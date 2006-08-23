@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    ListDisplayer& AddColumn( const char* column ) {
-        addColumn( tr( column ) );
+    ListDisplayer& AddColumn( const QString& column ) {
+        addColumn( column );
         itemDisplayer_.AddColumn( column );
         setResizeMode( QListView::LastColumn );
         return *this;

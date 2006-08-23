@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "Equipment.h"
 #include "clients_kernel/DataDictionary.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -67,10 +68,10 @@ void Equipments::DoUpdate( const ASN1T_MsgUnitDotations& message )
 // -----------------------------------------------------------------------------
 void Equipments::AddToDictionary( const Equipment& equipment )
 {
-    const QString baseName = QString( "Composantes/" ) + equipment.GetName().c_str() + "/";
+    const QString baseName = tools::translate( "Composantes", "Composantes" ) + "/" + equipment.GetName().c_str() + "/";
 
-    dico_.Register( baseName + "Disponible", equipment.available_ );
-    dico_.Register( baseName + "Indisponible", equipment.unavailable_ );
-    dico_.Register( baseName + "Réparables", equipment.repairable_ );
-    dico_.Register( baseName + "En maintenance", equipment.inMaintenance_ );
+    dico_.Register( baseName + tools::translate( "Composantes", "Disponible" ), equipment.available_ );
+    dico_.Register( baseName + tools::translate( "Composantes", "Indisponible" ), equipment.unavailable_ );
+    dico_.Register( baseName + tools::translate( "Composantes", "Réparables" ), equipment.repairable_ );
+    dico_.Register( baseName + tools::translate( "Composantes", "En maintenance" ), equipment.inMaintenance_ );
 }

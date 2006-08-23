@@ -35,7 +35,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controllers& controlle
     , currentTeam_( 0 )
 {
     setMinimumSize( 1, 1 );
-    addColumn( "Populations" );
+    addColumn( tr( "Populations" ) );
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
     setAcceptDrops( true );

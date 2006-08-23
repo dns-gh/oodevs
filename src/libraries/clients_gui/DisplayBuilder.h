@@ -35,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    GroupDisplayer& AddGroup( const char* name );
-    virtual GroupDisplayer& Group( const char* name );
+    GroupDisplayer& AddGroup( const QString& name );
+    virtual GroupDisplayer& Group( const QString& name );
     virtual void Hide();
     //@}
 
@@ -49,7 +49,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual Displayer_ABC& SubItem( const char* name );
+    virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
@@ -57,8 +57,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, GroupDisplayer* > T_Groups;
-    typedef T_Groups::iterator                      IT_Groups;
+    typedef std::map< QString, GroupDisplayer* > T_Groups;
+    typedef T_Groups::iterator                  IT_Groups;
     //@}
 
 private:

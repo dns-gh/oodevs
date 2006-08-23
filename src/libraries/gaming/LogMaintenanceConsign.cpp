@@ -15,6 +15,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "Tools.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -82,12 +83,12 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
 // -----------------------------------------------------------------------------
 void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "Consigne :", nID_ )
-             .Display( "Pion demandeur :", pion_ )
-             .Display( "Pion traitant :", pPionLogHandling_ )
-             .Display( "Type d'équipement :", diagnosed_ ? equipmentType_ : 0 )
-             .Display( "Type de panne :", diagnosed_ ? breakdownType_ : 0 )
-             .Display( "Etat :", nState_ );
+    displayer.Display( tools::translate( "Logistique", "Consigne :" ), nID_ )
+             .Display( tools::translate( "Logistique", "Pion demandeur :" ), pion_ )
+             .Display( tools::translate( "Logistique", "Pion traitant :" ), pPionLogHandling_ )
+             .Display( tools::translate( "Logistique", "Type d'équipement :" ), diagnosed_ ? equipmentType_ : 0 )
+             .Display( tools::translate( "Logistique", "Type de panne :" ), diagnosed_ ? breakdownType_ : 0 )
+             .Display( tools::translate( "Logistique", "Etat :" ), nState_ );
 }
 
 // -----------------------------------------------------------------------------

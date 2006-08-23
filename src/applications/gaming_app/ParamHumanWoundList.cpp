@@ -20,7 +20,7 @@ using namespace gui;
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites& asnListHumanWound, const std::string& /*strLabel*/ )
+ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites& asnListHumanWound, const QString& /*strLabel*/ )
     : QTable( 0, 1, parent )
     , pAsnHumanWoundList_( &asnListHumanWound )
 {

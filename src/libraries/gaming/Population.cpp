@@ -20,6 +20,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ActionController.h"
+#include "Tools.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -380,6 +381,6 @@ bool Population::IsInTeam( const Team_ABC& team ) const
 void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", (Population_ABC*)this )
-             .Display( "Vivants", GetLivingHumans() )
-             .Display( "Domination", nDomination_ );
+             .Display( tools::translate( "Population", "Vivants" ), GetLivingHumans() )
+             .Display( tools::translate( "Population", "Domination" ), nDomination_ );
 }

@@ -38,33 +38,32 @@ AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel
     , controllers_( controllers )
     , selected_( controllers )
 {
-    // $$$$ AGE 2006-08-22: $$tr$$
     pEquipment_ = new T_ListView( this, *this, factory );
-    pEquipment_->AddColumn( "Equipement" )
-                .AddColumn( "Disponible" )
-                .AddColumn( "Indisponible" )
-                .AddColumn( "Réparable" )
-                .AddColumn( "En maintenance" );
+    pEquipment_->AddColumn( tr( "Equipement" ) )
+                .AddColumn( tr( "Disponible" ) )
+                .AddColumn( tr( "Indisponible" ) )
+                .AddColumn( tr( "Réparable" ) )
+                .AddColumn( tr( "En maintenance" ) );
 
     pResources_ = new T_ListView( this, *this, factory );
-    pResources_->AddColumn( "Resource" )
-                .AddColumn( "Quantité" );
+    pResources_->AddColumn( tr( "Resource" ) )
+                .AddColumn( tr( "Quantité" ) );
 
     pTroops_ = new T_ListView( this, *this, factory );
-    pTroops_->AddColumn( "Catégorie" )
-             .AddColumn( "Officiers" )
-             .AddColumn( "Sous officiers" )
-             .AddColumn( "Mdr" );
+    pTroops_->AddColumn( tr( "Catégorie" ) )
+             .AddColumn( tr( "Officiers" ) )
+             .AddColumn( tr( "Sous officiers" ) )
+             .AddColumn( tr( "Mdr" ) );
 
     pLendings_ = new T_ListView( this, *this, factory );
-    pLendings_->AddColumn( "Emprunteur" )
-               .AddColumn( "Equipement" )
-               .AddColumn( "Quantité" );
+    pLendings_->AddColumn( tr( "Emprunteur" ) )
+               .AddColumn( tr( "Equipement" ) )
+               .AddColumn( tr( "Quantité" ) );
 
     pBorrowings_ = new T_ListView( this, *this, factory );
-    pBorrowings_->AddColumn( "Prêteur" )
-                 .AddColumn( "Equipement" )
-                 .AddColumn( "Quantité" );
+    pBorrowings_->AddColumn( tr( "Prêteur" ) )
+                 .AddColumn( tr( "Equipement" ) )
+                 .AddColumn( tr( "Quantité" ) );
 
     controllers_.Register( *this );
 }
@@ -120,8 +119,8 @@ void AgentResourcesPanel::NotifyUpdated( const Dotations& a )
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::Display( const Dotation& dotation, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( "Resource", dotation.type_ )
-             .Display( "Quantité", dotation.quantity_ );
+    displayer.Display( tr( "Resource" ), dotation.type_ )
+             .Display( tr( "Quantité" ), dotation.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,11 +142,11 @@ void AgentResourcesPanel::NotifyUpdated( const Equipments& a )
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( "Equipement", equipment.type_  )
-             .Display( "Disponible", equipment.available_ )
-             .Display( "Indisponible", equipment.unavailable_ )
-             .Display( "Réparable", equipment.repairable_ )
-             .Display( "En maintenance", equipment.inMaintenance_ );
+    displayer.Display( tr( "Equipement" ), equipment.type_  )
+             .Display( tr( "Disponible" ), equipment.available_ )
+             .Display( tr( "Indisponible" ), equipment.unavailable_ )
+             .Display( tr( "Réparable" ), equipment.repairable_ )
+             .Display( tr( "En maintenance" ), equipment.inMaintenance_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,9 +181,9 @@ void AgentResourcesPanel::NotifyUpdated( const Borrowings& a )
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::Display( const Loan& loan, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( 0, loan.agent_ )
-             .Display( "Equipement", loan.type_ )
-             .Display( "Quantité", loan.quantity_ );
+    displayer.Display( QString(), loan.agent_ )
+             .Display( tr( "Equipement" ), loan.type_ )
+             .Display( tr( "Quantité" ), loan.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,10 +206,10 @@ void AgentResourcesPanel::NotifyUpdated( const Troops& a )
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::Display( const Humans& humans, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( "Catégorie", humans.state_ )
-             .Display( "Officiers", humans.officers_ )
-             .Display( "Sous officiers", humans.subOfficers_ )
-             .Display( "Mdr", humans.troopers_ );
+    displayer.Display( tr( "Catégorie" ), humans.state_ )
+             .Display( tr( "Officiers" ), humans.officers_ )
+             .Display( tr( "Sous officiers" ), humans.subOfficers_ )
+             .Display( tr( "Mdr" ), humans.troopers_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -24,7 +24,7 @@ using namespace gui;
 // Name: ParamPathList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
+ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
     : QVBox( parent )
     , layer_( layer )
     , converter_( converter )
@@ -32,7 +32,7 @@ ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList
     , agent_( agent )
     , asn_( asnPathList )
     , paths_( 0 )
-    , listView_( new ParamListView( this, label.c_str() ) )
+    , listView_( new ParamListView( this, label ) )
     , selected_( 0 )
     , popup_( new QPopupMenu( this ) )
 {

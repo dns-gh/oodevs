@@ -40,46 +40,51 @@ ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
     , selected_    ( controllers )
 {
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( "Informations" )
-                .AddLabel( "Id:" )
-                .AddLabel( "Nom:" )
-                .AddLabel( "Type:" )
-                .AddLabel( "Position:" )
-                .AddSpinBox( "Construction:", 0, 100, 1 )
-                .AddSpinBox( "Valorisation:", 0, 100, 1 )
-                .AddSpinBox( "Contournement:", 0, 100, 1 )
-                .AddCheckBox( "En préparation:" );
+    
+    // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
+    // $$$$ AGE 2006-08-23: par le modèle correspondant et pire : traduits de la même maniere.
+    // $$$$ AGE 2006-08-23: Faire des fichiers avec un tas de statics référencés par les 2 ?
+    display_->AddGroup( tr( "Informations" ) )
+                .AddLabel( tr( "Id:" ) )
+                .AddLabel( tr( "Nom:" ) )
+                .AddLabel( tr( "Type:" ) )
+                .AddLabel( tr( "Position:" ) )
+                .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
+                .AddSpinBox( tr( "Valorisation:" ), 0, 100, 1 )
+                .AddSpinBox( tr( "Contournement:" ), 0, 100, 1 )
+                .AddCheckBox( tr( "En préparation:" ) );
 
-    display_->Group( "Informations" )
-                .AddLabel( "Dotation construction:" )
-                .AddLabel( "Dotation valorisation:" );
+    display_->Group( tr( "Informations" ) )
+                .AddLabel( tr( "Dotation construction:" ) )
+                .AddLabel( tr( "Dotation valorisation:" ) );
 
-    display_->AddGroup( "Site de franchissement" )
-                .AddLabel( "Largeur:" )
-                .AddLabel( "Profondeur:" )
-                .AddLabel( "Vitesse courant:" )
-                .AddLabel( "Berges à aménager:" );
+    display_->AddGroup( tr( "Site de franchissement" ) )
+                .AddLabel( tr( "Largeur:" ) )
+                .AddLabel( tr( "Profondeur:" ) )
+                .AddLabel( tr( "Vitesse du courant:" ) )
+                .AddLabel( tr( "Berges à aménager:" ) );
 
-    display_->AddGroup( "Camp" )
-                .AddLabel( "TC2:" );
+    display_->AddGroup( tr( "Camp" ) )
+                .AddLabel( tr( "TC2:" ) );
 
-    display_->AddGroup( "Nuage/Zone NBC" )
-                .AddLabel( "Agent_ABC NBC:" );
+    display_->AddGroup( tr( "Nuage/Zone NBC" ) )
+                .AddLabel( tr( "Agent_ABC NBC:" ) );
 
-    display_->AddGroup( "ROTA" )
-                .AddLabel( "Danger:" )
-                .AddLabel( "Agents NBC:" );
+    display_->AddGroup( tr( "ROTA" ) )
+                .AddLabel( tr( "Danger:" ) )
+                .AddLabel( tr( "Agents NBC:" ) );
 
-    display_->AddGroup( "Itinéraire logistique" )
-                .AddLabel( "Equipé:" )
-                .AddLabel( "Débit:" )
-                .AddLabel( "Largeur:" )
-                .AddLabel( "Longueur:" )
-                .AddLabel( "Poids supporté:" );
+    display_->AddGroup( tr( "Itinéraire logistique" ) )
+                .AddLabel( tr( "Equipé:" ) )
+                .AddLabel( tr( "Débit:" ) )
+                .AddLabel( tr( "Largeur:" ) )
+                .AddLabel( tr( "Longueur:" ) )
+                .AddLabel( tr( "Poids supporté:" ) );
 
     QWidget* pSpacer = new QWidget( this );
     pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
 
+    // $$$$ AGE 23/08/2006 :
 //    QHBox* pHBox = new QHBox( this );
 //    pApplyButton_  = new QPushButton( tr( "Appliquer" ), pHBox );
 //    pCancelButton_ = new QPushButton( tr( "Annuler" )  , pHBox );

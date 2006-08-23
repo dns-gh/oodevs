@@ -18,6 +18,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -72,15 +73,15 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Concentration" )
-                .Display( "Id:", nID_ )
-                .Display( "Concentration associée:", pConcentration_ )
-                .Display( "Position:", position_ )
-                .Display( "Humains vivants:", nNbrAliveHumans_ )
-                .Display( "Humains morts:", nNbrDeadHumans_ )
-                .Display( "Attitude:", eAttitude_ )
-                .Display( "Percue:", bIsPerceived_ )
-                .Display( "Pertinence:", rRelevance_ );
+    displayer.Group( tools::translate( "Population", "Concentration" ) )
+                .Display( tools::translate( "Population", "Id:" ), nID_ )
+                .Display( tools::translate( "Population", "Concentration associée:" ), pConcentration_ )
+                .Display( tools::translate( "Population", "Position:" ), position_ )
+                .Display( tools::translate( "Population", "Humains vivants:" ), nNbrAliveHumans_ )
+                .Display( tools::translate( "Population", "Humains morts:" ), nNbrDeadHumans_ )
+                .Display( tools::translate( "Population", "Attitude:" ), eAttitude_ )
+                .Display( tools::translate( "Population", "Percue:" ), bIsPerceived_ )
+                .Display( tools::translate( "Population", "Pertinence:" ), rRelevance_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,5 +90,6 @@ void PopulationConcentrationKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PopulationConcentrationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "Populations connues" ).Start( "Concentration - " ).Add( nID_ ).End();
+    displayer.Display( tools::translate( "Population", "Populations connues" ) )
+                .Start( tools::translate( "Population", "Concentration - " ) ).Add( nID_ ).End();
 }

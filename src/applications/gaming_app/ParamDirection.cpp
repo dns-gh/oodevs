@@ -14,11 +14,11 @@
 // Name: ParamDirection constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamDirection::ParamDirection( QWidget* parent, ASN1T_Direction& direction, const std::string& label )
+ParamDirection::ParamDirection( QWidget* parent, ASN1T_Direction& direction, const QString& label )
     : QHBox( parent )
     , direction_( direction )
 {
-    new QLabel( label.c_str(), this );
+    new QLabel( label, this );
     pDial_ = new QDial( 0, 359, 1, 0, this );
     pDial_->setWrapping( true );
     pDial_->setMaximumSize( 50, 50 );

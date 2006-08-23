@@ -25,7 +25,7 @@ using namespace gui;
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const std::string& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QHBox      ( pParent )
     , converter_ ( converter )
     , serializer_( converter, asn )
@@ -33,7 +33,7 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const s
     , location_( 0 )
 {
     setSpacing( 5 );
-    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label, false, this, "" );
 
     pShapeLabel_ = new QLabel( "---", this );
     pShapeLabel_->setMinimumWidth( 100 );
@@ -110,7 +110,7 @@ void ParamLocation::Handle( Location_ABC& location )
     delete location_;
     location_ = &location;
     if( location.IsValid() )
-        pShapeLabel_->setText( location.GetName().c_str() );
+        pShapeLabel_->setText( location.GetName() );
     else
         pShapeLabel_->setText( tr( "---" ) );
 }

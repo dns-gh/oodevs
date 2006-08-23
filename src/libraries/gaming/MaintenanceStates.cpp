@@ -14,6 +14,7 @@
 #include "Equipment.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/DataDictionary.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -26,10 +27,10 @@ MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC
     , resolver_( resolver )
     , agentResolver_( agentResolver )
 {
-    dico.Register( "Chaine maintenance/Chaine activée", bChainEnabled_ );
-    dico.Register( "Chaine maintenance/Priorités", priorities_ );
-    dico.Register( "Chaine maintenance/Priorités tactiques", tacticalPriorities_ );
-    dico.Register( "Chaine maintenance/Régime de travail", nWorkRate_ );
+    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Chaine activée" ), bChainEnabled_ );
+    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Priorités" ), priorities_ );
+    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Priorités tactiques" ), tacticalPriorities_ );
+    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Régime de travail" ), nWorkRate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,9 +87,10 @@ void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message )
 // -----------------------------------------------------------------------------
 void MaintenanceStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Etat chaine maintenance" )
-                .Display( "Etat chaine", bChainEnabled_ ? "Activée" : "Désactivée" )
-                .Display( "Régime de travail", QString( "R%1" ).arg( nWorkRate_ ) ) // $$$$ AGE 2006-04-03: 
-                .Display( "Priorités", priorities_ )
-                .Display( "Priorités tactiques", tacticalPriorities_ );
+    displayer.Group( tools::translate( "Logistique", "Etat chaine maintenance" ) )
+                .Display( tools::translate( "Logistique", "Etat chaine" ), bChainEnabled_ ?
+                        tools::translate( "Logistique", "Activée" ) : tools::translate( "Logistique", "Désactivée" ) )
+                .Display( tools::translate( "Logistique", "Régime de travail" ), tools::translate( "Logistique", "R%1" ).arg( nWorkRate_ ) ) // $$$$ AGE 2006-04-03: 
+                .Display( tools::translate( "Logistique", "Priorités" ), priorities_ )
+                .Display( tools::translate( "Logistique", "Priorités tactiques" ), tacticalPriorities_ );
 }

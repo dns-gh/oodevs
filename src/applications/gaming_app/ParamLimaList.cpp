@@ -15,7 +15,7 @@
 // Name: ParamLimaList constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamLimaList::ParamLimaList( QWidget* pParent, ASN1T_ListOID& asn, const std::string& label, const std::string& menu )
+ParamLimaList::ParamLimaList( QWidget* pParent, ASN1T_ListOID& asn, const QString& label, const QString& menu )
     : EntityListParameter< Lima >( pParent, asn.n, asn.elem, label, menu )
 {
     // NOTHING

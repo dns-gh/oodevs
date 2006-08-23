@@ -16,6 +16,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "statusicons.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -139,7 +140,7 @@ void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2
 // -----------------------------------------------------------------------------
 void Decisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "Mission", current_ );
+    displayer.Display( tools::translate( "Decisions", "Mission" ), current_ );
 }
 
 // -----------------------------------------------------------------------------

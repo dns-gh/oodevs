@@ -35,7 +35,7 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
     QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 9, 2, 5 );
     pSubLayout2->setMargin( 5 );
 
-    QLabel* pL2 = new QLabel( tr( "Taille police" ), pDisplayPanel );
+    QLabel* pL2 = new QLabel( tr( "Taille des polices" ), pDisplayPanel );
     pFontSpinbox_ = new QSpinBox( 1, 50, 1, pDisplayPanel );
     pSubLayout2->addWidget( pL2, 1, 0 );
     pSubLayout2->addWidget( pFontSpinbox_, 1, 1 );

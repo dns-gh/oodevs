@@ -30,14 +30,14 @@ class SubItemDisplayer : public BaseDisplayer
 public:
     //! @name Constructors/Destructor
     //@{
-             SubItemDisplayer( const char* name, ItemFactory_ABC& factory );
+             SubItemDisplayer( const QString& name, ItemFactory_ABC& factory );
     virtual ~SubItemDisplayer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Hide();
-    SubItemDisplayer& AddChild( const char* child );
+    SubItemDisplayer& AddChild( const QString& child );
 
     Displayer_ABC& operator()( QListViewItem* item );
     //@}
@@ -51,23 +51,23 @@ private:
 
     //! @name Helpers
     //@{
-    virtual Displayer_ABC& SubItem( const char* name );
+    virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    QListViewItem* FindChild( const char* name ) const;
+    QListViewItem* FindChild( const QString& name ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< std::string > T_Children;
+    typedef std::vector< QString > T_Children;
     //@}
 
 private:
     //! @name Member data
     //@{
     ItemFactory_ABC& factory_;
-    const char* name_;
+    QString name_;
     QListViewItem* parent_;
     QListViewItem* current_;
     QString message_;

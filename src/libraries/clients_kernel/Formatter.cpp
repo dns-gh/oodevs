@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Formatter.h"
 #include "Tools.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -22,6 +23,40 @@ void FormatterNotImplemented::Error( Displayer_ABC& displayer, const type_info& 
     throw std::runtime_error( std::string( typeid( displayer ).name() ) + " can't display " + type.name() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Formatter base types
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
+void Formatter< char >::operator()( const char& value, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( QString( QChar( value ) ) );
+}
+
+void Formatter< const char* >::operator()( const char* value, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( QString( value ) );
+}
+
+void Formatter< std::string >::operator()( const std::string& value, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( QString( value.c_str() ) );
+}
+
+void Formatter< ValueNotSet >::operator()( const ValueNotSet& , Displayer_ABC& displayer ) const {
+    static const QString notSet = tools::translate( "Formatter", " - " );
+    displayer.AddToDisplay( notSet );
+}
+
+void Formatter< Unit >::operator()( const Unit& value, Displayer_ABC& displayer ) const {
+    displayer.AddToDisplay( (const QString&)value );
+}
+
+void Formatter< Separator >::operator()( const Separator& , Displayer_ABC& displayer ) const {
+    static const QString separator = tools::translate( "Formatter", ", " );
+    displayer.AddToDisplay( separator );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formatter enums
+// Created: AGE 2006-02-21
+// -----------------------------------------------------------------------------
 void Formatter< E_UnitPosture >::operator()( const E_UnitPosture& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( ENT_Tr::ConvertFromUnitPosture( e ) );
 }

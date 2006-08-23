@@ -9,14 +9,78 @@
 
 #include "clients_kernel_pch.h"
 #include "Tools.h"
+#include <qapplication.h>
 
 using namespace kernel;
 
+
+// -----------------------------------------------------------------------------
+// Name: tools::translate
+// Created: AGE 2006-08-23
+// -----------------------------------------------------------------------------
+QString tools::translate( const char* context, const char* what )
+{
+    if ( qApp )
+	    return qApp->translate( context, what );
+    else
+    	return QString::fromLatin1( what );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::Unknown
+// Created: AGE 2006-08-23
+// -----------------------------------------------------------------------------
+QString tools::Unknown()
+{
+    static const QString unknown = tools::translate( "tools", "Inconnu" );
+    return unknown;
+}
+
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
+// Created: APE 2004-04-29
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_TroopHealthState nState )
+{
+    static const QString healthStates[] = 
+    {
+        tools::translate( "E_TroopHealthState", "Total" ),
+        tools::translate( "E_TroopHealthState", "Opérationnels" ),
+        tools::translate( "E_TroopHealthState", "Morts" ),
+        tools::translate( "E_TroopHealthState", "Blessés" ),
+        tools::translate( "E_TroopHealthState", "Blessés mentalement" ),
+        tools::translate( "E_TroopHealthState", "Contaminés" ),
+        tools::translate( "E_TroopHealthState", "En traitement" ),
+        tools::translate( "E_TroopHealthState", "Utilisés pour maintenance" )
+    };
+    if( nState >= 0 && nState < eTroopHealthStateNbrStates )
+        return healthStates[ nState ];
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: APE 2004-05-03
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_PerceptionResult nResult )
+{
+    static const QString perceptions[] = 
+    {
+        tools::translate( "E_PerceptionResult", "Identification" ),
+        tools::translate( "E_PerceptionResult", "Reconnaissance" ),
+        tools::translate( "E_PerceptionResult", "Detection" ),
+        tools::translate( "E_PerceptionResult", "Non vu" ),
+    };
+    if( nResult >= 0 && nResult < 4 )
+        return perceptions[ nResult ];
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::GetXmlSection
 // Created: AGE 2005-03-31
 // -----------------------------------------------------------------------------
-const char* tools::ToString( E_UnitPosture nPosture )
+const char* tools::GetXmlSection( E_UnitPosture nPosture )
 {
     switch( nPosture )
     {
@@ -33,49 +97,10 @@ const char* tools::ToString( E_UnitPosture nPosture )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::ToString
-// Created: APE 2004-04-29
-// -----------------------------------------------------------------------------
-const char* tools::ToString( E_TroopHealthState nState )
-{
-    switch( nState )
-    {
-        case eTroopHealthStateTotal:              return "Total";
-        case eTroopHealthStateOperational:        return "Opérationnels";
-        case eTroopHealthStateDead:               return "Morts";
-        case eTroopHealthStateWounded:            return "Blessés";
-        case eTroopHealthStateMentalWounds:       return "Blessés mentalement";
-        case eTroopHealthStateContaminated:       return "Contaminés";
-        case eTroopHealthStateInTreatment:        return "En traitement";
-        case eTroopHealthStateUsedForMaintenance: return "Utilisés pour maintenance";
-        default:
-            return "Unknown";
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToString
+// Name: tools::GetXmlSection
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-const char* tools::ToString( E_PerceptionResult nResult )
-{
-    switch( nResult )
-    {
-        case eIdentification:  return "Identification";
-        case eRecognition:     return "Reconnaissance";
-        case eDetection:       return "Detection";
-        case eNotSeen:         return "Non vu";
-        default:
-            return "Unknown";
-    }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: tools::ToString
-// Created: APE 2004-05-03
-// -----------------------------------------------------------------------------
-const char* tools::ToString( E_WeatherType weather )
+const char* tools::GetXmlSection( E_WeatherType weather )
 {
     switch( weather  )
     {
@@ -92,10 +117,10 @@ const char* tools::ToString( E_WeatherType weather )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::ToString
+// Name: tools::GetXmlSection
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
-const char* tools::ToString( E_LightingType weather )
+const char* tools::GetXmlSection( E_LightingType weather )
 {
     switch( weather  )
     {

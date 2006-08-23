@@ -11,6 +11,7 @@
 #include "Lines.h"
 #include "GlTools_ABC.h"
 #include "LocationVisitor_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -92,8 +93,8 @@ void Lines::Draw( const GlTools_ABC& tools ) const
 // Name: Lines::GetName
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-std::string Lines::GetName() const
+QString Lines::GetName() const
 {
-    // $$$$ AGE 2006-08-22: $$tr$$
-    return "ligne";
+    static const QString name = tools::translate( "Localisation", "Ligne" );
+    return name;
 }

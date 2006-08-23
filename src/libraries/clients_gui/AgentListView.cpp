@@ -36,7 +36,7 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFa
     , currentTeam_( 0 )
 {
     setMinimumSize( 1, 1 );
-    addColumn( "Unités" );
+    addColumn( tr( "Unités" ) );
     setRootIsDecorated( true );
     setAcceptDrops( true );
     header()->hide();

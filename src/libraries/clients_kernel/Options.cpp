@@ -117,7 +117,7 @@ void Options::Load( Settings_ABC& settings )
             else if( type == Settings_ABC::floatPrefix )
                 Load( settings, name, 1.f );
             else if( type == Settings_ABC::tristatePrefix )
-                Load( settings, name, TristateOption::auto_ );
+                Load( settings, name, TristateOption::Auto() );
         }
     }
 }

@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: ParamObjectKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const std::string& label, const std::string& menu )
+ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const QString& label, const QString& menu )
     : EntityListParameter< ObjectKnowledge >( pParent, asn.n, asn.elem, label, menu )
 {
     // NOTHING

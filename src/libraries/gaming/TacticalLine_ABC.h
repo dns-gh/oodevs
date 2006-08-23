@@ -35,9 +35,9 @@ class TacticalLine_ABC : public kernel::Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
-             TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const QString& baseName, unsigned long id, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const QString& baseName, unsigned long id, const T_PointVector& points, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( const QString& baseName, unsigned long id, const ASN1T_Line& line, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -115,7 +115,7 @@ private:
 
     unsigned long  id_;
     T_PointVector  pointList_;
-    std::string    strName_;
+    QString        strName_;
     E_State        nState_;
     E_NetworkState nNetworkState_;
     bool           bCreatedBy; 

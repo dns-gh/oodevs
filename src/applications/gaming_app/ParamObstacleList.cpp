@@ -22,7 +22,7 @@ using namespace gui;
 // Name: ParamObstacleList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject& asnObjectList, const std::string& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
+ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject& asnObjectList, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
     : QVBox( parent )
     , controller_( controller )
     , objectTypes_( objectTypes )
@@ -33,7 +33,7 @@ ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObjec
     , selected_( 0 )
     , popup_( new QPopupMenu( this ) )
 {
-    listView_ = new ParamListView( this, label.c_str() );
+    listView_ = new ParamListView( this, label );
     connect( listView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     disconnect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), listView_, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
     connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );

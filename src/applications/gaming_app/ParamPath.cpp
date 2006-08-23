@@ -25,7 +25,7 @@ using namespace gui;
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
+ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
     : QHBox( pParent )
     , converter_( converter )
     , layer_( layer )
@@ -35,7 +35,7 @@ ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string
     , location_( 0 )
 {
     setSpacing( 5 );
-    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label, false, this, "" );
 
     pPosLabel_ = new QLabel( "---", this );
     pPosLabel_->setMinimumWidth( 100 );
@@ -105,7 +105,7 @@ void ParamPath::CommitTo( ASN1T_Itineraire& destination )
 // -----------------------------------------------------------------------------
 void ParamPath::NotifyContextMenu( const geometry::Point2f&, ContextMenu& menu )
 {   
-    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( StartPath() ) );
+    menu.InsertItem( "Parametre", menu_, this, SLOT( StartPath() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,6 +127,6 @@ void ParamPath::Handle( Location_ABC& location )
     {
         delete location_;
         location_ = &location;
-        pPosLabel_->setText( location.GetName().c_str() );
+        pPosLabel_->setText( location.GetName() );
     }
 }

@@ -14,8 +14,8 @@
 // Name: ParamBool constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( QWidget* parent, ASN1BOOL& asn, const std::string& label, bool defaultValue /*= false*/ )
-    : QCheckBox( label.c_str(), parent )
+ParamBool::ParamBool( QWidget* parent, ASN1BOOL& asn, const QString& label, bool defaultValue /*= false*/ )
+    : QCheckBox( label, parent )
     , asn_     ( asn )
 {
     setChecked( defaultValue );

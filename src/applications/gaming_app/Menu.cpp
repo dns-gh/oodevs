@@ -23,9 +23,9 @@ namespace
 {
     void Populate( OptionMenu< TristateOption >& menu )
     {
-        menu.AddItem( qApp->tr( TristateOption::auto_ ), TristateOption::auto_ );
-        menu.AddItem( qApp->tr( TristateOption::on_ ), TristateOption::on_ );
-        menu.AddItem( qApp->tr( TristateOption::off_ ), TristateOption::off_ );
+        menu.AddItem( TristateOption::AutoName(), TristateOption::Auto() );
+        menu.AddItem( TristateOption::OnName(), TristateOption::On() );
+        menu.AddItem( TristateOption::OffName(), TristateOption::Off() );
     }
 
     void AddSubMenu( QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )

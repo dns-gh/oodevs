@@ -10,7 +10,7 @@
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include <iomanip>
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -48,9 +48,8 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& )
         glColor4d( COLOR_BLACK );
         tools_.DrawLine( start_, end_ );
         const geometry::Point2f middle( 0.5f*( start_.X() + end_.X() ), 0.5*(start_.Y() + end_.Y() ) );
-        std::stringstream message;
-        message << "  " << std::setw( 1 ) << start_.Distance( end_ ) << "m";
-        tools_.Print( message.str(), middle );
+        const QString message = tools::translate( "Règle GL", " %1m" ).arg( start_.Distance( end_ ), 0, 'f', 1 );
+        tools_.Print( message.ascii(), middle );
         glPopAttrib();
     }
 }

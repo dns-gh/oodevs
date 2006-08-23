@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -24,7 +25,7 @@ SupplyStates::SupplyStates( Controller& controller, const Resolver_ABC< Equipmen
     , resolver_( resolver )
     , dotationResolver_( dotationResolver )
 {
-    dico.Register( "Chaine ravitaillement/Chaine activée", bChainEnabled_ );
+    dico.Register( tools::translate( "Logistique", "Chaine ravitaillement/Chaine activée" ), bChainEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +90,8 @@ void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message )
 // -----------------------------------------------------------------------------
 void SupplyStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Etat chaine rav." )
-                .Display( "Etat chaine", bChainEnabled_ ? "Activée" : "Désactivée" );
+    displayer.Group( tools::translate( "Logistique", "Etat chaine rav." ) )
+                .Display( tools::translate( "Logistique", "Etat chaine" ), 
+                    bChainEnabled_ ? tools::translate( "Logistique", "Activée" )
+                                   : tools::translate( "Logistique", "Désactivée" ) );
 }

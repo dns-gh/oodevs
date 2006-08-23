@@ -16,6 +16,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "Attributes.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -292,7 +293,7 @@ void Agent::CreateDictionary()
 {
     DataDictionary& dictionary = *new DataDictionary();
     Attach( dictionary );
-    dictionary.Register( "Info/Identifiant", id_ );
-    dictionary.Register( "Info/Nom", name_ );
-    dictionary.Register( "Hiérarchie/Supérieur", superior_ );
+    dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
+    dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
+    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), superior_ );
 }

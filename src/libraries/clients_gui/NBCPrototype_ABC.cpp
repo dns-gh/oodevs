@@ -23,7 +23,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >&
     : ObjectPrototypeAttributes_ABC( parent, tr( "Paramètres NBC" ) )
     , resolver_( resolver )
 {
-    new QLabel( tr( "Agent_ABC NBC:" ), this );
+    new QLabel( tr( "Agent NBC:" ), this );
     nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );
     FillTypes();
 }

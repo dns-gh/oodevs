@@ -10,6 +10,8 @@
 #ifndef __TristateOption_h_
 #define __TristateOption_h_
 
+#include <qstring.h>
+
 namespace kernel
 {
     template< typename T > class ToolListButton;
@@ -26,15 +28,19 @@ class TristateOption
 public:
     //! @name Constants
     //@{
-    static const TristateOption off_;
-    static const TristateOption on_;
-    static const TristateOption auto_;
+    static TristateOption Off();
+    static TristateOption On();
+    static TristateOption Auto();
+
+    static QString OffName();
+    static QString OnName();
+    static QString AutoName();
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit TristateOption( const std::string& state = "Off" );
+    explicit TristateOption( const QString& state = OffName() );
             ~TristateOption();
     //@}
 
@@ -42,7 +48,7 @@ public:
     //@{
     bool IsSet( bool automaticCondition ) const;
     bool operator==( const TristateOption& rhs ) const { return rhs.state_ == state_; };
-    operator const char*() const;
+    operator QString() const;
     //@}
 
 private:

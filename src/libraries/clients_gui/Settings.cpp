@@ -121,7 +121,7 @@ void Settings::Save( const std::string& name, float value )
 // -----------------------------------------------------------------------------
 void Settings::Save( const std::string& name, const TristateOption& value )
 {
-    writeEntry( ( "/" + ( tristatePrefix + name ) ).c_str(), (const char*)value );
+    writeEntry( ( "/" + ( tristatePrefix + name ) ).c_str(), (QString)value );
 }
 
 // -----------------------------------------------------------------------------

@@ -280,7 +280,7 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawRectangle( const geometry::Point2f& center, float h, float factor /*= 1.f*/ ) const
 {
-    const Vector2f fontSize = Base().GetSize( "a" );
+    static const Vector2f fontSize = Base().GetSize( "a" );
     const float halfWidth   = fontSize.X() * factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = fontSize.Y() * factor * 600.f * 0.062f;
     const float height      = fontSize.Y() * factor * 600.f * h * 0.876f + deltaHeight;

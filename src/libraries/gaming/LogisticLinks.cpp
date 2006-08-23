@@ -16,6 +16,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DataDictionary.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -32,10 +33,10 @@ LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent_
     , medicalSuperior_( 0 )
     , supplySuperior_( 0 )
 {
-    dictionary.Register( "Liens logistiques/TC2", tc2_ );
-    dictionary.Register( "Liens logistiques/Superieur maintenance", maintenanceSuperior_ );
-    dictionary.Register( "Liens logistiques/Superieur médical", medicalSuperior_ );
-    dictionary.Register( "Liens logistiques/Superieur ravitaillement", supplySuperior_ );
+    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/TC2" ), tc2_ );
+    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/Superieur maintenance" ), maintenanceSuperior_ );
+    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/Superieur médical" ), medicalSuperior_ );
+    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/Superieur ravitaillement" ), supplySuperior_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,11 +141,11 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message 
 // -----------------------------------------------------------------------------
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Liens logistiques" )
-                .Display( "TC2:",                     GetTC2() )
-                .Display( "Supérieur maintenance:",   GetMaintenance() )
-                .Display( "Supérieur santé:",         GetMedical() )
-                .Display( "Supérieur ravitaillement:", GetSupply() );
+    displayer.Group( tools::translate( "Logistique", "Liens logistiques" ) )
+                .Display( tools::translate( "Logistique", "TC2:" ),                     GetTC2() )
+                .Display( tools::translate( "Logistique", "Supérieur maintenance:" ),   GetMaintenance() )
+                .Display( tools::translate( "Logistique", "Supérieur santé:" ),         GetMedical() )
+                .Display( tools::translate( "Logistique", "Supérieur ravitaillement:" ), GetSupply() );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,13 +15,13 @@
 // Name: ParamNumericField constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( QWidget* parent, ASN1INT& asn, const std::string& label )
+ParamNumericField::ParamNumericField( QWidget* parent, ASN1INT& asn, const QString& label )
     : QHBox( parent )
     , int_( &asn )
     , real_( 0 )
 {
     setSpacing( 5 );
-    pLabel_ = new QLabel( label.c_str(), this );
+    pLabel_ = new QLabel( label, this );
     pLabel_->setAlignment( AlignVCenter | AlignLeft );
 
     pEdit_ = new QLineEdit( QString::number( 0 ), this );
@@ -32,13 +32,13 @@ ParamNumericField::ParamNumericField( QWidget* parent, ASN1INT& asn, const std::
 // Name: ParamNumericField constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamNumericField::ParamNumericField( QWidget* parent, ASN1REAL& asn, const std::string& label )
+ParamNumericField::ParamNumericField( QWidget* parent, ASN1REAL& asn, const QString& label )
     : QHBox( parent )
     , int_ ( 0 )
     , real_( &asn )
 {
     setSpacing( 5 );
-    pLabel_ = new QLabel( label.c_str(), this );
+    pLabel_ = new QLabel( label, this );
     pLabel_->setAlignment( AlignVCenter | AlignLeft );
 
     pEdit_ = new QLineEdit( QString::number( 0. ), this );

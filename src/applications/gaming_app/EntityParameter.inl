@@ -15,7 +15,7 @@ using namespace gui;
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu )
+EntityParameter< ConcreteEntity >::EntityParameter( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
     : EntityParameterBase( pParent, id, label, menu )
     , potential_         ( 0 )
     , selected_          ( 0 )

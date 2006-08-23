@@ -29,7 +29,7 @@ class EntityListParameterBase : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameterBase( QWidget* pParent, unsigned int& n, ASN1T_OID*& ids, const std::string& label, const std::string& menu );
+             EntityListParameterBase( QWidget* pParent, unsigned int& n, ASN1T_OID*& ids, const QString& label, const QString& menu );
     virtual ~EntityListParameterBase();
     //@}
 
@@ -83,7 +83,7 @@ class EntityListParameter : public EntityListParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityListParameter( QWidget* pParent, unsigned int& n, ASN1T_OID*& ids, const std::string& label, const std::string& menu );
+             EntityListParameter( QWidget* pParent, unsigned int& n, ASN1T_OID*& ids, const QString& label, const QString& menu );
     virtual ~EntityListParameter();
     //@}
 

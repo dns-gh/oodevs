@@ -17,9 +17,9 @@ using namespace gui;
 // Name: CheckBoxDisplayer constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-CheckBoxDisplayer::CheckBoxDisplayer( QWidget* parent, const char* name )
+CheckBoxDisplayer::CheckBoxDisplayer( QWidget* parent, const QString& name )
 {
-    new QLabel( qApp->tr( name ), parent );
+    new QLabel( name, parent );
     box_ = new QCheckBox( parent );
 }
 
@@ -36,7 +36,7 @@ CheckBoxDisplayer::~CheckBoxDisplayer()
 // Name: CheckBoxDisplayer::SubItem
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-Displayer_ABC& CheckBoxDisplayer::SubItem( const char* )
+Displayer_ABC& CheckBoxDisplayer::SubItem( const QString& )
 {
     return NotToBeCalled( __FUNCTION__ );
 }

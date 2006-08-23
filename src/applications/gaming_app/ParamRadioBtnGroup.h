@@ -23,7 +23,7 @@ class ParamRadioBtnGroup : public QHButtonGroup, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamRadioBtnGroup( QWidget* parent, T& output, const std::string strLabel );
+             ParamRadioBtnGroup( QWidget* parent, T& output, const QString& strLabel );
     virtual ~ParamRadioBtnGroup();
     //@}
 
@@ -53,8 +53,8 @@ private:
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 template< typename T >
-ParamRadioBtnGroup<T>::ParamRadioBtnGroup( QWidget* parent, T& output, const std::string strLabel  )
-    : QHButtonGroup( strLabel.c_str(), parent, strLabel.c_str() )
+ParamRadioBtnGroup<T>::ParamRadioBtnGroup( QWidget* parent, T& output, const QString& strLabel  )
+    : QHButtonGroup( strLabel, parent, strLabel )
     , output_( output )
 {
     // NOTHING

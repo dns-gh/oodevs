@@ -70,7 +70,7 @@ void SensorType::InitializeWeatherFactors( xml::xistream& xis )
     for( unsigned i = 0; i < eNbrWeatherType; ++i )
     {
         float& rFactor = weatherFactors_[ i ];
-        xis >> content( tools::ToString( (E_WeatherType)i ), rFactor );
+        xis >> content( tools::GetXmlSection( (E_WeatherType)i ), rFactor );
     }
     xis >> end();
 }
@@ -85,7 +85,7 @@ void SensorType::InitializeLightingFactors( xml::xistream& xis )
     for( unsigned i = 0; i < eNbrLightingType; ++i )
     {
         float& rFactor = lightingFactors_[ i ];
-        xis >> content( tools::ToString( (E_LightingType)i ), rFactor );
+        xis >> content( tools::GetXmlSection( (E_LightingType)i ), rFactor );
     }
     xis >> end();
 }
@@ -145,7 +145,7 @@ void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
     for( unsigned i = 0; i < eNbrUnitPosture; ++i )
     {
         float& rFactor = postureSourceFactors_[ i ];
-        xis >> content( tools::ToString( (E_UnitPosture)i ), rFactor );
+        xis >> content( tools::GetXmlSection( (E_UnitPosture)i ), rFactor );
     }
     xis >> end();
 }

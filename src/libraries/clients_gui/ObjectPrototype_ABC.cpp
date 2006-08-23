@@ -67,7 +67,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    locationCreator_ = new LocationCreator( position_, "Nouvel objet", layer, *this );
+    locationCreator_ = new LocationCreator( position_, tr( "Nouvel objet" ), layer, *this );
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
@@ -237,7 +237,7 @@ void ObjectPrototype_ABC::Handle( Location_ABC& location )
     delete location_;
     location_ = &location;
     if( location.IsValid() )
-        locationLabel_->setText( location.GetName().c_str() );
+        locationLabel_->setText( location.GetName() );
     else
         locationLabel_->setText( tr( "---" ) );
 }

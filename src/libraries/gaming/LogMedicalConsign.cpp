@@ -16,6 +16,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "Tools.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -89,16 +90,16 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "Consigne :", nID_ )
-             .Display( "Pion demandeur :", pion_ )
-             .Display( "Pion traitant :", pPionLogHandling_ )
-             .Display( "Reac. mental :", bMentalDeceased_ )
-             .Display( "Contaminé NBC :", bContaminated_ )
-             .Display( "Etat :", nState_ );
+    displayer.Display( tools::translate( "Logistique", "Consigne :" ), nID_ )
+             .Display( tools::translate( "Logistique", "Pion demandeur :" ), pion_ )
+             .Display( tools::translate( "Logistique", "Pion traitant :" ), pPionLogHandling_ )
+             .Display( tools::translate( "Logistique", "Reac. mental :" ), bMentalDeceased_ )
+             .Display( tools::translate( "Logistique", "Contaminé NBC :" ), bContaminated_ )
+             .Display( tools::translate( "Logistique", "Etat :" ), nState_ );
     if( diagnosed_ )
-        displayer.Display( "Blessure :", wound_ );
+        displayer.Display( tools::translate( "Logistique", "Blessure :" ), wound_ );
     else
-        displayer.Display( "Blessure :", "Non diagnostiquée" );
+        displayer.Display( tools::translate( "Logistique", "Blessure :" ), tools::translate( "Logistique", "Non diagnostiquée" ) );
 }
 
 // -----------------------------------------------------------------------------

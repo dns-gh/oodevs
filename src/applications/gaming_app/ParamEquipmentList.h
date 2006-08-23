@@ -35,7 +35,7 @@ class ParamEquipmentList : public QTable
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites& asnListEquipment, const std::string& strLabel, const kernel::Resolver< kernel::EquipmentType >& resolver );
+             ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites& asnListEquipment, const QString& strLabel, const kernel::Resolver< kernel::EquipmentType >& resolver );
     virtual ~ParamEquipmentList();
     //@}
 

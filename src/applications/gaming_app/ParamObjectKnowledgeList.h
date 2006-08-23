@@ -33,7 +33,7 @@ class ParamObjectKnowledgeList : public EntityListParameter< ObjectKnowledge >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const std::string& label, const std::string& menu );
+             ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const QString& label, const QString& menu );
     virtual ~ParamObjectKnowledgeList();
     //@}
 

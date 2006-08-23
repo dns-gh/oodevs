@@ -23,8 +23,8 @@ using namespace gui;
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( pParent, label.c_str() )
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( pParent, label )
     , converter_( converter )
     , asn_( asn )
     , pAsnLocalisationList_( 0 )
@@ -37,8 +37,8 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& 
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( pParent, label.c_str() )
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( pParent, label )
     , converter_( converter )
     , asn_( (ASN1T_ListLocalisation&)asn )
     , pAsnLocalisationList_( 0 )
@@ -51,8 +51,8 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn, 
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn, const std::string label, const std::string menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : ParamListView( pParent, label.c_str() )
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : ParamListView( pParent, label )
     , converter_( converter )
     , asn_( (ASN1T_ListLocalisation&)asn )
     , pAsnLocalisationList_( 0 )
@@ -147,7 +147,7 @@ void ParamLocationList::Commit()
 void ParamLocationList::Handle( Location_ABC& location )
 {
     locations_.push_back( &location );
-    new QListViewItem( this, location.GetName().c_str() );
+    new QListViewItem( this, location.GetName() );
 }
 
 // -----------------------------------------------------------------------------

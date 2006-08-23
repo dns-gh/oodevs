@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -25,9 +26,9 @@ HumanFactors::HumanFactors( Controller& controller, DataDictionary& dictionary )
     , tiredness_( (E_UnitFatigue)0 )
     , morale_( (E_UnitMoral)0 )
 {
-    dictionary.Register( "Facteurs Humains/Experience", experience_ );
-    dictionary.Register( "Facteurs Humains/Fatigue", tiredness_ );
-    dictionary.Register( "Facteurs Humains/Moral", morale_ );
+    dictionary.Register( tools::translate( "Facteurs Humains", "Facteurs Humains/Experience" ), experience_ );
+    dictionary.Register( tools::translate( "Facteurs Humains", "Facteurs Humains/Fatigue" ), tiredness_ );
+    dictionary.Register( tools::translate( "Facteurs Humains", "Facteurs Humains/Moral" ), morale_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,10 +64,10 @@ void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void HumanFactors::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Facteurs humains" )
-                .Display( "Experience:", experience_ )
-                .Display( "Moral:", morale_ )
-                .Display( "Fatigue:", tiredness_ );
+    displayer.Group( tools::translate( "Facteurs Humains", "Facteurs humains" ) )
+                .Display( tools::translate( "Facteurs Humains", "Experience:" ), experience_ )
+                .Display( tools::translate( "Facteurs Humains", "Moral:" ), morale_ )
+                .Display( tools::translate( "Facteurs Humains", "Fatigue:" ), tiredness_ );
 }
    
 // -----------------------------------------------------------------------------

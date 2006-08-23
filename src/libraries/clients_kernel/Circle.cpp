@@ -11,6 +11,7 @@
 #include "Circle.h"
 #include "LocationVisitor_ABC.h"
 #include "GlTools_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -102,8 +103,8 @@ void Circle::Draw( const GlTools_ABC& tools ) const
 // Name: Circle::GetName
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-std::string Circle::GetName() const
+QString Circle::GetName() const
 {
-    // $$$$ AGE 2006-08-22: $$tr$$
-    return "cercle";
+    static const QString name = tools::translate( "Localisation", "Cercle" );
+    return name;
 }

@@ -80,7 +80,7 @@ void GlTooltip::Call( const E_EtatCombatRencontre& value )
 // Name: GlTooltip::SubItem
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-Displayer_ABC& GlTooltip::SubItem( const char* name )
+Displayer_ABC& GlTooltip::SubItem( const QString& name )
 {
     currentItem_ = name;
     return *this;

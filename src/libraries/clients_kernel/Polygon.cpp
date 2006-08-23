@@ -11,6 +11,7 @@
 #include "Polygon.h"
 #include "LocationVisitor_ABC.h"
 #include "GlTools_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -95,8 +96,8 @@ void Polygon::Draw( const GlTools_ABC& tools ) const
 // Name: Polygon::GetName
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-std::string Polygon::GetName() const
+QString Polygon::GetName() const
 {
-    // $$$$ AGE 2006-08-22: $$tr$$
-    return "polygone";
+    static const QString name = tools::translate( "Localisation", "Polygone" );
+    return name;
 }

@@ -38,7 +38,7 @@ class ParamPoint : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const kernel::CoordinateConverter_ABC& converter );
+             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const QString& label, const QString& menu, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPoint();
     //@}
 
@@ -69,9 +69,9 @@ private:
     ASN1T_Point&       asn_;
     const kernel::CoordinateConverter_ABC& converter_;
 
-    std::string        menu_;
-    gui::RichLabel*         pLabel_;
-    QLabel*            pPosLabel_;
+    QString         menu_;
+    gui::RichLabel* pLabel_;
+    QLabel*         pPosLabel_;
 
     ASN1T_CoordUTM    asnPoint_;
     geometry::Point2f popupPoint_;

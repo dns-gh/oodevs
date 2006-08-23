@@ -16,6 +16,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "statusicons.h"
+#include "Tools.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -30,19 +31,19 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , aggregated_( false ) 
 {
     // $$$$ AGE 2006-06-22: unité !
-    dictionary.Register( "Info/Etat opérationnel",               nRawOpState_ );
-    dictionary.Register( "Info/Vitesse",                         nSpeed_ );
-    dictionary.Register( "Info/Direction",                       nDirection_ );
-    dictionary.Register( "Postures/Posture courante",            nCurrentPosture_ );
-    dictionary.Register( "Communications/Brouillé",              bCommJammed_ );
-    dictionary.Register( "Communications/Silence radio",         bRadioSilence_ );
-    dictionary.Register( "Etat décisionnel/Etat opérationnel",   nOpState_ );
-    dictionary.Register( "Etat décisionnel/RoE",                 nRulesOfEngagementState_ );
-    dictionary.Register( "Etat décisionnel/Contact combat",      nCloseCombatState_ );
-    dictionary.Register( "Etat décisionnel/Rapport de force",    nFightRateState_ );
-    dictionary.Register( "Etat martial/Fait prisonnier",         bPrisoner_ );
-    dictionary.Register( "Etat martial/Rendu",                   bSurrendered_ );
-    dictionary.Register( "Etat martial/Réfugiés pris en compte", bRefugeesManaged_ );
+    dictionary.Register( tools::translate( "Attributs", "Info/Etat opérationnel" ),               nRawOpState_ );
+    dictionary.Register( tools::translate( "Attributs", "Info/Vitesse" ),                         nSpeed_ );
+    dictionary.Register( tools::translate( "Attributs", "Info/Direction" ),                       nDirection_ );
+    dictionary.Register( tools::translate( "Attributs", "Postures/Posture courante" ),            nCurrentPosture_ );
+    dictionary.Register( tools::translate( "Attributs", "Communications/Brouillé" ),              bCommJammed_ );
+    dictionary.Register( tools::translate( "Attributs", "Communications/Silence radio" ),         bRadioSilence_ );
+    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/Etat opérationnel" ),   nOpState_ );
+    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/RoE" ),                 nRulesOfEngagementState_ );
+    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/Contact combat" ),      nCloseCombatState_ );
+    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/Rapport de force" ),    nFightRateState_ );
+    dictionary.Register( tools::translate( "Attributs", "Etat martial/Fait prisonnier" ),         bPrisoner_ );
+    dictionary.Register( tools::translate( "Attributs", "Etat martial/Rendu" ),                   bSurrendered_ );
+    dictionary.Register( tools::translate( "Attributs", "Etat martial/Réfugiés pris en compte" ), bRefugeesManaged_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,40 +149,40 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void Attributes::Display( Displayer_ABC& displayer ) const
 {
     // $$$$ AGE 2006-03-17: Split attributes ?
-    displayer.Group( "Info" )
-                .Display( "Etat opérationnel:",      nRawOpState_ * Units::percentage )
-                .Display( "Mort:",                   bDead_ )
-                .Display( "Neutralisé:",             bNeutralized_ )
-                .Display( "Vitesse:",                nSpeed_ * Units::metersPerSecond )
-                .Display( "Direction:",              nDirection_ * Units::degrees )
-                .Display( "Altitude:",               nAltitude_  * Units::meters )
-                .Display( "Troupes:",                bLoadingState_ ? "Embarqué" : "Débarqué" )
-                .Display( "Transporteurs d'hommes:", bHumanTransportersReady_ ? "Disponibles" : "Indisponibles" );
+    displayer.Group( tools::translate( "Attributs", "Info" ) )
+                .Display( tools::translate( "Attributs", "Etat opérationnel:" ),      nRawOpState_ * Units::percentage )
+                .Display( tools::translate( "Attributs", "Mort:" ),                   bDead_ )
+                .Display( tools::translate( "Attributs", "Neutralisé:" ),             bNeutralized_ )
+                .Display( tools::translate( "Attributs", "Vitesse:" ),                nSpeed_ * Units::metersPerSecond )
+                .Display( tools::translate( "Attributs", "Direction:" ),              nDirection_ * Units::degrees )
+                .Display( tools::translate( "Attributs", "Altitude:" ),               nAltitude_  * Units::meters )
+                .Display( tools::translate( "Attributs", "Troupes:" ),                bLoadingState_ ? tools::translate( "Attributs", "Embarqué" ) : tools::translate( "Attributs", "Débarqué" ) )
+                .Display( tools::translate( "Attributs", "Transporteurs d'hommes:" ), bHumanTransportersReady_ ? tools::translate( "Attributs", "Disponibles" ) : tools::translate( "Attributs", "Indisponibles" ) );
 
-    displayer.Group( "Postures" )
-                .Display( "Ancienne posture:", nOldPosture_ )
-                .Item( "Nouvelle posture:" )
+    displayer.Group( tools::translate( "Attributs", "Postures" ) )
+                .Display( tools::translate( "Attributs", "Ancienne posture:" ), nOldPosture_ )
+                .Item( tools::translate( "Attributs", "Nouvelle posture:" ) )
                     .Start( nCurrentPosture_ )
                     .Add( " (" )
                     .Add( nPostureCompletionPourcentage_ * Units::percentage )
                     .Add( ")" ).End();
 
-    displayer.Group( "Communications" )
-                .Display( "Brouillé:", bCommJammed_ )
-                .Display( "Silence radio:", bRadioSilence_ );
+    displayer.Group( tools::translate( "Attributs", "Communications" ) )
+                .Display( tools::translate( "Attributs", "Brouillé:" ), bCommJammed_ )
+                .Display( tools::translate( "Attributs", "Silence radio:" ), bRadioSilence_ );
 
-    displayer.Group( "Etat décisionnel" )
-                .Display( "Etat opérationnel:", nOpState_ )
-                .Display( "RoE:", nRulesOfEngagementState_ )
-                .Display( "RoE Population:", nRulesOfEngagementPopulationState_ )
-                .Display( "Rapport de force:", nFightRateState_ )
-                .Display( "Disponibilité au tir indirect:", nIndirectFireAvailability_ )
-                .Display( "Contact combat:", nCloseCombatState_ );
+    displayer.Group( tools::translate( "Attributs", "Etat décisionnel" ) )
+                .Display( tools::translate( "Attributs", "Etat opérationnel:" ), nOpState_ )
+                .Display( tools::translate( "Attributs", "RoE:" ), nRulesOfEngagementState_ )
+                .Display( tools::translate( "Attributs", "RoE Population:" ), nRulesOfEngagementPopulationState_ )
+                .Display( tools::translate( "Attributs", "Rapport de force:" ), nFightRateState_ )
+                .Display( tools::translate( "Attributs", "Disponibilité au tir indirect:" ), nIndirectFireAvailability_ )
+                .Display( tools::translate( "Attributs", "Contact combat:" ), nCloseCombatState_ );
   
-    displayer.Group( "Etat martial" )
-            .Display( "Fait prisonnier:", bPrisoner_ )
-            .Display( "Rendu:", bSurrendered_ )
-            .Display( "Réfugiés pris en compte:", bRefugeesManaged_ );
+    displayer.Group( tools::translate( "Attributs", "Etat martial" ) )
+            .Display( tools::translate( "Attributs", "Fait prisonnier:" ), bPrisoner_ )
+            .Display( tools::translate( "Attributs", "Rendu:" ), bSurrendered_ )
+            .Display( tools::translate( "Attributs", "Réfugiés pris en compte:" ), bRefugeesManaged_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -191,10 +192,10 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", nOpState_ );
-    displayer.Display( "Rapport de force", nFightRateState_ );
+    displayer.Display( tools::translate( "Attributs", "Rapport de force" ), nFightRateState_ );
     displayer.Display( "", nCloseCombatState_ );
     displayer.Display( "", nCurrentPosture_ );
-    displayer.Display( "ROE", nRulesOfEngagementState_ );
+    displayer.Display( tools::translate( "Attributs", "ROE" ), nRulesOfEngagementState_ );
 }
 
 // -----------------------------------------------------------------------------

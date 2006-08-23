@@ -25,7 +25,7 @@ class ParamBool : public QCheckBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamBool( QWidget* parent, ASN1BOOL& asn, const std::string& label, bool defaultValue = false );
+             ParamBool( QWidget* parent, ASN1BOOL& asn, const QString& label, bool defaultValue = false );
     virtual ~ParamBool();
     //@}
 

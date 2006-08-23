@@ -15,6 +15,7 @@
 #include "ASN_Messages.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AutomatType.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -151,7 +152,7 @@ void AutomatDecisions::Disengage() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "Mission automate", current_ );
+    displayer.Display( tools::translate( "Decisions", "Mission automate" ), current_ );
 }
 
 // -----------------------------------------------------------------------------

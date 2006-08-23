@@ -11,6 +11,7 @@
 #include "RotaAttributes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -85,7 +86,7 @@ void RotaAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void RotaAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "ROTA" )
-                .Display( "Danger:", danger_ )
-                .Display( "Agents NBC:", agents_ );
+    displayer.Group( tools::translate( "NBC", "ROTA" ) )
+                .Display( tools::translate( "NBC", "Danger:" ), danger_ )
+                .Display( tools::translate( "NBC", "Agents NBC:" ), agents_ );
 }

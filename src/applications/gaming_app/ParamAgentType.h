@@ -25,7 +25,7 @@ class ParamAgentType : public QButtonGroup, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentType( QWidget* parent, ASN1T_NatureAtlas& asn, const std::string& label );
+             ParamAgentType( QWidget* parent, ASN1T_NatureAtlas& asn, const QString& label );
     virtual ~ParamAgentType();
     //@}
 

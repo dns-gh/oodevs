@@ -21,8 +21,8 @@ using namespace gui;
 // Name: GroupDisplayer constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-GroupDisplayer::GroupDisplayer( QWidget* parent, const char* name, ItemFactory_ABC& factory )
-    : QGroupBox( 2, Qt::Horizontal, tr( name ), parent )
+GroupDisplayer::GroupDisplayer( QWidget* parent, const QString& name, ItemFactory_ABC& factory )
+    : QGroupBox( 2, Qt::Horizontal, name, parent )
     , factory_( factory )
 {
     // NOTHING
@@ -41,11 +41,11 @@ GroupDisplayer::~GroupDisplayer()
 // Name: GroupDisplayer::AddLabel
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-GroupDisplayer& GroupDisplayer::AddLabel( const char* name, bool bold )
+GroupDisplayer& GroupDisplayer::AddLabel( const QString& name, bool bold )
 {
-    Displayer_ABC*& item = items_[ std::string( name ) ];
+    Displayer_ABC*& item = items_[ name ];
     if( item )
-        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
+        throw std::runtime_error( "Item '" + std::string( name.ascii() ) + "' already added" );
     item = new LabelDisplayer( this, name, bold, factory_ );
     return *this;
 }
@@ -55,11 +55,11 @@ GroupDisplayer& GroupDisplayer::AddLabel( const char* name, bool bold )
 // Name: GroupDisplayer::AddSpinBox
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-GroupDisplayer& GroupDisplayer::AddSpinBox( const char* name, int min, int max, int step )
+GroupDisplayer& GroupDisplayer::AddSpinBox( const QString& name, int min, int max, int step )
 {
-    Displayer_ABC*& item = items_[ std::string( name ) ];
+    Displayer_ABC*& item = items_[ name ];
     if( item )
-        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
+        throw std::runtime_error( "Item '" + std::string( name.ascii() ) + "' already added" );
     item = new SpinBoxDisplayer( this, name, min, max, step );
     return *this;
 }
@@ -68,11 +68,11 @@ GroupDisplayer& GroupDisplayer::AddSpinBox( const char* name, int min, int max, 
 // Name: GroupDisplayer::AddCheckBox
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-GroupDisplayer& GroupDisplayer::AddCheckBox( const char* name )
+GroupDisplayer& GroupDisplayer::AddCheckBox( const QString& name )
 {
-    Displayer_ABC*& item = items_[ std::string( name ) ];
+    Displayer_ABC*& item = items_[ name ];
     if( item )
-        throw std::runtime_error( "Item '" + std::string( name ) + "' already added" );
+        throw std::runtime_error( "Item '" + std::string( name.ascii() ) + "' already added" );
     item = new CheckBoxDisplayer( this, name );
     return *this;
 }
@@ -81,11 +81,11 @@ GroupDisplayer& GroupDisplayer::AddCheckBox( const char* name )
 // Name: GroupDisplayer::SubItem
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& GroupDisplayer::SubItem( const char* name )
+Displayer_ABC& GroupDisplayer::SubItem( const QString& name )
 {
-    Displayer_ABC* item = items_[ std::string( name ) ];
+    Displayer_ABC* item = items_[ name ];
     if( ! item )
-        throw std::runtime_error( "Item '" + std::string( name ) + "' does not exist" );
+        throw std::runtime_error( "Item '" + std::string( name.ascii() ) + "' does not exist" );
     show();
     return *item;
 }

@@ -41,7 +41,7 @@ public:
     Displayer_ABC& Display( const T& element );
 
     template< typename T >
-    Displayer_ABC& Display( const char* name, const T& element );
+    Displayer_ABC& Display( const QString& name, const T& element );
 
     template< typename T >
     Displayer_ABC& Start( const T& element );
@@ -53,8 +53,8 @@ public:
     void AddToDisplay( const T& element );
     void AddToDisplay( const QString& element );
 
-    virtual Displayer_ABC& Group( const char* name ) { return SubItem( name ); };
-    virtual Displayer_ABC& Item( const char* name ) { return SubItem( name ); };
+    virtual Displayer_ABC& Group( const QString& name ) { return SubItem( name ); };
+    virtual Displayer_ABC& Item( const QString& name ) { return SubItem( name ); };
     //@}
 
 protected:
@@ -83,7 +83,7 @@ private:
 
     //! @name Operations
     //@{
-    virtual Displayer_ABC& SubItem( const char* name ) = 0;
+    virtual Displayer_ABC& SubItem( const QString& name ) = 0;
     virtual void StartDisplay() = 0;
     virtual void DisplayFormatted( const QString& formatted ) = 0;
     virtual void EndDisplay() = 0;

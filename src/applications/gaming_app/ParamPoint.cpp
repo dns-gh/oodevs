@@ -21,14 +21,14 @@ using namespace gui;
 // Name: ParamPoint constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const std::string label, const std::string menu, const CoordinateConverter_ABC& converter )
+ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const QString& label, const QString& menu, const CoordinateConverter_ABC& converter )
     : QHBox     ( pParent )
     , asn_      ( asn )
     , converter_( converter )
     , menu_     ( menu )
 {
     setSpacing( 5 );
-    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label, false, this, "" );
 
     pPosLabel_ = new QLabel( "---", this );
     pPosLabel_->setMinimumWidth( 100 );
@@ -90,7 +90,7 @@ void ParamPoint::Commit()
 void ParamPoint::NotifyContextMenu( const geometry::Point2f& point, ContextMenu& menu )
 {
     popupPoint_ = point;
-    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( AcceptPopupMenuPoint() ) );
+    menu.InsertItem( "Parametre", menu_, this, SLOT( AcceptPopupMenuPoint() ) );
 }
 
 // -----------------------------------------------------------------------------

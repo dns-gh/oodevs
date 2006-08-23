@@ -35,7 +35,7 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             ValuedComboBox( QWidget* parent = 0, const char* name = 0 );
+    explicit ValuedComboBox( QWidget* parent = 0, const char* name = 0 );
     virtual ~ValuedComboBox();
     //@}
 
@@ -48,13 +48,7 @@ public:
     //! @name Operations
     //@{
     void AddItem( const QString& label, const T& value );
-//    void AddItem( const QPixmap& pixmap, const T& value );
-//    void AddItem( const QPixmap& pixmap, const QString& strLabel, const T& value );
-
     void ChangeItem( const QString& label, const T& value );
-//    void ChangeItem( const QPixmap& pixmap, const T& value );
-//    void ChangeItem( const QPixmap& pixmap, const QString& strLabel, const T& value );
-
     void RemoveItem( const T& value );
 
     int GetItemIndex( const T& value );

@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -85,9 +86,9 @@ void CrossingSiteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void CrossingSiteAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Site de franchissement" )
-                .Display( "Largeur:", width_ * Units::meters )
-                .Display( "Profondeur:", depth_ * Units::meters )
-                .Display( "Vitesse courant:", speed_ * Units::metersPerSecond )
-                .Display( "Berges à aménager:", needsConstruction_ );
+    displayer.Group( tools::translate( "Object", "Site de franchissement" ) )
+                .Display( tools::translate( "Object", "Largeur:" ), width_ * Units::meters )
+                .Display( tools::translate( "Object", "Profondeur:" ), depth_ * Units::meters )
+                .Display( tools::translate( "Object", "Vitesse du courant:" ), speed_ * Units::metersPerSecond )
+                .Display( tools::translate( "Object", "Berges à aménager:" ), needsConstruction_ );
 }

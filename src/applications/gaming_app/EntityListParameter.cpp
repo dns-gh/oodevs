@@ -18,7 +18,7 @@ using namespace gui;
 // Name: EntityListParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityListParameterBase::EntityListParameterBase( QWidget* pParent, unsigned int& n, ASN1T_OID*& ids, const std::string& label, const std::string& menu )
+EntityListParameterBase::EntityListParameterBase( QWidget* pParent, unsigned int& n, ASN1T_OID*& ids, const QString& label, const QString& menu )
     : QListView( pParent )
     , n_( n )
     , pIds_( 0 )
@@ -26,7 +26,7 @@ EntityListParameterBase::EntityListParameterBase( QWidget* pParent, unsigned int
     , menu_( menu )
     , pPopupMenu_( new QPopupMenu( this ) )
 {
-    addColumn( label.c_str() );
+    addColumn( label );
     setResizeMode( QListView::LastColumn );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }

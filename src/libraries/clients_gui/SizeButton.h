@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     float GetSize() const;
-    void EnableValueLabel( const std::string& prefix = "" );
+    void EnableValueLabel( const QString& prefix = "" );
     void Revert();
     void Commit();
     //@}
@@ -58,7 +58,7 @@ private:
     //@{
     QSlider*    slider_;
     float       size_;
-    std::string prefix_;
+    QString     prefix_;
     bool        valueLabel_;
     bool changed_;
     float previous_;

@@ -34,7 +34,7 @@ class EntityParameterBase : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu );
+             EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
     virtual ~EntityParameterBase();
     //@}
 
@@ -77,7 +77,7 @@ class EntityParameter : public EntityParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameter( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu );
+             EntityParameter( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
     virtual ~EntityParameter();
     //@}
 

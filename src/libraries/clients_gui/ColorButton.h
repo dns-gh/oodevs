@@ -28,7 +28,7 @@ class ColorButton : public QPushButton
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorButton( QWidget* parent = 0, const char* name = 0, QColor color = black );
+    explicit ColorButton( QWidget* parent = 0, const char* name = 0, QColor color = black );
     virtual ~ColorButton();
     //@}
 

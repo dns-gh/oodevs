@@ -17,6 +17,7 @@
 
 #include "DIN/DIN_Engine.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
+#include "Tools.h"
 
 using namespace DIN; using namespace NEK;
 using namespace tools::thread;
@@ -136,7 +137,7 @@ void Network::Update()
             session_ = it->link_;
             if( it->error_.empty() )
             {
-                MT_LOG_INFO_MSG( "Connecté à " << it->link_->GetRemoteAddress().GetAddressAsString() );
+                MT_LOG_INFO_MSG( tools::translate( "Reseau", "Connecté à " ) << it->link_->GetRemoteAddress().GetAddressAsString() );
                 manager_->Enable( *session_ );
                 ASN_MsgCtrlClientAnnouncement asnMsg;
                 asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
@@ -146,12 +147,12 @@ void Network::Update()
             }
             else if( it->lost_ )
             {
-                MT_LOG_WARNING_MSG( "Connexion à " << it->address_ << " perdue (raison :" << it->error_ << ")" );   
+                MT_LOG_WARNING_MSG( tools::translate( "Reseau", "Connexion à " ) << it->address_ << tools::translate( "Reseau", " perdue (raison :" ) << it->error_ << ")" );   
                 simu_.Disconnect();
             }
             else
             {
-                MT_LOG_WARNING_MSG( "Non connecté à " << it->address_ << " (raison :" << it->error_ << ")" );   
+                MT_LOG_WARNING_MSG( tools::translate( "Reseau", "Non connecté à " ) << it->address_ << tools::translate( "Reseau", " (raison :" ) << it->error_ << ")" );   
                 simu_.Disconnect();
             }
         }

@@ -17,6 +17,18 @@
 
 namespace
 {
+    ////
+    static const QString locale = "_fr";
+    ////
+
+    void AddTranslator( const char* t )
+    {
+        QTranslator* trans = new QTranslator( qApp );
+        trans->load( t + locale, "." );
+        qApp->installTranslator( trans );
+    }
+
+
     void PureHandler()
     {
         throw std::exception( "Pure virtual call" );
@@ -38,7 +50,14 @@ namespace
     {
         try
         {
-            return *new Application( argc, argv );
+            QApplication& app = *new Application( argc, argv );
+            AddTranslator( "qt_" );
+            AddTranslator( "ENT" );
+            AddTranslator( "clients_kernel" );
+            AddTranslator( "clients_gui" );
+            AddTranslator( "gaming" );
+            AddTranslator( "gaming_app" );
+            return app;
         }
         catch( ... )
         {

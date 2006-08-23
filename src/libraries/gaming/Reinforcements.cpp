@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -24,8 +25,8 @@ Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agen
     , resolver_( resolver )
     , reinforced_( 0 )
 {
-    dico.Register( "Renforts/Renforce", reinforced_ );
-    dico.Register( "Renforts/Est renforcé par", reinforcements_ );
+    dico.Register( tools::translate( "Renforts", "Renforts/Renforce" ), reinforced_ );
+    dico.Register( tools::translate( "Renforts", "Renforts/Est renforcé par" ), reinforcements_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,9 +68,9 @@ void Reinforcements::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Reinforcements::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Renforts" )
-        .Display( "Renforce:", reinforced_ )
-        .Display( "Est renforcé par:", reinforcements_ );
+    displayer.Group( tools::translate( "Renforts", "Renforts" ) )
+        .Display( tools::translate( "Renforts", "Renforce:" ), reinforced_ )
+        .Display( tools::translate( "Renforts", "Est renforcé par:" ), reinforcements_ );
 }
 
 // $$$$ AGE 2006-04-06: Draw something ?

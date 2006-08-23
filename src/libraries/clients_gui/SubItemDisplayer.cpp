@@ -18,7 +18,7 @@ using namespace gui;
 // Name: SubItemDisplayer constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-SubItemDisplayer::SubItemDisplayer( const char* name, ItemFactory_ABC& factory )
+SubItemDisplayer::SubItemDisplayer( const QString& name, ItemFactory_ABC& factory )
     : name_( name )
     , factory_( factory )
     , parent_( 0 )
@@ -49,7 +49,7 @@ void SubItemDisplayer::Hide()
 // Name: SubItemDisplayer::AddChild
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-SubItemDisplayer& SubItemDisplayer::AddChild( const char* child )
+SubItemDisplayer& SubItemDisplayer::AddChild( const QString& child )
 {
     children_.push_back( child );
     return *this;
@@ -69,10 +69,10 @@ Displayer_ABC& SubItemDisplayer::operator()( QListViewItem* item )
 // Name: SubItemDisplayer::SubItem
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-Displayer_ABC& SubItemDisplayer::SubItem( const char* name )
+Displayer_ABC& SubItemDisplayer::SubItem( const QString& name )
 {
     current_ = FindChild( name );
-    current_->setText( 0, qApp->tr( name ) );
+    current_->setText( 0, name );
     return *this;
 }
 
@@ -107,11 +107,11 @@ void SubItemDisplayer::EndDisplay()
 // Name: SubItemDisplayer::FindChild
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-QListViewItem* SubItemDisplayer::FindChild( const char* name ) const
+QListViewItem* SubItemDisplayer::FindChild( const QString& name ) const
 {
     if( ! parent_ )
         throw std::runtime_error( "Parent not set" );
-    if( std::string( name ) == name_ )
+    if( name == name_ )
         return parent_;
     QListViewItem* previous = parent_->firstChild();
     QListViewItem* child = previous;
@@ -124,5 +124,5 @@ QListViewItem* SubItemDisplayer::FindChild( const char* name ) const
         previous = child;
         child = child->nextSibling();
     }
-    throw std::runtime_error( std::string( "Element '" ) + name + "' does not exist" );
+    throw std::runtime_error( std::string( "Element '" ) + name.ascii() + "' does not exist" );
 }

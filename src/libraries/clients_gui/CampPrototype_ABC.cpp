@@ -27,7 +27,7 @@ CampPrototype_ABC::CampPrototype_ABC( QWidget* parent, Controllers& controllers 
     , controllers_( controllers )
     , selected_( controllers )
 {
-    new QLabel( qApp->tr( "TC2:" ), this );
+    new QLabel( tr( "TC2:" ), this );
     tc2s_ = new ValuedComboBox< const Agent_ABC* >( this );
     controllers_.Register( *this );
 }

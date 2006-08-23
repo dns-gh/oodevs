@@ -14,6 +14,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "statusicons.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -25,9 +26,9 @@ Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCA
     : controller_( controller )
     , resolver_( resolver )
 {
-    dico.Register( "NBC/Tenue NBC mise", bNbcProtectionSuitWorn_ );
-    dico.Register( "NBC/Agents contaminants", contaminatingNbcAgents_ );
-    dico.Register( "NBC/Niveau de contamination", nContamination_ );
+    dico.Register( tools::translate( "NBC", "NBC/Tenue NBC mise" ), bNbcProtectionSuitWorn_ );
+    dico.Register( tools::translate( "NBC", "NBC/Agents contaminants" ), contaminatingNbcAgents_ );
+    dico.Register( tools::translate( "NBC", "NBC/Niveau de contamination" ), nContamination_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,10 +69,11 @@ void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Contaminations::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "NBC" )
-                .Display( "Tenue NBC:", bNbcProtectionSuitWorn_ ? "Mise" : "Non mise" ) // $$$$ AGE 2006-02-22: Boolean
-                .Display( "Agents contaminants:", contaminatingNbcAgents_ )
-                .Display( "Contamination:", nContamination_ );
+    displayer.Group( tools::translate( "NBC", "NBC" ) )
+                .Display( tools::translate( "NBC", "Tenue NBC:" ), 
+                        bNbcProtectionSuitWorn_ ? tools::translate( "NBC", "Mise" ) : tools::translate( "NBC", "Non mise" ) ) // $$$$ AGE 2006-02-22: Boolean
+                .Display( tools::translate( "NBC", "Agents contaminants:" ), contaminatingNbcAgents_ )
+                .Display( tools::translate( "NBC", "Contamination:" ), nContamination_ );
 }
 
 // -----------------------------------------------------------------------------

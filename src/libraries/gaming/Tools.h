@@ -14,13 +14,10 @@
 #include "Types.h"
 #include "ASN_Types.h"
 
-namespace gaming
+namespace tools
 {
-    namespace tools
-    {
-        const char* ToString( E_FuncLimaType nType );
-        const char* ToString( ASN1T_EnumTypeLocalisation nType );
-    };
-}
+    QString ToString( E_FuncLimaType nType );
+    QString ToString( ASN1T_EnumTypeLocalisation nType );
+};
 
 #endif // __Gaming_Tools_h_

@@ -29,7 +29,7 @@ class ParamAgent : public EntityParameter< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgent( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu );
+             ParamAgent( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
     virtual ~ParamAgent();
     //@}
 };

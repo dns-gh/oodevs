@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asn, const std::string& label, const Resolver< DotationType >& resolver )
+ParamDotationDType::ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asn, const QString& label, const Resolver< DotationType >& resolver )
     : ParamComboBox< ASN1T_TypeDotationTrancheD >( pParent, asn, label )
 {
     Iterator< const DotationType& > it = resolver.CreateIterator();
@@ -26,7 +26,7 @@ ParamDotationDType::ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTran
     {
         const DotationType& type = it.NextElement();
         if( type.IsDType() )
-            AddItem( type.GetCategory(), type.GetId() );
+            AddItem( type.GetCategory().c_str(), type.GetId() );
     }
 }
     

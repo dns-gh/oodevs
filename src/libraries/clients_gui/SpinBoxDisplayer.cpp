@@ -18,9 +18,9 @@ using namespace gui;
 // Name: SpinBoxDisplayer constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-SpinBoxDisplayer::SpinBoxDisplayer( QWidget* parent, const char* name, int min, int max, int step )
+SpinBoxDisplayer::SpinBoxDisplayer( QWidget* parent, const QString& name, int min, int max, int step )
 {
-    new QLabel( qApp->tr( name ), parent );
+    new QLabel( name, parent );
     edit_ = new QSpinBox( min, max, step, parent );
 }
 
@@ -37,7 +37,7 @@ SpinBoxDisplayer::~SpinBoxDisplayer()
 // Name: SpinBoxDisplayer::SubItem
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-Displayer_ABC& SpinBoxDisplayer::SubItem( const char* )
+Displayer_ABC& SpinBoxDisplayer::SubItem( const QString& )
 {
     return NotToBeCalled( __FUNCTION__ );
 }

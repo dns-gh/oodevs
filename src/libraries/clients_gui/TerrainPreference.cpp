@@ -46,8 +46,8 @@ void TerrainPreference::Display( QWidget* parent )
 {
     QHBox* pBox = new QHBox( parent );
     new QLabel( name_.c_str(), pBox );
-    sizeButton_  = new SizeButton ( pBox, "Line width: ", lineWidth_ );
-    sizeButton_->EnableValueLabel( " px" );
+    sizeButton_  = new SizeButton ( pBox, tr( "Epaisseur du trait: ", "TerrainPreference" ), lineWidth_ );
+    sizeButton_->EnableValueLabel( tr( " px", "TerrainPreference" ) );
     colorButton_ = new ColorButton( pBox, "", color_ );
 }
 

@@ -13,6 +13,7 @@
 #include "ASN_Messages.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -23,7 +24,7 @@ IDManager Limit::idManager_( 138 );
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
 Limit::Limit( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( "Limit", idManager_.GetFreeIdentifier(), converter, publisher )
+    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager_.GetFreeIdentifier(), converter, publisher )
     , controller_( controller )
     , nLevel_( eNatureLevel_None )
 {
@@ -36,7 +37,7 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher, const Coordinate
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 Limit::Limit( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC(  "Limit", idManager_.GetFreeIdentifier(), pointList, converter, publisher )
+    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager_.GetFreeIdentifier(), pointList, converter, publisher )
     , controller_( controller )
     , nLevel_( eNatureLevel_None )
 {
@@ -49,7 +50,7 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher, const T_PointVec
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( "Limit", asnMsg.oid, asnMsg.geometrie, converter, publisher )
+    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), asnMsg.oid, asnMsg.geometrie, converter, publisher )
     , controller_( controller )
     , nLevel_( (E_NatureLevel) asnMsg.level )
 {

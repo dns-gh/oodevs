@@ -17,6 +17,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -155,7 +156,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Item( "Populations connues" ).Start( popu_ ).Add( " - " ).Add( nID_ ).End();
+    displayer.Item( tools::translate( "Population", "Populations connues" ) ).Start( popu_ ).Add( " - " ).Add( nID_ ).End();
 }
 
 // -----------------------------------------------------------------------------
@@ -164,10 +165,10 @@ void PopulationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 {
-   displayer.Group( "Détails" )
-                .Display( "Id:", nID_ )
-                .Display( "Population associée:", popu_ )
-                .Display( "Camp:", popu_.GetTeam() );
+   displayer.Group( tools::translate( "Population", "Détails" ) )
+                .Display( tools::translate( "Population", "Id:" ), nID_ )
+                .Display( tools::translate( "Population", "Population associée:" ), popu_ )
+                .Display( tools::translate( "Population", "Camp:" ), popu_.GetTeam() );
 }
 
 // -----------------------------------------------------------------------------

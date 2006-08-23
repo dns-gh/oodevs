@@ -23,8 +23,8 @@ using namespace gui;
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const std::string& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
-    : QGroupBox( 2, Qt::Horizontal, label.c_str(), parent )
+ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+    : QGroupBox( 2, Qt::Horizontal, label, parent )
     , asnObject_( asnObject )
 {
     new QLabel( tr( "Type:" ), this );

@@ -82,6 +82,7 @@ unsigned long Object::GetId() const
 // -----------------------------------------------------------------------------
 std::string Object::GetName() const
 {
+    // $$$$ AGE 2006-08-23: 
     std::stringstream stream;
     stream << strName_ << " [" << nId_ << ']';
     return stream.str();
@@ -134,20 +135,20 @@ void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void Object::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Informations" )
-             .Display( "Id:", nId_ )
-             .Display( "Nom:", strName_ )
-             .Display( "Type:", type_.GetName() )
-             .Display( "Position:", converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
-             .Display( "Construction:", rConstructionPercentage_ * Units::percentage )
-             .Display( "Valorisation:", rValorizationPercentage_ * Units::percentage )
-             .Display( "Contournement:", rBypassConstructionPercentage_ * Units::percentage )
-             .Display( "En préparation:", bPrepared_ )
-             .Item( "Dotation construction:" )
+    displayer.Group( tools::translate( "Object", "Informations" ) )
+             .Display( tools::translate( "Object", "Id:" ), nId_ )
+             .Display( tools::translate( "Object", "Nom:" ), strName_ )
+             .Display( tools::translate( "Object", "Type:" ), type_.GetName() )
+             .Display( tools::translate( "Object", "Position:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
+             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Valorisation:" ), rValorizationPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Contournement:" ), rBypassConstructionPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "En préparation:" ), bPrepared_ )
+             .Item( tools::translate( "Object", "Dotation construction:" ) )
                 .Start( nDotationConstruction_ )
                 .Add( " " ).Add( construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
-    displayer.Group( "Informations" )
-             .Item( "Dotation valorisation:" )
+    displayer.Group( tools::translate( "Object", "Informations" ) )
+             .Item( tools::translate( "Object", "Dotation valorisation:" ) )
                 .Start( nDotationValorization_ )
                 .Add( " " ).Add( valorization_ ).End();
 }
@@ -159,9 +160,9 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", *(Object_ABC*)this )
-             .Display( "Niveau de construction", rConstructionPercentage_ * Units::percentage )
-             .Display( "Valorisation",           rValorizationPercentage_ * Units::percentage )
-             .Display( "Contournement",          rBypassConstructionPercentage_ * Units::percentage );
+             .Display( tools::translate( "Object", "Niveau de construction" ), rConstructionPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Valorisation" ),           rValorizationPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Contournement" ),          rBypassConstructionPercentage_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------

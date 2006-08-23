@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -86,11 +87,10 @@ void LogisticRouteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void LogisticRouteAttributes::Display( Displayer_ABC& displayer ) const
 {
-    
-    displayer.Group( "Itinéraire logistique" )
-                .Display( "Equipé:", bLogRouteEquipped_ )
-                .Display( "Débit:", nLogRouteFlow_ * Units::vehiclesPerHour )
-                .Display( "Largeur:", nLogRouteWidth_ * Units::meters )
-                .Display( "Longueur:", nLogRouteLength_ * Units::meters )
-                .Display( "Poids supporté:", nLogRouteMaxWeight_ * Units::tons );
+    displayer.Group( tools::translate( "Object", "Itinéraire logistique" ) )
+                .Display( tools::translate( "Object", "Equipé:" ), bLogRouteEquipped_ )
+                .Display( tools::translate( "Object", "Débit:" ), nLogRouteFlow_ * Units::vehiclesPerHour )
+                .Display( tools::translate( "Object", "Largeur:" ), nLogRouteWidth_ * Units::meters )
+                .Display( tools::translate( "Object", "Longueur:" ), nLogRouteLength_ * Units::meters )
+                .Display( tools::translate( "Object", "Poids supporté:" ), nLogRouteMaxWeight_ * Units::tons );
 }

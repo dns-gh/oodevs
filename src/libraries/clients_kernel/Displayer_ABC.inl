@@ -31,7 +31,7 @@ Displayer_ABC& Displayer_ABC::Display( const T& element )
 // -----------------------------------------------------------------------------
 template< typename T >
 inline
-Displayer_ABC& Displayer_ABC::Display( const char* name, const T& element )
+Displayer_ABC& Displayer_ABC::Display( const QString& name, const T& element )
 {
     SubItem( name ).Display( element );
     return *this;

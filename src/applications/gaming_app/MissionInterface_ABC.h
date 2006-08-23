@@ -68,39 +68,39 @@ protected:
     //! @name Helpers
     //@{
     void CreateOkCancelButtons();
-    void CreateNatureAtlas        ( ASN1T_NatureAtlas& asn         , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateGDH                ( ASN1T_GDH& asn                 , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateDirection          ( ASN1T_Direction& asn           , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreatePoint              ( ASN1T_Point& asn               , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreatePath               ( ASN1T_Itineraire& asn          , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreatePathList           ( ASN1T_ListItineraire& asn      , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateAgentList          ( ASN1T_ListAgent& asn           , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateAgent              ( ASN1T_Agent& asn               , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateAutomateList       ( ASN1T_ListAutomate& asn        , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateAutomate           ( ASN1T_Agent& asn               , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateLocation           ( ASN1T_Localisation& asn        , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateLocationList       ( ASN1T_ListLocalisation& asn    , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreatePolygonList        ( ASN1T_ListPolygon& asn         , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreatePointList          ( ASN1T_ListPoint& asn           , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateAgentKnowledge     ( ASN1T_KnowledgeAgent& asn      , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateAgentKnowledgeList ( ASN1T_ListKnowledgeAgent& asn  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateObjectKnowledge    ( ASN1T_KnowledgeObject& asn     , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateGenObject          ( ASN1T_MissionGenObject& asn    , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateGenObjectList      ( ASN1T_ListMissionGenObject& asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateBool               ( ASN1BOOL& asn                  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0, QWidget* pParent = 0 );
-    void CreateNumeric            ( ASN1INT&  asn                  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateNumeric            ( ASN1REAL& asn                  , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateLimaList           ( ASN1T_ListOID& asn             , const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateLimits             ( ASN1T_OID& id1, ASN1T_OID& id2 , const std::string& name1, const std::string& name2, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateDotationDType      ( ASN1T_TypeDotationTrancheD& asn, const std::string& name   , OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateNatureAtlas        ( ASN1T_NatureAtlas& asn         , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateGDH                ( ASN1T_GDH& asn                 , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateDirection          ( ASN1T_Direction& asn           , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreatePoint              ( ASN1T_Point& asn               , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreatePath               ( ASN1T_Itineraire& asn          , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreatePathList           ( ASN1T_ListItineraire& asn      , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateAgentList          ( ASN1T_ListAgent& asn           , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateAgent              ( ASN1T_Agent& asn               , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateAutomateList       ( ASN1T_ListAutomate& asn        , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateAutomate           ( ASN1T_Agent& asn               , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateLocation           ( ASN1T_Localisation& asn        , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateLocationList       ( ASN1T_ListLocalisation& asn    , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreatePolygonList        ( ASN1T_ListPolygon& asn         , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreatePointList          ( ASN1T_ListPoint& asn           , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateAgentKnowledge     ( ASN1T_KnowledgeAgent& asn      , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateAgentKnowledgeList ( ASN1T_ListKnowledgeAgent& asn  , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateObjectKnowledge    ( ASN1T_KnowledgeObject& asn     , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateGenObject          ( ASN1T_MissionGenObject& asn    , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateGenObjectList      ( ASN1T_ListMissionGenObject& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateBool               ( ASN1BOOL& asn                  , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0, QWidget* pParent = 0 );
+    void CreateNumeric            ( ASN1INT&  asn                  , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateNumeric            ( ASN1REAL& asn                  , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateLimaList           ( ASN1T_ListOID& asn             , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateLimits             ( ASN1T_OID& id1, ASN1T_OID& id2 , const QString& name1, const QString& name2, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateDotationDType      ( ASN1T_TypeDotationTrancheD& asn, const QString& name, OptionalParamFunctor_ABC* pOptional = 0 );
 
-    void CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateMedicalPriorities    ( ASN1T_SantePriorites&       asn, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateMedicalPriorities    ( ASN1T_SantePriorites&       asn, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
 
     template < class T >
-    ParamComboBox< T >& CreateVarList( T& value, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 )
+    ParamComboBox< T >& CreateVarList( T& value, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 )
     {
         ParamComboBox< T >* pParam = new ParamComboBox<T>( this, value, strName );
         AddParameter( *pParam, pOptional  );
@@ -108,7 +108,7 @@ protected:
     }
 
     template < class T >
-    ParamRadioBtnGroup< T >& CreateRadioButtonGroup( T& value, const std::string& strName, OptionalParamFunctor_ABC* pOptional = 0 )
+    ParamRadioBtnGroup< T >& CreateRadioButtonGroup( T& value, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 )
     {
         ParamRadioBtnGroup< T >* pParam = new ParamRadioBtnGroup<T>( this, value, strName );
         AddParameter( *pParam, pOptional );

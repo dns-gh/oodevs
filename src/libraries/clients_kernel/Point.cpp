@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "LocationVisitor_ABC.h"
 #include "GlTools_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -93,8 +94,8 @@ void Point::Draw( const GlTools_ABC& tools ) const
 // Name: Point::GetName
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-std::string Point::GetName() const
+QString Point::GetName() const
 {
-    // $$$$ AGE 2006-08-22: $$tr$$
-    return "point";
+    static const QString name = tools::translate( "Localisation", "Point" );
+    return name;
 }

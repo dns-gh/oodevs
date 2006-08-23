@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "Units.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -22,13 +23,12 @@ Unit::Unit( const QString& symbol )
     // NOTHING
 }
 
-// $$$$ AGE 2006-08-22: $$tr$$
-const Unit Units::meters( "m" );
-const Unit Units::degrees( "°" );
-const Unit Units::percentage( "%" );
-const Unit Units::metersPerSecond( "m/s" );
-const Unit Units::vehiclesPerHour( "veh/h" );
-const Unit Units::tons( "t" );
-const Unit Units::kilometersPerHour( "km/h" );
-const Unit Units::hours( "h" );
+const Unit Units::meters            ( tools::translate( "Units", "m" ) );
+const Unit Units::degrees           ( tools::translate( "Units", "°" ) );
+const Unit Units::percentage        ( tools::translate( "Units", "%" ) );
+const Unit Units::metersPerSecond   ( tools::translate( "Units", "m/s" ) );
+const Unit Units::vehiclesPerHour   ( tools::translate( "Units", "veh/h" ) );
+const Unit Units::tons              ( tools::translate( "Units", "t" ) );
+const Unit Units::kilometersPerHour ( tools::translate( "Units", "km/h" ) );
+const Unit Units::hours             ( tools::translate( "Units", "h" ) );
 

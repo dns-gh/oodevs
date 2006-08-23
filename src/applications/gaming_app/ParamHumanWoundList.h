@@ -28,7 +28,7 @@ class ParamHumanWoundList : public QTable, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamHumanWoundList( QWidget* pParent, ASN1T_SantePriorites& asnListHumanWound, const std::string& strLabel );
+             ParamHumanWoundList( QWidget* pParent, ASN1T_SantePriorites& asnListHumanWound, const QString& strLabel );
     virtual ~ParamHumanWoundList();
     //@}
 

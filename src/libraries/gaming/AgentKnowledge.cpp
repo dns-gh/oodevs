@@ -19,6 +19,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -151,27 +152,27 @@ std::string AgentKnowledge::GetName() const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "Id:", nID_ )
-             .Display( "Agent_ABC associé:", realAgent_ )
-             .Display( "Position:", strPosition_ )
-             .Display( "Direction:", nDirection_ * Units::degrees )
-             .Display( "Vitesse:", nSpeed_ * Units::metersPerSecond )
-             .Display( "Etat ops.:", nEtatOps_ )
-             .Display( "Niveau de perception:", nCurrentPerceptionLevel_  )
-             .Display( "Niveau max de perception:", nMaxPerceptionLevel_ )
-             .Display( "Camp:", team_  )
-             .Display( "Niveau:", nLevel_ )
-             .Display( "Arme:", nWeapon_ )
-             .Display( "Spécialisation:", nSpecialization_ )
-             .Display( "Qualification:", nQualifier_  )
-             .Display( "Catégorie:", nCategory_ )
-             .Display( "Mobilité:", nMobility_  )
-             .Display( "Capacité mission:", nCapacity_ )
-             .Display( "Rendu:", bSurrendered_ )
-             .Display( "Fait prisonnier:", bPrisonner_ )
-             .Display( "Réfugiés pris en compte:", bRefugies_ )
-             .Display( "PC:", bIsPC_ )
-             .Display( "Pertinence:", nRelevance_ );
+    displayer.Display( tools::translate( "AgentKnowledge", "Id:" ), nID_ )
+             .Display( tools::translate( "AgentKnowledge", "Agent associé:" ), realAgent_ )
+             .Display( tools::translate( "AgentKnowledge", "Position:" ), strPosition_ )
+             .Display( tools::translate( "AgentKnowledge", "Direction:" ), nDirection_ * Units::degrees )
+             .Display( tools::translate( "AgentKnowledge", "Vitesse:" ), nSpeed_ * Units::metersPerSecond )
+             .Display( tools::translate( "AgentKnowledge", "Etat ops.:" ), nEtatOps_ )
+             .Display( tools::translate( "AgentKnowledge", "Niveau de perception:" ), nCurrentPerceptionLevel_  )
+             .Display( tools::translate( "AgentKnowledge", "Niveau max de perception:" ), nMaxPerceptionLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Camp:" ), team_  )
+             .Display( tools::translate( "AgentKnowledge", "Niveau:" ), nLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Arme:" ), nWeapon_ )
+             .Display( tools::translate( "AgentKnowledge", "Spécialisation:" ), nSpecialization_ )
+             .Display( tools::translate( "AgentKnowledge", "Qualification:" ), nQualifier_  )
+             .Display( tools::translate( "AgentKnowledge", "Catégorie:" ), nCategory_ )
+             .Display( tools::translate( "AgentKnowledge", "Mobilité:" ), nMobility_  )
+             .Display( tools::translate( "AgentKnowledge", "Capacité mission:" ), nCapacity_ )
+             .Display( tools::translate( "AgentKnowledge", "Rendu:" ), bSurrendered_ )
+             .Display( tools::translate( "AgentKnowledge", "Fait prisonnier:" ), bPrisonner_ )
+             .Display( tools::translate( "AgentKnowledge", "Réfugiés pris en compte:" ), bRefugies_ )
+             .Display( tools::translate( "AgentKnowledge", "PC:" ), bIsPC_ )
+             .Display( tools::translate( "AgentKnowledge", "Pertinence:" ), nRelevance_ );
 }
 
 // -----------------------------------------------------------------------------

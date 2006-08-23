@@ -58,8 +58,9 @@ void MiniViews::BuildContextMenu( const Entity_ABC& agent, ContextMenu& menu )
 {
     selected_ = &agent;
     bool remove = miniViews_.find( &agent ) != miniViews_.end();
-    // $$$$ AGE 2006-08-22: $$tr$$
-    menu.InsertItem( "Interface", remove ? "Supprimer la minivue" : "Ajouter une minivue" , this, SLOT( OnMiniView() ) );
+    static const QString supprimer = tr( "Supprimer la minivue" );
+    static const QString ajouter   = tr( "Ajouter une minivue" );
+    menu.InsertItem( "Interface", remove ? supprimer : ajouter , this, SLOT( OnMiniView() ) );
 }
 
 // -----------------------------------------------------------------------------

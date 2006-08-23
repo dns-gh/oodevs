@@ -48,6 +48,7 @@ PopulationFlow::~PopulationFlow()
 // -----------------------------------------------------------------------------
 std::string PopulationFlow::GetName() const
 {
+    // $$$$ AGE 2006-08-23: 
     static std::string flow( "Flow" );
     return flow;
 }

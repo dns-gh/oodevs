@@ -21,9 +21,9 @@ using namespace gui;
 // Name: LabelDisplayer constructor
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-LabelDisplayer::LabelDisplayer( QWidget* parent, const char* name, bool bold, ItemFactory_ABC& factory )
+LabelDisplayer::LabelDisplayer( QWidget* parent, const QString& name, bool bold, ItemFactory_ABC& factory )
 {
-    new QLabel( qApp->tr( name ), parent );
+    new QLabel( name, parent );
     valueLabel_ = factory.CreateLabel( parent );
     if( bold )
     {
@@ -46,7 +46,7 @@ LabelDisplayer::~LabelDisplayer()
 // Name: LabelDisplayer::SubItem
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& LabelDisplayer::SubItem( const char* )
+Displayer_ABC& LabelDisplayer::SubItem( const QString& )
 {
     return NotToBeCalled( __FUNCTION__ );
 }

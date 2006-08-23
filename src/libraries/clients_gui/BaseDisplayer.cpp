@@ -23,6 +23,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Mission.h"
 #include "gaming/InternalLinks.h"
+#include "Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -51,7 +52,9 @@ BaseDisplayer::~BaseDisplayer()
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const bool& value )
 {
-    AddToDisplay( value ? qApp->tr( "Oui" ) : qApp->tr( "Non" ) );
+    static const QString oui = tools::translate( "Oui/Non", "Oui" ) ;
+    static const QString non = tools::translate( "Oui/Non", "Non" ) ;
+    AddToDisplay( value ? oui : non );
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +162,8 @@ void BaseDisplayer::Call( const ObjectType& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const QTime& value )
 {
-    AddToDisplay( value.toString( "hh:mm:ss" ) );
+    static QString format = tools::translate( "Time Format", "hh:mm:ss" );
+    AddToDisplay( value.toString( format ) );
 }
 
 // -----------------------------------------------------------------------------

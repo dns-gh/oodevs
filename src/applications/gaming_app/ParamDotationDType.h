@@ -31,7 +31,7 @@ class ParamDotationDType : public ParamComboBox< ASN1T_TypeDotationTrancheD >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asnListEquipment, const std::string& label, const kernel::Resolver< kernel::DotationType >& resolver );
+             ParamDotationDType( QWidget* pParent, ASN1T_TypeDotationTrancheD& asnListEquipment, const QString& label, const kernel::Resolver< kernel::DotationType >& resolver );
     virtual ~ParamDotationDType();
     //@}
 };

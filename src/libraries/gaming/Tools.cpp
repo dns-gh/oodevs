@@ -12,46 +12,46 @@
 #include "gaming_pch.h"
 #include "Tools.h"
 
-using namespace gaming;
-
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2006-08-08
 // -----------------------------------------------------------------------------
-const char* tools::ToString( E_FuncLimaType nType )
+QString tools::ToString( E_FuncLimaType nType )
 {
-    switch( nType )
+    static const QString limas[] = 
     {
-        case eLimaFuncLD:     return "LD";
-        case eLimaFuncLCA:    return "LCA";
-        case eLimaFuncLC:     return "LC";
-        case eLimaFuncLI:     return "LI";
-        case eLimaFuncLO:     return "LO";
-        case eLimaFuncLCAR:   return "LCAR";
-        case eLimaFuncLR:     return "LR";
-        case eLimaFuncLDM:    return "LDM";
-        case eLimaFuncLFM:    return "LFM";
-        case eLimaFuncLIA:    return "LIA";
-        default:
-            return "Unknown";
-    }
+        tools::translate( "E_FuncLimaType", "LD" ),
+        tools::translate( "E_FuncLimaType", "LCA" ),
+        tools::translate( "E_FuncLimaType", "LC" ),
+        tools::translate( "E_FuncLimaType", "LI" ),
+        tools::translate( "E_FuncLimaType", "LO" ),
+        tools::translate( "E_FuncLimaType", "LCAR" ),
+        tools::translate( "E_FuncLimaType", "LR" ),
+        tools::translate( "E_FuncLimaType", "LDM" ),
+        tools::translate( "E_FuncLimaType", "LFM" ),
+        tools::translate( "E_FuncLimaType", "LIA" ),
+    };
+    if( nType >= 0 && nType < eLimaFuncNbr )
+        return limas[ nType ];
+    return Unknown();
 }
 
 // -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2006-08-08
 // -----------------------------------------------------------------------------
-const char* tools::ToString( ASN1T_EnumTypeLocalisation nType )
+QString tools::ToString( ASN1T_EnumTypeLocalisation nType )
 {
-    switch( nType )
+    static const QString localisations[] = 
     {
-        case EnumTypeLocalisation::circle:   return "cercle";
-        case EnumTypeLocalisation::ellipse:  return "ellipse";
-        case EnumTypeLocalisation::line:     return "ligne";
-        case EnumTypeLocalisation::polygon:  return "polygone";
-        case EnumTypeLocalisation::point:    return "point";
-        case EnumTypeLocalisation::sector:   return "secteur";
-        default:
-            return "Unknown";
-    }
+        tools::translate( "Localisation", "Cercle" ),
+        tools::translate( "Localisation", "Ellipse" ),
+        tools::translate( "Localisation", "Ligne" ),
+        tools::translate( "Localisation", "Polygone" ),
+        tools::translate( "Localisation", "Point" ),
+        tools::translate( "Localisation", "Secteur" ),
+    };
+    if( nType >= 0 && nType < 6 )
+        return localisations[ nType ];
+    return Unknown();
 }

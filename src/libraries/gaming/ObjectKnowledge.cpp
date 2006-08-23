@@ -17,6 +17,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -95,18 +96,19 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Détails" )
-                .Display( "Id:", id_ )
-                .Display( "Objet associé:", pRealObject_ )
-                .Display( "Type:", type_ )
-                .Display( "Construction:", nPourcentageConstruction_ * Units::percentage )
-                .Display( "Valeur:", nPourcentageValorisation_ * Units::percentage )
-                .Display( "Contournement:", nPourcentageContournement_* Units::percentage )
-                .Display( "En préparation:", bEnPreparation_ )
-                .Display( "Perçu:", bIsPerceived_ )
-                .Display( "Pertinence:", nRelevance_ );
+    displayer.Group( tools::translate( "Object", "Détails" ) )
+                .Display( tools::translate( "Object", "Id:" ), id_ )
+                .Display( tools::translate( "Object", "Objet associé:" ), pRealObject_ )
+                .Display( tools::translate( "Object", "Type:" ), type_ )
+                .Display( tools::translate( "Object", "Construction:" ), nPourcentageConstruction_ * Units::percentage )
+                .Display( tools::translate( "Object", "Valeur:" ), nPourcentageValorisation_ * Units::percentage )
+                .Display( tools::translate( "Object", "Contournement:" ), nPourcentageContournement_* Units::percentage )
+                .Display( tools::translate( "Object", "En préparation:" ), bEnPreparation_ )
+                .Display( tools::translate( "Object", "Perçu:" ), bIsPerceived_ )
+                .Display( tools::translate( "Object", "Pertinence:" ), nRelevance_ );
     if( ! position_.empty() )
-        displayer.Group( "Détails" ).Display( "Position:", position_ );
+        displayer.Group( tools::translate( "Object", "Détails" ) )
+                 .Display( tools::translate( "Object", "Position:" ), position_ );
 
 }
 
@@ -117,9 +119,9 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
     if( pRealObject_ )
-        displayer.Display( "Objets connus", pRealObject_ );
+        displayer.Display( tools::translate( "Object", "Objets connus" ), pRealObject_ );
     else
-        displayer.Display( "Objets connus", id_ );
+        displayer.Display( tools::translate( "Object", "Objets connus" ), id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +157,7 @@ unsigned long ObjectKnowledge::GetId() const
 // -----------------------------------------------------------------------------
 std::string ObjectKnowledge::GetName() const
 {
+    // $$$$ AGE 2006-08-23: 
     return pRealObject_ ? pRealObject_->GetName() : "Unknown Object";
 }
 

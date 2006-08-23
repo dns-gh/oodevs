@@ -25,7 +25,7 @@ class ParamLimaList : public EntityListParameter< Lima >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QWidget* pParent, ASN1T_ListOID& asn, const std::string& label, const std::string& menu );
+             ParamLimaList( QWidget* pParent, ASN1T_ListOID& asn, const QString& label, const QString& menu );
     virtual ~ParamLimaList();
     //@}
 };

@@ -13,6 +13,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/DataDictionary.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -25,9 +26,9 @@ MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< Equipm
     , resolver_( resolver )
     , agentResolver_( agentResolver )
 {
-    dico.Register( "Chaine médicale/Chaine activée", bChainEnabled_ );
-    dico.Register( "Chaine médicale/Priorités", priorities_ );
-    dico.Register( "Chaine médicale/Priorités tactiques", tacticalPriorities_ );
+    dico.Register( tools::translate( "Logistique", "Chaine médicale/Chaine activée" ), bChainEnabled_ );
+    dico.Register( tools::translate( "Logistique", "Chaine médicale/Priorités" ), priorities_ );
+    dico.Register( tools::translate( "Logistique", "Chaine médicale/Priorités tactiques" ), tacticalPriorities_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,8 +89,9 @@ void MedicalStates::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
 // -----------------------------------------------------------------------------
 void MedicalStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Etat chaine santé" )
-                .Display( "Etat chaine", bChainEnabled_ ? "Activée" : "Désactivée" )
-                .Display( "Priorités", priorities_ )
-                .Display( "Priorités tactiques", tacticalPriorities_ );
+    displayer.Group( tools::translate( "Logistique", "Etat chaine santé" ) )
+                .Display( tools::translate( "Logistique", "Etat chaine" ), bChainEnabled_ ?
+                    tools::translate( "Logistique", "Activée" ) : tools::translate( "Logistique", "Désactivée" ) )
+                .Display( tools::translate( "Logistique", "Priorités" ), priorities_ )
+                .Display( tools::translate( "Logistique", "Priorités tactiques" ), tacticalPriorities_ );
 }

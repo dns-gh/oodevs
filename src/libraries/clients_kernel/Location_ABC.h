@@ -10,6 +10,8 @@
 #ifndef __Location_ABC_h_
 #define __Location_ABC_h_
 
+#include <qstring.h>
+
 namespace kernel
 {
     class GlTools_ABC;
@@ -43,7 +45,7 @@ public:
     //@{
     virtual void Accept( LocationVisitor_ABC& ) const = 0;
     virtual void Draw( const GlTools_ABC& tools ) const = 0;
-    virtual std::string GetName() const = 0;
+    virtual QString GetName() const = 0;
     //@}
 };
 

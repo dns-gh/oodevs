@@ -20,7 +20,7 @@ using namespace gui;
 // Name: ParamEquipmentList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamEquipmentList::ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites& asnListEquipment, const std::string& /*label*/, const Resolver< EquipmentType >& resolver )
+ParamEquipmentList::ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePriorites& asnListEquipment, const QString& /*label*/, const Resolver< EquipmentType >& resolver )
     : QTable ( 0, 1, pParent )
     , pAsnEquipmentList_ ( &asnListEquipment )
 {

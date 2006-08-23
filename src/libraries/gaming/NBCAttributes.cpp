@@ -11,6 +11,7 @@
 #include "NBCAttributes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -90,6 +91,6 @@ void NBCAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void NBCAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Nuage/Zone NBC" )
-        .Display( "Agent_ABC NBC:", nbc_ );
+    displayer.Group( tools::translate( "NBC", "Nuage/Zone NBC" ) )
+        .Display( tools::translate( "NBC", "Agent NBC:" ), nbc_ );
 }

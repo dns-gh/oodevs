@@ -45,6 +45,7 @@ PopulationConcentration::~PopulationConcentration()
 // -----------------------------------------------------------------------------
 std::string PopulationConcentration::GetName() const
 {
+    // $$$$ AGE 2006-08-23: 
     static std::string concentration( "Concentration" );
     return concentration;
 }

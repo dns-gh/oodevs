@@ -24,9 +24,9 @@ namespace
 {
     void Populate( ToolListButton< TristateOption >& button )
     {
-        button.AddItem( qApp->tr( TristateOption::auto_ ), TristateOption::auto_ );
-        button.AddItem( qApp->tr( TristateOption::on_ ),   TristateOption::on_ );
-        button.AddItem( qApp->tr( TristateOption::off_ ),  TristateOption::off_ );
+        button.AddItem( TristateOption::AutoName(), TristateOption::Auto() );
+        button.AddItem( TristateOption::OnName(),   TristateOption::On() );
+        button.AddItem( TristateOption::OffName(),  TristateOption::Off() );
         button.setMinimumWidth( 55 );
     }
 }

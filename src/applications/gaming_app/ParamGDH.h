@@ -26,7 +26,7 @@ class ParamGDH : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamGDH( QWidget* parent, ASN1T_GDH& asn, const std::string& label );
+             ParamGDH( QWidget* parent, ASN1T_GDH& asn, const QString& label );
     virtual ~ParamGDH();
     //@}
 

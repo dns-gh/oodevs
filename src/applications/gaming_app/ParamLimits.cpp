@@ -15,7 +15,7 @@
 // Name: ParamLimits constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-ParamLimits::ParamLimits( QWidget* pParent, ASN1T_OID& id1, ASN1T_OID& id2, const std::string& label1, const std::string& label2, const std::string& menu1, const std::string& menu2 )
+ParamLimits::ParamLimits( QWidget* pParent, ASN1T_OID& id1, ASN1T_OID& id2, const QString& label1, const QString& label2, const QString& menu1, const QString& menu2 )
     : limit1_( new EntityParameter< Limit >( pParent, id1, label1, menu1 ) )
     , limit2_( new EntityParameter< Limit >( pParent, id2, label2, menu2 ) )
 {

@@ -50,6 +50,11 @@ private:
     StatusBar& operator=( const StatusBar& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    static QString NotSet();
+    //@}
+
 private:
     //! @name Member data
     //@{

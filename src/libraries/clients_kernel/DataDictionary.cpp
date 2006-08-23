@@ -44,7 +44,7 @@ void DataDictionary::Display( const QString& name, Displayer_ABC& displayer ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::vector< std::string > DataDictionary::FindKey
+// Name: QStringList DataDictionary::FindKey
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
 QStringList DataDictionary::FindKey( QString name ) const

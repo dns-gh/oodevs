@@ -32,7 +32,7 @@ class LocationCreator : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationCreator( QWidget* parent, const std::string& menu, ParametersLayer& layer, ShapeHandler_ABC& handler );
+             LocationCreator( QWidget* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler );
              LocationCreator( QWidget* parent, ParametersLayer& layer, ShapeHandler_ABC& handler );
     virtual ~LocationCreator();
     //@}
@@ -70,7 +70,7 @@ private:
     ParametersLayer& layer_;
     ShapeHandler_ABC& handler_;
     
-    std::string menu_;
+    QString menu_;
     QPopupMenu* pPopupMenu_;
     geometry::Point2f popupPoint_;
     //@}

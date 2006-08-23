@@ -45,7 +45,7 @@ class ParamPath : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const std::string label, const std::string menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamPath();
     //@}
 
@@ -80,9 +80,9 @@ private:
     const kernel::Positions& positions_;
     LocationSerializer serializer_;
 
-    std::string menu_;
-    gui::RichLabel* pLabel_;
-    QLabel*       pPosLabel_;
+    QString               menu_;
+    gui::RichLabel*       pLabel_;
+    QLabel*               pPosLabel_;
     kernel::Location_ABC* location_;
     //@}
 };

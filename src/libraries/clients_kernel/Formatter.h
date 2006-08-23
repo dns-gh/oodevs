@@ -43,12 +43,15 @@ struct Formatter : public FormatterNotImplemented {
 */
 // Created: AGE 2006-02-21
 // =============================================================================
-struct NumberFormatter {
+struct NumberFormatter
+{
     template< typename T >
-    void operator()( const T& value, Displayer_ABC& displayer ) const {
+    void operator()( const T& value, Displayer_ABC& displayer ) const
+    {
         displayer.AddToDisplay( QString::number(value ) );
     }
 };
+
 template< >
 struct Formatter< float > : public NumberFormatter {};
 template< >
@@ -62,26 +65,23 @@ struct Formatter< unsigned long > : public NumberFormatter {};
 template< >
 struct Formatter< long > : public NumberFormatter {};
 template< >
-struct Formatter< char > {
-    void operator()( const char& value, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( QString( QChar( value ) ) );
-    }
+struct Formatter< char >
+{
+    void operator()( const char& value, Displayer_ABC& displayer ) const;
 };
 template< >
-struct Formatter< const char* > {
-    void operator()( const char* value, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( QString( value ) );
-    }
+struct Formatter< const char* >
+{
+    void operator()( const char* value, Displayer_ABC& displayer ) const;
 };
 template< unsigned int N >
 struct Formatter< const char [N] > : public Formatter< const char* > { };
 
 
 template< >
-struct Formatter< std::string > {
-    void operator()( const std::string& value, Displayer_ABC& displayer ) const {
-        displayer.AddToDisplay( QString( value.c_str() ) );
-    }
+struct Formatter< std::string >
+{
+    void operator()( const std::string& value, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================
@@ -94,11 +94,7 @@ class ValueNotSet {};
 template< >
 struct Formatter< ValueNotSet >
 {
-    void operator()( const ValueNotSet& , Displayer_ABC& displayer ) const
-    {
-        // $$$$ AGE 2006-08-22: $$tr$$
-        displayer.AddToDisplay( QString( " - " ) );
-    }
+    void operator()( const ValueNotSet& , Displayer_ABC& displayer ) const;
 };
 
 template< typename T >
@@ -160,10 +156,7 @@ class Unit;
 template< >
 struct Formatter< Unit >
 {
-    void operator()( const Unit& element, Displayer_ABC& displayer ) const
-    {
-        displayer.AddToDisplay( (const QString&)element );
-    }
+    void operator()( const Unit& element, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================
@@ -304,14 +297,11 @@ struct Formatter< E_LogSanteTraitementEtat >
     void operator()( const E_LogSanteTraitementEtat& e, Displayer_ABC& displayer ) const;
 };
 
-
 template< >
 struct Formatter< E_LogMaintenanceTraitementEtat >
 {
     void operator()( const E_LogMaintenanceTraitementEtat& e, Displayer_ABC& displayer ) const;
 };
-
-
 
 // =============================================================================
 /** @class  Formatter
@@ -323,10 +313,7 @@ class Separator {};
 template< >
 struct Formatter< Separator >
 {
-    void operator()( const Separator& , Displayer_ABC& displayer ) const {
-        // $$$$ AGE 2006-08-22: $$tr$$
-        displayer.AddToDisplay( ", " );
-    }
+    void operator()( const Separator& , Displayer_ABC& displayer ) const;
 };
 
 template< typename T >

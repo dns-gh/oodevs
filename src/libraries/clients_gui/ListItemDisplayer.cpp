@@ -38,7 +38,7 @@ ListItemDisplayer::~ListItemDisplayer()
 // Name: ListItemDisplayer::AddColumn
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-ListItemDisplayer& ListItemDisplayer::AddColumn( const char* column )
+ListItemDisplayer& ListItemDisplayer::AddColumn( const QString& column )
 {
     columns_.push_back( column );
     return *this;
@@ -70,9 +70,9 @@ void ListItemDisplayer::Call( const QColor& color )
 // Name: ListItemDisplayer::SubItem
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& ListItemDisplayer::SubItem( const char* name )
+Displayer_ABC& ListItemDisplayer::SubItem( const QString& name )
 {
-    if( name )
+    if( ! name.isNull() )
         column_ = FindColumn( name );
     return *this;
 }
@@ -113,12 +113,12 @@ void ListItemDisplayer::EndDisplay()
 // Name: ListItemDisplayer::FindColumn
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-int ListItemDisplayer::FindColumn( const char* name ) const
+int ListItemDisplayer::FindColumn( const QString& name ) const
 {
     for( unsigned i = 0; i < columns_.size(); ++i )
         if( columns_[i] == name )
             return i;
-    throw std::runtime_error( std::string( "Column '" ) + name + "' does not exist" );
+    throw std::runtime_error( std::string( "Column '" ) + name.ascii() + "' does not exist" );
 }
 
 // -----------------------------------------------------------------------------

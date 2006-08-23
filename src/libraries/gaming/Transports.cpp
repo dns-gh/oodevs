@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -24,8 +25,8 @@ Transports::Transports( Controller& controller, const Resolver_ABC< Agent_ABC >&
     , resolver_( resolver )
     , transporter_( 0 )
 {
-    dico.Register( "Transport/Transporteur", transporter_ );
-    dico.Register( "Transport/Pions Transportés", transported_ );
+    dico.Register( tools::translate( "Transport", "Transport/Transporteur" ), transporter_ );
+    dico.Register( tools::translate( "Transport", "Transport/Pions Transportés" ), transported_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,5 +64,5 @@ void Transports::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Transports::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Pions Transportés" ).Display( "", transported_ ); // $$$$ AGE 2006-02-22: remove a level
+    displayer.Group( tools::translate( "Transport", "Pions Transportés" ) ).Display( "", transported_ ); // $$$$ AGE 2006-02-22: remove a level
 }

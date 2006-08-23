@@ -19,12 +19,12 @@ using namespace gui;
 // Name: EntityParameterBase constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-EntityParameterBase::EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu )
-    : QHBox     ( pParent )
-    , id_       ( id )
-    , menu_     ( menu )
+EntityParameterBase::EntityParameterBase( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
+    : QHBox( pParent )
+    , id_  ( id )
+    , menu_( menu )
 {
-    pLabel_ = new RichLabel( label.c_str(), false, this, "" );
+    pLabel_ = new RichLabel( label, false, this, "" );
 
     entityLabel_ = new QLabel( "---", this );
     entityLabel_->setMinimumWidth( 100 );

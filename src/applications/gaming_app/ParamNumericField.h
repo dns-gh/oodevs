@@ -25,8 +25,8 @@ class ParamNumericField : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamNumericField( QWidget* parent, ASN1INT& asn, const std::string& label );
-             ParamNumericField( QWidget* parent, ASN1REAL& asn, const std::string& label );
+             ParamNumericField( QWidget* parent, ASN1INT& asn, const QString& label );
+             ParamNumericField( QWidget* parent, ASN1REAL& asn, const QString& label );
     virtual ~ParamNumericField();
     //@}
 

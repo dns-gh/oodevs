@@ -11,6 +11,7 @@
 #include "CampAttributes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -89,5 +90,6 @@ void CampAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void CampAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( "Camp" ).Display( "TC2:", tc2_ );
+    displayer.Group( tools::translate( "Object", "Camp" ) )
+                .Display( tools::translate( "Object", "TC2:" ), tc2_ );
 }

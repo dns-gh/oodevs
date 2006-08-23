@@ -26,13 +26,13 @@ class ParamComboBox : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamComboBox( QWidget* parent, T& asn, const std::string label );
+             ParamComboBox( QWidget* parent, T& asn, const QString& label );
     virtual ~ParamComboBox();
     //@}
 
     //! @name Operations
     //@{
-    void AddItem( const std::string strLabel, const T& value );
+    void AddItem( const QString& strLabel, const T& value );
     virtual void Commit();
     //@}
 
@@ -58,11 +58,11 @@ using namespace gui;
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >
-ParamComboBox<T>::ParamComboBox( QWidget* parent, T& asn, const std::string label )
+ParamComboBox<T>::ParamComboBox( QWidget* parent, T& asn, const QString& label )
     : QHBox( parent )
     , asn_ ( asn )
 {
-    QLabel* pLabel = new QLabel( label.c_str(), this );
+    QLabel* pLabel = new QLabel( label, this );
     pLabel->setAlignment( AlignVCenter | AlignLeft );
     pComboBox_ = new ValuedComboBox<T>( this );
     pComboBox_->setSorting( true );
@@ -83,9 +83,9 @@ ParamComboBox<T>::~ParamComboBox()
 // Created: APE 2004-04-21
 // -----------------------------------------------------------------------------
 template< class T >
-void ParamComboBox<T>::AddItem( const std::string strLabel, const T& value )
+void ParamComboBox<T>::AddItem( const QString& strLabel, const T& value )
 {
-    pComboBox_->AddItem( strLabel.c_str(), value );
+    pComboBox_->AddItem( strLabel, value );
 }
 
 // -----------------------------------------------------------------------------

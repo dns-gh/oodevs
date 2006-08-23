@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: ParamObjectKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledge::ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu )
+ParamObjectKnowledge::ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
     : EntityParameter< ObjectKnowledge >( pParent, id, label, menu )
 {
     // NOTHING

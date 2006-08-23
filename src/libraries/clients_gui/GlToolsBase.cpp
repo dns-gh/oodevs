@@ -69,7 +69,7 @@ bool GlToolsBase::ShouldDisplay( const std::string& name ) const
 // -----------------------------------------------------------------------------
 bool GlToolsBase::ShouldDisplay( const std::string& name, bool autoCondition ) const
 {
-    return controllers_.options_.GetOption( name, TristateOption::auto_ )
+    return controllers_.options_.GetOption( name, TristateOption::Auto() )
         .To< TristateOption >().IsSet( autoCondition );
 }
 

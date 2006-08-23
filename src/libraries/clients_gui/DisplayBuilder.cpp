@@ -37,11 +37,11 @@ DisplayBuilder::~DisplayBuilder()
 // Name: DisplayBuilder::AddGroup
 // Created: AGE 2006-02-09
 // -----------------------------------------------------------------------------
-GroupDisplayer& DisplayBuilder::AddGroup( const char* name )
+GroupDisplayer& DisplayBuilder::AddGroup( const QString& name )
 {
-    GroupDisplayer*& group = groups_[ std::string( name ) ];
+    GroupDisplayer*& group = groups_[ name ];
     if( group )
-        throw std::runtime_error( "Group '" + std::string( name ) + "' already exists" );
+        throw std::runtime_error( "Group '" + std::string( name.ascii() ) + "' already exists" );
     group = new GroupDisplayer( parent_, name, factory_ );
     return *group;
 }
@@ -50,11 +50,11 @@ GroupDisplayer& DisplayBuilder::AddGroup( const char* name )
 // Name: DisplayBuilder::SubItem
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& DisplayBuilder::SubItem( const char* name )
+Displayer_ABC& DisplayBuilder::SubItem( const QString& name )
 {
-    GroupDisplayer* group = groups_[ std::string( name ) ];
+    GroupDisplayer* group = groups_[ name ];
     if( ! group )
-        throw std::runtime_error( "Group '" + std::string( name ) + "' does not exist" );
+        throw std::runtime_error( "Group '" + std::string( name.ascii() ) + "' does not exist" );
     return *group;
 }
 
@@ -62,7 +62,7 @@ Displayer_ABC& DisplayBuilder::SubItem( const char* name )
 // Name: DisplayBuilder::Group
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-GroupDisplayer& DisplayBuilder::Group( const char* name )
+GroupDisplayer& DisplayBuilder::Group( const QString& name )
 {
     return (GroupDisplayer&)( SubItem( name ) );
 }

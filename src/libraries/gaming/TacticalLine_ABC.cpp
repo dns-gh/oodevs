@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
     : converter_    ( converter )
     , publisher_    ( publisher )
     , id_           ( id )
@@ -27,14 +27,14 @@ TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long i
     , nNetworkState_( eNetworkStateNotRegistered )
     , bCreatedBy    ( true )
 {
-    strName_ = ( QString( baseName.c_str() ) + " %1" ).arg( id_ & 0x3FFFFF );
+    strName_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
     : converter_    ( converter )
     , publisher_    ( publisher )
     , id_           ( id )
@@ -43,14 +43,14 @@ TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long i
     , bCreatedBy    ( true )
     , pointList_    ( points )   
 {
-    strName_ = ( QString( baseName.c_str() ) + " %1" ).arg( id_ & 0x3FFFFF );
+    strName_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
     : converter_    ( converter )
     , publisher_    ( publisher )
     , id_           ( id )
@@ -58,7 +58,7 @@ TacticalLine_ABC::TacticalLine_ABC( const std::string& baseName, unsigned long i
     , nNetworkState_( eNetworkStateRegistered )
     , bCreatedBy    ( false )
 {
-    strName_ = ( QString( baseName.c_str() ) + " %1" ).arg( id_ & 0x3FFFFF );
+    strName_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
     for( uint i = 0; i != line.vecteur_point.n ; ++i )
         pointList_.push_back( converter.ConvertToXY( line.vecteur_point.elem[i] ) );
 }
@@ -152,7 +152,7 @@ unsigned long TacticalLine_ABC::GetId() const
 // -----------------------------------------------------------------------------
 std::string TacticalLine_ABC::GetName() const
 {
-    return strName_;
+    return strName_.ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ void TacticalLine_ABC::Draw( const GlTools_ABC& tools ) const
 void TacticalLine_ABC::DrawName( const GlTools_ABC& tools ) const
 {
     if( ! pointList_.empty() )
-        tools.Print( strName_, pointList_.front() );
+        tools.Print( strName_.ascii(), pointList_.front() );
 }
 
 // -----------------------------------------------------------------------------

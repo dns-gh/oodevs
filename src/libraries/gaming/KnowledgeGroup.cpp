@@ -75,6 +75,7 @@ unsigned long KnowledgeGroup::GetId() const
 std::string KnowledgeGroup::GetName() const
 {
     std::stringstream stream;
+    // $$$$ AGE 2006-08-23: 
     stream << "Gtia " << nID_;
     return stream.str();
 }

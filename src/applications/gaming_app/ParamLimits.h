@@ -27,8 +27,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ParamLimits( QWidget* pParent, ASN1T_OID& id1, ASN1T_OID& id2, 
-                 const std::string& label1, const std::string& label2, 
-                 const std::string& menu1, const std::string& menu2 );
+                 const QString& label1, const QString& label2, 
+                 const QString& menu1, const QString& menu2 );
     virtual ~ParamLimits();
     //@}
 

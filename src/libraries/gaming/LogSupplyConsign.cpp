@@ -17,6 +17,7 @@
 #include "DotationRequest.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "Tools.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -117,12 +118,12 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( "Consigne :", nID_ )
-             .Display( "Pion demandeur :", pion_ )
-             .Display( "Pion traitant :", pAutomateLogHandling_ )
-             .Display( "Pion fournissant les moyens :", pAutomateLogProvidingConvoyResources_ )
-             .Display( "Pion convoyant :", pPionLogConvoying_ )
-             .Display( "Etat :", nState_ );
+    displayer.Display( tools::translate( "Logistique", "Consigne :" ), nID_ )
+             .Display( tools::translate( "Logistique", "Pion demandeur :" ), pion_ )
+             .Display( tools::translate( "Logistique", "Pion traitant :" ), pAutomateLogHandling_ )
+             .Display( tools::translate( "Logistique", "Pion fournissant les moyens :" ), pAutomateLogProvidingConvoyResources_ )
+             .Display( tools::translate( "Logistique", "Pion convoyant :" ), pPionLogConvoying_ )
+             .Display( tools::translate( "Logistique", "Etat :" ), nState_ );
 }
 
 // -----------------------------------------------------------------------------

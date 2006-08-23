@@ -12,6 +12,7 @@
 #include "LocationVisitor_ABC.h"
 #include "Positions.h"
 #include "GlTools_ABC.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -98,8 +99,8 @@ void Path::Draw( const GlTools_ABC& tools ) const
 // Name: Path::GetName
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-std::string Path::GetName() const
+QString Path::GetName() const
 {
-    // $$$$ AGE 2006-08-22: $$tr$$
-    return "chemin"; // $$$$ AGE 2006-08-09: crap.
+    static const QString name = tools::translate( "Localisation", "Chemin" );
+    return name;
 }

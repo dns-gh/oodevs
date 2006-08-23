@@ -32,12 +32,12 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
     setShowSortIndicator( true );
     setSorting( -1 );
     setRootIsDecorated( true );
-    addColumn( tr( "Recu" ) );
-    addColumn( tr( "Log" ) );
+    addColumn( tr( "Date" ) );
+    addColumn( tr( "Message" ) );
     setResizeMode( QListView::LastColumn );
     setAllColumnsShowFocus ( true );
 
-    popupMenu_.insertItem( tr( "Effacer liste" ), this, SLOT( clear() ) ); 
+    popupMenu_.insertItem( tr( "Effacer la liste" ), this, SLOT( clear() ) ); 
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }

@@ -15,6 +15,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "statusicons.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -28,7 +29,7 @@ Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >
     , dictionary_( dictionary )
     , bEmptyGasTank_( false )
 {
-    dictionary_.Register( "Dotations/Plus de carburant", bEmptyGasTank_ );
+    dictionary_.Register( tools::translate( "Dotations", "Dotations/Plus de carburant" ), bEmptyGasTank_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +62,7 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitDotations& message )
         {
             Dotation& newDotation = *new Dotation( type, value.quantite_disponible );
             Register( value.ressource_id, newDotation );
-            dictionary_.Register( QString( "Dotations/" ) + type.GetCategory().c_str(), newDotation.quantity_ ); // $$$$ AGE 2006-06-22: 
+            dictionary_.Register( tools::translate( "Dotations", "Dotations" ) + "/" + type.GetCategory().c_str(), newDotation.quantity_ ); // $$$$ AGE 2006-06-22: 
         }
         if( type.IsGas() )
             bEmptyGasTank_ = ( value.quantite_disponible == 0 );

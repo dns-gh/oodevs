@@ -23,7 +23,7 @@ using namespace gui;
 // Name: LocationCreator constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-LocationCreator::LocationCreator( QWidget* parent, const std::string& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
+LocationCreator::LocationCreator( QWidget* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
     : QObject   ( parent )
     , layer_    ( layer )
     , handler_  ( handler )
@@ -64,15 +64,14 @@ void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle )
     if( pPopupMenu_ )
     {
         pPopupMenu_->clear();
-        // $$$$ AGE 2006-08-22: $$tr$$
         if( point )
-            pPopupMenu_->insertItem( "point", this, SLOT( StartPoint() ) );
+            pPopupMenu_->insertItem( tools::translate( "Localisation", "Point" ), this, SLOT( StartPoint() ) );
         if( line )
-            pPopupMenu_->insertItem( "ligne", this, SLOT( StartLine() ) );
+            pPopupMenu_->insertItem( tools::translate( "Localisation", "Ligne" ), this, SLOT( StartLine() ) );
         if( polygon )
-            pPopupMenu_->insertItem( "polygone", this, SLOT( StartPolygon() ) );
+            pPopupMenu_->insertItem( tools::translate( "Localisation", "Polygone" ), this, SLOT( StartPolygon() ) );
         if( circle )
-            pPopupMenu_->insertItem( "cercle", this, SLOT( StartCircle() ) );
+            pPopupMenu_->insertItem( tools::translate( "Localisation", "Cercle" ), this, SLOT( StartCircle() ) );
     }
 }
 
@@ -85,8 +84,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     if( !pPopupMenu_ )
         return;
     popupPoint_ = point;
-    // $$$$ AGE 2006-08-22: $$tr$$
-    menu.InsertItem( "Parametre", menu_.c_str(), pPopupMenu_ );
+    menu.InsertItem( "Parametre", menu_, pPopupMenu_ );
 }
 
 // -----------------------------------------------------------------------------

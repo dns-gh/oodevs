@@ -29,7 +29,7 @@ class LabelDisplayer : public BaseDisplayer
 public:
     //! @name Constructors/Destructor
     //@{
-             LabelDisplayer( QWidget* parent, const char* name, bool bold, ItemFactory_ABC& factory );
+             LabelDisplayer( QWidget* parent, const QString& name, bool bold, ItemFactory_ABC& factory );
     virtual ~LabelDisplayer();
     //@}
 
@@ -47,7 +47,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual Displayer_ABC& SubItem( const char* name );
+    virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();

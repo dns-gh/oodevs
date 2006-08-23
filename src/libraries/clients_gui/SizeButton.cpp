@@ -62,16 +62,16 @@ void SizeButton::OnValueChanged( int value )
     size_ = value * 0.5;
     changed_ = true;
     if( valueLabel_ )
-        setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_.c_str() ) );
+        setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SizeButton::EnableValueLabel
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void SizeButton::EnableValueLabel( const std::string& prefix /*= ""*/ )
+void SizeButton::EnableValueLabel( const QString& prefix /*= ""*/ )
 {
-    if( !prefix.empty() )
+    if( !prefix.isEmpty() )
         prefix_ = prefix;
     valueLabel_ = true;
     OnValueChanged( slider_->value() );
@@ -95,7 +95,7 @@ void SizeButton::Revert()
     changed_ = false;
     size_ = previous_;
     if( valueLabel_ )
-        setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_.c_str() ) );
+        setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
 }
 
 // -----------------------------------------------------------------------------

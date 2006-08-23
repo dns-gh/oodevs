@@ -15,7 +15,7 @@
 // Name: ParamGDH constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH& asn, const std::string& label )
+ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH& asn, const QString& label )
     : QHBox( parent )
     , asn_( asn )
 {
@@ -23,7 +23,7 @@ ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH& asn, const std::string& label )
     setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
 
     // Title
-    QLabel* pLabel = new QLabel( label.c_str(), this, "" );
+    QLabel* pLabel = new QLabel( label, this, "" );
     pDateTimeEdit_ = new QDateTimeEdit( QDateTime::currentDateTime(), this );
     pCheckbox_ = new QCheckBox( this );
 

@@ -119,7 +119,7 @@ void AttributeView::Hide()
 // Name: AttributeView::SubItem
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-Displayer_ABC& AttributeView::SubItem( const char*  )
+Displayer_ABC& AttributeView::SubItem( const QString&  )
 {
     return NotToBeCalled( __FUNCTION__ );
 }

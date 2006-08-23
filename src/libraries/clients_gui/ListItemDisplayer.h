@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual void Hide();
-    ListItemDisplayer& AddColumn( const char* column );
+    ListItemDisplayer& AddColumn( const QString& column );
 
     Displayer_ABC& operator()( RichListItem* item );
     //@}
@@ -50,17 +50,17 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< std::string > T_Columns;
+    typedef std::vector< QString > T_Columns;
     //@}
 
     //! @name Helpers
     //@{
     virtual void Call( const QColor& color );
-    virtual Displayer_ABC& SubItem( const char* name );
+    virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
-    int FindColumn( const char* name ) const;
+    int FindColumn( const QString& name ) const;
     //@}
 
 private:

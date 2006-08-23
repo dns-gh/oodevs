@@ -43,7 +43,7 @@ public:
     //@{
     virtual void Accept( LocationVisitor_ABC& ) const;
     virtual void Draw( const GlTools_ABC& tools ) const;
-    virtual std::string GetName() const;
+    virtual QString GetName() const;
     //@}
 
 private:

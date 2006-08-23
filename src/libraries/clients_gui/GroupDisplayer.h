@@ -33,15 +33,15 @@ class GroupDisplayer : public kernel::Displayer_ABC, public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             GroupDisplayer( QWidget* parent, const char* name, ItemFactory_ABC& factory );
+             GroupDisplayer( QWidget* parent, const QString& name, ItemFactory_ABC& factory );
     virtual ~GroupDisplayer();
     //@}
 
     //! @name Operations
     //@{
-    GroupDisplayer& AddLabel( const char* name, bool bold = false );
-    GroupDisplayer& AddSpinBox( const char* name, int min, int max, int step );
-    GroupDisplayer& AddCheckBox( const char* name );
+    GroupDisplayer& AddLabel( const QString& name, bool bold = false );
+    GroupDisplayer& AddSpinBox( const QString& name, int min, int max, int step );
+    GroupDisplayer& AddCheckBox( const QString& name );
     virtual void Hide();
     //@}
 
@@ -54,13 +54,13 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, kernel::Displayer_ABC* > T_Items;
-    typedef T_Items::iterator                              IT_Items;
+    typedef std::map< QString, kernel::Displayer_ABC* > T_Items;
+    typedef T_Items::iterator                          IT_Items;
     //@}
 
     //! @name Helpers
     //@{
-    virtual Displayer_ABC& SubItem( const char* name );
+    virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();

@@ -35,54 +35,54 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
     , selected_( controllers )
 {
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( "Info" )
-                .AddLabel( "Nom:", true )
-                .AddLabel( "Etat opérationnel:" )
-                .AddLabel( "Mort:" )
-                .AddLabel( "Neutralisé:" )
-                .AddLabel( "Vitesse:" )
-                .AddLabel( "Direction:" )
-                .AddLabel( "Altitude:" )
-                .AddLabel( "Troupes:" )
-                .AddLabel( "Transporteurs d'hommes:" );
-    display_->AddGroup( "NBC" )
-                .AddLabel( "Tenue NBC:" )
-                .AddLabel( "Agents contaminants:" )
-                .AddLabel( "Contamination:" );
-    display_->AddGroup( "Postures" )
-                .AddLabel( "Ancienne posture:" )
-                .AddLabel( "Nouvelle posture:" );
-    display_->AddGroup( "Communications" )
-                .AddLabel( "Brouillé:" )
-                .AddLabel( "Silence radio:" );
-    display_->AddGroup( "Facteurs humains" )
-                .AddLabel( "Experience:" )
-                .AddLabel( "Moral:" )
-                .AddLabel( "Fatigue:" );
-    display_->AddGroup( "Etat décisionnel" )
-                .AddLabel( "Etat opérationnel:" )
-                .AddLabel( "RoE:" )
-                .AddLabel( "RoE Population:" )
-                .AddLabel( "Rapport de force:" )
-                .AddLabel( "Disponibilité au tir indirect:" )
-                .AddLabel( "Contact combat:" );
-    display_->AddGroup( "Renforts" )
-                .AddLabel( "Renforce:" )
-                .AddLabel( "Est renforcé par:" );
+    display_->AddGroup( tr( "Info" ) )
+                .AddLabel( tr( "Nom:" ), true )
+                .AddLabel( tr( "Etat opérationnel:" ) )
+                .AddLabel( tr( "Mort:" ) )
+                .AddLabel( tr( "Neutralisé:" ) )
+                .AddLabel( tr( "Vitesse:" ) )
+                .AddLabel( tr( "Direction:" ) )
+                .AddLabel( tr( "Altitude:" ) )
+                .AddLabel( tr( "Troupes:" ) )
+                .AddLabel( tr( "Transporteurs d'hommes:" ) );
+    display_->AddGroup( tr( "NBC" ) )
+                .AddLabel( tr( "Tenue NBC:" ) )
+                .AddLabel( tr( "Agents contaminants:" ) )
+                .AddLabel( tr( "Contamination:" ) );
+    display_->AddGroup( tr( "Postures" ) )
+                .AddLabel( tr( "Ancienne posture:" ) )
+                .AddLabel( tr( "Nouvelle posture:" ) );
+    display_->AddGroup( tr( "Communications" ) )
+                .AddLabel( tr( "Brouillé:" ) )
+                .AddLabel( tr( "Silence radio:" ) );
+    display_->AddGroup( tr( "Facteurs humains" ) )
+                .AddLabel( tr( "Experience:" ) )
+                .AddLabel( tr( "Moral:" ) )
+                .AddLabel( tr( "Fatigue:" ) );
+    display_->AddGroup( tr( "Etat décisionnel" ) )
+                .AddLabel( tr( "Etat opérationnel:" ) )
+                .AddLabel( tr( "RoE:" ) )
+                .AddLabel( tr( "RoE Population:" ) )
+                .AddLabel( tr( "Rapport de force:" ) )
+                .AddLabel( tr( "Disponibilité au tir indirect:" ) )
+                .AddLabel( tr( "Contact combat:" ) );
+    display_->AddGroup( tr( "Renforts" ) )
+                .AddLabel( tr( "Renforce:" ) )
+                .AddLabel( tr( "Est renforcé par:" ) );
 
-    display_->AddGroup( "Pions Transportés" )
-                .AddLabel( "" );
+    display_->AddGroup( tr( "Pions Transportés" ) )
+                .AddLabel( tr( "" ) );
 
-    display_->AddGroup( "Liens logistiques" )
-                .AddLabel( "TC2:" )
-                .AddLabel( "Supérieur maintenance:" )
-                .AddLabel( "Supérieur santé:" )
-                .AddLabel( "Supérieur ravitaillement:" );
+    display_->AddGroup( tr( "Liens logistiques" ) )
+                .AddLabel( tr( "TC2:" ) )
+                .AddLabel( tr( "Supérieur maintenance:" ) )
+                .AddLabel( tr( "Supérieur santé:" ) )
+                .AddLabel( tr( "Supérieur ravitaillement:" ) );
 
-    display_->AddGroup( "Etat martial" )
-                .AddLabel( "Fait prisonnier:" )
-                .AddLabel( "Rendu:" )
-                .AddLabel( "Réfugiés pris en compte:" );
+    display_->AddGroup( tr( "Etat martial" ) )
+                .AddLabel( tr( "Fait prisonnier:" ) )
+                .AddLabel( tr( "Rendu:" ) )
+                .AddLabel( tr( "Réfugiés pris en compte:" ) );
 
     controllers_.Register( *this );
 }

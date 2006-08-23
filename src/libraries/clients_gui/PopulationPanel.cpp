@@ -33,17 +33,17 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
     , selected_     ( controllers )
 {
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( "Informations" )
-                .AddLabel( "Nom:", true )
-                .AddLabel( "Nombre de personnes vivantes:" )
-                .AddLabel( "Morts:" );
+    display_->AddGroup( tr( "Informations" ) )
+                .AddLabel( tr( "Nom:" ), true )
+                .AddLabel( tr( "Nombre de personnes vivantes:" ) )
+                .AddLabel( tr( "Morts:" ) );
 
     pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this, factory );
-    pPartsListView_->AddColumn( "Morceau" )
-                    .AddColumn( "Hommes vivants" )
-                    .AddColumn( "Hommes morts" )
-                    .AddColumn( "Attitude" )
-                    .AddColumn( "Densité vivants" );
+    pPartsListView_->AddColumn( tr( "Morceau" ) )
+                    .AddColumn( tr( "Hommes vivants" ) )
+                    .AddColumn( tr( "Hommes morts" ) )
+                    .AddColumn( tr( "Attitude" ) )
+                    .AddColumn( tr( "Densité vivants" ) );
 
     controllers_.Register( *this );
 }
@@ -104,11 +104,11 @@ void PopulationPanel::DisplayParts( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( "Morceau", part.GetName().c_str() )
-             .Display( "Hommes vivants", part.GetLivingHumans() )
-             .Display( "Hommes morts", part.GetDeadHumans() )
-             .Display( "Attitude", part.GetAttitude() )
-             .Display( "Densité vivants", part.GetDensity() );
+    displayer.Display( tr( "Morceau" ), part.GetName().c_str() )
+             .Display( tr( "Hommes vivants" ), part.GetLivingHumans() )
+             .Display( tr( "Hommes morts" ), part.GetDeadHumans() )
+             .Display( tr( "Attitude" ), part.GetAttitude() )
+             .Display( tr( "Densité vivants" ), part.GetDensity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,10 +119,10 @@ void PopulationPanel::NotifyUpdated( const Population_ABC& p )
 {
     if( ! IsVisible() || selected_ != &p )
         return;
-    display_->Group( "Informations" )
-                .Display( "Nom:", p )
-                .Display( "Nombre de personnes vivantes:", p.GetLivingHumans() )
-                .Display( "Morts:",  p.GetDeadHumans() );
+    display_->Group( tr( "Informations" ) )
+                .Display( tr( "Nom:" ), p )
+                .Display( tr( "Nombre de personnes vivantes:" ), p.GetLivingHumans() )
+                .Display( tr( "Morts:" ),  p.GetDeadHumans() );
     DisplayParts( p );
 }
 

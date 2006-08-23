@@ -32,7 +32,7 @@ class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu );
+             ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
     virtual ~ParamObjectKnowledge();
     //@}
 

@@ -55,7 +55,7 @@ private:
     virtual void Call( const E_EtatRapFor& value );
     virtual void Call( const E_EtatCombatRencontre& value );
 
-    virtual Displayer_ABC& SubItem( const char* name );
+    virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();

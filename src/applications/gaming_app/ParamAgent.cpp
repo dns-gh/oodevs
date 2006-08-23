@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: ParamAgent constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgent::ParamAgent(  QWidget* pParent, ASN1T_OID& id, const std::string& label, const std::string& menu )
+ParamAgent::ParamAgent(  QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
     : EntityParameter< Agent_ABC >( pParent, id, label, menu )
 {
     // NOTHING
