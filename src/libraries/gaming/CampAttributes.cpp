@@ -47,13 +47,13 @@ void CampAttributes::UpdateData( const T& message )
      && message.attributs_specifiques.t == T_AttrObjectSpecific_camp_prisonniers )
     {
         tc2_ = resolver_.Find( message.attributs_specifiques.u.camp_prisonniers->tc2 );
-        controller_.Update( *this );
+        controller_.Update( *(CampAttributes_ABC*)this );
     }
     if( message.m.attributs_specifiquesPresent 
      && message.attributs_specifiques.t == T_AttrObjectSpecific_camp_refugies )
     {
         tc2_ = resolver_.Find( message.attributs_specifiques.u.camp_refugies->tc2 );
-        controller_.Update( *this );
+        controller_.Update( *(CampAttributes_ABC*)this );
     }
 }
 

@@ -11,15 +11,13 @@
 #include "AgentStatePanel.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
-#include "gaming/Attributes.h"
 #include "gaming/Contaminations.h"
-#include "gaming/HumanFactors.h"
 #include "gaming/Reinforcements.h"
-#include "gaming/LogisticLinks.h"
 #include "gaming/Transports.h"
 
 using namespace kernel;
@@ -132,11 +130,11 @@ void AgentStatePanel::NotifySelected( const Agent_ABC* agent )
         if( selected_ )
         {
             Show();
-            UpdateExtension< Attributes >( *selected_ );
+            UpdateExtension< Attributes_ABC >( *selected_ );
+            UpdateExtension< HumanFactors_ABC >( *selected_ );
             UpdateExtension< Contaminations >( *selected_ );
-            UpdateExtension< HumanFactors >( *selected_ );
             UpdateExtension< Reinforcements >( *selected_ );
-            if( ! UpdateExtension< LogisticLinks >( *selected_ ) )
+            if( ! UpdateExtension< LogisticLinks_ABC >( *selected_ ) )
                 display_->Group( "Liens logistiques" ).Hide();
             UpdateExtension< Transports >( *selected_ );
         }
@@ -172,7 +170,7 @@ void AgentStatePanel::DisplayIfNeeded( const Extension& extension )
 // Name: AgentStatePanel::NotifyUpdated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyUpdated( const Attributes& attributes )
+void AgentStatePanel::NotifyUpdated( const Attributes_ABC& attributes )
 {
     if( ! ShouldUpdate( attributes ) )
         return;
@@ -194,7 +192,7 @@ void AgentStatePanel::NotifyUpdated( const Contaminations& attributes )
 // Name: AgentStatePanel::NotifyUpdated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyUpdated( const HumanFactors& attributes )
+void AgentStatePanel::NotifyUpdated( const HumanFactors_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }
@@ -212,7 +210,7 @@ void AgentStatePanel::NotifyUpdated( const Reinforcements& attributes )
 // Name: AgentStatePanel::NotifyUpdated
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyUpdated( const LogisticLinks& attributes )
+void AgentStatePanel::NotifyUpdated( const LogisticLinks_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }

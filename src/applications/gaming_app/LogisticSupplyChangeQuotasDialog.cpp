@@ -110,7 +110,8 @@ void LogisticSupplyChangeQuotasDialog::Show()
     while( it.HasMoreElements() )
     {
         const Agent_ABC& agent = it.NextElement();
-        const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
+        // $$$$ AGE 2006-08-24: 
+        const LogisticLinks* log = static_cast< const LogisticLinks* >( agent.Retrieve< LogisticLinks_ABC >() );
         if( log && log->GetSupply() == selected_ )
             targetCombo_->AddItem( agent.GetName(), &agent );
     }

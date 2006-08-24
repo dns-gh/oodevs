@@ -13,13 +13,9 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/ObjectExtensions.h"
 #include "gaming/ObjectKnowledges.h"
 #include "gaming/ObjectKnowledge.h"
-#include "gaming/CampAttributes.h"
-#include "gaming/CrossingSiteAttributes.h"
-#include "gaming/LogisticRouteAttributes.h"
-#include "gaming/NBCAttributes.h"
-#include "gaming/RotaAttributes.h"
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"
 
@@ -59,14 +55,14 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     display_->AddGroup( "Site de franchissement" )
                 .AddLabel( "Largeur:" )
                 .AddLabel( "Profondeur:" )
-                .AddLabel( "Vitesse courant:" )
+                .AddLabel( "Vitesse du courant:" )
                 .AddLabel( "Berges à aménager:" );
 
     display_->AddGroup( "Camp" )
                 .AddLabel( "TC2:" );
 
     display_->AddGroup( "Nuage/Zone NBC" )
-                .AddLabel( "Agent_ABC NBC:" );
+                .AddLabel( "Agent NBC:" );
 
     display_->AddGroup( "ROTA" )
                 .AddLabel( "Danger:" )
@@ -80,7 +76,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( "Poids supporté:" );
 
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( "Agent_ABC" );
+    pPerceptionListView_->AddColumn( "Agent" );
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) );
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
@@ -174,7 +170,7 @@ void ObjectKnowledgePanel::DisplayExtension( const T& extension )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const CampAttributes& element )
+void ObjectKnowledgePanel::NotifyUpdated( const CampAttributes_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -183,7 +179,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const CampAttributes& element )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const CrossingSiteAttributes& element )
+void ObjectKnowledgePanel::NotifyUpdated( const CrossingSiteAttributes_ABC& element )
 {
    DisplayExtension( element );
 }
@@ -192,7 +188,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const CrossingSiteAttributes& element 
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const LogisticRouteAttributes& element )
+void ObjectKnowledgePanel::NotifyUpdated( const LogisticRouteAttributes_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -201,7 +197,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const LogisticRouteAttributes& element
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const NBCAttributes& element )
+void ObjectKnowledgePanel::NotifyUpdated( const NBCAttributes_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -210,7 +206,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const NBCAttributes& element )
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes& element )
+void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes_ABC& element )
 {
     DisplayExtension( element );
 }
@@ -262,11 +258,11 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
         if( subSelected_ )
         {
             NotifyUpdated( *subSelected_ );
-            UpdateExtension< CampAttributes >( *subSelected_ );
-            UpdateExtension< CrossingSiteAttributes >( *subSelected_ );
-            UpdateExtension< LogisticRouteAttributes >( *subSelected_ );
-            UpdateExtension< NBCAttributes >( *subSelected_ );
-            UpdateExtension< RotaAttributes >( *subSelected_ );
+            UpdateExtension< CampAttributes_ABC >( *subSelected_ );
+            UpdateExtension< CrossingSiteAttributes_ABC >( *subSelected_ );
+            UpdateExtension< LogisticRouteAttributes_ABC >( *subSelected_ );
+            UpdateExtension< NBCAttributes_ABC >( *subSelected_ );
+            UpdateExtension< RotaAttributes_ABC >( *subSelected_ );
         }
     }
 }

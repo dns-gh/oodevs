@@ -14,6 +14,7 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/NullDisplayer.h"
 
 namespace kernel
 {
@@ -32,6 +33,10 @@ class Publisher_ABC;
 class ChangeHumanFactorsDialog : public QDialog
                                , public kernel::Observer_ABC
                                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                               , public kernel::NullDisplayer
+                               , public kernel::Caller< E_UnitFatigue >
+                               , public kernel::Caller< E_UnitMoral >
+                               , public kernel::Caller< E_UnitExperience >
 {
     Q_OBJECT
 public:
@@ -64,6 +69,9 @@ private:
     //! @name Helpers
     //@{
     void SendMessage( uint id, ASN1T_EnumUnitFatigue, ASN1T_EnumUnitMoral, ASN1T_EnumUnitExperience );
+    virtual void Call( const E_UnitFatigue& fatigue );
+    virtual void Call( const E_UnitMoral& morale );
+    virtual void Call( const E_UnitExperience& experience );
     //@}
 
 private:

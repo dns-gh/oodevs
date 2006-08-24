@@ -16,14 +16,10 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Units.h"
+#include "clients_kernel/ObjectExtensions.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
-#include "gaming/CampAttributes.h"
-#include "gaming/CrossingSiteAttributes.h"
-#include "gaming/LogisticRouteAttributes.h"
-#include "gaming/NBCAttributes.h"
-#include "gaming/RotaAttributes.h"
 
 #include <qgrid.h>
 
@@ -143,11 +139,11 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             Show();
             display_->Hide();
             NotifyUpdated( *selected_ );
-            UpdateExtension< CampAttributes >( *selected_ );
-            UpdateExtension< CrossingSiteAttributes >( *selected_ );
-            UpdateExtension< LogisticRouteAttributes >( *selected_ );
-            UpdateExtension< NBCAttributes >( *selected_ );
-            UpdateExtension< RotaAttributes >( *selected_ );
+            UpdateExtension< CampAttributes_ABC >( *selected_ );
+            UpdateExtension< CrossingSiteAttributes_ABC >( *selected_ );
+            UpdateExtension< LogisticRouteAttributes_ABC >( *selected_ );
+            UpdateExtension< NBCAttributes_ABC >( *selected_ );
+            UpdateExtension< RotaAttributes_ABC >( *selected_ );
         }
         else
             Hide();
@@ -191,61 +187,57 @@ bool ObjectPanel::ShouldUpdate( const Extension& extension )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPanel::NotifyUpdated
-// Created: AGE 2006-02-17
+// Name: ObjectPanel::DisplayIfNeeded
+// Created: AGE 2006-08-24
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const CampAttributes& attributes )
+template< typename Extension >
+void ObjectPanel::DisplayIfNeeded( const Extension& extension )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-
-    attributes.Display( *display_ );
+    if( ShouldUpdate( extension ) )
+        extension.Display( *display_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes& attributes )
+void ObjectPanel::NotifyUpdated( const CampAttributes_ABC& attributes )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes& attributes )
+void ObjectPanel::NotifyUpdated( const CrossingSiteAttributes_ABC& attributes )
 {
-    if( ! ShouldUpdate( attributes ) )
-        return;
-    
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const NBCAttributes& attributes )
+void ObjectPanel::NotifyUpdated( const LogisticRouteAttributes_ABC& attributes )
 {
-    if( ! ShouldUpdate( attributes) )
-        return;
-
-    attributes.Display( *display_ );
+    DisplayIfNeeded( attributes );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPanel::NotifyUpdated
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const RotaAttributes& attributes )
+void ObjectPanel::NotifyUpdated( const NBCAttributes_ABC& attributes )
 {
-     if( ! ShouldUpdate( attributes ) )
-        return;
+    DisplayIfNeeded( attributes );
+}
 
-    attributes.Display( *display_ );
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const RotaAttributes_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
 }

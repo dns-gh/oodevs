@@ -19,6 +19,11 @@ namespace kernel
 {
     class Object_ABC;
     class Controllers;
+    class NBCAttributes_ABC;
+    class CampAttributes_ABC;
+    class CrossingSiteAttributes_ABC;
+    class LogisticRouteAttributes_ABC;
+    class RotaAttributes_ABC;
 }
 
 namespace gui
@@ -26,12 +31,6 @@ namespace gui
     class DisplayBuilder;
     class ItemFactory_ABC;
 }
-
-class CampAttributes;
-class CrossingSiteAttributes;
-class LogisticRouteAttributes;
-class NBCAttributes;
-class RotaAttributes;
 
 // =============================================================================
 /** @class  ObjectPanel
@@ -42,11 +41,11 @@ class RotaAttributes;
 class ObjectPanel : public gui::InfoPanel_ABC
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Object_ABC >
-                  , public kernel::ElementObserver_ABC< CampAttributes >
-                  , public kernel::ElementObserver_ABC< CrossingSiteAttributes >
-                  , public kernel::ElementObserver_ABC< LogisticRouteAttributes >
-                  , public kernel::ElementObserver_ABC< NBCAttributes >
-                  , public kernel::ElementObserver_ABC< RotaAttributes >
+                  , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttributes_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::NBCAttributes_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::RotaAttributes_ABC >
                   , public kernel::SelectionObserver< kernel::Object_ABC >
 
 {
@@ -77,14 +76,16 @@ private:
 
     virtual void NotifyUpdated( const kernel::Object_ABC& );
     virtual void NotifyDeleted( const kernel::Object_ABC& );
-    virtual void NotifyUpdated( const CampAttributes& attributes );
-    virtual void NotifyUpdated( const CrossingSiteAttributes& attributes );
-    virtual void NotifyUpdated( const LogisticRouteAttributes& attributes );
-    virtual void NotifyUpdated( const NBCAttributes& attributes );
-    virtual void NotifyUpdated( const RotaAttributes& attributes );
+    virtual void NotifyUpdated( const kernel::CampAttributes_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::CrossingSiteAttributes_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::NBCAttributes_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::RotaAttributes_ABC& attributes );
 
     template< typename Extension >
     bool ShouldUpdate( const Extension& extension );
+    template< typename Extension >
+    void DisplayIfNeeded( const Extension& extension );
     template< typename T >
     void UpdateExtension( const kernel::Object_ABC& object );
     //@}

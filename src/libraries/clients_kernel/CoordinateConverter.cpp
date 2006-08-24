@@ -33,7 +33,7 @@ void CoordinateConverter::Load( const std::string& scipioXml )
     geocoord::Geoid::Instance().Initialize( world_.geoid_ );
 
     extent_ = geometry::Rectangle2f( 0, 0, world_.width_, world_.height_ );
-    translation_ = geometry::Vector2f( world_.width_ * 0.5, world_.height_ * 0.5 );
+    translation_ = geometry::Vector2f( world_.width_ * 0.5f, world_.height_ * 0.5f );
     const double rPiOver180 = std::acos( -1. ) / 180.;
     parameters_.SetOrigin( world_.latitude_ * rPiOver180, world_.longitude_ * rPiOver180 );
 }
@@ -67,7 +67,7 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) co
 {
     mgrs_.SetString( mgrs );
     planar_.SetCoordinates( mgrs_ );
-    geometry::Point2f pos( planar_.GetX(), planar_.GetY() );
+    geometry::Point2f pos( float( planar_.GetX() ), float( planar_.GetY() ) );
     return pos + translation_;
 }
 
@@ -77,12 +77,12 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) co
 // -----------------------------------------------------------------------------
 geometry::Point2f CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
 {
-    static const float r180OverPi = 180. / std::acos( -1. );
+    static const float r180OverPi = 180.f / std::acos( -1.f );
     const geometry::Point2f translated = pos - translation_;
     planar_.Set( translated.X(), translated.Y() );
     geodetic_.SetCoordinates( planar_ );
     geometry::Point2f result;
-    result.Set( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude()  * r180OverPi );
+    result.Set( float( geodetic_.GetLongitude() ) * r180OverPi, float( geodetic_.GetLatitude() ) * r180OverPi );
     return result;
 }
 

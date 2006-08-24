@@ -11,7 +11,7 @@
 #define __LogisticLinks_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -31,7 +31,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class LogisticLinks : public kernel::Extension_ABC
+class LogisticLinks : public kernel::LogisticLinks_ABC
                     , public kernel::Updatable_ABC< ASN1T_MsgChangeLiensLogistiquesAck >
                     , public kernel::Updatable_ABC< ASN1T_MsgAutomateCreation >
                     , public kernel::Drawable_ABC
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
 
     kernel::Agent_ABC* GetTC2() const;
     kernel::Agent_ABC* GetMaintenance() const;

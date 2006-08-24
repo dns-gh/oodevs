@@ -157,7 +157,7 @@ void SensorType::InitializePostureSourceFactors( xml::xistream& xis )
 float SensorType::GetPostureSourceFactor( const Agent_ABC& agent ) const
 {
     return 1.f;
-//    return agent.Get< Attributes >().ComputePostureFactor( postureSourceFactors_ );
+//    return agent.Get< Attributes_ABC >().ComputePostureFactor( postureSourceFactors_ );
 }
 
 // -----------------------------------------------------------------------------

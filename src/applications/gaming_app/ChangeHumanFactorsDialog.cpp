@@ -96,17 +96,42 @@ void ChangeHumanFactorsDialog::Show()
     Populate( eNbrUnitMoral, *pMoralCombo_, &ENT_Tr::ConvertFromUnitMoral );
     Populate( eNbrUnitExperience, *pExperienceCombo_, &ENT_Tr::ConvertFromUnitExperience );
 
-    if( const HumanFactors* humanFactors = selected_->Retrieve< HumanFactors >() )
+    if( const HumanFactors_ABC* factors = selected_->Retrieve< HumanFactors_ABC >() )
     {
-        pTirednessCombo_->SetCurrentItem( humanFactors->GetTiredness() );
-        pMoralCombo_->SetCurrentItem( humanFactors->GetMorale() );
-        pExperienceCombo_->SetCurrentItem( humanFactors->GetExperience() );
+        factors->Display( *this );
         if ( selected_->GetAutomatType() )
             pAllUnitsCheckBox_->show();
         else
             pAllUnitsCheckBox_->hide();
         show();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::Call
+// Created: AGE 2006-08-24
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::Call( const E_UnitFatigue& fatigue )
+{
+    pTirednessCombo_->SetCurrentItem( fatigue );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::Call
+// Created: AGE 2006-08-24
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::Call( const E_UnitMoral& morale )
+{
+    pMoralCombo_->SetCurrentItem( morale );
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::Call
+// Created: AGE 2006-08-24
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::Call( const E_UnitExperience& experience )
+{
+    pExperienceCombo_->SetCurrentItem( experience );
 }
 
 // -----------------------------------------------------------------------------

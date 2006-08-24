@@ -57,19 +57,20 @@ ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const AS
     switch( message.type )
     {
     case EnumObjectType::itineraire_logistique:
-        knowledge->Attach( *new LogisticRouteAttributes( controllers_.controller_ ) );
+        knowledge->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( controllers_.controller_ ) );
         break;
     case EnumObjectType::nuage_nbc:
     case EnumObjectType::zone_nbc:
-        knowledge->Attach( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
+        knowledge->Attach< NBCAttributes_ABC >( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
         break;
     case EnumObjectType::rota:
-        knowledge->Attach( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
+        knowledge->Attach< RotaAttributes_ABC >( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
         break;
     case EnumObjectType::site_franchissement:
-        knowledge->Attach( *new CrossingSiteAttributes( controllers_.controller_ ) );
+        knowledge->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
     default:
         ;
     };
+    // $$$$ AGE 2006-08-24: camp ????
     return knowledge;
 }

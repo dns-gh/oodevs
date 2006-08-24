@@ -15,7 +15,6 @@
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "Attributes.h"
 #include "Tools.h"
 
 using namespace kernel;

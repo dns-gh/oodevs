@@ -49,7 +49,7 @@ void CrossingSiteAttributes::UpdateData( const T& message )
         depth_ = message.attributs_specifiques.u.site_franchissement->profondeur;
         speed_ = message.attributs_specifiques.u.site_franchissement->vitesse_courant;
         needsConstruction_ = message.attributs_specifiques.u.site_franchissement->berges_a_amenager;
-        controller_.Update( *this );
+        controller_.Update( *(CrossingSiteAttributes_ABC*)this );
     }
 }
 

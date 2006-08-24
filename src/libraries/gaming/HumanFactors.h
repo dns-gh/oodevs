@@ -11,7 +11,7 @@
 #define __HumanFactors_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
@@ -27,7 +27,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class HumanFactors : public kernel::Extension_ABC
+class HumanFactors : public kernel::HumanFactors_ABC
                    , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors

@@ -49,7 +49,7 @@ void RotaAttributes::UpdateData( const T& message )
         agents_.resize( message.attributs_specifiques.u.rota->agents_nbc.n );
         for( uint i = 0; i < message.attributs_specifiques.u.rota->agents_nbc.n; ++i )
             agents_[ i ] = & resolver_.Get( message.attributs_specifiques.u.rota->agents_nbc.elem[ i ] );
-        controller_.Update( *this );
+        controller_.Update( *(RotaAttributes_ABC*)this );
     }
 }
 

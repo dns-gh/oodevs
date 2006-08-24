@@ -139,7 +139,7 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.refugie_pris_en_comptePresent )
         bRefugeesManaged_ = message.refugie_pris_en_compte;
 
-    controller_.Update( *this );
+    controller_.Update( *(Attributes_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

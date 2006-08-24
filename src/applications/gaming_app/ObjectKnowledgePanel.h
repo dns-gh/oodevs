@@ -20,6 +20,11 @@ namespace kernel
     class Team_ABC;
     class Controllers;
     class Displayer_ABC;
+    class NBCAttributes_ABC;
+    class CampAttributes_ABC;
+    class CrossingSiteAttributes_ABC;
+    class LogisticRouteAttributes_ABC;
+    class RotaAttributes_ABC;
 }
 
 namespace gui
@@ -32,11 +37,6 @@ namespace gui
 
 class ObjectKnowledges;
 class ObjectKnowledge;
-class CampAttributes;
-class CrossingSiteAttributes;
-class LogisticRouteAttributes;
-class NBCAttributes;
-class RotaAttributes;
 class ObjectKnowledges;
 
 // =============================================================================
@@ -49,11 +49,11 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public kernel::Observer_ABC
                            , public kernel::ElementObserver_ABC< ObjectKnowledges >
                            , public kernel::ElementObserver_ABC< ObjectKnowledge >
-                           , public kernel::ElementObserver_ABC< CampAttributes >
-                           , public kernel::ElementObserver_ABC< CrossingSiteAttributes >
-                           , public kernel::ElementObserver_ABC< LogisticRouteAttributes >
-                           , public kernel::ElementObserver_ABC< NBCAttributes >
-                           , public kernel::ElementObserver_ABC< RotaAttributes >
+                           , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttributes_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::NBCAttributes_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::RotaAttributes_ABC >
                            , public TeamSelectionObserver
 {
     Q_OBJECT;
@@ -91,11 +91,11 @@ private:
     void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const ObjectKnowledges& element );
     virtual void NotifyUpdated( const ObjectKnowledge& element );
-    virtual void NotifyUpdated( const CampAttributes& element );
-    virtual void NotifyUpdated( const CrossingSiteAttributes& element );
-    virtual void NotifyUpdated( const LogisticRouteAttributes& element );
-    virtual void NotifyUpdated( const NBCAttributes& element );
-    virtual void NotifyUpdated( const RotaAttributes& element );
+    virtual void NotifyUpdated( const kernel::CampAttributes_ABC& element );
+    virtual void NotifyUpdated( const kernel::CrossingSiteAttributes_ABC& element );
+    virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& element );
+    virtual void NotifyUpdated( const kernel::NBCAttributes_ABC& element );
+    virtual void NotifyUpdated( const kernel::RotaAttributes_ABC& element );
     template< typename T >
     void DisplayExtension( const T& extension );
     template< typename T >

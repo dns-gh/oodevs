@@ -11,7 +11,7 @@
 #define __RotaAttributes_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Resolver_ABC.h"
@@ -29,7 +29,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class RotaAttributes : public kernel::Extension_ABC
+class RotaAttributes : public kernel::RotaAttributes_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                      , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
                      , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:

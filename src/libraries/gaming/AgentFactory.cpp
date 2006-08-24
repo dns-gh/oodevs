@@ -98,8 +98,8 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach( *new Lives( *result ) );
-    result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
+    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
+    result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
@@ -120,7 +120,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
     result->Attach( *new Lives( *result ) );
-    result->Attach( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
+    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
@@ -154,7 +154,7 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico ) );
-    agent.Attach( *new HumanFactors( controllers_.controller_, dico ) );
+    agent.Attach< HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
     agent.Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     agent.Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     agent.Attach( *new Limits( model_.limits_ ) );

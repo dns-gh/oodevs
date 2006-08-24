@@ -61,24 +61,24 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
     {
     case EnumObjectType::camp_prisonniers:
     case EnumObjectType::camp_refugies:
-        result->Attach( *new CampAttributes( controllers_.controller_, model_.agents_ ) );
+        result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_.controller_, model_.agents_ ) );
         result->Update( message );
         break;
     case EnumObjectType::itineraire_logistique:
-        result->Attach( *new LogisticRouteAttributes( controllers_.controller_ ) );
+        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( controllers_.controller_ ) );
         result->Update( message );
         break;
     case EnumObjectType::nuage_nbc:
     case EnumObjectType::zone_nbc:
-        result->Attach( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
+        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
         result->Update( message );
         break;
     case EnumObjectType::rota:
-        result->Attach( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
+        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
         result->Update( message );
         break;
     case EnumObjectType::site_franchissement:
-        result->Attach( *new CrossingSiteAttributes( controllers_.controller_ ) );
+        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
         result->Update( message );
     default:
         ;

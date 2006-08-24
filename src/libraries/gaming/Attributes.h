@@ -11,7 +11,7 @@
 #define __Attributes_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
@@ -30,7 +30,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Attributes : public kernel::Extension_ABC
+class Attributes : public kernel::Attributes_ABC
                  , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                  , public kernel::Drawable_ABC
                  , public kernel::Aggregatable_ABC
@@ -45,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    void Display( kernel::Displayer_ABC& displayer ) const;
-    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     float ComputePostureFactor( const std::vector< float >& factors ) const; // $$$$ AGE 2006-04-19: move in Postures ?

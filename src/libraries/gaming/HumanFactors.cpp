@@ -55,7 +55,7 @@ void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.fatiguePresent )
         tiredness_ = (E_UnitFatigue)message.fatigue;
 
-    controller_.Update( *this );
+    controller_.Update( *(HumanFactors_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

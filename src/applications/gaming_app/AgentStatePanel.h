@@ -19,6 +19,9 @@ namespace kernel
 {
     class Agent_ABC;
     class Controllers;
+    class Attributes_ABC;
+    class LogisticLinks_ABC;
+    class HumanFactors_ABC;
 }
 
 namespace gui
@@ -28,11 +31,8 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class Attributes;
 class Contaminations;
-class HumanFactors;
 class Reinforcements;
-class LogisticLinks;
 class Transports;
 
 // =============================================================================
@@ -40,14 +40,14 @@ class Transports;
 // =============================================================================
 class AgentStatePanel : public gui::InfoPanel_ABC
                       , public kernel::Observer_ABC
-                      , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                      , public kernel::ElementObserver_ABC< Attributes >
-                      , public kernel::ElementObserver_ABC< Contaminations >
-                      , public kernel::ElementObserver_ABC< HumanFactors >
-                      , public kernel::ElementObserver_ABC< Reinforcements >
-                      , public kernel::ElementObserver_ABC< LogisticLinks >
-                      , public kernel::ElementObserver_ABC< Transports >
                       , public kernel::SelectionObserver< kernel::Agent_ABC >
+                      , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+                      , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
+                      , public kernel::ElementObserver_ABC< kernel::LogisticLinks_ABC >
+                      , public kernel::ElementObserver_ABC< kernel::HumanFactors_ABC >
+                      , public kernel::ElementObserver_ABC< Contaminations >
+                      , public kernel::ElementObserver_ABC< Reinforcements >
+                      , public kernel::ElementObserver_ABC< Transports >
 {
 public:
     //! @name Constructors/Destructor
@@ -70,11 +70,11 @@ private:
     //@{
     void showEvent( QShowEvent* );
     virtual void NotifyDeleted( const kernel::Agent_ABC& );
-    virtual void NotifyUpdated( const Attributes& attributes );
+    virtual void NotifyUpdated( const kernel::Attributes_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::LogisticLinks_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::HumanFactors_ABC& attributes );
     virtual void NotifyUpdated( const Contaminations& attributes );
-    virtual void NotifyUpdated( const HumanFactors& attributes );
     virtual void NotifyUpdated( const Reinforcements& attributes );
-    virtual void NotifyUpdated( const LogisticLinks& attributes );
     virtual void NotifyUpdated( const Transports& attributes );
 
     template< typename Extension >

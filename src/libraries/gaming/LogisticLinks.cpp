@@ -114,7 +114,7 @@ void LogisticLinks::UpdateData( const T& message )
     if( message.m.oid_ravitaillementPresent ) {
         idSupply_ = message.oid_ravitaillement; supplySuperior_ = 0;
     }
-    controller_.Update( *this );
+    controller_.Update( *(LogisticLinks_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

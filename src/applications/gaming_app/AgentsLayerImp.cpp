@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AgentsLayerImp.h"
-#include "gaming/Attributes.h"
+#include "clients_kernel/AgentExtensions.h"
 #include "gaming/Reports.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Decisions.h"
@@ -56,7 +56,8 @@ void AgentsLayerImp::AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displ
 void AgentsLayerImp::DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer )
 {
     displayer.Display( "", entity );
-    AddToTooltip< Attributes >      ( entity, displayer );
+    // $$$$ AGE 2006-08-24: Apply Displayable_ABC::DisplayInTooltip
+    AddToTooltip< Attributes_ABC >  ( entity, displayer );
     AddToTooltip< Decisions >       ( entity, displayer );
     AddToTooltip< AutomatDecisions >( entity, displayer );
     AddToTooltip< Reports >         ( entity, displayer );
