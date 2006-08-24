@@ -8,7 +8,4 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-
-#include "gaming/statusicons.cpp"
-#include "clients_kernel/objecticons.cpp"
-#include "clients_gui/resources.cpp"
+#include "icons.h"

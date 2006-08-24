@@ -14,6 +14,7 @@
 //
 //*****************************************************************************
 
+#include "clients_gui_pch.h"
 #include "resources.h"
 
 // Hack to encapsulate the xpm resources in a resources.cpp 
