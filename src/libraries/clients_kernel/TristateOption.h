@@ -14,8 +14,6 @@
 
 namespace kernel
 {
-    template< typename T > class ToolListButton;
-    template< typename T > class OptionMenu;
 
 // =============================================================================
 /** @class  TristateOption

@@ -12,6 +12,7 @@
 #include "GroupDisplayer.h"
 
 using namespace gui;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: DisplayBuilder constructor

@@ -82,7 +82,7 @@ private:
     //@{
     QWidget* CreateView( const kernel::Entity_ABC& agent );
     virtual void NotifyCreated( const Report_ABC& report );
-    void NotifyContextMenu( const kernel::Entity_ABC&, ContextMenu& menu );
+    void NotifyContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& menu );
     void RemoveAgent( const kernel::Entity_ABC& agent );
     //@}
 

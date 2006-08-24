@@ -28,7 +28,7 @@ class KnowledgeLayer : public EntityLayer< KnowledgeType >
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
     virtual ~KnowledgeLayer();
     //@}
 
@@ -41,7 +41,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual bool ShouldDisplay( const Entity_ABC& );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     //@}
 };
 
@@ -50,7 +50,7 @@ private:
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
 template< typename KnowledgeType >
-KnowledgeLayer< KnowledgeType >::KnowledgeLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
     : EntityLayer< KnowledgeType >( controllers, tools, strategy, view )
 {
     // NOTHING
@@ -71,7 +71,7 @@ KnowledgeLayer< KnowledgeType >::~KnowledgeLayer()
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
 template< typename KnowledgeType >
-bool KnowledgeLayer< KnowledgeType >::ShouldDisplay( const Entity_ABC& entity )
+bool KnowledgeLayer< KnowledgeType >::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
     const KnowledgeType& k = static_cast< const KnowledgeType& >( entity );
     return currentTeam_

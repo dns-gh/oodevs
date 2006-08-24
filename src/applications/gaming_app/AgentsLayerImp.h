@@ -18,22 +18,22 @@
 */
 // Created: SBO 2006-08-18
 // =============================================================================
-class AgentsLayerImp : public AgentsLayer
+class AgentsLayerImp : public gui::AgentsLayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayerImp( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             AgentsLayerImp( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
     virtual ~AgentsLayerImp();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const kernel::Agent_ABC& entity, kernel::Displayer_ABC& displayer );
     template< typename Extension >
-    void AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displayer );
+    void AddToTooltip( const kernel::Agent_ABC& entity, kernel::Displayer_ABC& displayer );
     //@}
 };
 

@@ -19,6 +19,7 @@
 #include "ENT/ENT_Tr.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UnitMissionInterface constructor

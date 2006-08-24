@@ -14,6 +14,7 @@
 #include "clients_kernel/Agent_ABC.h"
 
 using namespace geometry;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions constructor

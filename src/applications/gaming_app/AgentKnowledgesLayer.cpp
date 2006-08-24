@@ -10,6 +10,9 @@
 #include "gaming_app_pch.h"
 #include "AgentKnowledgesLayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgesLayer constructor
 // Created: AGE 2006-05-17

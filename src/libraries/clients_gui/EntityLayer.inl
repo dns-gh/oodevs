@@ -15,15 +15,15 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "graphics/MapWidget.h"
 
-using namespace kernel;
-using namespace gui;
+namespace gui
+{
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityLayer< ConcreteEntity >::EntityLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
+EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
     : EntityLayerBase( controllers, tools, view )
     , controllers_( controllers )
     , strategy_( strategy )
@@ -87,7 +87,7 @@ void EntityLayer< ConcreteEntity >::NotifySelected( const ConcreteEntity* entity
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::SelectColor( const Entity_ABC& entity )
+void EntityLayer< ConcreteEntity >::SelectColor( const kernel::Entity_ABC& entity )
 {
     strategy_.SelectColor( static_cast< const ConcreteEntity& >( entity ) );
 }
@@ -97,7 +97,7 @@ void EntityLayer< ConcreteEntity >::SelectColor( const Entity_ABC& entity )
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Team_ABC& team )
+bool EntityLayer< ConcreteEntity >::IsInTeam( const kernel::Entity_ABC& entity, const kernel::Team_ABC& team )
 {
     return static_cast< const ConcreteEntity& >( entity ).IsInTeam( team );
 }
@@ -107,7 +107,7 @@ bool EntityLayer< ConcreteEntity >::IsInTeam( const Entity_ABC& entity, const Te
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
+void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
 {
     controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( entity ), geoPoint, point );
 }
@@ -117,7 +117,7 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const Entity_ABC& entity, const
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-bool EntityLayer< ConcreteEntity >::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer )
+bool EntityLayer< ConcreteEntity >::DisplayTooltip( const kernel::Entity_ABC& entity, kernel::Displayer_ABC& displayer )
 {
     DisplayTooltip( static_cast< const ConcreteEntity& >( entity ), displayer );
     return EntityLayerBase::DisplayTooltip( entity, displayer );
@@ -128,7 +128,9 @@ bool EntityLayer< ConcreteEntity >::DisplayTooltip( const Entity_ABC& entity, Di
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::DisplayTooltip( const ConcreteEntity& , Displayer_ABC& )
+void EntityLayer< ConcreteEntity >::DisplayTooltip( const ConcreteEntity&, kernel::Displayer_ABC& )
 {
     // NOTHING
+}
+
 }

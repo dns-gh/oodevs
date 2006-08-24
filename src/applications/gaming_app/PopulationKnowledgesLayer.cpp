@@ -10,6 +10,9 @@
 #include "gaming_app_pch.h"
 #include "PopulationKnowledgesLayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledgesLayer constructor
 // Created: AGE 2006-05-18

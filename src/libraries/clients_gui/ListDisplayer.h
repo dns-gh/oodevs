@@ -49,25 +49,25 @@ public:
         return *this;
     }
     template< typename Element >
-    ValuedListItem* DisplayList( Iterator< const Element& > it ) {
+    ValuedListItem* DisplayList( kernel::Iterator< const Element& > it ) {
         if( it.HasMoreElements() )
             show();
         return T_Parent::Display( it, this, (ValuedListItem*)( firstChild() ) );
     }
     template< typename Element >
-    ValuedListItem* DisplayList( Iterator< const Element& > it, QListViewItem* parent ) {
+    ValuedListItem* DisplayList( kernel::Iterator< const Element& > it, QListViewItem* parent ) {
         if( it.HasMoreElements() )
             show();
         return T_Parent::Display( it, parent, (ValuedListItem*)( parent->firstChild() ) );
     }
     template< typename Element >
-    ValuedListItem* DisplayList( Iterator< const Element& > it, QListView* parent, ValuedListItem* at ) {
+    ValuedListItem* DisplayList( kernel::Iterator< const Element& > it, QListView* parent, ValuedListItem* at ) {
         if( it.HasMoreElements() )
             show();
         return T_Parent::Display( it, parent, at );
     }
     template< typename Element >
-    ValuedListItem* DisplayList( Iterator< const Element& > it, ValuedListItem* parent, ValuedListItem* at ) {
+    ValuedListItem* DisplayList( kernel::Iterator< const Element& > it, ValuedListItem* parent, ValuedListItem* at ) {
         if( it.HasMoreElements() )
             show();
         return T_Parent::Display( it, parent, at );
@@ -103,7 +103,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    Displayer_ABC& GetItemDisplayer( ValuedListItem* item ) { return itemDisplayer_( item ); };
+    kernel::Displayer_ABC& GetItemDisplayer( ValuedListItem* item ) { return itemDisplayer_( item ); };
     //@}
 
 private:

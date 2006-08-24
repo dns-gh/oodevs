@@ -13,6 +13,7 @@
 #include "ItemFactory_ABC.h"
 
 using namespace gui;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: SubItemDisplayer constructor

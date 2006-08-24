@@ -9,7 +9,8 @@
 
 #include "Formatter.h"
 
-using namespace kernel;
+namespace kernel
+{
 
 // -----------------------------------------------------------------------------
 // Name: Displayer_ABC::Display
@@ -104,4 +105,6 @@ inline
 void Displayer_ABC::AddToDisplay( const QString& element )
 {
     DisplayFormatted( element );
+}
+
 }

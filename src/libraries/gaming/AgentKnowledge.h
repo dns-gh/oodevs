@@ -86,27 +86,27 @@ public:
     const kernel::Team_ABC* team_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?
-    OptionalValue< std::string >                strPosition_;
-    OptionalValue< uint >                       nDirection_;
-    OptionalValue< uint >                       nSpeed_;
-    OptionalValue< uint >                       nEtatOps_;
-    OptionalValue< E_PerceptionResult >         nCurrentPerceptionLevel_;
-    OptionalValue< E_PerceptionResult >         nMaxPerceptionLevel_;
-    OptionalValue< E_NatureLevel >              nLevel_;
-    OptionalValue< E_UnitNatureWeapon >         nWeapon_;
-    OptionalValue< E_UnitNatureSpecialization > nSpecialization_;
-    OptionalValue< E_UnitNatureQualifier >      nQualifier_;
-    OptionalValue< E_UnitNatureCategory >       nCategory_;
-    OptionalValue< E_UnitNatureMobility >       nMobility_;
-    OptionalValue< E_UnitCapaciteMission >      nCapacity_;
-    OptionalValue< bool >                       bIsPC_;
-    OptionalValue< bool >                       bSurrendered_;
-    OptionalValue< bool >                       bPrisonner_;
-    OptionalValue< bool >                       bRefugies_;
-    OptionalValue< uint >                       nRelevance_;
+    kernel::OptionalValue< std::string >                strPosition_;
+    kernel::OptionalValue< uint >                       nDirection_;
+    kernel::OptionalValue< uint >                       nSpeed_;
+    kernel::OptionalValue< uint >                       nEtatOps_;
+    kernel::OptionalValue< kernel::E_PerceptionResult >         nCurrentPerceptionLevel_;
+    kernel::OptionalValue< kernel::E_PerceptionResult >         nMaxPerceptionLevel_;
+    kernel::OptionalValue< E_NatureLevel >              nLevel_;
+    kernel::OptionalValue< E_UnitNatureWeapon >         nWeapon_;
+    kernel::OptionalValue< E_UnitNatureSpecialization > nSpecialization_;
+    kernel::OptionalValue< E_UnitNatureQualifier >      nQualifier_;
+    kernel::OptionalValue< E_UnitNatureCategory >       nCategory_;
+    kernel::OptionalValue< E_UnitNatureMobility >       nMobility_;
+    kernel::OptionalValue< E_UnitCapaciteMission >      nCapacity_;
+    kernel::OptionalValue< bool >                       bIsPC_;
+    kernel::OptionalValue< bool >                       bSurrendered_;
+    kernel::OptionalValue< bool >                       bPrisonner_;
+    kernel::OptionalValue< bool >                       bRefugies_;
+    kernel::OptionalValue< uint >                       nRelevance_;
 
 private:
-    static IDManager idManager_;
+    static kernel::IDManager idManager_;
 };
 
 #endif // __AgentKnowledge_h_

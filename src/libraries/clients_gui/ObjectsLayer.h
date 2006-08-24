@@ -22,7 +22,7 @@ namespace gui
 */
 // Created: AGE 2006-03-23
 // =============================================================================
-class ObjectsLayer : public EntityLayer< Object_ABC >
+class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
 {
 
 public:

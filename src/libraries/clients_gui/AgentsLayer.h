@@ -26,7 +26,7 @@ namespace gui
 // =============================================================================
 class AgentsLayer : public QObject
                   , public EntityLayer< kernel::Agent_ABC >
-                  , public ContextMenuObserver_ABC< kernel::Agent_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 

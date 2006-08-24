@@ -18,20 +18,20 @@
 */
 // Created: SBO 2006-08-21
 // =============================================================================
-class PopulationsLayerImp : public PopulationsLayer
+class PopulationsLayerImp : public gui::PopulationsLayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsLayerImp( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             PopulationsLayerImp( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
     virtual ~PopulationsLayerImp();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    virtual void DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer );
+    virtual void DisplayTooltip( const kernel::Population_ABC& entity, kernel::Displayer_ABC& displayer );
     //@}
 };
 

@@ -49,18 +49,14 @@ private:
     //@}
 };
 
-}
-
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: AgentList constructor
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
 template< typename List >
-AgentList< List >::AgentList( Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory )
+AgentList< List >::AgentList( kernel::Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory )
 {
-    new EntitySearchBox< Agent_ABC >( this, controllers );
+    new EntitySearchBox< kernel::Agent_ABC >( this, controllers );
     new List( this, controllers, publisher, factory );
 }
 
@@ -74,5 +70,6 @@ AgentList< List >::~AgentList()
     // NOTHING
 }
 
+}
 
 #endif // __AgentList_h_

@@ -12,6 +12,9 @@
 #include "gaming/Reports.h"
 #include "gaming/Population.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationsLayerImp constructor
 // Created: SBO 2006-08-21

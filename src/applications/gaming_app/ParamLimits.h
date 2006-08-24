@@ -36,8 +36,8 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void SetOptional( bool );
-    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const;
-    virtual void RegisterIn( ActionController& controller );
+    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const kernel::GlTools_ABC& tools ) const;
+    virtual void RegisterIn( kernel::ActionController& controller );
     virtual bool CheckValidity();
     virtual void Commit();
     //@}

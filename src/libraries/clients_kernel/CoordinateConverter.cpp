@@ -60,7 +60,7 @@ std::string CoordinateConverter::ConvertToMgrs( const geometry::Point2f& pos ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: CoordinateConverter::DoConvertToXY
+// Name: CoordinateConverter::ConvertToXY
 // Created: SBO 2006-08-23
 // -----------------------------------------------------------------------------
 geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) const

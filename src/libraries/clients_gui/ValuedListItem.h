@@ -104,7 +104,7 @@ ValuedListItem* FindItem( const T& searched, QListViewItem* root )
 // Created: SBO 2006-08-03
 // -----------------------------------------------------------------------------
 template< typename T >
-ValuedListItem* FindItem( const SafePointer< T >& searched, QListViewItem* root )
+ValuedListItem* FindItem( const kernel::SafePointer< T >& searched, QListViewItem* root )
 {
     return FindItem( (const T*)searched, root );
 }

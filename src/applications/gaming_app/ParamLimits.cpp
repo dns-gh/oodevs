@@ -11,6 +11,8 @@
 #include "ParamLimits.h"
 #include "gaming/Limit.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: ParamLimits constructor
 // Created: AGE 2006-03-24

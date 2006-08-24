@@ -19,13 +19,13 @@
 */
 // Created: AGE 2006-05-17
 // =============================================================================
-class AgentKnowledgesLayer : public KnowledgeLayer< AgentKnowledge >
+class AgentKnowledgesLayer : public gui::KnowledgeLayer< AgentKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             AgentKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
     virtual ~AgentKnowledgesLayer();
     //@}
 

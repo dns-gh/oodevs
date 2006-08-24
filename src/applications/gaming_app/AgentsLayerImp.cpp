@@ -15,6 +15,9 @@
 #include "gaming/Decisions.h"
 #include "clients_kernel/Displayer_ABC.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayerImp constructor
 // Created: SBO 2006-08-18

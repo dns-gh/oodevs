@@ -51,8 +51,6 @@ private:
     //@}
 };
 
-using namespace gui;
-
 // -----------------------------------------------------------------------------
 // Name: ParamComboBox constructor
 // Created: APE 2004-04-21
@@ -64,7 +62,7 @@ ParamComboBox<T>::ParamComboBox( QWidget* parent, T& asn, const QString& label )
 {
     QLabel* pLabel = new QLabel( label, this );
     pLabel->setAlignment( AlignVCenter | AlignLeft );
-    pComboBox_ = new ValuedComboBox<T>( this );
+    pComboBox_ = new gui::ValuedComboBox<T>( this );
     pComboBox_->setSorting( true );
 }
 

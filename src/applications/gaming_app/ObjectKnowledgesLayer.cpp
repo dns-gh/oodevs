@@ -10,6 +10,9 @@
 #include "gaming_app_pch.h"
 #include "ObjectKnowledgesLayer.h"
 
+using namespace kernel;
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgesLayer constructor
 // Created: AGE 2006-05-18

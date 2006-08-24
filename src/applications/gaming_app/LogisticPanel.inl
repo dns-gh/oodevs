@@ -7,27 +7,24 @@
 //
 // *****************************************************************************
 
-using namespace kernel;
-using namespace gui;
-
 // -----------------------------------------------------------------------------
 // Name: LogisticPanel constructor
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
 template< typename ConcretePanel, typename Consign >
-LogisticPanel< ConcretePanel, Consign >::LogisticPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory, const QString& tabName )
-    : InfoPanel_ABC( parent, panel, tabName )
+LogisticPanel< ConcretePanel, Consign >::LogisticPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const QString& tabName )
+    : gui::InfoPanel_ABC( parent, panel, tabName )
     , selected_( controllers )
 {
-    pConsignListView_ = new ListDisplayer< ConcretePanel >( this, (ConcretePanel&)*this, factory );
+    pConsignListView_ = new gui::ListDisplayer< ConcretePanel >( this, (ConcretePanel&)*this, factory );
     pConsignListView_->AddColumn( "Demandes logistiques" );
     pConsignListView_->AddColumn( "" );
 
-    pConsignHandledListView_ = new ListDisplayer< ConcretePanel >( this, (ConcretePanel&)*this, factory );
+    pConsignHandledListView_ = new gui::ListDisplayer< ConcretePanel >( this, (ConcretePanel&)*this, factory );
     pConsignHandledListView_->AddColumn( "Consignes en traitement" );
     pConsignHandledListView_->AddColumn( "" );
 
-    logDisplay_ = new SubItemDisplayer( "Consigne :", factory );
+    logDisplay_ = new gui::SubItemDisplayer( "Consigne :", factory );
     logDisplay_->AddChild( "Pion demandeur :" )
                 .AddChild( "Pion traitant :" );
 }
@@ -69,7 +66,7 @@ void LogisticPanel< ConcretePanel, Consign >::showEvent( QShowEvent* )
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
 template< typename ConcretePanel, typename Consign >
-void LogisticPanel< ConcretePanel, Consign >::NotifySelected( const Agent_ABC* agent )
+void LogisticPanel< ConcretePanel, Consign >::NotifySelected( const kernel::Agent_ABC* agent )
 {
     if( ! agent || agent != selected_ )
     {
@@ -106,7 +103,7 @@ void LogisticPanel< ConcretePanel, Consign >::NotifyUpdated( const LogisticConsi
 template< typename ConcretePanel, typename Consign >
 void LogisticPanel< ConcretePanel, Consign >::NotifyUpdated( const Consign& consign )
 {
-    ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
+    gui::ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
     if( ! item )
         item = FindItem( &consign, pConsignHandledListView_->firstChild() );
     if( item )
@@ -129,7 +126,7 @@ bool LogisticPanel< ConcretePanel, Consign >::ShouldUpdate( const Extension& e )
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
 template< typename ConcretePanel, typename Consign >
-Displayer_ABC& LogisticPanel< ConcretePanel, Consign >::GetDisplayer( ValuedListItem* item )
+kernel::Displayer_ABC& LogisticPanel< ConcretePanel, Consign >::GetDisplayer( gui::ValuedListItem* item )
 {
     return (*logDisplay_)( item );
 }

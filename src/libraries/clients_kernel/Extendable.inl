@@ -10,7 +10,8 @@
 #include <stdexcept>
 #include <string>
 
-using namespace kernel;
+namespace kernel
+{
 
 template< typename BaseType >
 unsigned int Extendable< BaseType >::id_ = 0;
@@ -125,4 +126,6 @@ const Extension& Extendable< BaseType >::Get() const
     if( ! ext )
         throw std::runtime_error( std::string( "Extension " ) + typeid( Extension ).name() + " does not exist in " + typeid( *this ).name() );
     return *ext;
+}
+
 }

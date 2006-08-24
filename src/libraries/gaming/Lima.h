@@ -62,7 +62,7 @@ private:
 public:
     //! @name Member data
     //@{
-    static IDManager idManager_;
+    static kernel::IDManager idManager_;
 
 private:
     kernel::Controller& controller_;

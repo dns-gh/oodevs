@@ -19,13 +19,13 @@
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class ObjectKnowledgesLayer : public KnowledgeLayer< ObjectKnowledge >
+class ObjectKnowledgesLayer : public gui::KnowledgeLayer< ObjectKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             ObjectKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
     virtual ~ObjectKnowledgesLayer();
     //@}
 

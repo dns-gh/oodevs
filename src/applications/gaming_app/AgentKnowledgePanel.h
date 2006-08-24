@@ -93,7 +93,7 @@ private slots:
 private:
     //! @name Member data
     //@{
-    Controllers& controllers_;
+    kernel::Controllers& controllers_;
 
     gui::ListDisplayer< AgentKnowledgePanel >* pKnowledgeListView_;
     gui::DisplayBuilder* display_;

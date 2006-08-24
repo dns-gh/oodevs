@@ -68,7 +68,7 @@ private:
     //@}
 
 private:
-    static IDManager     idManager_;
+    static kernel::IDManager     idManager_;
 };
 
 #endif // __KnowledgeGroup_h_

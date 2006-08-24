@@ -99,7 +99,7 @@ private:
     //! @name Member data
     //@{
     bool selecting_;
-    ::ContextMenu menu_;
+    kernel::ContextMenu menu_;
     //@}
 
 };

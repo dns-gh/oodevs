@@ -19,13 +19,13 @@
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class PopulationKnowledgesLayer : public KnowledgeLayer< PopulationKnowledge >
+class PopulationKnowledgesLayer : public gui::KnowledgeLayer< PopulationKnowledge >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             PopulationKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
     virtual ~PopulationKnowledgesLayer();
     //@}
 

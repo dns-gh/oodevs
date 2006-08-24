@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     template< typename Element, typename Parent >
-    ValuedListItem* Display( Iterator< const Element& > it, Parent* parent, ValuedListItem* currentItem = 0 )
+    ValuedListItem* Display( kernel::Iterator< const Element& > it, Parent* parent, ValuedListItem* currentItem = 0 )
     {
         if( ! parent )
             throw std::runtime_error( "Missing parent !" );

@@ -12,6 +12,7 @@
 #include <qpainter.h>
 
 using namespace gui;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: GlTooltip constructor

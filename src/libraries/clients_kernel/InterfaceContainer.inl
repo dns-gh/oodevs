@@ -11,7 +11,8 @@
 #include <string>
 #include <algorithm>
 
-using namespace kernel;
+namespace kernel
+{
 
 template< typename BaseType >
 unsigned int InterfaceContainer< BaseType >::id_ = 0;
@@ -224,4 +225,6 @@ unsigned InterfaceContainer< BaseType >::Apply( Method method, T1& arg1, T2& arg
         (*imp.*method)( arg1, arg2, arg3 );
     }
     return implementations->second.size();
+}
+
 }

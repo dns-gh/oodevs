@@ -56,17 +56,12 @@ private:
     //@}
 };
 
-}
-
-using namespace kernel;
-using namespace gui;
-
 // -----------------------------------------------------------------------------
 // Name: EntitySearchBox constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 template< typename Entity >
-EntitySearchBox< Entity >::EntitySearchBox( QWidget* pParent, Controllers& controllers )
+EntitySearchBox< Entity >::EntitySearchBox( QWidget* pParent, kernel::Controllers& controllers )
     : EntitySearchBox_ABC( pParent, controllers.actions_ )
     , controllers_( controllers )
 {
@@ -103,5 +98,6 @@ void EntitySearchBox< Entity >::NotifyDeleted( const Entity& entity )
     RemoveItem( entity );
 }
 
+}
 
 #endif // __EntitySearchBox_h_

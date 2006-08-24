@@ -7,9 +7,6 @@
 //
 // *****************************************************************************
 
-using namespace kernel;
-using namespace gui;
-
 // -----------------------------------------------------------------------------
 // Name: EntityListParameter constructor
 // Created: AGE 2006-03-14
@@ -39,7 +36,7 @@ EntityListParameter< ConcreteEntity >::~EntityListParameter()
 template< typename ConcreteEntity >
 void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity )
 {
-    delete FindItem( &entity, firstChild() );
+    delete gui::FindItem( &entity, firstChild() );
     if( &entity == potential_ )
         potential_ = 0;
 }
@@ -49,9 +46,9 @@ void EntityListParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity&
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, ContextMenu& menu )
+void EntityListParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu )
 {
-    if( ! FindItem( &entity, firstChild() ) )
+    if( ! gui::FindItem( &entity, firstChild() ) )
     {
         potential_ = &entity;
         AddToMenu( menu );
@@ -67,7 +64,7 @@ void EntityListParameter< ConcreteEntity >::MenuItemValidated()
 {
     if( potential_ )
     {
-        ValuedListItem* item = new ValuedListItem( this );
+        gui::ValuedListItem* item = new gui::ValuedListItem( this );
         item->SetNamed( *potential_ );
     }
 }
@@ -77,7 +74,7 @@ void EntityListParameter< ConcreteEntity >::MenuItemValidated()
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-unsigned long EntityListParameter< ConcreteEntity >::GetId( ValuedListItem* item )
+unsigned long EntityListParameter< ConcreteEntity >::GetId( gui::ValuedListItem* item )
 {
     return item->GetValue< const ConcreteEntity* >()->GetId();
 }

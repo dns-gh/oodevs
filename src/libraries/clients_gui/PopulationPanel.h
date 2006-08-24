@@ -51,7 +51,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifySelected( const kernel::Population_ABC* popu );
-    void Display( const PopulationPart_ABC& part, kernel::Displayer_ABC& displayer, ValuedListItem* );
+    void Display( const kernel::PopulationPart_ABC& part, kernel::Displayer_ABC& displayer, ValuedListItem* );
     //@}
 
 private:

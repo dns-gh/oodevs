@@ -59,14 +59,16 @@ private:
 }
 
 #include "Controllers.h"
-using namespace kernel;
+
+namespace kernel
+{
 
 // -----------------------------------------------------------------------------
 // Name: SafePointer constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 template< typename T >
-SafePointer< T >::SafePointer( Controllers& controllers, const T* element /*= 0*/ )
+SafePointer< T >::SafePointer( kernel::Controllers& controllers, const T* element /*= 0*/ )
     : controllers_( &controllers )
     , element_( element )
 {
@@ -92,6 +94,8 @@ void SafePointer< T >::NotifyDeleted( const T& element )
 {
     if( &element == element_ )
         element_ = 0;
+}
+
 }
 
 #endif // __SafePointer_h_

@@ -24,7 +24,7 @@ namespace kernel
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class PopulationConcentration : public PopulationConcentration_ABC
+class PopulationConcentration : public kernel::PopulationConcentration_ABC
                               , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
                               , public kernel::Drawable_ABC
                               , public kernel::Positions
