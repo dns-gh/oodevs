@@ -83,10 +83,9 @@
 
     <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
-                   libs="tools,HLA,libFedTime,masalloc,paranoia
-                         MT_Tools_Scipio,ASN,
-                         simulation_terrain,simulation_kernel,simulation_missions,
-                         asn1per,xerces-c_2">
+                   libs="HLA,libFedTime,masalloc,paranoia
+                         MT_Tools_Scipio,ASN,asn1per,
+                         simulation_terrain,simulation_kernel,simulation_missions">
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${libraries.dir}/simulation_kernel"/>
@@ -99,7 +98,7 @@
 
     <target name="application.simulation_tester" description="build Astec Simulation Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
         <build-app name="simulation_tester" subsystem="console" depends="mt,din,terrain"
-                   libs="MT_Tools_SCIPIO,ASN,asn1per,xerces-c_2"
+                   libs="MT_Tools_SCIPIO,ASN,asn1per"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
             <includepath path="${applications.dir}/simulation_tester"/>
             <includepath path="${include.dir}/ASN"/>
@@ -107,14 +106,14 @@
     </target>
 
     <target name="application.adaptation_app" description="build Astec Adaptation executable" depends="library.ENT,library.MT_Tools_Scipio">
-        <build-app name="adaptation_app" depends="mt,qt" libs="ENT,xerces-c_2" pch-excludes="qtundo.cpp">
+        <build-app name="adaptation_app" depends="mt,qt" libs="ENT" pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32, user32"/>
         </build-app>
     </target>
 
     <target name="application.gaming_app" description="build Astec Gaming executable" depends="library.gaming">
         <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="tools,ASN,ENT,gaming,clients_gui,clients_kernel,asn1per">
+                   libs="ASN,ENT,gaming,clients_gui,clients_kernel,asn1per">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
@@ -122,20 +121,20 @@
 
     <target name="application.preparation_app" description="build Astec Gaming executable" depends="library.preparation,library.gaming">
         <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="tools,ASN,ENT,preparation,clients_gui,clients_kernel,asn1per,gaming"><!-- $$$ temporary, dependency to gaming will disapear -->
+                   libs="ASN,ENT,preparation,clients_gui,clients_kernel,asn1per,gaming"><!-- $$$ temporary, dependency to gaming will disapear -->
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
     </target>
 
     <target name="application.AGR" description="build AGR executable">
-        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost" libs="xerces-c_2">
+        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="mt,boost">
             <syslibset libs="user32"/>
         </build-app>
     </target>
 
     <target name="application.ScriptCompiler" description="build Astec ScriptCompiler executable" depends="library.MT_Tools_Scipio">
-        <build-app name="ScriptCompiler" subsystem="console" depends="mt,dia3" libs="MT_Tools_Scipio,xerces-c_2"/>
+        <build-app name="ScriptCompiler" subsystem="console" depends="mt,dia3" libs="MT_Tools_Scipio"/>
     </target>
 
     <!--
