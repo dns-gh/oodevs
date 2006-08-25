@@ -8,31 +8,30 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "AgentsLayerImp.h"
+#include "AgentsLayer.h"
 #include "clients_kernel/AgentExtensions.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include "gaming/Reports.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Decisions.h"
-#include "clients_kernel/Displayer_ABC.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayerImp constructor
+// Name: AgentsLayer constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentsLayerImp::AgentsLayerImp( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : AgentsLayer( controllers, tools, strategy, view )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view )
+    : gui::AgentsLayer( controllers, tools, strategy, view )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: AgentsLayerImp destructor
+// Name: AgentsLayer destructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentsLayerImp::~AgentsLayerImp()
+AgentsLayer::~AgentsLayer()
 {
     // NOTHING
 }
@@ -43,17 +42,17 @@ AgentsLayerImp::~AgentsLayerImp()
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
 template< typename Extension >
-void AgentsLayerImp::AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displayer )
+void AgentsLayer::AddToTooltip( const Agent_ABC& entity, Displayer_ABC& displayer )
 {
     if( const Extension* extension = entity.Retrieve< Extension >() )
         extension->DisplayInTooltip( displayer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayerImp::DisplayTooltip
+// Name: AgentsLayer::DisplayTooltip
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentsLayerImp::DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer )
+void AgentsLayer::DisplayTooltip( const Agent_ABC& entity, Displayer_ABC& displayer )
 {
     displayer.Display( "", entity );
     // $$$$ AGE 2006-08-24: Apply Displayable_ABC::DisplayInTooltip

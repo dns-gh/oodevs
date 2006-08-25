@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentsLayer_h_
-#define __AgentsLayer_h_
+#ifndef __Gui_AgentsLayer_h_
+#define __Gui_AgentsLayer_h_
 
 #include "EntityLayer.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -80,4 +80,4 @@ private:
 
 }
 
-#endif // __AgentsLayer_h_
+#endif // __Gui_AgentsLayer_h_

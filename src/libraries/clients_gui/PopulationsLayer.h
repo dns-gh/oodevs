@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __PopulationsLayer_h_
-#define __PopulationsLayer_h_
+#ifndef __Gui_PopulationsLayer_h_
+#define __Gui_PopulationsLayer_h_
 
 #include "EntityLayer.h"
 #include "clients_kernel/Population_ABC.h"
@@ -48,4 +48,4 @@ private:
 
 }
 
-#endif // __PopulationsLayer_h_
+#endif // __Gui_PopulationsLayer_h_

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentListViewImp_h_
-#define __AgentListViewImp_h_
+#ifndef __AgentListView_h_
+#define __AgentListView_h_
 
 #include "clients_gui/AgentListView.h"
 
@@ -16,20 +16,20 @@ class Publisher_ABC;
 class AutomatDecisions;
 
 // =============================================================================
-/** @class  AgentListViewImp
-    @brief  AgentListViewImp
+/** @class  AgentListView
+    @brief  AgentListView
 */
 // Created: SBO 2006-08-18
 // =============================================================================
-class AgentListViewImp : public gui::AgentListView
-                       , public kernel::ElementObserver_ABC< AutomatDecisions >
+class AgentListView : public gui::AgentListView
+                    , public kernel::ElementObserver_ABC< AutomatDecisions >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListViewImp( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory );
-    virtual ~AgentListViewImp();
+             AgentListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory );
+    virtual ~AgentListView();
     //@}
 
     //! @name Operations
@@ -52,4 +52,4 @@ private:
     //@}
 };
 
-#endif // __AgentListViewImp_h_
+#endif // __AgentListView_h_

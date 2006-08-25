@@ -8,37 +8,36 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "PopulationsLayerImp.h"
+#include "PopulationsLayer.h"
 #include "gaming/Reports.h"
 #include "gaming/Population.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayerImp constructor
+// Name: PopulationsLayer constructor
 // Created: SBO 2006-08-21
 // -----------------------------------------------------------------------------
-PopulationsLayerImp::PopulationsLayerImp( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : PopulationsLayer( controllers, tools, strategy, view )
+PopulationsLayer::PopulationsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view )
+    : gui::PopulationsLayer( controllers, tools, strategy, view )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayerImp destructor
+// Name: PopulationsLayer destructor
 // Created: SBO 2006-08-21
 // -----------------------------------------------------------------------------
-PopulationsLayerImp::~PopulationsLayerImp()
+PopulationsLayer::~PopulationsLayer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayerImp::DisplayTooltip
+// Name: PopulationsLayer::DisplayTooltip
 // Created: SBO 2006-08-21
 // -----------------------------------------------------------------------------
-void PopulationsLayerImp::DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer )
+void PopulationsLayer::DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer )
 {
     const Population* popu = dynamic_cast< const Population* >( &entity ); // $$$$ AGE 2006-08-07: 
     if( popu )

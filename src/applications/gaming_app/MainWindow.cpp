@@ -25,9 +25,9 @@
 #include "SIMControlToolbar.h"
 #include "UnitToolbar.h"
 #include "LinkInterpreter.h"
-#include "AgentListViewImp.h"
-#include "AgentsLayerImp.h"
-#include "PopulationsLayerImp.h"
+#include "AgentListView.h"
+#include "AgentsLayer.h"
+#include "PopulationsLayer.h"
 #include "AgentKnowledgesLayer.h"
 #include "PopulationKnowledgesLayer.h"
 #include "MeteoLayer.h"
@@ -130,7 +130,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new AgentList< AgentListViewImp >( controllers, publisher, *factory ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new AgentList< ::AgentListView >( controllers, publisher, *factory ), tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
@@ -164,7 +164,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    AgentsLayer*     agentsLayer = new AgentsLayerImp( controllers, *glProxy_, *strategy_, *glProxy_ );
+    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_ );
 
      // Mission panel
     MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_ );
@@ -226,7 +226,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup )
+void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, gui::AgentsLayer& agents, GraphicSetup_ABC& setup )
 {
     CircularEventStrategy* eventStrategy = new CircularEventStrategy();
     eventStrategy_ = eventStrategy;
@@ -239,7 +239,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.limits_ );
     Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
-    Layer_ABC& populations          = *new PopulationsLayerImp( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
     Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
     Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
     Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );

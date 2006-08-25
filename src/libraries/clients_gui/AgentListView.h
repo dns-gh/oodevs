@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentListView_h_
-#define __AgentListView_h_
+#ifndef __Gui_AgentListView_h_
+#define __Gui_AgentListView_h_
 
 #include "ListView.h"
 #include "clients_kernel/ElementObserver_ABC.h"
@@ -140,4 +140,4 @@ private:
 
 }
 
-#endif // __AgentListView_h_
+#endif // __Gui_AgentListView_h_

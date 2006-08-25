@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "AgentListViewImp.h"
+#include "AgentListView.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -16,33 +16,32 @@
 #include "gaming/ASN_Messages.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: AgentListViewImp constructor
+// Name: AgentListView constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentListViewImp::AgentListViewImp( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, ItemFactory_ABC& factory )
-    : AgentListView( pParent, controllers, factory )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory )
+    : gui::AgentListView( pParent, controllers, factory )
     , publisher_( publisher )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: AgentListViewImp destructor
+// Name: AgentListView destructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentListViewImp::~AgentListViewImp()
+AgentListView::~AgentListView()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListViewImp::Display
+// Name: AgentListView::Display
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentListViewImp::Display( const Agent_ABC& agent, ValuedListItem* item )
+void AgentListView::Display( const Agent_ABC& agent, gui::ValuedListItem* item )
 {
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
@@ -50,25 +49,25 @@ void AgentListViewImp::Display( const Agent_ABC& agent, ValuedListItem* item )
         const QPixmap pix = decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye );
         item->setPixmap( 0, pix );
     }
-    AgentListView::Display( agent, item );
+    gui::AgentListView::Display( agent, item );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListViewImp::NotifyUpdated
+// Name: AgentListView::NotifyUpdated
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentListViewImp::NotifyUpdated( const AutomatDecisions& decisions )
+void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
-    ValuedListItem* item = FindItem( & decisions.GetAgent(), firstChild() );
+    gui::ValuedListItem* item = gui::FindItem( & decisions.GetAgent(), firstChild() );
     if( item )
         item->setPixmap( 0, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListViewImp::Drop
+// Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListViewImp::Drop( const Agent_ABC& item, const Agent_ABC& target )
+bool AgentListView::Drop( const Agent_ABC& item, const Agent_ABC& target )
 {
     if( item.GetSuperior() == 0 || item.GetSuperior() == &target )
         return false;
@@ -88,7 +87,7 @@ bool AgentListViewImp::Drop( const Agent_ABC& item, const Agent_ABC& target )
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListViewImp::Drop( const Agent_ABC& item, const KnowledgeGroup_ABC& target )
+bool AgentListView::Drop( const Agent_ABC& item, const KnowledgeGroup_ABC& target )
 {
     if( item.GetSuperior() != 0 )
         return false;

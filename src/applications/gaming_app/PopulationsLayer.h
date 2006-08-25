@@ -7,25 +7,25 @@
 //
 // *****************************************************************************
 
-#ifndef __PopulationsLayerImp_h_
-#define __PopulationsLayerImp_h_
+#ifndef __PopulationsLayer_h_
+#define __PopulationsLayer_h_
 
 #include "clients_gui/PopulationsLayer.h"
 
 // =============================================================================
-/** @class  PopulationsLayerImp
-    @brief  PopulationsLayerImp
+/** @class  PopulationsLayer
+    @brief  PopulationsLayer
 */
 // Created: SBO 2006-08-21
 // =============================================================================
-class PopulationsLayerImp : public gui::PopulationsLayer
+class PopulationsLayer : public gui::PopulationsLayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsLayerImp( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
-    virtual ~PopulationsLayerImp();
+             PopulationsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
+    virtual ~PopulationsLayer();
     //@}
 
 private:
@@ -35,4 +35,4 @@ private:
     //@}
 };
 
-#endif // __PopulationsLayerImp_h_
+#endif // __PopulationsLayer_h_

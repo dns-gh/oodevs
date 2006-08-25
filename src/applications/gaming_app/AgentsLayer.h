@@ -7,25 +7,25 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentsLayerImp_h_
-#define __AgentsLayerImp_h_
+#ifndef __AgentsLayer_h_
+#define __AgentsLayer_h_
 
 #include "clients_gui/AgentsLayer.h"
 
 // =============================================================================
-/** @class  AgentsLayerImp
-    @brief  AgentsLayerImp
+/** @class  AgentsLayer
+    @brief  AgentsLayer
 */
 // Created: SBO 2006-08-18
 // =============================================================================
-class AgentsLayerImp : public gui::AgentsLayer
+class AgentsLayer : public gui::AgentsLayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayerImp( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
-    virtual ~AgentsLayerImp();
+             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
+    virtual ~AgentsLayer();
     //@}
 
 private:
@@ -37,4 +37,4 @@ private:
     //@}
 };
 
-#endif // __AgentsLayerImp_h_
+#endif // __AgentsLayer_h_
