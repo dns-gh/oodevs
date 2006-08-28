@@ -25,7 +25,6 @@
 #include "FiresModel.h"
 #include "FireFactory.h"
 #include "WeatherModel.h"
-#include "ModelLoaded.h"
 #include "StaticModel.h"
 
 using namespace kernel;

@@ -17,12 +17,12 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 
 class ElevationTextureTree;
-class ModelLoaded;
 
 namespace kernel
 {
     class Controller;
     class DetectionMap;
+    class ModelLoaded;
 }
 
 namespace gui
@@ -37,7 +37,7 @@ namespace gui
 class Elevation3dLayer : public Layer3d_ABC
                        , private ElevationColor_ABC
                        , public kernel::Observer_ABC
-                       , public kernel::ElementObserver_ABC< ModelLoaded >
+                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:
@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const ViewFrustum& frustum );
-    virtual void NotifyUpdated( const ModelLoaded& modelLoaded );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     //@}
 
 private:

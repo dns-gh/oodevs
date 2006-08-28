@@ -22,9 +22,8 @@ namespace kernel
     class Controllers;
     class Team_ABC;
     class ObjectType;
+    class ModelLoaded;
 }
-
-class ModelLoaded;
 
 namespace gui
 {
@@ -47,7 +46,7 @@ namespace gui
 class ObjectPrototype_ABC : public QGroupBox
                           , public kernel::Observer_ABC
                           , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-                          , public kernel::ElementObserver_ABC< ModelLoaded >
+                          , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                           , public ShapeHandler_ABC
 {
     Q_OBJECT
@@ -85,7 +84,7 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    virtual void NotifyUpdated( const ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void showEvent( QShowEvent* );
     virtual void hideEvent( QHideEvent* );
     void FillObjectTypes();

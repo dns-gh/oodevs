@@ -22,12 +22,12 @@
 
 class GraphicShape;
 class GraphicSetup_ABC;
-class ModelLoaded;
 
 namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
+    class ModelLoaded;
 }
 
 namespace gui
@@ -43,7 +43,7 @@ class TerrainLayer : public Layer2d_ABC
                    , private GraphicManager_ABC
                    , public kernel::Observer_ABC
                    , public kernel::OptionsObserver_ABC
-                   , public kernel::ElementObserver_ABC< ModelLoaded >
+                   , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:
@@ -56,7 +56,7 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
-    virtual void NotifyUpdated( const ModelLoaded& modelLoaded );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     //@}
 
 private:

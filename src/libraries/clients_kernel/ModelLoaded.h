@@ -7,42 +7,41 @@
 //
 // *****************************************************************************
 
-#ifndef __InfoPanels_h_
-#define __InfoPanels_h_
-
-#include "clients_gui/Panels.h"
+#ifndef __ModelLoaded_h_
+#define __ModelLoaded_h_
 
 namespace kernel
 {
-    class Controllers;
-}
-
-namespace gui
-{
-    class ItemFactory_ABC;
-}
 
 // =============================================================================
-/** @class  InfoPanels
-    @brief  Info panels container
+/** @class  ModelLoaded
+    @brief  Model loaded "event"
 */
-// Created: SBO 2006-08-08
+// Created: SBO 2006-05-24
 // =============================================================================
-class InfoPanels : public gui::Panels
+class ModelLoaded
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
-    virtual ~InfoPanels();
+    explicit ModelLoaded( const std::string& scipioXml );
+    virtual ~ModelLoaded();
+    //@}
+
+    //! @name Member data
+    //@{
+    std::string scipioXml_;
     //@}
 
 private:
-    //! @name Copy / Assignment
+    //! @name Copy/Assignement
     //@{
-    InfoPanels( const InfoPanels& );
-    InfoPanels& operator=( const InfoPanels& );
+    ModelLoaded( const ModelLoaded& );            //!< Copy constructor
+    ModelLoaded& operator=( const ModelLoaded& ); //!< Assignement operator
     //@}
 };
 
-#endif // __InfoPanels_h_
+}
+
+#endif // __ModelLoaded_h_

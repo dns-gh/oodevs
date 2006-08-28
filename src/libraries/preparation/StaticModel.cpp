@@ -15,7 +15,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
-#include "gaming/ModelLoaded.h"
+#include "clients_kernel/ModelLoaded.h"
 
 using namespace kernel;
 

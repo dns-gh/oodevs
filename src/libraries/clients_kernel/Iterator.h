@@ -110,6 +110,34 @@ private:
     typename Container::const_iterator end_;
 };
 
+
+// =============================================================================
+/** @class  KeyIterator
+    @brief  Associative container key iterator
+*/
+// Created: AGE 2005-11-13
+// =============================================================================
+template< typename Item, typename Container >
+class KeyIterator : public Iterator_ABC< Item >
+{
+public:
+    KeyIterator( const Container& container ) 
+        : current_( container.begin() )
+        , end_( container.end() )
+    {}
+    virtual bool HasMoreElements() const {
+        return current_ != end_;
+    };
+    virtual Item NextElement() {
+        return *(current_++)->first;
+    }
+private:
+    KeyIterator( const KeyIterator& );
+    KeyIterator& operator=( KeyIterator& );
+    typename Container::const_iterator current_;
+    typename Container::const_iterator end_;
+};
+
 }
 
 #endif // __Iterator_h_

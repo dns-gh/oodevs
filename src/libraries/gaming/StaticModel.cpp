@@ -15,8 +15,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/ModelLoaded.h"
 #include "SurfaceFactory.h"
-#include "ModelLoaded.h"
 
 using namespace kernel;
 

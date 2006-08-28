@@ -7,8 +7,10 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "ModelLoaded.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ModelLoaded constructor

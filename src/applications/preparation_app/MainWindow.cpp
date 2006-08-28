@@ -13,7 +13,7 @@
 
 //#include "ControllerToolbar.h"
 //#include "EventToolbar.h"
-//#include "InfoPanels.h"
+#include "InfoPanels.h"
 //#include "LogisticToolbar.h"
 //#include "MapToolbar.h"
 #include "Menu.h"
@@ -97,7 +97,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
 
-//    RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
+    RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
 //    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
 //    connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 //
@@ -118,8 +118,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
     moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-//    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory );
-//    pInfoDockWnd_->setWidget( pInfoPanel_ );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, staticModel_, *factory );
+    pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
     pInfoDockWnd_->setCaption( tr( "Informations" ) );

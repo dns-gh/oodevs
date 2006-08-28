@@ -15,6 +15,8 @@ namespace kernel
     class Team_ABC;
     class KnowledgeGroup_ABC;
     class Agent_ABC;
+    class AgentType;
+    class AutomatType;
     class ObjectType;
     class Object_ABC;
     class Population_ABC;
@@ -204,10 +206,16 @@ struct ListItemRtti< const kernel::PopulationConcentration_ABC* > {
     enum { rtti = 1029 };
 };
 
-//template< typename T > class SafePointer;
-//template< typename T >
-//struct ListItemRtti< SafePointer< T > > : public ListItemRtti< const T* > 
-//{};
+template< >
+struct ListItemRtti< const kernel::AgentType* > {
+    enum { rtti = 1030 };
+};
+
+template< >
+struct ListItemRtti< const kernel::AutomatType* > {
+    enum { rtti = 1031 };
+};
+
 
 }
 

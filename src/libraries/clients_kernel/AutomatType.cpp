@@ -10,6 +10,8 @@
 #include "AutomatType.h"
 #include "SymbolFactory.h"
 #include "GlTools_ABC.h"
+#include "Iterator.h"
+#include "AgentType.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -24,14 +26,18 @@ AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QSt
                                             , const SymbolFactory& symbolFactory )
 {
     int id;
-    std::string modelName;
+    std::string modelName, name;
 
-    xis >> attribute( "nom", name_ )
+    xis >> attribute( "nom", name )
         >> attribute( "type", type_ )
         >> content( "MosID", id )
         >> start( "Automate" )
-            >> content( "ModeleDecisionnel", modelName );
+            >> content( "ModeleDecisionnel", modelName )
+            >> start( "Constitution" )
+                >> list( "Pion", *this, &AutomatType::ReadAgent, agentResolver )
+            >> end();
     id_ = id;
+    name_ = name.c_str();
     model_ = & modelResolver.Get( modelName.c_str() );
     std::string pcType;
     xis >> end()
@@ -51,10 +57,32 @@ AutomatType::~AutomatType()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatType::ReadAgent
+// Created: SBO 2006-08-28
+// -----------------------------------------------------------------------------
+void AutomatType::ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver )
+{
+    std::string name;
+    int quantity;
+    xis >> attribute( "nom", name )
+        >> quantity;
+    units_.push_back( std::make_pair( &agentResolver.Get( name.c_str() ), quantity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::pair< const AgentType&, int > >& AutomatType::CreateIterator
+// Created: SBO 2006-08-28
+// -----------------------------------------------------------------------------
+Iterator< const AgentType& > AutomatType::CreateIterator() const
+{
+    return new KeyIterator< const AgentType&, std::vector< std::pair< const AgentType*, int > > >( units_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatType::GetTypePC
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentType* AutomatType::GetTypePC()
+AgentType* AutomatType::GetTypePC() const
 {   
     return pcType_;
 }
@@ -66,6 +94,15 @@ AgentType* AutomatType::GetTypePC()
 unsigned long AutomatType::GetId()
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::GetName
+// Created: SBO 2006-08-28
+// -----------------------------------------------------------------------------
+QString AutomatType::GetName() const
+{
+    return name_;
 }
 
 // -----------------------------------------------------------------------------

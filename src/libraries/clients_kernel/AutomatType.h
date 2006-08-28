@@ -20,6 +20,7 @@ namespace kernel
     class DecisionalModel;
     class AgentType;
     class SymbolFactory;
+    template< typename Container > class Iterator;
 
 // =============================================================================
 /** @class  AutomatType
@@ -42,10 +43,12 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId();
-    AgentType* GetTypePC();
+    QString GetName() const;
+    AgentType* GetTypePC() const;
     const DecisionalModel& GetDecisionalModel() const;
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
-
+    Iterator< const AgentType& > CreateIterator() const;
+    
     bool IsTC2() const;
     bool IsLogisticSupply() const;
     bool IsLogisticMaintenance() const;
@@ -59,16 +62,27 @@ private:
     AutomatType& operator=( const AutomatType& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< const AgentType*, int > > T_UnitConstitution;
+    //@}
+
 private:
     //! @name Member data
     //@{
     unsigned long id_;
-    std::string name_;
+    QString name_;
     std::string type_;
 
     DecisionalModel* model_;
     AgentType* pcType_;
     std::string symbol_;
+    T_UnitConstitution units_;
     //@}
 };
 

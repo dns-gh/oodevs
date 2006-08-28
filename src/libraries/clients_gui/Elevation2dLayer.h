@@ -15,12 +15,12 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 
 class ElevationLayer;
-class ModelLoaded;
 
 namespace kernel
 {
     class DetectionMap;
     class Controller;
+    class ModelLoaded;
 }
 
 namespace gui
@@ -34,7 +34,7 @@ namespace gui
 // =============================================================================
 class Elevation2dLayer : public Layer2d_ABC
                        , public kernel::Observer_ABC
-                       , public kernel::ElementObserver_ABC< ModelLoaded >
+                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:
@@ -47,7 +47,7 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
-    virtual void NotifyUpdated( const ModelLoaded& modelLoaded );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     //@}
 
 private:

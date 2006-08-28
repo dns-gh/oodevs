@@ -11,14 +11,14 @@
 #include "TerrainLayer.h"
 #include "graphics/GraphicSetup_ABC.h"
 #include "graphics/DataFactory.h"
+#include "graphics/GraphicData.h"
 #include "graphics/GraphicFactory.h"
 #include "graphics/GraphicShape.h"
-#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
-#include "gaming/ModelLoaded.h"
-#include "graphics/GraphicData.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/ModelLoaded.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace pathfind;
 using namespace kernel;
