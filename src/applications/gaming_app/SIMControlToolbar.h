@@ -18,11 +18,6 @@ namespace kernel
     class Controllers;
 }
 
-namespace gui
-{
-    class MT_SpinBox;
-}
-
 class ConnectDialog;
 class DisconnectDialog;
 class QMainWindow;
@@ -46,14 +41,18 @@ public:
     virtual ~SIMControlToolbar();
     //@}
 
-protected slots:
+public slots:
+    //! @name 
+    //@{
+    void SlotSpeedChange();
+    //@}
+
+private slots:
     //! @name Slots
     //@{
     void SlotConnectDisconnect();
     void SlotPlayPause();
-    void SlotSpeedChange();
     void SlotOnSpinBoxChange( int );
-    void SlotOnSpinBoxEnterPressed();
     //@}
 
 private:
@@ -76,7 +75,7 @@ private:
     QToolButton*        pConnectButton_;
     QToolButton*        pPlayButton_;
     QToolButton*        pSpeedButton_;
-    gui::MT_SpinBox*         pSpeedSpinBox_; // $$$$ AGE 2006-03-24: MT_Caca
+    QSpinBox*           pSpeedSpinBox_;
     ConnectDialog*      pConnectDlg_;
     DisconnectDialog*   pDisconnectDlg_;
     int speed_;

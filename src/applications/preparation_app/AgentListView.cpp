@@ -7,35 +7,34 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
-#include "Model.h"
+#include "preparation_app_pch.h"
+#include "AgentListView.h"
 
 // -----------------------------------------------------------------------------
-// Name: Model constructor
-// Created: AGE 2006-02-15
+// Name: AgentListView constructor
+// Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Model::Model()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model destructor
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-Model::~Model()
-{
-    // NOTHING
-}
-
-// ----------------------------------------------------------------------------- 
-// Name: Model::Purge
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void Model::Purge()
+AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+    : gui::AgentListView( pParent, controllers, factory )
 {
     // NOTHING
 }
     
+// -----------------------------------------------------------------------------
+// Name: AgentListView destructor
+// Created: SBO 2006-08-29
+// -----------------------------------------------------------------------------
+AgentListView::~AgentListView()
+{
+    // NOTHING
+}
 
-    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Display
+// Created: SBO 2006-08-29
+// -----------------------------------------------------------------------------
+void AgentListView::Display( const kernel::Agent_ABC& agent, gui::ValuedListItem* item )
+{
+    // $$$$ SBO 2006-08-29: icone embrayé/debrayé
+    gui::AgentListView::Display( agent, item );
+}

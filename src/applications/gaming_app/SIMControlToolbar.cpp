@@ -17,11 +17,43 @@
 #include "gaming/ASN_Messages.h"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/MT_SpinBox.h"
 #include "clients_gui/resources.h"
 
 using namespace kernel;
-using namespace gui;
+
+namespace 
+{
+    class SpinBox : public QSpinBox
+    {
+    public:
+        SpinBox( int minValue, int maxValue, int step, QWidget* parent, SIMControlToolbar& toolbar )
+            : QSpinBox( minValue, maxValue, step, parent )
+            , toolBar_( toolbar )
+        {
+            // NOTHING
+        }
+
+        ~SpinBox() {}
+
+    private:
+        SpinBox( const SpinBox& );
+        SpinBox& operator=( const SpinBox& );
+
+        virtual bool eventFilter( QObject*, QEvent* event )
+        {
+            if( event->type() == QEvent::KeyPress )
+            {
+                const int key = ((QKeyEvent*)event)->key();
+                if( key == Qt::Key_Enter || key == Qt::Key_Return )
+                    toolBar_.SlotSpeedChange();
+            }
+            return false;
+        }
+
+    private:
+        SIMControlToolbar& toolBar_;
+    };
+}
 
 //-----------------------------------------------------------------------------
 // Name: SIMControlToolbar constructor
@@ -51,7 +83,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     new QLabel( " ", this );
     new QLabel( tr( "Vitesse:" ), this );
 
-    pSpeedSpinBox_ = new MT_SpinBox( 1, 500, 1, this );
+    pSpeedSpinBox_ = new SpinBox( 1, 500, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
     pSpeedSpinBox_->setValue( 1 );
     pSpeedSpinBox_->setEnabled( false );
@@ -70,7 +102,6 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     connect( pPlayButton_,    SIGNAL( clicked() ), this, SLOT( SlotPlayPause() ) );
     connect( pSpeedButton_,   SIGNAL( clicked() ), this, SLOT( SlotSpeedChange() ) );
     connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), this, SLOT( SlotOnSpinBoxChange( int ) ) );
-    connect( pSpeedSpinBox_ , SIGNAL( enterPressed() ), this, SLOT( SlotOnSpinBoxEnterPressed() ) );
 
     controllers_.Register( *this );
 }
@@ -149,15 +180,6 @@ void SIMControlToolbar::SlotOnSpinBoxChange( int value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SIMControlToolbar::SlotOnSpinBoxEnterPressed
-// Created: SBO 2005-11-07
-// -----------------------------------------------------------------------------
-void SIMControlToolbar::SlotOnSpinBoxEnterPressed()
-{
-    SlotSpeedChange();
-}
-
-// -----------------------------------------------------------------------------
 // Name: SIMControlToolbar::NotifyUpdated
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
@@ -168,7 +190,8 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
     {
         pConnectButton_->setIconSet( MAKE_ICON( connexiongreen ) );
         pPlayButton_->setEnabled( true );
-        pSpeedSpinBox_->setEnabled( true );
+        if( !pSpeedSpinBox_->isEnabled() )
+            pSpeedSpinBox_->setEnabled( true );
     }
     else
     {
