@@ -27,6 +27,8 @@ namespace gui
     class ItemFactory_ABC;
 }
 
+class UnitListView;
+
 // =============================================================================
 /** @class  UnitsPanel
     @brief  UnitsPanel
@@ -37,12 +39,21 @@ class UnitsPanel : public gui::InfoPanel_ABC
                  , public kernel::Observer_ABC
                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
              UnitsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, kernel::AgentTypes& agentTypes, gui::ItemFactory_ABC& factory );
     virtual ~UnitsPanel();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void Sort();
+    void OpenList();
+    void CloseList();
     //@}
 
 private:
@@ -62,6 +73,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ValuedComboBox< std::string >* combo_;
+    UnitListView* list_;
     //@}
 };
 

@@ -37,8 +37,8 @@ public:
     //! @name Operations
     //@{
     void AddPanel( InfoPanel_ABC* panel );
-    void Add( QWidget* widget, const QString& name );
-    void Remove( QWidget* widget );
+    virtual void Add( QWidget* widget );
+    virtual void Remove( QWidget* widget );
     //@}
 
 private slots:

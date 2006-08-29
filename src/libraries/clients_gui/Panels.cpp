@@ -121,7 +121,7 @@ void Panels::UpdateCombo()
 // Name: Panels::Add
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
-void Panels::Add( QWidget* widget, const QString& )
+void Panels::Add( QWidget* widget )
 {
     for( unsigned int i = 0; i < currentPanels_.size(); ++i )
         if( currentPanels_[i] == widget )
@@ -130,6 +130,8 @@ void Panels::Add( QWidget* widget, const QString& )
     QWidget* selected = 0;
     if( !currentPanels_.empty() )
         selected = currentPanels_[combo_->currentItem()];
+    else
+        selected = widget;
     panelStates_[widget] = true;
     UpdateCombo();
     ShowPreferedWidget( selected );

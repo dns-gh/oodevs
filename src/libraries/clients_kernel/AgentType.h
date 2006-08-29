@@ -47,6 +47,7 @@ public:
     const DecisionalModel& GetDecisionalModel() const;
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     void DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools );
+    const AgentNature& GetNature() const;
     //@}
 
 private:

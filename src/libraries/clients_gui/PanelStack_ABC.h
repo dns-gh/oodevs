@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Add( QWidget* widget, const QString& name ) = 0;
+    virtual void Add( QWidget* widget ) = 0;
     virtual void Remove( QWidget* widget ) = 0;
     //@}
 };

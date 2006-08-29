@@ -47,7 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    void SortByNature( const std::string& nature );
+    void SetOpen( bool open );
+    void SetSorting( const std::string& nature );
     void Display( const kernel::AgentType& type, gui::ValuedListItem* );
     void Display( const kernel::AutomatType& type, gui::ValuedListItem* );
     //@}
@@ -62,6 +63,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    void DisplayList();
     //@}
 
 private:
@@ -69,6 +71,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::AgentTypes& types_;
+    std::string sorting_;
     //@}
 };
 

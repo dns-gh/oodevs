@@ -11,6 +11,7 @@
 #include "UnitListView.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AutomatType.h"
 
 using namespace kernel;
@@ -43,12 +44,24 @@ UnitListView::~UnitListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitListView::SortByNature
+// Name: UnitListView::SetOpen
+// Created: SBO 2006-08-29
+// -----------------------------------------------------------------------------
+void UnitListView::SetOpen( bool open )
+{
+    for( QListViewItem* item = firstChild(); item; item = item->nextSibling() )
+        item->setOpen( open );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::SetSorting
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-void UnitListView::SortByNature( const std::string& nature )
+void UnitListView::SetSorting( const std::string& nature )
 {
-    // $$$$ SBO 2006-08-28: TODO
+    sorting_ = nature;
+    clear();
+    DisplayList();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +70,37 @@ void UnitListView::SortByNature( const std::string& nature )
 // -----------------------------------------------------------------------------
 void UnitListView::NotifyUpdated( const ModelLoaded& )
 {
-    Iterator< const AutomatType& > it( types_.Resolver< AutomatType >::CreateIterator() );
-    DeleteTail( ListView< UnitListView >::Display( it, this ) );
+    DisplayList();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::DisplayList
+// Created: SBO 2006-08-29
+// -----------------------------------------------------------------------------
+void UnitListView::DisplayList()
+{
+    if( sorting_.empty() )
+    {
+        Iterator< const AutomatType& > it( types_.Resolver< AutomatType >::CreateIterator() );
+        DeleteTail( ListView< UnitListView >::Display( it, this ) );
+    }
+    else
+    {
+        Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
+        while( it.HasMoreElements() )
+        {
+            const AgentType& type = it.NextElement();
+            const QString text = type.GetNature().Retrieve( sorting_ ).c_str();
+            QListViewItem* parentItem = findItem( text, 0 );
+            if( !parentItem )
+            {
+                parentItem = new QListViewItem( this );
+                parentItem->setText( 0, text );
+            }
+            ValuedListItem* item = new ValuedListItem( parentItem );
+            item->SetNamed( type );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "UnitsPanel.h"
+#include "moc_UnitsPanel.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include "UnitListView.h"
@@ -23,14 +24,15 @@ namespace
     {
         ValuedComboBox< std::string >* combo = new ValuedComboBox< std::string >( parent );
         // $$$$ SBO 2006-08-28: Iterator sur AgentNatures?
+        combo->AddItem( tools::translate( "Preparation", "Vue hiérarchique" ), "" );
         combo->AddItem( tools::translate( "Preparation", "Niveau" ), "level" );
         combo->AddItem( tools::translate( "Preparation", "Arme" ), "weapon" );
-        combo->AddItem( tools::translate( "Preparation", "Specialisation" ), "specialization" );
+        combo->AddItem( tools::translate( "Preparation", "Spécialisation" ), "specialization" );
         combo->AddItem( tools::translate( "Preparation", "Qualificatif" ), "qualifier" );
-        combo->AddItem( tools::translate( "Preparation", "Categorie" ), "category" );
-        combo->AddItem( tools::translate( "Preparation", "TypeMobilite" ), "mobility" );
-        combo->AddItem( tools::translate( "Preparation", "QualificatifAtlas" ), "atlas qualifier" );
-        combo->AddItem( tools::translate( "Preparation", "CapaciteMission" ), "mission capacity" );
+        combo->AddItem( tools::translate( "Preparation", "Catégorie" ), "category" );
+        combo->AddItem( tools::translate( "Preparation", "Type de mobilité" ), "mobility" );
+        combo->AddItem( tools::translate( "Preparation", "Qualificatif Atlas" ), "atlas qualifier" );
+        combo->AddItem( tools::translate( "Preparation", "Capacité mission" ), "mission capacity" );
         return combo;
     }
 }
@@ -44,10 +46,18 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     , controllers_( controllers )
 {
     QHBox* box = new QHBox( this );
-    new QLabel( tools::translate( "Preparation", "Critère de tri:" ), box );
-    combo_ = BuildNatureFieldsCombo( box );
-    new UnitListView( this, controllers_, types, factory );
+    QPushButton* openAll  = new QPushButton( "+", box );
+    openAll->setMaximumSize( 20, 20 );;
+    QPushButton* closeAll = new QPushButton( "-", box );
+    closeAll->setMaximumSize( 20, 20 );;
 
+    new QLabel( tools::translate( "Preparation", "Affichage:" ), box );
+    combo_ = BuildNatureFieldsCombo( box );
+    list_ = new UnitListView( this, controllers_, types, factory );
+
+    connect( openAll , SIGNAL( clicked() ), this, SLOT( OpenList() ) );
+    connect( closeAll, SIGNAL( clicked() ), this, SLOT( CloseList() ) );
+    connect( combo_  , SIGNAL( activated( int ) ), this, SLOT( Sort() ) );
     controllers_.Register( *this );
 }
 
@@ -58,6 +68,33 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
 UnitsPanel::~UnitsPanel()
 {
     controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitsPanel::Sort
+// Created: SBO 2006-08-29
+// -----------------------------------------------------------------------------
+void UnitsPanel::Sort()
+{
+    list_->SetSorting( combo_->GetValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitsPanel::OpenList
+// Created: SBO 2006-08-29
+// -----------------------------------------------------------------------------
+void UnitsPanel::OpenList()
+{
+    list_->SetOpen( true );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: UnitsPanel::CloseList
+// Created: SBO 2006-08-29
+// -----------------------------------------------------------------------------
+void UnitsPanel::CloseList()
+{
+    list_->SetOpen( false );
 }
 
 // -----------------------------------------------------------------------------
