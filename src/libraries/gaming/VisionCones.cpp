@@ -38,6 +38,7 @@ VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Worke
 // -----------------------------------------------------------------------------
 VisionCones::~VisionCones()
 {
+    Join();
      for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
      delete map_;
@@ -81,6 +82,7 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 VisionCones::Updater::Updater( const VisionCones& cones )
     : cones_( & cones )
+    , locker_( cones )
 {
     // NOTHING
 }
@@ -93,6 +95,7 @@ void VisionCones::Updater::operator()()
 {
     try
     {
+
         cones_->updating_ = true;
         cones_->map_->Clear();
         for( CIT_Surfaces it = cones_->surfaces_.begin(); it != cones_->surfaces_.end(); ++it )
@@ -104,7 +107,6 @@ void VisionCones::Updater::operator()()
     {
         // $$$$ AGE 2006-04-20: 
     }
-    // $$$$ AGE 2006-04-20: add a ninja kung fu grip ?
 }
 
 // -----------------------------------------------------------------------------

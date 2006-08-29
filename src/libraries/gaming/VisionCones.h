@@ -16,6 +16,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/ThreadShared.h"
 
 namespace kernel
 {
@@ -39,6 +40,7 @@ class VisionCones : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< VisionConesMessage >
                   , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                   , public kernel::Drawable_ABC
+                  , public kernel::ThreadShared
 {
 
 public:
@@ -69,6 +71,7 @@ private:
         Updater( const VisionCones& cones );
         void operator()();
         const VisionCones* cones_;
+        kernel::ThreadShared::Locker locker_;
     };
     //@}
 

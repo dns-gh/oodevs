@@ -892,8 +892,6 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin()
 {
     bReceivingState_ = true;
     bUseMosLimits_ = true;
-    // $$$$ AGE 2006-07-06: refaire clignoter l'icone ?
-    // $$$$ AGE 2006-07-06: Afficher dans la barre d'etat un status ?
 }
 
 // -----------------------------------------------------------------------------

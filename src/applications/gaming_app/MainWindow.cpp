@@ -34,6 +34,7 @@
 #include "ObjectKnowledgesLayer.h"
 #include "StatusBar.h"
 #include "Spy.h"
+#include "AgentList.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -51,7 +52,6 @@
 #include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
 
-#include "clients_gui/AgentList.h"
 #include "clients_gui/Gl3dWidget.h"
 #include "clients_gui/GlWidget.h"
 #include "clients_gui/GraphicPreferences.h"
@@ -130,7 +130,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new AgentList< ::AgentListView >( controllers, publisher, *factory ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
