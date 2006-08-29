@@ -249,7 +249,6 @@ void MissionInterface_ABC::CreateLocation( ASN1T_Localisation& asn, const QStrin
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateLocationList( ASN1T_ListLocalisation& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    // $$$$ AGE 2006-04-03: pOptional ?
     AddParameter( *new ParamLocationList( this, asn, strName, strName, layer_, converter_ ), pOptional );
 }
 

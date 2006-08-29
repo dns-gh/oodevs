@@ -1,18 +1,18 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-02-28 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/IDManager.h $
-// $Author: Ape $
-// $Modtime: 3/02/04 11:09 $
-// $Revision: 1 $
-// $Workfile: IDManager.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __IDManager_h_
 #define __IDManager_h_
 
 #include "MT/MT_Tools/MT_IdentifierManager.h" // $$$$ AGE 2006-08-07: 
+// $$$$ AGE 2006-08-29: se débarasser de ce bazard si il n'y a plus de recyclage des ids
+// $$$$ AGE 2006-08-29: voir avec nld
 
 namespace kernel
 {

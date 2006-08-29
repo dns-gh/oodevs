@@ -31,11 +31,131 @@
         <source>Chaine maintenance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Type d&apos;&#xe9;quipement :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type de panne :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etat :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etat chaine maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etat chaine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&#xe9;gime de travail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorit&#xe9;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorit&#xe9;s tactiques</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remorqueur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disponible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Au travail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Au repos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&#xe9;parateur</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentMedicalPanel</name>
     <message>
         <source>Chaine sant&#xe9;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blessure :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reac. mental :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contamin&#xe9; NBC :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etat :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etat chaine sant&#xe9;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etat chaine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorit&#xe9;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorit&#xe9;s tactiques</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulances rel&#xe8;ve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disponible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Au travail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Au repos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulances ramassage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M&#xe9;decins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disponibles</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

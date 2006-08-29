@@ -44,7 +44,6 @@ void AgentTypes::Load( const std::string& scipioXml )
     xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) );
     symbolFactory_ = new SymbolFactory( xisSymbols );
 
-    // $$$$ AGE 2006-05-03: clean all
     xml::xifstream xis( scipioXml );
     xis >> start( "Scipio" )    
             >> start( "Donnees" );

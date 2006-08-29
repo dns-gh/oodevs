@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-02-28 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/IDManager.cpp $
-// $Author: Ape $
-// $Modtime: 15/03/05 11:01 $
-// $Revision: 2 $
-// $Workfile: IDManager.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "clients_kernel_pch.h"
 #include "IDManager.h"
@@ -23,7 +21,7 @@ IDManager::IDManager( uint nMOSClassID, uint nStartInstanceID )
     : nMOSClassID_     ( nMOSClassID )
     , nStartInstanceID_( nStartInstanceID )
 {
-    
+    // NOTHING
 }
 
 
@@ -33,7 +31,7 @@ IDManager::IDManager( uint nMOSClassID, uint nStartInstanceID )
 //-----------------------------------------------------------------------------
 IDManager::~IDManager()
 {
-    
+    // NOTHING
 }
 
 //=============================================================================

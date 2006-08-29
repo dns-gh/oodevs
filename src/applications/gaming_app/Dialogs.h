@@ -25,7 +25,7 @@ class Publisher_ABC;
 */
 // Created: AGE 2006-04-20
 // =============================================================================
-class Dialogs
+class Dialogs : public QObject
 {
 
 public:

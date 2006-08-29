@@ -35,7 +35,7 @@ Spy::Spy( QWidget* parent, Controllers& controllers )
     , selected_( 0 )
 {
     QVBox* box = new QVBox( this );
-    QPushButton* button = new QPushButton( MAKE_ICON( cross ), "Vider", box );// $$$$ AGE 2006-08-22: $$tr$$
+    QPushButton* button = new QPushButton( MAKE_ICON( cross ), tr( "Vider" ), box );
     button->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding ) );
     toolBox_ = new QToolBox( box );
     box->setStretchFactor( toolBox_, 100 );

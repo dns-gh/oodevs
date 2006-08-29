@@ -208,9 +208,9 @@ bool PopulationFlow::IsAt( const geometry::Point2f& point, float precision /*= 1
 // Name: PopulationFlow::IsIn
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool PopulationFlow::IsIn( const geometry::Rectangle2f& ) const
+bool PopulationFlow::IsIn( const geometry::Rectangle2f& rect ) const
 {
-    return true; // $$$$ AGE 2006-04-10: 
+    return ! boundingBox_.Intersect( rect ).IsEmpty();
 }
 
 // -----------------------------------------------------------------------------
@@ -220,31 +220,4 @@ bool PopulationFlow::IsIn( const geometry::Rectangle2f& ) const
 geometry::Rectangle2f PopulationFlow::GetBoundingBox() const
 {
     return boundingBox_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationFlow::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationFlow::Select( ActionController& controller ) const
-{
-     // $$$$ SBO 2006-08-02: 
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PopulationFlow::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationFlow::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-     // $$$$ SBO 2006-08-02: 
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PopulationFlow::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationFlow::Activate( ActionController& controller ) const
-{
-     // $$$$ SBO 2006-08-02: 
 }

@@ -27,8 +27,15 @@ class PopulationConcentration_ABC : public PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration_ABC() {}
-    virtual ~PopulationConcentration_ABC() {}
+             PopulationConcentration_ABC();
+    virtual ~PopulationConcentration_ABC();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 
 private:

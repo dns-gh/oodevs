@@ -11,6 +11,7 @@
 #include "KnowledgeGroup.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/ActionController.h"
 
 using namespace kernel;
 
@@ -102,7 +103,7 @@ bool KnowledgeGroup::IsInTeam( const Team_ABC& team ) const
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Select( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Select( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -111,7 +112,7 @@ void KnowledgeGroup::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.ContextMenu( *this, where );
 }
     
 // -----------------------------------------------------------------------------
@@ -120,5 +121,5 @@ void KnowledgeGroup::ContextMenu( ActionController& controller, const QPoint& wh
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::Activate( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Activate( *this );
 }

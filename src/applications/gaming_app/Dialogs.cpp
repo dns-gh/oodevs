@@ -23,6 +23,7 @@ using namespace kernel;
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher )
+    : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, publisher );
     new ChangeLogisticLinksDialog( parent, controllers, publisher );

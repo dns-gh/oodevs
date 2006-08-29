@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ObjectKnowledge.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
@@ -190,7 +191,7 @@ void ObjectKnowledge::Draw( const geometry::Point2f& where, const geometry::Rect
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Select( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Select( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -199,7 +200,7 @@ void ObjectKnowledge::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.ContextMenu( *this, where );
 }
     
 // -----------------------------------------------------------------------------
@@ -208,5 +209,5 @@ void ObjectKnowledge::ContextMenu( ActionController& controller, const QPoint& w
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Activate( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Activate( *this );
 }

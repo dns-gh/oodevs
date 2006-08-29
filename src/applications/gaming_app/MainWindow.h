@@ -34,7 +34,7 @@ namespace gui
     class GlProxy;
 }
 
-class Spy; // $$$$ AGE 2006-08-02: Duh !
+class Spy;
 class Model;
 class StaticModel;
 class Simulation;

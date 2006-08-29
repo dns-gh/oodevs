@@ -27,8 +27,15 @@ class PopulationFlow_ABC : public PopulationPart_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow_ABC() {}
-    virtual ~PopulationFlow_ABC() {}
+             PopulationFlow_ABC();
+    virtual ~PopulationFlow_ABC();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 
 private:

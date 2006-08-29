@@ -11,6 +11,7 @@
 #include "PopulationConcentration.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/ActionController.h"
 
 using namespace kernel;
 
@@ -169,9 +170,9 @@ bool PopulationConcentration::IsAt( const geometry::Point2f& pos, float precisio
 // Name: PopulationConcentration::IsIn
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool PopulationConcentration::IsIn( const geometry::Rectangle2f& ) const
+bool PopulationConcentration::IsIn( const geometry::Rectangle2f& rect ) const
 {
-    return true; // $$$$ AGE 2006-04-10: whatever
+    return ! boundingBox_.Intersect( rect ).IsEmpty();
 }
 
 // -----------------------------------------------------------------------------
@@ -181,31 +182,4 @@ bool PopulationConcentration::IsIn( const geometry::Rectangle2f& ) const
 geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
 {
     return boundingBox_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentration::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationConcentration::Select( ActionController& controller ) const
-{
-    // $$$$ SBO 2006-08-02: 
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentration::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationConcentration::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    // $$$$ SBO 2006-08-02: 
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentration::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationConcentration::Activate( ActionController& controller ) const
-{
-    // $$$$ SBO 2006-08-02: 
 }

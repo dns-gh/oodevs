@@ -13,6 +13,7 @@
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
@@ -231,7 +232,7 @@ void PopulationKnowledge::Draw( const geometry::Point2f& where, const geometry::
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Select( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Select( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -240,7 +241,7 @@ void PopulationKnowledge::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.ContextMenu( *this, where );
 }
     
 // -----------------------------------------------------------------------------
@@ -249,5 +250,5 @@ void PopulationKnowledge::ContextMenu( ActionController& controller, const QPoin
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Activate( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Activate( *this );
 }

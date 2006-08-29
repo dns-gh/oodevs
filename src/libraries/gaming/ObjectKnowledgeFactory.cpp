@@ -14,6 +14,7 @@
 #include "NBCAttributes.h"
 #include "RotaAttributes.h"
 #include "CrossingSiteAttributes.h"
+#include "CampAttributes.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -56,6 +57,10 @@ ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const AS
     knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_ ) );
     switch( message.type )
     {
+    case EnumObjectType::camp_prisonniers:
+    case EnumObjectType::camp_refugies:
+        knowledge->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_.controller_, model_.agents_ ) );
+        break;
     case EnumObjectType::itineraire_logistique:
         knowledge->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( controllers_.controller_ ) );
         break;
@@ -68,9 +73,9 @@ ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const AS
         break;
     case EnumObjectType::site_franchissement:
         knowledge->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
+        break;
     default:
         ;
     };
-    // $$$$ AGE 2006-08-24: camp ????
     return knowledge;
 }

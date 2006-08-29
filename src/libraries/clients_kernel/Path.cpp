@@ -78,7 +78,7 @@ bool Path::IsDone() const
 // -----------------------------------------------------------------------------
 void Path::Accept( LocationVisitor_ABC& visitor ) const
 {
-    // $$$$ AGE 2006-08-09: le point d'origine n'est pas passé. Bien noter.
+    // le point d'origine n'est pas passé. Bien noter.
     visitor.VisitLines( points_ );
 }
 

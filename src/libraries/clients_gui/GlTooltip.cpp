@@ -129,7 +129,7 @@ void GlTooltip::Draw( const geometry::Point2f& position )
         GenerateImage();
     if( image_.bits() )
     {
-        glRasterPos3f( position.X(), position.Y(), 300 ); // $$$$ AGE 2006-08-23: 
+        glRasterPos3f( position.X(), position.Y(), 300 ); // $$$$ AGE 2006-08-23: faire marcher ce truc en 3D aussi
         glBitmap(0, 0, 0, 0, 0, - image_.height(), 0 );
         glDrawPixels( image_.width(), image_.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image_.bits() );
     }

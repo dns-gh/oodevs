@@ -12,6 +12,7 @@
 
 #include "ASN_Messages.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -233,7 +234,7 @@ const KnowledgeGroup_ABC& AgentKnowledge::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Select( ActionController& controller ) const
 {
-     // $$$$ SBO 2006-08-02: 
+     controller.Select( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -242,7 +243,7 @@ void AgentKnowledge::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.ContextMenu( *this, where );
 }
     
 // -----------------------------------------------------------------------------
@@ -251,5 +252,5 @@ void AgentKnowledge::ContextMenu( ActionController& controller, const QPoint& wh
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Activate( ActionController& controller ) const
 {
-    // $$$$ SBO 2006-08-02: 
+    controller.Activate( *this );
 }

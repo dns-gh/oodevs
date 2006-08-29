@@ -34,7 +34,7 @@ namespace gui
 class PopulationListView : public QListView
                          , public kernel::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::Population_ABC >
-                         , public kernel::SelectionObserver_Base< kernel::Population_ABC > // $$$$ AGE 2006-08-07: SelectionObserver_Base ????
+                         , public kernel::SelectionObserver< kernel::Population_ABC >
                          , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
@@ -66,7 +66,7 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Population_ABC& popu );
     virtual void NotifyDeleted( const kernel::Population_ABC& popu );
-    virtual void Select( const kernel::Population_ABC& popu );
+    virtual void NotifySelected( const kernel::Population_ABC* popu );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 

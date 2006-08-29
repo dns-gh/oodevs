@@ -128,13 +128,18 @@ void PopulationListView::OnContextMenuRequested( QListViewItem* i, const QPoint&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationListView::Select
+// Name: PopulationListView::NotifySelected
 // Created: AGE 2006-03-21
 // -----------------------------------------------------------------------------
-void PopulationListView::Select( const Population_ABC& popu )
+void PopulationListView::NotifySelected( const Population_ABC* popu )
 {
-    setSelected( FindItem( &popu, firstChild() ), true );
-    ensureItemVisible( selectedItem() );
+    if( popu )
+    {
+        setSelected( FindItem( popu, firstChild() ), true );
+        ensureItemVisible( selectedItem() );
+    }
+    else
+        selectAll( false );
 }
 
 // -----------------------------------------------------------------------------

@@ -98,7 +98,7 @@ bool ParametersLayer::HandleKeyPress( QKeyEvent* key )
 // -----------------------------------------------------------------------------
 bool ParametersLayer::HandleMouseMove( QMouseEvent*, const geometry::Point2f& )
 {
-    return current_; // $$$$ AGE 2006-03-23: trouver autre chose pour gerer les focus events...
+    return current_ != 0;
 }
 
 // -----------------------------------------------------------------------------

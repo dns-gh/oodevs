@@ -61,7 +61,7 @@ private:
     //! @name Member data
     //@{
     std::string name_;
-    std::string default_; // $$$$ SBO 2006-03-20: boost::shared_ptr< Symbol > ?
+    std::string default_;
     T_Cases     cases_;
     //@}
 };

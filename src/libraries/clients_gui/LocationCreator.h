@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void Allow( bool point, bool line, bool polygon, bool circle ); // $$$$ AGE 2006-08-09: pas terrible
+    void Allow( bool point, bool line, bool polygon, bool circle );
     //@}
 
 public slots:
