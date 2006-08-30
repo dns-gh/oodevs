@@ -32,6 +32,7 @@ namespace gui
 }
 
 class Model;
+class ModelBuilder;
 class StaticModel;
 class GraphicSetup_ABC;
 class EventStrategy_ABC;
@@ -97,6 +98,7 @@ private:
     kernel::Controllers& controllers_;
     StaticModel& staticModel_;
     Model& model_;
+    ModelBuilder* modelBuilder_;
     std::string scipioXml_;
 
     gui::GlProxy*       glProxy_;

@@ -21,6 +21,7 @@
 //#include "UnitToolbar.h"
 //#include "LinkInterpreter.h"
 #include "AgentListView.h"
+#include "preparation/ModelBuilder.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -81,13 +82,14 @@ using namespace gui;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model )
-    : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , controllers_( controllers )
-    , staticModel_( staticModel )
-    , model_      ( model )
-    , glProxy_    ( 0 )
-    , widget2d_   ( 0 )
-    , iconLayout_ ( 0 )
+    : QMainWindow  ( 0, 0, Qt::WDestructiveClose )
+    , controllers_ ( controllers )
+    , staticModel_ ( staticModel )
+    , model_       ( model )
+    , modelBuilder_( new ModelBuilder( controllers, model ) )
+    , glProxy_     ( 0 )
+    , widget2d_    ( 0 )
+    , iconLayout_  ( 0 )
 {
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
@@ -106,7 +108,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new ::AgentListView( pListsTabWidget, controllers, *factory ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new ::AgentListView( pListsTabWidget, controllers, *factory, model ), tr( "Agents" ) );
 //    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
 //    pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
@@ -271,6 +273,7 @@ MainWindow::~MainWindow()
 //    controllers_.Remove( *this );
 //    delete pOptions_;
     delete glProxy_;
+    delete modelBuilder_;
 }
 
 // -----------------------------------------------------------------------------

@@ -86,11 +86,16 @@ private slots:
     void OnRequestCenter();
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
+    //@}
+
     //! @name Helpers
     //@{
 private:
-    virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
 
     virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& group );

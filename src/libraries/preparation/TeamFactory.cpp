@@ -7,57 +7,52 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "KnowledgeGroupsModel.h"
+#include "preparation_pch.h"
+#include "TeamFactory.h"
+#include "Model.h"
 #include "TeamsModel.h"
+#include "Team.h"
+#include "KnowledgeGroup.h"
+#include "clients_kernel/Controllers.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupsModel constructor
+// Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroupsModel::KnowledgeGroupsModel( TeamsModel& teams )
-    : teams_( teams )
+TeamFactory::TeamFactory( Controllers& controllers, Model& model )
+    : controllers_( controllers )
+    , model_( model )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupsModel destructor
+// Name: TeamFactory destructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroupsModel::~KnowledgeGroupsModel()
+TeamFactory::~TeamFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupsModel::Purge
-// Created: AGE 2006-04-20
+// Name: TeamFactory::CreateTeam
+// Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void KnowledgeGroupsModel::Purge()
+Team_ABC* TeamFactory::CreateTeam( const QString& name )
 {
-    // NOTHING
+    Team* result = new Team( name, controllers_.controller_, *this );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupsModel::Find
-// Created: AGE 2006-02-15
+// Name: TeamFactory::CreateKnowledgeGroup
+// Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* KnowledgeGroupsModel::Find( const unsigned long& identifier ) const
+kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned int identifier, const kernel::Team_ABC& team )
 {
-    return teams_.FindKnowledgeGroup( identifier );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupsModel::Get
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-KnowledgeGroup_ABC& KnowledgeGroupsModel::Get( const unsigned long& identifier ) const
-{
-    KnowledgeGroup_ABC* group = Find( identifier );
-    if( ! group )
-        throw std::runtime_error( "KnowledgeGroup not found" );
-    return *group;
+    KnowledgeGroup_ABC* result = new KnowledgeGroup( identifier, controllers_.controller_, team );
+    return result;
 }

@@ -25,6 +25,7 @@ namespace kernel
     class NBCAgent;
 }
 
+class Model; // $$$$ SBO 2006-08-30: 
 class Dotation;
 class Equipment;
 class AgentKnowledge;
@@ -216,6 +217,10 @@ struct ListItemRtti< const kernel::AutomatType* > {
     enum { rtti = 1031 };
 };
 
+template< >
+struct ListItemRtti< const Model* > {
+    enum { rtti = 1032 };
+};
 
 }
 

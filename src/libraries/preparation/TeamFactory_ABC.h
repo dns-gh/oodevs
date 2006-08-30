@@ -7,56 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __Model_h_
-#define __Model_h_
+#ifndef __TeamFactory_ABC_h_
+#define __TeamFactory_ABC_h_
 
 namespace kernel
 {
-    class Controllers;
+    class Team_ABC;
 }
 
-class TeamsModel;
-class TeamFactory_ABC;
-
 // =============================================================================
-/** @class  Model
-    @brief  Model
+/** @class  TeamFactory_ABC
+    @brief  TeamFactory_ABC
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class Model
+class TeamFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( kernel::Controllers& controllers );
-    virtual ~Model();
+             TeamFactory_ABC() {};
+    virtual ~TeamFactory_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    void Purge();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    TeamFactory_ABC& teamFactory_;
-    //@}
-
-public:
-    //! @name Member data
-    //@{
-    TeamsModel& teams_;
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    Model( const Model& );            //!< Copy constructor
-    Model& operator=( const Model& ); //!< Assignement operator
+    virtual kernel::Team_ABC* CreateTeam( const QString& name ) = 0;
     //@}
 };
 
-#endif // __Model_h_
+#endif // __TeamFactory_ABC_h_

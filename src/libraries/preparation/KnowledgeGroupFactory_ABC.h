@@ -7,56 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef __Model_h_
-#define __Model_h_
+#ifndef __KnowledgeGroupFactory_ABC_h_
+#define __KnowledgeGroupFactory_ABC_h_
 
 namespace kernel
 {
-    class Controllers;
+    class KnowledgeGroup_ABC;
+    class Team_ABC;
 }
 
-class TeamsModel;
-class TeamFactory_ABC;
-
 // =============================================================================
-/** @class  Model
-    @brief  Model
+/** @class  KnowledgeGroupFactory_ABC
+    @brief  KnowledgeGroupFactory_ABC
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class Model
+class KnowledgeGroupFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( kernel::Controllers& controllers );
-    virtual ~Model();
+             KnowledgeGroupFactory_ABC() {};
+    virtual ~KnowledgeGroupFactory_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    void Purge();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    TeamFactory_ABC& teamFactory_;
-    //@}
-
-public:
-    //! @name Member data
-    //@{
-    TeamsModel& teams_;
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    Model( const Model& );            //!< Copy constructor
-    Model& operator=( const Model& ); //!< Assignement operator
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned int identifier, const kernel::Team_ABC& team ) = 0;
     //@}
 };
 
-#endif // __Model_h_
+#endif // __KnowledgeGroupFactory_ABC_h_

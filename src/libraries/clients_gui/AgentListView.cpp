@@ -95,7 +95,7 @@ void AgentListView::NotifyUpdated( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyDeleted( const Team_ABC& team )
 {
-    delete FindSibling( &team, firstChild() );
+    delete FindItem( &team, firstChild() );
 }
 
 // -----------------------------------------------------------------------------

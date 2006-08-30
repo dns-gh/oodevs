@@ -77,9 +77,8 @@ ValuedListItem* RichItemFactory::CreateItem( QListView* parent, QListViewItem * 
 ValuedListItem* RichItemFactory::Connect( ValuedListItem* item )
 {
     if( connections_.insert( item->listView() ).second )
-    {
         connect( item->listView(), SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnClicked( QListViewItem*, const QPoint&, int ) ) );
-    }
+    item->setOpen( true );
     return item;
 }
 

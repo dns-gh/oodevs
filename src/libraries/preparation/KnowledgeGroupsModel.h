@@ -7,56 +7,54 @@
 //
 // *****************************************************************************
 
-#ifndef __Model_h_
-#define __Model_h_
+#ifndef __KnowledgeGroupsModel_h_
+#define __KnowledgeGroupsModel_h_
+
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
+    class KnowledgeGroup_ABC;
 }
 
 class TeamsModel;
-class TeamFactory_ABC;
 
 // =============================================================================
-/** @class  Model
-    @brief  Model
+/** @class  KnowledgeGroupsModel
+    @brief  KnowledgeGroupsModel
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class Model
+class KnowledgeGroupsModel : public kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( kernel::Controllers& controllers );
-    virtual ~Model();
+             KnowledgeGroupsModel( TeamsModel& teams );
+    virtual ~KnowledgeGroupsModel();
     //@}
 
     //! @name Operations
     //@{
     void Purge();
-    //@}
 
-private:
-    //! @name Member data
-    //@{
-    TeamFactory_ABC& teamFactory_;
-    //@}
-
-public:
-    //! @name Member data
-    //@{
-    TeamsModel& teams_;
+    virtual kernel::KnowledgeGroup_ABC* Find( const unsigned int identifier ) const;
+    virtual kernel::KnowledgeGroup_ABC& Get( const unsigned int identifier ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Model( const Model& );            //!< Copy constructor
-    Model& operator=( const Model& ); //!< Assignement operator
+    KnowledgeGroupsModel( const KnowledgeGroupsModel& );            //!< Copy constructor
+    KnowledgeGroupsModel& operator=( const KnowledgeGroupsModel& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    TeamsModel& teams_;
     //@}
 };
 
-#endif // __Model_h_
+#endif // __KnowledgeGroupsModel_h_

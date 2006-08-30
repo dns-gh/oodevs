@@ -9,12 +9,19 @@
 
 #include "preparation_pch.h"
 #include "Model.h"
+#include "clients_kernel/Controllers.h"
+#include "TeamsModel.h"
+#include "TeamFactory.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model()
+Model::Model( Controllers& controllers )
+    : teamFactory_( *new TeamFactory( controllers, *this ) )
+    , teams_( *new TeamsModel( teamFactory_ ) )
 {
     // NOTHING
 }
@@ -25,7 +32,8 @@ Model::Model()
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    // NOTHING
+    delete &teams_;
+    delete &teamFactory_;
 }
 
 // ----------------------------------------------------------------------------- 
@@ -34,7 +42,7 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
-    // NOTHING
+    teams_.Purge();
 }
     
 

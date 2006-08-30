@@ -16,4 +16,6 @@
 #include <vector>
 #include <set>
 
+#include "geometry/Types.h"
+
 #endif // __astec_preparation_pch_h_
