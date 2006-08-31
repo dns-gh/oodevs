@@ -103,9 +103,10 @@ namespace
         QKeyEvent* key_;
     };
 
-    struct MouseFunctor : public ExclusiveFunctor
+    template< typename Event >
+    struct EventFunctor : public ExclusiveFunctor
     {
-        MouseFunctor( QMouseEvent* button, const geometry::Point2f& point, bool (MapLayer_ABC::*func)( QMouseEvent* button, const geometry::Point2f& point ) )
+        EventFunctor( Event* button, const geometry::Point2f& point, bool (MapLayer_ABC::*func)( Event* button, const geometry::Point2f& point ) )
             : button_( button )
             , point_( point )
             , func_( func )
@@ -114,10 +115,13 @@ namespace
         {
             return (layer.*func_)( button_,point_ ) && exclusive_;
         }
-        QMouseEvent* button_;
+        Event* button_;
         geometry::Point2f point_;
-        bool (MapLayer_ABC::*func_)( QMouseEvent* button, const geometry::Point2f& point );
+        bool (MapLayer_ABC::*func_)( Event* button, const geometry::Point2f& point );
     };
+    typedef EventFunctor< QMouseEvent >     MouseFunctor;
+    typedef EventFunctor< QDropEvent >      DropFunctor;
+    typedef EventFunctor< QDragEnterEvent > DragFunctor;
 }
 
 
@@ -203,4 +207,27 @@ void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry:
 {
     if( ! Apply( MouseFunctor( mouse, point, &MapLayer_ABC::HandleMouseMove ) ) && default_ )
         default_->HandleMouseMove( mouse, point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::HandleDropEvent
+// Created: AGE 2006-08-31
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::HandleDropEvent( QDropEvent*  event, const geometry::Point2f& point )
+{
+    if( ! Apply( DropFunctor( event, point, &MapLayer_ABC::HandleDropEvent ) ) && default_ )
+        default_->HandleDropEvent( mouse, point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CircularEventStrategy::HandleEnterDragEvent
+// Created: AGE 2006-08-31
+// -----------------------------------------------------------------------------
+void CircularEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point )
+{
+    bool accept = false;
+    accept = Apply( DragFunctor( event, point, &MapLayer_ABC::HandleEnterDragEvent ) );
+    if( ! accept && default_ )
+        accept = default_->HandleEnterDragEvent( mouse, point ) );
+    event->accept( accept );
 }
