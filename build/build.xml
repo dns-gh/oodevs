@@ -225,6 +225,7 @@
         <update name="paranoia"/>
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>
+        <update name="svgl"/>
         <update name="terrain" package="generation_app"/>
         <update name="DIA" package="DIA_Tool_DebugGUI"/>
     </target>
