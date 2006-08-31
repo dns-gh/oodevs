@@ -213,10 +213,10 @@ void CircularEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry:
 // Name: CircularEventStrategy::HandleDropEvent
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void CircularEventStrategy::HandleDropEvent( QDropEvent*  event, const geometry::Point2f& point )
+void CircularEventStrategy::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
     if( ! Apply( DropFunctor( event, point, &MapLayer_ABC::HandleDropEvent ) ) && default_ )
-        default_->HandleDropEvent( mouse, point );
+        default_->HandleDropEvent( event, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,6 +228,6 @@ void CircularEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const 
     bool accept = false;
     accept = Apply( DragFunctor( event, point, &MapLayer_ABC::HandleEnterDragEvent ) );
     if( ! accept && default_ )
-        accept = default_->HandleEnterDragEvent( mouse, point ) );
+        accept = default_->HandleEnterDragEvent( event, point );
     event->accept( accept );
 }
