@@ -142,7 +142,7 @@
       clean
     ============================================================================
     -->
-    <target name="clean" depends="clean-reports" description="clean intermediate build artifacts">
+    <target name="clean" description="clean intermediate build artifacts">
         <clean name="MT_Tools_Scipio"/>
         <clean name="ASN"/>
         <clean name="ENT"/>
@@ -160,10 +160,6 @@
         <clean name="adaptation_app"/>
         <clean name="AGR"/>
         <clean name="ScriptCompiler"/>
-    </target>
-
-    <target name="clean-reports">
-        <delete dir="${reports.dir}"/>
     </target>
 
     <!--
@@ -237,6 +233,6 @@
     -->
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="clean-reports,configure,build,test,package" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,package" description="build and package distribution"/>
 
 </project>
