@@ -31,7 +31,7 @@ class KnowledgeGroupsModel : public kernel::Resolver_ABC< kernel::KnowledgeGroup
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupsModel( TeamsModel& teams );
+    explicit KnowledgeGroupsModel( TeamsModel& teams );
     virtual ~KnowledgeGroupsModel();
     //@}
 
@@ -39,8 +39,8 @@ public:
     //@{
     void Purge();
 
-    virtual kernel::KnowledgeGroup_ABC* Find( const unsigned int identifier ) const;
-    virtual kernel::KnowledgeGroup_ABC& Get( const unsigned int identifier ) const;
+    virtual kernel::KnowledgeGroup_ABC* Find( const unsigned long& identifier ) const;
+    virtual kernel::KnowledgeGroup_ABC& Get( const unsigned long& identifier ) const;
     //@}
 
 private:

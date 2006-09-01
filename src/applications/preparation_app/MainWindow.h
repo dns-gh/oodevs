@@ -25,12 +25,12 @@ namespace gui
     class GlWidget;
     class StatusBar;
     class ParametersLayer;
-    class AgentsLayer;
     class GlPlaceHolder;
     class IconLayout;
     class ColorStrategy;
 }
 
+class AgentsLayer;
 class Model;
 class ModelBuilder;
 class StaticModel;
@@ -77,7 +77,7 @@ private:
     //! @name Helpers
     //@{
     void BuildIconLayout();
-    void CreateLayers( gui::ParametersLayer& parameters, gui::AgentsLayer& agents, GraphicSetup_ABC& setup );
+    void CreateLayers( gui::ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();
@@ -113,7 +113,7 @@ private:
     gui::OptionsPanel*    pOptionsPanel_;
     gui::StatusBar*       pStatus_;
     gui::ParametersLayer* parameters_;
-    gui::AgentsLayer*     agents_;
+    AgentsLayer*     agents_;
     //@}
 };
 

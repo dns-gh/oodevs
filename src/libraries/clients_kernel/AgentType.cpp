@@ -115,7 +115,7 @@ void AgentType::Draw( const geometry::Point2f& where, const geometry::Rectangle2
 // Name: AgentType::DrawAggregated
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentType::DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools )
+void AgentType::DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsInside( where ) )
         tools.DrawApp6Symbol( symbol_, where, 2.f );

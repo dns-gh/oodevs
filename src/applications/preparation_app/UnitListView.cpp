@@ -99,6 +99,7 @@ void UnitListView::DisplayList()
             }
             ValuedListItem* item = new ValuedListItem( parentItem );
             item->SetNamed( type );
+            item->setDragEnabled( true );
         }
     }
 }
@@ -110,6 +111,7 @@ void UnitListView::DisplayList()
 void UnitListView::Display( const AgentType& type, ValuedListItem* item )
 {
     item->SetNamed( type );
+    item->setDragEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,10 +121,41 @@ void UnitListView::Display( const AgentType& type, ValuedListItem* item )
 void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
 {
     item->SetNamed( type );
+    item->setDragEnabled( true );
     Iterator< const AgentType& > it( type.CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
     const AgentType& pc = *type.GetTypePC();
     ValuedListItem* pcItem = new ValuedListItem( item );
     pcItem->SetNamed( pc );
+    pcItem->setDragEnabled( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::dragObject
+// Created: SBO 2006-04-18
+// -----------------------------------------------------------------------------
+QDragObject* UnitListView::dragObject()
+{
+    ValuedListItem* pItem = static_cast< ValuedListItem* >( selectedItem() );
+    if( !pItem )
+        return 0;
+
+    QByteArray* pBytes = new QByteArray();
+    std::string mimeType;
+    if( pItem->IsA< const AgentType* >() )
+    {
+        pBytes->setRawData( (const char*)&( pItem->GetValue< const AgentType* >() ), sizeof( AgentType* ) );
+        mimeType = "astec/AgentType";
+    }
+    else if( pItem->IsA< const AutomatType* >() )
+    {
+        pBytes->setRawData( (const char*)&( pItem->GetValue< const AutomatType* >() ), sizeof( AutomatType* ) );
+        mimeType = "astec/AutomatType";
+    }
+    if( mimeType.empty() )
+        return 0;
+    QStoredDrag* data = new QStoredDrag( mimeType.c_str(), this );
+    data->setEncodedData( *pBytes );
+    return data;
 }

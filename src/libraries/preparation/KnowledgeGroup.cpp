@@ -43,8 +43,8 @@ KnowledgeGroup::~KnowledgeGroup()
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::AddAutomat( unsigned long id, Agent_ABC& automat )
 {
-//    Resolver< Agent_ABC >::Register( id, automat );
-//    controller_.Update( *(KnowledgeGroup_ABC*)this );
+    Resolver< Agent_ABC >::Register( id, automat );
+    controller_.Update( *(KnowledgeGroup_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,8 +53,8 @@ void KnowledgeGroup::AddAutomat( unsigned long id, Agent_ABC& automat )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::RemoveAutomat( unsigned long id )
 {
-//    Resolver< Agent_ABC >::Remove( id );
-//    controller_.Update( *(KnowledgeGroup_ABC*)this );
+    Resolver< Agent_ABC >::Remove( id );
+    controller_.Update( *(KnowledgeGroup_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

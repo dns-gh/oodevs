@@ -10,7 +10,6 @@
 #ifndef __AgentsModel_h_
 #define __AgentsModel_h_
 
-#include "ASN_Types.h"
 #include "clients_kernel/Resolver.h"
 
 namespace kernel
@@ -18,15 +17,14 @@ namespace kernel
     class Agent_ABC;
     class Entity_ABC;
     class Population_ABC;
+    class AgentType;
+    class AutomatType;
+    class PopulationType;
+    class KnowledgeGroup_ABC;
+    class Team_ABC;
 }
 
 class AgentFactory_ABC;
-
-namespace DIN
-{
-    class DIN_Input;
-};
-
 
 // =============================================================================
 /** @class  AgentsModel
@@ -41,20 +39,20 @@ class AgentsModel : public kernel::Resolver< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsModel( AgentFactory_ABC& agentFactory );
+    explicit AgentsModel( AgentFactory_ABC& agentFactory );
     virtual ~AgentsModel();
     //@}
 
     //! @name Operations
     //@{
-    void CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg );
-    void CreateAgent( const ASN1T_MsgPionCreation& asnMsg );
+    void CreateAgent( const kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
+    void CreateAgent( const kernel::KnowledgeGroup_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
-    void CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg );
+    void CreatePopulation( const kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 

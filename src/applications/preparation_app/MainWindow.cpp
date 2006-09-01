@@ -21,6 +21,7 @@
 //#include "UnitToolbar.h"
 //#include "LinkInterpreter.h"
 #include "AgentListView.h"
+#include "AgentsLayer.h"
 #include "preparation/ModelBuilder.h"
 
 #include "clients_kernel/ActionController.h"
@@ -51,7 +52,6 @@
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ColorStrategy.h"
-#include "clients_gui/AgentsLayer.h"
 #include "clients_gui/PopulationsLayer.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
@@ -129,7 +129,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    AgentsLayer*     agentsLayer = new AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_ );
+    ::AgentsLayer*     agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_ );
 
     // object creation window
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
@@ -169,7 +169,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup )
+void MainWindow::CreateLayers( ParametersLayer& parameters, ::AgentsLayer& agents, GraphicSetup_ABC& setup )
 {
     CircularEventStrategy* eventStrategy = new CircularEventStrategy();
     eventStrategy_ = eventStrategy;

@@ -86,7 +86,7 @@ void Application::Initialize( int argc, char** argv )
     controllers_ = new Controllers();
     workers_     = new Workers();
     staticModel_ = new StaticModel( *controllers_ );
-    model_       = new Model( *controllers_ );
+    model_       = new Model( *controllers_, *staticModel_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_ );
 
     if( bfs::exists( bfs::path( conffile, bfs::native ) ) )

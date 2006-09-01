@@ -45,7 +45,7 @@ void KnowledgeGroupsModel::Purge()
 // Name: KnowledgeGroupsModel::Find
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* KnowledgeGroupsModel::Find( const unsigned int identifier ) const
+KnowledgeGroup_ABC* KnowledgeGroupsModel::Find( const unsigned long& identifier ) const
 {
     return teams_.FindKnowledgeGroup( identifier );
 }
@@ -54,7 +54,7 @@ KnowledgeGroup_ABC* KnowledgeGroupsModel::Find( const unsigned int identifier ) 
 // Name: KnowledgeGroupsModel::Get
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup_ABC& KnowledgeGroupsModel::Get( const unsigned int identifier ) const
+KnowledgeGroup_ABC& KnowledgeGroupsModel::Get( const unsigned long& identifier ) const
 {
     KnowledgeGroup_ABC* group = Find( identifier );
     if( ! group )

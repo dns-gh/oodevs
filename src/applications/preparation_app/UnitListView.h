@@ -64,6 +64,7 @@ private:
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     void DisplayList();
+    virtual QDragObject* dragObject();
     //@}
 
 private:

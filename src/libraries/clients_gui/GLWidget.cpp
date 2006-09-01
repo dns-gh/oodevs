@@ -52,6 +52,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::strin
     , frame_( 0 )
     , iconLayout_( iconLayout )
 {
+    setAcceptDrops( true );
     Register( *new SpyLayer( viewport_, frame_ ) );
 
     if( context() != context_ || ! context_->isValid() )

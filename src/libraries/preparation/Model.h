@@ -15,8 +15,12 @@ namespace kernel
     class Controllers;
 }
 
+class StaticModel;
 class TeamsModel;
 class TeamFactory_ABC;
+class KnowledgeGroupsModel;
+class AgentsModel;
+class AgentFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -30,7 +34,7 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( kernel::Controllers& controllers );
+             Model( kernel::Controllers& controllers, const StaticModel& staticModel );
     virtual ~Model();
     //@}
 
@@ -43,12 +47,15 @@ private:
     //! @name Member data
     //@{
     TeamFactory_ABC& teamFactory_;
+    AgentFactory_ABC& agentFactory_;
     //@}
 
 public:
     //! @name Member data
     //@{
     TeamsModel& teams_;
+    KnowledgeGroupsModel& knowledgeGroups_;
+    AgentsModel& agents_;
     //@}
 
 private:
