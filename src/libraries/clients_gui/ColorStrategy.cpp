@@ -321,7 +321,17 @@ void ColorStrategy::NotifyCreated( const Team_ABC& team )
     teamColors_[ &team ] = *it;
     available_.erase( it );
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::NotifyUpdated
+// Created: SBO 2006-09-04
+// -----------------------------------------------------------------------------
+void ColorStrategy::NotifyUpdated( const Team_ABC& team )
+{
+    NotifyDeleted( team );
+    NotifyCreated( team );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::NotifyDeleted
 // Created: AGE 2006-03-17

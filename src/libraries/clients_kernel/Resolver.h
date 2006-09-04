@@ -97,6 +97,10 @@ public:
             Error( identifier, "does not exist" );
         return *element;
     }
+    unsigned long Count() const
+    {
+        return elements_.size();
+    }
     //@}
     // $$$$ AGE 2006-02-14: 
 protected:

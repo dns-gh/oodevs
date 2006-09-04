@@ -12,6 +12,7 @@
 #include "AgentFactory_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/AutomatType.h"
 
 using namespace kernel;
 
@@ -54,6 +55,56 @@ void AgentsModel::CreateAgent( const Agent_ABC& parent, const AgentType& type, c
     Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
 }
 
+namespace
+{
+    geometry::Point2f CartesianFromPolar( double radius, double angle )
+    {
+        static const double pi = 3.1415926539 / 180.0;
+        const double radianAngle = pi * angle;
+        return geometry::Point2f( radius * std::sin( radianAngle ), radius * std::cos( radianAngle ) );
+    }
+
+    class DiamondFormation
+    {
+    public:
+        explicit DiamondFormation( const geometry::Point2f& center )
+            : center_( geometry::Vector2f( center.X(), center.Y() ) )
+            , radius_( 1 )
+            , angle_ ( 0 )
+            , onLevel_( 0 )
+            , totalOnLevel_( 4 )
+        {}
+
+        geometry::Point2f NextPosition()
+        {
+            static const double spacing = 100.;
+            geometry::Point2f position = CartesianFromPolar( radius_ * spacing, angle_ ) + center_;
+            ++onLevel_;
+
+            // if level is full, start a new one
+            if( onLevel_ == totalOnLevel_ )
+            {
+                radius_ *= 1.414; // sqrt(2)
+                angle_  = 0.;
+                totalOnLevel_ += 4;
+                onLevel_ = 0;
+            }
+            else
+                angle_ += 360.0 / totalOnLevel_;
+            return position;
+        }
+
+    private:
+        DiamondFormation( const DiamondFormation& );
+        DiamondFormation& operator=( const DiamondFormation& );
+
+    private:
+        const geometry::Vector2f center_;
+        double angle_, radius_;
+        unsigned int onLevel_, totalOnLevel_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::CreateAgent
 // Created: SBO 2006-09-01
@@ -62,6 +113,15 @@ void AgentsModel::CreateAgent( const KnowledgeGroup_ABC& parent, const AutomatTy
 {
     Agent_ABC* agent = agentFactory_.Create( parent, type, position );
     Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+
+    DiamondFormation formation( position );
+    CreateAgent( *agent, *type.GetTypePC(), formation.NextPosition() );
+    Iterator< const AgentType& > it = type.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const AgentType& agentType = it.NextElement();
+        CreateAgent( *agent, agentType, formation.NextPosition() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,4 +181,3 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 {
     return Resolver< Population_ABC>::Find( id );
 }
-

@@ -77,6 +77,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& );
+    virtual void NotifyUpdated( const kernel::Team_ABC& );
     virtual void NotifyDeleted( const kernel::Team_ABC& );
 
     virtual void BeforeSelection();
