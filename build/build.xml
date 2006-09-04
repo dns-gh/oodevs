@@ -112,7 +112,7 @@
     </target>
 
     <target name="application.gaming_app" description="build Astec Gaming executable" depends="library.gaming">
-        <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreencpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
+        <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
                    libs="ASN,ENT,gaming,clients_gui,clients_kernel,asn1per,svgl">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
