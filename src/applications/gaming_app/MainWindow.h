@@ -32,6 +32,9 @@ namespace gui
     class IconLayout;
     class ColorStrategy;
     class GlProxy;
+    class DrawerLayer;
+    class ExclusiveEventStrategy;
+    class CircularEventStrategy;
 }
 
 class Spy;
@@ -42,7 +45,6 @@ class Network;
 class MissionPanel;
 class ObjectCreationPanel;
 class GraphicSetup_ABC;
-class EventStrategy_ABC;
 
 // =============================================================================
 /** @class  MainWindow
@@ -101,7 +103,8 @@ private:
 
     void BuildIconLayout();
 
-    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::AgentsLayer& agents, GraphicSetup_ABC& setup );
+    void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, 
+                       gui::AgentsLayer& agents, gui::DrawerLayer& drawer, GraphicSetup_ABC& setup );
     //@}
 
     //! @name Copy/Assignment
@@ -119,13 +122,14 @@ private:
     Network& network_;
     std::string scipioXml_;
 
-    gui::GlProxy*       glProxy_;
-    gui::ColorStrategy* strategy_;
-    EventStrategy_ABC* eventStrategy_;
-    gui::GlWidget*      widget2d_;
-    gui::Gl3dWidget*    widget3d_;
-    gui::GlPlaceHolder* glPlaceHolder_;
-    gui::IconLayout* iconLayout_;
+    gui::GlProxy*                glProxy_;
+    gui::ColorStrategy*          strategy_;
+    gui::CircularEventStrategy*  forward_;
+    gui::ExclusiveEventStrategy* eventStrategy_;
+    gui::GlWidget*               widget2d_;
+    gui::Gl3dWidget*             widget3d_;
+    gui::GlPlaceHolder*          glPlaceHolder_;
+    gui::IconLayout*             iconLayout_;
 
     bool b3d_;
 

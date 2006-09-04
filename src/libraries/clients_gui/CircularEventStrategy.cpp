@@ -11,6 +11,8 @@
 #include "CircularEventStrategy.h"
 #include "graphics/MapLayer_ABC.h"
 
+using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: CircularEventStrategy constructor
 // Created: AGE 2006-08-21

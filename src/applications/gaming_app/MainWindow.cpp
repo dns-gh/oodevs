@@ -79,7 +79,10 @@
 #include "clients_gui/LimitsLayer.h"
 #include "clients_gui/ObjectsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
+#include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
+#include "clients_gui/DrawerLayer.h"
+#include "clients_gui/DrawerToolbar.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -204,13 +207,21 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EventToolbar( this, controllers );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
 
+
+    // Drawer
+    forward_ = new CircularEventStrategy();
+    eventStrategy_ = new ExclusiveEventStrategy( *forward_ );
+    DrawerLayer* drawer = new DrawerLayer();
+    new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_ );
+
+
     new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
 
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences() );
+    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, *drawer, prefDialog->GetPreferences() );
 
     pStatus_ = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     controllers_.Register( *this );
@@ -226,10 +237,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, gui::AgentsLayer& agents, GraphicSetup_ABC& setup )
+void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, gui::AgentsLayer& agents, DrawerLayer& drawer, GraphicSetup_ABC& setup )
 {
-    CircularEventStrategy* eventStrategy = new CircularEventStrategy();
-    eventStrategy_ = eventStrategy;
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
@@ -245,7 +254,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
     Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
-    
+
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );
@@ -264,18 +273,19 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
+    glProxy_->Register( drawer );
 
     // ordre des evenements
-    eventStrategy->Register( parameters );
-    eventStrategy->Register( agents );
-    eventStrategy->Register( populations );
-    eventStrategy->Register( objectsLayer );
-    eventStrategy->Register( agentKnowledges );
-    eventStrategy->Register( populationKnowledges );
-    eventStrategy->Register( objectKnowledges );
-    eventStrategy->Register( limits );
-    eventStrategy->Register( metrics );
-    eventStrategy->SetDefault( defaultLayer );
+    forward_->Register( parameters );
+    forward_->Register( agents );
+    forward_->Register( populations );
+    forward_->Register( objectsLayer );
+    forward_->Register( agentKnowledges );
+    forward_->Register( populationKnowledges );
+    forward_->Register( objectKnowledges );
+    forward_->Register( limits );
+    forward_->Register( metrics );
+    forward_->SetDefault( defaultLayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -348,8 +358,6 @@ void MainWindow::Close()
 MainWindow::~MainWindow()
 {
     controllers_.Remove( *this );
-//    delete pOptions_;
-    delete glProxy_;
 }
 
 // -----------------------------------------------------------------------------

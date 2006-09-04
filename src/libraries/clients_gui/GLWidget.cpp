@@ -13,6 +13,8 @@
 #include "graphics/Scale.h"
 #include "MiniView.h"
 #include "clients_gui/IconLayout.h"
+#include "DrawerStyle.h"
+#include "xeumeuleu/xml.h"
 
 using namespace geometry;
 using namespace kernel;

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CircularEventStrategy_h_
-#define __CircularEventStrategy_h_
+#ifndef __ExclusiveEventStrategy_h_
+#define __ExclusiveEventStrategy_h_
 
 #include "graphics/EventStrategy_ABC.h"
 
@@ -16,30 +16,29 @@ namespace gui
 {
 
 // =============================================================================
-/** @class  CircularEventStrategy
-    @brief  CircularEventStrategy
+/** @class  ExclusiveEventStrategy
+    @brief  Exclusive Event Strategy
 */
-// Created: AGE 2006-08-21
+// Created: AGE 2006-09-04
 // =============================================================================
-class CircularEventStrategy : public EventStrategy_ABC
+class ExclusiveEventStrategy : public EventStrategy_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CircularEventStrategy();
-    virtual ~CircularEventStrategy();
-    //@}
-
-    //! @name Settings
-    //@{
-    void SetReverse( bool );
-    void SetExclusive( bool );
+    explicit ExclusiveEventStrategy( EventStrategy_ABC& forward );
+    virtual ~ExclusiveEventStrategy();
     //@}
 
     //! @name Operations
     //@{
-            void SetDefault( MapLayer_ABC& layer );
+    void TakeExclusiveFocus( MapLayer_ABC& layer );
+    void ReleaseExclusiveFocus();
+    //@}
+
+    //! @name Operations
+    //@{
     virtual void Register  ( MapLayer_ABC& layer );
     virtual void Remove    ( MapLayer_ABC& layer );
 
@@ -54,32 +53,18 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    CircularEventStrategy( const CircularEventStrategy& );            //!< Copy constructor
-    CircularEventStrategy& operator=( const CircularEventStrategy& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    template< typename It, typename Functor >
-    bool Loop( It& use, It first, It begin, It end, Functor functor );
-    template< typename Functor >
-    bool Apply( Functor functor );
+    ExclusiveEventStrategy( const ExclusiveEventStrategy& );            //!< Copy constructor
+    ExclusiveEventStrategy& operator=( const ExclusiveEventStrategy& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_MapLayers layers_;
-    MapLayer_ABC* default_;
-
-    bool reverse_;
-    bool exclusive_;
-
-    CIT_MapLayers last_;
-    CRIT_MapLayers rlast_;
+    EventStrategy_ABC& forward_;
+    MapLayer_ABC* layer_;
     //@}
 };
 
 }
 
-#endif // __CircularEventStrategy_h_
+#endif // __ExclusiveEventStrategy_h_
