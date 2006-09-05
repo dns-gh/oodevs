@@ -132,7 +132,7 @@ void AutomatType::Draw( const geometry::Point2f& where, const geometry::Rectangl
 // -----------------------------------------------------------------------------
 bool AutomatType::IsTC2() const
 {
-    return name_.find( "TC2" ) != std::string::npos;
+    return name_.find( "TC2" ) != -1;
 }
 
 // -----------------------------------------------------------------------------
