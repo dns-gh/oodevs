@@ -78,6 +78,7 @@ void DrawerToolbar::OnShow( bool show )
 // -----------------------------------------------------------------------------
 void DrawerToolbar::OnDraw( bool draw )
 {
+    layer_.TakeFocus( draw );
     if( draw )
     {
         show_->setOn( true );

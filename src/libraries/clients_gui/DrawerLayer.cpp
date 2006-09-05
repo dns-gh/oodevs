@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "DrawerLayer.h"
 #include "DrawerShape.h"
+#include "clients_kernel/GlTools_ABC.h"
 
 using namespace gui;
 
@@ -17,9 +18,11 @@ using namespace gui;
 // Name: DrawerLayer constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerLayer::DrawerLayer()
-    : current_( 0 )
+DrawerLayer::DrawerLayer( const kernel::GlTools_ABC& tools )
+    : tools_( tools )
+    , current_( 0 )
     , show_( true )
+    , overlined_( false )
 {
     // NOTHING
 }
@@ -31,6 +34,16 @@ DrawerLayer::DrawerLayer()
 DrawerLayer::~DrawerLayer()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::TakeFocus
+// Created: AGE 2006-09-05
+// -----------------------------------------------------------------------------
+void DrawerLayer::TakeFocus( bool take )
+{
+    if( ! take )
+        overlined_ = selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +62,7 @@ void DrawerLayer::Show( bool show )
 void DrawerLayer::StartShape( const DrawerStyle& style )
 {
     delete current_;
-    current_ = new DrawerShape( style );
+    current_ = new DrawerShape( style, QColor( "blue" ) ); // $$$$ AGE 2006-09-04: 
 }
 
 // -----------------------------------------------------------------------------
@@ -61,9 +74,14 @@ void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
     if( show_ )
     {
         for( CIT_Shapes it = shapes_.begin(); it != shapes_.end(); ++it )
-            (*it)->Draw();
+        {
+            if( *it == selected_ )
+                (*it)->Draw( viewport, Qt::red, true );
+            else
+                (*it)->Draw( viewport, *it == overlined_ );
+        }
         if( current_ )
-            current_->Draw();
+            current_->Draw( viewport, true );
     }
 }
 
@@ -73,14 +91,14 @@ void DrawerLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 bool DrawerLayer::HandleKeyPress( QKeyEvent* key )
 {
-    if( ! current_ )
-        return false;
-
     switch( key->key() )
     {
         case Qt::Key_BackSpace:
         case Qt::Key_Delete:
-            current_->PopPoint();
+            if( current_ ) 
+                current_->PopPoint();
+            else if( selected_ )
+                DeleteSelected();
             return true;
         case Qt::Key_Return:
         case Qt::Key_Enter:
@@ -92,6 +110,19 @@ bool DrawerLayer::HandleKeyPress( QKeyEvent* key )
             return true;
     };
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::DeleteSelected
+// Created: AGE 2006-09-04
+// -----------------------------------------------------------------------------
+void DrawerLayer::DeleteSelected()
+{
+    T_Shapes::iterator it = std::find( shapes_.begin(), shapes_.end(), selected_ );
+    if( it != shapes_.end() )
+        shapes_.erase( it );
+    delete selected_;
+    selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +138,14 @@ void DrawerLayer::Done()
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::Precision
+// Created: AGE 2006-09-05
+// -----------------------------------------------------------------------------
+float DrawerLayer::Precision() const
+{
+    return 5.f * tools_.Pixels();
+}
 
 // -----------------------------------------------------------------------------
 // Name: DrawerLayer::HandleMouseMove
@@ -114,7 +153,20 @@ void DrawerLayer::Done()
 // -----------------------------------------------------------------------------
 bool DrawerLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point )
 {
-    return false;     // $$$$ AGE 2006-09-01: 
+    overlined_ = 0;
+    const float precision = Precision();
+    for( CIT_Shapes it = shapes_.begin(); it != shapes_.end() && ! overlined_; ++it )
+        if( (*it)->IsAt( point, precision ) )
+            overlined_ = *it;
+
+    if( selected_ && mouse->state() == Qt::LeftButton && ! dragPoint_.IsZero() )
+    {
+        const geometry::Vector2f translation( dragPoint_, point );
+        selected_->Translate( dragPoint_, translation, precision );
+        dragPoint_ = point;
+    }
+
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -123,14 +175,32 @@ bool DrawerLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& 
 // -----------------------------------------------------------------------------
 bool DrawerLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
 {
+    if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton ) 
+        dragPoint_ = point;
+    else 
+        dragPoint_ = geometry::Point2f();
+
+    if( current_ && mouse->button() == Qt::LeftButton && mouse->state() == Qt::LeftButton )
+        current_->AddPoint( point );
+    else if( current_ && mouse->button() == Qt::RightButton && mouse->state() == Qt::RightButton )
+        current_->PopPoint();
+    else if( mouse->button() == Qt::LeftButton )
+        selected_ = overlined_;
+
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerLayer::HandleMouseDoubleClick
+// Created: AGE 2006-09-04
+// -----------------------------------------------------------------------------
+bool DrawerLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point )
+{
     if( ! current_ )
         return false;
-
-    if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton )
-        current_->AddPoint( point );
-
-    if( mouse->button() == Qt::RightButton && mouse->state() == Qt::NoButton )
+    if( mouse->button() == Qt::RightButton )
         current_->PopPoint();
-
+    if( mouse->button() == Qt::LeftButton )
+        Done();
     return true;
 }

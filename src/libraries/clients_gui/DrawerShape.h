@@ -26,7 +26,7 @@ class DrawerShape
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DrawerShape( const DrawerStyle& style );
+             DrawerShape( const DrawerStyle& style, const QColor& color );
     virtual ~DrawerShape();
     //@}
 
@@ -34,11 +34,16 @@ public:
     //@{
     void PopPoint();
     void AddPoint( const geometry::Point2f& point );
+
+    void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
     //@}
 
     //! @name Operations
     //@{
-    void Draw() const;
+    bool IsAt( const geometry::Point2f& point, float precision = 100.f ) const;
+
+    void Draw( const geometry::Rectangle2f& viewport, bool overlined ) const;
+    void Draw( const geometry::Rectangle2f& viewport, const QColor& color, bool overlined ) const;
     //@}
 
 private:
@@ -48,10 +53,17 @@ private:
     DrawerShape& operator=( const DrawerShape& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    
+    //@}
+
 private:
     //! @name Member data
     //@{
     const DrawerStyle& style_;
+    QColor color_;
+    QColor complement_;
     T_PointVector points_;
     //@}
 };

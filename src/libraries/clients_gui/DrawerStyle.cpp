@@ -103,13 +103,10 @@ DrawerStyle::Unit DrawerStyle::ReadUnit( xml::xistream& input )
 // Name: DrawerStyle::Draw
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-void DrawerStyle::Draw( const T_PointVector& points ) const
+void DrawerStyle::Draw( const T_PointVector& points, svg::RenderingContext_ABC& context ) const
 {
     if( points.size() < 2 )
         return;
-    svg::RenderingContext context( 1 ); // $$$$ AGE 2006-08-31: 
-    svg::Color color( "blue" ); // $$$$ AGE 2006-09-01: 
-    context.PushProperty( "color", color );
 
     if( line_ )
         for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )

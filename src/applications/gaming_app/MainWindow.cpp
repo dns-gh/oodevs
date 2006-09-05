@@ -211,7 +211,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Drawer
     forward_ = new CircularEventStrategy();
     eventStrategy_ = new ExclusiveEventStrategy( *forward_ );
-    DrawerLayer* drawer = new DrawerLayer();
+    DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_ );
 
 

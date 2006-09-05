@@ -12,6 +12,11 @@
 
 #include "Layer_ABC.h"
 
+namespace kernel
+{
+    class GlTools_ABC;
+}
+
 namespace gui
 {
     class DrawerShape;
@@ -29,12 +34,13 @@ class DrawerLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerLayer();
+    explicit DrawerLayer( const kernel::GlTools_ABC& tools );
     virtual ~DrawerLayer();
     //@}
 
     //! @name Operations
     //@{
+    void TakeFocus( bool take );
     void Show( bool show );
 
     void StartShape( const DrawerStyle& style );
@@ -54,8 +60,11 @@ private:
     virtual bool HandleKeyPress  ( QKeyEvent* key );
     virtual bool HandleMouseMove ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
 
     void Done();
+    void DeleteSelected();
+    float Precision() const;
     //@}
 
     //! @name Types
@@ -67,9 +76,13 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::GlTools_ABC& tools_;
     bool         show_;
     DrawerShape* current_;
     T_Shapes     shapes_;
+    DrawerShape* overlined_;
+    DrawerShape* selected_;
+    geometry::Point2f dragPoint_;
     //@}
 };
 

@@ -51,7 +51,7 @@ public:
     //@{
     QString GetName() const;
     QString GetDescription() const;
-    void Draw( const T_PointVector& points ) const;
+    void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context ) const;
     //@}
 
 private:
