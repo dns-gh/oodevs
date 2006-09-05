@@ -18,6 +18,7 @@ namespace kernel
 }
 
 class Model;
+class ModelBuilder;
 
 // =============================================================================
 /** @class  AgentListView
@@ -33,7 +34,7 @@ class AgentListView : public gui::AgentListView
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const Model& model );
+             AgentListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const Model& model, ModelBuilder& modelBuilder );
     virtual ~AgentListView();
     //@}
 
@@ -60,6 +61,7 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void keyPressEvent( QKeyEvent* event );
     //@}
 
 private:
@@ -67,6 +69,7 @@ private:
     //@{
     gui::ItemFactory_ABC& factory_;
     const Model& model_;
+    ModelBuilder& modelBuilder_;
     //@}
 };
 

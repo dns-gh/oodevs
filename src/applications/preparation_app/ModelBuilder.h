@@ -56,11 +56,16 @@ public:
     //@{
     //@}
 
-private slots:
+public slots:
     //! @name Slots
     //@{
+    bool OnDelete();
+    //@}
+
+private slots:
+    //! @name Private Slots
+    //@{
     void OnCreate();
-    void OnDelete();
     //@}
 
 private:

@@ -20,6 +20,7 @@ namespace kernel
 }
 
 class Model;
+class ModelBuilder;
 
 // =============================================================================
 /** @class  AgentsLayer
@@ -34,7 +35,7 @@ class AgentsLayer : public gui::AgentsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model );
+             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder );
     virtual ~AgentsLayer();
     //@}
 
@@ -42,6 +43,7 @@ public:
     //@{
     virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
+    virtual bool HandleKeyPress( QKeyEvent* key );
     //@}
 
 private:
@@ -61,6 +63,7 @@ private:
     //! @name Member data
     //@{
     Model& model_;
+    ModelBuilder& modelBuilder_;
     kernel::SafePointer< kernel::Agent_ABC > selectedAgent_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedGroup_;
     //@}

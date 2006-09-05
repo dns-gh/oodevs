@@ -106,7 +106,7 @@ void ModelBuilder::OnCreate()
 // Name: ModelBuilder::OnDelete
 // Created: SBO 2006-09-04
 // -----------------------------------------------------------------------------
-void ModelBuilder::OnDelete()
+bool ModelBuilder::OnDelete()
 {
     if( selectedAgent_ )
         delete (const Agent_ABC*)selectedAgent_;
@@ -114,6 +114,9 @@ void ModelBuilder::OnDelete()
         delete (const KnowledgeGroup_ABC*)selectedGroup_;
     else if( selectedTeam_ )
         delete (const Team_ABC*)selectedTeam_;
+    else
+        return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------

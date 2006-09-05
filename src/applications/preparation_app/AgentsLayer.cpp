@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "AgentsLayer.h"
+#include "ModelBuilder.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 
@@ -18,9 +19,10 @@ using namespace kernel;
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, ModelBuilder& modelBuilder )
     : gui::AgentsLayer( controllers, tools, strategy, view )
     , model_( model )
+    , modelBuilder_( modelBuilder )
     , selectedAgent_( controllers )
     , selectedGroup_( controllers )
 {
@@ -93,5 +95,16 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return true;
         }
     }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::HandleKeyPress
+// Created: SBO 2006-09-05
+// -----------------------------------------------------------------------------
+bool AgentsLayer::HandleKeyPress( QKeyEvent* key )
+{
+    if( key->key() == Qt::Key_Delete )
+        return modelBuilder_.OnDelete();
     return false;
 }

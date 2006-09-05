@@ -10,10 +10,13 @@
 #include "preparation_app_pch.h"
 #include "AgentListView.h"
 #include "moc_AgentListView.cpp"
+#include "ModelBuilder.h"
 #include "preparation/Team.h"
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 
 using namespace kernel;
 
@@ -21,10 +24,11 @@ using namespace kernel;
 // Name: AgentListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, const Model& model )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, const Model& model, ModelBuilder& modelBuilder )
     : gui::AgentListView( pParent, controllers, factory )
     , factory_( factory )
     , model_( model )
+    , modelBuilder_( modelBuilder )
 {
     setRootIsDecorated( false );
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), this, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
@@ -90,10 +94,22 @@ void AgentListView::NotifyUpdated( const ModelLoaded& )
 void AgentListView::OnRename( QListViewItem* item, int, const QString& text )
 {
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item );
-    if( valuedItem->IsA< const Team_ABC* >() )
+    if( valuedItem && valuedItem->IsA< const Team_ABC* >() )
     {
         Team_ABC& team = const_cast< Team_ABC& >( *valuedItem->GetValue< const Team_ABC* >() );
         static_cast< Team& >( team ).Rename( text );
         valuedItem->SetNamed( team );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::keyPressEvent
+// Created: SBO 2006-09-05
+// -----------------------------------------------------------------------------
+void AgentListView::keyPressEvent( QKeyEvent* event )
+{
+    if( selectedItem() && event->key() == Qt::Key_Delete )
+        if( modelBuilder_.OnDelete() )
+            return;
+    QListView::keyPressEvent( event );
 }

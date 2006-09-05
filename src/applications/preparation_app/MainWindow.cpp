@@ -108,7 +108,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new ::AgentListView( pListsTabWidget, controllers, *factory, model ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new ::AgentListView( pListsTabWidget, controllers, *factory, model, *modelBuilder_ ), tr( "Agents" ) );
 //    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
 //    pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
@@ -129,7 +129,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    ::AgentsLayer*     agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_ );
+    ::AgentsLayer*     agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_ );
 
     // object creation window
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
