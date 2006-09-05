@@ -63,10 +63,12 @@ AutomatType::~AutomatType()
 void AutomatType::ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver )
 {
     std::string name;
-    int quantity;
+    std::string quantity;
     xis >> attribute( "nom", name )
         >> quantity;
-    units_.push_back( std::make_pair( &agentResolver.Get( name.c_str() ), quantity ) );
+    // $$$$ AGE 2006-09-05: 
+    units_.push_back( std::make_pair( &agentResolver.Get( name.c_str() ), 1 ) );
+     // $$$$ AGE 2006-09-05:  // $$$$ AGE 2006-09-05: 
 }
 
 // -----------------------------------------------------------------------------

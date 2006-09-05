@@ -32,12 +32,18 @@ DrawerStyle::DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools )
     
     std::string name, description;
     input >> xml::attribute( "name", name )
-          >> xml::optional() >> xml::content  ( "description", description )
+          >> xml::optional() >> xml::content( "description", description )
           >> xml::start( "segment" );
 
+    name_ = name.c_str(); 
+    if( ! description.empty() )
+        description_ = description.c_str();
+    else 
+        description_ = name_;
+
     lineUnit = ReadUnit( input );
-    name_ = name.c_str(); description_ = description.c_str();
     line_ = factory.Compile( input, *references_, 1 ); // $$$$ AGE 2006-08-31: 
+
     input >> xml::end() // segment
           >> xml::list( "marker-start", *this, &DrawerStyle::ReadMarker, markerStart_, startUnit )
           >> xml::list( "marker-mid", *this, &DrawerStyle::ReadMarker, markerMiddle_, middleUnit )
