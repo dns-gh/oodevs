@@ -13,6 +13,7 @@
 #include <qobject.h>
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -37,6 +38,10 @@ class ModelBuilder : public QObject
                    , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                   , public kernel::SelectionObserver_ABC
+                   , public kernel::SelectionObserver_Base< kernel::Team_ABC >
+                   , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
+                   , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
@@ -54,8 +59,8 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnCreateTeam();
-    void OnCreateKnowledgeGroup();
+    void OnCreate();
+    void OnDelete();
     //@}
 
 private:
@@ -71,6 +76,14 @@ private:
     virtual void NotifyContextMenu( const kernel::Team_ABC&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
+
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const kernel::Team_ABC& element );
+    virtual void Select( const kernel::KnowledgeGroup_ABC& element );
+    virtual void Select( const kernel::Agent_ABC& element );
+
+    void InsertDefaultMenu( kernel::ContextMenu& menu ) const;
     //@}
 
 private:
@@ -78,7 +91,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
-    const kernel::Team_ABC* currentTeam_;
+    kernel::SafePointer< kernel::Team_ABC > selectedTeam_;
+    kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedGroup_;
+    kernel::SafePointer< kernel::Agent_ABC > selectedAgent_;
     //@}
 };
 

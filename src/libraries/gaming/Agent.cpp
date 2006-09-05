@@ -78,7 +78,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
 // -----------------------------------------------------------------------------
 Agent::~Agent()
 {
-    ChangeKnowledgeGroup( 0 );
+    ChangeKnowledgeGroup( ( kernel::KnowledgeGroup_ABC*)0 );
     ChangeSuperior( 0 );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         static_cast< Agent* >( it->second )->superior_ = 0;
@@ -141,21 +141,20 @@ void Agent::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
 // -----------------------------------------------------------------------------
 void Agent::ChangeKnowledgeGroup( unsigned long id )
 {
-    KnowledgeGroup_ABC* gtia = gtiaResolver_.Find( id );
-    if( gtia )
-        ChangeKnowledgeGroup( *gtia );
+    ChangeKnowledgeGroup( gtiaResolver_.Find( id ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::ChangeKnowledgeGroup
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void Agent::ChangeKnowledgeGroup( KnowledgeGroup_ABC& gtia )
+void Agent::ChangeKnowledgeGroup( KnowledgeGroup_ABC* gtia )
 {
     if( gtia_ )
         gtia_->RemoveAutomat( id_ );
-    gtia_ = &gtia;
-    gtia_->AddAutomat( id_, *this );
+    gtia_ = gtia;
+    if( gtia_ )
+        gtia_->AddAutomat( id_, *this );
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         static_cast< Agent* >( it->second )->gtia_ = gtia_;
 }

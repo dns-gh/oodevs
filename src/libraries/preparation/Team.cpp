@@ -12,19 +12,22 @@
 #include "KnowledgeGroupFactory_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_gui/Tools.h"
 
 using namespace kernel;
+
+unsigned long Team::idManager_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( const QString& name, Controller& controller, KnowledgeGroupFactory_ABC& factory )
+Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory )
     : controller_( controller )
     , factory_( factory )
-    , name_( name )
-    , id_( 0 )
+    , id_( idManager_++ )
 {
+    name_ = tools::translate( "Preparation", "Armée %1" ).arg( id_ );
     controller_.Create( *(Team_ABC*)this );
 }
 
@@ -34,8 +37,8 @@ Team::Team( const QString& name, Controller& controller, KnowledgeGroupFactory_A
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    controller_.Delete( *(Team_ABC*)this );
     DeleteAll();
+    controller_.Delete( *(Team_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,9 +65,8 @@ unsigned long Team::GetId() const
 // -----------------------------------------------------------------------------
 void Team::CreateKnowledgeGroup()
 {
-    unsigned long id = GenerateKnowledgeGroupId();
-    KnowledgeGroup_ABC* group = factory_.CreateKnowledgeGroup( id, *this );
-    Resolver< KnowledgeGroup_ABC >::Register( id, *group );
+    KnowledgeGroup_ABC* group = factory_.CreateKnowledgeGroup( *this );
+    Resolver< KnowledgeGroup_ABC >::Register( group->GetId(), *group );
     controller_.Update( *(Team_ABC*)this );
 }
 
@@ -76,16 +78,4 @@ void Team::Rename( const QString& name )
 {
     name_ = name;
     controller_.Update( *(Team_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::GenerateKnowledgeGroupId
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-unsigned long Team::GenerateKnowledgeGroupId() const
-{
-    unsigned long i = 1;
-    for( ; Resolver< KnowledgeGroup_ABC >::Find( i ); ++i )
-        ;
-    return i;
 }

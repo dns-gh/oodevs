@@ -28,7 +28,7 @@ class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long id, kernel::Controller& controller, const kernel::Team_ABC& team );
+             KnowledgeGroup( kernel::Controller& controller, const kernel::Team_ABC& team );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -63,6 +63,12 @@ private:
     const kernel::Team_ABC& team_;
     unsigned long      id_;
     QString name_;
+    //@}
+
+private:
+    //! @name Static
+    //@{
+    static unsigned long idManager_;
     //@}
 };
 

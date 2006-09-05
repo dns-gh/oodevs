@@ -72,7 +72,7 @@ private:
     //! @name Helpers
     //@{
     void ChangeKnowledgeGroup( unsigned long id );
-    void ChangeKnowledgeGroup( kernel::KnowledgeGroup_ABC& gtia );
+    void ChangeKnowledgeGroup( kernel::KnowledgeGroup_ABC* gtia );
     void ChangeSuperior( unsigned long id );
     virtual void Aggregate( const bool& );
 

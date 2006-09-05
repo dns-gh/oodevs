@@ -31,7 +31,7 @@ class Team : public kernel::Team_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( const QString& name, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory );
+             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory );
     virtual ~Team();
     //@}
 
@@ -54,11 +54,6 @@ private:
     Team& operator=( const Team& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    unsigned long GenerateKnowledgeGroupId() const;
-    //@}
-
 private:
     //! @name Member data
     //@{
@@ -66,6 +61,12 @@ private:
     KnowledgeGroupFactory_ABC& factory_;
     QString name_;
     unsigned long id_;
+    //@}
+
+private:
+    //! @name Statics
+    //@{
+    static unsigned long idManager_;
     //@}
 };
 

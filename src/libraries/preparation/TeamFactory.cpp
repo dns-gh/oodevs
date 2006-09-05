@@ -41,9 +41,9 @@ TeamFactory::~TeamFactory()
 // Name: TeamFactory::CreateTeam
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Team_ABC* TeamFactory::CreateTeam( const QString& name )
+Team_ABC* TeamFactory::CreateTeam()
 {
-    Team* result = new Team( name, controllers_.controller_, *this );
+    Team* result = new Team( controllers_.controller_, *this );
     return result;
 }
 
@@ -51,8 +51,8 @@ Team_ABC* TeamFactory::CreateTeam( const QString& name )
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned int identifier, const kernel::Team_ABC& team )
+kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const kernel::Team_ABC& team )
 {
-    KnowledgeGroup_ABC* result = new KnowledgeGroup( identifier, controllers_.controller_, team );
+    KnowledgeGroup_ABC* result = new KnowledgeGroup( controllers_.controller_, team );
     return result;
 }

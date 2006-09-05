@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "AgentListView.h"
 #include "moc_AgentListView.cpp"
-#include "clients_kernel/Team_ABC.h"
+#include "preparation/Team.h"
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "clients_gui/Tools.h"
@@ -63,7 +63,7 @@ void AgentListView::Display( const Agent_ABC& agent, gui::ValuedListItem* item )
 // Name: AgentListView::NotifyCreated
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const kernel::Team_ABC& team )
+void AgentListView::NotifyCreated( const Team_ABC& team )
 {
     gui::ValuedListItem* item = factory_.CreateItem( firstChild() );
     item->SetNamed( team );
@@ -92,8 +92,8 @@ void AgentListView::OnRename( QListViewItem* item, int, const QString& text )
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item );
     if( valuedItem->IsA< const Team_ABC* >() )
     {
-        Team_ABC* team = const_cast< Team_ABC* >( valuedItem->GetValue< const Team_ABC* >() );
-        if( !model_.teams_.Rename( *team, text ) )
-            valuedItem->SetNamed( *team );
+        Team_ABC& team = const_cast< Team_ABC& >( *valuedItem->GetValue< const Team_ABC* >() );
+        static_cast< Team& >( team ).Rename( text );
+        valuedItem->SetNamed( team );
     }
 }

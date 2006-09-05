@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned int identifier, const kernel::Team_ABC& team ) = 0;
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const kernel::Team_ABC& team ) = 0;
     //@}
 };
 

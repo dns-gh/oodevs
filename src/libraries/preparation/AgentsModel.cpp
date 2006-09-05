@@ -13,6 +13,8 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 
@@ -20,10 +22,11 @@ using namespace kernel;
 // Name: AgentsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-AgentsModel::AgentsModel( AgentFactory_ABC& agentFactory )
+AgentsModel::AgentsModel( Controllers& controllers, AgentFactory_ABC& agentFactory )
     : agentFactory_( agentFactory )
+    , controllers_( controllers )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,6 +36,7 @@ AgentsModel::AgentsModel( AgentFactory_ABC& agentFactory )
 AgentsModel::~AgentsModel()
 {
     Purge();
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,4 +184,13 @@ Population_ABC& AgentsModel::GetPopulation( unsigned long id )
 Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 {
     return Resolver< Population_ABC>::Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::NotifyDeleted
+// Created: SBO 2006-09-04
+// -----------------------------------------------------------------------------
+void AgentsModel::NotifyDeleted( const Agent_ABC& agent )
+{
+    Resolver< Agent_ABC >::Remove( agent.GetId() );
 }

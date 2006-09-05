@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam( const QString& name );
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned int identifier, const kernel::Team_ABC& team );
+    virtual kernel::Team_ABC* CreateTeam();
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const kernel::Team_ABC& team );
     //@}
 
 private:

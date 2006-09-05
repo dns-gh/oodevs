@@ -22,7 +22,7 @@
 //#include "LinkInterpreter.h"
 #include "AgentListView.h"
 #include "AgentsLayer.h"
-#include "preparation/ModelBuilder.h"
+#include "ModelBuilder.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"

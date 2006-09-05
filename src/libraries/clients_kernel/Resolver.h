@@ -73,9 +73,13 @@ public:
 
     void DeleteAll() 
     {
-        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-            delete it->second;
-        elements_.clear();
+        while( ! elements_.empty() )
+        {
+            IT_Elements it = elements_.begin();
+            const T* element = it->second;
+            elements_.erase( it );
+            delete element;
+        }
     }
 
     void Clear()

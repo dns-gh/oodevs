@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam( const QString& name ) = 0;
+    virtual kernel::Team_ABC* CreateTeam() = 0;
     //@}
 };
 

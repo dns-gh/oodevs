@@ -25,10 +25,10 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : teamFactory_( *new TeamFactory( controllers, *this ) )
-    , teams_( *new TeamsModel( teamFactory_ ) )
+    , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel ) )
-    , agents_( *new AgentsModel( agentFactory_ ) )
+    , agents_( *new AgentsModel( controllers, agentFactory_ ) )
 {
     // NOTHING
 }

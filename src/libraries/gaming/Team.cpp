@@ -37,8 +37,8 @@ Team::Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGro
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    controller_.Delete( *(Team_ABC*)this );
     DeleteAll();
+    controller_.Delete( *(Team_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

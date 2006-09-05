@@ -75,9 +75,8 @@ template< typename T >
 void AgentListView::Update( const T& value )
 {
     ValuedListItem* item = FindItem( &value, firstChild() );
-    if( ! item )
-        throw std::runtime_error( std::string( "Could not update item " ) + typeid( value ).name() + " '" + value.GetName().ascii() + "'" );
-    Display( value, item );
+    if( item )
+        Display( value, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,6 +95,24 @@ void AgentListView::NotifyUpdated( const Team_ABC& team )
 void AgentListView::NotifyDeleted( const Team_ABC& team )
 {
     delete FindItem( &team, firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::NotifyDeleted
+// Created: SBO 2006-09-05
+// -----------------------------------------------------------------------------
+void AgentListView::NotifyDeleted( const KnowledgeGroup_ABC& group )
+{
+    delete FindItem( &group, firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::NotifyDeleted
+// Created: SBO 2006-09-05
+// -----------------------------------------------------------------------------
+void AgentListView::NotifyDeleted( const Agent_ABC& agent )
+{
+    delete FindItem( &agent, firstChild() );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #define __AgentsModel_h_
 
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -22,6 +23,7 @@ namespace kernel
     class PopulationType;
     class KnowledgeGroup_ABC;
     class Team_ABC;
+    class Controllers;
 }
 
 class AgentFactory_ABC;
@@ -34,12 +36,14 @@ class AgentFactory_ABC;
 // =============================================================================
 class AgentsModel : public kernel::Resolver< kernel::Agent_ABC >
                   , public kernel::Resolver< kernel::Population_ABC >
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentsModel( AgentFactory_ABC& agentFactory );
+             AgentsModel( kernel::Controllers& controllers, AgentFactory_ABC& agentFactory );
     virtual ~AgentsModel();
     //@}
 
@@ -66,9 +70,15 @@ private:
     AgentsModel& operator=( const AgentsModel& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     AgentFactory_ABC& agentFactory_;
     //@}
 };

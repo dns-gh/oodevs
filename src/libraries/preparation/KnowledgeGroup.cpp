@@ -12,17 +12,20 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Agent_ABC.h"
 
 using namespace kernel;
+
+unsigned long KnowledgeGroup::idManager_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long id, Controller& controller, const Team_ABC& team )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team )
     : controller_( controller )
     , team_( team )
-    , id_ ( id )
+    , id_ ( idManager_++ )
 {
     controller_.Create( *(KnowledgeGroup_ABC*)this );
     name_ = QString( "Gtia %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
@@ -34,6 +37,8 @@ KnowledgeGroup::KnowledgeGroup( unsigned long id, Controller& controller, const 
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
+    DeleteAll();
+    const_cast< Team_ABC& >( team_ ).Resolver< KnowledgeGroup_ABC >::Remove( id_ );
     controller_.Delete( *(KnowledgeGroup_ABC*)this );
 }
 

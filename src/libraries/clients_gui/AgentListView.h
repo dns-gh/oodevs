@@ -97,6 +97,8 @@ protected:
     //@{
 private:
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::KnowledgeGroup_ABC& group );
+    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
 
     virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& group );
     virtual void NotifyUpdated( const kernel::Agent_ABC& agent );
