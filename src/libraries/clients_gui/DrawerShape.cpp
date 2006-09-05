@@ -26,7 +26,10 @@ DrawerShape::DrawerShape( const DrawerStyle& style, const QColor& color )
 {
     int h, s, v;
     color_.getHsv( &h, &s, &v );
-    h+= 180; s = 255-s;
+    if( h == -1 )
+        v = 255-v;
+    else
+        h+= 180;
     complement_.setHsv( h, s, v );
 }
 
@@ -102,6 +105,7 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const QColor& col
 
     if( overlined )
     {
+        glLineWidth( 1 );
         glColor3f( complement_.red()   / 255.f,
                    complement_.green() / 255.f,
                    complement_.blue()  / 255.f );

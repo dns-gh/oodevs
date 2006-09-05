@@ -59,10 +59,10 @@ void DrawerLayer::Show( bool show )
 // Name: DrawerLayer::StartShape
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-void DrawerLayer::StartShape( const DrawerStyle& style )
+void DrawerLayer::StartShape( const DrawerStyle& style, const QColor& color )
 {
     delete current_;
-    current_ = new DrawerShape( style, QColor( "blue" ) ); // $$$$ AGE 2006-09-04: 
+    current_ = new DrawerShape( style, color );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +194,7 @@ bool DrawerLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f&
 // Name: DrawerLayer::HandleMouseDoubleClick
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------
-bool DrawerLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point )
+bool DrawerLayer::HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& )
 {
     if( ! current_ )
         return false;

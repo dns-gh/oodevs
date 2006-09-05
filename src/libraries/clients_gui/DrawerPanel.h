@@ -26,6 +26,7 @@ namespace gui
 {
     class DrawerLayer;
     class DrawerStyle;
+    class ColorButton;
 
 // =============================================================================
 /** @class  DrawerPanel
@@ -71,6 +72,7 @@ private:
     //! @name Member data
     //@{
     DrawerLayer& layer_;
+    ColorButton* color_;
     QToolBox* toolBox_;
     //@}
 };

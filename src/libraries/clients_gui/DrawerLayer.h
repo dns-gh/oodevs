@@ -43,7 +43,7 @@ public:
     void TakeFocus( bool take );
     void Show( bool show );
 
-    void StartShape( const DrawerStyle& style );
+    void StartShape( const DrawerStyle& style, const QColor& color );
 
     virtual void Paint( const geometry::Rectangle2f& viewport );
     //@}

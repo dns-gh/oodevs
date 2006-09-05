@@ -14,6 +14,7 @@
 #include <qtoolbox.h>
 #include "DrawerCategory.h"
 #include "DrawerLayer.h"
+#include "ColorButton.h"
 
 using namespace gui;
 
@@ -25,6 +26,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_A
     : QVBox( parent, "Drawer" )
     , layer_( layer )
 {
+    color_ = new ColorButton( this, "" );
     toolBox_ = new QToolBox( this );
     toolBox_->setMargin( 0 );
     toolBox_->setBackgroundColor( Qt::white );
@@ -70,5 +72,6 @@ void DrawerPanel::ReadCategory( xml::xistream& input, kernel::GlTools_ABC& tools
 // -----------------------------------------------------------------------------
 void DrawerPanel::OnSelect( DrawerStyle& style )
 {
-    layer_.StartShape( style );
+    color_->Commit();
+    layer_.StartShape( style, color_->GetColor() );
 }
