@@ -11,6 +11,7 @@
 #define __KnowledgeGroup_h_
 
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "Serializable_ABC.h"
 
 namespace kernel
 {
@@ -24,6 +25,7 @@ namespace kernel
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
+                     , public Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -47,6 +49,7 @@ public:
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -63,6 +66,7 @@ private:
     const kernel::Team_ABC& team_;
     unsigned long      id_;
     QString name_;
+    QString type_;
     //@}
 
 private:

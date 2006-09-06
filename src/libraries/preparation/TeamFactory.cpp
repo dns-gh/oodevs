@@ -44,6 +44,7 @@ TeamFactory::~TeamFactory()
 Team_ABC* TeamFactory::CreateTeam()
 {
     Team* result = new Team( controllers_.controller_, *this );
+//    result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     return result;
 }
 

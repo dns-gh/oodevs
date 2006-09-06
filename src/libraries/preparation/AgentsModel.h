@@ -26,6 +26,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace xml
+{
+    class xostream;
+}
+
 class AgentFactory_ABC;
 
 // =============================================================================
@@ -61,6 +66,7 @@ public:
     kernel::Population_ABC* FindPopulation( unsigned long id );
 
     void Purge();
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

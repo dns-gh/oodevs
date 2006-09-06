@@ -12,9 +12,11 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "xeumeuleu/xml.h"
 
 using namespace geometry;
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions constructor
@@ -123,4 +125,13 @@ void AgentPositions::Draw( const Point2f& where, const geometry::Rectangle2f& vi
 void AgentPositions::Aggregate( const bool& bDummy )
 {
     aggregated_ = bDummy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::Serialize
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void AgentPositions::Serialize( xml::xostream& xos ) const
+{
+    xos << content( "Position", converter_.ConvertToMgrs( position_ ) );
 }

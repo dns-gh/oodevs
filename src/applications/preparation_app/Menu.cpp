@@ -47,6 +47,9 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog 
     menu->setAccel( CTRL + Key_O, itemId );
     menu->insertItem( tr( "Fermer" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
+    itemId = menu->insertItem( MAKE_ICON( save ), tr( "&Sauvegarder" ), parent(), SLOT( Save() ) );
+    menu->setAccel( CTRL + Key_S, itemId );
+    menu->insertSeparator();
     menu->insertItem( tr( "&Quitter" ), qApp, SLOT( quit() ), CTRL + Key_Q );
     itemId = insertItem( tr( "&Fichier" ), menu );
     setAccel( ALT + Key_F, itemId );

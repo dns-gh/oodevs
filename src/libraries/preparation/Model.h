@@ -15,6 +15,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace xml
+{
+    class xostream;
+}
+
 class StaticModel;
 class TeamsModel;
 class TeamFactory_ABC;
@@ -41,11 +46,13 @@ public:
     //! @name Operations
     //@{
     void Purge();
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;
     //@}

@@ -17,6 +17,7 @@ namespace kernel
     class ModelLoaded;
 }
 
+class AutomatDecisions;
 class Model;
 class ModelBuilder;
 
@@ -28,6 +29,8 @@ class ModelBuilder;
 // =============================================================================
 class AgentListView : public gui::AgentListView
                     , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                    , public kernel::ElementObserver_ABC< AutomatDecisions >
+                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
     Q_OBJECT;
 
@@ -48,6 +51,8 @@ private slots:
     //! @name Slots
     //@{
     void OnRename( QListViewItem* item, int col, const QString& text );
+    void Engage();
+    void Disengage();
     //@}
 
 private:
@@ -60,7 +65,11 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& );
+    virtual void NotifyCreated( const kernel::KnowledgeGroup_ABC& );
+    virtual void NotifyCreated( const kernel::Agent_ABC& );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const AutomatDecisions& );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
     //@}
 

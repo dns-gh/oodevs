@@ -10,11 +10,14 @@
 #include "preparation_pch.h"
 #include "Team.h"
 #include "KnowledgeGroupFactory_ABC.h"
+#include "KnowledgeGroup.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/Tools.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 unsigned long Team::idManager_ = 1;
 
@@ -78,4 +81,22 @@ void Team::Rename( const QString& name )
 {
     name_ = name;
     controller_.Update( *(Team_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::Serialize
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void Team::Serialize( xml::xostream& xos ) const
+{
+    xos << start( "Armee" )
+            << attribute( "id", long( id_ ) )
+            << attribute( "nom", name_.ascii() )
+            << start( "GroupesConnaissance" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        static_cast< const KnowledgeGroup* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: Serialize KnowledgeGroup_ABC
+    xos     << end()
+            << start( "Diplomatie" )
+            << end()
+        << end();
 }

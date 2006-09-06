@@ -13,6 +13,11 @@
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
+namespace xml
+{
+    class xostream;
+}
+
 namespace kernel
 {
     class Team_ABC;
@@ -49,6 +54,8 @@ public:
 
     kernel::Team_ABC* FindTeam( const QString& name ) const;
     kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& id ) const;
+
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

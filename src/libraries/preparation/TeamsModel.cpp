@@ -15,8 +15,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: TeamsModel constructor
@@ -101,4 +103,16 @@ KnowledgeGroup_ABC* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) co
 void TeamsModel::NotifyDeleted( const Team_ABC& team )
 {
     Remove( team.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::Serialize
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void TeamsModel::Serialize( xml::xostream& xos ) const
+{
+    xos << start( "Armee" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        static_cast< const Team* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: Serialize Team_ABC
+    xos << end();
 }

@@ -9,15 +9,19 @@
 
 #include "preparation_pch.h"
 #include "Agent.h"
+#include "Serializable_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_gui/Tools.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 unsigned long Agent::idManager_ = 1; // $$$$ SBO 2006-09-05: 
 
@@ -31,6 +35,7 @@ Agent::Agent( const KnowledgeGroup_ABC& gtia, const AutomatType& type, Controlle
     , agentResolver_( agentResolver )
     , gtiaResolver_( gtiaResolver )
     , id_( idManager_++ )
+    , name_( type.GetName() )
     , automatType_( &type )
     , type_( automatType_->GetTypePC() )
     , superior_( 0 )
@@ -38,9 +43,7 @@ Agent::Agent( const KnowledgeGroup_ABC& gtia, const AutomatType& type, Controlle
     , aggregated_( false )
 {
     RegisterSelf( *this );
-    name_ = QString( "%1 [%2]" ).arg( type.GetName() ).arg( id_ );
     CreateDictionary();
-
     ChangeKnowledgeGroup( gtia.GetId() );
     controller_.Create( *(Agent_ABC*)this );
 }
@@ -55,6 +58,7 @@ Agent::Agent( const Agent_ABC& automat, const AgentType& type, Controller& contr
     , agentResolver_( agentResolver )
     , gtiaResolver_( gtiaResolver )
     , id_( idManager_++ )
+    , name_( type.GetName() )
     , automatType_( 0 )
     , type_( &type )
     , superior_( 0 )
@@ -62,9 +66,7 @@ Agent::Agent( const Agent_ABC& automat, const AgentType& type, Controller& contr
     , aggregated_( false )
 {
     RegisterSelf( *this );
-    name_ = QString( "%1 [%2]" ).arg( type.GetName() ).arg( id_ );
     CreateDictionary();
-
     ChangeSuperior( automat.GetId() );
     controller_.Create( *(Agent_ABC*)this );
 }
@@ -90,7 +92,7 @@ Agent::~Agent()
 // -----------------------------------------------------------------------------
 QString Agent::GetName() const
 {
-    return name_;
+    return QString( "%1 [%2]" ).arg( name_ ).arg( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,4 +257,25 @@ void Agent::CreateDictionary()
     dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
     dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), superior_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Serialize
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void Agent::Serialize( xml::xostream& xos ) const
+{
+    xos << start( automatType_ ? "Automate" : "Pion" )
+            << attribute( "id", long( id_ ) )
+            << attribute( "type", automatType_ ? automatType_->GetName().ascii() : type_->GetName().ascii() )
+            << content( "Nom", name_ );
+    Interface().Apply( &Serializable_ABC::Serialize, xos );
+    xos         << start( "LiensHierarchiques" );
+    if( automatType_ )
+        xos << content( "Armee", GetTeam().GetName() )
+            << content( "GroupeConnaissance", long( gtia_->GetId() ) );
+    else
+        xos << content( "Automate", long( superior_->GetId() ) );
+    xos         << end()
+        << end();
 }

@@ -265,6 +265,23 @@ void MainWindow::Close()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MainWindow::Save
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void MainWindow::Save()
+{
+    std::string current;
+    const QString filename = QFileDialog::getSaveFileName( "../data/", "Ordre de bataille (*.xml)", 0, 0, "Sauvegarde ODB" );
+    if( filename.isEmpty() )
+        return;
+    current = filename;
+    if( current.substr( 0, 2 ) == "//" )
+        std::replace( current.begin(), current.end(), '/', '\\' );
+    xml::xofstream xos( current, xml::encoding( "ISO-8859-1" ) );
+    model_.Serialize( xos );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MainWindow destructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------

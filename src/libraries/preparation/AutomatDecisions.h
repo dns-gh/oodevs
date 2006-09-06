@@ -7,70 +7,58 @@
 //
 // *****************************************************************************
 
-#ifndef __Team_h_
-#define __Team_h_
+#ifndef __AutomatDecisions_h_
+#define __AutomatDecisions_h_
 
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 #include "Serializable_ABC.h"
 
 namespace kernel
 {
+    class Agent_ABC;
     class Controller;
 }
 
-class KnowledgeGroupFactory_ABC;
-
 // =============================================================================
-/** @class  Team
-    @brief  Team
+/** @class  AutomatDecisions
+    @brief  AutomatDecisions
 */
-// Created: SBO 2006-08-29
+// Created: AGE 2006-03-14
 // =============================================================================
-class Team : public kernel::Team_ABC
-           , public Serializable_ABC
+class AutomatDecisions : public kernel::Extension_ABC
+                       , public Serializable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory );
-    virtual ~Team();
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual QString GetName() const;
-    virtual unsigned long GetId() const;
+             AutomatDecisions( kernel::Controller& controller, const kernel::Agent_ABC& agent );
+    virtual ~AutomatDecisions();
     //@}
 
     //! @name Operations
     //@{
-    void CreateKnowledgeGroup();
-    void Rename( const QString& name );
+    const kernel::Agent_ABC& GetAgent() const;
+    bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
+    void Engage();
+    void Disengage();
     virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Team( const Team& );            //!< Copy constructor
-    Team& operator=( const Team& ); //!< Assignement operator
+    AutomatDecisions( const AutomatDecisions& );            //!< Copy constructor
+    AutomatDecisions& operator=( const AutomatDecisions& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    KnowledgeGroupFactory_ABC& factory_;
-    QString name_;
-    unsigned long id_;
-    //@}
-
-private:
-    //! @name Statics
-    //@{
-    static unsigned long idManager_;
+    const kernel::Agent_ABC& agent_;
+    bool bEmbraye_;
     //@}
 };
 
-#endif // __Team_h_
+#endif // __AutomatDecisions_h_

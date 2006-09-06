@@ -13,8 +13,10 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 unsigned long KnowledgeGroup::idManager_ = 1;
 
@@ -26,6 +28,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team )
     : controller_( controller )
     , team_( team )
     , id_ ( idManager_++ )
+    , type_( "Standard" ) // $$$$ SBO 2006-09-06: 
 {
     controller_.Create( *(KnowledgeGroup_ABC*)this );
     name_ = QString( "Gtia %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
@@ -123,4 +126,16 @@ void KnowledgeGroup::ContextMenu( ActionController& controller, const QPoint& wh
 void KnowledgeGroup::Activate( ActionController& controller ) const
 {
     controller.Activate( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Serialize
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Serialize( xml::xostream& xos ) const
+{
+    xos << start( "GroupConnaissance" )
+            << attribute( "id", long( id_ ) )
+            << attribute( "type", type_ )
+        << end();
 }

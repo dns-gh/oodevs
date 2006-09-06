@@ -20,6 +20,11 @@ namespace kernel
     class AutomatType;
 }
 
+namespace xml
+{
+    class xostream;
+}
+
 // =============================================================================
 /** @class  Agent
     @brief  Agent
@@ -60,6 +65,7 @@ public:
 
     virtual const kernel::AutomatType* GetAutomatType() const;
     virtual const kernel::AgentType& GetType() const;
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

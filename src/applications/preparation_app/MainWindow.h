@@ -71,6 +71,7 @@ public slots:
     //@{
     void Open();
     void Close();
+    void Save();
     //@}
 
 private:

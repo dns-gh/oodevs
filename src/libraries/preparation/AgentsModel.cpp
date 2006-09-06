@@ -10,13 +10,16 @@
 #include "preparation_pch.h"
 #include "AgentsModel.h"
 #include "AgentFactory_ABC.h"
+#include "Agent.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel constructor
@@ -193,4 +196,28 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 void AgentsModel::NotifyDeleted( const Agent_ABC& agent )
 {
     Resolver< Agent_ABC >::Remove( agent.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::Serialize
+// Created: SBO 2006-09-06
+// -----------------------------------------------------------------------------
+void AgentsModel::Serialize( xml::xostream& xos ) const
+{
+    xos << start( "Automates" );
+    for( Resolver< Agent_ABC >::CIT_Elements it = Resolver< Agent_ABC >::elements_.begin(); it != Resolver< Agent_ABC >::elements_.end(); ++it )
+        if( it->second->GetAutomatType() )
+            static_cast< const Agent* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: 
+    xos << end();
+
+    xos << start( "Pions" );
+    for( Resolver< Agent_ABC >::CIT_Elements it = Resolver< Agent_ABC >::elements_.begin(); it != Resolver< Agent_ABC >::elements_.end(); ++it )
+        if( !it->second->GetAutomatType() )
+            static_cast< const Agent* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: 
+    xos << end();
+
+    xos << start( "Populations" );
+//    for( Resolver< Population_ABC >::CIT_Elements it = Resolver< Population_ABC >::elements_.begin(); it != Resolver< Population_ABC >::elements_.end(); ++it )
+//        static_cast< const Population* >( it->second )->Serialize( xos );
+    xos << end();
 }

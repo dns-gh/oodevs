@@ -51,7 +51,7 @@
 //#include "Logistics.h"
 //#include "Explosions.h"
 //#include "Decisions.h"
-//#include "AutomatDecisions.h"
+#include "AutomatDecisions.h"
 //#include "Fires.h"
 #include "AgentPositions.h"
 //#include "PopulationPositions.h"
@@ -97,7 +97,6 @@ Agent_ABC* AgentFactory::Create( const Agent_ABC& parent, const AgentType& type,
 //    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
 //    result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
 //    result->Attach( *new Decisions( controllers_.controller_, *result ) );
-//    result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
 //    result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
 //    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
@@ -116,6 +115,7 @@ kernel::Agent_ABC* AgentFactory::Create( const KnowledgeGroup_ABC& parent, const
     Agent* result = new Agent( parent, type, controllers_.controller_, model_.agents_, model_.knowledgeGroups_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
+    result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     AttachExtensions( *result );
     return result;
 }
