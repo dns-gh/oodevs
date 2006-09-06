@@ -427,6 +427,12 @@ Mission-Pion ::= CHOICE
     mission-pion-milice-detruire-embuscade                              Mission-Pion-MILICE-DetruireEmbuscade,
     mission-pion-joint-marine-transporter                               Mission-Pion-JOINT-MARINE-Transporter,
     mission-pion-joint-air-effectuer-raid                               Mission-Pion-JOINT-AIR-EffectuerRaid,
+    mission-pion-asy-sinfiltrer                                         Mission-Pion-ASY-SInfiltrer,
+    mission-pion-asy-commettre-attentatContrePopulation                 Mission-Pion-ASY-CommettreAttentatContrePopulation,
+    mission-pion-asy-commettre-attentatContreForcesArmees               Mission-Pion-ASY-CommettreAttentatContreForcesArmees,
+    mission-pion-asy-commettre-attentatContreInstallation               Mission-Pion-ASY-CommettreAttentatContreInstallation,
+    mission-pion-asy-commettre-exactions-sur-population-dans-zone       Mission-Pion-ASY-CommettreExactionsSurPopulationDansZone,
+    mission-pion-asy-renseigner                                         Mission-Pion-ASY-Renseigner,
     mission-pion-nbc-animer-un-plot-de-decontamination                  Mission-Pion-NBC-AnimerUnPlotDeDecontamination,
     mission-pion-nbc-reconnaitre-itineraire                             Mission-Pion-NBC-ReconnaitreItineraire,
     mission-pion-nbc-reconnaitre-zone                                   Mission-Pion-NBC-ReconnaitreZone,
@@ -443,13 +449,7 @@ Mission-Pion ::= CHOICE
     mission-pion-rens-roim-mettre-en-oeuvre                             Mission-Pion-RENS-ROIM-MettreEnOeuvre,     
     mission-pion-rens-roim-sdti-renseigner-sur                          Mission-Pion-RENS-ROIM-SDTI-RenseignerSur,
     mission-pion-rens-roim-cl289-renseigner-sur                         Mission-Pion-RENS-ROIM-CL289-RenseignerSur,
-    mission-pion-trans-etablir-gerer-liaison                            Mission-Pion-TRANS-EtablirGererLiaison,
-    mission-pion-asy-sinfiltrer                                         Mission-Pion-ASY-SInfiltrer,
-    mission-pion-asy-commettre-attentatContrePopulation                 Mission-Pion-ASY-CommettreAttentatContrePopulation,
-    mission-pion-asy-commettre-attentatContreForcesArmees               Mission-Pion-ASY-CommettreAttentatContreForcesArmees,
-    mission-pion-asy-commettre-attentatContreInstallation               Mission-Pion-ASY-CommettreAttentatContreInstallation,
-    mission-pion-asy-commettre-exactions-sur-population-dans-zone       Mission-Pion-ASY-CommettreExactionsSurPopulationDansZone,
-    mission-pion-asy-renseigner                                         Mission-Pion-ASY-Renseigner
+    mission-pion-trans-etablir-gerer-liaison                            Mission-Pion-TRANS-EtablirGererLiaison
 }
 
 MsgPionOrder ::= SEQUENCE

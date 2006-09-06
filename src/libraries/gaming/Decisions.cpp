@@ -123,7 +123,6 @@ const Mission* Decisions::GetCurrentMission() const
     return current_;
 }
 
-   
 // -----------------------------------------------------------------------------
 // Name: Decisions::Draw
 // Created: AGE 2006-04-10
