@@ -11,17 +11,18 @@
 #include "Diplomacy.h"
 #include "clients_gui/Tools.h"
 
-Diplomacy Diplomacy::unknown_( tools::translate( "Preparation", "inconnu" ) );
-Diplomacy Diplomacy::friend_ ( tools::translate( "Preparation", "ami"     ) );
-Diplomacy Diplomacy::enemy_  ( tools::translate( "Preparation", "ennemi"  ) );
-Diplomacy Diplomacy::neutral_( tools::translate( "Preparation", "neutre"  ) );
+Diplomacy Diplomacy::unknown_( "inconnu", tools::translate( "Preparation", "inconnu" ) );
+Diplomacy Diplomacy::friend_ ( "ami"    , tools::translate( "Preparation", "ami"     ) );
+Diplomacy Diplomacy::enemy_  ( "ennemi" , tools::translate( "Preparation", "ennemi"  ) );
+Diplomacy Diplomacy::neutral_( "neutre" , tools::translate( "Preparation", "neutre"  ) );
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacy constructor
 // Created: SBO 2006-09-07
 // -----------------------------------------------------------------------------
 Diplomacy::Diplomacy()
-    : name_( unknown_.name_ )
+    : value_( unknown_.value_ )
+    , name_( unknown_.name_ )
 {
     // NOTHING
 }
@@ -30,8 +31,9 @@ Diplomacy::Diplomacy()
 // Name: Diplomacy constructor
 // Created: SBO 2006-09-07
 // -----------------------------------------------------------------------------
-Diplomacy::Diplomacy( const QString& name )
-    : name_( name )
+Diplomacy::Diplomacy( const QString& value, const QString& name )
+    : value_( value )
+    , name_( name )
 {
     // NOTHING
 }
@@ -41,7 +43,8 @@ Diplomacy::Diplomacy( const QString& name )
 // Created: SBO 2006-09-07
 // -----------------------------------------------------------------------------
 Diplomacy::Diplomacy( const Diplomacy& diplomacy )
-    : name_( diplomacy.name_ )
+    : value_( diplomacy.value_ )
+    , name_( diplomacy.name_ )
 {
     // NOTHING
 }
@@ -62,6 +65,15 @@ Diplomacy::~Diplomacy()
 QString Diplomacy::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Diplomacy::GetValue
+// Created: SBO 2006-09-07
+// -----------------------------------------------------------------------------
+QString Diplomacy::GetValue() const
+{
+    return value_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +118,7 @@ Diplomacy Diplomacy::Neutral()
 // -----------------------------------------------------------------------------
 Diplomacy& Diplomacy::operator=( const Diplomacy& rhs )
 {
-    name_ = rhs.name_;
+    value_ = rhs.value_;
+    name_  = rhs.name_;
     return *this;
 }

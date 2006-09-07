@@ -23,7 +23,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Diplomacy();
-    explicit Diplomacy( const QString& name );
+    explicit Diplomacy( const QString& value, const QString& name );
              Diplomacy( const Diplomacy& );
     virtual ~Diplomacy();
     //@}
@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{
     QString GetName() const;
+    QString GetValue() const;
     static Diplomacy Unknown();
     static Diplomacy Friend ();
     static Diplomacy Enemy  ();
@@ -42,6 +43,7 @@ public:
 private:
     //! @name Member data
     //@{
+    QString value_;
     QString name_;
     //@}
 

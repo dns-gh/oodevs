@@ -68,7 +68,7 @@ void Diplomacies::Serialize( xml::xostream& xos ) const
     {
         xos << start( "Armee" )
                 << attribute( "nom", it->first->team_.GetName() )
-                << attribute( "relation", it->second.GetName() )
+                << attribute( "relation", it->second.GetValue() )
             << end();
     }
     xos << end();

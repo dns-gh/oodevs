@@ -31,9 +31,11 @@ namespace
 
         ~DiplomacyCell() {}
 
-        void SetColor( const QString& name, const QColor& color )
+        void SetColor( const Diplomacy& diplomacy, const QColor& color )
         {
+            const QString name = diplomacy.GetName();
             colors_[name] = color;
+            diplomacies_[name] = diplomacy;
         }
 
         void paint( QPainter* p, const QColorGroup& cg, const QRect& cr, bool selected )
@@ -45,17 +47,26 @@ namespace
             QTableItem::paint( p, newCg, cr, selected );
         }
 
+        Diplomacy GetValue() const
+        {
+            std::map< const QString, Diplomacy >::const_iterator it = diplomacies_.find( QTableItem::text() );
+            if( it != diplomacies_.end() )
+                return it->second;
+            return Diplomacy::Unknown();
+        }
+
     private:
-        std::map< QString, QColor > colors_;
+        std::map< const QString, QColor > colors_;
+        std::map< const QString, Diplomacy > diplomacies_;
     };
 
     DiplomacyCell* BuildDiplomacyCell( QTable* table, const QStringList& list )
     {
         DiplomacyCell* cell = new DiplomacyCell( table, list );
-        cell->SetColor( Diplomacy::Unknown().GetName(), QColor( 255, 255, 200 ) );
-        cell->SetColor( Diplomacy::Friend().GetName() , QColor( 200, 200, 255 ) );
-        cell->SetColor( Diplomacy::Enemy().GetName()  , QColor( 255, 200, 200 ) );
-        cell->SetColor( Diplomacy::Neutral().GetName(), QColor( 200, 255, 200 ) );
+        cell->SetColor( Diplomacy::Unknown(), QColor( 255, 255, 200 ) );
+        cell->SetColor( Diplomacy::Friend() , QColor( 200, 200, 255 ) );
+        cell->SetColor( Diplomacy::Enemy()  , QColor( 255, 200, 200 ) );
+        cell->SetColor( Diplomacy::Neutral(), QColor( 200, 255, 200 ) );
         return cell;
     }
 }
@@ -121,7 +132,8 @@ void ChangeDiplomacyDialog::Validate()
             if( i == j )
                 continue;
             Diplomacies& diplomacies = const_cast< Diplomacies& >( teams_[i]->Get< Diplomacies >() );
-            diplomacies.SetDiplomacy( *teams_[j], Diplomacy( table_->text( i, j ) ) );
+            DiplomacyCell* cell = static_cast< DiplomacyCell* >( table_->item( i, j ) );
+            diplomacies.SetDiplomacy( *teams_[j], cell->GetValue() );
         }
     hide();
 }
