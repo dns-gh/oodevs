@@ -11,6 +11,7 @@
 #include "Team.h"
 #include "KnowledgeGroupFactory_ABC.h"
 #include "KnowledgeGroup.h"
+#include "Serializable_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/Tools.h"
@@ -95,8 +96,7 @@ void Team::Serialize( xml::xostream& xos ) const
             << start( "GroupesConnaissance" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         static_cast< const KnowledgeGroup* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: Serialize KnowledgeGroup_ABC
-    xos     << end()
-            << start( "Diplomatie" )
-            << end()
-        << end();
+    xos     << end();
+    Interface().Apply( &Serializable_ABC::Serialize, xos );
+    xos << end();
 }

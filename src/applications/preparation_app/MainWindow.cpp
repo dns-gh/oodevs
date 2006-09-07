@@ -23,6 +23,7 @@
 #include "AgentListView.h"
 #include "AgentsLayer.h"
 #include "ModelBuilder.h"
+#include "Dialogs.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -95,6 +96,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setCaption( APP_NAME );
 
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
+    new Dialogs( this, controllers, model_, staticModel );
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );

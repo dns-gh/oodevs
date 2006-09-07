@@ -13,6 +13,7 @@
 #include "TeamsModel.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
+#include "Diplomacies.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace kernel;
@@ -44,7 +45,7 @@ TeamFactory::~TeamFactory()
 Team_ABC* TeamFactory::CreateTeam()
 {
     Team* result = new Team( controllers_.controller_, *this );
-//    result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
+    result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     return result;
 }
 

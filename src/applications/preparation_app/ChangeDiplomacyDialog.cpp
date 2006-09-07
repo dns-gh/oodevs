@@ -1,0 +1,211 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "preparation_app_pch.h"
+#include "ChangeDiplomacyDialog.h"
+#include "moc_ChangeDiplomacyDialog.cpp"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Team_ABC.h"
+#include "preparation/Diplomacy.h"
+#include "preparation/Diplomacies.h"
+
+#include <qtable.h>
+#include <qpainter.h>
+
+using namespace kernel;
+using namespace gui;
+
+namespace
+{
+    class DiplomacyCell : public QComboTableItem
+    {
+    public:
+        DiplomacyCell( QTable* table, const QStringList& list )
+            : QComboTableItem( table, list ) {}
+
+        ~DiplomacyCell() {}
+
+        void SetColor( const QString& name, const QColor& color )
+        {
+            colors_[name] = color;
+        }
+
+        void paint( QPainter* p, const QColorGroup& cg, const QRect& cr, bool selected )
+        {
+            QColorGroup newCg( cg );
+            newCg.setColor( QColorGroup::Base, colors_[QTableItem::text()] );
+
+            p->setBackgroundColor( colors_[QTableItem::text()] );
+            QTableItem::paint( p, newCg, cr, selected );
+        }
+
+    private:
+        std::map< QString, QColor > colors_;
+    };
+
+    DiplomacyCell* BuildDiplomacyCell( QTable* table, const QStringList& list )
+    {
+        DiplomacyCell* cell = new DiplomacyCell( table, list );
+        cell->SetColor( Diplomacy::Unknown().GetName(), QColor( 255, 255, 200 ) );
+        cell->SetColor( Diplomacy::Friend().GetName() , QColor( 200, 200, 255 ) );
+        cell->SetColor( Diplomacy::Enemy().GetName()  , QColor( 255, 200, 200 ) );
+        cell->SetColor( Diplomacy::Neutral().GetName(), QColor( 200, 255, 200 ) );
+        return cell;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog constructor
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers )
+    : QDialog( parent, 0, true )
+    , controllers_( controllers )
+{
+    setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+    setCaption( tr( "Diplomatie" ) );
+    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+
+    table_ = new QTable( this );
+    table_->setSelectionMode( QTable::NoSelection );
+    table_->setMinimumSize( 400, 200 );
+    pMainLayout->addWidget( table_ );
+
+    QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
+    pButtonLayout->setAlignment( Qt::Right );
+    QPushButton* okBtn     = new QPushButton( tr( "OK" ), this );
+    QPushButton* cancelBtn = new QPushButton( tr( "Annuler" ), this );
+    pButtonLayout->addWidget( okBtn );
+    pButtonLayout->addWidget( cancelBtn );
+    okBtn->setDefault( true );
+    okBtn->setMaximumWidth( 100 );
+    cancelBtn->setMaximumWidth( 100 );
+
+    list_.append( Diplomacy::Unknown().GetName() );
+    list_.append( Diplomacy::Friend().GetName() );
+    list_.append( Diplomacy::Enemy().GetName() );
+    list_.append( Diplomacy::Neutral().GetName() );
+
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
+
+    controllers_.Register( *this );
+
+    hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog destructor
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+ChangeDiplomacyDialog::~ChangeDiplomacyDialog()
+{
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::Validate
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::Validate()
+{
+    for( unsigned int i = 0; i < teams_.size(); ++i )
+        for( unsigned int j = 0; j < teams_.size(); ++j )
+        {
+            if( i == j )
+                continue;
+            Diplomacies& diplomacies = const_cast< Diplomacies& >( teams_[i]->Get< Diplomacies >() );
+            diplomacies.SetDiplomacy( *teams_[j], Diplomacy( table_->text( i, j ) ) );
+        }
+    hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::Reject
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::Reject()
+{
+    hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::NotifyCreated
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
+{
+    const int rows = table_->numRows();
+    table_->setNumCols( rows + 1 );
+    table_->setNumRows( rows + 1 );
+    table_->verticalHeader  ()->setLabel( rows, team.GetName() );
+    table_->horizontalHeader()->setLabel( rows, team.GetName() );
+    teams_.push_back( &team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::NotifyDeleted
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
+{
+    const int rows = table_->numRows();
+    table_->setNumCols( rows - 1 );
+    table_->setNumRows( rows - 1 );
+    T_Teams::iterator it = std::find( teams_.begin(), teams_.end(), &team );
+    teams_.erase( it );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::NotifyContextMenu
+// Created: AGE 2006-04-20
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
+{
+    menu.InsertItem( "Commande", tr( "Diplomatie" ), this, SLOT( show() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::showEvent
+// Created: SBO 2006-09-07
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::showEvent( QShowEvent* )
+{
+    for( unsigned int i = 0; i < teams_.size(); ++i )
+        for( unsigned int j = 0; j < teams_.size(); ++j )
+        {
+            if( i == j )
+            {
+                if( !table_->item( i, j ) )
+                    table_->setItem( i, j, new QTableItem( table_, QTableItem::Never ) );
+                table_->item( i, j )->setEnabled( false );
+            }
+            else
+            {
+                const Diplomacy& diplomacy = const_cast< Diplomacies& >( teams_[i]->Get< Diplomacies >() ).GetDiplomacy( *teams_[j] );
+                QTableItem* item = table_->item( i, j );
+                if( !item )
+                {
+                    item = BuildDiplomacyCell( table_, list_ );
+                    table_->setItem( i, j, item );
+                }
+                item->setText( diplomacy.GetName() );
+            }
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::sizeHint
+// Created: SBO 2006-09-07
+// -----------------------------------------------------------------------------
+QSize ChangeDiplomacyDialog::sizeHint()
+{
+    const QRect rect = table_->cellGeometry( 1, 1 );
+    return QSize( ( teams_.size() + 1 ) * rect.width(), teams_.size() * rect.height() + 50 );
+}

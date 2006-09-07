@@ -11,11 +11,15 @@
 #define __Team_h_
 
 #include "clients_kernel/Team_ABC.h"
-#include "Serializable_ABC.h"
 
 namespace kernel
 {
     class Controller;
+}
+
+namespace xml
+{
+    class xostream;
 }
 
 class KnowledgeGroupFactory_ABC;
@@ -27,7 +31,6 @@ class KnowledgeGroupFactory_ABC;
 // Created: SBO 2006-08-29
 // =============================================================================
 class Team : public kernel::Team_ABC
-           , public Serializable_ABC
 {
 
 public:
@@ -47,7 +50,7 @@ public:
     //@{
     void CreateKnowledgeGroup();
     void Rename( const QString& name );
-    virtual void Serialize( xml::xostream& xos ) const;
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
