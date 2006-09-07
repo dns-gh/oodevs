@@ -21,6 +21,11 @@ namespace kernel
     class ActionController;
 }
 
+namespace xml
+{
+    class xostream;
+}
+
 class Publisher_ABC;
 
 // =============================================================================
@@ -55,6 +60,8 @@ public:
     void UpdateToSim();
 
     bool IsAt( const geometry::Point2f& point, float precision = 100.f ) const;
+
+    virtual void Serialize( xml::xostream& xos ) const = 0;
     //@}
 
     //! @name Accessors
@@ -98,6 +105,7 @@ protected:
     void DrawName( const kernel::GlTools_ABC& tools ) const;
     template< typename Ack >
     void ValidateAcknowledge( const Ack& ack );
+    void SerializeGeometry( xml::xostream& xos ) const;
     //@}
 
 private:

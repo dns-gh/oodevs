@@ -12,8 +12,10 @@
 #include "ASN_Messages.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
@@ -172,6 +174,21 @@ void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line )
         line.vecteur_point.elem[i] = strMGRS.c_str();
         ++i;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::SerializeGeometry
+// Created: AGE 2006-09-06
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::SerializeGeometry( xml::xostream& xos ) const
+{
+    xos << attribute( "name", std::string( strName_.ascii() ) )
+        << attribute( "id", int( id_ ) );
+    for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
+        xos << start( "point" )
+                << attribute( "x", itPoint->X() )
+                << attribute( "y", itPoint->Y() )
+            << end();
 }
 
 // -----------------------------------------------------------------------------

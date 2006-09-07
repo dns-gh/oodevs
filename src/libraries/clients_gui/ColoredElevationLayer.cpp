@@ -24,7 +24,7 @@ using namespace gui;
 ColoredElevationLayer::ColoredElevationLayer( const DetectionMap& elevation )
     : ElevationLayer( elevation.GetMap() )
 {
-    xifstream xis(  "preferences.xml" ); // $$$$ AGE 2006-04-19: 
+    xifstream xis(  "elevations.xml" ); // $$$$ AGE 2006-04-19: 
     xis >> start( "preferences" )
             >> start( "elevations" )
             >> list( "elevation", *this, &ColoredElevationLayer::ReadElevation );

@@ -14,9 +14,11 @@
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
+#include "xeumeuleu/xml.h"
 #include <qobject.h>
 
 using namespace kernel;
+using namespace xml;
 
 IDManager Lima::idManager_( 137 );
 
@@ -150,4 +152,16 @@ void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
 void Lima::Activate( ActionController& actions ) const
 {
     actions.Activate( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::Serialize
+// Created: AGE 2006-09-06
+// -----------------------------------------------------------------------------
+void Lima::Serialize( xml::xostream& xos ) const
+{
+    xos << start( "lima" )
+            << attribute( "type", int( nFuncType_ ) );
+        SerializeGeometry( xos );
+    xos << end();
 }

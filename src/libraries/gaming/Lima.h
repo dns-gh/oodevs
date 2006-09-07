@@ -43,6 +43,8 @@ public:
     virtual void Select( kernel::ActionController& actions ) const;
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+
+    virtual void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

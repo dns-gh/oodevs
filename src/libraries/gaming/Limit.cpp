@@ -14,8 +14,10 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "Tools.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 IDManager Limit::idManager_( 138 );
 
@@ -154,3 +156,15 @@ void Limit::Activate( ActionController& actions ) const
 {
     actions.Activate( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Limit::Serialize
+// Created: AGE 2006-09-06
+// -----------------------------------------------------------------------------
+void Limit::Serialize( xml::xostream& xos ) const
+{
+    xos << start( "limit" );
+        SerializeGeometry( xos );
+    xos << end();
+}
+

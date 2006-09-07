@@ -13,18 +13,21 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "gaming/Lima.h"
 #include "gaming/Limit.h"
 #include "gaming/LimitsModel.h"
-#include "clients_kernel/OptionVariant.h"
 #include "ColorStrategy_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "Tools.h"
 #include "ParametersLayer.h"
-#include "clients_kernel/Location_ABC.h"
+
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
 using namespace gui;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer constructor
@@ -66,6 +69,62 @@ void LimitsLayer::Paint( const geometry::Rectangle2f& viewport )
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Save
+// Created: AGE 2006-09-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::Save( const std::string& filename ) const
+{
+    xofstream xos( filename );
+    xos << start( "lines" );
+    for( CIT_Lines it = lines_.begin(); it != lines_.end(); ++it )
+        (*it)->Serialize( xos );
+    xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Load
+// Created: AGE 2006-09-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::Load( const std::string& filename )
+{
+    xifstream xis( filename );
+    xis >> start( "lines" )
+            >> list( *this, &LimitsLayer::ReadLine );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::ReadLine
+// Created: AGE 2006-09-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::ReadLine( const std::string& name, xml::xistream& xis )
+{
+    T_PointVector points;
+    // $$$$ AGE 2006-09-06: id et name pas utilisés...
+    xis >> list( "points", *this, &LimitsLayer::ReadPoint, points );
+    if( name == "limit" )
+        model_.CreateLimit( points );
+    else
+    {
+        int type;
+        xis >> attribute( "type", type );
+        model_.CreateLima( E_FuncLimaType( type ), points );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::ReadPoint
+// Created: AGE 2006-09-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::ReadPoint( xml::xistream& xis, T_PointVector& points )
+{
+    float x, y;
+    xis >> attribute( "x", x )
+        >> attribute( "y", y );
+    points.push_back( geometry::Point2f( x, y ) );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer::NotifyCreated

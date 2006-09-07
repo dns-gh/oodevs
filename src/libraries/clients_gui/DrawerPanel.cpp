@@ -50,8 +50,8 @@ void DrawerPanel::ReadTemplates( kernel::GlTools_ABC& tools )
 {
     xml::xifstream input( "DrawingTemplates.xml" ); // $$$$ AGE 2006-09-01: 
     input >> xml::start( "templates" )
-              >> xml::list( "category", *this, &DrawerPanel::ReadCategory, tools )
-          >> xml::end();
+            >> xml::list( "category", *this, &DrawerPanel::ReadCategory, tools )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------

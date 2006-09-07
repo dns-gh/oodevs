@@ -31,6 +31,10 @@ class Limit;
 class LimitsModel;
 class TacticalLine_ABC;
 
+namespace xml {
+    class xistream;
+}
+
 namespace gui
 {
     class ColorStrategy_ABC;
@@ -40,6 +44,7 @@ namespace gui
 /** @class  LimitsLayer
     @brief  LimitsLayer
     // $$$$ AGE 2006-08-22: utiliser EntityLayer
+    // $$$$ AGE 2006-09-06: Bouger dans gaming_app
 */
 // Created: AGE 2006-03-24
 // =============================================================================
@@ -66,6 +71,13 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
+    //@}
+
+public slots:
+    //! @name 
+    //@{
+    void Load( const std::string& filename );
+    void Save( const std::string& filename ) const;
     //@}
 
 private slots:
@@ -110,6 +122,9 @@ private:
     virtual void VisitPolygon( const T_PointVector& ) {};
     virtual void VisitCircle ( const geometry::Point2f& , float ) {};
     virtual void VisitPoint  ( const geometry::Point2f& ) {};
+
+    void ReadLine( const std::string& name, xml::xistream& xis );
+    void ReadPoint( xml::xistream& xis, T_PointVector& points );
     //@}
 
     //! @name Types
