@@ -49,6 +49,12 @@ public:
     //@{
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void Closed();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -64,6 +70,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void hideEvent ( QHideEvent* );
     void ReadTemplates( kernel::GlTools_ABC& tools );
     void ReadCategory( xml::xistream& input, kernel::GlTools_ABC& tools );
     //@}

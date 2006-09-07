@@ -88,6 +88,15 @@ void DrawerToolbar::OnDraw( bool draw )
     else
     {
         dock_->hide();
-        strategy_.ReleaseExclusiveFocus();
+        strategy_.ReleaseExclusiveFocus();   
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerToolbar::OnPanelClosed
+// Created: AGE 2006-09-07
+// -----------------------------------------------------------------------------
+void DrawerToolbar::OnPanelClosed()
+{
+    OnDraw( false );
 }

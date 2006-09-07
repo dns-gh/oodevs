@@ -42,6 +42,7 @@ private slots:
     //@{
     void OnShow( bool );
     void OnDraw( bool );
+    void OnPanelClosed();
     //@}
 
 private:

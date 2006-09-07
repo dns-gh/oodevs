@@ -75,3 +75,12 @@ void DrawerPanel::OnSelect( DrawerStyle& style )
     color_->Commit();
     layer_.StartShape( style, color_->GetColor() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::hideEvent
+// Created: AGE 2006-09-07
+// -----------------------------------------------------------------------------
+void DrawerPanel::hideEvent( QHideEvent* )
+{
+    emit Closed();
+}

@@ -112,10 +112,10 @@ bool ParametersLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Poin
 
     if( world_.IsInside( point ) )
     {
-        if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton )
+        if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::LeftButton )
             AddPoint( point );
 
-        if( mouse->button() == Qt::RightButton && mouse->state() == Qt::NoButton )
+        if( mouse->button() == Qt::RightButton && mouse->state() == Qt::RightButton )
             current_->PopPoint();
     }
     return true;
