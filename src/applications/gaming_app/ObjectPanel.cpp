@@ -1,0 +1,136 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "gaming_app_pch.h"
+#include "ObjectPanel.h"
+#include "moc_ObjectPanel.cpp"
+#include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/GroupDisplayer.h"
+#include "clients_gui/LabelDisplayer.h"
+#include "clients_gui/CheckBoxDisplayer.h"
+#include "clients_gui/SpinBoxDisplayer.h"
+#include "gaming/ASN_Messages.h"
+#include "clients_kernel/Object_ABC.h"
+
+using namespace gui;
+using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel constructor
+// Created: AGE 2006-09-08
+// -----------------------------------------------------------------------------
+::ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher )
+    : gui::ObjectPanel( parent, panel, controllers, factory )
+    , publisher_( publisher )
+{
+    // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
+    // $$$$ AGE 2006-08-23: par le modèle correspondant et pire : traduits de la même maniere.
+    // $$$$ AGE 2006-08-23: Faire des fichiers avec un tas de statics référencés par les 2 ?
+    GetBuilder().AddGroup( tr( "Informations" ) )
+                .AddLabel( tr( "Id:" ) )
+                .AddLabel( tr( "Nom:" ) )
+                .AddLabel( tr( "Type:" ) )
+                .AddLabel( tr( "Position:" ) )
+                .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
+                .AddSpinBox( tr( "Valorisation:" ), 0, 100, 1 )
+                .AddSpinBox( tr( "Contournement:" ), 0, 100, 1 )
+                .AddCheckBox( tr( "En préparation:" ) );
+
+    GetBuilder().Group( tr( "Informations" ) )
+                .AddLabel( tr( "Dotation construction:" ) )
+                .AddLabel( tr( "Dotation valorisation:" ) );
+
+    GetBuilder().AddGroup( tr( "Site de franchissement" ) )
+                .AddLabel( tr( "Largeur:" ) )
+                .AddLabel( tr( "Profondeur:" ) )
+                .AddLabel( tr( "Vitesse du courant:" ) )
+                .AddLabel( tr( "Berges à aménager:" ) );
+
+    GetBuilder().AddGroup( tr( "Camp" ) )
+                .AddLabel( tr( "TC2:" ) );
+
+    GetBuilder().AddGroup( tr( "Nuage/Zone NBC" ) )
+                .AddLabel( tr( "Agent NBC:" ) );
+
+    GetBuilder().AddGroup( tr( "ROTA" ) )
+                .AddLabel( tr( "Danger:" ) )
+                .AddLabel( tr( "Agents NBC:" ) );
+
+    GetBuilder().AddGroup( tr( "Itinéraire logistique" ) )
+                .AddLabel( tr( "Equipé:" ) )
+                .AddLabel( tr( "Débit:" ) )
+                .AddLabel( tr( "Largeur:" ) )
+                .AddLabel( tr( "Longueur:" ) )
+                .AddLabel( tr( "Poids supporté:" ) );
+
+    Displayer_ABC& infos = GetBuilder().Group( tr( "Informations" ) );
+    construction_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
+    valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Valorisation:" ) ) );
+    contournement_ = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Contournement:" ) ) );
+    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "En préparation:" ) ) );
+
+    QWidget* pSpacer = new QWidget( this );
+    pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
+
+    QHBox* pHBox  = new QHBox( this );
+    QPushButton* pApplyButton_  = new QPushButton( tr( "Appliquer" ), pHBox );
+    QPushButton* pCancelButton_ = new QPushButton( tr( "Annuler" )  , pHBox );
+
+    connect( pApplyButton_,  SIGNAL( clicked() ), this, SLOT( OnApply() ) );
+    connect( pCancelButton_, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel destructor
+// Created: AGE 2006-09-08
+// -----------------------------------------------------------------------------
+::ObjectPanel::~ObjectPanel()
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::OnApply
+// Created: AGE 2006-09-08
+// -----------------------------------------------------------------------------
+void ::ObjectPanel::OnApply()
+{
+    const kernel::Object_ABC* object = GetSelected();
+    if( object )
+    {
+        ASN1T_MagicActionUpdateObject asnAction;
+
+        asnAction.m.pourcentage_constructionPresent           = 1;
+        asnAction.m.pourcentage_valorisationPresent           = 1;
+        asnAction.m.pourcentage_creation_contournementPresent = 1;
+        asnAction.m.en_preparationPresent                     = 1;
+
+        asnAction.pourcentage_construction           = construction_ ->GetValue();
+        asnAction.pourcentage_valorisation           = valorisation_ ->GetValue();
+        asnAction.pourcentage_creation_contournement = contournement_->GetValue();
+        asnAction.en_preparation                     = prepared_     ->IsChecked();
+
+        ASN_MsgObjectMagicAction asnMsg;
+        asnMsg.GetAsnMsg().oid_objet                = object->GetId();
+        asnMsg.GetAsnMsg().action.t                 = T_MsgObjectMagicAction_action_update_object;
+        asnMsg.GetAsnMsg().action.u.update_object   = &asnAction;
+
+        asnMsg.Send( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::OnCancel
+// Created: AGE 2006-09-08
+// -----------------------------------------------------------------------------
+void ::ObjectPanel::OnCancel()
+{
+    Update();
+}
