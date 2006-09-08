@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectPanel_h_
-#define __ObjectPanel_h_
+#ifndef __Gui_ObjectPanel_h_
+#define __Gui_ObjectPanel_h_
 
-#include "clients_gui/InfoPanel_ABC.h"
+#include "InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -30,7 +30,6 @@ namespace gui
 {
     class DisplayBuilder;
     class ItemFactory_ABC;
-}
 
 // =============================================================================
 /** @class  ObjectPanel
@@ -38,7 +37,7 @@ namespace gui
 */
 // Created: APE 2004-06-11
 // =============================================================================
-class ObjectPanel : public gui::InfoPanel_ABC
+class ObjectPanel : public InfoPanel_ABC
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Object_ABC >
                   , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
@@ -69,6 +68,14 @@ private:
     ObjectPanel& operator=( const ObjectPanel& );
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    const kernel::Object_ABC* GetSelected();
+    DisplayBuilder& GetBuilder();
+    void Update();
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -94,12 +101,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::DisplayBuilder* display_;
     kernel::SafePointer< kernel::Object_ABC > selected_;
-
-//    QPushButton* pApplyButton_;
-//    QPushButton* pCancelButton_;
+    DisplayBuilder* display_;
     //@}
 };
 
-#endif // __ObjectPanel_h_
+}
+
+#endif // __Gui_ObjectPanel_h_

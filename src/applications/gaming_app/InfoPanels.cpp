@@ -17,10 +17,10 @@
 #include "ReportPanel.h"
 #include "AgentStatePanel.h"
 #include "AgentResourcesPanel.h"
-#include "ObjectPanel.h"
 #include "AgentMaintenancePanel.h"
 #include "AgentMedicalPanel.h"
 #include "AgentSupplyPanel.h"
+#include "ObjectPanel.h"
 #include "clients_gui/PopulationPanel.h"
 
 using namespace kernel;
@@ -30,7 +30,7 @@ using namespace gui;
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory )
+InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, Publisher_ABC& publisher  )
     : Panels( parent )
 {
     AddPanel( new AgentStatePanel         ( this, *this, controllers, factory ) );
@@ -38,7 +38,7 @@ InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_A
     AddPanel( new AgentKnowledgePanel     ( this, *this, controllers, factory ) );
     AddPanel( new PopulationPanel         ( this, *this, controllers, factory ) );
     AddPanel( new PopulationKnowledgePanel( this, *this, controllers, factory ) );
-    AddPanel( new ObjectPanel             ( this, *this, controllers, factory ) );
+    AddPanel( new ::ObjectPanel           ( this, *this, controllers, factory, publisher ) );
     AddPanel( new ObjectReportPanel       ( this, *this, controllers, factory ) );
     AddPanel( new ObjectKnowledgePanel    ( this, *this, controllers, factory ) );
     AddPanel( new ReportPanel             ( this, *this, controllers, factory ) );

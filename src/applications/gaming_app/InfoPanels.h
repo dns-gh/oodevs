@@ -22,6 +22,8 @@ namespace gui
     class ItemFactory_ABC;
 }
 
+class Publisher_ABC;
+
 // =============================================================================
 /** @class  InfoPanels
     @brief  Info panels container
@@ -33,7 +35,7 @@ class InfoPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
     virtual ~InfoPanels();
     //@}
 

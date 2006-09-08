@@ -158,7 +158,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
     moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory, publisher );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );

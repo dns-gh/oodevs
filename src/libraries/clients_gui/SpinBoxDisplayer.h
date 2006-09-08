@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    int GetValue() const;
     //@}
 
 private:

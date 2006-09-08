@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    bool IsChecked() const;
     virtual void Hide();
     //@}
 

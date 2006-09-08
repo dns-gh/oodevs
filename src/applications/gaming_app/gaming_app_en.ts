@@ -1191,125 +1191,6 @@
     </message>
 </context>
 <context>
-    <name>ObjectPanel</name>
-    <message>
-        <source>Etat objet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Informations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Id:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nom:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Position:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Valorisation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contournement:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>En pr&#xe9;paration:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotation construction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotation valorisation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Site de franchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Largeur:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profondeur:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vitesse du courant:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Berges &#xe0; am&#xe9;nager:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nuage/Zone NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Danger:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agents NBC:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Itin&#xe9;raire logistique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equip&#xe9;:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>D&#xe9;bit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Longueur:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Poids support&#xe9;:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent NBC:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ParamAgentType</name>
     <message>
         <source>Blind&#xe9;</source>
@@ -1572,6 +1453,129 @@
     </message>
     <message>
         <source>Afficher chemin parcouru</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui</name>
+    <message>
+        <source>Appliquer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Annuler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Informations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Id:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Position:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valorisation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contournement:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>En pr&#xe9;paration:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation construction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation valorisation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Site de franchissement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Largeur:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profondeur:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vitesse du courant:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Berges &#xe0; am&#xe9;nager:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nuage/Zone NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent NBC:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROTA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agents NBC:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Itin&#xe9;raire logistique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equip&#xe9;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D&#xe9;bit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Longueur:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poids support&#xe9;:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

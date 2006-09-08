@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "ObjectPanel.h"
 
 #include "clients_kernel/Object_ABC.h"
@@ -17,11 +17,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_gui/DisplayBuilder.h"
-#include "clients_gui/GroupDisplayer.h"
-#include "clients_gui/LabelDisplayer.h"
-
-#include <qgrid.h>
+#include "DisplayBuilder.h"
 
 using namespace kernel;
 using namespace gui;
@@ -36,58 +32,6 @@ ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
     , selected_    ( controllers )
 {
     display_ = new DisplayBuilder( this, factory );
-    
-    // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
-    // $$$$ AGE 2006-08-23: par le modèle correspondant et pire : traduits de la même maniere.
-    // $$$$ AGE 2006-08-23: Faire des fichiers avec un tas de statics référencés par les 2 ?
-    display_->AddGroup( tr( "Informations" ) )
-                .AddLabel( tr( "Id:" ) )
-                .AddLabel( tr( "Nom:" ) )
-                .AddLabel( tr( "Type:" ) )
-                .AddLabel( tr( "Position:" ) )
-                .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
-                .AddSpinBox( tr( "Valorisation:" ), 0, 100, 1 )
-                .AddSpinBox( tr( "Contournement:" ), 0, 100, 1 )
-                .AddCheckBox( tr( "En préparation:" ) );
-
-    display_->Group( tr( "Informations" ) )
-                .AddLabel( tr( "Dotation construction:" ) )
-                .AddLabel( tr( "Dotation valorisation:" ) );
-
-    display_->AddGroup( tr( "Site de franchissement" ) )
-                .AddLabel( tr( "Largeur:" ) )
-                .AddLabel( tr( "Profondeur:" ) )
-                .AddLabel( tr( "Vitesse du courant:" ) )
-                .AddLabel( tr( "Berges à aménager:" ) );
-
-    display_->AddGroup( tr( "Camp" ) )
-                .AddLabel( tr( "TC2:" ) );
-
-    display_->AddGroup( tr( "Nuage/Zone NBC" ) )
-                .AddLabel( tr( "Agent NBC:" ) );
-
-    display_->AddGroup( tr( "ROTA" ) )
-                .AddLabel( tr( "Danger:" ) )
-                .AddLabel( tr( "Agents NBC:" ) );
-
-    display_->AddGroup( tr( "Itinéraire logistique" ) )
-                .AddLabel( tr( "Equipé:" ) )
-                .AddLabel( tr( "Débit:" ) )
-                .AddLabel( tr( "Largeur:" ) )
-                .AddLabel( tr( "Longueur:" ) )
-                .AddLabel( tr( "Poids supporté:" ) );
-
-    QWidget* pSpacer = new QWidget( this );
-    pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
-
-    // $$$$ AGE 23/08/2006 :
-//    QHBox* pHBox = new QHBox( this );
-//    pApplyButton_  = new QPushButton( tr( "Appliquer" ), pHBox );
-//    pCancelButton_ = new QPushButton( tr( "Annuler" )  , pHBox );
-
-//    connect( pApplyButton_,  SIGNAL( clicked() ), this, SLOT( OnApply() ) );
-//    connect( pCancelButton_, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
-
     controllers_.Register( *this );
 }
 
@@ -106,6 +50,15 @@ ObjectPanel::~ObjectPanel()
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
 void ObjectPanel::showEvent( QShowEvent* )
+{
+    Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::Update
+// Created: AGE 2006-09-08
+// -----------------------------------------------------------------------------
+void ObjectPanel::Update()
 {
     const Object_ABC* selected = selected_;
     selected_ = 0;
@@ -240,4 +193,22 @@ void ObjectPanel::NotifyUpdated( const NBCAttributes_ABC& attributes )
 void ObjectPanel::NotifyUpdated( const RotaAttributes_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::GetSelected
+// Created: AGE 2006-09-08
+// -----------------------------------------------------------------------------
+const kernel::Object_ABC* ObjectPanel::GetSelected()
+{
+    return selected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::GetBuilder
+// Created: AGE 2006-09-08
+// -----------------------------------------------------------------------------
+DisplayBuilder& ObjectPanel::GetBuilder()
+{
+    return *display_;
 }
