@@ -12,6 +12,12 @@
 
 #include "clients_kernel/GlTools_ABC.h"
 
+namespace svg
+{
+    class Node_ABC;
+    class References;
+}
+
 namespace gui
 {
     class GlFont;
@@ -41,9 +47,7 @@ public:
     GlToolsBase& Base() const;
     void BindIcon( const char** xpm );
     geometry::Point2f IconLocation( const char** xpm );
-    void PrintApp6( const std::string symbol, bool outlined );
-    geometry::Vector2f GetSize( const std::string& symbol );
-
+    void PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport );
     void SetIconLocation( const char** xpm, const geometry::Point2f& position );
     //@}
 
@@ -58,6 +62,10 @@ private:
     //@{
     typedef std::map< const char**, unsigned >            T_Icons;
     typedef T_Icons::const_iterator                     CIT_Icons;
+
+    typedef std::pair< svg::Node_ABC*, svg::Node_ABC* > T_LodSymbol;
+    typedef std::map< std::string, T_LodSymbol >        T_Symbols;
+    typedef T_Symbols::const_iterator                 CIT_Symbols;
     //@}
 
 private:
@@ -68,8 +76,11 @@ private:
 
     T_Icons         icons_;
 
-    GlFont* app6Font_;
-    GlFont* app6OutlinedFont_;
+    svg::References* references_;
+    T_Symbols        symbols_;
+
+//    GlFont* app6Font_;
+//    GlFont* app6OutlinedFont_;
     //@}
 };
 

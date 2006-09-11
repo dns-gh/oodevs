@@ -13,7 +13,7 @@
 #include "AgentNature.h"
 #include "SymbolFactory.h"
 #include "GlTools_ABC.h"
-
+#include <qgl.h>
 using namespace kernel;
 using namespace xml;
 
@@ -106,6 +106,7 @@ void AgentType::Draw( const geometry::Point2f& where, const geometry::Rectangle2
 {
     if( viewport.IsInside( where ) )
     {
+        tools.DrawRectangle( where );
         tools.DrawApp6Symbol( symbol_, where );
         tools.DrawApp6Symbol( levelSymbol_, where );
     }
@@ -118,5 +119,8 @@ void AgentType::Draw( const geometry::Point2f& where, const geometry::Rectangle2
 void AgentType::DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsInside( where ) )
+    {
+        tools.DrawRectangle( where, 2.f );
         tools.DrawApp6Symbol( symbol_, where, 2.f );
+    }
 }

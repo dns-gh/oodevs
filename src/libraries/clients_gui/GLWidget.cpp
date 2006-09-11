@@ -382,24 +382,22 @@ void GlWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::DrawRectangle
+// Name: GlWidget::DrawLife
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void GlWidget::DrawRectangle( const Point2f& where, float h, float factor /*= 1.f*/ ) const
+void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ ) const
 {
-     // $$$$ AGE 2006-08-22: 
-    static const Vector2f fontSize = Base().GetSize( "a" );
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
-    const float halfWidth   = fontSize.X() * factor * 600.f * 0.5f * 0.92f;
-    const float deltaHeight = fontSize.Y() * factor * 600.f * 0.062f;
-    const float height      = fontSize.Y() * factor * 600.f * h * 0.876f + deltaHeight;
-
-    glBegin( GL_QUADS );
-        glVertex2f( where.X() - halfWidth, where.Y() + deltaHeight );
-        glVertex2f( where.X() + halfWidth, where.Y() + deltaHeight);
-        glVertex2f( where.X() + halfWidth, where.Y() + height );
-        glVertex2f( where.X() - halfWidth, where.Y() + height);
-    glEnd();
+    const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
+    const float deltaHeight = factor * 600.f * 0.062f;
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glLineWidth( 3 );
+        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11: 
+        glBegin( GL_LINES );
+            glVertex2f( where.X()     - halfWidth, where.Y() - deltaHeight );
+            glVertex2f( where.X() + h * halfWidth, where.Y() - deltaHeight);
+        glEnd();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
@@ -427,41 +425,35 @@ void GlWidget::SetShadowedColor()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLWidget::DrawApp6Symbol
+// Name: GlWidget::DrawRectangle
+// Created: AGE 2006-09-11
+// -----------------------------------------------------------------------------
+void GlWidget::DrawRectangle( const geometry::Point2f& where, float factor /*= 1.f*/ ) const
+{
+     // $$$$ AGE 2006-09-11: hard coded sizes
+    const geometry::Point2f bottomLeft( where.X() - factor * 300, where.Y() );
+    const geometry::Point2f topRight  ( where.X() + factor * 300, where.Y() + factor * 600*0.66f );
+    glRectfv( (const float*)&bottomLeft, (const float*)&topRight );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GLWidget::DrawApp6Symbolc
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
-    const Vector2f fontSize = Base().GetSize( symbol );
-    const float size = 600.f * factor;
-    const Point2f center = Point2f( where.X() - fontSize.X() * size * 0.5f, where.Y() );
+    const float size   = 600.f * factor;
+    const float height = size * 0.660f; // $$$$ AGE 2006-09-11: 
+    const Point2f center = Point2f( where.X() - size * 0.5f, where.Y() + height );
+    const float ratio = size / 1000.f;
 
-    const float pixelSize = size / Pixels();
-    if( pixelSize <= 10 )
-    {
-        glPushAttrib( GL_CURRENT_BIT );
-        SetShadowedColor();
-        DrawRectangle( where, 1, factor );
-        glPopAttrib();
-        DrawRectangle( where, 1, factor * 0.6 );
-    }
-    else
-    {
-        glPushMatrix();
-            glTranslatef( center.X(), center.Y(), 0.0f );
-            glScalef( size, size, 1.f );
-            glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-
-            SetShadowedColor();
-            glLineWidth( 4.0f );
-            glPushMatrix();
-            Base().PrintApp6( symbol, true );
-            glPopMatrix();
-            glPopAttrib();
-
-            Base().PrintApp6( symbol, false );
-        glPopMatrix();
-    }
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+    glPushMatrix();
+        glTranslatef( center.X(), center.Y(), 0.0f );
+        glScalef( ratio, -ratio, 1 );
+        Base().PrintApp6( symbol, viewport_ );
+    glPopMatrix();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

@@ -12,11 +12,13 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TristateOption.h"
+#include "svgl/svgl.h"
 #include "GlFont.h"
 
 using namespace geometry;
 using namespace kernel;
 using namespace gui;
+using namespace svg;
 
 // -----------------------------------------------------------------------------
 // Name: GlToolsBase constructor
@@ -25,8 +27,7 @@ using namespace gui;
 GlToolsBase::GlToolsBase( Controllers& controllers )
     : controllers_( controllers )
     , selected_( false ) 
-    , app6Font_( 0 )
-    , app6OutlinedFont_( 0 )
+    , references_( new References() )
 {
     // NOTHING
 }
@@ -37,10 +38,13 @@ GlToolsBase::GlToolsBase( Controllers& controllers )
 // -----------------------------------------------------------------------------
 GlToolsBase::~GlToolsBase()
 {
-    delete app6Font_;
-    delete app6OutlinedFont_;
     for( CIT_Icons it = icons_.begin(); it != icons_.end(); ++it )
         glDeleteTextures( 1, & it->second );
+    for( CIT_Symbols it = symbols_.begin(); it != symbols_.end(); ++it )
+    {
+        delete it->second.first;
+        delete it->second.second;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,23 +114,22 @@ void GlToolsBase::BindIcon( const char** xpm )
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlToolsBase::PrintApp6( const std::string symbol, bool outlined )
+void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport )
 {
-    GlFont*& font = outlined ? app6OutlinedFont_ : app6Font_;
-    if( ! font )
-        font = new GlFont( "Scipio", outlined );
-    font->Print( symbol );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlToolsBase::GetSize
-// Created: AGE 2006-04-07
-// -----------------------------------------------------------------------------
-Vector2f GlToolsBase::GetSize( const std::string& symbol )
-{
-    if( ! app6Font_ )
-        app6Font_ = new GlFont( "Scipio" );
-    return app6Font_->GetTextSize( symbol );
+    T_LodSymbol& node = symbols_[ symbol ];
+    if( ! node.first )
+    {
+        // $$$$ AGE 2006-09-11: error management !
+        SVGFactory factory;
+        // $$$$ AGE 2006-09-11: 
+        node.first  = factory.Compile( "symbols/" + symbol, *references_, 10  ); // $$$$ AGE 2006-09-11: 
+        node.second = factory.Compile( "symbols/" + symbol, *references_, 100 ); // $$$$ AGE 2006-09-11: 
+    }
+    const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
+    RenderingContext context( box, 640, 480 ); // $$$$ AGE 2006-09-11: 
+    glColor3f( 0, 0, 0 );
+    Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
+    renderNode->Draw( context, *references_ );
 }
 
 // -----------------------------------------------------------------------------

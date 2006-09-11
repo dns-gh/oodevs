@@ -121,7 +121,7 @@
 
     <target name="application.preparation_app" description="build Astec Gaming executable" depends="library.preparation,library.gaming">
         <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="ASN,ENT,preparation,clients_gui,clients_kernel,asn1per,gaming"><!-- $$$ temporary, dependency to gaming will disapear -->
+                   libs="ASN,ENT,preparation,clients_gui,clients_kernel,asn1per,gaming,svgl"><!-- $$$ temporary, dependency to gaming will disapear -->
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>

@@ -33,7 +33,7 @@ class ObjectPanel : public gui::ObjectPanel
 public:
     //! @name Constructors/Destructor
     //@{
-    ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
+             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
     virtual ~ObjectPanel();
     //@}
 

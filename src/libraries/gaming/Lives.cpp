@@ -68,7 +68,7 @@ void Lives::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& v
         glColor4f( 1, 1, 0, 0.4f );
     else
         glColor4f( 1, 1, 1, 0.4f );
-    tools.DrawRectangle( where, GetLife(), aggregated_ ? 2.f : 1.f );
+    tools.DrawLife( where, GetLife(), aggregated_ ? 2.f : 1.f );
     glPopAttrib();
 }
 

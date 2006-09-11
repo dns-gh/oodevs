@@ -68,8 +68,9 @@ public:
     virtual void DrawArc        ( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const;
     virtual void DrawCircle     ( const geometry::Point2f& center, float radius = -1.f ) const;
     virtual void DrawDisc       ( const geometry::Point2f& center, float radius = -1.f ) const;
-    virtual void DrawRectangle  ( const geometry::Point2f& center, float height, float factor = 1.f ) const;
+    virtual void DrawLife       ( const geometry::Point2f& center, float height, float factor = 1.f ) const;
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const;
+    virtual void DrawRectangle  ( const geometry::Point2f& where, float factor = 1.f ) const;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f ) const;
     virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const;
 

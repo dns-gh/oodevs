@@ -275,25 +275,25 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/ ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawRectangle
+// Name: Gl3dWidget::DrawLife
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawRectangle( const geometry::Point2f& center, float h, float factor /*= 1.f*/ ) const
+void Gl3dWidget::DrawLife( const geometry::Point2f& center, float h, float factor /*= 1.f*/ ) const
 {
-    static const Vector2f fontSize = Base().GetSize( "a" );
-    const float halfWidth   = fontSize.X() * factor * 600.f * 0.5f * 0.92f;
-    const float deltaHeight = fontSize.Y() * factor * 600.f * 0.062f;
-    const float height      = fontSize.Y() * factor * 600.f * h * 0.876f + deltaHeight;
-
+    // $$$$ AGE 2006-09-11: 
+    const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
+    const float deltaHeight = factor * 600.f * 0.062f;
     glPushMatrix();
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glTranslatef( center.X(), center.Y(), ElevationAt( center ) + 100.f );
         UndoRotations();
-        glBegin( GL_QUADS );
-            glVertex2f( - halfWidth, deltaHeight );
-            glVertex2f(   halfWidth, deltaHeight);
-            glVertex2f(   halfWidth, height );
-            glVertex2f( - halfWidth, height);
+        glLineWidth( 3 );
+        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11: 
+        glBegin( GL_LINES );
+            glVertex2f(   - halfWidth, deltaHeight );
+            glVertex2f( h * halfWidth, deltaHeight );
         glEnd();
+    glPopAttrib();
     glPopMatrix();
 }
 
@@ -313,30 +313,35 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
-    const Vector2f& fontSize = Base().GetSize( symbol );
+    const float size = 600.f * factor;
+    const float ratio = size / 1000;
+    const float height = size * 0.660f; // $$$$ AGE 2006-09-11: 
+
+    glPushMatrix();
+    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+        glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
+        UndoRotations();
+        glTranslatef( - size * 0.5f, height, 0 );
+        glScalef( ratio, -ratio, ratio );
+        const geometry::Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
+        Base().PrintApp6( symbol, bbox );
+    glPopAttrib();
+    glPopMatrix();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawRectangle
+// Created: AGE 2006-09-11
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawRectangle( const geometry::Point2f& where, float factor /*= 1.f*/ ) const
+{
     const float size = 600.f * factor;
     glPushMatrix();
         glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
         UndoRotations();
-        
-        glTranslatef( - fontSize.X() * size * 0.5f, 0, 0 );
-        glScalef( size, size, size );
-        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-
-        float shadowedColor[4];
-        glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
-        for(unsigned i = 0;i < 3; ++i )
-            shadowedColor[i]/=5.f;
-        shadowedColor[3] = 0.9f;
-        glColor4fv( shadowedColor );
-
-        glLineWidth( 4.0f );
-        glPushMatrix();
-        Base().PrintApp6( symbol, true );
-        glPopMatrix();
-        glPopAttrib();
-
-        Base().PrintApp6( symbol, false );
+        const geometry::Point2f bottomLeft( - size*0.5f, 0 );
+        const geometry::Point2f topRight  (   size*0.5f, size*0.66f );
+        glRectfv( (const float*)&bottomLeft, (const float*)&topRight );
     glPopMatrix();
 }
 

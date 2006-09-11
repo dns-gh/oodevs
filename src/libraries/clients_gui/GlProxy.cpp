@@ -246,13 +246,13 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::DrawRectangle
+// Name: GlProxy::DrawLife
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void GlProxy::DrawRectangle( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
+void GlProxy::DrawLife( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
 {
 //    CheckTools();
-    tools_->DrawRectangle( center, height, factor );
+    tools_->DrawLife( center, height, factor );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,6 +263,15 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where 
 {
 //    CheckTools();
     tools_->Print( message, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::DrawRectangle
+// Created: AGE 2006-09-11
+// -----------------------------------------------------------------------------
+void GlProxy::DrawRectangle( const geometry::Point2f& where, float factor /*= 1.f*/ ) const
+{
+    tools_->DrawRectangle( where, factor );
 }
 
 // -----------------------------------------------------------------------------
