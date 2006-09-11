@@ -99,7 +99,7 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const QColor& col
     const geometry::BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
     svg::RenderingContext context( box, 320, 200 ); // $$$$ AGE 2006-09-04: 
     svg::Color svgColor( color.name().ascii() );
-    context.PushProperty( "color", svgColor );
+    context.PushProperty( svg::RenderingContext_ABC::color, svgColor );
 
     style_.Draw( points_, context );
 
