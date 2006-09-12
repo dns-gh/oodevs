@@ -110,6 +110,7 @@ public:
     AutomatonInfos*          FindAutomaton( const std::string& strName );
 
     std::string GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit );
+    std::string GetAutomataThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
     void ReadArchive( ADN_XmlInput_Helper& input );

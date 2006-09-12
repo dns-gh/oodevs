@@ -793,3 +793,23 @@ void ADN_Population_Data::WriteArchive( MT_OutputArchive_ABC& output )
     }
     output.EndList(); // Automates
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::GetPopulationsThatUse
+// Created: SBO 2006-09-11
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model )
+{
+    std::string result;
+    for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it )
+    {
+        if( (*it)->ptrModel_.GetData() == &model )
+        {
+            if( result != "" )
+                result += "<br>";
+            result += "<nobr>" + (*it)->strName_.GetData() + "</nobr>";
+        }
+    }
+    return result;
+}

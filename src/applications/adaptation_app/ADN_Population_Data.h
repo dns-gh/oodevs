@@ -284,6 +284,7 @@ public:
 
     T_PopulationInfosVector&  GetPopulation();
     PopulationInfos*          FindPopulation( const std::string& strName );
+    std::string GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
     void ReadArchive( ADN_XmlInput_Helper& input );

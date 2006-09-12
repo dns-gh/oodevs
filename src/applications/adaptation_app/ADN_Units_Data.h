@@ -268,6 +268,7 @@ public:
     int GetNextId();
 
     std::string GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
+    std::string GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
     void ReadArchive( ADN_XmlInput_Helper& input );

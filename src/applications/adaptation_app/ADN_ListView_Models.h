@@ -34,6 +34,7 @@ private:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
+    std::string GetToolTipFor( QListViewItem& item );
     //@}
 
 private:

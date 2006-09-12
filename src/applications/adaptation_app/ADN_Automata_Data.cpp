@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-02 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Automata_Data.cpp $
-// $Author: Ape $
-// $Modtime: 7/06/05 9:51 $
-// $Revision: 15 $
-// $Workfile: ADN_Automata_Data.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_Data.h"
@@ -126,8 +117,8 @@ ADN_Automata_Data::AutomatonInfos::AutomatonInfos()
 , bStrengthRatioFeedbackTime_( false )
 , strengthRatioFeedbackTime_( "0s" )
 {
-    this->BindExistenceTo( &ptrUnit_ );
-    this->BindExistenceTo( &ptrModel_ );
+    BindExistenceTo( &ptrUnit_ );
+    BindExistenceTo( &ptrModel_ );
 }
 
 
@@ -253,9 +244,7 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( MT_OutputArchive_ABC& outp
 
     output.BeginList( "Constitution", vSubUnits_.size() );
     for( IT_UnitInfosVector it = vSubUnits_.begin(); it != vSubUnits_.end(); ++it )
-    {
         (*it)->WriteArchive( output );
-    }
     output.EndList(); // Constitution
 
     if( bStrengthRatioFeedbackTime_.GetData() )
@@ -267,6 +256,8 @@ void ADN_Automata_Data::AutomatonInfos::WriteArchive( MT_OutputArchive_ABC& outp
 
     output.EndSection(); // Automate
 
+    if( !ptrUnit_.GetData() )
+        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Automat PC type missing: " ).append( strName_.GetData().c_str() ).ascii() );
     output.Section( "PionPC" );
     output.WriteAttribute( "type", ptrUnit_.GetData()->strName_.GetData() );
     output.EndSection(); // PionPC
@@ -291,7 +282,7 @@ ADN_Automata_Data::ADN_Automata_Data()
 // -----------------------------------------------------------------------------
 ADN_Automata_Data::~ADN_Automata_Data()
 {
-    this->Reset();
+    Reset();
 }
 
 
@@ -375,6 +366,26 @@ std::string ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& un
                 strResult += "<nobr>" + pAutomaton->strName_.GetData() + "</nobr>";
                 break;
             }
+        }
+    }
+    return strResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Automata_Data::GetAutomataThatUse
+// Created: SBO 2006-09-11
+// -----------------------------------------------------------------------------
+std::string ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& model )
+{
+    std::string strResult;
+    for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
+    {
+        AutomatonInfos* pAutomaton = *it;
+        if( pAutomaton->ptrModel_.GetData() == &model )
+        {
+            if( strResult != "" )
+                strResult += "<br>";
+            strResult += "<nobr>" + pAutomaton->strName_.GetData() + "</nobr>";
         }
     }
     return strResult;

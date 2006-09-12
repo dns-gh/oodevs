@@ -1091,3 +1091,23 @@ std::string ADN_Units_Data::GetUnitsThatUse( ADN_Composantes_Data::ComposanteInf
     }
     return strResult;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_Data::GetUnitsThatUse
+// Created: SBO 2006-09-11
+// -----------------------------------------------------------------------------
+std::string ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model )
+{
+    std::string strResult;
+    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    {
+        UnitInfos* pUnit = *it;
+        if( (*it)->ptrModel_.GetData() == &model )
+        {
+            if( strResult != "" )
+                strResult += "<br>";
+            strResult += "<nobr>" + pUnit->strName_.GetData() + "</nobr>";
+        }
+    }
+    return strResult;
+}

@@ -16,6 +16,9 @@
 #include "ADN_Workspace.h"
 #include "ADN_Model_Wizard.h"
 #include "ADN_Models_GUI.h"
+#include "ADN_Units_Data.h"
+#include "ADN_Automata_Data.h"
+#include "ADN_Population_Data.h"
 
 #include <qheader.h>
 #include <qpopmenu.h>
@@ -82,4 +85,31 @@ void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
     ADN_Model_Wizard wizard( eEntityType_, this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Models::GetToolTipFor
+// Created: SBO 2006-09-11
+// -----------------------------------------------------------------------------
+std::string ADN_ListView_Models::GetToolTipFor( QListViewItem& item )
+{
+    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    ModelInfos* pCastData = (ModelInfos*)pData;
+    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
+    switch( eEntityType_ )
+    {
+    case ModelInfos::E_ModelEntityType::ePawn:
+        strToolTip += ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData );
+        break;
+    case ModelInfos::E_ModelEntityType::eAutomat:
+        strToolTip += ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData );
+        break;
+    case ModelInfos::E_ModelEntityType::ePopulation:
+        strToolTip += ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData );
+        break;
+    default:
+        break;
+    }
+    return strToolTip;
 }
