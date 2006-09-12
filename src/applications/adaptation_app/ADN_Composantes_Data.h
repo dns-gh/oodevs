@@ -151,7 +151,8 @@ public:
 
     //*****************************************************************************
     class LogSupplyInfos
-        : public ADN_DataTreeNode_ABC
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
     {
         MT_COPYNOTALLOWED( LogSupplyInfos )
 

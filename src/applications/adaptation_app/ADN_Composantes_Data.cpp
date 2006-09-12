@@ -478,6 +478,7 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , rVolume_            ( 0 )
 , ptrDotationNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
+    BindExistenceTo( &ptrDotationNature_ );
 }
 
 
@@ -1773,6 +1774,9 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 , bMaxSlope_( false )
 , rMaxSlope_( 60 )
 {
+    BindExistenceTo( &ptrArmor_ );
+    BindExistenceTo( &ptrSize_ );
+
     strName_.SetDataName( "le nom" );
     strName_.SetParentNode( *this );
 
