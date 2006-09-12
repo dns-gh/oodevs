@@ -216,6 +216,17 @@
     </message>
 </context>
 <context>
+    <name>ADN_Automata_Data::AutomatonInfos</name>
+    <message>
+        <source>Data error</source>
+        <translation>Erreur dans les données</translation>
+    </message>
+    <message>
+        <source>Automat PC type missing: </source>
+        <translation>Le type du PC de l&apos;automate n&apos;existe pas: </translation>
+    </message>
+</context>
+<context>
     <name>ADN_Automata_GUI</name>
     <message>
         <source>Automata</source>
@@ -2767,11 +2778,11 @@
     </message>
     <message>
         <source>Pion ALAT AllerSeRecompleter</source>
-        <translation type="unfinished"></translation>
+        <translation>Pion ALAT AllerSeRecompleter</translation>
     </message>
     <message>
         <source>Automate ALAT AllerSeRecompleter</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate ALAT AllerSeRecompleter</translation>
     </message>
 </context>
 <context>
@@ -3351,6 +3362,10 @@ du tireur</translation>
     <message>
         <source>Models</source>
         <translation>Modèles</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <translation>&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
