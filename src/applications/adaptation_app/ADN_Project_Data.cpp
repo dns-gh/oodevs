@@ -11,10 +11,10 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Project_Data.h"
 
-#include "res/resource.h"
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_OpenFile_Exception.h"
+#include "ADN_Resources.h"
 #include "ADN_Xml_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_XmlInput_Helper.h"
@@ -472,20 +472,15 @@ void ADN_Project_Data::FilesNeeded( T_StringList& vFiles ) const
 void ADN_Project_Data::Reset()
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
+
     // load default parameters
-    LPVOID res = LockResource( LoadResource( GetModuleHandle( NULL ),
-                               FindResource( GetModuleHandle( NULL ), MAKEINTRESOURCE( IDR_XML_SCIPIO ), "xml") ) );
-    if( res == NULL )
-        throw ADN_DataException( "", "unable to open resource IDR_XML_SCIPIO", "" );
     ADN_XmlInput_Helper defaultScipioFile;
-    defaultScipioFile.SetData( (char*)res );
-    this->ReadArchive( defaultScipioFile );
-/*
+    defaultScipioFile.SetData( scipioXml );
+    ReadArchive( defaultScipioFile );
+
     ADN_XmlInput_Helper defaultNetworkFile;
-    defaultNetworkFile.SetData( (char*)LockResource( LoadResource(GetModuleHandle(NULL),
-        FindResource(GetModuleHandle(NULL),MAKEINTRESOURCE(IDR_XML_RESEAU),"xml"))));  
+    defaultNetworkFile.SetData( reseauXml );
     netInfos_.ReadArchive( defaultNetworkFile );
-*/
 }
 
 
@@ -595,15 +590,9 @@ void ADN_Project_Data::Save()
     if( ! pathfinderOutput.WriteToFile( szPathfinderFile ) )
         throw ADN_SaveFile_Exception( szPathfinderFile );
 
-    // Save the Id file (from an embedded resource)
+    // Save the Id file (from static resource)
     MT_TextOutputArchive idsOutput;
-    const char* szIds = (char*)LockResource( 
-            LoadResource( GetModuleHandle(NULL), FindResource( GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_XML_IDS_CLASSES), "xml" )));
-    if( szIds == NULL )
-        throw ADN_DataException( "", "unable to open resource IDR_XML_IDS_CLASSES", "" );
-
-    std::cout << szIds << std::endl;
-    idsOutput.GetOutputStream() << szIds;
+    idsOutput.GetOutputStream() << idClassesXml;
 
     std::string szIdsFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + dataInfos_.szIDs_.GetData();
     ADN_Tools::CreatePathToFile( szIdsFile );
