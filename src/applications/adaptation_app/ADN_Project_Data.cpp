@@ -15,7 +15,6 @@
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_OpenFile_Exception.h"
-#include "ADN_ResourceXml.h"
 #include "ADN_Xml_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_XmlInput_Helper.h"
@@ -473,11 +472,13 @@ void ADN_Project_Data::FilesNeeded( T_StringList& vFiles ) const
 void ADN_Project_Data::Reset()
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
-
     // load default parameters
+    LPVOID res = LockResource( LoadResource( GetModuleHandle( NULL ),
+                               FindResource( GetModuleHandle( NULL ), MAKEINTRESOURCE( IDR_XML_SCIPIO ), "xml") ) );
+    if( res == NULL )
+        throw ADN_DataException( "", "unable to open resource IDR_XML_SCIPIO", "" );
     ADN_XmlInput_Helper defaultScipioFile;
-    defaultScipioFile.SetData( (char*)LockResource( LoadResource(GetModuleHandle(NULL),
-                         FindResource(GetModuleHandle(NULL),MAKEINTRESOURCE(IDR_XML_SCIPIO),"xml"))));  
+    defaultScipioFile.SetData( (char*)res );
     this->ReadArchive( defaultScipioFile );
 /*
     ADN_XmlInput_Helper defaultNetworkFile;
@@ -598,6 +599,8 @@ void ADN_Project_Data::Save()
     MT_TextOutputArchive idsOutput;
     const char* szIds = (char*)LockResource( 
             LoadResource( GetModuleHandle(NULL), FindResource( GetModuleHandle(NULL), MAKEINTRESOURCE(IDR_XML_IDS_CLASSES), "xml" )));
+    if( szIds == NULL )
+        throw ADN_DataException( "", "unable to open resource IDR_XML_IDS_CLASSES", "" );
 
     std::cout << szIds << std::endl;
     idsOutput.GetOutputStream() << szIds;

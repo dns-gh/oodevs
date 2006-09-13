@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 ADN_ResourceXml::ADN_ResourceXml(const std::string& data)
 {
-    SetData(data); 
+    SetData(data);
 }
 
 
@@ -48,32 +48,32 @@ ADN_ResourceXml::~ADN_ResourceXml()
 // Name: ADN_ResourceXML::getStringVector
 // Created: JDY 03-06-20
 //-----------------------------------------------------------------------------
-T_StringVector  ADN_ResourceXml::getStringVector(const std::string& name)
+T_StringVector ADN_ResourceXml::getStringVector(const std::string& name)
 {
     T_StringVector lfields;
     uint i=0, previ=0;
     while ( i< name.size() )
     {
-        if ( name[i]=='/' || name[i]=='\\' )
+        if( name[i]=='/' || name[i]=='\\' )
         {
             lfields.push_back(std::string(name.begin()+previ,name.begin()+i));
             previ=i+1;
         }
         ++i;
     }
-    lfields.push_back(std::string(name.begin()+previ,name.end()));    
+    lfields.push_back(std::string(name.begin()+previ,name.end()));
     return lfields;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ResourceXml::Initialize
-/** @param  idres 
-*/
 // Created: AGN 2003-12-12
 // -----------------------------------------------------------------------------
 void ADN_ResourceXml::Initialize( int idres )
 {
-    SetData((char*)LockResource( LoadResource(GetModuleHandle(NULL),
-                                FindResource(GetModuleHandle(NULL),MAKEINTRESOURCE(idres),"xml")
-                                )));    
+    LPVOID res = LockResource( LoadResource( GetModuleHandle( NULL ),
+                               FindResource( GetModuleHandle( NULL ), MAKEINTRESOURCE( idres ),"xml") ) );
+    if( res == NULL )
+        throw MT_Exception( "ADN_ResourceXml::Initialize", 007, "unable to open resource" );
+    SetData((char*)res);
 }
