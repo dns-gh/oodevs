@@ -113,15 +113,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agent_ABC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Niveau perception</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Agent associ&#xe9;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -47,6 +47,7 @@ class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public kernel::ElementObserver_ABC< AgentKnowledges >
                           , public kernel::ElementObserver_ABC< AgentKnowledge >
                           , public kernel::ElementObserver_ABC< PerceptionMap >
+                          , public kernel::SelectionObserver_Base< AgentKnowledge >
                           , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
@@ -76,6 +77,9 @@ private:
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
     virtual void NotifyUpdated( const AgentKnowledge& knowledge );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
+    virtual void Select( const AgentKnowledge& k );
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
     void Select( const kernel::KnowledgeGroup_ABC* group );
     void Display( const AgentKnowledge& k );
     void showEvent( QShowEvent* );
@@ -102,6 +106,7 @@ private:
     kernel::SafePointer< kernel::Team_ABC >        owner_;
     kernel::SafePointer< AgentKnowledges > selected_;
     kernel::SafePointer< AgentKnowledge >  subSelected_;
+    kernel::SafePointer< AgentKnowledge >  selectionCandidate_;
     QCheckBox* pOwnTeamCheckBox_;
     //@}
 };

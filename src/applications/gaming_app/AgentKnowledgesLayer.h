@@ -10,7 +10,7 @@
 #ifndef __AgentKnowledgesLayer_h_
 #define __AgentKnowledgesLayer_h_
 
-#include "clients_gui/KnowledgeLayer.h"
+#include "KnowledgeLayer.h"
 #include "gaming/AgentKnowledge.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-05-17
 // =============================================================================
-class AgentKnowledgesLayer : public gui::KnowledgeLayer< AgentKnowledge >
+class AgentKnowledgesLayer : public KnowledgeLayer< AgentKnowledge >
 {
 
 public:

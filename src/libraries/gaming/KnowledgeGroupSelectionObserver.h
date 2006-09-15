@@ -37,20 +37,25 @@ public:
     virtual ~KnowledgeGroupSelectionObserver();
     //@}
 
-private:
-    //! @name Copy/Assignement
-    //@{
-    KnowledgeGroupSelectionObserver( const KnowledgeGroupSelectionObserver& );            //!< Copy constructor
-    KnowledgeGroupSelectionObserver& operator=( const KnowledgeGroupSelectionObserver& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
+    //! @name Operations
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void Select( const kernel::KnowledgeGroup_ABC& element );
     virtual void Select( const kernel::Agent_ABC& element );
+    //@}
+
+protected:
+    //! @name Operations
+    //@{    
     virtual void Select( const kernel::KnowledgeGroup_ABC* ) = 0;
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    KnowledgeGroupSelectionObserver( const KnowledgeGroupSelectionObserver& );            //!< Copy constructor
+    KnowledgeGroupSelectionObserver& operator=( const KnowledgeGroupSelectionObserver& ); //!< Assignement operator
     //@}
 
 private:

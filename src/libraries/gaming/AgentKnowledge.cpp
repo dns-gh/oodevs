@@ -207,7 +207,7 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Recta
         tools.Select( backupState );
     }
     else
-        ; // $$$$ AGE 2006-05-17: afficher genre un ?
+        tools.DrawApp6Symbol( "roles/Unknown.svg", where );
 }
 
 // -----------------------------------------------------------------------------

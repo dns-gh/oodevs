@@ -10,7 +10,7 @@
 #ifndef __ObjectKnowledgesLayer_h_
 #define __ObjectKnowledgesLayer_h_
 
-#include "clients_gui/KnowledgeLayer.h"
+#include "KnowledgeLayer.h"
 #include "gaming/ObjectKnowledge.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class ObjectKnowledgesLayer : public gui::KnowledgeLayer< ObjectKnowledge >
+class ObjectKnowledgesLayer : public KnowledgeLayer< ObjectKnowledge >
 {
 
 public:

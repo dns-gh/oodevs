@@ -10,7 +10,7 @@
 #ifndef __PopulationKnowledgesLayer_h_
 #define __PopulationKnowledgesLayer_h_
 
-#include "clients_gui/KnowledgeLayer.h"
+#include "KnowledgeLayer.h"
 #include "gaming/PopulationKnowledge.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class PopulationKnowledgesLayer : public gui::KnowledgeLayer< PopulationKnowledge >
+class PopulationKnowledgesLayer : public KnowledgeLayer< PopulationKnowledge >
 {
 
 public:

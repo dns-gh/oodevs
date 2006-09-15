@@ -263,12 +263,12 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( grid );
     glProxy_->Register( meteo );
     glProxy_->Register( limits );
-    glProxy_->Register( objectsLayer );
-    glProxy_->Register( populations );
-    glProxy_->Register( agents );
     glProxy_->Register( objectKnowledges );
     glProxy_->Register( populationKnowledges );
     glProxy_->Register( agentKnowledges );
+    glProxy_->Register( objectsLayer );
+    glProxy_->Register( populations );
+    glProxy_->Register( agents );
     glProxy_->Register( missionsLayer );
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );

@@ -121,3 +121,12 @@ void ParamObstacle::CommitTo( ASN1T_MissionGenObject& destination )
     destination.priorite = asnObject_.priorite;
     location_->CommitTo( destination.pos_obstacle );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::Draw
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+void ParamObstacle::Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    location_->Draw( point, viewport, tools );
+}

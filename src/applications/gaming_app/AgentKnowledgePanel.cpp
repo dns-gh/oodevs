@@ -36,6 +36,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , owner_       ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
+    , selectionCandidate_( controllers )
     , display_     ( 0 )
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
@@ -69,7 +70,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tr( "Pertinence:"  ) );
 
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( tr( "Agent_ABC" ) ).
+    pPerceptionListView_->AddColumn( tr( "Agent" ) ).
                           AddColumn( tr( "Niveau perception" ) );
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
@@ -141,6 +142,41 @@ void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displ
     }
     else
         delete item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::BeforeSelection
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::BeforeSelection()
+{
+    selectionCandidate_ = 0;
+    KnowledgeGroupSelectionObserver::BeforeSelection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::Select
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::Select( const AgentKnowledge& k )
+{
+    selectionCandidate_ = &k;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePanel::AfterSelection
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+void AgentKnowledgePanel::AfterSelection()
+{
+    if( selectionCandidate_ )
+    {
+        ValuedListItem* item = FindItem( (const AgentKnowledge*)selectionCandidate_, pKnowledgeListView_->firstChild() );
+        if( item )
+            pKnowledgeListView_->setSelected( item, true );
+    }
+    else
+        KnowledgeGroupSelectionObserver::AfterSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -255,6 +291,6 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* item )
 {
     item->SetValue( perception.detected_ );
-    displayer.Display( "Agent_ABC", perception.detected_->GetName() ); // to prevent link
+    displayer.Display( "Agent", perception.detected_->GetName() ); // to prevent link
     displayer.Display( "Niveau perception", perception.level_ );
 }

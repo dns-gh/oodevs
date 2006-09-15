@@ -10,10 +10,7 @@
 #ifndef __KnowledgeLayer_h_
 #define __KnowledgeLayer_h_
 
-#include "EntityLayer.h"
-
-namespace gui
-{
+#include "clients_gui/EntityLayer.h"
 
 // =============================================================================
 /** @class  KnowledgeLayer
@@ -22,13 +19,13 @@ namespace gui
 // Created: AGE 2006-05-18
 // =============================================================================
 template< typename KnowledgeType >
-class KnowledgeLayer : public EntityLayer< KnowledgeType >
+class KnowledgeLayer : public gui::EntityLayer< KnowledgeType >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
     virtual ~KnowledgeLayer();
     //@}
 
@@ -50,8 +47,8 @@ private:
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
 template< typename KnowledgeType >
-KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : EntityLayer< KnowledgeType >( controllers, tools, strategy, view )
+KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view )
+    : gui::EntityLayer< KnowledgeType >( controllers, tools, strategy, view )
 {
     // NOTHING
 }
@@ -77,8 +74,6 @@ bool KnowledgeLayer< KnowledgeType >::ShouldDisplay( const kernel::Entity_ABC& e
     return currentTeam_
         && k.IsInTeam( *currentTeam_ )
         && ! k.KnowledgeIsInTeam( *currentTeam_ );
-}
-
 }
 
 #endif // __KnowledgeLayer_h_
