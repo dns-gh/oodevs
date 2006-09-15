@@ -31,7 +31,7 @@ class CampPrototype : public gui::CampPrototype_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             CampPrototype( QWidget* parent, kernel::Controllers& controllers, ObjectsModel& model, kernel::Object_ABC*& creation );
+             CampPrototype( QWidget* parent, kernel::Controllers& controllers, kernel::Object_ABC*& creation );
     virtual ~CampPrototype();
     //@}
 
@@ -51,7 +51,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ObjectsModel& model_;
     kernel::Object_ABC*& creation_;
     //@}
 };

@@ -99,3 +99,12 @@ QString Point::GetName() const
     static const QString name = tools::translate( "Localisation", "Point" );
     return name;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Point::Clone
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+Location_ABC& Point::Clone() const
+{
+    return *new Point( *this );
+}

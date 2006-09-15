@@ -212,7 +212,7 @@ MT_Float MIL_PopulationElement_ABC::Exterminate( MT_Float rSurface )
     rNbrDeadHumans_  += rKills;
     rNbrAliveHumans_ -= rKills;
     bHumansUpdated_   = true;
-    return rKills * rDensity_;
+    return rKills / rDensity_;
 }
 
 // -----------------------------------------------------------------------------

@@ -108,3 +108,12 @@ QString Circle::GetName() const
     static const QString name = tools::translate( "Localisation", "Cercle" );
     return name;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Circle::Clone
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+Location_ABC& Circle::Clone() const
+{
+    return *new Circle( *this );
+}

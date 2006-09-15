@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "CampAttributes.h"
+#include "NBCAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/NBCAgent.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -18,50 +18,51 @@ using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes constructor
+// Name: NBCAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( Controllers& controllers )
-    : tc2_( controllers )
+NBCAttributes::NBCAttributes()
+    : nbc_( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes destructor
+// Name: NBCAttributes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::~CampAttributes()
+NBCAttributes::~NBCAttributes()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::SetTC2
-// Created: SBO 2006-09-11
-// -----------------------------------------------------------------------------
-void CampAttributes::SetTC2( const Agent_ABC& tc2 )
-{
-    tc2_ = &tc2;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CampAttributes::Display
+// Name: NBCAttributes::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void CampAttributes::Display( Displayer_ABC& displayer ) const
+void NBCAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Camp" ) )
-                .Display( tools::translate( "Object", "TC2:" ), tc2_ );
+    displayer.Group( tools::translate( "NBC", "Nuage/Zone NBC" ) )
+        .Display( tools::translate( "NBC", "Agent NBC:" ), nbc_ );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NBCAttributes::SetAgent
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+void NBCAttributes::SetAgent( const kernel::NBCAgent& agent )
+{
+    nbc_ = &agent;
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::Serialize
+// Name: NBCAttributes::Serialize
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void CampAttributes::Serialize( xml::xostream& xos ) const
+void NBCAttributes::Serialize( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
-            << content( "TC2", long( tc2_->GetId() ) )
+            << content( "nbc-agent", nbc_->GetName() )
         << end();
 }

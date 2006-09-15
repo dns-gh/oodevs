@@ -37,6 +37,7 @@ public:
     virtual void AddPoint( const geometry::Point2f& point );
     virtual bool IsValid() const;
     virtual bool IsDone() const;
+    virtual Location_ABC& Clone() const;
     //@}
 
     //! @name Operations
@@ -49,7 +50,6 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    Lines( const Lines& );            //!< Copy constructor
     Lines& operator=( const Lines& ); //!< Assignement operator
     //@}
 

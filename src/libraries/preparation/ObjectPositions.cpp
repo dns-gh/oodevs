@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "ObjectPositions.h"
 #include "LocationSerializer.h"
+#include "clients_kernel/Location_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -21,7 +22,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
     : converter_( converter )
-    , location_( &location )
+    , location_( &location.Clone() )
 {
     // NOTHING
 }
@@ -32,7 +33,7 @@ ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter, cons
 // -----------------------------------------------------------------------------
 ObjectPositions::~ObjectPositions()
 {
-    // NOTHING
+    delete location_;
 }
 
 // -----------------------------------------------------------------------------

@@ -8,49 +8,50 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "CampPrototype.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "NBCPrototype.h"
+#include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Object_ABC.h"
-#include "preparation/CampAttributes.h"
+#include "preparation/NBCAttributes.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::CampPrototype
-// Created: SBO 2006-04-19
+// Name: NBCPrototype constructor
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers, Object_ABC*& creation )
-    : CampPrototype_ABC( parent, controllers )
+NBCPrototype::NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, Object_ABC*& creation )
+    : NBCPrototype_ABC( parent, resolver )
     , creation_( creation )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::~CampPrototype
-// Created: SBO 2006-04-19
+// Name: NBCPrototype destructor
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-CampPrototype::~CampPrototype()
+NBCPrototype::~NBCPrototype()
 {
     Clean();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Commit
-// Created: SBO 2006-04-19
+// Name: NBCPrototype::Commit
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Commit()
+void NBCPrototype::Commit()
 {
-    if( creation_ )
-        static_cast< CampAttributes& >( creation_->Get< CampAttributes_ABC >() ).SetTC2( *selected_ );
+    if( !creation_ )
+        return;
+
+    static_cast< NBCAttributes& >( creation_->Get< NBCAttributes >() ).SetAgent( *nbcAgents_->GetValue() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Clean
+// Name: NBCPrototype::Clean
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Clean()
+void NBCPrototype::Clean()
 {
     // NOTHING
 }

@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "CampAttributes.h"
+#include "RotaAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/NBCAgent.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -18,50 +18,64 @@ using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes constructor
+// Name: RotaAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( Controllers& controllers )
-    : tc2_( controllers )
+RotaAttributes::RotaAttributes()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes destructor
+// Name: RotaAttributes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::~CampAttributes()
+RotaAttributes::~RotaAttributes()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::SetTC2
-// Created: SBO 2006-09-11
-// -----------------------------------------------------------------------------
-void CampAttributes::SetTC2( const Agent_ABC& tc2 )
-{
-    tc2_ = &tc2;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CampAttributes::Display
+// Name: RotaAttributes::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void CampAttributes::Display( Displayer_ABC& displayer ) const
+void RotaAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Camp" ) )
-                .Display( tools::translate( "Object", "TC2:" ), tc2_ );
+    displayer.Group( tools::translate( "NBC", "ROTA" ) )
+                .Display( tools::translate( "NBC", "Danger:" ), danger_ )
+                .Display( tools::translate( "NBC", "Agents NBC:" ), agents_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::Serialize
+// Name: RotaAttributes::SetDanger
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void CampAttributes::Serialize( xml::xostream& xos ) const
+void RotaAttributes::SetDanger( unsigned int level )
+{
+    danger_ = level;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaAttributes::AddAgent
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+void RotaAttributes::AddAgent( const kernel::NBCAgent& agent )
+{
+    if( std::find( agents_.begin(), agents_.end(), &agent ) == agents_.end() )
+        agents_.push_back( &agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaAttributes::Serialize
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+void RotaAttributes::Serialize( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
-            << content( "TC2", long( tc2_->GetId() ) )
+            << content( "danger", int( danger_ ) )
+            << start( "nbc-agents" );
+    for( T_Nbcs::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
+        xos     << content( "nbc-agent", (*it)->GetName() );
+    xos     << end()
         << end();
 }

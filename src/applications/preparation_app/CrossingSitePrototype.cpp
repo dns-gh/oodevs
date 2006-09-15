@@ -8,49 +8,56 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "CampPrototype.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "CrossingSitePrototype.h"
+#include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
-#include "preparation/CampAttributes.h"
+#include "preparation/CrossingSiteAttributes.h"
 
 using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::CampPrototype
+// Name: CrossingSitePrototype constructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers, Object_ABC*& creation )
-    : CampPrototype_ABC( parent, controllers )
+CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, Object_ABC*& creation )
+    : CrossingSitePrototype_ABC( parent )
     , creation_( creation )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::~CampPrototype
+// Name: CrossingSitePrototype destructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CampPrototype::~CampPrototype()
+CrossingSitePrototype::~CrossingSitePrototype()
 {
     Clean();
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Commit
+// Name: CrossingSitePrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CampPrototype::Commit()
+void CrossingSitePrototype::Commit()
 {
-    if( creation_ )
-        static_cast< CampAttributes& >( creation_->Get< CampAttributes_ABC >() ).SetTC2( *selected_ );
+    if( !creation_ )
+        return;
+
+    CrossingSiteAttributes& attr = static_cast< CrossingSiteAttributes& >( creation_->Get< CrossingSiteAttributes_ABC >() );
+
+    attr.SetWidth( width_->value() );
+    attr.SetDepth( depth_->value() );
+    attr.SetFlowSpeed( speed_->value() );
+    attr.SetConstruction( needsConstruction_->isOn() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Clean
+// Name: CrossingSitePrototype::Clean
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Clean()
+void CrossingSitePrototype::Clean()
 {
     // NOTHING
 }

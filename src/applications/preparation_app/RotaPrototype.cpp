@@ -8,49 +8,59 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "CampPrototype.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "RotaPrototype.h"
+#include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/Iterator.h"
 #include "clients_kernel/Object_ABC.h"
-#include "preparation/CampAttributes.h"
+#include "clients_gui/RichLabel.h"
+#include "clients_gui/ValuedListItem.h"
+#include "preparation/RotaAttributes.h"
 
 using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::CampPrototype
-// Created: SBO 2006-04-19
+// Name: RotaPrototype constructor
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers, Object_ABC*& creation )
-    : CampPrototype_ABC( parent, controllers )
+RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, kernel::Object_ABC*& creation )
+    : RotaPrototype_ABC( parent, resolver )
     , creation_( creation )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::~CampPrototype
-// Created: SBO 2006-04-19
+// Name: RotaPrototype destructor
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-CampPrototype::~CampPrototype()
+RotaPrototype::~RotaPrototype()
 {
     Clean();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Commit
-// Created: SBO 2006-04-19
+// Name: RotaPrototype::Commit
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Commit()
+void RotaPrototype::Commit()
 {
-    if( creation_ )
-        static_cast< CampAttributes& >( creation_->Get< CampAttributes_ABC >() ).SetTC2( *selected_ );
+    if( !creation_ )
+        return;
+    
+    RotaAttributes& attr = static_cast< RotaAttributes& >( creation_->Get< RotaAttributes_ABC >() );
+
+    for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
+        if( item->isSelected() )
+            attr.AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent* >() );
+    attr.SetDanger( danger_->text().toUInt() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Clean
+// Name: RotaPrototype::Clean
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Clean()
+void RotaPrototype::Clean()
 {
     // NOTHING
 }

@@ -98,3 +98,12 @@ QString Lines::GetName() const
     static const QString name = tools::translate( "Localisation", "Ligne" );
     return name;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Lines::Clone
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+Location_ABC& Lines::Clone() const
+{
+    return *new Lines( *this );
+}

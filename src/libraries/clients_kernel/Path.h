@@ -45,12 +45,12 @@ public:
     virtual void Accept( LocationVisitor_ABC& ) const;
     virtual void Draw( const GlTools_ABC& tools ) const;
     virtual QString GetName() const;
+    virtual Location_ABC& Clone() const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Path( const Path& );            //!< Copy constructor
     Path& operator=( const Path& ); //!< Assignement operator
     //@}
 

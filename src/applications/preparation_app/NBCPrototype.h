@@ -7,60 +7,50 @@
 //
 // *****************************************************************************
 
-#ifndef __Point_h_
-#define __Point_h_
+#ifndef __NBCPrototype_h_
+#define __NBCPrototype_h_
 
-#include "Location_ABC.h"
+#include "clients_gui/NBCPrototype_ABC.h"
 
 namespace kernel
 {
+    class Object_ABC;
+}
 
 // =============================================================================
-/** @class  Point
-    @brief  Point
+/** @class  NBCPrototype
+    @brief  NBCPrototype
 */
-// Created: AGE 2006-08-09
+// Created: SBO 2006-04-20
 // =============================================================================
-class Point : public Location_ABC
+class NBCPrototype : public gui::NBCPrototype_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Point();
-    virtual ~Point();
-    //@}
-
-    //! @name Construction
-    //@{
-    virtual void PopPoint();
-    virtual void AddPoint( const geometry::Point2f& point );
-    virtual bool IsValid() const;
-    virtual bool IsDone() const;
-    virtual Location_ABC& Clone() const;
+             NBCPrototype( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver, kernel::Object_ABC*& creation );
+    virtual ~NBCPrototype();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Accept( LocationVisitor_ABC& ) const;
-    virtual void Draw( const GlTools_ABC& tools ) const;
-    virtual QString GetName() const;
+    virtual void Commit();
+    virtual void Clean();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Point& operator=( const Point& ); //!< Assignement operator
+    NBCPrototype( const NBCPrototype& );            //!< Copy constructor
+    NBCPrototype& operator=( const NBCPrototype& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    bool pointSet_;
-    geometry::Point2f point_;
+    kernel::Object_ABC*& creation_;
     //@}
 };
 
-}
-
-#endif // __Point_h_
+#endif // __NBCPrototype_h_

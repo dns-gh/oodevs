@@ -104,3 +104,12 @@ QString Path::GetName() const
     static const QString name = tools::translate( "Localisation", "Chemin" );
     return name;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Path::Clone
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+Location_ABC& Path::Clone() const
+{
+    return *new Path( *this );
+}

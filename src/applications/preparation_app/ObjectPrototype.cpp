@@ -16,10 +16,10 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "CampPrototype.h"
-//#include "CrossingSitePrototype.h"
-//#include "LogisticRoutePrototype.h"
-//#include "NBCPrototype.h"
-//#include "RotaPrototype.h"
+#include "CrossingSitePrototype.h"
+#include "LogisticRoutePrototype.h"
+#include "NBCPrototype.h"
+#include "RotaPrototype.h"
 
 using namespace kernel;
 using namespace gui;
@@ -33,11 +33,11 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     , objectsModel_( objectsModel )
     , creation_( 0 )
 {
-    campAttributes_          = new CampPrototype         ( parent, controllers, objectsModel, creation_ );        campAttributes_->hide();
-//    crossingSiteAttributes_  = new CrossingSitePrototype ( parent, creation_ );                     crossingSiteAttributes_->hide();
-//    logisticRouteAttributes_ = new LogisticRoutePrototype( parent, creation_ );                     logisticRouteAttributes_->hide();
-//    nbcAttributes_           = new NBCPrototype          ( parent, model.objectTypes_, creation_ ); nbcAttributes_->hide();
-//    rotaAttributes_          = new RotaPrototype         ( parent, model.objectTypes_, creation_ ); rotaAttributes_->hide();
+    campAttributes_          = new CampPrototype         ( parent, controllers, creation_ );        campAttributes_->hide();
+    crossingSiteAttributes_  = new CrossingSitePrototype ( parent, creation_ );                     crossingSiteAttributes_->hide();
+    logisticRouteAttributes_ = new LogisticRoutePrototype( parent, creation_ );                     logisticRouteAttributes_->hide();
+    nbcAttributes_           = new NBCPrototype          ( parent, model.objectTypes_, creation_ ); nbcAttributes_->hide();
+    rotaAttributes_          = new RotaPrototype         ( parent, model.objectTypes_, creation_ ); rotaAttributes_->hide();
 }
 
 // -----------------------------------------------------------------------------

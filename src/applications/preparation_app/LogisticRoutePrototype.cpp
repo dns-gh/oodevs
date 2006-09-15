@@ -8,49 +8,55 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "CampPrototype.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "LogisticRoutePrototype.h"
 #include "clients_kernel/Object_ABC.h"
-#include "preparation/CampAttributes.h"
+#include "preparation/LogisticRouteAttributes.h"
 
 using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::CampPrototype
-// Created: SBO 2006-04-19
+// Name: LogisticRoutePrototype constructor
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-CampPrototype::CampPrototype( QWidget* parent, Controllers& controllers, Object_ABC*& creation )
-    : CampPrototype_ABC( parent, controllers )
+LogisticRoutePrototype::LogisticRoutePrototype( QWidget* parent, Object_ABC*& creation )
+    : LogisticRoutePrototype_ABC( parent )
     , creation_( creation )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::~CampPrototype
-// Created: SBO 2006-04-19
+// Name: LogisticRoutePrototype destructor
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-CampPrototype::~CampPrototype()
+LogisticRoutePrototype::~LogisticRoutePrototype()
 {
     Clean();
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Commit
-// Created: SBO 2006-04-19
+// Name: LogisticRoutePrototype::Commit
+// Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Commit()
+void LogisticRoutePrototype::Commit()
 {
-    if( creation_ )
-        static_cast< CampAttributes& >( creation_->Get< CampAttributes_ABC >() ).SetTC2( *selected_ );
+    if( !creation_ )
+        return;
+
+    LogisticRouteAttributes& attr = static_cast< LogisticRouteAttributes& >( creation_->Get< LogisticRouteAttributes_ABC >() );
+    attr.SetFlow( flow_->value() );
+    attr.SetWidth( width_->value() );
+    attr.SetLength( length_->value() );
+    attr.SetMaxWeight( maxWeight_->value() );
+    attr.SetEquipped( equipped_->isOn() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampPrototype::Clean
+// Name: LogisticRoutePrototype::Clean
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void CampPrototype::Clean()
+void LogisticRoutePrototype::Clean()
 {
     // NOTHING
 }

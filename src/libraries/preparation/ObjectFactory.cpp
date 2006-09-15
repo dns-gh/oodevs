@@ -10,10 +10,10 @@
 #include "preparation_pch.h"
 #include "ObjectFactory.h"
 #include "Object.h"
-//#include "LogisticRouteAttributes.h"
-//#include "NBCAttributes.h"
-//#include "RotaAttributes.h"
-//#include "CrossingSiteAttributes.h"
+#include "LogisticRouteAttributes.h"
+#include "NBCAttributes.h"
+#include "RotaAttributes.h"
+#include "CrossingSiteAttributes.h"
 #include "CampAttributes.h"
 #include "Model.h"
 #include "TeamsModel.h"
@@ -62,31 +62,21 @@ kernel::Object_ABC* ObjectFactory::CreateObject( kernel::ObjectType& type, kerne
     case EnumObjectType::camp_refugies:
         result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_ ) );
         break;
+    case EnumObjectType::itineraire_logistique:
+        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes() );
+        break;
+    case EnumObjectType::nuage_nbc:
+    case EnumObjectType::zone_nbc:
+        result->Attach< NBCAttributes_ABC >( *new NBCAttributes() );
+        break;
+    case EnumObjectType::rota:
+        result->Attach< RotaAttributes_ABC >( *new RotaAttributes() );
+        break;
+    case EnumObjectType::site_franchissement:
+        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes() );
+        break;
     default:
         break;
-    }
+    };
     return result;
 }
-
-//    case EnumObjectType::itineraire_logistique:
-//        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( controllers_.controller_ ) );
-//        result->Update( message );
-//        break;
-//    case EnumObjectType::nuage_nbc:
-//    case EnumObjectType::zone_nbc:
-//        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( controllers_.controller_, static_.objectTypes_ ) );
-//        result->Update( message );
-//        break;
-//    case EnumObjectType::rota:
-//        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( controllers_.controller_, static_.objectTypes_ ) );
-//        result->Update( message );
-//        break;
-//    case EnumObjectType::site_franchissement:
-//        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
-//        result->Update( message );
-//    default:
-//        ;
-//    };
-//    result->Update( message );
-//    return result;
-//}

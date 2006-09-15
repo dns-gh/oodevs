@@ -39,6 +39,7 @@ public:
     virtual void AddPoint( const geometry::Point2f& point ) = 0;
     virtual bool IsValid() const = 0;
     virtual bool IsDone() const = 0;
+    virtual Location_ABC& Clone() const = 0;
     //@}
 
     //! @name Operations

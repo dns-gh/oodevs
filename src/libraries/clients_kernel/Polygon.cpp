@@ -101,3 +101,12 @@ QString Polygon::GetName() const
     static const QString name = tools::translate( "Localisation", "Polygone" );
     return name;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::Clone
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+Location_ABC& Polygon::Clone() const
+{
+    return *new Polygon( *this );
+}
