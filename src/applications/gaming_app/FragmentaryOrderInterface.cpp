@@ -25,10 +25,10 @@ using namespace gui;
 // Name: FragmentaryOrderInterface constructor
 // Created: APE 2004-05-12
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
-    : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectTypes )
-    , publisher_( publisher )
-    , nMissionId_         ( nMissionId )
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+: MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectKnowledgeConverter, objectTypes )
+    , publisher_      ( publisher )
+    , nMissionId_     ( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgOrderConduite();
     pASNMsgOrder_->GetAsnMsg().unit_id = agent.GetId();

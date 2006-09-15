@@ -52,13 +52,14 @@ using namespace gui;
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Entity_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Entity_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes )
     : QVBox      ( parent )
     , controller_( controller )
     , agent_     ( agent )
     , layer_     ( layer )
     , converter_ ( converter )
     , knowledgeConverter_( knowledgeConverter )
+    , objectKnowledgeConverter_( objectKnowledgeConverter )
     , objectTypes_( objectTypes )
 {
     setMargin( 5 );
@@ -294,7 +295,7 @@ void MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgent& a
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateObjectKnowledge( ASN1T_KnowledgeObject& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    AddParameter( *new ParamObjectKnowledge( this, asn, strName, strName ), pOptional );
+    AddParameter( *new ParamObjectKnowledge( this, asn, strName, strName, objectKnowledgeConverter_, agent_ ), pOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,7 +304,7 @@ void MissionInterface_ABC::CreateObjectKnowledge( ASN1T_KnowledgeObject& asn, co
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    AddParameter( *new ParamObjectKnowledgeList( this, asn, strName, strName ), pOptional );
+    AddParameter( *new ParamObjectKnowledgeList( this, asn, strName, strName, objectKnowledgeConverter_, agent_ ), pOptional );
 }
 
 // -----------------------------------------------------------------------------

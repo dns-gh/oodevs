@@ -31,6 +31,7 @@ namespace gui
 
 class Param_ABC;
 class AgentKnowledgeConverter_ABC;
+class ObjectKnowledgeConverter_ABC;
 class OptionalParamFunctor_ABC;
 
 // =============================================================================
@@ -46,7 +47,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              MissionInterface_ABC( QWidget* parent, kernel::Entity_ABC& agent, kernel::ActionController& controller, gui::ParametersLayer& layer, 
-                                   const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter,
+                                   const kernel::CoordinateConverter_ABC& converter, 
+                                   AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, 
                                    const kernel::ObjectTypes& objectTypes );
     virtual ~MissionInterface_ABC();
     //@}
@@ -154,6 +156,7 @@ private:
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
     AgentKnowledgeConverter_ABC& knowledgeConverter_;
+    ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
     const kernel::ObjectTypes& objectTypes_;
 
     T_Parameters  parameters_;

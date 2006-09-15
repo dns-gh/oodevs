@@ -30,7 +30,7 @@ class FragmentaryOrderInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FragmentaryOrderInterface( QWidget* parent, kernel::Agent_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             FragmentaryOrderInterface( QWidget* parent, kernel::Agent_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~FragmentaryOrderInterface();
     //@}
 

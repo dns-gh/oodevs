@@ -30,7 +30,7 @@ class UnitMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMissionInterface( QWidget* parent, kernel::Agent_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             UnitMissionInterface( QWidget* parent, kernel::Agent_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~UnitMissionInterface();
     //@}
 

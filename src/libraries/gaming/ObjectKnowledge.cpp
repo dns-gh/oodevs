@@ -211,3 +211,21 @@ void ObjectKnowledge::Activate( ActionController& controller ) const
 {
     controller.Activate( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetRealObject
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+const kernel::Object_ABC* ObjectKnowledge::GetRealObject() const
+{
+    return pRealObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetTeam
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+const kernel::Team_ABC& ObjectKnowledge::GetTeam() const
+{
+    return owner_;
+}

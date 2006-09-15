@@ -10,7 +10,9 @@
 #include "gaming_app_pch.h"
 #include "ParamObjectKnowledgeList.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "gaming/ObjectKnowledge.h"
+#include "gaming/ObjectKnowledgeConverter_ABC.h"
 
 using namespace kernel;
 
@@ -18,8 +20,10 @@ using namespace kernel;
 // Name: ParamObjectKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const QString& label, const QString& menu )
+ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
     : EntityListParameter< ObjectKnowledge >( pParent, asn.n, asn.elem, label, menu )
+    , converter_( converter )
+    , agent_( static_cast< const Agent_ABC& >( agent ) ) // $$$$ AGE 2006-09-15: 
 {
     // NOTHING
 }
@@ -39,5 +43,7 @@ ParamObjectKnowledgeList::~ParamObjectKnowledgeList()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
-    // $$$$ AGE 2006-03-14: TODO !
+    const ObjectKnowledge* knowledge = converter_.Find( entity, agent_.GetTeam() );
+    if( knowledge )
+        EntityListParameter< ObjectKnowledge >::NotifyContextMenu( *knowledge, menu );
 }

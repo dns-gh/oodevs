@@ -22,8 +22,8 @@ using namespace gui;
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population_ABC& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
-    : MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter, objectTypes )
+PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population_ABC& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+: MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter, objectKnowledgeConverter,objectTypes )
     , publisher_( publisher )
     , nMissionId_( nMissionId )
 {

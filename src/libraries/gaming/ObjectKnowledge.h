@@ -62,13 +62,16 @@ public:
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     bool IsInTeam( const kernel::Team_ABC& team ) const;
+    const kernel::Team_ABC& GetTeam() const; // $$$$ AGE 2006-09-15: 
+
     bool KnowledgeIsInTeam( const kernel::Team_ABC& team ) const;
     const kernel::Team_ABC* GetKnowledgeTeam() const;
-
 
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+
+    const kernel::Object_ABC* GetRealObject() const; // $$$$ AGE 2006-09-15: 
     //@}
 
 private:

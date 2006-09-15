@@ -10,7 +10,9 @@
 #include "gaming_app_pch.h"
 #include "ParamObjectKnowledge.h"
 #include "gaming/ObjectKnowledge.h"
+#include "gaming/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 
 using namespace kernel;
 
@@ -18,8 +20,10 @@ using namespace kernel;
 // Name: ParamObjectKnowledge constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledge::ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
+ParamObjectKnowledge::ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
     : EntityParameter< ObjectKnowledge >( pParent, id, label, menu )
+    , converter_( converter )
+    , agent_( static_cast< const Agent_ABC& >( agent ) ) // $$$$ AGE 2006-09-15: 
 {
     // NOTHING
 }
@@ -39,12 +43,7 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
-    // agent_.GetKnowledgeGroup()->GetTeam().Get< ObjectKnowledges >()....
-    // $$$$ AGE 2006-03-14: 
-//    if( context.selectedElement_.pObject_ != 0 )
-//    {
-//        pPopupKnowledge_ = dynamic_cast<Agent_ABC*>(&agent_)->GetTeam().FindKnowledgeOnObject( *(context.selectedElement_.pObject_) );
-//        if( pPopupKnowledge_ == 0 )
-//            return;
-//    }
+    const ObjectKnowledge* knowledge = converter_.Find( entity, agent_.GetTeam() );
+    if( knowledge )
+        EntityParameter< ObjectKnowledge >::NotifyContextMenu( *knowledge, menu );
 }

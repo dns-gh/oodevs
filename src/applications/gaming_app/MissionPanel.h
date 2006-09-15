@@ -36,6 +36,7 @@ class AutomatDecisions;
 class MissionInterface_ABC;
 class StaticModel;
 class AgentKnowledgeConverter_ABC;
+class ObjectKnowledgeConverter_ABC;
 class Publisher_ABC;
 
 // =============================================================================
@@ -103,6 +104,7 @@ private:
     const kernel::GlTools_ABC& tools_;
 
     AgentKnowledgeConverter_ABC* knowledgeConverter_;
+    ObjectKnowledgeConverter_ABC* objectKnowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
     const kernel::Agent_ABC* selected_;
     const kernel::Population_ABC* selectedPopulation_;

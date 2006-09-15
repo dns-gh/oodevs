@@ -93,6 +93,15 @@ void Simulation::Update( const ASN1T_MsgCtrlInfo& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Simulation::Update
+// Created: AGE 2006-09-15
+// -----------------------------------------------------------------------------
+void Simulation::Update( const ProfilingValuesMessage& message )
+{
+    profiling_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Simulation::BeginTick
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------

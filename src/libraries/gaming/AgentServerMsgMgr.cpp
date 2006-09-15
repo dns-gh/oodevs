@@ -377,9 +377,9 @@ void AgentServerMsgMgr::OnReceiveMsgProfilingValues( DIN_Link& /*linkFrom*/, DIN
 // Name: AgentServerMsgMgr::OnReceiveMsgProfilingValues
 // Created: NLD 2002-10-14
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgProfilingValues( DIN_Input& )
+void AgentServerMsgMgr::_OnReceiveMsgProfilingValues( DIN_Input& input )
 {
-    // $$$$ AGE 2006-02-10: Faire une courbe, whatever
+    simulation_.Update( ProfilingValuesMessage( input ) );
 }
 
 //-----------------------------------------------------------------------------

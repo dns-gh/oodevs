@@ -11,6 +11,7 @@
 #define __Simulation_h_
 
 #include "ASN_Types.h"
+#include "Profiling.h"
 
 namespace kernel
 {
@@ -44,6 +45,7 @@ public:
     void Pause( bool );
     void ChangeSpeed( int timeFactor );
     void Update( const ASN1T_MsgCtrlInfo& asnMsg );
+    void Update( const ProfilingValuesMessage& message );
     void BeginTick( int );
     void EndTick();
     void SetConfigPath( const std::string& path );
@@ -76,6 +78,7 @@ private:
     sEndTick endTick_;
     std::string simulationHost_;
     std::string configPath_;
+    Profiling profiling_;
     //@}
 };
 

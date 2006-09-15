@@ -15,9 +15,12 @@
 namespace kernel
 {
     class Object_ABC;
+    class Agent_ABC;
+    class Entity_ABC;
 }
 
 class ObjectKnowledge;
+class ObjectKnowledgeConverter_ABC;
 
 // =============================================================================
 /** @class  ParamObjectKnowledge
@@ -32,7 +35,7 @@ class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu );
+             ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamObjectKnowledge();
     //@}
 
@@ -47,6 +50,12 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    //@}
+
+    //! @name Member data
+    //@{
+    ObjectKnowledgeConverter_ABC& converter_;
+    const kernel::Agent_ABC& agent_;
     //@}
 };
 
