@@ -127,7 +127,6 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangl
     }
     const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
     RenderingContext context( box, 640, 480 ); // $$$$ AGE 2006-09-11: 
-    glColor3f( 0, 0, 0 );
     Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
     renderNode->Draw( context, *references_ );
 }
