@@ -24,6 +24,106 @@
         <source>Afficher propre camp</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Agents connus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>D&#xe9;tails</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Id:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Position:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vitesse:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Etat ops.:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Niveau de perception:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Niveau max de perception:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Niveau:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arme:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sp&#xe9;cialisation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qualification:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cat&#xe9;gorie:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobilit&#xe9;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacit&#xe9; mission:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rendu:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fait prisonnier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&#xe9;fugi&#xe9;s pris en compte:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PC:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pertinence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent_ABC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Niveau perception</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent associ&#xe9;:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentMaintenancePanel</name>

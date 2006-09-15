@@ -39,38 +39,38 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , display_     ( 0 )
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( "Agents connus" );
+    pKnowledgeListView_->AddColumn( tr( "Agents connus" ) );
     
     pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
     pOwnTeamCheckBox_->setChecked( true );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( "Détails" )
-                .AddLabel( "Id:" )
-                .AddLabel( "Agent_ABC associé:" )
-                .AddLabel( "Position:" )
-                .AddLabel( "Direction:" )
-                .AddLabel( "Vitesse:" )
-                .AddLabel( "Etat ops.:" )
-                .AddLabel( "Niveau de perception:" )
-                .AddLabel( "Niveau max de perception:" )
-                .AddLabel( "Camp:" )
-                .AddLabel( "Niveau:" )
-                .AddLabel( "Arme:" )
-                .AddLabel( "Spécialisation:" )
-                .AddLabel( "Qualification:" )
-                .AddLabel( "Catégorie:" )
-                .AddLabel( "Mobilité:" )
-                .AddLabel( "Capacité mission:" )
-                .AddLabel( "Rendu:" )
-                .AddLabel( "Fait prisonnier:" )
-                .AddLabel( "Réfugiés pris en compte:" )
-                .AddLabel( "PC:" )
-                .AddLabel( "Pertinence:"  );
+    display_->AddGroup( tr( "Détails" ) )
+                .AddLabel( tr( "Id:" ) )
+                .AddLabel( tr( "Agent associé:" ) )
+                .AddLabel( tr( "Position:" ) )
+                .AddLabel( tr( "Direction:" ) )
+                .AddLabel( tr( "Vitesse:" ) )
+                .AddLabel( tr( "Etat ops.:" ) )
+                .AddLabel( tr( "Niveau de perception:" ) )
+                .AddLabel( tr( "Niveau max de perception:" ) )
+                .AddLabel( tr( "Camp:" ) )
+                .AddLabel( tr( "Niveau:" ) )
+                .AddLabel( tr( "Arme:" ) )
+                .AddLabel( tr( "Spécialisation:" ) )
+                .AddLabel( tr( "Qualification:" ) )
+                .AddLabel( tr( "Catégorie:" ) )
+                .AddLabel( tr( "Mobilité:" ) )
+                .AddLabel( tr( "Capacité mission:" ) )
+                .AddLabel( tr( "Rendu:" ) )
+                .AddLabel( tr( "Fait prisonnier:" ) )
+                .AddLabel( tr( "Réfugiés pris en compte:" ) )
+                .AddLabel( tr( "PC:" ) )
+                .AddLabel( tr( "Pertinence:"  ) );
 
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( "Agent_ABC" ).
-                          AddColumn( "Niveau perception" );
+    pPerceptionListView_->AddColumn( tr( "Agent_ABC" ) ).
+                          AddColumn( tr( "Niveau perception" ) );
 
     connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
 
