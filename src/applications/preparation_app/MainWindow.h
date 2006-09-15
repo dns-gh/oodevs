@@ -36,6 +36,7 @@ class ModelBuilder;
 class StaticModel;
 class GraphicSetup_ABC;
 class EventStrategy_ABC;
+class ObjectCreationPanel;
 
 // =============================================================================
 /** @class  MainWindow
@@ -78,7 +79,7 @@ private:
     //! @name Helpers
     //@{
     void BuildIconLayout();
-    void CreateLayers( gui::ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

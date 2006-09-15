@@ -65,6 +65,7 @@ private slots:
     //! @name Slots
     //@{
     void SetSelected();
+    void SelectionChanged();
     //@}
 
 private:

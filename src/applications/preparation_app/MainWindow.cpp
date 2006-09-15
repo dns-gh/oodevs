@@ -14,10 +14,11 @@
 //#include "ControllerToolbar.h"
 //#include "EventToolbar.h"
 #include "InfoPanels.h"
+#include "CreationPanels.h"
 //#include "LogisticToolbar.h"
 //#include "MapToolbar.h"
 #include "Menu.h"
-//#include "ObjectCreationPanel.h"
+#include "ObjectCreationPanel.h"
 //#include "UnitToolbar.h"
 //#include "LinkInterpreter.h"
 #include "AgentListView.h"
@@ -59,11 +60,13 @@
 #include "clients_gui/TerrainLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/GridLayer.h"
+#include "clients_gui/MissionLayer.h"
 //#include "clients_gui/LimitsLayer.h"
 #include "clients_gui/ObjectsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/IconLayout.h"
+#include "clients_gui/EntitySearchBox.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -110,14 +113,28 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new ::AgentListView( pListsTabWidget, controllers, *factory, model, *modelBuilder_ ), tr( "Agents" ) );
-//    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
-//    pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
+    QVBox* listsTabBox = new QVBox( pListsTabWidget );
+    new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
+    new ::AgentListView( listsTabBox, controllers, *factory, model, *modelBuilder_ );
+
+    pListsTabWidget->addTab( listsTabBox, tr( "Agents" ) );
+    pListsTabWidget->addTab( new ObjectList( controllers, *factory ), tr( "Objets" ) );
+    pListsTabWidget->addTab( new PopulationList( controllers, *factory ), tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
     pListDockWnd_->setCaption( tr( "Unités" ) );
     setDockEnabled( pListDockWnd_, Qt::DockTop, false );
+
+    // Creation panel
+    QDockWindow* pCreationDockWnd = new QDockWindow( this );
+    moveDockWindow( pCreationDockWnd, Qt::DockRight );
+    CreationPanels* pCreationPanel = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory );
+    pCreationDockWnd->setWidget( pCreationPanel );
+    pCreationDockWnd->setResizeEnabled( true );
+    pCreationDockWnd->setCloseMode( QDockWindow::Always );
+    pCreationDockWnd->setCaption( tr( "Creation" ) );
+    setDockEnabled( pCreationDockWnd, Qt::DockTop, false );
 
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
@@ -131,19 +148,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    ::AgentsLayer*     agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_ );
+    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_ );
 
     // object creation window
-    QDockWindow* pObjectCreationWnd = new QDockWindow( this );
-    moveDockWindow( pObjectCreationWnd, Qt::DockRight );
-    pObjectCreationWnd->hide();
-//    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pObjectCreationWnd, controllers, publisher, staticModel_, layers_->GetParametersLayer(), *layers_ );
-//    pObjectCreationWnd->setWidget( objectCreationPanel );
-    pObjectCreationWnd->setResizeEnabled( true );
-    pObjectCreationWnd->setCloseMode( QDockWindow::Always );
-    pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
-    setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
-//    layers_->Register( *new MiscLayer< ObjectCreationPanel >( *objectCreationPanel ) ); // $$$$ AGE 2006-06-30: 
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.objects_, *paramLayer, *glProxy_ );
+    pCreationPanel->AddPanel( objectCreationPanel );
 
 //    new MapToolbar( this, controllers );
 //    new UnitToolbar( this, controllers );
@@ -155,7 +164,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setCentralWidget( glPlaceHolder_ );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *paramLayer, *agentsLayer, prefDialog->GetPreferences() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences() );
 
     pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
 //    controllers_.Register( *this );
@@ -171,10 +180,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ParametersLayer& parameters, ::AgentsLayer& agents, GraphicSetup_ABC& setup )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, ::AgentsLayer& agents, GraphicSetup_ABC& setup )
 {
     CircularEventStrategy* eventStrategy = new CircularEventStrategy();
     eventStrategy_ = eventStrategy;
+    Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
@@ -195,7 +205,7 @@ void MainWindow::CreateLayers( ParametersLayer& parameters, ::AgentsLayer& agent
     glProxy_->Register( objectsLayer );
     glProxy_->Register( populations );
     glProxy_->Register( agents );
-//    glProxy_->Register( objectCreationLayer );
+    glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
 

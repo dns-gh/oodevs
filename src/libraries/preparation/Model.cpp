@@ -16,6 +16,8 @@
 #include "AgentFactory.h"
 #include "AgentsModel.h"
 #include "Serializable_ABC.h"
+#include "ObjectFactory.h"
+#include "ObjectsModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
@@ -34,6 +36,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel ) )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
+    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
+    , objects_( *new ObjectsModel( objectFactory_ ) )
 {
     // NOTHING
 }
@@ -71,6 +75,6 @@ void Model::Serialize( xml::xostream& xos ) const
     xos << start( "ODB" );
     teams_ .Serialize( xos );
     agents_.Serialize( xos );
-//    objects_.Serialize( xos );
+    objects_.Serialize( xos );
     xos << end();
 }

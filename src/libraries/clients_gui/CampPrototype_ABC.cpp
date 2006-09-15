@@ -29,6 +29,7 @@ CampPrototype_ABC::CampPrototype_ABC( QWidget* parent, Controllers& controllers 
 {
     new QLabel( tr( "TC2:" ), this );
     tc2s_ = new ValuedComboBox< const Agent_ABC* >( this );
+    connect( tc2s_, SIGNAL( activated( int ) ), this, SLOT( SelectionChanged() ) );
     controllers_.Register( *this );
 }
     
@@ -59,7 +60,11 @@ void CampPrototype_ABC::NotifyCreated( const Agent_ABC& agent )
     if( tc2s_->GetItemIndex( &agent ) != -1 )
         return;
     if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
+    {
         tc2s_->AddItem( agent.GetName(), &agent );
+        if( !selected_ )
+            selected_ = &agent;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -92,4 +97,13 @@ void CampPrototype_ABC::SetSelected()
 {
     if( selected_ )
         tc2s_->SetCurrentItem( selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CampPrototype_ABC::SelectionChanged
+// Created: SBO 2006-09-15
+// -----------------------------------------------------------------------------
+void CampPrototype_ABC::SelectionChanged()
+{
+    selected_ = tc2s_->GetValue();
 }

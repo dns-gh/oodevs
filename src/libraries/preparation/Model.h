@@ -26,6 +26,8 @@ class TeamFactory_ABC;
 class KnowledgeGroupsModel;
 class AgentsModel;
 class AgentFactory_ABC;
+class ObjectsModel;
+class ObjectFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -55,6 +57,7 @@ private:
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;
+    ObjectFactory_ABC& objectFactory_;
     //@}
 
 public:
@@ -63,6 +66,7 @@ public:
     TeamsModel& teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
     AgentsModel& agents_;
+    ObjectsModel& objects_;
     //@}
 
 private:
