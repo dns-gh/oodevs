@@ -31,7 +31,8 @@ namespace
 // -----------------------------------------------------------------------------
 Workers::Workers()
 {
-    for( unsigned i = 0; i < pool_.GetCpuNumber(); ++i )
+    const unsigned threads = pool_.GetCpuNumber();
+    for( unsigned i = 0; i < threads; ++i )
         pool_.Enqueue( PrioritySetter() );
 }
 
