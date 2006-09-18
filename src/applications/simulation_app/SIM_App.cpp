@@ -310,7 +310,7 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
     }
 
     // Parse options
-    for( nArgNbr = 1; nArgNbr < nArgc && *ppArgv[nArgNbr] == '-'; ++nArgNbr )
+    for( nArgNbr = 1; nArgNbr < nArgc ; ++nArgNbr )
     {
         if( stricmp( ppArgv[nArgNbr], "-noscripts") == 0 )
             startupConfig.SetUseOnlyDIAArchive( true );

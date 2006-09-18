@@ -221,6 +221,26 @@ const PHY_DotationCategory* MIL_RealObjectType::GetDotationCategoryForMining() c
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::GetNbrDotationForConstruction
+// Created: NLD 2006-09-15
+// -----------------------------------------------------------------------------
+inline
+uint MIL_RealObjectType::GetNbrDotationForConstruction() const
+{
+    return nNbrDotationForConstruction_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObjectType::GetNbrDotationForMining
+// Created: NLD 2006-09-15
+// -----------------------------------------------------------------------------
+inline
+uint MIL_RealObjectType::GetNbrDotationForMining() const
+{
+    return nNbrDotationForMining_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_RealObjectType::InstanciateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------

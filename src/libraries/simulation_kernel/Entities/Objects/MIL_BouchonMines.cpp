@@ -23,7 +23,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_BouchonMines, "MIL_BouchonMines" )
 MIL_BouchonMines::MIL_BouchonMines()
     : MIL_Obstacle( MIL_RealObjectType::bouchonMines_ )
 {
-    nFullNbrDotationForConstruction_ = 10; // Nbr mines
 }
 
 //-----------------------------------------------------------------------------
@@ -83,4 +82,5 @@ void MIL_BouchonMines::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
     if( !IsBypassed() && CanInteractWith( agent ) )
         ApplyAttrition( agent );
 }
+
 

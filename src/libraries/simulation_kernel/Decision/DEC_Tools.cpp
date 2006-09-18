@@ -352,7 +352,7 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     else if( *pType == *pTypeSantePriorites_ )
         delete static_cast< T_MedicalPriorityVector* >( pPtr );
     else if( *pType == *pTypePerceptionFlyingShell_ )
-        assert( false );
+        ; // NOTHING
     else if( *pType == *pTypeDotation_ )
         ; // NOTHING
     else

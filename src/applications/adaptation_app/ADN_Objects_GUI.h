@@ -51,6 +51,8 @@ public:
         eAttritions,
         eHasToBuild,
         eHasToReinforce,
+        eNbrToBuild,
+        eNbrToReinforce,
         eHasAttritions,
         eHasPopulationAttritions,
         ePopulationAttritionSurface,

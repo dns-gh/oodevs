@@ -67,8 +67,8 @@
       <PostePrepareGenie>1800s</PostePrepareGenie>
     </TempsMiseEnPosture>
     <Installation>
-        <DelaiInstallation>500s</DelaiInstallation>
-        <DelaiDesinstallation>30s</DelaiDesinstallation>
+      <DelaiInstallation>500s</DelaiInstallation>
+      <DelaiDesinstallation>30s</DelaiDesinstallation>
     </Installation>
     <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
     <DistancesAvantPoints>
@@ -724,9 +724,9 @@
       <PostePrepareGenie>1800s</PostePrepareGenie>
     </TempsMiseEnPosture>
     <Installation>
-        <DelaiInstallation>1000s</DelaiInstallation>
-        <DelaiDesinstallation>500s</DelaiDesinstallation>
-    </Installation>    
+      <DelaiInstallation>1000s</DelaiInstallation>
+      <DelaiDesinstallation>500s</DelaiDesinstallation>
+    </Installation>
     <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
     <DistancesAvantPoints>
       <Point type="foret">500</Point>

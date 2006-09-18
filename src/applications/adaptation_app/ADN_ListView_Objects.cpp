@@ -73,6 +73,9 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eMaxNbrUsers]->Connect(&pInfos->nMaxNbrUsers_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eToBuild]->Connect(&pInfos->ptrToBuild_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eToReinforce]->Connect(&pInfos->ptrToReinforce_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eNbrToBuild]->Connect(&pInfos->nNbrToBuild_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eNbrToReinforce]->Connect(&pInfos->nNbrToReinforce_, bConnect );
+  
     vItemConnectors_[ADN_Objects_GUI::eLocationScores]->Connect(&pInfos->vScoreLocation_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eAttritions]->Connect(&pInfos->attritions_, bConnect );
 

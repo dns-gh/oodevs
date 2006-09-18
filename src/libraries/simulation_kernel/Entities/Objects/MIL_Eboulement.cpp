@@ -23,8 +23,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_Eboulement, "MIL_Eboulement" )
 MIL_Eboulement::MIL_Eboulement()
     : MIL_Obstacle( MIL_RealObjectType::eboulement_ )
 {
-    nFullNbrDotationForConstruction_ = 200; // Explosifs
-    nFullNbrDotationForMining_       = 17;   // Mines
 }
 
 //-----------------------------------------------------------------------------

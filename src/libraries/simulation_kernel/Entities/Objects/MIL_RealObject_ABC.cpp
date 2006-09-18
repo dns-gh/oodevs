@@ -50,8 +50,8 @@ MT_Random MIL_RealObject_ABC::random_;
 MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type )
     : pType_                             ( &type )
     , rSizeCoef_                         ( 0. ) 
-    , nFullNbrDotationForConstruction_   ( 0 )
-    , nFullNbrDotationForMining_         ( 0 )
+    , nFullNbrDotationForConstruction_   ( type.GetNbrDotationForConstruction() ) 
+    , nFullNbrDotationForMining_         ( type.GetNbrDotationForMining      () )
     , nCurrentNbrDotationForConstruction_( 0 )
     , nCurrentNbrDotationForMining_      ( 0 )
     , xAttrToUpdate_                     ( eAttrUpdate_All )
@@ -1034,4 +1034,5 @@ DEC_Knowledge_Object& MIL_RealObject_ABC::CreateKnowledge( const MIL_Army& teamK
 {
     return *new DEC_Knowledge_Object( teamKnowing, *this );
 }
+
 

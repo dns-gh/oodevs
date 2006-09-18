@@ -221,7 +221,9 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , bInitialized_                    ( false )
     , pionAttritions_                  (  )
     , pDotationCategoryForConstruction_( 0 )
+    , nNbrDotationForConstruction_     ( 0 )
     , pDotationCategoryForMining_      ( 0 )
+    , nNbrDotationForMining_           ( 0 )
     , pDefaultConsumptionMode_         ( 0 )
     , nNbrMaxAnimators_                ( 0 )
     , rExitingPopulationDensity_       ( std::numeric_limits< MT_Float >::max() )
@@ -283,7 +285,7 @@ void MIL_RealObjectType::InitializePopulationAttritionData( MIL_InputArchive& ar
 // Name: MIL_RealObjectType::InitializeDotation
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
-void MIL_RealObjectType::InitializeDotation( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory ) const
+void MIL_RealObjectType::InitializeDotation( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory, uint& nDotationValue ) const
 {
     pDotationCategory = 0;
     if ( !archive.Section( strSection, MIL_InputArchive::eNothing ) )
@@ -302,6 +304,7 @@ void MIL_RealObjectType::InitializeDotation( MIL_InputArchive& archive, const st
     if( !pDotationCategory )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
 
+    archive.ReadAttribute( "valeur", nDotationValue, CheckValueGreaterOrEqual( 0 ) );
     archive.EndSection(); // strSection
 }
 
@@ -311,11 +314,11 @@ void MIL_RealObjectType::InitializeDotation( MIL_InputArchive& archive, const st
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::InitializeDotations( MIL_InputArchive& archive )
 {
-if( !archive.Section( "Dotations", MIL_InputArchive::eNothing ) )
+    if( !archive.Section( "Dotations", MIL_InputArchive::eNothing ) )
         return;
 
-    InitializeDotation( archive, "Construction", pDotationCategoryForConstruction_ );
-    InitializeDotation( archive, "Valorisation", pDotationCategoryForMining_       );
+    InitializeDotation( archive, "Construction", pDotationCategoryForConstruction_, nNbrDotationForConstruction_ );
+    InitializeDotation( archive, "Valorisation", pDotationCategoryForMining_      , nNbrDotationForMining_       );
 
     archive.EndSection(); // Dotations
 }

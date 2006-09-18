@@ -23,13 +23,13 @@
         <Terrain type="banlieue">7</Terrain>
       </PlacementScores>
       <Dotations>
-        <Construction categorie="mine classique" type="mine"/>
-        <Valorisation categorie="mine classique" type="mine"/>
+        <Construction categorie="mine classique" type="mine" valeur="10"/>
+        <Valorisation categorie="mine classique" type="mine" valeur="10"/>
       </Dotations>
       <AttritionPopulation>
         <SurfaceAttrition>3</SurfaceAttrition>
-        <PH>0.2</PH>        
-      </AttritionPopulation>      
+        <PH>0.2</PH>
+      </AttritionPopulation>
     </Objet>
     <Objet type="zone minee lineaire">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -44,7 +44,7 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="mine classique" type="mine"/>
+        <Construction categorie="mine classique" type="mine" valeur="10"/>
       </Dotations>
     </Objet>
     <Objet type="zone minee par dispersion">
@@ -59,12 +59,8 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="mine classique" type="mine"/>
+        <Construction categorie="mine classique" type="mine" valeur="10"/>
       </Dotations>
-      <AttritionPopulation>
-        <SurfaceAttrition>0.1</SurfaceAttrition>
-        <PH>0.2</PH>        
-      </AttritionPopulation>           
       <Attritions>
         <ProtectionTypeCharLourd>
           <Destruction>0.3</Destruction>
@@ -102,6 +98,10 @@
           <ReparableSansEvacuation>0.3</ReparableSansEvacuation>
         </ProtectionTypeCombattant>
       </Attritions>
+      <AttritionPopulation>
+        <SurfaceAttrition>0.1</SurfaceAttrition>
+        <PH>0.2</PH>
+      </AttritionPopulation>
     </Objet>
     <Objet type="fosse anti char">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -114,6 +114,15 @@
       <HauteurMaxInteraction>0</HauteurMaxInteraction>
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
+      <PlacementScores>
+        <Terrain type="departementale">3</Terrain>
+        <Terrain type="carrefour">10</Terrain>
+        <Terrain type="autoroute">2</Terrain>
+        <Terrain type="nationale">5</Terrain>
+      </PlacementScores>
+      <Dotations>
+        <Valorisation categorie="mine classique" type="mine" valeur="10"/>
+      </Dotations>
     </Objet>
     <Objet type="abattis">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
@@ -132,8 +141,8 @@
         <Terrain type="chemin">3</Terrain>
       </PlacementScores>
       <Dotations>
-        <Construction categorie="explosif classique" type="explosif"/>
-        <Valorisation categorie="mine classique" type="mine"/>
+        <Construction categorie="explosif classique" type="explosif" valeur="50"/>
+        <Valorisation categorie="mine classique" type="mine" valeur="10"/>
       </Dotations>
     </Objet>
     <Objet type="barricade">
@@ -148,8 +157,8 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="barbele classique" type="barbele"/>
-        <Valorisation categorie="mine classique" type="mine"/>
+        <Construction categorie="barbele classique" type="barbele" valeur="10"/>
+        <Valorisation categorie="mine classique" type="mine" valeur="10"/>
       </Dotations>
     </Objet>
     <Objet type="eboulement">
@@ -164,8 +173,8 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="explosif classique" type="explosif"/>
-        <Valorisation categorie="mine classique" type="mine"/>
+        <Construction categorie="explosif classique" type="explosif" valeur="200"/>
+        <Valorisation categorie="mine classique" type="mine" valeur="17"/>
       </Dotations>
     </Objet>
     <Objet type="destruction route">
@@ -180,8 +189,8 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="explosif classique" type="explosif"/>
-        <Valorisation categorie="mine classique" type="mine"/>
+        <Construction categorie="explosif classique" type="explosif" valeur="301"/>
+        <Valorisation categorie="mine classique" type="mine" valeur="7"/>
       </Dotations>
     </Objet>
     <Objet type="destruction pont">
@@ -196,8 +205,8 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="explosif classique" type="explosif"/>
-        <Valorisation categorie="mine classique" type="mine"/>
+        <Construction categorie="explosif classique" type="explosif" valeur="300"/>
+        <Valorisation categorie="mine classique" type="mine" valeur="7"/>
       </Dotations>
     </Objet>
     <Objet type="pont flottant continu">
@@ -211,7 +220,7 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="pont flottant de la mort" type="mine"/>
+        <Construction categorie="pont flottant de la mort" type="mine" valeur="1"/>
       </Dotations>
     </Objet>
     <Objet type="poste tir">
@@ -524,7 +533,7 @@
       <NombreAnimateursMax>0</NombreAnimateursMax>
       <ModeImpactSurVitessePion type="AuPlusLent"/>
       <Dotations>
-        <Construction categorie="pont flottant de la mort" type="mine"/>
+        <Construction categorie="pont flottant de la mort" type="mine" valeur="2"/>
       </Dotations>
     </Objet>
     <Objet type="installation">

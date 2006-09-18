@@ -26,7 +26,6 @@ MIL_FloatingBridge_ABC::MIL_FloatingBridge_ABC( const MIL_RealObjectType& type )
     : MIL_RealObject_ABC( type )
     , pPathfindData_    ( 0 )
 {
-    nFullNbrDotationForConstruction_    = 10; // Nbr mines
 }
 
 //-----------------------------------------------------------------------------
@@ -52,8 +51,8 @@ bool MIL_FloatingBridge_ABC::Initialize( MIL_Army& army, DIA_Parameters& diaPara
     if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
         return false;
 
-    if( diaParameters.GetParameters().size() > nCurrentParamIdx )
-        nFullNbrDotationForConstruction_ = (uint)diaParameters[ nCurrentParamIdx ].ToFloat();  // Nbr de ponts ...
+//    if( diaParameters.GetParameters().size() > nCurrentParamIdx )
+//        nFullNbrDotationForConstruction_ = (uint)diaParameters[ nCurrentParamIdx ].ToFloat();  // Nbr de ponts ...
 
     LinkToPathFinder();
     return true;

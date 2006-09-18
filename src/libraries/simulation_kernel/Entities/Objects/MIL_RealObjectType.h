@@ -117,14 +117,19 @@ public:
           bool                  CanBePrepared                     () const;
           bool                  CanBeBypassed                     () const;
           MT_Float              GetMaxInteractionHeight           () const;
-    const PHY_DotationCategory* GetDotationCategoryForConstruction() const;
-    const PHY_DotationCategory* GetDotationCategoryForMining      () const;
           MT_Float              GetDefaultSpeedWhenBypassed       () const;
           MT_Float              GetDefaultSpeedWhenNotBypassed    () const;
     const PHY_ConsumptionType&  GetDefaultConsumptionMode         () const;
           uint                  GetNbrMaxAnimators                () const;
           E_Behavior            GetBehavior                       () const;
           MT_Float              GetExitingPopulationDensity       () const;
+
+    // Dotations
+    const PHY_DotationCategory* GetDotationCategoryForConstruction() const;
+    const PHY_DotationCategory* GetDotationCategoryForMining      () const;
+          uint                  GetNbrDotationForConstruction     () const;
+          uint                  GetNbrDotationForMining           () const;
+
     // Attrition
     const PHY_AttritionData&    GetPionAttritionData              ( const PHY_Protection& protection ) const;
           MT_Float              GetPopulationAttritionPH          () const;
@@ -224,7 +229,7 @@ private:
     void InitializePionAttritionData      ( MIL_InputArchive& archive );
     void InitializePopulationAttritionData( MIL_InputArchive& archive );
     void InitializeDotations              ( MIL_InputArchive& archive );
-    void InitializeDotation               ( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory ) const;
+    void InitializeDotation               ( MIL_InputArchive& archive, const std::string& strSection, const PHY_DotationCategory*& pDotationCategory, uint& rDotationValue ) const;
     //@}
 
 private:
@@ -244,7 +249,9 @@ private:
     MT_Float                    rSpeedPolicyMaxSpeedAgentFactor_;
     bool                        bInitialized_;
     const PHY_DotationCategory* pDotationCategoryForConstruction_;
+    uint                        nNbrDotationForConstruction_;
     const PHY_DotationCategory* pDotationCategoryForMining_;
+    uint                        nNbrDotationForMining_;
     const PHY_ConsumptionType*  pDefaultConsumptionMode_;
     uint                        nNbrMaxAnimators_;
     MIL_MOSIDManager*           pIDManager_;

@@ -23,8 +23,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_Barricade, "MIL_Barricade" )
 MIL_Barricade::MIL_Barricade()
     : MIL_Obstacle( MIL_RealObjectType::barricade_ )
 {
-    nFullNbrDotationForMining_       = 10;
-    nFullNbrDotationForConstruction_ = 1;
 }
 
 //-----------------------------------------------------------------------------

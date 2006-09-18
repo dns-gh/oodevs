@@ -124,11 +124,13 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* pBuildGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Construction" ), pGroup );
     vInfosConnectors[eHasToBuild] = &pBuildGroup->GetConnector();
     builder.AddField<ADN_EquipementSelector>( pBuildGroup, tr( "uses"), vInfosConnectors[eToBuild] );
-
+    builder.AddField< ADN_EditLine_Int >( pBuildGroup, tr( "valeur" ), vInfosConnectors[eNbrToBuild], 0, eGreaterEqualZero );
+    
     // Valorized
     ADN_GroupBox* pValorizeGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Mining" ), pGroup );
     vInfosConnectors[eHasToReinforce] = &pValorizeGroup->GetConnector();
     builder.AddField<ADN_EquipementSelector>( pValorizeGroup, tr( "uses"), vInfosConnectors[eToReinforce] );
+    builder.AddField< ADN_EditLine_Int >( pValorizeGroup, tr( "valeur" ), vInfosConnectors[eNbrToReinforce], 0, eGreaterEqualZero );
 
     //-------------
     // Placement scores
@@ -190,4 +192,5 @@ void ADN_Objects_GUI::OnSpeedImpactComboChanged()
     else
         pMaxAgentSpeed_->setEnabled( false );
 }
+
 

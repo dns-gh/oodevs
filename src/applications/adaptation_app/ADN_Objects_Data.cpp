@@ -171,6 +171,8 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
 , attritions_       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos())
 , bToReinforce_     ( false )
 , bToBuild_         ( false )
+, nNbrToBuild_      ( 0 )
+, nNbrToReinforce_  ( 0 )
 , rMaxAgentSpeedPercentage_( 0 )
 , rOutgoingPopulationDensity_( 0 )
 , bHasOutgoingPopulationDensity_( false )
@@ -312,8 +314,10 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
         {
             std::string strType;
             std::string strCategory;
+            uint        nValue;
             input.ReadAttribute( "type", strType );
             input.ReadAttribute( "categorie", strCategory );
+            input.ReadAttribute( "valeur", nValue );
 
             ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( strType, strCategory );
             if( pCategory == 0 )
@@ -323,6 +327,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
             ptrToBuild_ = pCategory;
             bToBuild_ = true;
+            nNbrToBuild_ = nValue;
 
             input.EndSection(); // Construction
         }
@@ -331,8 +336,10 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
         {
             std::string strType;
             std::string strCategory;
+            uint        nValue;
             input.ReadAttribute( "type", strType );
             input.ReadAttribute( "categorie", strCategory );
+            input.ReadAttribute( "valeur", nValue );
 
             ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( strType, strCategory );
             if( pCategory == 0 )
@@ -342,6 +349,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
             ptrToReinforce_ = pCategory;
             bToReinforce_ = true;
+            nNbrToReinforce_ = nValue;
 
             input.EndSection(); // Valorisation
         }
@@ -433,6 +441,7 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
             output.Section( "Construction" );
             output.WriteAttribute( "type", ptrToBuild_.GetData()->parentDotation_.strName_.GetData() );
             output.WriteAttribute( "categorie", ptrToBuild_.GetData()->strName_.GetData() );
+            output.WriteAttribute( "valeur", nNbrToBuild_.GetData() );
             output.EndSection(); // Construction
         }
 
@@ -444,6 +453,7 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
             output.Section( "Valorisation" );
             output.WriteAttribute( "type", ptrToReinforce_.GetData()->parentDotation_.strName_.GetData() );
             output.WriteAttribute( "categorie", ptrToReinforce_.GetData()->strName_.GetData() );
+            output.WriteAttribute( "valeur", nNbrToReinforce_.GetData() );
             output.EndSection(); // Valorisation
         }
 
@@ -671,4 +681,5 @@ void ADN_Objects_Data::WriteArchive( MT_OutputArchive_ABC& output )
 
     output.EndSection(); // Objets
 }
+
 

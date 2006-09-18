@@ -23,8 +23,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_DestructionPont, "MIL_DestructionPont" )
 MIL_DestructionPont::MIL_DestructionPont()
     : MIL_Obstacle( MIL_RealObjectType::destructionPont_ )
 {
-    nFullNbrDotationForConstruction_ = 300; // Explosifs
-    nFullNbrDotationForMining_       = 7;   // Mines
 }
 
 //-----------------------------------------------------------------------------

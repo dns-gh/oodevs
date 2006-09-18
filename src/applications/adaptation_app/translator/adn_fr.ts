@@ -3902,6 +3902,10 @@ du tireur</translation>
         <source>PH</source>
         <translation>PH</translation>
     </message>
+    <message>
+        <source>valeur</source>
+        <translation>value</translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

@@ -132,9 +132,11 @@ public:
         ADN_Type_Bool                                bAttritions_;
         T_AttritionInfosVector                       attritions_;
 
-        ADN_Type_Bool                                                   bToBuild_;
+        ADN_Type_Int                                                  nNbrToBuild_;
+        ADN_Type_Bool                                                 bToBuild_;
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo>   ptrToBuild_;
-        ADN_Type_Bool                                                   bToReinforce_;
+        ADN_Type_Int                                                  nNbrToReinforce_;
+        ADN_Type_Bool                                                 bToReinforce_;
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo>   ptrToReinforce_;
 
         PopulationAttritionInfos                     populationAttrition_;

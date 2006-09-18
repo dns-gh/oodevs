@@ -23,8 +23,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_DestructionRoute, "MIL_DestructionRoute" )
 MIL_DestructionRoute::MIL_DestructionRoute()
     : MIL_Obstacle( MIL_RealObjectType::destructionRoute_ )
 {
-    nFullNbrDotationForConstruction_ = 300; // Explosifs
-    nFullNbrDotationForMining_       = 7;   // Mines
 }
 
 //-----------------------------------------------------------------------------

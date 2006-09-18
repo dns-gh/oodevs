@@ -24,7 +24,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_FosseAntiChar, "MIL_FosseAntiChar" )
 MIL_FosseAntiChar::MIL_FosseAntiChar( )
     : MIL_Obstacle( MIL_RealObjectType::fosseAntiChar_ )
 {
-    nFullNbrDotationForConstruction_    = 10; // Nbr mines
 }
 
 //-----------------------------------------------------------------------------
@@ -66,4 +65,5 @@ bool MIL_FosseAntiChar::Initialize( MIL_Army& army, DIA_Parameters& diaParameter
     rSizeCoef_ = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ) * diaParameters[ nCurrentParamIdx ].ToFloat(); /// Metres * type (simple/composé)
     return true;
 }
+
 

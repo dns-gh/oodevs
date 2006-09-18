@@ -23,8 +23,6 @@ BOOST_CLASS_EXPORT_GUID( MIL_Abattis, "MIL_Abattis" )
 MIL_Abattis::MIL_Abattis()
     : MIL_Obstacle( MIL_RealObjectType::abattis_ )
 {    
-    nFullNbrDotationForConstruction_ = 50;   // Explosifs
-    nFullNbrDotationForMining_       = 10;   // Mines
 }
 
 //-----------------------------------------------------------------------------
@@ -67,4 +65,5 @@ bool MIL_Abattis::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uin
     rSizeCoef_  = diaParameters[ nCurrentParamIdx ].ToFloat();  // Lengths
     return true;
 }
+
 
