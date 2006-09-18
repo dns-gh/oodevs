@@ -24,6 +24,7 @@ class Model;
 class Simulation;
 class Publisher_ABC;
 class StaticModel;
+class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -69,6 +70,7 @@ private:
     Publisher_ABC& publisher_;
     const Simulation& simulation_;
     kernel::Workers& workers_;
+    RcEntityResolver_ABC& rcResolver_;
     //@}
 };
 

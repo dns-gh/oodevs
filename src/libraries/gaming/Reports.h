@@ -26,6 +26,8 @@ namespace kernel
     class Displayer_ABC;
 }
 
+class RcEntityResolver_ABC;
+
 // =============================================================================
 /** @class  Reports
     @brief  Reports
@@ -41,7 +43,7 @@ class Reports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const Simulation& simulation );
+             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const Simulation& simulation, const RcEntityResolver_ABC& rcResolver );
     virtual ~Reports();
     //@}
 
@@ -78,6 +80,7 @@ public: // $$$$ AGE 2006-03-09:
     kernel::Controller& controller_;
     const Simulation& simulation_;
     T_Reports reports_;
+    const RcEntityResolver_ABC& rcResolver_;
     //@}
 };
 

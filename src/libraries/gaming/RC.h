@@ -22,6 +22,7 @@ namespace kernel
 
 enum E_OrderConduiteID;
 class Simulation;
+class RcEntityResolver_ABC;
 
 // =============================================================================
 // Created: AGN 2003-12-22
@@ -31,7 +32,7 @@ class RC : public Report_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             RC( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg );
+             RC( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg, const RcEntityResolver_ABC& rcResolver );
     virtual ~RC();
     //@}
 
@@ -50,6 +51,12 @@ private:
     std::string AgentLink          ( ASN1T_OID nId );
 
     void Initialize( const ASN1T_MsgCR& asnMsg );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const RcEntityResolver_ABC& rcResolver_;
     //@}
 };
 

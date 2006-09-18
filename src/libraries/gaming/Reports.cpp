@@ -13,6 +13,7 @@
 #include "Trace.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "RcEntityResolver_ABC.h"
 
 using namespace kernel;
 
@@ -20,10 +21,11 @@ using namespace kernel;
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation )
+Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation, const RcEntityResolver_ABC& rcResolver )
     : agent_( agent )
     , controller_( controller )
     , simulation_( simulation )
+    , rcResolver_( rcResolver )
 {
     // NOTHING
 }
@@ -44,7 +46,7 @@ Reports::~Reports()
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const ASN1T_MsgCR& message )
 {   
-    Report_ABC& rc = *new RC( agent_, simulation_, message );
+    Report_ABC& rc = *new RC( agent_, simulation_, message, rcResolver_ );
     reports_.push_back( &rc );
     controller_.Create( rc );
 }

@@ -62,6 +62,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "StaticModel.h"
+#include "RcEntityResolver.h"
 
 using namespace kernel;
 
@@ -76,6 +77,7 @@ AgentFactory::AgentFactory( Controllers& controllers, Model& model, const Static
     , publisher_( publisher )
     , simulation_( simulation )
     , workers_( workers )
+    , rcResolver_( *new RcEntityResolver( controllers ) )
 {
     // NOTHING
 }
@@ -86,7 +88,7 @@ AgentFactory::AgentFactory( Controllers& controllers, Model& model, const Static
 // -----------------------------------------------------------------------------
 AgentFactory::~AgentFactory()
 {
-    // NOTHING
+    delete &rcResolver_;
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +162,7 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach( *new Limits( model_.limits_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
-    agent.Attach( *new Reports( agent, controllers_.controller_, simulation_ ) );
+    agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, rcResolver_ ) );
     agent.Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Troops( controllers_.controller_ ) );
     agent.Attach( *new Logistics( agent, controllers_.controller_, model_, static_, dico ) );
