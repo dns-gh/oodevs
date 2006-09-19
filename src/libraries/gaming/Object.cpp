@@ -177,5 +177,5 @@ void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& 
 // -----------------------------------------------------------------------------
 bool Object::IsInTeam( const Team_ABC& team ) const
 {
-    return team_ == team;
+    return & team_ == & team;
 }

@@ -37,19 +37,18 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Select( ActionController& controller ) const = 0;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const = 0;
-    virtual void Activate( ActionController& controller ) const = 0;
+    virtual bool IsInTeam( const Team_ABC& team ) const = 0;
+    virtual const Team_ABC& GetTeam() const = 0;
+
     virtual void AddAutomat( unsigned long id, Agent_ABC& automat ) = 0;
     virtual void RemoveAutomat( unsigned long id ) = 0;
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const = 0;
-    virtual const Team_ABC& GetTeam() const = 0;
-    virtual unsigned long GetId() const = 0;
-    virtual QString GetName() const = 0;
+    virtual void Select( ActionController& controller ) const;
+    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( ActionController& controller ) const;
     //@}
 };
 

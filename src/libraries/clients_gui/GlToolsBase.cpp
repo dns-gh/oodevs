@@ -110,6 +110,30 @@ void GlToolsBase::BindIcon( const char** xpm )
     glBindTexture( GL_TEXTURE_2D, texture );
 }
 
+#include <qpicture.h>
+namespace
+{
+    void ShowSymbol( const std::string& filename )
+    {
+        QDialog* dialog = new QDialog( 0, "dialog", false );
+        QVBoxLayout* layout = new QVBoxLayout( dialog );
+        dialog->setMinimumSize( 320, 200 );
+        
+        QLabel* name = new QLabel( dialog, "name" );
+        name->setText( filename.c_str() );
+        layout->add( name );
+        
+        QLabel* label = new QLabel( dialog, "label" );
+        QPicture picture;
+        picture.load( filename.c_str(), "svg" );
+        label->setPicture( picture );
+        layout->add( label );
+
+        dialog->show();
+
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
@@ -124,6 +148,7 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangl
         // $$$$ AGE 2006-09-11: 
         node.first  = factory.Compile( "symbols/" + symbol, *references_, 10  ); // $$$$ AGE 2006-09-11: 
         node.second = factory.Compile( "symbols/" + symbol, *references_, 100 ); // $$$$ AGE 2006-09-11: 
+//        ShowSymbol( "symbols/" + symbol );
     }
     const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
     RenderingContext context( box, 640, 480 ); // $$$$ AGE 2006-09-11: 

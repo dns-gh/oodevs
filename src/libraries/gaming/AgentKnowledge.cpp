@@ -182,7 +182,7 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 bool AgentKnowledge::IsInTeam( const Team_ABC& team ) const
 {
-    return group_.GetTeam() == team;
+    return & group_.GetTeam() == & team;
 }
 
 // -----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ bool AgentKnowledge::IsInTeam( const Team_ABC& team ) const
 // -----------------------------------------------------------------------------
 bool AgentKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 {
-    return team_ && *team_ == team;
+    return team_ == & team;
 }
 
 // -----------------------------------------------------------------------------

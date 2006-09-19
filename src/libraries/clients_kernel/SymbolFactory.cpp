@@ -96,7 +96,7 @@ std::string SymbolFactory::CreateSymbolFromRules( const AgentNature& nature, con
         if( !value.empty() )
             return value;
     }
-    return "";
+    throw std::runtime_error( "No symbol found to match agent nature" );
 }
 
 // -----------------------------------------------------------------------------

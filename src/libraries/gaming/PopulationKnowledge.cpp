@@ -187,7 +187,7 @@ bool PopulationKnowledge::IsInTeam( const Team_ABC& team ) const
 // -----------------------------------------------------------------------------
 bool PopulationKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 {
-    return popu_.GetTeam() == team;
+    return & popu_.GetTeam() == & team;
 }
 
 // -----------------------------------------------------------------------------

@@ -63,12 +63,47 @@ void Reports::DoUpdate( const TraceMessage& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Reports::Clear
+// Created: AGE 2006-09-18
+// -----------------------------------------------------------------------------
+void Reports::Clear()
+{
+    for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
+        delete *it;
+    reports_.clear();
+    controller_.Update( *this ); 
+    // $$$$ AGE 2006-09-18: pas cohérent : 
+    // $$$$ AGE 2006-09-18: il faut observer le Create( Report_ABC )
+    // $$$$ AGE 2006-09-18: et le Update( Reports );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reports::ClearTraces
+// Created: AGE 2006-09-18
+// -----------------------------------------------------------------------------
+void Reports::ClearTraces()
+{
+    T_Reports tokeep;
+    tokeep.reserve( reports_.size() );
+    for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
+    {
+        Report_ABC* report = *it;
+        if( !report || report->GetType() == Report_ABC::eTrace )
+            delete report;
+        else
+            tokeep.push_back( report );
+    }
+    std::swap( tokeep, reports_ );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Reports::Draw
 // Created: AGE 2006-04-06
 // -----------------------------------------------------------------------------
 void Reports::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-06: 
+    // $$$$ AGE 2006-04-06: ?
 }
 
 // -----------------------------------------------------------------------------

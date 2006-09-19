@@ -40,17 +40,6 @@ public:
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
     //@}
-
-    //! @name Accessors
-    //@{
-    virtual QString GetName() const = 0;
-    virtual unsigned long GetId() const = 0;
-    //@}
-
-    //! @name Operators
-    //@{
-    bool operator==( const Team_ABC& ) const;
-    //@}
 };
 
 }

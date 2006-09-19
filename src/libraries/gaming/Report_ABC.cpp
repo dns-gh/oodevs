@@ -10,8 +10,9 @@
 #include "gaming_pch.h"
 #include "Report_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "Simulation.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "Simulation.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -24,6 +25,7 @@ Report_ABC::Report_ABC( const Entity_ABC& agent, const Simulation& simulation )
     : agent_  ( agent )
     , nTime_  ( simulation.GetTime() )
     , bNew_   ( true )
+    , point_( agent.Get< Positions >().GetPosition() )
 {
     // NOTHING
 }

@@ -44,13 +44,6 @@ public:
     virtual void RemoveAutomat( unsigned long id );
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

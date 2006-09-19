@@ -54,6 +54,10 @@ public slots:
     //! @name Slots
     //@{
     void OnOptionsChanged();
+    void OnRequestPopup( QListViewItem*, const QPoint&, int );
+    void OnClearAll();
+    void OnClearTrace();
+    void OnRequestCenter();
     //@}
 
 private:
@@ -76,10 +80,11 @@ private:
 
     //! @name Member data
     //@{
-    kernel::Controllers&               controllers_;
-    gui::ItemFactory_ABC&           factory_;
+    kernel::Controllers&       controllers_;
+    gui::ItemFactory_ABC&      factory_;
     const ReportFilterOptions& filter_;
-    const kernel::Entity_ABC*           selected_; // $$$$ AGE 2006-04-20: watch deletions !
+    const kernel::Entity_ABC*  selected_; // $$$$ AGE 2006-04-20: watch deletions !
+    QPopupMenu*                menu_;
     //@}
 };
 

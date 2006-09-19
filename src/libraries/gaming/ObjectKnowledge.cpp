@@ -131,7 +131,7 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 bool ObjectKnowledge::IsInTeam( const Team_ABC& team ) const
 {
-    return owner_ == team;
+    return & owner_ == & team;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ bool ObjectKnowledge::IsInTeam( const Team_ABC& team ) const
 // -----------------------------------------------------------------------------
 bool ObjectKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 {
-    return pRealObject_ && pRealObject_->GetTeam() == team;
+    return pRealObject_ && & pRealObject_->GetTeam() == & team;
 }
 
 // -----------------------------------------------------------------------------

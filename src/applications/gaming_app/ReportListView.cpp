@@ -32,6 +32,7 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     , filter_( filter )
     , factory_( factory )
     , selected_( 0 )
+    , menu_( new QPopupMenu( this ) )
 {
     AddColumn( "Reçu" );
     AddColumn( "Compte-rendu" );
@@ -40,14 +41,9 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     setSorting( 0, false );
     setSorting( -1, false );
 
-//    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
-//    connect( this, SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnClick( QListViewItem*, const QPoint&, int ) ) );
-//    connect( this, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-//    connect( this, SIGNAL( spacePressed( QListViewItem* ) ),  this, SLOT( OnRequestCenter() ) );
-//
-//    connect( this, SIGNAL( CenterOnPoint( const MT_Vector2D& ) )                  , &MainWindow::GetMainWindow(), SIGNAL( CenterOnPoint( const MT_Vector2D& ) ) );
-//    connect( this, SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ), &MainWindow::GetMainWindow(), SIGNAL( NewPopupMenu( QPopupMenu&, const ActionContext& ) ) );
-//    connect( this, SIGNAL( ReadingReports( Agent_ABC& ) )                     , &MainWindow::GetMainWindow(), SIGNAL( ReadingReports( Agent_ABC& ) ) );
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),        this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( spacePressed( QListViewItem* ) ),                             this, SLOT( OnRequestCenter() ) );
 
     controllers_.Register( *this );
 }
@@ -151,6 +147,7 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
     report.Display( GetItemDisplayer( item ) );
 }
 
+// $$$$ AGE 2006-09-18: 
     // Before we change the displayed reports, mark the old ones as read.
 //    QListViewItem* pItem = firstChild();
 //    while( pItem != 0 )
@@ -159,3 +156,54 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
 //        report.SetNew( false );
 //        pItem = pItem->nextSibling();
 //    }
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::OnRequestPopup
+// Created: AGE 2006-09-18
+// -----------------------------------------------------------------------------
+void ReportListView::OnRequestPopup( QListViewItem* item, const QPoint& pos, int /*column*/ )
+{
+    if( !selected_ )
+        return;
+    menu_->clear();
+    menu_->insertItem( tr( "Tout effacer" ),          this, SLOT( OnClearAll() ) );
+    menu_->insertItem( tr( "Effacer les msg debug" ), this, SLOT( OnClearTrace() ) );
+//    if( item )
+//        menu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
+    menu_->popup( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::OnClearAll
+// Created: AGE 2006-09-18
+// -----------------------------------------------------------------------------
+void ReportListView::OnClearAll()
+{
+    const Reports* reports = 0;
+    if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
+        const_cast< Reports* >( reports )->Clear(); // $$$$ AGE 2006-09-18: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::OnClearTrace
+// Created: AGE 2006-09-18
+// -----------------------------------------------------------------------------
+void ReportListView::OnClearTrace()
+{
+    const Reports* reports = 0;
+    if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
+        const_cast< Reports* >( reports )->ClearTraces(); // $$$$ AGE 2006-09-18: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::OnRequestCenter
+// Created: AGE 2006-09-18
+// -----------------------------------------------------------------------------
+void ReportListView::OnRequestCenter()
+{
+    if( selectedItem() )
+    {
+        ValuedListItem* item = (ValuedListItem*)( selectedItem() );
+        item->Activate( controllers_.actions_ );
+    }
+}

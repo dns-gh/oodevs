@@ -371,7 +371,7 @@ const PopulationType& Population::GetType() const
 // -----------------------------------------------------------------------------
 bool Population::IsInTeam( const Team_ABC& team ) const
 {
-    return team_ == team;
+    return & team_ == & team;
 }
 
 // -----------------------------------------------------------------------------

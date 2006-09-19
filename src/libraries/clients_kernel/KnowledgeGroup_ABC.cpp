@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "KnowledgeGroup_ABC.h"
+#include "ActionController.h"
 
 using namespace kernel;
 
@@ -28,4 +29,31 @@ KnowledgeGroup_ABC::KnowledgeGroup_ABC()
 KnowledgeGroup_ABC::~KnowledgeGroup_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup_ABC::Select
+// Created: AGE 2006-09-19
+// -----------------------------------------------------------------------------
+void KnowledgeGroup_ABC::Select( ActionController& controller ) const
+{
+    controller.Select( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup_ABC::ContextMenu
+// Created: AGE 2006-09-19
+// -----------------------------------------------------------------------------
+void KnowledgeGroup_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    controller.ContextMenu( *this, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup_ABC::Activate
+// Created: AGE 2006-09-19
+// -----------------------------------------------------------------------------
+void KnowledgeGroup_ABC::Activate( ActionController& controller ) const
+{
+    controller.Activate( *this );
 }

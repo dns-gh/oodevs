@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "Team_ABC.h"
+#include "ActionController.h"
 
 using namespace kernel;
 
@@ -34,34 +35,26 @@ Team_ABC::~Team_ABC()
 // Name: Team_ABC::Select
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-void Team_ABC::Select( ActionController& ) const
+void Team_ABC::Select( ActionController& controller ) const
 {
-    // NOTHING
+    controller.Select( *this );
 }
     
 // -----------------------------------------------------------------------------
 // Name: Team_ABC::ContextMenu
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-void Team_ABC::ContextMenu( ActionController&, const QPoint& ) const
+void Team_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    // NOTHING
+    controller.ContextMenu( *this, where );
 }
     
 // -----------------------------------------------------------------------------
 // Name: Team_ABC::Activate
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-void Team_ABC::Activate( ActionController& ) const
+void Team_ABC::Activate( ActionController& controller ) const
 {
-    // NOTHING
+    controller.Activate( *this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Team_ABC::operator==
-// Created: SBO 2006-08-08
-// -----------------------------------------------------------------------------
-bool Team_ABC::operator==( const Team_ABC& rhs ) const
-{
-    return this == &rhs;
-}

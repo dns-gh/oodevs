@@ -84,6 +84,7 @@ protected:
     int         nTime_;
     bool        bNew_;
     E_Type      eType_;
+    geometry::Point2f point_;
     //@}
 };
 

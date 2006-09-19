@@ -98,7 +98,7 @@ const Team_ABC& KnowledgeGroup::GetTeam() const
 // -----------------------------------------------------------------------------
 bool KnowledgeGroup::IsInTeam( const Team_ABC& team ) const
 {
-    return team_ == team;
+    return & team_ == & team;
 }
 
 // -----------------------------------------------------------------------------
