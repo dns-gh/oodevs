@@ -41,6 +41,7 @@ public:
 
     virtual kernel::KnowledgeGroup_ABC* Find( const unsigned long& identifier ) const;
     virtual kernel::KnowledgeGroup_ABC& Get( const unsigned long& identifier ) const;
+    virtual kernel::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
     //@}
 
 private:

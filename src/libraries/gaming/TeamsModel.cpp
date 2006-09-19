@@ -94,3 +94,12 @@ KnowledgeGroup_ABC* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) co
     }
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Iterator< const kernel::KnowledgeGroup_ABC& > TeamsModel::CreateKnowledgeGroupIterator
+// Created: AGE 2006-09-19
+// -----------------------------------------------------------------------------
+Iterator< const kernel::KnowledgeGroup_ABC& > TeamsModel::CreateKnowledgeGroupIterator() const
+{
+    throw std::runtime_error( "Not implemented" ); // $$$$ AGE 2006-09-19: 
+}

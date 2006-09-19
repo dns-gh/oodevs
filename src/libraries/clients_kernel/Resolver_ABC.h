@@ -10,6 +10,8 @@
 #ifndef __Resolver_ABC_h_
 #define __Resolver_ABC_h_
 
+#include "Iterator.h"
+
 namespace kernel
 {
 
@@ -34,6 +36,7 @@ public:
     //@{
     virtual T* Find( const Identifier& id ) const = 0;
     virtual T& Get ( const Identifier& id ) const = 0;
+    virtual Iterator< const T& > CreateIterator() const = 0;
     //@}
 };
 

@@ -61,3 +61,12 @@ KnowledgeGroup_ABC& KnowledgeGroupsModel::Get( const unsigned long& identifier )
         throw std::runtime_error( "KnowledgeGroup not found" );
     return *group;
 }
+
+// -----------------------------------------------------------------------------
+// Name: kernel::Iterator< const kernel::KnowledgeGroup_ABC& > KnowledgeGroupsModel::CreateIterator
+// Created: AGE 2006-09-19
+// -----------------------------------------------------------------------------
+kernel::Iterator< const kernel::KnowledgeGroup_ABC& > KnowledgeGroupsModel::CreateIterator() const
+{
+    throw std::runtime_error( "not implemented" );
+}

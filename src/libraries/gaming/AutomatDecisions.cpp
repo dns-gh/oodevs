@@ -84,7 +84,8 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrderAck& message )
 // -----------------------------------------------------------------------------
 Iterator< const Mission& > AutomatDecisions::GetMissions() const
 {
-    return GetAutomatDecisionalModel().Resolver< Mission >::CreateIterator();
+    const Resolver_ABC< Mission >& resolver = GetAutomatDecisionalModel();
+    return resolver.CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +94,8 @@ Iterator< const Mission& > AutomatDecisions::GetMissions() const
 // -----------------------------------------------------------------------------
 Iterator< const FragOrder& > AutomatDecisions::GetFragOrders() const
 {
-    return GetAutomatDecisionalModel().Resolver< FragOrder >::CreateIterator();
+    const Resolver_ABC< FragOrder >& resolver = GetAutomatDecisionalModel();
+    return resolver.CreateIterator();
 }
 
 // -----------------------------------------------------------------------------

@@ -54,7 +54,7 @@ public:
         }
     };
 
-    Iterator< const T& > CreateIterator() const
+    virtual Iterator< const T& > CreateIterator() const
     {
         return new AssociativeIterator< const T&, T_Elements >( elements_ );
     };
@@ -87,14 +87,14 @@ public:
         elements_.clear();
     }
 
-    T* Find( const Identifier& identifier ) const
+    virtual T* Find( const Identifier& identifier ) const
     {
         CIT_Elements it = elements_.find( identifier );
         if( it != elements_.end() )
             return it->second;
         return 0;
     }
-    T& Get ( const Identifier& identifier ) const
+    virtual T& Get ( const Identifier& identifier ) const
     {
         T* element = Find( identifier );
         if( ! element )

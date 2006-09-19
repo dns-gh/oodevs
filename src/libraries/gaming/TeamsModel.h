@@ -50,6 +50,7 @@ public:
     kernel::Team_ABC* FindTeam( const QString& team );
 
     kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& identifier ) const;
+    virtual kernel::Iterator< const kernel::KnowledgeGroup_ABC& > CreateKnowledgeGroupIterator() const;
     //@}
 
 private:

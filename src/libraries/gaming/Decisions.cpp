@@ -63,7 +63,7 @@ void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
     lastOrderId_ = message.order_id;
     // $$$$ AGE 2006-09-07: needs a tools::convert
-//    next_ = & GetDecisionalModel().Resolver< Mision >::Get( message.mission.t - 1 );
+//    next_ = & GetDecisionalModel().Resolver_ABC< Mision >::Get( message.mission.t - 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,8 @@ bool Decisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 Iterator< const Mission& > Decisions::GetMissions() const
 {
-    return GetDecisionalModel().Resolver< Mission >::CreateIterator();
+    const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
+    return resolver.CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +104,8 @@ Iterator< const Mission& > Decisions::GetMissions() const
 // -----------------------------------------------------------------------------
 Iterator< const FragOrder& > Decisions::GetFragOrders() const
 {
-    return GetDecisionalModel().Resolver< FragOrder >::CreateIterator();
+    const Resolver_ABC< FragOrder >& resolver = GetDecisionalModel();
+    return resolver.CreateIterator();
 }
 
 // -----------------------------------------------------------------------------
