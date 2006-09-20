@@ -41,7 +41,6 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
 
     CreateDictionary();
-
     ChangeKnowledgeGroup( message.oid_groupe_connaissance );
     controller_.Create( *(Agent_ABC*)this );
 }

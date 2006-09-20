@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class Controller;
 
 // =============================================================================
 /** @class  EntityHierarchies
@@ -28,16 +29,21 @@ class EntityHierarchies : public Hierarchies, public Resolver< Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityHierarchies();
+    explicit EntityHierarchies( Controller& controller );
     virtual ~EntityHierarchies();
     //@}
 
     //! @name Operations
     //@{
-    virtual const Entity_ABC* GetSuperior() const;
+    virtual const Entity_ABC* GetSuperior() const = 0;
+    virtual const Entity_ABC& GetEntity() const = 0;
+
     virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const; 
 
     bool IsSubordinateOf( const Entity_ABC& entity ) const;
+
+    virtual void AddSubordinate   (       Entity_ABC& entity );
+    virtual void RemoveSubordinate( const Entity_ABC& entity );
     //@}
 
 private:
@@ -47,10 +53,10 @@ private:
     EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignement operator
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
-    const Entity_ABC* superior_;
+    Controller& controller_;
     //@}
 };
 

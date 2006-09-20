@@ -18,6 +18,8 @@
 #include "Team.h"
 #include "Diplomacies.h"
 #include "AgentKnowledgeFactory.h"
+#include "KnowledgeGroupHierarchies.h"
+#include "TeamHierarchies.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace kernel;
@@ -51,6 +53,7 @@ Team_ABC* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
     Team* result = new Team( id, input, controllers_.controller_, *this );
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
+    result->Attach< Hierarchies >( *new TeamHierarchies( controllers_.controller_, *result ) );
     return result;
 }
 
@@ -58,10 +61,11 @@ Team_ABC* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned long id, const Team_ABC& team  )
+KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned long id, Team_ABC& team  )
 {
     KnowledgeGroup_ABC* result = new KnowledgeGroup( id, controllers_.controller_, team );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
+    result->Attach< Hierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, team, *result ) ); // $$$$ AGE 2006-09-20: 
     return result;
 }

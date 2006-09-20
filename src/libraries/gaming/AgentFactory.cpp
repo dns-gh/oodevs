@@ -63,6 +63,7 @@
 #include "clients_kernel/DataDictionary.h"
 #include "StaticModel.h"
 #include "RcEntityResolver.h"
+#include "AgentHierarchies.h"
 
 using namespace kernel;
 
@@ -129,6 +130,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
     result->Attach( *new MagicOrders( *result ) );
     AttachExtensions( *result );
+    result->Update( asnMsg );
     return result;
 }
 
@@ -171,5 +173,6 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
+    agent.Attach< Hierarchies >( *new AgentHierarchies( controllers_.controller_, agent, model_.agents_, model_.knowledgeGroups_ ) );
 }
 

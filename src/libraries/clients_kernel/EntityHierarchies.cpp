@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "EntityHierarchies.h"
 #include "Entity_ABC.h"
+#include "Controller.h"
 
 using namespace kernel;
 
@@ -17,8 +18,8 @@ using namespace kernel;
 // Name: EntityHierarchies constructor
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
-EntityHierarchies::EntityHierarchies()
-    : superior_( 0 )
+EntityHierarchies::EntityHierarchies( Controller& controller )
+    : controller_( controller )
 {
     // NOTHING
 }
@@ -30,15 +31,6 @@ EntityHierarchies::EntityHierarchies()
 EntityHierarchies::~EntityHierarchies()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityHierarchies::GetSuperior
-// Created: AGE 2006-09-19
-// -----------------------------------------------------------------------------
-const Entity_ABC* EntityHierarchies::GetSuperior() const
-{
-    return superior_;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,10 +48,31 @@ Iterator< const Entity_ABC& > EntityHierarchies::CreateSubordinateIterator() con
 // -----------------------------------------------------------------------------
 bool EntityHierarchies::IsSubordinateOf( const Entity_ABC& entity ) const
 {
-    if( superior_ == & entity )
+    const Entity_ABC* superior = GetSuperior();
+    if( superior == & entity )
         return true;
-    if( superior_ == 0 )
+    if( superior == 0 )
         return false;
-    const Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >();
+    const Hierarchies* hierarchies = superior->Retrieve< Hierarchies >();
     return hierarchies && hierarchies->IsSubordinateOf( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::AddSubordinate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void EntityHierarchies::AddSubordinate( Entity_ABC& entity )
+{
+    Register( entity.GetId(), entity );
+    controller_.Update( *(Hierarchies*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::RemoveSubordinate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void EntityHierarchies::RemoveSubordinate( const Entity_ABC& entity )
+{
+    Remove( entity.GetId() );
+    controller_.Update( *(Hierarchies*)this );
 }

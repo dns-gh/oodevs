@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::Team_ABC* CreateTeam( unsigned long id, DIN::DIN_Input& input );
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, const kernel::Team_ABC& team );
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, kernel::Team_ABC& team );
     //@}
 
 private:

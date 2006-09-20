@@ -93,16 +93,6 @@ void EntityLayer< ConcreteEntity >::SelectColor( const kernel::Entity_ABC& entit
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityLayer::IsInTeam
-// Created: AGE 2006-03-28
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-bool EntityLayer< ConcreteEntity >::IsInTeam( const kernel::Entity_ABC& entity, const kernel::Team_ABC& team )
-{
-    return static_cast< const ConcreteEntity& >( entity ).IsInTeam( team );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityLayer::ContextMenu
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------

@@ -39,6 +39,11 @@ public:
     virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 
 
     virtual bool IsSubordinateOf( const Entity_ABC& entity ) const = 0;
+
+    virtual void AddSubordinate   (       Entity_ABC& entity ) = 0;
+    virtual void RemoveSubordinate( const Entity_ABC& entity ) = 0;
+
+    virtual const Entity_ABC& GetEntity() const = 0;
     //@}
 };
 

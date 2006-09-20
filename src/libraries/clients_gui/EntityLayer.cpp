@@ -10,8 +10,10 @@
 #include "clients_gui_pch.h"
 #include "EntityLayer.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Hierarchies.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
 
@@ -88,11 +90,12 @@ bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::IsInTeam
-// Created: AGE 2006-03-28
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::IsInTeam( const Entity_ABC&, const Team_ABC& )
+bool EntityLayerBase::IsInTeam( const kernel::Entity_ABC& entity, const kernel::Team_ABC& team )
 {
-    return true;
+    const Hierarchies* hierarchies = entity.Retrieve< Hierarchies >();
+    return !hierarchies || hierarchies->IsSubordinateOf( team );
 }
 
 // -----------------------------------------------------------------------------
