@@ -35,7 +35,6 @@ PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Contr
     , domination_( 0 )
 {
     RegisterSelf( *this );
-    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,6 +46,15 @@ PopulationKnowledge::~PopulationKnowledge()
     Resolver< PopulationFlowKnowledge >::DeleteAll();
     Resolver< PopulationConcentrationKnowledge >::DeleteAll();
     controller_.Delete( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void PopulationKnowledge::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

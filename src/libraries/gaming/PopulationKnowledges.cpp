@@ -24,7 +24,7 @@ PopulationKnowledges::PopulationKnowledges( Controller& controller, const Knowle
     , controller_( controller )
     , factory_( factory )
 {
-    controller_.Create( *this );
+    // NOTHING   
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +35,15 @@ PopulationKnowledges::~PopulationKnowledges()
 {
     controller_.Delete( *this );
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledges::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void PopulationKnowledges::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

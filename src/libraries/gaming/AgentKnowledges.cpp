@@ -24,7 +24,7 @@ AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup_A
     , group_( group )
     , factory_( factory )
 {
-    controller_.Create( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +35,15 @@ AgentKnowledges::~AgentKnowledges()
 {
     controller_.Delete( *this );
     Resolver< AgentKnowledge >::DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledges::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void AgentKnowledges::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

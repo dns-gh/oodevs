@@ -28,7 +28,6 @@ Team::Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGro
     std::string name;
     input >> name;
     name_ = name.c_str();
-    controller_.Create( *(Team_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,6 +38,15 @@ Team::~Team()
 {
     DeleteAll();
     controller_.Delete( *(Team_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void Team::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *(Team_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

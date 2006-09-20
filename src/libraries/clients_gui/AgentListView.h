@@ -18,10 +18,9 @@
 
 namespace kernel
 {
-    class Team_ABC;
-    class KnowledgeGroup_ABC;
-    class Agent_ABC;
     class Controllers;
+    class Hierarchies;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -37,14 +36,9 @@ namespace gui
 // =============================================================================
 class AgentListView : public ListView< AgentListView >
                     , public kernel::Observer_ABC
-                    , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-                    , public kernel::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
-                    , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::Team_ABC > // $$$$ AGE 2006-03-21: refactor these crap
-                    , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
-                    , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
-                    , public kernel::SelectionObserver_ABC
-                    , public kernel::ActivationObserver_ABC< kernel::Agent_ABC >
+                    , public kernel::ElementObserver_ABC< kernel::Hierarchies >
+                    , public kernel::SelectionObserver< kernel::Entity_ABC >
+                    , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
                     , public kernel::OptionsObserver_ABC
 {
    Q_OBJECT;
@@ -66,9 +60,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const kernel::Team_ABC& team,            ValuedListItem* item );
-    virtual void Display( const kernel::KnowledgeGroup_ABC& group, ValuedListItem* item );
-    virtual void Display( const kernel::Agent_ABC& agent,          ValuedListItem* item );
+    virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
+    virtual void Display( const kernel::Hierarchies& hierarchy, ValuedListItem* item );
     //@}
 
 private:
@@ -89,51 +82,24 @@ private slots:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual void NotifyUpdated( const kernel::Team_ABC& team );
+    virtual void NotifyCreated( const kernel::Hierarchies& hierarchy );
+    virtual void NotifyUpdated( const kernel::Hierarchies& hierarchy );
+    virtual void NotifyDeleted( const kernel::Hierarchies& hierarchy );
     //@}
 
     //! @name Helpers
     //@{
 private:
-    virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    virtual void NotifyDeleted( const kernel::KnowledgeGroup_ABC& group );
-    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
-
-    virtual void NotifyUpdated( const kernel::KnowledgeGroup_ABC& group );
-    virtual void NotifyUpdated( const kernel::Agent_ABC& agent );
-
-    virtual void Select( const kernel::Team_ABC& element );
-    virtual void Select( const kernel::KnowledgeGroup_ABC& element );
-    virtual void Select( const kernel::Agent_ABC& element );
-    virtual void BeforeSelection();
-    virtual void AfterSelection();
-    virtual void NotifyActivated( const kernel::Agent_ABC& element );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyActivated( const kernel::Entity_ABC& element );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
-    template< typename ParentType, typename ChildType >
-    void RecursiveDisplay( const ParentType& value, ValuedListItem* item );
-
-    template< typename Type >
-    void Update( const Type& value );
-
-    QDragObject* dragObject();
-    void dropEvent( QDropEvent* pEvent );
-    void dragEnterEvent( QDragEnterEvent* pEvent );
+    virtual QDragObject* dragObject();
+    virtual void dropEvent( QDropEvent* pEvent );
+    virtual void dragEnterEvent( QDragEnterEvent* pEvent );
 
     bool Drop( ValuedListItem& item, ValuedListItem& target );
-    template< typename T >
-    bool DoDrop( ValuedListItem& item, ValuedListItem& target );
-
-    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Agent_ABC& target );
-    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::KnowledgeGroup_ABC& target );
-    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Team_ABC& target );
-    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Agent_ABC& target );
-    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::KnowledgeGroup_ABC& target );
-    virtual bool Drop( const kernel::KnowledgeGroup_ABC& item, const kernel::Team_ABC& target );
-    virtual bool Drop( const kernel::Team_ABC& item, const kernel::Agent_ABC& target );
-    virtual bool Drop( const kernel::Team_ABC& item, const kernel::KnowledgeGroup_ABC& target );
-    virtual bool Drop( const kernel::Team_ABC& item, const kernel::Team_ABC& target );
+    virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     //@}
 
 private:

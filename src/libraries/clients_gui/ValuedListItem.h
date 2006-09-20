@@ -15,6 +15,12 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/SafePointer.h"
 
+
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace gui
 {
     class ValueContainer_ABC;
@@ -190,6 +196,28 @@ public:
 private:
     T value_;
 };
+
+template< >
+class ValueContainer< const kernel::Entity_ABC* > : public ValueContainer_ABC
+{
+public:
+    ValueContainer( kernel::Entity_ABC const* const& value ) : value_( value ) {};
+    virtual int rtti() const {
+        return ListItemRtti< const kernel::Entity_ABC* >::rtti;
+    }
+    kernel::Entity_ABC const* const& GetValue() const {
+        return value_;
+    };
+    void SetValue( kernel::Entity_ABC const* const& value ) {
+        value_ = value;
+    }
+    virtual void Select( kernel::ActionController& actions );
+    virtual void ContextMenu( kernel::ActionController& actions, const QPoint& where );
+    void Activate( kernel::ActionController& actions );
+private:
+    const kernel::Entity_ABC* value_;
+};
+
 
 // -----------------------------------------------------------------------------
 // Name: ValuedListItem::IsA

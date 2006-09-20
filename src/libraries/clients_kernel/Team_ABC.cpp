@@ -37,7 +37,7 @@ Team_ABC::~Team_ABC()
 // -----------------------------------------------------------------------------
 void Team_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *this );
+    controller.Select( *this, *(const Entity_ABC*)this );
 }
     
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ void Team_ABC::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void Team_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, where );
+    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
 }
     
 // -----------------------------------------------------------------------------
@@ -55,6 +55,6 @@ void Team_ABC::ContextMenu( ActionController& controller, const QPoint& where ) 
 // -----------------------------------------------------------------------------
 void Team_ABC::Activate( ActionController& controller ) const
 {
-    controller.Activate( *this );
+    controller.Activate( *this, *(const Entity_ABC*)this );
 }
 

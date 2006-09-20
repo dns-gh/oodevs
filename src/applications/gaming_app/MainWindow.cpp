@@ -25,7 +25,6 @@
 #include "SIMControlToolbar.h"
 #include "UnitToolbar.h"
 #include "LinkInterpreter.h"
-#include "AgentListView.h"
 #include "AgentsLayer.h"
 #include "PopulationsLayer.h"
 #include "AgentKnowledgesLayer.h"

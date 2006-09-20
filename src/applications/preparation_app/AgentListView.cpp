@@ -18,6 +18,7 @@
 #include "clients_gui/Tools.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 
 using namespace kernel;
 
@@ -46,62 +47,24 @@ AgentListView::~AgentListView()
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Display
-// Created: SBO 2006-08-30
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Team_ABC& team, gui::ValuedListItem* item )
+void AgentListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
 {
-    item->setRenameEnabled( 0, true );
-    gui::AgentListView::Display( team, item );
+    if( ! hierarchy.GetSuperior() )
+        item->setRenameEnabled( 0, true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Display
-// Created: SBO 2006-08-29
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Agent_ABC& agent, gui::ValuedListItem* item )
+void AgentListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item )
 {
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 0, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
     gui::AgentListView::Display( agent, item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyCreated
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const Team_ABC& team )
-{
-    gui::ValuedListItem* item = factory_.CreateItem( firstChild() );
-    item->SetNamed( team );
-    gui::AgentListView::NotifyUpdated( team );
-    item->setOpen( true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyCreated
-// Created: SBO 2006-09-06
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const KnowledgeGroup_ABC& group )
-{
-    QListViewItem* item = gui::FindItem( &group.GetTeam(), firstChild() );
-    if( item )
-        item->setOpen( true );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyCreated
-// Created: SBO 2006-09-06
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const Agent_ABC& agent )
-{
-    QListViewItem* item = 0;
-    if( agent.GetSuperior() )
-        item = gui::FindItem( agent.GetSuperior(), firstChild() );
-    else
-        item = gui::FindItem< const KnowledgeGroup_ABC* >( &agent.GetKnowledgeGroup(), firstChild() );
-    if( item )
-        item->setOpen( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +86,8 @@ void AgentListView::NotifyUpdated( const ModelLoaded& )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
-    gui::ValuedListItem* item = gui::FindItem( & decisions.GetAgent(), firstChild() );
+    const Entity_ABC* agent = & decisions.GetAgent();
+    gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 0, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
 }
@@ -135,9 +99,12 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 void AgentListView::OnRename( QListViewItem* item, int, const QString& text )
 {
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item );
-    if( valuedItem && valuedItem->IsA< const Team_ABC* >() )
+    const Team_ABC* pTeam = 0;
+    // $$$$ AGE 2006-09-20: tuerie le nombre de casts
+    if( valuedItem && valuedItem->IsA< const Entity_ABC* >() 
+        && ( pTeam = dynamic_cast< const Team_ABC* >( valuedItem->GetValue< const Entity_ABC* >() ) ) )
     {
-        Team_ABC& team = const_cast< Team_ABC& >( *valuedItem->GetValue< const Team_ABC* >() );
+        Team_ABC& team = const_cast< Team_ABC& >( *pTeam );
         static_cast< Team& >( team ).Rename( text );
         valuedItem->SetNamed( team );
     }

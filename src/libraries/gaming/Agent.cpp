@@ -41,8 +41,7 @@ Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller,
     name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
 
     CreateDictionary();
-    ChangeKnowledgeGroup( message.oid_groupe_connaissance );
-    controller_.Create( *(Agent_ABC*)this );
+    gtia_ = & gtiaResolver_.Get( message.oid_groupe_connaissance );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +66,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
     name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
 
     CreateDictionary();
-    ChangeSuperior( message.oid_automate );
-    controller_.Create( *(Agent_ABC*)this );
+    superior_ = static_cast< Agent* >( &agentResolver_.Get( message.oid_automate ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,6 +80,21 @@ Agent::~Agent()
     for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         static_cast< Agent* >( it->second )->superior_ = 0;
     controller_.Delete( *(Agent_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const InstanciationComplete& )
+{
+    controller_.Create( *(Agent_ABC*)this );
+    if( gtia_ )
+        gtia_->AddAutomat( id_, *this );
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        static_cast< Agent* >( it->second )->gtia_ = gtia_;
+    if( superior_ )
+        superior_->AddChild( *this );
 }
 
 // -----------------------------------------------------------------------------

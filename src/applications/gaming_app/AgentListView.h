@@ -34,15 +34,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const kernel::Agent_ABC& agent, gui::ValuedListItem* item );
+    virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
-    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Agent_ABC& target );
-    virtual bool Drop( const kernel::Agent_ABC& item, const kernel::KnowledgeGroup_ABC& target );
+    virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target );
+    virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
     //@}
 
 private:

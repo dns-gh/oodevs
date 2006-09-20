@@ -18,6 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "AgentKnowledgePositions.h"
 #include "PopulationKnowledgePositions.h"
+#include "clients_kernel/InstanciationComplete.h"
 
 using namespace kernel;
 
@@ -51,6 +52,7 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGrou
     AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
     result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
+    result->Update( InstanciationComplete() );
     return result;
 }
 
@@ -62,5 +64,6 @@ PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const Kno
 {
     PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.agents_, message );
     result->Attach< Positions >( *new PopulationKnowledgePositions( *result ) );
+    ((Entity_ABC*)result)->Update( InstanciationComplete() );
     return result;
 }

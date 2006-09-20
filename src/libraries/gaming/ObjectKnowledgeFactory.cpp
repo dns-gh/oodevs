@@ -21,6 +21,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/InstanciationComplete.h"
 #include "ObjectKnowledgePositions.h"
 #include "StaticModel.h"
 
@@ -77,5 +78,6 @@ ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const AS
     default:
         ;
     };
+    knowledge->Update( InstanciationComplete() );
     return knowledge;
 }

@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controller;
     class KnowledgeGroup_ABC;
+    class InstanciationComplete;
 }
 
 class AgentKnowledge;
@@ -31,6 +32,7 @@ class AgentKnowledgeFactory_ABC;
 // Created: AGE 2006-02-15
 // =============================================================================
 class AgentKnowledges : public kernel::Extension_ABC
+                      , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
                       , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeDestruction >
@@ -60,6 +62,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeCreation&    message );
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate&      message );
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeDestruction& message );
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:

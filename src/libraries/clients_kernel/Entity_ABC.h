@@ -19,6 +19,7 @@ class QPoint;
 
 namespace kernel
 {
+    class Controller;
     class ActionController;
     class GlTools_ABC;
     class Drawer;

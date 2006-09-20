@@ -41,7 +41,6 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_Msg
     , team_        ( 0 )
 {
     RegisterSelf( *this );
-    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +50,15 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_Msg
 AgentKnowledge::~AgentKnowledge()
 {
     controller_.Delete( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void AgentKnowledge::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

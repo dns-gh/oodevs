@@ -25,6 +25,7 @@ namespace kernel
     class Team_ABC;
     class CoordinateConverter_ABC;
     class KnowledgeGroup_ABC;
+    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -36,6 +37,7 @@ namespace kernel
 class AgentKnowledge : public kernel::Entity_ABC
                      , public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+                     , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                      , public kernel::Drawable_ABC
 {
 
@@ -71,6 +73,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& message );
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
     //@}
 

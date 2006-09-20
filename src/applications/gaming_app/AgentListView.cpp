@@ -41,7 +41,7 @@ AgentListView::~AgentListView()
 // Name: AgentListView::Display
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Agent_ABC& agent, gui::ValuedListItem* item )
+void AgentListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item )
 {
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
@@ -58,9 +58,26 @@ void AgentListView::Display( const Agent_ABC& agent, gui::ValuedListItem* item )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
-    gui::ValuedListItem* item = gui::FindItem( & decisions.GetAgent(), firstChild() );
+    const Entity_ABC* entity = & decisions.GetAgent();
+    gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
     if( item )
         item->setPixmap( 0, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target )
+{
+    const Agent_ABC*          agent   = dynamic_cast< const Agent_ABC* >         ( &item );
+    const Agent_ABC*          automat = dynamic_cast< const Agent_ABC* >         ( &target );
+    const KnowledgeGroup_ABC* group   = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
+    if( agent && automat )
+        return Drop(*agent, *automat );
+    if( agent && group )
+        return Drop(*agent, *group );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

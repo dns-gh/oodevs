@@ -43,8 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const kernel::Team_ABC& team, gui::ValuedListItem* item );
-    virtual void Display( const kernel::Agent_ABC& agent, gui::ValuedListItem* item );
+    virtual void Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item );
+    virtual void Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item );
     //@}
 
 private slots:
@@ -64,9 +64,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Team_ABC& );
-    virtual void NotifyCreated( const kernel::KnowledgeGroup_ABC& );
-    virtual void NotifyCreated( const kernel::Agent_ABC& );
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const AutomatDecisions& );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );

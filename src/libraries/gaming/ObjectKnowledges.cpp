@@ -24,7 +24,7 @@ ObjectKnowledges::ObjectKnowledges( const Team_ABC& team, Controller& controller
     , controller_( controller )
     , factory_( factory )
 {
-    controller_.Create( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +35,15 @@ ObjectKnowledges::~ObjectKnowledges()
 {
     controller_.Delete( *this );
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledges::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledges::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

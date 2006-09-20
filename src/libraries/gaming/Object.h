@@ -26,6 +26,7 @@ namespace kernel
     class DotationType;
     class Displayer_ABC;
     class CoordinateConverter_ABC;
+    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -33,6 +34,7 @@ namespace kernel
 // =============================================================================
 class Object : public kernel::Object_ABC
              , public kernel::Extension_ABC
+             , public kernel::Updatable_ABC< kernel::InstanciationComplete >
              , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
              , public kernel::Drawable_ABC
 {
@@ -72,6 +74,7 @@ private:
 private:
     //! @name Operations
     //@{
+    virtual void DoUpdate( const  kernel::InstanciationComplete& );
     virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
     //@}
 

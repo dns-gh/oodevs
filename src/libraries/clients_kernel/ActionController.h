@@ -58,6 +58,21 @@ public:
         selecting_ = false;
     }
 
+    template< typename T1, typename T2 >
+    void Select( const T1& firstElement, const T2& secondElement )
+    {
+        // avoid reentrance
+        if( ! selecting_ )
+        {
+            selecting_ = true;
+            Apply( & SelectionObserver_ABC::BeforeSelection );
+            Apply( & SelectionObserver_Base< T1 >::Select, firstElement );
+            Apply( & SelectionObserver_Base< T2 >::Select, secondElement );
+            Apply( & SelectionObserver_ABC::AfterSelection );
+        }
+        selecting_ = false;
+    }
+
     template< typename T >
     void ContextMenu( const T& element, const QPoint& where )
     {
@@ -79,6 +94,13 @@ public:
     void Activate( const T& element )
     {
         Apply( & ActivationObserver_ABC< T >::NotifyActivated, element );
+    }
+
+    template< typename T1, typename T2 >
+    void Activate( const T1& firstElement, const T2& secondElement )
+    {
+        Apply( & ActivationObserver_ABC< T1 >::NotifyActivated, firstElement );
+        Apply( & ActivationObserver_ABC< T2 >::NotifyActivated, secondElement );
     }
     //@}
 

@@ -18,12 +18,13 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Hierarchies.h"
 #include "ItemFactory_ABC.h"
 
 using namespace kernel;
 using namespace gui;
 
-const char* AgentListView::agentMimeType_ = "agent";
+const char* AgentListView::agentMimeType_ = "agent"; // $$$$ AGE 2006-09-20: pas vraiment agent. Plus ValuedListItem
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView constructor
@@ -59,124 +60,59 @@ AgentListView::~AgentListView()
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyCreated
-// Created: AGE 2006-02-15
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const Team_ABC& team )
+void AgentListView::NotifyCreated( const Hierarchies& hierarchy )
 {
-    factory_.CreateItem( this )->SetNamed( team );
-    NotifyUpdated( team );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Update
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-template< typename T >
-void AgentListView::Update( const T& value )
-{
-    ValuedListItem* item = FindItem( &value, firstChild() );
-    if( item )
-        Display( value, item );
+    const Entity_ABC& entity = hierarchy.GetEntity();
+    ValuedListItem* item = FindItem( &entity, firstChild() );
+    if( ! item )
+        factory_.CreateItem( this )->SetNamed( entity );
+    NotifyUpdated( hierarchy );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyUpdated
-// Created: AGE 2006-02-15
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const Team_ABC& team )
+void AgentListView::NotifyUpdated( const Hierarchies& hierarchy )
 {
-    Update( team );
+    const Entity_ABC& entity = hierarchy.GetEntity();
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
+        Display( hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyDeleted
-// Created: AGE 2006-02-15
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyDeleted( const Team_ABC& team )
+void AgentListView::NotifyDeleted( const Hierarchies& hierarchy )
 {
-    delete FindItem( &team, firstChild() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyDeleted
-// Created: SBO 2006-09-05
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyDeleted( const KnowledgeGroup_ABC& group )
-{
-    delete FindItem( &group, firstChild() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyDeleted
-// Created: SBO 2006-09-05
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyDeleted( const Agent_ABC& agent )
-{
-    delete FindItem( &agent, firstChild() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyUpdated
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const KnowledgeGroup_ABC& group )
-{
-    Update( group );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyUpdated
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const Agent_ABC& agent )
-{
-    Update( agent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::RecursiveDisplay
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-template< typename ParentType, typename ChildType >
-void AgentListView::RecursiveDisplay( const ParentType& value, ValuedListItem* item )
-{
-    DeleteTail( ListView< AgentListView >::Display( value.CreateIterator(), item ) );
+    const Entity_ABC& entity = hierarchy.GetEntity();
+    delete FindItem( &entity, firstChild() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Display
-// Created: AGE 2006-02-16
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Team_ABC& team, ValuedListItem* item )
+void AgentListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    item->SetNamed( team );
-    item->setDropEnabled( true );
-    item->setDragEnabled( true );
-    RecursiveDisplay< Team_ABC, KnowledgeGroup_ABC >( team, item );
+    if( const Hierarchies* hierarchy = entity.Retrieve< Hierarchies >() )
+        Display( *hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Display
-// Created: AGE 2006-02-16
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const KnowledgeGroup_ABC& group, ValuedListItem* item )
+void AgentListView::Display( const Hierarchies& hierarchy, ValuedListItem* item )
 {
-    item->SetNamed( group );
+    item->SetNamed( hierarchy.GetEntity() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    RecursiveDisplay< KnowledgeGroup_ABC, Agent_ABC >( group, item );
-}
 
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Display
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void AgentListView::Display( const Agent_ABC& agent, ValuedListItem* item )
-{
-    item->SetNamed( agent );
-    item->setDropEnabled( true );
-    item->setDragEnabled( true );
-    RecursiveDisplay< Agent_ABC, Agent_ABC >( agent, item );
+    DeleteTail( ListView< AgentListView >::Display( hierarchy.CreateSubordinateIterator(), item ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,8 +121,8 @@ void AgentListView::Display( const Agent_ABC& agent, ValuedListItem* item )
 // -----------------------------------------------------------------------------
 void AgentListView::OnSelectionChange( QListViewItem* i )
 {
-    ValuedListItem* item = (ValuedListItem*)( i );
-    item->Select( controllers_.actions_ );
+    if( ValuedListItem* item = (ValuedListItem*)( i ) )
+        item->Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,11 +131,8 @@ void AgentListView::OnSelectionChange( QListViewItem* i )
 // -----------------------------------------------------------------------------
 void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
+    if( ValuedListItem* item = (ValuedListItem*)( i ) )
         item->ContextMenu( controllers_.actions_, pos );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -208,11 +141,8 @@ void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos,
 // -----------------------------------------------------------------------------
 void AgentListView::OnRequestCenter()
 {
-    if( selectedItem() )
-    {
-        ValuedListItem* item = (ValuedListItem*)( selectedItem() );
+    if( ValuedListItem* item = (ValuedListItem*)( selectedItem() ) )
         item->Activate( controllers_.actions_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -225,51 +155,18 @@ QSize AgentListView::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Select
-// Created: AGE 2006-03-21
+// Name: AgentListView::NotifySelected
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Select( const Team_ABC& element )
-{
-    setSelected( FindItem( &element, firstChild() ), true );
-    ensureItemVisible( selectedItem() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Select
-// Created: AGE 2006-03-21
-// -----------------------------------------------------------------------------
-void AgentListView::Select( const KnowledgeGroup_ABC& element )
-{
-    setSelected( FindItem( &element, firstChild() ), true );
-    ensureItemVisible( selectedItem() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Select
-// Created: AGE 2006-03-21
-// -----------------------------------------------------------------------------
-void AgentListView::Select( const Agent_ABC& element )
-{
-    setSelected( FindItem( &element, firstChild() ), true );
-    ensureItemVisible( selectedItem() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::BeforeSelection
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void AgentListView::BeforeSelection()
+void AgentListView::NotifySelected( const Entity_ABC* element )
 {
     selectAll( false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::AfterSelection
-// Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
-void AgentListView::AfterSelection()
-{
-    // NOTHING
+    ValuedListItem* item = 0;
+    if( element && ( item = FindItem( element, firstChild() ) ) )
+    {
+        setSelected( item, true );
+        ensureItemVisible( selectedItem() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -306,6 +203,15 @@ QDragObject* AgentListView::dragObject()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentListView::dragEnterEvent
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void AgentListView::dragEnterEvent( QDragEnterEvent* pEvent )
+{
+    pEvent->accept( pEvent->provides( agentMimeType_ ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentListView::dropEvent
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
@@ -329,129 +235,27 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-template< typename T >
-bool AgentListView::DoDrop( ValuedListItem& item, ValuedListItem& target )
-{
-    const T& concreteItem = *item.GetValue< const T* >();
-    if( target.IsA< const Agent_ABC* >() )
-        return Drop( concreteItem, *target.GetValue< const Agent_ABC* >() );
-    if( target.IsA< const KnowledgeGroup_ABC* >() )
-        return Drop( concreteItem, *target.GetValue< const KnowledgeGroup_ABC* >() );
-    if( target.IsA< const Team_ABC* >() )
-        return Drop( concreteItem, *target.GetValue< const Team_ABC* >() );
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
 bool AgentListView::Drop( ValuedListItem& item, ValuedListItem& target )
 {
-    if( item.IsA< const Agent_ABC* >() )
-        return DoDrop< Agent_ABC >( item, target );
-    if( item.IsA< const KnowledgeGroup_ABC* >() )
-        return DoDrop< KnowledgeGroup_ABC >( item, target );
-    if( item.IsA< const Team_ABC* >() )
-        return DoDrop< Team_ABC >( item, target );
-    return false;
+    return item.IsA< const Entity_ABC* >()
+        && target.IsA< const Entity_ABC* >()
+        && Drop( *item.GetValue< const Entity_ABC* >(), *target.GetValue< const Entity_ABC* >() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
-// Created: SBO 2006-08-09
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC&, const Agent_ABC& )
+bool AgentListView::Drop( const Entity_ABC& , const Entity_ABC& )
 {
     return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC&, const KnowledgeGroup_ABC& )
-{
-    return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC&, const Team_ABC& )
-{
-    return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const KnowledgeGroup_ABC&, const Agent_ABC& )
-{
-    return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const KnowledgeGroup_ABC&, const KnowledgeGroup_ABC& )
-{
-    return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const KnowledgeGroup_ABC&, const Team_ABC& )
-{
-    return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Team_ABC&, const Agent_ABC& )
-{
-    return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Team_ABC&, const KnowledgeGroup_ABC& )
-{
-    return false;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Team_ABC&, const Team_ABC& )
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::dragEnterEvent
-// Created: SBO 2006-04-18
-// -----------------------------------------------------------------------------
-void AgentListView::dragEnterEvent( QDragEnterEvent* pEvent )
-{
-    pEvent->accept( pEvent->provides( agentMimeType_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyActivated
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyActivated( const Agent_ABC& element )
+void AgentListView::NotifyActivated( const Entity_ABC& element )
 {
     ValuedListItem* item = FindItem( &element, firstChild() );    
     if( item )

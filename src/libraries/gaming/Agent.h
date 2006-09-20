@@ -19,6 +19,7 @@ namespace kernel
     class Controller;
     class AgentType;
     class AutomatType;
+    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -31,6 +32,7 @@ class Agent : public kernel::Agent_ABC
             , public kernel::Extension_ABC
             , public kernel::Aggregatable_ABC
             , public kernel::Drawable_ABC
+            , public kernel::Updatable_ABC< kernel::InstanciationComplete >
             , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomateAck >
             , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomate >
             , public kernel::Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
@@ -75,6 +77,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     virtual void DoUpdate( const ASN1T_MsgChangeAutomateAck& message );
     virtual void DoUpdate( const ASN1T_MsgChangeAutomate& message );
     virtual void DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message );

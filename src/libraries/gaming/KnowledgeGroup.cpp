@@ -26,8 +26,8 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const
     , team_( team )
     , nID_ ( nId )
 {
+    RegisterSelf( *this );
     idManager_.LockIdentifier( nID_ );
-    controller_.Create( *(KnowledgeGroup_ABC*)this );
     name_ = QString( "Gtia %1" ).arg( nID_ ); // $$$$ AGE 2006-08-23: 
 }
 
@@ -40,6 +40,15 @@ KnowledgeGroup::~KnowledgeGroup()
     controller_.Delete( *(KnowledgeGroup_ABC*)this );
     idManager_.ReleaseIdentifier( nID_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *(KnowledgeGroup_ABC*)this );
+}   
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::AddAutomat

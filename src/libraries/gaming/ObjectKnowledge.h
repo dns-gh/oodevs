@@ -27,6 +27,7 @@ namespace kernel
     class Team_ABC;
     class CoordinateConverter_ABC;
     class ObjectType;
+    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -38,6 +39,7 @@ namespace kernel
 class ObjectKnowledge : public kernel::Entity_ABC
                       , public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                       , public kernel::Drawable_ABC
 {
 
@@ -89,6 +91,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:

@@ -54,8 +54,6 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
         valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
 
     type_.manager_.LockIdentifier( nId_ );
-
-    controller_.Create( *(Object_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,6 +64,15 @@ Object::~Object()
 {
     controller_.Delete( *(Object_ABC*)this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Object::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void Object::DoUpdate( const  kernel::InstanciationComplete& )
+{
+    controller_.Create( *(Object_ABC*)this );
+}   
 
 // -----------------------------------------------------------------------------
 // Name: Object::GetId

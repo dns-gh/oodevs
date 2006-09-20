@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ValuedListItem.h"
+#include "clients_kernel/Entity_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -103,4 +104,34 @@ void ValuedListItem::Activate( ActionController& actions )
 {
     if( container_ )
         container_->Activate( actions );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValueContainer::Select
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void ValueContainer< const Entity_ABC* >::Select( kernel::ActionController& actions )
+{
+    if( value_ )
+        value_->Select( actions );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValueContainer::ContextMenu
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void ValueContainer< const Entity_ABC* >::ContextMenu( kernel::ActionController& actions, const QPoint& where )
+{
+    if( value_ )
+        value_->ContextMenu( actions, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValueContainer::Activate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void ValueContainer< const Entity_ABC* >::Activate( kernel::ActionController& actions )
+{
+    if( value_ )
+        value_->Activate( actions );
 }

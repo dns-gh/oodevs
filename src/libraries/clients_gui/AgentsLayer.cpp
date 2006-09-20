@@ -127,11 +127,11 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
     const Agent_ABC* superior = agent.GetSuperior();
     if( shift && superior )
     {
-        controllers_.actions_.Select( *superior );
-        controllers_.actions_.Activate( *superior );
+        superior->Select( controllers_.actions_ );
+        superior->Activate( controllers_.actions_ );
     }
     else
-        controllers_.actions_.Select( agent );
+        agent.Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------

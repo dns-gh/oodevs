@@ -39,7 +39,6 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
 {
     RegisterSelf( *this );
     pRealObject_ = objectResolver_.Find( message.oid_objet_reel );
-    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +48,15 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
 ObjectKnowledge::~ObjectKnowledge()
 {
     controller_.Delete( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void ObjectKnowledge::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

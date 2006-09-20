@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Controller;
+    class InstanciationComplete;
 }
 
 class KnowledgeGroupFactory_ABC;
@@ -30,6 +31,7 @@ class KnowledgeGroupFactory_ABC;
 // =============================================================================
 class Team : public kernel::Team_ABC
            , public kernel::Extension_ABC
+           , public kernel::Updatable_ABC< kernel::InstanciationComplete >
            , public kernel::Updatable_ABC< KnowledgeGroupCreationMessage >
 {
 
@@ -55,6 +57,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& message );
     virtual void DoUpdate( const KnowledgeGroupCreationMessage& message );
     //@}
 

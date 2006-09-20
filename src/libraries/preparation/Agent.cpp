@@ -44,6 +44,7 @@ Agent::Agent( const KnowledgeGroup_ABC& gtia, const AutomatType& type, Controlle
 {
     RegisterSelf( *this );
     CreateDictionary();
+    // $$$$ AGE 2006-09-20: 
     ChangeKnowledgeGroup( gtia.GetId() );
     controller_.Create( *(Agent_ABC*)this );
 }

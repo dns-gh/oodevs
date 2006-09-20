@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "Agent_ABC.h"
 #include "ActionController.h"
+#include "Controller.h"
 
 using namespace kernel;
 
@@ -37,7 +38,7 @@ Agent_ABC::~Agent_ABC()
 // -----------------------------------------------------------------------------
 void Agent_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *this );
+    controller.Select( *this, *(const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +47,7 @@ void Agent_ABC::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void Agent_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, where );
+    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,5 +56,6 @@ void Agent_ABC::ContextMenu( ActionController& controller, const QPoint& where )
 // -----------------------------------------------------------------------------
 void Agent_ABC::Activate( ActionController& controller ) const
 {
-    controller.Activate( *this );
+    controller.Activate( *this, *(const Entity_ABC*)this );
 }
+

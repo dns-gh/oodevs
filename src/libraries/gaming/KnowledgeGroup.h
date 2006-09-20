@@ -13,10 +13,13 @@
 #include "ASN_Types.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/IDManager.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
 {
     class Controller;
+    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -26,6 +29,8 @@ namespace kernel
 // Created: AGN 2003-12-22
 // =============================================================================
 class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
+                     , public kernel::Extension_ABC
+                     , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 public:
     //! @name Constructors/Destructor
@@ -42,6 +47,7 @@ public:
     virtual QString GetName() const;
     virtual void AddAutomat( unsigned long id, kernel::Agent_ABC& automat );
     virtual void RemoveAutomat( unsigned long id );
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:

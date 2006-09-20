@@ -61,6 +61,7 @@
 #include "MagicOrders.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/InstanciationComplete.h"
 #include "StaticModel.h"
 #include "RcEntityResolver.h"
 #include "AgentHierarchies.h"
@@ -112,6 +113,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 
     AttachExtensions( *result );
     result->Update( asnMsg );
+    result->Update( InstanciationComplete() );
     return result;
 }
 
@@ -131,6 +133,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new MagicOrders( *result ) );
     AttachExtensions( *result );
     result->Update( asnMsg );
+    result->Update( InstanciationComplete() );
     return result;
 }
 
@@ -144,6 +147,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach( *new PopulationDecisions( *result ) );
     AttachExtensions( *result );
+//    result->Update( InstanciationComplete() );
     return result;
 }
 

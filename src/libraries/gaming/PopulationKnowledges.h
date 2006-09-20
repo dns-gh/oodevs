@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controller;
     class KnowledgeGroup_ABC;
+    class InstanciationComplete;
 }
 
 class PopulationKnowledge;
@@ -40,6 +41,7 @@ class PopulationKnowledges : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeCreation >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeDestruction >
+                           , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                            , public kernel::Resolver< PopulationKnowledge >
 {
 
@@ -73,6 +75,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreation&             message );
     virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               message );
     virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          message );
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
 
     template< typename T >
     void UpdatePopulation( const T& message );

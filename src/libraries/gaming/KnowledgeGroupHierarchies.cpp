@@ -25,8 +25,7 @@ KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Te
     , superior_  ( team )
     , holder_    ( holder )
 {
-    if( Hierarchies* hierarchies = superior_.Retrieve< Hierarchies >() )
-        hierarchies->AddSubordinate( holder_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +36,16 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 {
     if( Hierarchies* hierarchies = superior_.Retrieve< Hierarchies >() )
         hierarchies->RemoveSubordinate( holder_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupHierarchies::DoUpdate
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void KnowledgeGroupHierarchies::DoUpdate( const kernel::InstanciationComplete& )
+{
+    if( Hierarchies* hierarchies = superior_.Retrieve< Hierarchies >() )
+        hierarchies->AddSubordinate( holder_ );
 }
 
 // -----------------------------------------------------------------------------

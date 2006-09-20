@@ -7,39 +7,29 @@
 //
 // *****************************************************************************
 
-#ifndef __PopulationPart_ABC_h_
-#define __PopulationPart_ABC_h_
-
-#include "Entity_ABC.h"
+#ifndef __InstanciationComplete_h_
+#define __InstanciationComplete_h_
 
 namespace kernel
 {
 
 // =============================================================================
-/** @class  PopulationPart_ABC
-    @brief  PopulationPart_ABC
+/** @class  InstanciationComplete
+    @brief  InstanciationComplete
 */
-// Created: SBO 2006-08-23
+// Created: AGE 2006-09-20
 // =============================================================================
-class PopulationPart_ABC : public Entity_ABC
+class InstanciationComplete
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPart_ABC() {}
-    virtual ~PopulationPart_ABC() {}
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual unsigned int GetDeadHumans() const = 0;
-    virtual unsigned int GetLivingHumans() const = 0;
-    virtual unsigned int GetDensity() const = 0;
-    virtual std::string  GetAttitude() const = 0;
+             InstanciationComplete() {};
+    virtual ~InstanciationComplete() {};
     //@}
 };
 
 }
 
-#endif // __PopulationPart_ABC_h_
+#endif // __InstanciationComplete_h_

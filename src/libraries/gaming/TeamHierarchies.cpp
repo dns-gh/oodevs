@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "TeamHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 
@@ -22,7 +23,7 @@ TeamHierarchies::TeamHierarchies( Controller& controller, const kernel::Team_ABC
     , controller_( controller )
     , holder_( holder )
 {
-    // NOTHING
+    controller_.Create( *(Hierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +32,7 @@ TeamHierarchies::TeamHierarchies( Controller& controller, const kernel::Team_ABC
 // -----------------------------------------------------------------------------
 TeamHierarchies::~TeamHierarchies()
 {
-    // NOTHING
+    controller_.Delete( *(Hierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------

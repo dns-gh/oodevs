@@ -37,7 +37,7 @@ PopulationFlow_ABC::~PopulationFlow_ABC()
 // -----------------------------------------------------------------------------
 void PopulationFlow_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *this );
+    controller.Select( *this, *(const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ void PopulationFlow_ABC::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void PopulationFlow_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, where );
+    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,5 +55,5 @@ void PopulationFlow_ABC::ContextMenu( ActionController& controller, const QPoint
 // -----------------------------------------------------------------------------
 void PopulationFlow_ABC::Activate( ActionController& controller ) const
 {
-    controller.Activate( *this );
+    controller.Activate( *this, *(const Entity_ABC*)this );
 }

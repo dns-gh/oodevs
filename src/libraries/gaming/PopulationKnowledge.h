@@ -25,6 +25,7 @@ namespace kernel
     class Population_ABC;
     class Displayer_ABC;
     class KnowledgeGroup_ABC;
+    class InstanciationComplete;
 }
 
 class PopulationPartKnowledge_ABC;
@@ -37,6 +38,7 @@ class PopulationFlowKnowledge;
 class PopulationKnowledge : public kernel::Entity_ABC
                           , public kernel::Resolver< PopulationConcentrationKnowledge >
                           , public kernel::Resolver< PopulationFlowKnowledge >
+                          , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                           , public kernel::Extension_ABC
                           , public kernel::Drawable_ABC
 {
@@ -66,6 +68,7 @@ public:
     virtual void Activate( kernel::ActionController& controller ) const;
 
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
     //! @name Network

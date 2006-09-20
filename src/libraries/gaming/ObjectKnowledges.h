@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controller;
     class Team_ABC;
+    class InstanciationComplete;
 }
 
 class ObjectKnowledge;
@@ -34,6 +35,7 @@ class ObjectKnowledges : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
+                       , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                        , public kernel::Resolver< ObjectKnowledge >
 {
 
@@ -60,6 +62,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeCreation&    message );
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate&      message );
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeDestruction& message );
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:
