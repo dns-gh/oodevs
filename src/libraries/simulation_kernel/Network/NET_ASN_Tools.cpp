@@ -1236,7 +1236,7 @@ bool NET_ASN_Tools::CopyAgentList( const ASN1T_ListAgent& asn, DIA_Variable_ABC&
     if( !NET_ASN_Tools::ReadAgentList( asn, agents ) )
         return false;
     dia.SetValue( agents );
-    return !agents.empty();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1273,7 +1273,7 @@ bool NET_ASN_Tools::CopyAutomateList( const ASN1T_ListAutomate& asn, DIA_Variabl
     if( !NET_ASN_Tools::ReadAutomateList( asn, automates ) )
         return false;
     dia.SetValue( automates );
-    return !automates.empty();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
