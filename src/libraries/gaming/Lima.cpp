@@ -60,6 +60,20 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLim
     idManager_.LockIdentifier( GetId() );
     controller_.Create( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Lima constructor
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( xis, converter, publisher )
+    , controller_( controller )
+{
+    int type = 0;
+    xis >> xml::attribute( "type", type );
+    nFuncType_ = E_FuncLimaType( type );
+    controller_.Create( *this );
+}
  
 // -----------------------------------------------------------------------------
 // Name: Lima destructor

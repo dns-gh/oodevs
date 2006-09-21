@@ -60,6 +60,17 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgL
     controller_.Create( *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Limit constructor
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+    : TacticalLine_ABC( xis, converter, publisher )
+    , controller_( controller )
+{
+    controller_.Create( *this );
+}
+
 //-----------------------------------------------------------------------------
 // Name: Limit destructor
 // Created: NLD 2002-08-08

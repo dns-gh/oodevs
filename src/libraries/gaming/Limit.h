@@ -34,6 +34,7 @@ public:
              Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter);
              Limit( kernel::Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter );
              Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
+             Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Limit();
     //@}
 

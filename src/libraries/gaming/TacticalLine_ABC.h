@@ -24,6 +24,7 @@ namespace kernel
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 class Publisher_ABC;
@@ -43,6 +44,7 @@ public:
              TacticalLine_ABC( const QString& baseName, unsigned long id, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
              TacticalLine_ABC( const QString& baseName, unsigned long id, const T_PointVector& points, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
              TacticalLine_ABC( const QString& baseName, unsigned long id, const ASN1T_Line& line, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+             TacticalLine_ABC( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -106,6 +108,7 @@ protected:
     template< typename Ack >
     void ValidateAcknowledge( const Ack& ack );
     void SerializeGeometry( xml::xostream& xos ) const;
+    void ReadPoint( xml::xistream& xis );
     //@}
 
 private:

@@ -34,6 +34,7 @@
 #include "StatusBar.h"
 #include "Spy.h"
 #include "AgentList.h"
+#include "TacticalLinesSaver.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -230,6 +231,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ReadSettings();
     ReadOptions();
     pMissionPanel_->hide();
+
+    new TacticalLinesSaver( this, model_.limits_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,12 +19,16 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace xml {
+    class xistream;
+}
+
 class Publisher_ABC;
 class TacticalLine_ABC;
 
 namespace DIN {
     class DIN_Input;
-};
+}
 
 // =============================================================================
 /** @class  LimitsModel
@@ -54,6 +58,9 @@ public:
 
     void UpdateToSim();
     void UseSimTacticalLines();
+
+    void Load( const std::string& tacticalLines );
+    void Save( const std::string& tacticalLines ) const;
     //@}
 
 private:
@@ -61,6 +68,11 @@ private:
     //@{
     LimitsModel( const LimitsModel& );            //!< Copy constructor
     LimitsModel& operator=( const LimitsModel& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadLine( const std::string& name, xml::xistream& xis );
     //@}
 
 private:

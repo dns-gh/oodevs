@@ -66,6 +66,22 @@ TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, c
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC constructor
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+TacticalLine_ABC::TacticalLine_ABC( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+    : converter_( converter )
+    , publisher_( publisher )
+{
+    std::string name;
+    int id;
+    xis >> attribute( "name", name )
+        >> attribute( "id", id );
+    strName_ = name.c_str(); id_ = id;
+    xis >> list( "point", *this, &TacticalLine_ABC::ReadPoint );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC destructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
@@ -189,6 +205,18 @@ void TacticalLine_ABC::SerializeGeometry( xml::xostream& xos ) const
                 << attribute( "x", itPoint->X() )
                 << attribute( "y", itPoint->Y() )
             << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::ReadPoint
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::ReadPoint( xml::xistream& xis )
+{
+    float x, y;
+    xis >> attribute( "x", x )
+        >> attribute( "y", y );
+    pointList_.push_back( geometry::Point2f( x, y ) );
 }
 
 // -----------------------------------------------------------------------------

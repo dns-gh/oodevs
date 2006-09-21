@@ -91,7 +91,6 @@ void Model::Purge()
     teams_.Purge();
     knowledgeGroups_.Purge();
     logistics_.Purge();
-//    limits_.Purge();
     fires_.Purge();
     weather_.Purge();
 }

@@ -34,6 +34,7 @@ public:
              Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
              Lima( kernel::Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const kernel::CoordinateConverter_ABC& converter );
              Lima( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Lima();
     //@}
 

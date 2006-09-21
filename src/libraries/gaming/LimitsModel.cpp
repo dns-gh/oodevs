@@ -14,6 +14,7 @@
 #include "Lima.h"
 #include "clients_kernel/Controllers.h"
 #include "Publisher_ABC.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
 
@@ -122,3 +123,45 @@ void LimitsModel::DeleteLima( unsigned long id )
     delete line;
 }
 
+// -----------------------------------------------------------------------------
+// Name: LimitsModel::Load
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void LimitsModel::Load( const std::string& tacticalLines )
+{
+    xml::xifstream xis( tacticalLines );
+    xis >> xml::start( "lines" )
+            >> xml::list( *this, &LimitsModel::ReadLine )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsModel::ReadLine
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void LimitsModel::ReadLine( const std::string& name, xml::xistream& xis )
+{
+    TacticalLine_ABC* line = 0;
+    if( name == "lima" )
+        line = new Lima( controllers_.controller_, publisher_, xis, converter_ );
+    else if( name == "limit" )
+        line = new Limit( controllers_.controller_, publisher_, xis, converter_ );
+    if( line )
+        Register( line->GetId(), *line );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsModel::Save
+// Created: AGE 2006-09-20
+// -----------------------------------------------------------------------------
+void LimitsModel::Save( const std::string& tacticalLines ) const
+{
+    xml::xofstream xos( tacticalLines );
+    xos << xml::start( "lines" );
+    for( Resolver< TacticalLine_ABC >::CIT_Elements it = Resolver< TacticalLine_ABC >::elements_.begin(); it != Resolver< TacticalLine_ABC >::elements_.end(); ++it )
+    {
+        TacticalLine_ABC& line = *it->second;
+        line.Serialize( xos );
+    }
+    xos << xml::end();
+}
