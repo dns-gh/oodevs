@@ -15,9 +15,10 @@
 #include "KnowledgeGroupsModel.h"
 #include "AgentFactory.h"
 #include "AgentsModel.h"
-#include "Serializable_ABC.h"
 #include "ObjectFactory.h"
 #include "ObjectsModel.h"
+#include "FormationFactory.h"
+#include "FormationModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
@@ -32,12 +33,14 @@ using namespace xml;
 Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : controllers_( controllers )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, staticModel ) )
+    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
+    , formationFactory_( *new FormationFactory( controllers ) )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, staticModel ) )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
-    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
+    , formations_( *new FormationModel( controllers, formationFactory_ ) )
 {
     // NOTHING
 }
@@ -48,6 +51,10 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &formations_;
+    delete &formationFactory_;
+    delete &objects_;
+    delete &objectFactory_;
     delete &agents_;
     delete &agentFactory_;
     delete &knowledgeGroups_;
@@ -72,9 +79,8 @@ void Model::Purge()
 // -----------------------------------------------------------------------------
 void Model::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "ODB" );
-    teams_ .Serialize( xos );
-    agents_.Serialize( xos );
+    xos << start( "odb" );
+    teams_.Serialize( xos );
     objects_.Serialize( xos );
     xos << end();
 }

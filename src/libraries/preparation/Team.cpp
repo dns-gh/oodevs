@@ -11,7 +11,6 @@
 #include "Team.h"
 #include "KnowledgeGroupFactory_ABC.h"
 #include "KnowledgeGroup.h"
-#include "Serializable_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/Tools.h"
@@ -31,8 +30,8 @@ Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory )
     , factory_( factory )
     , id_( idManager_++ )
 {
+    RegisterSelf( *this );
     name_ = tools::translate( "Preparation", "Armée %1" ).arg( id_ );
-    controller_.Create( *(Team_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +42,15 @@ Team::~Team()
 {
     DeleteAll();
     controller_.Delete( *(Team_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::DoUpdate
+// Created: SBO 2006-09-20
+// -----------------------------------------------------------------------------
+void Team::DoUpdate( const kernel::InstanciationComplete& )
+{
+    controller_.Create( *(Team_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,18 +93,19 @@ void Team::Rename( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::Serialize
+// Name: Team::DoSerialize
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void Team::Serialize( xml::xostream& xos ) const
+void Team::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( "Armee" )
-            << attribute( "id", long( id_ ) )
-            << attribute( "nom", name_.ascii() )
-            << start( "GroupesConnaissance" );
+    xos << attribute( "id", long( id_ ) )
+        << attribute( "nom", name_.ascii() )
+        << start( "knowledge-groups" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< const KnowledgeGroup* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: Serialize KnowledgeGroup_ABC
-    xos     << end();
-    Interface().Apply( &Serializable_ABC::Serialize, xos );
+    {
+        xos << start( "knowledge-group" );
+        it->second->Serialize( xos );
+        xos << end();
+    }
     xos << end();
 }

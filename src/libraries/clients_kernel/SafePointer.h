@@ -40,6 +40,7 @@ public:
     const T& operator *() const { return *element_; };
     const T* operator->() const { return &*element_; };
     SafePointer& operator=( const T* element ) { element_ = element; return *this; };
+    T* ConstCast() const { return const_cast< T* >( element_ ); }
     //@}
 
 private:

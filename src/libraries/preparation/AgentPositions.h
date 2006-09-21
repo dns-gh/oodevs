@@ -13,7 +13,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
-#include "Serializable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -30,7 +30,7 @@ namespace kernel
 class AgentPositions : public kernel::Positions
                      , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
-                     , public Serializable_ABC
+                     , public kernel::Serializable_ABC
 {
 
 public:
@@ -48,7 +48,7 @@ public:
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
 private:

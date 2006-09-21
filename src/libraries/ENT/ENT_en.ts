@@ -2245,6 +2245,30 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>non blesse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blesse urgence 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blesse urgence 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blesse urgence 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blesse urgence extreme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>genie construction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2498,30 +2522,6 @@
     </message>
     <message>
         <source>xxxxx</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>non blesse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>blesse urgence 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>blesse urgence 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>blesse urgence 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>blesse urgence extreme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2889,6 +2889,90 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>attente disponibilite ambulance releve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve deplacement aller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente chargement complet ambulance releve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve deplacement retour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance releve dechargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite medecin pour diagnostique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diagnostique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recherche secteur tri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite medecin pour tri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tri</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recherche secteur soin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite medecin pour soin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>soin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hospitalisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente disponibilite ambulance ramassage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance ramassage chargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attente chargement complet ambulance ramassage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance ramassage deplacement aller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ambulance ramassage dechargement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>termine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>un echelon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3009,6 +3093,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>calme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>agitee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>excitee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>agressive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>message</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3105,6 +3209,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>regime 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regime 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>deplacement vers chaine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3129,10 +3249,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>diagnostique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>attente prise en charge par niveau superieur</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3146,10 +3262,6 @@
     </message>
     <message>
         <source>retour pion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>termine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3186,78 +3298,6 @@
     </message>
     <message>
         <source>error invalid receveur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite ambulance releve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve deplacement aller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente chargement complet ambulance releve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve deplacement retour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance releve dechargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite medecin pour diagnostique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>recherche secteur tri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite medecin pour tri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tri</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>recherche secteur soin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite medecin pour soin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>soin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente disponibilite ambulance ramassage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance ramassage chargement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attente chargement complet ambulance ramassage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance ramassage deplacement aller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ambulance ramassage dechargement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3349,7 +3389,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>emploi force interdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>maintien a distance par moyens non letaux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dispersion par moyens de defense actifs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>armes letales autorisees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3401,26 +3453,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>agitee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>excitee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>agressive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>surete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3450,38 +3482,6 @@
     </message>
     <message>
         <source>reparer materiels sur place</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>armes letales autorisees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>emploi force interdit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dispersion par moyens de defense actifs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>regime 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>regime 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>regime 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>regime 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hospitalisation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

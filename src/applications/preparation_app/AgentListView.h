@@ -18,7 +18,6 @@ namespace kernel
 }
 
 class AutomatDecisions;
-class Model;
 class ModelBuilder;
 
 // =============================================================================
@@ -37,7 +36,7 @@ class AgentListView : public gui::AgentListView
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const Model& model, ModelBuilder& modelBuilder );
+             AgentListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder );
     virtual ~AgentListView();
     //@}
 
@@ -50,6 +49,7 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     void OnRename( QListViewItem* item, int col, const QString& text );
     void Engage();
     void Disengage();
@@ -74,7 +74,6 @@ private:
     //! @name Member data
     //@{
     gui::ItemFactory_ABC& factory_;
-    const Model& model_;
     ModelBuilder& modelBuilder_;
     //@}
 };

@@ -8,78 +8,73 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "AutomatDecisions.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Controller.h"
-#include "xeumeuleu/xml.h"
+#include "Level.h"
 
-using namespace kernel;
-using namespace xml;
+unsigned int Level::idManager_ = 1;
 
 // -----------------------------------------------------------------------------
-// Name: AutomatDecisions constructor
-// Created: AGE 2006-03-14
+// Name: Level constructor
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-AutomatDecisions::AutomatDecisions( Controller& controller, const Agent_ABC& agent )
-    : controller_( controller )
-    , agent_( agent )
-    , bEmbraye_( true )
+Level::Level( const QString& name, const Level* previous )
+    : name_( name )
+    , id_( idManager_++ )
+    , previous_( previous )
+    , next_( 0 )
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Level destructor
+// Created: SBO 2006-09-21
+// -----------------------------------------------------------------------------
+Level::~Level()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatDecisions destructor
-// Created: AGE 2006-03-14
+// Name: Level::SetNext
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-AutomatDecisions::~AutomatDecisions()
+void Level::SetNext( const Level& next )
 {
-    // NOTHING
+    next_ = &next;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatDecisions::GetAgent
-// Created: AGE 2006-03-14
+// Name: Level::GetId
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-const Agent_ABC& AutomatDecisions::GetAgent() const
+unsigned int Level::GetId() const
 {
-    return agent_;
+    return id_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatDecisions::IsEmbraye
-// Created: AGE 2006-03-14
+// Name: Level::GetName
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-bool AutomatDecisions::IsEmbraye() const
+QString Level::GetName() const
 {
-    return bEmbraye_;
+    return name_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: AutomatDecisions::Engage
-// Created: SBO 2006-06-19
+// Name: Level::GetPrevious
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void AutomatDecisions::Engage()
+const Level* Level::GetPrevious() const
 {
-    bEmbraye_ = true;
-    controller_.Update( *this );
+    return previous_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: AutomatDecisions::Disengage
-// Created: SBO 2006-06-19
+// Name: Level::GetNext
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void AutomatDecisions::Disengage()
+const Level* Level::GetNext() const
 {
-    bEmbraye_ = false;
-    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatDecisions::DoSerialize
-// Created: SBO 2006-09-06
-// -----------------------------------------------------------------------------
-void AutomatDecisions::DoSerialize( xml::xostream& xos ) const
-{
-    xos << content( "engaged", bEmbraye_ ? "true" : "false" );
+    return next_;
 }

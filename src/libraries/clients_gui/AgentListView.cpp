@@ -59,15 +59,39 @@ AgentListView::~AgentListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentListView::RecursiveCreateHierarchy
+// Created: SBO 2006-09-20
+// -----------------------------------------------------------------------------
+void AgentListView::RecursiveCreateHierarchy( const Hierarchies* hierarchy )
+{
+    if( !hierarchy )
+        return;
+    const Entity_ABC* superior = hierarchy->GetSuperior();
+    if( superior )
+        RecursiveCreateHierarchy( superior->Retrieve< Hierarchies >() );
+    
+    const Entity_ABC& entity = hierarchy->GetEntity();
+    ValuedListItem* item = FindItem( &entity, firstChild() );
+    if( item )
+        return;
+
+    if( !superior )
+        factory_.CreateItem( this )->SetNamed( entity );
+    else
+    {
+        ValuedListItem* parentItem = FindItem( superior, firstChild() );
+        if( parentItem )
+            factory_.CreateItem( parentItem )->SetNamed( entity );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentListView::NotifyCreated
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyCreated( const Hierarchies& hierarchy )
 {
-    const Entity_ABC& entity = hierarchy.GetEntity();
-    ValuedListItem* item = FindItem( &entity, firstChild() );
-    if( ! item )
-        factory_.CreateItem( this )->SetNamed( entity );
+    RecursiveCreateHierarchy( &hierarchy );
     NotifyUpdated( hierarchy );
 }
 

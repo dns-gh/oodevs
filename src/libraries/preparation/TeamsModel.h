@@ -23,6 +23,7 @@ namespace kernel
     class Team_ABC;
     class KnowledgeGroup_ABC;
     class Controllers;
+    class Entity_ABC;
 }
 
 class TeamFactory_ABC;
@@ -56,6 +57,8 @@ public:
     kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& id ) const;
 
     void Serialize( xml::xostream& xos ) const;
+
+    kernel::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
     //@}
 
 private:

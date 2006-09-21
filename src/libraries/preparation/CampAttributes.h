@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/SafePointer.h"
-#include "Serializable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -27,7 +27,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class CampAttributes : public kernel::CampAttributes_ABC
-                     , public Serializable_ABC
+                     , public kernel::Serializable_ABC
 {
 
 public:
@@ -41,7 +41,7 @@ public:
     //@{
     void SetTC2( const kernel::Agent_ABC& tc2 );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
 private:

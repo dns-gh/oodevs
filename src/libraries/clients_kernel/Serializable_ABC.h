@@ -15,6 +15,9 @@ namespace xml
     class xostream;
 }
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  Serializable_ABC
     @brief  Serializable_ABC
@@ -33,8 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( xml::xostream& xos ) const = 0;
+    virtual void DoSerialize( xml::xostream& xos ) const = 0;
     //@}
 };
+
+}
 
 #endif // __Serializable_ABC_h_

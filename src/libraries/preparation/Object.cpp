@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "Object.h"
-#include "Serializable_ABC.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/IDManager.h"
 #include "clients_kernel/Controller.h"
@@ -160,16 +159,15 @@ bool Object::IsInTeam( const Team_ABC& team ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::Serialize
+// Name: Object::DoSerialize
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------
-void Object::Serialize( xml::xostream& xos ) const
+void Object::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( "Objet" )
+    xos << start( "object" )
             << attribute( "id", long( nId_ ) )
             << attribute( "type", type_.GetName().ascii() )
-            << content( "Nom", strName_ )
-            << content( "Armee", team_.GetName() );
-    Interface().Apply( &Serializable_ABC::Serialize, xos );
+            << content( "name", strName_ )
+            << content( "side", team_.GetName() );
     xos << end();
 }

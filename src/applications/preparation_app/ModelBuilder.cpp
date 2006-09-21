@@ -13,11 +13,15 @@
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/FormationModel.h"
+#include "preparation/FormationLevels.h"
+#include "preparation/Level.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 
 using namespace kernel;
 
@@ -31,6 +35,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
     , selectedTeam_( controllers )
     , selectedGroup_( controllers )
     , selectedAgent_( controllers )
+    , selectedFormation_( controllers )
 {
     controllers_.Register( *this );
 }
@@ -52,42 +57,64 @@ void ModelBuilder::InsertDefaultMenu( kernel::ContextMenu& menu ) const
 {
     menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), this, SLOT( OnDelete() ) );
 }
+    
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::NotifyContextMenu
+// Created: SBO 2006-08-30
+// -----------------------------------------------------------------------------
+void ModelBuilder::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
+{
+    QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
+    const Level* level = model_.formations_.levels_.GetRoot();
+    while( level && ( level = level->GetNext() ) )
+        subMenu->insertItem( level->GetName(), this, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+    InsertDefaultMenu( menu );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::NotifyContextMenu
+// Created: SBO 2006-08-30
+// -----------------------------------------------------------------------------
+void ModelBuilder::NotifyContextMenu( const KnowledgeGroup_ABC&, ContextMenu& menu )
+{
+    InsertDefaultMenu( menu );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::NotifyContextMenu
+// Created: SBO 2006-08-30
+// -----------------------------------------------------------------------------
+void ModelBuilder::NotifyContextMenu( const Agent_ABC&, ContextMenu& menu )
+{
+    InsertDefaultMenu( menu );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-08-30
+// Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const Model&, ContextMenu& menu )
+void ModelBuilder::NotifyContextMenu( const Formation_ABC&, ContextMenu& menu )
 {
-    menu.InsertItem( "Ordre", tools::translate( "Preparation", "Créer une armée" ), this, SLOT( OnCreate() ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const kernel::Team_ABC&, ContextMenu& menu )
-{
-    menu.InsertItem( "Ordre", tools::translate( "Preparation", "Créer un groupe de connaissance" ), this, SLOT( OnCreate() ) );
+    const Level* level = model_.formations_.levels_.Resolve( selectedFormation_->GetLevel() );
+    if( level && level->GetNext() )
+    {
+        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tools::translate( "Preparation", "Créer une formation" ) );
+        while( level && ( level = level->GetNext() ) )
+            subMenu->insertItem( level->GetName(), this, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+    }
     InsertDefaultMenu( menu );
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-08-30
+// Name: ModelBuilder::OnCreateFormation
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const kernel::KnowledgeGroup_ABC&, ContextMenu& menu )
+void ModelBuilder::OnCreateFormation( int levelId )
 {
-    InsertDefaultMenu( menu );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const kernel::Agent_ABC&, ContextMenu& menu )
-{
-    InsertDefaultMenu( menu );
+    if( selectedTeam_ )
+        model_.formations_.Create( *selectedTeam_.ConstCast(), levelId );
+    else if( selectedFormation_ )
+        model_.formations_.Create( *selectedFormation_.ConstCast(), levelId );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,10 +123,7 @@ void ModelBuilder::NotifyContextMenu( const kernel::Agent_ABC&, ContextMenu& men
 // -----------------------------------------------------------------------------
 void ModelBuilder::OnCreate()
 {
-    if( selectedTeam_ )
-        model_.teams_.CreateKnowledgeGroup( *selectedTeam_ );
-    else
-        model_.teams_.CreateTeam();
+    model_.teams_.CreateTeam();
 }
 
 // -----------------------------------------------------------------------------
@@ -114,9 +138,23 @@ bool ModelBuilder::OnDelete()
         delete (const KnowledgeGroup_ABC*)selectedGroup_;
     else if( selectedTeam_ )
         delete (const Team_ABC*)selectedTeam_;
+    else if( selectedFormation_ )
+        delete (const Formation_ABC*)selectedFormation_;
     else
         return false;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::ClearSelection
+// Created: SBO 2006-09-21
+// -----------------------------------------------------------------------------
+void ModelBuilder::ClearSelection()
+{
+    selectedTeam_ = 0;
+    selectedGroup_ = 0;
+    selectedAgent_ = 0;
+    selectedFormation_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,9 +163,7 @@ bool ModelBuilder::OnDelete()
 // -----------------------------------------------------------------------------
 void ModelBuilder::BeforeSelection()
 {
-    selectedTeam_  = 0;
-    selectedGroup_ = 0;
-    selectedAgent_ = 0;
+    ClearSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +179,7 @@ void ModelBuilder::AfterSelection()
 // Name: ModelBuilder::Select
 // Created: SBO 2006-09-04
 // -----------------------------------------------------------------------------
-void ModelBuilder::Select( const kernel::Team_ABC& element )
+void ModelBuilder::Select( const Team_ABC& element )
 {
     selectedTeam_ = &element;
 }
@@ -152,7 +188,7 @@ void ModelBuilder::Select( const kernel::Team_ABC& element )
 // Name: ModelBuilder::Select
 // Created: SBO 2006-09-04
 // -----------------------------------------------------------------------------
-void ModelBuilder::Select( const kernel::KnowledgeGroup_ABC& element )
+void ModelBuilder::Select( const KnowledgeGroup_ABC& element )
 {
     selectedGroup_ = &element;
 }
@@ -161,7 +197,16 @@ void ModelBuilder::Select( const kernel::KnowledgeGroup_ABC& element )
 // Name: ModelBuilder::Select
 // Created: SBO 2006-09-04
 // -----------------------------------------------------------------------------
-void ModelBuilder::Select( const kernel::Agent_ABC& element )
+void ModelBuilder::Select( const Agent_ABC& element )
 {
     selectedAgent_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
+// Created: SBO 2006-09-19
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const Formation_ABC& element )
+{
+    selectedFormation_ = &element;
 }

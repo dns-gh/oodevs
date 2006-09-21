@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "Agent.h"
-#include "Serializable_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -261,22 +260,14 @@ void Agent::CreateDictionary()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Serialize
+// Name: Agent::DoSerialize
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void Agent::Serialize( xml::xostream& xos ) const
+void Agent::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( automatType_ ? "Automate" : "Pion" )
+    xos << start( automatType_ ? "automat" : "unit" )
             << attribute( "id", long( id_ ) )
             << attribute( "type", automatType_ ? automatType_->GetName().ascii() : type_->GetName().ascii() )
-            << content( "Nom", name_ );
-    Interface().Apply( &Serializable_ABC::Serialize, xos );
-    xos         << start( "LiensHierarchiques" );
-    if( automatType_ )
-        xos << content( "Armee", GetTeam().GetName() )
-            << content( "GroupeConnaissance", long( gtia_->GetId() ) );
-    else
-        xos << content( "Automate", long( superior_->GetId() ) );
-    xos         << end()
+            << content( "name", name_ )
         << end();
 }

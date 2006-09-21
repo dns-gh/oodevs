@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -35,6 +36,7 @@ class Agent : public kernel::Agent_ABC
             , public kernel::Extension_ABC
             , public kernel::Aggregatable_ABC
             , public kernel::Drawable_ABC
+            , public kernel::Serializable_ABC
 {
 
 public:
@@ -65,7 +67,7 @@ public:
 
     virtual const kernel::AutomatType* GetAutomatType() const;
     virtual const kernel::AgentType& GetType() const;
-    void Serialize( xml::xostream& xos ) const;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
 private:

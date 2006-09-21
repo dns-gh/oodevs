@@ -8,87 +8,93 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "ObjectPositions.h"
-#include "LocationSerializer.h"
-#include "clients_kernel/Location_ABC.h"
+#include "Formation.h"
+#include "clients_kernel/ActionController.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
 using namespace xml;
 
+unsigned long Formation::idManager_ = 0;
+
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions constructor
-// Created: AGE 2006-03-22
+// Name: Formation constructor
+// Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter, const kernel::Location_ABC& location )
-    : converter_( converter )
-    , location_( &location.Clone() )
+Formation::Formation( kernel::Controller& controller, const QString& level )
+    : controller_( controller )
+    , id_( idManager_++ )
+    , name_( "" )
+    , level_( level )
 {
-    // NOTHING
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions destructor
-// Created: AGE 2006-03-22
+// Name: Formation destructor
+// Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-ObjectPositions::~ObjectPositions()
+Formation::~Formation()
 {
-    delete location_;
+    controller_.Delete( *(Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions::GetPosition
-// Created: SBO 2006-09-11
+// Name: Formation::DoUpdate
+// Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-geometry::Point2f ObjectPositions::GetPosition() const
+void Formation::DoUpdate( const kernel::InstanciationComplete& )
 {
-    return center_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectPositions::GetHeight
-// Created: SBO 2006-09-11
-// -----------------------------------------------------------------------------
-float ObjectPositions::GetHeight() const
-{
-    return 0;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectPositions::IsAt
-// Created: SBO 2006-09-11
-// -----------------------------------------------------------------------------
-bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
-{
-    return false; // $$$$ SBO 2006-09-11: todo
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectPositions::IsIn
-// Created: SBO 2006-09-11
-// -----------------------------------------------------------------------------
-bool ObjectPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
-{
-    return false; // $$$$ SBO 2006-09-11: todo
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectPositions::GetBoundingBox
-// Created: SBO 2006-09-11
-// -----------------------------------------------------------------------------
-geometry::Rectangle2f ObjectPositions::GetBoundingBox() const
-{
-    return boundingBox_;
+    controller_.Create( *(Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions::DoSerialize
-// Created: SBO 2006-09-12
+// Name: Formation::IsInTeam
+// Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void ObjectPositions::DoSerialize( xml::xostream& xos ) const
+bool Formation::IsInTeam( const Team_ABC& team ) const
 {
-    LocationSerializer serializer( converter_ );
-    xos << start( "Forme" );
-    serializer.Serialize( *location_, xos );
-    xos << end();
+    const Hierarchies* hierarchy = Retrieve< Hierarchies >();
+    return hierarchy || hierarchy->IsSubordinateOf( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetName
+// Created: SBO 2006-09-19
+// -----------------------------------------------------------------------------
+QString Formation::GetName() const
+{
+    return level_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Formation::GetId
+// Created: SBO 2006-09-19
+// -----------------------------------------------------------------------------
+unsigned long Formation::GetId() const
+{
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetLevel
+// Created: SBO 2006-09-20
+// -----------------------------------------------------------------------------
+const QString& Formation::GetLevel() const
+{
+    return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::DoSerialize
+// Created: SBO 2006-09-21
+// -----------------------------------------------------------------------------
+void Formation::DoSerialize( xml::xostream& xos ) const
+{
+    xos << attribute( "id", long( id_ ) )
+        << attribute( "name", std::string( name_.ascii() ) )
+        << attribute( "level", std::string( level_.ascii() ) );
 }

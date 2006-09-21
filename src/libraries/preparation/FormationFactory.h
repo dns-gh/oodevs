@@ -7,55 +7,49 @@
 //
 // *****************************************************************************
 
-#ifndef __TeamFactory_h_
-#define __TeamFactory_h_
+#ifndef __FormationFactory_h_
+#define __FormationFactory_h_
 
-#include "TeamFactory_ABC.h"
-#include "KnowledgeGroupFactory_ABC.h"
+#include "FormationFactory_ABC.h"
 
 namespace kernel
 {
     class Controllers;
 }
 
-class Model;
-
 // =============================================================================
-/** @class  TeamFactory
-    @brief  TeamFactory
+/** @class  FormationFactory
+    @brief  FormationFactory
 */
-// Created: AGE 2006-02-15
+// Created: SBO 2006-09-19
 // =============================================================================
-class TeamFactory : public TeamFactory_ABC
-                  , public KnowledgeGroupFactory_ABC
+class FormationFactory : public FormationFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( kernel::Controllers& controllers, Model& model );
-    virtual ~TeamFactory();
+    explicit FormationFactory( kernel::Controllers& controllers );
+    virtual ~FormationFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam();
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team );
+    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const QString& level );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    TeamFactory( const TeamFactory& );            //!< Copy constructor
-    TeamFactory& operator=( const TeamFactory& ); //!< Assignement operator
+    FormationFactory( const FormationFactory& );            //!< Copy constructor
+    FormationFactory& operator=( const FormationFactory& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Model& model_;
     //@}
 };
 
-#endif // __TeamFactory_h_
+#endif // __FormationFactory_h_

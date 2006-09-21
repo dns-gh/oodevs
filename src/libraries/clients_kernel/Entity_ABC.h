@@ -14,6 +14,7 @@
 #include "InterfaceContainer.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
+#include "Serializable_ABC.h"
 
 class QPoint;
 
@@ -59,6 +60,11 @@ public:
         const unsigned int applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
         if( ! applied )
             throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() ) + " could be updated with message type " + typeid( T ).name() );
+    }
+
+    virtual void Serialize( xml::xostream& xos ) const
+    {
+        const_cast< Entity_ABC* >( this )->Apply( & Serializable_ABC::DoSerialize, xos );
     }
 
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;

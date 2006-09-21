@@ -81,8 +81,8 @@ void ObjectsModel::DeleteObject( unsigned long id )
 // -----------------------------------------------------------------------------
 void ObjectsModel::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "Objets" );
+    xos << start( "objects" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< const Object* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: 
+        it->second->Serialize( xos );
     xos << end();
 }

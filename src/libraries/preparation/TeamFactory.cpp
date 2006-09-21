@@ -14,7 +14,10 @@
 #include "Team.h"
 #include "KnowledgeGroup.h"
 #include "Diplomacies.h"
+#include "EntityHierarchies.h"
+#include "TeamHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/InstanciationComplete.h"
 
 using namespace kernel;
 
@@ -44,8 +47,10 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamFactory::CreateTeam()
 {
-    Team* result = new Team( controllers_.controller_, *this );
+    Team_ABC* result = new Team( controllers_.controller_, *this );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
+    result->Attach< Hierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
+    result->Update( InstanciationComplete() );
     return result;
 }
 
@@ -53,8 +58,10 @@ Team_ABC* TeamFactory::CreateTeam()
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const kernel::Team_ABC& team )
+kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( kernel::Team_ABC& team )
 {
     KnowledgeGroup_ABC* result = new KnowledgeGroup( controllers_.controller_, team );
+    result->Attach< Hierarchies >( *new ::EntityHierarchies( controllers_.controller_, *result, &team ) );
+    result->Update( InstanciationComplete() );
     return result;
 }

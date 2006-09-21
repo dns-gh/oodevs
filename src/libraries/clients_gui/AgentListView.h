@@ -87,9 +87,10 @@ protected:
     virtual void NotifyDeleted( const kernel::Hierarchies& hierarchy );
     //@}
 
+private:
     //! @name Helpers
     //@{
-private:
+    void RecursiveCreateHierarchy( const kernel::Hierarchies* hierarchy );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );

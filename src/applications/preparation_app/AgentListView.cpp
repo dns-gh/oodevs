@@ -26,14 +26,13 @@ using namespace kernel;
 // Name: AgentListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, const Model& model, ModelBuilder& modelBuilder )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::AgentListView( pParent, controllers, factory )
     , factory_( factory )
-    , model_( model )
     , modelBuilder_( modelBuilder )
 {
-    setRootIsDecorated( false );
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), this, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -74,10 +73,6 @@ void AgentListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListIte
 void AgentListView::NotifyUpdated( const ModelLoaded& )
 {
     clear();
-    gui::ValuedListItem* root = new gui::ValuedListItem( this );
-    root->SetValue( &model_ );
-    root->setText( 0, tools::translate( "Preparation", "Ordre de Bataille" ) );
-    root->setOpen( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +115,20 @@ void AgentListView::keyPressEvent( QKeyEvent* event )
         if( modelBuilder_.OnDelete() )
             return;
     QListView::keyPressEvent( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::OnContextMenuRequested
+// Created: SBO 2006-09-21
+// -----------------------------------------------------------------------------
+void AgentListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
+{
+    if( item )
+        return;
+    modelBuilder_.ClearSelection();
+    QPopupMenu* menu = new QPopupMenu( this );
+    menu->insertItem( tools::translate( "Preparation", "Créer un camp" ), &modelBuilder_, SLOT( OnCreate() ) );
+    menu->exec( pos, index );
 }
 
 // -----------------------------------------------------------------------------

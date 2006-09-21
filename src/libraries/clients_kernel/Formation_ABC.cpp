@@ -7,62 +7,53 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
-#include "NBCAttributes.h"
-#include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/NBCAgent.h"
-#include "clients_gui/Tools.h"
-#include "xeumeuleu/xml.h"
+#include "clients_kernel_pch.h"
+#include "Formation_ABC.h"
+#include "ActionController.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes constructor
-// Created: AGE 2006-02-14
+// Name: Formation_ABC constructor
+// Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-NBCAttributes::NBCAttributes()
-    : nbc_( 0 )
+Formation_ABC::Formation_ABC()
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Formation_ABC destructor
+// Created: SBO 2006-09-20
+// -----------------------------------------------------------------------------
+Formation_ABC::~Formation_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes destructor
-// Created: AGE 2006-02-14
+// Name: Formation_ABC::Select
+// Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-NBCAttributes::~NBCAttributes()
+void Formation_ABC::Select( ActionController& controller ) const
 {
-    // NOTHING
+    controller.Select( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes::Display
-// Created: AGE 2006-02-23
+// Name: Formation_ABC::ContextMenu
+// Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void NBCAttributes::Display( Displayer_ABC& displayer ) const
+void Formation_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    displayer.Group( tools::translate( "NBC", "Nuage/Zone NBC" ) )
-        .Display( tools::translate( "NBC", "Agent NBC:" ), nbc_ );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: NBCAttributes::SetAgent
-// Created: SBO 2006-09-15
-// -----------------------------------------------------------------------------
-void NBCAttributes::SetAgent( const kernel::NBCAgent& agent )
-{
-    nbc_ = &agent;
+    controller.ContextMenu( *this, where );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes::DoSerialize
-// Created: SBO 2006-09-15
+// Name: Formation_ABC::Activate
+// Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void NBCAttributes::DoSerialize( xml::xostream& xos ) const
+void Formation_ABC::Activate( ActionController& controller ) const
 {
-    xos << start( "specific-attributes" )
-            << content( "nbc-agent", nbc_->GetName() )
-        << end();
+    controller.Activate( *this );
 }

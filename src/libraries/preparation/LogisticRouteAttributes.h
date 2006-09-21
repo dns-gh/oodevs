@@ -12,7 +12,7 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/OptionalValue.h"
-#include "Serializable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -26,7 +26,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class LogisticRouteAttributes : public kernel::LogisticRouteAttributes_ABC
-                              , public Serializable_ABC
+                              , public kernel::Serializable_ABC
 {
 
 public:
@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
     //! @name Modifiers

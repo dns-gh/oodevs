@@ -115,7 +115,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-    new ::AgentListView( listsTabBox, controllers, *factory, model, *modelBuilder_ );
+    new ::AgentListView( listsTabBox, controllers, *factory, *modelBuilder_ );
 
     pListsTabWidget->addTab( listsTabBox, tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList( controllers, *factory ), tr( "Objets" ) );

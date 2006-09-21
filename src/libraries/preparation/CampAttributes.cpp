@@ -56,10 +56,10 @@ void CampAttributes::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: CampAttributes::Serialize
+// Name: CampAttributes::DoSerialize
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void CampAttributes::Serialize( xml::xostream& xos ) const
+void CampAttributes::DoSerialize( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
             << content( "TC2", long( tc2_->GetId() ) )

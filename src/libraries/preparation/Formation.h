@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __Team_h_
-#define __Team_h_
+#ifndef __Formation_h_
+#define __Formation_h_
 
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
@@ -20,64 +20,53 @@ namespace kernel
     class InstanciationComplete;
 }
 
-namespace xml
-{
-    class xostream;
-}
-
-class KnowledgeGroupFactory_ABC;
-
 // =============================================================================
-/** @class  Team
-    @brief  Team
+/** @class  Formation
+    @brief  Formation
 */
-// Created: SBO 2006-08-29
+// Created: SBO 2006-09-19
 // =============================================================================
-class Team : public kernel::Team_ABC
-           , public kernel::Extension_ABC
-           , public kernel::Updatable_ABC< kernel::InstanciationComplete >
-           , public kernel::Serializable_ABC
+class Formation : public kernel::Formation_ABC
+                , public kernel::Extension_ABC
+                , public kernel::Updatable_ABC< kernel::InstanciationComplete >
+                , public kernel::Serializable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory );
-    virtual ~Team();
+             Formation( kernel::Controller& controller, const QString& level );
+    virtual ~Formation();
     //@}
 
     //! @name Accessors
     //@{
+    virtual bool IsInTeam( const kernel::Team_ABC& team ) const; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    //@}
-
-    //! @name Operations
-    //@{
-    void CreateKnowledgeGroup();
-    void Rename( const QString& name );
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual const QString& GetLevel() const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    Team( const Team& );            //!< Copy constructor
-    Team& operator=( const Team& ); //!< Assignement operator
+    Formation( const Formation& );            //!< Copy constructor
+    Formation& operator=( const Formation& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& );
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    KnowledgeGroupFactory_ABC& factory_;
-    QString name_;
     unsigned long id_;
+    QString name_;
+    QString level_;
     //@}
 
 private:
@@ -87,4 +76,4 @@ private:
     //@}
 };
 
-#endif // __Team_h_
+#endif // __Formation_h_

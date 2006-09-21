@@ -7,15 +7,18 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_EntityHierarchies_h_
-#define __kernel_EntityHierarchies_h_
+#ifndef __EntityHierarchies_h_
+#define __EntityHierarchies_h_
 
-#include "Hierarchies.h"
-#include "Resolver.h"
+#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
 {
     class Controller;
+    class Entity_ABC;
+    class InstanciationComplete;
+}
 
 // =============================================================================
 /** @class  EntityHierarchies
@@ -23,27 +26,21 @@ namespace kernel
 */
 // Created: AGE 2006-09-19
 // =============================================================================
-class EntityHierarchies : public Hierarchies, public Resolver< Entity_ABC >
+class EntityHierarchies : public kernel::EntityHierarchies
+                        , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EntityHierarchies( Controller& controller );
+             EntityHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~EntityHierarchies();
     //@}
 
     //! @name Operations
     //@{
-    virtual const Entity_ABC* GetSuperior() const = 0;
-    virtual const Entity_ABC& GetEntity() const = 0;
-
-    virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const; 
-
-    bool IsSubordinateOf( const Entity_ABC& entity ) const;
-
-    virtual void AddSubordinate   (       Entity_ABC& entity );
-    virtual void RemoveSubordinate( const Entity_ABC& entity );
+    virtual const kernel::Entity_ABC* GetSuperior() const;
+    virtual const kernel::Entity_ABC& GetEntity() const;
     //@}
 
 private:
@@ -53,13 +50,18 @@ private:
     EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    Controller& controller_;
+    kernel::Controller& controller_;
+    kernel::Entity_ABC& holder_;
+    kernel::Entity_ABC* superior_;
     //@}
 };
 
-}
-
-#endif // __kernel_EntityHierarchies_h_
+#endif // __EntityHierarchies_h_

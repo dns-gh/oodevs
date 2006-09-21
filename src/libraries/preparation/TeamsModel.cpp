@@ -111,8 +111,21 @@ void TeamsModel::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void TeamsModel::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "Armee" );
+    xos << start( "sides" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< const Team* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: Serialize Team_ABC
+    {
+        xos << start( "side" );
+        it->second->Serialize( xos );
+        xos << end();
+    }
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Iterator< const kernel::Entity_ABC& > TeamsModel::CreateEntityIterator
+// Created: SBO 2006-09-20
+// -----------------------------------------------------------------------------
+Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
+{
+    return new AssociativeIterator< const Entity_ABC&,Resolver< Team_ABC >::T_Elements >( elements_ );
 }

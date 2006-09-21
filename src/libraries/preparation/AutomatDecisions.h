@@ -11,7 +11,7 @@
 #define __AutomatDecisions_h_
 
 #include "clients_kernel/Extension_ABC.h"
-#include "Serializable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -26,7 +26,7 @@ namespace kernel
 // Created: AGE 2006-03-14
 // =============================================================================
 class AutomatDecisions : public kernel::Extension_ABC
-                       , public Serializable_ABC
+                       , public kernel::Serializable_ABC
 {
 
 public:
@@ -42,7 +42,7 @@ public:
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
     void Engage();
     void Disengage();
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
 private:

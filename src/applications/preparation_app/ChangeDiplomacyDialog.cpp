@@ -168,10 +168,14 @@ void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 {
     const int rows = table_->numRows();
-    table_->setNumCols( rows - 1 );
-    table_->setNumRows( rows - 1 );
-    T_Teams::iterator it = std::find( teams_.begin(), teams_.end(), &team );
-    teams_.erase( it );
+    if( rows > 0 )
+    {
+        table_->setNumCols( rows - 1 );
+        table_->setNumRows( rows - 1 );
+        T_Teams::iterator it = std::find( teams_.begin(), teams_.end(), &team );
+        if( it != teams_.end() )
+            teams_.erase( it );
+    }
 }
     
 // -----------------------------------------------------------------------------

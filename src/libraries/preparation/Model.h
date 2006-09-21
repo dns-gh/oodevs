@@ -10,9 +10,12 @@
 #ifndef __Model_h_
 #define __Model_h_
 
+#include "clients_kernel/Entity_ABC.h"
+
 namespace kernel
 {
     class Controllers;
+    class ActionController;
 }
 
 namespace xml
@@ -28,6 +31,8 @@ class AgentsModel;
 class AgentFactory_ABC;
 class ObjectsModel;
 class ObjectFactory_ABC;
+class FormationModel;
+class FormationFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -58,6 +63,7 @@ private:
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;
     ObjectFactory_ABC& objectFactory_;
+    FormationFactory_ABC& formationFactory_;
     //@}
 
 public:
@@ -67,6 +73,7 @@ public:
     KnowledgeGroupsModel& knowledgeGroups_;
     AgentsModel& agents_;
     ObjectsModel& objects_;
+    FormationModel& formations_;
     //@}
 
 private:

@@ -15,6 +15,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -37,6 +38,7 @@ namespace xml
 class Object : public kernel::Object_ABC
              , public kernel::Extension_ABC
              , public kernel::Drawable_ABC
+             , public kernel::Serializable_ABC
 {
 
 public:
@@ -53,7 +55,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-    void Serialize( xml::xostream& xos ) const;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
     //! @name Accessors

@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "Serializable_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
@@ -27,7 +27,7 @@ namespace kernel
 // Created: AGE 2006-03-22
 // =============================================================================
 class ObjectPositions : public kernel::Positions
-                      , public Serializable_ABC
+                      , public kernel::Serializable_ABC
 {
 
 public:
@@ -44,7 +44,7 @@ public:
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
-    virtual void Serialize( xml::xostream& xos ) const;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
 private:

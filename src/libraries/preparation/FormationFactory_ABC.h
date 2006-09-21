@@ -7,35 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef __KnowledgeGroupFactory_ABC_h_
-#define __KnowledgeGroupFactory_ABC_h_
+#ifndef __FormationFactory_ABC_h_
+#define __FormationFactory_ABC_h_
 
 namespace kernel
 {
-    class KnowledgeGroup_ABC;
-    class Team_ABC;
+    class Entity_ABC;
+    class Formation_ABC;
 }
 
 // =============================================================================
-/** @class  KnowledgeGroupFactory_ABC
-    @brief  KnowledgeGroupFactory_ABC
+/** @class  FormationFactory_ABC
+    @brief  FormationFactory_ABC
 */
-// Created: AGE 2006-02-15
+// Created: SBO 2006-09-19
 // =============================================================================
-class KnowledgeGroupFactory_ABC
+class FormationFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupFactory_ABC() {};
-    virtual ~KnowledgeGroupFactory_ABC() {};
+             FormationFactory_ABC() {};
+    virtual ~FormationFactory_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team ) = 0;
+    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const QString& level ) = 0;
     //@}
 };
 
-#endif // __KnowledgeGroupFactory_ABC_h_
+#endif // __FormationFactory_ABC_h_

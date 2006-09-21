@@ -7,35 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __KnowledgeGroupFactory_ABC_h_
-#define __KnowledgeGroupFactory_ABC_h_
+#ifndef __TeamHierarchies_h_
+#define __TeamHierarchies_h_
 
-namespace kernel
-{
-    class KnowledgeGroup_ABC;
-    class Team_ABC;
-}
+#include "EntityHierarchies.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
-/** @class  KnowledgeGroupFactory_ABC
-    @brief  KnowledgeGroupFactory_ABC
+/** @class  TeamHierarchies
+    @brief  TeamHierarchies
 */
-// Created: AGE 2006-02-15
+// Created: SBO 2006-09-21
 // =============================================================================
-class KnowledgeGroupFactory_ABC
+class TeamHierarchies : public EntityHierarchies
+                      , public kernel::Serializable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupFactory_ABC() {};
-    virtual ~KnowledgeGroupFactory_ABC() {};
+             TeamHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+    virtual ~TeamHierarchies();
     //@}
 
+private:
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team ) = 0;
+    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 };
 
-#endif // __KnowledgeGroupFactory_ABC_h_
+#endif // __TeamHierarchies_h_
