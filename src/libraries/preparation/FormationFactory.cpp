@@ -11,9 +11,10 @@
 #include "FormationFactory.h"
 #include "clients_kernel/Controllers.h"
 #include "FormationHierarchies.h"
+#include "Formation.h"
+#include "TeamHierarchy.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/InstanciationComplete.h"
-#include "Formation.h"
 
 using namespace kernel;
 
@@ -38,11 +39,26 @@ FormationFactory::~FormationFactory()
 
 // -----------------------------------------------------------------------------
 // Name: FormationFactory::Create
-// Created: SBO 2006-09-19
+// Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-Formation_ABC* FormationFactory::Create( Entity_ABC& parent, const QString& level )
+kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const QString& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level );
+    formation->Attach( *new TeamHierarchy( parent ) );    
+    formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Update( InstanciationComplete() );
+    return formation;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: FormationFactory::Create
+// Created: SBO 2006-09-22
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC* FormationFactory::Create( kernel::Formation_ABC& parent, const QString& level )
+{
+    Formation_ABC* formation = new Formation( controllers_.controller_, level );
+    if( const TeamHierarchy* team = parent.Retrieve< TeamHierarchy >() )
+        formation->Attach( *new TeamHierarchy( team->GetTeam() ) );    
     formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
     return formation;

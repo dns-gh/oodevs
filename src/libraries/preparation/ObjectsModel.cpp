@@ -83,6 +83,10 @@ void ObjectsModel::Serialize( xml::xostream& xos ) const
 {
     xos << start( "objects" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        xos << start( "object" );
         it->second->Serialize( xos );
+        xos << end();
+    }
     xos << end();
 }

@@ -164,10 +164,8 @@ bool Object::IsInTeam( const Team_ABC& team ) const
 // -----------------------------------------------------------------------------
 void Object::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( "object" )
-            << attribute( "id", long( nId_ ) )
-            << attribute( "type", type_.GetName().ascii() )
-            << content( "name", strName_ )
-            << content( "side", team_.GetName() );
-    xos << end();
+    xos << attribute( "id", long( nId_ ) )
+        << attribute( "type", type_.GetName().ascii() )
+        << content( "name", strName_ )
+        << content( "side", team_.GetName() );
 }

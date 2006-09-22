@@ -18,6 +18,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Formation_ABC;
+    class Team_ABC;
 }
 
 namespace xml { class xostream; }
@@ -45,7 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    void Create( kernel::Entity_ABC& parent, unsigned int level );
+    void Create( kernel::Team_ABC& parent, unsigned int levelId );
+    void Create( kernel::Formation_ABC& parent, unsigned int levelId );
     void Purge();
     void Serialize( xml::xostream& xos ) const;
     //@}

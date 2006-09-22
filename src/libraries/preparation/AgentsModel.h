@@ -21,14 +21,9 @@ namespace kernel
     class AgentType;
     class AutomatType;
     class PopulationType;
-    class KnowledgeGroup_ABC;
+    class Formation_ABC;
     class Team_ABC;
     class Controllers;
-}
-
-namespace xml
-{
-    class xostream;
 }
 
 class AgentFactory_ABC;
@@ -54,19 +49,18 @@ public:
 
     //! @name Operations
     //@{
-    void CreateAgent( const kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
-    void CreateAgent( const kernel::KnowledgeGroup_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void CreateAgent( kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
+    void CreateAgent( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
-    void CreatePopulation( const kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position );
+    void CreatePopulation( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 
     void Purge();
-    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

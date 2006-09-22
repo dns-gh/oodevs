@@ -98,7 +98,7 @@ void ModelBuilder::NotifyContextMenu( const Formation_ABC&, ContextMenu& menu )
     const Level* level = model_.formations_.levels_.Resolve( selectedFormation_->GetLevel() );
     if( level && level->GetNext() )
     {
-        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tools::translate( "Preparation", "Créer une formation" ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
         while( level && ( level = level->GetNext() ) )
             subMenu->insertItem( level->GetName(), this, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
     }

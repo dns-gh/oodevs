@@ -12,8 +12,8 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class Formation_ABC;
+    class Team_ABC;
 }
 
 // =============================================================================
@@ -34,7 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const QString& level ) = 0;
+    virtual kernel::Formation_ABC* Create( kernel::Team_ABC& parent, const QString& level ) = 0;
+    virtual kernel::Formation_ABC* Create( kernel::Formation_ABC& parent, const QString& level ) = 0;
     //@}
 };
 

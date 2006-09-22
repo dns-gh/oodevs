@@ -7,50 +7,49 @@
 //
 // *****************************************************************************
 
-#ifndef __FormationFactory_h_
-#define __FormationFactory_h_
+#ifndef __TeamHierarchy_h_
+#define __TeamHierarchy_h_
 
-#include "FormationFactory_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
+    class Team_ABC;
 }
 
 // =============================================================================
-/** @class  FormationFactory
-    @brief  FormationFactory
+/** @class  TeamHierarchy
+    @brief  TeamHierarchy
 */
-// Created: SBO 2006-09-19
+// Created: SBO 2006-09-22
 // =============================================================================
-class FormationFactory : public FormationFactory_ABC
+class TeamHierarchy : public kernel::Extension_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FormationFactory( kernel::Controllers& controllers );
-    virtual ~FormationFactory();
+    explicit TeamHierarchy( const kernel::Team_ABC& team );
+    virtual ~TeamHierarchy();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Formation_ABC* Create( kernel::Team_ABC& parent, const QString& level );
-    virtual kernel::Formation_ABC* Create( kernel::Formation_ABC& parent, const QString& level );
+    const kernel::Team_ABC& GetTeam() const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    FormationFactory( const FormationFactory& );            //!< Copy constructor
-    FormationFactory& operator=( const FormationFactory& ); //!< Assignement operator
+    TeamHierarchy( const TeamHierarchy& );            //!< Copy constructor
+    TeamHierarchy& operator=( const TeamHierarchy& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    const kernel::Team_ABC& team_;
     //@}
 };
 
-#endif // __FormationFactory_h_
+#endif // __TeamHierarchy_h_

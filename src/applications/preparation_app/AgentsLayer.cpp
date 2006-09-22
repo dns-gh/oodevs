@@ -12,6 +12,7 @@
 #include "ModelBuilder.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
+#include "clients_kernel/Formation_ABC.h"
 
 using namespace kernel;
 
@@ -24,7 +25,7 @@ AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gu
     , model_( model )
     , modelBuilder_( modelBuilder )
     , selectedAgent_( controllers )
-    , selectedGroup_( controllers )
+    , selectedFormation_( controllers )
 {
     // NOTHING
 }
@@ -51,9 +52,9 @@ void AgentsLayer::Select( const kernel::Agent_ABC& element )
 // Name: AgentsLayer::Select
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-void AgentsLayer::Select( const kernel::KnowledgeGroup_ABC& element )
+void AgentsLayer::Select( const kernel::Formation_ABC& element )
 {
-    selectedGroup_ = &element;
+    selectedFormation_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,19 +80,19 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         const AgentType* droppedItem = *reinterpret_cast< const AgentType** >( tmp.data() );
         if( droppedItem )
         {
-            model_.agents_.CreateAgent( *selectedAgent_, *droppedItem, point );
+            model_.agents_.CreateAgent( *selectedAgent_.ConstCast(), *droppedItem, point );
             return true;
         }
     }
     else if( event->provides( "astec/AutomatType" ) )
     {
-        if( !selectedGroup_ )
+        if( !selectedFormation_ )
             return false;
         QByteArray tmp = event->encodedData( "astec/AutomatType" );
         const AutomatType* droppedItem = *reinterpret_cast< const AutomatType** >( tmp.data() );
         if( droppedItem )
         {
-            model_.agents_.CreateAgent( *selectedGroup_, *droppedItem, point );
+            model_.agents_.CreateAgent( *selectedFormation_.ConstCast(), *droppedItem, point );
             return true;
         }
     }

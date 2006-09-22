@@ -19,6 +19,7 @@ namespace kernel
     class Controller;
     class AgentType;
     class AutomatType;
+    class Formation_ABC;
 }
 
 namespace xml
@@ -42,16 +43,8 @@ class Agent : public kernel::Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const kernel::KnowledgeGroup_ABC& gtia
-                  , const kernel::AutomatType& type
-                  , kernel::Controller& controller
-                  , const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver
-                  , const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& gtiaResolver );
-             Agent( const kernel::Agent_ABC& automat
-                  , const kernel::AgentType& type
-                  , kernel::Controller& controller
-                  , const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver
-                  , const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& gtiaResolver );
+             Agent( const kernel::Entity_ABC& parent, const kernel::AutomatType& type, kernel::Controller& controller );
+             Agent( const kernel::Entity_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller );
     virtual ~Agent();
     //@}
 
@@ -79,16 +72,8 @@ private:
 
     //! @name Helpers
     //@{
-    void ChangeKnowledgeGroup( unsigned long id );
-    void ChangeKnowledgeGroup( kernel::KnowledgeGroup_ABC* gtia );
-    void ChangeSuperior( unsigned long id );
     virtual void Aggregate( const bool& );
-
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-
-    void RemoveChild( kernel::Agent_ABC& child );
-    void AddChild( kernel::Agent_ABC& child );
-
     void CreateDictionary();
     //@}
 
@@ -96,20 +81,12 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
-    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >&  gtiaResolver_;
     unsigned long id_;
     QString   name_;
 
-    // Automat only
+    const kernel::Entity_ABC*   parent_;
     const kernel::AutomatType*  automatType_;
     const kernel::AgentType*    type_;
-
-    // Agent only
-    Agent*  superior_;
-
-    // Automat only
-    kernel::KnowledgeGroup_ABC* gtia_;
 
     bool aggregated_;
     //@}

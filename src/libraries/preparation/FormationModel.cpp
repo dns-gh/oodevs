@@ -42,9 +42,22 @@ FormationModel::~FormationModel()
 
 // -----------------------------------------------------------------------------
 // Name: FormationModel::Create
-// Created: SBO 2006-09-19
+// Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-void FormationModel::Create( Entity_ABC& parent, unsigned int levelId )
+void FormationModel::Create( kernel::Team_ABC& parent, unsigned int levelId )
+{
+    const Level* level = levels_.Resolve( levelId );
+    if( !level )
+        return;
+    Formation_ABC* formation = factory_.Create( parent, level->GetName() );
+    Register( formation->GetId(), *formation );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: FormationModel::Create
+// Created: SBO 2006-09-22
+// -----------------------------------------------------------------------------
+void FormationModel::Create( kernel::Formation_ABC& parent, unsigned int levelId )
 {
     const Level* level = levels_.Resolve( levelId );
     if( !level )

@@ -39,9 +39,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Agent_ABC* Create( const kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
-    virtual kernel::Agent_ABC* Create( const kernel::KnowledgeGroup_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
-    virtual kernel::Population_ABC* Create( const kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position );
+    virtual kernel::Agent_ABC* Create( kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
+    virtual kernel::Agent_ABC* Create( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
+    virtual kernel::Population_ABC* Create( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position );
     //@}
 
 private:

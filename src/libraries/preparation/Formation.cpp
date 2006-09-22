@@ -18,7 +18,7 @@
 using namespace kernel;
 using namespace xml;
 
-unsigned long Formation::idManager_ = 0;
+unsigned long Formation::idManager_ = 1000;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
@@ -95,6 +95,6 @@ const QString& Formation::GetLevel() const
 void Formation::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "name", std::string( name_.ascii() ) )
-        << attribute( "level", std::string( level_.ascii() ) );
+        << attribute( "name", name_.ascii() )
+        << attribute( "level", level_.ascii() );
 }

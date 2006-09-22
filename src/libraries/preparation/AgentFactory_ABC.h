@@ -17,7 +17,7 @@ namespace kernel
     class AgentType;
     class AutomatType;
     class PopulationType;
-    class KnowledgeGroup_ABC;
+    class Formation_ABC;
     class Team_ABC;
 }
 
@@ -39,9 +39,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Agent_ABC* Create( const kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position ) = 0;
-    virtual kernel::Agent_ABC* Create( const kernel::KnowledgeGroup_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position ) = 0;
-    virtual kernel::Population_ABC* Create( const kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position ) = 0;
+    virtual kernel::Agent_ABC* Create( kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position ) = 0;
+    virtual kernel::Agent_ABC* Create( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position ) = 0;
+    virtual kernel::Population_ABC* Create( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position ) = 0;
     //@}
 
 private:

@@ -57,7 +57,6 @@ public:
     //! @name Operations
     //@{
     void ClearSelection();
-    void BuildFormationContextMenu( const QPoint& point, int index ) const;
     //@}
 
 public slots:

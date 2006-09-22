@@ -16,10 +16,8 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
-#include "xeumeuleu/xml.h"
 
 using namespace kernel;
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel constructor
@@ -56,7 +54,7 @@ void AgentsModel::Purge()
 // Name: AgentsModel::CreateAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( const Agent_ABC& parent, const AgentType& type, const geometry::Point2f& position )
+void AgentsModel::CreateAgent( Agent_ABC& parent, const AgentType& type, const geometry::Point2f& position )
 {
     Agent_ABC* agent = agentFactory_.Create( parent, type, position );
     Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
@@ -116,7 +114,7 @@ namespace
 // Name: AgentsModel::CreateAgent
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( const KnowledgeGroup_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
+void AgentsModel::CreateAgent( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
 {
     Agent_ABC* agent = agentFactory_.Create( parent, type, position );
     Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
@@ -165,7 +163,7 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // Name: AgentsModel::CreatePopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( const Team_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
+void AgentsModel::CreatePopulation( Team_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
 {
     Population_ABC* popu = agentFactory_.Create( parent, type, position );
     Resolver< Population_ABC >::Register( popu->GetId(), *popu );
@@ -196,28 +194,4 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 void AgentsModel::NotifyDeleted( const Agent_ABC& agent )
 {
     Resolver< Agent_ABC >::Remove( agent.GetId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::Serialize
-// Created: SBO 2006-09-06
-// -----------------------------------------------------------------------------
-void AgentsModel::Serialize( xml::xostream& xos ) const
-{
-    xos << start( "Automates" );
-    for( Resolver< Agent_ABC >::CIT_Elements it = Resolver< Agent_ABC >::elements_.begin(); it != Resolver< Agent_ABC >::elements_.end(); ++it )
-        if( it->second->GetAutomatType() )
-            static_cast< const Agent* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: 
-    xos << end();
-
-    xos << start( "Pions" );
-    for( Resolver< Agent_ABC >::CIT_Elements it = Resolver< Agent_ABC >::elements_.begin(); it != Resolver< Agent_ABC >::elements_.end(); ++it )
-        if( !it->second->GetAutomatType() )
-            static_cast< const Agent* >( it->second )->Serialize( xos ); // $$$$ SBO 2006-09-06: 
-    xos << end();
-
-    xos << start( "Populations" );
-//    for( Resolver< Population_ABC >::CIT_Elements it = Resolver< Population_ABC >::elements_.begin(); it != Resolver< Population_ABC >::elements_.end(); ++it )
-//        static_cast< const Population* >( it->second )->Serialize( xos );
-    xos << end();
 }

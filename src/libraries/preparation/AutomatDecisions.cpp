@@ -81,5 +81,5 @@ void AutomatDecisions::Disengage()
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DoSerialize( xml::xostream& xos ) const
 {
-    xos << content( "engaged", bEmbraye_ ? "true" : "false" );
+    xos << attribute( "engaged", bEmbraye_ ? "true" : "false" );
 }

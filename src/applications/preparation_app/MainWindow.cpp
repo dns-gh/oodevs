@@ -112,12 +112,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
-
+    
+    QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
     new ::AgentListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+    pAgentsTabWidget->addTab( listsTabBox, tr( "Tactique" ) );
 
-    pListsTabWidget->addTab( listsTabBox, tr( "Agents" ) );
+    pListsTabWidget->addTab( pAgentsTabWidget, tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList( controllers, *factory ), tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory ), tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );

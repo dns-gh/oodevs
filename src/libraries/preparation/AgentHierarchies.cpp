@@ -8,42 +8,45 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "FormationHierarchies.h"
+#include "AgentHierarchies.h"
 #include "AutomatDecisions.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "xeumeuleu/xml.h"
 
+using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: FormationHierarchies constructor
-// Created: SBO 2006-09-21
+// Name: AgentHierarchies constructor
+// Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
     : EntityHierarchies( controller, holder, superior )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: FormationHierarchies destructor
-// Created: SBO 2006-09-21
+// Name: AgentHierarchies destructor
+// Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-FormationHierarchies::~FormationHierarchies()
+AgentHierarchies::~AgentHierarchies()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationHierarchies::DoSerialize
-// Created: SBO 2006-09-21
+// Name: AgentHierarchies::DoSerialize
+// Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-void FormationHierarchies::DoSerialize( xml::xostream& xos ) const
+void AgentHierarchies::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( "formations" );
+    if( !GetEntity().Retrieve< AutomatDecisions >() ) // $$$$ SBO 2006-09-22: bof bof
+        return;
+    xos << start( "units" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        xos << start( it->second->Retrieve< AutomatDecisions >() ? "automat" : "formation" ); // $$$$ SBO 2006-09-22: bof bof
+        xos << start( "unit" );
         it->second->Serialize( xos );
         xos << end();
     }

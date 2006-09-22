@@ -16,7 +16,7 @@
 namespace kernel
 {
     class Agent_ABC;
-    class KnowledgeGroup_ABC;
+    class Formation_ABC;
 }
 
 class Model;
@@ -29,7 +29,7 @@ class ModelBuilder;
 // Created: SBO 2006-08-31
 // =============================================================================
 class AgentsLayer : public gui::AgentsLayer
-                  , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
+                  , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
 {
 
 public:
@@ -56,7 +56,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Select( const kernel::Agent_ABC& element );
-    virtual void Select( const kernel::KnowledgeGroup_ABC& element );
+    virtual void Select( const kernel::Formation_ABC& element );
     //@}
 
 private:
@@ -65,7 +65,7 @@ private:
     Model& model_;
     ModelBuilder& modelBuilder_;
     kernel::SafePointer< kernel::Agent_ABC > selectedAgent_;
-    kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedGroup_;
+    kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     //@}
 };
 

@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Agent.h"
+#include "TeamHierarchy.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -28,23 +29,17 @@ unsigned long Agent::idManager_ = 1; // $$$$ SBO 2006-09-05:
 // Name: Agent constructor
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-Agent::Agent( const KnowledgeGroup_ABC& gtia, const AutomatType& type, Controller& controller
-            , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
+Agent::Agent( const Entity_ABC& parent, const AutomatType& type, Controller& controller )
     : controller_( controller )
-    , agentResolver_( agentResolver )
-    , gtiaResolver_( gtiaResolver )
     , id_( idManager_++ )
     , name_( type.GetName() )
+    , parent_( &parent )
     , automatType_( &type )
     , type_( automatType_->GetTypePC() )
-    , superior_( 0 )
-    , gtia_( 0 )
     , aggregated_( false )
 {
     RegisterSelf( *this );
     CreateDictionary();
-    // $$$$ AGE 2006-09-20: 
-    ChangeKnowledgeGroup( gtia.GetId() );
     controller_.Create( *(Agent_ABC*)this );
 }
 
@@ -52,22 +47,17 @@ Agent::Agent( const KnowledgeGroup_ABC& gtia, const AutomatType& type, Controlle
 // Name: Agent constructor
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-Agent::Agent( const Agent_ABC& automat, const AgentType& type, Controller& controller
-            , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
+Agent::Agent( const Entity_ABC& parent, const AgentType& type, Controller& controller )
     : controller_( controller )
-    , agentResolver_( agentResolver )
-    , gtiaResolver_( gtiaResolver )
     , id_( idManager_++ )
     , name_( type.GetName() )
+    , parent_( &parent )
     , automatType_( 0 )
     , type_( &type )
-    , superior_( 0 )
-    , gtia_( 0 )
     , aggregated_( false )
 {
     RegisterSelf( *this );
     CreateDictionary();
-    ChangeSuperior( automat.GetId() );
     controller_.Create( *(Agent_ABC*)this );
 }
 
@@ -77,11 +67,6 @@ Agent::Agent( const Agent_ABC& automat, const AgentType& type, Controller& contr
 // -----------------------------------------------------------------------------
 Agent::~Agent()
 {
-    ChangeKnowledgeGroup( (kernel::KnowledgeGroup_ABC*)0 );
-    ChangeSuperior( 0 );
-     // $$$$ SBO 2006-09-04: 
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< Agent* >( it->second )->superior_ = 0;
     DeleteAll();
     controller_.Delete( *(Agent_ABC*)this );
 }
@@ -105,74 +90,12 @@ unsigned long Agent::GetId() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::ChangeKnowledgeGroup
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::ChangeKnowledgeGroup( unsigned long id )
-{
-    ChangeKnowledgeGroup( gtiaResolver_.Find( id ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ChangeKnowledgeGroup
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::ChangeKnowledgeGroup( KnowledgeGroup_ABC* gtia )
-{
-    if( gtia_ )
-        gtia_->RemoveAutomat( id_ );
-    gtia_ = gtia;
-    if( gtia_ )
-        gtia_->AddAutomat( id_, *this );
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< Agent* >( it->second )->gtia_ = gtia_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ChangeSuperior
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::ChangeSuperior( unsigned long id )
-{
-    if( superior_ )
-        superior_->RemoveChild( *this );
-    superior_ = static_cast< Agent* >( agentResolver_.Find( id ) );
-    if( superior_ )
-        superior_->AddChild( *this );
-    controller_.Update( *(Agent_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::AddChild
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::AddChild( Agent_ABC& child )
-{
-    Resolver< Agent_ABC >::Register( child.GetId(), child );
-    controller_.Update( *(Agent_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::RemoveChild
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::RemoveChild( Agent_ABC& child )
-{
-    Resolver< Agent_ABC >::Remove( child.GetId() );
-    controller_.Update( *(Agent_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::GetKnowledgeGroup
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 {
-    if( gtia_ )
-        return *gtia_;
-    if( superior_ )
-        return superior_->GetKnowledgeGroup();
-    throw std::runtime_error( "I have no knowledge group" );
+    throw std::runtime_error( "I have no knowledge group" ); // $$$$ SBO 2006-09-22: 
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +104,10 @@ KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 const Team_ABC& Agent::GetTeam() const
 {
-    return GetKnowledgeGroup().GetTeam();
+    const TeamHierarchy* team = Retrieve< TeamHierarchy >();
+    if( team )
+        return team->GetTeam();
+    throw std::runtime_error( "I have no team" );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +116,7 @@ const Team_ABC& Agent::GetTeam() const
 // -----------------------------------------------------------------------------
 const Agent_ABC* Agent::GetSuperior() const
 {
-    return superior_;
+    return 0; // $$$$ SBO 2006-09-22: 
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +169,7 @@ const AgentType& Agent::GetType() const
 // -----------------------------------------------------------------------------
 bool Agent::IsInTeam( const Team_ABC& team ) const
 {
-    return GetKnowledgeGroup().IsInTeam( team );
+    return &GetTeam() == &team;
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +182,7 @@ void Agent::CreateDictionary()
     Attach( dictionary );
     dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
-    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), superior_ );
+    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), parent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -265,9 +191,7 @@ void Agent::CreateDictionary()
 // -----------------------------------------------------------------------------
 void Agent::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( automatType_ ? "automat" : "unit" )
-            << attribute( "id", long( id_ ) )
-            << attribute( "type", automatType_ ? automatType_->GetName().ascii() : type_->GetName().ascii() )
-            << content( "name", name_ )
-        << end();
+    xos << attribute( "id", long( id_ ) )
+        << attribute( "type", automatType_ ? automatType_->GetName().ascii() : type_->GetName().ascii() )
+        << attribute( "name", name_.ascii() );
 }
