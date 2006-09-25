@@ -14,52 +14,13 @@
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/Diplomacy.h"
 #include "preparation/Diplomacies.h"
-
-#include <qtable.h>
-#include <qpainter.h>
+#include "DiplomacyCell.h"
 
 using namespace kernel;
 using namespace gui;
 
 namespace
 {
-    class DiplomacyCell : public QComboTableItem
-    {
-    public:
-        DiplomacyCell( QTable* table, const QStringList& list )
-            : QComboTableItem( table, list ) {}
-
-        ~DiplomacyCell() {}
-
-        void SetColor( const Diplomacy& diplomacy, const QColor& color )
-        {
-            const QString name = diplomacy.GetName();
-            colors_[name] = color;
-            diplomacies_[name] = diplomacy;
-        }
-
-        void paint( QPainter* p, const QColorGroup& cg, const QRect& cr, bool selected )
-        {
-            QColorGroup newCg( cg );
-            newCg.setColor( QColorGroup::Base, colors_[QTableItem::text()] );
-
-            p->setBackgroundColor( colors_[QTableItem::text()] );
-            QTableItem::paint( p, newCg, cr, selected );
-        }
-
-        Diplomacy GetValue() const
-        {
-            std::map< const QString, Diplomacy >::const_iterator it = diplomacies_.find( QTableItem::text() );
-            if( it != diplomacies_.end() )
-                return it->second;
-            return Diplomacy::Unknown();
-        }
-
-    private:
-        std::map< const QString, QColor > colors_;
-        std::map< const QString, Diplomacy > diplomacies_;
-    };
-
     DiplomacyCell* BuildDiplomacyCell( QTable* table, const QStringList& list )
     {
         DiplomacyCell* cell = new DiplomacyCell( table, list );
