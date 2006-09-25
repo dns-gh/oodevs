@@ -20,7 +20,6 @@
 
 int MIL_AutomateMission_ALAT_Reconnaitre::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Reconnaitre::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_AutomateMission_ALAT_Reconnaitre::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Reconnaitre::nDIAPorteeActionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Reconnaitre::nDIAAmbianceMissionIdx_ = 0 ;
 
@@ -59,7 +58,6 @@ void MIL_AutomateMission_ALAT_Reconnaitre::InitializeDIA( const MIL_AutomateMiss
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
@@ -79,8 +77,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Reconnaitre::Initialize( const
     if( !NET_ASN_Tools::CopyPoint( asnMission.pointRegroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup() ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -118,7 +114,6 @@ void MIL_AutomateMission_ALAT_Reconnaitre::Serialize( ASN1T_MsgAutomateOrder& as
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.pointRegroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 

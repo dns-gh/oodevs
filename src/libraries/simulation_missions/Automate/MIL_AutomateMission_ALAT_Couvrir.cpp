@@ -22,7 +22,6 @@ int MIL_AutomateMission_ALAT_Couvrir::nDIAUnitesAAppuyerIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Couvrir::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Couvrir::nDIACiblesPrioritairesIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Couvrir::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_AutomateMission_ALAT_Couvrir::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Couvrir::nDIAPorteeActionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Couvrir::nDIAAmbianceMissionIdx_ = 0 ;
 
@@ -63,7 +62,6 @@ void MIL_AutomateMission_ALAT_Couvrir::InitializeDIA( const MIL_AutomateMissionT
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIACiblesPrioritairesIdx_ = DEC_Tools::InitializeDIAField( "ciblesPrioritaires_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
@@ -87,8 +85,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Couvrir::Initialize( const ASN
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup() ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -128,7 +124,6 @@ void MIL_AutomateMission_ALAT_Couvrir::Serialize( ASN1T_MsgAutomateOrder& asnMsg
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyNatureAtlas( GetVariable( nDIACiblesPrioritairesIdx_ ), asnMission.cibles_prioritaires );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 

@@ -22,7 +22,6 @@ int MIL_AutomateMission_ALAT_Appuyer::nDIAUnitesAAppuyerIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Appuyer::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Appuyer::nDIACiblesPrioritairesIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Appuyer::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_AutomateMission_ALAT_Appuyer::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Appuyer::nDIAPointDislocationIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Appuyer::nDIAZoneIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Appuyer::nDIAPorteeActionIdx_ = 0 ;
@@ -65,7 +64,6 @@ void MIL_AutomateMission_ALAT_Appuyer::InitializeDIA( const MIL_AutomateMissionT
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIACiblesPrioritairesIdx_ = DEC_Tools::InitializeDIAField( "ciblesPrioritaires_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPointDislocationIdx_ = DEC_Tools::InitializeDIAField( "pointDislocation_", diaType );
     nDIAZoneIdx_ = DEC_Tools::InitializeDIAField( "zone_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
@@ -91,8 +89,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Appuyer::Initialize( const ASN
     if( !NET_ASN_Tools::CopyNatureAtlas( asnMission.cibles_prioritaires, GetVariable( nDIACiblesPrioritairesIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup() ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_dislocation, GetVariable( nDIAPointDislocationIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -136,7 +132,6 @@ void MIL_AutomateMission_ALAT_Appuyer::Serialize( ASN1T_MsgAutomateOrder& asnMsg
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyNatureAtlas( GetVariable( nDIACiblesPrioritairesIdx_ ), asnMission.cibles_prioritaires );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointDislocationIdx_ ), asnMission.point_dislocation );
     NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneIdx_ ), asnMission.zone );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );

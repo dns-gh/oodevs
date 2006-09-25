@@ -29,7 +29,6 @@ Mission-Pion-ALAT-ReconnaitreDansLaProfondeur ::= SEQUENCE
 {
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission,
     point-dislocation               Point,
@@ -40,7 +39,6 @@ Mission-Pion-ALAT-ReconnaitreContourEnnemi ::= SEQUENCE
 {
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission   
 }
@@ -52,7 +50,6 @@ Mission-Pion-ALAT-DetruireNeutraliserDansZone ::= SEQUENCE
     cibles-prioritaires             NatureAtlas,                                
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission,
     neutraliser                     BOOLEAN
@@ -63,7 +60,6 @@ Mission-Pion-ALAT-DetruireAeromobile ::= SEQUENCE
     unite-a-detruire                ListKnowledgeAgent,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -73,7 +69,6 @@ Mission-Pion-ALAT-Freiner ::= SEQUENCE
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -83,7 +78,6 @@ Mission-Pion-ALAT-Attaquer ::= SEQUENCE
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -93,7 +87,6 @@ Mission-Pion-ALAT-Jalonner ::= SEQUENCE
     point-regroupement              Point,
     cibles-prioritaires             NatureAtlas,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -105,7 +98,6 @@ Mission-Pion-ALAT-Escorter ::= SEQUENCE
     point-regroupement              Point,
     cibles-prioritaires             NatureAtlas,                                
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -117,7 +109,6 @@ Mission-Pion-ALAT-Heliporter ::= SEQUENCE
     point-embarquement              Point,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     attendre-unite                  BOOLEAN,
     avec-materiel                   BOOLEAN DEFAULT FALSE
@@ -128,7 +119,6 @@ Mission-Pion-ALAT-HeliporterHelitransporterPlotRavitaillement ::= SEQUENCE
     point-debarquement              Point,
     position-regroupement           Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction
 }
 
@@ -139,7 +129,6 @@ Mission-Pion-ALAT-Helitransporter ::= SEQUENCE
     point-embarquement              Point,
     point-regroupement              Point,  
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     avec-materiel                   BOOLEAN DEFAULT FALSE
 }
@@ -149,7 +138,6 @@ Mission-Pion-ALAT-EffectuerRechercheEtSauvetage ::= SEQUENCE
     unites-a-secourir               ListAgent,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction
 }
 
@@ -158,7 +146,6 @@ Mission-Pion-ALAT-IMEX ::= SEQUENCE
     unites-a-appuyer                ListAgent,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction
 }
 
@@ -167,7 +154,6 @@ Mission-Pion-ALAT-Eclairer ::= SEQUENCE
 {
     point-regroupement      Point,
     plots-ravitaillement    ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action           EnumMissionALAT_PorteeAction,
     ambiance-mission        EnumMissionALAT_AmbianceMission
 }
@@ -177,7 +163,6 @@ Mission-Pion-ALAT-Surveiller ::= SEQUENCE
     zone                            Polygon,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -189,7 +174,6 @@ Mission-Pion-ALAT-AppuyerDirectAuContact ::= SEQUENCE
     unites-a-appuyer                ListAgent,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -200,7 +184,6 @@ Mission-Pion-ALAT-Couvrir ::= SEQUENCE
     unites-a-couvrir                ListAgent,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission
 }
@@ -211,7 +194,6 @@ Mission-Pion-ALAT-EvacuationSanitaire ::= SEQUENCE
 	zone-extraction                 Polygon,
 	point-regroupement              Point,
 	plots-ravitaillement            ListKnowledgeObject,
-	ravitaillement-debut-mission    BOOLEAN DEFAULT TRUE,
 	portee-action                   EnumMissionALAT_PorteeAction
 }
 

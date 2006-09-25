@@ -499,7 +499,6 @@ void UnitMissionInterface::CreateMission_ALAT_EvacuationSanitaire()
     CreateLocation( asnMission.zone_extraction, "Zone extraction");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -518,7 +517,6 @@ void UnitMissionInterface::CreateMission_ALAT_ReconnaitreDansLaProfondeur()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_dans_la_profondeur = &asnMission;
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -543,7 +541,6 @@ void UnitMissionInterface::CreateMission_ALAT_ReconnaitreContourEnnemi()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_contour_ennemi = &asnMission;
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -569,7 +566,6 @@ void UnitMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZone()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -594,7 +590,6 @@ void UnitMissionInterface::CreateMission_ALAT_DetruireAeromobile()
     CreateAgentKnowledgeList( asnMission.unite_a_detruire, "Unite a detruire");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -618,7 +613,6 @@ void UnitMissionInterface::CreateMission_ALAT_Freiner()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -642,7 +636,6 @@ void UnitMissionInterface::CreateMission_ALAT_Jalonner()
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -667,7 +660,6 @@ void UnitMissionInterface::CreateMission_ALAT_Escorter()
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -693,7 +685,6 @@ void UnitMissionInterface::CreateMission_ALAT_Heliporter()
     CreatePoint( asnMission.point_embarquement, "Point embarquement");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -715,7 +706,6 @@ void UnitMissionInterface::CreateMission_ALAT_HeliporterHelitransporterPlotRavit
     CreatePoint( asnMission.point_debarquement, "Point debarquement");
     CreatePoint( asnMission.position_regroupement, "Position regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -737,7 +727,6 @@ void UnitMissionInterface::CreateMission_ALAT_Helitransporter()
     CreatePoint( asnMission.point_embarquement, "Point embarquement");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -758,7 +747,6 @@ void UnitMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvetage()
     CreateAgentList( asnMission.unites_a_secourir, "Unites a secourir");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -778,7 +766,6 @@ void UnitMissionInterface::CreateMission_ALAT_IMEX()
     CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -797,7 +784,6 @@ void UnitMissionInterface::CreateMission_ALAT_Eclairer()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_alat_eclairer = &asnMission;
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -821,7 +807,6 @@ void UnitMissionInterface::CreateMission_ALAT_Surveiller()
     CreateLocation( asnMission.zone, "Zone");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -846,7 +831,6 @@ void UnitMissionInterface::CreateMission_ALAT_AppuyerDirectAuContact()
     CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -871,7 +855,6 @@ void UnitMissionInterface::CreateMission_ALAT_Couvrir()
     CreateAgentList( asnMission.unites_a_couvrir, "Unites a couvrir");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
@@ -895,7 +878,6 @@ void UnitMissionInterface::CreateMission_ALAT_Attaquer()
     CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreateBool( asnMission.ravitaillement_debut_mission, "Ravitaillement debut mission");
     ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
     pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );

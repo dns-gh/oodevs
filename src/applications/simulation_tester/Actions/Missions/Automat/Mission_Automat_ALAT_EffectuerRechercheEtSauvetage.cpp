@@ -54,7 +54,6 @@ void Mission_Automat_ALAT_EffectuerRechercheEtSauvetage::Serialize()
     ASN_Tools::CopyAgentList( unitesASecourir_, asnMission.unites_a_secourir );
     ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
     ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
-    ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.ravitaillement_debut_mission );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
 
     delete &unitesASecourir_;

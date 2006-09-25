@@ -23,7 +23,6 @@
 int MIL_PionMission_ALAT_Surveiller::nDIAZoneIdx_ = 0 ;
 int MIL_PionMission_ALAT_Surveiller::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_PionMission_ALAT_Surveiller::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_PionMission_ALAT_Surveiller::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_PionMission_ALAT_Surveiller::nDIAPorteeActionIdx_ = 0 ;
 int MIL_PionMission_ALAT_Surveiller::nDIAAmbianceMissionIdx_ = 0 ;
 
@@ -39,7 +38,6 @@ void MIL_PionMission_ALAT_Surveiller::InitializeDIA( const MIL_PionMissionType& 
     nDIAZoneIdx_ = DEC_Tools::InitializeDIAField( "zone_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
@@ -84,8 +82,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_Surveiller::Initialize( const ASN1
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
@@ -104,7 +100,7 @@ bool MIL_PionMission_ALAT_Surveiller::Initialize( const MIL_AutomateMission_ABC&
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                        
+                    
     return true;    
 }
 
@@ -121,7 +117,6 @@ bool MIL_PionMission_ALAT_Surveiller::Initialize( MIL_PionMission_ABC& missionTm
     NET_ASN_Tools::CopyPolygon( mission.GetVariable( nDIAZoneIdx_ ), GetVariable( nDIAZoneIdx_ ) );
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::CopyBool( mission.GetVariable( nDIARavitaillementDebutMissionIdx_ ), GetVariable( nDIARavitaillementDebutMissionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAAmbianceMissionIdx_ ), GetVariable( nDIAAmbianceMissionIdx_ ) );
 
@@ -157,7 +152,6 @@ void MIL_PionMission_ALAT_Surveiller::Serialize( ASN1T_MsgPionOrder& asnMsg )
     NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneIdx_ ), asnMission.zone );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, pion_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 

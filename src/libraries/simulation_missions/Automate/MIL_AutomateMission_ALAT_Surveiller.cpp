@@ -21,7 +21,6 @@
 int MIL_AutomateMission_ALAT_Surveiller::nDIAZoneIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Surveiller::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Surveiller::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_AutomateMission_ALAT_Surveiller::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Surveiller::nDIAPorteeActionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Surveiller::nDIAAmbianceMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_Surveiller::nDIAPointLogistiqueIdx_ = 0 ;
@@ -62,7 +61,6 @@ void MIL_AutomateMission_ALAT_Surveiller::InitializeDIA( const MIL_AutomateMissi
     nDIAZoneIdx_ = DEC_Tools::InitializeDIAField( "zone_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
     nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
     nDIAPointLogistiqueIdx_ = DEC_Tools::InitializeDIAField( "pointLogistique_", diaType );
@@ -85,8 +83,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Surveiller::Initialize( const 
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup() ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -127,7 +123,6 @@ void MIL_AutomateMission_ALAT_Surveiller::Serialize( ASN1T_MsgAutomateOrder& asn
     NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneIdx_ ), asnMission.zone );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointLogistiqueIdx_ ), asnMission.point_logistique );

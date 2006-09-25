@@ -21,7 +21,6 @@
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAUnitesASecourirIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIARavitaillementDebutMissionIdx_ = 0 ;
 int MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::nDIAPorteeActionIdx_ = 0 ;
 
 
@@ -60,7 +59,6 @@ void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::InitializeDIA( cons
     nDIAUnitesASecourirIdx_ = DEC_Tools::InitializeDIAField( "unitesASecourir_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIARavitaillementDebutMissionIdx_ = DEC_Tools::InitializeDIAField( "ravitaillementDebutMission_", diaType );
     nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
 
 }
@@ -81,8 +79,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage:
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup() ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyBool( asnMission.ravitaillement_debut_mission, GetVariable( nDIARavitaillementDebutMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
@@ -119,7 +115,6 @@ void MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage::Serialize( ASN1T_Ms
     NET_ASN_Tools::CopyAgentList( GetVariable( nDIAUnitesASecourirIdx_ ), asnMission.unites_a_secourir );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyBool( GetVariable( nDIARavitaillementDebutMissionIdx_ ), asnMission.ravitaillement_debut_mission );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
 
 }
