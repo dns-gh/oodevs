@@ -94,7 +94,6 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI(QWidget * parent )
     // tab with 4 columns
     setNumCols(6);
     setNumRows(0);
-    setColumnStretchable(0,true);
     setColumnStretchable(1,true);
     setColumnStretchable(2,true);
     setColumnStretchable(3,true);
