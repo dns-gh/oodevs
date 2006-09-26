@@ -8,57 +8,61 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "AgentListView.h"
-#include "moc_AgentListView.cpp"
+#include "TacticalListView.h"
+#include "moc_TacticalListView.cpp"
 #include "ModelBuilder.h"
 #include "preparation/Team.h"
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/AutomatDecisions.h"
+#include "preparation/FormationLevels.h"
+#include "preparation/Level.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Hierarchies.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView constructor
+// Name: TacticalListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, const FormationLevels& levels )
     : gui::AgentListView( pParent, controllers, factory )
     , factory_( factory )
     , modelBuilder_( modelBuilder )
+    , levels_( levels )
+    , selectedFormation_( controllers )
 {
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), this, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
 }
     
 // -----------------------------------------------------------------------------
-// Name: AgentListView destructor
+// Name: TacticalListView destructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-AgentListView::~AgentListView()
+TacticalListView::~TacticalListView()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Display
+// Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
+void TacticalListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
 {
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Display
+// Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item )
+void TacticalListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item )
 {
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
@@ -67,19 +71,19 @@ void AgentListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListIte
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyUpdated
+// Name: TacticalListView::NotifyUpdated
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const ModelLoaded& )
+void TacticalListView::NotifyUpdated( const ModelLoaded& )
 {
     clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyUpdated
+// Name: TacticalListView::NotifyUpdated
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
+void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
     const Entity_ABC* agent = & decisions.GetAgent();
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
@@ -88,10 +92,10 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnRename
+// Name: TacticalListView::OnRename
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
-void AgentListView::OnRename( QListViewItem* item, int, const QString& text )
+void TacticalListView::OnRename( QListViewItem* item, int, const QString& text )
 {
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item );
     const Team_ABC* pTeam = 0;
@@ -106,10 +110,10 @@ void AgentListView::OnRename( QListViewItem* item, int, const QString& text )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::keyPressEvent
+// Name: TacticalListView::keyPressEvent
 // Created: SBO 2006-09-05
 // -----------------------------------------------------------------------------
-void AgentListView::keyPressEvent( QKeyEvent* event )
+void TacticalListView::keyPressEvent( QKeyEvent* event )
 {
     if( selectedItem() && event->key() == Qt::Key_Delete )
         if( modelBuilder_.OnDelete() )
@@ -118,12 +122,12 @@ void AgentListView::keyPressEvent( QKeyEvent* event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnContextMenuRequested
+// Name: TacticalListView::OnContextMenuRequested
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void AgentListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
+void TacticalListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
 {
-    if( item )
+    if( item || !isVisible() )
         return;
     modelBuilder_.ClearSelection();
     QPopupMenu* menu = new QPopupMenu( this );
@@ -132,10 +136,43 @@ void AgentListView::OnContextMenuRequested( QListViewItem* item, const QPoint& p
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyContextMenu
+// Name: TacticalListView::NotifyContextMenu
+// Created: SBO 2006-09-25
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyContextMenu( const kernel::Team_ABC&, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
+    const Level* level = levels_.GetRoot();
+    while( level && ( level = level->GetNext() ) )
+        subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+    menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), &modelBuilder_, SLOT( OnDelete() ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyContextMenu
+// Created: SBO 2006-09-25
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu )
+{
+    if( !isVisible() )
+        return;
+    const Level* level = levels_.Resolve( selectedFormation_->GetLevel() );
+    if( level && level->GetNext() )
+    {
+        QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
+        while( level && ( level = level->GetNext() ) )
+            subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+    }
+    menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), &modelBuilder_, SLOT( OnDelete() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
 {
     if( agent.Retrieve< AutomatDecisions >() )
     {
@@ -144,13 +181,14 @@ void AgentListView::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::C
         else
             menu.InsertItem( "Commande", tr( "Debrayer" ), this, SLOT( Disengage() ) );
     }
+    menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), &modelBuilder_, SLOT( OnDelete() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Engage
+// Name: TacticalListView::Engage
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void AgentListView::Engage()
+void TacticalListView::Engage()
 {
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( valuedItem && valuedItem->IsA< const Agent_ABC* >() )
@@ -161,10 +199,10 @@ void AgentListView::Engage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Disengage
+// Name: TacticalListView::Disengage
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void AgentListView::Disengage()
+void TacticalListView::Disengage()
 {
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( valuedItem && valuedItem->IsA< const Agent_ABC* >() )
@@ -172,4 +210,31 @@ void AgentListView::Disengage()
         Agent_ABC& agent = const_cast< Agent_ABC& >( *valuedItem->GetValue< const Agent_ABC* >() );
         agent.Get< AutomatDecisions >().Disengage();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::BeforeSelection
+// Created: SBO 2006-09-25
+// -----------------------------------------------------------------------------
+void TacticalListView::BeforeSelection()
+{
+    selectedFormation_ = 0;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::AfterSelection
+// Created: SBO 2006-09-25
+// -----------------------------------------------------------------------------
+void TacticalListView::AfterSelection()
+{
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Select
+// Created: SBO 2006-09-25
+// -----------------------------------------------------------------------------
+void TacticalListView::Select( const kernel::Formation_ABC& element )
+{
+    selectedFormation_ = &element;
 }

@@ -50,62 +50,6 @@ ModelBuilder::~ModelBuilder()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelBuilder::InsertDefaultMenu
-// Created: SBO 2006-09-04
-// -----------------------------------------------------------------------------
-void ModelBuilder::InsertDefaultMenu( kernel::ContextMenu& menu ) const
-{
-    menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), this, SLOT( OnDelete() ) );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
-{
-    QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
-    const Level* level = model_.formations_.levels_.GetRoot();
-    while( level && ( level = level->GetNext() ) )
-        subMenu->insertItem( level->GetName(), this, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
-    InsertDefaultMenu( menu );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const KnowledgeGroup_ABC&, ContextMenu& menu )
-{
-    InsertDefaultMenu( menu );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const Agent_ABC&, ContextMenu& menu )
-{
-    InsertDefaultMenu( menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelBuilder::NotifyContextMenu
-// Created: SBO 2006-09-19
-// -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const Formation_ABC&, ContextMenu& menu )
-{
-    const Level* level = model_.formations_.levels_.Resolve( selectedFormation_->GetLevel() );
-    if( level && level->GetNext() )
-    {
-        QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
-        while( level && ( level = level->GetNext() ) )
-            subMenu->insertItem( level->GetName(), this, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
-    }
-    InsertDefaultMenu( menu );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ModelBuilder::OnCreateFormation
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
@@ -124,6 +68,16 @@ void ModelBuilder::OnCreateFormation( int levelId )
 void ModelBuilder::OnCreate()
 {
     model_.teams_.CreateTeam();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::OnCreateCommunication
+// Created: SBO 2006-09-26
+// -----------------------------------------------------------------------------
+void ModelBuilder::OnCreateCommunication()
+{
+    if( selectedTeam_ )
+        model_.teams_.CreateKnowledgeGroup( *selectedTeam_ );
 }
 
 // -----------------------------------------------------------------------------

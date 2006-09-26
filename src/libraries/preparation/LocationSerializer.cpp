@@ -43,9 +43,9 @@ LocationSerializer::~LocationSerializer()
 void LocationSerializer::Serialize( const Location_ABC& location, xml::xostream& xos )
 {
     xos_ = &xos;
-    *xos_ << start( "Localisation" );
+//    *xos_ << start( "location" );
     location.Accept( *this );
-    *xos_ << end();
+//    *xos_ << end();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,11 +98,11 @@ void LocationSerializer::VisitPoint( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void LocationSerializer::SetPoints( const T_PointVector& points )
 {
-    *xos_ << start( "Points" );
+    *xos_ << start( "points" );
     for( unsigned i = 0; i < points.size(); ++i )
     {
         const std::string coord = converter_.ConvertToMgrs( points[i] );
-        *xos_ << content( "Point", coord.c_str() );
+        *xos_ << content( "point", coord.c_str() );
     }
     *xos_ << end();
 }

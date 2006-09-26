@@ -88,7 +88,7 @@ geometry::Rectangle2f ObjectPositions::GetBoundingBox() const
 void ObjectPositions::DoSerialize( xml::xostream& xos ) const
 {
     LocationSerializer serializer( converter_ );
-    xos << start( "Forme" );
+    xos << start( "shape" );
     serializer.Serialize( *location_, xos );
     xos << end();
 }

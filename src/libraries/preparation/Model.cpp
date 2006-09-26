@@ -79,7 +79,7 @@ void Model::Purge()
 // -----------------------------------------------------------------------------
 void Model::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "odb" );
+    xos << start( "orbat" );
     teams_.Serialize( xos );
     objects_.Serialize( xos );
     xos << end();

@@ -7,37 +7,43 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentListView_h_
-#define __AgentListView_h_
+#ifndef __TacticalListView_h_
+#define __TacticalListView_h_
 
 #include "clients_gui/AgentListView.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
 
 namespace kernel
 {
     class ModelLoaded;
+    class Formation_ABC;
 }
 
 class AutomatDecisions;
 class ModelBuilder;
+class FormationLevels;
 
 // =============================================================================
-/** @class  AgentListView
-    @brief  AgentListView
+/** @class  TacticalListView
+    @brief  TacticalListView
 */
 // Created: SBO 2006-08-29
 // =============================================================================
-class AgentListView : public gui::AgentListView
-                    , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
-                    , public kernel::ElementObserver_ABC< AutomatDecisions >
-                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+class TacticalListView : public gui::AgentListView
+                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                       , public kernel::ElementObserver_ABC< AutomatDecisions >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                       , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder );
-    virtual ~AgentListView();
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, const FormationLevels& levels );
+    virtual ~TacticalListView();
     //@}
 
     //! @name Operations
@@ -58,16 +64,22 @@ private slots:
 private:
     //! @name Copy/Assignement
     //@{
-    AgentListView( const AgentListView& );            //!< Copy constructor
-    AgentListView& operator=( const AgentListView& ); //!< Assignement operator
+    TacticalListView( const TacticalListView& );            //!< Copy constructor
+    TacticalListView& operator=( const TacticalListView& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const AutomatDecisions& );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
+
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const kernel::Formation_ABC& element );
     //@}
 
 private:
@@ -75,6 +87,8 @@ private:
     //@{
     gui::ItemFactory_ABC& factory_;
     ModelBuilder& modelBuilder_;
+    const FormationLevels& levels_;
+    kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     //@}
 };
 

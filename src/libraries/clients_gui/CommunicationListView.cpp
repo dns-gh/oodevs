@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "AgentListView.h"
-#include "moc_AgentListView.cpp"
+#include "CommunicationListView.h"
+#include "moc_CommunicationListView.cpp"
 
 #include "ValuedListItem.h"
 #include "clients_kernel/Controller.h"
@@ -18,20 +18,20 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "ItemFactory_ABC.h"
 
 using namespace kernel;
 using namespace gui;
 
-const char* AgentListView::agentMimeType_ = "agent"; // $$$$ AGE 2006-09-20: pas vraiment agent. Plus ValuedListItem
+const char* CommunicationListView::agentMimeType_ = "agent"; // $$$$ AGE 2006-09-20: pas vraiment agent. Plus ValuedListItem
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView constructor
+// Name: CommunicationListView constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : ListView< AgentListView >( pParent, *this, factory )
+CommunicationListView::CommunicationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+    : ListView< CommunicationListView >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
     , currentTeam_( 0 )
@@ -50,25 +50,25 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFa
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView destructor
+// Name: CommunicationListView destructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::~AgentListView()
+CommunicationListView::~CommunicationListView()
 {
     controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::RecursiveCreateHierarchy
+// Name: CommunicationListView::RecursiveCreateHierarchy
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::RecursiveCreateHierarchy( const Hierarchies* hierarchy )
+void CommunicationListView::RecursiveCreateHierarchy( const CommunicationHierarchies* hierarchy )
 {
     if( !hierarchy )
         return;
     const Entity_ABC* superior = hierarchy->GetSuperior();
     if( superior )
-        RecursiveCreateHierarchy( superior->Retrieve< Hierarchies >() );
+        RecursiveCreateHierarchy( superior->Retrieve< CommunicationHierarchies >() );
     
     const Entity_ABC& entity = hierarchy->GetEntity();
     if( FindItem( &entity, firstChild() ) )
@@ -84,20 +84,20 @@ void AgentListView::RecursiveCreateHierarchy( const Hierarchies* hierarchy )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyCreated
+// Name: CommunicationListView::NotifyCreated
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const Hierarchies& hierarchy )
+void CommunicationListView::NotifyCreated( const CommunicationHierarchies& hierarchy )
 {
     RecursiveCreateHierarchy( &hierarchy );
     NotifyUpdated( hierarchy );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyUpdated
+// Name: CommunicationListView::NotifyUpdated
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const Hierarchies& hierarchy )
+void CommunicationListView::NotifyUpdated( const CommunicationHierarchies& hierarchy )
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
@@ -105,82 +105,82 @@ void AgentListView::NotifyUpdated( const Hierarchies& hierarchy )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyDeleted
+// Name: CommunicationListView::NotifyDeleted
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyDeleted( const Hierarchies& hierarchy )
+void CommunicationListView::NotifyDeleted( const CommunicationHierarchies& hierarchy )
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     delete FindItem( &entity, firstChild() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Display
+// Name: CommunicationListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Entity_ABC& entity, ValuedListItem* item )
+void CommunicationListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    if( const Hierarchies* hierarchy = entity.Retrieve< Hierarchies >() )
+    if( const CommunicationHierarchies* hierarchy = entity.Retrieve< CommunicationHierarchies >() )
         Display( *hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Display
+// Name: CommunicationListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Hierarchies& hierarchy, ValuedListItem* item )
+void CommunicationListView::Display( const CommunicationHierarchies& hierarchy, ValuedListItem* item )
 {
     item->SetNamed( hierarchy.GetEntity() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
 
-    DeleteTail( ListView< AgentListView >::Display( hierarchy.CreateSubordinateIterator(), item ) );
+    DeleteTail( ListView< CommunicationListView >::Display( hierarchy.CreateSubordinateIterator(), item ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnSelectionChange
+// Name: CommunicationListView::OnSelectionChange
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentListView::OnSelectionChange( QListViewItem* i )
+void CommunicationListView::OnSelectionChange( QListViewItem* i )
 {
     if( ValuedListItem* item = (ValuedListItem*)( i ) )
         item->Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnContextMenuRequested
+// Name: CommunicationListView::OnContextMenuRequested
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
+void CommunicationListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
 {
     if( ValuedListItem* item = (ValuedListItem*)( i ) )
         item->ContextMenu( controllers_.actions_, pos );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnRequestCenter
+// Name: CommunicationListView::OnRequestCenter
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void AgentListView::OnRequestCenter()
+void CommunicationListView::OnRequestCenter()
 {
     if( ValuedListItem* item = (ValuedListItem*)( selectedItem() ) )
         item->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::sizeHint
+// Name: CommunicationListView::sizeHint
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-QSize AgentListView::sizeHint() const
+QSize CommunicationListView::sizeHint() const
 {
     return QSize( 230, 340 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifySelected
+// Name: CommunicationListView::NotifySelected
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifySelected( const Entity_ABC* element )
+void CommunicationListView::NotifySelected( const Entity_ABC* element )
 {
     selectAll( false );
     ValuedListItem* item = 0;
@@ -192,10 +192,10 @@ void AgentListView::NotifySelected( const Entity_ABC* element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OptionChanged
+// Name: CommunicationListView::OptionChanged
 // Created: AGE 2006-03-27
 // -----------------------------------------------------------------------------
-void AgentListView::OptionChanged( const std::string& name, const OptionVariant& value )
+void CommunicationListView::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "CurrentTeam" )
         currentTeam_ = value.To< const Team_ABC* >();
@@ -208,10 +208,10 @@ void AgentListView::OptionChanged( const std::string& name, const OptionVariant&
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::dragObject
+// Name: CommunicationListView::dragObject
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-QDragObject* AgentListView::dragObject()
+QDragObject* CommunicationListView::dragObject()
 {
     QListViewItem* pItem = selectedItem();
     if( !pItem )
@@ -225,19 +225,19 @@ QDragObject* AgentListView::dragObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::dragEnterEvent
+// Name: CommunicationListView::dragEnterEvent
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::dragEnterEvent( QDragEnterEvent* pEvent )
+void CommunicationListView::dragEnterEvent( QDragEnterEvent* pEvent )
 {
     pEvent->accept( pEvent->provides( agentMimeType_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::dropEvent
+// Name: CommunicationListView::dropEvent
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-void AgentListView::dropEvent( QDropEvent* pEvent )
+void CommunicationListView::dropEvent( QDropEvent* pEvent )
 {
     if( !pEvent->provides( agentMimeType_ ) )
          return;
@@ -254,10 +254,10 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
+// Name: CommunicationListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( ValuedListItem& item, ValuedListItem& target )
+bool CommunicationListView::Drop( ValuedListItem& item, ValuedListItem& target )
 {
     return item.IsA< const Entity_ABC* >()
         && target.IsA< const Entity_ABC* >()
@@ -265,19 +265,19 @@ bool AgentListView::Drop( ValuedListItem& item, ValuedListItem& target )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
+// Name: CommunicationListView::Drop
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Entity_ABC& , const Entity_ABC& )
+bool CommunicationListView::Drop( const Entity_ABC& , const Entity_ABC& )
 {
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyActivated
+// Name: CommunicationListView::NotifyActivated
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyActivated( const Entity_ABC& element )
+void CommunicationListView::NotifyActivated( const Entity_ABC& element )
 {
     ValuedListItem* item = FindItem( &element, firstChild() );    
     if( item )

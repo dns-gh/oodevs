@@ -21,7 +21,8 @@
 #include "ObjectCreationPanel.h"
 //#include "UnitToolbar.h"
 //#include "LinkInterpreter.h"
-#include "AgentListView.h"
+#include "TacticalListView.h"
+#include "CommunicationListView.h"
 #include "AgentsLayer.h"
 #include "ModelBuilder.h"
 #include "Dialogs.h"
@@ -38,6 +39,7 @@
 #include "preparation/Model.h"
 //#include "gaming/Population.h"
 #include "preparation/StaticModel.h"
+#include "preparation/FormationModel.h"
 
 #include "clients_gui/GlWidget.h"
 #include "clients_gui/GlProxy.h"
@@ -116,8 +118,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-    new ::AgentListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+    new TacticalListView( listsTabBox, controllers, *factory, *modelBuilder_, model_.formations_.levels_ );
     pAgentsTabWidget->addTab( listsTabBox, tr( "Tactique" ) );
+
+    listsTabBox = new QVBox( pListsTabWidget );
+    new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
+    new ::CommunicationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+    pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
 
     pListsTabWidget->addTab( pAgentsTabWidget, tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList( controllers, *factory ), tr( "Objets" ) );

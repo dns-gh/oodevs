@@ -8,43 +8,32 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "TeamHierarchies.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "xeumeuleu/xml.h"
-
-using namespace xml;
+#include "TeamCommunications.h"
 
 // -----------------------------------------------------------------------------
-// Name: TeamHierarchies constructor
-// Created: SBO 2006-09-21
+// Name: TeamCommunications constructor
+// Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-TeamHierarchies::TeamHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : EntityHierarchies( controller, holder, superior )
+TeamCommunications::TeamCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+    : CommunicationHierarchies( controller, holder, superior )
 {
     // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: TeamHierarchies destructor
-// Created: SBO 2006-09-21
+// Name: TeamCommunications destructor
+// Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-TeamHierarchies::~TeamHierarchies()
+TeamCommunications::~TeamCommunications()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamHierarchies::DoSerialize
-// Created: SBO 2006-09-21
+// Name: TeamCommunications::DoSerialize
+// Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void TeamHierarchies::DoSerialize( xml::xostream& xos ) const
+void TeamCommunications::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( "tactical" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        xos << start( "formation" );
-        it->second->Serialize( xos );
-        xos << end();
-    }
-    xos << end();
+    // $$$$ SBO 2006-09-25: todo
 }

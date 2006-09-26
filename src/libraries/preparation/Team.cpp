@@ -100,7 +100,7 @@ void Team::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "nom", name_.ascii() )
-        << start( "knowledge-groups" );
+        << start( "communication" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "knowledge-group" );
