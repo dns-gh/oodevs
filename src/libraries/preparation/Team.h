@@ -26,6 +26,7 @@ namespace xml
 }
 
 class KnowledgeGroupFactory_ABC;
+class IdManager;
 
 // =============================================================================
 /** @class  Team
@@ -42,7 +43,7 @@ class Team : public kernel::Team_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory );
+             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager );
     virtual ~Team();
     //@}
 
@@ -78,12 +79,6 @@ private:
     KnowledgeGroupFactory_ABC& factory_;
     QString name_;
     unsigned long id_;
-    //@}
-
-private:
-    //! @name Statics
-    //@{
-    static unsigned long idManager_;
     //@}
 };
 

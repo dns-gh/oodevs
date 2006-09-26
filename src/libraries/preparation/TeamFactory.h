@@ -19,6 +19,7 @@ namespace kernel
 }
 
 class Model;
+class IdManager;
 
 // =============================================================================
 /** @class  TeamFactory
@@ -33,7 +34,7 @@ class TeamFactory : public TeamFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( kernel::Controllers& controllers, Model& model );
+             TeamFactory( kernel::Controllers& controllers, Model& model, IdManager& idManager );
     virtual ~TeamFactory();
     //@}
 
@@ -55,6 +56,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
+    IdManager& idManager_;
     //@}
 };
 

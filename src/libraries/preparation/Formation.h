@@ -20,6 +20,8 @@ namespace kernel
     class InstanciationComplete;
 }
 
+class IdManager;
+
 // =============================================================================
 /** @class  Formation
     @brief  Formation
@@ -35,7 +37,7 @@ class Formation : public kernel::Formation_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( kernel::Controller& controller, const QString& level );
+             Formation( kernel::Controller& controller, const QString& level, IdManager& idManager );
     virtual ~Formation();
     //@}
 
@@ -67,12 +69,6 @@ private:
     unsigned long id_;
     QString name_;
     QString level_;
-    //@}
-
-private:
-    //! @name Statics
-    //@{
-    static unsigned long idManager_;
     //@}
 };
 

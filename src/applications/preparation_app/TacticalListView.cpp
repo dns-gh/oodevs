@@ -36,7 +36,6 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , selectedFormation_( controllers )
 {
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), this, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -52,7 +51,7 @@ TacticalListView::~TacticalListView()
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
+void TacticalListView::Display( const Hierarchies& hierarchy, gui::ValuedListItem* item )
 {
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
@@ -62,7 +61,7 @@ void TacticalListView::Display( const kernel::Hierarchies& hierarchy, gui::Value
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item )
+void TacticalListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item )
 {
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
@@ -77,6 +76,7 @@ void TacticalListView::Display( const kernel::Entity_ABC& agent, gui::ValuedList
 void TacticalListView::NotifyUpdated( const ModelLoaded& )
 {
     clear();
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +139,7 @@ void TacticalListView::OnContextMenuRequested( QListViewItem* item, const QPoint
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const kernel::Team_ABC&, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 {
     if( !isVisible() )
         return;
@@ -154,10 +154,12 @@ void TacticalListView::NotifyContextMenu( const kernel::Team_ABC&, kernel::Conte
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
     if( !isVisible() )
         return;
+    if( &formation != selectedFormation_ )
+        selectedFormation_ = &formation;
     const Level* level = levels_.Resolve( selectedFormation_->GetLevel() );
     if( level && level->GetNext() )
     {
@@ -172,7 +174,7 @@ void TacticalListView::NotifyContextMenu( const kernel::Formation_ABC& agent, ke
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     if( agent.Retrieve< AutomatDecisions >() )
     {
@@ -234,7 +236,17 @@ void TacticalListView::AfterSelection()
 // Name: TacticalListView::Select
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void TacticalListView::Select( const kernel::Formation_ABC& element )
+void TacticalListView::Select( const Formation_ABC& element )
 {
     selectedFormation_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: SBO 2006-09-26
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
+{
+//        return Drop(*agent, *group );
+    return false;
 }

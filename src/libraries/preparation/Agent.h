@@ -27,6 +27,8 @@ namespace xml
     class xostream;
 }
 
+class IdManager;
+
 // =============================================================================
 /** @class  Agent
     @brief  Agent
@@ -43,8 +45,8 @@ class Agent : public kernel::Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const kernel::Entity_ABC& parent, const kernel::AutomatType& type, kernel::Controller& controller );
-             Agent( const kernel::Entity_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller );
+             Agent( const kernel::Formation_ABC& parent, const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager );
+             Agent( const kernel::Agent_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager );
     virtual ~Agent();
     //@}
 
@@ -84,17 +86,12 @@ private:
     unsigned long id_;
     QString   name_;
 
-    const kernel::Entity_ABC*   parent_;
-    const kernel::AutomatType*  automatType_;
-    const kernel::AgentType*    type_;
+    const kernel::Formation_ABC* formation_;
+    const kernel::Agent_ABC*     automat_;
+    const kernel::AutomatType*   automatType_;
+    const kernel::AgentType*     type_;
 
     bool aggregated_;
-    //@}
-
-private:
-    //! @name Statics
-    //@{
-    static unsigned long idManager_; // $$$$ SBO 2006-09-01: use a "real" idManager
     //@}
 };
 

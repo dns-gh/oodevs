@@ -80,6 +80,7 @@ private:
     virtual void BeforeSelection();
     virtual void AfterSelection();
     virtual void Select( const kernel::Formation_ABC& element );
+    virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     //@}
 
 private:

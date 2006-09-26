@@ -27,9 +27,21 @@ class CommunicationHierarchies : public EntityHierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CommunicationHierarchies( Controller& controller ) 
-        : EntityHierarchies( controller ) {};
-    virtual ~CommunicationHierarchies() {};
+    explicit CommunicationHierarchies( Controller& controller );
+    virtual ~CommunicationHierarchies();
+    //@}
+
+    //! @name Operations
+    //@{
+    bool IsSubordinateOf( const Entity_ABC& entity ) const;
+    virtual void AddSubordinate   (       Entity_ABC& entity );
+    virtual void RemoveSubordinate( const Entity_ABC& entity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    Controller& controller_;
     //@}
 };
 

@@ -22,8 +22,9 @@ using namespace kernel;
 // Name: FormationFactory constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-FormationFactory::FormationFactory( Controllers& controllers )
+FormationFactory::FormationFactory( Controllers& controllers, IdManager& idManager )
     : controllers_( controllers )
+    , idManager_( idManager )
 {
     //NOTHING
 }
@@ -43,7 +44,7 @@ FormationFactory::~FormationFactory()
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const QString& level )
 {
-    Formation_ABC* formation = new Formation( controllers_.controller_, level );
+    Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
     formation->Attach( *new TeamHierarchy( parent ) );    
     formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
@@ -56,7 +57,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* FormationFactory::Create( kernel::Formation_ABC& parent, const QString& level )
 {
-    Formation_ABC* formation = new Formation( controllers_.controller_, level );
+    Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
     if( const TeamHierarchy* team = parent.Retrieve< TeamHierarchy >() )
         formation->Attach( *new TeamHierarchy( team->GetTeam() ) );    
     formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );

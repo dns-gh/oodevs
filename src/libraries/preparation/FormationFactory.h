@@ -17,6 +17,8 @@ namespace kernel
     class Controllers;
 }
 
+class IdManager;
+
 // =============================================================================
 /** @class  FormationFactory
     @brief  FormationFactory
@@ -29,7 +31,7 @@ class FormationFactory : public FormationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FormationFactory( kernel::Controllers& controllers );
+             FormationFactory( kernel::Controllers& controllers, IdManager& idManager );
     virtual ~FormationFactory();
     //@}
 
@@ -50,6 +52,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    IdManager& idManager_;
     //@}
 };
 

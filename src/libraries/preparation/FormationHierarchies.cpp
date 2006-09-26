@@ -40,12 +40,10 @@ FormationHierarchies::~FormationHierarchies()
 // -----------------------------------------------------------------------------
 void FormationHierarchies::DoSerialize( xml::xostream& xos ) const
 {
-    xos << start( "formations" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( it->second->Retrieve< AutomatDecisions >() ? "automat" : "formation" ); // $$$$ SBO 2006-09-22: bof bof
         it->second->Serialize( xos );
         xos << end();
     }
-    xos << end();
 }

@@ -21,7 +21,9 @@
 #include "AgentPositions.h"
 #include "AgentHierarchies.h"
 #include "TeamHierarchy.h"
+#include "CommunicationHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -34,10 +36,11 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
+    , idManager_( idManager )
 {
     // NOTHING
 }
@@ -57,11 +60,12 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 Agent_ABC* AgentFactory::Create( Agent_ABC& parent, const AgentType& type, const geometry::Point2f& position )
 {
-    Agent* result = new Agent( parent, type, controllers_.controller_ );
+    Agent* result = new Agent( parent, type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach( *new TeamHierarchy( parent.GetTeam() ) );
-    result->Attach< Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, &parent ) );
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
     return result;
@@ -73,14 +77,15 @@ Agent_ABC* AgentFactory::Create( Agent_ABC& parent, const AgentType& type, const
 // -----------------------------------------------------------------------------
 kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
 {
-    Agent* result = new Agent( parent, type, controllers_.controller_ );
+    Agent* result = new Agent( parent, type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
 
-    if( const TeamHierarchy* team = parent.Retrieve< TeamHierarchy >() )
-        result->Attach( *new TeamHierarchy( team->GetTeam() ) );
-    result->Attach< Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    const TeamHierarchy& team = parent.Get< TeamHierarchy >();
+    result->Attach( *new TeamHierarchy( team.GetTeam() ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Team_ABC* >( &team.GetTeam() ) ) );
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
     return result;

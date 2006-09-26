@@ -14,20 +14,19 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "xeumeuleu/xml.h"
+#include "IdManager.h"
 
 using namespace kernel;
 using namespace xml;
-
-unsigned long KnowledgeGroup::idManager_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team, IdManager& idManager )
     : controller_( controller )
     , team_( team )
-    , id_ ( idManager_++ )
+    , id_ ( idManager.GetNextId() )
     , type_( "Standard" ) // $$$$ SBO 2006-09-06: 
 {
     RegisterSelf( *this );

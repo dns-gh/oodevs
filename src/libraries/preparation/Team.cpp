@@ -15,20 +15,19 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
+#include "IdManager.h"
 
 using namespace kernel;
 using namespace xml;
-
-unsigned long Team::idManager_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory )
+Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager )
     : controller_( controller )
     , factory_( factory )
-    , id_( idManager_++ )
+    , id_( idManager.GetNextId() )
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Preparation", "Armée %1" ).arg( id_ );

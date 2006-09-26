@@ -30,10 +30,11 @@ using namespace kernel;
 // Name: ObjectFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-ObjectFactory::ObjectFactory( Controllers& controllers, Model& model, const StaticModel& staticModel )
+ObjectFactory::ObjectFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
+    , idManager_( idManager )
 {
     // NOTHING
 }
@@ -53,7 +54,7 @@ ObjectFactory::~ObjectFactory()
 // -----------------------------------------------------------------------------
 kernel::Object_ABC* ObjectFactory::CreateObject( kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location )
 {
-    Object* result = new Object( controllers_.controller_, static_.coordinateConverter_, type, team );
+    Object* result = new Object( controllers_.controller_, static_.coordinateConverter_, type, team, idManager_ );
     result->Attach< Positions >( *new ObjectPositions( static_.coordinateConverter_, location ) );
     
     switch( type.id_ )

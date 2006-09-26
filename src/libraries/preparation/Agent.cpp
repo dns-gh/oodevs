@@ -19,21 +19,21 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
+#include "IdManager.h"
 
 using namespace kernel;
 using namespace xml;
-
-unsigned long Agent::idManager_ = 1; // $$$$ SBO 2006-09-05: 
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-Agent::Agent( const Entity_ABC& parent, const AutomatType& type, Controller& controller )
+Agent::Agent( const Formation_ABC& parent, const AutomatType& type, Controller& controller, IdManager& idManager )
     : controller_( controller )
-    , id_( idManager_++ )
+    , id_( idManager.GetNextId() )
     , name_( type.GetName() )
-    , parent_( &parent )
+    , formation_( &parent )
+    , automat_( 0 )
     , automatType_( &type )
     , type_( automatType_->GetTypePC() )
     , aggregated_( false )
@@ -47,11 +47,12 @@ Agent::Agent( const Entity_ABC& parent, const AutomatType& type, Controller& con
 // Name: Agent constructor
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-Agent::Agent( const Entity_ABC& parent, const AgentType& type, Controller& controller )
+Agent::Agent( const Agent_ABC& parent, const AgentType& type, Controller& controller, IdManager& idManager )
     : controller_( controller )
-    , id_( idManager_++ )
+    , id_( idManager.GetNextId() )
     , name_( type.GetName() )
-    , parent_( &parent )
+    , formation_( 0 )
+    , automat_( &parent )
     , automatType_( 0 )
     , type_( &type )
     , aggregated_( false )
@@ -116,7 +117,7 @@ const Team_ABC& Agent::GetTeam() const
 // -----------------------------------------------------------------------------
 const Agent_ABC* Agent::GetSuperior() const
 {
-    return 0; // $$$$ SBO 2006-09-22: 
+    return automat_;
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +183,7 @@ void Agent::CreateDictionary()
     Attach( dictionary );
     dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
-    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), parent_ );
+    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), formation_ ? (Entity_ABC*)formation_ : (Entity_ABC*)automat_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,6 +19,7 @@
 #include "ObjectsModel.h"
 #include "FormationFactory.h"
 #include "FormationModel.h"
+#include "IdManager.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
@@ -32,10 +33,11 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : controllers_( controllers )
-    , teamFactory_( *new TeamFactory( controllers, *this ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, staticModel ) )
-    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
-    , formationFactory_( *new FormationFactory( controllers ) )
+    , idManager_( *new IdManager() )
+    , teamFactory_( *new TeamFactory( controllers, *this, idManager_ ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
+    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )
+    , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
@@ -60,6 +62,7 @@ Model::~Model()
     delete &knowledgeGroups_;
     delete &teams_;
     delete &teamFactory_;
+    delete &idManager_;
 }
 
 // ----------------------------------------------------------------------------- 
@@ -71,6 +74,7 @@ void Model::Purge()
     agents_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
+    idManager_.Reset();
 }
     
 // -----------------------------------------------------------------------------

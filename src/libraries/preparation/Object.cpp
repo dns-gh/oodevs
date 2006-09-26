@@ -20,21 +20,20 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Team_ABC.h"
 #include "xeumeuleu/xml.h"
+#include "IdManager.h"
 
 using namespace kernel;
 using namespace xml;
-
-unsigned long Object::idManager_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, kernel::ObjectType& type, Team_ABC& team )
+Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, kernel::ObjectType& type, Team_ABC& team, IdManager& idManager )
     : controller_                    ( controller )
     , converter_                     ( converter )
     , type_                          ( type )
-    , nId_                           ( idManager_++ )
+    , nId_                           ( idManager.GetNextId() )
     , strName_                       ( type.GetName() )
     , team_                          ( team )
     , rConstructionPercentage_       ( 0.0 )

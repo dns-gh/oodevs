@@ -43,12 +43,10 @@ void AgentHierarchies::DoSerialize( xml::xostream& xos ) const
 {
     if( !GetEntity().Retrieve< AutomatDecisions >() ) // $$$$ SBO 2006-09-22: bof bof
         return;
-    xos << start( "units" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "unit" );
         it->second->Serialize( xos );
         xos << end();
     }
-    xos << end();
 }

@@ -18,6 +18,8 @@ namespace kernel
     class Controller;
 }
 
+class IdManager;
+
 // =============================================================================
 /** @class  KnowledgeGroup
     @brief  Represents a gtia.
@@ -31,7 +33,7 @@ class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, const kernel::Team_ABC& team );
+             KnowledgeGroup( kernel::Controller& controller, const kernel::Team_ABC& team, IdManager& idManager );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -65,15 +67,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Team_ABC& team_;
-    unsigned long      id_;
+    unsigned long id_;
     QString name_;
     QString type_;
-    //@}
-
-private:
-    //! @name Static
-    //@{
-    static unsigned long idManager_;
     //@}
 };
 

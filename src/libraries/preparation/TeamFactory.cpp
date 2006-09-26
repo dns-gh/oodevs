@@ -26,9 +26,10 @@ using namespace kernel;
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( Controllers& controllers, Model& model )
+TeamFactory::TeamFactory( Controllers& controllers, Model& model, IdManager& idManager )
     : controllers_( controllers )
     , model_( model )
+    , idManager_( idManager )
 {
     // NOTHING
 }
@@ -48,7 +49,7 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamFactory::CreateTeam()
 {
-    Team_ABC* result = new Team( controllers_.controller_, *this );
+    Team_ABC* result = new Team( controllers_.controller_, *this, idManager_ );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     result->Attach< kernel::Hierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
@@ -62,7 +63,7 @@ Team_ABC* TeamFactory::CreateTeam()
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( kernel::Team_ABC& team )
 {
-    KnowledgeGroup_ABC* result = new KnowledgeGroup( controllers_.controller_, team );
+    KnowledgeGroup_ABC* result = new KnowledgeGroup( controllers_.controller_, team, idManager_ );
     result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, &team ) );
     result->Update( InstanciationComplete() );
     return result;

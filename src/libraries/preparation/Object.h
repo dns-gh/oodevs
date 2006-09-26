@@ -32,6 +32,8 @@ namespace xml
     class xostream;
 }
 
+class IdManager;
+
 // =============================================================================
 // Created: SBO 2005-09-02
 // =============================================================================
@@ -45,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     kernel::ObjectType& type, kernel::Team_ABC& team );
+                     kernel::ObjectType& type, kernel::Team_ABC& team, IdManager& idManager );
     virtual ~Object();
     //@}
 
@@ -97,12 +99,6 @@ public:
     kernel::DotationType* valorization_;
     unsigned int nDotationConstruction_;
     unsigned int nDotationValorization_;
-    //@}
-
-private:
-    //! @name Static
-    //@{
-    static unsigned long idManager_; // $$$$ SBO 2006-09-12: use a real one
     //@}
 };
 

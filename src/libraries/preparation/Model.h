@@ -33,6 +33,7 @@ class ObjectsModel;
 class ObjectFactory_ABC;
 class FormationModel;
 class FormationFactory_ABC;
+class IdManager;
 
 // =============================================================================
 /** @class  Model
@@ -59,6 +60,7 @@ public:
 private:
     //! @name Member data
     //@{
+    IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;

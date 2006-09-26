@@ -20,6 +20,7 @@ namespace kernel
 
 class Model;
 class StaticModel;
+class IdManager;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -33,7 +34,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager );
     virtual ~AgentFactory();
     //@}
 
@@ -62,6 +63,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
+    IdManager& idManager_;
     //@}
 };
 

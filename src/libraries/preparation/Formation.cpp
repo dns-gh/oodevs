@@ -14,19 +14,18 @@
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "xeumeuleu/xml.h"
+#include "IdManager.h"
 
 using namespace kernel;
 using namespace xml;
-
-unsigned long Formation::idManager_ = 1000;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-Formation::Formation( kernel::Controller& controller, const QString& level )
+Formation::Formation( kernel::Controller& controller, const QString& level, IdManager& idManager )
     : controller_( controller )
-    , id_( idManager_++ )
+    , id_( idManager.GetNextId() )
     , name_( "" )
     , level_( level )
 {

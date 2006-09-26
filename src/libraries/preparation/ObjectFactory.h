@@ -19,6 +19,7 @@ namespace kernel
 
 class Model;
 class StaticModel;
+class IdManager;
 
 // =============================================================================
 /** @class  ObjectFactory
@@ -74,7 +75,7 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager );
     virtual ~ObjectFactory();
     //@}
 
@@ -96,6 +97,7 @@ private:
     kernel::Controllers& controllers_;
     Model& model_;
     const StaticModel& static_;
+    IdManager& idManager_;
     //@}
 };
 
