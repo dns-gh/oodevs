@@ -414,24 +414,25 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_MiscFunctions::RC_Warning    < MIL_Automate >, "DEC_Warning" );
 
     // Geometry       
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau  < MIL_Automate >, "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau"  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInParts               < MIL_Automate >, "DEC_Geometrie_DecoupeLocalisation"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInSections            < MIL_Automate >, "DEC_Geometrie_DecoupeFuseauEnTroncons"                   );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeObstaclePosition                < MIL_Automate >, "DEC_Geometrie_CalculerPositionObstacle"                  );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPoint                       < MIL_Automate >, "DEC_Geometrie_CalculerPointArrivee"                      ); 
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeStartPoint                      < MIL_Automate >, "DEC_Geometrie_CalculerPointDepart"                       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::IsPointInFuseau                        < MIL_Automate >, "DEC_Geometrie_EstPointDansFuseau"                        );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointBeforeLima                 < MIL_Automate >, "DEC_Geometrie_CalculerPositionParRapportALima"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointsBeforeLima                                , "DEC_Geometrie_CalculerPositionsParRapportALima"          );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau              , "DEC_Geometrie_PositionsParRapportALocalisation"          );    
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingFrontAndBackLines                        , "DEC_Geometrie_StartCalculLignesAvantEtArriere"           );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StopComputingFrontAndBackLines                         , "DEC_Geometrie_StopCalculLignesAvantEtArriere"            );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromFrontLine                           , "DEC_Geometrie_CalculerDistanceLigneAvant"                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromBackLine                            , "DEC_Geometrie_CalculerDistanceLigneArriere"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPointForPion                                , "DEC_Geometrie_CalculerPointArriveePourPion"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_Automate >, "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau" );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeFrontestAgent                   < MIL_Automate >, "DEC_Geometrie_PionDevant"                                );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_Automate >, "DEC_Geometrie_PionDerriere"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau  < MIL_Automate >         , "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInParts               < MIL_Automate >         , "DEC_Geometrie_DecoupeLocalisation"                                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::SplitLocalisationInSections            < MIL_Automate >         , "DEC_Geometrie_DecoupeFuseauEnTroncons"                               );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeObstaclePosition                < MIL_Automate >         , "DEC_Geometrie_CalculerPositionObstacle"                              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPoint                       < MIL_Automate >         , "DEC_Geometrie_CalculerPointArrivee"                                  ); 
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeStartPoint                      < MIL_Automate >         , "DEC_Geometrie_CalculerPointDepart"                                   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::IsPointInFuseau                        < MIL_Automate >         , "DEC_Geometrie_EstPointDansFuseau"                                    );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointBeforeLima                 < MIL_Automate >         , "DEC_Geometrie_CalculerPositionParRapportALima"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputePointsBeforeLima                                         , "DEC_Geometrie_CalculerPositionsParRapportALima"                      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeLocalisationPointsForPionsInFuseau                       , "DEC_Geometrie_PositionsParRapportALocalisation"                      );    
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StartComputingFrontAndBackLines                                 , "DEC_Geometrie_StartCalculLignesAvantEtArriere"                       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::StopComputingFrontAndBackLines                                  , "DEC_Geometrie_StopCalculLignesAvantEtArriere"                        );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromFrontLine                                    , "DEC_Geometrie_CalculerDistanceLigneAvant"                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDistanceFromBackLine                                     , "DEC_Geometrie_CalculerDistanceLigneArriere"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeDestPointForPion                                         , "DEC_Geometrie_CalculerPointArriveePourPion"                          );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau< MIL_Automate >         , "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau< MIL_Automate >, "DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau"   );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeFrontestAgent                   < MIL_Automate >         , "DEC_Geometrie_PionDevant"                                            );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_GeometryFunctions::ComputeBackestAgent                    < MIL_Automate >         , "DEC_Geometrie_PionDerriere"                                          );
 
     // Orders
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::IsNewMissionStarted< MIL_Automate >, "DEC_NouvelleMission"    );

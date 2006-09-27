@@ -419,3 +419,28 @@ void DEC_GeometryFunctions::ComputeNearestLocalisationPointInFuseau( DIA_Call_AB
     param.GetParameter( 1 ).SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
     call.GetResult().SetValue( bOut );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau
+// Created: GGR 2006-09-27
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+void DEC_GeometryFunctions::ComputeNearestUnclippedLocalisationPointInFuseau( DIA_Call_ABC& call, const T& caller )
+{
+    assert( DEC_Tools::CheckTypeLocalisation( call.GetParameter( 0 ) ) );
+    assert( DEC_Tools::CheckTypePoint       ( call.GetParameter( 1 ) ) );
+
+    DIA_Parameters& param = call.GetParameters();
+    TER_Localisation* pLocalisation = param[0].ToUserPtr( pLocalisation );
+    assert( pLocalisation );
+
+    TER_Localisation fuseauLocalisation = TER_Localisation( TER_Localisation::ePolygon, caller.GetFuseau().GetBorderPoints() );
+
+    MT_Vector2D* pResult = new MT_Vector2D(); //$$$$ TMP
+    bool bOut;
+
+    bOut = fuseauLocalisation.ComputeNearestPoint( pLocalisation->ComputeBarycenter(), *pResult );
+    param.GetParameter( 1 ).SetValue( (void*)pResult, &DEC_Tools::GetTypePoint() );
+    call.GetResult().SetValue( bOut );
+}
