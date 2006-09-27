@@ -98,14 +98,10 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 void TacticalListView::OnRename( QListViewItem* item, int, const QString& text )
 {
     gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item );
-    const Team_ABC* pTeam = 0;
-    // $$$$ AGE 2006-09-20: tuerie le nombre de casts
-    if( valuedItem && valuedItem->IsA< const Entity_ABC* >() 
-        && ( pTeam = dynamic_cast< const Team_ABC* >( valuedItem->GetValue< const Entity_ABC* >() ) ) )
+    if( valuedItem && valuedItem->IsA< const Entity_ABC* >() )
     {
-        Team_ABC& team = const_cast< Team_ABC& >( *pTeam );
-        static_cast< Team& >( team ).Rename( text );
-        valuedItem->SetNamed( team );
+        const Team* team = dynamic_cast< const Team* >( valuedItem->GetValue< const Entity_ABC* >() );
+        const_cast< Team* >( team )->Rename( text );
     }
 }
 

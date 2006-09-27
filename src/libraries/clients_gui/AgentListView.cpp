@@ -14,7 +14,6 @@
 #include "ValuedListItem.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
@@ -62,25 +61,24 @@ AgentListView::~AgentListView()
 // Name: AgentListView::RecursiveCreateHierarchy
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::RecursiveCreateHierarchy( const Hierarchies* hierarchy )
+ValuedListItem* AgentListView::RecursiveCreateHierarchy( const Entity_ABC* entity )
 {
-    if( !hierarchy )
-        return;
-    const Entity_ABC* superior = hierarchy->GetSuperior();
-    if( superior )
-        RecursiveCreateHierarchy( superior->Retrieve< Hierarchies >() );
-    
-    const Entity_ABC& entity = hierarchy->GetEntity();
-    if( FindItem( &entity, firstChild() ) )
-        return;
-    if( !superior )
-        factory_.CreateItem( this )->SetNamed( entity );
-    else
+    if( !entity )
+        return 0;
+    ValuedListItem* item = FindItem( entity, firstChild() );
+    if( item )
+        return item;
+    if( const Hierarchies* hierarchy = entity->Retrieve< Hierarchies >() )
     {
-        ValuedListItem* parentItem = FindItem( superior, firstChild() );
-        if( parentItem )
-            factory_.CreateItem( parentItem )->SetNamed( entity );
+        item = RecursiveCreateHierarchy( hierarchy->GetSuperior() );
+        if( !item )
+            item = factory_.CreateItem( this );
+        else
+            item = factory_.CreateItem( item );
+        item->SetNamed( *entity );
+        return item;
     }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +87,7 @@ void AgentListView::RecursiveCreateHierarchy( const Hierarchies* hierarchy )
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyCreated( const Hierarchies& hierarchy )
 {
-    RecursiveCreateHierarchy( &hierarchy );
+    RecursiveCreateHierarchy( &hierarchy.GetEntity() );
     NotifyUpdated( hierarchy );
 }
 

@@ -62,25 +62,24 @@ CommunicationListView::~CommunicationListView()
 // Name: CommunicationListView::RecursiveCreateHierarchy
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void CommunicationListView::RecursiveCreateHierarchy( const CommunicationHierarchies* hierarchy )
+ValuedListItem* CommunicationListView::RecursiveCreateHierarchy( const Entity_ABC* entity )
 {
-    if( !hierarchy )
-        return;
-    const Entity_ABC* superior = hierarchy->GetSuperior();
-    if( superior )
-        RecursiveCreateHierarchy( superior->Retrieve< CommunicationHierarchies >() );
-    
-    const Entity_ABC& entity = hierarchy->GetEntity();
-    if( FindItem( &entity, firstChild() ) )
-        return;
-    if( !superior )
-        factory_.CreateItem( this )->SetNamed( entity );
-    else
+    if( !entity )
+        return 0;
+    ValuedListItem* item = FindItem( entity, firstChild() );
+    if( item )
+        return item;
+    if( const Hierarchies* hierarchy = entity->Retrieve< CommunicationHierarchies >() )
     {
-        ValuedListItem* parentItem = FindItem( superior, firstChild() );
-        if( parentItem )
-            factory_.CreateItem( parentItem )->SetNamed( entity );
+        item = RecursiveCreateHierarchy( hierarchy->GetSuperior() );
+        if( !item )
+            item = factory_.CreateItem( this );
+        else
+            item = factory_.CreateItem( item );
+        item->SetNamed( *entity );
+        return item;
     }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +88,7 @@ void CommunicationListView::RecursiveCreateHierarchy( const CommunicationHierarc
 // -----------------------------------------------------------------------------
 void CommunicationListView::NotifyCreated( const CommunicationHierarchies& hierarchy )
 {
-    RecursiveCreateHierarchy( &hierarchy );
+    RecursiveCreateHierarchy( &hierarchy.GetEntity() );
     NotifyUpdated( hierarchy );
 }
 

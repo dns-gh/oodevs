@@ -18,6 +18,7 @@
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
@@ -100,7 +101,6 @@ KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 {
     if( automat_ )
         return automat_->GetKnowledgeGroup();
-
     const KnowledgeGroupHierarchy* group = Retrieve< KnowledgeGroupHierarchy >();
     if( group )
         return *const_cast< KnowledgeGroup_ABC* >( group->GetKnowledgeGroup() );
@@ -113,7 +113,9 @@ KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 const Team_ABC& Agent::GetTeam() const
 {
-    const TeamHierarchy* team = Retrieve< TeamHierarchy >();
+    if( automat_ )
+        return automat_->GetTeam();
+    const TeamHierarchy* team = formation_->Retrieve< TeamHierarchy >();
     if( team )
         return team->GetTeam();
     throw std::runtime_error( "I have no team" );

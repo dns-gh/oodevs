@@ -90,7 +90,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    void RecursiveCreateHierarchy( const kernel::Hierarchies* hierarchy );
+    ValuedListItem* RecursiveCreateHierarchy( const kernel::Entity_ABC* entity );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
