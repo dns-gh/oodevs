@@ -21,6 +21,7 @@
 #include "AgentPositions.h"
 #include "AgentHierarchies.h"
 #include "TeamHierarchy.h"
+#include "KnowledgeGroupHierarchy.h"
 #include "CommunicationHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -85,6 +86,7 @@ kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatTyp
     result->Attach< kernel::Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     const TeamHierarchy& team = parent.Get< TeamHierarchy >();
     result->Attach( *new TeamHierarchy( team.GetTeam() ) );
+    result->Attach( *new KnowledgeGroupHierarchy( controllers_.controller_ ) );
     result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Team_ABC* >( &team.GetTeam() ) ) );
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );

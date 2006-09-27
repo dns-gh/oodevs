@@ -41,7 +41,6 @@ public:
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual const kernel::Entity_ABC& GetEntity() const;
-
     void ChangeSuperior( kernel::Entity_ABC& superior );
     //@}
 

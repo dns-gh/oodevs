@@ -10,6 +10,8 @@
 #include "preparation_pch.h"
 #include "Agent.h"
 #include "TeamHierarchy.h"
+#include "KnowledgeGroupHierarchy.h"
+#include "CommunicationHierarchies.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -96,7 +98,13 @@ unsigned long Agent::GetId() const
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 {
-    throw std::runtime_error( "I have no knowledge group" ); // $$$$ SBO 2006-09-22: 
+    if( automat_ )
+        return automat_->GetKnowledgeGroup();
+
+    const KnowledgeGroupHierarchy* group = Retrieve< KnowledgeGroupHierarchy >();
+    if( group )
+        return *const_cast< KnowledgeGroup_ABC* >( group->GetKnowledgeGroup() );
+    throw std::runtime_error( "I have no knowledge group" );
 }
 
 // -----------------------------------------------------------------------------

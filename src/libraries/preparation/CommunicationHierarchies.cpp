@@ -72,6 +72,7 @@ void CommunicationHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
     RemoveFromSuperior();
     superior_ = &superior;
     RegisterToSuperior();
+    controller_.Update( *(kernel::CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
