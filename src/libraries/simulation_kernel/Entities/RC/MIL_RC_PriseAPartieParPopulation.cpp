@@ -53,7 +53,7 @@ void MIL_RC_PriseAPartieParPopulation::Send( const MIL_AgentPion& sender, E_RcTy
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_prise_a_partie_par_population );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_prise_a_partie_par_population, sender.GetKnowledgeGroup() );
     asnMsg.Send();   
 }
 
@@ -67,7 +67,7 @@ void MIL_RC_PriseAPartieParPopulation::Send( const MIL_Automate& sender, E_RcTyp
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_prise_a_partie_par_population );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_prise_a_partie_par_population, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 

@@ -53,7 +53,7 @@ void MIL_RC_RiposteContrePopulation::Send( const MIL_AgentPion& sender, E_RcType
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_population );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_population, sender.GetKnowledgeGroup() );
     asnMsg.Send();   
 }
 
@@ -67,7 +67,7 @@ void MIL_RC_RiposteContrePopulation::Send( const MIL_Automate& sender, E_RcType 
 
     NET_ASN_MsgCR asnMsg;
     FillRcMessage( asnMsg.GetAsnMsg(), sender, nType );
-    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_population );
+    NET_ASN_Tools::CopyPopulationKnowledge( diaParams[ 1 ], asnMsg.GetAsnMsg().cr.u.cr_riposte_contre_population, sender.GetKnowledgeGroup() );
     asnMsg.Send();
 }
 
