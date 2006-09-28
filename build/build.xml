@@ -105,9 +105,9 @@
         </build-app>
     </target>
 
-    <target name="application.adaptation_app" description="build Astec Adaptation executable" depends="library.ENT,library.MT_Tools_Scipio">
+    <target name="application.adaptation_app" description="build Astec Adaptation executable" depends="library.ENT">
         <build-app name="adaptation_app" depends="mt,qt" excludes="**/XmlResources.cpp" libs="ENT" pch-excludes="qtundo.cpp">
-            <syslibset libs="advapi32, user32"/>
+            <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
 
