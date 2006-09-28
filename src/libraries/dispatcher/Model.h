@@ -21,6 +21,7 @@ class KnowledgeGroup;
 class Automat;
 class Agent;    
 class Object;
+class KnowledgeAgent;
 class SimulationModel;
 class Publisher_ABC;
 
@@ -78,6 +79,7 @@ private:
     ModelsContainer< Automat        > automats_;
     ModelsContainer< Agent          > agents_;
     ModelsContainer< Object         > objects_;
+    ModelsContainer< KnowledgeAgent > knowledgesAgent_;
 };
 
 }

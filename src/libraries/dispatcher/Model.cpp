@@ -16,6 +16,7 @@
 #include "Automat.h"
 #include "Agent.h"
 #include "Object.h"
+#include "KnowledgeAgent.h"
 #include "SimulationModel.h"
 
 using namespace dispatcher;
@@ -33,6 +34,7 @@ Model::Model( Dispatcher& dispatcher )
     , automats_        ()
     , agents_          ()
     , objects_         ()
+    , knowledgesAgent_ ()
 {
     pSimulationModel_ = new SimulationModel();
 }
@@ -81,9 +83,9 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.u.msg_lima_creation                       ); break;
 //        case T_MsgsOutSim_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.u.msg_lima_destruction                     ); break;
 
-//        case T_MsgsOutSim_msg_msg_unit_knowledge_creation:              model.Update( ( *message.u.msg_unit_knowledge_creation             ); break;
-//        case T_MsgsOutSim_msg_msg_unit_knowledge_update:                OnReceiveMsgUnitKnowledgeUpdate       ( *message.u.msg_unit_knowledge_update               ); break;
-//        case T_MsgsOutSim_msg_msg_unit_knowledge_destruction:           OnReceiveMsgUnitKnowledgeDestruction  ( *message.u.msg_unit_knowledge_destruction          ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_creation:              knowledgesAgent_.Create( *this, asnMsg.msg.u.msg_unit_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_unit_knowledge_creation ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_update:                knowledgesAgent_.Get( asnMsg.msg.u.msg_unit_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_unit_knowledge_update ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_destruction:           knowledgesAgent_.Destroy( asnMsg.msg.u.msg_unit_knowledge_destruction->oid_connaissance ); break;
 //
         case T_MsgsOutSim_msg_msg_unit_attributes:                    agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid_pion ).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
         case T_MsgsOutSim_msg_msg_unit_dotations:                     agents_.Get( asnMsg.msg.u.msg_unit_dotations ->oid_pion ).Update( *asnMsg.msg.u.msg_unit_dotations  ); break;
@@ -242,6 +244,10 @@ void Model::Send( Publisher_ABC& publisher ) const
     agents_         .Apply( std::mem_fun_ref( &Agent  ::SendFullUpdate ), publisher );
 //$$$ POPULATION
     objects_        .Apply( std::mem_fun_ref( &Object ::SendFullUpdate ), publisher );
+
+    // Knowledges
+    knowledgesAgent_.Apply( std::mem_fun_ref( &KnowledgeAgent::SendCreation   ), publisher );
+    knowledgesAgent_.Apply( std::mem_fun_ref( &KnowledgeAgent::SendFullUpdate ), publisher );
     /*
 
     // Knowledge
