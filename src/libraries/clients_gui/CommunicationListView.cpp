@@ -70,16 +70,13 @@ ValuedListItem* CommunicationListView::RecursiveCreateHierarchy( const Entity_AB
     if( item )
         return item;
     if( const Hierarchies* hierarchy = entity->Retrieve< CommunicationHierarchies >() )
-    {
         item = RecursiveCreateHierarchy( hierarchy->GetSuperior() );
-        if( !item )
-            item = factory_.CreateItem( this );
-        else
-            item = factory_.CreateItem( item );
-        item->SetNamed( *entity );
-        return item;
-    }
-    return 0;
+    if( !item )
+        item = factory_.CreateItem( this );
+    else
+        item = factory_.CreateItem( item );
+    item->SetNamed( *entity );
+    return item;
 }
 
 // -----------------------------------------------------------------------------

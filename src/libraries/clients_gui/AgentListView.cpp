@@ -69,16 +69,13 @@ ValuedListItem* AgentListView::RecursiveCreateHierarchy( const Entity_ABC* entit
     if( item )
         return item;
     if( const Hierarchies* hierarchy = entity->Retrieve< Hierarchies >() )
-    {
         item = RecursiveCreateHierarchy( hierarchy->GetSuperior() );
-        if( !item )
-            item = factory_.CreateItem( this );
-        else
-            item = factory_.CreateItem( item );
-        item->SetNamed( *entity );
-        return item;
-    }
-    return 0;
+    if( !item )
+        item = factory_.CreateItem( this );
+    else
+        item = factory_.CreateItem( item );
+    item->SetNamed( *entity );
+    return item;
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +197,7 @@ void AgentListView::OptionChanged( const std::string& name, const OptionVariant&
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {
-        item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
+        item->setVisible( ! currentTeam_ || item->Holds( (const Entity_ABC*)currentTeam_ ) );
         item = (ValuedListItem*)( item->nextSibling() );
     }
 }
