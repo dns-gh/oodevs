@@ -35,7 +35,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , levels_( levels )
     , selectedFormation_( controllers )
 {
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), this, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void TacticalListView::Display( const Entity_ABC& agent, gui::ValuedListItem* it
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyUpdated( const ModelLoaded& )
 {
-    clear();
+    clear(); // $$$$ SBO 2006-09-28: ajouter ModelUnLoaded + disconnect ?
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
 }
 
@@ -92,17 +92,14 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalListView::OnRename
-// Created: SBO 2006-08-30
+// Name: TacticalListView::NotifyUpdated
+// Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
-void TacticalListView::OnRename( QListViewItem* item, int, const QString& text )
+void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
-    gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item );
-    if( valuedItem && valuedItem->IsA< const Entity_ABC* >() )
-    {
-        const Team* team = dynamic_cast< const Team* >( valuedItem->GetValue< const Entity_ABC* >() );
-        const_cast< Team* >( team )->Rename( text );
-    }
+    gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
+    if( item )
+        item->SetNamed( entity );
 }
 
 // -----------------------------------------------------------------------------

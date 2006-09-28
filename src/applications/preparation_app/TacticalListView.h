@@ -31,6 +31,7 @@ class FormationLevels;
 // =============================================================================
 class TacticalListView : public gui::AgentListView
                        , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                       , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< AutomatDecisions >
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
@@ -56,7 +57,6 @@ private slots:
     //! @name Slots
     //@{
     void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
-    void OnRename( QListViewItem* item, int col, const QString& text );
     void Engage();
     void Disengage();
     //@}
@@ -71,6 +71,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyUpdated( const AutomatDecisions& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );

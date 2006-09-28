@@ -26,7 +26,7 @@ CommunicationListView::CommunicationListView( QWidget* parent, Controllers& cont
     , factory_( factory )
     , modelBuilder_( modelBuilder )
 {
-    // NOTHING
+    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +58,18 @@ void CommunicationListView::NotifyUpdated( const ModelLoaded& )
 {
     clear();
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationListView::NotifyUpdated
+// Created: SBO 2006-09-28
+// -----------------------------------------------------------------------------
+void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
+    if( item )
+        item->SetNamed( entity );
+}
+
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::NotifyContextMenu
 // Created: SBO 2006-09-26

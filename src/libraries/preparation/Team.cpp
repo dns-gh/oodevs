@@ -88,7 +88,7 @@ void Team::CreateKnowledgeGroup()
 void Team::Rename( const QString& name )
 {
     name_ = name;
-//    controller_.Update( *(Team_ABC*)this );
+    controller_.Update( *(Team_ABC*)this );
     controller_.Update( *(Entity_ABC*)this );
 }
 

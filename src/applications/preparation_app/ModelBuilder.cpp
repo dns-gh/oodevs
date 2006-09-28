@@ -16,6 +16,7 @@
 #include "preparation/FormationModel.h"
 #include "preparation/FormationLevels.h"
 #include "preparation/Level.h"
+#include "preparation/Team.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -163,4 +164,17 @@ void ModelBuilder::Select( const Agent_ABC& element )
 void ModelBuilder::Select( const Formation_ABC& element )
 {
     selectedFormation_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::OnRename
+// Created: SBO 2006-09-28
+// -----------------------------------------------------------------------------
+void ModelBuilder::OnRename( QListViewItem*, int, const QString& text )
+{
+    if( selectedTeam_ )
+    {
+        if( Team* concreteTeam = dynamic_cast< Team* >( selectedTeam_.ConstCast() ) )
+            concreteTeam->Rename( text );
+    }
 }

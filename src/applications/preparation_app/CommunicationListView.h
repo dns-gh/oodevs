@@ -27,6 +27,7 @@ class ModelBuilder;
 // =============================================================================
 class CommunicationListView : public gui::CommunicationListView
                             , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                            , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
 {
 
@@ -52,6 +53,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::KnowledgeGroup_ABC& target );

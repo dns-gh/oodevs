@@ -61,6 +61,7 @@ public slots:
     void OnCreate();
     void OnCreateFormation( int level );
     void OnCreateCommunication();
+    void OnRename( QListViewItem*, int, const QString& text );
     //@}
 
 private:
