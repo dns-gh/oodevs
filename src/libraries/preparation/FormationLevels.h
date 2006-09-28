@@ -10,7 +10,10 @@
 #ifndef __FormationLevels_h_
 #define __FormationLevels_h_
 
-class Level;
+namespace kernel
+{
+    class HierarchyLevel_ABC;
+}
 
 // =============================================================================
 /** @class  FormationLevels
@@ -30,9 +33,9 @@ public:
 
     //! @name Accessors
     //@{
-    const Level* Resolve( const QString& name ) const;
-    const Level* Resolve( unsigned int id ) const;
-    const Level* GetRoot() const;
+    const kernel::HierarchyLevel_ABC* Resolve( const QString& name ) const;
+    const kernel::HierarchyLevel_ABC* Resolve( unsigned int id ) const;
+    const kernel::HierarchyLevel_ABC* GetRoot() const;
     //@}
 
 private:
@@ -50,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Level* root_;
+    kernel::HierarchyLevel_ABC* root_;
     //@}
 };
 

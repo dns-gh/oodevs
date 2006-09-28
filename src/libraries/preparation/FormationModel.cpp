@@ -11,7 +11,6 @@
 #include "FormationModel.h"
 #include "FormationFactory_ABC.h"
 #include "FormationLevels.h"
-#include "Level.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
 
@@ -46,10 +45,10 @@ FormationModel::~FormationModel()
 // -----------------------------------------------------------------------------
 void FormationModel::Create( kernel::Team_ABC& parent, unsigned int levelId )
 {
-    const Level* level = levels_.Resolve( levelId );
+    const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
     if( !level )
         return;
-    Formation_ABC* formation = factory_.Create( parent, level->GetName() );
+    Formation_ABC* formation = factory_.Create( parent, *level );
     Register( formation->GetId(), *formation );
 }
     
@@ -59,10 +58,10 @@ void FormationModel::Create( kernel::Team_ABC& parent, unsigned int levelId )
 // -----------------------------------------------------------------------------
 void FormationModel::Create( kernel::Formation_ABC& parent, unsigned int levelId )
 {
-    const Level* level = levels_.Resolve( levelId );
+    const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
     if( !level )
         return;
-    Formation_ABC* formation = factory_.Create( parent, level->GetName() );
+    Formation_ABC* formation = factory_.Create( parent, *level );
     Register( formation->GetId(), *formation );
 }
     
@@ -75,15 +74,6 @@ void FormationModel::Purge()
     DeleteAll();
 }
     
-// -----------------------------------------------------------------------------
-// Name: FormationModel::Serialize
-// Created: SBO 2006-09-19
-// -----------------------------------------------------------------------------
-void FormationModel::Serialize( xml::xostream& xos ) const
-{
-    // $$$$ SBO 2006-09-19: todo
-}
-
 // -----------------------------------------------------------------------------
 // Name: FormationModel::NotifyDeleted
 // Created: SBO 2006-09-19

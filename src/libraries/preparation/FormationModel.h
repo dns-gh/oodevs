@@ -49,7 +49,6 @@ public:
     void Create( kernel::Team_ABC& parent, unsigned int levelId );
     void Create( kernel::Formation_ABC& parent, unsigned int levelId );
     void Purge();
-    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

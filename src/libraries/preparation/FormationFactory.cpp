@@ -42,7 +42,7 @@ FormationFactory::~FormationFactory()
 // Name: FormationFactory::Create
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const QString& level )
+kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
     formation->Attach( *new TeamHierarchy( parent ) );    
@@ -55,7 +55,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const
 // Name: FormationFactory::Create
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* FormationFactory::Create( kernel::Formation_ABC& parent, const QString& level )
+kernel::Formation_ABC* FormationFactory::Create( kernel::Formation_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
     if( const TeamHierarchy* team = parent.Retrieve< TeamHierarchy >() )

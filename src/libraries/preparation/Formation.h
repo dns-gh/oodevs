@@ -37,7 +37,7 @@ class Formation : public kernel::Formation_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( kernel::Controller& controller, const QString& level, IdManager& idManager );
+             Formation( kernel::Controller& controller, const kernel::HierarchyLevel_ABC& level, IdManager& idManager );
     virtual ~Formation();
     //@}
 
@@ -46,7 +46,7 @@ public:
     virtual bool IsInTeam( const kernel::Team_ABC& team ) const; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    virtual const QString& GetLevel() const;
+    virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     //@}
 
 private:
@@ -68,7 +68,7 @@ private:
     kernel::Controller& controller_;
     unsigned long id_;
     QString name_;
-    QString level_;
+    const kernel::HierarchyLevel_ABC& level_;
     //@}
 };
 

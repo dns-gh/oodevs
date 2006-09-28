@@ -31,9 +31,7 @@ EntityHierarchies::EntityHierarchies( kernel::Controller& controller, kernel::En
 // -----------------------------------------------------------------------------
 EntityHierarchies::~EntityHierarchies()
 {
-    if( superior_ )
-        if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
-            hierarchies->RemoveSubordinate( holder_ );
+    RemoveFromSuperior();
     controller_.Delete( *(kernel::Hierarchies*)this );
 }
 
@@ -43,9 +41,7 @@ EntityHierarchies::~EntityHierarchies()
 // -----------------------------------------------------------------------------
 void EntityHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 {
-    if( superior_ )
-        if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
-            hierarchies->AddSubordinate( holder_ );
+    RegisterToSuperior();
     controller_.Create( *(kernel::Hierarchies*)this );
 }
 
@@ -65,4 +61,37 @@ const kernel::Entity_ABC* EntityHierarchies::GetSuperior() const
 const kernel::Entity_ABC& EntityHierarchies::GetEntity() const
 {
     return holder_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::ChangeSuperior
+// Created: SBO 2006-09-28
+// -----------------------------------------------------------------------------
+void EntityHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+{
+    RemoveFromSuperior();
+    superior_ = &superior;
+    RegisterToSuperior();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::RegisterToSuperior
+// Created: SBO 2006-09-28
+// -----------------------------------------------------------------------------
+void EntityHierarchies::RegisterToSuperior()
+{
+    if( superior_ )
+        if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
+            hierarchies->AddSubordinate( holder_ );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::RemoveFromSuperior
+// Created: SBO 2006-09-28
+// -----------------------------------------------------------------------------
+void EntityHierarchies::RemoveFromSuperior()
+{
+    if( superior_ )
+        if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
+            hierarchies->RemoveSubordinate( holder_ );
 }

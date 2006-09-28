@@ -11,6 +11,8 @@
 #include "FormationLevels.h"
 #include "Level.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: FormationLevels constructor
 // Created: SBO 2006-09-21
@@ -32,9 +34,9 @@ FormationLevels::~FormationLevels()
 
 namespace 
 {
-    Level* AddLevel( Level& root, const QString& name )
+    HierarchyLevel_ABC* AddLevel( HierarchyLevel_ABC& root, const QString& name )
     {
-        Level* newLevel = new Level( name, &root );
+        HierarchyLevel_ABC* newLevel = new Level( name, &root );
         root.SetNext( *newLevel );
         return newLevel;
     }
@@ -46,7 +48,7 @@ namespace
 // -----------------------------------------------------------------------------
 void FormationLevels::Initialize()
 {
-    Level* root = new Level( "xxxx", 0 );
+    HierarchyLevel_ABC* root = new Level( "xxxx", 0 );
     root_ = root;
     root = AddLevel( *root, "xxx" );
     root = AddLevel( *root, "xx" );
@@ -63,7 +65,7 @@ void FormationLevels::Initialize()
 // Name: FormationLevels::GetRoot
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-const Level* FormationLevels::GetRoot() const
+const HierarchyLevel_ABC* FormationLevels::GetRoot() const
 {
     return root_;
 }
@@ -72,9 +74,9 @@ const Level* FormationLevels::GetRoot() const
 // Name: FormationLevels::Resolve
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-const Level* FormationLevels::Resolve( const QString& name ) const
+const HierarchyLevel_ABC* FormationLevels::Resolve( const QString& name ) const
 {
-    const Level* root = root_;
+    const HierarchyLevel_ABC* root = root_;
     while( root )
     {
         if( root->GetName() == name )
@@ -88,9 +90,9 @@ const Level* FormationLevels::Resolve( const QString& name ) const
 // Name: FormationLevels::Resolve
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-const Level* FormationLevels::Resolve( unsigned int id ) const
+const HierarchyLevel_ABC* FormationLevels::Resolve( unsigned int id ) const
 {
-    const Level* root = root_;
+    const HierarchyLevel_ABC* root = root_;
     while( root )
     {
         if( root->GetId() == id )

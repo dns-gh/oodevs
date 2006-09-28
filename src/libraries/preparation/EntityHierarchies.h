@@ -41,6 +41,7 @@ public:
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual const kernel::Entity_ABC& GetEntity() const;
+    void ChangeSuperior( kernel::Entity_ABC& superior );
     //@}
 
 private:
@@ -53,6 +54,8 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& );
+    void RegisterToSuperior();
+    void RemoveFromSuperior();
     //@}
 
 private:

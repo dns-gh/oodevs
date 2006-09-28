@@ -10,33 +10,36 @@
 #ifndef __Level_h_
 #define __Level_h_
 
+#include "clients_kernel/HierarchyLevel_ABC.h"
+
 // =============================================================================
 /** @class  Level
     @brief  Level
 */
 // Created: SBO 2006-09-21
 // =============================================================================
-class Level
+class Level : public kernel::HierarchyLevel_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Level( const QString& name, const Level* previous );
+             Level( const QString& name, const kernel::HierarchyLevel_ABC* previous );
     virtual ~Level();
     //@}
 
     //! @name Accessors
     //@{
-    QString GetName() const;
-    unsigned int GetId() const;
-    const Level* GetPrevious() const;
-    const Level* GetNext() const;
+    virtual QString GetName() const;
+    virtual unsigned int GetId() const;
+    virtual const kernel::HierarchyLevel_ABC* GetPrevious() const;
+    virtual const kernel::HierarchyLevel_ABC* GetNext() const;
     //@}
 
     //! @name Operations
     //@{
-    void SetNext( const Level& next );
+    virtual void SetNext( const kernel::HierarchyLevel_ABC& next );
+    virtual bool operator<( const kernel::HierarchyLevel_ABC& rhs ) const;
     //@}
 
 private:
@@ -51,8 +54,8 @@ private:
     //@{
     QString name_;
     unsigned int id_;
-    const Level* previous_;
-    const Level* next_;
+    const kernel::HierarchyLevel_ABC* previous_;
+    const kernel::HierarchyLevel_ABC* next_;
     //@}
 
 private:

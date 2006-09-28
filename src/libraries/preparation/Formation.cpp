@@ -13,6 +13,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/HierarchyLevel_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
 
@@ -23,7 +24,7 @@ using namespace xml;
 // Name: Formation constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-Formation::Formation( kernel::Controller& controller, const QString& level, IdManager& idManager )
+Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, IdManager& idManager )
     : controller_( controller )
     , id_( idManager.GetNextId() )
     , name_( "" )
@@ -66,7 +67,7 @@ bool Formation::IsInTeam( const Team_ABC& team ) const
 // -----------------------------------------------------------------------------
 QString Formation::GetName() const
 {
-    return level_;
+    return level_.GetName();
 }
     
 // -----------------------------------------------------------------------------
@@ -82,7 +83,7 @@ unsigned long Formation::GetId() const
 // Name: Formation::GetLevel
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-const QString& Formation::GetLevel() const
+const HierarchyLevel_ABC& Formation::GetLevel() const
 {
     return level_;
 }
@@ -95,5 +96,5 @@ void Formation::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )
-        << attribute( "level", level_.ascii() );
+        << attribute( "level", level_.GetName().ascii() );
 }

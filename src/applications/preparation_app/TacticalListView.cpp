@@ -16,6 +16,7 @@
 #include "preparation/TeamsModel.h"
 #include "preparation/AutomatDecisions.h"
 #include "preparation/FormationLevels.h"
+#include "preparation/EntityHierarchies.h"
 #include "preparation/Level.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -55,6 +56,8 @@ void TacticalListView::Display( const Hierarchies& hierarchy, gui::ValuedListIte
 {
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
+    item->setDragEnabled( true );
+    gui::AgentListView::Display( hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +140,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
     if( !isVisible() )
         return;
     QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
-    const Level* level = levels_.GetRoot();
+    const HierarchyLevel_ABC* level = levels_.GetRoot();
     while( level && ( level = level->GetNext() ) )
         subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
     menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), &modelBuilder_, SLOT( OnDelete() ) );
@@ -153,7 +156,7 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
         return;
     if( &formation != selectedFormation_ )
         selectedFormation_ = &formation;
-    const Level* level = levels_.Resolve( selectedFormation_->GetLevel() );
+    const HierarchyLevel_ABC* level = &selectedFormation_->GetLevel();
     if( level && level->GetNext() )
     {
         QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
@@ -240,6 +243,69 @@ void TacticalListView::Select( const Formation_ABC& element )
 // -----------------------------------------------------------------------------
 bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
 {
-//        return Drop(*agent, *group );
+    const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &item );
+    if( agent )
+        return Drop( *agent, target );
+
+    const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &item );
+    if( formation )
+        return Drop( *formation, target );
     return false;
+}
+
+namespace 
+{
+    bool ChangeSuperior( const Entity_ABC& entity, const Entity_ABC& superior ) // $$$$ SBO 2006-09-28: cast-machine
+    {
+        if( const Hierarchies* hierarchies = entity.Retrieve< Hierarchies >() )
+            if( const ::EntityHierarchies* hierarchy = static_cast< const ::EntityHierarchies* >( hierarchies ) )
+            {
+                const_cast< ::EntityHierarchies* >( hierarchy )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
+                return true;
+            }
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: SBO 2006-09-28
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const Agent_ABC& agent, const Entity_ABC& target )
+{
+    const Agent_ABC* automat = dynamic_cast< const Agent_ABC* >( &target );
+    if( automat )
+    {
+        if( !agent.GetSuperior() )
+            return false;
+        return ChangeSuperior( agent, target );
+    }
+    if( agent.GetSuperior() )
+        return false;
+
+    const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &target );
+    if( formation )
+        return ChangeSuperior( agent, target );
+    return false;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: SBO 2006-09-28
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const Formation_ABC& formation, const Entity_ABC& target )
+{
+    const Formation_ABC* targetFormation = dynamic_cast< const Formation_ABC* >( &target );
+    if( targetFormation )
+    {
+        if( formation.GetLevel() < targetFormation->GetLevel() )
+            return ChangeSuperior( formation, target );
+        return false;
+    }
+
+    const Team_ABC* team = dynamic_cast< const Team_ABC* >( &target );
+    if( team )
+        return ChangeSuperior( formation, target );
+    return false;
+
 }

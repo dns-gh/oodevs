@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Team_ABC;
+    class HierarchyLevel_ABC;
 
 // =============================================================================
 /** @class  Formation_ABC
@@ -35,7 +36,7 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsInTeam( const Team_ABC& team ) const = 0; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
-    virtual const QString& GetLevel() const = 0;
+    virtual const HierarchyLevel_ABC& GetLevel() const = 0;
     //@}
 
     //! @name Operations
