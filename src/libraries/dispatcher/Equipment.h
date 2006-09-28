@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     void Update( const ASN1T_DotationEquipement& asnMsg );
+    void Send  ( ASN1T_DotationEquipement& asnMsg ) const;
     //@}
 
 private:

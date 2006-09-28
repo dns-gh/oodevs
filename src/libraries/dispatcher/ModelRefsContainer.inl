@@ -74,4 +74,21 @@ void ModelRefsContainer< T >::ThrowError( unsigned long nID, const std::string& 
 
 }
 
+// -----------------------------------------------------------------------------
+// Name: template< typename L, typename E > ModelRefsContainer::SerializeTest
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+template< typename T > template< typename L, typename E > inline
+void ModelRefsContainer< T >::Send( L& asnList ) const
+{
+    asnList.n = modelRefs_.size();
+    if( !modelRefs_.empty() )
+    {
+        asnList.elem = new E[ modelRefs_.size() ];
+        uint i = 0;
+        for( CIT_ModelRefMap it = modelRefs_.begin(); it != modelRefs_.end(); ++it, ++i )
+            asnList.elem[ i ] = it->second->GetID();
+    }
+}
+
 }

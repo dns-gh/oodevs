@@ -12,6 +12,7 @@
 #include "Loan.h"
 
 #include "Model.h"
+#include "Agent.h"
 
 using namespace dispatcher;
 
@@ -46,4 +47,25 @@ Loan::~Loan()
 
 }
     
-    
+// -----------------------------------------------------------------------------
+// Name: Loan::Send
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void Loan::Send( ASN1T_EquipementEmprunte& asnMsg ) const
+{
+    asnMsg.type_equipement  = nEquipmentType_;
+    asnMsg.oid_pion_preteur = pAgent_->GetID();
+    asnMsg.nombre           = nQuantity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Loan::Send
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void Loan::Send( ASN1T_EquipementPrete& asnMsg ) const
+{
+    asnMsg.type_equipement     = nEquipmentType_;
+    asnMsg.oid_pion_emprunteur = pAgent_->GetID();
+    asnMsg.nombre              = nQuantity_;
+
+}

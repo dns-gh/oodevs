@@ -6,15 +6,6 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2006-09-25 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "dispatcher_pch.h"
 
@@ -27,7 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const Model& /*model*/, const ASN1T_DotationRessource& asnMsg )
-: nDotationType_( asnMsg.ressource_id )
+   : nDotationType_( asnMsg.ressource_id )
    , nNbr_         ( asnMsg.quantite_disponible )
 {
 }
@@ -49,4 +40,15 @@ Dotation::~Dotation()
 void Dotation::Update( const ASN1T_DotationRessource& asnMsg )
 {
     nNbr_ = asnMsg.quantite_disponible;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dotation::Send
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void Dotation::Send( ASN1T_DotationRessource& asnMsg ) const
+{
+    asnMsg.ressource_id        = nDotationType_;
+    asnMsg.quantite_disponible = nNbr_;
+
 }

@@ -6,15 +6,6 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2006-09-25 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __ModelsContainer_h_
 #define __ModelsContainer_h_
@@ -33,6 +24,14 @@ template< typename T >
 class ModelsContainer
 {
 public:
+    //! @name Types
+    //@{
+    typedef typename std::map< unsigned long, T* > T_ModelMap;
+    typedef typename T_ModelMap::iterator          IT_ModelMap;
+    typedef typename T_ModelMap::const_iterator    CIT_ModelMap;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
      ModelsContainer();
@@ -48,6 +47,17 @@ public:
     void  Destroy( unsigned long nID );
     T&    Get    ( unsigned long nID ) const;
     T*    Find   ( unsigned long nID ) const;    
+    void  Clear  ();
+
+    template< typename F >
+    void  Apply( F functor ) const;
+    template< typename F, typename P1 >
+    void  Apply( F functor, P1& param1 ) const;
+
+    const T_ModelMap& GetContainer() const;
+
+    template< typename L, typename E > 
+    void Send( L& asnList ) const;
     //@}
 
 private:
@@ -60,14 +70,6 @@ private:
     //! @name Tools
     //@{
     void ThrowError( unsigned long nID, const std::string& strMessage ) const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef typename std::map< unsigned long, T* > T_ModelMap;
-    typedef typename T_ModelMap::iterator          IT_ModelMap;
-    typedef typename T_ModelMap::const_iterator    CIT_ModelMap;
     //@}
 
 private:

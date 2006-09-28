@@ -34,6 +34,12 @@ public:
     ~Position();
     //@}
 
+    //! @name Operations
+    //@{
+    void Update( const ASN1T_CoordUTM& asn );
+    void Send  ( ASN1T_CoordUTM& asn ) const;
+    //@}
+
 private:
     std::string strPosition_;
 };

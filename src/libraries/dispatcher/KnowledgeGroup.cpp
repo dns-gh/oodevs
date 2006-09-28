@@ -6,21 +6,14 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2006-09-25 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "dispatcher_pch.h"
 
 #include "KnowledgeGroup.h"
 
 #include "Side.h"
+#include "Publisher_ABC.h"
+#include "Network_Def.h"
 
 using namespace dispatcher;
 
@@ -45,3 +38,18 @@ KnowledgeGroup::~KnowledgeGroup()
     side_.GetKnowledgeGroups().Unregister( *this );
 }
 
+// =============================================================================
+// MAIN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::SendCreation
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::SendCreation( Publisher_ABC& publisher ) const
+{
+    DIN::DIN_BufferedMessage msg = publisher.GetDinMsg();
+    msg << nID_
+        << side_.GetID();
+    publisher.Send( eMsgKnowledgeGroup, msg );
+}

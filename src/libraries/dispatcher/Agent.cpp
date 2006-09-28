@@ -17,6 +17,7 @@
 #include "Dotation.h"
 #include "Humans.h"
 #include "Loan.h"
+#include "Network_Def.h"
 
 using namespace dispatcher;
 
@@ -210,15 +211,164 @@ void Agent::Update( const ASN1T_MsgUnitDotations& asnMsg )
 
     if( asnMsg.m.equipements_pretesPresent )
     {
-        lendings_.clear();
+        lendings_.Clear();
         for( uint i = 0; i < asnMsg.equipements_pretes.n; ++i )
-            lendings_.push_back( Loan( model_, asnMsg.equipements_pretes.elem[ i ] ) );
+            lendings_.Create( model_, i, asnMsg.equipements_pretes.elem[ i ] );
     }
 
     if( asnMsg.m.equipements_empruntesPresent )
     {
-        borrowings_.clear();
+        borrowings_.Clear();
         for( uint i = 0; i < asnMsg.equipements_empruntes.n; ++i )
-            borrowings_.push_back( Loan( model_, asnMsg.equipements_empruntes.elem[ i ] ) );
+            borrowings_.Create( model_, i, asnMsg.equipements_empruntes.elem[ i ] );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SendCreation
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void Agent::SendCreation( Publisher_ABC& publisher ) const
+{
+    AsnMsgInClientPionCreation asn;
+    asn().oid_pion      = nID_;
+    asn().type_pion     = nType_;
+    asn().nom           = strName_.c_str(); // !! pointeur sur const char*
+    asn().oid_automate  = automat_.GetID();
+    asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SendFullUpdate
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
+{
+    { // Attributes $$$
+        AsnMsgInClientUnitAttributes asn;
+
+        asn().m.positionPresent = 1;
+        asn().m.directionPresent = 1;
+        asn().m.hauteurPresent = 1;
+        asn().m.vitessePresent = 1;
+        asn().m.etat_operationnel_brutPresent = 1;
+        asn().m.pions_renforcantPresent = 1;
+        asn().m.pion_renforcePresent = 1;
+        asn().m.etat_automatePresent = 1;
+        asn().m.mortPresent = 1;
+        asn().m.neutralisePresent = 1;
+        asn().m.mode_furtif_actifPresent = 1;
+        asn().m.embarquePresent = 1;
+        asn().m.transporteurs_disponiblesPresent = 1;
+        asn().m.posture_oldPresent = 1;
+        asn().m.posture_newPresent = 1;
+        asn().m.posture_pourcentagePresent = 1;
+        asn().m.etat_installationPresent = 1;
+        asn().m.en_tenue_de_protection_nbcPresent = 1;
+        asn().m.contamine_par_agents_nbcPresent = 1;
+        asn().m.etat_contaminationPresent = 1;
+        asn().m.communications_brouilleesPresent = 1;
+        asn().m.silence_radioPresent = 1;
+        asn().m.radar_actifPresent = 1;
+        asn().m.pions_transportesPresent = 1;
+        asn().m.pion_transporteurPresent = 1;
+        asn().m.rapport_de_forcePresent = 1;
+        asn().m.combat_de_rencontrePresent = 1;
+        asn().m.etat_operationnelPresent = 1;
+        asn().m.disponibilite_au_tir_indirectPresent = 1;
+        asn().m.roePresent = 1;
+        asn().m.roe_populationPresent = 1;
+        asn().m.fatiguePresent = 1;
+        asn().m.moralPresent = 1;
+        asn().m.experiencePresent = 1;
+        asn().m.renduPresent = 1;
+        asn().m.prisonnierPresent = 1;
+        asn().m.refugie_pris_en_comptePresent = 1;
+
+        position_.Send( asn().position );
+
+        asn().direction = nDirection_;
+        asn().hauteur = nHeight_;
+        asn().vitesse = nSpeed_;
+        asn().etat_operationnel_brut = nOperationalStateValue_;
+
+        reinforcements_.Send< ASN1T_ListAgent, ASN1T_Agent >( asn().pions_renforcant );
+
+        asn().pion_renforce = pReinforced_ ? pReinforced_->GetID() : 0 ;
+        asn().etat_automate = nAutomatState_;
+        asn().mort = bDead_;
+        asn().neutralise =  bNeutralized_;
+        asn().mode_furtif_actif = bStealthModeEnabled_;
+        asn().embarque = bLoaded_;
+        asn().transporteurs_disponibles = bHumanTransportersAvailable_;
+        asn().posture_old = nLastPosture_;
+        asn().posture_new = nCurrentPosture_;
+        asn().posture_pourcentage = nPostureCompletion_;
+        asn().etat_installation = nInstallationState_;
+        asn().en_tenue_de_protection_nbc = bNbcProtectionSuitEnabled_;
+
+        SendVector< ASN1T_ListOID, ASN1T_OID, T_OIDVector >( nbcAgentTypesContaminating_, asn().contamine_par_agents_nbc ); 
+
+        asn().etat_contamination = nContaminationState_;
+        asn().communications_brouillees = bCommunicationJammed_;
+        asn().silence_radio = bBlackoutEnabled_;
+        asn().radar_actif = bRadarEnabled_;
+
+        transportedAgents_.Send< ASN1T_ListAgent, ASN1T_Agent >( asn().pions_transportes );
+
+        asn().pion_transporteur = pTransporter_ ? pTransporter_->GetID() : 0;
+
+        asn().rapport_de_force = nForceRatioState_;
+        asn().combat_de_rencontre = nCloseCombatState_;
+        asn().etat_operationnel = nOperationalState_;
+        asn().disponibilite_au_tir_indirect = nIndirectFireAvailability_;
+        asn().roe = nRoe_;
+        asn().roe_population = nRoePopulation_;
+        asn().fatigue = nTiredness_;
+        asn().moral = nMorale_;
+        asn().experience = nExperience_;
+        asn().rendu = bSurrendered_;
+        asn().prisonnier = bPrisonner_;
+        asn().refugie_pris_en_compte = bRefugeeManaged_;
+
+        asn.Send( publisher );
+
+        if( asn().m.pions_renforcantPresent && asn().pions_renforcant.n > 0 )
+            delete [] asn().pions_renforcant.elem;
+
+        if( asn().m.contamine_par_agents_nbcPresent && asn().contamine_par_agents_nbc.n > 0 )
+            delete [] asn().contamine_par_agents_nbc.elem;
+
+        if( asn().m.pions_transportesPresent && asn().pions_transportes.n > 0 )
+            delete [] asn().pions_transportes.elem;
+    }
+
+    { // Dotations
+        AsnMsgInClientUnitDotations asn;
+
+        asn().m.dotation_eff_materielPresent  = 1;
+        asn().m.dotation_eff_personnelPresent = 1;
+        asn().m.dotation_eff_ressourcePresent = 1;
+        asn().m.equipements_empruntesPresent  = 1;
+        asn().m.equipements_pretesPresent     = 1;
+
+        equipments_ .Send< ASN1T__SeqOfDotationEquipement, ASN1T_DotationEquipement >( asn().dotation_eff_materiel  );
+        troops_     .Send< ASN1T__SeqOfDotationPersonnel , ASN1T_DotationPersonnel  >( asn().dotation_eff_personnel );
+        dotations_  .Send< ASN1T__SeqOfDotationRessource , ASN1T_DotationRessource  >( asn().dotation_eff_ressource );
+        borrowings_ .Send< ASN1T__SeqOfEquipementEmprunte, ASN1T_EquipementEmprunte >( asn().equipements_empruntes  );
+        lendings_   .Send< ASN1T__SeqOfEquipementPrete   , ASN1T_EquipementPrete    >( asn().equipements_pretes     );
+
+        asn.Send( publisher );
+
+        if( asn().m.dotation_eff_materielPresent && asn().dotation_eff_materiel.n > 0 )
+            delete [] asn().dotation_eff_materiel.elem;
+        if( asn().m.dotation_eff_personnelPresent && asn().dotation_eff_personnel.n > 0 )
+            delete [] asn().dotation_eff_personnel.elem;
+        if( asn().m.dotation_eff_ressourcePresent && asn().dotation_eff_ressource.n > 0 )
+            delete [] asn().dotation_eff_ressource.elem;
+        if( asn().m.equipements_empruntesPresent && asn().equipements_empruntes.n > 0 )
+            delete [] asn().equipements_empruntes.elem;
+        if( asn().m.equipements_pretesPresent && asn().equipements_pretes.n > 0 )
+            delete [] asn().equipements_pretes.elem;
     }
 }

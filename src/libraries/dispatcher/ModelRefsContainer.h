@@ -6,15 +6,6 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2006-09-25 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __ModelRefsContainer_h_
 #define __ModelRefsContainer_h_
@@ -31,6 +22,12 @@ namespace dispatcher
 template< typename T >
 class ModelRefsContainer
 {
+public:
+    //! @name Types
+    //@{
+    typedef typename std::map< unsigned long, T* >  T_ModelRefMap;
+    typedef typename T_ModelRefMap::const_iterator  CIT_ModelRefMap;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -45,11 +42,8 @@ public:
     void Register  ( T& t );
     void Unregister( T& t );
 
-
-//    template< typename U > void Remove( T& t );
-//
-//    template< typename U >
-//    T&    Get( unsigned int nID ) const;
+    template< typename L, typename E > 
+    void Send( L& asnList ) const;
     //@}
 
 private:
@@ -62,13 +56,6 @@ private:
     //! @name Tools
 //    //@{
     void ThrowError( unsigned long nID, const std::string& strMessage ) const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef typename std::map< unsigned long, T* >  T_ModelRefMap;
-    typedef typename T_ModelRefMap::const_iterator  CIT_ModelRefMap;
     //@}
 
 private:

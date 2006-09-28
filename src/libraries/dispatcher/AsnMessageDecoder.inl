@@ -84,7 +84,7 @@ template< typename T, typename C > inline
 void AsnMessageDecoder< T, C >::Dump() const
 {
     std::cout << "BEGIN MSG DUMP =>" << std::endl;
-    const_cast< C& >( asnMsgCtrl_ ).Print( "Receiving MsgsMosSim" );
+    const_cast< C& >( asnMsgCtrl_ ).Print( "Receiving msg" );
     std::cout << "END MSG DUMP =>" << std::endl;
 }
 

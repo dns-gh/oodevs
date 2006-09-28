@@ -36,8 +36,11 @@ public:
     //@{
     void OnReceive( const ASN1T_MsgsOutClient& asnMsg );
     void OnReceive( unsigned int nMsgID, DIN::DIN_Input& input ); //$$$ TMP DIN
-    void Send     ( const ASN1T_MsgsInClient&  asnMsg, const DIN::DIN_BufferedMessage& dinMsg );
+    void Send     ( const ASN1T_MsgsInClient& asnMsg );
+    void Send     ( const ASN1T_MsgsInClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
     void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg ); //$$$ TMP DIN
+    
+    DIN::DIN_BufferedMessage GetDinMsg(); //$$$ TMP DIN    
     //@}
 
     //! @name Tools

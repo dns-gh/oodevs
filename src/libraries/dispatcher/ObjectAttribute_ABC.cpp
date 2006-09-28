@@ -17,7 +17,8 @@ using namespace dispatcher;
 // Name: ObjectAttribute_ABC constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ObjectAttribute_ABC::ObjectAttribute_ABC( const Model& model, const ASN1T_MsgObjectCreation& asnMsg )
+ObjectAttribute_ABC::ObjectAttribute_ABC( const Model& /*model*/, const ASN1T_AttrObjectSpecific& asnMsg )
+    : nType_( asnMsg.t )
 {
 }
 
@@ -30,11 +31,3 @@ ObjectAttribute_ABC::~ObjectAttribute_ABC()
 
 }  
 
-// -----------------------------------------------------------------------------
-// Name: ObjectAttribute_ABC::Update
-// Created: NLD 2006-09-26
-// -----------------------------------------------------------------------------
-void ObjectAttribute_ABC::Update( const ASN1T_MsgObjectUpdate& asnMsg )
-{
-
-}

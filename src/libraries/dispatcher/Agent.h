@@ -17,13 +17,14 @@
 
 namespace dispatcher
 {
-    class Dispatcher;
-    class Automat;
-    class Model;
-    class Equipment;
-    class Dotation;
-    class Humans;
-    class Loan;
+class Dispatcher;
+class Automat;
+class Model;
+class Equipment;
+class Dotation;
+class Humans;
+class Loan;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -42,8 +43,10 @@ public:
 
     //! @name Main
     //@{
-    void Update( const ASN1T_MsgUnitAttributes& asnMsg );
-    void Update( const ASN1T_MsgUnitDotations&  asnMsg );
+    void Update        ( const ASN1T_MsgUnitAttributes& asnMsg );
+    void Update        ( const ASN1T_MsgUnitDotations&  asnMsg );
+    void SendCreation  ( Publisher_ABC& publisher ) const;
+    void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}
 
     //! @name Accessors
@@ -62,7 +65,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< unsigned int > T_OIDVector;
-    typedef std::vector< Loan >         T_LoanVector;
     //@}
 
 private:
@@ -113,9 +115,8 @@ private:
     ModelsContainer< Equipment >  equipments_;
     ModelsContainer< Humans    >  troops_;
     ModelsContainer< Dotation  >  dotations_;
-
-    T_LoanVector                  borrowings_;
-    T_LoanVector                  lendings_;
+    ModelsContainer< Loan      >  borrowings_;
+    ModelsContainer< Loan      >  lendings_;
 };
 
 }

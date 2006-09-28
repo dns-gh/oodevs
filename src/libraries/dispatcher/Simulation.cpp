@@ -16,6 +16,7 @@
 #include "AsnMessageEncoder.h"
 #include "Dispatcher.h"
 #include "Model.h"
+#include "SimulationPublisher.h"
 
 using namespace dispatcher;
 using namespace DIN;
@@ -34,13 +35,11 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
     link_.SetUserData( this );        
     messageService_.Enable( link_ );
 
+    AsnMsgInSimCtrlClientAnnouncement asnMsg;
+    asnMsg() = MsgCtrlClientAnnouncement::mos_light;
 
-    //$$$ TMP
-    ASN1T_MsgsInSim asnMsg;
-    asnMsg.msg.t                              = T_MsgsInSim_msg_msg_ctrl_client_announcement;
-    asnMsg.msg.u.msg_ctrl_client_announcement = MsgCtrlClientAnnouncement::mos_light;
-    AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( messageService_, asnMsg );
-    messageService_.Send( link_, eMsgInSim, asnEncoder.GetDinMsg() );
+    SimulationPublisher publisher( *this );
+    asnMsg.Send( publisher );
 }
 
 //-----------------------------------------------------------------------------
@@ -207,6 +206,16 @@ void Simulation::OnReceive( unsigned int nMsgID, DIN::DIN_Input& input )
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Send
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void Simulation::Send( const ASN1T_MsgsInSim& asnMsg )
+{
+    AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( messageService_, asnMsg );
+    messageService_.Send( link_, eMsgInSim, asnEncoder.GetDinMsg() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::Send
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 void Simulation::Send( const ASN1T_MsgsInSim& /*asnMsg*/, const DIN_BufferedMessage& dinMsg )
@@ -221,4 +230,13 @@ void Simulation::Send( const ASN1T_MsgsInSim& /*asnMsg*/, const DIN_BufferedMess
 void Simulation::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
 {
     messageService_.Send( link_, nMsgID, dinMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Simulation::GetDinMsg
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+DIN_BufferedMessage Simulation::GetDinMsg()
+{
+    return DIN_BufferedMessage( messageService_ );
 }

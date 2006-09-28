@@ -7,37 +7,26 @@
 //
 // *****************************************************************************
 
-namespace dispatcher
-{
+#include "dispatcher_pch.h"
+
+#include "Publisher_ABC.h"
+
+using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: ModelRefsContainer< KnowledgeGroup >& Side::GetKnowledgeGroups
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-inline
-ModelRefsContainer< KnowledgeGroup >& Side::GetKnowledgeGroups()
-{
-    return knowledgeGroups_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelRefsContainer< Automat        >& Side::GetAutomats
+// Name: Publisher_ABC constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-inline
-ModelRefsContainer< Automat >& Side::GetAutomats()
+Publisher_ABC::Publisher_ABC()
 {
-    return automats_;
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: Side::GetID
-// Created: NLD 2006-09-27
+// Name: Publisher_ABC destructor
+// Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-inline
-unsigned long Side::GetID() const
+Publisher_ABC::~Publisher_ABC()
 {
-    return nID_;
-}
 
 }

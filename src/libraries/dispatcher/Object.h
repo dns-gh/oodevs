@@ -15,10 +15,11 @@
 
 namespace dispatcher
 {
-    class Dispatcher;
-    class Side;
-    class Model;
-    class ObjectAttribute_ABC;
+class Dispatcher;
+class Side;
+class Model;
+class ObjectAttribute_ABC;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Object
@@ -42,7 +43,9 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgObjectUpdate& msg );
+    void Update        ( const ASN1T_MsgObjectUpdate& msg );
+    void SendCreation  ( Publisher_ABC& publisher ) const;
+    void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}
 
 private:

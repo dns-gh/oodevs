@@ -15,11 +15,12 @@
 
 namespace dispatcher
 {
-    class Dispatcher;
-    class Side;
-    class KnowledgeGroup;
-    class Model;
-    class Agent;
+class Dispatcher;
+class Side;
+class KnowledgeGroup;
+class Model;
+class Agent;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Automat
@@ -40,6 +41,11 @@ public:
     //@{
     unsigned long                GetID    () const;
     ModelRefsContainer< Agent >& GetAgents();
+    //@}
+
+    //! @name Main
+    //@{
+    void SendCreation( Publisher_ABC& publisher ) const;
     //@}
 
 private:

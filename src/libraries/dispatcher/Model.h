@@ -15,12 +15,14 @@
 
 namespace dispatcher
 {
-    class Dispatcher;
-    class Side;
-    class KnowledgeGroup;
-    class Automat;
-    class Agent;    
-    class Object;
+class Dispatcher;
+class Side;
+class KnowledgeGroup;
+class Automat;
+class Agent;    
+class Object;
+class SimulationModel;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -41,6 +43,8 @@ public:
     //@{
     void Update( const ASN1T_MsgsOutSim& asnMsg );
     void Update( uint nMsgID, DIN::DIN_Input& input );
+
+    void Send  ( Publisher_ABC& publisher ) const;
     //@}
 
     //! @name Accessors
@@ -67,6 +71,7 @@ private:
 
 private:
     Dispatcher&         dispatcher_;
+    SimulationModel*    pSimulationModel_;
 
     ModelsContainer< Side >           sides_;
     ModelsContainer< KnowledgeGroup > knowledgeGroups_;

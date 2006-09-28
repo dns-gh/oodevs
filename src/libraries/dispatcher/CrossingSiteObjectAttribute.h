@@ -28,13 +28,15 @@ class CrossingSiteObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     CrossingSiteObjectAttribute( const Model& model, const ASN1T_MsgObjectCreation& asnMsg );
+     CrossingSiteObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg );
     ~CrossingSiteObjectAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const ASN1T_MsgObjectUpdate& asnMsg );
+    virtual void Update   ( const ASN1T_AttrObjectSpecific& asnMsg );
+    virtual void Send     ( ASN1T_AttrObjectSpecific& asnMsg ) const;
+    virtual void AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const;
     //@}
 
 private:

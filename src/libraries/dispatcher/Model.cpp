@@ -16,6 +16,7 @@
 #include "Automat.h"
 #include "Agent.h"
 #include "Object.h"
+#include "SimulationModel.h"
 
 using namespace dispatcher;
 using namespace DIN;
@@ -25,14 +26,15 @@ using namespace DIN;
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
 Model::Model( Dispatcher& dispatcher )
-    : dispatcher_     ( dispatcher )
-    , sides_          ()
-    , knowledgeGroups_()
-    , automats_       ()
-    , agents_         ()
-    , objects_        ()
-
+    : dispatcher_      ( dispatcher )
+    , pSimulationModel_( 0 )
+    , sides_           ()
+    , knowledgeGroups_ ()
+    , automats_        ()
+    , agents_          ()
+    , objects_         ()
 {
+    pSimulationModel_ = new SimulationModel();
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +43,7 @@ Model::Model( Dispatcher& dispatcher )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete pSimulationModel_;
 }
 
 // =============================================================================
@@ -55,7 +58,7 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 {
     switch( asnMsg.msg.t )
     {
-//        case T_MsgsOutSim_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.u.msg_ctrl_info                           ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_info:                            pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_info ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.u.msg_ctrl_begin_tick                     ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.u.msg_ctrl_end_tick                       ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_stop_ack:                        break;
@@ -70,8 +73,8 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_load_end:             OnReceiveMsgCheckPointLoadEnd         (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_set_frequency_ack:    OnReceiveMsgCheckPointSetFrequencyAck (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_save_now_ack:         OnReceiveMsgCheckPointSaveNowAck      (); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
+        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:        /*NOTHING*/ break;
+        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:          /*NOTHING*/ break;
 
 //        case T_MsgsOutSim_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.u.msg_limit_creation                      ); break;
 //        case T_MsgsOutSim_msg_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.u.msg_limit_destruction                    ); break;
@@ -112,7 +115,7 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //
         case T_MsgsOutSim_msg_msg_pion_creation:                        agents_  .Create( *this, asnMsg.msg.u.msg_pion_creation    ->oid_pion    , *asnMsg.msg.u.msg_pion_creation     ); break;
         case T_MsgsOutSim_msg_msg_automate_creation:                    automats_.Create( *this, asnMsg.msg.u.msg_automate_creation->oid_automate, *asnMsg.msg.u.msg_automate_creation ); break;
-//        case T_MsgsOutSim_msg_msg_change_diplomatie:                    OnReceiveMsgChangeDiplomatie          ( *message.u.msg_change_diplomatie                   ); break;
+        case T_MsgsOutSim_msg_msg_change_diplomatie:                    sides_.Get( asnMsg.msg.u.msg_change_diplomatie->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie ); break;
 //
 //        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.u.msg_log_maintenance_traitement_equipement_creation ); break;
 //        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.u.msg_log_maintenance_traitement_equipement_destruction ); break;
@@ -193,7 +196,7 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 //        case eMsgDisableProfiling                       : break;
 //        case eMsgUnitVisionCones                        : break;
 //        case eMsgTrace                                  : break;
-//        case eMsgInit                                   : break;
+        case eMsgInit                                   : pSimulationModel_->Update_MsgInit( msg ); break;
 //        case eMsgProfilingValues                        : break;
 //        case eMsgUnitInterVisibility                    : break;
 //        case eMsgObjectInterVisibility                  : break;
@@ -208,7 +211,55 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 //        case eMsgPopulationCollision                    : break;
         default:
             ;
-
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: Model::Send
+// Created: NLD 2006-09-26
+// -----------------------------------------------------------------------------
+void Model::Send( Publisher_ABC& publisher ) const
+{
+    AsnMsgInClientCtrlSendCurrentStateBegin().Send( publisher );
+
+    pSimulationModel_->Send( publisher );
+
+    /*
+    workspace.GetLimaManager  ().SendStateToNewClient();
+    workspace.GetLimitManager ().SendStateToNewClient();
+    */
+
+    sides_          .Apply( /*std::bind2nd( */std::mem_fun_ref( &Side::SendCreation ), publisher /*)*/ ); //$$$$ booouh std::bind2nd sucks
+    knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendCreation ), publisher );
+    automats_       .Apply( std::mem_fun_ref( &Automat       ::SendCreation ), publisher );
+    agents_         .Apply( std::mem_fun_ref( &Agent         ::SendCreation ), publisher );
+//$$$ POPULATION
+    objects_        .Apply( std::mem_fun_ref( &Object        ::SendCreation ), publisher );
+
+
+    sides_          .Apply( std::mem_fun_ref( &Side   ::SendFullUpdate ), publisher );
+//    automats_       .Apply( std::mem_fun_ref( &Automat::SendFullUpdate ), publisher ); //$$$ Séparation pions/automates
+    agents_         .Apply( std::mem_fun_ref( &Agent  ::SendFullUpdate ), publisher );
+//$$$ POPULATION
+    objects_        .Apply( std::mem_fun_ref( &Object ::SendFullUpdate ), publisher );
+    /*
+
+    // Knowledge
+    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
+        itArmy->second->SendKnowledge();
+//    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
+//        itAutomate->second->SendKnowledge );
+    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        itPion->second->SendKnowledge();
+    */
+
+    /*
+    // Armies / knowledge groups
+    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
+        itArmy->second->SendCreation();
+    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
+        itArmy->second->SendFullState();
+*/
+    
+    AsnMsgInClientCtrlSendCurrentStateEnd().Send( publisher );
+}

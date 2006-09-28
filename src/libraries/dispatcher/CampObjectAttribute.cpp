@@ -12,6 +12,7 @@
 #include "CampObjectAttribute.h"
 
 #include "Model.h"
+#include "Agent.h"
 
 using namespace dispatcher;
 
@@ -19,19 +20,15 @@ using namespace dispatcher;
 // Name: CampObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-CampObjectAttribute::CampObjectAttribute( const Model& model, const ASN1T_MsgObjectCreation& asnMsg )
+CampObjectAttribute::CampObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , model_             ( model )
     , pTC2_              ( 0 )
 {
-    if( !asnMsg.m.attributs_specifiquesPresent )
-        return;
-
-    if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_camp_prisonniers )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.attributs_specifiques.u.camp_prisonniers->tc2 );
-    else if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_camp_refugies )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.attributs_specifiques.u.camp_refugies->tc2 );
-        
+    if( asnMsg.t == T_AttrObjectSpecific_camp_prisonniers )
+        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_prisonniers->tc2 );
+    else if( asnMsg.t == T_AttrObjectSpecific_camp_refugies )
+        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_refugies->tc2 );        
 }
 
 // -----------------------------------------------------------------------------
@@ -47,13 +44,53 @@ CampObjectAttribute::~CampObjectAttribute()
 // Name: CampObjectAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void CampObjectAttribute::Update( const ASN1T_MsgObjectUpdate& asnMsg )
+void CampObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
 {
-    if( !asnMsg.m.attributs_specifiquesPresent )
-        return;
+    if( asnMsg.t == T_AttrObjectSpecific_camp_prisonniers )
+        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_prisonniers->tc2 );
+    else if( asnMsg.t == T_AttrObjectSpecific_camp_refugies )
+        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_refugies->tc2 );
+}
 
-    if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_camp_prisonniers )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.attributs_specifiques.u.camp_prisonniers->tc2 );
-    else if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_camp_refugies )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.attributs_specifiques.u.camp_refugies->tc2 );
+// -----------------------------------------------------------------------------
+// Name: CampObjectAttribute::Send
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void CampObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
+{
+    assert( pTC2_ );
+
+    asnMsg.t = nType_;
+    switch( nType_ )
+    {
+        case T_AttrObjectSpecific_camp_prisonniers: 
+            asnMsg.u.camp_prisonniers = new ASN1T_AttrObjectCampPrisonniers();
+            asnMsg.u.camp_prisonniers->tc2 = pTC2_->GetID(); 
+            break;
+        case T_AttrObjectSpecific_camp_refugies   : 
+            asnMsg.u.camp_refugies = new ASN1T_AttrObjectCampRefugies();
+            asnMsg.u.camp_refugies->tc2 = pTC2_->GetID(); 
+            break;
+        default:
+            throw std::runtime_error( "object specific attributes inconsistency" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CampObjectAttribute::AsnDelete
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void CampObjectAttribute::AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const
+{
+    switch( nType_ )
+    {
+        case T_AttrObjectSpecific_camp_prisonniers: 
+            delete asnMsg.u.camp_prisonniers;
+            break;
+        case T_AttrObjectSpecific_camp_refugies   : 
+            delete asnMsg.u.camp_refugies;
+            break;
+        default:
+            throw std::runtime_error( "object specific attributes inconsistency" );
+    }
 }

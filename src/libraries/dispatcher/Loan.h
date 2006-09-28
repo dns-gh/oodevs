@@ -33,6 +33,12 @@ public:
     ~Loan();
     //@}
 
+    //! @name Operations
+    //@{
+    void Send( ASN1T_EquipementEmprunte& asnMsg ) const;
+    void Send( ASN1T_EquipementPrete&    asnMsg ) const;
+    //@}
+
 private:
     Agent*       pAgent_;         // Borrower / lender
     unsigned int nEquipmentType_; // XML reference - no resolved by dispatcher

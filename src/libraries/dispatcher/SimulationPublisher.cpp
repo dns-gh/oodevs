@@ -9,54 +9,64 @@
 
 #include "dispatcher_pch.h"
 
-#include "Position.h"
+#include "SimulationPublisher.h"
+
+#include "Simulation.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: Position constructor
-// Created: NLD 2006-09-26
+// Name: SimulationPublisher constructor
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-Position::Position()
-    : strPosition_( )
+SimulationPublisher::SimulationPublisher( Simulation& simulation )
+    : Publisher_ABC()
+    , simulation_  ( simulation )
 {
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: Position constructor
-// Created: NLD 2006-09-26
+// Name: SimulationPublisher destructor
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-Position::Position( const ASN1T_CoordUTM& asn )
-    : strPosition_( (const char*)asn.data, 15 )
+SimulationPublisher::~SimulationPublisher()
 {
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: Position destructor
-// Created: NLD 2006-09-26
+// Name: SimulationPublisher::Send
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-Position::~Position()
+void SimulationPublisher::Send( const ASN1T_MsgsInSim& msg )
 {
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: Position::Update
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void Position::Update( const ASN1T_CoordUTM& asn )
-{
-    strPosition_ = ( (const char*)asn.data, 15 );
+    simulation_.Send( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Position::Send
-// Created: NLD 2006-09-28
+// Name: SimulationPublisher::Send
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Position::Send( ASN1T_CoordUTM& asn ) const
+void SimulationPublisher::Send( const ASN1T_MsgsInClient& /*msg*/ )
 {
-    asn = strPosition_.c_str();
+    throw std::runtime_error( "Invalid publisher" );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationPublisher::Send
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void SimulationPublisher::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
+{
+    simulation_.Send( nMsgID, dinMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationPublisher::GetDinMsg
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+DIN::DIN_BufferedMessage SimulationPublisher::GetDinMsg()
+{
+    return simulation_.GetDinMsg();
 }

@@ -7,44 +7,45 @@
 //
 // *****************************************************************************
 
-#ifndef __CampObjectAttribute_h_
-#define __CampObjectAttribute_h_
+#ifndef __SimulationPublisher_h_
+#define __SimulationPublisher_h_
 
 #include "AsnTypes.h"
-#include "ObjectAttribute_ABC.h"
+#include "Publisher_ABC.h"
 
 namespace dispatcher
 {
-    class Model;
-    class Agent;
+class Simulation;
 
 // =============================================================================
-/** @class  CampObjectAttribute
-    @brief  CampObjectAttribute
+/** @class  SimulationPublisher
+    @brief  SimulationPublisher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-    class CampObjectAttribute : public ObjectAttribute_ABC
+class SimulationPublisher : public Publisher_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     CampObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg );
-    ~CampObjectAttribute();
+     SimulationPublisher( Simulation& simulation );
+    ~SimulationPublisher();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_AttrObjectSpecific& asnMsg );
-    virtual void Send     ( ASN1T_AttrObjectSpecific& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const;
+    virtual void Send( const ASN1T_MsgsInSim&    msg );
+    virtual void Send( const ASN1T_MsgsInClient& msg );
+
+    //$$ TMP DIN
+    virtual void                     Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg ); //$$$ TMP DIN
+    virtual DIN::DIN_BufferedMessage GetDinMsg();
     //@}
 
 private:
-    const Model& model_;
-    const Agent* pTC2_;
+    Simulation& simulation_;
 };
 
 }
 
-#endif // __CampObjectAttribute_h_
+#endif // __SimulationPublisher_h_

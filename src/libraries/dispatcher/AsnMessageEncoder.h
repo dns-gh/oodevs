@@ -46,6 +46,7 @@ private:
     //! @name Tools
     //@{
     void Encode();
+    void Dump  () const;
     //@}
 
 private:

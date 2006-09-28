@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "RotaObjectAttribute.h"
+#include "Network_Def.h"
 
 using namespace dispatcher;
 
@@ -17,24 +18,22 @@ using namespace dispatcher;
 // Name: RotaObjectAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_MsgObjectCreation& asnMsg )
+RotaObjectAttribute::RotaObjectAttribute( const Model& model, const ASN1T_AttrObjectSpecific& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , nDanger_           ( 0 )
     , nbcAgents_         ()
 {
-    if( !asnMsg.m.attributs_specifiquesPresent )
-        return;
-
-    if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_rota )
+    if( asnMsg.t == T_AttrObjectSpecific_rota )
     {
-        nDanger_ = asnMsg.attributs_specifiques.u.rota->niveau_danger;
-        for( uint i = 0; i < asnMsg.attributs_specifiques.u.rota->agents_nbc.n; ++i )
-            nbcAgents_.push_back( asnMsg.attributs_specifiques.u.rota->agents_nbc.elem[ i ] );
+        nDanger_ = asnMsg.u.rota->niveau_danger;
+        nbcAgents_.clear();
+        for( uint i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
+            nbcAgents_.push_back( asnMsg.u.rota->agents_nbc.elem[ i ] );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: RotaObjectAttribute destructor
+// Name: RotaObjectAttribute destructorw
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 RotaObjectAttribute::~RotaObjectAttribute()
@@ -46,16 +45,39 @@ RotaObjectAttribute::~RotaObjectAttribute()
 // Name: RotaObjectAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void RotaObjectAttribute::Update( const ASN1T_MsgObjectUpdate& asnMsg )
+void RotaObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
 {
-    if( !asnMsg.m.attributs_specifiquesPresent )
-        return;
-
-    if( asnMsg.attributs_specifiques.t == T_AttrObjectSpecific_rota )
+    if( asnMsg.t == T_AttrObjectSpecific_rota )
     {
-        nDanger_ = asnMsg.attributs_specifiques.u.rota->niveau_danger;
+        nDanger_ = asnMsg.u.rota->niveau_danger;
         nbcAgents_.clear();
-        for( uint i = 0; i < asnMsg.attributs_specifiques.u.rota->agents_nbc.n; ++i )
-            nbcAgents_.push_back( asnMsg.attributs_specifiques.u.rota->agents_nbc.elem[ i ] );
+        for( uint i = 0; i < asnMsg.u.rota->agents_nbc.n; ++i )
+            nbcAgents_.push_back( asnMsg.u.rota->agents_nbc.elem[ i ] );
     }
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaObjectAttribute::Send
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void RotaObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
+{
+    asnMsg.t = nType_;
+    asnMsg.u.rota = new ASN1T_AttrObjectROTA();
+
+    asnMsg.u.rota->niveau_danger = nDanger_;
+
+    SendVector< ASN1T__SeqOfOID, ASN1T_OID, T_IDVector >( nbcAgents_, asnMsg.u.rota->agents_nbc );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaObjectAttribute::AsnDelete
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void RotaObjectAttribute::AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const
+{
+    if( asnMsg.u.rota->agents_nbc.n > 0 )
+        delete [] asnMsg.u.rota->agents_nbc.elem;
+    delete asnMsg.u.rota;
 }

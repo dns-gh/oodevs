@@ -60,6 +60,7 @@ void AsnMessageEncoder< T, C >::Encode()
         throw std::runtime_error( "Error while encoding asn message" );
     }
 
+    Dump();
     dinMsg_.GetOutput().Append( asnBuffer_.GetMsgPtr(), asnBuffer_.GetMsgLen() );
 }
 
@@ -71,6 +72,18 @@ template< typename T, typename C > inline
 const DIN::DIN_BufferedMessage& AsnMessageEncoder< T, C >::GetDinMsg() const
 {
     return dinMsg_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AsnMessageEncoder::Dump
+// Created: NLD 2006-09-22
+// -----------------------------------------------------------------------------
+template< typename T, typename C > inline 
+void AsnMessageEncoder< T, C >::Dump() const
+{
+    std::cout << "BEGIN MSG DUMP =>" << std::endl;
+    const_cast< C& >( asnMsgCtrl_ ).Print( "Sending msg" );
+    std::cout << "END MSG DUMP =>" << std::endl;
 }
 
 

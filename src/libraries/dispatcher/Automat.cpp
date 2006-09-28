@@ -6,15 +6,6 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2006-09-25 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "dispatcher_pch.h"
 
@@ -23,6 +14,7 @@
 #include "Side.h"
 #include "Model.h"
 #include "KnowledgeGroup.h"
+#include "Network_Def.h"
 
 using namespace dispatcher;
 
@@ -59,3 +51,21 @@ Automat::~Automat()
     side_          .GetAutomats().Unregister( *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Automat::SendCreation
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void Automat::SendCreation( Publisher_ABC& publisher ) const
+{
+    AsnMsgInClientAutomateCreation asn;
+    asn().oid_automate            = nID_;
+    asn().type_automate           = nType_;
+    asn().nom                     = strName_.c_str(); // !! pointeur sur const char*
+    asn().oid_camp                = side_.GetID();
+    asn().oid_groupe_connaissance = knowledgeGroup_.GetID();
+//    asn().oid_tc2;
+//    asn().oid_maintenance;
+//    asn().oid_sante;
+//    asn().oid_ravitaillement;
+    asn.Send( publisher );
+}

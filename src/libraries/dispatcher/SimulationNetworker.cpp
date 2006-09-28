@@ -107,12 +107,11 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
 // =============================================================================
 
 //$$$ TMP MESSAGES DIN
-
 #define DECLARE_DIN_CALLBACK( MSG )                                                                \
-    void SimulationNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input )  \
+    void SimulationNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )    \
     {                                                                                              \
         assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );  \
-        pSimulation_->OnReceive( eMsg##MSG, input );                                               \
+        pSimulation_->OnReceive( eMsg##MSG, msg );                                                 \
     }
 
 DECLARE_DIN_CALLBACK( Init                                   )

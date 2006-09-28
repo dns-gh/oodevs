@@ -19,6 +19,7 @@ namespace dispatcher
     class KnowledgeGroup;
     class Automat;
     class Model;
+    class Publisher_ABC;
 
 // =============================================================================
 /** @class  Side
@@ -31,7 +32,7 @@ class Side
 public:
     //! @name Constructors/Destructor
     //@{
-    Side( Model& model, unsigned int nID, DIN::DIN_Input& dinMsg );
+    Side( Model& model, unsigned int nID, DIN::DIN_Input& msg );
     ~Side();
     //@}
 
@@ -39,6 +40,14 @@ public:
     //@{
     ModelRefsContainer< KnowledgeGroup >& GetKnowledgeGroups();
     ModelRefsContainer< Automat        >& GetAutomats       ();
+    unsigned long                         GetID             () const;
+    //@}
+
+    //! @name Main
+    //@{
+    void Update        ( const ASN1T_MsgChangeDiplomatie& asnMsg );
+    void SendCreation  ( Publisher_ABC& publisher ) const;
+    void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -49,10 +58,19 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< Side*, ASN1T_EnumDiplomatie > T_DiplomacyMap;
+    typedef T_DiplomacyMap::const_iterator          CIT_DiplomacyMap;
+    //@}
+
+private:
+          Model&                               model_;
     const unsigned long                        nID_;
           std::string                          strName_;
           ModelRefsContainer< KnowledgeGroup > knowledgeGroups_;
           ModelRefsContainer< Automat        > automats_;
+          T_DiplomacyMap                       diplomacies_;
 };
 
 }

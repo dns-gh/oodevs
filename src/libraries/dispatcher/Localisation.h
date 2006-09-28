@@ -34,9 +34,12 @@ public:
     ~Localisation();
     //@}
 
-    //! @name Operations
+    //! @name Main
     //@{
     void Update( const ASN1T_Localisation& asn );
+    void Send  ( ASN1T_Localisation& asn ) const;
+
+    static void AsnDelete( ASN1T_Localisation& asn, bool bOptionalValue = true );
     //@}
 
 private:

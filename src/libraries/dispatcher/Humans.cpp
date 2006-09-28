@@ -6,15 +6,6 @@
 // Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2006-09-25 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "dispatcher_pch.h"
 
@@ -62,4 +53,21 @@ void Humans::Update( const ASN1T_DotationPersonnel& asnMsg )
     nNbrNBC_                  = asnMsg.nb_contamines_nbc;
     nNbrInLogisticMedical_    = asnMsg.nb_dans_chaine_sante;
     nNbrInLogisticMaintenance_= asnMsg.nb_utilises_pour_maintenance;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Humans::Send
+// Created: NLD 2006-09-28
+// -----------------------------------------------------------------------------
+void Humans::Send( ASN1T_DotationPersonnel& asnMsg ) const
+{
+    asnMsg.rang                         = nRank_;
+    asnMsg.nb_total                     = nNbrTotal_;
+    asnMsg.nb_operationnels             = nNbrOperational_;
+    asnMsg.nb_morts                     = nNbrDead_;
+    asnMsg.nb_blesses                   = nNbrWounded_;
+    asnMsg.nb_blesses_mentaux           = nNbrMentalDiseased_;
+    asnMsg.nb_contamines_nbc            = nNbrNBC_;
+    asnMsg.nb_dans_chaine_sante         = nNbrInLogisticMedical_;
+    asnMsg.nb_utilises_pour_maintenance = nNbrInLogisticMaintenance_; 
 }

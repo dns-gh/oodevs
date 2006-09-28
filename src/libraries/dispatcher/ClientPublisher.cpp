@@ -9,54 +9,64 @@
 
 #include "dispatcher_pch.h"
 
-#include "Position.h"
+#include "ClientPublisher.h"
+
+#include "Client.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: Position constructor
-// Created: NLD 2006-09-26
+// Name: ClientPublisher constructor
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-Position::Position()
-    : strPosition_( )
+ClientPublisher::ClientPublisher( Client& client )
+    : Publisher_ABC()
+    , client_      ( client )
 {
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: Position constructor
-// Created: NLD 2006-09-26
+// Name: ClientPublisher destructor
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-Position::Position( const ASN1T_CoordUTM& asn )
-    : strPosition_( (const char*)asn.data, 15 )
+ClientPublisher::~ClientPublisher()
 {
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: Position destructor
-// Created: NLD 2006-09-26
+// Name: ClientPublisher::Send
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-Position::~Position()
+void ClientPublisher::Send( const ASN1T_MsgsInSim& /*msg*/ )
 {
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: Position::Update
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-void Position::Update( const ASN1T_CoordUTM& asn )
-{
-    strPosition_ = ( (const char*)asn.data, 15 );
+    throw std::runtime_error( "Invalid publisher" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Position::Send
-// Created: NLD 2006-09-28
+// Name: ClientPublisher::Send
+// Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Position::Send( ASN1T_CoordUTM& asn ) const
+void ClientPublisher::Send( const ASN1T_MsgsInClient& msg )
 {
-    asn = strPosition_.c_str();
+    client_.Send( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientPublisher::Send
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void ClientPublisher::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
+{
+    client_.Send( nMsgID, dinMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientPublisher::GetDinMsg
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+DIN::DIN_BufferedMessage ClientPublisher::GetDinMsg()
+{
+    return client_.GetDinMsg();
 }

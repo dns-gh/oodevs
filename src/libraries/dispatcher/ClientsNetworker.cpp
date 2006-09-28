@@ -33,14 +33,13 @@ ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, unsigned short nPort
     , clients_          ()
 {
     messageService_.SetCbkOnError( &ClientsNetworker::OnErrorReceivingMessage );
-    messageService_.RegisterReceivedMessage( eMsgOutClient           , *this, &ClientsNetworker::OnReceiveMsgOutClient );
-
-//    messageService_.RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, & ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
-//    messageService_.RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, & ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
-//    messageService_.RegisterReceivedMessage( eMsgEnableProfiling       , *this, & ClientsNetworker::OnReceiveMsgEnableProfiling        );
-//    messageService_.RegisterReceivedMessage( eMsgDisableProfiling      , *this, & ClientsNetworker::OnReceiveMsgDisableProfiling       );
-//    messageService_.RegisterReceivedMessage( eMsgUnitMagicAction       , *this, & ClientsNetworker::OnReceiveMsgUnitMagicAction        );
-//    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, & ClientsNetworker::OnReceiveMsgDebugDrawPoints        );
+    messageService_.RegisterReceivedMessage( eMsgOutClient             , *this, &ClientsNetworker::OnReceiveMsgOutClient              );
+    messageService_.RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );
+    messageService_.RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, &ClientsNetworker::OnReceiveMsgDisableUnitVisionCones );
+    messageService_.RegisterReceivedMessage( eMsgEnableProfiling       , *this, &ClientsNetworker::OnReceiveMsgEnableProfiling        );
+    messageService_.RegisterReceivedMessage( eMsgDisableProfiling      , *this, &ClientsNetworker::OnReceiveMsgDisableProfiling       );
+    messageService_.RegisterReceivedMessage( eMsgUnitMagicAction       , *this, &ClientsNetworker::OnReceiveMsgUnitMagicAction        );
+    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, &ClientsNetworker::OnReceiveMsgDebugDrawPoints        );
 
     connectionService_.SetCbkOnConnectionReceived( &ClientsNetworker::OnConnectionReceived    );
     connectionService_.SetCbkOnConnectionFailed  ( &ClientsNetworker::OnBadConnectionReceived );
@@ -102,6 +101,20 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& /*server*/, DIN_Link& link,
 // =============================================================================
 // RECEIVED MESSAGES
 // =============================================================================
+
+//$$$ TMP MESSAGES DIN
+#define DECLARE_DIN_CALLBACK( MSG )                                                           \
+    void ClientsNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )  \
+    {                                                                                         \
+        Client::GetClientFromLink( linkFrom ).OnReceive( eMsg##MSG, msg );                    \
+    }
+
+DECLARE_DIN_CALLBACK( EnableUnitVisionCones  )
+DECLARE_DIN_CALLBACK( DisableUnitVisionCones )
+DECLARE_DIN_CALLBACK( EnableProfiling        )
+DECLARE_DIN_CALLBACK( DisableProfiling       )
+DECLARE_DIN_CALLBACK( UnitMagicAction        )
+DECLARE_DIN_CALLBACK( DebugDrawPoints        )
 
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker::OnErrorReceivingMessage
