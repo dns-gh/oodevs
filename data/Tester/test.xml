@@ -8,8 +8,8 @@
         <TimeFactor>40</TimeFactor>
     </Sim>
     <Actions>
-        <!-- launch automat missions (true) or pawn missions (false) -->
-        <TestAutomats>true</TestAutomats>
+        <!-- launch test on : "automats", "populations" or "pawns" -->
+        <Entities>automats</Entities>
         <!-- launch missions every N tick -->
         <Period>60</Period>
         <!-- launch each mission N consecutive time -->
