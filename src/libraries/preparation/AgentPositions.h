@@ -51,6 +51,11 @@ public:
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
+    //! @name Operations
+    //@{
+    void Set( const geometry::Point2f& point );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{

@@ -39,7 +39,20 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    controller_.Delete( *(Entity_ABC*)this );
+    if( const Hierarchies* hierarchies = Retrieve< Hierarchies >() )
+    {
+        Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Entity_ABC& entity = it.NextElement();
+            delete &entity;
+        }
+    }
+//    if( const Hierarchies* hierarchies = Retrieve< Hierarchies >() ) // $$$$ SBO 2006-09-28: bof bof
+//        if( hierarchies->GetSuperior() )
+//            if( const Hierarchies* supHierarchy = hierarchies->GetSuperior()->Retrieve< Hierarchies >() )
+//                const_cast< Hierarchies* >( supHierarchy )->RemoveSubordinate( *this );
+    controller_.Delete( *(Formation_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +61,7 @@ Formation::~Formation()
 // -----------------------------------------------------------------------------
 void Formation::DoUpdate( const kernel::InstanciationComplete& )
 {
-    controller_.Create( *(Entity_ABC*)this );
+    controller_.Create( *(Formation_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

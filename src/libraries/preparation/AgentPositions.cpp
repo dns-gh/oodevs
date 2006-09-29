@@ -135,3 +135,12 @@ void AgentPositions::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "position", converter_.ConvertToMgrs( position_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::Set
+// Created: SBO 2006-09-29
+// -----------------------------------------------------------------------------
+void AgentPositions::Set( const geometry::Point2f& point )
+{
+    position_ = point;
+}

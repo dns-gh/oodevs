@@ -13,7 +13,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "xeumeuleu/xml.h"
 
-using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------

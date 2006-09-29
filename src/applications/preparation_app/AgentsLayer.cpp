@@ -12,6 +12,7 @@
 #include "ModelBuilder.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/AgentPositions.h"
 #include "clients_kernel/Formation_ABC.h"
 
 using namespace kernel;
@@ -63,7 +64,8 @@ void AgentsLayer::Select( const kernel::Formation_ABC& element )
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return event->provides( "astec/AgentType" ) || event->provides( "astec/AutomatType" );
+    // $$$$ SBO 2006-09-29: Unify mime-types
+    return event->provides( "Agent" ) || event->provides( "astec/AgentType" ) || event->provides( "astec/AutomatType" );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +74,17 @@ bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( event->provides( "astec/AgentType" ) )
+    if( event->provides( "Agent" ) )
+    {
+        if( !selectedAgent_ )
+            return false;
+        if( const AgentPositions* position = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )
+        {
+            const_cast< AgentPositions* >( position )->Set( point );
+            return true;
+        }
+    }
+    else if( event->provides( "astec/AgentType" ) )
     {
         if( !selectedAgent_ || !selectedAgent_->GetAutomatType() )
             return false;
