@@ -19,7 +19,6 @@ namespace kernel
     class Controller;
     class AgentType;
     class AutomatType;
-    class Formation_ABC;
 }
 
 namespace xml
@@ -45,7 +44,7 @@ class Agent : public kernel::Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const kernel::Formation_ABC& parent, const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager );
+             Agent( const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager );
              Agent( const kernel::Agent_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager );
     virtual ~Agent();
     //@}
@@ -86,7 +85,6 @@ private:
     unsigned long id_;
     QString   name_;
 
-    const kernel::Formation_ABC* formation_;
     const kernel::Agent_ABC*     automat_;
     const kernel::AutomatType*   automatType_;
     const kernel::AgentType*     type_;

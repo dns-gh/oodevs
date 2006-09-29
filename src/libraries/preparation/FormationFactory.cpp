@@ -45,7 +45,7 @@ FormationFactory::~FormationFactory()
 kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
-    formation->Attach( *new TeamHierarchy( parent ) );    
+    formation->Attach( *new TeamHierarchy( controllers_, parent, *formation ) );    
     formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
     return formation;
@@ -59,7 +59,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Formation_ABC& parent, 
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
     if( const TeamHierarchy* team = parent.Retrieve< TeamHierarchy >() )
-        formation->Attach( *new TeamHierarchy( team->GetTeam() ) );    
+        formation->Attach( *new TeamHierarchy( controllers_, team->GetTeam(), *formation ) );    
     formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
     return formation;

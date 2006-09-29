@@ -31,7 +31,7 @@ CommunicationHierarchies::CommunicationHierarchies( kernel::Controller& controll
 // -----------------------------------------------------------------------------
 CommunicationHierarchies::~CommunicationHierarchies()
 {
-    RemoveFromSuperior();
+//    RemoveFromSuperior();
     controller_.Delete( *(kernel::CommunicationHierarchies*)this );
 }
 
@@ -94,5 +94,8 @@ void CommunicationHierarchies::RemoveFromSuperior()
 {
     if( superior_ )
         if( kernel::CommunicationHierarchies* hierarchies = superior_->Retrieve< kernel::CommunicationHierarchies >() )
+        {
             hierarchies->RemoveSubordinate( holder_ );
+            superior_ = 0;
+        }
 }

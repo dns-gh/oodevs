@@ -72,6 +72,7 @@ void EntityHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
     RemoveFromSuperior();
     superior_ = &superior;
     RegisterToSuperior();
+    controller_.Update( *(kernel::Hierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +82,7 @@ void EntityHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 void EntityHierarchies::RegisterToSuperior()
 {
     if( superior_ )
-        if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
+        if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
             hierarchies->AddSubordinate( holder_ );
 }
     
@@ -92,6 +93,9 @@ void EntityHierarchies::RegisterToSuperior()
 void EntityHierarchies::RemoveFromSuperior()
 {
     if( superior_ )
-        if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
+        if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
+        {
             hierarchies->RemoveSubordinate( holder_ );
+            superior_ = 0;
+        }
 }

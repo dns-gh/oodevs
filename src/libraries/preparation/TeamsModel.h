@@ -51,7 +51,6 @@ public:
     void Purge();
     void CreateTeam();
     void CreateKnowledgeGroup( const kernel::Team_ABC& team );
-    void Rename( unsigned long id, const QString& name );
 
     kernel::Team_ABC* FindTeam( const QString& name ) const;
     kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& id ) const;

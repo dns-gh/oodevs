@@ -18,7 +18,6 @@
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
@@ -31,11 +30,10 @@ using namespace xml;
 // Name: Agent constructor
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-Agent::Agent( const Formation_ABC& parent, const AutomatType& type, Controller& controller, IdManager& idManager )
+Agent::Agent( const AutomatType& type, Controller& controller, IdManager& idManager )
     : controller_( controller )
     , id_( idManager.GetNextId() )
     , name_( type.GetName() )
-    , formation_( &parent )
     , automat_( 0 )
     , automatType_( &type )
     , type_( automatType_->GetTypePC() )
@@ -54,7 +52,6 @@ Agent::Agent( const Agent_ABC& parent, const AgentType& type, Controller& contro
     : controller_( controller )
     , id_( idManager.GetNextId() )
     , name_( type.GetName() )
-    , formation_( 0 )
     , automat_( &parent )
     , automatType_( 0 )
     , type_( &type )
@@ -72,6 +69,14 @@ Agent::Agent( const Agent_ABC& parent, const AgentType& type, Controller& contro
 Agent::~Agent()
 {
     DeleteAll();
+    if( const Hierarchies* hierarchies = Retrieve< Hierarchies >() ) // $$$$ SBO 2006-09-28: bof bof
+        if( hierarchies->GetSuperior() )
+            if( const Hierarchies* supHierarchy = hierarchies->GetSuperior()->Retrieve< Hierarchies >() )
+                const_cast< Hierarchies* >( supHierarchy )->RemoveSubordinate( *this );
+    if( const kernel::CommunicationHierarchies* hierarchies = Retrieve< kernel::CommunicationHierarchies >() )
+        if( hierarchies->GetSuperior() )
+            if( const kernel::CommunicationHierarchies* supHierarchy = hierarchies->GetSuperior()->Retrieve< kernel::CommunicationHierarchies >() )
+                const_cast< kernel::CommunicationHierarchies* >( supHierarchy )->RemoveSubordinate( *this );
     controller_.Delete( *(Agent_ABC*)this );
 }
 
@@ -99,11 +104,14 @@ unsigned long Agent::GetId() const
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 {
-    if( automat_ )
-        return automat_->GetKnowledgeGroup();
-    const KnowledgeGroupHierarchy* group = Retrieve< KnowledgeGroupHierarchy >();
-    if( group )
-        return *const_cast< KnowledgeGroup_ABC* >( group->GetKnowledgeGroup() );
+    const kernel::CommunicationHierarchies* root = Retrieve< kernel::CommunicationHierarchies >();
+    while( root && root->GetSuperior() )
+    {
+        if( const KnowledgeGroupHierarchy* group = root->GetEntity().Retrieve< KnowledgeGroupHierarchy >() )
+            if( group->GetKnowledgeGroup() )
+                return const_cast< KnowledgeGroup_ABC& >( *group->GetKnowledgeGroup() );
+        root = root->GetSuperior()->Retrieve< kernel::CommunicationHierarchies >();
+    }
     throw std::runtime_error( "I have no knowledge group" );
 }
 
@@ -113,11 +121,15 @@ KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 // -----------------------------------------------------------------------------
 const Team_ABC& Agent::GetTeam() const
 {
-    if( automat_ )
-        return automat_->GetTeam();
-    const TeamHierarchy* team = formation_->Retrieve< TeamHierarchy >();
-    if( team )
-        return team->GetTeam();
+    const Hierarchies* root = Retrieve< Hierarchies >();
+    while( root && root->GetSuperior() )
+    {
+        if( const TeamHierarchy* team = root->GetEntity().Retrieve< TeamHierarchy >() )
+            return team->GetTeam();
+        root = root->GetSuperior()->Retrieve< Hierarchies >();
+    }
+    if( root )
+        return static_cast< const Team_ABC& >( root->GetEntity() );
     throw std::runtime_error( "I have no team" );
 }
 
@@ -193,7 +205,7 @@ void Agent::CreateDictionary()
     Attach( dictionary );
     dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
-    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), formation_ ? (Entity_ABC*)formation_ : (Entity_ABC*)automat_ );
+//    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), &Get< Hierarchies >().GetEntity() );
 }
 
 // -----------------------------------------------------------------------------
