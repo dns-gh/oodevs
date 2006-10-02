@@ -45,7 +45,8 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgChangeDiplomatie& asnMsg );
+    void Update        ( const ASN1T_MsgChangeDiplomatie&    asnMsg );
+    void Update        ( const ASN1T_MsgChangeDiplomatieAck& asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}

@@ -82,6 +82,15 @@ void SimulationModel::Update( const ASN1T_MsgCtrlEndTick& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationModel::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+//void SimulationModel::Update( const ASN1T_MsgCtrlCheckPointSetFrequencyAck& msg )
+//{
+//    nCheckpointFrequency_ = msg;
+//}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationModel::Update_MsgInit
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------

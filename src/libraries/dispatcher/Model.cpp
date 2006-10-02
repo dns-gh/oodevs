@@ -18,6 +18,10 @@
 #include "Object.h"
 #include "AgentKnowledge.h"
 #include "ObjectKnowledge.h"
+#include "LogConsignMaintenance.h"
+#include "LogConsignSupply.h"
+#include "LogConsignMedical.h"
+
 #include "SimulationModel.h"
 
 using namespace dispatcher;
@@ -28,15 +32,19 @@ using namespace DIN;
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
 Model::Model( Dispatcher& dispatcher )
-    : dispatcher_      ( dispatcher )
-    , pSimulationModel_( 0 )
-    , sides_           ()
-    , knowledgeGroups_ ()
-    , automats_        ()
-    , agents_          ()
-    , objects_         ()
-    , agentKnowledges_ ()
-    , objectKnowledges_()
+    : dispatcher_            ( dispatcher )
+    , pSimulationModel_      ( 0 )
+    , sides_                 ()
+    , knowledgeGroups_       ()
+    , automats_              ()
+    , agents_                ()
+    , objects_               ()
+    , agentKnowledges_       ()
+    , objectKnowledges_      ()
+    , logConsignsMaintenance_()
+    , logConsignsSupply_     ()
+    , logConsignsMedical_    ()
+
 {
     pSimulationModel_ = new SimulationModel();
 }
@@ -62,6 +70,27 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 {
     switch( asnMsg.msg.t )
     {
+//        case T_MsgsOutSim_msg_msg_limit_creation_ack 1
+//        case T_MsgsOutSim_msg_msg_limit_destruction_ack 2
+//        case T_MsgsOutSim_msg_msg_limit_update_ack 3
+//        case T_MsgsOutSim_msg_msg_lima_creation_ack 4
+//        case T_MsgsOutSim_msg_msg_lima_destruction_ack 5
+//        case T_MsgsOutSim_msg_msg_lima_update_ack 6
+//        case T_MsgsOutSim_msg_msg_pion_order_ack 7
+//        case T_MsgsOutSim_msg_msg_order_conduite_ack 8
+//        case T_MsgsOutSim_msg_msg_automate_order_ack 9
+//        case T_MsgsOutSim_msg_msg_population_order_ack 10
+//        case T_MsgsOutSim_msg_msg_set_automate_mode_ack 11
+//        case T_MsgsOutSim_msg_msg_unit_magic_action_ack 12
+//        case T_MsgsOutSim_msg_msg_object_magic_action_ack 13
+//        case T_MsgsOutSim_msg_msg_population_magic_action_ack 14
+        case T_MsgsOutSim_msg_msg_change_diplomatie_ack:                sides_.Get( asnMsg.msg.u.msg_change_diplomatie_ack->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie_ack ); break;
+        case T_MsgsOutSim_msg_msg_change_groupe_connaissance_ack:       automats_.Get( asnMsg.msg.u.msg_change_groupe_connaissance_ack->oid_automate ).Update( *asnMsg.msg.u.msg_change_groupe_connaissance_ack ); break;
+        case T_MsgsOutSim_msg_msg_change_liens_logistiques_ack:         automats_.Get( asnMsg.msg.u.msg_change_liens_logistiques_ack->oid_automate ).Update( *asnMsg.msg.u.msg_change_liens_logistiques_ack ); break;
+        case T_MsgsOutSim_msg_msg_change_automate_ack:                  agents_.Get( asnMsg.msg.u.msg_change_automate_ack->oid_pion ).Update( *asnMsg.msg.u.msg_change_automate_ack ); break;   
+//        case T_MsgsOutSim_msg_msg_log_ravitaillement_pousser_flux_ack 19
+//        case T_MsgsOutSim_msg_msg_log_ravitaillement_change_quotas_ack 20
+
         case T_MsgsOutSim_msg_msg_ctrl_info:                            pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_info ); break;
         case T_MsgsOutSim_msg_msg_ctrl_begin_tick:                      pSimulationModel_->Update( asnMsg.msg.u.msg_ctrl_begin_tick ); break;
         case T_MsgsOutSim_msg_msg_ctrl_end_tick:                        pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_end_tick ); break;
@@ -75,7 +104,7 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_save_end:             OnReceiveMsgCheckPointSaveEnd         (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_load_begin:           OnReceiveMsgCheckPointLoadBegin       (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_load_end:             OnReceiveMsgCheckPointLoadEnd         (); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_set_frequency_ack:    OnReceiveMsgCheckPointSetFrequencyAck (); break;
+//        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_set_frequency_ack:    pSimulationModel_->Update( asnMsg.msg.u.msg_ctrl_checkpoint_set_frequency_ack ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_save_now_ack:         OnReceiveMsgCheckPointSaveNowAck      (); break;
         case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:        /*NOTHING*/ break;
         case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:          /*NOTHING*/ break;
@@ -115,26 +144,26 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_object_knowledge_update:              objectKnowledges_.Get( asnMsg.msg.u.msg_object_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_object_knowledge_update ); break;
         case T_MsgsOutSim_msg_msg_object_knowledge_destruction:         objectKnowledges_.Destroy( asnMsg.msg.u.msg_object_knowledge_destruction->oid_connaissance ); break;
 
-//        case T_MsgsOutSim_msg_msg_change_automate:                      OnReceiveMsgChangeAutomate            ( *message.u.msg_change_automate ); break;
-//
+        case T_MsgsOutSim_msg_msg_change_automate:                      agents_.Get( asnMsg.msg.u.msg_change_automate->oid_pion ).Update( *asnMsg.msg.u.msg_change_automate ); break;
+
         case T_MsgsOutSim_msg_msg_pion_creation:                        agents_  .Create( *this, asnMsg.msg.u.msg_pion_creation    ->oid_pion    , *asnMsg.msg.u.msg_pion_creation     ); break;
         case T_MsgsOutSim_msg_msg_automate_creation:                    automats_.Create( *this, asnMsg.msg.u.msg_automate_creation->oid_automate, *asnMsg.msg.u.msg_automate_creation ); break;
         case T_MsgsOutSim_msg_msg_change_diplomatie:                    sides_.Get( asnMsg.msg.u.msg_change_diplomatie->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie ); break;
-//
-//        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.u.msg_log_maintenance_traitement_equipement_creation ); break;
-//        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.u.msg_log_maintenance_traitement_equipement_destruction ); break;
-//        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *message.u.msg_log_maintenance_traitement_equipement_update ); break;
+
+        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_creation:    logConsignsMaintenance_.Create( *this, asnMsg.msg.u.msg_log_maintenance_traitement_equipement_creation->oid_consigne, *asnMsg.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
+        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_destruction: logConsignsMaintenance_.Destroy( asnMsg.msg.u.msg_log_maintenance_traitement_equipement_destruction->oid_consigne ); break;
+        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_update:      logConsignsMaintenance_.Get( asnMsg.msg.u.msg_log_maintenance_traitement_equipement_update->oid_consigne ).Update( *asnMsg.msg.u.msg_log_maintenance_traitement_equipement_update ); break;
         case T_MsgsOutSim_msg_msg_log_maintenance_etat:                              agents_.Get( asnMsg.msg.u.msg_log_maintenance_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_maintenance_etat ); break;
-//
-//        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *message.u.msg_log_ravitaillement_traitement_creation ); break;
-//        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *message.u.msg_log_ravitaillement_traitement_destruction ); break;
-//        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *message.u.msg_log_ravitaillement_traitement_update ); break;
+
+        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_creation:    logConsignsSupply_.Create ( *this, asnMsg.msg.u.msg_log_ravitaillement_traitement_creation->oid_consigne, *asnMsg.msg.u.msg_log_ravitaillement_traitement_creation ); break;
+        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_destruction: logConsignsSupply_.Destroy( asnMsg.msg.u.msg_log_ravitaillement_traitement_destruction->oid_consigne ); break;
+        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_update:      logConsignsSupply_.Get( asnMsg.msg.u.msg_log_ravitaillement_traitement_update->oid_consigne ).Update( *asnMsg.msg.u.msg_log_ravitaillement_traitement_update ); break;
         case T_MsgsOutSim_msg_msg_log_ravitaillement_etat:                   agents_.Get( asnMsg.msg.u.msg_log_ravitaillement_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_ravitaillement_etat ); break;
         //case T_MsgsOutSim_msg_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *message.u.msg_log_ravitaillement_quotas ); break;
-//
-//        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *message.u.msg_log_sante_traitement_humain_creation ); break;
-//        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *message.u.msg_log_sante_traitement_humain_destruction ); break;
-//        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *message.u.msg_log_sante_traitement_humain_update ); break;
+
+        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_creation:    logConsignsMedical_.Create ( *this, asnMsg.msg.u.msg_log_sante_traitement_humain_creation->oid_consigne, *asnMsg.msg.u.msg_log_sante_traitement_humain_creation ); break;
+        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_destruction: logConsignsMedical_.Destroy( asnMsg.msg.u.msg_log_sante_traitement_humain_destruction->oid_consigne ); break;
+        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_update:      logConsignsMedical_.Get( asnMsg.msg.u.msg_log_sante_traitement_humain_update->oid_consigne ).Update( *asnMsg.msg.u.msg_log_sante_traitement_humain_update ); break;
         case T_MsgsOutSim_msg_msg_log_sante_etat:                   agents_.Get( asnMsg.msg.u.msg_log_sante_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_sante_etat ); break;
 
 //        case T_MsgsOutSim_msg_msg_population_creation                       : OnMsgPopulationCreation                ( *message.u.msg_population_creation ); break;
@@ -209,7 +238,6 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
         case eMsgKnowledgeGroup                         : OnReceiveMsgCreateKnowledgeGroup( msg ); break;
         case eMsgArmy                                   : OnReceiveMsgCreateSide( msg ); break;
 
-            
 //        case eMsgDebugDrawPoints                        : break;
 //        case eMsgEnvironmentType                        : break;
 //        case eMsgPopulationCollision                    : break;
@@ -237,15 +265,22 @@ void Model::Send( Publisher_ABC& publisher ) const
     knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendCreation ), publisher );
     automats_       .Apply( std::mem_fun_ref( &Automat       ::SendCreation ), publisher );
     agents_         .Apply( std::mem_fun_ref( &Agent         ::SendCreation ), publisher );
-//$$$ POPULATION
     objects_        .Apply( std::mem_fun_ref( &Object        ::SendCreation ), publisher );
-
+//$$$ POPULATION
 
     sides_          .Apply( std::mem_fun_ref( &Side   ::SendFullUpdate ), publisher );
-//    automats_       .Apply( std::mem_fun_ref( &Automat::SendFullUpdate ), publisher ); //$$$ Séparation pions/automates
+    automats_       .Apply( std::mem_fun_ref( &Automat::SendFullUpdate ), publisher ); //$$$ Séparation pions/automates
     agents_         .Apply( std::mem_fun_ref( &Agent  ::SendFullUpdate ), publisher );
-//$$$ POPULATION
     objects_        .Apply( std::mem_fun_ref( &Object ::SendFullUpdate ), publisher );
+//$$$ POPULATION
+
+    // Logistic
+    logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::SendCreation   ), publisher );
+    logConsignsSupply_     .Apply( std::mem_fun_ref( &LogConsignSupply     ::SendCreation   ), publisher );
+    logConsignsMedical_    .Apply( std::mem_fun_ref( &LogConsignMedical    ::SendCreation   ), publisher );
+    logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::SendFullUpdate ), publisher );
+    logConsignsSupply_     .Apply( std::mem_fun_ref( &LogConsignSupply     ::SendFullUpdate ), publisher );
+    logConsignsMedical_    .Apply( std::mem_fun_ref( &LogConsignMedical    ::SendFullUpdate ), publisher );
 
     // Knowledges
     agentKnowledges_.Apply( std::mem_fun_ref( &AgentKnowledge::SendCreation   ), publisher );

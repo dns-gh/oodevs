@@ -33,7 +33,7 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , nID_                          ( msg.oid_pion )
     , nType_                        ( msg.type_pion )
     , strName_                      ( msg.nom )
-    , automat_                      ( model.GetAutomats().Get( msg.oid_automate ) )
+    , pAutomat_                     ( &model.GetAutomats().Get( msg.oid_automate ) )
     , position_                     ()
     , nDirection_                   ( 0 )
     , nHeight_                      ( 0 )
@@ -81,7 +81,7 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , pLogSupply_                   ()
 
 {
-    automat_.GetAgents().Register( *this );
+    pAutomat_->GetAgents().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
 // -----------------------------------------------------------------------------
 Agent::~Agent()
 {
-    automat_.GetAgents().Unregister( *this );
+    pAutomat_->GetAgents().Unregister( *this );
 }
 
 // =============================================================================
@@ -268,6 +268,28 @@ void Agent::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgChangeAutomate& asnMsg )
+{
+    pAutomat_->GetAgents().Unregister( *this );
+    pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
+    pAutomat_->GetAgents().Register( *this );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgChangeAutomateAck& asnMsg )
+{
+    pAutomat_->GetAgents().Unregister( *this );
+    pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
+    pAutomat_->GetAgents().Register( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -277,7 +299,7 @@ void Agent::SendCreation( Publisher_ABC& publisher ) const
     asn().oid_pion      = nID_;
     asn().type_pion     = nType_;
     asn().nom           = strName_.c_str(); // !! pointeur sur const char*
-    asn().oid_automate  = automat_.GetID();
+    asn().oid_automate  = pAutomat_->GetID();
     asn.Send( publisher );
 }
 

@@ -51,6 +51,8 @@ public:
     void Update        ( const ASN1T_MsgLogSanteEtat&          asnMsg );
     void Update        ( const ASN1T_MsgLogMaintenanceEtat&    asnMsg );
     void Update        ( const ASN1T_MsgLogRavitaillementEtat& asnMsg );
+    void Update        ( const ASN1T_MsgChangeAutomate&        asnMsg );
+    void Update        ( const ASN1T_MsgChangeAutomateAck&     asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}
@@ -78,7 +80,7 @@ private:
     const unsigned long  nID_;
     const unsigned long  nType_; // XML reference - no resolved by dispatcher
     const std::string    strName_;
-          Automat&       automat_;
+          Automat*       pAutomat_;
 
     Position                      position_;
     unsigned int                  nDirection_;

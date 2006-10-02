@@ -23,22 +23,20 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model& model, const ASN1T_MsgAutomateCreation& msg )
-    : nID_           ( msg.oid_automate )
-    , nType_         ( msg.type_automate )
-    , strName_       ( msg.nom )
-    , side_          ( model.GetSides          ().Get( msg.oid_camp ) )
-    , knowledgeGroup_( model.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
-    , agents_        ()
+    : model_          ( model )
+    , nID_            ( msg.oid_automate )
+    , nType_          ( msg.type_automate )
+    , strName_        ( msg.nom )
+    , side_           ( model.GetSides          ().Get( msg.oid_camp ) )
+    , pKnowledgeGroup_( &model.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
+    , agents_         ()
+    , nTC2_           ( msg.m.oid_tc2Present ? msg.oid_tc2 : 0 )
+    , nLogMaintenance_( msg.m.oid_maintenancePresent ? msg.oid_maintenance : 0 )
+    , nLogMedical_    ( msg.m.oid_santePresent ? msg.oid_sante : 0 )
+    , nLogSupply_     ( msg.m.oid_ravitaillementPresent ? msg.oid_ravitaillement : 0 )
 {
-    /*
-    oid-tc2                  Automate OPTIONAL, $$$
-    oid-maintenance          Automate OPTIONAL, $$$
-    oid-sante                Automate OPTIONAL, $$$
-    oid-ravitaillement       Automate OPTIONAL  $$$
-    */
-
-    knowledgeGroup_.GetAutomats().Register( *this );
-    side_          .GetAutomats().Register( *this );
+    pKnowledgeGroup_->GetAutomats().Register( *this );
+    side_            .GetAutomats().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +45,39 @@ Automat::Automat( Model& model, const ASN1T_MsgAutomateCreation& msg )
 // -----------------------------------------------------------------------------
 Automat::~Automat()
 {
-    knowledgeGroup_.GetAutomats().Unregister( *this );
-    side_          .GetAutomats().Unregister( *this );
+    pKnowledgeGroup_->GetAutomats().Unregister( *this );
+    side_            .GetAutomats().Unregister( *this );
+}
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg )
+{
+    if( asnMsg.m.oid_tc2Present )
+        nTC2_ = asnMsg.oid_tc2;
+    if( asnMsg.m.oid_maintenancePresent )
+        nLogMaintenance_ = asnMsg.oid_maintenance;
+    if( asnMsg.m.oid_santePresent )
+        nLogMedical_ = asnMsg.oid_sante;
+    if( asnMsg.m.oid_ravitaillementPresent )
+        nLogSupply_ = asnMsg.oid_ravitaillement;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg )
+{
+    pKnowledgeGroup_->GetAutomats().Unregister( *this );
+    pKnowledgeGroup_ = &model_.GetKnowledgeGroups().Get( asnMsg.oid_groupe_connaissance );
+    pKnowledgeGroup_->GetAutomats().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,10 +91,37 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
     asn().type_automate           = nType_;
     asn().nom                     = strName_.c_str(); // !! pointeur sur const char*
     asn().oid_camp                = side_.GetID();
-    asn().oid_groupe_connaissance = knowledgeGroup_.GetID();
-//    asn().oid_tc2;
-//    asn().oid_maintenance;
-//    asn().oid_sante;
-//    asn().oid_ravitaillement;
+    asn().oid_groupe_connaissance = pKnowledgeGroup_->GetID();
+
+    if( nTC2_ != 0 )
+    {
+        asn().m.oid_tc2Present = 1;
+        asn().oid_tc2 = nTC2_;
+    }
+    if( nLogMaintenance_ != 0 )
+    {
+        asn().m.oid_maintenancePresent = 1;
+        asn().oid_maintenance = nLogMaintenance_;
+    }
+    if( nLogMedical_ != 0 )
+    {
+        asn().m.oid_santePresent = 1;
+        asn().oid_sante = nLogMedical_;
+    }
+    if( nLogSupply_ != 0 )
+    {
+        asn().m.oid_ravitaillementPresent = 1;
+        asn().oid_ravitaillement = nLogSupply_;
+    }
+
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::SendFullUpdate
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
+{
+    //$$$ TODO
 }

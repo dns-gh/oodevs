@@ -23,6 +23,9 @@ class Agent;
 class Object;
 class AgentKnowledge;
 class ObjectKnowledge;
+class LogConsignMaintenance;
+class LogConsignSupply;
+class LogConsignMedical;
 class SimulationModel;
 class Publisher_ABC;
 
@@ -76,13 +79,16 @@ private:
     Dispatcher&         dispatcher_;
     SimulationModel*    pSimulationModel_;
 
-    ModelsContainer< Side            > sides_;
-    ModelsContainer< KnowledgeGroup  > knowledgeGroups_;
-    ModelsContainer< Automat         > automats_;
-    ModelsContainer< Agent           > agents_;
-    ModelsContainer< Object          > objects_;
-    ModelsContainer< AgentKnowledge  > agentKnowledges_;
-    ModelsContainer< ObjectKnowledge > objectKnowledges_;
+    ModelsContainer< Side                   > sides_;
+    ModelsContainer< KnowledgeGroup         > knowledgeGroups_;
+    ModelsContainer< Automat                > automats_;
+    ModelsContainer< Agent                  > agents_;
+    ModelsContainer< Object                 > objects_;
+    ModelsContainer< AgentKnowledge         > agentKnowledges_;
+    ModelsContainer< ObjectKnowledge        > objectKnowledges_;
+    ModelsContainer< LogConsignMaintenance  > logConsignsMaintenance_;
+    ModelsContainer< LogConsignSupply       > logConsignsSupply_;
+    ModelsContainer< LogConsignMedical      > logConsignsMedical_;
 };
 
 }

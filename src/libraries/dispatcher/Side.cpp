@@ -55,6 +55,16 @@ void Side::Update( const ASN1T_MsgChangeDiplomatie& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Side::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Side::Update( const ASN1T_MsgChangeDiplomatieAck& asnMsg )
+{
+    Side& side = model_.GetSides().Get( asnMsg.oid_camp2 );   
+    diplomacies_[ &side ] = asnMsg.diplomatie;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Side::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
