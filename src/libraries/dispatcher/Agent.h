@@ -25,6 +25,9 @@ class Dotation;
 class Humans;
 class Loan;
 class Publisher_ABC;
+class AgentLogMedical;
+class AgentLogMaintenance;
+class AgentLogSupply;
 
 // =============================================================================
 /** @class  Agent
@@ -43,8 +46,11 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgUnitAttributes& asnMsg );
-    void Update        ( const ASN1T_MsgUnitDotations&  asnMsg );
+    void Update        ( const ASN1T_MsgUnitAttributes&        asnMsg );
+    void Update        ( const ASN1T_MsgUnitDotations&         asnMsg );
+    void Update        ( const ASN1T_MsgLogSanteEtat&          asnMsg );
+    void Update        ( const ASN1T_MsgLogMaintenanceEtat&    asnMsg );
+    void Update        ( const ASN1T_MsgLogRavitaillementEtat& asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}
@@ -117,6 +123,11 @@ private:
     ModelsContainer< Dotation  >  dotations_;
     ModelsContainer< Loan      >  borrowings_;
     ModelsContainer< Loan      >  lendings_;
+
+
+    AgentLogMedical*              pLogMedical_;
+    AgentLogMaintenance*          pLogMaintenance_;
+    AgentLogSupply*               pLogSupply_;
 };
 
 }

@@ -58,6 +58,30 @@ void SimulationModel::Update( const ASN1T_MsgCtrlInfo& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationModel::Update
+// Created: NLD 2006-09-29
+// -----------------------------------------------------------------------------
+void SimulationModel::Update( const ASN1T_MsgCtrlBeginTick& msg )
+{
+    nCurrentTick_ = msg;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationModel::Update
+// Created: NLD 2006-09-29
+// -----------------------------------------------------------------------------
+void SimulationModel::Update( const ASN1T_MsgCtrlEndTick& msg )
+{
+    nCurrentTick_ = msg.current_tick;
+    //$$$$ 
+    /*
+    tick-duration       INTEGER,    -- En millisecondes
+    nb-pathfinds-longs  INTEGER,
+    nb-pathfinds-courts INTEGER
+    */
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationModel::Update_MsgInit
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------

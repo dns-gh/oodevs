@@ -31,6 +31,7 @@ public:
     //! @name Constructors/Destructor
     //@{
      Localisation( const ASN1T_Localisation& asn ); 
+     Localisation(); 
     ~Localisation();
     //@}
 

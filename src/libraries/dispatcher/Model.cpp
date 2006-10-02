@@ -16,7 +16,8 @@
 #include "Automat.h"
 #include "Agent.h"
 #include "Object.h"
-#include "KnowledgeAgent.h"
+#include "AgentKnowledge.h"
+#include "ObjectKnowledge.h"
 #include "SimulationModel.h"
 
 using namespace dispatcher;
@@ -34,7 +35,8 @@ Model::Model( Dispatcher& dispatcher )
     , automats_        ()
     , agents_          ()
     , objects_         ()
-    , knowledgesAgent_ ()
+    , agentKnowledges_ ()
+    , objectKnowledges_()
 {
     pSimulationModel_ = new SimulationModel();
 }
@@ -61,8 +63,8 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
     switch( asnMsg.msg.t )
     {
         case T_MsgsOutSim_msg_msg_ctrl_info:                            pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_info ); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.u.msg_ctrl_begin_tick                     ); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.u.msg_ctrl_end_tick                       ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_begin_tick:                      pSimulationModel_->Update( asnMsg.msg.u.msg_ctrl_begin_tick ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_end_tick:                        pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_end_tick ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_stop_ack:                        break;
 //        case T_MsgsOutSim_msg_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( message.u.msg_ctrl_pause_ack                       ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( message.u.msg_ctrl_resume_ack                      ); break;
@@ -83,9 +85,9 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.u.msg_lima_creation                       ); break;
 //        case T_MsgsOutSim_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.u.msg_lima_destruction                     ); break;
 
-        case T_MsgsOutSim_msg_msg_unit_knowledge_creation:              knowledgesAgent_.Create( *this, asnMsg.msg.u.msg_unit_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_unit_knowledge_creation ); break;
-        case T_MsgsOutSim_msg_msg_unit_knowledge_update:                knowledgesAgent_.Get( asnMsg.msg.u.msg_unit_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_unit_knowledge_update ); break;
-        case T_MsgsOutSim_msg_msg_unit_knowledge_destruction:           knowledgesAgent_.Destroy( asnMsg.msg.u.msg_unit_knowledge_destruction->oid_connaissance ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_creation:              agentKnowledges_.Create( *this, asnMsg.msg.u.msg_unit_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_unit_knowledge_creation ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_update:                agentKnowledges_.Get( asnMsg.msg.u.msg_unit_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_unit_knowledge_update ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_destruction:           agentKnowledges_.Destroy( asnMsg.msg.u.msg_unit_knowledge_destruction->oid_connaissance ); break;
 //
         case T_MsgsOutSim_msg_msg_unit_attributes:                    agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid_pion ).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
         case T_MsgsOutSim_msg_msg_unit_dotations:                     agents_.Get( asnMsg.msg.u.msg_unit_dotations ->oid_pion ).Update( *asnMsg.msg.u.msg_unit_dotations  ); break;
@@ -109,10 +111,10 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_object_creation:                      objects_.Create( *this, asnMsg.msg.u.msg_object_creation->oid, *asnMsg.msg.u.msg_object_creation ); break;
         case T_MsgsOutSim_msg_msg_object_update:                        objects_.Get( asnMsg.msg.u.msg_object_update->oid ).Update( *asnMsg.msg.u.msg_object_update ); break;
         case T_MsgsOutSim_msg_msg_object_destruction:                   objects_.Destroy( asnMsg.msg.u.msg_object_destruction ); break;
-//        case T_MsgsOutSim_msg_msg_object_knowledge_creation:            OnReceiveMsgObjectKnowledgeCreation   ( *message.u.msg_object_knowledge_creation           ); break;
-//        case T_MsgsOutSim_msg_msg_object_knowledge_update:              OnReceiveMsgObjectKnowledgeUpdate     ( *message.u.msg_object_knowledge_update             ); break;
-//        case T_MsgsOutSim_msg_msg_object_knowledge_destruction:         OnReceiveMsgObjectKnowledgeDestruction( *message.u.msg_object_knowledge_destruction        ); break;
-//
+        case T_MsgsOutSim_msg_msg_object_knowledge_creation:            objectKnowledges_.Create( *this, asnMsg.msg.u.msg_object_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_object_knowledge_creation ); break;
+        case T_MsgsOutSim_msg_msg_object_knowledge_update:              objectKnowledges_.Get( asnMsg.msg.u.msg_object_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_object_knowledge_update ); break;
+        case T_MsgsOutSim_msg_msg_object_knowledge_destruction:         objectKnowledges_.Destroy( asnMsg.msg.u.msg_object_knowledge_destruction->oid_connaissance ); break;
+
 //        case T_MsgsOutSim_msg_msg_change_automate:                      OnReceiveMsgChangeAutomate            ( *message.u.msg_change_automate ); break;
 //
         case T_MsgsOutSim_msg_msg_pion_creation:                        agents_  .Create( *this, asnMsg.msg.u.msg_pion_creation    ->oid_pion    , *asnMsg.msg.u.msg_pion_creation     ); break;
@@ -122,18 +124,18 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_creation:    OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( *message.u.msg_log_maintenance_traitement_equipement_creation ); break;
 //        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_destruction: OnReceiveMsgLogMaintenanceTraitementEquipementDestruction( *message.u.msg_log_maintenance_traitement_equipement_destruction ); break;
 //        case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_update:      OnReceiveMsgLogMaintenanceTraitementEquipementUpdate     ( *message.u.msg_log_maintenance_traitement_equipement_update ); break;
-//        case T_MsgsOutSim_msg_msg_log_maintenance_etat:                              OnReceiveMsgLogMaintenanceEtat( *message.u.msg_log_maintenance_etat ); break;
+        case T_MsgsOutSim_msg_msg_log_maintenance_etat:                              agents_.Get( asnMsg.msg.u.msg_log_maintenance_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_maintenance_etat ); break;
 //
 //        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_creation:    OnReceiveMsgLogRavitaillementTraitementCreation   ( *message.u.msg_log_ravitaillement_traitement_creation ); break;
 //        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_destruction: OnReceiveMsgLogRavitaillementTraitementDestruction( *message.u.msg_log_ravitaillement_traitement_destruction ); break;
 //        case T_MsgsOutSim_msg_msg_log_ravitaillement_traitement_update:      OnReceiveMsgLogRavitaillementTraitementUpdate     ( *message.u.msg_log_ravitaillement_traitement_update ); break;
-//        case T_MsgsOutSim_msg_msg_log_ravitaillement_etat:                   OnReceiveMsgLogRavitaillementEtat( *message.u.msg_log_ravitaillement_etat ); break;
-//        case T_MsgsOutSim_msg_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *message.u.msg_log_ravitaillement_quotas ); break;
+        case T_MsgsOutSim_msg_msg_log_ravitaillement_etat:                   agents_.Get( asnMsg.msg.u.msg_log_ravitaillement_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_ravitaillement_etat ); break;
+        //case T_MsgsOutSim_msg_msg_log_ravitaillement_quotas:                 OnReceiveMsgLogRavitaillementQuotas               (  *message.u.msg_log_ravitaillement_quotas ); break;
 //
 //        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_creation:    OnReceiveMsgLogSanteTraitementHumainCreation   ( *message.u.msg_log_sante_traitement_humain_creation ); break;
 //        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_destruction: OnReceiveMsgLogSanteTraitementHumainDestruction( *message.u.msg_log_sante_traitement_humain_destruction ); break;
 //        case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_update:      OnReceiveMsgLogSanteTraitementHumainUpdate     ( *message.u.msg_log_sante_traitement_humain_update ); break;
-//        case T_MsgsOutSim_msg_msg_log_sante_etat:                          OnReceiveMsgLogSanteEtat( *message.u.msg_log_sante_etat ); break;
+        case T_MsgsOutSim_msg_msg_log_sante_etat:                   agents_.Get( asnMsg.msg.u.msg_log_sante_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_sante_etat ); break;
 
 //        case T_MsgsOutSim_msg_msg_population_creation                       : OnMsgPopulationCreation                ( *message.u.msg_population_creation ); break;
 //        case T_MsgsOutSim_msg_msg_population_update                         : OnMsgPopulationUpdate                  ( *message.u.msg_population_update ); break;
@@ -246,26 +248,11 @@ void Model::Send( Publisher_ABC& publisher ) const
     objects_        .Apply( std::mem_fun_ref( &Object ::SendFullUpdate ), publisher );
 
     // Knowledges
-    knowledgesAgent_.Apply( std::mem_fun_ref( &KnowledgeAgent::SendCreation   ), publisher );
-    knowledgesAgent_.Apply( std::mem_fun_ref( &KnowledgeAgent::SendFullUpdate ), publisher );
-    /*
+    agentKnowledges_.Apply( std::mem_fun_ref( &AgentKnowledge::SendCreation   ), publisher );
+    agentKnowledges_.Apply( std::mem_fun_ref( &AgentKnowledge::SendFullUpdate ), publisher );
 
-    // Knowledge
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->SendKnowledge();
-//    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-//        itAutomate->second->SendKnowledge );
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->SendKnowledge();
-    */
-
-    /*
-    // Armies / knowledge groups
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->SendCreation();
-    for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
-        itArmy->second->SendFullState();
-*/
+    objectKnowledges_.Apply( std::mem_fun_ref( &ObjectKnowledge::SendCreation   ), publisher );
+    objectKnowledges_.Apply( std::mem_fun_ref( &ObjectKnowledge::SendFullUpdate ), publisher );
     
     AsnMsgInClientCtrlSendCurrentStateEnd().Send( publisher );
 }

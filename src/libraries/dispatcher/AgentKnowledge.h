@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __KnowledgeAgent_h_
-#define __KnowledgeAgent_h_
+#ifndef __AgentKnowledge_h_
+#define __AgentKnowledge_h_
 
 #include "AsnTypes.h"
 #include "Position.h"
@@ -22,18 +22,18 @@ namespace dispatcher
     class Side;
 
 // =============================================================================
-/** @class  KnowledgeAgent
-    @brief  KnowledgeAgent
+/** @class  AgentKnowledge
+    @brief  AgentKnowledge
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class KnowledgeAgent
+class AgentKnowledge
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     KnowledgeAgent( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg );
-    ~KnowledgeAgent();
+     AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg );
+    ~AgentKnowledge();
     //@}
 
     //! @name Operations
@@ -108,4 +108,4 @@ private:
 
 }
 
-#endif // __KnowledgeAgent_h_
+#endif // __AgentKnowledge_h_

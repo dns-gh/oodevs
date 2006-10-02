@@ -17,6 +17,9 @@
 #include "Dotation.h"
 #include "Humans.h"
 #include "Loan.h"
+#include "AgentLogMedical.h"
+#include "AgentLogMaintenance.h"
+#include "AgentLogSupply.h"
 #include "Network_Def.h"
 
 using namespace dispatcher;
@@ -73,6 +76,10 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , dotations_                    ()
     , borrowings_                   ()
     , lendings_                     ()
+    , pLogMedical_                  ()
+    , pLogMaintenance_              ()
+    , pLogSupply_                   ()
+
 {
     automat_.GetAgents().Register( *this );
 }
@@ -225,6 +232,42 @@ void Agent::Update( const ASN1T_MsgUnitDotations& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
+{
+    if( !pLogMedical_ )
+        pLogMedical_ = new AgentLogMedical( model_, asnMsg );
+    else
+        pLogMedical_->Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
+{
+    if( !pLogMaintenance_ )
+        pLogMaintenance_ = new AgentLogMaintenance( model_, asnMsg );
+    else
+        pLogMaintenance_->Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: NLD 2006-10-02
+// -----------------------------------------------------------------------------
+void Agent::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
+{
+    if( !pLogSupply_ )
+        pLogSupply_ = new AgentLogSupply( model_, asnMsg );
+    else
+        pLogSupply_->Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -371,4 +414,14 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         if( asn().m.equipements_pretesPresent && asn().equipements_pretes.n > 0 )
             delete [] asn().equipements_pretes.elem;
     }
+
+    // Log
+    if( pLogMedical_ )
+        pLogMedical_->Send( publisher );
+
+    if( pLogMaintenance_ )
+        pLogMaintenance_->Send( publisher );
+
+    if( pLogSupply_ )
+        pLogSupply_->Send( publisher );
 }

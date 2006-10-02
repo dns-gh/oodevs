@@ -51,13 +51,23 @@ ModelsContainer< Agent >& Model::GetAgents()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelsContainer< Agent          >& Model::GetAgents
+// Name: ModelsContainer< Agent >& Model::GetAgents
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 inline
 const ModelsContainer< Agent >& Model::GetAgents() const
 {
     return agents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelsContainer< Object >& Model::GetObjects
+// Created: NLD 2006-09-29
+// -----------------------------------------------------------------------------
+inline
+ModelsContainer< Object >& Model::GetObjects()
+{
+    return objects_;
 }
 
 }

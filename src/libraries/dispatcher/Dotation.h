@@ -28,13 +28,16 @@ public:
     //! @name Constructors/Destructor
     //@{
      Dotation( const Model& model, const ASN1T_DotationRessource& asnMsg );
+     Dotation( const Model& model, const ASN1T_DotationStock    & asnMsg );
     ~Dotation();
     //@}
 
     //! @name Operations
     //@{
     void Update( const ASN1T_DotationRessource& asnMsg );
+    void Update( const ASN1T_DotationStock& asnMsg );
     void Send  ( ASN1T_DotationRessource& asnMsg ) const ;
+    void Send  ( ASN1T_DotationStock& asnMsg ) const ;
     //@}
 
 private:

@@ -13,6 +13,17 @@
 
 using namespace dispatcher;
 
+
+// -----------------------------------------------------------------------------
+// Name: Localisation constructor
+// Created: NLD 2006-09-29
+// -----------------------------------------------------------------------------
+Localisation::Localisation()
+    : nType_ ( EnumTypeLocalisation::ellipse )
+    , points_()
+{
+}
+
 // -----------------------------------------------------------------------------
 // Name: Localisation constructor
 // Created: NLD 2006-09-26
@@ -24,7 +35,7 @@ Localisation::Localisation( const ASN1T_Localisation& asn )
     for( uint i = 0; i < asn.vecteur_point.n; ++i )
         points_.push_back( Position( asn.vecteur_point.elem[ i ] ) );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: Localisation destructor
 // Created: NLD 2006-09-26

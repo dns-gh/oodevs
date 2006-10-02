@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 
-#include "KnowledgeAgent.h"
+#include "AgentKnowledge.h"
 
 #include "KnowledgeGroup.h"
 #include "Agent.h"
@@ -20,10 +20,10 @@
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeAgent constructor
+// Name: AgentKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-KnowledgeAgent::KnowledgeAgent( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
+AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
     : model_                ( model )
     , nID_                  ( asnMsg.oid_connaissance )
     , knowledgeGroup_       ( model.GetKnowledgeGroups().Get( asnMsg.oid_groupe_possesseur ) )
@@ -75,10 +75,10 @@ KnowledgeAgent::KnowledgeAgent( Model& model, const ASN1T_MsgUnitKnowledgeCreati
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeAgent destructor
+// Name: AgentKnowledge destructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-KnowledgeAgent::~KnowledgeAgent()
+AgentKnowledge::~AgentKnowledge()
 {
 
 }
@@ -95,10 +95,10 @@ KnowledgeAgent::~KnowledgeAgent()
     }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeAgent::Update
+// Name: AgentKnowledge::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void KnowledgeAgent::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
+void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 {
     UPDATE_ASN_ATTRIBUTE( pertinence               , nRelevance_            ); 
     UPDATE_ASN_ATTRIBUTE( identification_level     , nPerceptionLevel_      );
@@ -139,10 +139,10 @@ void KnowledgeAgent::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeAgent::SendCreation
+// Name: AgentKnowledge::SendCreation
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void KnowledgeAgent::SendCreation( Publisher_ABC& publisher )
+void AgentKnowledge::SendCreation( Publisher_ABC& publisher )
 {
     AsnMsgInClientUnitKnowledgeCreation asn;
 
@@ -161,10 +161,10 @@ void KnowledgeAgent::SendCreation( Publisher_ABC& publisher )
     }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeAgent::SendFullUpdate
+// Name: AgentKnowledge::SendFullUpdate
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void KnowledgeAgent::SendFullUpdate( Publisher_ABC& publisher ) const
+void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientUnitKnowledgeUpdate asn;
 

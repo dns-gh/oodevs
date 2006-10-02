@@ -34,6 +34,8 @@ public:
     //! @name Operations
     //@{
     void Update        ( const ASN1T_MsgCtrlInfo& msg );
+    void Update        ( const ASN1T_MsgCtrlBeginTick& msg );
+    void Update        ( const ASN1T_MsgCtrlEndTick& msg );
     void Update_MsgInit( DIN::DIN_Input& msg ); //$$$ TMP DIN
     void Send          ( Publisher_ABC& publisher ) const;
     //@}

@@ -21,7 +21,8 @@ class KnowledgeGroup;
 class Automat;
 class Agent;    
 class Object;
-class KnowledgeAgent;
+class AgentKnowledge;
+class ObjectKnowledge;
 class SimulationModel;
 class Publisher_ABC;
 
@@ -55,6 +56,7 @@ public:
           ModelsContainer< Automat        >& GetAutomats       ();
           ModelsContainer< Agent          >& GetAgents         ();
     const ModelsContainer< Agent          >& GetAgents         () const;
+          ModelsContainer< Object         >& GetObjects        ();
     //@}
 
 private:
@@ -74,12 +76,13 @@ private:
     Dispatcher&         dispatcher_;
     SimulationModel*    pSimulationModel_;
 
-    ModelsContainer< Side >           sides_;
-    ModelsContainer< KnowledgeGroup > knowledgeGroups_;
-    ModelsContainer< Automat        > automats_;
-    ModelsContainer< Agent          > agents_;
-    ModelsContainer< Object         > objects_;
-    ModelsContainer< KnowledgeAgent > knowledgesAgent_;
+    ModelsContainer< Side            > sides_;
+    ModelsContainer< KnowledgeGroup  > knowledgeGroups_;
+    ModelsContainer< Automat         > automats_;
+    ModelsContainer< Agent           > agents_;
+    ModelsContainer< Object          > objects_;
+    ModelsContainer< AgentKnowledge  > agentKnowledges_;
+    ModelsContainer< ObjectKnowledge > objectKnowledges_;
 };
 
 }
