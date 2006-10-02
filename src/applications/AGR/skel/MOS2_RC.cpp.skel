@@ -11,6 +11,9 @@
 #include "RC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "InternalLinks.h"
+#include "RcEntityResolver_ABC.h"
+
+using namespace kernel;
 
 //-----------------------------------------------------------------------------
 // Name: RC constructor
