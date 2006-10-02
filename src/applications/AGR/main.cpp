@@ -48,7 +48,7 @@ int main( int /*argc*/, char** /*argv*/ )
 
         std::cout << "Generating XSD files from ASN files" << std::endl;
         MT_MakeDir( "agr_tmp" );
-        std::string strCommandLine( "asn2xsd.exe ../src/libraries/asn/asn/*.asn -o ./agr_tmp" );
+        std::string strCommandLine( "asn2xsd.exe ../../src/libraries/asn/asn/*.asn -o ./agr_tmp" );
         int nErrorCode = system( strCommandLine.c_str() );
         if( nErrorCode != EXIT_SUCCESS )
         {

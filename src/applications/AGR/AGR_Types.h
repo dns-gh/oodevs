@@ -33,6 +33,6 @@
 #include "AGR_PointType.h"
 #include "AGR_PolygonType.h"
 
-#define AGR_SKEL_DIR "../src/applications/AGR/skel/"
+#define AGR_SKEL_DIR "../../src/applications/AGR/skel/"
 
 #endif // __AGR_Types_h_
