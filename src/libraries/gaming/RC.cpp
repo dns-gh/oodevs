@@ -353,7 +353,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 // -----------------------------------------------------------------------------
 std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
-    return rcResolver_.CreateLink( InternalLinks::objectKnowledge_, nId ).ascii();
+    return InternalLinks::CreateLink( InternalLinks::objectKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -362,7 +362,7 @@ std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 {
-    return rcResolver_.CreateLink( InternalLinks::agentKnowledge_, nId ).ascii();
+    return InternalLinks::CreateLink( InternalLinks::agentKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -371,7 +371,7 @@ std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 {
-    return rcResolver_.CreateLink( InternalLinks::populationKnowledge_, nId ).ascii();
+    return InternalLinks::CreateLink( InternalLinks::populationKnowledge_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -380,5 +380,5 @@ std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentLink( ASN1T_OID nId )
 {
-    return rcResolver_.CreateLink( InternalLinks::agent_, nId ).ascii();
+    return InternalLinks::CreateLink( InternalLinks::agent_, nId, QString::number( nId ) ).ascii();
 }

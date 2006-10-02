@@ -22,7 +22,6 @@ Mission-Automate-ALAT-Heliporter ::= SEQUENCE
     plots-ravitaillement            ListKnowledgeObject,    
     portee-action                   EnumMissionALAT_PorteeAction,
     ambiance-mission                EnumMissionALAT_AmbianceMission,
-    attendre-unites                 BOOLEAN DEFAULT TRUE,
     avec-materiel                   BOOLEAN DEFAULT FALSE
 }
 

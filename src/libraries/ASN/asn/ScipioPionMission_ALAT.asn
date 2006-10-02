@@ -110,7 +110,6 @@ Mission-Pion-ALAT-Heliporter ::= SEQUENCE
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
     portee-action                   EnumMissionALAT_PorteeAction,
-    attendre-unite                  BOOLEAN,
     avec-materiel                   BOOLEAN DEFAULT FALSE
 }
 

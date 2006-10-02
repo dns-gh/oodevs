@@ -745,7 +745,6 @@ void AutomateMissionInterface::CreateMission_ALAT_Heliporter()
     pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
     pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
     pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-    CreateBool( asnMission.attendre_unites, "Attendre unites");
     CreateBool( asnMission.avec_materiel, "Avec materiel");
 }
 

@@ -164,7 +164,6 @@ T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
 id porteeAction_;
 id ambianceMission_;
-bool attendreUnites_;
 bool avecMateriel_;
 };
 

@@ -94,7 +94,6 @@ T_Point pointEmbarquement_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
 id porteeAction_;
-bool attendreUnite_;
 bool avecMateriel_;
 };
 

@@ -690,7 +690,6 @@ void UnitMissionInterface::CreateMission_ALAT_Heliporter()
     pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
     pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
     pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    CreateBool( asnMission.attendre_unite, "Attendre unite");
     CreateBool( asnMission.avec_materiel, "Avec materiel");
 }
 

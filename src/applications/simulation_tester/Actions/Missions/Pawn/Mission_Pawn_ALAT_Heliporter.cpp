@@ -59,7 +59,6 @@ void Mission_Pawn_ALAT_Heliporter::Serialize()
     ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
     ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
-    ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.attendre_unite );
     ASN_Tools::CopyBool( pTarget_->GetTestParam_Bool(), asnMission.avec_materiel );
 
     delete &unitesAHeliporter_;
