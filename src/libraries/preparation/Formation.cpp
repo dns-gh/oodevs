@@ -48,10 +48,7 @@ Formation::~Formation()
             delete &entity;
         }
     }
-//    if( const Hierarchies* hierarchies = Retrieve< Hierarchies >() ) // $$$$ SBO 2006-09-28: bof bof
-//        if( hierarchies->GetSuperior() )
-//            if( const Hierarchies* supHierarchy = hierarchies->GetSuperior()->Retrieve< Hierarchies >() )
-//                const_cast< Hierarchies* >( supHierarchy )->RemoveSubordinate( *this );
+    DestroyExtensions();
     controller_.Delete( *(Formation_ABC*)this );
 }
 

@@ -11,6 +11,8 @@
 #include "AgentHierarchies.h"
 #include "AutomatDecisions.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/DataDictionary.h"
+#include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -19,10 +21,11 @@ using namespace xml;
 // Name: AgentHierarchies constructor
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
-AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior, kernel::DataDictionary& dictionary )
     : EntityHierarchies( controller, holder, superior )
 {
-    // NOTHING
+    if( superior )
+        dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), superior );
 }
 
 // -----------------------------------------------------------------------------

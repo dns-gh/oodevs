@@ -64,6 +64,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
+    DestroyExtensions();
     controller_.Delete( *(Object_ABC*)this );
 }
 

@@ -31,7 +31,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent_ABC : public Entity_ABC
-                , public Resolver< Agent_ABC >
+//                , public Resolver< Agent_ABC >
 {
 
 public:

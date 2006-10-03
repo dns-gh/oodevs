@@ -41,7 +41,8 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team, Id
 KnowledgeGroup::~KnowledgeGroup()
 {
     DeleteAll();
-    const_cast< Team_ABC& >( team_ ).Resolver< KnowledgeGroup_ABC >::Remove( id_ );
+    const_cast< Team_ABC& >( team_ ).Resolver< KnowledgeGroup_ABC >::Remove( id_ ); // $$$$ SBO 2006-10-03: 
+    DestroyExtensions();
     controller_.Delete( *(KnowledgeGroup_ABC*)this );
 }
 

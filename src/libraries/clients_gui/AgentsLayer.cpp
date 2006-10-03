@@ -13,6 +13,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -63,10 +64,10 @@ void AgentsLayer::Toggle( const Agent_ABC& automat, bool aggregate )
 {
     if( automat.GetSuperior() )
         return;
-    Iterator< const Agent_ABC& > children = automat.CreateIterator();
+    Iterator< const Entity_ABC& > children = automat.Get< Hierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const Agent_ABC& child = children.NextElement();
+        const Entity_ABC& child = children.NextElement();
         child.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );    
         if( aggregate )
             RemoveEntity( child );

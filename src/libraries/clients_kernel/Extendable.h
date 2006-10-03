@@ -54,6 +54,7 @@ protected:
     //! @name Operations
     //@{
     virtual void AddExtension( BaseType& ext );
+    virtual void DestroyExtensions();
     //@}
 
 private:

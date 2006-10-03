@@ -68,15 +68,7 @@ Agent::Agent( const Agent_ABC& parent, const AgentType& type, Controller& contro
 // -----------------------------------------------------------------------------
 Agent::~Agent()
 {
-    DeleteAll();
-    if( const Hierarchies* hierarchies = Retrieve< Hierarchies >() ) // $$$$ SBO 2006-09-28: bof bof
-        if( hierarchies->GetSuperior() )
-            if( const Hierarchies* supHierarchy = hierarchies->GetSuperior()->Retrieve< Hierarchies >() )
-                const_cast< Hierarchies* >( supHierarchy )->RemoveSubordinate( *this );
-    if( const kernel::CommunicationHierarchies* hierarchies = Retrieve< kernel::CommunicationHierarchies >() )
-        if( hierarchies->GetSuperior() )
-            if( const kernel::CommunicationHierarchies* supHierarchy = hierarchies->GetSuperior()->Retrieve< kernel::CommunicationHierarchies >() )
-                const_cast< kernel::CommunicationHierarchies* >( supHierarchy )->RemoveSubordinate( *this );
+    DestroyExtensions();
     controller_.Delete( *(Agent_ABC*)this );
 }
 
@@ -205,7 +197,6 @@ void Agent::CreateDictionary()
     Attach( dictionary );
     dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
-//    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), &Get< Hierarchies >().GetEntity() );
 }
 
 // -----------------------------------------------------------------------------

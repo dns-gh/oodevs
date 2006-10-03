@@ -50,6 +50,18 @@ void Extendable< BaseType >::AddExtension( BaseType& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Extendable::DestroyExtensions
+// Created: SBO 2006-10-03
+// -----------------------------------------------------------------------------
+template< typename BaseType >
+void Extendable< BaseType >::DestroyExtensions()
+{
+    for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+        delete *it;
+    extensions_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Extendable< BaseType >::Find
 // Created: AGE 2006-02-06
 // -----------------------------------------------------------------------------

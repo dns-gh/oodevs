@@ -56,7 +56,7 @@ bool CommunicationHierarchies::IsSubordinateOf( const Entity_ABC& entity ) const
 void CommunicationHierarchies::AddSubordinate( Entity_ABC& entity )
 {
     Register( entity.GetId(), entity );
-    controller_.Update( *(CommunicationHierarchies*)this );
+//    controller_.Update( *(CommunicationHierarchies*)this );
 }
     
 // -----------------------------------------------------------------------------
@@ -66,5 +66,5 @@ void CommunicationHierarchies::AddSubordinate( Entity_ABC& entity )
 void CommunicationHierarchies::RemoveSubordinate( const Entity_ABC& entity )
 {
     Remove( entity.GetId() );
-    controller_.Update( *(CommunicationHierarchies*)this );
+//    controller_.Update( *(CommunicationHierarchies*)this );
 }

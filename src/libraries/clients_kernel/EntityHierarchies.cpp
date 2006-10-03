@@ -34,7 +34,7 @@ EntityHierarchies::~EntityHierarchies()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Iterator< const Entity_ABC& > EntityHierarchies::CreateSubordinateIterator
+// Name: EntityHierarchies::CreateSubordinateIterator
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
 Iterator< const Entity_ABC& > EntityHierarchies::CreateSubordinateIterator() const
@@ -64,7 +64,6 @@ bool EntityHierarchies::IsSubordinateOf( const Entity_ABC& entity ) const
 void EntityHierarchies::AddSubordinate( Entity_ABC& entity )
 {
     Register( entity.GetId(), entity );
-    controller_.Update( *(Hierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,5 +73,4 @@ void EntityHierarchies::AddSubordinate( Entity_ABC& entity )
 void EntityHierarchies::RemoveSubordinate( const Entity_ABC& entity )
 {
     Remove( entity.GetId() );
-    controller_.Update( *(Hierarchies*)this );
 }

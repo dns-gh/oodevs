@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -51,7 +52,7 @@ Point2f AgentPositions::GetPosition() const
 
     Point2f aggregatedPosition = position_;
     unsigned count = 1;
-    Iterator< const Agent_ABC& > children = agent_.CreateIterator();
+    Iterator< const Entity_ABC& > children = agent_.Get< Hierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();

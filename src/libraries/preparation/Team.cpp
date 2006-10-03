@@ -40,6 +40,7 @@ Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManage
 Team::~Team()
 {
     DeleteAll();
+    DestroyExtensions();
     controller_.Delete( *(Team_ABC*)this );
 }
 

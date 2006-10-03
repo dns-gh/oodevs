@@ -45,7 +45,10 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 void KnowledgeGroupHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 {
     if( Hierarchies* hierarchies = superior_.Retrieve< Hierarchies >() )
+    {
         hierarchies->AddSubordinate( holder_ );
+        controller_.Update( *(Hierarchies*)this );
+    }
 }
 
 // -----------------------------------------------------------------------------

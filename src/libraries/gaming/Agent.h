@@ -13,6 +13,7 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/Resolver.h"
 
 namespace kernel
 {
@@ -29,6 +30,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent : public kernel::Agent_ABC
+            , public kernel::Resolver< Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Aggregatable_ABC
             , public kernel::Drawable_ABC
