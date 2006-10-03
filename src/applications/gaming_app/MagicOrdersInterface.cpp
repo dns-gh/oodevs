@@ -22,6 +22,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -181,14 +182,16 @@ namespace
     struct RecursiveMagicFunctor : public MagicFunctor
     {
         RecursiveMagicFunctor( Publisher_ABC& publisher, int id ) : MagicFunctor( publisher, id ) {};
-        void operator()( const Agent_ABC& agent ) const
+        void operator()( const Entity_ABC& entity ) const
         {
-            MagicFunctor::operator()( agent );
-            agent.Resolver< Agent_ABC >::Apply( *this );
-        }
-        void operator()( const KnowledgeGroup_ABC& group ) const
-        {
-            group.Resolver< Agent_ABC >::Apply( *this );
+            if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
+                MagicFunctor::operator()( *agent );
+            Iterator< const Entity_ABC& > it = entity.Get< Hierarchies >().CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const Entity_ABC& entity = it.NextElement();
+                operator()( entity ); 
+            }
         }
     };
 }

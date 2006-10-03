@@ -12,9 +12,10 @@
 #include "moc_ChangeHumanFactorsDialog.cpp"
 #include "gaming/ASN_Messages.h"
 #include "gaming/HumanFactors.h"
+#include "gaming/MagicOrders.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "gaming/MagicOrders.h"
+#include "clients_kernel/Hierarchies.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -147,7 +148,7 @@ void ChangeHumanFactorsDialog::Validate()
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
     if ( pAllUnitsCheckBox_->isChecked() )
     {
-        Iterator< const Agent_ABC& > it = selected_->CreateIterator();
+        Iterator< const Entity_ABC& > it = selected_->Get< Hierarchies >().CreateSubordinateIterator();
         while( it.HasMoreElements() )
             SendMessage( it.NextElement().GetId(), tiredness, moral, experience );
     }

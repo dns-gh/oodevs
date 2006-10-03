@@ -45,10 +45,7 @@ void AgentListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item 
 {
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
-    {
-        const QPixmap pix = decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye );
-        item->setPixmap( 0, pix );
-    }
+        item->setPixmap( 0, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
     gui::AgentListView::Display( agent, item );
 }
 
