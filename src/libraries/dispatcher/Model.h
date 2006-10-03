@@ -26,6 +26,7 @@ class ObjectKnowledge;
 class LogConsignMaintenance;
 class LogConsignSupply;
 class LogConsignMedical;
+class Population;
 class SimulationModel;
 class Publisher_ABC;
 
@@ -89,6 +90,8 @@ private:
     ModelsContainer< LogConsignMaintenance  > logConsignsMaintenance_;
     ModelsContainer< LogConsignSupply       > logConsignsSupply_;
     ModelsContainer< LogConsignMedical      > logConsignsMedical_;
+    ModelsContainer< Population             > populations_;
+
 };
 
 }

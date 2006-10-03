@@ -21,6 +21,7 @@
 #include "LogConsignMaintenance.h"
 #include "LogConsignSupply.h"
 #include "LogConsignMedical.h"
+#include "Population.h"
 
 #include "SimulationModel.h"
 
@@ -44,6 +45,7 @@ Model::Model( Dispatcher& dispatcher )
     , logConsignsMaintenance_()
     , logConsignsSupply_     ()
     , logConsignsMedical_    ()
+    , populations_           ()
 
 {
     pSimulationModel_ = new SimulationModel();
@@ -164,17 +166,17 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_creation:    logConsignsMedical_.Create ( *this, asnMsg.msg.u.msg_log_sante_traitement_humain_creation->oid_consigne, *asnMsg.msg.u.msg_log_sante_traitement_humain_creation ); break;
         case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_destruction: logConsignsMedical_.Destroy( asnMsg.msg.u.msg_log_sante_traitement_humain_destruction->oid_consigne ); break;
         case T_MsgsOutSim_msg_msg_log_sante_traitement_humain_update:      logConsignsMedical_.Get( asnMsg.msg.u.msg_log_sante_traitement_humain_update->oid_consigne ).Update( *asnMsg.msg.u.msg_log_sante_traitement_humain_update ); break;
-        case T_MsgsOutSim_msg_msg_log_sante_etat:                   agents_.Get( asnMsg.msg.u.msg_log_sante_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_sante_etat ); break;
+        case T_MsgsOutSim_msg_msg_log_sante_etat:                           agents_.Get( asnMsg.msg.u.msg_log_sante_etat->oid_pion ).Update( *asnMsg.msg.u.msg_log_sante_etat ); break;
 
-//        case T_MsgsOutSim_msg_msg_population_creation                       : OnMsgPopulationCreation                ( *message.u.msg_population_creation ); break;
-//        case T_MsgsOutSim_msg_msg_population_update                         : OnMsgPopulationUpdate                  ( *message.u.msg_population_update ); break;
-//        case T_MsgsOutSim_msg_msg_population_concentration_creation         : OnMsgPopulationConcentrationCreation   ( *message.u.msg_population_concentration_creation ); break;
-//        case T_MsgsOutSim_msg_msg_population_concentration_destruction      : OnMsgPopulationConcentrationDestruction( *message.u.msg_population_concentration_destruction ); break;
-//        case T_MsgsOutSim_msg_msg_population_concentration_update           : OnMsgPopulationConcentrationUpdate     ( *message.u.msg_population_concentration_update ); break;
-//        case T_MsgsOutSim_msg_msg_population_flux_creation                  : OnMsgPopulationFluxCreation            ( *message.u.msg_population_flux_creation ); break;
-//        case T_MsgsOutSim_msg_msg_population_flux_destruction               : OnMsgPopulationFluxDestruction         ( *message.u.msg_population_flux_destruction ); break;
-//        case T_MsgsOutSim_msg_msg_population_flux_update                    : OnMsgPopulationFluxUpdate              ( *message.u.msg_population_flux_update ); break;
-//
+        case T_MsgsOutSim_msg_msg_population_creation                       : populations_.Create( *this, asnMsg.msg.u.msg_population_creation->oid_population, *asnMsg.msg.u.msg_population_creation ); break;
+        case T_MsgsOutSim_msg_msg_population_update                         : populations_.Get( asnMsg.msg.u.msg_population_update->oid_population ).Update( *asnMsg.msg.u.msg_population_update ); break;
+        case T_MsgsOutSim_msg_msg_population_concentration_creation         : populations_.Get( asnMsg.msg.u.msg_population_concentration_creation->oid_population ).Update( *asnMsg.msg.u.msg_population_concentration_creation ); break;
+        case T_MsgsOutSim_msg_msg_population_concentration_destruction      : populations_.Get( asnMsg.msg.u.msg_population_concentration_destruction->oid_population ).Update( *asnMsg.msg.u.msg_population_concentration_destruction ); break;
+        case T_MsgsOutSim_msg_msg_population_concentration_update           : populations_.Get( asnMsg.msg.u.msg_population_concentration_update->oid_population ).Update( *asnMsg.msg.u.msg_population_concentration_update ); break;
+        case T_MsgsOutSim_msg_msg_population_flux_creation                  : populations_.Get( asnMsg.msg.u.msg_population_flux_creation->oid_population ).Update( *asnMsg.msg.u.msg_population_flux_creation ); break;
+        case T_MsgsOutSim_msg_msg_population_flux_destruction               : populations_.Get( asnMsg.msg.u.msg_population_flux_destruction->oid_population ).Update( *asnMsg.msg.u.msg_population_flux_destruction ); break;
+        case T_MsgsOutSim_msg_msg_population_flux_update                    : populations_.Get( asnMsg.msg.u.msg_population_flux_update->oid_population ).Update( *asnMsg.msg.u.msg_population_flux_update ); break;
+
 //        case T_MsgsOutSim_msg_msg_population_knowledge_creation                  : OnReceiveMsgPopulationKnowledgeCreation                ( *message.u.msg_population_knowledge_creation                  ); break;
 //        case T_MsgsOutSim_msg_msg_population_knowledge_update                    : OnReceiveMsgPopulationKnowledgeUpdate                  ( *message.u.msg_population_knowledge_update                    ); break;
 //        case T_MsgsOutSim_msg_msg_population_knowledge_destruction               : OnReceiveMsgPopulationKnowledgeDestruction             ( *message.u.msg_population_knowledge_destruction               ); break;
@@ -266,13 +268,13 @@ void Model::Send( Publisher_ABC& publisher ) const
     automats_       .Apply( std::mem_fun_ref( &Automat       ::SendCreation ), publisher );
     agents_         .Apply( std::mem_fun_ref( &Agent         ::SendCreation ), publisher );
     objects_        .Apply( std::mem_fun_ref( &Object        ::SendCreation ), publisher );
-//$$$ POPULATION
+    populations_    .Apply( std::mem_fun_ref( &Population    ::SendCreation ), publisher );
 
-    sides_          .Apply( std::mem_fun_ref( &Side   ::SendFullUpdate ), publisher );
-    automats_       .Apply( std::mem_fun_ref( &Automat::SendFullUpdate ), publisher ); //$$$ Séparation pions/automates
-    agents_         .Apply( std::mem_fun_ref( &Agent  ::SendFullUpdate ), publisher );
-    objects_        .Apply( std::mem_fun_ref( &Object ::SendFullUpdate ), publisher );
-//$$$ POPULATION
+    sides_          .Apply( std::mem_fun_ref( &Side      ::SendFullUpdate ), publisher );
+    automats_       .Apply( std::mem_fun_ref( &Automat   ::SendFullUpdate ), publisher ); //$$$ Séparation pions/automates
+    agents_         .Apply( std::mem_fun_ref( &Agent     ::SendFullUpdate ), publisher );
+    objects_        .Apply( std::mem_fun_ref( &Object    ::SendFullUpdate ), publisher );
+    populations_    .Apply( std::mem_fun_ref( &Population::SendFullUpdate ), publisher );
 
     // Logistic
     logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::SendCreation   ), publisher );
