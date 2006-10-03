@@ -54,6 +54,7 @@ public:
 
     void Clear();
     void ClearTraces();
+    void MarkAsRead();
     //@}
 
 private:

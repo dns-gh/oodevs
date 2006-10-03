@@ -87,6 +87,7 @@ void ReportListView::NotifySelected( const Entity_ABC* element )
 {
     if( element != selected_ )
     {
+        MarkReportsAsRead();
         selected_ = element;
         const Reports* reports = selected_ ? selected_->Retrieve< Reports >() : 0;
         if( reports )
@@ -147,16 +148,6 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
     report.Display( GetItemDisplayer( item ) );
 }
 
-// $$$$ AGE 2006-09-18: 
-    // Before we change the displayed reports, mark the old ones as read.
-//    QListViewItem* pItem = firstChild();
-//    while( pItem != 0 )
-//    {
-//        Report_ABC& report = GetItemValue( *pItem );
-//        report.SetNew( false );
-//        pItem = pItem->nextSibling();
-//    }
-
 // -----------------------------------------------------------------------------
 // Name: ReportListView::OnRequestPopup
 // Created: AGE 2006-09-18
@@ -171,6 +162,17 @@ void ReportListView::OnRequestPopup( QListViewItem* item, const QPoint& pos, int
 //    if( item )
 //        menu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
     menu_->popup( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::MarkReportsAsRead
+// Created: AGE 2006-09-21
+// -----------------------------------------------------------------------------
+void ReportListView::MarkReportsAsRead()
+{
+    const Reports* reports = 0;
+    if( selected_ && ( reports = selected_->Retrieve< Reports >() ) != 0 )
+        const_cast< Reports* >( reports )->MarkAsRead(); // $$$$ AGE 2006-09-18: 
 }
 
 // -----------------------------------------------------------------------------

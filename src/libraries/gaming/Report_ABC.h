@@ -49,12 +49,11 @@ public:
     //@{
     void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+
+    void Read();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
-    //@{
+    //! @name Accessors
     const kernel::Entity_ABC& GetAgent() const;
     
     E_Type      GetType () const;

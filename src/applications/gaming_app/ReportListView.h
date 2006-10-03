@@ -69,6 +69,8 @@ private:
     virtual void NotifyCreated( const Report_ABC& report );
 
     bool ShouldUpdate( const Reports& reports );
+
+    void MarkReportsAsRead();
     //@}
 
 private:
