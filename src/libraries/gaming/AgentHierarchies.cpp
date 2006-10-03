@@ -40,7 +40,7 @@ AgentHierarchies::~AgentHierarchies()
 {
     if( superior_ )
         if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
-            hierarchies->RemoveSubordinate( holder_ );
+            hierarchies->UnregisterSubordinate( holder_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,16 +79,10 @@ void AgentHierarchies::UpdateSuperior( Entity_ABC& superior )
 {
     if( superior_ )
         if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
-        {
             hierarchies->RemoveSubordinate( holder_ );
-            controller_.Update( *hierarchies );
-        }
     superior_ = &superior;
     if( Hierarchies* hierarchies = superior_->Retrieve< Hierarchies >() )
-    {
         hierarchies->AddSubordinate( holder_ );
-        controller_.Update( *hierarchies );
-    }
     controller_.Update( *(Hierarchies*)this );
 }
 

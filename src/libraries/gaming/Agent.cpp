@@ -15,6 +15,7 @@
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -77,8 +78,12 @@ Agent::~Agent()
 {
     ChangeKnowledgeGroup( ( kernel::KnowledgeGroup_ABC*)0 );
     ChangeSuperior( 0 );
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< Agent* >( it->second )->superior_ = 0;
+    Iterator< const Entity_ABC& > it = Get< Hierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Agent& agent = static_cast< const Agent& >( it.NextElement() );
+        const_cast< Agent& >( agent ).superior_ = 0;
+    }
     controller_.Delete( *(Agent_ABC*)this );
 }
 
@@ -91,8 +96,12 @@ void Agent::DoUpdate( const InstanciationComplete& )
     controller_.Create( *(Agent_ABC*)this );
     if( gtia_ )
         gtia_->AddAutomat( id_, *this );
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< Agent* >( it->second )->gtia_ = gtia_;
+    Iterator< const Entity_ABC& > it = Get< Hierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Agent& agent = static_cast< const Agent& >( it.NextElement() );
+        const_cast< Agent& >( agent ).gtia_ = gtia_; // $$$$ SBO 2006-10-03: use KnowledgeGroupExtension
+    }
     if( superior_ )
         superior_->AddChild( *this );
 }
@@ -167,8 +176,12 @@ void Agent::ChangeKnowledgeGroup( KnowledgeGroup_ABC* gtia )
     gtia_ = gtia;
     if( gtia_ )
         gtia_->AddAutomat( id_, *this );
-    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        static_cast< Agent* >( it->second )->gtia_ = gtia_;
+    Iterator< const Entity_ABC& > it = Get< Hierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Agent& agent = static_cast< const Agent& >( it.NextElement() );
+        const_cast< Agent& >( agent ).gtia_ = gtia_; // $$$$ SBO 2006-10-03: use KnowledgeGroupExtension
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -191,8 +204,11 @@ void Agent::ChangeSuperior( unsigned long id )
 // -----------------------------------------------------------------------------
 void Agent::AddChild( Agent_ABC& child )
 {
-    Resolver< Agent_ABC >::Register( child.GetId(), child );
-    controller_.Update( *(Agent_ABC*)this );
+    if( !child.Get< Hierarchies >().IsSubordinateOf( *this ) )
+    {
+        Get< Hierarchies >().AddSubordinate( child );
+        controller_.Update( *(Agent_ABC*)this );
+    } 
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +217,7 @@ void Agent::AddChild( Agent_ABC& child )
 // -----------------------------------------------------------------------------
 void Agent::RemoveChild( Agent_ABC& child )
 {
-    Resolver< Agent_ABC >::Remove( child.GetId() );
+    Get< Hierarchies >().RemoveSubordinate( child );
     controller_.Update( *(Agent_ABC*)this );
 }
 

@@ -34,7 +34,7 @@ EntityHierarchies::~EntityHierarchies()
     DeleteAll();
     if( superior_ )
         if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
-            hierarchies->RemoveSubordinate( holder_ );
+            hierarchies->UnregisterSubordinate( holder_ );
     controller_.Delete( *(kernel::Hierarchies*)this );
 }
 
@@ -86,10 +86,7 @@ void EntityHierarchies::RegisterToSuperior()
 {
     if( superior_ )
         if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
-        {
             hierarchies->AddSubordinate( holder_ );
-            controller_.Update( *hierarchies );
-        }
 }
     
 // -----------------------------------------------------------------------------
@@ -102,7 +99,6 @@ void EntityHierarchies::RemoveFromSuperior()
         if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
         {
             hierarchies->RemoveSubordinate( holder_ );
-            controller_.Update( *hierarchies );
             superior_ = 0;
         }
 }

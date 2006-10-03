@@ -64,6 +64,7 @@ bool EntityHierarchies::IsSubordinateOf( const Entity_ABC& entity ) const
 void EntityHierarchies::AddSubordinate( Entity_ABC& entity )
 {
     Register( entity.GetId(), entity );
+    controller_.Update( *(Hierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,6 +72,16 @@ void EntityHierarchies::AddSubordinate( Entity_ABC& entity )
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 void EntityHierarchies::RemoveSubordinate( const Entity_ABC& entity )
+{
+    Remove( entity.GetId() );
+    controller_.Update( *(Hierarchies*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::UnregisterSubordinate
+// Created: SBO 2006-10-03
+// -----------------------------------------------------------------------------
+void EntityHierarchies::UnregisterSubordinate( const Entity_ABC& entity )
 {
     Remove( entity.GetId() );
 }
