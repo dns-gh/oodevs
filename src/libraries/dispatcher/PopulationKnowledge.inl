@@ -11,33 +11,33 @@ namespace dispatcher
 {
 
 // -----------------------------------------------------------------------------
-// Name: Population::GetID
+// Name: PopulationKnowledge::GetID
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 inline
-unsigned long Population::GetID() const
+unsigned long PopulationKnowledge::GetID() const
 {
     return nID_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelsContainer< PopulationConcentration >& Population::GetConcentrations
+// Name: PopulationKnowledge::GetKnowledgeGroup
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
 inline
-const ModelsContainer< PopulationConcentration >& Population::GetConcentrations() const
+const KnowledgeGroup& PopulationKnowledge::GetKnowledgeGroup() const
 {
-    return concentrations_;
+    return knowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelsContainer< PopulationFlow          >& Population::GetFlows
+// Name: PopulationKnowledge::GetPopulation
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
 inline
-const ModelsContainer< PopulationFlow          >& Population::GetFlows() const
+const Population& PopulationKnowledge::GetPopulation() const
 {
-    return flows_;
+    return population_;
 }
 
 }

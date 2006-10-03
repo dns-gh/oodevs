@@ -70,4 +70,14 @@ ModelsContainer< Object >& Model::GetObjects()
     return objects_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: }ModelsContainer< Population >& Model::GetPopulations
+// Created: NLD 2006-10-03
+// -----------------------------------------------------------------------------
+inline
+ModelsContainer< Population >& Model::GetPopulations()
+{
+    return populations_;
+}
+
 }

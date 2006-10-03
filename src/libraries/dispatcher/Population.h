@@ -38,7 +38,9 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned long GetID() const;
+          unsigned long                               GetID            () const;
+    const ModelsContainer< PopulationConcentration >& GetConcentrations() const;
+    const ModelsContainer< PopulationFlow          >& GetFlows         () const;
     //@}
 
     //! @name Operations

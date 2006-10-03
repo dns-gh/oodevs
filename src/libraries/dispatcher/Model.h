@@ -27,6 +27,7 @@ class LogConsignMaintenance;
 class LogConsignSupply;
 class LogConsignMedical;
 class Population;
+class PopulationKnowledge;
 class SimulationModel;
 class Publisher_ABC;
 
@@ -61,6 +62,7 @@ public:
           ModelsContainer< Agent          >& GetAgents         ();
     const ModelsContainer< Agent          >& GetAgents         () const;
           ModelsContainer< Object         >& GetObjects        ();
+          ModelsContainer< Population     >& GetPopulations    ();
     //@}
 
 private:
@@ -91,6 +93,7 @@ private:
     ModelsContainer< LogConsignSupply       > logConsignsSupply_;
     ModelsContainer< LogConsignMedical      > logConsignsMedical_;
     ModelsContainer< Population             > populations_;
+    ModelsContainer< PopulationKnowledge    > populationKnowledges_;
 
 };
 
