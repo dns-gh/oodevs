@@ -102,7 +102,7 @@
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
                    libs="HLA,libFedTime,masalloc,paranoia
                          MT_Tools_Scipio,ASN,asn1per,
-                         simulation_terrain,simulation_kernel,simulation_missions">
+                         simulation_terrain,simulation_kernel,simulation_missions,dispatcher">
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${libraries.dir}/simulation_kernel"/>
