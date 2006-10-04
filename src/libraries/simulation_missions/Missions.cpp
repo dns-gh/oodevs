@@ -17,9 +17,38 @@
 #include "simulation_kernel/Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "simulation_kernel/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 
-#include "Automate\MIL_AutomateMission_ABC_ArmerPointDeControle.cpp"
-#include "Automate\MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies.cpp"
-#include "Automate\MIL_AutomateMission_ABC_ProtegerPC.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_AllerSeRecompleter.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_ExtrairePersonnel.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_DonnerCoupArret.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_AttaquerFormationAeromobile.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_RecueillirFormationAeromobile.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Heliporter.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Jalonner.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Helitransporter.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Appuyer.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Couvrir.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Surveiller.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Reconnaitre.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Freiner.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Escorter.cpp"
+#include "Automate\MIL_AutomateMission_ALAT_Attaquer.cpp"
+#include "Automate\MIL_AutomateMission_ASA_DefendreSite.cpp"
+#include "Automate\MIL_AutomateMission_ASA_DefendreZone.cpp"
+#include "Automate\MIL_AutomateMission_ASA_DefendreUnites.cpp"
+#include "Automate\MIL_AutomateMission_ASA_Surveiller.cpp"
+#include "Automate\MIL_AutomateMission_ASA_DefendreItineraire.cpp"
+#include "Automate\MIL_AutomateMission_ASA_MISTRAL_DefendreZone.cpp"
+#include "Automate\MIL_AutomateMission_ASA_MISTRAL_DefendreSite.cpp"
+#include "Automate\MIL_AutomateMission_ASA_MISTRAL_Surveiller.cpp"
+#include "Automate\MIL_AutomateMission_ASA_HAWK_DefendreZone.cpp"
+#include "Automate\MIL_AutomateMission_ASA_HAWK_DefendreSite.cpp"
+#include "Automate\MIL_AutomateMission_ASA_HAWK_Surveiller.cpp"
+#include "Automate\MIL_AutomateMission_ASS_SeDeployer.cpp"
+#include "Automate\MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement.cpp"
+#include "Automate\MIL_AutomateMission_ASS_AcquerirObjectifs.cpp"
 #include "Automate\MIL_AutomateMission_ABC_Appuyer.cpp"
 #include "Automate\MIL_AutomateMission_ABC_Attaquer.cpp"
 #include "Automate\MIL_AutomateMission_ABC_ContreAttaquer.cpp"
@@ -48,58 +77,10 @@
 #include "Automate\MIL_AutomateMission_ABC_RecueillirUnite.cpp"
 #include "Automate\MIL_AutomateMission_ABC_EscorterUnite.cpp"
 #include "Automate\MIL_AutomateMission_ABC_EscorterUnites.cpp"
+#include "Automate\MIL_AutomateMission_ABC_ArmerPointDeControle.cpp"
+#include "Automate\MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies.cpp"
+#include "Automate\MIL_AutomateMission_ABC_ProtegerPC.cpp"
 #include "Automate\MIL_AutomateMission_ABC_AppuyerSurPosition.cpp"
-#include "Pion\MIL_PionMission_ALAT_AllerSeRecompleter.cpp"
-#include "Pion\MIL_PionMission_ALAT_EvacuationSanitaire.cpp"
-#include "Pion\MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur.cpp"
-#include "Pion\MIL_PionMission_ALAT_ReconnaitreContourEnnemi.cpp"
-#include "Pion\MIL_PionMission_ALAT_DetruireNeutraliserDansZone.cpp"
-#include "Pion\MIL_PionMission_ALAT_DetruireAeromobile.cpp"
-#include "Pion\MIL_PionMission_ALAT_Freiner.cpp"
-#include "Pion\MIL_PionMission_ALAT_Jalonner.cpp"
-#include "Pion\MIL_PionMission_ALAT_Escorter.cpp"
-#include "Pion\MIL_PionMission_ALAT_Heliporter.cpp"
-#include "Pion\MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement.cpp"
-#include "Pion\MIL_PionMission_ALAT_Helitransporter.cpp"
-#include "Pion\MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage.cpp"
-#include "Pion\MIL_PionMission_ALAT_IMEX.cpp"
-#include "Pion\MIL_PionMission_ALAT_Eclairer.cpp"
-#include "Pion\MIL_PionMission_ALAT_Surveiller.cpp"
-#include "Pion\MIL_PionMission_ALAT_AppuyerDirectAuContact.cpp"
-#include "Pion\MIL_PionMission_ALAT_Couvrir.cpp"
-#include "Pion\MIL_PionMission_ALAT_Attaquer.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Heliporter.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Jalonner.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Helitransporter.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_ExtrairePersonnel.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Appuyer.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Couvrir.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Surveiller.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Reconnaitre.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Freiner.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Escorter.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_Attaquer.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_RecueillirFormationAeromobile.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_AttaquerFormationAeromobile.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_DonnerCoupArret.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_AllerSeRecompleter.cpp"
-#include "Automate\MIL_AutomateMission_ASA_DefendreZone.cpp"
-#include "Automate\MIL_AutomateMission_ASA_DefendreSite.cpp"
-#include "Automate\MIL_AutomateMission_ASA_Surveiller.cpp"
-#include "Automate\MIL_AutomateMission_ASA_DefendreItineraire.cpp"
-#include "Automate\MIL_AutomateMission_ASA_MISTRAL_DefendreZone.cpp"
-#include "Automate\MIL_AutomateMission_ASA_MISTRAL_DefendreSite.cpp"
-#include "Automate\MIL_AutomateMission_ASA_MISTRAL_Surveiller.cpp"
-#include "Automate\MIL_AutomateMission_ASA_HAWK_DefendreZone.cpp"
-#include "Automate\MIL_AutomateMission_ASA_HAWK_DefendreSite.cpp"
-#include "Automate\MIL_AutomateMission_ASA_HAWK_Surveiller.cpp"
-#include "Automate\MIL_AutomateMission_ASA_DefendreUnites.cpp"
-#include "Automate\MIL_AutomateMission_ASS_SeDeployer.cpp"
-#include "Automate\MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement.cpp"
-#include "Automate\MIL_AutomateMission_ASS_AcquerirObjectifs.cpp"
 #include "Automate\MIL_AutomateMission_GEN_SeDeployer.cpp"
 #include "Automate\MIL_AutomateMission_GEN_FaireFranchir.cpp"
 #include "Automate\MIL_AutomateMission_GEN_RealiserSystemeObstacles.cpp"
@@ -148,7 +129,6 @@
 #include "Automate\MIL_AutomateMission_LOG_SeDeployer.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerMouvement.cpp"
 #include "Automate\MIL_AutomateMission_LOG_ReconnaitreItineraire.cpp"
-#include "Automate\MIL_AutomateMission_LOG_Surveiller.cpp"
 #include "Automate\MIL_AutomateMission_LOG_TransporterUnites.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerMouvementDansZone.cpp"
 #include "Automate\MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement.cpp"
@@ -156,6 +136,7 @@
 #include "Automate\MIL_AutomateMission_LOG_BloquerZone.cpp"
 #include "Automate\MIL_AutomateMission_LOG_ReconnaitreZoneContaminee.cpp"
 #include "Automate\MIL_AutomateMission_LOG_ReconnaitreZoneDeDeploiement.cpp"
+#include "Automate\MIL_AutomateMission_LOG_Surveiller.cpp"
 #include "Automate\MIL_AutomateMission_LOG_ArmerPIAs.cpp"
 #include "Automate\MIL_AutomateMission_Test_MoveTo.cpp"
 #include "Automate\MIL_AutomateMission_Decrocher.cpp"
@@ -189,6 +170,25 @@
 #include "Automate\MIL_AutomateMission_RENS_ROEM_RenseignerSur.cpp"
 #include "Automate\MIL_AutomateMission_RENS_RADINT_RenseignerSur.cpp"
 #include "Automate\MIL_AutomateMission_TRANS_Commander.cpp"
+#include "Pion\MIL_PionMission_ALAT_AllerSeRecompleter.cpp"
+#include "Pion\MIL_PionMission_ALAT_EvacuationSanitaire.cpp"
+#include "Pion\MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur.cpp"
+#include "Pion\MIL_PionMission_ALAT_ReconnaitreContourEnnemi.cpp"
+#include "Pion\MIL_PionMission_ALAT_DetruireNeutraliserDansZone.cpp"
+#include "Pion\MIL_PionMission_ALAT_DetruireAeromobile.cpp"
+#include "Pion\MIL_PionMission_ALAT_Freiner.cpp"
+#include "Pion\MIL_PionMission_ALAT_Jalonner.cpp"
+#include "Pion\MIL_PionMission_ALAT_Escorter.cpp"
+#include "Pion\MIL_PionMission_ALAT_Heliporter.cpp"
+#include "Pion\MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement.cpp"
+#include "Pion\MIL_PionMission_ALAT_Helitransporter.cpp"
+#include "Pion\MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage.cpp"
+#include "Pion\MIL_PionMission_ALAT_IMEX.cpp"
+#include "Pion\MIL_PionMission_ALAT_Eclairer.cpp"
+#include "Pion\MIL_PionMission_ALAT_Surveiller.cpp"
+#include "Pion\MIL_PionMission_ALAT_AppuyerDirectAuContact.cpp"
+#include "Pion\MIL_PionMission_ALAT_Couvrir.cpp"
+#include "Pion\MIL_PionMission_ALAT_Attaquer.cpp"
 #include "Pion\MIL_PionMission_ASA_DefendreSite.cpp"
 #include "Pion\MIL_PionMission_ASA_DefendreSiteAPartirPosition.cpp"
 #include "Pion\MIL_PionMission_ASA_DefendreZone.cpp"
@@ -359,12 +359,6 @@
 #include "Pion\MIL_PionMission_MILICE_DetruireEmbuscade.cpp"
 #include "Pion\MIL_PionMission_JOINT_MARINE_Transporter.cpp"
 #include "Pion\MIL_PionMission_JOINT_AIR_EffectuerRaid.cpp"
-#include "Pion\MIL_PionMission_ASY_SInfiltrer.cpp"
-#include "Pion\MIL_PionMission_ASY_CommettreAttentatContrePopulation.cpp"
-#include "Pion\MIL_PionMission_ASY_CommettreAttentatContreForcesArmees.cpp"
-#include "Pion\MIL_PionMission_ASY_CommettreAttentatContreInstallation.cpp"
-#include "Pion\MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone.cpp"
-#include "Pion\MIL_PionMission_ASY_Renseigner.cpp"
 #include "Pion\MIL_PionMission_NBC_AnimerUnPlotDeDecontamination.cpp"
 #include "Pion\MIL_PionMission_NBC_ReconnaitreItineraire.cpp"
 #include "Pion\MIL_PionMission_NBC_ReconnaitreZone.cpp"
@@ -382,6 +376,12 @@
 #include "Pion\MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur.cpp"
 #include "Pion\MIL_PionMission_RENS_ROIM_CL289_RenseignerSur.cpp"
 #include "Pion\MIL_PionMission_TRANS_EtablirGererLiaison.cpp"
+#include "Pion\MIL_PionMission_ASY_SInfiltrer.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreAttentatContrePopulation.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreAttentatContreForcesArmees.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreAttentatContreInstallation.cpp"
+#include "Pion\MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone.cpp"
+#include "Pion\MIL_PionMission_ASY_Renseigner.cpp"
 #include "Population\MIL_PopulationMission_FaireMouvement.cpp"
 #include "Population\MIL_PopulationMission_Manifester.cpp"
 #include "Population\MIL_PopulationMission_CommettreExactions.cpp"
@@ -465,9 +465,38 @@ void missions::RegisterPopulationMissions()
 //-----------------------------------------------------------------------------
 void missions::RegisterAutomateMissions()
 {
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_ArmerPointDeControle>( "Automate ABC ArmerPointDeControle", eMission_Automate_ABC_ArmerPointDeControle, T_Mission_Automate_mission_automate_abc_armer_point_de_controle, "T_Mission_Automate_ABC_ArmerPointDeControle", "MIS_Automate_MRT_ABC_ArmerPointDeControle", "MIS_Automate_CDT_ABC_ArmerPointDeControle");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies>( "Automate ABC OrganiserAccueilColonneRefugies", eMission_Automate_ABC_OrganiserAccueilColonneRefugies, T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies, "T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies", "MIS_Automate_MRT_ABC_OrganiserAccueilColonneRefugies", "MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_ProtegerPC>( "Automate ABC ProtegerPC", eMission_Automate_ABC_ProtegerPC, T_Mission_Automate_mission_automate_abc_proteger_pc, "T_Mission_Automate_ABC_ProtegerPC", "MIS_Automate_MRT_ABC_ProtegerPC", "MIS_Automate_CDT_ABC_ProtegerPC");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_AllerSeRecompleter>( "Automate ALAT AllerSeRecompleter", eMission_Automate_ALAT_AllerSeRecompleter, T_Mission_Automate_mission_automate_alat_aller_se_recompleter, "T_Mission_Automate_ALAT_AllerSeRecompleter", "MIS_Automate_MRT_ALAT_AllerSeRecompleter", "MIS_Automate_CDT_ALAT_AllerSeRecompleter");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage>( "Automate ALAT EffectuerRechercheEtSauvetage", eMission_Automate_ALAT_EffectuerRechercheEtSauvetage, T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage, "T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_MRT_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_CDT_ALAT_EffectuerRechercheEtSauvetage");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_ExtrairePersonnel>( "Automate ALAT ExtrairePersonnel", eMission_Automate_ALAT_ExtrairePersonnel, T_Mission_Automate_mission_automate_alat_extraire_personnel, "T_Mission_Automate_ALAT_ExtrairePersonnel", "MIS_Automate_MRT_ALAT_ExtrairePersonnel", "MIS_Automate_CDT_ALAT_ExtrairePersonnel");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur>( "Automate ALAT DetruireNeutraliserDansProfondeur", eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur, "T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone>( "Automate ALAT DetruireNeutraliserDansZone", eMission_Automate_ALAT_DetruireNeutraliserDansZone, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone, "T_Mission_Automate_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DonnerCoupArret>( "Automate ALAT DonnerCoupArret", eMission_Automate_ALAT_DonnerCoupArret, T_Mission_Automate_mission_automate_alat_donner_coup_arret, "T_Mission_Automate_ALAT_DonnerCoupArret", "MIS_Automate_MRT_ALAT_DonnerCoupArret", "MIS_Automate_CDT_ALAT_DonnerCoupArret");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_AttaquerFormationAeromobile>( "Automate ALAT AttaquerFormationAeromobile", eMission_Automate_ALAT_AttaquerFormationAeromobile, T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile, "T_Mission_Automate_ALAT_AttaquerFormationAeromobile", "MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile", "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_RecueillirFormationAeromobile>( "Automate ALAT RecueillirFormationAeromobile", eMission_Automate_ALAT_RecueillirFormationAeromobile, T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile, "T_Mission_Automate_ALAT_RecueillirFormationAeromobile", "MIS_Automate_MRT_ALAT_RecueillirFormationAeromobile", "MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Heliporter>( "Automate ALAT Heliporter", eMission_Automate_ALAT_Heliporter, T_Mission_Automate_mission_automate_alat_heliporter, "T_Mission_Automate_ALAT_Heliporter", "MIS_Automate_MRT_ALAT_Heliporter", "MIS_Automate_CDT_ALAT_Heliporter");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Jalonner>( "Automate ALAT Jalonner", eMission_Automate_ALAT_Jalonner, T_Mission_Automate_mission_automate_alat_jalonner, "T_Mission_Automate_ALAT_Jalonner", "MIS_Automate_MRT_ALAT_Jalonner", "MIS_Automate_CDT_ALAT_Jalonner");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Helitransporter>( "Automate ALAT Helitransporter", eMission_Automate_ALAT_Helitransporter, T_Mission_Automate_mission_automate_alat_helitransporter, "T_Mission_Automate_ALAT_Helitransporter", "MIS_Automate_MRT_ALAT_Helitransporter", "MIS_Automate_CDT_ALAT_Helitransporter");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Appuyer>( "Automate ALAT Appuyer", eMission_Automate_ALAT_Appuyer, T_Mission_Automate_mission_automate_alat_appuyer, "T_Mission_Automate_ALAT_Appuyer", "MIS_Automate_MRT_ALAT_Appuyer", "MIS_Automate_CDT_ALAT_Appuyer");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Couvrir>( "Automate ALAT Couvrir", eMission_Automate_ALAT_Couvrir, T_Mission_Automate_mission_automate_alat_couvrir, "T_Mission_Automate_ALAT_Couvrir", "MIS_Automate_MRT_ALAT_Couvrir", "MIS_Automate_CDT_ALAT_Couvrir");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Surveiller>( "Automate ALAT Surveiller", eMission_Automate_ALAT_Surveiller, T_Mission_Automate_mission_automate_alat_surveiller, "T_Mission_Automate_ALAT_Surveiller", "MIS_Automate_MRT_ALAT_Surveiller", "MIS_Automate_CDT_ALAT_Surveiller");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Reconnaitre>( "Automate ALAT Reconnaitre", eMission_Automate_ALAT_Reconnaitre, T_Mission_Automate_mission_automate_alat_reconnaitre, "T_Mission_Automate_ALAT_Reconnaitre", "MIS_Automate_MRT_ALAT_Reconnaitre", "MIS_Automate_CDT_ALAT_Reconnaitre");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Freiner>( "Automate ALAT Freiner", eMission_Automate_ALAT_Freiner, T_Mission_Automate_mission_automate_alat_freiner, "T_Mission_Automate_ALAT_Freiner", "MIS_Automate_MRT_ALAT_Freiner", "MIS_Automate_CDT_ALAT_Freiner");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Escorter>( "Automate ALAT Escorter", eMission_Automate_ALAT_Escorter, T_Mission_Automate_mission_automate_alat_escorter, "T_Mission_Automate_ALAT_Escorter", "MIS_Automate_MRT_ALAT_Escorter", "MIS_Automate_CDT_ALAT_Escorter");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Attaquer>( "Automate ALAT Attaquer", eMission_Automate_ALAT_Attaquer, T_Mission_Automate_mission_automate_alat_attaquer, "T_Mission_Automate_ALAT_Attaquer", "MIS_Automate_MRT_ALAT_Attaquer", "MIS_Automate_CDT_ALAT_Attaquer");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreSite>( "Automate ASA DefendreSite", eMission_Automate_ASA_DefendreSite, T_Mission_Automate_mission_automate_asa_defendre_site, "T_Mission_Automate_ASA_DefendreSite", "MIS_Automate_MRT_ASA_DefendreSite", "MIS_Automate_CDT_ASA_DefendreSite");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreZone>( "Automate ASA DefendreZone", eMission_Automate_ASA_DefendreZone, T_Mission_Automate_mission_automate_asa_defendre_zone, "T_Mission_Automate_ASA_DefendreZone", "MIS_Automate_MRT_ASA_DefendreZone", "MIS_Automate_CDT_ASA_DefendreZone");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreUnites>( "Automate ASA DefendreUnites", eMission_Automate_ASA_DefendreUnites, T_Mission_Automate_mission_automate_asa_defendre_unites, "T_Mission_Automate_ASA_DefendreUnites", "MIS_Automate_MRT_ASA_DefendreUnites", "MIS_Automate_CDT_ASA_DefendreUnites");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_Surveiller>( "Automate ASA Surveiller", eMission_Automate_ASA_Surveiller, T_Mission_Automate_mission_automate_asa_surveiller, "T_Mission_Automate_ASA_Surveiller", "MIS_Automate_MRT_ASA_Surveiller", "MIS_Automate_CDT_ASA_Surveiller");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreItineraire>( "Automate ASA DefendreItineraire", eMission_Automate_ASA_DefendreItineraire, T_Mission_Automate_mission_automate_asa_defendre_itineraire, "T_Mission_Automate_ASA_DefendreItineraire", "MIS_Automate_MRT_ASA_DefendreItineraire", "MIS_Automate_CDT_ASA_DefendreItineraire");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_MISTRAL_DefendreZone>( "Automate ASA MISTRAL DefendreZone", eMission_Automate_ASA_MISTRAL_DefendreZone, T_Mission_Automate_mission_automate_asa_mistral_defendre_zone, "T_Mission_Automate_ASA_MISTRAL_DefendreZone", "MIS_Automate_MRT_ASA_MISTRAL_DefendreZone", "MIS_Automate_CDT_ASA_MISTRAL_DefendreZone");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_MISTRAL_DefendreSite>( "Automate ASA MISTRAL DefendreSite", eMission_Automate_ASA_MISTRAL_DefendreSite, T_Mission_Automate_mission_automate_asa_mistral_defendre_site, "T_Mission_Automate_ASA_MISTRAL_DefendreSite", "MIS_Automate_MRT_ASA_MISTRAL_DefendreSite", "MIS_Automate_CDT_ASA_MISTRAL_DefendreSite");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_MISTRAL_Surveiller>( "Automate ASA MISTRAL Surveiller", eMission_Automate_ASA_MISTRAL_Surveiller, T_Mission_Automate_mission_automate_asa_mistral_surveiller, "T_Mission_Automate_ASA_MISTRAL_Surveiller", "MIS_Automate_MRT_ASA_MISTRAL_Surveiller", "MIS_Automate_CDT_ASA_MISTRAL_Surveiller");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_HAWK_DefendreZone>( "Automate ASA HAWK DefendreZone", eMission_Automate_ASA_HAWK_DefendreZone, T_Mission_Automate_mission_automate_asa_hawk_defendre_zone, "T_Mission_Automate_ASA_HAWK_DefendreZone", "MIS_Automate_MRT_ASA_HAWK_DefendreZone", "MIS_Automate_CDT_ASA_HAWK_DefendreZone");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_HAWK_DefendreSite>( "Automate ASA HAWK DefendreSite", eMission_Automate_ASA_HAWK_DefendreSite, T_Mission_Automate_mission_automate_asa_hawk_defendre_site, "T_Mission_Automate_ASA_HAWK_DefendreSite", "MIS_Automate_MRT_ASA_HAWK_DefendreSite", "MIS_Automate_CDT_ASA_HAWK_DefendreSite");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_HAWK_Surveiller>( "Automate ASA HAWK Surveiller", eMission_Automate_ASA_HAWK_Surveiller, T_Mission_Automate_mission_automate_asa_hawk_surveiller, "T_Mission_Automate_ASA_HAWK_Surveiller", "MIS_Automate_MRT_ASA_HAWK_Surveiller", "MIS_Automate_CDT_ASA_HAWK_Surveiller");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASS_SeDeployer>( "Automate ASS SeDeployer", eMission_Automate_ASS_SeDeployer, T_Mission_Automate_mission_automate_ass_se_deployer, "T_Mission_Automate_ASS_SeDeployer", "MIS_Automate_MRT_ASS_SeDeployer", "MIS_Automate_CDT_ASS_SeDeployer");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement>( "Automate ASS ReconnaitreZonesDeploiement", eMission_Automate_ASS_ReconnaitreZonesDeploiement, T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement, "T_Mission_Automate_ASS_ReconnaitreZonesDeploiement", "MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement", "MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASS_AcquerirObjectifs>( "Automate ASS AcquerirObjectifs", eMission_Automate_ASS_AcquerirObjectifs, T_Mission_Automate_mission_automate_ass_acquerir_objectifs, "T_Mission_Automate_ASS_AcquerirObjectifs", "MIS_Automate_MRT_ASS_AcquerirObjectifs", "MIS_Automate_CDT_ASS_AcquerirObjectifs");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_Appuyer>( "Automate ABC Appuyer", eMission_Automate_ABC_Appuyer, T_Mission_Automate_mission_automate_abc_appuyer, "T_Mission_Automate_ABC_Appuyer", "MIS_Automate_MRT_ABC_Appuyer", "MIS_Automate_CDT_ABC_Appuyer");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_Attaquer>( "Automate ABC Attaquer", eMission_Automate_ABC_Attaquer, T_Mission_Automate_mission_automate_abc_attaquer, "T_Mission_Automate_ABC_Attaquer", "MIS_Automate_MRT_ABC_Attaquer", "MIS_Automate_CDT_ABC_Attaquer");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_ContreAttaquer>( "Automate ABC ContreAttaquer", eMission_Automate_ABC_ContreAttaquer, T_Mission_Automate_mission_automate_abc_contre_attaquer, "T_Mission_Automate_ABC_ContreAttaquer", "MIS_Automate_MRT_ABC_ContreAttaquer", "MIS_Automate_CDT_ABC_ContreAttaquer");
@@ -496,39 +525,10 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_RecueillirUnite>( "Automate ABC RecueillirUnite", eMission_Automate_ABC_RecueillirUnite, T_Mission_Automate_mission_automate_abc_recueillir_unite, "T_Mission_Automate_ABC_RecueillirUnite", "MIS_Automate_MRT_ABC_RecueillirUnite", "MIS_Automate_CDT_ABC_RecueillirUnite");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_EscorterUnite>( "Automate ABC EscorterUnite", eMission_Automate_ABC_EscorterUnite, T_Mission_Automate_mission_automate_abc_escorter_unite, "T_Mission_Automate_ABC_EscorterUnite", "MIS_Automate_MRT_ABC_EscorterUnite", "MIS_Automate_CDT_ABC_EscorterUnite");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_EscorterUnites>( "Automate ABC EscorterUnites", eMission_Automate_ABC_EscorterUnites, T_Mission_Automate_mission_automate_abc_escorter_unites, "T_Mission_Automate_ABC_EscorterUnites", "MIS_Automate_MRT_ABC_EscorterUnites", "MIS_Automate_CDT_ABC_EscorterUnites");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_ArmerPointDeControle>( "Automate ABC ArmerPointDeControle", eMission_Automate_ABC_ArmerPointDeControle, T_Mission_Automate_mission_automate_abc_armer_point_de_controle, "T_Mission_Automate_ABC_ArmerPointDeControle", "MIS_Automate_MRT_ABC_ArmerPointDeControle", "MIS_Automate_CDT_ABC_ArmerPointDeControle");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies>( "Automate ABC OrganiserAccueilColonneRefugies", eMission_Automate_ABC_OrganiserAccueilColonneRefugies, T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies, "T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies", "MIS_Automate_MRT_ABC_OrganiserAccueilColonneRefugies", "MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_ProtegerPC>( "Automate ABC ProtegerPC", eMission_Automate_ABC_ProtegerPC, T_Mission_Automate_mission_automate_abc_proteger_pc, "T_Mission_Automate_ABC_ProtegerPC", "MIS_Automate_MRT_ABC_ProtegerPC", "MIS_Automate_CDT_ABC_ProtegerPC");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_AppuyerSurPosition>( "Automate ABC AppuyerSurPosition", eMission_Automate_ABC_AppuyerSurPosition, T_Mission_Automate_mission_automate_abc_appuyer_sur_position, "T_Mission_Automate_ABC_AppuyerSurPosition", "MIS_Automate_MRT_ABC_AppuyerSurPosition", "MIS_Automate_CDT_ABC_AppuyerSurPosition");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Heliporter>( "Automate ALAT Heliporter", eMission_Automate_ALAT_Heliporter, T_Mission_Automate_mission_automate_alat_heliporter, "T_Mission_Automate_ALAT_Heliporter", "MIS_Automate_MRT_ALAT_Heliporter", "MIS_Automate_CDT_ALAT_Heliporter");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Jalonner>( "Automate ALAT Jalonner", eMission_Automate_ALAT_Jalonner, T_Mission_Automate_mission_automate_alat_jalonner, "T_Mission_Automate_ALAT_Jalonner", "MIS_Automate_MRT_ALAT_Jalonner", "MIS_Automate_CDT_ALAT_Jalonner");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Helitransporter>( "Automate ALAT Helitransporter", eMission_Automate_ALAT_Helitransporter, T_Mission_Automate_mission_automate_alat_helitransporter, "T_Mission_Automate_ALAT_Helitransporter", "MIS_Automate_MRT_ALAT_Helitransporter", "MIS_Automate_CDT_ALAT_Helitransporter");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_ExtrairePersonnel>( "Automate ALAT ExtrairePersonnel", eMission_Automate_ALAT_ExtrairePersonnel, T_Mission_Automate_mission_automate_alat_extraire_personnel, "T_Mission_Automate_ALAT_ExtrairePersonnel", "MIS_Automate_MRT_ALAT_ExtrairePersonnel", "MIS_Automate_CDT_ALAT_ExtrairePersonnel");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Appuyer>( "Automate ALAT Appuyer", eMission_Automate_ALAT_Appuyer, T_Mission_Automate_mission_automate_alat_appuyer, "T_Mission_Automate_ALAT_Appuyer", "MIS_Automate_MRT_ALAT_Appuyer", "MIS_Automate_CDT_ALAT_Appuyer");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Couvrir>( "Automate ALAT Couvrir", eMission_Automate_ALAT_Couvrir, T_Mission_Automate_mission_automate_alat_couvrir, "T_Mission_Automate_ALAT_Couvrir", "MIS_Automate_MRT_ALAT_Couvrir", "MIS_Automate_CDT_ALAT_Couvrir");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Surveiller>( "Automate ALAT Surveiller", eMission_Automate_ALAT_Surveiller, T_Mission_Automate_mission_automate_alat_surveiller, "T_Mission_Automate_ALAT_Surveiller", "MIS_Automate_MRT_ALAT_Surveiller", "MIS_Automate_CDT_ALAT_Surveiller");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Reconnaitre>( "Automate ALAT Reconnaitre", eMission_Automate_ALAT_Reconnaitre, T_Mission_Automate_mission_automate_alat_reconnaitre, "T_Mission_Automate_ALAT_Reconnaitre", "MIS_Automate_MRT_ALAT_Reconnaitre", "MIS_Automate_CDT_ALAT_Reconnaitre");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Freiner>( "Automate ALAT Freiner", eMission_Automate_ALAT_Freiner, T_Mission_Automate_mission_automate_alat_freiner, "T_Mission_Automate_ALAT_Freiner", "MIS_Automate_MRT_ALAT_Freiner", "MIS_Automate_CDT_ALAT_Freiner");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Escorter>( "Automate ALAT Escorter", eMission_Automate_ALAT_Escorter, T_Mission_Automate_mission_automate_alat_escorter, "T_Mission_Automate_ALAT_Escorter", "MIS_Automate_MRT_ALAT_Escorter", "MIS_Automate_CDT_ALAT_Escorter");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_Attaquer>( "Automate ALAT Attaquer", eMission_Automate_ALAT_Attaquer, T_Mission_Automate_mission_automate_alat_attaquer, "T_Mission_Automate_ALAT_Attaquer", "MIS_Automate_MRT_ALAT_Attaquer", "MIS_Automate_CDT_ALAT_Attaquer");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_RecueillirFormationAeromobile>( "Automate ALAT RecueillirFormationAeromobile", eMission_Automate_ALAT_RecueillirFormationAeromobile, T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile, "T_Mission_Automate_ALAT_RecueillirFormationAeromobile", "MIS_Automate_MRT_ALAT_RecueillirFormationAeromobile", "MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_AttaquerFormationAeromobile>( "Automate ALAT AttaquerFormationAeromobile", eMission_Automate_ALAT_AttaquerFormationAeromobile, T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile, "T_Mission_Automate_ALAT_AttaquerFormationAeromobile", "MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile", "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DonnerCoupArret>( "Automate ALAT DonnerCoupArret", eMission_Automate_ALAT_DonnerCoupArret, T_Mission_Automate_mission_automate_alat_donner_coup_arret, "T_Mission_Automate_ALAT_DonnerCoupArret", "MIS_Automate_MRT_ALAT_DonnerCoupArret", "MIS_Automate_CDT_ALAT_DonnerCoupArret");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur>( "Automate ALAT DetruireNeutraliserDansProfondeur", eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur, "T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone>( "Automate ALAT DetruireNeutraliserDansZone", eMission_Automate_ALAT_DetruireNeutraliserDansZone, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone, "T_Mission_Automate_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage>( "Automate ALAT EffectuerRechercheEtSauvetage", eMission_Automate_ALAT_EffectuerRechercheEtSauvetage, T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage, "T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_MRT_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_CDT_ALAT_EffectuerRechercheEtSauvetage");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_AllerSeRecompleter>( "Automate ALAT AllerSeRecompleter", eMission_Automate_ALAT_AllerSeRecompleter, T_Mission_Automate_mission_automate_alat_aller_se_recompleter, "T_Mission_Automate_ALAT_AllerSeRecompleter", "MIS_Automate_MRT_ALAT_AllerSeRecompleter", "MIS_Automate_CDT_ALAT_AllerSeRecompleter");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreZone>( "Automate ASA DefendreZone", eMission_Automate_ASA_DefendreZone, T_Mission_Automate_mission_automate_asa_defendre_zone, "T_Mission_Automate_ASA_DefendreZone", "MIS_Automate_MRT_ASA_DefendreZone", "MIS_Automate_CDT_ASA_DefendreZone");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreSite>( "Automate ASA DefendreSite", eMission_Automate_ASA_DefendreSite, T_Mission_Automate_mission_automate_asa_defendre_site, "T_Mission_Automate_ASA_DefendreSite", "MIS_Automate_MRT_ASA_DefendreSite", "MIS_Automate_CDT_ASA_DefendreSite");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_Surveiller>( "Automate ASA Surveiller", eMission_Automate_ASA_Surveiller, T_Mission_Automate_mission_automate_asa_surveiller, "T_Mission_Automate_ASA_Surveiller", "MIS_Automate_MRT_ASA_Surveiller", "MIS_Automate_CDT_ASA_Surveiller");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreItineraire>( "Automate ASA DefendreItineraire", eMission_Automate_ASA_DefendreItineraire, T_Mission_Automate_mission_automate_asa_defendre_itineraire, "T_Mission_Automate_ASA_DefendreItineraire", "MIS_Automate_MRT_ASA_DefendreItineraire", "MIS_Automate_CDT_ASA_DefendreItineraire");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_MISTRAL_DefendreZone>( "Automate ASA MISTRAL DefendreZone", eMission_Automate_ASA_MISTRAL_DefendreZone, T_Mission_Automate_mission_automate_asa_mistral_defendre_zone, "T_Mission_Automate_ASA_MISTRAL_DefendreZone", "MIS_Automate_MRT_ASA_MISTRAL_DefendreZone", "MIS_Automate_CDT_ASA_MISTRAL_DefendreZone");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_MISTRAL_DefendreSite>( "Automate ASA MISTRAL DefendreSite", eMission_Automate_ASA_MISTRAL_DefendreSite, T_Mission_Automate_mission_automate_asa_mistral_defendre_site, "T_Mission_Automate_ASA_MISTRAL_DefendreSite", "MIS_Automate_MRT_ASA_MISTRAL_DefendreSite", "MIS_Automate_CDT_ASA_MISTRAL_DefendreSite");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_MISTRAL_Surveiller>( "Automate ASA MISTRAL Surveiller", eMission_Automate_ASA_MISTRAL_Surveiller, T_Mission_Automate_mission_automate_asa_mistral_surveiller, "T_Mission_Automate_ASA_MISTRAL_Surveiller", "MIS_Automate_MRT_ASA_MISTRAL_Surveiller", "MIS_Automate_CDT_ASA_MISTRAL_Surveiller");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_HAWK_DefendreZone>( "Automate ASA HAWK DefendreZone", eMission_Automate_ASA_HAWK_DefendreZone, T_Mission_Automate_mission_automate_asa_hawk_defendre_zone, "T_Mission_Automate_ASA_HAWK_DefendreZone", "MIS_Automate_MRT_ASA_HAWK_DefendreZone", "MIS_Automate_CDT_ASA_HAWK_DefendreZone");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_HAWK_DefendreSite>( "Automate ASA HAWK DefendreSite", eMission_Automate_ASA_HAWK_DefendreSite, T_Mission_Automate_mission_automate_asa_hawk_defendre_site, "T_Mission_Automate_ASA_HAWK_DefendreSite", "MIS_Automate_MRT_ASA_HAWK_DefendreSite", "MIS_Automate_CDT_ASA_HAWK_DefendreSite");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_HAWK_Surveiller>( "Automate ASA HAWK Surveiller", eMission_Automate_ASA_HAWK_Surveiller, T_Mission_Automate_mission_automate_asa_hawk_surveiller, "T_Mission_Automate_ASA_HAWK_Surveiller", "MIS_Automate_MRT_ASA_HAWK_Surveiller", "MIS_Automate_CDT_ASA_HAWK_Surveiller");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASA_DefendreUnites>( "Automate ASA DefendreUnites", eMission_Automate_ASA_DefendreUnites, T_Mission_Automate_mission_automate_asa_defendre_unites, "T_Mission_Automate_ASA_DefendreUnites", "MIS_Automate_MRT_ASA_DefendreUnites", "MIS_Automate_CDT_ASA_DefendreUnites");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASS_SeDeployer>( "Automate ASS SeDeployer", eMission_Automate_ASS_SeDeployer, T_Mission_Automate_mission_automate_ass_se_deployer, "T_Mission_Automate_ASS_SeDeployer", "MIS_Automate_MRT_ASS_SeDeployer", "MIS_Automate_CDT_ASS_SeDeployer");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement>( "Automate ASS ReconnaitreZonesDeploiement", eMission_Automate_ASS_ReconnaitreZonesDeploiement, T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement, "T_Mission_Automate_ASS_ReconnaitreZonesDeploiement", "MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement", "MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ASS_AcquerirObjectifs>( "Automate ASS AcquerirObjectifs", eMission_Automate_ASS_AcquerirObjectifs, T_Mission_Automate_mission_automate_ass_acquerir_objectifs, "T_Mission_Automate_ASS_AcquerirObjectifs", "MIS_Automate_MRT_ASS_AcquerirObjectifs", "MIS_Automate_CDT_ASS_AcquerirObjectifs");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_SeDeployer>( "Automate GEN SeDeployer", eMission_Automate_GEN_SeDeployer, T_Mission_Automate_mission_automate_gen_se_deployer, "T_Mission_Automate_GEN_SeDeployer", "MIS_Automate_MRT_GEN_SeDeployer", "MIS_Automate_CDT_GEN_SeDeployer");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_FaireFranchir>( "Automate GEN FaireFranchir", eMission_Automate_GEN_FaireFranchir, T_Mission_Automate_mission_automate_gen_faire_franchir, "T_Mission_Automate_GEN_FaireFranchir", "MIS_Automate_MRT_GEN_FaireFranchir", "MIS_Automate_CDT_GEN_FaireFranchir");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserSystemeObstacles>( "Automate GEN RealiserSystemeObstacles", eMission_Automate_GEN_RealiserSystemeObstacles, T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles, "T_Mission_Automate_GEN_RealiserSystemeObstacles", "MIS_Automate_MRT_GEN_RealiserSystemeObstacles", "MIS_Automate_CDT_GEN_RealiserSystemeObstacles");
@@ -577,7 +577,6 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_SeDeployer>( "Automate LOG SeDeployer", eMission_Automate_LOG_SeDeployer, T_Mission_Automate_mission_automate_log_se_deployer, "T_Mission_Automate_LOG_SeDeployer", "MIS_Automate_MRT_LOG_SeDeployer", "MIS_Automate_CDT_LOG_SeDeployer");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerMouvement>( "Automate LOG AppuyerMouvement", eMission_Automate_LOG_AppuyerMouvement, T_Mission_Automate_mission_automate_log_appuyer_mouvement, "T_Mission_Automate_LOG_AppuyerMouvement", "MIS_Automate_MRT_LOG_AppuyerMouvement", "MIS_Automate_CDT_LOG_AppuyerMouvement");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_ReconnaitreItineraire>( "Automate LOG ReconnaitreItineraire", eMission_Automate_LOG_ReconnaitreItineraire, T_Mission_Automate_mission_automate_log_reconnaitre_itineraire, "T_Mission_Automate_LOG_ReconnaitreItineraire", "MIS_Automate_MRT_LOG_ReconnaitreItineraire", "MIS_Automate_CDT_LOG_ReconnaitreItineraire");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_Surveiller>( "Automate LOG Surveiller", eMission_Automate_LOG_Surveiller, T_Mission_Automate_mission_automate_log_surveiller, "T_Mission_Automate_LOG_Surveiller", "MIS_Automate_MRT_LOG_Surveiller", "MIS_Automate_CDT_LOG_Surveiller");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_TransporterUnites>( "Automate LOG TransporterUnites", eMission_Automate_LOG_TransporterUnites, T_Mission_Automate_mission_automate_log_transporter_unites, "T_Mission_Automate_LOG_TransporterUnites", "MIS_Automate_MRT_LOG_TransporterUnites", "MIS_Automate_CDT_LOG_TransporterUnites");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerMouvementDansZone>( "Automate LOG AppuyerMouvementDansZone", eMission_Automate_LOG_AppuyerMouvementDansZone, T_Mission_Automate_mission_automate_log_appuyer_mouvement_dans_zone, "T_Mission_Automate_LOG_AppuyerMouvementDansZone", "MIS_Automate_MRT_LOG_AppuyerMouvementDansZone", "MIS_Automate_CDT_LOG_AppuyerMouvementDansZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement>( "Automate LOG MettreEnOeuvreZoneStationnement", eMission_Automate_LOG_MettreEnOeuvreZoneStationnement, T_Mission_Automate_mission_automate_log_mettre_en_oeuvre_zone_stationnement, "T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement", "MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement", "MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement");
@@ -585,6 +584,7 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_BloquerZone>( "Automate LOG BloquerZone", eMission_Automate_LOG_BloquerZone, T_Mission_Automate_mission_automate_log_bloquer_zone, "T_Mission_Automate_LOG_BloquerZone", "MIS_Automate_MRT_LOG_BloquerZone", "MIS_Automate_CDT_LOG_BloquerZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_ReconnaitreZoneContaminee>( "Automate LOG ReconnaitreZoneContaminee", eMission_Automate_LOG_ReconnaitreZoneContaminee, T_Mission_Automate_mission_automate_log_reconnaitre_zone_contaminee, "T_Mission_Automate_LOG_ReconnaitreZoneContaminee", "MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee", "MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_ReconnaitreZoneDeDeploiement>( "Automate LOG ReconnaitreZoneDeDeploiement", eMission_Automate_LOG_ReconnaitreZoneDeDeploiement, T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement, "T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement", "MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement", "MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_Surveiller>( "Automate LOG Surveiller", eMission_Automate_LOG_Surveiller, T_Mission_Automate_mission_automate_log_surveiller, "T_Mission_Automate_LOG_Surveiller", "MIS_Automate_MRT_LOG_Surveiller", "MIS_Automate_CDT_LOG_Surveiller");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_ArmerPIAs>( "Automate LOG ArmerPIAs", eMission_Automate_LOG_ArmerPIAs, T_Mission_Automate_mission_automate_log_armer_pias, "T_Mission_Automate_LOG_ArmerPIAs", "MIS_Automate_MRT_LOG_ArmerPIAs", "MIS_Automate_CDT_LOG_ArmerPIAs");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_Test_MoveTo>( "Automate Test MoveTo", eMission_Automate_Test_MoveTo, T_Mission_Automate_mission_automate_test_move_to, "T_Mission_Automate_Test_MoveTo", "MIS_Automate_MRT_Test_MoveTo", "MIS_Automate_CDT_Test_MoveTo");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_Decrocher>( "Automate Decrocher", eMission_Automate_Decrocher, T_Mission_Automate_mission_automate_decrocher, "T_Mission_Automate_Decrocher", "MIS_Automate_MRT_Decrocher", "MIS_Automate_CDT_Decrocher");
@@ -816,12 +816,6 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_MILICE_DetruireEmbuscade>( "Pion MILICE DetruireEmbuscade", eMission_Pion_MILICE_DetruireEmbuscade, T_Mission_Pion_mission_pion_milice_detruire_embuscade, "T_Mission_Pion_MILICE_DetruireEmbuscade", "MIS_Pion_MILICE_DetruireEmbuscade");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_JOINT_MARINE_Transporter>( "Pion JOINT MARINE Transporter", eMission_Pion_JOINT_MARINE_Transporter, T_Mission_Pion_mission_pion_joint_marine_transporter, "T_Mission_Pion_JOINT_MARINE_Transporter", "MIS_Pion_JOINT_MARINE_Transporter");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_JOINT_AIR_EffectuerRaid>( "Pion JOINT AIR EffectuerRaid", eMission_Pion_JOINT_AIR_EffectuerRaid, T_Mission_Pion_mission_pion_joint_air_effectuer_raid, "T_Mission_Pion_JOINT_AIR_EffectuerRaid", "MIS_Pion_JOINT_AIR_EffectuerRaid");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_SInfiltrer>( "Pion ASY SInfiltrer", eMission_Pion_ASY_SInfiltrer, T_Mission_Pion_mission_pion_asy_sinfiltrer, "T_Mission_Pion_ASY_SInfiltrer", "MIS_Pion_ASY_SInfiltrer");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContrePopulation>( "Pion ASY CommettreAttentatContrePopulation", eMission_Pion_ASY_CommettreAttentatContrePopulation, T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation, "T_Mission_Pion_ASY_CommettreAttentatContrePopulation", "MIS_Pion_ASY_CommettreAttentatContrePopulation");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContreForcesArmees>( "Pion ASY CommettreAttentatContreForcesArmees", eMission_Pion_ASY_CommettreAttentatContreForcesArmees, T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees, "T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees", "MIS_Pion_ASY_CommettreAttentatContreForcesArmees");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContreInstallation>( "Pion ASY CommettreAttentatContreInstallation", eMission_Pion_ASY_CommettreAttentatContreInstallation, T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation, "T_Mission_Pion_ASY_CommettreAttentatContreInstallation", "MIS_Pion_ASY_CommettreAttentatContreInstallation");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone>( "Pion ASY CommettreExactionsSurPopulationDansZone", eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone, T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone, "T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone", "MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_Renseigner>( "Pion ASY Renseigner", eMission_Pion_ASY_Renseigner, T_Mission_Pion_mission_pion_asy_renseigner, "T_Mission_Pion_ASY_Renseigner", "MIS_Pion_ASY_Renseigner");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_AnimerUnPlotDeDecontamination>( "Pion NBC AnimerUnPlotDeDecontamination", eMission_Pion_NBC_AnimerUnPlotDeDecontamination, T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination, "T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination", "MIS_Pion_NBC_AnimerUnPlotDeDecontamination");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_ReconnaitreItineraire>( "Pion NBC ReconnaitreItineraire", eMission_Pion_NBC_ReconnaitreItineraire, T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire, "T_Mission_Pion_NBC_ReconnaitreItineraire", "MIS_Pion_NBC_ReconnaitreItineraire");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_ReconnaitreZone>( "Pion NBC ReconnaitreZone", eMission_Pion_NBC_ReconnaitreZone, T_Mission_Pion_mission_pion_nbc_reconnaitre_zone, "T_Mission_Pion_NBC_ReconnaitreZone", "MIS_Pion_NBC_ReconnaitreZone");
@@ -839,6 +833,12 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur>( "Pion RENS ROIM SDTI RenseignerSur", eMission_Pion_RENS_ROIM_SDTI_RenseignerSur, T_Mission_Pion_mission_pion_rens_roim_sdti_renseigner_sur, "T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur", "MIS_Pion_RENS_ROIM_SDTI_RenseignerSur");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_RENS_ROIM_CL289_RenseignerSur>( "Pion RENS ROIM CL289 RenseignerSur", eMission_Pion_RENS_ROIM_CL289_RenseignerSur, T_Mission_Pion_mission_pion_rens_roim_cl289_renseigner_sur, "T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur", "MIS_Pion_RENS_ROIM_CL289_RenseignerSur");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_TRANS_EtablirGererLiaison>( "Pion TRANS EtablirGererLiaison", eMission_Pion_TRANS_EtablirGererLiaison, T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison, "T_Mission_Pion_TRANS_EtablirGererLiaison", "MIS_Pion_TRANS_EtablirGererLiaison");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_SInfiltrer>( "Pion ASY SInfiltrer", eMission_Pion_ASY_SInfiltrer, T_Mission_Pion_mission_pion_asy_sinfiltrer, "T_Mission_Pion_ASY_SInfiltrer", "MIS_Pion_ASY_SInfiltrer");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContrePopulation>( "Pion ASY CommettreAttentatContrePopulation", eMission_Pion_ASY_CommettreAttentatContrePopulation, T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation, "T_Mission_Pion_ASY_CommettreAttentatContrePopulation", "MIS_Pion_ASY_CommettreAttentatContrePopulation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContreForcesArmees>( "Pion ASY CommettreAttentatContreForcesArmees", eMission_Pion_ASY_CommettreAttentatContreForcesArmees, T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees, "T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees", "MIS_Pion_ASY_CommettreAttentatContreForcesArmees");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreAttentatContreInstallation>( "Pion ASY CommettreAttentatContreInstallation", eMission_Pion_ASY_CommettreAttentatContreInstallation, T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation, "T_Mission_Pion_ASY_CommettreAttentatContreInstallation", "MIS_Pion_ASY_CommettreAttentatContreInstallation");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone>( "Pion ASY CommettreExactionsSurPopulationDansZone", eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone, T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone, "T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone", "MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_ASY_Renseigner>( "Pion ASY Renseigner", eMission_Pion_ASY_Renseigner, T_Mission_Pion_mission_pion_asy_renseigner, "T_Mission_Pion_ASY_Renseigner", "MIS_Pion_ASY_Renseigner");
 
 }
 

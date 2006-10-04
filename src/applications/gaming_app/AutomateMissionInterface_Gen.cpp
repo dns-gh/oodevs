@@ -15,9 +15,38 @@ AutomateMissionInterface::~AutomateMissionInterface()
 {
     switch( pASNMsgOrder_->GetAsnMsg().mission.t )
     {
-        case T_Mission_Automate_mission_automate_abc_armer_point_de_controle : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_armer_point_de_controle; break;
-        case T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_organiser_accueil_colonne_refugies; break;
-        case T_Mission_Automate_mission_automate_abc_proteger_pc : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_proteger_pc; break;
+        case T_Mission_Automate_mission_automate_alat_aller_se_recompleter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_aller_se_recompleter; break;
+        case T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_effectuer_recherche_et_sauvetage; break;
+        case T_Mission_Automate_mission_automate_alat_extraire_personnel : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_extraire_personnel; break;
+        case T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_profondeur; break;
+        case T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_zone; break;
+        case T_Mission_Automate_mission_automate_alat_donner_coup_arret : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_donner_coup_arret; break;
+        case T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer_formation_aeromobile; break;
+        case T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_recueillir_formation_aeromobile; break;
+        case T_Mission_Automate_mission_automate_alat_heliporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_heliporter; break;
+        case T_Mission_Automate_mission_automate_alat_jalonner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_jalonner; break;
+        case T_Mission_Automate_mission_automate_alat_helitransporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_helitransporter; break;
+        case T_Mission_Automate_mission_automate_alat_appuyer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_appuyer; break;
+        case T_Mission_Automate_mission_automate_alat_couvrir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_couvrir; break;
+        case T_Mission_Automate_mission_automate_alat_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_surveiller; break;
+        case T_Mission_Automate_mission_automate_alat_reconnaitre : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_reconnaitre; break;
+        case T_Mission_Automate_mission_automate_alat_freiner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_freiner; break;
+        case T_Mission_Automate_mission_automate_alat_escorter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_escorter; break;
+        case T_Mission_Automate_mission_automate_alat_attaquer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer; break;
+        case T_Mission_Automate_mission_automate_asa_defendre_site : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_site; break;
+        case T_Mission_Automate_mission_automate_asa_defendre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_zone; break;
+        case T_Mission_Automate_mission_automate_asa_defendre_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_unites; break;
+        case T_Mission_Automate_mission_automate_asa_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_surveiller; break;
+        case T_Mission_Automate_mission_automate_asa_defendre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_itineraire; break;
+        case T_Mission_Automate_mission_automate_asa_mistral_defendre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_zone; break;
+        case T_Mission_Automate_mission_automate_asa_mistral_defendre_site : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_site; break;
+        case T_Mission_Automate_mission_automate_asa_mistral_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_surveiller; break;
+        case T_Mission_Automate_mission_automate_asa_hawk_defendre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_zone; break;
+        case T_Mission_Automate_mission_automate_asa_hawk_defendre_site : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_site; break;
+        case T_Mission_Automate_mission_automate_asa_hawk_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_surveiller; break;
+        case T_Mission_Automate_mission_automate_ass_se_deployer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_se_deployer; break;
+        case T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_reconnaitre_zones_deploiement; break;
+        case T_Mission_Automate_mission_automate_ass_acquerir_objectifs : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_acquerir_objectifs; break;
         case T_Mission_Automate_mission_automate_abc_appuyer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_appuyer; break;
         case T_Mission_Automate_mission_automate_abc_attaquer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_attaquer; break;
         case T_Mission_Automate_mission_automate_abc_contre_attaquer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_contre_attaquer; break;
@@ -46,39 +75,10 @@ AutomateMissionInterface::~AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_abc_recueillir_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_recueillir_unite; break;
         case T_Mission_Automate_mission_automate_abc_escorter_unite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_unite; break;
         case T_Mission_Automate_mission_automate_abc_escorter_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_escorter_unites; break;
+        case T_Mission_Automate_mission_automate_abc_armer_point_de_controle : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_armer_point_de_controle; break;
+        case T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_organiser_accueil_colonne_refugies; break;
+        case T_Mission_Automate_mission_automate_abc_proteger_pc : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_proteger_pc; break;
         case T_Mission_Automate_mission_automate_abc_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_appuyer_sur_position; break;
-        case T_Mission_Automate_mission_automate_alat_heliporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_heliporter; break;
-        case T_Mission_Automate_mission_automate_alat_jalonner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_jalonner; break;
-        case T_Mission_Automate_mission_automate_alat_helitransporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_helitransporter; break;
-        case T_Mission_Automate_mission_automate_alat_extraire_personnel : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_extraire_personnel; break;
-        case T_Mission_Automate_mission_automate_alat_appuyer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_appuyer; break;
-        case T_Mission_Automate_mission_automate_alat_couvrir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_couvrir; break;
-        case T_Mission_Automate_mission_automate_alat_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_surveiller; break;
-        case T_Mission_Automate_mission_automate_alat_reconnaitre : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_reconnaitre; break;
-        case T_Mission_Automate_mission_automate_alat_freiner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_freiner; break;
-        case T_Mission_Automate_mission_automate_alat_escorter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_escorter; break;
-        case T_Mission_Automate_mission_automate_alat_attaquer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer; break;
-        case T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_recueillir_formation_aeromobile; break;
-        case T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer_formation_aeromobile; break;
-        case T_Mission_Automate_mission_automate_alat_donner_coup_arret : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_donner_coup_arret; break;
-        case T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_profondeur; break;
-        case T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_zone; break;
-        case T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_effectuer_recherche_et_sauvetage; break;
-        case T_Mission_Automate_mission_automate_alat_aller_se_recompleter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_aller_se_recompleter; break;
-        case T_Mission_Automate_mission_automate_asa_defendre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_zone; break;
-        case T_Mission_Automate_mission_automate_asa_defendre_site : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_site; break;
-        case T_Mission_Automate_mission_automate_asa_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_surveiller; break;
-        case T_Mission_Automate_mission_automate_asa_defendre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_itineraire; break;
-        case T_Mission_Automate_mission_automate_asa_mistral_defendre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_zone; break;
-        case T_Mission_Automate_mission_automate_asa_mistral_defendre_site : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_site; break;
-        case T_Mission_Automate_mission_automate_asa_mistral_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_surveiller; break;
-        case T_Mission_Automate_mission_automate_asa_hawk_defendre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_zone; break;
-        case T_Mission_Automate_mission_automate_asa_hawk_defendre_site : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_site; break;
-        case T_Mission_Automate_mission_automate_asa_hawk_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_surveiller; break;
-        case T_Mission_Automate_mission_automate_asa_defendre_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_unites; break;
-        case T_Mission_Automate_mission_automate_ass_se_deployer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_se_deployer; break;
-        case T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_reconnaitre_zones_deploiement; break;
-        case T_Mission_Automate_mission_automate_ass_acquerir_objectifs : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_acquerir_objectifs; break;
         case T_Mission_Automate_mission_automate_gen_se_deployer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_se_deployer; break;
         case T_Mission_Automate_mission_automate_gen_faire_franchir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_faire_franchir; break;
         case T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_systeme_obstacles; break;
@@ -127,7 +127,6 @@ AutomateMissionInterface::~AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_log_se_deployer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_se_deployer; break;
         case T_Mission_Automate_mission_automate_log_appuyer_mouvement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement; break;
         case T_Mission_Automate_mission_automate_log_reconnaitre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_itineraire; break;
-        case T_Mission_Automate_mission_automate_log_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_surveiller; break;
         case T_Mission_Automate_mission_automate_log_transporter_unites : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_transporter_unites; break;
         case T_Mission_Automate_mission_automate_log_appuyer_mouvement_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement_dans_zone; break;
         case T_Mission_Automate_mission_automate_log_mettre_en_oeuvre_zone_stationnement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_mettre_en_oeuvre_zone_stationnement; break;
@@ -135,6 +134,7 @@ AutomateMissionInterface::~AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_log_bloquer_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_bloquer_zone; break;
         case T_Mission_Automate_mission_automate_log_reconnaitre_zone_contaminee : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_contaminee; break;
         case T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_de_deploiement; break;
+        case T_Mission_Automate_mission_automate_log_surveiller : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_surveiller; break;
         case T_Mission_Automate_mission_automate_log_armer_pias : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_armer_pias; break;
         case T_Mission_Automate_mission_automate_test_move_to : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_test_move_to; break;
         case T_Mission_Automate_mission_automate_decrocher : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_decrocher; break;
@@ -183,9 +183,38 @@ void AutomateMissionInterface::CreateInterface()
 {
     switch( nMissionId_ )
     {
-        case eMission_Automate_ABC_ArmerPointDeControle : CreateMission_ABC_ArmerPointDeControle(); break;
-        case eMission_Automate_ABC_OrganiserAccueilColonneRefugies : CreateMission_ABC_OrganiserAccueilColonneRefugies(); break;
-        case eMission_Automate_ABC_ProtegerPC : CreateMission_ABC_ProtegerPC(); break;
+        case eMission_Automate_ALAT_AllerSeRecompleter : CreateMission_ALAT_AllerSeRecompleter(); break;
+        case eMission_Automate_ALAT_EffectuerRechercheEtSauvetage : CreateMission_ALAT_EffectuerRechercheEtSauvetage(); break;
+        case eMission_Automate_ALAT_ExtrairePersonnel : CreateMission_ALAT_ExtrairePersonnel(); break;
+        case eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur : CreateMission_ALAT_DetruireNeutraliserDansProfondeur(); break;
+        case eMission_Automate_ALAT_DetruireNeutraliserDansZone : CreateMission_ALAT_DetruireNeutraliserDansZone(); break;
+        case eMission_Automate_ALAT_DonnerCoupArret : CreateMission_ALAT_DonnerCoupArret(); break;
+        case eMission_Automate_ALAT_AttaquerFormationAeromobile : CreateMission_ALAT_AttaquerFormationAeromobile(); break;
+        case eMission_Automate_ALAT_RecueillirFormationAeromobile : CreateMission_ALAT_RecueillirFormationAeromobile(); break;
+        case eMission_Automate_ALAT_Heliporter : CreateMission_ALAT_Heliporter(); break;
+        case eMission_Automate_ALAT_Jalonner : CreateMission_ALAT_Jalonner(); break;
+        case eMission_Automate_ALAT_Helitransporter : CreateMission_ALAT_Helitransporter(); break;
+        case eMission_Automate_ALAT_Appuyer : CreateMission_ALAT_Appuyer(); break;
+        case eMission_Automate_ALAT_Couvrir : CreateMission_ALAT_Couvrir(); break;
+        case eMission_Automate_ALAT_Surveiller : CreateMission_ALAT_Surveiller(); break;
+        case eMission_Automate_ALAT_Reconnaitre : CreateMission_ALAT_Reconnaitre(); break;
+        case eMission_Automate_ALAT_Freiner : CreateMission_ALAT_Freiner(); break;
+        case eMission_Automate_ALAT_Escorter : CreateMission_ALAT_Escorter(); break;
+        case eMission_Automate_ALAT_Attaquer : CreateMission_ALAT_Attaquer(); break;
+        case eMission_Automate_ASA_DefendreSite : CreateMission_ASA_DefendreSite(); break;
+        case eMission_Automate_ASA_DefendreZone : CreateMission_ASA_DefendreZone(); break;
+        case eMission_Automate_ASA_DefendreUnites : CreateMission_ASA_DefendreUnites(); break;
+        case eMission_Automate_ASA_Surveiller : CreateMission_ASA_Surveiller(); break;
+        case eMission_Automate_ASA_DefendreItineraire : CreateMission_ASA_DefendreItineraire(); break;
+        case eMission_Automate_ASA_MISTRAL_DefendreZone : CreateMission_ASA_MISTRAL_DefendreZone(); break;
+        case eMission_Automate_ASA_MISTRAL_DefendreSite : CreateMission_ASA_MISTRAL_DefendreSite(); break;
+        case eMission_Automate_ASA_MISTRAL_Surveiller : CreateMission_ASA_MISTRAL_Surveiller(); break;
+        case eMission_Automate_ASA_HAWK_DefendreZone : CreateMission_ASA_HAWK_DefendreZone(); break;
+        case eMission_Automate_ASA_HAWK_DefendreSite : CreateMission_ASA_HAWK_DefendreSite(); break;
+        case eMission_Automate_ASA_HAWK_Surveiller : CreateMission_ASA_HAWK_Surveiller(); break;
+        case eMission_Automate_ASS_SeDeployer : CreateMission_ASS_SeDeployer(); break;
+        case eMission_Automate_ASS_ReconnaitreZonesDeploiement : CreateMission_ASS_ReconnaitreZonesDeploiement(); break;
+        case eMission_Automate_ASS_AcquerirObjectifs : CreateMission_ASS_AcquerirObjectifs(); break;
         case eMission_Automate_ABC_Appuyer : CreateMission_ABC_Appuyer(); break;
         case eMission_Automate_ABC_Attaquer : CreateMission_ABC_Attaquer(); break;
         case eMission_Automate_ABC_ContreAttaquer : CreateMission_ABC_ContreAttaquer(); break;
@@ -214,39 +243,10 @@ void AutomateMissionInterface::CreateInterface()
         case eMission_Automate_ABC_RecueillirUnite : CreateMission_ABC_RecueillirUnite(); break;
         case eMission_Automate_ABC_EscorterUnite : CreateMission_ABC_EscorterUnite(); break;
         case eMission_Automate_ABC_EscorterUnites : CreateMission_ABC_EscorterUnites(); break;
+        case eMission_Automate_ABC_ArmerPointDeControle : CreateMission_ABC_ArmerPointDeControle(); break;
+        case eMission_Automate_ABC_OrganiserAccueilColonneRefugies : CreateMission_ABC_OrganiserAccueilColonneRefugies(); break;
+        case eMission_Automate_ABC_ProtegerPC : CreateMission_ABC_ProtegerPC(); break;
         case eMission_Automate_ABC_AppuyerSurPosition : CreateMission_ABC_AppuyerSurPosition(); break;
-        case eMission_Automate_ALAT_Heliporter : CreateMission_ALAT_Heliporter(); break;
-        case eMission_Automate_ALAT_Jalonner : CreateMission_ALAT_Jalonner(); break;
-        case eMission_Automate_ALAT_Helitransporter : CreateMission_ALAT_Helitransporter(); break;
-        case eMission_Automate_ALAT_ExtrairePersonnel : CreateMission_ALAT_ExtrairePersonnel(); break;
-        case eMission_Automate_ALAT_Appuyer : CreateMission_ALAT_Appuyer(); break;
-        case eMission_Automate_ALAT_Couvrir : CreateMission_ALAT_Couvrir(); break;
-        case eMission_Automate_ALAT_Surveiller : CreateMission_ALAT_Surveiller(); break;
-        case eMission_Automate_ALAT_Reconnaitre : CreateMission_ALAT_Reconnaitre(); break;
-        case eMission_Automate_ALAT_Freiner : CreateMission_ALAT_Freiner(); break;
-        case eMission_Automate_ALAT_Escorter : CreateMission_ALAT_Escorter(); break;
-        case eMission_Automate_ALAT_Attaquer : CreateMission_ALAT_Attaquer(); break;
-        case eMission_Automate_ALAT_RecueillirFormationAeromobile : CreateMission_ALAT_RecueillirFormationAeromobile(); break;
-        case eMission_Automate_ALAT_AttaquerFormationAeromobile : CreateMission_ALAT_AttaquerFormationAeromobile(); break;
-        case eMission_Automate_ALAT_DonnerCoupArret : CreateMission_ALAT_DonnerCoupArret(); break;
-        case eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur : CreateMission_ALAT_DetruireNeutraliserDansProfondeur(); break;
-        case eMission_Automate_ALAT_DetruireNeutraliserDansZone : CreateMission_ALAT_DetruireNeutraliserDansZone(); break;
-        case eMission_Automate_ALAT_EffectuerRechercheEtSauvetage : CreateMission_ALAT_EffectuerRechercheEtSauvetage(); break;
-        case eMission_Automate_ALAT_AllerSeRecompleter : CreateMission_ALAT_AllerSeRecompleter(); break;
-        case eMission_Automate_ASA_DefendreZone : CreateMission_ASA_DefendreZone(); break;
-        case eMission_Automate_ASA_DefendreSite : CreateMission_ASA_DefendreSite(); break;
-        case eMission_Automate_ASA_Surveiller : CreateMission_ASA_Surveiller(); break;
-        case eMission_Automate_ASA_DefendreItineraire : CreateMission_ASA_DefendreItineraire(); break;
-        case eMission_Automate_ASA_MISTRAL_DefendreZone : CreateMission_ASA_MISTRAL_DefendreZone(); break;
-        case eMission_Automate_ASA_MISTRAL_DefendreSite : CreateMission_ASA_MISTRAL_DefendreSite(); break;
-        case eMission_Automate_ASA_MISTRAL_Surveiller : CreateMission_ASA_MISTRAL_Surveiller(); break;
-        case eMission_Automate_ASA_HAWK_DefendreZone : CreateMission_ASA_HAWK_DefendreZone(); break;
-        case eMission_Automate_ASA_HAWK_DefendreSite : CreateMission_ASA_HAWK_DefendreSite(); break;
-        case eMission_Automate_ASA_HAWK_Surveiller : CreateMission_ASA_HAWK_Surveiller(); break;
-        case eMission_Automate_ASA_DefendreUnites : CreateMission_ASA_DefendreUnites(); break;
-        case eMission_Automate_ASS_SeDeployer : CreateMission_ASS_SeDeployer(); break;
-        case eMission_Automate_ASS_ReconnaitreZonesDeploiement : CreateMission_ASS_ReconnaitreZonesDeploiement(); break;
-        case eMission_Automate_ASS_AcquerirObjectifs : CreateMission_ASS_AcquerirObjectifs(); break;
         case eMission_Automate_GEN_SeDeployer : CreateMission_GEN_SeDeployer(); break;
         case eMission_Automate_GEN_FaireFranchir : CreateMission_GEN_FaireFranchir(); break;
         case eMission_Automate_GEN_RealiserSystemeObstacles : CreateMission_GEN_RealiserSystemeObstacles(); break;
@@ -295,7 +295,6 @@ void AutomateMissionInterface::CreateInterface()
         case eMission_Automate_LOG_SeDeployer : CreateMission_LOG_SeDeployer(); break;
         case eMission_Automate_LOG_AppuyerMouvement : CreateMission_LOG_AppuyerMouvement(); break;
         case eMission_Automate_LOG_ReconnaitreItineraire : CreateMission_LOG_ReconnaitreItineraire(); break;
-        case eMission_Automate_LOG_Surveiller : CreateMission_LOG_Surveiller(); break;
         case eMission_Automate_LOG_TransporterUnites : CreateMission_LOG_TransporterUnites(); break;
         case eMission_Automate_LOG_AppuyerMouvementDansZone : CreateMission_LOG_AppuyerMouvementDansZone(); break;
         case eMission_Automate_LOG_MettreEnOeuvreZoneStationnement : CreateMission_LOG_MettreEnOeuvreZoneStationnement(); break;
@@ -303,6 +302,7 @@ void AutomateMissionInterface::CreateInterface()
         case eMission_Automate_LOG_BloquerZone : CreateMission_LOG_BloquerZone(); break;
         case eMission_Automate_LOG_ReconnaitreZoneContaminee : CreateMission_LOG_ReconnaitreZoneContaminee(); break;
         case eMission_Automate_LOG_ReconnaitreZoneDeDeploiement : CreateMission_LOG_ReconnaitreZoneDeDeploiement(); break;
+        case eMission_Automate_LOG_Surveiller : CreateMission_LOG_Surveiller(); break;
         case eMission_Automate_LOG_ArmerPIAs : CreateMission_LOG_ArmerPIAs(); break;
         case eMission_Automate_Test_MoveTo : CreateMission_Test_MoveTo(); break;
         case eMission_Automate_Decrocher : CreateMission_Decrocher(); break;
@@ -347,39 +347,633 @@ void AutomateMissionInterface::CreateInterface()
 
 
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ABC_ArmerPointDeControle
+// Name: AutomateMissionInterface::CreateMission_ALAT_AllerSeRecompleter
 // Created: AGR
 // -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ABC_ArmerPointDeControle()
+void AutomateMissionInterface::CreateMission_ALAT_AllerSeRecompleter()
 {
-    ASN1T_Mission_Automate_ABC_ArmerPointDeControle& asnMission = *new ASN1T_Mission_Automate_ABC_ArmerPointDeControle();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_armer_point_de_controle;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_armer_point_de_controle = &asnMission;
-    CreateLocation( asnMission.zone_de_controle, "Zone de controle");
+    ASN1T_Mission_Automate_ALAT_AllerSeRecompleter& asnMission = *new ASN1T_Mission_Automate_ALAT_AllerSeRecompleter();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_aller_se_recompleter;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_aller_se_recompleter = &asnMission;
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ABC_OrganiserAccueilColonneRefugies
+// Name: AutomateMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvetage
 // Created: AGR
 // -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ABC_OrganiserAccueilColonneRefugies()
+void AutomateMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvetage()
 {
-    ASN1T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies& asnMission = *new ASN1T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_organiser_accueil_colonne_refugies = &asnMission;
-    CreateLocation( asnMission.zone_installation, "Zone installation");
+    ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage& asnMission = *new ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_effectuer_recherche_et_sauvetage = &asnMission;
+    CreateAgentList( asnMission.unites_a_secourir, "Unites a secourir");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ABC_ProtegerPC
+// Name: AutomateMissionInterface::CreateMission_ALAT_ExtrairePersonnel
 // Created: AGR
 // -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ABC_ProtegerPC()
+void AutomateMissionInterface::CreateMission_ALAT_ExtrairePersonnel()
 {
-    ASN1T_Mission_Automate_ABC_ProtegerPC& asnMission = *new ASN1T_Mission_Automate_ABC_ProtegerPC();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_proteger_pc;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_proteger_pc = &asnMission;
-    CreateAutomate( asnMission.pc, "Pc");
+    ASN1T_Mission_Automate_ALAT_ExtrairePersonnel& asnMission = *new ASN1T_Mission_Automate_ALAT_ExtrairePersonnel();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_extraire_personnel;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_extraire_personnel = &asnMission;
+    CreateAgentList( asnMission.unites_a_helitransporter, "Unites a helitransporter");
+    CreatePoint( asnMission.point_debarquement, "Point debarquement");
+    CreatePoint( asnMission.point_embarquement, "Point embarquement");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    CreateBool( asnMission.avec_materiel, "Avec materiel");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansProfondeur
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansProfondeur()
+{
+    ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur& asnMission = *new ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_profondeur = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreatePoint( asnMission.point_dislocation, "Point dislocation");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    CreateBool( asnMission.neutraliser, "Neutraliser");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZone()
+{
+    ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone& asnMission = *new ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreatePoint( asnMission.point_dislocation, "Point dislocation");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    CreateBool( asnMission.neutraliser, "Neutraliser");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_DonnerCoupArret
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_DonnerCoupArret()
+{
+    ASN1T_Mission_Automate_ALAT_DonnerCoupArret& asnMission = *new ASN1T_Mission_Automate_ALAT_DonnerCoupArret();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_donner_coup_arret;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_donner_coup_arret = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_AttaquerFormationAeromobile
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_AttaquerFormationAeromobile()
+{
+    ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *new ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer_formation_aeromobile = &asnMission;
+    CreateAgentKnowledgeList( asnMission.unites_a_attaquer, "Unites a attaquer");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_RecueillirFormationAeromobile
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_RecueillirFormationAeromobile()
+{
+    ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile& asnMission = *new ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_recueillir_formation_aeromobile = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Heliporter
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Heliporter()
+{
+    ASN1T_Mission_Automate_ALAT_Heliporter& asnMission = *new ASN1T_Mission_Automate_ALAT_Heliporter();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_heliporter;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_heliporter = &asnMission;
+    CreateAgentList( asnMission.unites_a_heliporter, "Unites a heliporter");
+    CreatePoint( asnMission.point_debarquement, "Point debarquement");
+    CreatePoint( asnMission.point_embarquement, "Point embarquement");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    CreateBool( asnMission.avec_materiel, "Avec materiel");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Jalonner
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Jalonner()
+{
+    ASN1T_Mission_Automate_ALAT_Jalonner& asnMission = *new ASN1T_Mission_Automate_ALAT_Jalonner();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_jalonner;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_jalonner = &asnMission;
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Helitransporter
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Helitransporter()
+{
+    ASN1T_Mission_Automate_ALAT_Helitransporter& asnMission = *new ASN1T_Mission_Automate_ALAT_Helitransporter();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_helitransporter;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_helitransporter = &asnMission;
+    CreateAgentList( asnMission.unites_a_helitransporter, "Unites a helitransporter");
+    CreatePoint( asnMission.point_debarquement, "Point debarquement");
+    CreatePoint( asnMission.point_embarquement, "Point embarquement");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    CreateBool( asnMission.avec_materiel, "Avec materiel");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Appuyer
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Appuyer()
+{
+    ASN1T_Mission_Automate_ALAT_Appuyer& asnMission = *new ASN1T_Mission_Automate_ALAT_Appuyer();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_appuyer;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_appuyer = &asnMission;
+    CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    CreatePoint( asnMission.point_dislocation, "Point dislocation");
+    CreateLocation( asnMission.zone, "Zone");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Couvrir
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Couvrir()
+{
+    ASN1T_Mission_Automate_ALAT_Couvrir& asnMission = *new ASN1T_Mission_Automate_ALAT_Couvrir();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_couvrir;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_couvrir = &asnMission;
+    CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Surveiller
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Surveiller()
+{
+    ASN1T_Mission_Automate_ALAT_Surveiller& asnMission = *new ASN1T_Mission_Automate_ALAT_Surveiller();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_surveiller;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_surveiller = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+    CreatePoint( asnMission.point_logistique, "Point logistique");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Reconnaitre
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Reconnaitre()
+{
+    ASN1T_Mission_Automate_ALAT_Reconnaitre& asnMission = *new ASN1T_Mission_Automate_ALAT_Reconnaitre();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_reconnaitre;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_reconnaitre = &asnMission;
+    CreatePoint( asnMission.pointRegroupement, "PointRegroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Freiner
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Freiner()
+{
+    ASN1T_Mission_Automate_ALAT_Freiner& asnMission = *new ASN1T_Mission_Automate_ALAT_Freiner();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_freiner;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_freiner = &asnMission;
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Escorter
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Escorter()
+{
+    ASN1T_Mission_Automate_ALAT_Escorter& asnMission = *new ASN1T_Mission_Automate_ALAT_Escorter();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_escorter;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_escorter = &asnMission;
+    CreateAgentList( asnMission.unites_a_escorter, "Unites a escorter");
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ALAT_Attaquer
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ALAT_Attaquer()
+{
+    ASN1T_Mission_Automate_ALAT_Attaquer& asnMission = *new ASN1T_Mission_Automate_ALAT_Attaquer();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_attaquer;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer = &asnMission;
+    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
+    CreatePoint( asnMission.point_regroupement, "Point regroupement");
+    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
+    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
+    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
+    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
+    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
+    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
+    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
+    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_DefendreSite
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_DefendreSite()
+{
+    ASN1T_Mission_Automate_ASA_DefendreSite& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreSite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_site;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_site = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreatePointList( asnMission.positions_sections, "Positions sections");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_DefendreZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_DefendreZone()
+{
+    ASN1T_Mission_Automate_ASA_DefendreZone& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreatePointList( asnMission.positions_sections, "Positions sections");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_DefendreUnites
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_DefendreUnites()
+{
+    ASN1T_Mission_Automate_ASA_DefendreUnites& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreUnites();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_unites;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_unites = &asnMission;
+    CreateAgentList( asnMission.unites, "Unites");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_Surveiller
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_Surveiller()
+{
+    ASN1T_Mission_Automate_ASA_Surveiller& asnMission = *new ASN1T_Mission_Automate_ASA_Surveiller();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_surveiller;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_surveiller = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreatePointList( asnMission.positions_sections, "Positions sections");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_DefendreItineraire
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_DefendreItineraire()
+{
+    ASN1T_Mission_Automate_ASA_DefendreItineraire& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreItineraire();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_itineraire;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_itineraire = &asnMission;
+    CreatePath( asnMission.itineraire, "Itineraire");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreZone()
+{
+    ASN1T_Mission_Automate_ASA_MISTRAL_DefendreZone& asnMission = *new ASN1T_Mission_Automate_ASA_MISTRAL_DefendreZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_defendre_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement");
+    pSelector_mode_deploiement->AddItem( "En carre", EnumModeDeploiement::en_carre );
+    pSelector_mode_deploiement->AddItem( "En triangle", EnumModeDeploiement::en_triangle );
+    pSelector_mode_deploiement->AddItem( "Nasse trois sections", EnumModeDeploiement::nasse_trois_sections );
+    pSelector_mode_deploiement->AddItem( "Nasse quatre sections", EnumModeDeploiement::nasse_quatre_sections );
+    pSelector_mode_deploiement->AddItem( "Double rideau", EnumModeDeploiement::double_rideau );
+    pSelector_mode_deploiement->AddItem( "Simple rideau", EnumModeDeploiement::simple_rideau );
+    CreateNumeric( asnMission.angle, "Angle");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreSite
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreSite()
+{
+    ASN1T_Mission_Automate_ASA_MISTRAL_DefendreSite& asnMission = *new ASN1T_Mission_Automate_ASA_MISTRAL_DefendreSite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_defendre_site;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_site = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement");
+    pSelector_mode_deploiement->AddItem( "En carre", EnumModeDeploiement::en_carre );
+    pSelector_mode_deploiement->AddItem( "En triangle", EnumModeDeploiement::en_triangle );
+    pSelector_mode_deploiement->AddItem( "Nasse trois sections", EnumModeDeploiement::nasse_trois_sections );
+    pSelector_mode_deploiement->AddItem( "Nasse quatre sections", EnumModeDeploiement::nasse_quatre_sections );
+    pSelector_mode_deploiement->AddItem( "Double rideau", EnumModeDeploiement::double_rideau );
+    pSelector_mode_deploiement->AddItem( "Simple rideau", EnumModeDeploiement::simple_rideau );
+    CreateNumeric( asnMission.angle, "Angle");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_MISTRAL_Surveiller
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_MISTRAL_Surveiller()
+{
+    ASN1T_Mission_Automate_ASA_MISTRAL_Surveiller& asnMission = *new ASN1T_Mission_Automate_ASA_MISTRAL_Surveiller();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_surveiller;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_surveiller = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement");
+    pSelector_mode_deploiement->AddItem( "En carre", EnumModeDeploiement::en_carre );
+    pSelector_mode_deploiement->AddItem( "En triangle", EnumModeDeploiement::en_triangle );
+    pSelector_mode_deploiement->AddItem( "Nasse trois sections", EnumModeDeploiement::nasse_trois_sections );
+    pSelector_mode_deploiement->AddItem( "Nasse quatre sections", EnumModeDeploiement::nasse_quatre_sections );
+    pSelector_mode_deploiement->AddItem( "Double rideau", EnumModeDeploiement::double_rideau );
+    pSelector_mode_deploiement->AddItem( "Simple rideau", EnumModeDeploiement::simple_rideau );
+    CreateNumeric( asnMission.angle, "Angle");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreZone()
+{
+    ASN1T_Mission_Automate_ASA_HAWK_DefendreZone& asnMission = *new ASN1T_Mission_Automate_ASA_HAWK_DefendreZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_hawk_defendre_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreatePointList( asnMission.positions_sections, "Positions sections");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreSite
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreSite()
+{
+    ASN1T_Mission_Automate_ASA_HAWK_DefendreSite& asnMission = *new ASN1T_Mission_Automate_ASA_HAWK_DefendreSite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_hawk_defendre_site;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_site = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreatePointList( asnMission.positions_sections, "Positions sections");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASA_HAWK_Surveiller
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASA_HAWK_Surveiller()
+{
+    ASN1T_Mission_Automate_ASA_HAWK_Surveiller& asnMission = *new ASN1T_Mission_Automate_ASA_HAWK_Surveiller();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_hawk_surveiller;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_surveiller = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+    CreatePointList( asnMission.positions_sections, "Positions sections");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASS_SeDeployer
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASS_SeDeployer()
+{
+    ASN1T_Mission_Automate_ASS_SeDeployer& asnMission = *new ASN1T_Mission_Automate_ASS_SeDeployer();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_se_deployer;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_se_deployer = &asnMission;
+    CreateLocation( asnMission.zone_deploiement, "Zone deploiement");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASS_ReconnaitreZonesDeploiement
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASS_ReconnaitreZonesDeploiement()
+{
+    ASN1T_Mission_Automate_ASS_ReconnaitreZonesDeploiement& asnMission = *new ASN1T_Mission_Automate_ASS_ReconnaitreZonesDeploiement();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_reconnaitre_zones_deploiement = &asnMission;
+    CreatePointList( asnMission.positions_a_reconnaitre, "Positions a reconnaitre");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ASS_AcquerirObjectifs
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ASS_AcquerirObjectifs()
+{
+    ASN1T_Mission_Automate_ASS_AcquerirObjectifs& asnMission = *new ASN1T_Mission_Automate_ASS_AcquerirObjectifs();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_acquerir_objectifs;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_acquerir_objectifs = &asnMission;
+    CreatePolygonList( asnMission.zones_a_observer, "Zones a observer");
+    CreatePointList( asnMission.positions_deploiement, "Positions deploiement");
+    CreateNatureAtlas( asnMission.categories, "Categories");
 }
 
 // -----------------------------------------------------------------------------
@@ -710,6 +1304,42 @@ void AutomateMissionInterface::CreateMission_ABC_EscorterUnites()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ABC_ArmerPointDeControle
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ABC_ArmerPointDeControle()
+{
+    ASN1T_Mission_Automate_ABC_ArmerPointDeControle& asnMission = *new ASN1T_Mission_Automate_ABC_ArmerPointDeControle();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_armer_point_de_controle;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_armer_point_de_controle = &asnMission;
+    CreateLocation( asnMission.zone_de_controle, "Zone de controle");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ABC_OrganiserAccueilColonneRefugies
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ABC_OrganiserAccueilColonneRefugies()
+{
+    ASN1T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies& asnMission = *new ASN1T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_organiser_accueil_colonne_refugies = &asnMission;
+    CreateLocation( asnMission.zone_installation, "Zone installation");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_ABC_ProtegerPC
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_ABC_ProtegerPC()
+{
+    ASN1T_Mission_Automate_ABC_ProtegerPC& asnMission = *new ASN1T_Mission_Automate_ABC_ProtegerPC();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_proteger_pc;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_proteger_pc = &asnMission;
+    CreateAutomate( asnMission.pc, "Pc");
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface::CreateMission_ABC_AppuyerSurPosition
 // Created: AGR
 // -----------------------------------------------------------------------------
@@ -720,636 +1350,6 @@ void AutomateMissionInterface::CreateMission_ABC_AppuyerSurPosition()
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_appuyer_sur_position = &asnMission;
     CreateLocation( asnMission.position_installation, "Position installation");
     CreateAutomate( asnMission.compagnie, "Compagnie");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Heliporter
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Heliporter()
-{
-    ASN1T_Mission_Automate_ALAT_Heliporter& asnMission = *new ASN1T_Mission_Automate_ALAT_Heliporter();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_heliporter;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_heliporter = &asnMission;
-    CreateAgentList( asnMission.unites_a_heliporter, "Unites a heliporter");
-    CreatePoint( asnMission.point_debarquement, "Point debarquement");
-    CreatePoint( asnMission.point_embarquement, "Point embarquement");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-    CreateBool( asnMission.avec_materiel, "Avec materiel");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Jalonner
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Jalonner()
-{
-    ASN1T_Mission_Automate_ALAT_Jalonner& asnMission = *new ASN1T_Mission_Automate_ALAT_Jalonner();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_jalonner;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_jalonner = &asnMission;
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Helitransporter
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Helitransporter()
-{
-    ASN1T_Mission_Automate_ALAT_Helitransporter& asnMission = *new ASN1T_Mission_Automate_ALAT_Helitransporter();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_helitransporter;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_helitransporter = &asnMission;
-    CreateAgentList( asnMission.unites_a_helitransporter, "Unites a helitransporter");
-    CreatePoint( asnMission.point_debarquement, "Point debarquement");
-    CreatePoint( asnMission.point_embarquement, "Point embarquement");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-    CreateBool( asnMission.avec_materiel, "Avec materiel");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_ExtrairePersonnel
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_ExtrairePersonnel()
-{
-    ASN1T_Mission_Automate_ALAT_ExtrairePersonnel& asnMission = *new ASN1T_Mission_Automate_ALAT_ExtrairePersonnel();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_extraire_personnel;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_extraire_personnel = &asnMission;
-    CreateAgentList( asnMission.unites_a_helitransporter, "Unites a helitransporter");
-    CreatePoint( asnMission.point_debarquement, "Point debarquement");
-    CreatePoint( asnMission.point_embarquement, "Point embarquement");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-    CreateBool( asnMission.avec_materiel, "Avec materiel");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Appuyer
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Appuyer()
-{
-    ASN1T_Mission_Automate_ALAT_Appuyer& asnMission = *new ASN1T_Mission_Automate_ALAT_Appuyer();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_appuyer;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_appuyer = &asnMission;
-    CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    CreatePoint( asnMission.point_dislocation, "Point dislocation");
-    CreateLocation( asnMission.zone, "Zone");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Couvrir
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Couvrir()
-{
-    ASN1T_Mission_Automate_ALAT_Couvrir& asnMission = *new ASN1T_Mission_Automate_ALAT_Couvrir();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_couvrir;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_couvrir = &asnMission;
-    CreateAgentList( asnMission.unites_a_appuyer, "Unites a appuyer");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Surveiller
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Surveiller()
-{
-    ASN1T_Mission_Automate_ALAT_Surveiller& asnMission = *new ASN1T_Mission_Automate_ALAT_Surveiller();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_surveiller;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_surveiller = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-    CreatePoint( asnMission.point_logistique, "Point logistique");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Reconnaitre
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Reconnaitre()
-{
-    ASN1T_Mission_Automate_ALAT_Reconnaitre& asnMission = *new ASN1T_Mission_Automate_ALAT_Reconnaitre();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_reconnaitre;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_reconnaitre = &asnMission;
-    CreatePoint( asnMission.pointRegroupement, "PointRegroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Freiner
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Freiner()
-{
-    ASN1T_Mission_Automate_ALAT_Freiner& asnMission = *new ASN1T_Mission_Automate_ALAT_Freiner();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_freiner;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_freiner = &asnMission;
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Escorter
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Escorter()
-{
-    ASN1T_Mission_Automate_ALAT_Escorter& asnMission = *new ASN1T_Mission_Automate_ALAT_Escorter();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_escorter;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_escorter = &asnMission;
-    CreateAgentList( asnMission.unites_a_escorter, "Unites a escorter");
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_Attaquer
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_Attaquer()
-{
-    ASN1T_Mission_Automate_ALAT_Attaquer& asnMission = *new ASN1T_Mission_Automate_ALAT_Attaquer();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_attaquer;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer = &asnMission;
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_RecueillirFormationAeromobile
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_RecueillirFormationAeromobile()
-{
-    ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile& asnMission = *new ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_recueillir_formation_aeromobile = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_AttaquerFormationAeromobile
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_AttaquerFormationAeromobile()
-{
-    ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *new ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_attaquer_formation_aeromobile = &asnMission;
-    CreateAgentKnowledgeList( asnMission.unites_a_attaquer, "Unites a attaquer");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_DonnerCoupArret
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_DonnerCoupArret()
-{
-    ASN1T_Mission_Automate_ALAT_DonnerCoupArret& asnMission = *new ASN1T_Mission_Automate_ALAT_DonnerCoupArret();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_donner_coup_arret;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_donner_coup_arret = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansProfondeur
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansProfondeur()
-{
-    ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur& asnMission = *new ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_profondeur = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreatePoint( asnMission.point_dislocation, "Point dislocation");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-    CreateBool( asnMission.neutraliser, "Neutraliser");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZone
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_DetruireNeutraliserDansZone()
-{
-    ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone& asnMission = *new ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_detruire_neutraliser_dans_zone = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreateNatureAtlas( asnMission.cibles_prioritaires, "Cibles prioritaires");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreatePoint( asnMission.point_dislocation, "Point dislocation");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-    CreateBool( asnMission.neutraliser, "Neutraliser");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvetage
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_EffectuerRechercheEtSauvetage()
-{
-    ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage& asnMission = *new ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_effectuer_recherche_et_sauvetage = &asnMission;
-    CreateAgentList( asnMission.unites_a_secourir, "Unites a secourir");
-    CreatePoint( asnMission.point_regroupement, "Point regroupement");
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ALAT_AllerSeRecompleter
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ALAT_AllerSeRecompleter()
-{
-    ASN1T_Mission_Automate_ALAT_AllerSeRecompleter& asnMission = *new ASN1T_Mission_Automate_ALAT_AllerSeRecompleter();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_aller_se_recompleter;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_alat_aller_se_recompleter = &asnMission;
-    CreateObjectKnowledgeList( asnMission.plots_ravitaillement, "Plots ravitaillement");
-    ParamComboBox< ASN1T_EnumMissionALAT_PorteeAction >* pSelector_portee_action = &CreateVarList( asnMission.portee_action, "Portee action");
-    pSelector_portee_action->AddItem( "Courte portee", EnumMissionALAT_PorteeAction::courte_portee );
-    pSelector_portee_action->AddItem( "Moyenne portee", EnumMissionALAT_PorteeAction::moyenne_portee );
-    pSelector_portee_action->AddItem( "Longue portee", EnumMissionALAT_PorteeAction::longue_portee );
-    pSelector_portee_action->AddItem( "Sans munitions", EnumMissionALAT_PorteeAction::sans_munitions );
-    ParamComboBox< ASN1T_EnumMissionALAT_AmbianceMission >* pSelector_ambiance_mission = &CreateVarList( asnMission.ambiance_mission, "Ambiance mission");
-    pSelector_ambiance_mission->AddItem( "Aa", EnumMissionALAT_AmbianceMission::aa );
-    pSelector_ambiance_mission->AddItem( "As", EnumMissionALAT_AmbianceMission::as );
-    pSelector_ambiance_mission->AddItem( "Polyvalent", EnumMissionALAT_AmbianceMission::polyvalent );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_DefendreZone
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_DefendreZone()
-{
-    ASN1T_Mission_Automate_ASA_DefendreZone& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreZone();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_zone;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_zone = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreatePointList( asnMission.positions_sections, "Positions sections");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_DefendreSite
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_DefendreSite()
-{
-    ASN1T_Mission_Automate_ASA_DefendreSite& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreSite();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_site;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_site = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreatePointList( asnMission.positions_sections, "Positions sections");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_Surveiller
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_Surveiller()
-{
-    ASN1T_Mission_Automate_ASA_Surveiller& asnMission = *new ASN1T_Mission_Automate_ASA_Surveiller();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_surveiller;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_surveiller = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreatePointList( asnMission.positions_sections, "Positions sections");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_DefendreItineraire
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_DefendreItineraire()
-{
-    ASN1T_Mission_Automate_ASA_DefendreItineraire& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreItineraire();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_itineraire;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_itineraire = &asnMission;
-    CreatePath( asnMission.itineraire, "Itineraire");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreZone
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreZone()
-{
-    ASN1T_Mission_Automate_ASA_MISTRAL_DefendreZone& asnMission = *new ASN1T_Mission_Automate_ASA_MISTRAL_DefendreZone();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_defendre_zone;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_zone = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement");
-    pSelector_mode_deploiement->AddItem( "En carre", EnumModeDeploiement::en_carre );
-    pSelector_mode_deploiement->AddItem( "En triangle", EnumModeDeploiement::en_triangle );
-    pSelector_mode_deploiement->AddItem( "Nasse trois sections", EnumModeDeploiement::nasse_trois_sections );
-    pSelector_mode_deploiement->AddItem( "Nasse quatre sections", EnumModeDeploiement::nasse_quatre_sections );
-    pSelector_mode_deploiement->AddItem( "Double rideau", EnumModeDeploiement::double_rideau );
-    pSelector_mode_deploiement->AddItem( "Simple rideau", EnumModeDeploiement::simple_rideau );
-    CreateNumeric( asnMission.angle, "Angle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreSite
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_MISTRAL_DefendreSite()
-{
-    ASN1T_Mission_Automate_ASA_MISTRAL_DefendreSite& asnMission = *new ASN1T_Mission_Automate_ASA_MISTRAL_DefendreSite();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_defendre_site;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_defendre_site = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement");
-    pSelector_mode_deploiement->AddItem( "En carre", EnumModeDeploiement::en_carre );
-    pSelector_mode_deploiement->AddItem( "En triangle", EnumModeDeploiement::en_triangle );
-    pSelector_mode_deploiement->AddItem( "Nasse trois sections", EnumModeDeploiement::nasse_trois_sections );
-    pSelector_mode_deploiement->AddItem( "Nasse quatre sections", EnumModeDeploiement::nasse_quatre_sections );
-    pSelector_mode_deploiement->AddItem( "Double rideau", EnumModeDeploiement::double_rideau );
-    pSelector_mode_deploiement->AddItem( "Simple rideau", EnumModeDeploiement::simple_rideau );
-    CreateNumeric( asnMission.angle, "Angle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_MISTRAL_Surveiller
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_MISTRAL_Surveiller()
-{
-    ASN1T_Mission_Automate_ASA_MISTRAL_Surveiller& asnMission = *new ASN1T_Mission_Automate_ASA_MISTRAL_Surveiller();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_mistral_surveiller;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_mistral_surveiller = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    ParamComboBox< ASN1T_EnumModeDeploiement >* pSelector_mode_deploiement = &CreateVarList( asnMission.mode_deploiement, "Mode deploiement");
-    pSelector_mode_deploiement->AddItem( "En carre", EnumModeDeploiement::en_carre );
-    pSelector_mode_deploiement->AddItem( "En triangle", EnumModeDeploiement::en_triangle );
-    pSelector_mode_deploiement->AddItem( "Nasse trois sections", EnumModeDeploiement::nasse_trois_sections );
-    pSelector_mode_deploiement->AddItem( "Nasse quatre sections", EnumModeDeploiement::nasse_quatre_sections );
-    pSelector_mode_deploiement->AddItem( "Double rideau", EnumModeDeploiement::double_rideau );
-    pSelector_mode_deploiement->AddItem( "Simple rideau", EnumModeDeploiement::simple_rideau );
-    CreateNumeric( asnMission.angle, "Angle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreZone
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreZone()
-{
-    ASN1T_Mission_Automate_ASA_HAWK_DefendreZone& asnMission = *new ASN1T_Mission_Automate_ASA_HAWK_DefendreZone();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_hawk_defendre_zone;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_zone = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreatePointList( asnMission.positions_sections, "Positions sections");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreSite
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_HAWK_DefendreSite()
-{
-    ASN1T_Mission_Automate_ASA_HAWK_DefendreSite& asnMission = *new ASN1T_Mission_Automate_ASA_HAWK_DefendreSite();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_hawk_defendre_site;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_defendre_site = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreatePointList( asnMission.positions_sections, "Positions sections");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_HAWK_Surveiller
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_HAWK_Surveiller()
-{
-    ASN1T_Mission_Automate_ASA_HAWK_Surveiller& asnMission = *new ASN1T_Mission_Automate_ASA_HAWK_Surveiller();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_hawk_surveiller;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_hawk_surveiller = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-    CreatePointList( asnMission.positions_sections, "Positions sections");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASA_DefendreUnites
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASA_DefendreUnites()
-{
-    ASN1T_Mission_Automate_ASA_DefendreUnites& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreUnites();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_unites;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_asa_defendre_unites = &asnMission;
-    CreateAgentList( asnMission.unites, "Unites");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASS_SeDeployer
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASS_SeDeployer()
-{
-    ASN1T_Mission_Automate_ASS_SeDeployer& asnMission = *new ASN1T_Mission_Automate_ASS_SeDeployer();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_se_deployer;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_se_deployer = &asnMission;
-    CreateLocation( asnMission.zone_deploiement, "Zone deploiement");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASS_ReconnaitreZonesDeploiement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASS_ReconnaitreZonesDeploiement()
-{
-    ASN1T_Mission_Automate_ASS_ReconnaitreZonesDeploiement& asnMission = *new ASN1T_Mission_Automate_ASS_ReconnaitreZonesDeploiement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_reconnaitre_zones_deploiement = &asnMission;
-    CreatePointList( asnMission.positions_a_reconnaitre, "Positions a reconnaitre");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_ASS_AcquerirObjectifs
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_ASS_AcquerirObjectifs()
-{
-    ASN1T_Mission_Automate_ASS_AcquerirObjectifs& asnMission = *new ASN1T_Mission_Automate_ASS_AcquerirObjectifs();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_acquerir_objectifs;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_ass_acquerir_objectifs = &asnMission;
-    CreatePolygonList( asnMission.zones_a_observer, "Zones a observer");
-    CreatePointList( asnMission.positions_deploiement, "Positions deploiement");
-    CreateNatureAtlas( asnMission.categories, "Categories");
 }
 
 // -----------------------------------------------------------------------------
@@ -1950,18 +1950,6 @@ void AutomateMissionInterface::CreateMission_LOG_ReconnaitreItineraire()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_LOG_Surveiller
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_LOG_Surveiller()
-{
-    ASN1T_Mission_Automate_LOG_Surveiller& asnMission = *new ASN1T_Mission_Automate_LOG_Surveiller();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_surveiller;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_surveiller = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-}
-
-// -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface::CreateMission_LOG_TransporterUnites
 // Created: AGR
 // -----------------------------------------------------------------------------
@@ -2044,6 +2032,18 @@ void AutomateMissionInterface::CreateMission_LOG_ReconnaitreZoneDeDeploiement()
     ASN1T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement& asnMission = *new ASN1T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_de_deploiement = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_LOG_Surveiller
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_LOG_Surveiller()
+{
+    ASN1T_Mission_Automate_LOG_Surveiller& asnMission = *new ASN1T_Mission_Automate_LOG_Surveiller();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_surveiller;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_log_surveiller = &asnMission;
     CreateLocation( asnMission.zone, "Zone");
 }
 

@@ -103,6 +103,9 @@ private:
 
     typedef std::map< std::string, const AGR_TypeRC* > T_TypeRCMap;
     typedef T_TypeRCMap::const_iterator                CIT_TypeRCMap;
+
+    typedef std::vector< std::string >                T_OrderedMissions;
+    typedef T_OrderedMissions::const_iterator       CIT_OrderedMissions;
     //@}
 
     //! @name Helpers
@@ -121,6 +124,9 @@ private:
     //@{
     T_FragOrder_Vector fragOrderList_;
     T_Mission_Vector missionList_;
+    T_OrderedMissions automatMissions_;
+    T_OrderedMissions pawnMissions_;
+    T_OrderedMissions populationMissions_;
     T_Enumeration_Vector enumerationList_;
     T_TypeVector typeList_;
     T_String_Set parsedFileSet_;

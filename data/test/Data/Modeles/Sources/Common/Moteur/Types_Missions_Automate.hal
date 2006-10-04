@@ -3,19 +3,269 @@
 // Created : 
 // *******************************************************************************************
 
-typedef struct T_Mission_Automate_ABC_ArmerPointDeControle : T_Mission_Automate
+typedef struct T_Mission_Automate_ALAT_AllerSeRecompleter : T_Mission_Automate
 {
-T_Localisation zoneDeControle_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
 };
 
-typedef struct T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies : T_Mission_Automate
+typedef struct T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage : T_Mission_Automate
 {
-T_Localisation zoneInstallation_;
+T_ListePions unitesASecourir_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
 };
 
-typedef struct T_Mission_Automate_ABC_ProtegerPC : T_Mission_Automate
+typedef struct T_Mission_Automate_ALAT_ExtrairePersonnel : T_Mission_Automate
 {
-T_Automate pc_;
+T_ListePions unitesAHelitransporter_;
+T_Point pointDebarquement_;
+T_Point pointEmbarquement_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+bool avecMateriel_;
+};
+
+typedef struct T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur : T_Mission_Automate
+{
+T_Localisation zone_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_Point pointDislocation_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+bool neutraliser_;
+};
+
+typedef struct T_Mission_Automate_ALAT_DetruireNeutraliserDansZone : T_Mission_Automate
+{
+T_Localisation zone_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_Point pointDislocation_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+bool neutraliser_;
+};
+
+typedef struct T_Mission_Automate_ALAT_DonnerCoupArret : T_Mission_Automate
+{
+T_Localisation zone_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_AttaquerFormationAeromobile : T_Mission_Automate
+{
+T_ListeConnaissancesAgent unitesAAttaquer_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_RecueillirFormationAeromobile : T_Mission_Automate
+{
+T_Localisation zone_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Heliporter : T_Mission_Automate
+{
+T_ListePions unitesAHeliporter_;
+T_Point pointDebarquement_;
+T_Point pointEmbarquement_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+bool avecMateriel_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Jalonner : T_Mission_Automate
+{
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Helitransporter : T_Mission_Automate
+{
+T_ListePions unitesAHelitransporter_;
+T_Point pointDebarquement_;
+T_Point pointEmbarquement_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+bool avecMateriel_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Appuyer : T_Mission_Automate
+{
+T_ListePions unitesAAppuyer_;
+T_Point pointRegroupement_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+T_Point pointDislocation_;
+T_Localisation zone_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Couvrir : T_Mission_Automate
+{
+T_ListePions unitesAAppuyer_;
+T_Point pointRegroupement_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Surveiller : T_Mission_Automate
+{
+T_Localisation zone_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+T_Point pointLogistique_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Reconnaitre : T_Mission_Automate
+{
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Freiner : T_Mission_Automate
+{
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Escorter : T_Mission_Automate
+{
+T_ListePions unitesAEscorter_;
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ALAT_Attaquer : T_Mission_Automate
+{
+E_NatureAtlasType ciblesPrioritaires_;
+T_Point pointRegroupement_;
+T_ListeConnaissancesObjet plotsRavitaillement_;
+id porteeAction_;
+id ambianceMission_;
+};
+
+typedef struct T_Mission_Automate_ASA_DefendreSite : T_Mission_Automate
+{
+T_Localisation zone_;
+T_ListePoints positionsSections_;
+};
+
+typedef struct T_Mission_Automate_ASA_DefendreZone : T_Mission_Automate
+{
+T_Localisation zone_;
+T_ListePoints positionsSections_;
+};
+
+typedef struct T_Mission_Automate_ASA_DefendreUnites : T_Mission_Automate
+{
+T_ListePions unites_;
+};
+
+typedef struct T_Mission_Automate_ASA_Surveiller : T_Mission_Automate
+{
+T_Localisation zone_;
+T_ListePoints positionsSections_;
+};
+
+typedef struct T_Mission_Automate_ASA_DefendreItineraire : T_Mission_Automate
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Automate_ASA_MISTRAL_DefendreZone : T_Mission_Automate
+{
+T_Localisation zone_;
+id modeDeploiement_;
+float angle_;
+};
+
+typedef struct T_Mission_Automate_ASA_MISTRAL_DefendreSite : T_Mission_Automate
+{
+T_Localisation zone_;
+id modeDeploiement_;
+float angle_;
+};
+
+typedef struct T_Mission_Automate_ASA_MISTRAL_Surveiller : T_Mission_Automate
+{
+T_Localisation zone_;
+id modeDeploiement_;
+float angle_;
+};
+
+typedef struct T_Mission_Automate_ASA_HAWK_DefendreZone : T_Mission_Automate
+{
+T_Localisation zone_;
+T_ListePoints positionsSections_;
+};
+
+typedef struct T_Mission_Automate_ASA_HAWK_DefendreSite : T_Mission_Automate
+{
+T_Localisation zone_;
+T_ListePoints positionsSections_;
+};
+
+typedef struct T_Mission_Automate_ASA_HAWK_Surveiller : T_Mission_Automate
+{
+T_Localisation zone_;
+T_ListePoints positionsSections_;
+};
+
+typedef struct T_Mission_Automate_ASS_SeDeployer : T_Mission_Automate
+{
+T_Localisation zoneDeploiement_;
+};
+
+typedef struct T_Mission_Automate_ASS_ReconnaitreZonesDeploiement : T_Mission_Automate
+{
+T_ListePoints positionsAReconnaitre_;
+};
+
+typedef struct T_Mission_Automate_ASS_AcquerirObjectifs : T_Mission_Automate
+{
+T_ListeLocalisations zonesAObserver_;
+T_ListePoints positionsDeploiement_;
+E_NatureAtlasType categories_;
 };
 
 typedef struct T_Mission_Automate_ABC_Appuyer : T_Mission_Automate
@@ -149,275 +399,25 @@ typedef struct T_Mission_Automate_ABC_EscorterUnites : T_Mission_Automate
 T_Automate automateAEscorter_;
 };
 
+typedef struct T_Mission_Automate_ABC_ArmerPointDeControle : T_Mission_Automate
+{
+T_Localisation zoneDeControle_;
+};
+
+typedef struct T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies : T_Mission_Automate
+{
+T_Localisation zoneInstallation_;
+};
+
+typedef struct T_Mission_Automate_ABC_ProtegerPC : T_Mission_Automate
+{
+T_Automate pc_;
+};
+
 typedef struct T_Mission_Automate_ABC_AppuyerSurPosition : T_Mission_Automate
 {
 T_Localisation positionInstallation_;
 T_Automate compagnie_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Heliporter : T_Mission_Automate
-{
-T_ListePions unitesAHeliporter_;
-T_Point pointDebarquement_;
-T_Point pointEmbarquement_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-bool avecMateriel_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Jalonner : T_Mission_Automate
-{
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Helitransporter : T_Mission_Automate
-{
-T_ListePions unitesAHelitransporter_;
-T_Point pointDebarquement_;
-T_Point pointEmbarquement_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-bool avecMateriel_;
-};
-
-typedef struct T_Mission_Automate_ALAT_ExtrairePersonnel : T_Mission_Automate
-{
-T_ListePions unitesAHelitransporter_;
-T_Point pointDebarquement_;
-T_Point pointEmbarquement_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-bool avecMateriel_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Appuyer : T_Mission_Automate
-{
-T_ListePions unitesAAppuyer_;
-T_Point pointRegroupement_;
-E_NatureAtlasType ciblesPrioritaires_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-T_Point pointDislocation_;
-T_Localisation zone_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Couvrir : T_Mission_Automate
-{
-T_ListePions unitesAAppuyer_;
-T_Point pointRegroupement_;
-E_NatureAtlasType ciblesPrioritaires_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Surveiller : T_Mission_Automate
-{
-T_Localisation zone_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-T_Point pointLogistique_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Reconnaitre : T_Mission_Automate
-{
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Freiner : T_Mission_Automate
-{
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Escorter : T_Mission_Automate
-{
-T_ListePions unitesAEscorter_;
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_Attaquer : T_Mission_Automate
-{
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_RecueillirFormationAeromobile : T_Mission_Automate
-{
-T_Localisation zone_;
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_AttaquerFormationAeromobile : T_Mission_Automate
-{
-T_ListeConnaissancesAgent unitesAAttaquer_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_DonnerCoupArret : T_Mission_Automate
-{
-T_Localisation zone_;
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur : T_Mission_Automate
-{
-T_Localisation zone_;
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_Point pointDislocation_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-bool neutraliser_;
-};
-
-typedef struct T_Mission_Automate_ALAT_DetruireNeutraliserDansZone : T_Mission_Automate
-{
-T_Localisation zone_;
-E_NatureAtlasType ciblesPrioritaires_;
-T_Point pointRegroupement_;
-T_Point pointDislocation_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-bool neutraliser_;
-};
-
-typedef struct T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage : T_Mission_Automate
-{
-T_ListePions unitesASecourir_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-};
-
-typedef struct T_Mission_Automate_ALAT_AllerSeRecompleter : T_Mission_Automate
-{
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-};
-
-typedef struct T_Mission_Automate_ASA_DefendreZone : T_Mission_Automate
-{
-T_Localisation zone_;
-T_ListePoints positionsSections_;
-};
-
-typedef struct T_Mission_Automate_ASA_DefendreSite : T_Mission_Automate
-{
-T_Localisation zone_;
-T_ListePoints positionsSections_;
-};
-
-typedef struct T_Mission_Automate_ASA_Surveiller : T_Mission_Automate
-{
-T_Localisation zone_;
-T_ListePoints positionsSections_;
-};
-
-typedef struct T_Mission_Automate_ASA_DefendreItineraire : T_Mission_Automate
-{
-T_ListePoints itineraire_;
-};
-
-typedef struct T_Mission_Automate_ASA_MISTRAL_DefendreZone : T_Mission_Automate
-{
-T_Localisation zone_;
-id modeDeploiement_;
-float angle_;
-};
-
-typedef struct T_Mission_Automate_ASA_MISTRAL_DefendreSite : T_Mission_Automate
-{
-T_Localisation zone_;
-id modeDeploiement_;
-float angle_;
-};
-
-typedef struct T_Mission_Automate_ASA_MISTRAL_Surveiller : T_Mission_Automate
-{
-T_Localisation zone_;
-id modeDeploiement_;
-float angle_;
-};
-
-typedef struct T_Mission_Automate_ASA_HAWK_DefendreZone : T_Mission_Automate
-{
-T_Localisation zone_;
-T_ListePoints positionsSections_;
-};
-
-typedef struct T_Mission_Automate_ASA_HAWK_DefendreSite : T_Mission_Automate
-{
-T_Localisation zone_;
-T_ListePoints positionsSections_;
-};
-
-typedef struct T_Mission_Automate_ASA_HAWK_Surveiller : T_Mission_Automate
-{
-T_Localisation zone_;
-T_ListePoints positionsSections_;
-};
-
-typedef struct T_Mission_Automate_ASA_DefendreUnites : T_Mission_Automate
-{
-T_ListePions unites_;
-};
-
-typedef struct T_Mission_Automate_ASS_SeDeployer : T_Mission_Automate
-{
-T_Localisation zoneDeploiement_;
-};
-
-typedef struct T_Mission_Automate_ASS_ReconnaitreZonesDeploiement : T_Mission_Automate
-{
-T_ListePoints positionsAReconnaitre_;
-};
-
-typedef struct T_Mission_Automate_ASS_AcquerirObjectifs : T_Mission_Automate
-{
-T_ListeLocalisations zonesAObserver_;
-T_ListePoints positionsDeploiement_;
-E_NatureAtlasType categories_;
 };
 
 typedef struct T_Mission_Automate_GEN_SeDeployer : T_Mission_Automate
@@ -670,11 +670,6 @@ typedef struct T_Mission_Automate_LOG_ReconnaitreItineraire : T_Mission_Automate
 T_ListePoints itineraireLog_;
 };
 
-typedef struct T_Mission_Automate_LOG_Surveiller : T_Mission_Automate
-{
-T_Localisation zone_;
-};
-
 typedef struct T_Mission_Automate_LOG_TransporterUnites : T_Mission_Automate
 {
 T_ListePions unitesATransporter_;
@@ -708,6 +703,11 @@ T_Localisation zone_;
 };
 
 typedef struct T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement : T_Mission_Automate
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Automate_LOG_Surveiller : T_Mission_Automate
 {
 T_Localisation zone_;
 };

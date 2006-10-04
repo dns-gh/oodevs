@@ -10,9 +10,38 @@
 #include "simulation_tester_pch.h"
 #include "Mission_Automat_Type.h"
 
-#include "Automat/Mission_Automat_ABC_ArmerPointDeControle.cpp"
-#include "Automat/Mission_Automat_ABC_OrganiserAccueilColonneRefugies.cpp"
-#include "Automat/Mission_Automat_ABC_ProtegerPC.cpp"
+#include "Automat/Mission_Automat_ALAT_AllerSeRecompleter.cpp"
+#include "Automat/Mission_Automat_ALAT_EffectuerRechercheEtSauvetage.cpp"
+#include "Automat/Mission_Automat_ALAT_ExtrairePersonnel.cpp"
+#include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur.cpp"
+#include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansZone.cpp"
+#include "Automat/Mission_Automat_ALAT_DonnerCoupArret.cpp"
+#include "Automat/Mission_Automat_ALAT_AttaquerFormationAeromobile.cpp"
+#include "Automat/Mission_Automat_ALAT_RecueillirFormationAeromobile.cpp"
+#include "Automat/Mission_Automat_ALAT_Heliporter.cpp"
+#include "Automat/Mission_Automat_ALAT_Jalonner.cpp"
+#include "Automat/Mission_Automat_ALAT_Helitransporter.cpp"
+#include "Automat/Mission_Automat_ALAT_Appuyer.cpp"
+#include "Automat/Mission_Automat_ALAT_Couvrir.cpp"
+#include "Automat/Mission_Automat_ALAT_Surveiller.cpp"
+#include "Automat/Mission_Automat_ALAT_Reconnaitre.cpp"
+#include "Automat/Mission_Automat_ALAT_Freiner.cpp"
+#include "Automat/Mission_Automat_ALAT_Escorter.cpp"
+#include "Automat/Mission_Automat_ALAT_Attaquer.cpp"
+#include "Automat/Mission_Automat_ASA_DefendreSite.cpp"
+#include "Automat/Mission_Automat_ASA_DefendreZone.cpp"
+#include "Automat/Mission_Automat_ASA_DefendreUnites.cpp"
+#include "Automat/Mission_Automat_ASA_Surveiller.cpp"
+#include "Automat/Mission_Automat_ASA_DefendreItineraire.cpp"
+#include "Automat/Mission_Automat_ASA_MISTRAL_DefendreZone.cpp"
+#include "Automat/Mission_Automat_ASA_MISTRAL_DefendreSite.cpp"
+#include "Automat/Mission_Automat_ASA_MISTRAL_Surveiller.cpp"
+#include "Automat/Mission_Automat_ASA_HAWK_DefendreZone.cpp"
+#include "Automat/Mission_Automat_ASA_HAWK_DefendreSite.cpp"
+#include "Automat/Mission_Automat_ASA_HAWK_Surveiller.cpp"
+#include "Automat/Mission_Automat_ASS_SeDeployer.cpp"
+#include "Automat/Mission_Automat_ASS_ReconnaitreZonesDeploiement.cpp"
+#include "Automat/Mission_Automat_ASS_AcquerirObjectifs.cpp"
 #include "Automat/Mission_Automat_ABC_Appuyer.cpp"
 #include "Automat/Mission_Automat_ABC_Attaquer.cpp"
 #include "Automat/Mission_Automat_ABC_ContreAttaquer.cpp"
@@ -41,39 +70,10 @@
 #include "Automat/Mission_Automat_ABC_RecueillirUnite.cpp"
 #include "Automat/Mission_Automat_ABC_EscorterUnite.cpp"
 #include "Automat/Mission_Automat_ABC_EscorterUnites.cpp"
+#include "Automat/Mission_Automat_ABC_ArmerPointDeControle.cpp"
+#include "Automat/Mission_Automat_ABC_OrganiserAccueilColonneRefugies.cpp"
+#include "Automat/Mission_Automat_ABC_ProtegerPC.cpp"
 #include "Automat/Mission_Automat_ABC_AppuyerSurPosition.cpp"
-#include "Automat/Mission_Automat_ALAT_Heliporter.cpp"
-#include "Automat/Mission_Automat_ALAT_Jalonner.cpp"
-#include "Automat/Mission_Automat_ALAT_Helitransporter.cpp"
-#include "Automat/Mission_Automat_ALAT_ExtrairePersonnel.cpp"
-#include "Automat/Mission_Automat_ALAT_Appuyer.cpp"
-#include "Automat/Mission_Automat_ALAT_Couvrir.cpp"
-#include "Automat/Mission_Automat_ALAT_Surveiller.cpp"
-#include "Automat/Mission_Automat_ALAT_Reconnaitre.cpp"
-#include "Automat/Mission_Automat_ALAT_Freiner.cpp"
-#include "Automat/Mission_Automat_ALAT_Escorter.cpp"
-#include "Automat/Mission_Automat_ALAT_Attaquer.cpp"
-#include "Automat/Mission_Automat_ALAT_RecueillirFormationAeromobile.cpp"
-#include "Automat/Mission_Automat_ALAT_AttaquerFormationAeromobile.cpp"
-#include "Automat/Mission_Automat_ALAT_DonnerCoupArret.cpp"
-#include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur.cpp"
-#include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansZone.cpp"
-#include "Automat/Mission_Automat_ALAT_EffectuerRechercheEtSauvetage.cpp"
-#include "Automat/Mission_Automat_ALAT_AllerSeRecompleter.cpp"
-#include "Automat/Mission_Automat_ASA_DefendreZone.cpp"
-#include "Automat/Mission_Automat_ASA_DefendreSite.cpp"
-#include "Automat/Mission_Automat_ASA_Surveiller.cpp"
-#include "Automat/Mission_Automat_ASA_DefendreItineraire.cpp"
-#include "Automat/Mission_Automat_ASA_MISTRAL_DefendreZone.cpp"
-#include "Automat/Mission_Automat_ASA_MISTRAL_DefendreSite.cpp"
-#include "Automat/Mission_Automat_ASA_MISTRAL_Surveiller.cpp"
-#include "Automat/Mission_Automat_ASA_HAWK_DefendreZone.cpp"
-#include "Automat/Mission_Automat_ASA_HAWK_DefendreSite.cpp"
-#include "Automat/Mission_Automat_ASA_HAWK_Surveiller.cpp"
-#include "Automat/Mission_Automat_ASA_DefendreUnites.cpp"
-#include "Automat/Mission_Automat_ASS_SeDeployer.cpp"
-#include "Automat/Mission_Automat_ASS_ReconnaitreZonesDeploiement.cpp"
-#include "Automat/Mission_Automat_ASS_AcquerirObjectifs.cpp"
 #include "Automat/Mission_Automat_GEN_SeDeployer.cpp"
 #include "Automat/Mission_Automat_GEN_FaireFranchir.cpp"
 #include "Automat/Mission_Automat_GEN_RealiserSystemeObstacles.cpp"
@@ -122,7 +122,6 @@
 #include "Automat/Mission_Automat_LOG_SeDeployer.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerMouvement.cpp"
 #include "Automat/Mission_Automat_LOG_ReconnaitreItineraire.cpp"
-#include "Automat/Mission_Automat_LOG_Surveiller.cpp"
 #include "Automat/Mission_Automat_LOG_TransporterUnites.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerMouvementDansZone.cpp"
 #include "Automat/Mission_Automat_LOG_MettreEnOeuvreZoneStationnement.cpp"
@@ -130,6 +129,7 @@
 #include "Automat/Mission_Automat_LOG_BloquerZone.cpp"
 #include "Automat/Mission_Automat_LOG_ReconnaitreZoneContaminee.cpp"
 #include "Automat/Mission_Automat_LOG_ReconnaitreZoneDeDeploiement.cpp"
+#include "Automat/Mission_Automat_LOG_Surveiller.cpp"
 #include "Automat/Mission_Automat_LOG_ArmerPIAs.cpp"
 #include "Automat/Mission_Automat_Test_MoveTo.cpp"
 #include "Automat/Mission_Automat_Decrocher.cpp"
@@ -195,9 +195,38 @@ Mission_Automat_Type::~Mission_Automat_Type()
 // -----------------------------------------------------------------------------
 void Mission_Automat_Type::Initialize()
 {
-    Register< Mission_Automat_ABC_ArmerPointDeControle >( "Automate ABC ArmerPointDeControle" );
-    Register< Mission_Automat_ABC_OrganiserAccueilColonneRefugies >( "Automate ABC OrganiserAccueilColonneRefugies" );
-    Register< Mission_Automat_ABC_ProtegerPC >( "Automate ABC ProtegerPC" );
+    Register< Mission_Automat_ALAT_AllerSeRecompleter >( "Automate ALAT AllerSeRecompleter" );
+    Register< Mission_Automat_ALAT_EffectuerRechercheEtSauvetage >( "Automate ALAT EffectuerRechercheEtSauvetage" );
+    Register< Mission_Automat_ALAT_ExtrairePersonnel >( "Automate ALAT ExtrairePersonnel" );
+    Register< Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur >( "Automate ALAT DetruireNeutraliserDansProfondeur" );
+    Register< Mission_Automat_ALAT_DetruireNeutraliserDansZone >( "Automate ALAT DetruireNeutraliserDansZone" );
+    Register< Mission_Automat_ALAT_DonnerCoupArret >( "Automate ALAT DonnerCoupArret" );
+    Register< Mission_Automat_ALAT_AttaquerFormationAeromobile >( "Automate ALAT AttaquerFormationAeromobile" );
+    Register< Mission_Automat_ALAT_RecueillirFormationAeromobile >( "Automate ALAT RecueillirFormationAeromobile" );
+    Register< Mission_Automat_ALAT_Heliporter >( "Automate ALAT Heliporter" );
+    Register< Mission_Automat_ALAT_Jalonner >( "Automate ALAT Jalonner" );
+    Register< Mission_Automat_ALAT_Helitransporter >( "Automate ALAT Helitransporter" );
+    Register< Mission_Automat_ALAT_Appuyer >( "Automate ALAT Appuyer" );
+    Register< Mission_Automat_ALAT_Couvrir >( "Automate ALAT Couvrir" );
+    Register< Mission_Automat_ALAT_Surveiller >( "Automate ALAT Surveiller" );
+    Register< Mission_Automat_ALAT_Reconnaitre >( "Automate ALAT Reconnaitre" );
+    Register< Mission_Automat_ALAT_Freiner >( "Automate ALAT Freiner" );
+    Register< Mission_Automat_ALAT_Escorter >( "Automate ALAT Escorter" );
+    Register< Mission_Automat_ALAT_Attaquer >( "Automate ALAT Attaquer" );
+    Register< Mission_Automat_ASA_DefendreSite >( "Automate ASA DefendreSite" );
+    Register< Mission_Automat_ASA_DefendreZone >( "Automate ASA DefendreZone" );
+    Register< Mission_Automat_ASA_DefendreUnites >( "Automate ASA DefendreUnites" );
+    Register< Mission_Automat_ASA_Surveiller >( "Automate ASA Surveiller" );
+    Register< Mission_Automat_ASA_DefendreItineraire >( "Automate ASA DefendreItineraire" );
+    Register< Mission_Automat_ASA_MISTRAL_DefendreZone >( "Automate ASA MISTRAL DefendreZone" );
+    Register< Mission_Automat_ASA_MISTRAL_DefendreSite >( "Automate ASA MISTRAL DefendreSite" );
+    Register< Mission_Automat_ASA_MISTRAL_Surveiller >( "Automate ASA MISTRAL Surveiller" );
+    Register< Mission_Automat_ASA_HAWK_DefendreZone >( "Automate ASA HAWK DefendreZone" );
+    Register< Mission_Automat_ASA_HAWK_DefendreSite >( "Automate ASA HAWK DefendreSite" );
+    Register< Mission_Automat_ASA_HAWK_Surveiller >( "Automate ASA HAWK Surveiller" );
+    Register< Mission_Automat_ASS_SeDeployer >( "Automate ASS SeDeployer" );
+    Register< Mission_Automat_ASS_ReconnaitreZonesDeploiement >( "Automate ASS ReconnaitreZonesDeploiement" );
+    Register< Mission_Automat_ASS_AcquerirObjectifs >( "Automate ASS AcquerirObjectifs" );
     Register< Mission_Automat_ABC_Appuyer >( "Automate ABC Appuyer" );
     Register< Mission_Automat_ABC_Attaquer >( "Automate ABC Attaquer" );
     Register< Mission_Automat_ABC_ContreAttaquer >( "Automate ABC ContreAttaquer" );
@@ -226,39 +255,10 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_ABC_RecueillirUnite >( "Automate ABC RecueillirUnite" );
     Register< Mission_Automat_ABC_EscorterUnite >( "Automate ABC EscorterUnite" );
     Register< Mission_Automat_ABC_EscorterUnites >( "Automate ABC EscorterUnites" );
+    Register< Mission_Automat_ABC_ArmerPointDeControle >( "Automate ABC ArmerPointDeControle" );
+    Register< Mission_Automat_ABC_OrganiserAccueilColonneRefugies >( "Automate ABC OrganiserAccueilColonneRefugies" );
+    Register< Mission_Automat_ABC_ProtegerPC >( "Automate ABC ProtegerPC" );
     Register< Mission_Automat_ABC_AppuyerSurPosition >( "Automate ABC AppuyerSurPosition" );
-    Register< Mission_Automat_ALAT_Heliporter >( "Automate ALAT Heliporter" );
-    Register< Mission_Automat_ALAT_Jalonner >( "Automate ALAT Jalonner" );
-    Register< Mission_Automat_ALAT_Helitransporter >( "Automate ALAT Helitransporter" );
-    Register< Mission_Automat_ALAT_ExtrairePersonnel >( "Automate ALAT ExtrairePersonnel" );
-    Register< Mission_Automat_ALAT_Appuyer >( "Automate ALAT Appuyer" );
-    Register< Mission_Automat_ALAT_Couvrir >( "Automate ALAT Couvrir" );
-    Register< Mission_Automat_ALAT_Surveiller >( "Automate ALAT Surveiller" );
-    Register< Mission_Automat_ALAT_Reconnaitre >( "Automate ALAT Reconnaitre" );
-    Register< Mission_Automat_ALAT_Freiner >( "Automate ALAT Freiner" );
-    Register< Mission_Automat_ALAT_Escorter >( "Automate ALAT Escorter" );
-    Register< Mission_Automat_ALAT_Attaquer >( "Automate ALAT Attaquer" );
-    Register< Mission_Automat_ALAT_RecueillirFormationAeromobile >( "Automate ALAT RecueillirFormationAeromobile" );
-    Register< Mission_Automat_ALAT_AttaquerFormationAeromobile >( "Automate ALAT AttaquerFormationAeromobile" );
-    Register< Mission_Automat_ALAT_DonnerCoupArret >( "Automate ALAT DonnerCoupArret" );
-    Register< Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur >( "Automate ALAT DetruireNeutraliserDansProfondeur" );
-    Register< Mission_Automat_ALAT_DetruireNeutraliserDansZone >( "Automate ALAT DetruireNeutraliserDansZone" );
-    Register< Mission_Automat_ALAT_EffectuerRechercheEtSauvetage >( "Automate ALAT EffectuerRechercheEtSauvetage" );
-    Register< Mission_Automat_ALAT_AllerSeRecompleter >( "Automate ALAT AllerSeRecompleter" );
-    Register< Mission_Automat_ASA_DefendreZone >( "Automate ASA DefendreZone" );
-    Register< Mission_Automat_ASA_DefendreSite >( "Automate ASA DefendreSite" );
-    Register< Mission_Automat_ASA_Surveiller >( "Automate ASA Surveiller" );
-    Register< Mission_Automat_ASA_DefendreItineraire >( "Automate ASA DefendreItineraire" );
-    Register< Mission_Automat_ASA_MISTRAL_DefendreZone >( "Automate ASA MISTRAL DefendreZone" );
-    Register< Mission_Automat_ASA_MISTRAL_DefendreSite >( "Automate ASA MISTRAL DefendreSite" );
-    Register< Mission_Automat_ASA_MISTRAL_Surveiller >( "Automate ASA MISTRAL Surveiller" );
-    Register< Mission_Automat_ASA_HAWK_DefendreZone >( "Automate ASA HAWK DefendreZone" );
-    Register< Mission_Automat_ASA_HAWK_DefendreSite >( "Automate ASA HAWK DefendreSite" );
-    Register< Mission_Automat_ASA_HAWK_Surveiller >( "Automate ASA HAWK Surveiller" );
-    Register< Mission_Automat_ASA_DefendreUnites >( "Automate ASA DefendreUnites" );
-    Register< Mission_Automat_ASS_SeDeployer >( "Automate ASS SeDeployer" );
-    Register< Mission_Automat_ASS_ReconnaitreZonesDeploiement >( "Automate ASS ReconnaitreZonesDeploiement" );
-    Register< Mission_Automat_ASS_AcquerirObjectifs >( "Automate ASS AcquerirObjectifs" );
     Register< Mission_Automat_GEN_SeDeployer >( "Automate GEN SeDeployer" );
     Register< Mission_Automat_GEN_FaireFranchir >( "Automate GEN FaireFranchir" );
     Register< Mission_Automat_GEN_RealiserSystemeObstacles >( "Automate GEN RealiserSystemeObstacles" );
@@ -307,7 +307,6 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_LOG_SeDeployer >( "Automate LOG SeDeployer" );
     Register< Mission_Automat_LOG_AppuyerMouvement >( "Automate LOG AppuyerMouvement" );
     Register< Mission_Automat_LOG_ReconnaitreItineraire >( "Automate LOG ReconnaitreItineraire" );
-    Register< Mission_Automat_LOG_Surveiller >( "Automate LOG Surveiller" );
     Register< Mission_Automat_LOG_TransporterUnites >( "Automate LOG TransporterUnites" );
     Register< Mission_Automat_LOG_AppuyerMouvementDansZone >( "Automate LOG AppuyerMouvementDansZone" );
     Register< Mission_Automat_LOG_MettreEnOeuvreZoneStationnement >( "Automate LOG MettreEnOeuvreZoneStationnement" );
@@ -315,6 +314,7 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_LOG_BloquerZone >( "Automate LOG BloquerZone" );
     Register< Mission_Automat_LOG_ReconnaitreZoneContaminee >( "Automate LOG ReconnaitreZoneContaminee" );
     Register< Mission_Automat_LOG_ReconnaitreZoneDeDeploiement >( "Automate LOG ReconnaitreZoneDeDeploiement" );
+    Register< Mission_Automat_LOG_Surveiller >( "Automate LOG Surveiller" );
     Register< Mission_Automat_LOG_ArmerPIAs >( "Automate LOG ArmerPIAs" );
     Register< Mission_Automat_Test_MoveTo >( "Automate Test MoveTo" );
     Register< Mission_Automat_Decrocher >( "Automate Decrocher" );

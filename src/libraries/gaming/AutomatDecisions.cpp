@@ -61,8 +61,9 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
     lastOrderId_ = message.order_id;
-    // $$$$ AGE 2006-09-07: needs a tools::convert
-//    next_ = & GetAutomatDecisionalModel().Resolver< Mission >::Get( message.mission.t - 1 );
+    const Resolver_ABC< Mission >& resolver = GetAutomatDecisionalModel();
+    current_ = & resolver.Get( message.mission.t );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,9 +72,9 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrderAck& message )
 {
-    if( message.order_id == lastOrderId_ )
+    if( message.error_code && message.order_id == lastOrderId_ )
     {
-        current_ = next_;
+        current_ = 0;
         controller_.Update( *this );
     }
 }

@@ -205,12 +205,6 @@ UnitMissionInterface::~UnitMissionInterface()
         case T_Mission_Pion_mission_pion_milice_detruire_embuscade : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_milice_detruire_embuscade; break;
         case T_Mission_Pion_mission_pion_joint_marine_transporter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_joint_marine_transporter; break;
         case T_Mission_Pion_mission_pion_joint_air_effectuer_raid : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_joint_air_effectuer_raid; break;
-        case T_Mission_Pion_mission_pion_asy_sinfiltrer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_sinfiltrer; break;
-        case T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContrePopulation; break;
-        case T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreForcesArmees; break;
-        case T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreInstallation; break;
-        case T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone; break;
-        case T_Mission_Pion_mission_pion_asy_renseigner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_renseigner; break;
         case T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_nbc_animer_un_plot_de_decontamination; break;
         case T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_itineraire; break;
         case T_Mission_Pion_mission_pion_nbc_reconnaitre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_zone; break;
@@ -228,6 +222,12 @@ UnitMissionInterface::~UnitMissionInterface()
         case T_Mission_Pion_mission_pion_rens_roim_sdti_renseigner_sur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_rens_roim_sdti_renseigner_sur; break;
         case T_Mission_Pion_mission_pion_rens_roim_cl289_renseigner_sur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_rens_roim_cl289_renseigner_sur; break;
         case T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_trans_etablir_gerer_liaison; break;
+        case T_Mission_Pion_mission_pion_asy_sinfiltrer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_sinfiltrer; break;
+        case T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContrePopulation; break;
+        case T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreForcesArmees; break;
+        case T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreInstallation; break;
+        case T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone; break;
+        case T_Mission_Pion_mission_pion_asy_renseigner : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_renseigner; break;
 
         default:
             assert( false );
@@ -432,12 +432,6 @@ void UnitMissionInterface::CreateInterface()
         case eMission_Pion_MILICE_DetruireEmbuscade : CreateMission_MILICE_DetruireEmbuscade(); break;
         case eMission_Pion_JOINT_MARINE_Transporter : CreateMission_JOINT_MARINE_Transporter(); break;
         case eMission_Pion_JOINT_AIR_EffectuerRaid : CreateMission_JOINT_AIR_EffectuerRaid(); break;
-        case eMission_Pion_ASY_SInfiltrer : CreateMission_ASY_SInfiltrer(); break;
-        case eMission_Pion_ASY_CommettreAttentatContrePopulation : CreateMission_ASY_CommettreAttentatContrePopulation(); break;
-        case eMission_Pion_ASY_CommettreAttentatContreForcesArmees : CreateMission_ASY_CommettreAttentatContreForcesArmees(); break;
-        case eMission_Pion_ASY_CommettreAttentatContreInstallation : CreateMission_ASY_CommettreAttentatContreInstallation(); break;
-        case eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone : CreateMission_ASY_CommettreExactionsSurPopulationDansZone(); break;
-        case eMission_Pion_ASY_Renseigner : CreateMission_ASY_Renseigner(); break;
         case eMission_Pion_NBC_AnimerUnPlotDeDecontamination : CreateMission_NBC_AnimerUnPlotDeDecontamination(); break;
         case eMission_Pion_NBC_ReconnaitreItineraire : CreateMission_NBC_ReconnaitreItineraire(); break;
         case eMission_Pion_NBC_ReconnaitreZone : CreateMission_NBC_ReconnaitreZone(); break;
@@ -455,6 +449,12 @@ void UnitMissionInterface::CreateInterface()
         case eMission_Pion_RENS_ROIM_SDTI_RenseignerSur : CreateMission_RENS_ROIM_SDTI_RenseignerSur(); break;
         case eMission_Pion_RENS_ROIM_CL289_RenseignerSur : CreateMission_RENS_ROIM_CL289_RenseignerSur(); break;
         case eMission_Pion_TRANS_EtablirGererLiaison : CreateMission_TRANS_EtablirGererLiaison(); break;
+        case eMission_Pion_ASY_SInfiltrer : CreateMission_ASY_SInfiltrer(); break;
+        case eMission_Pion_ASY_CommettreAttentatContrePopulation : CreateMission_ASY_CommettreAttentatContrePopulation(); break;
+        case eMission_Pion_ASY_CommettreAttentatContreForcesArmees : CreateMission_ASY_CommettreAttentatContreForcesArmees(); break;
+        case eMission_Pion_ASY_CommettreAttentatContreInstallation : CreateMission_ASY_CommettreAttentatContreInstallation(); break;
+        case eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone : CreateMission_ASY_CommettreExactionsSurPopulationDansZone(); break;
+        case eMission_Pion_ASY_Renseigner : CreateMission_ASY_Renseigner(); break;
 
         default:
             assert( false );
@@ -3336,87 +3336,6 @@ void UnitMissionInterface::CreateMission_JOINT_AIR_EffectuerRaid()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_ASY_SInfiltrer
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_ASY_SInfiltrer()
-{
-    ASN1T_Mission_Pion_ASY_SInfiltrer& asnMission = *new ASN1T_Mission_Pion_ASY_SInfiltrer();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_sinfiltrer;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_sinfiltrer = &asnMission;
-    CreatePath( asnMission.itineraire, "Itineraire");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_ASY_CommettreAttentatContrePopulation
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_ASY_CommettreAttentatContrePopulation()
-{
-    ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContrePopulation = &asnMission;
-    CreatePath( asnMission.itineraire, "Itineraire");
-    CreatePoint( asnMission.point_repli, "Point repli");
-    CreatePopulationKnowledge( asnMission.population_cible, "Population cible");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreForcesArmees
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreForcesArmees()
-{
-    ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreForcesArmees = &asnMission;
-    CreatePath( asnMission.itineraire, "Itineraire");
-    CreatePoint( asnMission.point_repli, "Point repli");
-    ParamComboBox< ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees_type_attentat_forces_armees >* pSelector_type_attentat_forces_armees = &CreateVarList( asnMission.type_attentat_forces_armees, "Type attentat forces armees");
-    pSelector_type_attentat_forces_armees->AddItem( "Assasinat officier", Mission_Pion_ASY_CommettreAttentatContreForcesArmees_type_attentat_forces_armees::assasinat_officier );
-    pSelector_type_attentat_forces_armees->AddItem( "Destruction composante majeure", Mission_Pion_ASY_CommettreAttentatContreForcesArmees_type_attentat_forces_armees::destruction_composante_majeure );
-    CreateAgentKnowledge( asnMission.unite_cible, "Unite cible");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreInstallation
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreInstallation()
-{
-    ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreInstallation = &asnMission;
-    CreatePath( asnMission.itineraire, "Itineraire");
-    CreatePoint( asnMission.point_repli, "Point repli");
-    CreateObjectKnowledge( asnMission.installation_cible, "Installation cible");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_ASY_CommettreExactionsSurPopulationDansZone
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_ASY_CommettreExactionsSurPopulationDansZone()
-{
-    ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_ASY_Renseigner
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_ASY_Renseigner()
-{
-    ASN1T_Mission_Pion_ASY_Renseigner& asnMission = *new ASN1T_Mission_Pion_ASY_Renseigner();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_renseigner;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_renseigner = &asnMission;
-    CreateAutomate( asnMission.destinataire, "Destinataire");
-}
-
-// -----------------------------------------------------------------------------
 // Name: UnitMissionInterface::CreateMission_NBC_AnimerUnPlotDeDecontamination
 // Created: AGR
 // -----------------------------------------------------------------------------
@@ -3620,5 +3539,86 @@ void UnitMissionInterface::CreateMission_TRANS_EtablirGererLiaison()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_trans_etablir_gerer_liaison = &asnMission;
     CreatePoint( asnMission.position_deploiement, "Position deploiement");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_ASY_SInfiltrer
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_ASY_SInfiltrer()
+{
+    ASN1T_Mission_Pion_ASY_SInfiltrer& asnMission = *new ASN1T_Mission_Pion_ASY_SInfiltrer();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_sinfiltrer;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_sinfiltrer = &asnMission;
+    CreatePath( asnMission.itineraire, "Itineraire");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_ASY_CommettreAttentatContrePopulation
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_ASY_CommettreAttentatContrePopulation()
+{
+    ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContrePopulation = &asnMission;
+    CreatePath( asnMission.itineraire, "Itineraire");
+    CreatePoint( asnMission.point_repli, "Point repli");
+    CreatePopulationKnowledge( asnMission.population_cible, "Population cible");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreForcesArmees
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreForcesArmees()
+{
+    ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreForcesArmees = &asnMission;
+    CreatePath( asnMission.itineraire, "Itineraire");
+    CreatePoint( asnMission.point_repli, "Point repli");
+    ParamComboBox< ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees_type_attentat_forces_armees >* pSelector_type_attentat_forces_armees = &CreateVarList( asnMission.type_attentat_forces_armees, "Type attentat forces armees");
+    pSelector_type_attentat_forces_armees->AddItem( "Assasinat officier", Mission_Pion_ASY_CommettreAttentatContreForcesArmees_type_attentat_forces_armees::assasinat_officier );
+    pSelector_type_attentat_forces_armees->AddItem( "Destruction composante majeure", Mission_Pion_ASY_CommettreAttentatContreForcesArmees_type_attentat_forces_armees::destruction_composante_majeure );
+    CreateAgentKnowledge( asnMission.unite_cible, "Unite cible");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreInstallation
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_ASY_CommettreAttentatContreInstallation()
+{
+    ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreInstallation = &asnMission;
+    CreatePath( asnMission.itineraire, "Itineraire");
+    CreatePoint( asnMission.point_repli, "Point repli");
+    CreateObjectKnowledge( asnMission.installation_cible, "Installation cible");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_ASY_CommettreExactionsSurPopulationDansZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_ASY_CommettreExactionsSurPopulationDansZone()
+{
+    ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_ASY_Renseigner
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_ASY_Renseigner()
+{
+    ASN1T_Mission_Pion_ASY_Renseigner& asnMission = *new ASN1T_Mission_Pion_ASY_Renseigner();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_renseigner;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_asy_renseigner = &asnMission;
+    CreateAutomate( asnMission.destinataire, "Destinataire");
 }
 

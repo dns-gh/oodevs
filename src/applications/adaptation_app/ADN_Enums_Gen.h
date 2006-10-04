@@ -330,9 +330,6 @@ enum E_SMission
     // ABC
     eSMission_Automate_ABC_Debut,
 
-    eSMission_Automate_ABC_ArmerPointDeControle,
-    eSMission_Automate_ABC_OrganiserAccueilColonneRefugies,
-    eSMission_Automate_ABC_ProtegerPC,
     eSMission_Automate_ABC_Appuyer,
     eSMission_Automate_ABC_Attaquer,
     eSMission_Automate_ABC_ContreAttaquer,
@@ -361,6 +358,9 @@ enum E_SMission
     eSMission_Automate_ABC_RecueillirUnite,
     eSMission_Automate_ABC_EscorterUnite,
     eSMission_Automate_ABC_EscorterUnites,
+    eSMission_Automate_ABC_ArmerPointDeControle,
+    eSMission_Automate_ABC_OrganiserAccueilColonneRefugies,
+    eSMission_Automate_ABC_ProtegerPC,
     eSMission_Automate_ABC_AppuyerSurPosition,
 
     eSMission_Automate_ABC_Fin,
@@ -428,7 +428,6 @@ enum E_SMission
     eSMission_Automate_LOG_SeDeployer,
     eSMission_Automate_LOG_AppuyerMouvement,
     eSMission_Automate_LOG_ReconnaitreItineraire,
-    eSMission_Automate_LOG_Surveiller,
     eSMission_Automate_LOG_TransporterUnites,
     eSMission_Automate_LOG_AppuyerMouvementDansZone,
     eSMission_Automate_LOG_MettreEnOeuvreZoneStationnement,
@@ -436,6 +435,7 @@ enum E_SMission
     eSMission_Automate_LOG_BloquerZone,
     eSMission_Automate_LOG_ReconnaitreZoneContaminee,
     eSMission_Automate_LOG_ReconnaitreZoneDeDeploiement,
+    eSMission_Automate_LOG_Surveiller,
     eSMission_Automate_LOG_ArmerPIAs,
 
     eSMission_Automate_LOG_Fin,
@@ -443,8 +443,9 @@ enum E_SMission
     // ASS
     eSMission_Automate_3D_Debut,
 
-    eSMission_Automate_ASA_DefendreZone,
     eSMission_Automate_ASA_DefendreSite,
+    eSMission_Automate_ASA_DefendreZone,
+    eSMission_Automate_ASA_DefendreUnites,
     eSMission_Automate_ASA_Surveiller,
     eSMission_Automate_ASA_DefendreItineraire,
     eSMission_Automate_ASA_MISTRAL_DefendreZone,
@@ -453,7 +454,6 @@ enum E_SMission
     eSMission_Automate_ASA_HAWK_DefendreZone,
     eSMission_Automate_ASA_HAWK_DefendreSite,
     eSMission_Automate_ASA_HAWK_Surveiller,
-    eSMission_Automate_ASA_DefendreUnites,
     eSMission_Automate_ASS_SeDeployer,
     eSMission_Automate_ASS_ReconnaitreZonesDeploiement,
     eSMission_Automate_ASS_AcquerirObjectifs,
@@ -463,10 +463,17 @@ enum E_SMission
     // ALAT
     eSMission_Automate_ALAT_Debut,
 
+    eSMission_Automate_ALAT_AllerSeRecompleter,
+    eSMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
+    eSMission_Automate_ALAT_ExtrairePersonnel,
+    eSMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
+    eSMission_Automate_ALAT_DetruireNeutraliserDansZone,
+    eSMission_Automate_ALAT_DonnerCoupArret,
+    eSMission_Automate_ALAT_AttaquerFormationAeromobile,
+    eSMission_Automate_ALAT_RecueillirFormationAeromobile,
     eSMission_Automate_ALAT_Heliporter,
     eSMission_Automate_ALAT_Jalonner,
     eSMission_Automate_ALAT_Helitransporter,
-    eSMission_Automate_ALAT_ExtrairePersonnel,
     eSMission_Automate_ALAT_Appuyer,
     eSMission_Automate_ALAT_Couvrir,
     eSMission_Automate_ALAT_Surveiller,
@@ -474,13 +481,6 @@ enum E_SMission
     eSMission_Automate_ALAT_Freiner,
     eSMission_Automate_ALAT_Escorter,
     eSMission_Automate_ALAT_Attaquer,
-    eSMission_Automate_ALAT_RecueillirFormationAeromobile,
-    eSMission_Automate_ALAT_AttaquerFormationAeromobile,
-    eSMission_Automate_ALAT_DonnerCoupArret,
-    eSMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
-    eSMission_Automate_ALAT_DetruireNeutraliserDansZone,
-    eSMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
-    eSMission_Automate_ALAT_AllerSeRecompleter,
 
     eSMission_Automate_ALAT_Fin,
 

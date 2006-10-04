@@ -97,13 +97,11 @@ void AGR_EnumGenerator::GenerateEnumFile( const AGR_Workspace& workspace, const 
     for( AGR_Workspace::CIT_Mission_Vector it = workspace.Missions().begin(); it != workspace.Missions().end(); ++it )
     {
         const AGR_Mission& mission = **it;
-        const std::string strEntry = "    " + mission.EnumName() + ",\n";
-        if( mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) )
-            strAutomataMissionList += strEntry;
-        else if( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) )
-            strPopulationMissionList += strEntry;
-        else
-            strUnitMissionList += strEntry;
+        std::string& strList = mission.IsOfMissionType( AGR_Mission::eMissionAutomate ) ? strAutomataMissionList
+                           : ( mission.IsOfMissionType( AGR_Mission::eMissionPopulation ) ? strPopulationMissionList
+                           : strUnitMissionList );
+        const std::string strEntry = "    " + mission.EnumName() + ( strList.empty() ? " = 1" : "" ) + ",\n";
+        strList += strEntry;
     }
 
     for( AGR_Workspace::CIT_FragOrder_Vector it = workspace.FragOrders().begin(); it != workspace.FragOrders().end(); ++it )

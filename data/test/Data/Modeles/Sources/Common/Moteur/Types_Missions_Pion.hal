@@ -1151,43 +1151,6 @@ T_ListePoints itineraire_;
 T_Localisation zone_;
 };
 
-typedef struct T_Mission_Pion_ASY_SInfiltrer : T_Mission_Pion
-{
-T_ListePoints itineraire_;
-};
-
-typedef struct T_Mission_Pion_ASY_CommettreAttentatContrePopulation : T_Mission_Pion
-{
-T_ListePoints itineraire_;
-T_Point pointRepli_;
-T_ConnaissancePopulation populationCible_;
-};
-
-typedef struct T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees : T_Mission_Pion
-{
-T_ListePoints itineraire_;
-T_Point pointRepli_;
-id typeAttentatForcesArmees_;
-T_ConnaissanceAgent uniteCible_;
-};
-
-typedef struct T_Mission_Pion_ASY_CommettreAttentatContreInstallation : T_Mission_Pion
-{
-T_ListePoints itineraire_;
-T_Point pointRepli_;
-T_ConnaissanceObjet installationCible_;
-};
-
-typedef struct T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone : T_Mission_Pion
-{
-T_Localisation zone_;
-};
-
-typedef struct T_Mission_Pion_ASY_Renseigner : T_Mission_Pion
-{
-T_Automate destinataire_;
-};
-
 typedef struct T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination : T_Mission_Pion
 {
 T_Point positionSiteDecontamination_;
@@ -1273,5 +1236,42 @@ T_ListeLocalisations zonesDeRecherche_;
 typedef struct T_Mission_Pion_TRANS_EtablirGererLiaison : T_Mission_Pion
 {
 T_Point positionDeploiement_;
+};
+
+typedef struct T_Mission_Pion_ASY_SInfiltrer : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+};
+
+typedef struct T_Mission_Pion_ASY_CommettreAttentatContrePopulation : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_Point pointRepli_;
+T_ConnaissancePopulation populationCible_;
+};
+
+typedef struct T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_Point pointRepli_;
+id typeAttentatForcesArmees_;
+T_ConnaissanceAgent uniteCible_;
+};
+
+typedef struct T_Mission_Pion_ASY_CommettreAttentatContreInstallation : T_Mission_Pion
+{
+T_ListePoints itineraire_;
+T_Point pointRepli_;
+T_ConnaissanceObjet installationCible_;
+};
+
+typedef struct T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone : T_Mission_Pion
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Pion_ASY_Renseigner : T_Mission_Pion
+{
+T_Automate destinataire_;
 };
 

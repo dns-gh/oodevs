@@ -30,7 +30,6 @@ Decisions::Decisions( Controller& controller, const Agent_ABC& agent )
     , bEmbraye_( false )
     , lastOrderId_( unsigned( -1 ) )
     , current_( 0 )
-    , next_( 0 )
 {
     // NOTHING
 }
@@ -62,8 +61,9 @@ void Decisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
     lastOrderId_ = message.order_id;
-    // $$$$ AGE 2006-09-07: needs a tools::convert
-//    next_ = & GetDecisionalModel().Resolver_ABC< Mision >::Get( message.mission.t - 1 );
+    const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
+    current_ = & resolver.Get( message.mission.t );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,9 +72,9 @@ void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 // -----------------------------------------------------------------------------
 void Decisions::DoUpdate( const ASN1T_MsgPionOrderAck& message )
 {
-    if( message.order_id == lastOrderId_ )
+    if( message.error_code && message.order_id == lastOrderId_ )
     {
-        current_ = next_;
+        current_ = 0;
         controller_.Update( *this );
     }
 }

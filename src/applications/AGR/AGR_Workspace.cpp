@@ -165,6 +165,22 @@ void AGR_Workspace::Read( MT_XXmlInputArchive& input, const std::string& strModu
         if( pClass )
             pClass->SetLowName( it->second );
     }
+
+    // sort missions
+    T_Mission_Vector sortedMissions;
+    for( CIT_OrderedMissions it = automatMissions_.begin(); it != automatMissions_.end(); ++it )
+        if( AGR_Mission* mission = FindMission( *it ) )
+            sortedMissions.push_back( mission );
+    for( CIT_OrderedMissions it = pawnMissions_.begin(); it != pawnMissions_.end(); ++it )
+        if( AGR_Mission* mission = FindMission( *it ) )
+            sortedMissions.push_back( mission );
+    for( CIT_OrderedMissions it = populationMissions_.begin(); it != populationMissions_.end(); ++it )
+        if( AGR_Mission* mission = FindMission( *it ) )
+            sortedMissions.push_back( mission );
+    for( CIT_Mission_Vector it = missionList_.begin(); it != missionList_.end(); ++it )
+        if( std::find( sortedMissions.begin(), sortedMissions.end(), *it ) == sortedMissions.end() )
+            sortedMissions.push_back( *it );
+    std::swap( sortedMissions, missionList_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,6 +293,8 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
         // A MISSION ENUMERATION
         if( strTypeName.substr( 0, 8 ) == "Mission_" )
         {
+            T_OrderedMissions& orderedMissions = strTypeName == "Mission_Population" ? populationMissions_
+                                             : ( strTypeName == "Mission_Automate" ? automatMissions_ : pawnMissions_ );
             // this should define the lower name for the missions
             while( input.NextListElement() )
             {
@@ -285,6 +303,9 @@ void AGR_Workspace::ReadComplexType( MT_XXmlInputArchive& input, const std::stri
                 std::string strMissionName;
                 input.ReadAttribute( "name", strLowName );
                 input.ReadAttribute( "type", strMissionName );
+                // files may be parsed more than once...
+                if( std::find( orderedMissions.begin(), orderedMissions.end(), strMissionName ) == orderedMissions.end() )
+                    orderedMissions.push_back( strMissionName );
                 AGR_Mission* pMission = FindMission( strMissionName );
                 if( pMission != 0 )
                     pMission->SetLowName( strLowName );
