@@ -26,7 +26,6 @@ class MIL_AutomateLOG;
 class MIL_CampPrisonniers;
 class MIL_CampRefugies;
 class MIL_AgentTypePion;
-class NET_AS_MOSServer;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_AutomateDecision;

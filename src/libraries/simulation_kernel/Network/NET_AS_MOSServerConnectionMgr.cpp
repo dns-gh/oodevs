@@ -13,7 +13,6 @@
 
 #include "NET_AS_MOSServerConnectionMgr.h"
 
-#include "NET_Def.h"
 #include "NET_AS_MOSServerMsgMgr.h"
 #include "NET_AgentServer.h"
 #include "MIL_AgentServer.h"
@@ -28,25 +27,12 @@ using namespace NEK;
 NET_AS_MOSServerConnectionMgr::NET_AS_MOSServerConnectionMgr( NET_AgentServer& agentServer )
     : NET_AS_MOSServerMgr_ABC( agentServer )
     , pServer_               ( 0 )
+    , connectionService_     ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), agentServer.GetMagicAS_MOS() )
 {
-    DIN_ConnectorHost connector( eConnector_SIM_MOS );
-
-    pConnService_ = new DIN_ConnectionServiceServerUserCbk< NET_AS_MOSServerConnectionMgr >( 
-                                      *this
-                                    , agentServer_.GetDINEngine()
-                                    , connector
-                                    , agentServer_.GetConnectionProtocols()
-                                    , eConnMagicMOSServerAgentServer
-                                    , "Agent server for MOS server"
-                                    , false );
-
-    pConnService_->SetCbkOnConnectionReceived( & NET_AS_MOSServerConnectionMgr::OnConnectionReceived    );
-    pConnService_->SetCbkOnConnectionFailed  ( & NET_AS_MOSServerConnectionMgr::OnBadConnectionReceived );
-    pConnService_->SetCbkOnConnectionLost    ( & NET_AS_MOSServerConnectionMgr::OnConnectionLost        );
-    pConnService_->SetCbkOnWantFreeStationID ( & NET_AS_MOSServerConnectionMgr::OnWantFreeStationID     );
-    pConnService_->SetCbkOnReleaseStationID  ( & NET_AS_MOSServerConnectionMgr::OnReleaseStationID      );
+    connectionService_.SetCbkOnConnectionReceived( & NET_AS_MOSServerConnectionMgr::OnConnectionReceived    );
+    connectionService_.SetCbkOnConnectionFailed  ( & NET_AS_MOSServerConnectionMgr::OnBadConnectionReceived );
+    connectionService_.SetCbkOnConnectionLost    ( & NET_AS_MOSServerConnectionMgr::OnConnectionLost        );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerConnectionMgr destructor
@@ -56,8 +42,6 @@ NET_AS_MOSServerConnectionMgr::~NET_AS_MOSServerConnectionMgr()
 {
     if( pServer_ )
         StopServer();
-
-    delete pConnService_;
 }
 
 //=============================================================================
@@ -78,8 +62,7 @@ bool NET_AS_MOSServerConnectionMgr::StartServer()
     }
 
     NEK_AddressINET addr( agentServer_.GetPortAS_MOS() );
-    pServer_ = &pConnService_->CreateHost( addr, "Agent server for MOS server" );
-
+    pServer_ = &connectionService_.CreateHost( addr, "Agent server for MOS server" );
     return true;
 }
 
@@ -95,7 +78,7 @@ bool NET_AS_MOSServerConnectionMgr::StopServer()
         MT_LOG_ERROR_MSG( "Server not started" );
         return false;
     }
-    bool bOut = pConnService_->DestroyHost( *pServer_ );
+    bool bOut = connectionService_.DestroyHost( *pServer_ );
     assert( bOut );
 
     pServer_ = 0;
@@ -117,7 +100,6 @@ void NET_AS_MOSServerConnectionMgr::OnConnectionReceived( DIN_Server& /*server*/
     agentServer_.GetMessageMgr().Enable( link );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerConnectionMgr::OnBadConnectionReceived
 // Created: NLD 2002-07-12
@@ -126,7 +108,6 @@ void NET_AS_MOSServerConnectionMgr::OnBadConnectionReceived( DIN_Server& /*serve
 {
     MT_LOG_INFO_MSG( MT_FormatString( "AS <- MOS - Bad connection received from %s (reason : %s)", address.GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerConnectionMgr::OnConnectionLost
@@ -139,43 +120,6 @@ void NET_AS_MOSServerConnectionMgr::OnConnectionLost( DIN_Server& /*server*/, DI
     RemoveConnection( link );
     agentServer_.GetMessageMgr().DeleteMessagesFrom( link );
     // $$$$ AGE 2005-06-23: MsgManager.TrashMessagesFrom( link );
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerConnectionMgr::OnWantFreeStationID
-// Created: NLD 2003-04-16
-//-----------------------------------------------------------------------------
-DIN_StationID NET_AS_MOSServerConnectionMgr::OnWantFreeStationID( DIN_StationID nForcedStationID )
-{
-    if( agentServer_.GetDINEngine().GetStationID() == DIN_NULL_STATION_ID )
-    {
-        assert( nForcedStationID == DIN_NULL_STATION_ID );
-        // NB : affectation de l'id locale
-        DIN_StationID nLocalStationID = MIL_AgentServer::GetWorkspace().GetExerciceID() + 5000; //$$$ NLD - Pourquoi j'ai fait ça ??
-        bool bOut = stationIDManager_.LockIdentifier( nLocalStationID );
-        assert( bOut );
-        return nLocalStationID;
-    }
-
-    if( nForcedStationID != DIN_NULL_STATION_ID )
-    {
-        if( stationIDManager_.LockIdentifier( nForcedStationID ) )
-            return nForcedStationID;
-        else
-            return DIN_NULL_STATION_ID;
-    }        
-    else
-        return stationIDManager_.GetFreeIdentifier();
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerConnectionMgr::OnReleaseStationID
-// Created: NLD 2003-04-16
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerConnectionMgr::OnReleaseStationID( DIN_StationID nStationID )
-{
-    stationIDManager_.ReleaseIdentifier( nStationID );
 }
 
 //=============================================================================

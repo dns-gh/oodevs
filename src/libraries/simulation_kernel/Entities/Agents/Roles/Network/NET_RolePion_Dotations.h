@@ -22,7 +22,6 @@ class PHY_Dotation;
 class MIL_AgentPion;
 class NET_ASN_MsgUnitDotations;
 class NET_ASN_MsgUnitAttributes;
-class NET_AS_MOSServer;
 
 // =============================================================================
 // @class  NET_RolePion_Dotations

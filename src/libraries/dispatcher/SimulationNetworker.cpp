@@ -28,7 +28,7 @@ using namespace NEK;
 // -----------------------------------------------------------------------------
 SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::string& strHostName, unsigned short nPort )
     : Networker_ABC     ( dispatcher )
-    , connectionService_( *this, dinEngine_, DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 1 )
+    , connectionService_( *this, dinEngine_, DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 2 )
     , messageService_   ( *this, dinEngine_, DIN_ConnectorGuest() )
     , pSimulation_      ( 0 )
     , simulationAddress_( strHostName, nPort )
@@ -46,7 +46,7 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
     messageService_.RegisterReceivedMessage( eMsgKnowledgeGroup                        , *this, &SimulationNetworker::OnReceiveMsgKnowledgeGroup                         );
     messageService_.RegisterReceivedMessage( eMsgArmy                                  , *this, &SimulationNetworker::OnReceiveMsgArmy                                   );
     messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, &SimulationNetworker::OnReceiveMsgDebugDrawPoints                        );
-    // eMsgEnvironmentType
+    messageService_.RegisterReceivedMessage( eMsgEnvironmentType                       , *this, &SimulationNetworker::OnReceiveMsgEnvironmentType                        );
     messageService_.RegisterReceivedMessage( eMsgPopulationCollision                   , *this, &SimulationNetworker::OnReceiveMsgPopulationCollision                    );
 
     connectionService_.SetCbkOnConnectionSuccessful( &SimulationNetworker::OnConnected      );
@@ -113,7 +113,6 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
     void SimulationNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )    \
     {                                                                                              \
         assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );  \
-        MT_LOG_INFO_MSG( "Receiving DIN msg " << eMsg##MSG << " from simulation" ); \
         pSimulation_->OnReceive( eMsg##MSG, msg );                                                 \
     }
 
@@ -128,6 +127,7 @@ DECLARE_DIN_CALLBACK( PopulationFlowInterVisibility          )
 DECLARE_DIN_CALLBACK( KnowledgeGroup                         )
 DECLARE_DIN_CALLBACK( Army                                   )
 DECLARE_DIN_CALLBACK( DebugDrawPoints                        )
+DECLARE_DIN_CALLBACK( EnvironmentType                        )
 DECLARE_DIN_CALLBACK( PopulationCollision                    )
 
 // -----------------------------------------------------------------------------

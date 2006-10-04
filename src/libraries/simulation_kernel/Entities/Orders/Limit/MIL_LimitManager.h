@@ -29,7 +29,7 @@ public:
     
     //! @name Network
     //@{
-    void       SendStateToNewClient    ( NET_AS_MOSServer& connection ) const;
+    void       SendStateToNewClient    () const;
     MIL_Limit* OnReceiveMsgCreateLimit ( const ASN1T_MsgLimitCreation&    asnMsg, MIL_MOSContextID nCtx );
     void       OnReceiveMsgDestroyLimit( const ASN1T_MsgLimitDestruction& asnMsg, MIL_MOSContextID nCtx );
     void       OnReceiveMsgUpdateLimit ( const ASN1T_MsgLimitUpdate&      asnMsg, MIL_MOSContextID nCtx );

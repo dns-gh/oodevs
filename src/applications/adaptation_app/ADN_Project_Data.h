@@ -122,8 +122,6 @@ public:
     public:
         ADN_Type_Int nServerPort_;
         ADN_Type_Int nServerMagic_;
-        ADN_Type_Int nLauncherPort_;
-        ADN_Type_Int nLauncherMagic_;
         ADN_Type_Bool bNetworkThreadActive_;
     };
 

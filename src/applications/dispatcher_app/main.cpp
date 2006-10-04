@@ -12,6 +12,8 @@
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 #include "dispatcher/Dispatcher.h"
 
+#include <windows.h> //$$$ A VIRER
+
 using namespace dispatcher;
 
 //-----------------------------------------------------------------------------
@@ -31,7 +33,10 @@ int main( int nArgc, char* pArgv[] )
     Dispatcher dispatcher;
 
     while( 1 )
+    {
+        ::Sleep( 0 );
         dispatcher.Update();
+    }
 
 
     //     __try

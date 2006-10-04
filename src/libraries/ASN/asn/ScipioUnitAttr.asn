@@ -26,11 +26,11 @@ EquipementEmprunte ::= SEQUENCE
 MsgUnitDotations ::= SEQUENCE 
 {
     oid-pion               Agent,
-    dotation-eff-personnel SEQUENCE OF DotationPersonnel    OPTIONAL, -- Dotations effectives du pion
-    dotation-eff-materiel  SEQUENCE OF DotationEquipement   OPTIONAL,
-    dotation-eff-ressource SEQUENCE OF DotationRessource    OPTIONAL,    
-    equipements-pretes     SEQUENCE OF EquipementPrete      OPTIONAL,
-    equipements-empruntes  SEQUENCE OF EquipementEmprunte   OPTIONAL
+    dotation-eff-personnel SEQUENCE OF DotationPersonnel    OPTIONAL, -- Dotations effectives du pion DELTA
+    dotation-eff-materiel  SEQUENCE OF DotationEquipement   OPTIONAL, -- DELTA
+    dotation-eff-ressource SEQUENCE OF DotationRessource    OPTIONAL, -- DELTA
+    equipements-pretes     SEQUENCE OF EquipementPrete      OPTIONAL, -- FULL
+    equipements-empruntes  SEQUENCE OF EquipementEmprunte   OPTIONAL  -- FULL
 }
 
 -- Personnel

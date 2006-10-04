@@ -30,16 +30,6 @@ uint NET_AgentServer::GetMagicAS_MOS() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_AgentServer::GetConnectionProtocols
-// Created: JVT 02-10-30
-//-----------------------------------------------------------------------------
-inline
-DIN::DIN_ConnectionProtocols& NET_AgentServer::GetConnectionProtocols()
-{
-    return connectionProtocols_;
-}
-
-//-----------------------------------------------------------------------------
 // Name: NET_AgentServer::GetDINEngine
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------

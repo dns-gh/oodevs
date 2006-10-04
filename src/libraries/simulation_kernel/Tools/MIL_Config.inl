@@ -289,3 +289,23 @@ bool MIL_Config::IsDataTestMode() const
 {
     return bDataTestMode_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsDispatcherEmbedded
+// Created: NLD 2006-10-04
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsDispatcherEmbedded() const
+{
+    return bEmbeddedDispatcher_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::SetEmbeddedDispatcher
+// Created: NLD 2006-10-04
+// -----------------------------------------------------------------------------
+inline
+void MIL_Config::SetEmbeddedDispatcher( bool bEnabled )
+{
+    bEmbeddedDispatcher_ = bEnabled;
+}

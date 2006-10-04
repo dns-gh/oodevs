@@ -15,11 +15,9 @@
 
 #include "MIL_AgentServer.h"
 
-#include "NET_Def.h"
 #include "NET_AS_MOSServer.h"
 #include "NET_AS_MOSServerConnectionMgr.h"
 #include "NET_ASN_Messages.h"
-#include "NET_ASN_MsgsMosSimWithContextController.h"
 
 #include "Entities/Orders/Lima/MIL_LimaManager.h"
 #include "Entities/Orders/Limit/MIL_LimitManager.h"
@@ -30,26 +28,54 @@
 
 using namespace DIN;
 
+//! @name DIN Messages
+//@{
+static enum  
+{
+    eMsgOutSim                                 = 0,
+    eMsgInSim                                  = 1,
+
+    eMsgOutClient                              = 2,
+    eMsgInClient                               = 3,
+
+    eMsgEnableUnitVisionCones                  = 1000,
+    eMsgDisableUnitVisionCones                 = 1001,
+    eMsgUnitMagicAction                        = 1002,
+    eMsgEnableProfiling                        = 1003,
+    eMsgDisableProfiling                       = 1004,
+    eMsgUnitVisionCones                        = 1005,
+    eMsgTrace                                  = 1006,
+    eMsgInit                                   = 1007,
+    eMsgProfilingValues                        = 1008,
+    eMsgUnitInterVisibility                    = 1009,
+    eMsgObjectInterVisibility                  = 1010,
+    eMsgPopulationConcentrationInterVisibility = 1011,
+    eMsgPopulationFlowInterVisibility          = 1012,
+    eMsgKnowledgeGroup                         = 1013,
+    eMsgArmy                                   = 1014,
+    eMsgDebugDrawPoints                        = 1015,
+    eMsgEnvironmentType                        = 1016,
+    eMsgPopulationCollision                    = 1017
+};
+//@}
+
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
 NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
     : NET_AS_MOSServerMgr_ABC( agentServer )
+    , messageService_        ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost() )
 {
-    DIN_ConnectorHost connector( eConnector_SIM_MOS );
-    pMessageService_ = new DIN_MessageServiceUserCbk<NET_AS_MOSServerMsgMgr>( *this, agentServer.GetDINEngine(), connector, "Msgs MOS Server -> Agent Server" );
+    messageService_.RegisterReceivedMessage( eMsgInSim                 , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim                 );
+    messageService_.RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableUnitVisionCones  );
+    messageService_.RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones );
+    messageService_.RegisterReceivedMessage( eMsgEnableProfiling       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling        );
+    messageService_.RegisterReceivedMessage( eMsgDisableProfiling      , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableProfiling       );
+    messageService_.RegisterReceivedMessage( eMsgUnitMagicAction       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgUnitMagicAction        );
+    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints        );
 
-    pMessageService_->RegisterReceivedMessage( eMsgMosSim                , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSim                 );
-    pMessageService_->RegisterReceivedMessage( eMsgMosSimWithContext     , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSimWithContext      );
-    pMessageService_->RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableUnitVisionCones  );
-    pMessageService_->RegisterReceivedMessage( eMsgDisableUnitVisionCones, *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableUnitVisionCones );
-    pMessageService_->RegisterReceivedMessage( eMsgEnableProfiling       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgEnableProfiling        );
-    pMessageService_->RegisterReceivedMessage( eMsgDisableProfiling      , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDisableProfiling       );
-    pMessageService_->RegisterReceivedMessage( eMsgUnitMagicAction       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgUnitMagicAction        );
-    pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints       , *this, & NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints        );
-
-    pMessageService_->SetCbkOnError( & NET_AS_MOSServerMsgMgr::OnError );
+    messageService_.SetCbkOnError( & NET_AS_MOSServerMsgMgr::OnError );
 }
 
 //-----------------------------------------------------------------------------
@@ -58,7 +84,6 @@ NET_AS_MOSServerMsgMgr::NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer )
 //-----------------------------------------------------------------------------
 NET_AS_MOSServerMsgMgr::~NET_AS_MOSServerMsgMgr()
 {
-    delete pMessageService_;    
 }
 
 //=============================================================================
@@ -72,7 +97,7 @@ NET_AS_MOSServerMsgMgr::~NET_AS_MOSServerMsgMgr()
 void NET_AS_MOSServerMsgMgr::Enable( DIN_Link& link)
 {
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    pMessageService_->Enable( link );
+    messageService_.Enable( link );
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +107,7 @@ void NET_AS_MOSServerMsgMgr::Enable( DIN_Link& link)
 void NET_AS_MOSServerMsgMgr::Disable( DIN_Link& link )
 {
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    pMessageService_->Disable( link );
+    messageService_.Disable( link );
 }
 
 //=============================================================================
@@ -98,7 +123,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgToAllMos( uint nMsgID, DIN::DIN_BufferedMess
     const T_MosConnectionMap& connections = agentServer_.GetConnectionMgr().GetMosConnections();
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
     for( CIT_MosConnectionMap itConnection = connections.begin(); itConnection != connections.end(); ++itConnection )
-        pMessageService_->Send( itConnection->second->GetLink(), nMsgID, msg );    
+        messageService_.Send( itConnection->second->GetLink(), nMsgID, msg );    
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +135,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgToAllMosLight( uint nMsgID, DIN::DIN_Buffere
     const T_MosConnectionMap& connections = agentServer_.GetConnectionMgr().GetMosLightConnections();
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
     for( CIT_MosConnectionMap itConnection = connections.begin(); itConnection != connections.end(); ++itConnection )
-        pMessageService_->Send( itConnection->second->GetLink(), nMsgID, msg );    
+        messageService_.Send( itConnection->second->GetLink(), nMsgID, msg );    
 }
 
 //-----------------------------------------------------------------------------
@@ -136,17 +161,6 @@ void NET_AS_MOSServerMsgMgr::DeleteMessagesFrom( DIN_Link& dinLink )
             {
                 delete *it;
                 it = messageControllerList_.erase( it );
-            }
-            else
-                ++it;
-    }
-    {
-        MT_CriticalSectionLocker lockerWithCtxList( ctlWithCtxListCriticalSection_ );
-        for( T_MessageWithCtxControllerVector::iterator it = messageWithCtxControllerList_.begin(); it != messageWithCtxControllerList_.end(); )
-            if( (**it).GetLink() == &dinLink )
-            {
-                delete *it;
-                it = messageWithCtxControllerList_.erase( it );
             }
             else
                 ++it;
@@ -208,7 +222,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN_Link& /*linkFrom*/
 void NET_AS_MOSServerMsgMgr::SendMsgInit( NET_AS_MOSServer& mosServer, DIN_BufferedMessage& msg )
 {
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    pMessageService_->Send( mosServer.GetLink(), eMsgInit, msg );
+    messageService_.Send( mosServer.GetLink(), eMsgInit, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -315,45 +329,13 @@ void NET_AS_MOSServerMsgMgr::SendMsgEnvironmentType( DIN::DIN_BufferedMessage& m
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgSimMosWithContext
+// Name: NET_AS_MOSServerMsgMgr::SendMsgOutSim
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgSimMosWithContext( ASN1T_MsgsSimMosWithContext& asnMsg, MIL_MOSContextID nCtx, NET_AS_MOSServer* pMOS )
-{
-    // Create the asn msg buffer
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-    
-    ASN1C_MsgsSimMosWithContext asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
-    if( asnMsgCtrl.Encode() != ASN_OK )
-    {
-        asnPEREncodeBuffer.PrintErrorInfo();
-        assert( false ); //$$$ TMP
-        return;
-    }
-
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg << nCtx;
-
-    dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
-    if( pMOS )
-    {
-        MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-        pMessageService_->Send( pMOS->GetLink(),  eMsgSimMosWithContext, dinMsg );
-    }
-    else
-        SendMsgToAll( eMsgSimMosWithContext, dinMsg );
-
-    
-}
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgSimMos
-// Created: NLD 2003-02-24
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgSimMos( ASN1T_MsgsSimMos& asnMsg, NET_AS_MOSServer* pMOS )
+void NET_AS_MOSServerMsgMgr::SendMsgOutSim( ASN1T_MsgsOutSim& asnMsg )
 {
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-    ASN1C_MsgsSimMos asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
+    ASN1C_MsgsOutSim asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
         asnPEREncodeBuffer.PrintErrorInfo();
@@ -364,13 +346,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgSimMos( ASN1T_MsgsSimMos& asnMsg, NET_AS_MOS
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    if( pMOS )
-    {
-        MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-        pMessageService_->Send( pMOS->GetLink(),  eMsgSimMosWithContext, dinMsg );
-    }
-    else
-        SendMsgToAll( eMsgSimMos, dinMsg );
+    SendMsgToAll( eMsgOutSim, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,8 +387,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
     NET_ASN_MsgCtrlSendCurrentStateBegin asnMsgStateBegin;
     asnMsgStateBegin.Send();
     
-    workspace.GetLimaManager  ().SendStateToNewClient( connection );
-    workspace.GetLimitManager ().SendStateToNewClient( connection );
+    workspace.GetLimaManager  ().SendStateToNewClient();
+    workspace.GetLimitManager ().SendStateToNewClient();
     workspace.GetEntityManager().SendStateToNewClient();
     
     NET_ASN_MsgCtrlSendCurrentStateEnd asnMsgStateEnd;
@@ -486,16 +462,16 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactor( const ASN1T_MsgCt
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSim
+// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSim( DIN_Link& linkFrom, DIN_Input& input )
+void NET_AS_MOSServerMsgMgr::OnReceiveMsgInSim( DIN_Link& linkFrom, DIN_Input& input )
 {
     uint nAsnMsgSize = input.GetAvailable();
     assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
 
     // Get a MessageController
-    NET_ASN_MsgsMosSimController& msgCtrl = *new NET_ASN_MsgsMosSimController( aASNDecodeBuffer_, sizeof( aASNDecodeBuffer_ ) );
+    NET_ASN_MsgsInSimController& msgCtrl = *new NET_ASN_MsgsInSimController( aASNDecodeBuffer_, sizeof( aASNDecodeBuffer_ ) );
     msgCtrl.SetLink( linkFrom );
     // Fill the asn buffer array
     memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize);
@@ -512,7 +488,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSim( DIN_Link& linkFrom, DIN_Input& 
 #ifdef _DEBUG
     std::cout << "BEGIN MSG DUMP =>" << std::endl;
     msgCtrl.SetTrace( true );
-    msgCtrl.Print( "Receiving MsgsMosSim" );
+    msgCtrl.Print( "Receiving MsgsInSim" );
     std::cout << "END MSG DUMP =>" << std::endl;
 #endif
 
@@ -521,143 +497,69 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSim( DIN_Link& linkFrom, DIN_Input& 
     messageControllerList_.push_back( &msgCtrl );
 }
 
-
-
-//-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSimWithContext
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgMosSimWithContext( DIN_Link& linkFrom, DIN_Input& input )
-{
-    MIL_MOSContextID nCtx;
-    input >> nCtx;
-
-    uint nAsnMsgSize = input.GetAvailable();
-    assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
-
-    // Get a MessageController
-    NET_ASN_MsgsMosSimWithContextController& msgCtrl = *new NET_ASN_MsgsMosSimWithContextController( aASNDecodeBuffer_, sizeof( aASNDecodeBuffer_ ) );
-    msgCtrl.SetLink( linkFrom );
-
-    // Fill the asn buffer array
-    memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize);
-
-    // Decode
-    if( msgCtrl.Decode( nCtx ) != ASN_OK )
-    {
-        msgCtrl.PrintErrorInfo();
-        delete &msgCtrl;
-        assert( false ); //$$$ TMP
-        return;
-    }
-
-#ifdef _DEBUG
-    std::cout << "BEGIN MSG DUMP =>" << std::endl;
-    msgCtrl.SetTrace( true );
-    msgCtrl.Print( "Receiving MsgsMosSim" );
-    std::cout << "END MSG DUMP =>" << std::endl;
-#endif
-
-    // Mutex Lock
-    MT_CriticalSectionLocker locker( ctlWithCtxListCriticalSection_ );
-
-    // Enqueue the message
-    messageWithCtxControllerList_.push_back( &msgCtrl );
-}
-
-
 // -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::DoUpdate
 // Created: AGE 2004-02-03
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::DoUpdate()
 {
-    T_MessageWithCtxControllerVector withContextMessages;
-    {
-        MT_CriticalSectionLocker locker( ctlWithCtxListCriticalSection_ );
-        withContextMessages = messageWithCtxControllerList_;
-        messageWithCtxControllerList_.clear();
-    }
-    DoUpdateWithContext( withContextMessages );
-
     T_MessageControllerVector noContextMessages;
     {
         MT_CriticalSectionLocker locker( ctlListCriticalSection_ );
         noContextMessages = messageControllerList_;
         messageControllerList_.clear();
     }
-    DoUpdateNoContext( noContextMessages );
+    DoUpdate( noContextMessages );
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::DoUpdateWithContext
+// Name: NET_AS_MOSServerMsgMgr::DoUpdate
 // Created: AGE 2004-02-03
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::DoUpdateWithContext( const T_MessageWithCtxControllerVector& messages )
-{
-    MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
-    for( CIT_MessageWithCtxControllerVector it = messages.begin(); it != messages.end(); ++it )
-    {
-        assert( *it );
-        NET_ASN_MsgsMosSimWithContextController& msgCtrl = **it;
-        ASN1T_MsgsMosSimWithContext& asnMsg = msgCtrl.GetMessage();
-        MIL_MOSContextID nCtx = msgCtrl.GetContext();
-        switch( asnMsg.t )
-        {
-            case T_MsgsMosSimWithContext_msg_limit_creation                     : workspace.GetLimitManager ().OnReceiveMsgCreateLimit          ( *asnMsg.u.msg_limit_creation                  , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_limit_destruction                  : workspace.GetLimitManager ().OnReceiveMsgDestroyLimit         (  asnMsg.u.msg_limit_destruction               , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_limit_update                       : workspace.GetLimitManager ().OnReceiveMsgUpdateLimit          ( *asnMsg.u.msg_limit_update                    , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_lima_creation                      : workspace.GetLimaManager  ().OnReceiveMsgCreateLima           ( *asnMsg.u.msg_lima_creation                   , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_lima_destruction                   : workspace.GetLimaManager  ().OnReceiveMsgDestroyLima          (  asnMsg.u.msg_lima_destruction                , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_lima_update                        : workspace.GetLimaManager  ().OnReceiveMsgUpdateLima           ( *asnMsg.u.msg_lima_update                     , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_pion_order                         : workspace.GetEntityManager().OnReceiveMsgPionOrder            ( *asnMsg.u.msg_pion_order                      , nCtx ); break;         
-            case T_MsgsMosSimWithContext_msg_order_conduite                     : workspace.GetEntityManager().OnReceiveMsgOrderConduite        ( *asnMsg.u.msg_order_conduite                  , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_automate_order                     : workspace.GetEntityManager().OnReceiveMsgAutomateOrder        ( *asnMsg.u.msg_automate_order                  , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_population_order                   : workspace.GetEntityManager().OnReceiveMsgPopulationOrder      ( *asnMsg.u.msg_population_order                , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_population_magic_action            : workspace.GetEntityManager().OnReceiveMsgPopulationMagicAction( *asnMsg.u.msg_population_magic_action         , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_set_automate_mode                  : workspace.GetEntityManager().OnReceiveMsgSetAutomateMode      ( *asnMsg.u.msg_set_automate_mode               , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_unit_magic_action                  : workspace.GetEntityManager().OnReceiveMsgUnitMagicAction      ( *asnMsg.u.msg_unit_magic_action               , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_object_magic_action                : workspace.GetEntityManager().OnReceiveMsgObjectMagicAction    ( *asnMsg.u.msg_object_magic_action             , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_change_diplomatie                  : workspace.GetEntityManager().OnReceiveMsgChangeDiplomacy      ( *asnMsg.u.msg_change_diplomatie               , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_change_groupe_connaissance         : workspace.GetEntityManager().OnReceiveMsgChangeKnowledgeGroup ( *asnMsg.u.msg_change_groupe_connaissance      , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_change_automate                    : workspace.GetEntityManager().OnReceiveMsgChangeAutomate       ( *asnMsg.u.msg_change_automate                 , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_change_liens_logistiques           : workspace.GetEntityManager().OnReceiveMsgChangeLogisticLinks  ( *asnMsg.u.msg_change_liens_logistiques        , nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_log_ravitaillement_change_quotas   : workspace.GetEntityManager().OnReceiveMsgLogSupplyChangeQuotas( *asnMsg.u.msg_log_ravitaillement_change_quotas, nCtx ); break;
-            case T_MsgsMosSimWithContext_msg_log_ravitaillement_pousser_flux    : workspace.GetEntityManager().OnReceiveMsgLogSupplyPushFlow    ( *asnMsg.u.msg_log_ravitaillement_pousser_flux , nCtx ); break;
-                
-            default:
-                assert( false );
-        }
-        delete &msgCtrl;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::DoUpdateNoContext
-// Created: AGE 2004-02-03
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::DoUpdateNoContext( const T_MessageControllerVector& messages )
+void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageControllerVector& messages )
 {
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
     for( CIT_MessageControllerVector it = messages.begin(); it != messages.end(); ++it )
     {
         assert( *it );
-        NET_ASN_MsgsMosSimController& msgCtrl = **it;
-        ASN1T_MsgsMosSim& asnMsg = msgCtrl.GetMessage();
-        switch( asnMsg.t )
-        {
-            case T_MsgsMosSim_msg_ctrl_client_announcement      : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink(), asnMsg.u.msg_ctrl_client_announcement ); break;
-            case T_MsgsMosSim_msg_ctrl_stop                     : OnReceiveMsgCtrlStop              (); break;
-            case T_MsgsMosSim_msg_ctrl_pause                    : OnReceiveMsgCtrlPause             (); break;
-            case T_MsgsMosSim_msg_ctrl_resume                   : OnReceiveMsgCtrlResume            (); break;
-            case T_MsgsMosSim_msg_ctrl_change_time_factor       : OnReceiveMsgCtrlChangeTimeFactor  ( asnMsg.u.msg_ctrl_change_time_factor ); break;
-            case T_MsgsMosSim_msg_ctrl_meteo_globale            : workspace.GetMeteoDataManager ().OnReceiveMsgGlobalMeteo           ( *asnMsg.u.msg_ctrl_meteo_globale ); break;
-            case T_MsgsMosSim_msg_ctrl_meteo_locale             : workspace.GetMeteoDataManager ().OnReceiveMsgLocalMeteo            ( *asnMsg.u.msg_ctrl_meteo_locale  ); break;
-            case T_MsgsMosSim_msg_ctrl_checkpoint_save_now      : workspace.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow     ( *asnMsg.u.msg_ctrl_checkpoint_save_now ); break;
-            case T_MsgsMosSim_msg_ctrl_checkpoint_set_frequency : workspace.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency( asnMsg.u.msg_ctrl_checkpoint_set_frequency ); break;
+        NET_ASN_MsgsInSimController& msgCtrl = **it;
+        ASN1T_MsgsInSim& asnMsg = msgCtrl.GetMessage();
 
-        default:
-            assert( false );
+        MIL_MOSContextID nCtx = asnMsg.context;
+        switch( asnMsg.msg.t )
+        {
+            case T_MsgsInSim_msg_msg_ctrl_client_announcement          : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink(), asnMsg.msg.u.msg_ctrl_client_announcement ); break;
+            case T_MsgsInSim_msg_msg_ctrl_stop                         : OnReceiveMsgCtrlStop              (); break;
+            case T_MsgsInSim_msg_msg_ctrl_pause                        : OnReceiveMsgCtrlPause             (); break;
+            case T_MsgsInSim_msg_msg_ctrl_resume                       : OnReceiveMsgCtrlResume            (); break;
+            case T_MsgsInSim_msg_msg_ctrl_change_time_factor           : OnReceiveMsgCtrlChangeTimeFactor  ( asnMsg.msg.u.msg_ctrl_change_time_factor ); break;
+            case T_MsgsInSim_msg_msg_ctrl_meteo_globale                : workspace.GetMeteoDataManager ().OnReceiveMsgGlobalMeteo           ( *asnMsg.msg.u.msg_ctrl_meteo_globale           ); break;
+            case T_MsgsInSim_msg_msg_ctrl_meteo_locale                 : workspace.GetMeteoDataManager ().OnReceiveMsgLocalMeteo            ( *asnMsg.msg.u.msg_ctrl_meteo_locale            ); break;
+            case T_MsgsInSim_msg_msg_ctrl_checkpoint_save_now          : workspace.GetCheckPointManager().OnReceiveMsgCheckPointSaveNow     ( *asnMsg.msg.u.msg_ctrl_checkpoint_save_now     ); break;
+            case T_MsgsInSim_msg_msg_ctrl_checkpoint_set_frequency     : workspace.GetCheckPointManager().OnReceiveMsgCheckPointSetFrequency( asnMsg.msg.u.msg_ctrl_checkpoint_set_frequency ); break;
+            case T_MsgsInSim_msg_msg_limit_creation                    : workspace.GetLimitManager     ().OnReceiveMsgCreateLimit           ( *asnMsg.msg.u.msg_limit_creation                  , nCtx ); break;
+            case T_MsgsInSim_msg_msg_limit_destruction                 : workspace.GetLimitManager     ().OnReceiveMsgDestroyLimit          (  asnMsg.msg.u.msg_limit_destruction               , nCtx ); break;
+            case T_MsgsInSim_msg_msg_limit_update                      : workspace.GetLimitManager     ().OnReceiveMsgUpdateLimit           ( *asnMsg.msg.u.msg_limit_update                    , nCtx ); break;
+            case T_MsgsInSim_msg_msg_lima_creation                     : workspace.GetLimaManager      ().OnReceiveMsgCreateLima            ( *asnMsg.msg.u.msg_lima_creation                   , nCtx ); break;
+            case T_MsgsInSim_msg_msg_lima_destruction                  : workspace.GetLimaManager      ().OnReceiveMsgDestroyLima           (  asnMsg.msg.u.msg_lima_destruction                , nCtx ); break;
+            case T_MsgsInSim_msg_msg_lima_update                       : workspace.GetLimaManager      ().OnReceiveMsgUpdateLima            ( *asnMsg.msg.u.msg_lima_update                     , nCtx ); break;
+            case T_MsgsInSim_msg_msg_pion_order                        : workspace.GetEntityManager    ().OnReceiveMsgPionOrder             ( *asnMsg.msg.u.msg_pion_order                      , nCtx ); break;         
+            case T_MsgsInSim_msg_msg_order_conduite                    : workspace.GetEntityManager    ().OnReceiveMsgOrderConduite         ( *asnMsg.msg.u.msg_order_conduite                  , nCtx ); break;
+            case T_MsgsInSim_msg_msg_automate_order                    : workspace.GetEntityManager    ().OnReceiveMsgAutomateOrder         ( *asnMsg.msg.u.msg_automate_order                  , nCtx ); break;
+            case T_MsgsInSim_msg_msg_population_order                  : workspace.GetEntityManager    ().OnReceiveMsgPopulationOrder       ( *asnMsg.msg.u.msg_population_order                , nCtx ); break;
+            case T_MsgsInSim_msg_msg_population_magic_action           : workspace.GetEntityManager    ().OnReceiveMsgPopulationMagicAction ( *asnMsg.msg.u.msg_population_magic_action         , nCtx ); break;
+            case T_MsgsInSim_msg_msg_set_automate_mode                 : workspace.GetEntityManager    ().OnReceiveMsgSetAutomateMode       ( *asnMsg.msg.u.msg_set_automate_mode               , nCtx ); break;
+            case T_MsgsInSim_msg_msg_unit_magic_action                 : workspace.GetEntityManager    ().OnReceiveMsgUnitMagicAction       ( *asnMsg.msg.u.msg_unit_magic_action               , nCtx ); break;
+            case T_MsgsInSim_msg_msg_object_magic_action               : workspace.GetEntityManager    ().OnReceiveMsgObjectMagicAction     ( *asnMsg.msg.u.msg_object_magic_action             , nCtx ); break;
+            case T_MsgsInSim_msg_msg_change_diplomatie                 : workspace.GetEntityManager    ().OnReceiveMsgChangeDiplomacy       ( *asnMsg.msg.u.msg_change_diplomatie               , nCtx ); break;
+            case T_MsgsInSim_msg_msg_change_groupe_connaissance        : workspace.GetEntityManager    ().OnReceiveMsgChangeKnowledgeGroup  ( *asnMsg.msg.u.msg_change_groupe_connaissance      , nCtx ); break;
+            case T_MsgsInSim_msg_msg_change_automate                   : workspace.GetEntityManager    ().OnReceiveMsgChangeAutomate        ( *asnMsg.msg.u.msg_change_automate                 , nCtx ); break;
+            case T_MsgsInSim_msg_msg_change_liens_logistiques          : workspace.GetEntityManager    ().OnReceiveMsgChangeLogisticLinks   ( *asnMsg.msg.u.msg_change_liens_logistiques        , nCtx ); break;
+            case T_MsgsInSim_msg_msg_log_ravitaillement_change_quotas  : workspace.GetEntityManager    ().OnReceiveMsgLogSupplyChangeQuotas ( *asnMsg.msg.u.msg_log_ravitaillement_change_quotas, nCtx ); break;
+            case T_MsgsInSim_msg_msg_log_ravitaillement_pousser_flux   : workspace.GetEntityManager    ().OnReceiveMsgLogSupplyPushFlow     ( *asnMsg.msg.u.msg_log_ravitaillement_pousser_flux , nCtx ); break;
+
+            default:
+                assert( false );
         }
         delete &msgCtrl;
     }
@@ -733,8 +635,7 @@ bool NET_AS_MOSServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_Er
 //-----------------------------------------------------------------------------
 DIN::DIN_BufferedMessage NET_AS_MOSServerMsgMgr::BuildMessage()
 {
-    assert( pMessageService_ );
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    return DIN::DIN_BufferedMessage( *pMessageService_ );
+    return DIN::DIN_BufferedMessage( messageService_ );
 }
 

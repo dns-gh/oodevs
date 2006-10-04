@@ -17,7 +17,6 @@
 #include "Network/NET_ASN_Types.h"
 
 class MIL_Agent_ABC;
-class NET_AS_MOSServer;
 class MIL_LimaFunction_ABC;
 
 //=============================================================================
@@ -72,10 +71,9 @@ public:
     
     //! @name Accessors
     //@{
-          uint              GetID          () const;
-	const NET_AS_MOSServer*	GetAckReceiver () const;
-    const T_PointVector&    GetPointVector () const;
-          E_LimaFunctions   GetLimaFunction() const;
+          uint            GetID          () const;
+    const T_PointVector&  GetPointVector () const;
+          E_LimaFunctions GetLimaFunction() const;
     //@}
 
 private:

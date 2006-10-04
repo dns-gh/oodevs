@@ -80,14 +80,10 @@ static const char* scipioXml =
 static const char* reseauXml =
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
 "<Reseau>"
-"    <AgentServer-MOSServer>"
+"    <Simulation>"
 "      <BasePort>10000</BasePort>"
 "      <Magic>1</Magic>"
-"    </AgentServer-MOSServer>"
-"    <AgentServer-Launcher>"
-"      <Port>4322</Port>"
-"      <Magic>3232</Magic>"
-"    </AgentServer-Launcher>"
+"    </Simulation>"
 "	<ThreadReseauActif>true</ThreadReseauActif>"
 "</Reseau>";
 

@@ -35,8 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( ASN1T_MsgsMosSim& message ) = 0;
-    virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 ) = 0;
+    virtual void Send( ASN1T_MsgsOutClient& message ) = 0;
     virtual void SendMagicDestruction( const kernel::Agent_ABC& agent ) = 0; // $$$$ SBO 2006-07-06: 
     //@}
 };

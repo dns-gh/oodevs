@@ -103,8 +103,6 @@ void ADN_Project_GUI::Build()
 
     builder.AddField<ADN_EditLine_Int>( pNetworkGroup, tr( "Server port" ), data_.netInfos_.nServerPort_ );
     builder.AddField<ADN_EditLine_Int>( pNetworkGroup, tr( "Server magic" ), data_.netInfos_.nServerMagic_ );
-    builder.AddField<ADN_EditLine_Int>( pNetworkGroup, tr( "Launcher port" ), data_.netInfos_.nLauncherPort_ );
-    builder.AddField<ADN_EditLine_Int>( pNetworkGroup, tr( "Launcher magic" ), data_.netInfos_.nLauncherMagic_ );
     builder.AddField<ADN_CheckBox>( pNetworkGroup, tr( "Network thread active" ), data_.netInfos_.bNetworkThreadActive_ );
 
     // Pathfinder

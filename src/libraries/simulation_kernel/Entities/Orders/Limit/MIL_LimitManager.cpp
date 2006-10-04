@@ -156,7 +156,7 @@ void MIL_LimitManager::OnReceiveMsgUpdateLimit( const ASN1T_MsgLimitUpdate& asnM
 // Name: MIL_LimitManager::SendStateToNewClient
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-void MIL_LimitManager::SendStateToNewClient( NET_AS_MOSServer& /*connection*/ ) const
+void MIL_LimitManager::SendStateToNewClient() const
 {
     for( CIT_LimitMap itLimit = limits_.begin(); itLimit != limits_.end(); ++itLimit )
         itLimit->second->SendFullState();

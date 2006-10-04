@@ -249,8 +249,6 @@ void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
 ADN_Project_Data::NetInfos::NetInfos()
 : nServerPort_()
 , nServerMagic_()
-, nLauncherPort_()
-, nLauncherMagic_()
 , bNetworkThreadActive_()
 {
 }
@@ -264,16 +262,11 @@ void ADN_Project_Data::NetInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Reseau" );
 
-    input.Section( "AgentServer-MOSServer" );
+    input.Section( "Simulation" );
     input.ReadField( "BasePort", nServerPort_ );
     input.ReadField( "Magic", nServerMagic_ );
-    input.EndSection();   // AgentServer-MOSServer
-
-    input.Section( "AgentServer-Launcher" );
-    input.ReadField( "Port", nLauncherPort_ );
-    input.ReadField( "Magic", nLauncherMagic_ );
-    input.EndSection();   // AgentServer-Launcher
-
+    input.EndSection();   // Simulation
+    
     input.ReadField( "ThreadReseauActif", bNetworkThreadActive_ );
     input.EndSection();   // Reseau
 }
@@ -287,16 +280,11 @@ void ADN_Project_Data::NetInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Reseau" );
 
-    output.Section( "AgentServer-MOSServer" );
+    output.Section( "Simulation" );
     output.WriteField( "BasePort", nServerPort_.GetData() );
     output.WriteField( "Magic", nServerMagic_.GetData() );
-    output.EndSection();   // AgentServer-MOSServer
-
-    output.Section( "AgentServer-Launcher" );
-    output.WriteField( "Port", nLauncherPort_.GetData() );
-    output.WriteField( "Magic", nLauncherMagic_.GetData() );
-    output.EndSection();   // AgentServer-Launcher
-
+    output.EndSection();   // Simulation
+    
     output.WriteField( "ThreadReseauActif", bNetworkThreadActive_.GetData() );
 
     output.EndSection();   // Reseau

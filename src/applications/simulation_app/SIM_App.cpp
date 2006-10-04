@@ -15,6 +15,7 @@
 #include <ctime>
 #include <signal.h>
 #include "SIM_NetworkLogger.h"
+#include "SIM_Dispatcher.h"
 
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_missions/Missions.h"
@@ -35,6 +36,7 @@ SIM_App::SIM_App( int nArgc, char* pArgv[] )
     : startupConfig_ ()
     , pNetworkLogger_( 0 )
     , bTestMode_     ( false )
+    , pDispatcher_   ( 0 )
 {
     std::string strMsg = "Scipio SIM - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
@@ -42,6 +44,9 @@ SIM_App::SIM_App( int nArgc, char* pArgv[] )
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
 
     ParseCmdArgs( nArgc, pArgv, startupConfig_ );
+
+    if( startupConfig_.IsDispatcherEmbedded() )
+        pDispatcher_ = new SIM_Dispatcher();
 
     try
     {
@@ -67,6 +72,9 @@ SIM_App::~SIM_App()
         MT_LOG_UNREGISTER_LOGGER( *pNetworkLogger_ );
         delete pNetworkLogger_;
     }
+
+    if( pDispatcher_ )
+        delete pDispatcher_;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +115,7 @@ void SIM_App::Initialize()
 // -----------------------------------------------------------------------------
 // Name: SIM_App::Cleanup
 // Created: NLD 2004-01-27
-// -----------------------------------------------------------------------------s
+// -----------------------------------------------------------------------------
 void SIM_App::Cleanup()
 {
     MIL_AgentServer::DestroyWorkspace();
@@ -252,13 +260,10 @@ std::string SIM_App::Wrap( const std::string& content, const std::string& prefix
 // Name: App::ParseCmdArgs
 // Created:  NLD 2002-02-18 
 //-----------------------------------------------------------------------------
-
-
 // #include <boost/program_options.hpp>
-
 bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig )
 {
-/*
+    /*
     try
     {
         boost::program_options::options_description desc;
@@ -291,26 +296,25 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
     catch( std::exception& e )
     {
         std::cout << e.what() << std::endl;
-    }*/
-
+    }
+    */
 
     MT_LOG_INFO_MSG( MT_FormatString( "%d arguments on command line", nArgc ).c_str() );
 
-    const char* szCommandLine = "Usage : %s [-noscripts] [-forceodbcomposition] [-diadebugserver] [-nbpathfindthreads #] [-exerciceID #] [-checkpoint IDEX__YYYY_MM_DD__HHhMMmSEC] [-nocheckpointcrc] [-test]";
+    const char* szCommandLine = "Usage : %s [-dispatcher] [-noscripts] [-forceodbcomposition] [-diadebugserver] [-nbpathfindthreads #] [-exerciceID #] [-checkpoint IDEX__YYYY_MM_DD__HHhMMmSEC] [-nocheckpointcrc] [-test]";
     if( nArgc < 1 )
     {
         MT_LOG_INFO_MSG( MT_FormatString( szCommandLine, ppArgv[0] ).c_str() );
         return false;
     }
 
-    int nArgNbr;
-    for( nArgNbr = 0 ; nArgNbr < nArgc; ++nArgNbr )
+    for( int nArgNbr = 0 ; nArgNbr < nArgc; ++nArgNbr )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "\t Argument %d: %s", nArgNbr, ppArgv[nArgNbr] ).c_str() );
     }
 
     // Parse options
-    for( nArgNbr = 1; nArgNbr < nArgc ; ++nArgNbr )
+    for( int nArgNbr = 1; nArgNbr < nArgc ; ++nArgNbr )
     {
         if( stricmp( ppArgv[nArgNbr], "-noscripts") == 0 )
             startupConfig.SetUseOnlyDIAArchive( true );
@@ -382,6 +386,10 @@ bool SIM_App::ParseCmdArgs( int nArgc, char** ppArgv, MIL_Config& startupConfig 
         {
             startupConfig_.SetDataTestMode( true );
             bTestMode_ = true;
+        }
+        else if ( stricmp( ppArgv[nArgNbr], "-dispatcher" ) == 0 )
+        {
+            startupConfig_.SetEmbeddedDispatcher( true );
         }
 
         else if( stricmp( ppArgv[nArgNbr], "-?"     ) == 0 ||

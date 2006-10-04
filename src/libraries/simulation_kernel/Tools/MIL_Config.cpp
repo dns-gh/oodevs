@@ -33,6 +33,7 @@ MIL_Config::MIL_Config()
     , strConfFile_                 ( "scipio.xml" )
     , strRootDirectory_            ( MT_GetCurrentDir() )
     , bDataTestMode_               ( false )
+    , bEmbeddedDispatcher_         ( false )
 {
 }
 

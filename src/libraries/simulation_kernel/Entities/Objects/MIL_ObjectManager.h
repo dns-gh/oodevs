@@ -16,7 +16,6 @@
 
 #include "Network/NET_ASN_Types.h"
 
-class NET_AS_MOSServer;
 class MIL_Army;
 class MIL_RealObjectType;
 class TER_Localisation;

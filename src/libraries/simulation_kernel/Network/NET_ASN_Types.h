@@ -29,7 +29,6 @@
 #include "ASN/ASN/Generated/ScipioOrderConduite.h"
 #include "ASN/ASN/Generated/ScipioAutomateOrder.h"
 #include "ASN/ASN/Generated/ScipioObject.h"
-#include "ASN/ASN/Generated/ScipioLauncher.h"
 #include "ASN/ASN/Generated/ScipioHierarchie.h"
 #include "ASN/ASN/Generated/ScipioPopulation.h"
 #include "ASN/ASN/Generated/ScipioPopulationKnowledge.h"

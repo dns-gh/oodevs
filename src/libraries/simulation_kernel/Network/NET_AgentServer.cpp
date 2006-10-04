@@ -13,11 +13,8 @@
 
 #include "NET_AgentServer.h"
 
-#include "NET_Def.h"
-
 #include "NET_AS_MOSServerConnectionMgr.h"
 #include "NET_AS_MOSServerMsgMgr.h"
-#include "NET_LAU_Mgr.h"
 #include "MIL_AgentServer.h"
 #include "DIN/DIN_EventManager.h"
 #include "tools/win32/Win32Exception.h"
@@ -32,9 +29,8 @@ using namespace tools::thread;
 //-----------------------------------------------------------------------------
 NET_AgentServer::NET_AgentServer( MIL_InputArchive& archive )
     : dinEngine_                     (  )
-    , nPortAS_MOS_                   ( MIL_DEFAULT_PORT_AS_MOS )
-    , nMagicAS_MOS_                  ( eConnMagicMOSServerAgentServer )
-    , connectionProtocols_           ( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 )
+    , nPortAS_MOS_                   ( 10000 )
+    , nMagicAS_MOS_                  ( 0 )
     , bSendUnitVisionCones_          ( false )
     , bThreaded_                     ( false )
     , bTerminated_                   ( false )
@@ -48,25 +44,24 @@ NET_AgentServer::NET_AgentServer( MIL_InputArchive& archive )
     networkArchive.Open( strFile );
     MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strFile );
     
-    networkArchive.Section( "Reseau" );
-
-    pConnectionMgr_ = new NET_AS_MOSServerConnectionMgr( *this );
-    pMsgMgr_        = new NET_AS_MOSServerMsgMgr       ( *this );     
-    pLauMgr_        = new NET_LAU_Mgr                  ( *this, networkArchive );
-    
+    networkArchive.Section( "Reseau" );    
+        
     uint nBasePort;
-    networkArchive.Section( "AgentServer-MOSServer" );
+    networkArchive.Section( "Simulation" );
     networkArchive.ReadField( "BasePort", nBasePort );
     networkArchive.ReadField( "Magic", nMagicAS_MOS_ );
 
     nPortAS_MOS_ = (uint16)( nBasePort + MIL_AgentServer::GetWorkspace().GetExerciceID() );    
 
-    networkArchive.EndSection(); // AgentServer-MOSServer
+    networkArchive.EndSection(); // Simulation
 
     networkArchive.ReadField( "ThreadReseauActif", bThreaded_ );
 
     networkArchive.EndSection(); // Reseau
     networkArchive.Close();
+
+    pConnectionMgr_ = new NET_AS_MOSServerConnectionMgr( *this );
+    pMsgMgr_        = new NET_AS_MOSServerMsgMgr       ( *this );
     
     Start();
     if( bThreaded_ )
@@ -85,7 +80,6 @@ NET_AgentServer::~NET_AgentServer()
     Stop();
     delete pMsgMgr_;
     delete pConnectionMgr_;
-    delete pLauMgr_;
 }
 
 //=============================================================================
@@ -99,7 +93,6 @@ NET_AgentServer::~NET_AgentServer()
 void NET_AgentServer::Start()
 {   
     pConnectionMgr_->StartServer();
-    pLauMgr_->Connect( dinEngine_ );
 
     // Initialize asn
     ASN1OCTET buffer[128];
@@ -114,7 +107,6 @@ void NET_AgentServer::Stop()
 {
     bTerminated_ = true;
     pConnectionMgr_->StopServer();
-    pLauMgr_->Disconnect();
 }
 
 //-----------------------------------------------------------------------------
@@ -133,7 +125,6 @@ void NET_AgentServer::Update()
 
     // Perform synchronous updates
     pMsgMgr_->DoUpdate();
-    pLauMgr_->DoUpdate();
 }
 
 // -----------------------------------------------------------------------------

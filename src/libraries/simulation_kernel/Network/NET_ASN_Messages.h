@@ -24,17 +24,18 @@
 //=============================================================================
 
 // ASN Message which isn't a pointer and doesn't take any context
-#define NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( ASNMSG, ASNVAR )             \
+#define NET_GENERATE_SEND_ASN_MSG_NOPTR( ASNMSG, ASNVAR )                   \
 class NET_ASN_Msg##ASNMSG                                                   \
 {                                                                           \
 public:                                                                     \
-    void Send( NET_AS_MOSServer* pMOS = 0 )                                 \
+    void Send( MIL_MOSContextID nCtx = 0 )                                  \
     {                                                                       \
-        ASN1T_MsgsSimMos    globalAsnMsg;                                   \
+        ASN1T_MsgsOutSim    globalAsnMsg;                                   \
                                                                             \
-        globalAsnMsg.t              = T_MsgsSimMos_msg_##ASNVAR;            \
-        globalAsnMsg.u.msg_##ASNVAR  = asnMsg_;                             \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgSimMos( globalAsnMsg, pMOS ); \
+        globalAsnMsg.context             = nCtx;                            \
+        globalAsnMsg.msg.t               = T_MsgsOutSim_msg_msg_##ASNVAR;   \
+        globalAsnMsg.msg.u.msg_##ASNVAR  = asnMsg_;                         \
+        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -48,17 +49,18 @@ private:                                                                    \
 
 
 // ASN Message which is a pointer and doesn't take any context
-#define NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( ASNMSG, ASNVAR )               \
+#define NET_GENERATE_SEND_ASN_MSG_PTR( ASNMSG, ASNVAR )                     \
 class NET_ASN_Msg##ASNMSG                                                   \
 {                                                                           \
 public:                                                                     \
-    void Send( NET_AS_MOSServer* pMOS = 0 )                                 \
+    void Send( MIL_MOSContextID nCtx = 0 )                                  \
     {                                                                       \
-        ASN1T_MsgsSimMos    globalAsnMsg;                                   \
+        ASN1T_MsgsOutSim    globalAsnMsg;                                   \
                                                                             \
-        globalAsnMsg.t             = T_MsgsSimMos_msg_##ASNVAR;             \
-        globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                             \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgSimMos( globalAsnMsg, pMOS ); \
+        globalAsnMsg.context             = nCtx;                            \
+        globalAsnMsg.msg.t               = T_MsgsOutSim_msg_msg_##ASNVAR;   \
+        globalAsnMsg.msg.u.msg_##ASNVAR  = &asnMsg_;                        \
+        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
     ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
@@ -69,79 +71,18 @@ public:                                                                     \
 private:                                                                    \
     ASN1T_Msg##ASNMSG asnMsg_;                                              \
 };
-
-// ASN Message which isn't a pointer and take any context
-#define NET_GENERATE_SEND_ASN_MSG_NOPTR_CTX( ASNMSG, ASNVAR )                       \
-class NET_ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send( MIL_MOSContextID nCtx, NET_AS_MOSServer* pMOS = 0 )                  \
-    {                                                                               \
-        ASN1T_MsgsSimMosWithContext    globalAsnMsg;                                \
-                                                                                    \
-        globalAsnMsg.t             = T_MsgsSimMosWithContext_msg_##ASNVAR;          \
-        globalAsnMsg.u.msg_##ASNVAR = asnMsg_;                                      \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgSimMosWithContext( globalAsnMsg, nCtx, pMOS ); \
-    }                                                                               \
-                                                                                    \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
-    {                                                                               \
-        return asnMsg_;                                                             \
-    }                                                                               \
-                                                                                    \
-private:                                                                            \
-    ASN1T_Msg##ASNMSG asnMsg_;                                                      \
-};
-
 // ASN Message which is a pointer and take any context
-#define NET_GENERATE_SEND_ASN_MSG_PTR_CTX( ASNMSG, ASNVAR )                         \
+#define NET_GENERATE_SEND_ASN_MSG_NOMSG( ASNMSG, ASNVAR )                           \
 class NET_ASN_Msg##ASNMSG                                                           \
 {                                                                                   \
 public:                                                                             \
-    void Send( MIL_MOSContextID nCtx, NET_AS_MOSServer* pMOS = 0 )                  \
+    void Send( MIL_MOSContextID nCtx = 0 )                                          \
     {                                                                               \
-        ASN1T_MsgsSimMosWithContext    globalAsnMsg;                                \
+        ASN1T_MsgsOutSim    globalAsnMsg;                                           \
                                                                                     \
-        globalAsnMsg.t             = T_MsgsSimMosWithContext_msg_##ASNVAR;          \
-        globalAsnMsg.u.msg_##ASNVAR = &asnMsg_;                                     \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgSimMosWithContext( globalAsnMsg, nCtx, pMOS ); \
-    }                                                                               \
-                                                                                    \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
-    {                                                                               \
-        return asnMsg_;                                                             \
-    }                                                                               \
-                                                                                    \
-private:                                                                            \
-    ASN1T_Msg##ASNMSG asnMsg_;                                                      \
-};                                                          
-
-
-// ASN Message which isn't a pointer and take any context
-#define NET_GENERATE_SEND_ASN_MSG_NOMSG_CTX( ASNMSG, ASNVAR )                       \
-class NET_ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send( MIL_MOSContextID nCtx, NET_AS_MOSServer* pMOS = 0 )                  \
-    {                                                                               \
-        ASN1T_MsgsSimMosWithContext    globalAsnMsg;                                \
-                                                                                    \
-        globalAsnMsg.t             = T_MsgsSimMosWithContext_msg_##ASNVAR;          \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgSimMosWithContext( globalAsnMsg, nCtx, pMOS ); \
-    }                                                                               \
-};
-
-// ASN Message which is a pointer and take any context
-#define NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( ASNMSG, ASNVAR )                     \
-class NET_ASN_Msg##ASNMSG                                                           \
-{                                                                                   \
-public:                                                                             \
-    void Send( NET_AS_MOSServer* pMOS = 0 )                                         \
-    {                                                                               \
-        ASN1T_MsgsSimMos    globalAsnMsg;                                           \
-                                                                                    \
-        globalAsnMsg.t             = T_MsgsSimMos_msg_##ASNVAR;                     \
-        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgSimMos( globalAsnMsg, pMOS ); \
+        globalAsnMsg.context          = nCtx;                                       \
+        globalAsnMsg.msg.t            = T_MsgsOutSim_msg_msg_##ASNVAR;              \
+        MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
     }                                                                               \
 }; 
 
@@ -150,139 +91,139 @@ public:                                                                         
 //=============================================================================
 
 // Control
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlBeginTick                , ctrl_begin_tick                   )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( CtrlEndTick                  , ctrl_end_tick                     )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlStopAck                  , ctrl_stop_ack                     )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlResumeAck                , ctrl_resume_ack                   )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( CtrlPauseAck                 , ctrl_pause_ack                    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( CtrlChangeTimeFactorAck      , ctrl_change_time_factor_ack       )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( CtrlInfo                     , ctrl_info                         )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlMeteoGlobaleAck          , ctrl_meteo_globale_ack            )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlMeteoLocaleAck           , ctrl_meteo_locale_ack             )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlCheckPointSaveBegin      , ctrl_checkpoint_save_begin        )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlCheckPointLoadBegin      , ctrl_checkpoint_load_begin        )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlCheckPointSaveEnd        , ctrl_checkpoint_save_end          )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlCheckPointLoadEnd        , ctrl_checkpoint_load_end          )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlCheckPointSetFrequencyAck, ctrl_checkpoint_set_frequency_ack )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlCheckPointSaveNowAck     , ctrl_checkpoint_save_now_ack      )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlSendCurrentStateBegin    , ctrl_send_current_state_begin     )
-NET_GENERATE_SEND_ASN_MSG_NOMSG_NOCTX( CtrlSendCurrentStateEnd      , ctrl_send_current_state_end       )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlBeginTick                , ctrl_begin_tick                   )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( CtrlEndTick                  , ctrl_end_tick                     )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlStopAck                  , ctrl_stop_ack                     )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlResumeAck                , ctrl_resume_ack                   )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( CtrlPauseAck                 , ctrl_pause_ack                    )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( CtrlChangeTimeFactorAck      , ctrl_change_time_factor_ack       )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( CtrlInfo                     , ctrl_info                         )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlMeteoGlobaleAck          , ctrl_meteo_globale_ack            )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlMeteoLocaleAck           , ctrl_meteo_locale_ack             )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSaveBegin      , ctrl_checkpoint_save_begin        )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointLoadBegin      , ctrl_checkpoint_load_begin        )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSaveEnd        , ctrl_checkpoint_save_end          )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointLoadEnd        , ctrl_checkpoint_load_end          )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSetFrequencyAck, ctrl_checkpoint_set_frequency_ack )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSaveNowAck     , ctrl_checkpoint_save_now_ack      )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlSendCurrentStateBegin    , ctrl_send_current_state_begin     )
+NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlSendCurrentStateEnd      , ctrl_send_current_state_end       )
                                                                                             
 // Unit attributes
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( UnitAttributes     , unit_attributes       )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( UnitDotations      , unit_dotations        )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( UnitMagicActionAck , unit_magic_action_ack )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( UnitPathFind       , unit_pathfind         )
+NET_GENERATE_SEND_ASN_MSG_PTR( UnitAttributes     , unit_attributes       )
+NET_GENERATE_SEND_ASN_MSG_PTR( UnitDotations      , unit_dotations        )
+NET_GENERATE_SEND_ASN_MSG_PTR( UnitMagicActionAck , unit_magic_action_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR( UnitPathFind       , unit_pathfind         )
 
 // Logistic
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogMaintenanceTraitementEquipementCreation   , log_maintenance_traitement_equipement_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogMaintenanceTraitementEquipementUpdate     , log_maintenance_traitement_equipement_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogMaintenanceTraitementEquipementDestruction, log_maintenance_traitement_equipement_destruction )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogMaintenanceEtat                           , log_maintenance_etat                              )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogSanteTraitementHumainCreation             , log_sante_traitement_humain_creation              )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogSanteTraitementHumainUpdate               , log_sante_traitement_humain_update                )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogSanteTraitementHumainDestruction          , log_sante_traitement_humain_destruction           )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogSanteEtat                                 , log_sante_etat                                    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogRavitaillementTraitementCreation          , log_ravitaillement_traitement_creation            )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogRavitaillementTraitementUpdate            , log_ravitaillement_traitement_update              )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogRavitaillementTraitementDestruction       , log_ravitaillement_traitement_destruction         )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogRavitaillementEtat                        , log_ravitaillement_etat                           )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( LogRavitaillementQuotas                      , log_ravitaillement_quotas                         )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementCreation   , log_maintenance_traitement_equipement_creation    )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementUpdate     , log_maintenance_traitement_equipement_update      )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementDestruction, log_maintenance_traitement_equipement_destruction )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceEtat                           , log_maintenance_etat                              )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteTraitementHumainCreation             , log_sante_traitement_humain_creation              )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteTraitementHumainUpdate               , log_sante_traitement_humain_update                )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteTraitementHumainDestruction          , log_sante_traitement_humain_destruction           )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogSanteEtat                                 , log_sante_etat                                    )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementTraitementCreation          , log_ravitaillement_traitement_creation            )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementTraitementUpdate            , log_ravitaillement_traitement_update              )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementTraitementDestruction       , log_ravitaillement_traitement_destruction         )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementEtat                        , log_ravitaillement_etat                           )
+NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementQuotas                      , log_ravitaillement_quotas                         )
 
 // Context infos
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX    ( LimitCreationAck                  , limit_creation_ack                    )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX    ( LimitDestructionAck               , limit_destruction_ack                 ) 
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX    ( LimitUpdateAck                    , limit_update_ack                      ) 
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX    ( LimaCreationAck                   , lima_creation_ack                     ) 
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX    ( LimaDestructionAck                , lima_destruction_ack                  )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX    ( LimaUpdateAck                     , lima_update_ack                       )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( LimitCreation                     , limit_creation                        )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( LimitDestruction                  , limit_destruction                     )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( LimaCreation                      , lima_creation                         )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( LimaDestruction                   , lima_destruction                      )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitCreationAck                  , limit_creation_ack                    )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitDestructionAck               , limit_destruction_ack                 ) 
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitUpdateAck                    , limit_update_ack                      ) 
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaCreationAck                   , lima_creation_ack                     ) 
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaDestructionAck                , lima_destruction_ack                  )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaUpdateAck                     , lima_update_ack                       )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitCreation                     , limit_creation                        )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitDestruction                  , limit_destruction                     )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaCreation                      , lima_creation                         )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaDestruction                   , lima_destruction                      )
 
 // Fire
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartPionFire      , start_pion_fire       )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartPopulationFire, start_population_fire )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopPionFire       , stop_pion_fire        )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StopPopulationFire , stop_population_fire  )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( Explosion          , explosion             )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( StartFireEffect    , start_fire_effect     )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( StopFireEffect     , stop_fire_effect      )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( StartPionFire      , start_pion_fire       )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( StartPopulationFire, start_population_fire )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( StopPionFire       , stop_pion_fire        )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( StopPopulationFire , stop_population_fire  )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( Explosion          , explosion             )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( StartFireEffect    , start_fire_effect     )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( StopFireEffect     , stop_fire_effect      )
 
 // Unit knowledge
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX ( UnitKnowledgeCreation   , unit_knowledge_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX ( UnitKnowledgeUpdate     , unit_knowledge_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX ( UnitKnowledgeDestruction, unit_knowledge_destruction )
+NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeCreation   , unit_knowledge_creation    )
+NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeUpdate     , unit_knowledge_update      )
+NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeDestruction, unit_knowledge_destruction )
 
 // Orders
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( OrderManagement, order_management )
+NET_GENERATE_SEND_ASN_MSG_PTR( OrderManagement, order_management )
 
 // Orders conduite
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( OrderConduiteAck           , order_conduite_ack            )
+NET_GENERATE_SEND_ASN_MSG_PTR( OrderConduiteAck           , order_conduite_ack            )
 
 // Orders pion
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PionOrder              , pion_order                         )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( PionOrderAck           , pion_order_ack                     )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionOrder              , pion_order                         )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionOrderAck           , pion_order_ack                     )
 
 // Orders automate
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( AutomateOrder     , automate_order        )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( AutomateOrderAck  , automate_order_ack    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( AutomateMRT       , automate_mrt          )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( SetAutomateModeAck, set_automate_mode_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrder     , automate_order        )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrderAck  , automate_order_ack    )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateMRT       , automate_mrt          )
+NET_GENERATE_SEND_ASN_MSG_PTR( SetAutomateModeAck, set_automate_mode_ack )
 
 // Orders population
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( PopulationOrderAck       , population_order_ack )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( PopulationMagicActionAck , population_magic_action_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrderAck       , population_order_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationMagicActionAck , population_magic_action_ack )
 
 // CR
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( CR, cr )
+NET_GENERATE_SEND_ASN_MSG_PTR( CR, cr )
 
 // Objects
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( ObjectCreation       , object_creation         )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_NOCTX( ObjectDestruction    , object_destruction      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX  ( ObjectUpdate         , object_update           )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX    ( ObjectMagicActionAck , object_magic_action_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( ObjectCreation       , object_creation         )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( ObjectDestruction    , object_destruction      )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( ObjectUpdate         , object_update           )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( ObjectMagicActionAck , object_magic_action_ack )
 
 // Object knowledge
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( ObjectKnowledgeCreation   , object_knowledge_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( ObjectKnowledgeUpdate     , object_knowledge_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( ObjectKnowledgeDestruction, object_knowledge_destruction )
+NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeCreation   , object_knowledge_creation    )
+NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeUpdate     , object_knowledge_update      )
+NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeDestruction, object_knowledge_destruction )
 
 // Hierarchie / init
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( ChangeDiplomatieAck        , change_diplomatie_ack          )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( ChangeGroupeConnaissanceAck, change_groupe_connaissance_ack )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( ChangeLiensLogistiquesAck  , change_liens_logistiques_ack   )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( ChangeAutomate             , change_automate                )
-NET_GENERATE_SEND_ASN_MSG_PTR_CTX  ( ChangeAutomateAck          , change_automate_ack            )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( AutomateCreation           , automate_creation              )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PionCreation               , pion_creation                  )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( ChangeDiplomatie           , change_diplomatie              )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatieAck        , change_diplomatie_ack          )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeGroupeConnaissanceAck, change_groupe_connaissance_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeLiensLogistiquesAck  , change_liens_logistiques_ack   )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomate             , change_automate                )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomateAck          , change_automate_ack            )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateCreation           , automate_creation              )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionCreation               , pion_creation                  )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie           , change_diplomatie              )
 
 // Logistique - Rav
-NET_GENERATE_SEND_ASN_MSG_NOPTR_CTX  ( LogRavitaillementChangeQuotasAck, log_ravitaillement_change_quotas_ack )
-NET_GENERATE_SEND_ASN_MSG_NOPTR_CTX  ( LogRavitaillementPousserFluxAck , log_ravitaillement_pousser_flux_ack  )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LogRavitaillementChangeQuotasAck, log_ravitaillement_change_quotas_ack )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LogRavitaillementPousserFluxAck , log_ravitaillement_pousser_flux_ack  )
 
 // Population
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationCreation                , population_creation                  )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationUpdate                  , population_update                    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationCreation   , population_concentration_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationDestruction, population_concentration_destruction )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationUpdate     , population_concentration_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxCreation            , population_flux_creation             )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxDestruction         , population_flux_destruction          )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxUpdate              , population_flux_update               )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationCreation                , population_creation                  )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationUpdate                  , population_update                    )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationCreation   , population_concentration_creation    )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationDestruction, population_concentration_destruction )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationUpdate     , population_concentration_update      )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxCreation            , population_flux_creation             )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxDestruction         , population_flux_destruction          )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxUpdate              , population_flux_update               )
 
 // Population knowledge
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationKnowledgeCreation                , population_knowledge_creation                  )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationKnowledgeUpdate                  , population_knowledge_update                    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationKnowledgeDestruction             , population_knowledge_destruction               )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationKnowledgeCreation   , population_concentration_knowledge_creation    )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationKnowledgeDestruction, population_concentration_knowledge_destruction )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationConcentrationKnowledgeUpdate     , population_concentration_knowledge_update      )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeCreation            , population_flux_knowledge_creation             )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeDestruction         , population_flux_knowledge_destruction          )
-NET_GENERATE_SEND_ASN_MSG_PTR_NOCTX( PopulationFluxKnowledgeUpdate              , population_flux_knowledge_update               )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationKnowledgeCreation                , population_knowledge_creation                  )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationKnowledgeUpdate                  , population_knowledge_update                    )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationKnowledgeDestruction             , population_knowledge_destruction               )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationKnowledgeCreation   , population_concentration_knowledge_creation    )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationKnowledgeDestruction, population_concentration_knowledge_destruction )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationConcentrationKnowledgeUpdate     , population_concentration_knowledge_update      )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxKnowledgeCreation            , population_flux_knowledge_creation             )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxKnowledgeDestruction         , population_flux_knowledge_destruction          )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationFluxKnowledgeUpdate              , population_flux_knowledge_update               )
 
 #endif // __NET_ASN_Messages_h_
 

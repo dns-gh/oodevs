@@ -18,7 +18,6 @@
 
 class NET_AS_MOSServerConnectionMgr;
 class NET_AS_MOSServerMsgMgr;
-class NET_LAU_Mgr;
 
 //=============================================================================
 // Created: NLD 2002-07-12
@@ -42,11 +41,10 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    bool                          IsThreaded            () const;
-    DIN::DIN_Engine&              GetDINEngine          ();
-    uint16                        GetPortAS_MOS         () const;
-    uint                          GetMagicAS_MOS        () const;
-    DIN::DIN_ConnectionProtocols& GetConnectionProtocols();
+    bool                          IsThreaded    () const;
+    DIN::DIN_Engine&              GetDINEngine  ();
+    uint16                        GetPortAS_MOS () const;
+    uint                          GetMagicAS_MOS() const;
 
     NET_AS_MOSServerConnectionMgr& GetConnectionMgr () const;
     NET_AS_MOSServerMsgMgr&        GetMessageMgr    () const;
@@ -85,12 +83,8 @@ private:
     NET_AS_MOSServerConnectionMgr*  pConnectionMgr_;
     NET_AS_MOSServerMsgMgr*         pMsgMgr_;
 
-    NET_LAU_Mgr*                    pLauMgr_;    // petit bout reseaux qui gere les discussions avec le Launcher
-
     uint16                          nPortAS_MOS_;   // le port final (port de base auquel + exerciceID)
     uint                            nMagicAS_MOS_;
-
-    DIN::DIN_ConnectionProtocols    connectionProtocols_;
 
     // Debug network properties
     uint                            nUnitVisionConesChangeTimeStep_;

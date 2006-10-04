@@ -18,7 +18,6 @@
 
 class MIL_Agent_ABC;
 class MIL_Fuseau;
-class NET_AS_MOSServer;
 class TER_DynamicData;
 
 //=============================================================================
@@ -49,10 +48,9 @@ public:
     
     //! @name Accessors
     //@{
-          uint              GetID         () const;
-	const NET_AS_MOSServer*	GetAckReceiver() const;
-    const T_PointVector&    GetPoints     () const;
-          MT_Float          GetLength     () const;
+          uint           GetID    () const;
+    const T_PointVector& GetPoints() const;
+          MT_Float       GetLength() const;
     //@}
 
     //! @name Operations

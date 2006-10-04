@@ -18,7 +18,6 @@
 #include "Entities/Orders/MIL_Order_Def.h"
 
 class MIL_AgentPion;
-class NET_AS_MOSServer;
 class MIL_PionMission_ABC;
 class MIL_OrderConduite_ABC;
 class MIL_Fuseau;

@@ -107,7 +107,6 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& /*server*/, DIN_Link& link,
     void ClientsNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )  \
     {                                                                                         \
         Client::GetClientFromLink( linkFrom ).OnReceive( eMsg##MSG, msg );                    \
-        MT_LOG_INFO_MSG( "Receiving DIN msg " << eMsg##MSG << " from client" ); \
     }
 
 DECLARE_DIN_CALLBACK( EnableUnitVisionCones  )

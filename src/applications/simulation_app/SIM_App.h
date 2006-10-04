@@ -17,6 +17,7 @@
 #include "simulation_kernel/Tools/MIL_Config.h"
 
 class SIM_NetworkLogger;
+class SIM_Dispatcher;
 
 //=============================================================================
 // Created: NLD 2002-08-07
@@ -56,9 +57,10 @@ private:
     // Error dispatchers
     SIM_NetworkLogger* pNetworkLogger_;
 
-    static bool bCrashWithCoreDump_;
-    static bool bUserInterrupt_;
-    bool        bTestMode_;
+    static bool     bCrashWithCoreDump_;
+    static bool     bUserInterrupt_;
+    bool            bTestMode_;
+    SIM_Dispatcher* pDispatcher_;
     //@}
 };
 

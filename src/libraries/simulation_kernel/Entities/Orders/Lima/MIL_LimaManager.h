@@ -40,7 +40,7 @@ public:
 
     //! @name Network
     //@{
-    void      SendStateToNewClient   ( NET_AS_MOSServer& connection ) const;
+    void      SendStateToNewClient   () const;
     MIL_Lima* OnReceiveMsgCreateLima ( const ASN1T_MsgLimaCreation&    asnMsg, MIL_MOSContextID nCtx );
     void      OnReceiveMsgDestroyLima( const ASN1T_MsgLimaDestruction& asnMsg, MIL_MOSContextID nCtx );
     void      OnReceiveMsgUpdateLima ( const ASN1T_MsgLimaUpdate&      asnMsg, MIL_MOSContextID nCtx );

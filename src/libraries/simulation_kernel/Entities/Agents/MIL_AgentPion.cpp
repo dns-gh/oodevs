@@ -65,7 +65,6 @@
 #include "Knowledge/DEC_KS_Fire.h"
 
 #include "Network/NET_AgentServer.h"
-#include "Network/NET_AS_MOSServer.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
 #include "Network/NET_ASN_Messages.h"
 
@@ -618,9 +617,6 @@ DEC_Knowledge_Agent& MIL_AgentPion::CreateKnowledge( const MIL_KnowledgeGroup& k
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::SendCreation()
 {
-    if( bIsPC_ )
-        return;
-
     NET_ASN_MsgPionCreation asnMsg;
    
     assert( pType_ );

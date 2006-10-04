@@ -147,7 +147,7 @@ void MIL_LimaManager::OnReceiveMsgUpdateLima( const ASN1T_MsgLimaUpdate& asnMsg,
 // Name: MIL_LimaManager::SendStateToNewClient
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
-void MIL_LimaManager::SendStateToNewClient( NET_AS_MOSServer& /*connection*/ ) const
+void MIL_LimaManager::SendStateToNewClient() const
 {
     for( CIT_LimaMap itLima = limaMap_.begin(); itLima != limaMap_.end(); ++itLima )
         itLima->second->SendFullState();

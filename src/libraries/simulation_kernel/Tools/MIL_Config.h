@@ -41,6 +41,7 @@ public:
     const std::string& GetCheckPointODBFileName   () const;
     const std::string& GetConfigFileName          () const;
           bool         IsDataTestMode             () const;
+          bool         IsDispatcherEmbedded       () const;
     
           bool         UseCheckPoint    () const;          
           bool         UseCheckPointCRC () const;
@@ -70,6 +71,7 @@ public:
     void SetProfilingEnabled           ( bool bEnabled );
     void SetUseCheckPointCRC           ( bool bUse );
     void SetDataTestMode               ( bool bEnabled );
+    void SetEmbeddedDispatcher         ( bool bEnabled );
     //@}
 
 private:
@@ -95,6 +97,7 @@ private:
     bool                bUsePathDebug_;
     T_CRCMap            CRCMap_;
     bool                bDataTestMode_;
+    bool                bEmbeddedDispatcher_;
 };
 
 #   include "MIL_Config.inl"

@@ -832,16 +832,16 @@ void MIL_EntityManager::SendStateToNewClient()
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         itArmy->second->SendFullState();
 
-    assert( pObjectManager_ );
-    pObjectManager_->SendStateToNewClient();
-
-    // Automates / pions / populations creation
+    // Automates / pions / populationcs creation
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
         itAutomate->second->SendCreation();
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         itPion->second->SendCreation();
     for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
         itPopulation->second->SendCreation();
+
+    assert( pObjectManager_ );
+    pObjectManager_->SendStateToNewClient();
 
     // Automates / pions state
     for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )

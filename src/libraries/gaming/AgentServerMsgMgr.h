@@ -49,43 +49,7 @@ class AgentServerMsgMgr : public kernel::Observer_ABC
                         , public kernel::OptionsObserver_ABC
                         , public Publisher_ABC
 {
-
-public:
-    //! @name Messages
-    //@{
-    //! SIM <- MOS
-    enum 
-    {
-        eMsgMosSim                  = 0,
-        eMsgMosSimWithContext       = 1,
-
-        eMsgEnableUnitVisionCones   = 1000,
-        eMsgDisableUnitVisionCones  = 1001,
-        eMsgUnitMagicAction         = 1002
-    };
-
-    //! SIM -> MOS
-    enum
-    {
-        eMsgSimMos                                 = 0,
-        eMsgSimMosWithContext                      = 1,
-
-        eMsgUnitVisionCones                        = 1004,
-        eMsgTrace                                  = 1005,
-        eMsgInit                                   = 1007,
-        eMsgProfilingValues                        = 1008,
-        eMsgUnitInterVisibility                    = 1009,
-        eMsgObjectInterVisibility                  = 1010,
-        eMsgPopulationConcentrationInterVisibility = 1011,
-        eMsgPopulationFlowInterVisibility          = 1012,
-        eMsgKnowledgeGroup                         = 1013,
-        eMsgArmy                                   = 1014,
-        eMsgDebugDrawPoints                        = 1015,
-        eMsgEnvironmentType                        = 1016,
-        eMsgPopulationCollision                    = 1017
-    };
-    //@}
-    
+   
 public:
     //! @name Constructor/Destructor
     //@{
@@ -103,13 +67,11 @@ public:
     void DoUpdate();
     void Flush();
 
-    virtual void Send( ASN1T_MsgsMosSim& message );
-    virtual void Send( ASN1T_MsgsMosSimWithContext& message, unsigned long contextId = 4212 );
+    virtual void Send( ASN1T_MsgsOutClient& message );
     virtual void SendMagicDestruction( const kernel::Agent_ABC& agent );
 
     DIN::DIN_BufferedMessage BuildMessage();
-    void SendMsgMosSim           ( ASN1OCTET* pMsg, int nMsgLength );
-    void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, unsigned long nCtx );
+    void SendMsgOutClient           ( ASN1OCTET* pMsg, int nMsgLength );
     void SendMsgUnitMagicActionDestroyComposante( const kernel::Agent_ABC& agent );
 
     void SetModel( Model& model );
@@ -140,8 +102,7 @@ private:
     void OnReceiveMsgPopulationCollision                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // ASN
-    void OnReceiveMsgSimMos           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgSimMosWithContext( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    void OnReceiveMsgInClient           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     void _OnReceiveMsgProfilingValues                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgInit                                  ( DIN::DIN_Input& input );
@@ -155,8 +116,7 @@ private:
     void _OnReceiveMsgArmy                                  ( DIN::DIN_Input& input );
     void _OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgPopulationCollision                   ( DIN::DIN_Input& input );
-    void _OnReceiveMsgSimMos                                ( DIN::DIN_Input& input );
-    void _OnReceiveMsgSimMosWithContext                     ( DIN::DIN_Input& input );
+    void _OnReceiveMsgInClient                                ( DIN::DIN_Input& input );    
 
     // Control
     void OnReceiveMsgCtrlPauseAck             ( const ASN1T_MsgCtrlPauseAck&  asnMsg );

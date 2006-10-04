@@ -30,15 +30,12 @@ namespace internal
     public:
         explicit Message( std::ifstream& input );
         explicit Message( ASN1PEREncodeBuffer& asnPEREncodeBuffer );
-                 Message( unsigned long nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
         virtual ~Message();
 
         void Write( std::ofstream& output ) const;
         void Send( AgentServerMsgMgr& msgManager );
 
     private:
-        char bContext_;
-        unsigned long nContext_;
         ASN1OCTET* pMsg_;
         int nMsgLength_;
     };
@@ -54,8 +51,6 @@ using namespace internal;
 Message::Message( std::ifstream& input )
     : pMsg_( 0 )
 {
-    input.read( &bContext_, 1 );
-    input.read( (char*)( &nContext_ ), sizeof( nContext_ ) );
     input.read( (char*)( &nMsgLength_ ), sizeof( nMsgLength_ ) );
     pMsg_ = new ASN1OCTET[ nMsgLength_];
     input.read( (char*)pMsg_, nMsgLength_ );
@@ -67,22 +62,7 @@ Message::Message( std::ifstream& input )
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
 Message::Message( ASN1PEREncodeBuffer& asnPEREncodeBuffer )
-    : bContext_ ( false )
-    , nContext_ ( 0 )
-    , pMsg_     ( asnPEREncodeBuffer.GetMsgCopy() )
-    , nMsgLength_( asnPEREncodeBuffer.GetMsgLen() )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Message::Message
-// Created: APE 2004-10-20
-// -----------------------------------------------------------------------------
-Message::Message( unsigned long nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
-    : bContext_ ( true )
-    , nContext_ ( nContext )
-    , pMsg_     ( asnPEREncodeBuffer.GetMsgCopy() )
+    : pMsg_     ( asnPEREncodeBuffer.GetMsgCopy() )
     , nMsgLength_( asnPEREncodeBuffer.GetMsgLen() )
 {
     // NOTHING
@@ -106,10 +86,7 @@ Message::~Message()
 // -----------------------------------------------------------------------------
 void Message::Send( AgentServerMsgMgr& msgManager )
 {
-    if( bContext_ )
-        msgManager.SendMsgMosSimWithContext( pMsg_, nMsgLength_, nContext_ );
-    else
-        msgManager.SendMsgMosSim( pMsg_, nMsgLength_ );
+    msgManager.SendMsgOutClient( pMsg_, nMsgLength_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +95,6 @@ void Message::Send( AgentServerMsgMgr& msgManager )
 // -----------------------------------------------------------------------------
 void Message::Write( std::ofstream& output ) const 
 {
-    output.write( &bContext_, 1 );
-    output.write( (const char*)( &nContext_ ), sizeof( nContext_ ) );
     output.write( (const char*)( &nMsgLength_ ), sizeof( nMsgLength_ ) );
     output.write( (const char*)pMsg_, nMsgLength_ );
 }
@@ -150,28 +125,17 @@ MsgRecorder::~MsgRecorder()
 // Name: MsgRecorder::OnNewMsg
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
-void MsgRecorder::OnNewMsg( int /*nType*/, ASN1PEREncodeBuffer& /*asnPEREncodeBuffer*/ )
-{
-    if( ! recording_ )
-        return;
-    return;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MsgRecorder::OnNewMsgWithContext
-// Created: APE 2004-10-20
-// -----------------------------------------------------------------------------
-void MsgRecorder::OnNewMsgWithContext( int nType, unsigned long nContext, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
+void MsgRecorder::OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
 {
     if( ! recording_ )
         return;
 
-    if(    nType != T_MsgsMosSimWithContext_msg_pion_order
-        && nType != T_MsgsMosSimWithContext_msg_order_conduite
-        && nType != T_MsgsMosSimWithContext_msg_automate_order )
+    if(    nType != T_MsgsOutClient_msg_msg_pion_order
+        && nType != T_MsgsOutClient_msg_msg_order_conduite
+        && nType != T_MsgsOutClient_msg_msg_automate_order )
         return;
 
-    messages_.push_back( new Message( nContext, asnPEREncodeBuffer ) );
+    messages_.push_back( new Message( asnPEREncodeBuffer ) );
 }
 
 // -----------------------------------------------------------------------------

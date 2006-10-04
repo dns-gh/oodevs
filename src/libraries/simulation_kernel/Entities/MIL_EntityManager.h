@@ -29,8 +29,6 @@ class MIL_RealObject_ABC;
 class MIL_Population;
 class TER_Localisation;
 
-class NET_AS_MOSServer;
-
 class HLA_Federate;
 
 struct ASN1T_MsgUnitMagicAction;

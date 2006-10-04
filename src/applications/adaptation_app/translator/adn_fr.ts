@@ -4223,11 +4223,11 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Launcher port</source>
-        <translation>Port launcher</translation>
+        <translation type="obsolete">Port launcher</translation>
     </message>
     <message>
         <source>Launcher magic</source>
-        <translation>Magic cookie launcher</translation>
+        <translation type="obsolete">Magic cookie launcher</translation>
     </message>
     <message>
         <source>Network thread active</source>

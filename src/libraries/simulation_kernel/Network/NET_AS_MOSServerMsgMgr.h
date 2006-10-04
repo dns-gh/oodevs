@@ -19,8 +19,7 @@
 
 #include "NET_ASN_MessageController.h"
 
-NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsMosSim )
-class NET_ASN_MsgsMosSimWithContextController;
+NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsInSim )
 class MIL_Agent_ABC;
 
 //=============================================================================
@@ -30,44 +29,6 @@ class MIL_Agent_ABC;
 class NET_AS_MOSServerMsgMgr : public NET_AS_MOSServerMgr_ABC
 {
     MT_COPYNOTALLOWED( NET_AS_MOSServerMsgMgr );
-
-public:
-    //! @name Messages
-    //@{
-    //! SIM <- MOS
-    enum 
-    {
-        eMsgMosSim                  = 0,
-        eMsgMosSimWithContext       = 1,
-
-        eMsgEnableUnitVisionCones   = 1000,
-        eMsgDisableUnitVisionCones  = 1001,
-        eMsgUnitMagicAction         = 1002,
-        eMsgEnableProfiling         = 1003,
-        eMsgDisableProfiling        = 1004
-    };
-
-    //! SIM -> MOS
-    enum
-    {
-        eMsgSimMos                                 = 0,
-        eMsgSimMosWithContext                      = 1,
-
-        eMsgUnitVisionCones                        = 1004,
-        eMsgTrace                                  = 1005,
-        eMsgInit                                   = 1007,
-        eMsgProfilingValues                        = 1008,
-        eMsgUnitInterVisibility                    = 1009,
-        eMsgObjectInterVisibility                  = 1010,
-        eMsgPopulationConcentrationInterVisibility = 1011,
-        eMsgPopulationFlowInterVisibility          = 1012,
-        eMsgKnowledgeGroup                         = 1013,
-        eMsgArmy                                   = 1014,
-        eMsgDebugDrawPoints                        = 1015,
-        eMsgEnvironmentType                        = 1016,
-        eMsgPopulationCollision                    = 1017
-    };
-    //@}
 
 public:
     NET_AS_MOSServerMsgMgr( NET_AgentServer& agentServer ); 
@@ -106,8 +67,7 @@ public:
     void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg ); 
     
     // ASN
-    void SendMsgSimMos           ( ASN1T_MsgsSimMos& asnMsg, NET_AS_MOSServer* pMOS = 0 );
-    void SendMsgSimMosWithContext( ASN1T_MsgsSimMosWithContext& asnMsg, MIL_MOSContextID nCtx, NET_AS_MOSServer* pMOS = 0 );
+    void SendMsgOutSim( ASN1T_MsgsOutSim& asnMsg );
     //@}
 
     //! @name Callback Handling
@@ -136,9 +96,8 @@ private:
     void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitMagicAction       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-
-    void OnReceiveMsgMosSim           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgMosSimWithContext( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+    
+    void OnReceiveMsgInSim                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     void OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom, const ASN1T_MsgCtrlClientAnnouncement& asnMsg );
     void OnReceiveMsgCtrlStop              ();
@@ -149,21 +108,17 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< NET_ASN_MsgsMosSimController* >            T_MessageControllerVector;
-    typedef T_MessageControllerVector::const_iterator             CIT_MessageControllerVector;
-
-    typedef std::vector< NET_ASN_MsgsMosSimWithContextController* >    T_MessageWithCtxControllerVector;
-    typedef T_MessageWithCtxControllerVector::const_iterator         CIT_MessageWithCtxControllerVector;
+    typedef std::vector< NET_ASN_MsgsInSimController* > T_MessageControllerVector;
+    typedef T_MessageControllerVector::const_iterator   CIT_MessageControllerVector;
     //@}
 
     //! @name Helpers
     //@{
-    void DoUpdateWithContext( const T_MessageWithCtxControllerVector& messages );
-    void DoUpdateNoContext  ( const T_MessageControllerVector& messages );
+    void DoUpdate( const T_MessageControllerVector& messages );
     //@}
     
 private:
-    DIN::DIN_MessageServiceUserCbk<NET_AS_MOSServerMsgMgr>* pMessageService_;
+    DIN::DIN_MessageServiceUserCbk< NET_AS_MOSServerMsgMgr > messageService_;
 
     // ASN
     ASN1OCTET aASNEncodeBuffer_[100000];
@@ -171,9 +126,6 @@ private:
     
     MT_CriticalSection        ctlListCriticalSection_;
     T_MessageControllerVector messageControllerList_;
-
-    MT_CriticalSection               ctlWithCtxListCriticalSection_;
-    T_MessageWithCtxControllerVector messageWithCtxControllerList_;
 };
 
 #   include "NET_AS_MOSServerMsgMgr.inl"

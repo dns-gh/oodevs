@@ -28,17 +28,13 @@ public:
     NET_AS_MOSServerConnectionMgr( NET_AgentServer& agentServer );
     virtual ~NET_AS_MOSServerConnectionMgr();
 
-    //-------------------------------------------------------------------------
-    /** @name Main methods */
-    //-------------------------------------------------------------------------
+    //! @name Main methods
     //@{
     bool StartServer();
     bool StopServer ();
     //@}
     
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     const T_MosConnectionMap& GetMosConnections     () const;
     const T_MosConnectionMap& GetMosLightConnections() const;
@@ -53,19 +49,15 @@ public:
     //@}
 
 private:
-    //-------------------------------------------------------------------------
-    /** @name Connection service callbacks */
-    //-------------------------------------------------------------------------
+    //! @name Connection service callbacks
     //@{
     void                OnConnectionReceived   ( DIN::DIN_Server& server, DIN::DIN_Link& link );
     void                OnBadConnectionReceived( DIN::DIN_Server& server, const NEK::NEK_Address_ABC& address, const DIN::DIN_ErrorDescription& reason );
     void                OnConnectionLost       ( DIN::DIN_Server& server, DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
-    DIN::DIN_StationID  OnWantFreeStationID    ( DIN::DIN_StationID nForcedStationID );
-    void                OnReleaseStationID     ( DIN::DIN_StationID nStationID );
     //@}
 
 private:
-    DIN::DIN_ConnectionServiceServerUserCbk< NET_AS_MOSServerConnectionMgr >* pConnService_;
+    DIN::DIN_ConnectionServiceServerUserCbk< NET_AS_MOSServerConnectionMgr > connectionService_;
 
     // Server
     DIN::DIN_Server* pServer_;
@@ -73,9 +65,8 @@ private:
     // Clients
     T_MosConnectionMap mosConnectionMap_;
     T_MosConnectionMap mosLightConnectionMap_;
-
-    MT_IdentifierManager stationIDManager_;
 };
 
-#   include "NET_AS_MOSServerConnectionMgr.inl"
+#include "NET_AS_MOSServerConnectionMgr.inl"
+
 #endif // __NET_AS_MOSServerConnectionMgr_h_
