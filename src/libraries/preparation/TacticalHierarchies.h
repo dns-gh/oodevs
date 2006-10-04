@@ -7,10 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityHierarchies_h_
-#define __EntityHierarchies_h_
+#ifndef __TacticalHierarchies_h_
+#define __TacticalHierarchies_h_
 
 #include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
 namespace kernel
@@ -21,20 +22,20 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  EntityHierarchies
+/** @class  TacticalHierarchies
     @brief  Entity hierarchies
 */
 // Created: AGE 2006-09-19
 // =============================================================================
-class EntityHierarchies : public kernel::EntityHierarchies
-                        , public kernel::Updatable_ABC< kernel::InstanciationComplete >
+class TacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+                          , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
-    virtual ~EntityHierarchies();
+             TacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+    virtual ~TacticalHierarchies();
     //@}
 
     //! @name Operations
@@ -47,8 +48,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    EntityHierarchies( const EntityHierarchies& );            //!< Copy constructor
-    EntityHierarchies& operator=( const EntityHierarchies& ); //!< Assignement operator
+    TacticalHierarchies( const TacticalHierarchies& );            //!< Copy constructor
+    TacticalHierarchies& operator=( const TacticalHierarchies& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -67,4 +68,4 @@ private:
     //@}
 };
 
-#endif // __EntityHierarchies_h_
+#endif // __TacticalHierarchies_h_

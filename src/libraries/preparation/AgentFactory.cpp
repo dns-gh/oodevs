@@ -63,7 +63,7 @@ Agent_ABC* AgentFactory::Create( Agent_ABC& parent, const AgentType& type, const
     Agent* result = new Agent( parent, type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
@@ -79,11 +79,11 @@ kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatTyp
     Agent* result = new Agent( type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
 
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     result->Attach( *new KnowledgeGroupHierarchy( controllers_.controller_ ) );
-    const Entity_ABC& team = parent.Get< Hierarchies >().GetTop();
+    const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
 
     AttachExtensions( *result );

@@ -14,7 +14,6 @@
 #include "Team.h"
 #include "KnowledgeGroup.h"
 #include "Diplomacies.h"
-#include "EntityHierarchies.h"
 #include "TeamHierarchies.h"
 #include "TeamCommunications.h"
 #include "clients_kernel/Controllers.h"
@@ -51,7 +50,7 @@ Team_ABC* TeamFactory::CreateTeam()
 {
     Team_ABC* result = new Team( controllers_.controller_, *this, idManager_ );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
-    result->Attach< kernel::Hierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
+    result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Update( InstanciationComplete() );
     return result;

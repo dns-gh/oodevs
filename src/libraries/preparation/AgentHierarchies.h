@@ -10,7 +10,7 @@
 #ifndef __AgentHierarchies_h_
 #define __AgentHierarchies_h_
 
-#include "EntityHierarchies.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -24,7 +24,7 @@ namespace kernel
 */
 // Created: AGE 2006-09-20
 // =============================================================================
-class AgentHierarchies : public EntityHierarchies
+class AgentHierarchies : public TacticalHierarchies
                        , public kernel::Serializable_ABC
 {
 

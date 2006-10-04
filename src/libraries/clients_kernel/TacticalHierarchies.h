@@ -7,31 +7,31 @@
 //
 // *****************************************************************************
 
-#ifndef __Kernel_CommunicationHierarchies_h_
-#define __Kernel_CommunicationHierarchies_h_
+#ifndef __kernel_TacticalHierarchies_h_
+#define __kernel_TacticalHierarchies_h_
 
-#include "EntityHierarchies.h"
+#include "Hierarchies.h"
 
 namespace kernel
 {
 
 // =============================================================================
-/** @class  Communications
-    @brief  Communications
+/** @class  TacticalHierarchies
+    @brief  TacticalHierarchies
 */
-// Created: SBO 2006-09-25
+// Created: AGE 2006-10-04
 // =============================================================================
-class CommunicationHierarchies : public Hierarchies
+class TacticalHierarchies : public Hierarchies
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationHierarchies() {};
-    virtual ~CommunicationHierarchies() {};
+             TacticalHierarchies() {};
+    virtual ~TacticalHierarchies() {};
     //@}
 };
 
-};
+}
 
-#endif // __Kernel_CommunicationHierarchies_h_
+#endif // __kernel_TacticalHierarchies_h_

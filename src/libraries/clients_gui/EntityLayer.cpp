@@ -13,7 +13,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
 
@@ -94,7 +94,7 @@ bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::IsInTeam( const kernel::Entity_ABC& entity, const kernel::Team_ABC& team )
 {
-    const Hierarchies* hierarchies = entity.Retrieve< Hierarchies >();
+    const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
     return !hierarchies || hierarchies->IsSubordinateOf( team );
 }
 

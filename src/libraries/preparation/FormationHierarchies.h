@@ -10,7 +10,7 @@
 #ifndef __FormationHierarchies_h_
 #define __FormationHierarchies_h_
 
-#include "EntityHierarchies.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-09-21
 // =============================================================================
-class FormationHierarchies : public EntityHierarchies
+class FormationHierarchies : public TacticalHierarchies
                            , public kernel::Serializable_ABC
 {
 

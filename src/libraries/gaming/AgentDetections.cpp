@@ -13,7 +13,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 
@@ -94,6 +94,6 @@ void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rect
 // -----------------------------------------------------------------------------
 bool AgentDetections::IsSameTeam( const Entity_ABC& entity ) const
 {
-    return & entity. Get< Hierarchies >().GetTop()
-        == & holder_.Get< Hierarchies >().GetTop();
+    return entity. Get< TacticalHierarchies >().IsSubordinateOf(
+           holder_.Get< TacticalHierarchies >().GetTop() );
 }

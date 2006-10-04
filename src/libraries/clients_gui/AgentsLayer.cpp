@@ -13,7 +13,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -64,7 +64,7 @@ void AgentsLayer::Toggle( const Agent_ABC& automat, bool aggregate )
 {
     if( automat.GetSuperior() )
         return;
-    Iterator< const Entity_ABC& > children = automat.Get< Hierarchies >().CreateSubordinateIterator();
+    Iterator< const Entity_ABC& > children = automat.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Entity_ABC& child = children.NextElement();

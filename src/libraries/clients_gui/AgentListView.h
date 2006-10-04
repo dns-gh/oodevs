@@ -19,7 +19,7 @@
 namespace kernel
 {
     class Controllers;
-    class Hierarchies;
+    class TacticalHierarchies;
     class Entity_ABC;
 }
 
@@ -36,7 +36,7 @@ namespace gui
 // =============================================================================
 class AgentListView : public ListView< AgentListView >
                     , public kernel::Observer_ABC
-                    , public kernel::ElementObserver_ABC< kernel::Hierarchies >
+                    , public kernel::ElementObserver_ABC< kernel::TacticalHierarchies >
                     , public kernel::SelectionObserver< kernel::Entity_ABC >
                     , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
                     , public kernel::OptionsObserver_ABC
@@ -61,7 +61,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
-    virtual void Display( const kernel::Hierarchies& hierarchy, ValuedListItem* item );
+    virtual void Display( const kernel::TacticalHierarchies& hierarchy, ValuedListItem* item );
     //@}
 
 private:
@@ -82,9 +82,9 @@ private slots:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Hierarchies& hierarchy );
-    virtual void NotifyUpdated( const kernel::Hierarchies& hierarchy );
-    virtual void NotifyDeleted( const kernel::Hierarchies& hierarchy );
+    virtual void NotifyCreated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyDeleted( const kernel::TacticalHierarchies& hierarchy );
     //@}
 
 private:

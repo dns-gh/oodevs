@@ -17,7 +17,7 @@
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
 CommunicationHierarchies::CommunicationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::CommunicationHierarchies( controller )
+    : kernel::EntityHierarchies< kernel::CommunicationHierarchies >( controller )
     , controller_( controller )
     , holder_( holder )
     , superior_( superior )

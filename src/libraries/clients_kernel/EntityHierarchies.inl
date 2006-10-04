@@ -7,18 +7,18 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
-#include "EntityHierarchies.h"
 #include "Entity_ABC.h"
 #include "Controller.h"
 
-using namespace kernel;
+namespace kernel
+{
 
 // -----------------------------------------------------------------------------
 // Name: EntityHierarchies constructor
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
-EntityHierarchies::EntityHierarchies( Controller& controller )
+template< typename Interface >
+EntityHierarchies< Interface >::EntityHierarchies( Controller& controller )
     : controller_( controller )
 {
     // NOTHING
@@ -28,7 +28,8 @@ EntityHierarchies::EntityHierarchies( Controller& controller )
 // Name: EntityHierarchies destructor
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
-EntityHierarchies::~EntityHierarchies()
+template< typename Interface >
+EntityHierarchies< Interface >::~EntityHierarchies()
 {
     // NOTHING
 }
@@ -37,7 +38,8 @@ EntityHierarchies::~EntityHierarchies()
 // Name: EntityHierarchies::CreateSubordinateIterator
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
-Iterator< const Entity_ABC& > EntityHierarchies::CreateSubordinateIterator() const
+template< typename Interface >
+Iterator< const Entity_ABC& > EntityHierarchies< Interface >::CreateSubordinateIterator() const
 {
     return CreateIterator();
 }
@@ -46,14 +48,15 @@ Iterator< const Entity_ABC& > EntityHierarchies::CreateSubordinateIterator() con
 // Name: EntityHierarchies::IsSubordinateOf
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
-bool EntityHierarchies::IsSubordinateOf( const Entity_ABC& entity ) const
+template< typename Interface >
+bool EntityHierarchies< Interface >::IsSubordinateOf( const Entity_ABC& entity ) const
 {
     const Entity_ABC* superior = GetSuperior();
     if( superior == & entity )
         return true;
     if( superior == 0 )
         return false;
-    const Hierarchies* hierarchies = superior->Retrieve< Hierarchies >();
+    const Interface* hierarchies = superior->Retrieve< Interface >();
     return hierarchies && hierarchies->IsSubordinateOf( entity );
 }
 
@@ -61,27 +64,30 @@ bool EntityHierarchies::IsSubordinateOf( const Entity_ABC& entity ) const
 // Name: EntityHierarchies::AddSubordinate
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void EntityHierarchies::AddSubordinate( Entity_ABC& entity )
+template< typename Interface >
+void EntityHierarchies< Interface >::AddSubordinate( Entity_ABC& entity )
 {
     Register( entity.GetId(), entity );
-    controller_.Update( *(Hierarchies*)this );
+    controller_.Update( *(Interface*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityHierarchies::RemoveSubordinate
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void EntityHierarchies::RemoveSubordinate( const Entity_ABC& entity )
+template< typename Interface >
+void EntityHierarchies< Interface >::RemoveSubordinate( const Entity_ABC& entity )
 {
-    Remove( entity.GetId() );
-    controller_.Update( *(Hierarchies*)this );
+    UnregisterSubordinate( entity );
+    controller_.Update( *(Interface*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityHierarchies::UnregisterSubordinate
 // Created: SBO 2006-10-03
 // -----------------------------------------------------------------------------
-void EntityHierarchies::UnregisterSubordinate( const Entity_ABC& entity )
+template< typename Interface >
+void EntityHierarchies< Interface >::UnregisterSubordinate( const Entity_ABC& entity )
 {
     Remove( entity.GetId() );
 }
@@ -90,15 +96,18 @@ void EntityHierarchies::UnregisterSubordinate( const Entity_ABC& entity )
 // Name: EntityHierarchies::GetTop
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
-const Entity_ABC& EntityHierarchies::GetTop() const
+template< typename Interface >
+const Entity_ABC& EntityHierarchies< Interface >::GetTop() const
 {
     const Entity_ABC* superior = GetSuperior();
     if( superior )
     {
-        const Hierarchies* superiorHierarchies = superior->Retrieve< Hierarchies >();
+        const Interface* superiorHierarchies = superior->Retrieve< Interface >();
         if( superiorHierarchies )
             return superiorHierarchies->GetTop();
         return *superior;
     }
     return GetEntity();
+}
+
 }

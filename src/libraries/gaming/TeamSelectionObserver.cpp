@@ -14,7 +14,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 
@@ -79,7 +79,7 @@ void TeamSelectionObserver::Select( const KnowledgeGroup_ABC& element )
 // -----------------------------------------------------------------------------
 void TeamSelectionObserver::Select( const Agent_ABC& element )
 {
-    const Team_ABC& team = static_cast< const Team_ABC& >( element.Get< Hierarchies >().GetTop() );
+    const Team_ABC& team = static_cast< const Team_ABC& >( element.Get< TacticalHierarchies >().GetTop() );
     Select( team );
 }
 

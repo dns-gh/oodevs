@@ -17,7 +17,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "ItemFactory_ABC.h"
 
 using namespace kernel;
@@ -68,7 +68,7 @@ ValuedListItem* AgentListView::RecursiveCreateHierarchy( const Entity_ABC* entit
     ValuedListItem* item = FindItem( entity, firstChild() );
     if( item )
         return item;
-    if( const Hierarchies* hierarchy = entity->Retrieve< Hierarchies >() )
+    if( const TacticalHierarchies* hierarchy = entity->Retrieve< TacticalHierarchies >() )
         item = RecursiveCreateHierarchy( hierarchy->GetSuperior() );
     if( !item )
         item = factory_.CreateItem( this );
@@ -82,7 +82,7 @@ ValuedListItem* AgentListView::RecursiveCreateHierarchy( const Entity_ABC* entit
 // Name: AgentListView::NotifyCreated
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const Hierarchies& hierarchy )
+void AgentListView::NotifyCreated( const TacticalHierarchies& hierarchy )
 {
     RecursiveCreateHierarchy( &hierarchy.GetEntity() );
     NotifyUpdated( hierarchy );
@@ -92,7 +92,7 @@ void AgentListView::NotifyCreated( const Hierarchies& hierarchy )
 // Name: AgentListView::NotifyUpdated
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const Hierarchies& hierarchy )
+void AgentListView::NotifyUpdated( const TacticalHierarchies& hierarchy )
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
@@ -103,7 +103,7 @@ void AgentListView::NotifyUpdated( const Hierarchies& hierarchy )
 // Name: AgentListView::NotifyDeleted
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyDeleted( const Hierarchies& hierarchy )
+void AgentListView::NotifyDeleted( const TacticalHierarchies& hierarchy )
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     delete FindItem( &entity, firstChild() );
@@ -115,7 +115,7 @@ void AgentListView::NotifyDeleted( const Hierarchies& hierarchy )
 // -----------------------------------------------------------------------------
 void AgentListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    if( const Hierarchies* hierarchy = entity.Retrieve< Hierarchies >() )
+    if( const TacticalHierarchies* hierarchy = entity.Retrieve< TacticalHierarchies >() )
         Display( *hierarchy, item );
 }
 
@@ -123,7 +123,7 @@ void AgentListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 // Name: AgentListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Hierarchies& hierarchy, ValuedListItem* item )
+void AgentListView::Display( const TacticalHierarchies& hierarchy, ValuedListItem* item )
 {
     item->SetNamed( hierarchy.GetEntity() );
     item->setDropEnabled( true );

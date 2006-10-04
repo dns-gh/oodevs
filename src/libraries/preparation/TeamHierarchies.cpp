@@ -19,7 +19,7 @@ using namespace xml;
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
 TeamHierarchies::TeamHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : EntityHierarchies( controller, holder, superior )
+    : TacticalHierarchies( controller, holder, superior )
 {
     // NOTHING
 }

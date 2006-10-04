@@ -10,6 +10,7 @@
 #ifndef __CommunicationHierarchies_h_
 #define __CommunicationHierarchies_h_
 
+#include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -26,7 +27,7 @@ namespace kernel
 */
 // Created: SBO 2006-09-25
 // =============================================================================
-class CommunicationHierarchies : public kernel::CommunicationHierarchies
+class CommunicationHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                                , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 

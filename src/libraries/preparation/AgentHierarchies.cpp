@@ -22,7 +22,7 @@ using namespace xml;
 // Created: SBO 2006-09-22
 // -----------------------------------------------------------------------------
 AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior, kernel::DataDictionary& dictionary )
-    : EntityHierarchies( controller, holder, superior )
+    : TacticalHierarchies( controller, holder, superior )
 {
     if( superior )
         dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), superior );

@@ -10,7 +10,7 @@
 #ifndef __TeamHierarchies_h_
 #define __TeamHierarchies_h_
 
-#include "EntityHierarchies.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-09-21
 // =============================================================================
-class TeamHierarchies : public EntityHierarchies
+class TeamHierarchies : public TacticalHierarchies
                       , public kernel::Serializable_ABC
 {
 

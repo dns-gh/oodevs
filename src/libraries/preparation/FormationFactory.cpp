@@ -44,7 +44,7 @@ FormationFactory::~FormationFactory()
 kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
-    formation->Attach< kernel::Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
     return formation;
 }
@@ -56,7 +56,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const
 kernel::Formation_ABC* FormationFactory::Create( kernel::Formation_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
-    formation->Attach< kernel::Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
     return formation;
 }

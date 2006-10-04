@@ -8,16 +8,16 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "EntityHierarchies.h"
+#include "TacticalHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies constructor
+// Name: TacticalHierarchies constructor
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
-EntityHierarchies::EntityHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies( controller )
+TacticalHierarchies::TacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller )
     , controller_( controller )
     , holder_( holder )
     , superior_( superior )
@@ -26,77 +26,77 @@ EntityHierarchies::EntityHierarchies( kernel::Controller& controller, kernel::En
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies destructor
+// Name: TacticalHierarchies destructor
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
-EntityHierarchies::~EntityHierarchies()
+TacticalHierarchies::~TacticalHierarchies()
 {
     DeleteAll();
     if( superior_ )
-        if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
+        if( kernel::TacticalHierarchies* hierarchies = superior_->Retrieve< kernel::TacticalHierarchies >() )
             hierarchies->UnregisterSubordinate( holder_ );
-    controller_.Delete( *(kernel::Hierarchies*)this );
+    controller_.Delete( *(kernel::TacticalHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::DoUpdate
+// Name: TacticalHierarchies::DoUpdate
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void EntityHierarchies::DoUpdate( const kernel::InstanciationComplete& )
+void TacticalHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 {
     RegisterToSuperior();
-    controller_.Create( *(kernel::Hierarchies*)this );
+    controller_.Create( *(kernel::TacticalHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::GetSuperior
+// Name: TacticalHierarchies::GetSuperior
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* EntityHierarchies::GetSuperior() const
+const kernel::Entity_ABC* TacticalHierarchies::GetSuperior() const
 {
     return superior_;
 }
     
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::GetEntity
+// Name: TacticalHierarchies::GetEntity
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC& EntityHierarchies::GetEntity() const
+const kernel::Entity_ABC& TacticalHierarchies::GetEntity() const
 {
     return holder_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::ChangeSuperior
+// Name: TacticalHierarchies::ChangeSuperior
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
-void EntityHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+void TacticalHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 {
     RemoveFromSuperior();
     superior_ = &superior;
     RegisterToSuperior();
-    controller_.Update( *(kernel::Hierarchies*)this );
+    controller_.Update( *(kernel::TacticalHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::RegisterToSuperior
+// Name: TacticalHierarchies::RegisterToSuperior
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
-void EntityHierarchies::RegisterToSuperior()
+void TacticalHierarchies::RegisterToSuperior()
 {
     if( superior_ )
-        if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
+        if( kernel::TacticalHierarchies* hierarchies = superior_->Retrieve< kernel::TacticalHierarchies >() )
             hierarchies->AddSubordinate( holder_ );
 }
     
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::RemoveFromSuperior
+// Name: TacticalHierarchies::RemoveFromSuperior
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
-void EntityHierarchies::RemoveFromSuperior()
+void TacticalHierarchies::RemoveFromSuperior()
 {
     if( superior_ )
-        if( kernel::Hierarchies* hierarchies = superior_->Retrieve< kernel::Hierarchies >() )
+        if( kernel::TacticalHierarchies* hierarchies = superior_->Retrieve< kernel::TacticalHierarchies >() )
         {
             hierarchies->RemoveSubordinate( holder_ );
             superior_ = 0;

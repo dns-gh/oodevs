@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Team_ABC& team, KnowledgeGroup_ABC& holder )
-    : EntityHierarchies( controller )
+    : EntityHierarchies< TacticalHierarchies >( controller )
     , controller_( controller )
     , superior_  ( team )
     , holder_    ( holder )
@@ -34,7 +34,7 @@ KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Te
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 {
-    if( Hierarchies* hierarchies = superior_.Retrieve< Hierarchies >() )
+    if( TacticalHierarchies* hierarchies = superior_.Retrieve< TacticalHierarchies >() )
         hierarchies->RemoveSubordinate( holder_ );
 }
 
@@ -44,11 +44,11 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 {
-    if( Hierarchies* hierarchies = superior_.Retrieve< Hierarchies >() )
+    if( TacticalHierarchies* hierarchies = superior_.Retrieve< TacticalHierarchies >() )
     {
         hierarchies->AddSubordinate( holder_ );
         controller_.Update( *hierarchies );
-        controller_.Update( *(Hierarchies*)this );
+        controller_.Update( *(TacticalHierarchies*)this );
     }
 }
 

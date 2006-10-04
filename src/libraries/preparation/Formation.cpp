@@ -11,7 +11,7 @@
 #include "Formation.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "xeumeuleu/xml.h"
@@ -39,7 +39,7 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    if( const Hierarchies* hierarchies = Retrieve< Hierarchies >() )
+    if( const TacticalHierarchies* hierarchies = Retrieve< TacticalHierarchies >() )
     {
         Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
         while( it.HasMoreElements() )

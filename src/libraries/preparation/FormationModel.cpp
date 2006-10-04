@@ -13,7 +13,6 @@
 #include "FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Hierarchies.h"
 
 using namespace kernel;
 

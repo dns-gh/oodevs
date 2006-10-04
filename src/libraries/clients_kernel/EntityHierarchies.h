@@ -23,7 +23,8 @@ namespace kernel
 */
 // Created: AGE 2006-09-19
 // =============================================================================
-class EntityHierarchies : public Hierarchies, public Resolver< Entity_ABC >
+template< typename Interface >
+class EntityHierarchies : public Interface, public Resolver< Entity_ABC >
 {
 
 public:
@@ -64,5 +65,7 @@ private:
 };
 
 }
+
+#include "EntityHierarchies.inl"
 
 #endif // __kernel_EntityHierarchies_h_

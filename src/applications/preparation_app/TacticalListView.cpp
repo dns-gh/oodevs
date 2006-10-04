@@ -16,12 +16,12 @@
 #include "preparation/TeamsModel.h"
 #include "preparation/AutomatDecisions.h"
 #include "preparation/FormationLevels.h"
-#include "preparation/EntityHierarchies.h"
+#include "preparation/TacticalHierarchies.h"
 #include "preparation/Level.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 
@@ -52,7 +52,7 @@ TacticalListView::~TacticalListView()
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const Hierarchies& hierarchy, gui::ValuedListItem* item )
+void TacticalListView::Display( const kernel::TacticalHierarchies& hierarchy, gui::ValuedListItem* item )
 {
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
@@ -257,12 +257,12 @@ namespace
 {
     bool ChangeSuperior( const Entity_ABC& entity, const Entity_ABC& superior ) // $$$$ SBO 2006-09-28: cast-machine
     {
-        if( const Hierarchies* hierarchies = entity.Retrieve< Hierarchies >() )
-            if( const ::EntityHierarchies* hierarchy = static_cast< const ::EntityHierarchies* >( hierarchies ) )
-            {
-                const_cast< ::EntityHierarchies* >( hierarchy )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
-                return true;
-            }
+        if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            const ::TacticalHierarchies* hierarchy = static_cast< const ::TacticalHierarchies* >( hierarchies );
+            const_cast< ::TacticalHierarchies* >( hierarchy )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
+            return true;
+         }
         return false;
     }
 }
