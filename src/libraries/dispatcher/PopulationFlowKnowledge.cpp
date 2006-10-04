@@ -183,4 +183,11 @@ void PopulationFlowKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
     }
 
     asn.Send( publisher );
+
+    if( asn().m.portions_fluxPresent && asn().portions_flux.n > 0 )
+    {
+        for( uint i = 0; i < asn().portions_flux.n; ++i )
+            PopulationFlowPart::AsnDelete( asn().portions_flux.elem[ i ] );
+        delete [] asn().portions_flux.elem;
+    }
 }

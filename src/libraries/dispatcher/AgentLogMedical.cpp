@@ -13,6 +13,7 @@
 
 #include "Model.h"
 #include "Automat.h"
+#include "Agent.h"
 #include "Network_Def.h"
 
 using namespace dispatcher;
@@ -21,8 +22,9 @@ using namespace dispatcher;
 // Name: AgentLogMedical constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMedical::AgentLogMedical( Model& model, const ASN1T_MsgLogSanteEtat& asnMsg )
-    : model_                           ( model )
+AgentLogMedical::AgentLogMedical( Model& model, const Agent& agent, const ASN1T_MsgLogSanteEtat& asnMsg )
+    : agent_                           ( agent )
+    , model_                           ( model )
     , bSystemEnabled_                  ( false )
     , priorities_                      ()
     , tacticalPriorities_              ()
@@ -98,6 +100,8 @@ void AgentLogMedical::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
 void AgentLogMedical::Send( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientLogSanteEtat asn;
+
+    asn().oid_pion = agent_.GetID();
 
     asn().m.chaine_activeePresent                      = 1;
     asn().m.disponibilites_ambulances_ramassagePresent = 1;

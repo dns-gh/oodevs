@@ -195,13 +195,10 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
 // Name: Simulation::OnReceive
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Simulation::OnReceive( unsigned int nMsgID, DIN::DIN_Input& input )
+void Simulation::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 {
-    DIN_BufferedMessage copiedMsg( messageService_ );
-    copiedMsg.GetOutput().Append( input.GetBuffer( 0 ), input.GetAvailable() );
-
-    dispatcher_.GetModel().Update( nMsgID, input );
-    dispatcher_.DispatchToClients( nMsgID, copiedMsg );
+    dispatcher_.DispatchToClients( nMsgID, dinMsg );
+    dispatcher_.GetModel().Update( nMsgID, dinMsg );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 
 #include "Model.h"
 #include "Automat.h"
+#include "Agent.h"
 #include "Network_Def.h"
 
 using namespace dispatcher;
@@ -21,8 +22,9 @@ using namespace dispatcher;
 // Name: AgentLogSupply constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogSupply::AgentLogSupply( Model& model, const ASN1T_MsgLogRavitaillementEtat& asnMsg )
-    : model_                ( model )
+AgentLogSupply::AgentLogSupply( Model& model, const Agent& agent, const ASN1T_MsgLogRavitaillementEtat& asnMsg )
+    : agent_                ( agent )
+    , model_                ( model )
     , bSystemEnabled_       ( false )
     , stocks_               ()
     , convoyersAvailability_()
@@ -79,6 +81,8 @@ void AgentLogSupply::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
 void AgentLogSupply::Send( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientLogRavitaillementEtat asn;
+
+    asn().oid_pion = agent_.GetID();
 
     asn().m.chaine_activeePresent                       = 1;
     asn().m.disponibilites_transporteurs_convoisPresent = 1;

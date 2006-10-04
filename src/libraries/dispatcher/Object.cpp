@@ -12,6 +12,7 @@
 #include "Object.h"
 
 #include "Model.h"
+#include "Side.h"
 #include "NBCObjectAttribute.h"
 #include "LogisticRouteObjectAttribute.h"
 #include "CrossingSiteObjectAttribute.h"
@@ -120,6 +121,7 @@ void Object::SendCreation( Publisher_ABC& publisher ) const
     asn().oid  = nID_;
     asn().type = nType_;
     asn().nom  = strName_.c_str(); // !! pointeur sur const char*
+    asn().camp = side_.GetID();
 
     localisation_.Send( asn().localisation );
 

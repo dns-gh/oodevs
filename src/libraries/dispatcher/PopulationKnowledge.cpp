@@ -117,7 +117,6 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 // NETWORK
 // =============================================================================
 
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::SendCreation
 // Created: NLD 2006-10-02
@@ -155,5 +154,4 @@ void PopulationKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
 
     concentrations_.Apply( std::mem_fun_ref( &PopulationConcentrationKnowledge::SendFullUpdate ), publisher );
     flows_         .Apply( std::mem_fun_ref( &PopulationFlowKnowledge         ::SendFullUpdate ), publisher );
-
 }

@@ -13,6 +13,7 @@
 
 #include "Model.h"
 #include "Automat.h"
+#include "Agent.h"
 #include "Network_Def.h"
 
 using namespace dispatcher;
@@ -21,8 +22,9 @@ using namespace dispatcher;
 // Name: AgentLogMaintenance constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMaintenance::AgentLogMaintenance( Model& model, const ASN1T_MsgLogMaintenanceEtat& asnMsg )
-    : model_                ( model )
+AgentLogMaintenance::AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceEtat& asnMsg )
+    : agent_                ( agent )
+    , model_                ( model )
     , bSystemEnabled_       ( false )
     , priorities_           ()
     , tacticalPriorities_   ()
@@ -90,6 +92,8 @@ void AgentLogMaintenance::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
 void AgentLogMaintenance::Send( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientLogMaintenanceEtat asn;
+
+    asn().oid_pion = agent_.GetID();
 
     asn().m.chaine_activeePresent             = 1;
     asn().m.disponibilites_remorqueursPresent = 1;

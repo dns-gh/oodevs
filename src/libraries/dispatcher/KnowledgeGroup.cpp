@@ -49,7 +49,7 @@ KnowledgeGroup::~KnowledgeGroup()
 void KnowledgeGroup::SendCreation( Publisher_ABC& publisher ) const
 {
     DIN::DIN_BufferedMessage msg = publisher.GetDinMsg();
-    msg << nID_
-        << side_.GetID();
+    msg << side_.GetID()
+        << nID_;        
     publisher.Send( eMsgKnowledgeGroup, msg );
 }

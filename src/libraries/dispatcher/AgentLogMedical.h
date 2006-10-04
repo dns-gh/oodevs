@@ -18,6 +18,7 @@
 namespace dispatcher
 {
 class Model;
+class Agent;
 class Automat;
 class Publisher_ABC;
 
@@ -32,7 +33,7 @@ class AgentLogMedical
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogMedical( Model& model, const ASN1T_MsgLogSanteEtat& asnMsg );
+     AgentLogMedical( Model& model, const Agent& agent, const ASN1T_MsgLogSanteEtat& asnMsg );
     ~AgentLogMedical();
     //@}
 
@@ -56,10 +57,11 @@ private:
     //@}
 
 private:
-    Model&                          model_;
-    bool                            bSystemEnabled_;
-    T_HumanWoundVector              priorities_;
-    ModelRefsContainer< Automat >   tacticalPriorities_;
+    const Agent&                          agent_;
+          Model&                          model_;
+          bool                            bSystemEnabled_;
+          T_HumanWoundVector              priorities_;
+          ModelRefsContainer< Automat >   tacticalPriorities_;
 
     ModelsContainer< EquipmentAvailability< ASN1T_SanteDisponibiliteMoyens > > evacuationAmbulancesAvailability_;
     ModelsContainer< EquipmentAvailability< ASN1T_SanteDisponibiliteMoyens > > collectionAmbulancesAvailability_;

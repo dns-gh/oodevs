@@ -107,6 +107,7 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& /*server*/, DIN_Link& link,
     void ClientsNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )  \
     {                                                                                         \
         Client::GetClientFromLink( linkFrom ).OnReceive( eMsg##MSG, msg );                    \
+        MT_LOG_INFO_MSG( "Receiving DIN msg " << eMsg##MSG << " from client" ); \
     }
 
 DECLARE_DIN_CALLBACK( EnableUnitVisionCones  )
@@ -167,8 +168,11 @@ void ClientsNetworker::Dispatch( const ASN1T_MsgsInClient& asnMsg )
 // Name: ClientsNetworker::Dispatch
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Dispatch( unsigned int nMsgID, DIN::DIN_BufferedMessage& dinMsg )
+void ClientsNetworker::Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
 {
+    DIN_BufferedMessage copiedMsg( messageService_ );
+    copiedMsg.GetOutput().Append( dinMsg.GetBuffer( 0 ), dinMsg.GetAvailable() );
+
     for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
-        (**it).Send( nMsgID, dinMsg );
+        (**it).Send( nMsgID, copiedMsg );
 }

@@ -46,6 +46,7 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
     messageService_.RegisterReceivedMessage( eMsgKnowledgeGroup                        , *this, &SimulationNetworker::OnReceiveMsgKnowledgeGroup                         );
     messageService_.RegisterReceivedMessage( eMsgArmy                                  , *this, &SimulationNetworker::OnReceiveMsgArmy                                   );
     messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, &SimulationNetworker::OnReceiveMsgDebugDrawPoints                        );
+    // eMsgEnvironmentType
     messageService_.RegisterReceivedMessage( eMsgPopulationCollision                   , *this, &SimulationNetworker::OnReceiveMsgPopulationCollision                    );
 
     connectionService_.SetCbkOnConnectionSuccessful( &SimulationNetworker::OnConnected      );
@@ -86,6 +87,7 @@ void SimulationNetworker::OnNotConnected( DIN_Link& link, const DIN_ErrorDescrip
 {
     assert( !pSimulation_ );
     MT_LOG_INFO_MSG( MT_FormatString( "Connection to simulation '%s' failed (reason : %s)", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
+    connectionService_.JoinHost( simulationAddress_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +113,7 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
     void SimulationNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )    \
     {                                                                                              \
         assert( pSimulation_ && pSimulation_ == &Simulation::GetSimulationFromLink( linkFrom ) );  \
+        MT_LOG_INFO_MSG( "Receiving DIN msg " << eMsg##MSG << " from simulation" ); \
         pSimulation_->OnReceive( eMsg##MSG, msg );                                                 \
     }
 
@@ -180,8 +183,12 @@ void SimulationNetworker::Dispatch( const ASN1T_MsgsInSim& asnMsg )
 // Name: SimulationNetworker::Dispatch
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Dispatch( unsigned int nMsgID, DIN::DIN_BufferedMessage& dinMsg )
+void SimulationNetworker::Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
 {
     assert( pSimulation_ );
-    pSimulation_->Send( nMsgID, dinMsg );
+
+    DIN_BufferedMessage copiedMsg( messageService_ );
+    copiedMsg.GetOutput().Append( dinMsg.GetBuffer( 0 ), dinMsg.GetAvailable() );
+
+    pSimulation_->Send( nMsgID, copiedMsg );
 }

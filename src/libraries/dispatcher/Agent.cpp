@@ -238,7 +238,7 @@ void Agent::Update( const ASN1T_MsgUnitDotations& asnMsg )
 void Agent::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
 {
     if( !pLogMedical_ )
-        pLogMedical_ = new AgentLogMedical( model_, asnMsg );
+        pLogMedical_ = new AgentLogMedical( model_, *this, asnMsg );
     else
         pLogMedical_->Update( asnMsg );
 }
@@ -250,7 +250,7 @@ void Agent::Update( const ASN1T_MsgLogSanteEtat& asnMsg )
 void Agent::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
 {
     if( !pLogMaintenance_ )
-        pLogMaintenance_ = new AgentLogMaintenance( model_, asnMsg );
+        pLogMaintenance_ = new AgentLogMaintenance( model_, *this, asnMsg );
     else
         pLogMaintenance_->Update( asnMsg );
 }
@@ -262,7 +262,7 @@ void Agent::Update( const ASN1T_MsgLogMaintenanceEtat& asnMsg )
 void Agent::Update( const ASN1T_MsgLogRavitaillementEtat& asnMsg )
 {
     if( !pLogSupply_ )
-        pLogSupply_ = new AgentLogSupply( model_, asnMsg );
+        pLogSupply_ = new AgentLogSupply( model_, *this, asnMsg );
     else
         pLogSupply_->Update( asnMsg );
 }
@@ -311,6 +311,8 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 {
     { // Attributes $$$
         AsnMsgInClientUnitAttributes asn;
+
+        asn().oid_pion = nID_;
 
         asn().m.positionPresent = 1;
         asn().m.directionPresent = 1;
@@ -410,6 +412,8 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 
     { // Dotations
         AsnMsgInClientUnitDotations asn;
+
+        asn().oid_pion = nID_;
 
         asn().m.dotation_eff_materielPresent  = 1;
         asn().m.dotation_eff_personnelPresent = 1;

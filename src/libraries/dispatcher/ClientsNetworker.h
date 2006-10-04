@@ -41,7 +41,7 @@ public:
     //! @name Main
     //@{
     void Dispatch( const ASN1T_MsgsInClient& asnMsg );
-    void Dispatch( unsigned int nMsgID, DIN::DIN_BufferedMessage& dinMsg );
+    void Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
 private:

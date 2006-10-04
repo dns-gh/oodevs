@@ -273,7 +273,7 @@ void Model::Send( Publisher_ABC& publisher ) const
     populations_    .Apply( std::mem_fun_ref( &Population    ::SendCreation ), publisher );
 
     sides_          .Apply( std::mem_fun_ref( &Side      ::SendFullUpdate ), publisher );
-    automats_       .Apply( std::mem_fun_ref( &Automat   ::SendFullUpdate ), publisher ); //$$$ Séparation pions/automates
+    automats_       .Apply( std::mem_fun_ref( &Automat   ::SendFullUpdate ), publisher );
     agents_         .Apply( std::mem_fun_ref( &Agent     ::SendFullUpdate ), publisher );
     objects_        .Apply( std::mem_fun_ref( &Object    ::SendFullUpdate ), publisher );
     populations_    .Apply( std::mem_fun_ref( &Population::SendFullUpdate ), publisher );
@@ -292,6 +292,9 @@ void Model::Send( Publisher_ABC& publisher ) const
 
     objectKnowledges_.Apply( std::mem_fun_ref( &ObjectKnowledge::SendCreation   ), publisher );
     objectKnowledges_.Apply( std::mem_fun_ref( &ObjectKnowledge::SendFullUpdate ), publisher );
+
+    populationKnowledges_.Apply( std::mem_fun_ref( &PopulationKnowledge::SendCreation   ), publisher );
+    populationKnowledges_.Apply( std::mem_fun_ref( &PopulationKnowledge::SendFullUpdate ), publisher );
     
     AsnMsgInClientCtrlSendCurrentStateEnd().Send( publisher );
 }

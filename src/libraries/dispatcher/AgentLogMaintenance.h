@@ -19,6 +19,7 @@ namespace dispatcher
 {
 class Model;
 class Automat;
+class Agent;
 class Publisher_ABC;
 
 // =============================================================================
@@ -32,7 +33,7 @@ class AgentLogMaintenance
 public:
     //! @name Constructors/Destructor
     //@{
-     AgentLogMaintenance( Model& model, const ASN1T_MsgLogMaintenanceEtat& asnMsg );
+     AgentLogMaintenance( Model& model, const Agent& agent, const ASN1T_MsgLogMaintenanceEtat& asnMsg );
     ~AgentLogMaintenance();
     //@}
 
@@ -56,10 +57,11 @@ private:
     //@}
 
 private:
-    Model&                          model_;
-    bool                            bSystemEnabled_;
-    T_EquipmentTypeVector           priorities_;
-    ModelRefsContainer< Automat >   tacticalPriorities_;
+    const Agent&                          agent_;
+          Model&                          model_;
+          bool                            bSystemEnabled_;
+          T_EquipmentTypeVector           priorities_;
+          ModelRefsContainer< Automat >   tacticalPriorities_;
 
     ModelsContainer< EquipmentAvailability< ASN1T_MaintenanceDisponibiliteMoyens > > haulersAvailability_;
     ModelsContainer< EquipmentAvailability< ASN1T_MaintenanceDisponibiliteMoyens > > repairersAvailability_;

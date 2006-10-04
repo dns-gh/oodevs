@@ -94,7 +94,6 @@ private:
     ModelsContainer< LogConsignMedical      > logConsignsMedical_;
     ModelsContainer< Population             > populations_;
     ModelsContainer< PopulationKnowledge    > populationKnowledges_;
-
 };
 
 }

@@ -45,12 +45,6 @@ static enum
 };
 //@}
 
-/****TEST****/
-
-
-//AsnMsgInSimCtrlInfo()
-//AsnMsgInClientsCtrlInfo()
-
  
 #define GENERATE_EMPTY_ASN_MSG_SENDER( TARGET, ASNMSG, ASNVAR )  \
 class AsnMsgIn##TARGET##ASNMSG                                   \

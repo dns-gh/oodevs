@@ -85,7 +85,7 @@ void Dispatcher::DispatchToSimulation( const ASN1T_MsgsInSim& asnMsg )
 // Name: Dispatcher::DispatchToSimulation
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Dispatcher::DispatchToSimulation( unsigned int nMsgID, DIN::DIN_BufferedMessage& dinMsg )
+void Dispatcher::DispatchToSimulation( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
 {
     assert( pSimulationNetworker_ );
     pSimulationNetworker_->Dispatch( nMsgID, dinMsg );   
@@ -107,7 +107,7 @@ void Dispatcher::DispatchToClients( const ASN1T_MsgsInClient& asnMsg )
 // Name: Dispatcher::DispatchToClients
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Dispatcher::DispatchToClients( unsigned int nMsgID, DIN::DIN_BufferedMessage& dinMsg )
+void Dispatcher::DispatchToClients( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
 {
     assert( pClientsNetworker_ );
     pClientsNetworker_->Dispatch( nMsgID, dinMsg );   

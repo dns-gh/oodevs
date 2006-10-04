@@ -157,11 +157,9 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
 // Name: Client::OnReceive
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void Client::OnReceive( unsigned int nMsgID, DIN::DIN_Input& input )
+void Client::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 {
-    DIN_BufferedMessage copiedMsg( messageService_ );
-    copiedMsg.GetOutput().Append( input.GetBuffer( 0 ), input.GetAvailable() );
-    dispatcher_.DispatchToSimulation( nMsgID, copiedMsg );
+    dispatcher_.DispatchToSimulation( nMsgID, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
