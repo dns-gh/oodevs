@@ -17,7 +17,8 @@ namespace kernel
 
 // =============================================================================
 /** @class  TacticalHierarchies
-    @brief  TacticalHierarchies
+    @brief  Tactical hierarchies
+            agent -> formations -> team
 */
 // Created: AGE 2006-10-04
 // =============================================================================

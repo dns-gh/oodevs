@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/EntityHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "ASN_Types.h"
 
@@ -29,7 +29,7 @@ namespace kernel
 */
 // Created: AGE 2006-09-20
 // =============================================================================
-class AgentHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class AgentHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateCreation >
                        , public kernel::Updatable_ABC< ASN1T_MsgPionCreation >
                        , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomateAck >

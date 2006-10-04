@@ -22,7 +22,7 @@ using namespace kernel;
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
 AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory )
-    : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory )
+    : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory )
     , publisher_( publisher )
 {
     // NOTHING
@@ -46,7 +46,7 @@ void AgentListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item 
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 0, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
-    gui::HierarchyListView< kernel::TacticalHierarchies >::Display( agent, item );
+    gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( agent, item );
 }
 
 // -----------------------------------------------------------------------------

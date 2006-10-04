@@ -15,7 +15,7 @@
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -78,7 +78,7 @@ Agent::~Agent()
 {
     ChangeKnowledgeGroup( ( kernel::KnowledgeGroup_ABC*)0 );
     ChangeSuperior( 0 );
-    Iterator< const Entity_ABC& > it = Get< TacticalHierarchies >().CreateSubordinateIterator();
+    Iterator< const Entity_ABC& > it = Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const Agent& agent = static_cast< const Agent& >( it.NextElement() );
@@ -96,7 +96,7 @@ void Agent::DoUpdate( const InstanciationComplete& )
     controller_.Create( *(Agent_ABC*)this );
     if( gtia_ )
         gtia_->AddAutomat( id_, *this );
-    Iterator< const Entity_ABC& > it = Get< TacticalHierarchies >().CreateSubordinateIterator();
+    Iterator< const Entity_ABC& > it = Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const Agent& agent = static_cast< const Agent& >( it.NextElement() );
@@ -176,7 +176,7 @@ void Agent::ChangeKnowledgeGroup( KnowledgeGroup_ABC* gtia )
     gtia_ = gtia;
     if( gtia_ )
         gtia_->AddAutomat( id_, *this );
-    Iterator< const Entity_ABC& > it = Get< TacticalHierarchies >().CreateSubordinateIterator();
+    Iterator< const Entity_ABC& > it = Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         const Agent& agent = static_cast< const Agent& >( it.NextElement() );
@@ -204,9 +204,9 @@ void Agent::ChangeSuperior( unsigned long id )
 // -----------------------------------------------------------------------------
 void Agent::AddChild( Agent_ABC& child )
 {
-    if( !child.Get< TacticalHierarchies >().IsSubordinateOf( *this ) )
+    if( !child.Get< CommunicationHierarchies >().IsSubordinateOf( *this ) )
     {
-        Get< TacticalHierarchies >().AddSubordinate( child );
+        Get< CommunicationHierarchies >().AddSubordinate( child );
         controller_.Update( *(Agent_ABC*)this );
     } 
 }
@@ -217,7 +217,7 @@ void Agent::AddChild( Agent_ABC& child )
 // -----------------------------------------------------------------------------
 void Agent::RemoveChild( Agent_ABC& child )
 {
-    Get< TacticalHierarchies >().RemoveSubordinate( child );
+    Get< CommunicationHierarchies >().RemoveSubordinate( child );
     controller_.Update( *(Agent_ABC*)this );
 }
 

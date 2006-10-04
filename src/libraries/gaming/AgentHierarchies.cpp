@@ -22,7 +22,7 @@ using namespace kernel;
 AgentHierarchies::AgentHierarchies( Controller& controller, Entity_ABC& holder, 
                                     const Resolver_ABC< Agent_ABC >& agentResolver, 
                                     const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
-    : EntityHierarchies< TacticalHierarchies >( controller )
+    : EntityHierarchies< CommunicationHierarchies >( controller )
     , controller_   ( controller )
     , holder_       ( holder )
     , agentResolver_( agentResolver ) 
@@ -39,7 +39,7 @@ AgentHierarchies::AgentHierarchies( Controller& controller, Entity_ABC& holder,
 AgentHierarchies::~AgentHierarchies()
 {
     if( superior_ )
-        if( TacticalHierarchies* hierarchies = superior_->Retrieve< TacticalHierarchies >() )
+        if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
             hierarchies->UnregisterSubordinate( holder_ );
 }
 
@@ -78,12 +78,12 @@ void AgentHierarchies::ChangeSuperior( unsigned int id, const Resolver& resolver
 void AgentHierarchies::UpdateSuperior( Entity_ABC& superior )
 {
     if( superior_ )
-        if( TacticalHierarchies* hierarchies = superior_->Retrieve< TacticalHierarchies >() )
+        if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
             hierarchies->RemoveSubordinate( holder_ );
     superior_ = &superior;
-    if( TacticalHierarchies* hierarchies = superior_->Retrieve< TacticalHierarchies >() )
+    if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
         hierarchies->AddSubordinate( holder_ );
-    controller_.Update( *(TacticalHierarchies*)this );
+    controller_.Update( *(CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------

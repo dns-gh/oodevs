@@ -16,8 +16,9 @@ namespace kernel
 {
 
 // =============================================================================
-/** @class  Communications
-    @brief  Communications
+/** @class  CommunicationHierarchies
+    @brief  Communication hierarchies
+            agent -> automat -> knowledge group -> team
 */
 // Created: SBO 2006-09-25
 // =============================================================================

@@ -22,7 +22,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -186,7 +186,7 @@ namespace
         {
             if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
                 MagicFunctor::operator()( *agent );
-            Iterator< const Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
+            Iterator< const Entity_ABC& > it = entity.Get< CommunicationHierarchies >().CreateSubordinateIterator();
             while( it.HasMoreElements() )
             {
                 const Entity_ABC& entity = it.NextElement();

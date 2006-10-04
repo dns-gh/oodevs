@@ -15,7 +15,7 @@
 #include "gaming/MagicOrders.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -148,7 +148,7 @@ void ChangeHumanFactorsDialog::Validate()
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
     if ( pAllUnitsCheckBox_->isChecked() )
     {
-        Iterator< const Entity_ABC& > it = selected_->Get< TacticalHierarchies >().CreateSubordinateIterator();
+        Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
         while( it.HasMoreElements() )
             SendMessage( it.NextElement().GetId(), tiredness, moral, experience );
     }

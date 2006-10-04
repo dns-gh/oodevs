@@ -18,7 +18,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -187,7 +187,7 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 bool PopulationKnowledge::IsInTeam( const Team_ABC& team ) const
 {
-     return group_.Get< TacticalHierarchies >().IsSubordinateOf( team );
+     return group_.Get< CommunicationHierarchies >().IsSubordinateOf( team );
 }
 
 // -----------------------------------------------------------------------------

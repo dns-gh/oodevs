@@ -17,6 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/Lima.h"
 #include "gaming/Limit.h"
@@ -149,7 +150,9 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 QColor ColorStrategy::FindColor( const Entity_ABC& entity )
 {
-    const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
+    const Hierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
+    if( ! hierarchies )
+        hierarchies = entity.Retrieve< CommunicationHierarchies >();
     const Entity_ABC* team = hierarchies ? &hierarchies->GetTop() : &entity;
     return teamColors_[ team ].second;
 }

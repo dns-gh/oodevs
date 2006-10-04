@@ -11,7 +11,7 @@
 #include "Lives.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 using namespace kernel;
 
@@ -47,7 +47,7 @@ float Lives::GetLife() const
         return life_;
     float result = life_;
     unsigned count = 1;
-    Iterator< const Entity_ABC& > children = agent_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    Iterator< const Entity_ABC& > children = agent_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         result += children.NextElement().Get< Lives >().GetLife();

@@ -24,6 +24,7 @@ namespace kernel
 // =============================================================================
 /** @class  KnowledgeGroupHierarchy
     @brief  KnowledgeGroupHierarchy
+    // $$$$ AGE 2006-10-04: non au modèle qui observe le modèle !
 */
 // Created: SBO 2006-09-27
 // =============================================================================

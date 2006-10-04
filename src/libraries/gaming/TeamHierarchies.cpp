@@ -19,11 +19,11 @@ using namespace kernel;
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 TeamHierarchies::TeamHierarchies( Controller& controller, const kernel::Team_ABC& holder )
-    : EntityHierarchies< TacticalHierarchies >( controller )
+    : EntityHierarchies< CommunicationHierarchies >( controller )
     , controller_( controller )
     , holder_( holder )
 {
-    controller_.Create( *(TacticalHierarchies*)this );
+    controller_.Create( *(CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ TeamHierarchies::TeamHierarchies( Controller& controller, const kernel::Team_ABC
 // -----------------------------------------------------------------------------
 TeamHierarchies::~TeamHierarchies()
 {
-    controller_.Delete( *(TacticalHierarchies*)this );
+    controller_.Delete( *(CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #ifndef __AgentListView_h_
 #define __AgentListView_h_
 
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_gui/HierarchyListView.h"
 
 class Publisher_ABC;
@@ -22,7 +22,7 @@ class AutomatDecisions;
 */
 // Created: SBO 2006-08-18
 // =============================================================================
-class AgentListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
+class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
                     , public kernel::ElementObserver_ABC< AutomatDecisions >
 {
 
