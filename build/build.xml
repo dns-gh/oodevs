@@ -26,6 +26,12 @@
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT"/>
     </target>
+    
+    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools_Scipio, library.ASN">
+        <build-lib name="dispatcher">
+            <includepath path="${include.dir}/ASN"/>
+        </build-lib>
+    </target>
 
     <target name="library.simulation_terrain" description="build simulation_terrain static library" depends="library.MT_Tools_Scipio">
         <build-lib name="simulation_terrain"/>
@@ -76,12 +82,22 @@
             depends="applications.simulation,applications.clients"/>
 
     <target name="applications.simulation" description="build Astec Simulation executables"
-            depends="application.simulation_app,application.simulation_tester,application.AGR,application.ScriptCompiler" />
+            depends="application.dispatcher_app,application.simulation_app,application.simulation_tester,application.AGR,application.ScriptCompiler" />
 
     <target name="applications.clients" description="build Astec Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
+            
+    <target name="application.dispatcher_app" description="build Astec Dispatcher executable" depends="library.dispatcher">
+        <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
+                   libs="masalloc,paranoia
+                         MT_Tools_Scipio,ASN,asn1per">
+            <syslibset libs="dbghelp,psapi"/>
+            <syslibset libs="iphlpapi"/> <!-- paranoia -->
+            <includepath path="${include.dir}/ASN"/>
+        </build-app>    
+    </target>
 
-    <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions">
+    <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions, library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
                    libs="HLA,libFedTime,masalloc,paranoia
                          MT_Tools_Scipio,ASN,asn1per,
