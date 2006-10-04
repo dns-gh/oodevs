@@ -54,7 +54,7 @@ TacticalListView::~TacticalListView()
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::TacticalHierarchies& hierarchy, gui::ValuedListItem* item )
+void TacticalListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
 {
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
