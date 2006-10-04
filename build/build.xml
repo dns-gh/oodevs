@@ -90,7 +90,8 @@
     <target name="application.dispatcher_app" description="build Astec Dispatcher executable" depends="library.dispatcher">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
                    libs="masalloc,paranoia
-                         MT_Tools_Scipio,ASN,asn1per">
+                         MT_Tools_Scipio,ASN,asn1per,
+                         dispatcher">
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${include.dir}/ASN"/>
