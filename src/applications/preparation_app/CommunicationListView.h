@@ -10,7 +10,8 @@
 #ifndef __CommunicationListView_h_
 #define __CommunicationListView_h_
 
-#include "clients_gui/CommunicationListView.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_gui/HierarchyListView.h"
 
 namespace kernel
 {
@@ -25,7 +26,7 @@ class ModelBuilder;
 */
 // Created: SBO 2006-09-25
 // =============================================================================
-class CommunicationListView : public gui::CommunicationListView
+class CommunicationListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
                             , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                             , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >

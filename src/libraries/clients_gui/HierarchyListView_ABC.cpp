@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "AgentListView.h"
-#include "moc_AgentListView.cpp"
+#include "HierarchyListView_ABC.h"
+#include "moc_HierarchyListView_ABC.cpp"
 
 #include "ValuedListItem.h"
 #include "clients_kernel/Controller.h"
@@ -17,20 +17,20 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Hierarchies.h"
 #include "ItemFactory_ABC.h"
 
 using namespace kernel;
 using namespace gui;
 
-const char* AgentListView::agentMimeType_ = "agent"; // $$$$ AGE 2006-09-20: pas vraiment agent. Plus ValuedListItem
+const char* HierarchyListView_ABC::agentMimeType_ = "agent"; // $$$$ AGE 2006-09-20: pas vraiment agent. Plus ValuedListItem
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView constructor
+// Name: HierarchyListView_ABC constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : ListView< AgentListView >( pParent, *this, factory )
+HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+    : ListView< HierarchyListView_ABC >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
     , currentTeam_( 0 )
@@ -45,30 +45,60 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ItemFa
     connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView destructor
+// Name: HierarchyListView_ABC destructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-AgentListView::~AgentListView()
+HierarchyListView_ABC::~HierarchyListView_ABC()
 {
-    controllers_.Remove( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::RecursiveCreateHierarchy
+// Name: HierarchyListView_ABC::NotifyCreated
+// Created: AGE 2006-10-04
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy )
+{   
+    RecursiveCreateHierarchy( &hierarchy.GetEntity() );
+    NotifyUpdated( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::NotifyUpdated
+// Created: AGE 2006-10-04
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy )
+{
+    const Entity_ABC& entity = hierarchy.GetEntity();
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
+        Display( hierarchy, item );
+}   
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::NotifyDeleted
+// Created: AGE 2006-10-04
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::NotifyDeleted( const kernel::Hierarchies& hierarchy )
+{
+    const Entity_ABC& entity = hierarchy.GetEntity();
+    delete FindItem( &entity, firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::RecursiveCreateHierarchy
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-ValuedListItem* AgentListView::RecursiveCreateHierarchy( const Entity_ABC* entity )
+ValuedListItem* HierarchyListView_ABC::RecursiveCreateHierarchy( const Entity_ABC* entity )
 {
     if( !entity )
         return 0;
     ValuedListItem* item = FindItem( entity, firstChild() );
     if( item )
         return item;
-    if( const TacticalHierarchies* hierarchy = entity->Retrieve< TacticalHierarchies >() )
+    if( const Hierarchies* hierarchy = RetrieveHierarchy( *entity ) )
         item = RecursiveCreateHierarchy( hierarchy->GetSuperior() );
     if( !item )
         item = factory_.CreateItem( this );
@@ -79,103 +109,72 @@ ValuedListItem* AgentListView::RecursiveCreateHierarchy( const Entity_ABC* entit
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyCreated
+// Name: HierarchyListView_ABC::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyCreated( const TacticalHierarchies& hierarchy )
+void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    RecursiveCreateHierarchy( &hierarchy.GetEntity() );
-    NotifyUpdated( hierarchy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyUpdated
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyUpdated( const TacticalHierarchies& hierarchy )
-{
-    const Entity_ABC& entity = hierarchy.GetEntity();
-    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
-        Display( hierarchy, item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyDeleted
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void AgentListView::NotifyDeleted( const TacticalHierarchies& hierarchy )
-{
-    const Entity_ABC& entity = hierarchy.GetEntity();
-    delete FindItem( &entity, firstChild() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentListView::Display
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void AgentListView::Display( const Entity_ABC& entity, ValuedListItem* item )
-{
-    if( const TacticalHierarchies* hierarchy = entity.Retrieve< TacticalHierarchies >() )
+    if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         Display( *hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Display
+// Name: HierarchyListView_ABC::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const TacticalHierarchies& hierarchy, ValuedListItem* item )
+void HierarchyListView_ABC::Display( const Hierarchies& hierarchy, ValuedListItem* item )
 {
     item->SetNamed( hierarchy.GetEntity() );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
 
-    DeleteTail( ListView< AgentListView >::Display( hierarchy.CreateSubordinateIterator(), item ) );
+    DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy.CreateSubordinateIterator(), item ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnSelectionChange
+// Name: HierarchyListView_ABC::OnSelectionChange
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void AgentListView::OnSelectionChange( QListViewItem* i )
+void HierarchyListView_ABC::OnSelectionChange( QListViewItem* i )
 {
     if( ValuedListItem* item = (ValuedListItem*)( i ) )
         item->Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnContextMenuRequested
+// Name: HierarchyListView_ABC::OnContextMenuRequested
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void AgentListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
+void HierarchyListView_ABC::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
 {
     if( ValuedListItem* item = (ValuedListItem*)( i ) )
         item->ContextMenu( controllers_.actions_, pos );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OnRequestCenter
+// Name: HierarchyListView_ABC::OnRequestCenter
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void AgentListView::OnRequestCenter()
+void HierarchyListView_ABC::OnRequestCenter()
 {
     if( ValuedListItem* item = (ValuedListItem*)( selectedItem() ) )
         item->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::sizeHint
+// Name: HierarchyListView_ABC::sizeHint
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-QSize AgentListView::sizeHint() const
+QSize HierarchyListView_ABC::sizeHint() const
 {
     return QSize( 230, 340 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifySelected
+// Name: HierarchyListView_ABC::NotifySelected
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::NotifySelected( const Entity_ABC* element )
+void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
 {
     selectAll( false );
     ValuedListItem* item = 0;
@@ -187,10 +186,10 @@ void AgentListView::NotifySelected( const Entity_ABC* element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::OptionChanged
+// Name: HierarchyListView_ABC::OptionChanged
 // Created: AGE 2006-03-27
 // -----------------------------------------------------------------------------
-void AgentListView::OptionChanged( const std::string& name, const OptionVariant& value )
+void HierarchyListView_ABC::OptionChanged( const std::string& name, const OptionVariant& value )
 {
     if( name == "CurrentTeam" )
         currentTeam_ = value.To< const Team_ABC* >();
@@ -203,10 +202,10 @@ void AgentListView::OptionChanged( const std::string& name, const OptionVariant&
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::dragObject
+// Name: HierarchyListView_ABC::dragObject
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-QDragObject* AgentListView::dragObject()
+QDragObject* HierarchyListView_ABC::dragObject()
 {
     QListViewItem* pItem = selectedItem();
     if( !pItem )
@@ -220,19 +219,19 @@ QDragObject* AgentListView::dragObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::dragEnterEvent
+// Name: HierarchyListView_ABC::dragEnterEvent
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentListView::dragEnterEvent( QDragEnterEvent* pEvent )
+void HierarchyListView_ABC::dragEnterEvent( QDragEnterEvent* pEvent )
 {
     pEvent->accept( pEvent->provides( agentMimeType_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::dropEvent
+// Name: HierarchyListView_ABC::dropEvent
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-void AgentListView::dropEvent( QDropEvent* pEvent )
+void HierarchyListView_ABC::dropEvent( QDropEvent* pEvent )
 {
     if( !pEvent->provides( agentMimeType_ ) )
          return;
@@ -249,10 +248,10 @@ void AgentListView::dropEvent( QDropEvent* pEvent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
+// Name: HierarchyListView_ABC::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( ValuedListItem& item, ValuedListItem& target )
+bool HierarchyListView_ABC::Drop( ValuedListItem& item, ValuedListItem& target )
 {
     return item.IsA< const Entity_ABC* >()
         && target.IsA< const Entity_ABC* >()
@@ -260,19 +259,19 @@ bool AgentListView::Drop( ValuedListItem& item, ValuedListItem& target )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::Drop
+// Name: HierarchyListView_ABC::Drop
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Entity_ABC& , const Entity_ABC& )
+bool HierarchyListView_ABC::Drop( const Entity_ABC& , const Entity_ABC& )
 {
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentListView::NotifyActivated
+// Name: HierarchyListView_ABC::NotifyActivated
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentListView::NotifyActivated( const Entity_ABC& element )
+void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 {
     ValuedListItem* item = FindItem( &element, firstChild() );    
     if( item )

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Gui_CommunicationListView_h_
-#define __Gui_CommunicationListView_h_
+#ifndef __Gui_HierarchyListView_ABC_h_
+#define __Gui_HierarchyListView_ABC_h_
 
 #include "ListView.h"
 #include "clients_kernel/ElementObserver_ABC.h"
@@ -19,7 +19,7 @@
 namespace kernel
 {
     class Controllers;
-    class CommunicationHierarchies;
+    class Hierarchies;
     class Entity_ABC;
 }
 
@@ -29,14 +29,13 @@ namespace gui
     class ItemFactory_ABC;
 
 // =============================================================================
-/** @class  CommunicationListView
-    @brief  Displays the agent list sorted by team, gtia and group.
+/** @class  HierarchyListView_ABC
+    @brief  Displays the agent list sorted according to a hierarchy
 */
 // Created: APE 2004-03-15
 // =============================================================================
-class CommunicationListView : public ListView< CommunicationListView >
+class HierarchyListView_ABC : public ListView< HierarchyListView_ABC >
                             , public kernel::Observer_ABC
-                            , public kernel::ElementObserver_ABC< kernel::CommunicationHierarchies >
                             , public kernel::SelectionObserver< kernel::Entity_ABC >
                             , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
                             , public kernel::OptionsObserver_ABC
@@ -52,8 +51,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
-    virtual ~CommunicationListView();
+             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+    virtual ~HierarchyListView_ABC();
 
     QSize sizeHint() const;
     //@}
@@ -61,14 +60,14 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
-    virtual void Display( const kernel::CommunicationHierarchies& hierarchy, ValuedListItem* item );
+    virtual void Display( const kernel::Hierarchies& hierarchy, ValuedListItem* item );
     //@}
 
 private:
     //! @name Copy / Assignment
     //@{
-    CommunicationListView( const CommunicationListView& );
-    CommunicationListView& operator=( const CommunicationListView& );
+    HierarchyListView_ABC( const HierarchyListView_ABC& );
+    HierarchyListView_ABC& operator=( const HierarchyListView_ABC& );
     //@}
 
 private slots:
@@ -82,9 +81,10 @@ private slots:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::CommunicationHierarchies& hierarchy );
-    virtual void NotifyUpdated( const kernel::CommunicationHierarchies& hierarchy );
-    virtual void NotifyDeleted( const kernel::CommunicationHierarchies& hierarchy );
+    virtual const kernel::Hierarchies* RetrieveHierarchy( const kernel::Entity_ABC& entity ) = 0;
+    virtual void NotifyCreated( const kernel::Hierarchies& hierarchies );
+    virtual void NotifyUpdated( const kernel::Hierarchies& hierarchies );
+    virtual void NotifyDeleted( const kernel::Hierarchies& hierarchies );
     //@}
 
 private:
@@ -114,4 +114,4 @@ private:
 
 }
 
-#endif // __Gui_CommunicationListView_h_
+#endif // __Gui_HierarchyListView_ABC_h_

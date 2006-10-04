@@ -9,7 +9,6 @@
 
 #include "preparation_app_pch.h"
 #include "TacticalListView.h"
-#include "moc_TacticalListView.cpp"
 #include "ModelBuilder.h"
 #include "preparation/Team.h"
 #include "preparation/Model.h"
@@ -23,6 +22,9 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
+using namespace gui;
+#include "moc_TacticalListView.cpp"
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -30,7 +32,7 @@ using namespace kernel;
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, const FormationLevels& levels )
-    : gui::AgentListView( pParent, controllers, factory )
+    : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory )
     , factory_( factory )
     , modelBuilder_( modelBuilder )
     , levels_( levels )
@@ -57,7 +59,7 @@ void TacticalListView::Display( const kernel::TacticalHierarchies& hierarchy, gu
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
     item->setDragEnabled( true );
-    gui::AgentListView::Display( hierarchy, item );
+    gui::HierarchyListView< kernel::TacticalHierarchies >::Display( hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +71,7 @@ void TacticalListView::Display( const Entity_ABC& agent, gui::ValuedListItem* it
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 0, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
-    gui::AgentListView::Display( agent, item );
+    gui::HierarchyListView< kernel::TacticalHierarchies >::Display( agent, item );
 }
 
 // -----------------------------------------------------------------------------

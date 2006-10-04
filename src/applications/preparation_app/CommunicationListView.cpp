@@ -22,7 +22,7 @@ using namespace kernel;
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
 CommunicationListView::CommunicationListView( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
-    : gui::CommunicationListView( parent, controllers, factory )
+    : gui::HierarchyListView< kernel::CommunicationHierarchies >( parent, controllers, factory )
     , factory_( factory )
     , modelBuilder_( modelBuilder )
 {
@@ -47,7 +47,7 @@ void CommunicationListView::Display( const kernel::CommunicationHierarchies& hie
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
     item->setDragEnabled( true );
-    gui::CommunicationListView::Display( hierarchy, item );
+    gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------

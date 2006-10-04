@@ -1,12 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AgentListView</name>
-    <message>
-        <source>Unit&#xe9;s</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AgentStatePanel</name>
     <message>
         <source></source>
