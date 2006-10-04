@@ -39,7 +39,6 @@ public:
 
     //! @name Accessors & Modifiers
     //@{
-    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
     virtual const kernel::Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual QString GetName() const;

@@ -13,6 +13,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 
 using namespace kernel;
 
@@ -20,10 +21,10 @@ using namespace kernel;
 // Name: AgentDetections constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Team_ABC& team )
+AgentDetections::AgentDetections( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const Entity_ABC& holder )
     : controller_( controller )
     , resolver_  ( resolver )
-    , team_      ( team )
+    , holder_    ( holder )
 {
     // NOTHING
 }
@@ -71,7 +72,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rect
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
-        if( ! agent.IsInTeam( team_ ) && it->second != eVisTypeInvisible )
+        if( ! IsSameTeam( agent ) && it->second != eVisTypeInvisible )
         {
             if( it->second == eVisTypeRecognized )
                 glColor4d( COLOR_RECO );
@@ -85,4 +86,14 @@ void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rect
         }
     }
     glPopAttrib();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentDetections::IsSameTeam
+// Created: AGE 2006-10-04
+// -----------------------------------------------------------------------------
+bool AgentDetections::IsSameTeam( const Entity_ABC& entity ) const
+{
+    return & entity. Get< Hierarchies >().GetTop()
+        == & holder_.Get< Hierarchies >().GetTop();
 }

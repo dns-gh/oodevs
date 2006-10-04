@@ -12,7 +12,8 @@
 #include "gaming/ObjectKnowledge.h"
 #include "gaming/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
 
@@ -23,7 +24,7 @@ using namespace kernel;
 ParamObjectKnowledge::ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
     : EntityParameter< ObjectKnowledge >( pParent, id, label, menu )
     , converter_( converter )
-    , agent_( static_cast< const Agent_ABC& >( agent ) ) // $$$$ AGE 2006-09-15: 
+    , agent_( agent ) // $$$$ AGE 2006-09-15: 
 {
     // NOTHING
 }
@@ -43,7 +44,8 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
-    const ObjectKnowledge* knowledge = converter_.Find( entity, agent_.GetTeam() );
+    const Team_ABC& team = static_cast< const Team_ABC& >( agent_.Get< Hierarchies >().GetTop() );
+    const ObjectKnowledge* knowledge = converter_.Find( entity, team );
     if( knowledge )
         EntityParameter< ObjectKnowledge >::NotifyContextMenu( *knowledge, menu );
 }

@@ -85,3 +85,20 @@ void EntityHierarchies::UnregisterSubordinate( const Entity_ABC& entity )
 {
     Remove( entity.GetId() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::GetTop
+// Created: AGE 2006-10-04
+// -----------------------------------------------------------------------------
+const Entity_ABC& EntityHierarchies::GetTop() const
+{
+    const Entity_ABC* superior = GetSuperior();
+    if( superior )
+    {
+        const Hierarchies* superiorHierarchies = superior->Retrieve< Hierarchies >();
+        if( superiorHierarchies )
+            return superiorHierarchies->GetTop();
+        return *superior;
+    }
+    return GetEntity();
+}

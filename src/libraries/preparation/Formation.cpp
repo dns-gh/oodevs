@@ -62,16 +62,6 @@ void Formation::DoUpdate( const kernel::InstanciationComplete& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::IsInTeam
-// Created: SBO 2006-09-20
-// -----------------------------------------------------------------------------
-bool Formation::IsInTeam( const Team_ABC& team ) const
-{
-    const Hierarchies* hierarchy = Retrieve< Hierarchies >();
-    return hierarchy || hierarchy->IsSubordinateOf( team );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Formation::GetName
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/AutomatComposition.h"
 
 using namespace kernel;
 
@@ -121,11 +122,12 @@ void AgentsModel::CreateAgent( Formation_ABC& parent, const AutomatType& type, c
 
     DiamondFormation formation( position );
     CreateAgent( *agent, *type.GetTypePC(), formation.NextPosition() );
-    Iterator< const AgentType& > it = type.CreateIterator();
+    Iterator< const AutomatComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
-        const AgentType& agentType = it.NextElement();
-        CreateAgent( *agent, agentType, formation.NextPosition() );
+        const AutomatComposition& composition = it.NextElement();
+        for( unsigned toAdd = composition.GetMin(); toAdd > 0; --toAdd )
+            CreateAgent( *agent, composition.GetType(), formation.NextPosition() );
     }
 }
 

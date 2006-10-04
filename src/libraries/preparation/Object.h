@@ -53,7 +53,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;

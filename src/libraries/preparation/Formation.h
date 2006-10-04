@@ -43,7 +43,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsInTeam( const kernel::Team_ABC& team ) const; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;

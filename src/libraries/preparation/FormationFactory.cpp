@@ -12,7 +12,6 @@
 #include "clients_kernel/Controllers.h"
 #include "FormationHierarchies.h"
 #include "Formation.h"
-#include "TeamHierarchy.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/InstanciationComplete.h"
 
@@ -45,8 +44,7 @@ FormationFactory::~FormationFactory()
 kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
-    formation->Attach( *new TeamHierarchy( controllers_, parent, *formation ) );    
-    formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
     return formation;
 }
@@ -58,9 +56,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Team_ABC& parent, const
 kernel::Formation_ABC* FormationFactory::Create( kernel::Formation_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
     Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
-    if( const TeamHierarchy* team = parent.Retrieve< TeamHierarchy >() )
-        formation->Attach( *new TeamHierarchy( controllers_, team->GetTeam(), *formation ) );    
-    formation->Attach< Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::Hierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Update( InstanciationComplete() );
     return formation;
 }

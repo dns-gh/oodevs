@@ -31,7 +31,6 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Agent_ABC : public Entity_ABC
-//                , public Resolver< Agent_ABC >
 {
 
 public:
@@ -43,9 +42,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const = 0; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
     virtual const Agent_ABC* GetSuperior() const = 0;
-    virtual const Team_ABC& GetTeam() const = 0;
     virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
 
     virtual const AutomatType* GetAutomatType() const = 0;

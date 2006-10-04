@@ -24,6 +24,7 @@ namespace kernel
     class PopulationConcentration_ABC;
     class NBCAgent;
     class Entity_ABC;
+    class AutomatComposition;
 }
 
 class Model; // $$$$ SBO 2006-08-30: 
@@ -226,6 +227,11 @@ struct ListItemRtti< const Model* > {
 template< >
 struct ListItemRtti< const kernel::Entity_ABC* > {
     enum { rtti = 1033 };
+};
+
+template< >
+struct ListItemRtti< const kernel::AutomatComposition* > {
+    enum { rtti = 1034 };
 };
 
 }

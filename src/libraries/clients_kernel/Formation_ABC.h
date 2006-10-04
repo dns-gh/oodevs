@@ -35,7 +35,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const = 0; // $$$$ AGE 2006-08-03: descendre dans Entity_ABC
     virtual const HierarchyLevel_ABC& GetLevel() const = 0;
     //@}
 

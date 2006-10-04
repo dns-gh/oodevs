@@ -19,6 +19,7 @@ namespace kernel
 {
     class DecisionalModel;
     class AgentType;
+    class AutomatComposition;
     class SymbolFactory;
     template< typename Container > class Iterator;
 
@@ -47,7 +48,7 @@ public:
     AgentType* GetTypePC() const;
     const DecisionalModel& GetDecisionalModel() const;
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
-    Iterator< const AgentType& > CreateIterator() const;
+    Iterator< const AutomatComposition& > CreateIterator() const;
     
     bool IsTC2() const;
     bool IsLogisticSupply() const;
@@ -69,7 +70,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< std::pair< const AgentType*, int > > T_UnitConstitution;
+    typedef std::vector< AutomatComposition* > T_UnitConstitution;
     //@}
 
 private:

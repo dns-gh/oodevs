@@ -11,7 +11,7 @@
 #include "SymbolFactory.h"
 #include "GlTools_ABC.h"
 #include "Iterator.h"
-#include "AgentType.h"
+#include "AutomatComposition.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -62,22 +62,16 @@ AutomatType::~AutomatType()
 // -----------------------------------------------------------------------------
 void AutomatType::ReadAgent( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver )
 {
-    std::string name;
-    std::string quantity;
-    xis >> attribute( "nom", name )
-        >> quantity;
-    // $$$$ AGE 2006-09-05: 
-    units_.push_back( std::make_pair( &agentResolver.Get( name.c_str() ), 1 ) );
-     // $$$$ AGE 2006-09-05:  // $$$$ AGE 2006-09-05: 
+    units_.push_back( new AutomatComposition( xis, agentResolver ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::pair< const AgentType&, int > >& AutomatType::CreateIterator
+// Name: AutomatType::CreateIterator
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-Iterator< const AgentType& > AutomatType::CreateIterator() const
+Iterator< const AutomatComposition& > AutomatType::CreateIterator() const
 {
-    return new KeyIterator< const AgentType&, std::vector< std::pair< const AgentType*, int > > >( units_ );
+    return new SimpleIterator< const AutomatComposition&, T_UnitConstitution >( units_ );
 }
 
 // -----------------------------------------------------------------------------

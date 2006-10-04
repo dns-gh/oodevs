@@ -56,8 +56,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
-    virtual const kernel::Team_ABC& GetTeam() const;
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     virtual const kernel::Agent_ABC* GetSuperior() const;
 

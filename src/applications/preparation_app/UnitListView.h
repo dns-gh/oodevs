@@ -16,7 +16,7 @@
 namespace kernel
 {
     class AgentTypes;
-    class AgentType;
+    class AutomatComposition;
     class AutomatType;
     class ModelLoaded;
     class Controllers;
@@ -49,7 +49,7 @@ public:
     //@{
     void SetOpen( bool open );
     void SetSorting( const std::string& nature );
-    void Display( const kernel::AgentType& type, gui::ValuedListItem* );
+    void Display( const kernel::AutomatComposition& type, gui::ValuedListItem* );
     void Display( const kernel::AutomatType& type, gui::ValuedListItem* );
     //@}
 

@@ -62,7 +62,6 @@ public:
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;
 
-    virtual bool IsInTeam( const kernel::Team_ABC& team ) const;
     virtual geometry::Point2f GetPosition() const;
     virtual float             GetHeight() const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision = 100.f ) const;

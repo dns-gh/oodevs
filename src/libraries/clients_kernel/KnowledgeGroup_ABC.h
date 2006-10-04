@@ -37,7 +37,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const = 0;
     virtual const Team_ABC& GetTeam() const = 0;
 
     virtual void AddAutomat( unsigned long id, Agent_ABC& automat ) = 0;

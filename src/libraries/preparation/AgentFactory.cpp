@@ -20,7 +20,6 @@
 #include "AutomatDecisions.h"
 #include "AgentPositions.h"
 #include "AgentHierarchies.h"
-#include "TeamHierarchy.h"
 #include "KnowledgeGroupHierarchy.h"
 #include "CommunicationHierarchies.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -64,7 +63,7 @@ Agent_ABC* AgentFactory::Create( Agent_ABC& parent, const AgentType& type, const
     Agent* result = new Agent( parent, type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+    result->Attach< kernel::Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
@@ -80,12 +79,12 @@ kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatTyp
     Agent* result = new Agent( type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+    result->Attach< kernel::Hierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
 
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     result->Attach( *new KnowledgeGroupHierarchy( controllers_.controller_ ) );
-    const TeamHierarchy& team = parent.Get< TeamHierarchy >();
-    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Team_ABC* >( &team.GetTeam() ) ) );
+    const Entity_ABC& team = parent.Get< Hierarchies >().GetTop();
+    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
@@ -98,6 +97,7 @@ kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatTyp
 // -----------------------------------------------------------------------------
 Population_ABC* AgentFactory::Create( Team_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
 {
+     // $$$$ AGE 2006-10-04: 
     return 0;
 }
 

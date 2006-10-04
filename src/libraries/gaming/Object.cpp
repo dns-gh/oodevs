@@ -177,12 +177,3 @@ void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& 
 {
     type_.Draw( where, viewport, tools );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Object::IsInTeam
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-bool Object::IsInTeam( const Team_ABC& team ) const
-{
-    return & team_ == & team;
-}

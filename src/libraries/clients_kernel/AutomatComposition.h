@@ -24,7 +24,7 @@ namespace kernel
 
 // =============================================================================
 /** @class  AutomatComposition
-    @brief  AutomatComposition
+    @brief  AutomatComposition // $$$$ AGE 2006-10-03: Le nom est pas terrible
 */
 // Created: AGE 2006-09-05
 // =============================================================================

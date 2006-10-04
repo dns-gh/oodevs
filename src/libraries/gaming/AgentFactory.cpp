@@ -108,7 +108,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
-    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
+    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
 
     AttachExtensions( *result );
@@ -129,7 +129,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
-    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, result->GetTeam() ) );
+    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
     AttachExtensions( *result );
     result->Update( asnMsg );

@@ -17,6 +17,7 @@
 
 namespace kernel
 {
+    class Entity_ABC;
     class Team_ABC;
     class Agent_ABC;
     class Object_ABC;
@@ -98,13 +99,14 @@ private:
     QColor SuperiorSelectedColor( const QColor& base ) const;
     QColor KnowledgeColor( const QColor& base ) const;
     void ApplyColor( const QColor& color ) const;
+    QColor FindColor( const kernel::Entity_ABC& entity );
     //@}
 
     //! @name Types 
     //@{
-    typedef std::map< const kernel::Team_ABC*, std::pair< std::string, QColor > > T_TeamColors;
-    typedef std::map< std::string, std::string >                                  T_Synonyms;
-    typedef std::map< std::string, QColor >                                       T_Colors;
+    typedef std::map< const kernel::Entity_ABC*, std::pair< std::string, QColor > > T_TeamColors;
+    typedef std::map< std::string, std::string >                                    T_Synonyms;
+    typedef std::map< std::string, QColor >                                         T_Colors;
     //@}
 
 private:

@@ -45,6 +45,8 @@ public:
     virtual void UnregisterSubordinate( const Entity_ABC& entity ) = 0;
 
     virtual const Entity_ABC& GetEntity() const = 0;
+
+    virtual const Entity_ABC& GetTop() const = 0;
     //@}
 };
 

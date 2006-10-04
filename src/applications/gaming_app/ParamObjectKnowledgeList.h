@@ -16,7 +16,6 @@
 namespace kernel
 {
     class Object_ABC;
-    class Agent_ABC;
     class Entity_ABC;
 }
 
@@ -56,7 +55,7 @@ private:
     //! @name Member data
     //@{
     ObjectKnowledgeConverter_ABC& converter_;
-    const kernel::Agent_ABC& agent_;
+    const kernel::Entity_ABC& agent_;
     //@}
 };
 

@@ -21,7 +21,7 @@ namespace kernel
 {
     class Controller;
     class Agent_ABC;
-    class Team_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -38,7 +38,7 @@ class AgentDetections : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Team_ABC& team );
+             AgentDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, const kernel::Entity_ABC& holder );
     virtual ~AgentDetections();
     //@}
 
@@ -63,6 +63,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const DetectionMessage& message );
+    bool IsSameTeam( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -70,7 +71,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
-    const kernel::Team_ABC& team_;
+    const kernel::Entity_ABC& holder_;
 
     T_AgentDetections detections_;
     //@}

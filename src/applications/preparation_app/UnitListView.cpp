@@ -11,6 +11,7 @@
 #include "UnitListView.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AutomatType.h"
 
@@ -108,9 +109,9 @@ void UnitListView::DisplayList()
 // Name: UnitListView::Display
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-void UnitListView::Display( const AgentType& type, ValuedListItem* item )
+void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item )
 {
-    item->SetNamed( type );
+    item->SetNamed( type.GetType() );
     item->setDragEnabled( true );
 }
 
@@ -122,7 +123,7 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
 {
     item->SetNamed( type );
     item->setDragEnabled( true );
-    Iterator< const AgentType& > it( type.CreateIterator() );
+    Iterator< const AutomatComposition& > it( type.CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
     const AgentType& pc = *type.GetTypePC();

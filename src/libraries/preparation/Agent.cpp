@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "Agent.h"
-#include "TeamHierarchy.h"
 #include "KnowledgeGroupHierarchy.h"
 #include "CommunicationHierarchies.h"
 #include "clients_kernel/AgentType.h"
@@ -108,24 +107,6 @@ KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetTeam
-// Created: AGE 2006-03-28
-// -----------------------------------------------------------------------------
-const Team_ABC& Agent::GetTeam() const
-{
-    const Hierarchies* root = Retrieve< Hierarchies >();
-    while( root && root->GetSuperior() )
-    {
-        if( const TeamHierarchy* team = root->GetEntity().Retrieve< TeamHierarchy >() )
-            return team->GetTeam();
-        root = root->GetSuperior()->Retrieve< Hierarchies >();
-    }
-    if( root )
-        return static_cast< const Team_ABC& >( root->GetEntity() );
-    throw std::runtime_error( "I have no team" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::GetSuperior
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -176,15 +157,6 @@ const AutomatType* Agent::GetAutomatType() const
 const AgentType& Agent::GetType() const
 {
     return *type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::IsInTeam
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-bool Agent::IsInTeam( const Team_ABC& team ) const
-{
-    return &GetTeam() == &team;
 }
 
 // -----------------------------------------------------------------------------

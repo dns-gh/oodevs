@@ -97,11 +97,3 @@ const Team_ABC& KnowledgeGroup::GetTeam() const
     return team_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::IsInTeam
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-bool KnowledgeGroup::IsInTeam( const Team_ABC& team ) const
-{
-    return & team_ == & team;
-}

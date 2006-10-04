@@ -17,6 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Hierarchies.h"
 #include "gaming/Lima.h"
 #include "gaming/Limit.h"
 #include "gaming/ObjectKnowledge.h"
@@ -124,8 +125,7 @@ void ColorStrategy::AfterSelection()
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Agent_ABC& agent )
 {
-    const Team_ABC& team = agent.GetTeam();
-    QColor color = teamColors_[ &team ].second;
+    QColor color = FindColor( agent );
     if( selectedAgent_ == &agent )
     {
         tools_.Select( true );
@@ -141,6 +141,17 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
         tools_.Select( false );
         
     ApplyColor( color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::FindColor
+// Created: AGE 2006-10-04
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::FindColor( const Entity_ABC& entity )
+{
+    const Hierarchies* hierarchies = entity.Retrieve< Hierarchies >();
+    const Entity_ABC* team = hierarchies ? &hierarchies->GetTop() : &entity;
+    return teamColors_[ team ].second;
 }
 
 // -----------------------------------------------------------------------------

@@ -45,6 +45,8 @@ public:
     virtual void AddSubordinate   (       Entity_ABC& entity );
     virtual void RemoveSubordinate( const Entity_ABC& entity );
     virtual void UnregisterSubordinate( const Entity_ABC& entity );
+
+    virtual const Entity_ABC& GetTop() const;
     //@}
 
 private:

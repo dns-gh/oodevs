@@ -40,7 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const = 0;
     virtual const Team_ABC& GetTeam() const = 0;
     virtual const PopulationType& GetType() const = 0;
 

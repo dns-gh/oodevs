@@ -43,7 +43,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool IsInTeam( const Team_ABC& team ) const = 0;
     virtual const Team_ABC& GetTeam() const = 0;
     virtual ObjectType& GetType() const = 0;
     //@}

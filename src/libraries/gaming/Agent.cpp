@@ -236,15 +236,6 @@ KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetTeam
-// Created: AGE 2006-03-28
-// -----------------------------------------------------------------------------
-const Team_ABC& Agent::GetTeam() const
-{
-    return GetKnowledgeGroup().GetTeam();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::GetSuperior
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -295,15 +286,6 @@ const AutomatType* Agent::GetAutomatType() const
 const AgentType& Agent::GetType() const
 {
     return *type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::IsInTeam
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-bool Agent::IsInTeam( const Team_ABC& team ) const
-{
-    return GetKnowledgeGroup().IsInTeam( team );
 }
 
 // -----------------------------------------------------------------------------
