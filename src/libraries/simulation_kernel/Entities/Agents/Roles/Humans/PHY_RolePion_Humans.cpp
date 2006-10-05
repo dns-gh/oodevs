@@ -486,7 +486,7 @@ void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& hum
 // Name: PHY_RolePion_Humans::SendChangedState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const
 {
     if( nNbrHumansDataChanged_ == 0 )
         return;
@@ -528,7 +528,7 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitDotations& asn ) cons
 // Name: PHY_RolePion_Humans::SendFullState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendFullState( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Humans::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
 {
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     ASN1T_DotationPersonnel* pPersonnel = new ASN1T_DotationPersonnel[ ranks.size() ];

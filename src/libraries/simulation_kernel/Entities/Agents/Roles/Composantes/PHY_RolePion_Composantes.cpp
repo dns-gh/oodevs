@@ -1114,10 +1114,10 @@ void PHY_RolePion_Composantes::SendLogisticFullState() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendFullLoans
+// Name: PHY_RolePion_Composantes::SendLoans
 // Created: NLD 2005-01-18
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendFullLoans( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
 {
     typedef std::pair< const MIL_AgentPion*, const PHY_ComposanteTypePion* > T_Key;
     typedef std::map < T_Key, uint >                                         T_LoanCountMap;
@@ -1185,59 +1185,13 @@ void PHY_RolePion_Composantes::SendFullLoans( NET_ASN_MsgUnitDotations& asn ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendChangedLoans
-// Created: NLD 2005-01-18
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendChangedLoans( NET_ASN_MsgUnitDotations& asn ) const
-{
-    if( bLoansChanged_ )
-        SendFullLoans( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendChangedState
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitDotations& asn ) const
-{
-    if( nNbrComposanteChanged_ == 0 )
-        return;
-
-    ASN1T_DotationEquipement* pEquipments = new ASN1T_DotationEquipement[ nNbrComposanteChanged_ ];
-    uint i = 0;
-    for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
-    {
-        const PHY_ComposanteTypePion&     compType   = *itComposanteType->first;
-        const T_ComposanteTypeProperties& properties =  itComposanteType->second;
-
-        if( !properties.bHasChanged_ )
-            continue;
-
-        ASN1T_DotationEquipement& value  = pEquipments[ i++ ];
-        value.type_equipement            = compType.GetMosID();
-        value.nb_disponibles             = properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ];
-        value.nb_indisponibles           = properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ];
-        value.nb_reparables              = properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ];
-        value.nb_dans_chaine_maintenance = properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ];
-        value.nb_prisonniers             = properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ];
-    }
-
-    asn.GetAsnMsg().dotation_eff_materiel.n        = nNbrComposanteChanged_;
-    asn.GetAsnMsg().dotation_eff_materiel.elem     = pEquipments;
-    asn.GetAsnMsg().m.dotation_eff_materielPresent = 1;
-
-    SendChangedLoans( asn );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::SendFullState
-// Created: NLD 2004-09-07
+// Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    asn.GetAsnMsg().dotation_eff_materiel.n        = composanteTypes_.size();
-    asn.GetAsnMsg().m.dotation_eff_materielPresent = 1;
-
+    msg.GetAsnMsg().dotation_eff_materiel.n        = composanteTypes_.size();
+    msg.GetAsnMsg().m.dotation_eff_materielPresent = 1;
     if( !composanteTypes_.empty() )
     {
         ASN1T_DotationEquipement* pEquipments = new ASN1T_DotationEquipement[ composanteTypes_.size() ];
@@ -1255,20 +1209,13 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitDotations& asn ) co
             value.nb_dans_chaine_maintenance = properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ];
             value.nb_prisonniers             = properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ];
         }
-        asn.GetAsnMsg().dotation_eff_materiel.elem = pEquipments;
+        msg.GetAsnMsg().dotation_eff_materiel.elem = pEquipments;
     }
 
-    SendFullLoans( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendFullState
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
-{
     msg.GetAsnMsg().m.etat_operationnel_brutPresent = 1;
     msg.GetAsnMsg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
+
+    SendLoans( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -1277,10 +1224,40 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    if( !HasChanged() )
-        return;
+    if( nNbrComposanteChanged_ > 0 )
+    {
+        ASN1T_DotationEquipement* pEquipments = new ASN1T_DotationEquipement[ nNbrComposanteChanged_ ];
+        uint i = 0;
+        for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
+        {
+            const PHY_ComposanteTypePion&     compType   = *itComposanteType->first;
+            const T_ComposanteTypeProperties& properties =  itComposanteType->second;
 
-    SendFullState( msg );
+            if( !properties.bHasChanged_ )
+                continue;
+
+            ASN1T_DotationEquipement& value  = pEquipments[ i++ ];
+            value.type_equipement            = compType.GetMosID();
+            value.nb_disponibles             = properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ];
+            value.nb_indisponibles           = properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ];
+            value.nb_reparables              = properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ];
+            value.nb_dans_chaine_maintenance = properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ];
+            value.nb_prisonniers             = properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ];
+        }
+
+        msg.GetAsnMsg().dotation_eff_materiel.n        = nNbrComposanteChanged_;
+        msg.GetAsnMsg().dotation_eff_materiel.elem     = pEquipments;
+        msg.GetAsnMsg().m.dotation_eff_materielPresent = 1;
+    }
+
+    if( bOperationalStateChanged_ )
+    {
+        msg.GetAsnMsg().m.etat_operationnel_brutPresent = 1;
+        msg.GetAsnMsg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
+    }
+
+    if( bLoansChanged_ )
+        SendLoans( msg );
 }
 
 // -----------------------------------------------------------------------------

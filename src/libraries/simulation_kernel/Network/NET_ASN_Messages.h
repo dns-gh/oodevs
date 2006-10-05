@@ -111,9 +111,11 @@ NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlSendCurrentStateEnd      , ctrl_send_curren
                                                                                             
 // Unit attributes
 NET_GENERATE_SEND_ASN_MSG_PTR( UnitAttributes     , unit_attributes       )
-NET_GENERATE_SEND_ASN_MSG_PTR( UnitDotations      , unit_dotations        )
 NET_GENERATE_SEND_ASN_MSG_PTR( UnitMagicActionAck , unit_magic_action_ack )
 NET_GENERATE_SEND_ASN_MSG_PTR( UnitPathFind       , unit_pathfind         )
+
+// Automate attributes
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateAttributes , automate_attributes   )
 
 // Logistic
 NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementCreation   , log_maintenance_traitement_equipement_creation    )

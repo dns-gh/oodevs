@@ -18,7 +18,6 @@
 
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 
-class NET_ASN_MsgUnitDotations;
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 class MIL_NbcAgentType;
@@ -211,9 +210,6 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitDotations& asn ) const;
-    void SendFullState   ( NET_ASN_MsgUnitDotations& asn ) const;
-
     void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
     void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
 
@@ -284,8 +280,7 @@ private:
     void UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
 
-    void SendChangedLoans( NET_ASN_MsgUnitDotations& asn ) const;
-    void SendFullLoans   ( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendLoans( NET_ASN_MsgUnitAttributes& asn ) const;
     //@}
 
 private:

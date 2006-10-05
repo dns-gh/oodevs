@@ -27,7 +27,7 @@ class PHY_SupplyState;
 class PHY_SupplyDotationRequestContainer;
 class PHY_DotationGroupContainer;
 class PHY_AmmoDotationClass;
-class NET_ASN_MsgUnitDotations;
+class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RolePion_Dotations
@@ -94,8 +94,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitDotations& asn ) const;
-    void SendFullState   ( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
+    void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
     //@}
 
     //! @name Logistic - Supply

@@ -123,7 +123,7 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_unit_knowledge_destruction:           agentKnowledges_.Destroy( asnMsg.msg.u.msg_unit_knowledge_destruction->oid_connaissance ); break;
 //
         case T_MsgsOutSim_msg_msg_unit_attributes:                    agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid_pion ).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
-        case T_MsgsOutSim_msg_msg_unit_dotations:                     agents_.Get( asnMsg.msg.u.msg_unit_dotations ->oid_pion ).Update( *asnMsg.msg.u.msg_unit_dotations  ); break;
+        case T_MsgsOutSim_msg_msg_automate_attributes:                automats_.Get( asnMsg.msg.u.msg_automate_attributes->oid_automate ).Update( *asnMsg.msg.u.msg_automate_attributes  ); break;
 
 //        case T_MsgsOutSim_msg_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.u.msg_unit_pathfind                       ); break;
 

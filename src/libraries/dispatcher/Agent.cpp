@@ -41,7 +41,6 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , nOperationalStateValue_       ( 100 )
     , reinforcements_               ( )
     , pReinforced_                  ( 0 )
-    , nAutomatState_                ( EnumAutomateState::embraye )  //$$$ Séparation pions/automates
     , bDead_                        ( false )
     , bNeutralized_                 ( false )
     , bStealthModeEnabled_          ( false )
@@ -123,7 +122,6 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     if( asnMsg.m.pion_renforcePresent )
         pReinforced_ = asnMsg.pion_renforce == 0 ? 0 : &model_.GetAgents().Get( asnMsg.pion_renforce );
 
-    UPDATE_ASN_ATTRIBUTE( etat_automate, nAutomatState_ );
     UPDATE_ASN_ATTRIBUTE( mort, bDead_ );
     UPDATE_ASN_ATTRIBUTE( neutralise,  bNeutralized_ );
     UPDATE_ASN_ATTRIBUTE( mode_furtif_actif, bStealthModeEnabled_ );
@@ -169,15 +167,8 @@ void Agent::Update( const ASN1T_MsgUnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( rendu, bSurrendered_ );
     UPDATE_ASN_ATTRIBUTE( prisonnier, bPrisonner_ );
     UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte, bRefugeeManaged_ );
-}
 
-// -----------------------------------------------------------------------------
-// Name: Agent::Update
-// Created: NLD 2006-09-26
-// -----------------------------------------------------------------------------
-void Agent::Update( const ASN1T_MsgUnitDotations& asnMsg )
-{
-    if( asnMsg.m.dotation_eff_materielPresent )
+  if( asnMsg.m.dotation_eff_materielPresent )
     {
         for( uint i = 0; i < asnMsg.dotation_eff_materiel.n; ++i )
         {
@@ -312,8 +303,13 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
     { // Attributes $$$
         AsnMsgInClientUnitAttributes asn;
 
-        asn().oid_pion = nID_;
+        asn().oid_pion = nID_;     
 
+        asn().m.dotation_eff_materielPresent = 1;
+        asn().m.dotation_eff_personnelPresent = 1;
+        asn().m.dotation_eff_ressourcePresent = 1;
+        asn().m.equipements_empruntesPresent = 1;
+        asn().m.equipements_pretesPresent = 1;
         asn().m.positionPresent = 1;
         asn().m.directionPresent = 1;
         asn().m.hauteurPresent = 1;
@@ -321,7 +317,6 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().m.etat_operationnel_brutPresent = 1;
         asn().m.pions_renforcantPresent = 1;
         asn().m.pion_renforcePresent = 1;
-        asn().m.etat_automatePresent = 1;
         asn().m.mortPresent = 1;
         asn().m.neutralisePresent = 1;
         asn().m.mode_furtif_actifPresent = 1;
@@ -362,7 +357,6 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         reinforcements_.Send< ASN1T_ListAgent, ASN1T_Agent >( asn().pions_renforcant );
 
         asn().pion_renforce = pReinforced_ ? pReinforced_->GetID() : 0 ;
-        asn().etat_automate = nAutomatState_;
         asn().mort = bDead_;
         asn().neutralise =  bNeutralized_;
         asn().mode_furtif_actif = bStealthModeEnabled_;
@@ -398,29 +392,6 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().prisonnier = bPrisonner_;
         asn().refugie_pris_en_compte = bRefugeeManaged_;
 
-        asn.Send( publisher );
-
-        if( asn().m.pions_renforcantPresent && asn().pions_renforcant.n > 0 )
-            delete [] asn().pions_renforcant.elem;
-
-        if( asn().m.contamine_par_agents_nbcPresent && asn().contamine_par_agents_nbc.n > 0 )
-            delete [] asn().contamine_par_agents_nbc.elem;
-
-        if( asn().m.pions_transportesPresent && asn().pions_transportes.n > 0 )
-            delete [] asn().pions_transportes.elem;
-    }
-
-    { // Dotations
-        AsnMsgInClientUnitDotations asn;
-
-        asn().oid_pion = nID_;
-
-        asn().m.dotation_eff_materielPresent  = 1;
-        asn().m.dotation_eff_personnelPresent = 1;
-        asn().m.dotation_eff_ressourcePresent = 1;
-        asn().m.equipements_empruntesPresent  = 1;
-        asn().m.equipements_pretesPresent     = 1;
-
         equipments_ .Send< ASN1T__SeqOfDotationEquipement, ASN1T_DotationEquipement >( asn().dotation_eff_materiel  );
         troops_     .Send< ASN1T__SeqOfDotationPersonnel , ASN1T_DotationPersonnel  >( asn().dotation_eff_personnel );
         dotations_  .Send< ASN1T__SeqOfDotationRessource , ASN1T_DotationRessource  >( asn().dotation_eff_ressource );
@@ -429,6 +400,12 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
 
         asn.Send( publisher );
 
+        if( asn().m.pions_renforcantPresent && asn().pions_renforcant.n > 0 )
+            delete [] asn().pions_renforcant.elem;
+        if( asn().m.contamine_par_agents_nbcPresent && asn().contamine_par_agents_nbc.n > 0 )
+            delete [] asn().contamine_par_agents_nbc.elem;
+        if( asn().m.pions_transportesPresent && asn().pions_transportes.n > 0 )
+            delete [] asn().pions_transportes.elem;
         if( asn().m.dotation_eff_materielPresent && asn().dotation_eff_materiel.n > 0 )
             delete [] asn().dotation_eff_materiel.elem;
         if( asn().m.dotation_eff_personnelPresent && asn().dotation_eff_personnel.n > 0 )

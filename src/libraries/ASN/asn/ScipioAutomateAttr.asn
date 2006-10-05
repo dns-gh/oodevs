@@ -1,0 +1,54 @@
+--
+-- file name : ScipioAutomatetAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+
+ScipioAutomateAttr DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID FROM ScipioBase
+IMPORTS EnumEtatRapFor, EnumEtatCombatRencontre, EnumEtatOperationnel, EnumDisponibiliteAuTir, EnumRoe FROM ScipioUnitAttr;
+
+EnumAutomateState ::= ENUMERATED
+{
+    embraye,
+    debraye
+}
+
+
+MsgAutomateAttributes ::= SEQUENCE
+{
+    oid-automate                  Automate,
+    
+    etat-automate                 EnumAutomateState       OPTIONAL,   
+    rapport-de-force              EnumEtatRapFor          OPTIONAL,
+    combat-de-rencontre           EnumEtatCombatRencontre OPTIONAL,
+    etat-operationnel             EnumEtatOperationnel    OPTIONAL,
+    roe                           EnumRoe                 OPTIONAL
+}
+
+-- Misc
+MsgSetAutomateMode ::= SEQUENCE
+{
+    unit-id Agent,
+    mode    EnumAutomateState
+}
+
+EnumSetAutomateModeErrorCode ::= ENUMERATED
+{
+    no-error                  (0),
+    error-invalid-unit        (1),
+    error-unit-not-automate   (2),
+    error-already-embraye     (3),
+    error-already-debraye     (4),
+    error-unit-surrendered    (5)
+}
+
+MsgSetAutomateModeAck ::= SEQUENCE
+{
+    unit-id     Agent,
+    error-code  EnumSetAutomateModeErrorCode
+}
+
+END -- ScipioAutomateAttr

@@ -24,6 +24,7 @@
 #include "ASN/ASN/Generated/ScipioMessages.h"
 #include "ASN/ASN/Generated/ScipioUnitKnowledge.h"
 #include "ASN/ASN/Generated/ScipioUnitAttr.h"
+#include "ASN/ASN/Generated/ScipioAutomateAttr.h"
 #include "ASN/ASN/Generated/ScipioOrder.h"
 #include "ASN/ASN/Generated/ScipioPionOrder.h"
 #include "ASN/ASN/Generated/ScipioOrderConduite.h"

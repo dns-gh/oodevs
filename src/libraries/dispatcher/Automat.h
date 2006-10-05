@@ -45,7 +45,8 @@ public:
 
     //! @name Main
     //@{
-    void Update        ( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg );
+    void Update        ( const ASN1T_MsgAutomateAttributes&          asnMsg );
+    void Update        ( const ASN1T_MsgChangeLiensLogistiquesAck&   asnMsg );
     void Update        ( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg );
     void SendCreation  ( Publisher_ABC& publisher ) const;
     void SendFullUpdate( Publisher_ABC& publisher ) const;
@@ -67,7 +68,12 @@ private:
           KnowledgeGroup*             pKnowledgeGroup_;
           ModelRefsContainer< Agent > agents_;
 
-    //$$$ TMP
+    ASN1T_EnumAutomateState       nAutomatState_;
+    ASN1T_EnumEtatRapFor          nForceRatioState_;
+    ASN1T_EnumEtatCombatRencontre nCloseCombatState_;
+    ASN1T_EnumEtatOperationnel    nOperationalState_;
+    ASN1T_EnumRoe                 nRoe_;
+
     unsigned long  nTC2_;
     unsigned long  nLogMaintenance_;
     unsigned long  nLogMedical_;

@@ -93,6 +93,7 @@ public:
     const MT_Vector2D&                      GetDirDanger     () const;
     const T_LimaFlagedPtrMap&               GetLimas         () const;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
+          bool                              IsEmbraye        () const;
     //@}
         
     //! @name Operations
@@ -144,12 +145,6 @@ public:
     virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, MIL_MOSContextID nCtx );
     virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, MIL_MOSContextID nCtx );
     virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, MIL_MOSContextID nCtx );
-    //@}
-
-    //! @name Embraye
-    //@{
-    bool IsEmbraye             () const;
-    bool HasAutomateModeChanged() const;
     //@}
 
     //! @name Misc

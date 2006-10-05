@@ -47,7 +47,6 @@ public:
     //! @name Main
     //@{
     void Update        ( const ASN1T_MsgUnitAttributes&        asnMsg );
-    void Update        ( const ASN1T_MsgUnitDotations&         asnMsg );
     void Update        ( const ASN1T_MsgLogSanteEtat&          asnMsg );
     void Update        ( const ASN1T_MsgLogMaintenanceEtat&    asnMsg );
     void Update        ( const ASN1T_MsgLogRavitaillementEtat& asnMsg );
@@ -89,7 +88,6 @@ private:
     unsigned int                  nOperationalStateValue_;
     ModelRefsContainer< Agent >   reinforcements_;
     Agent*                        pReinforced_;
-    ASN1T_EnumAutomateState       nAutomatState_; //$$$ Séparation pions/automates
     bool                          bDead_;
     bool                          bNeutralized_;
     bool                          bStealthModeEnabled_;

@@ -137,7 +137,7 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( unit_knowledge_update                             );
         DISPATCH_ASN_MSG( unit_knowledge_destruction                        );
         DISPATCH_ASN_MSG( unit_attributes                                   );
-        DISPATCH_ASN_MSG( unit_dotations                                    );
+        DISPATCH_ASN_MSG( automate_attributes                               );
         DISPATCH_ASN_MSG( unit_pathfind                                     );
         DISPATCH_ASN_MSG( start_pion_fire                                   );
         DISPATCH_ASN_MSG( stop_pion_fire                                    );

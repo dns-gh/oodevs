@@ -23,17 +23,22 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model& model, const ASN1T_MsgAutomateCreation& msg )
-    : model_          ( model )
-    , nID_            ( msg.oid_automate )
-    , nType_          ( msg.type_automate )
-    , strName_        ( msg.nom )
-    , side_           ( model.GetSides          ().Get( msg.oid_camp ) )
-    , pKnowledgeGroup_( &model.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
-    , agents_         ()
-    , nTC2_           ( msg.m.oid_tc2Present ? msg.oid_tc2 : 0 )
-    , nLogMaintenance_( msg.m.oid_maintenancePresent ? msg.oid_maintenance : 0 )
-    , nLogMedical_    ( msg.m.oid_santePresent ? msg.oid_sante : 0 )
-    , nLogSupply_     ( msg.m.oid_ravitaillementPresent ? msg.oid_ravitaillement : 0 )
+    : model_            ( model )
+    , nID_              ( msg.oid_automate )
+    , nType_            ( msg.type_automate )
+    , strName_          ( msg.nom )
+    , side_             ( model.GetSides          ().Get( msg.oid_camp ) )
+    , pKnowledgeGroup_  ( &model.GetKnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
+    , agents_           ()
+    , nTC2_             ( msg.m.oid_tc2Present ? msg.oid_tc2 : 0 )
+    , nLogMaintenance_  ( msg.m.oid_maintenancePresent ? msg.oid_maintenance : 0 )
+    , nLogMedical_      ( msg.m.oid_santePresent ? msg.oid_sante : 0 )
+    , nLogSupply_       ( msg.m.oid_ravitaillementPresent ? msg.oid_ravitaillement : 0 )
+    , nAutomatState_    ( EnumAutomateState::debraye )
+    , nForceRatioState_ ( EnumEtatRapFor::neutre )
+    , nCloseCombatState_( EnumEtatCombatRencontre::etat_fixe )
+    , nOperationalState_( EnumEtatOperationnel::detruit_totalement )
+    , nRoe_             ( EnumRoe::tir_interdit )
 {
     pKnowledgeGroup_->GetAutomats().Register( *this );
     side_            .GetAutomats().Register( *this );
@@ -81,6 +86,24 @@ void Automat::Update( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+void Automat::Update( const ASN1T_MsgAutomateAttributes& asnMsg )
+{
+    if( asnMsg.m.etat_automatePresent )
+        nAutomatState_ = asnMsg.etat_automate;
+    if( asnMsg.m.rapport_de_forcePresent )
+        nForceRatioState_ = asnMsg.rapport_de_force;
+    if( asnMsg.m.combat_de_rencontrePresent )
+        nCloseCombatState_ = asnMsg.combat_de_rencontre;
+    if( asnMsg.m.etat_operationnelPresent )
+        nOperationalState_ = asnMsg.etat_operationnel;
+    if( asnMsg.m.roePresent )
+        nRoe_ = asnMsg.roe;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Automat::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -123,5 +146,20 @@ void Automat::SendCreation( Publisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
 {
-    //$$$ TODO
+    AsnMsgInClientAutomateAttributes asn;
+
+    asn().m.etat_automatePresent = 1;
+    asn().m.rapport_de_forcePresent = 1;
+    asn().m.combat_de_rencontrePresent = 1;
+    asn().m.etat_operationnelPresent = 1;
+    asn().m.roePresent = 1;
+
+    asn().etat_automate = nAutomatState_;
+    asn().rapport_de_force = nForceRatioState_;
+    asn().combat_de_rencontre = nCloseCombatState_;
+    asn().etat_operationnel = nOperationalState_;
+    asn().roe = nRoe_;
+
+    asn.Send( publisher );
 }
+

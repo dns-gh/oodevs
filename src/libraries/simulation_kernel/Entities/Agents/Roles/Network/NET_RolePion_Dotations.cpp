@@ -95,124 +95,12 @@ void NET_RolePion_Dotations::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendChangedState
-// Created: NLD 2004-09-08
+// Name: NET_RolePion_Dotations::DataUpdated
+// Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendChangedState()
+bool NET_RolePion_Dotations::DataUpdated() const
 {
-    SendMsgDotationsChangedState ();
-    SendMsgAttributesChangedState();
-    GetRole< PHY_RoleAction_Moving    >().SendChangedState        (); // Itineraire
-    GetRole< PHY_RolePion_Composantes >().SendLogisticChangedState(); // Consignes logistiques maintenance
-    GetRole< PHY_RolePion_Humans      >().SendLogisticChangedState(); // Consignes logistiques santé
-    GetRole< PHY_RolePion_Maintenance >().SendChangedState        ();
-    GetRole< PHY_RolePion_Medical     >().SendChangedState        ();
-    GetRole< PHY_RolePion_Supply      >().SendChangedState        ();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendFullState
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendFullState()
-{
-    SendMsgDotationsFullState ();
-    SendMsgAttributesFullState();
-    GetRole< PHY_RoleAction_Moving    >().SendFullState        (); // Itineraire
-    GetRole< PHY_RolePion_Composantes >().SendLogisticFullState(); // Consignes logistiques maintenance
-    GetRole< PHY_RolePion_Humans      >().SendLogisticFullState(); // Consignes logistiques santé
-    GetRole< PHY_RolePion_Maintenance >().SendFullState        ();
-    GetRole< PHY_RolePion_Medical     >().SendFullState        ();
-    GetRole< PHY_RolePion_Supply      >().SendFullState        ();
-}
-
-// =============================================================================
-// DOTATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::DataDotationsUpdated
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-inline
-bool NET_RolePion_Dotations::DataDotationsUpdated() const
-{
-    return     GetRole< PHY_RolePion_Dotations   >().HasChanged()
-            || GetRole< PHY_RolePion_Humans      >().HasChanged()
-            || GetRole< PHY_RolePion_Composantes >().HasChanged();
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendMsgDotations
-// Created: NLD 2004-08-16
-// -----------------------------------------------------------------------------
-inline
-void NET_RolePion_Dotations::SendMsgDotations( NET_ASN_MsgUnitDotations& msg )
-{
-    msg.Send();
-
-    ASN1T_MsgUnitDotations& asnMsg = msg.GetAsnMsg();
-
-    if( asnMsg.m.dotation_eff_ressourcePresent && asnMsg.dotation_eff_ressource.n > 0 )
-        delete [] asnMsg.dotation_eff_ressource.elem;
-    if( asnMsg.m.dotation_eff_materielPresent && asnMsg.dotation_eff_materiel.n > 0 )
-        delete [] asnMsg.dotation_eff_materiel.elem;
-    if( asnMsg.m.dotation_eff_personnelPresent && asnMsg.dotation_eff_personnel.n > 0 )
-        delete [] asnMsg.dotation_eff_personnel.elem;
-    if( asnMsg.m.equipements_pretesPresent && asnMsg.equipements_pretes.n > 0 )
-        delete [] asnMsg.equipements_pretes.elem;
-    if( asnMsg.m.equipements_empruntesPresent && asnMsg.equipements_empruntes.n > 0 )
-        delete [] asnMsg.equipements_empruntes.elem;
-}
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendMsgDotationsChangedState
-// Created: NLD 2004-08-16
-// -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendMsgDotationsChangedState()
-{
-    if( !DataDotationsUpdated() )
-        return;
-
-    assert( pPion_ );
-
-    NET_ASN_MsgUnitDotations msg;
-    msg.GetAsnMsg().oid_pion = pPion_->GetID();
-
-    GetRole< PHY_RolePion_Humans      >().SendChangedState( msg );
-    GetRole< PHY_RolePion_Composantes >().SendChangedState( msg );
-    GetRole< PHY_RolePion_Dotations   >().SendChangedState( msg );
-
-    SendMsgDotations( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendMsgDotationsFullState
-// Created: NLD 2004-08-16
-// -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendMsgDotationsFullState()
-{
-    NET_ASN_MsgUnitDotations msg;
-    assert( pPion_ );
-    msg.GetAsnMsg().oid_pion = pPion_->GetID();
-
-    GetRole< PHY_RolePion_Humans      >().SendFullState( msg );
-    GetRole< PHY_RolePion_Dotations   >().SendFullState( msg );
-    GetRole< PHY_RolePion_Composantes >().SendFullState( msg );
-    SendMsgDotations( msg );
-}
-
-// =============================================================================
-// ATTRIBUTES
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::DataAttributesUpdated
-// Created: NLD 2004-09-08
-// -----------------------------------------------------------------------------
-bool NET_RolePion_Dotations::DataAttributesUpdated() const
-{
-    assert( pPion_ );
-    if( GetRole< PHY_RolePion_Posture          >().HasChanged()
+    if(    GetRole< PHY_RolePion_Posture          >().HasChanged()
         || GetRole< PHY_RolePion_Composantes      >().HasChanged()
         || GetRole< PHY_RolePion_Location         >().HasLocationChanged()
         || GetRole< PHY_RolePion_Location         >().HasSpeedChanged()
@@ -225,42 +113,24 @@ bool NET_RolePion_Dotations::DataAttributesUpdated() const
         || GetRole< PHY_RoleAction_Loading        >().HasChanged()
         || GetRole< PHY_RolePion_Surrender        >().HasChanged()
         || GetRole< PHY_RolePion_Refugee          >().HasChanged()
-        || GetRole< PHY_RolePion_Perceiver        >().HasRadarStateChanged() )
-        return true;
-
-    if(    pPion_->IsDead() != bLastStateDead_ 
+        || GetRole< PHY_RolePion_Perceiver        >().HasRadarStateChanged() 
+        || GetRole< DEC_RolePion_Decision         >().HasStateChanged()
+        || GetRole< PHY_RolePion_Dotations        >().HasChanged()
+        || GetRole< PHY_RolePion_Humans           >().HasChanged()
+        || GetRole< PHY_RolePion_Composantes      >().HasChanged()
+        || pPion_->IsDead()        != bLastStateDead_
         || pPion_->IsNeutralized() != bLastStateNeutralized_ )
         return true;
-    
-    if ( pPion_->IsPC() )
-    {
-        if( pPion_->GetAutomate().HasAutomateModeChanged() )
-            return true;
-        if( pPion_->GetAutomate().IsEmbraye() )
-        {
-            if( pPion_->GetAutomate().GetDecision().HasStateChanged() )
-                return true;
-        }
-        else
-        {
-            if( GetRole< DEC_RolePion_Decision >().HasStateChanged() )
-                return true;
-        }
-    }
-    else
-    {
-        if( GetRole< DEC_RolePion_Decision >().HasStateChanged() )
-            return true;
-    }
+
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendMsgAttributes
+// Name: NET_RolePion_Dotations::SendMsg
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
 inline
-void NET_RolePion_Dotations::SendMsgAttributes( NET_ASN_MsgUnitAttributes& asnMsg )
+void NET_RolePion_Dotations::SendMsg( NET_ASN_MsgUnitAttributes& asnMsg ) const
 {
     asnMsg.Send();
 
@@ -272,13 +142,28 @@ void NET_RolePion_Dotations::SendMsgAttributes( NET_ASN_MsgUnitAttributes& asnMs
 
     if( asnMsg.GetAsnMsg().m.pions_transportesPresent && asnMsg.GetAsnMsg().pions_transportes.n > 0 )
         delete [] asnMsg.GetAsnMsg().pions_transportes.elem;
+
+    if( asnMsg.GetAsnMsg().m.dotation_eff_ressourcePresent && asnMsg.GetAsnMsg().dotation_eff_ressource.n > 0 )
+        delete [] asnMsg.GetAsnMsg().dotation_eff_ressource.elem;
+
+    if( asnMsg.GetAsnMsg().m.dotation_eff_materielPresent && asnMsg.GetAsnMsg().dotation_eff_materiel.n > 0 )
+        delete [] asnMsg.GetAsnMsg().dotation_eff_materiel.elem;
+
+    if( asnMsg.GetAsnMsg().m.dotation_eff_personnelPresent && asnMsg.GetAsnMsg().dotation_eff_personnel.n > 0 )
+        delete [] asnMsg.GetAsnMsg().dotation_eff_personnel.elem;
+
+    if( asnMsg.GetAsnMsg().m.equipements_pretesPresent && asnMsg.GetAsnMsg().equipements_pretes.n > 0 )
+        delete [] asnMsg.GetAsnMsg().equipements_pretes.elem;
+
+    if( asnMsg.GetAsnMsg().m.equipements_empruntesPresent && asnMsg.GetAsnMsg().equipements_empruntes.n > 0 )
+        delete [] asnMsg.GetAsnMsg().equipements_empruntes.elem;
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendMsgAttributesChangedState
+// Name: NET_RolePion_Dotations::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendMsgAttributesChangedState()
+void NET_RolePion_Dotations::SendChangedState()
 {
     // Debug - Cones de vision
     if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
@@ -293,13 +178,15 @@ void NET_RolePion_Dotations::SendMsgAttributesChangedState()
             GetRole< PHY_RolePion_Perceiver >().SendDebugState(); //$$ BOF
     }
 
-    if( !DataAttributesUpdated() )
+    if( !DataUpdated() )
         return;
 
     NET_ASN_MsgUnitAttributes msg;
     assert( pPion_ );
     msg.GetAsnMsg().oid_pion = pPion_->GetID();
 
+    GetRole< PHY_RolePion_Humans         >().SendChangedState( msg );
+    GetRole< PHY_RolePion_Dotations      >().SendChangedState( msg );
     GetRole< PHY_RolePion_Posture        >().SendChangedState( msg ); // Current, old, pourcentage
     GetRole< PHY_RolePion_Location       >().SendChangedState( msg ); // Direction, speed, altitude, position
     GetRole< PHY_RolePion_Composantes    >().SendChangedState( msg ); // Etat ops
@@ -313,7 +200,7 @@ void NET_RolePion_Dotations::SendMsgAttributesChangedState()
     GetRole< PHY_RolePion_Perceiver      >().SendChangedState( msg );
     GetRole< PHY_RolePion_Surrender      >().SendChangedState( msg );
     GetRole< PHY_RolePion_Refugee        >().SendChangedState( msg );
-
+    GetRole< DEC_RolePion_Decision       >().SendChangedState( msg ); // Dec states
 
     bool bIsDead = pPion_->IsDead();
     if( bLastStateDead_ != bIsDead )
@@ -329,50 +216,36 @@ void NET_RolePion_Dotations::SendMsgAttributesChangedState()
         msg.GetAsnMsg().m.neutralisePresent = 1;
         msg.GetAsnMsg().neutralise          = bIsNeutralized;
         bLastStateNeutralized_              = bIsNeutralized;        
-    }
-    
-    if ( pPion_->IsPC() )
-    {
-        const MIL_Automate& automate = pPion_->GetAutomate();
-        if( automate.HasAutomateModeChanged() )
-        {
-            msg.GetAsnMsg().m.etat_automatePresent = 1;
-            if( automate.IsEmbraye() )
-            {
-                msg.GetAsnMsg().etat_automate = EnumAutomateState::embraye;
-                pPion_->GetAutomate().GetDecision().SendFullState( msg );
-            }
-            else
-            {
-                msg.GetAsnMsg().etat_automate = EnumAutomateState::debraye;
-                GetRole< DEC_RolePion_Decision >().SendFullState( msg ); // Dec states
-            }
-        }
-        else
-        {
-            if ( pPion_->GetAutomate().IsEmbraye() )
-                pPion_->GetAutomate().GetDecision().SendChangedState( msg );
-            else
-                GetRole< DEC_RolePion_Decision >().SendChangedState( msg ); // Dec states
-        }
-    }
-    else
-        GetRole< DEC_RolePion_Decision >().SendChangedState( msg ); // Dec states
+    }       
 
-    SendMsgAttributes( msg );
+    SendMsg( msg );
+
+    // Other messages
+    GetRole< PHY_RoleAction_Moving    >().SendChangedState        (); // Itineraire
+    GetRole< PHY_RolePion_Composantes >().SendLogisticChangedState(); // Consignes logistiques maintenance
+    GetRole< PHY_RolePion_Humans      >().SendLogisticChangedState(); // Consignes logistiques santé
+    GetRole< PHY_RolePion_Maintenance >().SendChangedState        ();
+    GetRole< PHY_RolePion_Medical     >().SendChangedState        ();
+    GetRole< PHY_RolePion_Supply      >().SendChangedState        ();
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendMsgAttributesFullState
+// Name: NET_RolePion_Dotations::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendMsgAttributesFullState()
+void NET_RolePion_Dotations::SendFullState()
 {
-    NET_ASN_MsgUnitAttributes msg;
-    
+    // MsgUnitAttributes
     assert( pPion_ );
-    msg.GetAsnMsg().oid_pion = pPion_->GetID();
 
+    NET_ASN_MsgUnitAttributes msg;
+    msg.GetAsnMsg().oid_pion            = pPion_->GetID();
+    msg.GetAsnMsg().m.mortPresent       = 1;
+    msg.GetAsnMsg().mort                = bLastStateDead_ = pPion_->IsDead();
+    msg.GetAsnMsg().m.neutralisePresent = 1;
+    msg.GetAsnMsg().neutralise          = bLastStateNeutralized_ = pPion_->IsNeutralized();
+    GetRole< PHY_RolePion_Humans         >().SendFullState( msg );
+    GetRole< PHY_RolePion_Dotations      >().SendFullState( msg );
     GetRole< PHY_RolePion_Posture        >().SendFullState( msg ); // Current, old, pourcentage
     GetRole< PHY_RolePion_Location       >().SendFullState( msg ); // Direction, speed, altitude, position
     GetRole< PHY_RolePion_Composantes    >().SendFullState( msg ); // Etat ops
@@ -387,23 +260,13 @@ void NET_RolePion_Dotations::SendMsgAttributesFullState()
     GetRole< PHY_RolePion_Perceiver      >().SendFullState( msg );
     GetRole< PHY_RolePion_Surrender      >().SendFullState( msg );
     GetRole< PHY_RolePion_Refugee        >().SendFullState( msg );
+    SendMsg( msg );
 
-    if ( pPion_->IsPC() )
-    {
-        const MIL_Automate& automate = pPion_->GetAutomate();
-        msg.GetAsnMsg().m.etat_automatePresent = 1;
-        msg.GetAsnMsg().etat_automate          = automate.IsEmbraye() ? EnumAutomateState::embraye : EnumAutomateState::debraye;
-        if( automate.IsEmbraye() )
-            automate.GetDecision().SendFullState( msg );
-        else
-            GetRole< DEC_RolePion_Decision >().SendFullState( msg ); // Dec states
-    }
-    else
-        GetRole< DEC_RolePion_Decision >().SendFullState( msg ); // Dec states
-
-    msg.GetAsnMsg().m.mortPresent       = 1;
-    msg.GetAsnMsg().mort                = bLastStateDead_ = pPion_->IsDead();
-    msg.GetAsnMsg().m.neutralisePresent = 1;
-    msg.GetAsnMsg().neutralise          = bLastStateNeutralized_ = pPion_->IsNeutralized();
-    SendMsgAttributes( msg );
+    // Other messages
+    GetRole< PHY_RoleAction_Moving    >().SendFullState        (); // Itineraire
+    GetRole< PHY_RolePion_Composantes >().SendLogisticFullState(); // Consignes logistiques maintenance
+    GetRole< PHY_RolePion_Humans      >().SendLogisticFullState(); // Consignes logistiques santé
+    GetRole< PHY_RolePion_Maintenance >().SendFullState        ();
+    GetRole< PHY_RolePion_Medical     >().SendFullState        ();
+    GetRole< PHY_RolePion_Supply      >().SendFullState        ();
 }

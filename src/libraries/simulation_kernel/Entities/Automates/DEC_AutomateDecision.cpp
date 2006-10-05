@@ -378,29 +378,25 @@ void DEC_AutomateDecision::Reset()
 // Name: DEC_AutomateDecision::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void DEC_AutomateDecision::SendFullState( NET_ASN_MsgAutomateAttributes& msg ) const
 {
     msg.GetAsnMsg().m.rapport_de_forcePresent    = 1;
     msg.GetAsnMsg().m.roePresent                 = 1;
     msg.GetAsnMsg().m.combat_de_rencontrePresent = 1;
     msg.GetAsnMsg().m.etat_operationnelPresent   = 1;
-    msg.GetAsnMsg().m.roe_populationPresent      = 1;
 
     msg.GetAsnMsg().rapport_de_force      = (ASN1T_EnumEtatRapFor)nForceRatioState_;
     msg.GetAsnMsg().combat_de_rencontre   = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
     msg.GetAsnMsg().etat_operationnel     = (ASN1T_EnumEtatOperationnel)nOperationalState_;
     msg.GetAsnMsg().roe                   = (ASN1T_EnumRoe)nRulesOfEngagementState_;
-    msg.GetAsnMsg().roe_population        = PHY_RoePopulation::none_.GetAsnID();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void DEC_AutomateDecision::SendChangedState( NET_ASN_MsgAutomateAttributes& msg ) const
 {
-    if ( bStateHasChanged_ )
+    if( bStateHasChanged_ )
         SendFullState( msg );
 }
-
-

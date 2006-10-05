@@ -404,7 +404,7 @@ void PHY_DotationGroupContainer::NotifyTakenPrisoner()
 // Name: PHY_DotationGroupContainer::SendChangedState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::SendChangedState( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_DotationGroupContainer::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const
 {
     if( dotationsChanged_.empty() )
         return;
@@ -428,7 +428,7 @@ void PHY_DotationGroupContainer::SendChangedState( NET_ASN_MsgUnitDotations& asn
 // Name: PHY_DotationGroupContainer::SendFullState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
 {
     uint nNbrDotations = 0;
     for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )

@@ -204,16 +204,6 @@ bool MIL_Automate::IsEmbraye() const
     return bEmbraye_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::HasAutomateModeChanged
-// Created: NLD 2004-09-09
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Automate::HasAutomateModeChanged() const
-{
-    return bAutomateModeChanged_;
-}
-
 // =============================================================================
 // TOOLS
 // =============================================================================

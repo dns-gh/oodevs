@@ -400,6 +400,22 @@ void MIL_Automate::CleanKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateNetwork() const
 {
+    assert( pDecision_ );
+    if( bAutomateModeChanged_ || pDecision_->HasStateChanged() )
+    {
+        NET_ASN_MsgAutomateAttributes msg;
+        msg.GetAsnMsg().oid_automate = nID_;
+    
+        if( bAutomateModeChanged_ )
+        {
+            msg.GetAsnMsg().m.etat_automatePresent = 1;
+            msg.GetAsnMsg().etat_automate = bEmbraye_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
+        }
+
+        pDecision_->SendChangedState( msg );
+        msg.Send();
+    }
+
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->SendChangedState();
 }
@@ -794,6 +810,17 @@ void MIL_Automate::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendFullState() const
 {
+    assert( pDecision_ );
+
+    NET_ASN_MsgAutomateAttributes msg;
+    msg.GetAsnMsg().oid_automate = nID_;
+
+    msg.GetAsnMsg().m.etat_automatePresent = 1;
+    msg.GetAsnMsg().etat_automate = bEmbraye_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
+
+    pDecision_->SendFullState( msg );
+    msg.Send();
+
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->SendFullState();
 }

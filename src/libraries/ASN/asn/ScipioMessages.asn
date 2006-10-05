@@ -74,8 +74,9 @@ MsgsOutSim ::= SEQUENCE
         msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,
 
         msg-unit-attributes                                     MsgUnitAttributes,
-        msg-unit-dotations                                      MsgUnitDotations,
         msg-unit-pathfind                                       MsgUnitPathFind,
+        
+        msg-automate-attributes                                 MsgAutomateAttributes,
 
         msg-start-pion-fire                                     MsgStartPionFire,
         msg-stop-pion-fire                                      MsgStopPionFire,
@@ -249,8 +250,9 @@ MsgsInClient ::= SEQUENCE
         msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,
 
         msg-unit-attributes                                     MsgUnitAttributes,
-        msg-unit-dotations                                      MsgUnitDotations,
         msg-unit-pathfind                                       MsgUnitPathFind,
+        
+        msg-automate-attributes                                 MsgAutomateAttributes,        
 
         msg-start-pion-fire                                     MsgStartPionFire,
         msg-stop-pion-fire                                      MsgStopPionFire,

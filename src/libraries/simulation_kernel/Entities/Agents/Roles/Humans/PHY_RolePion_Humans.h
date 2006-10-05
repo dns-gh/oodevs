@@ -20,9 +20,9 @@ class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_Human;
 class PHY_MedicalHumanState;
-class NET_ASN_MsgUnitDotations;
 class MIL_AgentPion;
 class MIL_AutomateLOG;
+class NET_ASN_MsgUnitAttributes;
 
 // =============================================================================
 // @class  PHY_RolePion_Humans
@@ -89,8 +89,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitDotations& asn ) const;
-    void SendFullState   ( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
+    void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
 
     void SendLogisticChangedState() const;
     void SendLogisticFullState   () const;

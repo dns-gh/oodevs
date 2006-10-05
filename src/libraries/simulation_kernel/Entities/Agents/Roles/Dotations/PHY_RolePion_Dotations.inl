@@ -152,7 +152,7 @@ void PHY_RolePion_Dotations::FillSupplyRequest( PHY_SupplyDotationRequestContain
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Dotations::SendChangedState( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Dotations::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const
 {
     assert( pDotations_ );
     pDotations_->SendChangedState( asn );
@@ -163,7 +163,7 @@ void PHY_RolePion_Dotations::SendChangedState( NET_ASN_MsgUnitDotations& asn ) c
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-void PHY_RolePion_Dotations::SendFullState( NET_ASN_MsgUnitDotations& asn ) const
+void PHY_RolePion_Dotations::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
 {
     assert( pDotations_ );
     pDotations_->SendFullState( asn );

@@ -50,21 +50,14 @@ public:
 private:
     //! @name Tools
     //@{
-    void SendMsgAttributesChangedState();
-    void SendMsgAttributesFullState   ();
-    void SendMsgAttributes            ( NET_ASN_MsgUnitAttributes& msg );
-    bool DataAttributesUpdated        () const;
-
-    void SendMsgDotationsChangedState();
-    void SendMsgDotationsFullState   ();
-    void SendMsgDotations            ( NET_ASN_MsgUnitDotations& msg );
-    bool DataDotationsUpdated        () const;
+    bool DataUpdated() const;
+    void SendMsg    ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
     //@}
 
 private:
-    const MIL_AgentPion*      pPion_;
-          bool                bLastStateDead_;
-          bool                bLastStateNeutralized_;
+    const MIL_AgentPion* pPion_;
+          bool           bLastStateDead_;
+          bool           bLastStateNeutralized_;
 };
 
 #include "NET_RolePion_Dotations.inl"

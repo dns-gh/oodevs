@@ -21,7 +21,7 @@ class PHY_DotationCapacity;
 class PHY_Dotation;
 class PHY_RolePion_Dotations;
 class PHY_SupplyDotationRequestContainer;
-class NET_ASN_MsgUnitDotations;
+class NET_ASN_MsgUnitAttributes;
 class MIL_AutomateLOG;
 class PHY_AmmoDotationClass;
 
@@ -87,8 +87,8 @@ public:
     void NotifyDotationChanged( const PHY_Dotation& dotation );
     bool HasChanged           () const;
     void Clean                ();
-    void SendChangedState     ( NET_ASN_MsgUnitDotations& asn ) const;
-    void SendFullState        ( NET_ASN_MsgUnitDotations& asn ) const;
+    void SendChangedState     ( NET_ASN_MsgUnitAttributes& asn ) const;
+    void SendFullState        ( NET_ASN_MsgUnitAttributes& asn ) const;
     //@}
 
 private:

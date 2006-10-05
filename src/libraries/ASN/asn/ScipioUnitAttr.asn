@@ -23,16 +23,6 @@ EquipementEmprunte ::= SEQUENCE
     nombre           INTEGER
 }
 
-MsgUnitDotations ::= SEQUENCE 
-{
-    oid-pion               Agent,
-    dotation-eff-personnel SEQUENCE OF DotationPersonnel    OPTIONAL, -- Dotations effectives du pion DELTA
-    dotation-eff-materiel  SEQUENCE OF DotationEquipement   OPTIONAL, -- DELTA
-    dotation-eff-ressource SEQUENCE OF DotationRessource    OPTIONAL, -- DELTA
-    equipements-pretes     SEQUENCE OF EquipementPrete      OPTIONAL, -- FULL
-    equipements-empruntes  SEQUENCE OF EquipementEmprunte   OPTIONAL  -- FULL
-}
-
 -- Personnel
 DotationPersonnel ::= SEQUENCE 
 {
@@ -98,12 +88,6 @@ EnumUnitPosture ::= ENUMERATED
     posture-poste-prepare-genie (6)
 }
 
-EnumAutomateState ::= ENUMERATED
-{
-    embraye,
-    debraye
-}
-
 EnumEtatRapFor ::= ENUMERATED
 {
     none        (0),
@@ -155,51 +139,57 @@ EnumDisponibiliteAuTir ::= ENUMERATED
 MsgUnitAttributes ::= SEQUENCE
 {
     oid-pion                      Agent,
-    position				      CoordUTM                OPTIONAL,
-    direction                     Direction               OPTIONAL, -- en degrés
-    hauteur                       Hauteur                 OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
-    vitesse                       Vitesse                 OPTIONAL, -- en km/h
-    etat-operationnel-brut        PourcentageLibre        OPTIONAL,
-    pions-renforcant              ListAgent               OPTIONAL,
-    pion-renforce                 Agent                   OPTIONAL, -- '0' quand pas en renfort                                                    
-    etat-automate                 EnumAutomateState       OPTIONAL,   
-    mort                          BOOLEAN                 OPTIONAL,   
-    neutralise                    BOOLEAN                 OPTIONAL,   
-    mode-furtif-actif             BOOLEAN                 OPTIONAL,
-    embarque                      BOOLEAN                 OPTIONAL,
-    transporteurs-disponibles     BOOLEAN                 OPTIONAL,
     
-    posture-old                   EnumUnitPosture         OPTIONAL,
-    posture-new                   EnumUnitPosture         OPTIONAL,
-    posture-pourcentage           Pourcentage             OPTIONAL,
+    dotation-eff-personnel        SEQUENCE OF DotationPersonnel     OPTIONAL, -- Dotations effectives du pion DELTA
+    dotation-eff-materiel         SEQUENCE OF DotationEquipement    OPTIONAL, -- DELTA
+    dotation-eff-ressource        SEQUENCE OF DotationRessource     OPTIONAL, -- DELTA
+    equipements-pretes            SEQUENCE OF EquipementPrete       OPTIONAL, -- FULL
+    equipements-empruntes         SEQUENCE OF EquipementEmprunte    OPTIONAL, -- FULL
+        
+    position				      CoordUTM                          OPTIONAL,
+    direction                     Direction                         OPTIONAL, -- en degrés
+    hauteur                       Hauteur                           OPTIONAL, -- hauteur d'un pion 3D par rapport au sol en mètres
+    vitesse                       Vitesse                           OPTIONAL, -- en km/h
+    etat-operationnel-brut        PourcentageLibre                  OPTIONAL,
+    pions-renforcant              ListAgent                         OPTIONAL,
+    pion-renforce                 Agent                             OPTIONAL, -- '0' quand pas en renfort
+    mort                          BOOLEAN                           OPTIONAL,   
+    neutralise                    BOOLEAN                           OPTIONAL,   
+    mode-furtif-actif             BOOLEAN                           OPTIONAL,
+    embarque                      BOOLEAN                           OPTIONAL,
+    transporteurs-disponibles     BOOLEAN                           OPTIONAL,
     
-    etat-installation             Pourcentage             OPTIONAL,
-                                                          
-    en-tenue-de-protection-nbc    BOOLEAN                 OPTIONAL,
-    contamine-par-agents-nbc      ListOID                 OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
-    etat-contamination            Pourcentage             OPTIONAL,
+    posture-old                   EnumUnitPosture                   OPTIONAL,
+    posture-new                   EnumUnitPosture                   OPTIONAL,
+    posture-pourcentage           Pourcentage                       OPTIONAL,
     
-    communications-brouillees     BOOLEAN                 OPTIONAL,
-    silence-radio                 BOOLEAN                 OPTIONAL,
-    radar-actif                   BOOLEAN                 OPTIONAL,
+    etat-installation             Pourcentage                       OPTIONAL,
+                                                                    
+    en-tenue-de-protection-nbc    BOOLEAN                           OPTIONAL,
+    contamine-par-agents-nbc      ListOID                           OPTIONAL,          -- ID d'agents chimiques - Cf. MOS/IDClasses.xml
+    etat-contamination            Pourcentage                       OPTIONAL,
     
-    pions-transportes             ListAgent               OPTIONAL, 
-    pion-transporteur             Agent                   OPTIONAL, -- '0' quand aucun transporteur
+    communications-brouillees     BOOLEAN                           OPTIONAL,
+    silence-radio                 BOOLEAN                           OPTIONAL,
+    radar-actif                   BOOLEAN                           OPTIONAL,
     
-    rapport-de-force              EnumEtatRapFor          OPTIONAL,
-    combat-de-rencontre           EnumEtatCombatRencontre OPTIONAL,
-    etat-operationnel             EnumEtatOperationnel    OPTIONAL,
-    disponibilite-au-tir-indirect EnumDisponibiliteAuTir  OPTIONAL,
-    roe                           EnumRoe                 OPTIONAL,
-    roe-population                EnumRoePopulation       OPTIONAL,
+    pions-transportes             ListAgent                         OPTIONAL, 
+    pion-transporteur             Agent                             OPTIONAL, -- '0' quand aucun transporteur
     
-    fatigue                       EnumUnitFatigue         OPTIONAL,
-    moral                         EnumUnitMoral           OPTIONAL,
-    experience                    EnumUnitExperience      OPTIONAL,
+    rapport-de-force              EnumEtatRapFor                    OPTIONAL,
+    combat-de-rencontre           EnumEtatCombatRencontre           OPTIONAL,
+    etat-operationnel             EnumEtatOperationnel              OPTIONAL,
+    disponibilite-au-tir-indirect EnumDisponibiliteAuTir            OPTIONAL,
+    roe                           EnumRoe                           OPTIONAL,
+    roe-population                EnumRoePopulation                 OPTIONAL,
     
-    rendu                         BOOLEAN                 OPTIONAL,
-    prisonnier                    BOOLEAN                 OPTIONAL,
-    refugie-pris-en-compte        BOOLEAN                 OPTIONAL
+    fatigue                       EnumUnitFatigue                   OPTIONAL,
+    moral                         EnumUnitMoral                     OPTIONAL,
+    experience                    EnumUnitExperience                OPTIONAL,
+    
+    rendu                         BOOLEAN                           OPTIONAL,
+    prisonnier                    BOOLEAN                           OPTIONAL,
+    refugie-pris-en-compte        BOOLEAN                           OPTIONAL
 }
 
 -- Actions magiques
@@ -289,30 +279,6 @@ MsgUnitMagicActionAck ::= SEQUENCE
 {
     oid         OID,
     error-code  EnumUnitAttrErrorCode
-}
-
-
--- Misc
-MsgSetAutomateMode ::= SEQUENCE
-{
-    unit-id Agent,
-    mode    EnumAutomateState
-}
-
-EnumSetAutomateModeErrorCode ::= ENUMERATED
-{
-    no-error                  (0),
-    error-invalid-unit        (1),
-    error-unit-not-automate   (2),
-    error-already-embraye     (3),
-    error-already-debraye     (4),
-    error-unit-surrendered    (5)
-}
-
-MsgSetAutomateModeAck ::= SEQUENCE
-{
-    unit-id     Agent,
-    error-code  EnumSetAutomateModeErrorCode
 }
 
 -- Path finder

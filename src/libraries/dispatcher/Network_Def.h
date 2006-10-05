@@ -148,7 +148,7 @@ GENERATE_ASN_MSG_SENDER         ( Client, UnitKnowledgeCreation                 
 GENERATE_ASN_MSG_SENDER         ( Client, UnitKnowledgeUpdate                           , unit_knowledge_update                             );
 GENERATE_ASN_MSG_SENDER         ( Client, UnitKnowledgeDestruction                      , unit_knowledge_destruction                        );
 GENERATE_ASN_MSG_SENDER         ( Client, UnitAttributes                                , unit_attributes                                   );
-GENERATE_ASN_MSG_SENDER         ( Client, UnitDotations                                 , unit_dotations                                    );
+GENERATE_ASN_MSG_SENDER         ( Client, AutomateAttributes                            , automate_attributes                               );
 GENERATE_ASN_MSG_SENDER         ( Client, UnitPathFind                                  , unit_pathfind                                     );
 GENERATE_ASN_MSG_SENDER         ( Client, StartPionFire                                 , start_pion_fire                                   );
 GENERATE_ASN_MSG_SENDER         ( Client, StopPionFire                                  , stop_pion_fire                                    );
