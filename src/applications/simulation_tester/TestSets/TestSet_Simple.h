@@ -19,10 +19,6 @@
 #ifndef __TestSet_Simple_h_
 #define __TestSet_Simple_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "TestSet_ABC.h"
 
 namespace TEST {

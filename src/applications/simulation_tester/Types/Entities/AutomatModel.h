@@ -19,10 +19,6 @@
 #ifndef __AutomatModel_h_
 #define __AutomatModel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 
 namespace TEST {

@@ -126,15 +126,6 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 }
 
 //-----------------------------------------------------------------------------
-// Name: Pawn::OnAttributeUpdated
-// Created: SBO 2005-05-16
-//-----------------------------------------------------------------------------
-void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitDotations& /*asnMsg*/ )
-{
-    // NOTHING
-}
-
-//-----------------------------------------------------------------------------
 // Name: Pawn::OnReceivePathfind
 // Created: SBO 2005-06-15
 //-----------------------------------------------------------------------------

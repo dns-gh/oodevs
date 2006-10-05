@@ -47,38 +47,34 @@ class MessageManager
 	MT_COPYNOTALLOWED( MessageManager );
 
 public:
-    //-------------------------------------------------------------------------
-    /** @name Messages */
-    //-------------------------------------------------------------------------
+    //! @name DIN Messages
     //@{
-    //! SIM <- MOS
-    enum 
+    static enum  
     {
-        eMsgMosSim                  = 0,
-        eMsgMosSimWithContext       = 1,
+        eMsgOutSim                                 = 0,
+        eMsgInSim                                  = 1,
 
-        eMsgEnableUnitVisionCones   = 1000,
-        eMsgDisableUnitVisionCones  = 1001,
-        eMsgUnitMagicAction         = 1002
-    };
+        eMsgOutClient                              = 2,
+        eMsgInClient                               = 3,
 
-    //! SIM -> MOS
-    enum
-    {
-        eMsgSimMos                  = 0,
-        eMsgSimMosWithContext       = 1,
-
-        eMsgUnitVisionCones         = 1004,
-        eMsgUnitTrace               = 1005,
-        eMsgInit                    = 1007,
-        eMsgProfilingValues         = 1008,
-        eMsgUnitInterVisibility     = 1009,
-        eMsgObjectInterVisibility   = 1010,
-        eMsgKnowledgeGroup          = 1013,
-        eMsgArmy                    = 1014,
-        eMsgDebugDrawPoints         = 1015,
-
-        eMsgTerrainType             = 1016,
+        eMsgEnableUnitVisionCones                  = 1000,
+        eMsgDisableUnitVisionCones                 = 1001,
+        eMsgUnitMagicAction                        = 1002,
+        eMsgEnableProfiling                        = 1003,
+        eMsgDisableProfiling                       = 1004,
+        eMsgUnitVisionCones                        = 1005,
+        eMsgTrace                                  = 1006,
+        eMsgInit                                   = 1007,
+        eMsgProfilingValues                        = 1008,
+        eMsgUnitInterVisibility                    = 1009,
+        eMsgObjectInterVisibility                  = 1010,
+        eMsgPopulationConcentrationInterVisibility = 1011,
+        eMsgPopulationFlowInterVisibility          = 1012,
+        eMsgKnowledgeGroup                         = 1013,
+        eMsgArmy                                   = 1014,
+        eMsgDebugDrawPoints                        = 1015,
+        eMsgEnvironmentType                        = 1016,
+        eMsgPopulationCollision                    = 1017
     };
     //@}
 
@@ -96,12 +92,8 @@ public:
 
 	//! @name Message management
 	//@{
-	void SendMsgMosSim           ( ASN1T_MsgsMosSim& asnMsg );
-	void SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, T_NetContextId nCtx );
-	void SendMsgMosSim           ( ASN1OCTET* pMsg, int nMsgLength );
-	void SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, T_NetContextId nCtx );
-
-    void SendMsgDebugDrawPoints  ( DIN::DIN_BufferedMessage& msg );
+	void SendMsgInSim          ( ASN1T_MsgsInSim& asnMsg );
+    void SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg );
 	//@}
 
 	//! @name Message
@@ -120,8 +112,7 @@ private:
     bool OnError                              ( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
 
 	void OnReceiveMsgInit                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-	void OnReceiveMsgSimMos                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-	void OnReceiveMsgSimMosWithContext        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
+	void OnReceiveMsgOutSim                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // Control
     void OnReceiveMsgCtrlInfo                 ( const ASN1T_MsgCtrlInfo& asnMsg );
@@ -137,7 +128,6 @@ private:
     void OnReceiveMsgTeam                     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgAutomatCreation          ( const ASN1T_MsgAutomateCreation& asnMsg );
 	void OnReceiveMsgPawnCreation             ( const ASN1T_MsgPionCreation& asnMsg );
-    void OnReceiveMsgUnitDotations            ( const ASN1T_MsgUnitDotations& asnMsg );
     void OnReceiveMsgUnitAttributes           ( const ASN1T_MsgUnitAttributes& asnMsg );
 
     void OnReceiveMsgObjectCreation           ( const ASN1T_MsgObjectCreation& asnMsg );
@@ -183,14 +173,14 @@ private:
     //@}
 
     // automat mode
-    void OnReceiveMsgSetAutomatModeAck        ( const ASN1T_MsgSetAutomateModeAck& asnMsg, T_NetContextId nCtx );
+    void OnReceiveMsgSetAutomatModeAck        ( const ASN1T_MsgSetAutomateModeAck& asnMsg, unsigned int nCtx );
 
     // Hierarchy changes
     void OnReceiveMsgChangeAutomat            ( const ASN1T_MsgChangeAutomate& asnMsg );
-    void OnReceiveMsgChangeAutomateAck        ( const ASN1T_MsgChangeAutomateAck& asnMsg, T_NetContextId nCtx );
+    void OnReceiveMsgChangeAutomateAck        ( const ASN1T_MsgChangeAutomateAck& asnMsg, unsigned int nCtx );
     void OnReceiveMsgChangeTeamRelation       ( const ASN1T_MsgChangeDiplomatie& asnMsg );
-    void OnReceiveMsgChangeTeamRelationAck    ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, T_NetContextId nCtx );
-    void OnReceiveMsgChangeKnowledgeGroupAck  ( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, T_NetContextId nCtx );
+    void OnReceiveMsgChangeTeamRelationAck    ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, unsigned int nCtx );
+    void OnReceiveMsgChangeKnowledgeGroupAck  ( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, unsigned int nCtx );
 
     // pathfind and terrain type
     void OnReceiveMsgPawnPathFind             ( const ASN1T_MsgUnitPathFind& asnMsg            );
@@ -198,14 +188,14 @@ private:
     void OnReceiveMsgDebugDrawPoints          ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // communication/orders
-    void OnReceiveMsgAutomateOrderAck         ( const ASN1T_MsgAutomateOrderAck& asnMsg, T_NetContextId nCtx );
-    void OnReceiveMsgPionOrderAck             ( const ASN1T_MsgPionOrderAck&     asnMsg, T_NetContextId nCtx );
+    void OnReceiveMsgAutomateOrderAck         ( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned int nCtx );
+    void OnReceiveMsgPionOrderAck             ( const ASN1T_MsgPionOrderAck&     asnMsg, unsigned int nCtx );
     //@}
 
 private:
     //! @name Member data
     //@{
-    DIN::DIN_MessageServiceUserCbk< MessageManager >*  pMessageService_;
+    DIN::DIN_MessageServiceUserCbk< MessageManager >   messageService_;
     Workspace&                                         workspace_;
 
     bool bIsInitialized_; //$$$ ugly bDummy to handle MOS_Light connection after start and avoid re-lauching missions 

@@ -19,10 +19,6 @@
 #ifndef __GenObject_h_
 #define __GenObject_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Messages/ASN_Types.h"
 

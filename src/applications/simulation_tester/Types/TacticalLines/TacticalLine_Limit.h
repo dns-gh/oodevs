@@ -19,10 +19,6 @@
 #ifndef __TacticalLine_Limit_h_
 #define __TacticalLine_Limit_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "TacticalLine_ABC.h"
 #include "Tools/Position.h"

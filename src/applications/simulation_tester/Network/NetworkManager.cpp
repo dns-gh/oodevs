@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-05-09 $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/Network/NetworkManager.cpp $
-// $Author: Sbo $
-// $Modtime: 5/07/05 18:08 $
-// $Revision: 9 $
-// $Workfile: NetworkManager.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_tester_pch.h"
 #include "NetworkManager.h"

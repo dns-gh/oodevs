@@ -15,8 +15,6 @@
 #include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Assert.h"
 
-typedef uint32      T_NetContextId;
-
 typedef uint32      T_EntityId;
 
 typedef std::vector< uint >        T_IdVector;

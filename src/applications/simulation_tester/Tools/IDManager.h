@@ -19,10 +19,6 @@
 #ifndef __IDManager_h_
 #define __IDManager_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "MT/MT_Tools/MT_IdentifierManager.h"
 
 namespace TEST {

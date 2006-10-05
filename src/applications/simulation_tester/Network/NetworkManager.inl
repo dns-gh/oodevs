@@ -9,15 +9,6 @@
 // All Rights Reserved. DIN is a trademark of MASA Corporation.
 //
 //*****************************************************************************
-//
-// $Created: SBO 2005-05-09 $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/Network/NetworkManager.inl $
-// $Author: Sbo $
-// $Modtime: 12/05/05 16:13 $
-// $Revision: 1 $
-// $Workfile: NetworkManager.inl $
-//
-//*****************************************************************************
 
 namespace TEST
 {

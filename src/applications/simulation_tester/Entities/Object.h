@@ -19,10 +19,6 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Tools/Position.h"
 

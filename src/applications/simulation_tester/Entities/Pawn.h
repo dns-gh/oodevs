@@ -68,7 +68,6 @@ public:
     //@{
     void OnAutomatChanged    (       Automat&                 automat );
     void OnAttributeUpdated  ( const ASN1T_MsgUnitAttributes& asnMsg  );
-    void OnAttributeUpdated  ( const ASN1T_MsgUnitDotations&  asnMsg  );
     void OnReceivePathfind   ( const ASN1T_MsgUnitPathFind&   asnMsg  );
     void OnReceiveTerrainType(       DIN::DIN_Input&          input   );
     //@}

@@ -19,10 +19,6 @@
 #ifndef __Mission_Automat_Type_h_
 #define __Mission_Automat_Type_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 
 namespace TEST {

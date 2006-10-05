@@ -19,10 +19,6 @@
 #ifndef __TestSet_ABC_h_
 #define __TestSet_ABC_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 namespace TEST {
 
     class Workspace;

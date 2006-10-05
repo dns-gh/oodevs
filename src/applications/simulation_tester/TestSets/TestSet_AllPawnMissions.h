@@ -19,10 +19,6 @@
 #ifndef __TestSet_AllPawnMissions_h_
 #define __TestSet_AllPawnMissions_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "TestSet_ABC.h"
 
 namespace TEST {

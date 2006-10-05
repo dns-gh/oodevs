@@ -32,7 +32,7 @@ using namespace TEST;
 Config::Config( const std::string& strFile )
     : strServer_           ( "127.0.0.1" )
     , strConfigFile_       ( "./scipio.xml" )
-    , nPort_               ( 10000 )
+    , nPort_               ( 10001 )
     , nTimeFactor_         ( 40 )
     , nPeriod_             ( 180 )
     , nRecompletionPeriod_ ( 180 )

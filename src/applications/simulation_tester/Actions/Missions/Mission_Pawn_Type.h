@@ -19,10 +19,6 @@
 #ifndef __Mission_Pawn_Type_h_
 #define __Mission_Pawn_Type_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 
 namespace TEST {

@@ -26,23 +26,12 @@ using namespace TEST;
 // Created: SBO 2005-05-09
 //-----------------------------------------------------------------------------
 ConnectionHandler::ConnectionHandler( NetworkManager& networkManager )
-    : pNetworkManager_ ( &networkManager )
+    : networkManager_   ( networkManager )
+    , connectionService_( *this, networkManager_.GetDINEngine(), DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 1 )
 {
-    DIN_ConnectionProtocols connProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 );
-
-	DIN_ConnectorGuest connector( eConnector_SIM_TEST ); // a voir
-
-    pConnService_ = new DIN_ConnectionServiceClientUserCbk< ConnectionHandler >( 
-                                      *this
-                                    , pNetworkManager_->GetDINEngine()
-                                    , connector
-                                    , connProtocols
-									, eConnMagicTICServerAgentServer /* a voir aussi */
-                                    , "TIC Server to agent server"); 
-
-    pConnService_->SetCbkOnConnectionSuccessful( & ConnectionHandler::OnConnected        );
-    pConnService_->SetCbkOnConnectionFailed    ( & ConnectionHandler::OnConnectionFailed );
-    pConnService_->SetCbkOnConnectionLost      ( & ConnectionHandler::OnConnectionLost   );
+    connectionService_.SetCbkOnConnectionSuccessful( & ConnectionHandler::OnConnected        );
+    connectionService_.SetCbkOnConnectionFailed    ( & ConnectionHandler::OnConnectionFailed );
+    connectionService_.SetCbkOnConnectionLost      ( & ConnectionHandler::OnConnectionLost   );
 }
 
 
@@ -52,7 +41,6 @@ ConnectionHandler::ConnectionHandler( NetworkManager& networkManager )
 //-----------------------------------------------------------------------------
 ConnectionHandler::~ConnectionHandler()
 {
-    delete pConnService_;
 }
 
 //=============================================================================
@@ -65,7 +53,7 @@ ConnectionHandler::~ConnectionHandler()
 //-----------------------------------------------------------------------------
 bool ConnectionHandler::ConnectToServer( const std::string& strHostName, uint nPort )
 {
-    if( pNetworkManager_->IsConnected() )
+    if( networkManager_.IsConnected() )
     {
         MT_LOG_ERROR_MSG( "Already Connected" );
         assert( false );
@@ -74,7 +62,7 @@ bool ConnectionHandler::ConnectToServer( const std::string& strHostName, uint nP
     
     NEK_AddressINET addr( strHostName.c_str(), ( uint16 )nPort );
 
-    pConnService_->JoinHost( addr );
+    connectionService_.JoinHost( addr );
     return true;
 }
 
@@ -85,7 +73,7 @@ bool ConnectionHandler::ConnectToServer( const std::string& strHostName, uint nP
 //-----------------------------------------------------------------------------
 bool ConnectionHandler::DisconnectFromServer()
 {
-    if( ! pNetworkManager_->IsConnected() )
+    if( ! networkManager_.IsConnected() )
     {
         MT_LOG_ERROR_MSG( "Unable to disconnect - not connected to server" );
         return false;
@@ -107,10 +95,10 @@ void ConnectionHandler::OnConnected( DIN_Link& link )
     MT_LOG_INFO_MSG( "Connected to " << link.GetRemoteAddress().GetAddressAsString() );
 
     // bind link
-    pNetworkManager_->BindLink( link );
+    networkManager_.BindLink( link );
 
     // bind message manager
-	pNetworkManager_->GetMessageMgr().Enable( link );
+	networkManager_.GetMessageMgr().Enable( link );
     
 	MOS_ASN_MsgCtrlClientAnnouncement asnMsg;
     asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
@@ -137,6 +125,6 @@ void ConnectionHandler::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescrip
     MT_LOG_INFO_MSG( "Connection to " << link.GetRemoteAddress().GetAddressAsString() << " lost (reason: " << reason.GetInfo() << ")" );
 
     // unbind link
-    pNetworkManager_->UnbindLink();
+    networkManager_.UnbindLink();
     throw std::exception( "Connection lost" );
 }

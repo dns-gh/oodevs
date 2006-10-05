@@ -19,10 +19,6 @@
 #ifndef __Location_h_
 #define __Location_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Position.h"
 #include "Messages/ASN_Types.h"

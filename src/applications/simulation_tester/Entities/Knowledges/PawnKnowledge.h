@@ -19,10 +19,6 @@
 #ifndef __PawnKnowledge_h_
 #define __PawnKnowledge_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Entities/KnowledgeGroup.h"
 

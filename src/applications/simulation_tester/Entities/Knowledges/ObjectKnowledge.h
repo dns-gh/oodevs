@@ -19,10 +19,6 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Entities/Team.h"
 

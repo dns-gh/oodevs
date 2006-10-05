@@ -53,27 +53,20 @@ using namespace NEK;
 MessageManager::MessageManager( Workspace& workspace, NetworkManager& networkManager )
     : workspace_      ( workspace )
     , bIsInitialized_ ( false )
+    , messageService_ ( *this, networkManager.GetDINEngine(), DIN_ConnectorGuest() )
 {
-    DIN_ConnectorGuest connector( eConnector_SIM_TEST );
-    pMessageService_ = new DIN_MessageServiceUserCbk< MessageManager >( 
-                                *this
-                              , networkManager.GetDINEngine()
-                              , connector
-                              , "Msgs TEST Server -> SIM Server" );
+    messageService_.RegisterReceivedMessage( eMsgInit                 , *this, & MessageManager::OnReceiveMsgInit                  );
 
-    pMessageService_->RegisterReceivedMessage( eMsgInit                 , *this, & MessageManager::OnReceiveMsgInit                  );
-
-    pMessageService_->RegisterReceivedMessage( eMsgKnowledgeGroup       , *this, & MessageManager::OnReceiveMsgKnowledgeGroup        );
-    pMessageService_->RegisterReceivedMessage( eMsgArmy                 , *this, & MessageManager::OnReceiveMsgTeam                  );
+    messageService_.RegisterReceivedMessage( eMsgKnowledgeGroup       , *this, & MessageManager::OnReceiveMsgKnowledgeGroup        );
+    messageService_.RegisterReceivedMessage( eMsgArmy                 , *this, & MessageManager::OnReceiveMsgTeam                  );
     
-    pMessageService_->RegisterReceivedMessage( eMsgTerrainType          , *this, & MessageManager::OnReceiveMsgPawnTerrainType       );
+    messageService_.RegisterReceivedMessage( eMsgEnvironmentType      , *this, & MessageManager::OnReceiveMsgPawnTerrainType       );
 
-    pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints      , *this, & MessageManager::OnReceiveMsgDebugDrawPoints       );
+    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints      , *this, & MessageManager::OnReceiveMsgDebugDrawPoints       );
 
-	pMessageService_->RegisterReceivedMessage( eMsgSimMos               , *this, & MessageManager::OnReceiveMsgSimMos                );
-    pMessageService_->RegisterReceivedMessage( eMsgSimMosWithContext    , *this, & MessageManager::OnReceiveMsgSimMosWithContext     );
+	messageService_.RegisterReceivedMessage( eMsgOutSim               , *this, & MessageManager::OnReceiveMsgOutSim                );
 	
-    pMessageService_->SetCbkOnError( & MessageManager::OnError );
+    messageService_.SetCbkOnError( & MessageManager::OnError );
 }
 
 
@@ -83,7 +76,6 @@ MessageManager::MessageManager( Workspace& workspace, NetworkManager& networkMan
 //-----------------------------------------------------------------------------
 MessageManager::~MessageManager()
 {
-    delete pMessageService_;
 }
 
 //=============================================================================
@@ -96,7 +88,7 @@ MessageManager::~MessageManager()
 //-----------------------------------------------------------------------------
 void MessageManager::Enable( DIN_Link& link )
 {
-    pMessageService_->Enable( link );
+    messageService_.Enable( link );
 }
 
 
@@ -106,7 +98,7 @@ void MessageManager::Enable( DIN_Link& link )
 //-----------------------------------------------------------------------------
 void MessageManager::Disable( DIN_Link& link )
 {
-    pMessageService_->Disable( link );
+    messageService_.Disable( link );
 }
 
 
@@ -125,8 +117,7 @@ void MessageManager::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& /*inpu
 //-----------------------------------------------------------------------------
 DIN::DIN_BufferedMessage MessageManager::BuildMessage()
 {
-    assert( pMessageService_ );
-    return DIN::DIN_BufferedMessage( *pMessageService_ );
+    return DIN::DIN_BufferedMessage( messageService_ );
 }
 
 //=============================================================================
@@ -134,17 +125,17 @@ DIN::DIN_BufferedMessage MessageManager::BuildMessage()
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MessageManager::SendMsgMosSim
+// Name: MessageManager::SendMsgInSim
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void MessageManager::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
+void MessageManager::SendMsgInSim( ASN1T_MsgsInSim& asnMsg )
 {
 	if ( !workspace_.GetNetworkManager().IsConnected() )
         return;
 
     ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
 
-    ASN1C_MsgsMosSim asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
+    ASN1C_MsgsInSim asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
 
     if( asnMsgCtrl.Encode() != ASN_OK )
     {
@@ -156,63 +147,7 @@ void MessageManager::SendMsgMosSim( ASN1T_MsgsMosSim& asnMsg )
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
 
-    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSim, dinMsg );
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MessageManager::SendMsgMosSimWithContext
-// Created: NLD 2003-02-24
-//-----------------------------------------------------------------------------
-void MessageManager::SendMsgMosSimWithContext( ASN1T_MsgsMosSimWithContext& asnMsg, T_NetContextId nCtx )
-{
-    if ( !workspace_.GetNetworkManager().IsConnected() )
-        return;
-
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-
-    ASN1C_MsgsMosSimWithContext asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
-
-    if( asnMsgCtrl.Encode() != ASN_OK )
-    {
-        asnPEREncodeBuffer.PrintErrorInfo();
-        assert( false ); //$$$ TMP
-        return;
-    }
-
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg << nCtx;
-
-    dinMsg.GetOutput().Append( asnPEREncodeBuffer.GetMsgPtr(), asnPEREncodeBuffer.GetMsgLen() );
-
-    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSimWithContext, dinMsg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MessageManager::SendMsgMosSim
-// Created: APE 2004-10-20
-// -----------------------------------------------------------------------------
-void MessageManager::SendMsgMosSim( ASN1OCTET* pMsg, int nMsgLength )
-{
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg.GetOutput().Append( pMsg, nMsgLength );
-
-    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSim, dinMsg );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MessageManager::SendMsgMosSimWithContext
-// Created: APE 2004-10-20
-// -----------------------------------------------------------------------------
-void MessageManager::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, T_NetContextId nCtx )
-{
-    DIN_BufferedMessage dinMsg = BuildMessage();
-    dinMsg << nCtx;
-
-    dinMsg.GetOutput().Append( pMsg, nMsgLength );
-
-    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgMosSimWithContext, dinMsg );
+    messageService_.Send( workspace_.GetNetworkManager().GetLink(), eMsgInSim, dinMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +156,7 @@ void MessageManager::SendMsgMosSimWithContext( ASN1OCTET* pMsg, int nMsgLength, 
 // -----------------------------------------------------------------------------
 void MessageManager::SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg )
 {
-    pMessageService_->Send( workspace_.GetNetworkManager().GetLink(), eMsgDebugDrawPoints, msg  );
+    messageService_.Send( workspace_.GetNetworkManager().GetLink(), eMsgDebugDrawPoints, msg  );
 }
 
 //=============================================================================
@@ -281,7 +216,7 @@ void MessageManager::OnReceiveMsgTeam( DIN::DIN_Link& /*linkForm*/, DIN::DIN_Inp
 // Name: MessageManager constructor
 // Created: NLD 2003-02-26
 //-----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& input )
+void MessageManager::OnReceiveMsgOutSim( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
     uint nAsnMsgSize = input.GetAvailable();
 
@@ -294,95 +229,61 @@ void MessageManager::OnReceiveMsgSimMos( DIN_Link& /*linkFrom*/, DIN_Input& inpu
     ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
 
     // Decode the message
-    ASN1T_MsgsSimMos asnMsg;
-    ASN1C_MsgsSimMos asnMsgCtrl( asnPERDecodeBuffer, asnMsg );
+    ASN1T_MsgsOutSim asnMsg;
+    ASN1C_MsgsOutSim asnMsgCtrl( asnPERDecodeBuffer, asnMsg );
     if( asnMsgCtrl.Decode() != ASN_OK )
     {
         asnPERDecodeBuffer.PrintErrorInfo();
         assert( false ); //$$$ TMP
     }
 
-    switch( asnMsg.t )
+    unsigned int nCtx = asnMsg.context;
+
+    switch( asnMsg.msg.t )
     {
-		case T_MsgsSimMos_msg_ctrl_info:                     OnReceiveMsgCtrlInfo                  ( *asnMsg.u.msg_ctrl_info                    ); break;
-        case T_MsgsSimMos_msg_ctrl_begin_tick:               OnReceiveMsgCtrlBeginTick             (  asnMsg.u.msg_ctrl_begin_tick              ); break;
-        case T_MsgsSimMos_msg_ctrl_end_tick:                 OnReceiveMsgCtrlEndTick               ( *asnMsg.u.msg_ctrl_end_tick                ); break;
-        case T_MsgsSimMos_msg_ctrl_change_time_factor_ack:   OnReceiveMsgCtrlChangeTimeFactorAck   ( *asnMsg.u.msg_ctrl_change_time_factor_ack  ); break;
-        case T_MsgsSimMos_msg_ctrl_send_current_state_begin: OnReceiveMsgCtrlSendCurrentStateBegin (); break;
-        case T_MsgsSimMos_msg_ctrl_send_current_state_end:   OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
+        case T_MsgsOutSim_msg_msg_change_automate_ack:            OnReceiveMsgChangeAutomateAck      ( *asnMsg.msg.u.msg_change_automate_ack           , nCtx ); break;
+        case T_MsgsOutSim_msg_msg_change_diplomatie_ack:          OnReceiveMsgChangeTeamRelationAck  ( *asnMsg.msg.u.msg_change_diplomatie_ack         , nCtx ); break;
+        case T_MsgsOutSim_msg_msg_change_groupe_connaissance_ack: OnReceiveMsgChangeKnowledgeGroupAck( *asnMsg.msg.u.msg_change_groupe_connaissance_ack, nCtx ); break;
+        case T_MsgsOutSim_msg_msg_automate_order_ack:             OnReceiveMsgAutomateOrderAck       ( *asnMsg.msg.u.msg_automate_order_ack            , nCtx ); break;
+        case T_MsgsOutSim_msg_msg_pion_order_ack:                 OnReceiveMsgPionOrderAck           ( *asnMsg.msg.u.msg_pion_order_ack                , nCtx ); break;
+        case T_MsgsOutSim_msg_msg_set_automate_mode_ack:          OnReceiveMsgSetAutomatModeAck      ( *asnMsg.msg.u.msg_set_automate_mode_ack         , nCtx ); break;
 
-        case T_MsgsSimMos_msg_unit_attributes:               OnReceiveMsgUnitAttributes            ( *asnMsg.u.msg_unit_attributes              ); break;
-        case T_MsgsSimMos_msg_unit_dotations:                OnReceiveMsgUnitDotations             ( *asnMsg.u.msg_unit_dotations               ); break;
-        case T_MsgsSimMos_msg_unit_pathfind:                 OnReceiveMsgPawnPathFind              ( *asnMsg.u.msg_unit_pathfind                ); break;
+		case T_MsgsOutSim_msg_msg_ctrl_info:                     OnReceiveMsgCtrlInfo                  ( *asnMsg.msg.u.msg_ctrl_info                    ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_begin_tick:               OnReceiveMsgCtrlBeginTick             (  asnMsg.msg.u.msg_ctrl_begin_tick              ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_end_tick:                 OnReceiveMsgCtrlEndTick               ( *asnMsg.msg.u.msg_ctrl_end_tick                ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_change_time_factor_ack:   OnReceiveMsgCtrlChangeTimeFactorAck   ( *asnMsg.msg.u.msg_ctrl_change_time_factor_ack  ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin: OnReceiveMsgCtrlSendCurrentStateBegin (); break;
+        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:   OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
-        case T_MsgsSimMos_msg_change_automate:               OnReceiveMsgChangeAutomat             ( *asnMsg.u.msg_change_automate              ); break;
-        case T_MsgsSimMos_msg_pion_creation:                 OnReceiveMsgPawnCreation              ( *asnMsg.u.msg_pion_creation                ); break;
-        case T_MsgsSimMos_msg_automate_creation:             OnReceiveMsgAutomatCreation           ( *asnMsg.u.msg_automate_creation            ); break;
-		case T_MsgsSimMos_msg_change_diplomatie:             OnReceiveMsgChangeTeamRelation        ( *asnMsg.u.msg_change_diplomatie            ); break;  
+        case T_MsgsOutSim_msg_msg_unit_attributes:               OnReceiveMsgUnitAttributes            ( *asnMsg.msg.u.msg_unit_attributes              ); break;
+        case T_MsgsOutSim_msg_msg_unit_pathfind:                 OnReceiveMsgPawnPathFind              ( *asnMsg.msg.u.msg_unit_pathfind                ); break;
 
-        case T_MsgsSimMos_msg_unit_knowledge_creation:       OnReceiveMsgUnitKnowledgeCreation     ( *asnMsg.u.msg_unit_knowledge_creation      ); break;
-        case T_MsgsSimMos_msg_unit_knowledge_update:         OnReceiveMsgUnitKnowledgeUpdate       ( *asnMsg.u.msg_unit_knowledge_update        ); break;
-        case T_MsgsSimMos_msg_unit_knowledge_destruction:    OnReceiveMsgUnitKnowledgeDestruction  ( *asnMsg.u.msg_unit_knowledge_destruction   ); break;
+        case T_MsgsOutSim_msg_msg_change_automate:               OnReceiveMsgChangeAutomat             ( *asnMsg.msg.u.msg_change_automate              ); break;
+        case T_MsgsOutSim_msg_msg_pion_creation:                 OnReceiveMsgPawnCreation              ( *asnMsg.msg.u.msg_pion_creation                ); break;
+        case T_MsgsOutSim_msg_msg_automate_creation:             OnReceiveMsgAutomatCreation           ( *asnMsg.msg.u.msg_automate_creation            ); break;
+		case T_MsgsOutSim_msg_msg_change_diplomatie:             OnReceiveMsgChangeTeamRelation        ( *asnMsg.msg.u.msg_change_diplomatie            ); break;  
 
-        case T_MsgsSimMos_msg_population_knowledge_creation:       OnReceiveMsgPopulationKnowledgeCreation     ( *asnMsg.u.msg_population_knowledge_creation      ); break;
-        case T_MsgsSimMos_msg_population_knowledge_update:         OnReceiveMsgPopulationKnowledgeUpdate       ( *asnMsg.u.msg_population_knowledge_update        ); break;
-        case T_MsgsSimMos_msg_population_knowledge_destruction:    OnReceiveMsgPopulationKnowledgeDestruction  ( *asnMsg.u.msg_population_knowledge_destruction   ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_creation:       OnReceiveMsgUnitKnowledgeCreation     ( *asnMsg.msg.u.msg_unit_knowledge_creation      ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_update:         OnReceiveMsgUnitKnowledgeUpdate       ( *asnMsg.msg.u.msg_unit_knowledge_update        ); break;
+        case T_MsgsOutSim_msg_msg_unit_knowledge_destruction:    OnReceiveMsgUnitKnowledgeDestruction  ( *asnMsg.msg.u.msg_unit_knowledge_destruction   ); break;
 
-        case T_MsgsSimMos_msg_object_creation:               OnReceiveMsgObjectCreation            ( *asnMsg.u.msg_object_creation              ); break;
-        case T_MsgsSimMos_msg_object_update:                 OnReceiveMsgObjectUpdate              ( *asnMsg.u.msg_object_update                ); break;
-        case T_MsgsSimMos_msg_object_destruction:            OnReceiveMsgObjectDestruction         ( asnMsg.u.msg_object_destruction            ); break;
-        case T_MsgsSimMos_msg_object_knowledge_creation:     OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.u.msg_object_knowledge_creation    ); break; 
-        case T_MsgsSimMos_msg_object_knowledge_update:       OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.u.msg_object_knowledge_update      ); break; 
-        case T_MsgsSimMos_msg_object_knowledge_destruction:  OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.u.msg_object_knowledge_destruction ); break; 
+        case T_MsgsOutSim_msg_msg_population_knowledge_creation:       OnReceiveMsgPopulationKnowledgeCreation     ( *asnMsg.msg.u.msg_population_knowledge_creation      ); break;
+        case T_MsgsOutSim_msg_msg_population_knowledge_update:         OnReceiveMsgPopulationKnowledgeUpdate       ( *asnMsg.msg.u.msg_population_knowledge_update        ); break;
+        case T_MsgsOutSim_msg_msg_population_knowledge_destruction:    OnReceiveMsgPopulationKnowledgeDestruction  ( *asnMsg.msg.u.msg_population_knowledge_destruction   ); break;
 
-        case T_MsgsSimMos_msg_population_creation:           OnReceiveMsgPopulationCreation        ( *asnMsg.u.msg_population_creation          ); break;
-        case T_MsgsSimMos_msg_population_update:             OnReceiveMsgPopulationUpdate          ( *asnMsg.u.msg_population_update            ); break;
+        case T_MsgsOutSim_msg_msg_object_creation:               OnReceiveMsgObjectCreation            ( *asnMsg.msg.u.msg_object_creation              ); break;
+        case T_MsgsOutSim_msg_msg_object_update:                 OnReceiveMsgObjectUpdate              ( *asnMsg.msg.u.msg_object_update                ); break;
+        case T_MsgsOutSim_msg_msg_object_destruction:            OnReceiveMsgObjectDestruction         ( asnMsg.msg.u.msg_object_destruction            ); break;
+        case T_MsgsOutSim_msg_msg_object_knowledge_creation:     OnReceiveMsgObjectKnowledgeCreation   ( *asnMsg.msg.u.msg_object_knowledge_creation    ); break; 
+        case T_MsgsOutSim_msg_msg_object_knowledge_update:       OnReceiveMsgObjectKnowledgeUpdate     ( *asnMsg.msg.u.msg_object_knowledge_update      ); break; 
+        case T_MsgsOutSim_msg_msg_object_knowledge_destruction:  OnReceiveMsgObjectKnowledgeDestruction( *asnMsg.msg.u.msg_object_knowledge_destruction ); break; 
+
+        case T_MsgsOutSim_msg_msg_population_creation:           OnReceiveMsgPopulationCreation        ( *asnMsg.msg.u.msg_population_creation          ); break;
+        case T_MsgsOutSim_msg_msg_population_update:             OnReceiveMsgPopulationUpdate          ( *asnMsg.msg.u.msg_population_update            ); break;
         default:
 			;
 	}
 }
-
-//-----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgSimMosWithContext
-// Created: NLD 2003-02-26
-//-----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgSimMosWithContext( DIN_Link& /*linkFrom*/, DIN_Input& input )
-{
-    T_NetContextId nCtx;
-    input >> nCtx;
-
-    uint nAsnMsgSize = input.GetAvailable();
-
-    assert( nAsnMsgSize <= sizeof(aASNDecodeBuffer_) );
-
-    // Fill the asn buffer array
-    memcpy( aASNDecodeBuffer_, input.GetBuffer(nAsnMsgSize), nAsnMsgSize );
-
-    // Create the asn msg buffer
-    ASN1PERDecodeBuffer asnPERDecodeBuffer( aASNDecodeBuffer_, nAsnMsgSize, TRUE );
-
-    // Decode the message
-    ASN1T_MsgsSimMosWithContext asnMsg;
-    ASN1C_MsgsSimMosWithContext asnMsgCtrl( asnPERDecodeBuffer, asnMsg );
-    if( asnMsgCtrl.Decode() != ASN_OK )
-    {
-        asnPERDecodeBuffer.PrintErrorInfo();
-        assert( false ); //$$$ TMP
-    }
-
-    switch( asnMsg.t )
-    {
-        case T_MsgsSimMosWithContext_msg_change_automate_ack:            OnReceiveMsgChangeAutomateAck      ( *asnMsg.u.msg_change_automate_ack           , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_change_diplomatie_ack:          OnReceiveMsgChangeTeamRelationAck  ( *asnMsg.u.msg_change_diplomatie_ack         , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_change_groupe_connaissance_ack: OnReceiveMsgChangeKnowledgeGroupAck( *asnMsg.u.msg_change_groupe_connaissance_ack, nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_automate_order_ack:             OnReceiveMsgAutomateOrderAck       ( *asnMsg.u.msg_automate_order_ack            , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_pion_order_ack:                 OnReceiveMsgPionOrderAck           ( *asnMsg.u.msg_pion_order_ack                , nCtx ); break;
-        case T_MsgsSimMosWithContext_msg_set_automate_mode_ack:          OnReceiveMsgSetAutomatModeAck      ( *asnMsg.u.msg_set_automate_mode_ack         , nCtx ); break;
-        default:
-            ;
-    }
-}
-
 
 //-----------------------------------------------------------------------------
 // TIME MANAGEMENT
@@ -532,7 +433,7 @@ void MessageManager::OnReceiveMsgChangeAutomat( const ASN1T_MsgChangeAutomate& a
 // Name: MessageManager::OnReceiveMsgChangeAutomateAck
 // Created: SBO 2005-05-17
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& asnMsg, T_NetContextId /*nCtx*/ )
+void MessageManager::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAutomateAck& asnMsg, unsigned int /*nCtx*/ )
 {
     // don't do anything if original command was malformed
     if( asnMsg.error_code == EnumOrderErrorCode::no_error )
@@ -558,17 +459,6 @@ void MessageManager::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttributes& 
     pPawn->OnAttributeUpdated( asnMsg );
 }
 
-//-----------------------------------------------------------------------------
-// Name: MessageManager::OnReceiveMsgUnitDotations
-// Created: SBO 2005-05-16
-//-----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations& asnMsg )
-{
-    Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_pion );
-    assert( pPawn );
-    pPawn->OnAttributeUpdated( asnMsg );
-}
-
 // -----------------------------------------------------------------------------
 // Name: MessageManager::OnReceiveMsgChangeTeamRelation
 // Created: SBO 2005-05-16
@@ -588,7 +478,7 @@ void MessageManager::OnReceiveMsgChangeTeamRelation( const ASN1T_MsgChangeDiplom
 // Name: MessageManager::OnReceiveMsgChangeTeamRelation
 // Created: SBO 2005-05-17
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgChangeTeamRelationAck( const ASN1T_MsgChangeDiplomatieAck& asnMsg, T_NetContextId /*nCtx*/ )
+void MessageManager::OnReceiveMsgChangeTeamRelationAck( const ASN1T_MsgChangeDiplomatieAck& asnMsg, unsigned int /*nCtx*/ )
 {
     // don't do anything if original command was malformed
     if( asnMsg.error_code == EnumChangeDiplomatieErrorCode::no_error )
@@ -607,7 +497,7 @@ void MessageManager::OnReceiveMsgChangeTeamRelationAck( const ASN1T_MsgChangeDip
 // Name: MessageManager::OnReceiveMsgChangeKnowledgeGroupAck
 // Created: SBO 2005-05-24
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgChangeKnowledgeGroupAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, T_NetContextId /*nCtx*/ )
+void MessageManager::OnReceiveMsgChangeKnowledgeGroupAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, unsigned int /*nCtx*/ )
 {
     if( asnMsg.error_code == EnumChangeGroupeConnaissanceErrorCode::no_error )
     {
@@ -899,7 +789,7 @@ void MessageManager::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObje
 // Name: MessageManager::OnReceiveMsgPionOrderAck
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnMsg, T_NetContextId /*nCtx*/ )
+void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnMsg, unsigned int /*nCtx*/ )
 {
     Pawn* pPawn = workspace_.GetEntityManager().FindPawn( asnMsg.oid_unite_executante );
     assert( pPawn );
@@ -914,7 +804,7 @@ void MessageManager::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& asnM
 // Name: MessageManager::OnReceiveMsgAutomateOrderAck
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& asnMsg, T_NetContextId /*nCtx*/ )
+void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned int /*nCtx*/ )
 {
     Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.oid_unite_executante );
     assert( pAutomat );
@@ -929,7 +819,7 @@ void MessageManager::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderA
 // Name: MessageManager::OnReceiveMsgSetAutomatModeAck
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
-void MessageManager::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomateModeAck& /*asnMsg*/, T_NetContextId /*nCtx*/ )
+void MessageManager::OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomateModeAck& /*asnMsg*/, unsigned int /*nCtx*/ )
 {
     /*
     Automat* pAutomat = workspace_.GetEntityManager().FindAutomat( asnMsg.unit_id );

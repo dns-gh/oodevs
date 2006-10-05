@@ -19,10 +19,6 @@
 #ifndef __TacticalLineManager_h_
 #define __TacticalLineManager_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Messages/ASN_Messages.h"
 

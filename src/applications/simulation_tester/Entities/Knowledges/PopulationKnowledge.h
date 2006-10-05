@@ -19,10 +19,6 @@
 #ifndef __PopulationKnowledge_h_
 #define __PopulationKnowledge_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Entities/KnowledgeGroup.h"
 

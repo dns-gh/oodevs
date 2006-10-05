@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-05-09 $
-// $Archive: /MVW_v10/Build/SDK/TIC/src/Network/NetworkManager.h $
-// $Author: Nld $
-// $Modtime: 8/06/05 13:30 $
-// $Revision: 5 $
-// $Workfile: NetworkManager.h $
-//
-// *****************************************************************************
 
 #ifndef __NetworkManager_h_
 #define __NetworkManager_h_
@@ -33,27 +24,9 @@ namespace TEST
     class MessageManager;
     class Workspace;
 
-enum EConnector
-{
-	eConnector_SIM_MOS  = (DIN::DIN_Connector_ABC::DIN_ConnectionID)-1,
-	eConnector_SIM_LAU  = 1,
-	eConnector_MOS_LAU  = 2,
-	eConnector_SIM_WMI  = 3,
-	eConnector_SIM_TEST = 4
-};
-
-enum EConnMagicCookie
-{
-    eConnMagicTICServerAgentServer   = 1
-};
-
 // =============================================================================
 /** @class  NetworkManager
     @brief  NetworkManager
-    @par    Using example
-    @code
-    Server;
-    @endcode
 */
 // Created: SBO 2005-05-09
 // =============================================================================

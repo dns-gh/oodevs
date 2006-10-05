@@ -19,10 +19,6 @@
 #ifndef __ASN_Tools_h_
 #define __ASN_Tools_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Messages/ASN_Types.h"
 #include "Tools/Position.h"

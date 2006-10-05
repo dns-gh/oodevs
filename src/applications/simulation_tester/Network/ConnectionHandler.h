@@ -62,8 +62,8 @@ private:
 private:
     //! @name Member data
     //@{
-	DIN::DIN_ConnectionServiceClientUserCbk< ConnectionHandler >* pConnService_;
-    NetworkManager*                                               pNetworkManager_;
+	DIN::DIN_ConnectionServiceClientUserCbk< ConnectionHandler >  connectionService_;
+    NetworkManager&                                               networkManager_;
 	//@}
 };
 

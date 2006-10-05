@@ -122,7 +122,7 @@ void TacticalLine_Lima::UpdateToSim()
         ++i;
     }
 
-    asnMsg.Send( (T_NetContextId)this );
+    asnMsg.Send( (unsigned int)this );
     bIsSyncWithSim_ = true;
 
     delete[] asnMsg.GetAsnMsg().geometrie.vecteur_point.elem;

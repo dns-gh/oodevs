@@ -19,10 +19,6 @@
 #ifndef __PawnModel_h_
 #define __PawnModel_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 #include "Actions/Missions/Mission_Pawn_Type.h"
 

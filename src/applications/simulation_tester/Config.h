@@ -19,10 +19,6 @@
 #ifndef __Config_h_
 #define __Config_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include "Types.h"
 
 namespace TEST {
