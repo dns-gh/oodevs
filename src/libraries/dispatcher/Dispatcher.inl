@@ -21,4 +21,15 @@ Model& Dispatcher::GetModel() const
     return *pModel_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Dispatcher::GetClientsNetworker
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+inline
+ClientsNetworker& Dispatcher::GetClientsNetworker() const
+{
+    assert( pClientsNetworker_ );
+    return *pClientsNetworker_;
+}
+
 }

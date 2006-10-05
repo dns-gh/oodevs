@@ -48,6 +48,8 @@ public:
 
     //! @name Update
     //@{
+    void Reset();
+
     void Update( const ASN1T_MsgsOutSim& asnMsg );
     void Update( uint nMsgID, DIN::DIN_Input& input );
 

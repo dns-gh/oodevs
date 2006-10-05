@@ -75,6 +75,15 @@ bool Client::CheckRights( const ASN1T_MsgsInClient& asnMsg ) const
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Client::Disconnect
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+void Client::Disconnect()
+{
+    link_.Close( true ); 
+}
+
 // =============================================================================
 // MESSAGES
 // =============================================================================
@@ -112,7 +121,7 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
 {
     if( !CheckRights( asnInMsg ) )
     {
-        link_.Close( true ); // Disconnect
+        Disconnect();
         return;
     }
 

@@ -45,6 +45,7 @@ public:
 
     //! @name Tools
     //@{
+    void Disconnect();
     static Client& GetClientFromLink( const DIN::DIN_Link& link );
     //@}
 

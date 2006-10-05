@@ -39,6 +39,7 @@ public:
 //    void Update        ( const ASN1T_MsgCtrlCheckPointSetFrequencyAck& msg );
     void Update_MsgInit( DIN::DIN_Input& msg ); //$$$ TMP DIN
     void Send          ( Publisher_ABC& publisher ) const;
+    void Reset         ();
     //@}
 
 private:

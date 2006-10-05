@@ -14,6 +14,7 @@
 #include "Dispatcher.h"
 #include "Simulation.h"
 #include "Model.h"
+#include "ClientsNetworker.h"
 #include "Network_Def.h"
 #include "AsnMessageDecoder.h"
 #include "AsnMessageEncoder.h"
@@ -88,6 +89,9 @@ void SimulationNetworker::OnNotConnected( DIN_Link& link, const DIN_ErrorDescrip
     assert( !pSimulation_ );
     MT_LOG_INFO_MSG( MT_FormatString( "Connection to simulation '%s' failed (reason : %s)", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
     connectionService_.JoinHost( simulationAddress_ );
+
+    dispatcher_.GetModel().Reset();
+    dispatcher_.GetClientsNetworker().DenyConnections();
 }
 
 // -----------------------------------------------------------------------------
@@ -102,6 +106,9 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
 
     MT_LOG_INFO_MSG( MT_FormatString( "Connection to simulation '%s' lost (reason : %s) - reconnecting", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );    
     connectionService_.JoinHost( simulationAddress_ );
+
+    dispatcher_.GetModel().Reset();
+    dispatcher_.GetClientsNetworker().DenyConnections();
 }
 
 // =============================================================================

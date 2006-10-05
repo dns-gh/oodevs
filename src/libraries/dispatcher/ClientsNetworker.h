@@ -40,6 +40,9 @@ public:
 
     //! @name Main
     //@{
+    void DenyConnections ();
+    void AllowConnections();
+
     void Dispatch( const ASN1T_MsgsInClient& asnMsg );
     void Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
@@ -86,6 +89,7 @@ private:
     //@}
 
 private:
+    NEK::NEK_AddressINET                                        serverAddress_;
     DIN::DIN_ConnectionServiceServerUserCbk< ClientsNetworker > connectionService_;
     DIN::DIN_MessageServiceUserCbk         < ClientsNetworker > messageService_;
     DIN::DIN_Server*                                            pServer_;

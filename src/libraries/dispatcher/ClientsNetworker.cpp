@@ -27,6 +27,7 @@ using namespace NEK;
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, unsigned short nPort )
     : Networker_ABC     ( dispatcher )
+    , serverAddress_    ( nPort )
     , connectionService_( *this, dinEngine_, DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 1 )
     , messageService_   ( *this, dinEngine_, DIN_ConnectorHost() )
     , pServer_          ( 0 )
@@ -44,9 +45,6 @@ ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, unsigned short nPort
     connectionService_.SetCbkOnConnectionReceived( &ClientsNetworker::OnConnectionReceived    );
     connectionService_.SetCbkOnConnectionFailed  ( &ClientsNetworker::OnBadConnectionReceived );
     connectionService_.SetCbkOnConnectionLost    ( &ClientsNetworker::OnConnectionLost        );
-
-    NEK_AddressINET serverAddress( nPort );
-    pServer_ = &connectionService_.CreateHost( NEK_AddressINET( nPort ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,9 +53,39 @@ ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, unsigned short nPort
 // -----------------------------------------------------------------------------
 ClientsNetworker::~ClientsNetworker()
 {
-    assert( pServer_ );
-    connectionService_.DestroyHost( *pServer_ );
-    pServer_ = 0;
+    DenyConnections();
+}
+
+// =============================================================================
+// MAIN
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::DenyConnections
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+void ClientsNetworker::DenyConnections()
+{
+    if( pServer_ )
+    {
+        connectionService_.DestroyHost( *pServer_ );
+        pServer_ = 0;
+    }
+
+    for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
+        (**it).Disconnect();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientsNetworker::AllowConnections
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+void ClientsNetworker::AllowConnections()
+{
+    if( pServer_ )
+        DenyConnections();
+
+    pServer_ = &connectionService_.CreateHost( serverAddress_ );
 }
 
 // =============================================================================

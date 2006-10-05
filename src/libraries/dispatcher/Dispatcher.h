@@ -51,7 +51,8 @@ public:
 
     //! @name Accessors
     //@{
-    Model& GetModel() const;
+    Model&            GetModel           () const;
+    ClientsNetworker& GetClientsNetworker() const;
     //@}
 
 private:

@@ -67,6 +67,28 @@ Model::~Model()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: Model::Reset
+// Created: NLD 2006-10-05
+// -----------------------------------------------------------------------------
+void Model::Reset()
+{
+    pSimulationModel_->Reset();
+
+    agentKnowledges_        .Clear();
+    objectKnowledges_       .Clear();
+    populationKnowledges_   .Clear();
+    logConsignsMaintenance_ .Clear();
+    logConsignsSupply_      .Clear();
+    logConsignsMedical_     .Clear();
+    objects_                .Clear();
+    populations_            .Clear();
+    agents_                 .Clear();
+    automats_               .Clear();
+    knowledgeGroups_        .Clear();
+    sides_                  .Clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Update
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
