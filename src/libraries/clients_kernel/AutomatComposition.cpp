@@ -27,11 +27,20 @@ AutomatComposition::AutomatComposition( xml::xistream& input, const Resolver_ABC
     std::string quantity;
     input >> quantity;
     QString q = quantity.c_str();
-    QStringList minMax = QStringList::split( "..", q );
-    if( ! minMax.isEmpty() )
-        max_ = min_ = minMax[0].toUInt();
-    if( minMax.size() >= 2 )
-        max_ = minMax[1].toUInt();
+
+    if( q == "+" || q == "*" )
+    {
+        min_ = ( q == "+" ) ? 1 : 0;
+        max_ = std::numeric_limits< unsigned int >::max();
+    }
+    else
+    {
+        QStringList minMax = QStringList::split( "..", q );
+        if( ! minMax.isEmpty() )
+            max_ = min_ = minMax[0].toUInt();
+        if( minMax.size() >= 2 )
+            max_ = minMax[1].toUInt();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -79,4 +88,17 @@ unsigned int AutomatComposition::GetMin() const
 unsigned int AutomatComposition::GetMax() const
 {
     return max_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatComposition::GetSensibleNumber
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+unsigned int AutomatComposition::GetSensibleNumber() const
+{
+    if( max_ == min_ )
+        return min_;
+    if( max_ != std::numeric_limits< unsigned int >::max() )
+        return std::max( ( max_ - min_ ) / 2u, 1u );
+    return std::max( min_, 1u );
 }

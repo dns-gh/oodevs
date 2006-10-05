@@ -83,7 +83,7 @@ namespace
 
         geometry::Point2f NextPosition()
         {
-            static const double spacing = 100.;
+            static const double spacing = 500.;
             geometry::Point2f position = CartesianFromPolar( radius_ * spacing, angle_ ) + center_;
             ++onLevel_;
 
@@ -91,7 +91,7 @@ namespace
             if( onLevel_ == totalOnLevel_ )
             {
                 radius_ *= 1.414; // sqrt(2)
-                angle_  = 0.;
+                angle_  = 45.;
                 totalOnLevel_ += 4;
                 onLevel_ = 0;
             }
@@ -126,7 +126,7 @@ void AgentsModel::CreateAgent( Formation_ABC& parent, const AutomatType& type, c
     while( it.HasMoreElements() )
     {
         const AutomatComposition& composition = it.NextElement();
-        for( unsigned toAdd = composition.GetMin(); toAdd > 0; --toAdd )
+        for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
             CreateAgent( *agent, composition.GetType(), formation.NextPosition() );
     }
 }

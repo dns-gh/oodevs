@@ -71,6 +71,13 @@
     </message>
 </context>
 <context>
+    <name>HierarchyListView_ABC</name>
+    <message>
+        <source>Unit&#xe9;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LimitsLayer</name>
     <message>
         <source>Cr&#xe9;er limite</source>

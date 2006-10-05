@@ -6,7 +6,7 @@ SOURCES         = GraphicsPanel.cpp   \
                   PreferencesDialog.cpp \
                   StatusBar.cpp \
                   PopulationPanel.cpp \
-                  AgentListView.cpp \
+                  HierarchyListView_ABC.cpp \
                   ObjectListView.cpp \
                   PopulationListView.cpp \
                   BaseDisplayer.cpp \

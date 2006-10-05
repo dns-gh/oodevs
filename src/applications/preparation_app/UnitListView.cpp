@@ -14,6 +14,7 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_gui/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -28,7 +29,8 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, AgentType
     , types_( list )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tr( "Type d'unité" ) );
+    addColumn( tools::translate( "Preparation", "Unit type" ) );
+    addColumn( tools::translate( "Preparation", "Count" ) );
     setRootIsDecorated( true );
     header()->hide();
 
@@ -111,7 +113,13 @@ void UnitListView::DisplayList()
 // -----------------------------------------------------------------------------
 void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item )
 {
-    item->SetNamed( type.GetType() );
+    QString cnt;
+    if( type.GetMax() != type.GetMin() )
+        cnt = QString( "%1..%2" ).arg( type.GetMin() ).arg( type.GetMax() == std::numeric_limits< unsigned int >::max() ? "*" : QString::number( type.GetMax() ) );
+    else
+        cnt = QString::number( type.GetMin() );
+
+    item->Set( &type.GetType(), type.GetType().GetName(), cnt );
     item->setDragEnabled( true );
 }
 
@@ -128,7 +136,7 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
 
     const AgentType& pc = *type.GetTypePC();
     ValuedListItem* pcItem = new ValuedListItem( item );
-    pcItem->SetNamed( pc );
+    pcItem->Set( &pc, pc.GetName(), tools::translate( "Preparation", "CP" ) );
     pcItem->setDragEnabled( true );
 }
 

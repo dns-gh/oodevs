@@ -43,6 +43,7 @@ public:
     const AgentType& GetType() const;
     unsigned int GetMin() const;
     unsigned int GetMax() const;
+    unsigned int GetSensibleNumber() const;
     //@}
 
 private:
