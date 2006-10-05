@@ -22,6 +22,7 @@
 #include "IdManager.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/PathTools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -87,4 +88,19 @@ void Model::Serialize( xml::xostream& xos ) const
     teams_.Serialize( xos );
     objects_.Serialize( xos );
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Load
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void Model::Load( const std::string& filename )
+{
+    xml::xifstream xis( filename );
+    std::string orbat;
+    xis >> start( "Scipio" )
+            >> start( "Donnees" )
+                >> content( "ODB", orbat );
+    teams_.Load( path_tools::BuildChildPath( filename, orbat ), *this );
+//    objects_.Load( orbat );
 }

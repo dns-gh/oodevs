@@ -11,6 +11,8 @@
 #include "TeamsModel.h"
 #include "Team.h"
 #include "TeamFactory_ABC.h"
+#include "Model.h"
+#include "FormationModel.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -128,4 +130,40 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
 Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 {
     return new AssociativeIterator< const Entity_ABC&,Resolver< Team_ABC >::T_Elements >( elements_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::Load
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void TeamsModel::Load( const std::string& filename, Model& model )
+{
+    Purge();
+
+    xifstream xis( filename );
+    xis >> start( "orbat" )
+            >> start( "sides" )
+                >> list( "side", *this, &TeamsModel::ReadTeam, model )
+            >> end()
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::ReadTeam
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
+{
+    Team_ABC* team = factory_.CreateTeam( xis );
+    Register( team->GetId(), *team );
+
+    // $$$$ SBO 2006-10-05: forward to communications extension?
+    xis >> start( "communication" )
+            >> list( "knowledge-group", static_cast< Team& >( *team ), &Team::CreateKnowledgeGroup )
+        >> end();
+//    team->Get< Diplomacies >().Load( xis );
+    xis >> start( "tactical" )
+            >> list( "formation", model.formations_, &FormationModel::Create, *team, model )
+        >> end();
+    
 }

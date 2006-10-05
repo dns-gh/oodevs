@@ -18,12 +18,14 @@ namespace kernel
 {
     class Controller;
     class AgentType;
+    class AgentTypes;
     class AutomatType;
 }
 
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 class IdManager;
@@ -46,6 +48,8 @@ public:
     //@{
              Agent( const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager );
              Agent( const kernel::Agent_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager );
+             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
+             Agent( xml::xistream& xis, const kernel::Agent_ABC& parent, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
     virtual ~Agent();
     //@}
 

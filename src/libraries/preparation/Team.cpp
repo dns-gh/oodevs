@@ -34,6 +34,22 @@ Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManage
 }
 
 // -----------------------------------------------------------------------------
+// Name: Team constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager )
+    : controller_( controller )
+    , factory_( factory )
+{
+    std::string name;
+    xis >> attribute( "id", (int&)id_ )
+        >> attribute( "name", name );
+    name_ = name.c_str();
+    idManager.Lock( id_ );
+    RegisterSelf( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Team destructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
@@ -83,6 +99,17 @@ void Team::CreateKnowledgeGroup()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Team::CreateKnowledgeGroup
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void Team::CreateKnowledgeGroup( xml::xistream& xis )
+{
+    KnowledgeGroup_ABC* group = factory_.CreateKnowledgeGroup( xis, *this );
+    Resolver< KnowledgeGroup_ABC >::Register( group->GetId(), *group );
+    controller_.Update( *(Team_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Team::Rename
 // Created: SBO 2006-08-30
 // -----------------------------------------------------------------------------
@@ -100,7 +127,7 @@ void Team::Rename( const QString& name )
 void Team::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "nom", name_.ascii() )
+        << attribute( "name", name_.ascii() )
         << start( "communication" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {

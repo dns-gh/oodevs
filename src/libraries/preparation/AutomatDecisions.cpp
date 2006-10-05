@@ -29,6 +29,19 @@ AutomatDecisions::AutomatDecisions( Controller& controller, const Agent_ABC& age
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatDecisions constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+AutomatDecisions::AutomatDecisions( xml::xistream& xis, kernel::Controller& controller, const kernel::Agent_ABC& agent )
+    : controller_( controller )
+    , agent_( agent )
+{
+    std::string engaged;
+    xis >> optional() >> attribute( "engaged", engaged );
+    bEmbraye_ = engaged.empty() || engaged == "true";
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatDecisions destructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------

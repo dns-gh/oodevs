@@ -21,10 +21,15 @@ namespace kernel
     class Team_ABC;
 }
 
-namespace xml { class xostream; }
+namespace xml
+{ 
+    class xostream;
+    class xistream;
+}
 
 class FormationFactory_ABC;
 class FormationLevels;
+class Model;
 
 // =============================================================================
 /** @class  FormationModel
@@ -46,8 +51,8 @@ public:
 
     //! @name Operations
     //@{
-    void Create( kernel::Team_ABC& parent, unsigned int levelId );
-    void Create( kernel::Formation_ABC& parent, unsigned int levelId );
+    void Create( kernel::Entity_ABC& parent, unsigned int levelId );
+    void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model );
     void Purge();
     //@}
 

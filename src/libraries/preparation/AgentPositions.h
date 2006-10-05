@@ -21,6 +21,11 @@ namespace kernel
     class Agent_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  AgentPositions
     @brief  AgentPositions. Nothing sexual.
@@ -37,6 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentPositions( const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position );
+             AgentPositions( xml::xistream& xis, const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AgentPositions();
     //@}
 

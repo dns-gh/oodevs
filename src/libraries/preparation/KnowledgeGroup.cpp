@@ -35,6 +35,25 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team, Id
 }
 
 // -----------------------------------------------------------------------------
+// Name: KnowledgeGroup constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, const kernel::Team_ABC& team, IdManager& idManager )
+    : controller_( controller )
+    , team_( team )
+{
+    std::string type;
+    xis >> attribute( "id", (int&)id_ )
+        >> attribute( "type", type );
+    type_ = type.c_str();
+    idManager.Lock( id_ );
+
+    RegisterSelf( *this );
+    controller_.Create( *(KnowledgeGroup_ABC*)this );
+    name_ = QString( "Gtia %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
+}
+
+// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup destructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------

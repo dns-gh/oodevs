@@ -19,6 +19,11 @@ namespace kernel
     class Controller;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  AutomatDecisions
     @brief  AutomatDecisions
@@ -33,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatDecisions( kernel::Controller& controller, const kernel::Agent_ABC& agent );
+             AutomatDecisions( xml::xistream& xis, kernel::Controller& controller, const kernel::Agent_ABC& agent );
     virtual ~AutomatDecisions();
     //@}
 

@@ -15,6 +15,11 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  TeamFactory_ABC
     @brief  TeamFactory_ABC
@@ -34,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::Team_ABC* CreateTeam() = 0;
+    virtual kernel::Team_ABC* CreateTeam( xml::xistream& xis ) = 0;
     //@}
 };
 

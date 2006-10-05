@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "KnowledgeGroupHierarchy.h"
+#include "KnowledgeGroupsModel.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
@@ -27,7 +28,20 @@ KnowledgeGroupHierarchy::KnowledgeGroupHierarchy( kernel::Controller& controller
 {
     controller_.Register( *this );
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupHierarchy constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+KnowledgeGroupHierarchy::KnowledgeGroupHierarchy( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupsModel& model )
+    : controller_( controller )
+{
+    int group;
+    xis >> attribute( "knowledge-group", group );
+    group_ = &model.Get( ( unsigned long )group );
+    controller_.Register( *this );
+}
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupHierarchy destructor
 // Created: SBO 2006-09-27

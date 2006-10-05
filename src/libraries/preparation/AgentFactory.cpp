@@ -93,6 +93,43 @@ kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatTyp
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Agent_ABC& parent )
+{
+    Agent* result = new Agent( xis, parent, controllers_.controller_, idManager_, static_.types_ );
+    DataDictionary& dico = result->Get< DataDictionary >();
+    result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+
+    AttachExtensions( *result );
+    result->Update( InstanciationComplete() );
+    return result;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation_ABC& parent )
+{
+    Agent* result = new Agent( xis, controllers_.controller_, idManager_, static_.types_ );
+    DataDictionary& dico = result->Get< DataDictionary >();
+    result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+
+    result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
+    result->Attach( *new KnowledgeGroupHierarchy( xis, controllers_.controller_, model_.knowledgeGroups_ ) );
+    const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
+    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
+
+    AttachExtensions( *result );
+    result->Update( InstanciationComplete() );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 Population_ABC* AgentFactory::Create( Team_ABC& parent, const PopulationType& type, const geometry::Point2f& position )

@@ -16,6 +16,7 @@
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 namespace kernel
@@ -27,6 +28,7 @@ namespace kernel
 }
 
 class TeamFactory_ABC;
+class Model;
 
 // =============================================================================
 /** @class  TeamsModel
@@ -48,6 +50,7 @@ public:
 
     //! @name Operations
     //@{
+    void Load( const std::string& filename, Model& model );
     void Purge();
     void CreateTeam();
     void CreateKnowledgeGroup( const kernel::Team_ABC& team );
@@ -70,6 +73,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    void ReadTeam( xml::xistream& xis, Model& model );
     //@}
 
 private:

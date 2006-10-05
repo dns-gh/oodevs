@@ -26,6 +26,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 class AgentFactory_ABC;
 
 // =============================================================================
@@ -51,6 +56,8 @@ public:
     //@{
     void CreateAgent( kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
     void CreateAgent( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void CreateAgent( xml::xistream& xis, kernel::Formation_ABC& parent );
+    void CreateAgent( xml::xistream& xis, kernel::Agent_ABC& parent );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
 

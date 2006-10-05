@@ -38,6 +38,7 @@ class AgentTypes : public Resolver< AgentType >
                  , public Resolver< PopulationType >
                  , public Resolver< PopulationType, QString >
                  , public Resolver< AutomatType >
+                 , public Resolver< AutomatType, QString >
                  , public Resolver< ComponentType >
                  , public Resolver< ComponentType, QString >
                  , public Resolver< SensorType, QString >

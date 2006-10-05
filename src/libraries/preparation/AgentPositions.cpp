@@ -34,6 +34,21 @@ AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverte
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentPositions constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+AgentPositions::AgentPositions( xml::xistream& xis, const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter )
+    : agent_( agent )
+    , converter_( converter )
+    , aggregated_( false )
+    , height_( 0 )
+{
+    std::string position;
+    xis >> attribute( "position", position );
+    position_ = converter_.ConvertToXY( position );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentPositions destructor
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------

@@ -41,7 +41,9 @@ public:
     //! @name Operations
     //@{
     virtual kernel::Team_ABC* CreateTeam();
+    virtual kernel::Team_ABC* CreateTeam( xml::xistream& xis );
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team );
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team );
     //@}
 
 private:

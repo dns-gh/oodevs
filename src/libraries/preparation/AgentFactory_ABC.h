@@ -21,6 +21,11 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  AgentFactory_ABC
     @brief  AgentFactory_ABC
@@ -41,6 +46,8 @@ public:
     //@{
     virtual kernel::Agent_ABC* Create( kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position ) = 0;
     virtual kernel::Agent_ABC* Create( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position ) = 0;
+    virtual kernel::Agent_ABC* Create( xml::xistream& xis, kernel::Agent_ABC& parent ) = 0;
+    virtual kernel::Agent_ABC* Create( xml::xistream& xis, kernel::Formation_ABC& parent ) = 0;
     virtual kernel::Population_ABC* Create( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position ) = 0;
     //@}
 

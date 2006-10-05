@@ -52,7 +52,8 @@ public:
     //@}
 
     //! @name Operations
-    //@{
+    //@
+    void Load( const std::string& filename );
     void Purge();
     void Serialize( xml::xostream& xos ) const;
     //@}

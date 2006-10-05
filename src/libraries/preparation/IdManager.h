@@ -30,6 +30,7 @@ public:
     //@{
     unsigned long GetNextId();
     void Reset();
+    void Lock( unsigned long id );
     //@}
 
 private:

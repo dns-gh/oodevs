@@ -229,15 +229,15 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow::Open
+// Name: MainWindow::New
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-void MainWindow::Open()
+void MainWindow::New()
 {
     std::string current;
     while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
     {
-        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Open scipio.xml" );
+        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Choose scipio.xml" );
         if( filename.isEmpty() )
             return;
         current = filename;
@@ -247,6 +247,16 @@ void MainWindow::Open()
     Load( current );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MainWindow::Open
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void MainWindow::Open()
+{
+    New();
+    if( !scipioXml_.empty() )
+        model_.Load( scipioXml_ ); // $$$$ SBO 2006-10-05: should be a different file
+}
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::Load

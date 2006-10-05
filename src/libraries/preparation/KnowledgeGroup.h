@@ -18,6 +18,11 @@ namespace kernel
     class Controller;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 class IdManager;
 
 // =============================================================================
@@ -34,6 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              KnowledgeGroup( kernel::Controller& controller, const kernel::Team_ABC& team, IdManager& idManager );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, const kernel::Team_ABC& team, IdManager& idManager );
     virtual ~KnowledgeGroup();
     //@}
 

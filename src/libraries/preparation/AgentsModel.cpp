@@ -17,8 +17,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/AutomatComposition.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentsModel constructor
@@ -196,4 +198,24 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 void AgentsModel::NotifyDeleted( const Agent_ABC& agent )
 {
     Resolver< Agent_ABC >::Remove( agent.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateAgent
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateAgent( xml::xistream& xis, kernel::Formation_ABC& parent )
+{
+    Agent_ABC* agent = agentFactory_.Create( xis, parent );
+    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateAgent
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateAgent( xml::xistream& xis, kernel::Agent_ABC& parent )
+{
+    Agent_ABC* agent = agentFactory_.Create( xis, parent );
+    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
 }

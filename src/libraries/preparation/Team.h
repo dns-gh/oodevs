@@ -23,6 +23,7 @@ namespace kernel
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 class KnowledgeGroupFactory_ABC;
@@ -44,6 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager );
+             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager );
     virtual ~Team();
     //@}
 
@@ -56,6 +58,7 @@ public:
     //! @name Operations
     //@{
     void CreateKnowledgeGroup();
+    void CreateKnowledgeGroup( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}

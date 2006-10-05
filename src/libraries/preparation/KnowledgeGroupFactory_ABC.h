@@ -16,6 +16,11 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
     @brief  KnowledgeGroupFactory_ABC
@@ -35,6 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team ) = 0;
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team ) = 0;
     //@}
 };
 

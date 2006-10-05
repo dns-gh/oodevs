@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Formation_ABC* Create( kernel::Team_ABC& parent, const kernel::HierarchyLevel_ABC& level );
-    virtual kernel::Formation_ABC* Create( kernel::Formation_ABC& parent, const kernel::HierarchyLevel_ABC& level );
+    virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level );
+    virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent, const FormationLevels& levels );
     //@}
 
 private:

@@ -9,13 +9,14 @@
 
 #include "preparation_pch.h"
 #include "Formation.h"
+#include "FormationLevels.h"
+#include "IdManager.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "xeumeuleu/xml.h"
-#include "IdManager.h"
 
 using namespace kernel;
 using namespace xml;
@@ -28,8 +29,26 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
     : controller_( controller )
     , id_( idManager.GetNextId() )
     , name_( "" )
-    , level_( level )
+    , level_( &level )
 {
+    RegisterSelf( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
+    : controller_( controller )
+    , name_( "" )
+{
+    std::string level, name;
+    xis >> attribute( "id", (int&)id_ )
+        >> attribute( "level", level )
+        >> attribute( "name", name );
+    level_ = levels.Resolve( level.c_str() );
+    name_  = name.c_str();
+    idManager.Lock( id_ );
     RegisterSelf( *this );
 }
 
@@ -67,7 +86,7 @@ void Formation::DoUpdate( const kernel::InstanciationComplete& )
 // -----------------------------------------------------------------------------
 QString Formation::GetName() const
 {
-    return level_.GetName();
+    return level_->GetName();
 }
     
 // -----------------------------------------------------------------------------
@@ -85,7 +104,7 @@ unsigned long Formation::GetId() const
 // -----------------------------------------------------------------------------
 const HierarchyLevel_ABC& Formation::GetLevel() const
 {
-    return level_;
+    return *level_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,5 +115,5 @@ void Formation::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )
-        << attribute( "level", level_.GetName().ascii() );
+        << attribute( "level", level_->GetName().ascii() );
 }

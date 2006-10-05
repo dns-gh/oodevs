@@ -21,6 +21,13 @@ namespace kernel
     class Controller;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
+class KnowledgeGroupsModel;
+
 // =============================================================================
 /** @class  KnowledgeGroupHierarchy
     @brief  KnowledgeGroupHierarchy
@@ -38,6 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit KnowledgeGroupHierarchy( kernel::Controller& controller );
+             KnowledgeGroupHierarchy( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupsModel& model );
     virtual ~KnowledgeGroupHierarchy();
     //@}
 

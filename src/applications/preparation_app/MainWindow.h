@@ -70,6 +70,7 @@ public:
 public slots:
     //! @name Slots
     //@{
+    void New();
     void Open();
     void Close();
     void Save();

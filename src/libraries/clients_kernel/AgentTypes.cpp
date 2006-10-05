@@ -75,6 +75,7 @@ void AgentTypes::Purge()
     Resolver< AgentType >::DeleteAll();
     Resolver< AgentType, QString >::Clear();
     Resolver< AutomatType >::DeleteAll();
+    Resolver< AutomatType, QString >::DeleteAll();
     Resolver< ComponentType >::DeleteAll();
     Resolver< ComponentType, QString >::Clear();
     Resolver< DecisionalModel, QString >::DeleteAll();
@@ -233,7 +234,8 @@ void AgentTypes::ReadAutomats( const std::string& automats )
 void AgentTypes::ReadAutomatType( xml::xistream& xis )
 {
     AutomatType* type = new AutomatType( xis, *this, *this, *symbolFactory_ );
-    Resolver< AutomatType >::Register( type->GetId(), *type );
+    Resolver< AutomatType >         ::Register( type->GetId(), *type );
+    Resolver< AutomatType, QString >::Register( type->GetName(), *type );
 }
 
 // -----------------------------------------------------------------------------

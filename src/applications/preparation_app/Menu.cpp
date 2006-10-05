@@ -43,28 +43,26 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog 
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    int itemId = menu->insertItem( MAKE_ICON( open ), tr( "&Ouvrir scipio.xml..." ), parent(), SLOT( Open() ) );
-    menu->setAccel( CTRL + Key_O, itemId );
-    menu->insertItem( tr( "Fermer" ), parent(), SLOT( Close() ) );
+    menu->insertItem( tr( "&New..." ), parent(), SLOT( New() ), CTRL + Key_N );
+    menu->insertItem( MAKE_ICON( open ), tr( "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
+    menu->insertItem( tr( "Close" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
-    itemId = menu->insertItem( MAKE_ICON( save ), tr( "&Sauvegarder" ), parent(), SLOT( Save() ) );
-    menu->setAccel( CTRL + Key_S, itemId );
+    menu->insertItem( MAKE_ICON( save ), tr( "&Save" ), parent(), SLOT( Save() ), CTRL + Key_S );
     menu->insertSeparator();
-    menu->insertItem( tr( "&Quitter" ), qApp, SLOT( quit() ), CTRL + Key_Q );
-    itemId = insertItem( tr( "&Fichier" ), menu );
-    setAccel( ALT + Key_F, itemId );
+    menu->insertItem( tr( "&Quit" ), qApp, SLOT( quit() ), CTRL + Key_Q );
+    insertItem( tr( "&File" ), menu, ALT + Key_F );
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
 
-    AddSubMenu( subMenu, tr( "Liens logistiques" )              , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
-    AddSubMenu( subMenu, tr( "Liens logistiques manquant" )     , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
-    menu->insertItem( tr( "Logistique..." ), subMenu );
+    AddSubMenu( subMenu, tr( "Logistic links" )        , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
+    AddSubMenu( subMenu, tr( "Missing logistic links" ), MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
+    menu->insertItem( tr( "Logistic..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu( subMenu, tr( "Petits textes" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
-    AddSubMenu( subMenu, tr( "Grands textes" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
-    AddSubMenu( subMenu, tr( "Lignes tactiques" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
+    AddSubMenu( subMenu, tr( "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
+    AddSubMenu( subMenu, tr( "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
+    AddSubMenu( subMenu, tr( "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
 
     subMenu->insertSeparator();
 
@@ -77,14 +75,13 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog 
     gridMenu->AddItem( tr( "2.5km"  ),  2.5f );
     gridMenu->AddItem( tr( "5km"  ),  5.0f );
     gridMenu->AddItem( tr( "10km" ), 10.0f );
-    subMenu->insertItem( tr( "Grille" ), gridMenu );
+    subMenu->insertItem( tr( "Grid" ), gridMenu );
 
     menu->insertItem( tr( "Terrain..." ), subMenu );
     menu->insertSeparator();
 
-    menu->insertItem( tr( "&Préférences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
-    itemId = insertItem( tr( "Affi&chage" ), menu );
-    setAccel( ALT + Key_C, itemId );
+    menu->insertItem( tr( "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
+    insertItem( tr( "&Display" ), menu, ALT + Key_D );
 
 //    menu = new QPopupMenu( this );
 //    menu->insertItem( tr( "A propos" ), new AboutDialog( this, factory ), SLOT( exec() ) );

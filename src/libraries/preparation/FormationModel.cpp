@@ -11,10 +11,14 @@
 #include "FormationModel.h"
 #include "FormationFactory_ABC.h"
 #include "FormationLevels.h"
+#include "AgentsModel.h"
+#include "Model.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: FormationModel constructor
@@ -38,33 +42,33 @@ FormationModel::~FormationModel()
     Purge();
     controllers_.Remove( *this );
 }
+    
+// -----------------------------------------------------------------------------
+// Name: FormationModel::Create
+// Created: SBO 2006-09-22
+// -----------------------------------------------------------------------------
+void FormationModel::Create( kernel::Entity_ABC& parent, unsigned int levelId )
+{
+    const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
+    if( !level )
+        return;
+    Formation_ABC* formation = factory_.Create( parent, *level );
+    Register( formation->GetId(), *formation );
+}
 
 // -----------------------------------------------------------------------------
 // Name: FormationModel::Create
-// Created: SBO 2006-09-22
+// Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void FormationModel::Create( kernel::Team_ABC& parent, unsigned int levelId )
+void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model )
 {
-    const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
-    if( !level )
-        return;
-    Formation_ABC* formation = factory_.Create( parent, *level );
+    Formation_ABC* formation = factory_.Create( xis, parent, levels_ );
     Register( formation->GetId(), *formation );
+    xis >> list( "formation", *this        , &FormationModel::Create, *(Entity_ABC*)formation, model );
+    void (AgentsModel::*pFunc)( xml::xistream&, Formation_ABC&) = &AgentsModel::CreateAgent;
+    xis >> list( "automat"  , model.agents_, pFunc, *formation );
 }
-    
-// -----------------------------------------------------------------------------
-// Name: FormationModel::Create
-// Created: SBO 2006-09-22
-// -----------------------------------------------------------------------------
-void FormationModel::Create( kernel::Formation_ABC& parent, unsigned int levelId )
-{
-    const HierarchyLevel_ABC* level = levels_.Resolve( levelId );
-    if( !level )
-        return;
-    Formation_ABC* formation = factory_.Create( parent, *level );
-    Register( formation->GetId(), *formation );
-}
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationModel::Purge
 // Created: SBO 2006-09-19

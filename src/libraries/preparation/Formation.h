@@ -20,7 +20,13 @@ namespace kernel
     class InstanciationComplete;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 class IdManager;
+class FormationLevels;
 
 // =============================================================================
 /** @class  Formation
@@ -38,6 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Formation( kernel::Controller& controller, const kernel::HierarchyLevel_ABC& level, IdManager& idManager );
+             Formation( xml::xistream& xis, kernel::Controller& controller, const FormationLevels& levels, IdManager& idManager );
     virtual ~Formation();
     //@}
 
@@ -67,7 +74,7 @@ private:
     kernel::Controller& controller_;
     unsigned long id_;
     QString name_;
-    const kernel::HierarchyLevel_ABC& level_;
+    const kernel::HierarchyLevel_ABC* level_;
     //@}
 };
 

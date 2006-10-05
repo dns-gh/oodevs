@@ -46,3 +46,13 @@ void IdManager::Reset()
 {
     currentId_ = 1;
 }
+
+// -----------------------------------------------------------------------------
+// Name: IdManager::Lock
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void IdManager::Lock( unsigned long id )
+{
+    if( id > currentId_ )
+        currentId_ = id;
+}

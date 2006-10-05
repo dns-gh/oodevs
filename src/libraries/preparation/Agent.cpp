@@ -12,6 +12,7 @@
 #include "KnowledgeGroupHierarchy.h"
 #include "CommunicationHierarchies.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DataDictionary.h"
@@ -56,6 +57,50 @@ Agent::Agent( const Agent_ABC& parent, const AgentType& type, Controller& contro
     , type_( &type )
     , aggregated_( false )
 {
+    RegisterSelf( *this );
+    CreateDictionary();
+    controller_.Create( *(Agent_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
+    : controller_( controller )
+    , automat_( 0 )
+    , aggregated_( false )
+{
+    std::string name, type;
+    xis >> attribute( "id", (int&)id_ )
+        >> attribute( "name", name )
+        >> attribute( "type", type );
+    name_ = name.c_str();
+    automatType_ = &agentTypes.Resolver< AutomatType, QString >::Get( type.c_str() );
+    type_ = automatType_->GetTypePC();
+    idManager.Lock( id_ );
+    RegisterSelf( *this );
+    CreateDictionary();
+    controller_.Create( *(Agent_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent constructor
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+Agent::Agent( xistream& xis, const Agent_ABC& parent, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
+    : controller_( controller )
+    , automat_( &parent )
+    , automatType_( 0 )
+    , aggregated_( false )
+{
+    std::string name, type;
+    xis >> attribute( "id", (int&)id_ )
+        >> attribute( "name", name )
+        >> attribute( "type", type );
+    name_ = name.c_str();
+    type_ = &agentTypes.Resolver< AgentType, QString >::Get( type.c_str() );
+    idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary();
     controller_.Create( *(Agent_ABC*)this );
