@@ -13,6 +13,7 @@
 #include "AgentFactory_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -42,20 +43,39 @@ AgentsModel::~AgentsModel()
 void AgentsModel::Purge()
 {
     Resolver< Agent_ABC >::DeleteAll();
+    Resolver< Automat_ABC >::DeleteAll();
     Resolver< Population_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAgent
-// Created: AGE 2006-02-10
+// Name: AgentsModel::CreateAutomat
+// Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg )
+void AgentsModel::CreateAutomat( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    if( !Resolver< Agent_ABC >::Find( asnMsg.oid_automate ) )
+    if( !Resolver< Automat_ABC >::Find( asnMsg.oid_automate ) )
     {
-        Agent_ABC* pAgent = agentFactory_.Create( asnMsg );
-        Resolver< Agent_ABC >::Register( asnMsg.oid_automate, *pAgent );
+        Automat_ABC* pAgent = agentFactory_.Create( asnMsg );
+        Resolver< Automat_ABC >::Register( asnMsg.oid_automate, *pAgent );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::GetAutomat
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC& AgentsModel::GetAutomat( unsigned long id )
+{
+    return Resolver< Automat_ABC >::Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::FindAutomat
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
+{
+    return Resolver< Automat_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------

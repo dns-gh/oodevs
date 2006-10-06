@@ -17,6 +17,8 @@
 #include "clients_kernel/AgentType.h"
 #include "statusicons.h"
 #include "Tools.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "AutomatDecisions.h"
 
 using namespace kernel;
 
@@ -27,7 +29,6 @@ using namespace kernel;
 Decisions::Decisions( Controller& controller, const Agent_ABC& agent )
     : controller_( controller )
     , agent_( agent )
-    , bEmbraye_( false )
     , lastOrderId_( unsigned( -1 ) )
     , current_( 0 )
 {
@@ -44,14 +45,13 @@ Decisions::~Decisions()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Decisions::DoUpdate
-// Created: AGE 2006-03-14
+// Name: Decisions::IsEmbraye
+// Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void Decisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+bool Decisions::IsEmbraye() const
 {
-    if( message.m.etat_automatePresent )
-        bEmbraye_ = ( message.etat_automate == EnumAutomateState::embraye );
-    controller_.Update( *this );
+    // $$$$ AGE 2006-10-06: 
+    return agent_.GetAutomat().Get< AutomatDecisions >().IsEmbraye();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,15 +77,6 @@ void Decisions::DoUpdate( const ASN1T_MsgPionOrderAck& message )
         current_ = 0;
         controller_.Update( *this );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Decisions::IsEmbraye
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-bool Decisions::IsEmbraye() const
-{
-    return bEmbraye_ || agent_.GetSuperior() && agent_.GetSuperior()->Get< Decisions >().bEmbraye_;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,11 +121,12 @@ const Mission* Decisions::GetCurrentMission() const
 // Name: Decisions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
-{
-    if( bEmbraye_ && viewport.IsInside( where ) )
-        tools.DrawIcon( xpm_cadenas, where, 150.f );
-}
+// $$$$ AGE 2006-10-06: move to AutomatDecisions
+//void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+//{
+//    if( bEmbraye_ && viewport.IsInside( where ) )
+//        tools.DrawIcon( xpm_cadenas, where, 150.f );
+//}
 
 // -----------------------------------------------------------------------------
 // Name: Decisions::DisplayInTooltip

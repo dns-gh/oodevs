@@ -12,7 +12,7 @@
 #include "moc_ChangeLogisticLinksDialog.cpp"
 #include "gaming/ASN_Messages.h"
 #include "gaming/LogisticLinks.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 
@@ -44,26 +44,26 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     color->setMaximumWidth( 10 );
     QLabel* label = new QLabel( tr( "TC2" ), grid );
     label->setMaximumWidth( 150 );
-    tc2Combo_ = new ValuedComboBox< const Agent_ABC* >( grid );
+    tc2Combo_ = new ValuedComboBox< const Automat_ABC* >( grid );
     tc2Combo_->setMinimumWidth( 200 );
 
     color = new QLabel( grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 128, 0, 0 ) );
     label = new QLabel( tr( "Superieur maintenance" ), grid );
-    maintenanceCombo_ = new ValuedComboBox< const Agent_ABC* >( grid );
+    maintenanceCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
 
     color = new QLabel( "", grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 255, 164, 200 ) );
     label = new QLabel( tr( "Superieur santé" ), grid );
-    medicalCombo_ = new ValuedComboBox< const Agent_ABC* >( grid );
+    medicalCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
 
     color = new QLabel( "  ", grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 255, 150, 10 ) );
     label = new QLabel( tr( "Superieur ravitaillement" ), grid );
-    supplyCombo_ = new ValuedComboBox< const Agent_ABC* >( grid );
+    supplyCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
    
     QHBox* box = new QHBox( this );
     layout->addWidget( box );
@@ -100,21 +100,22 @@ void ChangeLogisticLinksDialog::Show()
 {
     if( !selected_ )
         return;
-    const Agent_ABC& agent = *selected_;
+    const Automat_ABC& agent = *selected_;
 
     // $$$$ AGE 2006-08-24: display aussi ?
     const LogisticLinks* log = static_cast< const LogisticLinks* >( agent.Retrieve< LogisticLinks_ABC >() );
-    const AutomatType* type = agent.GetAutomatType();
-    if( !log || !type )
+    if( !log )
         return;
+    const AutomatType& type = agent.GetType();
+    
     tc2Combo_->SetCurrentItem( log->GetTC2() );
     maintenanceCombo_->SetCurrentItem( log->GetMaintenance() );
     medicalCombo_->SetCurrentItem( log->GetMedical() );
     supplyCombo_->SetCurrentItem( log->GetSupply() );
 
-    maintenanceCombo_->setEnabled( type->IsTC2() || type->IsLogisticMaintenance() );
-    medicalCombo_->setEnabled( type->IsTC2() || type->IsLogisticMedical() );
-    supplyCombo_->setEnabled( type->IsTC2() || type->IsLogisticSupply() );
+    maintenanceCombo_->setEnabled( type.IsTC2() || type.IsLogisticMaintenance() );
+    medicalCombo_->setEnabled( type.IsTC2() || type.IsLogisticMedical() );
+    supplyCombo_->setEnabled( type.IsTC2() || type.IsLogisticSupply() );
     show();
 }
 
@@ -122,18 +123,16 @@ void ChangeLogisticLinksDialog::Show()
 // Name: ChangeLogisticLinksDialog::NotifyCreated
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::NotifyCreated( const Agent_ABC& agent )
+void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 {
-    const AutomatType* type = agent.GetAutomatType();
-    if( !type )
-        return;
-    if( type->IsTC2() )
+    const AutomatType& type = agent.GetType();
+    if( type.IsTC2() )
         tc2Combo_->AddItem( agent.GetName(), &agent );
-    if( type->IsLogisticMaintenance() )
+    if( type.IsLogisticMaintenance() )
         maintenanceCombo_->AddItem( agent.GetName(), &agent );
-    if( type->IsLogisticMedical() )
+    if( type.IsLogisticMedical() )
         medicalCombo_->AddItem( agent.GetName(), &agent );
-    if( type->IsLogisticSupply() )
+    if( type.IsLogisticSupply() )
         supplyCombo_->AddItem( agent.GetName(), &agent );
 }
 
@@ -141,28 +140,26 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Agent_ABC& agent )
 // Name: ChangeLogisticLinksDialog::NotifyDeleted
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::NotifyDeleted( const Agent_ABC& agent )
+void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 {
-    const AutomatType* type = agent.GetAutomatType();
-    if( !type )
-        return;
-    if( type->IsTC2() )
+    const AutomatType& type = agent.GetType();
+    if( type.IsTC2() )
         tc2Combo_->RemoveItem( &agent );
-    if( type->IsLogisticMaintenance() )
+    if( type.IsLogisticMaintenance() )
         maintenanceCombo_->RemoveItem( &agent );
-    if( type->IsLogisticMedical() )
+    if( type.IsLogisticMedical() )
         medicalCombo_->RemoveItem( &agent );
-    if( type->IsLogisticSupply() )
+    if( type.IsLogisticSupply() )
         supplyCombo_->RemoveItem( &agent );    
 }
 
 namespace
 {
-    unsigned int SetId( ValuedComboBox< const Agent_ABC* >& combo, unsigned int& id )
+    unsigned int SetId( ValuedComboBox< const Automat_ABC* >& combo, unsigned int& id )
     {
         if( combo.isEnabled() )
         {
-            const Agent_ABC* agent = combo.GetValue();
+            const Automat_ABC* agent = combo.GetValue();
             id = agent ? agent->GetId() : 0;
         }
         return combo.isEnabled();
@@ -203,10 +200,9 @@ void ChangeLogisticLinksDialog::Reject()
 // Name: ChangeLogisticLinksDialog::NotifyContextMenu
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-void ChangeLogisticLinksDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void ChangeLogisticLinksDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    const AutomatType* type = agent.GetAutomatType();
-    if( !type || !agent.Retrieve< LogisticLinks_ABC >() )
+    if( !agent.Retrieve< LogisticLinks_ABC >() )
         return;
     selected_ = &agent;
     menu.InsertItem( "Commande", tr( "Changer les liens logistiques" ), this, SLOT( Show() ) );

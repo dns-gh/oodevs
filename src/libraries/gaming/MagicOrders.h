@@ -38,8 +38,6 @@ public:
 
     //! @name Operations
     //@{
-    bool CanSurrender() const;
-    bool CanMagicMove() const;
     bool CanRetrieveTransporters() const;
     //@}
 

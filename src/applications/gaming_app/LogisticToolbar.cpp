@@ -66,9 +66,9 @@ LogisticToolbar::~LogisticToolbar()
 // Name: LogisticToolbar::NotifyCreated
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticToolbar::NotifyCreated( const Agent_ABC& agent )
+void LogisticToolbar::NotifyCreated( const Automat_ABC& agent )
 {
-    if( agent.GetAutomatType() && std::find( automats_.begin(), automats_.end(), &agent ) == automats_.end() )
+    if( std::find( automats_.begin(), automats_.end(), &agent ) == automats_.end() )
         automats_.push_back( &agent );
 }
  
@@ -76,7 +76,7 @@ void LogisticToolbar::NotifyCreated( const Agent_ABC& agent )
 // Name: LogisticToolbar::NotifyDeleted
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticToolbar::NotifyDeleted( const Agent_ABC& agent )
+void LogisticToolbar::NotifyDeleted( const Automat_ABC& agent )
 {
     IT_Agents it = std::find( automats_.begin(), automats_.end(), &agent );
     if( it != automats_.end() )

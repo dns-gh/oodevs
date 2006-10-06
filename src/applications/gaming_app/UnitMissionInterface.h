@@ -15,7 +15,6 @@
 namespace kernel
 {
     class Mission;
-    class Agent_ABC;
     class ObjectTypes;
 }
 
@@ -30,7 +29,7 @@ class UnitMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMissionInterface( QWidget* parent, kernel::Agent_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             UnitMissionInterface( QWidget* parent, kernel::Entity_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~UnitMissionInterface();
     //@}
 
@@ -63,7 +62,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    kernel::Agent_ABC& agent_;
+    kernel::Entity_ABC& agent_;
     uint nMissionId_;
     ASN_MsgPionOrder* pASNMsgOrder_;
     //@}

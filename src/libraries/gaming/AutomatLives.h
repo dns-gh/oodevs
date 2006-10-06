@@ -7,58 +7,56 @@
 //
 // *****************************************************************************
 
-#ifndef __Troops_h_
-#define __Troops_h_
+#ifndef __AutomatLives_h_
+#define __AutomatLives_h_
 
-#include "ASN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
-#include "Humans.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
-    class Controller;
+    class Entity_ABC;
 }
 
 // =============================================================================
-/** @class  Troops
-    @brief  Troops
+/** @class  AutomatLives
+    @brief  AutomatLives
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-10-06
 // =============================================================================
-class Troops : public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+class AutomatLives : public kernel::Extension_ABC
+                   , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Troops( kernel::Controller& controller );
-    virtual ~Troops();
+    explicit AutomatLives( const kernel::Entity_ABC& automat );
+    virtual ~AutomatLives();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    Troops( const Troops& );            //!< Copy constructor
-    Troops& operator=( const Troops& ); //!< Assignement operator
+    AutomatLives( const AutomatLives& );            //!< Copy constructor
+    AutomatLives& operator=( const AutomatLives& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    float GetLife() const;
     //@}
 
-public: // $$$$ AGE 2006-04-28: 
+private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    Humans humans_[kernel::eTroopHealthStateNbrStates];
+    const kernel::Entity_ABC& automat_;
     //@}
 };
 
-#endif // __Troops_h_
+#endif // __AutomatLives_h_

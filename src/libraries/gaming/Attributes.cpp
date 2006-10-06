@@ -82,9 +82,6 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.posture_pourcentagePresent )
         nPostureCompletionPourcentage_ = message.posture_pourcentage;
 
-    if( message.m.etat_automatePresent )
-        bEmbraye_ = ( message.etat_automate == EnumAutomateState::embraye );
-
     if( message.m.mortPresent ) 
         bDead_ = message.mort;
 

@@ -31,7 +31,7 @@ class Equipment;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Equipments : public kernel::Extension_ABC
-                 , public kernel::Updatable_ABC< ASN1T_MsgUnitDotations >
+                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                  , public kernel::Resolver< Equipment >
 {
 
@@ -51,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     void AddToDictionary( const Equipment& equipment );
     //@}
 

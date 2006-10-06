@@ -13,7 +13,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DataDictionary.h"
 #include "Tools.h"
@@ -24,7 +24,7 @@ using namespace kernel;
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, const AutomatType& type, DataDictionary& dictionary )
+LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const AutomatType& type, DataDictionary& dictionary )
     : controller_( controller )
     , resolver_( resolver )
     , type_( type )
@@ -52,7 +52,7 @@ LogisticLinks::~LogisticLinks()
 // Name: LogisticLinks::GetTC2
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent_ABC* LogisticLinks::GetTC2() const
+Automat_ABC* LogisticLinks::GetTC2() const
 {
     return Resolve( tc2_, idTc2_ );
 }
@@ -61,7 +61,7 @@ Agent_ABC* LogisticLinks::GetTC2() const
 // Name: LogisticLinks::GetMaintenance
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent_ABC* LogisticLinks::GetMaintenance() const
+Automat_ABC* LogisticLinks::GetMaintenance() const
 {
     return Resolve( maintenanceSuperior_, idMaintenance_);
 }
@@ -70,7 +70,7 @@ Agent_ABC* LogisticLinks::GetMaintenance() const
 // Name: LogisticLinks::GetMedical
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent_ABC* LogisticLinks::GetMedical() const
+Automat_ABC* LogisticLinks::GetMedical() const
 {
     return Resolve( medicalSuperior_, idMedical_ );
 }
@@ -79,7 +79,7 @@ Agent_ABC* LogisticLinks::GetMedical() const
 // Name: LogisticLinks::GetSupply
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent_ABC* LogisticLinks::GetSupply() const
+Automat_ABC* LogisticLinks::GetSupply() const
 {
     return Resolve( supplySuperior_, idSupply_ );
 }
@@ -88,7 +88,7 @@ Agent_ABC* LogisticLinks::GetSupply() const
 // Name: LogisticLinks::Resolve
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-Agent_ABC* LogisticLinks::Resolve( Agent_ABC*& agent, unsigned long id ) const
+Automat_ABC* LogisticLinks::Resolve( Automat_ABC*& agent, unsigned long id ) const
 {
     if( ! agent )
         agent = resolver_.Find( id );
@@ -142,9 +142,9 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message 
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Logistique", "Liens logistiques" ) )
-                .Display( tools::translate( "Logistique", "TC2:" ),                     GetTC2() )
-                .Display( tools::translate( "Logistique", "Supérieur maintenance:" ),   GetMaintenance() )
-                .Display( tools::translate( "Logistique", "Supérieur santé:" ),         GetMedical() )
+                .Display( tools::translate( "Logistique", "TC2:" ),                      GetTC2() )
+                .Display( tools::translate( "Logistique", "Supérieur maintenance:" ),    GetMaintenance() )
+                .Display( tools::translate( "Logistique", "Supérieur santé:" ),          GetMedical() )
                 .Display( tools::translate( "Logistique", "Supérieur ravitaillement:" ), GetSupply() );
 }
 
@@ -152,7 +152,7 @@ void LogisticLinks::Display( Displayer_ABC& displayer ) const
 // Name: LogisticLinks::DrawLink
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLinks::DrawLink( const geometry::Point2f& where, Agent_ABC* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
+void LogisticLinks::DrawLink( const geometry::Point2f& where, Automat_ABC* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
 {
     if( agent && link )
         tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );

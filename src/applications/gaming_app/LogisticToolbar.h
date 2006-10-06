@@ -15,7 +15,7 @@
 namespace kernel
 {
     class Controllers;
-    class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace gui
@@ -31,7 +31,7 @@ namespace gui
 // =============================================================================
 class LogisticToolbar : public QToolBar
                       , public kernel::Observer_ABC
-                      , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+                      , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;
 
@@ -58,15 +58,15 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Agent_ABC& );
-    virtual void NotifyDeleted( const kernel::Agent_ABC& );
+    virtual void NotifyCreated( const kernel::Automat_ABC& );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< const kernel::Agent_ABC* > T_Agents;
-    typedef T_Agents::iterator         IT_Agents;
-    typedef T_Agents::const_iterator  CIT_Agents;
+    typedef std::vector< const kernel::Automat_ABC* > T_Agents;
+    typedef T_Agents::iterator                       IT_Agents;
+    typedef T_Agents::const_iterator                CIT_Agents;
     //@}
 
     //! @name Member data

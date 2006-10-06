@@ -11,18 +11,12 @@
 #define __Agent_ABC_h_
 
 #include "Entity_ABC.h"
-#include "Extension_ABC.h"
-#include "Updatable_ABC.h"
-#include "Resolver.h"
-#include "Drawable_ABC.h"
-#include "Aggregatable_ABC.h"
 
 namespace kernel
 {
     class KnowledgeGroup_ABC;
-    class Team_ABC;
     class AgentType;
-    class AutomatType;
+    class Automat_ABC;
 
 // =============================================================================
 /** @class  Agent_ABC
@@ -42,10 +36,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const Agent_ABC* GetSuperior() const = 0;
-    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
+    virtual const Automat_ABC& GetAutomat() const = 0;
 
-    virtual const AutomatType* GetAutomatType() const = 0;
+    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
     virtual const AgentType& GetType() const = 0;
     //@}
 

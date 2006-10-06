@@ -12,6 +12,7 @@
 #include "GlTools_ABC.h"
 #include "Iterator.h"
 #include "AutomatComposition.h"
+#include "AgentType.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -116,8 +117,7 @@ const DecisionalModel& AutomatType::GetDecisionalModel() const
 // -----------------------------------------------------------------------------
 void AutomatType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) ) // $$$$ AGE 2006-04-21: maybe add a tools.WhereIsInside or something ?
-        tools.DrawApp6Symbol( symbol_, where );
+    pcType_->DrawAggregated( where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Agent_ABC;
+    class Automat_ABC;
     class Entity_ABC;
     class Population_ABC;
 }
@@ -35,19 +36,23 @@ namespace DIN
 // Created: AGE 2006-02-10
 // =============================================================================
 class AgentsModel : public kernel::Resolver< kernel::Agent_ABC >
+                  , public kernel::Resolver< kernel::Automat_ABC >
                   , public kernel::Resolver< kernel::Population_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsModel( AgentFactory_ABC& agentFactory );
+    explicit AgentsModel( AgentFactory_ABC& agentFactory );
     virtual ~AgentsModel();
     //@}
 
     //! @name Operations
     //@{
-    void CreateAgent( const ASN1T_MsgAutomateCreation& asnMsg );
+    void CreateAutomat( const ASN1T_MsgAutomateCreation& asnMsg );
+    kernel::Automat_ABC& GetAutomat( unsigned long id );
+    kernel::Automat_ABC* FindAutomat( unsigned long id );
+
     void CreateAgent( const ASN1T_MsgPionCreation& asnMsg );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;

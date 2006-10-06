@@ -7,61 +7,53 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "Lives.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel_pch.h"
+#include "Automat_ABC.h"
+#include "ActionController.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Lives constructor
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-Lives::Lives()
-    : life_( 1.f )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lives destructor
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-Lives::~Lives()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lives::Draw
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-void Lives::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
-{
-    if( ! viewport.IsInside( where ) )
-        return;
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( 1, 1, 1, 0.4f ); // $$$$ AGE 2006-10-06: jaune pour le pc embrayé ?
-    tools.DrawLife( where, life_ );
-    glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lives::DoUpdate
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-void Lives::DoUpdate( const ASN1T_MsgUnitAttributes& message )
-{
-    if( message.m.etat_operationnel_brutPresent )
-        life_ = message.etat_operationnel_brut * 0.01f;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Lives::GetLife
+// Name: Automat_ABC constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-float Lives::GetLife() const
+Automat_ABC::Automat_ABC()
 {
-    return life_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat_ABC destructor
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+Automat_ABC::~Automat_ABC()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat_ABC::Select
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+void Automat_ABC::Select( ActionController& controller ) const
+{
+    controller.Select( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat_ABC::ContextMenu
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+void Automat_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
+{
+    controller.ContextMenu( *this, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat_ABC::Activate
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+void Automat_ABC::Activate( ActionController& controller ) const
+{
+    controller.Activate( *this );
 }

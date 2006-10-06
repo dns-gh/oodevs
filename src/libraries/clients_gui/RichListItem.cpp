@@ -305,9 +305,10 @@ void RichListItem::setText( int column, const QString& text )
     while( (int)columns_.size() <= column )
         columns_.push_back( RichText( "", CreateRichText( "" ) ) );
     RichText& richText = columns_[ column ];
-    delete richText.rich;
     richText.base = text;
-    richText.rich = CreateRichText( text );
+    QSimpleRichText* rich = CreateRichText( text );
+    std::swap( rich, richText.rich );
+    delete rich;
     widthChanged();
     listView()->triggerUpdate();
 }

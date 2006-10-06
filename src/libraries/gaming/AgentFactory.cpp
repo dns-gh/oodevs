@@ -13,6 +13,7 @@
 #include "Model.h"
 #include "clients_kernel/AgentTypes.h"
 #include "Agent.h"
+#include "Automat.h"
 #include "Population.h"
 
 #include "Attributes.h"
@@ -65,6 +66,9 @@
 #include "StaticModel.h"
 #include "RcEntityResolver.h"
 #include "AgentHierarchies.h"
+#include "AutomatLives.h"
+#include "AutomatPositions.h"
+#include "AutomatHierarchies.h"
 
 using namespace kernel;
 
@@ -97,23 +101,17 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
+Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
+    Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_, model_.knowledgeGroups_ );
     DataDictionary& dico = result->Get< DataDictionary >();
-    result->Attach( *new Lives( *result ) );
-    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
-    result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, *result->GetAutomatType(), dico ) );
-    result->Attach( *new Decisions( controllers_.controller_, *result ) );
+    result->Attach< CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_  ) );
+    result->Attach( *new AutomatLives( *result ) );
+    result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
-    result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
-    result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
-    result->Attach( *new MagicOrders( *result ) );
+    result->Attach< Positions >( *new AutomatPositions( *result ) );
 
-    AttachExtensions( *result );
     result->Update( asnMsg );
-    result->Update( InstanciationComplete() );
     return result;
 }
 
@@ -124,7 +122,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
-    result->Attach( *new Lives( *result ) );
+    result->Attach( *new Lives() );
     result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
@@ -132,6 +130,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
     AttachExtensions( *result );
+    result->Attach< CommunicationHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, model_.agents_ ) );
     result->Update( asnMsg );
     result->Update( InstanciationComplete() );
     return result;
@@ -177,6 +176,5 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
-    agent.Attach< CommunicationHierarchies >( *new AgentHierarchies( controllers_.controller_, agent, model_.agents_, model_.knowledgeGroups_ ) );
 }
 

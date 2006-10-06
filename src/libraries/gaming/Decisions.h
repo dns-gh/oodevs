@@ -33,10 +33,8 @@ namespace kernel
 // Created: AGE 2006-03-14
 // =============================================================================
 class Decisions : public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                 , public kernel::Updatable_ABC< ASN1T_MsgPionOrder >
                 , public kernel::Updatable_ABC< ASN1T_MsgPionOrderAck >
-                , public kernel::Drawable_ABC
 {
 
 public:
@@ -48,15 +46,14 @@ public:
 
     //! @name Operations
     //@{
+    bool IsEmbraye() const;
+
     void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
     const kernel::Agent_ABC& GetAgent() const;
-    bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
     virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
     virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const;
     const kernel::Mission* GetCurrentMission() const;
-
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -68,7 +65,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
     virtual void DoUpdate( const ASN1T_MsgPionOrderAck& message );
 
@@ -80,8 +76,6 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Agent_ABC& agent_;
-    bool bEmbraye_;
-
     unsigned long lastOrderId_;
     const kernel::Mission* current_;
     const kernel::Mission* next_;

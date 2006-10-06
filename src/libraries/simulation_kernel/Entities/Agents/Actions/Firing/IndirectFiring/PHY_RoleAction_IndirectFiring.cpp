@@ -103,7 +103,7 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
     }
 
     // 
-    PHY_ComposantePion* pFirer               = 0;
+    const PHY_ComposantePion* pFirer         = 0;
     PHY_Weapon*         pFirerWeapon         = 0;
     while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) && !pEffect->IsInterventionTypeFired() ) // ready weapons
     {

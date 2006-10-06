@@ -9,8 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentHierarchies.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 
 using namespace kernel;
@@ -20,13 +19,11 @@ using namespace kernel;
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 AgentHierarchies::AgentHierarchies( Controller& controller, Entity_ABC& holder, 
-                                    const Resolver_ABC< Agent_ABC >& agentResolver, 
-                                    const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
+                                    const Resolver_ABC< Automat_ABC >& automatResolver )
     : EntityHierarchies< CommunicationHierarchies >( controller )
     , controller_   ( controller )
     , holder_       ( holder )
-    , agentResolver_( agentResolver ) 
-    , gtiaResolver_ ( gtiaResolver )
+    , automatResolver_( automatResolver ) 
     , superior_     ( 0 )
 {
     // NOTHING
@@ -62,16 +59,6 @@ const kernel::Entity_ABC& AgentHierarchies::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentHierarchies::ChangeSuperior
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-template< typename Resolver >
-void AgentHierarchies::ChangeSuperior( unsigned int id, const Resolver& resolver )
-{
-    UpdateSuperior( resolver.Get( id ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentHierarchies::UpdateSuperior
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
@@ -90,18 +77,9 @@ void AgentHierarchies::UpdateSuperior( Entity_ABC& superior )
 // Name: AgentHierarchies::DoUpdate
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void AgentHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
-{
-    ChangeSuperior( message.oid_groupe_connaissance, gtiaResolver_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentHierarchies::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
 void AgentHierarchies::DoUpdate( const ASN1T_MsgPionCreation& message )
 {
-    ChangeSuperior( message.oid_automate, agentResolver_ );
+    UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +89,7 @@ void AgentHierarchies::DoUpdate( const ASN1T_MsgPionCreation& message )
 void AgentHierarchies::DoUpdate( const ASN1T_MsgChangeAutomateAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error )
-        ChangeSuperior( message.oid_automate, agentResolver_ );
+        UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
 }   
 
 // -----------------------------------------------------------------------------
@@ -120,15 +98,5 @@ void AgentHierarchies::DoUpdate( const ASN1T_MsgChangeAutomateAck& message )
 // -----------------------------------------------------------------------------
 void AgentHierarchies::DoUpdate( const ASN1T_MsgChangeAutomate& message )
 {
-    ChangeSuperior( message.oid_automate, agentResolver_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentHierarchies::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void AgentHierarchies::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
-{
-    if( message.error_code == EnumObjectErrorCode::no_error ) 
-        ChangeSuperior( message.oid_groupe_connaissance, gtiaResolver_ );
+    UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
 }

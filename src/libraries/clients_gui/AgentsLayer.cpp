@@ -10,10 +10,10 @@
 #include "clients_gui_pch.h"
 #include "AgentsLayer.h"
 #include "moc_AgentsLayer.cpp"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -42,7 +42,7 @@ AgentsLayer::~AgentsLayer()
 // Name: AgentsLayer::Aggregate
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentsLayer::Aggregate( const Agent_ABC& automat )
+void AgentsLayer::Aggregate( const Automat_ABC& automat )
 {
     Toggle( automat, true );
 }
@@ -51,7 +51,7 @@ void AgentsLayer::Aggregate( const Agent_ABC& automat )
 // Name: AgentsLayer::Disaggregate
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentsLayer::Disaggregate( const Agent_ABC& automat )
+void AgentsLayer::Disaggregate( const Automat_ABC& automat )
 {
     Toggle( automat, false );
 }
@@ -60,11 +60,9 @@ void AgentsLayer::Disaggregate( const Agent_ABC& automat )
 // Name: AgentsLayer::Toggle
 // Created: AGE 2006-06-30
 // -----------------------------------------------------------------------------
-void AgentsLayer::Toggle( const Agent_ABC& automat, bool aggregate )
+void AgentsLayer::Toggle( const Automat_ABC& automat, bool aggregate )
 {
-    if( automat.GetSuperior() )
-        return;
-    Iterator< const Entity_ABC& > children = automat.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    Iterator< const Entity_ABC& > children = automat.Get< CommunicationHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Entity_ABC& child = children.NextElement();
@@ -77,20 +75,23 @@ void AgentsLayer::Toggle( const Agent_ABC& automat, bool aggregate )
     automat.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
 
     if( aggregate )
+    {
+        AddEntity( automat ); // $$$$ AGE 2006-10-06: careful may have side effects
         aggregated_.insert( &automat );
+    }
     else
+    {
+        RemoveEntity( automat );
         aggregated_.erase( &automat );
+    }
 }   
 
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::NotifyContextMenu
 // Created: AGE 2006-04-11
 // -----------------------------------------------------------------------------
-void AgentsLayer::NotifyContextMenu( const Agent_ABC& agent, ::ContextMenu& menu )
+void AgentsLayer::NotifyContextMenu( const Automat_ABC& agent, ::ContextMenu& menu )
 {
-    if( agent.GetSuperior() )
-        return;
-
     selected_ = &agent;
     if( aggregated_.find( &agent ) == aggregated_.end() )
         menu.InsertItem( "Interface", tr( "Aggreger" ), this, SLOT( Aggregate() ) );
@@ -124,15 +125,14 @@ void AgentsLayer::Disaggregate()
 // -----------------------------------------------------------------------------
 void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
 {
-    const Agent_ABC& agent = static_cast< const Agent_ABC& >( entity );
-    const Agent_ABC* superior = agent.GetSuperior();
+    const Entity_ABC* superior = entity.Get< CommunicationHierarchies >().GetSuperior();
     if( shift && superior )
     {
         superior->Select( controllers_.actions_ );
         superior->Activate( controllers_.actions_ );
     }
     else
-        agent.Select( controllers_.actions_ );
+        entity.Select( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------

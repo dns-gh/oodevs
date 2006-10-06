@@ -39,7 +39,7 @@ Borrowings::~Borrowings()
 // Name: Borrowings::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Borrowings::DoUpdate( const ASN1T_MsgUnitDotations& message )
+void Borrowings::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( ! message.m.equipements_pretesPresent )
         return;

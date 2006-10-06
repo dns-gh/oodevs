@@ -7,38 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentPositions_h_
-#define __AgentPositions_h_
+#ifndef __AutomatPositions_h_
+#define __AutomatPositions_h_
 
-#include "ASN_Types.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
-    class Agent_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
-/** @class  AgentPositions
-    @brief  AgentPositions. Nothing sexual.
+/** @class  AutomatPositions
+    @brief  AutomatPositions
 */
-// Created: AGE 2006-03-16
+// Created: AGE 2006-10-06
 // =============================================================================
-class AgentPositions : public kernel::Positions
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public kernel::Drawable_ABC
-                     , public kernel::Aggregatable_ABC
+class AutomatPositions : public kernel::Positions
+                       , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentPositions( const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter );
-    virtual ~AgentPositions();
+    explicit AutomatPositions( const kernel::Entity_ABC& automat );
+    virtual ~AutomatPositions();
     //@}
 
     //! @name Operations
@@ -52,28 +46,21 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    AgentPositions( const AgentPositions& );            //!< Copy constructor
-    AgentPositions& operator=( const AgentPositions& ); //!< Assignement operator
+    AutomatPositions( const AutomatPositions& );            //!< Copy constructor
+    AutomatPositions& operator=( const AutomatPositions& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
-    virtual void Aggregate( const bool& );
     //@}
 
 private:
-    friend class AutomatPositions; // $$$$ AGE 2006-10-06: 
     //! @name Member data
     //@{
-    const kernel::Agent_ABC& agent_;
-    const kernel::CoordinateConverter_ABC& converter_;
-    geometry::Point2f position_;
-    float height_;
-    bool aggregated_;
+    const kernel::Entity_ABC& automat_;
     //@}
 };
 
-#endif // __AgentPositions_h_
+#endif // __AutomatPositions_h_

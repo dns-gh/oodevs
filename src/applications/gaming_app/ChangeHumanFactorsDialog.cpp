@@ -100,10 +100,7 @@ void ChangeHumanFactorsDialog::Show()
     if( const HumanFactors_ABC* factors = selected_->Retrieve< HumanFactors_ABC >() )
     {
         factors->Display( *this );
-        if ( selected_->GetAutomatType() )
-            pAllUnitsCheckBox_->show();
-        else
-            pAllUnitsCheckBox_->hide();
+        pAllUnitsCheckBox_->show();
         show();
     }
 }

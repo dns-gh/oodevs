@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "CampPrototype.h"
 
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "gaming/ASN_Messages.h"
 
 using namespace kernel;

@@ -37,7 +37,7 @@ Troops::~Troops()
 // Name: Troops::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Troops::DoUpdate( const ASN1T_MsgUnitDotations& message )
+void Troops::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( ! message.m.dotation_eff_personnelPresent  )
         return;

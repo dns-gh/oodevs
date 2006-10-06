@@ -13,6 +13,11 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_gui/HierarchyListView.h"
 
+namespace kernel
+{
+    class Automat_ABC;
+}
+
 class Publisher_ABC;
 class AutomatDecisions;
 
@@ -44,7 +49,8 @@ private:
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target );
-    virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
+    virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Automat_ABC& target );
+    virtual bool Drop( const kernel::Automat_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
     //@}
 
 private:

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AutomatDecisions.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/Controller.h"
 #include "ASN_Messages.h"
@@ -23,10 +23,12 @@ using namespace kernel;
 // Name: AutomatDecisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Agent_ABC& agent )
+AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Automat_ABC& agent )
     : controller_( controller )
     , publisher_( publisher )
     , agent_( agent )
+    , model_( agent.GetType().GetDecisionalModel() )
+    , bEmbraye_( false )
     , lastOrderId_( unsigned( -1 ) )
     , current_( 0 )
     , next_( 0 )
@@ -47,7 +49,7 @@ AutomatDecisions::~AutomatDecisions()
 // Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateAttributes& message )
 {
     if( message.m.etat_automatePresent )
         bEmbraye_ = ( message.etat_automate == EnumAutomateState::embraye );
@@ -61,7 +63,7 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
     lastOrderId_ = message.order_id;
-    const Resolver_ABC< Mission >& resolver = GetAutomatDecisionalModel();
+    const Resolver_ABC< Mission >& resolver = model_;
     current_ = & resolver.Get( message.mission.t );
     controller_.Update( *this );
 }
@@ -85,7 +87,7 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrderAck& message )
 // -----------------------------------------------------------------------------
 Iterator< const Mission& > AutomatDecisions::GetMissions() const
 {
-    const Resolver_ABC< Mission >& resolver = GetAutomatDecisionalModel();
+    const Resolver_ABC< Mission >& resolver = model_;
     return resolver.CreateIterator();
 }
 
@@ -95,7 +97,7 @@ Iterator< const Mission& > AutomatDecisions::GetMissions() const
 // -----------------------------------------------------------------------------
 Iterator< const FragOrder& > AutomatDecisions::GetFragOrders() const
 {
-    const Resolver_ABC< FragOrder >& resolver = GetAutomatDecisionalModel();
+    const Resolver_ABC< FragOrder >& resolver = model_;
     return resolver.CreateIterator();
 }
 
@@ -112,7 +114,7 @@ const Mission* AutomatDecisions::GetCurrentMission() const
 // Name: AutomatDecisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Agent_ABC& AutomatDecisions::GetAgent() const
+const Automat_ABC& AutomatDecisions::GetAgent() const
 {
     return agent_;
 }
@@ -159,13 +161,3 @@ void AutomatDecisions::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Decisions", "Mission automate" ), current_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AutomatDecisions::GetAutomatDecisionalModel
-// Created: SBO 2006-08-03
-// -----------------------------------------------------------------------------
-const DecisionalModel& AutomatDecisions::GetAutomatDecisionalModel() const
-{
-    if( !agent_.GetAutomatType() )
-        throw std::runtime_error( "AutomatDecisions attached to an agent" );
-    return agent_.GetAutomatType()->GetDecisionalModel();
-}

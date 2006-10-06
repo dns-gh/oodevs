@@ -141,9 +141,9 @@ private:
 
     // Attributes
     void OnReceiveMsgUnitAttributes    ( const ASN1T_MsgUnitAttributes& asnMsg );
-    void OnReceiveMsgUnitDotations     ( const ASN1T_MsgUnitDotations&  asnMsg );
     void OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgUnitPathFind      ( const ASN1T_MsgUnitPathFind& asnMsg );
+    void OnReceiveMsgAutomateAttributes( const ASN1T_MsgAutomateAttributes& asnMsg );
 
     // Log maintenance
     void OnReceiveMsgLogMaintenanceTraitementEquipementCreation   ( const ASN1T_MsgLogMaintenanceTraitementEquipementCreation& asnMsg );

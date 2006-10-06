@@ -16,6 +16,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -24,50 +25,22 @@ using namespace kernel;
 // Name: Agent constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Agent::Agent( const ASN1T_MsgAutomateCreation& message, Controller& controller, 
-              const Resolver_ABC< AutomatType >& resolver,
-              const Resolver_ABC< Agent_ABC >& agentResolver, 
-              const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
-    : controller_( controller )
-    , agentResolver_( agentResolver )
-    , gtiaResolver_( gtiaResolver )
-    , id_( message.oid_automate )
-    , automatType_( & resolver.Get( message.type_automate ) )
-    , type_( automatType_->GetTypePC() )
-    , superior_( 0 )
-    , gtia_( 0 )
-    , aggregated_( false )
-{
-    RegisterSelf( *this );
-    name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
-
-    CreateDictionary();
-    gtia_ = & gtiaResolver_.Get( message.oid_groupe_connaissance );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent constructor
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
 Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller, 
               const Resolver_ABC< AgentType >& resolver,
-              const Resolver_ABC< Agent_ABC >& agentResolver, 
+              const Resolver_ABC< Automat_ABC >& automatResolver, 
               const Resolver_ABC< KnowledgeGroup_ABC >& gtiaResolver )
     : controller_( controller )
-    , agentResolver_( agentResolver )
+    , automatResolver_( automatResolver )
     , gtiaResolver_( gtiaResolver )
     , id_( message.oid_pion )
-    , automatType_( 0 )
-    , type_( & resolver.Get( message.type_pion ) )
-    , superior_( 0 )
-    , gtia_( 0 )
-    , aggregated_( false )
+    , type_( resolver.Get( message.type_pion ) )
+    , automat_( & automatResolver_.Get( message.oid_automate ) )
+    , isPc_( id_ == automat_->GetId() )
 {
     RegisterSelf( *this );
     name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
 
     CreateDictionary();
-    superior_ = static_cast< Agent* >( &agentResolver_.Get( message.oid_automate ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,14 +49,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
 // -----------------------------------------------------------------------------
 Agent::~Agent()
 {
-    ChangeKnowledgeGroup( ( kernel::KnowledgeGroup_ABC*)0 );
-    ChangeSuperior( 0 );
-    Iterator< const Entity_ABC& > it = Get< CommunicationHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        const Agent& agent = static_cast< const Agent& >( it.NextElement() );
-        const_cast< Agent& >( agent ).superior_ = 0;
-    }
+    ChangeAutomat( 0 );
     controller_.Delete( *(Agent_ABC*)this );
 }
 
@@ -94,16 +60,8 @@ Agent::~Agent()
 void Agent::DoUpdate( const InstanciationComplete& )
 {
     controller_.Create( *(Agent_ABC*)this );
-    if( gtia_ )
-        gtia_->AddAutomat( id_, *this );
-    Iterator< const Entity_ABC& > it = Get< CommunicationHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        const Agent& agent = static_cast< const Agent& >( it.NextElement() );
-        const_cast< Agent& >( agent ).gtia_ = gtia_; // $$$$ SBO 2006-10-03: use KnowledgeGroupExtension
-    }
-    if( superior_ )
-        superior_->AddChild( *this );
+    if( automat_ )
+        automat_->AddAgent( id_, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +89,7 @@ unsigned long Agent::GetId() const
 void Agent::DoUpdate( const ASN1T_MsgChangeAutomateAck& message )
 {
     if( message.error_code == EnumObjectErrorCode::no_error )
-        ChangeSuperior( message.oid_automate );
+        ChangeAutomat( message.oid_automate );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,61 +98,20 @@ void Agent::DoUpdate( const ASN1T_MsgChangeAutomateAck& message )
 // -----------------------------------------------------------------------------
 void Agent::DoUpdate( const ASN1T_MsgChangeAutomate& message )
 {
-    ChangeSuperior( message.oid_automate );
+    ChangeAutomat( message.oid_automate );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::DoUpdate
+// Name: Agent::ChangeAutomat
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
+void Agent::ChangeAutomat( unsigned long id )
 {
-    if( message.error_code == EnumObjectErrorCode::no_error ) 
-    {
-        ChangeKnowledgeGroup( message.oid_groupe_connaissance );
-        controller_.Update( *(Agent_ABC*)this );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ChangeKnowledgeGroup
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::ChangeKnowledgeGroup( unsigned long id )
-{
-    ChangeKnowledgeGroup( gtiaResolver_.Find( id ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ChangeKnowledgeGroup
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::ChangeKnowledgeGroup( KnowledgeGroup_ABC* gtia )
-{
-    if( gtia_ )
-        gtia_->RemoveAutomat( id_ );
-    gtia_ = gtia;
-    if( gtia_ )
-        gtia_->AddAutomat( id_, *this );
-    Iterator< const Entity_ABC& > it = Get< CommunicationHierarchies >().CreateSubordinateIterator();
-    while( it.HasMoreElements() )
-    {
-        const Agent& agent = static_cast< const Agent& >( it.NextElement() );
-        const_cast< Agent& >( agent ).gtia_ = gtia_; // $$$$ SBO 2006-10-03: use KnowledgeGroupExtension
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ChangeSuperior
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void Agent::ChangeSuperior( unsigned long id )
-{
-    if( superior_ )
-        superior_->RemoveChild( *this );
-    superior_ = static_cast< Agent* >( agentResolver_.Find( id ) );
-    if( superior_ )
-        superior_->AddChild( *this );
+    if( automat_ )
+        automat_->RemoveAgent( id_ );
+    automat_ = automatResolver_.Find( id );
+    if( automat_ )
+        automat_->AddAgent( id_, *this );
     controller_.Update( *(Agent_ABC*)this );
 }
 
@@ -228,20 +145,16 @@ void Agent::RemoveChild( Agent_ABC& child )
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC& Agent::GetKnowledgeGroup() const
 {
-    if( gtia_ )
-        return *gtia_;
-    if( superior_ )
-        return superior_->GetKnowledgeGroup();
-    throw std::runtime_error( "I have no knowledge group" );
+    return automat_->GetKnowledgeGroup();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetSuperior
+// Name: Agent::GetAutomat
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Agent_ABC* Agent::GetSuperior() const
+const Automat_ABC& Agent::GetAutomat() const
 {
-    return superior_;
+    return *automat_;
 }
 
 // -----------------------------------------------------------------------------
@@ -251,32 +164,7 @@ const Agent_ABC* Agent::GetSuperior() const
 void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsInside( where ) )
-    {
-        if( automatType_ && ! aggregated_ )
-            automatType_->Draw( where, viewport, tools );
-        if( type_ && ! aggregated_ )
-            type_->Draw( where, viewport, tools );
-        else if( type_ && aggregated_ )
-            type_->DrawAggregated( where, viewport, tools );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Aggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void Agent::Aggregate( const bool& bDenis )
-{
-    aggregated_ = bDenis;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::GetAutomatType
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-const AutomatType* Agent::GetAutomatType() const
-{
-    return automatType_;
+        type_.Draw( where, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +173,7 @@ const AutomatType* Agent::GetAutomatType() const
 // -----------------------------------------------------------------------------
 const AgentType& Agent::GetType() const
 {
-    return *type_;
+    return type_;
 }
 
 // -----------------------------------------------------------------------------
@@ -298,5 +186,5 @@ void Agent::CreateDictionary()
     Attach( dictionary );
     dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
-    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), superior_ );
+    dictionary.Register( tools::translate( "Agent", "Hiérarchie/Supérieur" ), automat_ );
 }

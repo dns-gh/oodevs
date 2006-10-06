@@ -46,28 +46,6 @@ void MagicOrders::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MagicOrders::CanSurrender
-// Created: AGE 2006-04-28
-// -----------------------------------------------------------------------------
-bool MagicOrders::CanSurrender() const
-{
-    return agent_.GetAutomatType();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MagicOrders::CanMagicMove
-// Created: AGE 2006-04-28
-// -----------------------------------------------------------------------------
-bool MagicOrders::CanMagicMove() const
-{
-    if( agent_.GetAutomatType() )
-        return true;
-    if( agent_.GetSuperior() && agent_.GetSuperior()->GetAutomatType() )
-        return !agent_.GetSuperior()->Retrieve< AutomatDecisions >()->IsEmbraye();
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MagicOrders::CanRetrieveTransporters
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------

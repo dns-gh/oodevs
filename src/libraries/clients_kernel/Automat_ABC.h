@@ -7,44 +7,41 @@
 //
 // *****************************************************************************
 
-#ifndef __KnowledgeGroup_ABC_h_
-#define __KnowledgeGroup_ABC_h_
+#ifndef __Automat_ABC_h_
+#define __Automat_ABC_h_
 
 #include "Entity_ABC.h"
-#include "Resolver.h"
 
 namespace kernel
 {
-    class Automat_ABC;
-    class Team_ABC;
+    class AutomatType;
+    class Agent_ABC;
+    class KnowledgeGroup_ABC;
 
 // =============================================================================
-/** @class  KnowledgeGroup_ABC
-    @brief  Knowledge group base class
+/** @class  Automat_ABC
+    @brief  Automat_ABC
 */
-// Created: SBO 2006-08-09
+// Created: AGE 2006-10-06
 // =============================================================================
-class KnowledgeGroup_ABC : public Entity_ABC
-                         , public Resolver< Automat_ABC > // $$$$ AGE 2006-10-06: degager....
+class Automat_ABC : public Entity_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup_ABC();
-    virtual ~KnowledgeGroup_ABC();
+             Automat_ABC();
+    virtual ~Automat_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual const Team_ABC& GetTeam() const = 0;
+    virtual const AutomatType& GetType() const = 0;
+    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
 
-    virtual void AddAutomat( unsigned long id, Automat_ABC& automat ) = 0;
-    virtual void RemoveAutomat( unsigned long id ) = 0;
-    //@}
+    virtual void AddAgent( unsigned long id, Agent_ABC& agent ) = 0;
+    virtual void RemoveAgent( unsigned long id ) = 0;
 
-    //! @name Operations
-    //@{
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
@@ -53,4 +50,4 @@ public:
 
 }
 
-#endif // __KnowledgeGroup_ABC_h_
+#endif // __Automat_ABC_h_

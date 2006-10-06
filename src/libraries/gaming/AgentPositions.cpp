@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 
 using namespace geometry;
@@ -47,21 +48,7 @@ Point2f AgentPositions::GetPosition() const
 {
     if( ! aggregated_ )
         return position_;
-    if( agent_.GetSuperior() )
-        return agent_.GetSuperior()->Get< Positions >().GetPosition();
-
-    Point2f aggregatedPosition = position_;
-    unsigned count = 1;
-    Iterator< const Entity_ABC& > children = agent_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
-    {
-        const Positions& childPositions = children.NextElement().Get< Positions >();
-        // $$$$ AGE 2006-04-11: Crado
-        const Point2f childPosition = ((const AgentPositions&)( childPositions )).position_;
-        aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
-        ++count;
-    }
-    return Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count );
+    return agent_.GetAutomat().Get< Positions >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +57,9 @@ Point2f AgentPositions::GetPosition() const
 // -----------------------------------------------------------------------------
 float AgentPositions::GetHeight() const
 {
-    return height_; // $$$$ AGE 2006-04-18: aggregated
+    if( ! aggregated_ )
+        return height_;
+    return agent_.GetAutomat().Get< Positions >().GetHeight();
 }
 
 // -----------------------------------------------------------------------------

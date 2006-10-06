@@ -32,7 +32,7 @@ class Dotation;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Dotations : public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< ASN1T_MsgUnitDotations >
+                , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                 , public kernel::Resolver< Dotation >
 {
 
@@ -57,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
 public:

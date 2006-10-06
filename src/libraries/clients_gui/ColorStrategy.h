@@ -20,6 +20,7 @@ namespace kernel
     class Entity_ABC;
     class Team_ABC;
     class Agent_ABC;
+    class Automat_ABC;
     class Object_ABC;
     class Population_ABC;
     class Controllers;
@@ -117,7 +118,6 @@ private:
 
     const kernel::Object_ABC*     selectedObject_;
     const kernel::Agent_ABC*      selectedAgent_;
-    const kernel::Agent_ABC*      selectedSuperior_;
     const kernel::Population_ABC* selectedPopulation_;
     const TacticalLine_ABC* selectedLine_;
 

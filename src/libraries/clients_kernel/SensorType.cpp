@@ -211,8 +211,8 @@ float SensorType::ComputeEnvironementFactor( bool inForest, bool inTown, bool in
 // -----------------------------------------------------------------------------
 float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance  ) const
 {
-    assert( rCurrentNRJ <= rDetectionDist_ );
-    assert( rCurrentNRJ > 0 );
+//    assert( rCurrentNRJ <= rDetectionDist_ );
+//    assert( rCurrentNRJ > 0 );
 
 //    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
 //    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];

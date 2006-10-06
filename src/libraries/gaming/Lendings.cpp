@@ -39,7 +39,7 @@ Lendings::~Lendings()
 // Name: Lendings::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Lendings::DoUpdate( const ASN1T_MsgUnitDotations& message )
+void Lendings::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( ! message.m.equipements_pretesPresent )
         return;

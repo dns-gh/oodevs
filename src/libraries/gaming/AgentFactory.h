@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg );
-    virtual kernel::Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg );
+    virtual kernel::Automat_ABC*    Create( const ASN1T_MsgAutomateCreation& asnMsg );
+    virtual kernel::Agent_ABC*      Create( const ASN1T_MsgPionCreation& asnMsg );
     virtual kernel::Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg );
     //@}
 

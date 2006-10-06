@@ -37,7 +37,6 @@ ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     , tools_             ( tools )
     , selectedObject_    ( 0 )
     , selectedAgent_     ( 0 )
-    , selectedSuperior_  ( 0 )
     , selectedPopulation_( 0 )
     , selectedLine_      ( 0 )
 {
@@ -61,7 +60,7 @@ ColorStrategy::~ColorStrategy()
 // -----------------------------------------------------------------------------
 void ColorStrategy::BeforeSelection()
 {
-    selectedObject_ = 0; selectedAgent_ = 0; selectedSuperior_ = 0; 
+    selectedObject_ = 0; selectedAgent_ = 0;
     selectedPopulation_ = 0; selectedLine_ = 0;
 }
 
@@ -71,8 +70,7 @@ void ColorStrategy::BeforeSelection()
 // -----------------------------------------------------------------------------
 void ColorStrategy::Select( const Agent_ABC& element )
 {
-    selectedAgent_    = &element;
-    selectedSuperior_ = element.GetSuperior();
+    selectedAgent_   = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,8 +130,7 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
         tools_.Select( true );
         color = SelectedColor( color );
     }
-    else if( ( selectedAgent_    && selectedAgent_    == agent.GetSuperior() )
-          || ( selectedSuperior_ && selectedSuperior_ == agent.GetSuperior() ) )
+    else if( selectedAgent_ && & selectedAgent_->GetAutomat() == & agent.GetAutomat() )
     {
         tools_.Select( false );
         color = SuperiorSelectedColor( color );

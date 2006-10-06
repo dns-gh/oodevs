@@ -13,6 +13,8 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/FragOrder.h"
 
@@ -20,7 +22,6 @@
 #include "gaming/AutomatDecisions.h"
 #include "gaming/StaticModel.h"
 #include "gaming/PopulationDecisions.h"
-#include "clients_kernel/Population_ABC.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
@@ -46,8 +47,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , converter_        ( static_.coordinateConverter_ )
     , tools_            ( tools )
     , pMissionInterface_( 0 )
-    , selected_         ( 0 )
-    , selectedPopulation_( 0 )
+    , selectedEntity_   ( controllers )
 {
     knowledgeConverter_ = new AgentKnowledgeConverter( controllers );
     objectKnowledgeConverter_ = new ObjectKnowledgeConverter( controllers );
@@ -74,15 +74,21 @@ MissionPanel::~MissionPanel()
 // -----------------------------------------------------------------------------
 void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    selected_ = &agent;
-
+    selectedEntity_ = &agent;
     if( const Decisions* decisions = agent.Retrieve< Decisions >() )
         AddAgentMissions( *decisions, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionPanel::NotifyContextMenu
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
+{
+    selectedEntity_ = &agent;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
-        AddAutomatMissions( *decisions, menu );
-    
-    if( agent.Retrieve< AutomatDecisions >() )
     {
+        AddAutomatMissions( *decisions, menu );
         if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
             menu.InsertItem( "Commande", tr( "Embrayer" ), this, SLOT( Engage() ) );
         else
@@ -149,8 +155,9 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
 void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& menu )
 {
     const int id = AddMissions( decisions.GetMissions(), menu, tr( "Missions Pion" ), SLOT( ActivateAgentMission( int ) ) );
-    menu.SetItemEnabled( id, ! decisions.IsEmbraye() );
-    if( ! decisions.IsEmbraye() )
+    const bool isEmbraye = decisions.IsEmbraye();
+    menu.SetItemEnabled( id, ! isEmbraye );
+    if( ! isEmbraye )
         AddFragOrders( decisions, menu, tr( "Ordres de conduite" ), SLOT( ActivateFragOrder( int ) ) );
 }
 
@@ -175,7 +182,7 @@ void MissionPanel::ActivateAgentMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new UnitMissionInterface( this, const_cast< Agent_ABC& >( *selected_ ), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -192,8 +199,7 @@ void MissionPanel::ActivateAutomatMission( int id )
 {
     hide();
     delete pMissionInterface_;
-    // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new AutomateMissionInterface( this, const_cast< Agent_ABC& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new AutomateMissionInterface( this, *selectedEntity_.ConstCast(), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -208,7 +214,7 @@ void MissionPanel::ActivateFragOrder( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new FragmentaryOrderInterface( this, const_cast< Agent_ABC& >( *selected_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
     if( pMissionInterface_->IsEmpty() )
         pMissionInterface_->OnOk();
     else
@@ -225,7 +231,7 @@ void MissionPanel::ActivateFragOrder( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& menu )
 {
-    selectedPopulation_ = &agent;
+    selectedEntity_ = &agent;
     if( const PopulationDecisions* decisions = agent.Retrieve< PopulationDecisions >() )
     {
         QPopupMenu& missions = *new QPopupMenu( menu );
@@ -249,7 +255,7 @@ void MissionPanel::ActivatePopulationMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Population_ABC& >( *selectedPopulation_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -290,9 +296,8 @@ void MissionPanel::Draw( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void MissionPanel::Engage()
 {
-    if( !selected_ || selected_->GetSuperior() )
-        return;
-    selected_->Retrieve< AutomatDecisions >()->Engage();
+    AutomatDecisions* decisions = selectedEntity_ ? selectedEntity_.ConstCast()->Retrieve< AutomatDecisions >() : 0;
+    decisions->Engage();
 }
 
 // -----------------------------------------------------------------------------
@@ -301,7 +306,6 @@ void MissionPanel::Engage()
 // -----------------------------------------------------------------------------
 void MissionPanel::Disengage()
 {
-    if( !selected_ || selected_->GetSuperior() )
-        return;
-    selected_->Retrieve< AutomatDecisions >()->Disengage();
+    AutomatDecisions* decisions = selectedEntity_ ? selectedEntity_.ConstCast()->Retrieve< AutomatDecisions >() : 0;
+    decisions->Disengage();
 }

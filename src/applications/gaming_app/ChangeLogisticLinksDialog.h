@@ -18,7 +18,7 @@
 namespace kernel
 {
     class Controllers;
-    class Agent_ABC;
+    class Automat_ABC;
 }
 
 class Publisher_ABC;
@@ -32,8 +32,8 @@ class Publisher_ABC;
 // =============================================================================
 class ChangeLogisticLinksDialog : public QDialog
                                 , public kernel::Observer_ABC
-                                , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                                , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+                                , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;
 
@@ -46,9 +46,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyCreated( const kernel::Agent_ABC& agent );
-    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyCreated( const kernel::Automat_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& agent );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -71,11 +71,11 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
-    gui::ValuedComboBox< const kernel::Agent_ABC* >* tc2Combo_;
-    gui::ValuedComboBox< const kernel::Agent_ABC* >* maintenanceCombo_;
-    gui::ValuedComboBox< const kernel::Agent_ABC* >* medicalCombo_;
-    gui::ValuedComboBox< const kernel::Agent_ABC* >* supplyCombo_;
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    gui::ValuedComboBox< const kernel::Automat_ABC* >* tc2Combo_;
+    gui::ValuedComboBox< const kernel::Automat_ABC* >* maintenanceCombo_;
+    gui::ValuedComboBox< const kernel::Automat_ABC* >* medicalCombo_;
+    gui::ValuedComboBox< const kernel::Automat_ABC* >* supplyCombo_;
+    kernel::SafePointer< kernel::Automat_ABC > selected_;
     //@}
 };
 

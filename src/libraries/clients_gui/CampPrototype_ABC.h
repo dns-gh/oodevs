@@ -20,7 +20,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Automat_ABC;
     class Controllers;
 }
 
@@ -35,8 +35,8 @@ namespace gui
 // =============================================================================
 class CampPrototype_ABC : public ObjectPrototypeAttributes_ABC
                         , public kernel::Observer_ABC
-                        , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                        , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;
 
@@ -71,17 +71,17 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Agent_ABC& agent );
-    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
-    virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
+    virtual void NotifyCreated( const kernel::Automat_ABC& automat );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
     //@}
 
 protected:
     //! @name Member Data
     //@{
     kernel::Controllers& controllers_;
-    ValuedComboBox< const kernel::Agent_ABC* >* tc2s_;
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    ValuedComboBox< const kernel::Automat_ABC* >* tc2s_;
+    kernel::SafePointer< kernel::Automat_ABC > selected_;
     //@}
 };
 

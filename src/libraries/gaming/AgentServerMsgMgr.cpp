@@ -38,6 +38,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TristateOption.h"
 
@@ -346,7 +347,7 @@ void AgentServerMsgMgr::OptionChanged( const std::string& name, const OptionVari
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCreation& message )
 {
-    GetModel().agents_.CreateAgent( message );
+    GetModel().agents_.CreateAutomat( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -682,14 +683,13 @@ void AgentServerMsgMgr::OnReceiveMsgUnitAttributes( const ASN1T_MsgUnitAttribute
     GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
 }
 
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgUnitDotations
-// Created: NLD 2003-03-06
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgUnitDotations( const ASN1T_MsgUnitDotations& message )
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomateAttributes
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomateAttributes( const ASN1T_MsgAutomateAttributes& message )
 {
-    GetModel().agents_.GetAgent( message.oid_pion ).Update( message );
+    GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -806,7 +806,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementEtat( const ASN1T_MsgLogRav
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementQuotas( const ASN1T_MsgLogRavitaillementQuotas& message )
 {
-    GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
+    GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1092,7 +1092,8 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrderAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( message, "AutomateOrderAck" );
+    if( CheckAcknowledge( message, "AutomateOrderAck" ) )
+        GetModel().agents_.GetAutomat( message.oid_unite_executante ).Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1211,7 +1212,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDip
 void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "ChangeGroupeConnaissanceAck" ) )
-        GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
+        GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1221,7 +1222,7 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
 void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck( const ASN1T_MsgChangeLiensLogistiquesAck& message, unsigned long )
 {
     if( CheckAcknowledge( message, "ChangeLiensLogistiquesAck" ) )
-        GetModel().agents_.GetAgent( message.oid_automate ).Update( message );
+        GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
 }
 
 // =============================================================================
@@ -1511,7 +1512,7 @@ void AgentServerMsgMgr::OnMsgPopulationUpdate( const ASN1T_MsgPopulationUpdate& 
 void AgentServerMsgMgr::OnMsgPopulationConcentrationCreation( const ASN1T_MsgPopulationConcentrationCreation& message )
 {
     GetModel().agents_.GetPopulation( message.oid_population ).Update( message );
-    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnMsgPopulationConcentrationDestruction
@@ -1658,8 +1659,8 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_unit_knowledge_destruction:           OnReceiveMsgUnitKnowledgeDestruction  ( *message.msg.u.msg_unit_knowledge_destruction          ); break;
 
         case T_MsgsInClient_msg_msg_unit_attributes:                      OnReceiveMsgUnitAttributes            ( *message.msg.u.msg_unit_attributes                     ); break;
-        case T_MsgsInClient_msg_msg_unit_dotations:                       OnReceiveMsgUnitDotations             ( *message.msg.u.msg_unit_dotations                      ); break;
         case T_MsgsInClient_msg_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.msg.u.msg_unit_pathfind                       ); break;
+        case T_MsgsInClient_msg_msg_automate_attributes:                  OnReceiveMsgAutomateAttributes        ( *message.msg.u.msg_automate_attributes                 ); break;              
 
         case T_MsgsInClient_msg_msg_start_pion_fire:                      OnReceiveMsgStartPionFire             ( *message.msg.u.msg_start_pion_fire                     ); break;
         case T_MsgsInClient_msg_msg_stop_pion_fire:                       OnReceiveMsgStopPionFire              ( *message.msg.u.msg_stop_pion_fire                      ); break;

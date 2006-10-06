@@ -16,11 +16,12 @@
 #include "gaming/LogisticLinks.h"
 #include "gaming/Model.h"
 #include "gaming/SupplyStates.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Iterator.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 
 using namespace kernel;
@@ -43,7 +44,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     QHBox* box = new QHBox( this );
     box->setMargin( 5 );
     new QLabel( tr( "Cible:" ), box );
-    targetCombo_ = new ValuedComboBox< const Agent_ABC* >( box );
+    targetCombo_ = new ValuedComboBox< const Automat_ABC* >( box );
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
 
@@ -87,10 +88,10 @@ LogisticSupplyChangeQuotasDialog::~LogisticSupplyChangeQuotasDialog()
 // Name: LogisticSupplyChangeQuotasDialog::NotifyContextMenu
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    const AutomatType* type = agent.GetAutomatType();
-    if( !type || !type->IsLogisticSupply() )
+    const AutomatType& type = agent.GetType();
+    if( !type.IsLogisticSupply() )
         return;
     selected_ = &agent;
     menu.InsertItem( "Commande", tr( "Affecter des quotas ravitaillement" ), this, SLOT( Show() ) );
@@ -106,10 +107,10 @@ void LogisticSupplyChangeQuotasDialog::Show()
         return;
 
     targetCombo_->Clear();
-    Iterator< const Agent_ABC& > it = model_.agents_.Resolver< Agent_ABC >::CreateIterator();
+    Iterator< const Automat_ABC& > it = model_.agents_.Resolver< Automat_ABC >::CreateIterator();
     while( it.HasMoreElements() )
     {
-        const Agent_ABC& agent = it.NextElement();
+        const Automat_ABC& agent = it.NextElement();
         // $$$$ AGE 2006-08-24: 
         const LogisticLinks* log = static_cast< const LogisticLinks* >( agent.Retrieve< LogisticLinks_ABC >() );
         if( log && log->GetSupply() == selected_ )
@@ -125,7 +126,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::Validate()
 {
-    const Agent_ABC* target = targetCombo_->GetValue();
+    const Automat_ABC* target = targetCombo_->GetValue();
     if( !selected_ || !target )
         return;
 
@@ -148,7 +149,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-            quota[i].ressource_id     = supplies_[ text ]->type_->GetId();
+            quota[i].ressource_id     = supplies_[ text ].type_->GetId();
             quota[i].quota_disponible = table_->text( i, 1 ).toInt();
         }
         message.GetAsnMsg().quotas.elem = quota;
@@ -169,33 +170,49 @@ void LogisticSupplyChangeQuotasDialog::Reject()
     hide();
 }
 
+// $$$$ AGE 2006-10-06: Factorisation avec le poussage de flux;
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog::OnSelectionChanged
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
 {
-    const Agent_ABC* agent = targetCombo_->GetValue();
-    const SupplyStates* states = agent ? agent->Retrieve< SupplyStates >() : 0;
-    if( !states )
-        return;
-
+    const Automat_ABC* agent = targetCombo_->GetValue();
+    // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
+    const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
+    Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    Iterator< const Dotation& > it = states->CreateIterator();
-    while( it.HasMoreElements() )
+    while( children.HasMoreElements() )
+        AddDotation( children.NextElement() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::AddDotation
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+void LogisticSupplyChangeQuotasDialog::AddDotation( const kernel::Entity_ABC& entity )
+{
+    const SupplyStates* states = entity.Retrieve< SupplyStates >();
+    if( states )
     {
-        const Dotation& dotation = it.NextElement();
-        const QString type = dotation.type_->GetCategory();
-        dotationTypes_.append( type );
-        supplies_[ type ] = 0;
-    }
-
-    for( std::vector< Dotation >::const_iterator it = states->quotas_.begin(); it != states->quotas_.end(); ++it )
-        supplies_[ it->type_->GetCategory() ] = &*it;
-
-    table_->setNumRows( 0 );
-    AddItem();
+        Iterator< const Dotation& > it = states->CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Dotation& dotation = it.NextElement();
+            const QString type = dotation.type_->GetCategory();
+            Dotation& supply = supplies_[ type ];
+            if( ! supply.type_ )
+            {
+                dotationTypes_.append( type );
+                supply.type_      = dotation.type_;
+            }
+            supply.quantity_ += dotation.quantity_;
+        }
+        table_->setNumRows( 0 );
+        AddItem();
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +221,7 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
 {
-    const Agent_ABC* agent = targetCombo_->GetValue();
+    const Automat_ABC* agent = targetCombo_->GetValue();
     if( !selected_ || !agent )
         return;
 
@@ -227,8 +244,8 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
         table_->setCurrentCell( row, 1 );
         if( ! table_->text( row, 0 ).isEmpty() )
         {
-            const Dotation* dotation = supplies_[ table_->text( row, 0 ) ];
-            table_->setText( row, 2, QString::number( dotation ? dotation->quantity_ : 0 ) );
+            const Dotation& dotation = supplies_[ table_->text( row, 0 ) ];
+            table_->setText( row, 2, QString::number( dotation.quantity_ ) );
             table_->adjustColumn( 0 );
             table_->adjustColumn( 1 );
             table_->adjustColumn( 2 );
@@ -251,7 +268,7 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::AddItem()
 {
-    const Agent_ABC* agent = targetCombo_->GetValue();
+    const Automat_ABC* agent = targetCombo_->GetValue();
     if( !selected_ || !agent )
         return;
     const unsigned int rows = table_->numRows() + 1;

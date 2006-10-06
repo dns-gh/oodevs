@@ -30,7 +30,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Borrowings : public kernel::Extension_ABC
-                 , public kernel::Updatable_ABC< ASN1T_MsgUnitDotations >
+                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
 {
 
 public:
@@ -52,7 +52,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitDotations& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 
 public:

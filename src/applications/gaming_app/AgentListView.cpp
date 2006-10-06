@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "AgentListView.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "gaming/AutomatDecisions.h"
@@ -67,29 +68,46 @@ void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target )
 {
-    const Agent_ABC*          agent   = dynamic_cast< const Agent_ABC* >         ( &item );
-    const Agent_ABC*          automat = dynamic_cast< const Agent_ABC* >         ( &target );
-    const KnowledgeGroup_ABC* group   = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
-    if( agent && automat )
-        return Drop(*agent, *automat );
-    if( agent && group )
-        return Drop(*agent, *group );
+    const Agent_ABC* agent   = dynamic_cast< const Agent_ABC* >  ( &item );
+    if( agent )
+    {
+        const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &target );
+        if( automat )
+            return Drop( *agent, *automat );
+        const Agent_ABC* targetAgent = dynamic_cast< const Agent_ABC* >( &target );
+        if( targetAgent )
+            return Drop( *agent, *targetAgent );
+        return false;
+    }
+
+    const Automat_ABC* automat      = dynamic_cast< const Automat_ABC* >       ( &item );
+    if( automat )
+    {
+        const KnowledgeGroup_ABC* group = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
+        return group && Drop( *automat, *group );
+    }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentListView::Drop
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+bool AgentListView::Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target )
+{
+    return Drop( item, target.GetAutomat() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC& item, const Agent_ABC& target )
+bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 {
-    if( item.GetSuperior() == 0 || item.GetSuperior() == &target )
+    if( & item.GetAutomat() == &target )
         return false;
 
     unsigned int superiorId = target.GetId();
-    if( target.GetSuperior() != 0 )
-        superiorId = target.GetSuperior()->GetId();
-
     ASN_MsgChangeAutomate asnMsg;
     asnMsg.GetAsnMsg().oid_pion = item.GetId();
     asnMsg.GetAsnMsg().oid_automate = superiorId;
@@ -101,11 +119,8 @@ bool AgentListView::Drop( const Agent_ABC& item, const Agent_ABC& target )
 // Name: AgentListView::Drop
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-bool AgentListView::Drop( const Agent_ABC& item, const KnowledgeGroup_ABC& target )
+bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& target )
 {
-    if( item.GetSuperior() != 0 )
-        return false;
-        
     ASN_MsgChangeGroupeConnaissance asnMsg;
     asnMsg.GetAsnMsg().oid_automate = item.GetId();
     asnMsg.GetAsnMsg().oid_camp  = target.GetTeam().GetId();

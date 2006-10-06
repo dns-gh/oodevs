@@ -12,7 +12,7 @@
 #include "OptionalParamFunctor_ABC.h"
 #include "gaming/ASN_Messages.h"
 #include "gaming/ASN_Types.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -23,7 +23,7 @@ using namespace gui;
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Agent_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
     : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectKnowledgeConverter, objectTypes )
     , publisher_( publisher )
     , agent_( agent )

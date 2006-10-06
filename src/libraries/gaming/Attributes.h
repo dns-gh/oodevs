@@ -85,7 +85,6 @@ private:
 
     bool     bDead_;
     bool     bNeutralized_;
-    bool     bEmbraye_;
 
     E_UnitPosture nOldPosture_;
     E_UnitPosture nCurrentPosture_;

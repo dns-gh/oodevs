@@ -15,8 +15,8 @@
 namespace kernel
 {
     class Mission;
-    class Agent_ABC;
     class ObjectTypes;
+    class Automat_ABC;
 }
 
 class ASN_MsgAutomateOrder;
@@ -30,7 +30,7 @@ class AutomateMissionInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateMissionInterface( QWidget* parent, kernel::Agent_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             AutomateMissionInterface( QWidget* parent, kernel::Entity_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
     virtual ~AutomateMissionInterface();
     //@}
 
@@ -63,7 +63,7 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-    kernel::Agent_ABC&                agent_;
+    kernel::Entity_ABC& agent_;
     uint                  nMissionId_;
     ASN_MsgAutomateOrder* pASNMsgOrder_;
     //@}

@@ -13,11 +13,13 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "gaming/Dotation.h"
 
 namespace kernel
 {
     class Controllers;
-    class Agent_ABC;
+    class Automat_ABC;
+    class Entity_ABC;
 }
 
 class Model;
@@ -32,7 +34,7 @@ class Publisher_ABC;
 // =============================================================================
 class LogisticSupplyChangeQuotasDialog : public QDialog
                                        , public kernel::Observer_ABC
-                                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                                       , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;
 
@@ -45,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -68,11 +70,12 @@ private:
     //! @name Helpers
     //@{
     void AddItem();
+    void AddDotation( const kernel::Entity_ABC& entity );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< QString, const Dotation* > T_Supplies;
+    typedef std::map< QString, Dotation > T_Supplies;
     //@}
 
 private:
@@ -81,9 +84,9 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const Model& model_;
-    gui::ValuedComboBox< const kernel::Agent_ABC* >* targetCombo_;
+    gui::ValuedComboBox< const kernel::Automat_ABC* >* targetCombo_;
     QTable* table_;
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Automat_ABC > selected_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
     //@}

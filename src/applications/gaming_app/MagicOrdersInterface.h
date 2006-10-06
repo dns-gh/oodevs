@@ -18,6 +18,7 @@
 
 namespace kernel
 {
+    class Entity_ABC;
     class Agent_ABC;
     class KnowledgeGroup_ABC;
     class Team_ABC;
@@ -88,8 +89,7 @@ private:
     void AddMagicMove( const kernel::Agent_ABC& agent, QPopupMenu* menu );
     void AddMagic( const QString& label, int id,           QPopupMenu* menu );
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
-    void ApplyOnHierarchy( const kernel::KnowledgeGroup_ABC& group, int id );
-    void ApplyOnHierarchy( const kernel::Team_ABC& team, int id );
+    void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
 
     virtual void VisitLines  ( const T_PointVector& ) {};

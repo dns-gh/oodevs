@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Automat_ABC;
     class Agent_ABC;
     class Population_ABC;
 }
@@ -36,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Agent_ABC* Create( const ASN1T_MsgAutomateCreation& asnMsg ) = 0;
-    virtual kernel::Agent_ABC* Create( const ASN1T_MsgPionCreation& asnMsg ) = 0;
+    virtual kernel::Automat_ABC*    Create( const ASN1T_MsgAutomateCreation& asnMsg ) = 0;
+    virtual kernel::Agent_ABC*      Create( const ASN1T_MsgPionCreation& asnMsg ) = 0;
     virtual kernel::Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg ) = 0;
     //@}
 

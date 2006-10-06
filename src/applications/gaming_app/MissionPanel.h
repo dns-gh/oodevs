@@ -13,11 +13,14 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/Iterator.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
     class Agent_ABC;
+    class Automat_ABC;
     class Population_ABC;
+    class Entity_ABC;
     class Controllers;
     class CoordinateConverter_ABC;
     class GlTools_ABC;
@@ -45,6 +48,7 @@ class Publisher_ABC;
 class MissionPanel : public QDockWindow
                    , public kernel::Observer_ABC
                    , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
         
 {
@@ -84,6 +88,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
     int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
@@ -106,8 +111,7 @@ private:
     AgentKnowledgeConverter_ABC* knowledgeConverter_;
     ObjectKnowledgeConverter_ABC* objectKnowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
-    const kernel::Agent_ABC* selected_;
-    const kernel::Population_ABC* selectedPopulation_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}
 };
 

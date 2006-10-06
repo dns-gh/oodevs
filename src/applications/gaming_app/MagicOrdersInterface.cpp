@@ -72,7 +72,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
         QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
 
         int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
-        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
+//        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() ); // $$$$ AGE 2006-10-06: 
         AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
         AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
         AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
@@ -80,8 +80,9 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
         AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
         AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
 
-        if( orders->CanSurrender() )
-            AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
+        // $$$$ AGE 2006-10-06: 
+//        if( orders->CanSurrender() )
+//            AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
 
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
@@ -222,20 +223,12 @@ void MagicOrdersInterface::Magic( int type )
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::ApplyOnHierarchy
-// Created: AGE 2006-07-04
+// Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::ApplyOnHierarchy( const KnowledgeGroup_ABC& group, int id )
+void MagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id )
 {
-    group.Resolver< Agent_ABC >::Apply( RecursiveMagicFunctor( publisher_, id ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MagicOrdersInterface::ApplyOnHierarchy
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void MagicOrdersInterface::ApplyOnHierarchy( const Team_ABC& team, int id )
-{
-    team.Resolver< KnowledgeGroup_ABC >::Apply( RecursiveMagicFunctor( publisher_, id ) );
+    RecursiveMagicFunctor functor( publisher_, id );
+    functor( entity );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,7 +17,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Automat_ABC;
     class Controller;
     class Mission;
     class FragOrder;
@@ -34,7 +34,7 @@ class Publisher_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class AutomatDecisions : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                       , public kernel::Updatable_ABC< ASN1T_MsgAutomateAttributes >
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrder >
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrderAck >
 {
@@ -42,7 +42,7 @@ class AutomatDecisions : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatDecisions( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::Agent_ABC& agent );
+             AutomatDecisions( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::Automat_ABC& agent );
     virtual ~AutomatDecisions();
     //@}
 
@@ -50,8 +50,9 @@ public:
     //@{
     void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
-    const kernel::Agent_ABC& GetAgent() const;
+    const kernel::Automat_ABC& GetAgent() const; // $$$$ AGE 2006-10-06: 
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
+
     virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
     virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const;
     const kernel::Mission* GetCurrentMission() const;
@@ -68,11 +69,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomateAttributes& message );
     virtual void DoUpdate( const ASN1T_MsgAutomateOrder& message );
     virtual void DoUpdate( const ASN1T_MsgAutomateOrderAck& message );
-
-    const kernel::DecisionalModel& GetAutomatDecisionalModel() const;
     //@}
 
 private:
@@ -80,7 +79,8 @@ private:
     //@{
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
-    const kernel::Agent_ABC& agent_;
+    const kernel::Automat_ABC& agent_;
+    const kernel::DecisionalModel& model_;
     bool bEmbraye_;
 
     unsigned long lastOrderId_;

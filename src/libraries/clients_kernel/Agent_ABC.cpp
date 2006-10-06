@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "Agent_ABC.h"
 #include "ActionController.h"
-#include "Controller.h"
 
 using namespace kernel;
 

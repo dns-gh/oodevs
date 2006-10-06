@@ -15,6 +15,11 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
+namespace kernel
+{
+    class Automat_ABC;
+}
+
 namespace gui
 {
 
@@ -26,7 +31,7 @@ namespace gui
 // =============================================================================
 class AgentsLayer : public QObject
                   , public EntityLayer< kernel::Agent_ABC >
-                  , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;
 
@@ -39,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    void Aggregate   ( const kernel::Agent_ABC& agent );
-    void Disaggregate( const kernel::Agent_ABC& agent );
+    void Aggregate   ( const kernel::Automat_ABC& agent );
+    void Disaggregate( const kernel::Automat_ABC& agent );
     //@}
 
 private slots:
@@ -59,21 +64,21 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const kernel::Agent_ABC&, kernel::ContextMenu& );
-    virtual void Select( const kernel::Entity_ABC&, bool );
-    virtual void DisplayTooltip( const kernel::Agent_ABC& entity, kernel::Displayer_ABC& displayer );
-    void Toggle( const kernel::Agent_ABC& automat, bool aggregate );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
+    virtual void Select           ( const kernel::Entity_ABC&, bool );
+    virtual void DisplayTooltip   ( const kernel::Agent_ABC& entity, kernel::Displayer_ABC& displayer );
+    void Toggle                   ( const kernel::Automat_ABC& automat, bool aggregate );
     //@}
 
     //! @name Types
     //@{
-    typedef std::set< const kernel::Agent_ABC* > T_Agents;
+    typedef std::set< const kernel::Automat_ABC* > T_Agents;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Automat_ABC > selected_;
     T_Agents aggregated_;
     //@}
 };

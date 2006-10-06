@@ -11,7 +11,7 @@
 #include "CampPrototype_ABC.h"
 #include "moc_CampPrototype_ABC.cpp"
 
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AutomatType.h"
 
@@ -28,7 +28,7 @@ CampPrototype_ABC::CampPrototype_ABC( QWidget* parent, Controllers& controllers 
     , selected_( controllers )
 {
     new QLabel( tr( "TC2:" ), this );
-    tc2s_ = new ValuedComboBox< const Agent_ABC* >( this );
+    tc2s_ = new ValuedComboBox< const Automat_ABC* >( this );
     connect( tc2s_, SIGNAL( activated( int ) ), this, SLOT( SelectionChanged() ) );
     controllers_.Register( *this );
 }
@@ -55,15 +55,15 @@ bool CampPrototype_ABC::CheckValidity() const
 // Name: CampPrototype_ABC::NotifyCreated
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CampPrototype_ABC::NotifyCreated( const Agent_ABC& agent )
+void CampPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
 {
-    if( tc2s_->GetItemIndex( &agent ) != -1 )
+    if( tc2s_->GetItemIndex( &automat ) != -1 )
         return;
-    if( agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
+    if( automat.GetType().IsTC2() )
     {
-        tc2s_->AddItem( agent.GetName(), &agent );
+        tc2s_->AddItem( automat.GetName(), &automat );
         if( !selected_ )
-            selected_ = &agent;
+            selected_ = &automat;
     }
 }
 
@@ -71,18 +71,18 @@ void CampPrototype_ABC::NotifyCreated( const Agent_ABC& agent )
 // Name: CampPrototype_ABC::NotifyDeleted
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void CampPrototype_ABC::NotifyDeleted( const Agent_ABC& agent )
+void CampPrototype_ABC::NotifyDeleted( const Automat_ABC& automat )
 {
-    tc2s_->RemoveItem( &agent );
+    tc2s_->RemoveItem( &automat );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CampPrototype_ABC::NotifyContextMenu
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void CampPrototype_ABC::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void CampPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( isVisible() && agent.GetAutomatType() && agent.GetAutomatType()->IsTC2() )
+    if( isVisible() && agent.GetType().IsTC2() )
     {
         selected_ = &agent;
         menu.InsertItem( "Parametre", tr( "TC2 du camp" ), this, SLOT( SetSelected() ) );

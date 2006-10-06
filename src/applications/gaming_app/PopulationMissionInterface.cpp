@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "PopulationMissionInterface.h"
 #include "gaming/ASN_Messages.h"
-#include "clients_kernel/Population_ABC.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/Entity_ABC.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -22,8 +22,8 @@ using namespace gui;
 // Name: UnitMissionInterface constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Population_ABC& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
-: MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter, objectKnowledgeConverter,objectTypes )
+PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_ABC& population, unsigned long nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
+    : MissionInterface_ABC( parent, population, controller, layer, converter, knowledgeConverter, objectKnowledgeConverter,objectTypes )
     , publisher_( publisher )
     , nMissionId_( nMissionId )
 {

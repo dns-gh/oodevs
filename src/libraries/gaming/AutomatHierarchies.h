@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentHierarchies_h_
-#define __AgentHierarchies_h_
+#ifndef __AutomatHierarchies_h_
+#define __AutomatHierarchies_h_
 
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -18,27 +18,26 @@
 namespace kernel
 {
     class Controller;
-    class Automat_ABC;
+    class KnowledgeGroup_ABC;
 }
 
 // =============================================================================
-/** @class  AgentHierarchies
-    @brief  AgentHierarchies
+/** @class  AutomatHierarchies
+    @brief  AutomatHierarchies
 */
-// Created: AGE 2006-09-20
+// Created: AGE 2006-10-06
 // =============================================================================
-class AgentHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                       , public kernel::Updatable_ABC< ASN1T_MsgPionCreation >
-                       , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomateAck >
-                       , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomate >
+class AutomatHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
+                         , public kernel::Updatable_ABC< ASN1T_MsgAutomateCreation >
+                         , public kernel::Updatable_ABC< ASN1T_MsgChangeGroupeConnaissanceAck >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
-                               const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver );
-    virtual ~AgentHierarchies();
+             AutomatHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
+                                 const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver );
+    virtual ~AutomatHierarchies();
     //@}
 
     //! @name Operations
@@ -50,15 +49,14 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    AgentHierarchies( const AgentHierarchies& );            //!< Copy constructor
-    AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignement operator
+    AutomatHierarchies( const AutomatHierarchies& );            //!< Copy constructor
+    AutomatHierarchies& operator=( const AutomatHierarchies& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPionCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeAutomateAck& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeAutomate& message );
+    virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
+    virtual void DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message );
 
     void UpdateSuperior( kernel::Entity_ABC& superior );
     //@}
@@ -68,9 +66,9 @@ private:
     //@{
     kernel::Controller& controller_;
     kernel::Entity_ABC& holder_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver_; 
+    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_; 
     kernel::Entity_ABC* superior_;
     //@}
 };
 
-#endif // __AgentHierarchies_h_
+#endif // __AutomatHierarchies_h_
