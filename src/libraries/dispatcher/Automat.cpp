@@ -154,6 +154,7 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().m.etat_operationnelPresent = 1;
     asn().m.roePresent = 1;
 
+    asn().oid_automate = nID_;
     asn().etat_automate = nAutomatState_;
     asn().rapport_de_force = nForceRatioState_;
     asn().combat_de_rencontre = nCloseCombatState_;
