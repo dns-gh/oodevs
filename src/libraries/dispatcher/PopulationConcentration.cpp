@@ -87,6 +87,8 @@ void PopulationConcentration::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().m.nb_humains_mortsPresent   = 1;
     asn().m.nb_humains_vivantsPresent = 1;
 
+    asn().oid_concentration  = nID_;
+    asn().oid_population     = population_.GetID();
     asn().attitude           = nAttitude_;
     asn().nb_humains_morts   = nNbrDeadHumans_;
     asn().nb_humains_vivants = nNbrAliveHumans_;

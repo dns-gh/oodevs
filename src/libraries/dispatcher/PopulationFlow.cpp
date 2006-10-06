@@ -102,13 +102,15 @@ void PopulationFlow::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().m.nb_humains_vivantsPresent = 1;
 
 
-    path_.Send( asn().itineraire );
-    flow_.Send( asn().flux );
+    asn().oid_flux           = nID_;
+    asn().oid_population     = population_.GetID();
     asn().direction          = nDirection_; 
     asn().vitesse            = nSpeed_;
     asn().attitude           = nAttitude_;
     asn().nb_humains_morts   = nNbrDeadHumans_;
     asn().nb_humains_vivants = nNbrAliveHumans_;
+    path_.Send( asn().itineraire );
+    flow_.Send( asn().flux );
    
     asn.Send( publisher );
 
