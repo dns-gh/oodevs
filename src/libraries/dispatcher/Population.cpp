@@ -131,6 +131,9 @@ void Population::SendCreation( Publisher_ABC& publisher ) const
     asn().nom             = strName_.c_str();
 
     asn.Send( publisher );
+
+    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentration::SendCreation ), publisher );
+    flows_         .Apply( std::mem_fun_ref( &PopulationFlow         ::SendCreation ), publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,4 +150,7 @@ void Population::SendFullUpdate( Publisher_ABC& publisher ) const
     asn().etat_domination = nDominationState_;
 
     asn.Send( publisher );
+
+    concentrations_.Apply( std::mem_fun_ref( &PopulationConcentration::SendFullUpdate ), publisher );
+    flows_         .Apply( std::mem_fun_ref( &PopulationFlow         ::SendFullUpdate ), publisher );
 }
