@@ -132,6 +132,7 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& pare
 {
     Automat_ABC* agent = agentFactory_.Create( xis, parent );
     Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
+    xis >> list( "unit", *this, &AgentsModel::CreateAgent, *agent );
 }
     
 // -----------------------------------------------------------------------------

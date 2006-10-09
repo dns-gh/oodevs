@@ -120,5 +120,6 @@ void Automat::CreateDictionary()
 void Automat::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "name", name_.ascii() );
+        << attribute( "name", name_.ascii() )
+        << attribute( "type", type_->GetName().ascii() );
 }

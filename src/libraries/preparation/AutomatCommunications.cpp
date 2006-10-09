@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "AutomatCommunications.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -22,6 +23,18 @@ AutomatCommunications::AutomatCommunications( Controller& controller, Entity_ABC
     : EntityCommunications( controller, holder, superior )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatCommunications constructor
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+AutomatCommunications::AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
+    : EntityCommunications( controller, holder, 0 )
+{
+    int group;
+    xis >> attribute( "knowledge-group", group );
+    SetSuperior( &groups.Get( group ) );
 }
 
 // -----------------------------------------------------------------------------

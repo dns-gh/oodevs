@@ -121,9 +121,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
-
-    const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
-    result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
+    result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );

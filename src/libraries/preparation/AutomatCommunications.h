@@ -12,9 +12,16 @@
 
 #include "EntityCommunications.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
+
+namespace kernel
+{
+    class KnowledgeGroup_ABC;
+}
 
 namespace xml
 {
+    class xistream;
     class xostream;
 }
 
@@ -32,6 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+             AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
     virtual ~AutomatCommunications();
     //@}
 
