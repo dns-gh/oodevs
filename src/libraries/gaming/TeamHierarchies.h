@@ -31,14 +31,8 @@ class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationH
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamHierarchies( kernel::Controller& controller, const kernel::Team_ABC& holder );
+             TeamHierarchies( kernel::Controller& controller, kernel::Team_ABC& holder );
     virtual ~TeamHierarchies();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const;
-    virtual const kernel::Entity_ABC& GetEntity() const;
     //@}
 
 private:
@@ -52,7 +46,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Team_ABC& holder_;
     //@}
 };
 

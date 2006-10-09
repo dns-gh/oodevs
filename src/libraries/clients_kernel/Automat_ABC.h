@@ -15,7 +15,6 @@
 namespace kernel
 {
     class AutomatType;
-    class Agent_ABC;
     class KnowledgeGroup_ABC;
 
 // =============================================================================
@@ -38,9 +37,6 @@ public:
     //@{
     virtual const AutomatType& GetType() const = 0;
     virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
-
-    virtual void AddAgent( unsigned long id, Agent_ABC& agent ) = 0;
-    virtual void RemoveAgent( unsigned long id ) = 0;
 
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;

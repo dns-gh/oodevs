@@ -36,9 +36,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const Automat_ABC& GetAutomat() const = 0;
-
-    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
     virtual const AgentType& GetType() const = 0;
     //@}
 

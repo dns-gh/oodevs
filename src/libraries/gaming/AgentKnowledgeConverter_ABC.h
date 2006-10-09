@@ -12,7 +12,7 @@
 
 namespace kernel
 {
-    class KnowledgeGroup_ABC;
+    class Entity_ABC;
     class Agent_ABC;
     class Population_ABC;
 }
@@ -38,10 +38,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
-    virtual const AgentKnowledge*      Find( const kernel::Agent_ABC& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
-    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
-    virtual const PopulationKnowledge* Find( const kernel::Population_ABC& base, const kernel::KnowledgeGroup_ABC& owner ) = 0;
+    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const kernel::Entity_ABC& owner ) = 0;
+    virtual const AgentKnowledge*      Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner ) = 0;
+    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const kernel::Entity_ABC& owner ) = 0;
+    virtual const PopulationKnowledge* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner ) = 0;
     //@}
 
 private:

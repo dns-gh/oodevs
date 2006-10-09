@@ -51,9 +51,6 @@ public:
 
     virtual const kernel::AutomatType& GetType() const;
     virtual       kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-
-    virtual void AddAgent( unsigned long id, kernel::Agent_ABC& agent );
-    virtual void RemoveAgent( unsigned long id );
     //@}
 
     //! @name Extensions

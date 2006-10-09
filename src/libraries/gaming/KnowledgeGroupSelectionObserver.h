@@ -17,6 +17,8 @@ namespace kernel
     class Agent_ABC;
     class KnowledgeGroup_ABC;
     class Controllers;
+    class Automat_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -28,6 +30,7 @@ namespace kernel
 class KnowledgeGroupSelectionObserver : public kernel::SelectionObserver_ABC
                                       , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
                                       , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
+                                      , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
 {
 
 public:
@@ -43,6 +46,7 @@ public:
     virtual void AfterSelection();
     virtual void Select( const kernel::KnowledgeGroup_ABC& element );
     virtual void Select( const kernel::Agent_ABC& element );
+    virtual void Select( const kernel::Automat_ABC& element );
     //@}
 
 protected:
@@ -61,7 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::KnowledgeGroup_ABC* selected_;
+    const kernel::Entity_ABC* selected_;
     //@}
 };
 

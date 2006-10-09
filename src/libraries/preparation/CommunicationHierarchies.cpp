@@ -48,24 +48,6 @@ void CommunicationHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies::GetSuperior
-// Created: SBO 2006-09-25
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* CommunicationHierarchies::GetSuperior() const
-{
-    return superior_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies::GetEntity
-// Created: SBO 2006-09-25
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& CommunicationHierarchies::GetEntity() const
-{
-    return holder_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: CommunicationHierarchies::ChangeSuperior
 // Created: SBO 2006-09-26
 // -----------------------------------------------------------------------------

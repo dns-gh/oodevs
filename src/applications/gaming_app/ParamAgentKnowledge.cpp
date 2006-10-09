@@ -22,7 +22,7 @@ using namespace kernel;
 ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityParameter< AgentKnowledge >( pParent, id, label, menu )
     , converter_( converter )
-    , agent_    ( dynamic_cast< const Agent_ABC& >( agent ) )
+    , agent_    ( agent )
 {
     // NOTHING
 }
@@ -42,7 +42,7 @@ ParamAgentKnowledge::~ParamAgentKnowledge()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledge::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu )
 {
-    const AgentKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
+    const AgentKnowledge* knowledge = converter_.Find( entity, agent_ );
     if( knowledge )
         EntityParameter< AgentKnowledge >::NotifyContextMenu( *knowledge, menu );
 }

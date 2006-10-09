@@ -121,7 +121,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 // -----------------------------------------------------------------------------
 Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
-    Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_, model_.agents_, model_.knowledgeGroups_ );
+    Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_ );
     result->Attach( *new Lives() );
     result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );

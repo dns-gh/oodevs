@@ -35,8 +35,6 @@ class Agent : public kernel::Agent_ABC
             , public kernel::Extension_ABC
             , public kernel::Drawable_ABC
             , public kernel::Updatable_ABC< kernel::InstanciationComplete >
-            , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomateAck >
-            , public kernel::Updatable_ABC< ASN1T_MsgChangeAutomate >
 {
 
 public:
@@ -44,17 +42,12 @@ public:
     //@{
              Agent( const ASN1T_MsgPionCreation& message,
                     kernel::Controller& controller, 
-                    const kernel::Resolver_ABC< kernel::AgentType >& resolver,
-                    const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver, 
-                    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& gtiaResolver );
+                    const kernel::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    virtual const kernel::Automat_ABC& GetAutomat() const;
-
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual const kernel::AgentType& GetType() const;
@@ -70,16 +63,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& );
-    virtual void DoUpdate( const ASN1T_MsgChangeAutomateAck& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeAutomate& message );
-
-    void ChangeAutomat( unsigned long id );
-
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-
-    void RemoveChild( kernel::Agent_ABC& child );
-    void AddChild( kernel::Agent_ABC& child );
-
     void CreateDictionary();
     //@}
 
@@ -87,12 +71,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
-    const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >&  gtiaResolver_;
     unsigned long id_;
     QString   name_;
     kernel::AgentType&   type_;
-    kernel::Automat_ABC* automat_;
     bool isPc_;
     //@}
 };

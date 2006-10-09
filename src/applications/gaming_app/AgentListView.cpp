@@ -95,7 +95,7 @@ bool AgentListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_A
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target )
 {
-    return Drop( item, target.GetAutomat() );
+    return Drop( item, target.Get< CommunicationHierarchies >().GetUp() );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +104,7 @@ bool AgentListView::Drop( const kernel::Agent_ABC& item,  const kernel::Agent_AB
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 {
-    if( & item.GetAutomat() == &target )
+    if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
         return false;
 
     unsigned int superiorId = target.GetId();

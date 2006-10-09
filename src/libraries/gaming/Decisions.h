@@ -35,6 +35,7 @@ namespace kernel
 class Decisions : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< ASN1T_MsgPionOrder >
                 , public kernel::Updatable_ABC< ASN1T_MsgPionOrderAck >
+                , public kernel::Drawable_ABC
 {
 
 public:
@@ -65,6 +66,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
     virtual void DoUpdate( const ASN1T_MsgPionOrderAck& message );
 

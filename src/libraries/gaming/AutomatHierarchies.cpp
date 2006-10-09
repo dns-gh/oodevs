@@ -18,11 +18,9 @@ using namespace kernel;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 AutomatHierarchies::AutomatHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver )
-    : EntityHierarchies< CommunicationHierarchies >( controller )
+    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_   ( controller )
-    , holder_       ( holder )
     , groupResolver_( groupResolver ) 
-    , superior_     ( 0 )
 {
     // NOTHING
 }
@@ -33,27 +31,9 @@ AutomatHierarchies::AutomatHierarchies( kernel::Controller& controller, kernel::
 // -----------------------------------------------------------------------------
 AutomatHierarchies::~AutomatHierarchies()
 {
-    if( superior_ )
-        if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
-            hierarchies->UnregisterSubordinate( holder_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatHierarchies::GetSuperior
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* AutomatHierarchies::GetSuperior() const
-{
-    return superior_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatHierarchies::GetEntity
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& AutomatHierarchies::GetEntity() const
-{
-    return holder_;
+    if( GetSuperior() )
+        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+            hierarchies->UnregisterSubordinate( GetEntity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,11 +61,11 @@ void AutomatHierarchies::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& m
 // -----------------------------------------------------------------------------
 void AutomatHierarchies::UpdateSuperior( kernel::Entity_ABC& superior )
 {
-    if( superior_ )
-        if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
-            hierarchies->RemoveSubordinate( holder_ );
-    superior_ = &superior;
-    if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
-        hierarchies->AddSubordinate( holder_ );
+    if( GetSuperior() )
+        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+            hierarchies->RemoveSubordinate( GetEntity() );
+    SetSuperior( &superior );
+    if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+        hierarchies->AddSubordinate( GetEntity() );
     controller_.Update( *(CommunicationHierarchies*)this );
 }

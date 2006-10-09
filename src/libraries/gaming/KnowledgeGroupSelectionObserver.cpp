@@ -10,6 +10,9 @@
 #include "gaming_pch.h"
 #include "KnowledgeGroupSelectionObserver.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 using namespace kernel;
 
@@ -47,7 +50,7 @@ void KnowledgeGroupSelectionObserver::BeforeSelection()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupSelectionObserver::AfterSelection()
 {
-    Select( selected_ );
+    Select( static_cast< const kernel::KnowledgeGroup_ABC* >( selected_ ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -65,5 +68,14 @@ void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup_ABC& element 
 // -----------------------------------------------------------------------------
 void KnowledgeGroupSelectionObserver::Select( const Agent_ABC& element )
 {
-    selected_ = & element.GetKnowledgeGroup();
+    selected_ = & element.Get< CommunicationHierarchies >().GetUp( 2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupSelectionObserver::Select
+// Created: AGE 2006-10-06
+// -----------------------------------------------------------------------------
+void KnowledgeGroupSelectionObserver::Select( const kernel::Automat_ABC& element )
+{
+    selected_ = & element.Get< CommunicationHierarchies >().GetUp();
 }

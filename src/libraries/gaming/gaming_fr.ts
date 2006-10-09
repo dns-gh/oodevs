@@ -9,10 +9,6 @@
         <source>Info/Nom</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Hi&#xe9;rarchie/Sup&#xe9;rieur</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AgentKnowledge</name>

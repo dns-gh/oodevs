@@ -130,7 +130,8 @@ void ColorStrategy::SelectColor( const Agent_ABC& agent )
         tools_.Select( true );
         color = SelectedColor( color );
     }
-    else if( selectedAgent_ && & selectedAgent_->GetAutomat() == & agent.GetAutomat() )
+    else if( selectedAgent_ && selectedAgent_->Get< CommunicationHierarchies >().GetSuperior()
+                            == agent.Get< CommunicationHierarchies >().GetSuperior() )
     {
         tools_.Select( false );
         color = SuperiorSelectedColor( color );

@@ -39,12 +39,6 @@ public:
     virtual ~KnowledgeGroupHierarchies();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const;
-    virtual const kernel::Entity_ABC& GetEntity() const;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -61,8 +55,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::Entity_ABC& superior_;
-    kernel::KnowledgeGroup_ABC& holder_;
     //@}
 };
 

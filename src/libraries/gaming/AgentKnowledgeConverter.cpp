@@ -9,11 +9,14 @@
 
 #include "gaming_pch.h"
 #include "AgentKnowledgeConverter.h"
-#include "AgentKnowledge.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "PopulationKnowledge.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "PopulationKnowledge.h"
+#include "AgentKnowledges.h"
+#include "AgentKnowledge.h"
 
 using namespace kernel;
 
@@ -40,7 +43,7 @@ AgentKnowledgeConverter::~AgentKnowledgeConverter()
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const AgentKnowledge* AgentKnowledgeConverter::Find( const AgentKnowledge& base, const KnowledgeGroup_ABC& owner )
+const AgentKnowledge* AgentKnowledgeConverter::Find( const AgentKnowledge& base, const Entity_ABC& owner )
 {
     return Find( base.GetRealAgent(), owner );
 }
@@ -49,16 +52,16 @@ const AgentKnowledge* AgentKnowledgeConverter::Find( const AgentKnowledge& base,
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const AgentKnowledge* AgentKnowledgeConverter::Find( const Agent_ABC& base, const KnowledgeGroup_ABC& owner )
+const AgentKnowledge* AgentKnowledgeConverter::Find( const Agent_ABC& base, const Entity_ABC& owner )
 {
-    return agents_[ &owner ][ &base ];
+    return agents_[ FindKnowledgeGroup( owner ) ][ &base ];
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const PopulationKnowledge* AgentKnowledgeConverter::Find( const PopulationKnowledge& base, const KnowledgeGroup_ABC& owner )
+const PopulationKnowledge* AgentKnowledgeConverter::Find( const PopulationKnowledge& base, const Entity_ABC& owner )
 {
     return Find( base.GetRealPopulation(), owner );
 }
@@ -67,9 +70,28 @@ const PopulationKnowledge* AgentKnowledgeConverter::Find( const PopulationKnowle
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const PopulationKnowledge* AgentKnowledgeConverter::Find( const Population_ABC& base, const KnowledgeGroup_ABC& owner )
+const PopulationKnowledge* AgentKnowledgeConverter::Find( const Population_ABC& base, const Entity_ABC& owner )
 {
-    return populations_[ &owner ][ &base ];
+    return populations_[ FindKnowledgeGroup( owner ) ][ &base ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgeConverter::FindKnowledgeGroup
+// Created: AGE 2006-10-09
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* AgentKnowledgeConverter::FindKnowledgeGroup( const kernel::Entity_ABC& owner ) const
+{
+    const AgentKnowledges* extension = owner.Retrieve< AgentKnowledges >();
+    if( extension )
+        return &owner;
+    const CommunicationHierarchies* hierarchies = owner.Retrieve< CommunicationHierarchies >();
+    if( hierarchies )
+    {
+        const kernel::Entity_ABC* superior = hierarchies->GetSuperior();
+        if( superior )
+            return FindKnowledgeGroup( *superior );
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

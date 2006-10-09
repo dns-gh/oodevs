@@ -18,10 +18,9 @@ using namespace kernel;
 // Name: TeamHierarchies constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-TeamHierarchies::TeamHierarchies( Controller& controller, const kernel::Team_ABC& holder )
-    : EntityHierarchies< CommunicationHierarchies >( controller )
+TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& holder )
+    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_( controller )
-    , holder_( holder )
 {
     controller_.Create( *(CommunicationHierarchies*)this );
 }
@@ -33,22 +32,4 @@ TeamHierarchies::TeamHierarchies( Controller& controller, const kernel::Team_ABC
 TeamHierarchies::~TeamHierarchies()
 {
     controller_.Delete( *(CommunicationHierarchies*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamHierarchies::GetSuperior
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-const Entity_ABC* TeamHierarchies::GetSuperior() const
-{
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamHierarchies::GetEntity
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& TeamHierarchies::GetEntity() const
-{
-    return holder_;
 }

@@ -12,9 +12,10 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/Controller.h"
-#include "ASN_Messages.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "ASN_Messages.h"
 #include "Tools.h"
 
 using namespace kernel;

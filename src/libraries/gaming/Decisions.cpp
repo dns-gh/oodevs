@@ -15,10 +15,11 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "statusicons.h"
-#include "Tools.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "Tools.h"
 #include "AutomatDecisions.h"
+#include "statusicons.h"
 
 using namespace kernel;
 
@@ -51,7 +52,7 @@ Decisions::~Decisions()
 bool Decisions::IsEmbraye() const
 {
     // $$$$ AGE 2006-10-06: 
-    return agent_.GetAutomat().Get< AutomatDecisions >().IsEmbraye();
+    return agent_.Get< CommunicationHierarchies >().GetUp().Get< AutomatDecisions >().IsEmbraye();
 }
 
 // -----------------------------------------------------------------------------
@@ -121,12 +122,11 @@ const Mission* Decisions::GetCurrentMission() const
 // Name: Decisions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-// $$$$ AGE 2006-10-06: move to AutomatDecisions
-//void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
-//{
-//    if( bEmbraye_ && viewport.IsInside( where ) )
-//        tools.DrawIcon( xpm_cadenas, where, 150.f );
-//}
+void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+{
+    if( IsEmbraye() && viewport.IsInside( where ) )
+        tools.DrawIcon( xpm_cadenas, where, 150.f );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Decisions::DisplayInTooltip

@@ -30,24 +30,31 @@ class EntityHierarchies : public Interface, public Resolver< Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EntityHierarchies( Controller& controller );
+             EntityHierarchies( Controller& controller, Entity_ABC& entity );
     virtual ~EntityHierarchies();
     //@}
 
     //! @name Operations
     //@{
-    virtual const Entity_ABC* GetSuperior() const = 0;
-    virtual const Entity_ABC& GetEntity() const = 0;
-
+    virtual const Entity_ABC* GetSuperior() const;
+    virtual const Entity_ABC& GetEntity() const;
     virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const; 
 
-    bool IsSubordinateOf( const Entity_ABC& entity ) const;
-
-    virtual void AddSubordinate   (       Entity_ABC& entity );
-    virtual void RemoveSubordinate( const Entity_ABC& entity );
+    virtual void AddSubordinate       (       Entity_ABC& entity );
+    virtual void RemoveSubordinate    ( const Entity_ABC& entity );
     virtual void UnregisterSubordinate( const Entity_ABC& entity );
 
+    bool IsSubordinateOf( const Entity_ABC& entity ) const;
     virtual const Entity_ABC& GetTop() const;
+    virtual const Entity_ABC& GetUp( unsigned int nLevel = 1 ) const;
+    //@}
+
+protected:
+    //! @name Modifiers
+    //@{
+    void SetSuperior( Entity_ABC* superior );
+    Entity_ABC* GetSuperior();
+    Entity_ABC& GetEntity();
     //@}
 
 private:
@@ -61,6 +68,8 @@ private:
     //! @name Member data
     //@{
     Controller& controller_;
+    Entity_ABC& entity_;
+    Entity_ABC* superior_;
     //@}
 };
 

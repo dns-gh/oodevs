@@ -29,7 +29,7 @@ class Publisher_ABC;
 
 // =============================================================================
 /** @class  AutomatDecisions
-    @brief  AutomatDecisions
+    @brief  Automat decisions
 */
 // Created: AGE 2006-03-14
 // =============================================================================

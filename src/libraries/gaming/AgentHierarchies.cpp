@@ -20,11 +20,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AgentHierarchies::AgentHierarchies( Controller& controller, Entity_ABC& holder, 
                                     const Resolver_ABC< Automat_ABC >& automatResolver )
-    : EntityHierarchies< CommunicationHierarchies >( controller )
+    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_   ( controller )
-    , holder_       ( holder )
     , automatResolver_( automatResolver ) 
-    , superior_     ( 0 )
 {
     // NOTHING
 }
@@ -35,27 +33,9 @@ AgentHierarchies::AgentHierarchies( Controller& controller, Entity_ABC& holder,
 // -----------------------------------------------------------------------------
 AgentHierarchies::~AgentHierarchies()
 {
-    if( superior_ )
-        if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
-            hierarchies->UnregisterSubordinate( holder_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentHierarchies::GetSuperior
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-const Entity_ABC* AgentHierarchies::GetSuperior() const
-{
-    return superior_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentHierarchies::GetEntity
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& AgentHierarchies::GetEntity() const
-{
-    return holder_;
+    if( GetSuperior() )
+        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+            hierarchies->UnregisterSubordinate( GetEntity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,12 +44,12 @@ const kernel::Entity_ABC& AgentHierarchies::GetEntity() const
 // -----------------------------------------------------------------------------
 void AgentHierarchies::UpdateSuperior( Entity_ABC& superior )
 {
-    if( superior_ )
-        if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
-            hierarchies->RemoveSubordinate( holder_ );
-    superior_ = &superior;
-    if( CommunicationHierarchies* hierarchies = superior_->Retrieve< CommunicationHierarchies >() )
-        hierarchies->AddSubordinate( holder_ );
+    if( GetSuperior() )
+        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+            hierarchies->RemoveSubordinate( GetEntity() );
+    SetSuperior( &superior );
+    if( CommunicationHierarchies* hierarchies = superior.Retrieve< CommunicationHierarchies >() )
+        hierarchies->AddSubordinate( GetEntity() );
     controller_.Update( *(CommunicationHierarchies*)this );
 }
 

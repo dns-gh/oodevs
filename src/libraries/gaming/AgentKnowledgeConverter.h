@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class KnowledgeGroup_ABC;
 }
 
 // =============================================================================
@@ -39,10 +40,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const kernel::KnowledgeGroup_ABC& owner );
-    virtual const AgentKnowledge*      Find( const kernel::Agent_ABC& base, const kernel::KnowledgeGroup_ABC& owner );
-    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const kernel::KnowledgeGroup_ABC& owner );
-    virtual const PopulationKnowledge* Find( const kernel::Population_ABC& base, const kernel::KnowledgeGroup_ABC& owner );
+    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const kernel::Entity_ABC& owner );
+    virtual const AgentKnowledge*      Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner );
+    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const kernel::Entity_ABC& owner );
+    virtual const PopulationKnowledge* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner );
     //@}
 
 private:
@@ -58,14 +59,16 @@ private:
     virtual void NotifyDeleted( const AgentKnowledge& );
     virtual void NotifyCreated( const PopulationKnowledge& );
     virtual void NotifyDeleted( const PopulationKnowledge& );
+
+    const kernel::Entity_ABC* FindKnowledgeGroup( const kernel::Entity_ABC& owner ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Agent_ABC*, const AgentKnowledge* >                 T_KnowledgeMap;
-    typedef std::map< const kernel::KnowledgeGroup_ABC* , T_KnowledgeMap >              T_Knowledges;
-    typedef std::map< const kernel::Population_ABC*, const PopulationKnowledge* >       T_PopulationKnowledgeMap;
-    typedef std::map< const kernel::KnowledgeGroup_ABC* , T_PopulationKnowledgeMap >    T_PopulationKnowledges;
+    typedef std::map< const kernel::Agent_ABC*, const AgentKnowledge* >           T_KnowledgeMap;
+    typedef std::map< const kernel::Entity_ABC* , T_KnowledgeMap >                T_Knowledges;
+    typedef std::map< const kernel::Population_ABC*, const PopulationKnowledge* > T_PopulationKnowledgeMap;
+    typedef std::map< const kernel::Entity_ABC* , T_PopulationKnowledgeMap >      T_PopulationKnowledges;
     //@}
 
 private:

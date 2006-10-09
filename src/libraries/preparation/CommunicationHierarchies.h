@@ -40,8 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const;
-    virtual const kernel::Entity_ABC& GetEntity() const;
     void ChangeSuperior( kernel::Entity_ABC& superior );
     //@}
 
@@ -63,8 +61,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::Entity_ABC& holder_;
-    kernel::Entity_ABC* superior_;
     //@}
 };
 

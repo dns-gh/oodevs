@@ -23,7 +23,7 @@ using namespace kernel;
 ParamPopulationKnowledge::ParamPopulationKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
     : EntityParameter< PopulationKnowledge >( pParent, id, label, menu )
     , converter_( converter )
-    , agent_( dynamic_cast< const Agent_ABC& >( agent ) )
+    , agent_( agent )
 {
     // NOTHING
 }
@@ -43,7 +43,7 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu )
 {
-    const PopulationKnowledge* knowledge = converter_.Find( entity, agent_.GetKnowledgeGroup() );
+    const PopulationKnowledge* knowledge = converter_.Find( entity, agent_ );
     if( knowledge )
         EntityParameter< PopulationKnowledge >::NotifyContextMenu( *knowledge, menu );
 

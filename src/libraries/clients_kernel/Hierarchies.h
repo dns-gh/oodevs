@@ -36,17 +36,16 @@ public:
     //! @name Operations
     //@{
     virtual const Entity_ABC* GetSuperior() const = 0;
+    virtual const Entity_ABC& GetEntity() const = 0;
     virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 
-
-    virtual bool IsSubordinateOf( const Entity_ABC& entity ) const = 0;
 
     virtual void AddSubordinate   (       Entity_ABC& entity ) = 0;
     virtual void RemoveSubordinate( const Entity_ABC& entity ) = 0;
     virtual void UnregisterSubordinate( const Entity_ABC& entity ) = 0;
 
-    virtual const Entity_ABC& GetEntity() const = 0;
-
+    virtual bool IsSubordinateOf( const Entity_ABC& entity ) const = 0;
     virtual const Entity_ABC& GetTop() const = 0;
+    virtual const Entity_ABC& GetUp( unsigned int nLevel = 1 ) const = 0;
     //@}
 };
 

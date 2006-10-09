@@ -20,12 +20,10 @@ using namespace kernel;
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Team_ABC& team, KnowledgeGroup_ABC& holder )
-    : EntityHierarchies< CommunicationHierarchies >( controller )
+    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_( controller )
-    , superior_  ( team )
-    , holder_    ( holder )
 {
-    // NOTHING
+    SetSuperior( &team );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,8 +32,8 @@ KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Te
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 {
-    if( CommunicationHierarchies* hierarchies = superior_.Retrieve< CommunicationHierarchies >() )
-        hierarchies->RemoveSubordinate( holder_ );
+    if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+        hierarchies->RemoveSubordinate( GetEntity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,27 +42,9 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 {
-    if( CommunicationHierarchies* hierarchies = superior_.Retrieve< CommunicationHierarchies >() )
+    if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
     {
-        hierarchies->AddSubordinate( holder_ );
+        hierarchies->AddSubordinate( GetEntity() );
         controller_.Update( *(CommunicationHierarchies*)this );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupHierarchies::GetSuperior
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-const Entity_ABC* KnowledgeGroupHierarchies::GetSuperior() const
-{
-    return &superior_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupHierarchies::GetEntity
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& KnowledgeGroupHierarchies::GetEntity() const
-{
-    return holder_;
 }

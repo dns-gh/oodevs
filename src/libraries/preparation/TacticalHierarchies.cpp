@@ -49,24 +49,6 @@ void TacticalHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalHierarchies::GetSuperior
-// Created: SBO 2006-09-20
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* TacticalHierarchies::GetSuperior() const
-{
-    return superior_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: TacticalHierarchies::GetEntity
-// Created: SBO 2006-09-20
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& TacticalHierarchies::GetEntity() const
-{
-    return holder_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalHierarchies::ChangeSuperior
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
