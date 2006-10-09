@@ -8,32 +8,32 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "TeamCommunications.h"
+#include "AgentCommunications.h"
 
 // -----------------------------------------------------------------------------
-// Name: TeamCommunications constructor
-// Created: SBO 2006-09-25
+// Name: AgentCommunications constructor
+// Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-TeamCommunications::TeamCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+AgentCommunications::AgentCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
     : EntityCommunications( controller, holder, superior )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: TeamCommunications destructor
-// Created: SBO 2006-09-25
+// Name: AgentCommunications destructor
+// Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-TeamCommunications::~TeamCommunications()
+AgentCommunications::~AgentCommunications()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamCommunications::DoSerialize
-// Created: SBO 2006-09-25
+// Name: AgentCommunications::DoSerialize
+// Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void TeamCommunications::DoSerialize( xml::xostream& xos ) const
+void AgentCommunications::DoSerialize( xml::xostream& xos ) const
 {
     // $$$$ SBO 2006-09-25: todo
 }

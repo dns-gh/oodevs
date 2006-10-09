@@ -13,11 +13,6 @@
 #include "TacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
-namespace kernel
-{
-    class DataDictionary;
-}
-
 // =============================================================================
 /** @class  AgentHierarchies
     @brief  AgentHierarchies
@@ -31,7 +26,7 @@ class AgentHierarchies : public TacticalHierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior, kernel::DataDictionary& dictionary );
+             AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~AgentHierarchies();
     //@}
 

@@ -11,7 +11,7 @@
 #include "AgentsModel.h"
 #include "AgentFactory_ABC.h"
 #include "Agent.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "Automat.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
@@ -43,6 +43,7 @@ AgentsModel::~AgentsModel()
     controllers_.Remove( *this );
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::Purge
 // Created: AGE 2006-04-20
@@ -51,16 +52,6 @@ void AgentsModel::Purge()
 {
     Resolver< Agent_ABC >::DeleteAll();
     Resolver< Population_ABC >::DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAgent
-// Created: AGE 2006-02-10
-// -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( Agent_ABC& parent, const AgentType& type, const geometry::Point2f& position )
-{
-    Agent_ABC* agent = agentFactory_.Create( parent, type, position );
-    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
 }
 
 namespace
@@ -114,16 +105,16 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAgent
-// Created: SBO 2006-09-01
+// Name: AgentsModel::CreateAutomat
+// Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
+void AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position )
 {
-    Agent_ABC* agent = agentFactory_.Create( parent, type, position );
-    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    Automat_ABC* agent = agentFactory_.Create( parent, type, position );
+    Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
 
     DiamondFormation formation( position );
-    CreateAgent( *agent, *type.GetTypePC(), formation.NextPosition() );
+    CreateAgent( *agent, *type.GetTypePC(), formation.NextPosition(), true );
     Iterator< const AutomatComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
@@ -131,6 +122,54 @@ void AgentsModel::CreateAgent( Formation_ABC& parent, const AutomatType& type, c
         for( unsigned toAdd = composition.GetSensibleNumber(); toAdd > 0; --toAdd )
             CreateAgent( *agent, composition.GetType(), formation.NextPosition() );
     }
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateAutomat
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent )
+{
+    Automat_ABC* agent = agentFactory_.Create( xis, parent );
+    Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::GetAutomat
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC& AgentsModel::GetAutomat( unsigned long id )
+{
+    return Resolver< Automat_ABC >::Get( id );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::FindAutomat
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
+{
+    return Resolver< Automat_ABC >::Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateAgent
+// Created: AGE 2006-02-10
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateAgent( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
+{
+    Agent_ABC* agent = agentFactory_.Create( parent, type, position, commandPost );
+    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreateAgent
+// Created: SBO 2006-10-05
+// -----------------------------------------------------------------------------
+void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent )
+{
+    Agent_ABC* agent = agentFactory_.Create( xis, parent );
+    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,10 +196,12 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 {
-    Entity_ABC* agent = Resolver< Agent_ABC >::Find( id );
-    if( ! agent )
-        agent = Resolver< Population_ABC >::Find( id );
-    return agent;
+    Entity_ABC* agent = Resolver< Automat_ABC >::Find( id );
+    if( agent )
+        return agent;
+    if( agent = Resolver< Agent_ABC >::Find( id ) )
+        return agent;
+    return Resolver< Population_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,21 +242,19 @@ void AgentsModel::NotifyDeleted( const Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAgent
-// Created: SBO 2006-10-05
+// Name: AgentsModel::NotifyDeleted
+// Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( xml::xistream& xis, kernel::Formation_ABC& parent )
+void AgentsModel::NotifyDeleted( const kernel::Automat_ABC& agent )
 {
-    Agent_ABC* agent = agentFactory_.Create( xis, parent );
-    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    Resolver< Automat_ABC >::Remove( agent.GetId() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsModel::CreateAgent
-// Created: SBO 2006-10-05
+// Name: AgentsModel::NotifyDeleted
+// Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( xml::xistream& xis, kernel::Agent_ABC& parent )
+void AgentsModel::NotifyDeleted( const kernel::Population_ABC& agent )
 {
-    Agent_ABC* agent = agentFactory_.Create( xis, parent );
-    Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
+    Resolver< Population_ABC >::Remove( agent.GetId() );
 }

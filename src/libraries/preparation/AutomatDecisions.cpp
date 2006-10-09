@@ -9,7 +9,7 @@
 
 #include "preparation_pch.h"
 #include "AutomatDecisions.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "xeumeuleu/xml.h"
 
@@ -20,7 +20,7 @@ using namespace xml;
 // Name: AutomatDecisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-AutomatDecisions::AutomatDecisions( Controller& controller, const Agent_ABC& agent )
+AutomatDecisions::AutomatDecisions( Controller& controller, const Automat_ABC& agent )
     : controller_( controller )
     , agent_( agent )
     , bEmbraye_( true )
@@ -32,7 +32,7 @@ AutomatDecisions::AutomatDecisions( Controller& controller, const Agent_ABC& age
 // Name: AutomatDecisions constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-AutomatDecisions::AutomatDecisions( xml::xistream& xis, kernel::Controller& controller, const kernel::Agent_ABC& agent )
+AutomatDecisions::AutomatDecisions( xml::xistream& xis, kernel::Controller& controller, const kernel::Automat_ABC& agent )
     : controller_( controller )
     , agent_( agent )
 {
@@ -54,7 +54,7 @@ AutomatDecisions::~AutomatDecisions()
 // Name: AutomatDecisions::GetAgent
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-const Agent_ABC& AutomatDecisions::GetAgent() const
+const Automat_ABC& AutomatDecisions::GetAgent() const
 {
     return agent_;
 }

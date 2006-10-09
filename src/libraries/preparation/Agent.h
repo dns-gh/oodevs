@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -19,7 +20,7 @@ namespace kernel
     class Controller;
     class AgentType;
     class AgentTypes;
-    class AutomatType;
+    class Automat_ABC;
 }
 
 namespace xml
@@ -38,7 +39,6 @@ class IdManager;
 // =============================================================================
 class Agent : public kernel::Agent_ABC
             , public kernel::Extension_ABC
-            , public kernel::Aggregatable_ABC
             , public kernel::Drawable_ABC
             , public kernel::Serializable_ABC
 {
@@ -46,22 +46,17 @@ class Agent : public kernel::Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager );
-             Agent( const kernel::Agent_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager );
-             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
-             Agent( xml::xistream& xis, const kernel::Agent_ABC& parent, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
+             Agent( const kernel::Automat_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager, bool commandPost = false );
+             Agent( xml::xistream& xis, const kernel::Automat_ABC& parent, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    virtual const kernel::Agent_ABC* GetSuperior() const;
-
+    virtual const kernel::Automat_ABC& GetAutomat() const;
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
 
-    virtual const kernel::AutomatType* GetAutomatType() const;
     virtual const kernel::AgentType& GetType() const;
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
@@ -75,7 +70,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Aggregate( const bool& );
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     void CreateDictionary();
     //@}
@@ -85,13 +79,10 @@ private:
     //@{
     kernel::Controller& controller_;
     unsigned long id_;
-    QString   name_;
-
-    const kernel::Agent_ABC*     automat_;
-    const kernel::AutomatType*   automatType_;
-    const kernel::AgentType*     type_;
-
-    bool aggregated_;
+    QString name_;
+    const kernel::Automat_ABC& automat_;
+    const kernel::AgentType* type_;
+    bool commandPost_;
     //@}
 };
 

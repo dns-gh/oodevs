@@ -103,9 +103,9 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
-    Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_, model_.knowledgeGroups_ );
+    Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_ );
     DataDictionary& dico = result->Get< DataDictionary >();
-    result->Attach< CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_  ) );
+    result->Attach< CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     result->Attach( *new AutomatLives( *result ) );
     result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );

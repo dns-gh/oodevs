@@ -65,8 +65,7 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
     Formation_ABC* formation = factory_.Create( xis, parent, levels_ );
     Register( formation->GetId(), *formation );
     xis >> list( "formation", *this        , &FormationModel::Create, *(Entity_ABC*)formation, model );
-    void (AgentsModel::*pFunc)( xml::xistream&, Formation_ABC&) = &AgentsModel::CreateAgent;
-    xis >> list( "automat"  , model.agents_, pFunc, *formation );
+    xis >> list( "automat"  , model.agents_, &AgentsModel::CreateAutomat, *formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +76,7 @@ void FormationModel::Purge()
 {
     DeleteAll();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationModel::NotifyDeleted
 // Created: SBO 2006-09-19

@@ -13,15 +13,17 @@
 #include "Model.h"
 #include "clients_kernel/AgentTypes.h"
 #include "Agent.h"
+#include "Automat.h"
 
 #include "AgentsModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "AgentFactory.h"
 #include "AutomatDecisions.h"
 #include "AgentPositions.h"
+#include "AgentCommunications.h"
+#include "AutomatPositions.h"
 #include "AgentHierarchies.h"
-#include "KnowledgeGroupHierarchy.h"
-#include "CommunicationHierarchies.h"
+#include "AutomatCommunications.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -58,12 +60,13 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent_ABC* AgentFactory::Create( Agent_ABC& parent, const AgentType& type, const geometry::Point2f& position )
+Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
 {
-    Agent* result = new Agent( parent, type, controllers_.controller_, idManager_ );
+    Agent* result = new Agent( parent, type, controllers_.controller_, idManager_, commandPost );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
@@ -74,17 +77,16 @@ Agent_ABC* AgentFactory::Create( Agent_ABC& parent, const AgentType& type, const
 // Name: AgentFactory::Create
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
+kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
 {
-    Agent* result = new Agent( type, controllers_.controller_, idManager_ );
+    Automat_ABC* result = new Automat( type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
-    result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
-
+    result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
-    result->Attach( *new KnowledgeGroupHierarchy( controllers_.controller_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
-    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
+    result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
@@ -95,12 +97,13 @@ kernel::Agent_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatTyp
 // Name: AgentFactory::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Agent_ABC& parent )
+kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC& parent )
 {
     Agent* result = new Agent( xis, parent, controllers_.controller_, idManager_, static_.types_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
@@ -111,17 +114,16 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Agent_ABC& 
 // Name: AgentFactory::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation_ABC& parent )
+kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation_ABC& parent )
 {
-    Agent* result = new Agent( xis, controllers_.controller_, idManager_, static_.types_ );
+    Automat_ABC* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
     DataDictionary& dico = result->Get< DataDictionary >();
-    result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent, dico ) );
-
+    result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
-    result->Attach( *new KnowledgeGroupHierarchy( xis, controllers_.controller_, model_.knowledgeGroups_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
-    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
+    result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );

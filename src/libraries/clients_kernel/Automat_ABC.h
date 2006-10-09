@@ -36,7 +36,6 @@ public:
     //! @name Operations
     //@{
     virtual const AutomatType& GetType() const = 0;
-    virtual KnowledgeGroup_ABC& GetKnowledgeGroup() const = 0;
 
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;

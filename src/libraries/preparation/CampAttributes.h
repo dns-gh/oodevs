@@ -16,7 +16,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Automat_ABC;
     class Displayer_ABC;
 }
 
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void SetTC2( const kernel::Agent_ABC& tc2 );
+    void SetTC2( const kernel::Automat_ABC& tc2 );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Agent_ABC > tc2_;
+    kernel::SafePointer< kernel::Automat_ABC > tc2_;
     //@}
 };
 

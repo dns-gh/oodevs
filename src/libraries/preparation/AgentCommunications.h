@@ -7,27 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __TeamCommunications_h_
-#define __TeamCommunications_h_
+#ifndef __AgentCommunications_h_
+#define __AgentCommunications_h_
 
 #include "EntityCommunications.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
-/** @class  TeamCommunications
-    @brief  TeamCommunications
+/** @class  AgentCommunications
+    @brief  AgentCommunications
 */
-// Created: SBO 2006-09-25
+// Created: SBO 2006-10-09
 // =============================================================================
-class TeamCommunications : public EntityCommunications
-                         , public kernel::Serializable_ABC
+class AgentCommunications : public EntityCommunications
+                          , public kernel::Serializable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
-    virtual ~TeamCommunications();
+             AgentCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+    virtual ~AgentCommunications();
     //@}
 
 private:
@@ -37,4 +37,4 @@ private:
     //@}
 };
 
-#endif // __TeamCommunications_h_
+#endif // __AgentCommunications_h_

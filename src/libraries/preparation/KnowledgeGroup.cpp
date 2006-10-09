@@ -12,7 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
 
@@ -69,9 +69,9 @@ KnowledgeGroup::~KnowledgeGroup()
 // Name: KnowledgeGroup::AddAutomat
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::AddAutomat( unsigned long id, Agent_ABC& automat )
+void KnowledgeGroup::AddAutomat( unsigned long id, Automat_ABC& automat )
 {
-    Resolver< Agent_ABC >::Register( id, automat );
+    Resolver< Automat_ABC >::Register( id, automat );
     controller_.Update( *(KnowledgeGroup_ABC*)this );
 }
 
@@ -81,7 +81,7 @@ void KnowledgeGroup::AddAutomat( unsigned long id, Agent_ABC& automat )
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::RemoveAutomat( unsigned long id )
 {
-    Resolver< Agent_ABC >::Remove( id );
+    Resolver< Automat_ABC >::Remove( id );
     controller_.Update( *(KnowledgeGroup_ABC*)this );
 }
 

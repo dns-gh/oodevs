@@ -39,11 +39,6 @@ public:
     virtual ~CommunicationListView();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Display( const kernel::CommunicationHierarchies& hierarchy, gui::ValuedListItem* item );
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
@@ -57,7 +52,6 @@ private:
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
-    virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::KnowledgeGroup_ABC& target );
     //@}
 
 private:

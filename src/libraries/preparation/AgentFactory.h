@@ -40,10 +40,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Agent_ABC* Create( kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
-    virtual kernel::Agent_ABC* Create( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
-    virtual kernel::Agent_ABC* Create( xml::xistream& xis, kernel::Agent_ABC& parent );
-    virtual kernel::Agent_ABC* Create( xml::xistream& xis, kernel::Formation_ABC& parent );
+    virtual kernel::Agent_ABC* Create( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false );
+    virtual kernel::Automat_ABC* Create( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
+    virtual kernel::Agent_ABC* Create( xml::xistream& xis, kernel::Automat_ABC& parent );
+    virtual kernel::Automat_ABC* Create( xml::xistream& xis, kernel::Formation_ABC& parent );
     virtual kernel::Population_ABC* Create( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position );
     //@}
 

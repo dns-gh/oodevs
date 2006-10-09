@@ -8,32 +8,38 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "TeamCommunications.h"
+#include "AutomatCommunications.h"
+#include "xeumeuleu/xml.h"
+
+using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: TeamCommunications constructor
+// Name: AutomatCommunications constructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-TeamCommunications::TeamCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+AutomatCommunications::AutomatCommunications( Controller& controller, Entity_ABC& holder, Entity_ABC* superior )
     : EntityCommunications( controller, holder, superior )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: TeamCommunications destructor
+// Name: CommunicationHierarchies destructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-TeamCommunications::~TeamCommunications()
+AutomatCommunications::~AutomatCommunications()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamCommunications::DoSerialize
-// Created: SBO 2006-09-25
+// Name: AutomatCommunications::DoSerialize
+// Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void TeamCommunications::DoSerialize( xml::xostream& xos ) const
+void AutomatCommunications::DoSerialize( xml::xostream& xos ) const
 {
-    // $$$$ SBO 2006-09-25: todo
+    if( ! GetSuperior() ) // $$$$ SBO 2006-10-09: check that superior is a gtia
+        throw std::runtime_error( QString( "Knowledge group not defined for automat '%1'." ).arg( GetEntity().GetId() ).ascii() );
+    xos << attribute( "knowledge-group", long( GetSuperior()->GetId() ) );
 }

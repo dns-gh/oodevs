@@ -77,7 +77,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( kernel::Team_ABC& team )
 {
     KnowledgeGroup_ABC* result = new KnowledgeGroup( controllers_.controller_, team, idManager_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, &team ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, &team ) );
     result->Update( InstanciationComplete() );
     return result;
 }
@@ -89,7 +89,7 @@ kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( kernel::Team_ABC&
 kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team )
 {
     KnowledgeGroup_ABC* result = new KnowledgeGroup( xis, controllers_.controller_, team, idManager_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new ::CommunicationHierarchies( controllers_.controller_, *result, &team ) );
+    result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, &team ) );
     result->Update( InstanciationComplete() );
     return result;
 }

@@ -11,9 +11,9 @@
 #include "CommunicationListView.h"
 #include "ModelBuilder.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "preparation/CommunicationHierarchies.h"
+#include "preparation/AutomatCommunications.h"
 
 using namespace kernel;
 
@@ -36,18 +36,6 @@ CommunicationListView::CommunicationListView( QWidget* parent, Controllers& cont
 CommunicationListView::~CommunicationListView()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationListView::Display
-// Created: SBO 2006-09-25
-// -----------------------------------------------------------------------------
-void CommunicationListView::Display( const kernel::CommunicationHierarchies& hierarchy, gui::ValuedListItem* item )
-{
-    if( ! hierarchy.GetSuperior() )
-        item->setRenameEnabled( 0, true );
-    item->setDragEnabled( true );
-    gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( hierarchy, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,26 +75,13 @@ void CommunicationListView::NotifyContextMenu( const Team_ABC&, ContextMenu& men
 // -----------------------------------------------------------------------------
 bool CommunicationListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
 {
-    const Agent_ABC*          agent   = dynamic_cast< const Agent_ABC* >         ( &item );
+    const Automat_ABC*        automat = dynamic_cast< const Automat_ABC* >       ( &item );
     const KnowledgeGroup_ABC* group   = dynamic_cast< const KnowledgeGroup_ABC* >( &target );
-    if( agent && group )
-        return Drop( *agent, *group );
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationListView::Drop
-// Created: SBO 2006-09-26
-// -----------------------------------------------------------------------------
-bool CommunicationListView::Drop( const Agent_ABC& item,  const KnowledgeGroup_ABC& target )
-{
-    if( item.GetSuperior() )
-        return false;
-    kernel::CommunicationHierarchies* com = const_cast< kernel::CommunicationHierarchies* >( item.Retrieve< kernel::CommunicationHierarchies >() );
-    if( com )
+    if( automat && group )
     {
-        KnowledgeGroup_ABC& group = const_cast< KnowledgeGroup_ABC& >( target );
-        static_cast< ::CommunicationHierarchies* >( com )->ChangeSuperior( group );
+        CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( automat->Get< CommunicationHierarchies >() );
+        static_cast< AutomatCommunications& >( com ).ChangeSuperior( const_cast< Entity_ABC& >( target ) );
+        return true;
     }
-    return true;
+    return false;
 }

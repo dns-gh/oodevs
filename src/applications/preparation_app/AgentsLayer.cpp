@@ -26,6 +26,7 @@ AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gu
     , model_( model )
     , modelBuilder_( modelBuilder )
     , selectedAgent_( controllers )
+    , selectedAutomat_( controllers )
     , selectedFormation_( controllers )
 {
     // NOTHING
@@ -41,6 +42,26 @@ AgentsLayer::~AgentsLayer()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentsLayer::BeforeSelection
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+void AgentsLayer::BeforeSelection()
+{
+    selectedAgent_ = 0;
+    selectedAutomat_ = 0;
+    selectedFormation_ = 0;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::AfterSelection
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+void AgentsLayer::AfterSelection()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentsLayer::Select
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
@@ -48,7 +69,16 @@ void AgentsLayer::Select( const kernel::Agent_ABC& element )
 {
     selectedAgent_ = &element;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::Select
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+void AgentsLayer::Select( const kernel::Automat_ABC& element )
+{
+    selectedAutomat_ = &element;
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentsLayer::Select
 // Created: SBO 2006-09-01
@@ -86,13 +116,13 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     }
     else if( event->provides( "astec/AgentType" ) )
     {
-        if( !selectedAgent_ || !selectedAgent_->GetAutomatType() )
+        if( !selectedAutomat_ )
             return false;
         QByteArray tmp = event->encodedData( "astec/AgentType" );
         const AgentType* droppedItem = *reinterpret_cast< const AgentType** >( tmp.data() );
         if( droppedItem )
         {
-            model_.agents_.CreateAgent( *selectedAgent_.ConstCast(), *droppedItem, point );
+            model_.agents_.CreateAgent( *selectedAutomat_.ConstCast(), *droppedItem, point );
             return true;
         }
     }
@@ -104,7 +134,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
         const AutomatType* droppedItem = *reinterpret_cast< const AutomatType** >( tmp.data() );
         if( droppedItem )
         {
-            model_.agents_.CreateAgent( *selectedFormation_.ConstCast(), *droppedItem, point );
+            model_.agents_.CreateAutomat( *selectedFormation_.ConstCast(), *droppedItem, point );
             return true;
         }
     }

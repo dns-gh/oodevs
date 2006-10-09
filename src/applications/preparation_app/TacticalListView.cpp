@@ -19,6 +19,7 @@
 #include "preparation/Level.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -58,7 +59,6 @@ void TacticalListView::Display( const kernel::Hierarchies& hierarchy, gui::Value
 {
     if( ! hierarchy.GetSuperior() )
         item->setRenameEnabled( 0, true );
-    item->setDragEnabled( true );
     gui::HierarchyListView< kernel::TacticalHierarchies >::Display( hierarchy, item );
 }
 
@@ -249,6 +249,10 @@ bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
     if( agent )
         return Drop( *agent, target );
 
+    const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &item );
+    if( automat )
+        return Drop( *automat, target );
+
     const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &item );
     if( formation )
         return Drop( *formation, target );
@@ -273,24 +277,26 @@ namespace
 // Name: TacticalListView::Drop
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
-bool TacticalListView::Drop( const Agent_ABC& agent, const Entity_ABC& target )
+bool TacticalListView::Drop( const Agent_ABC& item, const Entity_ABC& target )
 {
-    const Agent_ABC* automat = dynamic_cast< const Agent_ABC* >( &target );
+    const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &target );
     if( automat )
-    {
-        if( !agent.GetSuperior() )
-            return false;
-        return ChangeSuperior( agent, target );
-    }
-    if( agent.GetSuperior() )
-        return false;
-
-    const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &target );
-    if( formation )
-        return ChangeSuperior( agent, target );
+        return ChangeSuperior( item, target );
     return false;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::Drop
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target )
+{
+    const Formation_ABC* formation = dynamic_cast< const Formation_ABC* >( &target );
+    if( formation )
+        return ChangeSuperior( item, target );
+    return false;
+}
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::Drop
 // Created: SBO 2006-09-28

@@ -48,7 +48,7 @@ public:
     virtual const kernel::Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
-    virtual void AddAutomat( unsigned long id, kernel::Agent_ABC& automat );
+    virtual void AddAutomat( unsigned long id, kernel::Automat_ABC& automat );
     virtual void RemoveAutomat( unsigned long id );
     //@}
 

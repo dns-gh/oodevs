@@ -18,6 +18,7 @@ namespace kernel
 {
     class ModelLoaded;
     class Formation_ABC;
+    class Automat_ABC;
 }
 
 class AutomatDecisions;
@@ -84,6 +85,7 @@ private:
     virtual void Select( const kernel::Formation_ABC& element );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
+    virtual bool Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
     //@}
 

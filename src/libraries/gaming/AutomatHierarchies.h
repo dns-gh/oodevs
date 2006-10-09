@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controller;
     class KnowledgeGroup_ABC;
+    class DataDictionary;
 }
 
 // =============================================================================
@@ -36,7 +37,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
-                                 const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver );
+                                 const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver,
+                                 kernel::DataDictionary& dictionary );
     virtual ~AutomatHierarchies();
     //@}
 

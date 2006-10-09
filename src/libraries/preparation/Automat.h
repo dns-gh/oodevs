@@ -12,15 +12,24 @@
 
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "ASN_Types.h"
 
 namespace kernel
 {
+    class AutomatType;
+    class AgentTypes;
     class Controller;
+    class KnowledgeGroup_ABC;
 }
+
+namespace xml
+{
+    class xistream;
+    class xostream;
+}
+
+class IdManager;
 
 // =============================================================================
 /** @class  Automat
@@ -31,13 +40,14 @@ namespace kernel
 class Automat : public kernel::Automat_ABC
               , public kernel::Extension_ABC
               , public kernel::Drawable_ABC
+              , public kernel::Serializable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const ASN1T_MsgAutomateCreation& message, kernel::Controller& controller, 
-                      const kernel::Resolver_ABC< kernel::AutomatType >& resolver );
+             Automat( const kernel::AutomatType& type, kernel::Controller& controller, IdManager& idManager );
+             Automat( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
     virtual ~Automat();
     //@}
 
@@ -45,6 +55,7 @@ public:
     //@{
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
+
     virtual const kernel::AutomatType& GetType() const;
     //@}
 
@@ -60,11 +71,17 @@ private:
     Automat& operator=( const Automat& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoSerialize( xml::xostream& xos ) const;
+    void CreateDictionary();
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::AutomatType& type_;
+    const kernel::AutomatType* type_;
     QString name_;
     unsigned long id_;
     //@}

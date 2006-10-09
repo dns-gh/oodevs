@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CommunicationHierarchies_h_
-#define __CommunicationHierarchies_h_
+#ifndef __EntityCommunications_h_
+#define __EntityCommunications_h_
 
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -22,20 +22,20 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  CommunicationHierarchies
-    @brief  CommunicationHierarchies
+/** @class  EntityCommunications
+    @brief  EntityCommunications
 */
-// Created: SBO 2006-09-25
+// Created: SBO 2006-10-09
 // =============================================================================
-class CommunicationHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                               , public kernel::Updatable_ABC< kernel::InstanciationComplete >
+class EntityCommunications : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
+                           , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
-    virtual ~CommunicationHierarchies();
+             EntityCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+    virtual ~EntityCommunications();
     //@}
 
     //! @name Operations
@@ -46,8 +46,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    CommunicationHierarchies( const CommunicationHierarchies& );            //!< Copy constructor
-    CommunicationHierarchies& operator=( const CommunicationHierarchies& ); //!< Assignement operator
+    EntityCommunications( const EntityCommunications& );            //!< Copy constructor
+    EntityCommunications& operator=( const EntityCommunications& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -64,4 +64,4 @@ private:
     //@}
 };
 
-#endif // __CommunicationHierarchies_h_
+#endif // __EntityCommunications_h_

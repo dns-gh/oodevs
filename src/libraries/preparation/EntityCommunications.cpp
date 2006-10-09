@@ -8,78 +8,77 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "CommunicationHierarchies.h"
+#include "EntityCommunications.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controller.h"
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies constructor
+// Name: EntityCommunications constructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-CommunicationHierarchies::CommunicationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies< kernel::CommunicationHierarchies >( controller )
+EntityCommunications::EntityCommunications( Controller& controller, Entity_ABC& holder, Entity_ABC* superior )
+    : kernel::EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_( controller )
-    , holder_( holder )
-    , superior_( superior )
 {
-    // NOTHING
+    if( superior )
+        SetSuperior( superior );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CommunicationHierarchies destructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-CommunicationHierarchies::~CommunicationHierarchies()
+EntityCommunications::~EntityCommunications()
 {
-    if( superior_ )
-        if( kernel::CommunicationHierarchies* hierarchies = superior_->Retrieve< kernel::CommunicationHierarchies >() )
-            hierarchies->UnregisterSubordinate( holder_ );
-    controller_.Delete( *(kernel::CommunicationHierarchies*)this );
+    DeleteAll(); // $$$$ SBO 2006-10-09: 
+    if( GetSuperior() )
+        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+            hierarchies->UnregisterSubordinate( GetEntity() );
+    controller_.Delete( *(CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies::DoUpdate
+// Name: EntityCommunications::DoUpdate
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void CommunicationHierarchies::DoUpdate( const kernel::InstanciationComplete& )
+void EntityCommunications::DoUpdate( const kernel::InstanciationComplete& )
 {
     RegisterToSuperior();
-    controller_.Create( *(kernel::CommunicationHierarchies*)this );
+    controller_.Create( *(CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies::ChangeSuperior
+// Name: EntityCommunications::ChangeSuperior
 // Created: SBO 2006-09-26
 // -----------------------------------------------------------------------------
-void CommunicationHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+void EntityCommunications::ChangeSuperior( kernel::Entity_ABC& superior )
 {
     RemoveFromSuperior();
-    superior_ = &superior;
+    SetSuperior( &superior );
     RegisterToSuperior();
-    controller_.Update( *(kernel::CommunicationHierarchies*)this );
+    controller_.Update( *(CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies::RegisterToSuperior
+// Name: EntityCommunications::RegisterToSuperior
 // Created: SBO 2006-09-26
 // -----------------------------------------------------------------------------
-void CommunicationHierarchies::RegisterToSuperior()
+void EntityCommunications::RegisterToSuperior()
 {
-    if( superior_ )
-        if( kernel::CommunicationHierarchies* hierarchies = superior_->Retrieve< kernel::CommunicationHierarchies >() )
-            hierarchies->AddSubordinate( holder_ );
+    if( GetSuperior() )
+        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+            hierarchies->AddSubordinate( GetEntity() );
 }
     
 // -----------------------------------------------------------------------------
-// Name: CommunicationHierarchies::RemoveFromSuperior
+// Name: EntityCommunications::RemoveFromSuperior
 // Created: SBO 2006-09-26
 // -----------------------------------------------------------------------------
-void CommunicationHierarchies::RemoveFromSuperior()
+void EntityCommunications::RemoveFromSuperior()
 {
-    if( superior_ )
-        if( kernel::CommunicationHierarchies* hierarchies = superior_->Retrieve< kernel::CommunicationHierarchies >() )
-        {
-            hierarchies->RemoveSubordinate( holder_ );
-            superior_ = 0;
-        }
+    if( GetSuperior() )
+        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
+            hierarchies->RemoveSubordinate( GetEntity() );
 }

@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Automat_ABC;
     class Controller;
 }
 
@@ -37,14 +37,14 @@ class AutomatDecisions : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatDecisions( kernel::Controller& controller, const kernel::Agent_ABC& agent );
-             AutomatDecisions( xml::xistream& xis, kernel::Controller& controller, const kernel::Agent_ABC& agent );
+             AutomatDecisions( kernel::Controller& controller, const kernel::Automat_ABC& agent );
+             AutomatDecisions( xml::xistream& xis, kernel::Controller& controller, const kernel::Automat_ABC& agent );
     virtual ~AutomatDecisions();
     //@}
 
     //! @name Operations
     //@{
-    const kernel::Agent_ABC& GetAgent() const;
+    const kernel::Automat_ABC& GetAgent() const;
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
     void Engage();
     void Disengage();
@@ -62,7 +62,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Agent_ABC& agent_;
+    const kernel::Automat_ABC& agent_;
     bool bEmbraye_;
     //@}
 };

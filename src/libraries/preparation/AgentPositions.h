@@ -75,6 +75,7 @@ private:
     //@}
 
 private:
+    friend class AutomatPositions; // $$$$ AGE 2006-10-06: 
     //! @name Member data
     //@{
     const kernel::Agent_ABC& agent_;

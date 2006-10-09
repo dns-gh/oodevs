@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "CampAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -40,7 +40,7 @@ CampAttributes::~CampAttributes()
 // Name: CampAttributes::SetTC2
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-void CampAttributes::SetTC2( const Agent_ABC& tc2 )
+void CampAttributes::SetTC2( const Automat_ABC& tc2 )
 {
     tc2_ = &tc2;
 }

@@ -15,8 +15,9 @@
 
 namespace kernel
 {
-    class Agent_ABC;
     class Entity_ABC;
+    class Agent_ABC;
+    class Automat_ABC;
     class Population_ABC;
     class AgentType;
     class AutomatType;
@@ -40,9 +41,12 @@ class AgentFactory_ABC;
 // Created: AGE 2006-02-10
 // =============================================================================
 class AgentsModel : public kernel::Resolver< kernel::Agent_ABC >
+                  , public kernel::Resolver< kernel::Automat_ABC >
                   , public kernel::Resolver< kernel::Population_ABC >
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+                  , public kernel::ElementObserver_ABC< kernel::Population_ABC >
 {
 
 public:
@@ -54,10 +58,13 @@ public:
 
     //! @name Operations
     //@{
-    void CreateAgent( kernel::Agent_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position );
-    void CreateAgent( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void CreateAgent( xml::xistream& xis, kernel::Formation_ABC& parent );
-    void CreateAgent( xml::xistream& xis, kernel::Agent_ABC& parent );
+    void CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
+    void CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent );
+    kernel::Automat_ABC& GetAutomat( unsigned long id );
+    kernel::Automat_ABC* FindAutomat( unsigned long id );
+
+    void CreateAgent( kernel::Automat_ABC& parent, const kernel::AgentType& type, const geometry::Point2f& position, bool commandPost = false );
+    void CreateAgent( xml::xistream& xis, kernel::Automat_ABC& parent );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
 
@@ -80,6 +87,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& agent );
+    virtual void NotifyDeleted( const kernel::Population_ABC& agent );
     //@}
 
 private:
