@@ -10,7 +10,7 @@
 #ifndef __Kernel_CommunicationHierarchies_h_
 #define __Kernel_CommunicationHierarchies_h_
 
-#include "EntityHierarchies.h"
+#include "Hierarchies.h"
 
 namespace kernel
 {

@@ -85,3 +85,15 @@ bool CommunicationListView::Drop( const Entity_ABC& item, const Entity_ABC& targ
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: CommunicationListView::keyPressEvent
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void CommunicationListView::keyPressEvent( QKeyEvent* event )
+{
+    if( selectedItem() && event->key() == Qt::Key_Delete )
+        if( modelBuilder_.OnDelete() )
+            return;
+    QListView::keyPressEvent( event );
+}

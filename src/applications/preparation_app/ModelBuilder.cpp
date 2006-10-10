@@ -17,6 +17,7 @@
 #include "preparation/FormationLevels.h"
 #include "preparation/Level.h"
 #include "preparation/Team.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -95,7 +96,17 @@ bool ModelBuilder::OnDelete()
     else if( selectedAutomat_ )
         delete (const Automat_ABC*)selectedAutomat_;
     else if( selectedGroup_ )
-        delete (const KnowledgeGroup_ABC*)selectedGroup_;
+    {
+        const Team_ABC& team = static_cast< const Team_ABC& >( selectedGroup_->Get< CommunicationHierarchies >().GetUp() );
+        Iterator< const Entity_ABC& > it = team.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            if( &it.NextElement() != selectedGroup_ )
+            {
+                delete (const KnowledgeGroup_ABC*)selectedGroup_;
+                return true;
+            }
+        return false;
+    }
     else if( selectedTeam_ )
         delete (const Team_ABC*)selectedTeam_;
     else if( selectedFormation_ )

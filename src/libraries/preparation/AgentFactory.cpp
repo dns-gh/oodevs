@@ -26,6 +26,7 @@
 #include "AutomatCommunications.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -103,8 +104,12 @@ Entity_ABC* AgentFactory::FindKnowledgeGroup( const kernel::Entity_ABC& parent )
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const CommunicationHierarchies& teamHierarchy = team.Get< CommunicationHierarchies >();
     Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
-    if( it.HasMoreElements() )
-        return const_cast< Entity_ABC* >( &it.NextElement() );
+    while( it.HasMoreElements() )
+    {
+        const Entity_ABC* entity = &it.NextElement();
+        if( dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
+            return const_cast< Entity_ABC* >( entity );
+    }
     return const_cast< Entity_ABC* >( &team );
 }
 

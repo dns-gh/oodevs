@@ -61,6 +61,7 @@ void TeamsModel::CreateTeam()
 {
     Team_ABC* team = factory_.CreateTeam();
     Register( team->GetId(), *team );
+    CreateKnowledgeGroup( *team );
 }
 
 // -----------------------------------------------------------------------------
