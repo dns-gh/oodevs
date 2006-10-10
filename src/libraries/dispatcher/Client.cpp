@@ -14,6 +14,8 @@
 #include "AsnTypes.h"
 #include "Dispatcher.h"
 #include "Model.h"
+#include "Profile.h"
+#include "ProfileManager.h"
 #include "Network_Def.h"
 #include "ClientPublisher.h"
 #include "AsnMessageEncoder.h"
@@ -30,15 +32,12 @@ Client::Client( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, 
     , dispatcher_     ( dispatcher )
     , messageService_ ( messageService )
     , link_           ( link )
+    , pProfile_       ( 0 )
 {
     assert( !link_.GetUserData() );
     link_.SetUserData( this );        
 
     messageService_.Enable( link_ );
-
-    //$$$$ TMP SEND PATÊ
-    ClientPublisher publisher( *this );
-    dispatcher.GetModel().Send( publisher );
 }
 
 //-----------------------------------------------------------------------------
@@ -53,28 +52,6 @@ Client::~Client()
     link_.SetUserData( 0 );
 }
 
-// =============================================================================
-// RIGHTS MANAGEMENT
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: Client::CheckRights
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-bool Client::CheckRights( const ASN1T_MsgsOutClient& asnMsg ) const
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::CheckRights
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-bool Client::CheckRights( const ASN1T_MsgsInClient& asnMsg ) const
-{
-    return true;
-}
-
 // -----------------------------------------------------------------------------
 // Name: Client::Disconnect
 // Created: NLD 2006-10-05
@@ -85,21 +62,79 @@ void Client::Disconnect()
 }
 
 // =============================================================================
+// RIGHTS MANAGEMENT
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Client::CheckRights
+// Created: NLD 2006-09-21
+// -----------------------------------------------------------------------------
+bool Client::CheckRights( const ASN1T_MsgsOutClient& asnMsg ) const
+{
+    if( asnMsg.msg.t == T_MsgsOutClient_msg_msg_auth_login )
+        return true;
+
+    if( !pProfile_ )
+        return false;
+
+    return pProfile_->CheckRights( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::CheckRights
+// Created: NLD 2006-09-21
+// -----------------------------------------------------------------------------
+bool Client::CheckRights( const ASN1T_MsgsInClient& asnMsg ) const
+{
+    //$$$$ TMP
+    if( !pProfile_ )
+        return false;    
+    return true;
+}
+
+// =============================================================================
 // MESSAGES
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: Client::OnReceiveMsgCtrlClientAnnouncement
+// Name: Client::OnReceiveMsgAuthLogin
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
-void Client::OnReceiveMsgCtrlClientAnnouncement( const ASN1T_MsgCtrlClientAnnouncement& asnMsg )
+void Client::OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& msg )
 {
-    ///// profiles ....
+    //$$$ TMP
+    if( pProfile_ )
+    {
+        Disconnect();
+        return;
+    }
+
+    ClientPublisher publisher( *this );
+
+    pProfile_ = dispatcher_.GetProfileManager().Authenticate( msg.login, msg.password );
+    if( !pProfile_ )
+    {
+        AsnMsgInClientAuthLoginAck ack;
+        ack().etat = MsgAuthLoginAck_etat::invalid_login;
+        ack.Send( publisher );
+        return; //$$$ ??
+    }
+
+    // Ack message
+    AsnMsgInClientAuthLoginAck ack;
+    ack().etat             = MsgAuthLoginAck_etat::success;
+    ack().m.profilePresent = 1;
+    pProfile_->Send( ack().profile );
+    ack.Send( publisher );
+    Profile::AsnDelete( ack().profile );
+
+    // Model
+    dispatcher_.GetModel().Send( publisher );
 }
 
 // 
-#define DISPATCH_ASN_MSG( NAME )                                  \
-    {                                                             \
+#define DISPATCH_ASN_MSG( NAME )                                 \
+    {                                                            \
         asnOutMsg.context          = asnInMsg.context;           \
         asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME; \
         asnOutMsg.msg.u.msg_##NAME = asnInMsg.msg.u.msg_##NAME;  \
@@ -128,7 +163,10 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
     ASN1T_MsgsInSim asnOutMsg;
     switch( asnInMsg.msg.t )
     {
-        case T_MsgsOutClient_msg_msg_ctrl_client_announcement           : OnReceiveMsgCtrlClientAnnouncement( asnInMsg.msg.u.msg_ctrl_client_announcement ); break;
+        case T_MsgsOutClient_msg_msg_auth_login                         : OnReceiveMsgAuthLogin( *asnInMsg.msg.u.msg_auth_login ); break;
+        case T_MsgsOutClient_msg_msg_ctrl_profile_creation              : /*TODO$$$*/ break;
+        case T_MsgsOutClient_msg_msg_ctrl_profile_update                : /*TODO$$$*/ break;
+        case T_MsgsOutClient_msg_msg_ctrl_profile_destruction           : /*TODO$$$*/ break;
         case T_MsgsOutClient_msg_msg_ctrl_stop                          : DISPATCH_EMPTY_ASN_MSG( ctrl_stop ); break;
         case T_MsgsOutClient_msg_msg_ctrl_pause                         : DISPATCH_EMPTY_ASN_MSG( ctrl_pause ); break;
         case T_MsgsOutClient_msg_msg_ctrl_resume                        : DISPATCH_EMPTY_ASN_MSG( ctrl_resume ); break;
@@ -168,6 +206,10 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
 // -----------------------------------------------------------------------------
 void Client::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 {
+    // $$$ TMP
+    if( !pProfile_ )
+        return;
+
     dispatcher_.DispatchToSimulation( nMsgID, dinMsg );
 }
 
@@ -202,7 +244,10 @@ void Client::Send( const ASN1T_MsgsInClient& asnMsg, const DIN_BufferedMessage& 
 // -----------------------------------------------------------------------------
 void Client::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
 {
-    // RIGHTS ??
+    // $$$ TMP
+    if( !pProfile_ )
+        return;
+
     messageService_.Send( link_, nMsgID, dinMsg );
 }
 

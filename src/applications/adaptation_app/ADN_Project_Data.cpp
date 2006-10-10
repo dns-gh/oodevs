@@ -611,5 +611,10 @@ void ADN_Project_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.Section("Scipio");
     simInfos_.WriteArchive( output );
     dataInfos_.WriteArchive( output );
+
+    output.Section( "Dispatcher" );
+    output.WriteField( "Profiles", "Data/Profiles.xml" );
+    output.EndSection(); // Dispatcher
+
     output.EndSection();   // Scipio
 }

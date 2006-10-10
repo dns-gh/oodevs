@@ -27,31 +27,17 @@ class NET_AS_MOSServer : public DIN::DIN_UserData_ABC
     MT_COPYNOTALLOWED( NET_AS_MOSServer );
 
 public:
-    //! @name Types
-    //@{
-    enum E_ClientType
-    {
-        eMos      = 0,
-        eMosLight = 1
-    };
-    //@}
-
-public:
-     NET_AS_MOSServer( DIN::DIN_Link& link, E_ClientType nClientType );
+     NET_AS_MOSServer( DIN::DIN_Link& link );
     ~NET_AS_MOSServer();
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
-    DIN::DIN_Link&     GetLink      () const;
-    DIN::DIN_StationID GetStationID () const;
-    E_ClientType       GetClientType() const;
+    DIN::DIN_Link&     GetLink     () const;
+    DIN::DIN_StationID GetStationID() const;
     //@}
 
 private:
     DIN::DIN_Link& link_;
-    E_ClientType   nClientType_;
 };
 
 #   include "NET_AS_MOSServer.inl"

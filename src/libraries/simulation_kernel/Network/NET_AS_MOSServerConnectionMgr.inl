@@ -10,23 +10,13 @@
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerConnectionMgr::GetMosConnection
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-inline
-const NET_AS_MOSServerMgr_ABC::T_MosConnectionMap& NET_AS_MOSServerConnectionMgr::GetMosConnections() const
-{
-    return mosConnectionMap_;    
-}
-
-// -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerConnectionMgr::GetMosLightConnection
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 inline
-const NET_AS_MOSServerMgr_ABC::T_MosConnectionMap& NET_AS_MOSServerConnectionMgr::GetMosLightConnections() const
+const NET_AS_MOSServerMgr_ABC::T_ConnectionMap& NET_AS_MOSServerConnectionMgr::GetConnections() const
 {
-    return mosLightConnectionMap_;
+    return connections_;
 }
 
 

@@ -36,16 +36,15 @@ public:
     
     //! @name Accessors
     //@{
-    const T_MosConnectionMap& GetMosConnections     () const;
-    const T_MosConnectionMap& GetMosLightConnections() const;
+    const T_ConnectionMap& GetConnections() const;
 
     bool NeedsUpdating() const;
     //@}
 
     //! @name Connections management
     //@{
-    NET_AS_MOSServer& AddConnection   ( DIN::DIN_Link& link, NET_AS_MOSServer::E_ClientType nClientType );
-    void              RemoveConnection( DIN::DIN_Link& link  );
+    NET_AS_MOSServer& AddConnection   ( DIN::DIN_Link& link );
+    void              RemoveConnection( DIN::DIN_Link& link );
     //@}
 
 private:
@@ -63,8 +62,7 @@ private:
     DIN::DIN_Server* pServer_;
 
     // Clients
-    T_MosConnectionMap mosConnectionMap_;
-    T_MosConnectionMap mosLightConnectionMap_;
+    T_ConnectionMap connections_;
 };
 
 #include "NET_AS_MOSServerConnectionMgr.inl"

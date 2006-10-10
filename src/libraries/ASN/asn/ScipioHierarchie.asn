@@ -18,8 +18,8 @@ EnumDiplomatie ::= ENUMERATED
 
 MsgChangeDiplomatie ::= SEQUENCE
 {
-    oid-camp1  OID,
-    oid-camp2  OID,
+    oid-camp1  Camp,
+    oid-camp2  Camp,
     diplomatie EnumDiplomatie 
 }
 
@@ -31,8 +31,8 @@ EnumChangeDiplomatieErrorCode ::= ENUMERATED
 
 MsgChangeDiplomatieAck ::= SEQUENCE
 {
-    oid-camp1  OID,
-    oid-camp2  OID,
+    oid-camp1  Camp,
+    oid-camp2  Camp,
     diplomatie EnumDiplomatie,
     error-code EnumChangeDiplomatieErrorCode
 }
@@ -41,7 +41,7 @@ MsgChangeDiplomatieAck ::= SEQUENCE
 MsgChangeGroupeConnaissance ::= SEQUENCE
 {
     oid-automate             Automate,
-    oid-camp                 OID,
+    oid-camp                 Camp,
     oid-groupe-connaissance  OID 
 }
 
@@ -56,7 +56,7 @@ EnumChangeGroupeConnaissanceErrorCode ::= ENUMERATED
 MsgChangeGroupeConnaissanceAck ::= SEQUENCE
 {
     oid-automate             Automate,
-    oid-camp                 OID,
+    oid-camp                 Camp,
     oid-groupe-connaissance  OID,
     error-code               EnumChangeGroupeConnaissanceErrorCode
 }
@@ -120,7 +120,7 @@ MsgAutomateCreation ::= SEQUENCE
     oid-automate             Automate,
     type-automate            TypeAutomate,
     nom                      VisibleString,
-    oid-camp                 OID,
+    oid-camp                 Camp,
     oid-groupe-connaissance  OID,
     oid-tc2                  Automate OPTIONAL,
     oid-maintenance          Automate OPTIONAL,

@@ -1,0 +1,46 @@
+--
+-- file name : ScipioAutomatetAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+ScipioAuth DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+--------------------
+-- AUTH / PROFILES
+--------------------
+
+Profile ::= SEQUENCE
+{
+    login                   VisibleString,
+    password                VisibleString  OPTIONAL,
+    read-only-automates     ListAutomate   OPTIONAL,
+    read-write-automates    ListAutomate   OPTIONAL,
+    read-only-camps         ListCamp       OPTIONAL,
+    read-write-camps        ListCamp       OPTIONAL,
+    read-only-populations   ListPopulation OPTIONAL,
+    read-write-populations  ListPopulation OPTIONAL,
+    superviseur             BOOLEAN
+}
+
+MsgAuthLogin ::= SEQUENCE
+{
+    login    VisibleString,
+    password VisibleString 
+}
+
+MsgAuthLoginAck ::= SEQUENCE
+{
+    etat ENUMERATED
+    {   
+        success,
+        invalid-login
+    },
+    profile Profile OPTIONAL -- only if success
+}
+
+MsgCtrlProfileCreation    ::= Profile
+MsgCtrlProfileUpdate      ::= Profile
+MsgCtrlProfileDestruction ::= VisibleString
+
+END -- ScipioAuth

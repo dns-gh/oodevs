@@ -1,123 +1,145 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Populations>
 
-    <Effets>
-        <TempsRechargement densitePopulation="2" modificateur="2"/>        
-    </Effets>
-    
-    <Population nom="test1">
-        <MosID>1</MosID>
-        <ModeleDecisionnel>Population Test</ModeleDecisionnel>
-        <DensiteConcentration>2</DensiteConcentration>
-        <DensiteNominaleDeplacement>4</DensiteNominaleDeplacement> <!-- Densite nb hommes par metre carre-->
-        <VitesseDeplacement>60</VitesseDeplacement>
+  <Effets>
+    <TempsRechargement densitePopulation="2" modificateur="2"/>
+  </Effets>
 
-        <Effets>        
-            <Ralentissement>
-                <Attitudes>
-                    <Attitude nom="agressive">
-                        <VolumesPions>
-                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="21"/>
-                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="22"/>
-                        </VolumesPions>
-                     </Attitude>
-                    <Attitude nom="agitee">
-                        <VolumesPions>
-                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="31"/>
-                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="32"/>
-                            <VolumePion nom="moyen" densitePopulation="0.9" vitesseMaximale="33"/>
-                        </VolumesPions>
-                     </Attitude>                     
-                    <Attitude nom="calme">
-                        <VolumesPions>
-                            <VolumePion nom="gros"  densitePopulation="0.9" vitesseMaximale="41"/>
-                            <VolumePion nom="petit" densitePopulation="0.9" vitesseMaximale="42"/>
-                        </VolumesPions>
-                     </Attitude>
-                </Attitudes>
-            </Ralentissement>
-            <Tir>
-                <Tireur>                
-                    <Attitudes>
-                        <Attitude nom="agressive">                     
-                            <Intensite densitePopulation="2" intensite="0.9"/>
-                            <ProtectionsPions>
-                                <ProtectionPion nom="CharLourd">
-                                    <Destruction>0.1</Destruction>
-                                    <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                                    <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
-                                 </ProtectionPion>
-                                 <ProtectionPion nom="BlindeLeger">
-                                    <Destruction>0.8</Destruction>
-                                    <ReparableAvecEvacuation>0.1</ReparableAvecEvacuation>
-                                    <ReparableSansEvacuation>0.1</ReparableSansEvacuation>
-                                 </ProtectionPion>
-                            </ProtectionsPions>
-                         </Attitude>
-                        <Attitude nom="agitee">
-                            <Intensite densitePopulation="2" intensite="0.05"/>
-                            <ProtectionsPions>
-                                <ProtectionPion nom="CharLourd">
-                                    <Destruction>0.1</Destruction>
-                                    <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                                    <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
-                                 </ProtectionPion>
-                                 <ProtectionPion nom="BlindeLeger">
-                                    <Destruction>0.2</Destruction>
-                                    <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                                    <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
-                                 </ProtectionPion>
-                            </ProtectionsPions>
-                         </Attitude>                     
-                        <Attitude nom="calme">
-                            <Intensite densitePopulation="2" intensite="0.01"/>
-                            <ProtectionsPions>
-                                <ProtectionPion nom="CharLourd">
-                                    <Destruction>0.1</Destruction>
-                                    <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                                    <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
-                                 </ProtectionPion>
-                                 <ProtectionPion nom="BlindeLeger">
-                                    <Destruction>0.2</Destruction>
-                                    <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
-                                    <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
-                                 </ProtectionPion>
-                            </ProtectionsPions>
-                         </Attitude>
-                    </Attitudes>
-                </Tireur>
-                <Cible>
-	          <ReglesEngagementTireur>
-	            <RegleEngagementTireur nom="emploi force interdit">
-	              <SurfaceAttrition>0.1</SurfaceAttrition>
-	              <PH>0</PH>
-	            </RegleEngagementTireur>
-	            <RegleEngagementTireur nom="dispersion par moyens de defense actifs">
-	              <SurfaceAttrition>0.1</SurfaceAttrition>
-	              <PH>0.2</PH>
-	            </RegleEngagementTireur>
-	            <RegleEngagementTireur nom="armes letales autorisees">
-	              <SurfaceAttrition>0.5</SurfaceAttrition>
-	              <PH>0.8</PH>
-	            </RegleEngagementTireur>
-	          </ReglesEngagementTireur>
-                </Cible>
-            </Tir>           
-        </Effets>
-    </Population>
-    
-    <Population nom="test2">
-        <MosID>2</MosID>
-        <ModeleDecisionnel>Population Test</ModeleDecisionnel>
-        <DensiteConcentration>2</DensiteConcentration>
-        <DensiteNominaleDeplacement>20</DensiteNominaleDeplacement>
-        <VitesseDeplacement>24</VitesseDeplacement>
-        <Effets>
-            <Ralentissement/>
-            <Tir>
-                <Tireur/>
-                <Cible/>
-            </Tir>
-        </Effets>
-    </Population>
+  <Population nom="test1">
+    <MosID>0</MosID>
+    <ModeleDecisionnel>Population Test</ModeleDecisionnel>
+    <DensiteConcentration>2</DensiteConcentration>
+    <DensiteNominaleDeplacement>4</DensiteNominaleDeplacement>
+    <VitesseDeplacement>60</VitesseDeplacement>
+    <Effets>
+      <Ralentissement>
+        <Attitudes>
+          <Attitude nom="calme">
+            <VolumesPions>
+              <VolumePion densitePopulation="0.9" nom="Gros" vitesseMaximale="41"/>
+              <VolumePion densitePopulation="0.9" nom="Petit" vitesseMaximale="42"/>
+            </VolumesPions>
+          </Attitude>
+          <Attitude nom="agitee">
+            <VolumesPions>
+              <VolumePion densitePopulation="0.9" nom="Gros" vitesseMaximale="31"/>
+              <VolumePion densitePopulation="0.9" nom="Moyen" vitesseMaximale="33"/>
+              <VolumePion densitePopulation="0.9" nom="Petit" vitesseMaximale="32"/>
+            </VolumesPions>
+          </Attitude>
+          <Attitude nom="excitee">
+            <VolumesPions/>
+          </Attitude>
+          <Attitude nom="agressive">
+            <VolumesPions>
+              <VolumePion densitePopulation="0.9" nom="Gros" vitesseMaximale="21"/>
+              <VolumePion densitePopulation="0.9" nom="Petit" vitesseMaximale="22"/>
+            </VolumesPions>
+          </Attitude>
+        </Attitudes>
+      </Ralentissement>
+      <Tir>
+        <Tireur>
+          <Attitudes>
+            <Attitude nom="calme">
+              <Intensite densitePopulation="2" intensite="0.01"/>
+              <ProtectionsPions>
+                <ProtectionPion nom="CharLourd">
+                  <Destruction>0.1</Destruction>
+                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
+                  <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
+                </ProtectionPion>
+                <ProtectionPion nom="BlindeLeger">
+                  <Destruction>0.2</Destruction>
+                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
+                  <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
+                </ProtectionPion>
+              </ProtectionsPions>
+            </Attitude>
+            <Attitude nom="agitee">
+              <Intensite densitePopulation="2" intensite="0.05"/>
+              <ProtectionsPions>
+                <ProtectionPion nom="CharLourd">
+                  <Destruction>0.1</Destruction>
+                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
+                  <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
+                </ProtectionPion>
+                <ProtectionPion nom="BlindeLeger">
+                  <Destruction>0.2</Destruction>
+                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
+                  <ReparableSansEvacuation>0.4</ReparableSansEvacuation>
+                </ProtectionPion>
+              </ProtectionsPions>
+            </Attitude>
+            <Attitude nom="agressive">
+              <Intensite densitePopulation="2" intensite="0.9"/>
+              <ProtectionsPions>
+                <ProtectionPion nom="CharLourd">
+                  <Destruction>0.1</Destruction>
+                  <ReparableAvecEvacuation>0.4</ReparableAvecEvacuation>
+                  <ReparableSansEvacuation>0.5</ReparableSansEvacuation>
+                </ProtectionPion>
+                <ProtectionPion nom="BlindeLeger">
+                  <Destruction>0.8</Destruction>
+                  <ReparableAvecEvacuation>0.1</ReparableAvecEvacuation>
+                  <ReparableSansEvacuation>0.1</ReparableSansEvacuation>
+                </ProtectionPion>
+              </ProtectionsPions>
+            </Attitude>
+          </Attitudes>
+        </Tireur>
+        <Cible>
+          <ReglesEngagementTireur>
+            <RegleEngagementTireur nom="emploi force interdit">
+              <SurfaceAttrition>0.1</SurfaceAttrition>
+              <PH>0</PH>
+            </RegleEngagementTireur>
+            <RegleEngagementTireur nom="dispersion par moyens de defense actifs">
+              <SurfaceAttrition>0.1</SurfaceAttrition>
+              <PH>0.2</PH>
+            </RegleEngagementTireur>
+            <RegleEngagementTireur nom="armes letales autorisees">
+              <SurfaceAttrition>0.5</SurfaceAttrition>
+              <PH>0.8</PH>
+            </RegleEngagementTireur>
+          </ReglesEngagementTireur>
+        </Cible>
+      </Tir>
+    </Effets>
+  </Population>
+
+  <Population nom="test2">
+    <MosID>1</MosID>
+    <ModeleDecisionnel>Population Test</ModeleDecisionnel>
+    <DensiteConcentration>2</DensiteConcentration>
+    <DensiteNominaleDeplacement>20</DensiteNominaleDeplacement>
+    <VitesseDeplacement>24</VitesseDeplacement>
+    <Effets>
+      <Ralentissement>
+        <Attitudes>
+          <Attitude nom="calme">
+            <VolumesPions/>
+          </Attitude>
+          <Attitude nom="agitee">
+            <VolumesPions/>
+          </Attitude>
+          <Attitude nom="excitee">
+            <VolumesPions/>
+          </Attitude>
+          <Attitude nom="agressive">
+            <VolumesPions/>
+          </Attitude>
+        </Attitudes>
+      </Ralentissement>
+      <Tir>
+        <Tireur>
+          <Attitudes/>
+        </Tireur>
+        <Cible>
+          <ReglesEngagementTireur/>
+        </Cible>
+      </Tir>
+    </Effets>
+  </Population>
+
 </Populations>

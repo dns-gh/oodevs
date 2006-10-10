@@ -43,4 +43,8 @@
     <Populations>Data/Populations.xml</Populations>
   </Donnees>
 
+  <Dispatcher>
+    <Profiles>Data/Profiles.xml</Profiles>
+  </Dispatcher>
+
 </Scipio>

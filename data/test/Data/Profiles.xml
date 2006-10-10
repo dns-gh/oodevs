@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<profiles>
+    <profile name="test">
+        <password>cock</password>
+        <rights>
+            <readonly>
+                <automat id="5000001"/>
+                <side id="2621445"/>
+            </readonly>
+            
+            <readwrite>
+                <automat id="5000001"/>
+                <automat id="5000000"/>
+                <automat id="1458"/>                    
+            </readwrite>
+            
+            <supervision>true</supervision>
+        </rights>
+    </profile>
+</profiles>

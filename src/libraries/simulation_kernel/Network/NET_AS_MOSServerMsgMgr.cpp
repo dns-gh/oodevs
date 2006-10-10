@@ -114,38 +114,16 @@ void NET_AS_MOSServerMsgMgr::Disable( DIN_Link& link )
 // TOOLS
 //=============================================================================
 
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgToAllMos
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgToAllMos( uint nMsgID, DIN::DIN_BufferedMessage& msg )
-{
-    const T_MosConnectionMap& connections = agentServer_.GetConnectionMgr().GetMosConnections();
-    MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    for( CIT_MosConnectionMap itConnection = connections.begin(); itConnection != connections.end(); ++itConnection )
-        messageService_.Send( itConnection->second->GetLink(), nMsgID, msg );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgToAllMosLight
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgToAllMosLight( uint nMsgID, DIN::DIN_BufferedMessage& msg )
-{
-    const T_MosConnectionMap& connections = agentServer_.GetConnectionMgr().GetMosLightConnections();
-    MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    for( CIT_MosConnectionMap itConnection = connections.begin(); itConnection != connections.end(); ++itConnection )
-        messageService_.Send( itConnection->second->GetLink(), nMsgID, msg );    
-}
-
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::SendMsgToAll
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgToAll( uint nMsgID, DIN_BufferedMessage& msg ) 
 {
-    SendMsgToAllMos     ( nMsgID, msg );
-    SendMsgToAllMosLight( nMsgID, msg );
+    const T_ConnectionMap& connections = agentServer_.GetConnectionMgr().GetConnections();
+    MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
+    for( CIT_ConnectionMap itConnection = connections.begin(); itConnection != connections.end(); ++itConnection )
+        messageService_.Send( itConnection->second->GetLink(), nMsgID, msg );    
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +155,7 @@ void NET_AS_MOSServerMsgMgr::DeleteMessagesFrom( DIN_Link& dinLink )
 //-----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgProfilingValues( DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgProfilingValues, msg );
+    SendMsgToAll( eMsgProfilingValues, msg );
 }
 
 //=============================================================================
@@ -231,7 +209,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgInit( NET_AS_MOSServer& mosServer, DIN_Buffe
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgKnowledgeGroup( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgKnowledgeGroup, msg );
+    SendMsgToAll( eMsgKnowledgeGroup, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,7 +218,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgKnowledgeGroup( DIN::DIN_BufferedMessage& ms
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgArmy( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgArmy, msg );
+    SendMsgToAll( eMsgArmy, msg );
 }
 
 //-----------------------------------------------------------------------------
@@ -249,7 +227,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgArmy( DIN::DIN_BufferedMessage& msg )
 //-----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgTrace( DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgTrace, msg );
+    SendMsgToAll( eMsgTrace, msg );
 }
 
 //-----------------------------------------------------------------------------
@@ -258,7 +236,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgTrace( DIN_BufferedMessage& msg )
 //-----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgUnitVisionCones( DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgUnitVisionCones, msg );
+    SendMsgToAll( eMsgUnitVisionCones, msg );
 }
 
 //-----------------------------------------------------------------------------
@@ -267,7 +245,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgUnitVisionCones( DIN_BufferedMessage& msg )
 //-----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgUnitInterVisibility( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgUnitInterVisibility, msg );
+    SendMsgToAll( eMsgUnitInterVisibility, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,7 +254,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgUnitInterVisibility( DIN::DIN_BufferedMessag
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgObjectInterVisibility( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgObjectInterVisibility, msg );    
+    SendMsgToAll( eMsgObjectInterVisibility, msg );    
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +263,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgObjectInterVisibility( DIN::DIN_BufferedMess
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgPopulationConcentrationInterVisibility, msg );
+    SendMsgToAll( eMsgPopulationConcentrationInterVisibility, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -294,7 +272,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgPopulationConcentrationInterVisibility( DIN:
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgPopulationFlowInterVisibility( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgPopulationFlowInterVisibility, msg );
+    SendMsgToAll( eMsgPopulationFlowInterVisibility, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,7 +281,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgPopulationFlowInterVisibility( DIN::DIN_Buff
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgPopulationCollision( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgPopulationCollision, msg );
+    SendMsgToAll( eMsgPopulationCollision, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -312,7 +290,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgPopulationCollision( DIN::DIN_BufferedMessag
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgDebugDrawPoints, msg );
+    SendMsgToAll( eMsgDebugDrawPoints, msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -321,7 +299,7 @@ void NET_AS_MOSServerMsgMgr::SendMsgDebugDrawPoints( DIN::DIN_BufferedMessage& m
 // -----------------------------------------------------------------------------
 void NET_AS_MOSServerMsgMgr::SendMsgEnvironmentType( DIN::DIN_BufferedMessage& msg )
 {
-    SendMsgToAllMosLight( eMsgEnvironmentType, msg );
+    SendMsgToAll( eMsgEnvironmentType, msg );
 }
 
 //=============================================================================
@@ -353,12 +331,12 @@ void NET_AS_MOSServerMsgMgr::SendMsgOutSim( ASN1T_MsgsOutSim& asnMsg )
 // Name: NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom, const ASN1T_MsgCtrlClientAnnouncement& asnMsg )
+void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom )
 {
     //$$$ A revoir totalement
-    MT_LOG_INFO_MSG( MT_FormatString( "Announcement from client %s - Type : %s", linkFrom.GetRemoteAddress().GetAddressAsString().c_str(), asnMsg == MsgCtrlClientAnnouncement::mos ? "Mos" : "Mos_Light" ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "Announcement from client %s", linkFrom.GetRemoteAddress().GetAddressAsString().c_str() ) );
 
-    NET_AS_MOSServer& connection = agentServer_.GetConnectionMgr().AddConnection( linkFrom, (NET_AS_MOSServer::E_ClientType)asnMsg );
+    NET_AS_MOSServer& connection = agentServer_.GetConnectionMgr().AddConnection( linkFrom );
     
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
 
@@ -373,16 +351,13 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
     asnMsgCtrlInfo.Send();
 
     // Init message - MOS Light ONLY
-    if( connection.GetClientType() == NET_AS_MOSServer::eMosLight )
-    {
-        DIN_BufferedMessage msg = BuildMessage(); // $$$$ AGE 2005-03-07: The critical section is probably locked twice here. And in many other places
-        msg << (uint8)workspace.GetAgentServer    ().MustSendUnitVisionCones();
-        msg << (uint8)workspace.GetProfilerManager().IsProfilingEnabled     ();
-        // $$$$ AGE 2006-05-11: un peu crado
-        const std::string conffile = MT_GetCurrentDir() + '\\' + MIL_AgentServer::GetWorkspace().GetConfig().GetConfigFileName();
-        msg << conffile;
-        SendMsgInit( connection, msg );
-    }
+    DIN_BufferedMessage msg = BuildMessage(); // $$$$ AGE 2005-03-07: The critical section is probably locked twice here. And in many other places
+    msg << (uint8)workspace.GetAgentServer    ().MustSendUnitVisionCones();
+    msg << (uint8)workspace.GetProfilerManager().IsProfilingEnabled     ();
+    // $$$$ AGE 2006-05-11: un peu crado
+    const std::string conffile = MT_GetCurrentDir() + '\\' + MIL_AgentServer::GetWorkspace().GetConfig().GetConfigFileName();
+    msg << conffile;
+    SendMsgInit( connection, msg );
 
     NET_ASN_MsgCtrlSendCurrentStateBegin asnMsgStateBegin;
     asnMsgStateBegin.Send();
@@ -528,7 +503,7 @@ void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageControllerVector& messages
         MIL_MOSContextID nCtx = asnMsg.context;
         switch( asnMsg.msg.t )
         {
-            case T_MsgsInSim_msg_msg_ctrl_client_announcement          : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink(), asnMsg.msg.u.msg_ctrl_client_announcement ); break;
+            case T_MsgsInSim_msg_msg_ctrl_client_announcement          : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink() ); break;
             case T_MsgsInSim_msg_msg_ctrl_stop                         : OnReceiveMsgCtrlStop              (); break;
             case T_MsgsInSim_msg_msg_ctrl_pause                        : OnReceiveMsgCtrlPause             (); break;
             case T_MsgsInSim_msg_msg_ctrl_resume                       : OnReceiveMsgCtrlResume            (); break;

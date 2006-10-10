@@ -18,7 +18,7 @@ IMPORTS EnumObjectType, AttrObjectSpecific FROM ScipioObject;
 MsgObjectKnowledgeCreation ::= SEQUENCE
 {
     oid-connaissance            OID, 
-    oid-camp-possesseur         OID, 
+    oid-camp-possesseur         Camp, 
     oid-objet-reel              OID, -- id de l'objet réel pointé par la connaissance
     type                        EnumObjectType,
     type-dotation-construction  TypeDotation OPTIONAL,
@@ -28,7 +28,7 @@ MsgObjectKnowledgeCreation ::= SEQUENCE
 MsgObjectKnowledgeUpdate ::= SEQUENCE
 {
     oid-connaissance           OID,
-    oid-camp-possesseur        OID,
+    oid-camp-possesseur        Camp,
     oid-objet-reel             OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
     pertinence                 INTEGER( 0..100 )  OPTIONAL,
     localisation               Localisation       OPTIONAL,
@@ -46,7 +46,7 @@ MsgObjectKnowledgeUpdate ::= SEQUENCE
 MsgObjectKnowledgeDestruction ::= SEQUENCE
 {
     oid-connaissance    OID,    
-    oid-camp-possesseur OID     
+    oid-camp-possesseur Camp     
 }
 
 END -- ScipioObjectKnowledge

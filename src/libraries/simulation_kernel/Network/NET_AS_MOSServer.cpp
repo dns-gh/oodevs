@@ -19,10 +19,9 @@ using namespace DIN;
 // Name: NET_AS_MOSServer constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AS_MOSServer::NET_AS_MOSServer( DIN::DIN_Link& link, E_ClientType nClientType )
+NET_AS_MOSServer::NET_AS_MOSServer( DIN::DIN_Link& link )
     : DIN_UserData_ABC()
     , link_           ( link )
-    , nClientType_    ( nClientType )
 {
     assert( !link_.GetUserData() );
     link_.SetUserData( this );

@@ -16,23 +16,48 @@
 #include "ClientsNetworker.h"
 #include "ProfileManager.h"
 
+#include "xeumeuleu/xml.h"
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
+
+namespace bfs = boost::filesystem;
+
 using namespace dispatcher;
+
+//$$$ a déplacer
+std::string BuildChildPath( const std::string& parent, const std::string& child )
+{
+    bfs::path parentPath( parent.c_str(), bfs::native );
+    bfs::path childPath( child.c_str(), bfs::native );
+    return ( parentPath.branch_path() / childPath ).native_file_string();
+}
 
 // -----------------------------------------------------------------------------
 // Name: Dispatcher constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Dispatcher::Dispatcher()
+Dispatcher::Dispatcher( const std::string& strConfFile )
     : pModel_              ( 0 )
     , pSimulationNetworker_( 0 )
     , pClientsNetworker_   ( 0 )
     , pProfileManager_     ( 0 )
 {
-    //$$$ TMP
+    std::string strProfiles_;
+
+    xml::xifstream xisMain( strConfFile );
+    xisMain >> xml::start( "Scipio" )
+                >> xml::start( "Dispatcher" )
+                    >> xml::content( "Profiles", strProfiles_ )
+                >> xml::end()
+            >> xml::end();
+        
     pModel_               = new Model              ( *this );
-    pSimulationNetworker_ = new SimulationNetworker( *this , "localhost", 10000 );
-    pClientsNetworker_    = new ClientsNetworker   ( *this , 10001 );
-    pProfileManager_      = new ProfileManager     ( *this );
+    pSimulationNetworker_ = new SimulationNetworker( *this , "localhost", 10000 ); //$$$
+    pClientsNetworker_    = new ClientsNetworker   ( *this , 10001 ); //$$$
+    pProfileManager_      = new ProfileManager     ( *this, BuildChildPath( strConfFile, strProfiles_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,15 +82,12 @@ Dispatcher::~Dispatcher()
 // -----------------------------------------------------------------------------
 void Dispatcher::Update()
 {
-    assert( pProfileManager_      );
     assert( pClientsNetworker_    );
     assert( pSimulationNetworker_ );
 
-    pProfileManager_     ->Update();
     pClientsNetworker_   ->Update();
     pSimulationNetworker_->Update();
 }
-
 
 // =============================================================================
 // DISPATCHING

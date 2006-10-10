@@ -13,6 +13,11 @@
 struct ASN1T_MsgsInClient;
 struct ASN1T_MsgsInSim;
 
+namespace DIN
+{
+    class DIN_Input;
+}
+
 namespace dispatcher
 {
 
@@ -32,7 +37,7 @@ class Dispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-     Dispatcher();
+     Dispatcher( const std::string& strConfFile );
     ~Dispatcher();
     //@}
 
@@ -53,6 +58,7 @@ public:
     //@{
     Model&            GetModel           () const;
     ClientsNetworker& GetClientsNetworker() const;
+    ProfileManager&   GetProfileManager  () const;
     //@}
 
 private:

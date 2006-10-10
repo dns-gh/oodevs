@@ -83,9 +83,7 @@ public:
 private:
     //! @name Tools
     //@{
-    void SendMsgToAll        ( uint nMsgID, DIN::DIN_BufferedMessage& msg );
-    void SendMsgToAllMos     ( uint nMsgID, DIN::DIN_BufferedMessage& msg );
-    void SendMsgToAllMosLight( uint nMsgID, DIN::DIN_BufferedMessage& msg );
+    void SendMsgToAll( uint nMsgID, DIN::DIN_BufferedMessage& msg );
     //@}
 
     //! @name Msg callbacks
@@ -99,7 +97,7 @@ private:
     
     void OnReceiveMsgInSim                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
-    void OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom, const ASN1T_MsgCtrlClientAnnouncement& asnMsg );
+    void OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& linkFrom );
     void OnReceiveMsgCtrlStop              ();
     void OnReceiveMsgCtrlPause             ();
     void OnReceiveMsgCtrlResume            ();

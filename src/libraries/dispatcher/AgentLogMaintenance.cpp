@@ -107,7 +107,7 @@ void AgentLogMaintenance::Send( Publisher_ABC& publisher ) const
     haulersAvailability_  .Send< ASN1T__SeqOfMaintenanceDisponibiliteMoyens, ASN1T_MaintenanceDisponibiliteMoyens >( asn().disponibilites_remorqueurs );
 
     tacticalPriorities_.Send< ASN1T_ListAutomate, ASN1T_Automate >( asn().priorites_tactiques );
-    SendVector< ASN1T_MaintenancePriorites, ASN1T_TypeEquipement, T_EquipmentTypeVector >( priorities_, asn().priorites );
+    SendContainerValues< ASN1T_MaintenancePriorites, ASN1T_TypeEquipement, T_EquipmentTypeVector >( priorities_, asn().priorites );
 
     asn.Send( publisher );
 

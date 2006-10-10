@@ -139,8 +139,10 @@ void Network::Update()
             {
                 MT_LOG_INFO_MSG( tools::translate( "Reseau", "Connecté à " ) << it->link_->GetRemoteAddress().GetAddressAsString() );
                 manager_->Enable( *session_ );
-                ASN_MsgCtrlClientAnnouncement asnMsg;
-                asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
+
+                ASN_MsgAuthLogin asnMsg;
+                asnMsg.GetAsnMsg().login    = "test";
+                asnMsg.GetAsnMsg().password = "cock";
                 asnMsg.Send( *manager_ );
                 
                 simu_.Connect( it->address_ );

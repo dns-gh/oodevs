@@ -46,7 +46,10 @@ SIM_App::SIM_App( int nArgc, char* pArgv[] )
     ParseCmdArgs( nArgc, pArgv, startupConfig_ );
 
     if( startupConfig_.IsDispatcherEmbedded() )
-        pDispatcher_ = new SIM_Dispatcher();
+    {
+        MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
+        pDispatcher_ = new SIM_Dispatcher( startupConfig_.GetConfigFileName() );
+    }
 
     try
     {

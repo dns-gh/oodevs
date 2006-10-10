@@ -16,8 +16,8 @@
 // Name: SIM_Dispatcher constructor
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
-SIM_Dispatcher::SIM_Dispatcher()
-    : dispatcher_()
+SIM_Dispatcher::SIM_Dispatcher( const std::string& strConfFile )
+    : dispatcher_( strConfFile )
 {
     Thread::Start();
 }

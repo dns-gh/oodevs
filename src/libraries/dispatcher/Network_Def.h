@@ -199,8 +199,12 @@ GENERATE_ASN_MSG_SENDER         ( Client, PopulationConcentrationKnowledgeUpdate
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeCreation               , population_flux_knowledge_creation                );
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeDestruction            , population_flux_knowledge_destruction             );
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeUpdate                 , population_flux_knowledge_update                  );
+GENERATE_ASN_MSG_SENDER         ( Client, AuthLoginAck                                  , auth_login_ack                                    );
+GENERATE_ASN_MSG_SENDER         ( Client, CtrlProfileCreation                           , ctrl_profile_creation                             );
+GENERATE_ASN_MSG_SENDER         ( Client, CtrlProfileUpdate                             , ctrl_profile_update                               );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, CtrlProfileDestruction                        , ctrl_profile_destruction                          );
 
-GENERATE_NOPTR_ASN_MSG_SENDER   ( Sim, CtrlClientAnnouncement        , ctrl_client_announcement         );
+GENERATE_EMPTY_ASN_MSG_SENDER   ( Sim, CtrlClientAnnouncement        , ctrl_client_announcement         );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Sim, CtrlStop                      , ctrl_stop                        );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Sim, CtrlPause                     , ctrl_pause                       );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Sim, CtrlResume                    , ctrl_resume                      );
@@ -232,7 +236,7 @@ GENERATE_ASN_MSG_SENDER         ( Sim, LogRavitaillementChangeQuotas , log_ravit
 
 
 template< typename L, typename E, typename P > 
-void SendVector( const P& container, L& asnList )
+void SendContainerValues( const P& container, L& asnList )
 {
     asnList.n = container.size();
     if( !container.empty() )
@@ -241,6 +245,19 @@ void SendVector( const P& container, L& asnList )
         uint i = 0;
         for( P::const_iterator it = container.begin(); it != container.end(); ++it, ++i )
             asnList.elem[ i ] = *it;
+    }
+}
+
+template< typename L, typename E, typename P > 
+void SendContainerRefs( const P& container, L& asnList )
+{
+    asnList.n = container.size();
+    if( !container.empty() )
+    {
+        asnList.elem = new E[ container.size() ];
+        uint i = 0;
+        for( P::const_iterator it = container.begin(); it != container.end(); ++it, ++i )
+            asnList.elem[ i ] = (**it).GetID();
     }
 }
 

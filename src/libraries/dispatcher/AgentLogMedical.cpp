@@ -117,7 +117,7 @@ void AgentLogMedical::Send( Publisher_ABC& publisher ) const
     doctorsAvailability_             .Send< ASN1T__SeqOfSanteDisponibiliteMoyens, ASN1T_SanteDisponibiliteMoyens >( asn().disponibilites_medecins             );
 
     tacticalPriorities_.Send< ASN1T_ListAutomate, ASN1T_Automate >( asn().priorites_tactiques );
-    SendVector< ASN1T_SantePriorites, ASN1T_EnumHumanWound, T_HumanWoundVector >( priorities_, asn().priorites );
+    SendContainerValues< ASN1T_SantePriorites, ASN1T_EnumHumanWound, T_HumanWoundVector >( priorities_, asn().priorites );
 
     asn.Send( publisher );
 

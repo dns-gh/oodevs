@@ -35,12 +35,3 @@ DIN::DIN_StationID NET_AS_MOSServer::GetStationID() const
     return link_.GetStationID();
 }
 
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServer::GetClientType
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-inline
-NET_AS_MOSServer::E_ClientType NET_AS_MOSServer::GetClientType() const
-{
-    return nClientType_;    
-}

@@ -14,7 +14,7 @@
 
 namespace dispatcher
 {
-
+class Profile;
 class Dispatcher;
 
 // =============================================================================
@@ -64,13 +64,14 @@ private:
 
     //! @name Messages
     //@{
-    void OnReceiveMsgCtrlClientAnnouncement( const ASN1T_MsgCtrlClientAnnouncement& asnMsg );
+    void OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& asnMsg );
     //@}
 
 private:
     Dispatcher&                  dispatcher_;
     DIN::DIN_MessageService_ABC& messageService_;
     DIN::DIN_Link&               link_;
+    Profile*                     pProfile_;
 };
 
 }

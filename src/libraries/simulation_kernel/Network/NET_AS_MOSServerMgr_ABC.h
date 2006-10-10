@@ -29,9 +29,9 @@ public:
     /** @name Types */
     //-------------------------------------------------------------------------
     //@{
-    typedef std::map< DIN::DIN_StationID, NET_AS_MOSServer* > T_MosConnectionMap;
-    typedef T_MosConnectionMap::iterator                      IT_MosConnectionMap;
-    typedef T_MosConnectionMap::const_iterator                CIT_MosConnectionMap;
+    typedef std::map< DIN::DIN_StationID, NET_AS_MOSServer* > T_ConnectionMap;
+    typedef T_ConnectionMap::iterator                         IT_ConnectionMap;
+    typedef T_ConnectionMap::const_iterator                   CIT_ConnectionMap;
     //@}
 
 public:

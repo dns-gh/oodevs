@@ -236,6 +236,11 @@ MsgsInClient ::= SEQUENCE
         msg-ctrl-send-current-state-begin                       MsgCtrlSendCurrentStateBegin,
         msg-ctrl-send-current-state-end                         MsgCtrlSendCurrentStateEnd,
 
+        msg-auth-login-ack                                      MsgAuthLoginAck,
+        msg-ctrl-profile-creation                               MsgCtrlProfileCreation,
+        msg-ctrl-profile-update                                 MsgCtrlProfileUpdate,
+        msg-ctrl-profile-destruction                            MsgCtrlProfileDestruction,
+
         msg-limit-creation                                      MsgLimitCreation,
         msg-limit-destruction                                   MsgLimitDestruction,
         msg-lima-creation                                       MsgLimaCreation,
@@ -320,7 +325,6 @@ MsgsOutClient ::= SEQUENCE
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
-        msg-ctrl-client-announcement            MsgCtrlClientAnnouncement,
         msg-ctrl-stop                           MsgCtrlStop,
         msg-ctrl-pause                          MsgCtrlPause,
         msg-ctrl-resume                         MsgCtrlResume,
@@ -329,6 +333,11 @@ MsgsOutClient ::= SEQUENCE
         msg-ctrl-meteo-locale                   MsgCtrlMeteoLocale,
         msg-ctrl-checkpoint-save-now            MsgCtrlCheckPointSaveNow,
         msg-ctrl-checkpoint-set-frequency       MsgCtrlCheckPointSetFrequency, 
+        
+        msg-auth-login                          MsgAuthLogin,
+        msg-ctrl-profile-creation               MsgCtrlProfileCreation,
+        msg-ctrl-profile-update                 MsgCtrlProfileUpdate,
+        msg-ctrl-profile-destruction            MsgCtrlProfileDestruction,        
       
         msg-limit-creation                      MsgLimitCreation,
         msg-limit-destruction                   MsgLimitDestruction,

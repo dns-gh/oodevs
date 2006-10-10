@@ -368,7 +368,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().etat_installation = nInstallationState_;
         asn().en_tenue_de_protection_nbc = bNbcProtectionSuitEnabled_;
 
-        SendVector< ASN1T_ListOID, ASN1T_OID, T_OIDVector >( nbcAgentTypesContaminating_, asn().contamine_par_agents_nbc ); 
+        SendContainerValues< ASN1T_ListOID, ASN1T_OID, T_OIDVector >( nbcAgentTypesContaminating_, asn().contamine_par_agents_nbc ); 
 
         asn().etat_contamination = nContaminationState_;
         asn().communications_brouillees = bCommunicationJammed_;

@@ -130,7 +130,6 @@ void ClientsNetworker::OnConnectionLost( DIN_Server& /*server*/, DIN_Link& link,
 // RECEIVED MESSAGES
 // =============================================================================
 
-//$$$ TMP MESSAGES DIN
 #define DECLARE_DIN_CALLBACK( MSG )                                                           \
     void ClientsNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )  \
     {                                                                                         \

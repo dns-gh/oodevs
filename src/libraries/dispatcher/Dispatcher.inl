@@ -32,4 +32,15 @@ ClientsNetworker& Dispatcher::GetClientsNetworker() const
     return *pClientsNetworker_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Dispatcher::GetProfileManager
+// Created: NLD 2006-10-06
+// -----------------------------------------------------------------------------
+inline
+ProfileManager& Dispatcher::GetProfileManager() const
+{
+    assert( pProfileManager_ );
+    return *pProfileManager_;
+}
+
 }

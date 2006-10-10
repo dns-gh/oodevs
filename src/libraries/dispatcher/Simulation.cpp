@@ -18,6 +18,7 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "SimulationPublisher.h"
+#include "ProfileManager.h"
 
 using namespace dispatcher;
 using namespace DIN;
@@ -37,8 +38,6 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
     messageService_.Enable( link_ );
 
     AsnMsgInSimCtrlClientAnnouncement asnMsg;
-    asnMsg() = MsgCtrlClientAnnouncement::mos_light;
-
     SimulationPublisher publisher( *this );
     asnMsg.Send( publisher );
 }
@@ -126,22 +125,23 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_set_frequency_ack                 );
         DISPATCH_EMPTY_ASN_MSG( ctrl_checkpoint_save_now_ack                      );
 
-        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:                                   
+        //$$$ a déplacer
+        case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:
         {
             dispatcher_.GetClientsNetworker().DenyConnections();
             dispatcher_.GetModel           ().Reset();
 
             MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
-            break;                                                          
-        } 
+            break;
+        }
 
         case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:  
-        {   
+        {
             MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
-            //dispatcher_.GetProfileManager  ().Reset(); initialization profiles
+            dispatcher_.GetProfileManager  ().Reset(); // Profiles initialization
             dispatcher_.GetClientsNetworker().AllowConnections();
-            break;                                                          
-        } 
+            break;
+        }
 
         DISPATCH_ASN_MSG( limit_creation                                    );
         DISPATCH_ASN_MSG( limit_destruction                                 );

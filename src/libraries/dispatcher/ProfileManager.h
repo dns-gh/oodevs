@@ -10,10 +10,12 @@
 #ifndef __ProfileManager_h_
 #define __ProfileManager_h_
 
+namespace xml{ class xistream; };
+
 namespace dispatcher
 {
-
 class Dispatcher;
+class Profile;
 
 // =============================================================================
 /** @class  ProfileManager
@@ -26,13 +28,14 @@ class ProfileManager
 public:
     //! @name Constructors/Destructor
     //@{
-     ProfileManager( Dispatcher& dispatcher );
-    ~ProfileManager();
+    ProfileManager( Dispatcher& dispatcher, const std::string& strFile );
+    virtual ~ProfileManager();
     //@}
 
     //! @name Main
     //@{
-    void Update();
+    void     Reset       ();
+    Profile* Authenticate( const std::string& strName, const std::string& strPassword );
     //@}
 
 private:
@@ -42,8 +45,23 @@ private:
     ProfileManager& operator=( const ProfileManager& ); //!< Assignement operator
     //@}
 
+    //! @name Tools
+    //@{
+    void ReadProfile( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, Profile* > T_ProfileMap;
+    typedef T_ProfileMap::const_iterator      CIT_ProfileMap;
+    //@}
+
 private:
     Dispatcher& dispatcher_;
+    const std::string strFile_;
+
+    T_ProfileMap profiles_;
 };
 
 }

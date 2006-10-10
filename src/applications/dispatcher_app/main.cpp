@@ -7,46 +7,42 @@
 //
 // *****************************************************************************
 
-#include <cassert>
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
+#include "App.h"
+#include "MT_Tools/MT_CrashHandler.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
-#include "dispatcher/Dispatcher.h"
+//#include "paranoia/ParanoiaFacade.h"
+#include <windows.h>
 
-#include <windows.h> //$$$ A VIRER
+//-----------------------------------------------------------------------------
+// Name: Run()
+// Created: NLD 2004-02-04
+//-----------------------------------------------------------------------------
+int Run( int argc, char** argv )
+{
+//#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
+//    ParanoiaFacade::CheckLicense( "dispatcher" );
+//#endif
+    MT_ConsoleLogger        consoleLogger;
+    MT_LOG_REGISTER_LOGGER( consoleLogger );
 
-using namespace dispatcher;
+    App app( argc, argv );
+    int nResult = app.Execute();
+
+    MT_LOG_UNREGISTER_LOGGER( consoleLogger );
+    return nResult;
+}
 
 //-----------------------------------------------------------------------------
 // Name: main constructor
 // Created: FBD 02-11-22
 //-----------------------------------------------------------------------------
-int main( int nArgc, char* pArgv[] )
+int main( int argc, char** argv )
 {
-//    std::string strMsg = "Scipio SIM - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
-//    MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-//    MT_LOG_STARTUP_MESSAGE( strMsg.c_str() );
-//    MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-
-    MT_ConsoleLogger        consoleLogger;
-    MT_LOG_REGISTER_LOGGER( consoleLogger );
-
-    Dispatcher dispatcher;
-
-    while( 1 )
+    __try
     {
-        ::Sleep( 0 );
-        dispatcher.Update();
+        return Run( argc, argv );
     }
-
-
-    //     __try
-//    {
-//        return Run( nArgc, pArgv );
-//    }
-//    __except( WriteMiniDump( GetExceptionInformation() ) )
-//    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
-//    {
-//    }
-
-    MT_LOG_UNREGISTER_LOGGER( consoleLogger );
+    __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
+    {
+    }
 }

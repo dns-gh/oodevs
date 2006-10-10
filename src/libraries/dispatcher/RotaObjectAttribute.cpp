@@ -68,7 +68,7 @@ void RotaObjectAttribute::Send( ASN1T_AttrObjectSpecific& asnMsg ) const
 
     asnMsg.u.rota->niveau_danger = nDanger_;
 
-    SendVector< ASN1T__SeqOfOID, ASN1T_OID, T_IDVector >( nbcAgents_, asnMsg.u.rota->agents_nbc );
+    SendContainerValues< ASN1T__SeqOfOID, ASN1T_OID, T_IDVector >( nbcAgents_, asnMsg.u.rota->agents_nbc );
 }
 
 // -----------------------------------------------------------------------------

@@ -130,19 +130,10 @@ void NET_AS_MOSServerConnectionMgr::OnConnectionLost( DIN_Server& /*server*/, DI
 // Name: NET_AS_MOSServerConnectionMgr::AddConnection
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-NET_AS_MOSServer& NET_AS_MOSServerConnectionMgr::AddConnection( DIN::DIN_Link& link, NET_AS_MOSServer::E_ClientType nClientType )
+NET_AS_MOSServer& NET_AS_MOSServerConnectionMgr::AddConnection( DIN::DIN_Link& link )
 {
-    NET_AS_MOSServer* pConnection = new NET_AS_MOSServer( link, nClientType );
-    bool bOut = false;
-    switch( nClientType )
-    {
-        case NET_AS_MOSServer::eMos     : bOut = mosConnectionMap_     .insert( std::make_pair( link.GetStationID(), pConnection ) ).second; break;
-        case NET_AS_MOSServer::eMosLight: bOut = mosLightConnectionMap_.insert( std::make_pair( link.GetStationID(), pConnection ) ).second; break;
-        default:
-            assert( false );
-    }
-
-    assert( bOut );
+    NET_AS_MOSServer* pConnection = new NET_AS_MOSServer( link );
+    connections_.insert( std::make_pair( link.GetStationID(), pConnection ) );
     return *pConnection;
 }
 
@@ -156,15 +147,7 @@ void NET_AS_MOSServerConnectionMgr::RemoveConnection( DIN::DIN_Link& link )
     if( !pConnection )
         return;
 
-    int nOut = 0;
-    switch( pConnection->GetClientType() )
-    {
-        case NET_AS_MOSServer::eMos     : nOut = mosConnectionMap_     .erase( link.GetStationID() ); break;
-        case NET_AS_MOSServer::eMosLight: nOut = mosLightConnectionMap_.erase( link.GetStationID() ); break;
-        default:
-            assert( false ); 
-    }
-    assert( nOut == 1 );
+    connections_.erase( link.GetStationID() );
     delete pConnection;
 }
 
@@ -176,13 +159,7 @@ bool NET_AS_MOSServerConnectionMgr::NeedsUpdating() const
 {
     const unsigned int nMaxPending = 10;
     unsigned int nPending = 0;
-    for( CIT_MosConnectionMap it = mosConnectionMap_.begin(); it != mosConnectionMap_.end() && nPending < nMaxPending; ++it )
-    {
-        assert( it->second );
-        const NET_AS_MOSServer& server = *it->second;
-        nPending += server.GetLink().GetPendingMessages();
-    }
-    for( CIT_MosConnectionMap it = mosLightConnectionMap_.begin(); it != mosLightConnectionMap_.end() && nPending < nMaxPending; ++it )
+    for( CIT_ConnectionMap it = connections_.begin(); it != connections_.end() && nPending < nMaxPending; ++it )
     {
         assert( it->second );
         const NET_AS_MOSServer& server = *it->second;

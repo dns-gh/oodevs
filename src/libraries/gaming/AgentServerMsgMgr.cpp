@@ -1650,6 +1650,12 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
+        case T_MsgsInClient_msg_msg_auth_login_ack:                       /*//$$$$ TODO*/; break;
+        case T_MsgsInClient_msg_msg_ctrl_profile_creation:                /*//$$$$ TODO*/; break;
+        case T_MsgsInClient_msg_msg_ctrl_profile_update:                  /*//$$$$ TODO*/; break;
+        case T_MsgsInClient_msg_msg_ctrl_profile_destruction:             /*//$$$$ TODO*/; break;
+
+
         case T_MsgsInClient_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.msg.u.msg_limit_creation                      ); break;
         case T_MsgsInClient_msg_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.msg.u.msg_limit_destruction                    ); break;
         case T_MsgsInClient_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.msg.u.msg_lima_creation                       ); break;

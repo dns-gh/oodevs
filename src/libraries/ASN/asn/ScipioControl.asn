@@ -44,11 +44,7 @@ MsgCtrlEndTick   ::= SEQUENCE
     nb-pathfinds-courts INTEGER
 }
 
-MsgCtrlClientAnnouncement ::= ENUMERATED
-{
-    mos       (0),
-    mos-light (1)
-}
+MsgCtrlClientAnnouncement ::= NULL
 
 EnumEtatSim ::= ENUMERATED
 {
@@ -90,7 +86,6 @@ MsgCtrlCheckPointSaveNowAck      ::= NULL
 MsgCtrlSendCurrentStateBegin    ::= NULL
 MsgCtrlSendCurrentStateEnd      ::= NULL
                                          
-
 ----------------
 -- METEO
 ----------------
@@ -116,12 +111,10 @@ MeteoAttributs ::= SEQUENCE
     precipitation                       EnumPrecipitationType
 }
 
-
 MsgCtrlMeteoGlobale ::= SEQUENCE
 {
     attributs MeteoAttributs
 }
-
 
 MsgCtrlMeteoLocale ::= SEQUENCE
 {
@@ -136,6 +129,5 @@ MsgCtrlMeteoLocale ::= SEQUENCE
 
 MsgCtrlMeteoGlobaleAck ::= NULL
 MsgCtrlMeteoLocaleAck  ::= NULL
-
 
 END -- ScipioControl

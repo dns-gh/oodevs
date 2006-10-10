@@ -27,7 +27,7 @@ class SIM_Dispatcher : public tools::thread::Thread
 public:
     //! @name Constructors/Destructor
     //@{
-             SIM_Dispatcher();
+             SIM_Dispatcher( const std::string& strConfFile );
     virtual ~SIM_Dispatcher();
     //@}
 
