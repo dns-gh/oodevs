@@ -75,7 +75,7 @@ void AgentTypes::Purge()
     Resolver< AgentType >::DeleteAll();
     Resolver< AgentType, QString >::Clear();
     Resolver< AutomatType >::DeleteAll();
-    Resolver< AutomatType, QString >::DeleteAll();
+    Resolver< AutomatType, QString >::Clear();
     Resolver< ComponentType >::DeleteAll();
     Resolver< ComponentType, QString >::Clear();
     Resolver< DecisionalModel, QString >::DeleteAll();
