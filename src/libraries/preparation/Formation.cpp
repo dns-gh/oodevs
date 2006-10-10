@@ -58,15 +58,6 @@ Formation::Formation( xml::xistream& xis, Controller& controller, const Formatio
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    if( const TacticalHierarchies* hierarchies = Retrieve< TacticalHierarchies >() )
-    {
-        Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Entity_ABC& entity = it.NextElement();
-            delete &entity;
-        }
-    }
     DestroyExtensions();
     controller_.Delete( *(Formation_ABC*)this );
 }

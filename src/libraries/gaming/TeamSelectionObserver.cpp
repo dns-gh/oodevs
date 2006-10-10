@@ -70,7 +70,8 @@ void TeamSelectionObserver::Select( const Team_ABC& element )
 // -----------------------------------------------------------------------------
 void TeamSelectionObserver::Select( const KnowledgeGroup_ABC& element )
 {
-    Select( element.GetTeam() );
+    const Team_ABC& team = static_cast< const Team_ABC& >( element.Get< CommunicationHierarchies >().GetTop() );
+    Select( team );
 }
 
 // -----------------------------------------------------------------------------

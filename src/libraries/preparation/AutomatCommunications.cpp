@@ -29,12 +29,10 @@ AutomatCommunications::AutomatCommunications( Controller& controller, Entity_ABC
 // Name: AutomatCommunications constructor
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-AutomatCommunications::AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
-    : EntityCommunications( controller, holder, 0 )
+AutomatCommunications::AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
+    : EntityCommunications( controller, holder, ReadKnowledgeGroup( xis, groups ) )
 {
-    int group;
-    xis >> attribute( "knowledge-group", group );
-    SetSuperior( &groups.Get( group ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +42,17 @@ AutomatCommunications::AutomatCommunications( xml::xistream& xis, kernel::Contro
 AutomatCommunications::~AutomatCommunications()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatCommunications::ReadKnowledgeGroup
+// Created: AGE 2006-10-10
+// -----------------------------------------------------------------------------
+kernel::KnowledgeGroup_ABC* AutomatCommunications::ReadKnowledgeGroup( xml::xistream& xis, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups )
+{
+    int group;
+    xis >> attribute( "knowledge-group", group );
+    return &groups.Get( group );
 }
 
 // -----------------------------------------------------------------------------

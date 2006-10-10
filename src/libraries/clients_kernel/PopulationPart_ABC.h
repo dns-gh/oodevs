@@ -27,8 +27,8 @@ class PopulationPart_ABC : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPart_ABC() {}
-    virtual ~PopulationPart_ABC() {}
+             PopulationPart_ABC() {};
+    virtual ~PopulationPart_ABC() {};
     //@}
 
     //! @name Accessors

@@ -21,7 +21,7 @@ namespace kernel
     class KnowledgeGroup_ABC;
     class Agent_ABC;
     class Displayer_ABC;
-    class Team_ABC;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -93,7 +93,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Team_ABC > owner_;
+    kernel::SafePointer< kernel::Entity_ABC > owner_;
     gui::ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     gui::DisplayBuilder* display_;
     kernel::SafePointer< PopulationKnowledges >        selected_;

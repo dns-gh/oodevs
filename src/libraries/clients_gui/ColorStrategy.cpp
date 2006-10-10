@@ -35,9 +35,9 @@ using namespace gui;
 ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     : controllers_       ( controllers )
     , tools_             ( tools )
-    , selectedObject_    ( 0 )
-    , selectedAgent_     ( 0 )
-    , selectedPopulation_( 0 )
+    , selectedObject_    ( controllers )
+    , selectedAgent_     ( controllers )
+    , selectedPopulation_( controllers )
     , selectedLine_      ( 0 )
 {
     InitializeSynonyms();

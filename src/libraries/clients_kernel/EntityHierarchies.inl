@@ -33,7 +33,8 @@ EntityHierarchies< Interface >::EntityHierarchies( Controller& controller, Entit
 template< typename Interface >
 EntityHierarchies< Interface >::~EntityHierarchies()
 {
-    // NOTHING
+    if( Interface* superiorHierarchy = SuperiorHierarchy() )
+        superiorHierarchy->UnregisterSubordinate( entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +154,11 @@ const Entity_ABC& EntityHierarchies< Interface >::GetUp( unsigned int nLevel /*=
 template< typename Interface >
 void EntityHierarchies< Interface >::SetSuperior( Entity_ABC* superior )
 {
+    if( Interface* superiorHierarchy = SuperiorHierarchy() )
+            superiorHierarchy->RemoveSubordinate( entity_ );
     superior_ = superior;
+    if( Interface* superiorHierarchy = SuperiorHierarchy() )
+            superiorHierarchy->AddSubordinate( entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,6 +169,16 @@ template< typename Interface >
 Entity_ABC* EntityHierarchies< Interface >::GetSuperior()
 {
     return superior_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::SuperiorHierarchy
+// Created: AGE 2006-10-09
+// -----------------------------------------------------------------------------
+template< typename Interface >
+Interface* EntityHierarchies< Interface >::SuperiorHierarchy()
+{
+    return superior_ ? superior_->Retrieve< Interface >() : 0;
 }
 
 // -----------------------------------------------------------------------------

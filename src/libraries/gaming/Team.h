@@ -21,8 +21,6 @@ namespace kernel
     class InstanciationComplete;
 }
 
-class KnowledgeGroupFactory_ABC;
-
 // =============================================================================
 /** @class  Team
     @brief  Team
@@ -32,13 +30,12 @@ class KnowledgeGroupFactory_ABC;
 class Team : public kernel::Team_ABC
            , public kernel::Extension_ABC
            , public kernel::Updatable_ABC< kernel::InstanciationComplete >
-           , public kernel::Updatable_ABC< KnowledgeGroupCreationMessage >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( uint id, DIN::DIN_Input& input, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory );
+             Team( uint id, DIN::DIN_Input& input, kernel::Controller& controller );
     virtual ~Team();
     //@}
 
@@ -58,14 +55,12 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& message );
-    virtual void DoUpdate( const KnowledgeGroupCreationMessage& message );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    KnowledgeGroupFactory_ABC& factory_;
     QString name_;
     unsigned long id_;
     //@}

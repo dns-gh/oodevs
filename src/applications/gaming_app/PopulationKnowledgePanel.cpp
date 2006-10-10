@@ -13,6 +13,7 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "gaming/PopulationKnowledges.h"
 #include "gaming/PopulationKnowledge.h"
 #include "gaming/PopulationConcentrationKnowledge.h"
@@ -237,8 +238,9 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationConcentrationKnowl
 // -----------------------------------------------------------------------------
 void PopulationKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 {
-    const PopulationKnowledges* k = element ? element->Retrieve< PopulationKnowledges >() : 0;
-    owner_ = element ? & element->GetTeam() : 0;
+    const PopulationKnowledges* k               = element ? element->Retrieve< PopulationKnowledges >() : 0;
+    const CommunicationHierarchies* hierarchies = element ? element->Retrieve< CommunicationHierarchies >() : 0;
+    owner_ = hierarchies ? & hierarchies->GetTop() : 0;
     if( ! k || k != selected_ )
     {
         selected_ = k;

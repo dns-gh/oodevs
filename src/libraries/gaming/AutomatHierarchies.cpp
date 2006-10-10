@@ -33,9 +33,7 @@ AutomatHierarchies::AutomatHierarchies( Controller& controller, Entity_ABC& hold
 // -----------------------------------------------------------------------------
 AutomatHierarchies::~AutomatHierarchies()
 {
-    if( GetSuperior() )
-        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-            hierarchies->UnregisterSubordinate( GetEntity() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -63,11 +61,6 @@ void AutomatHierarchies::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& m
 // -----------------------------------------------------------------------------
 void AutomatHierarchies::UpdateSuperior( kernel::Entity_ABC& superior )
 {
-    if( GetSuperior() )
-        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-            hierarchies->RemoveSubordinate( GetEntity() );
     SetSuperior( &superior );
-    if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-        hierarchies->AddSubordinate( GetEntity() );
     controller_.Update( *(CommunicationHierarchies*)this );
 }

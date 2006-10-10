@@ -15,6 +15,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Units.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/AgentKnowledge.h"
 #include "gaming/AgentKnowledges.h"
 #include "gaming/PerceptionMap.h"
@@ -185,8 +186,9 @@ void AgentKnowledgePanel::AfterSelection()
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 {
-    const AgentKnowledges* k = element ? element->Retrieve< AgentKnowledges >() : 0;
-    owner_ = element ? & element->GetTeam() : 0;
+    const AgentKnowledges* k     = element ? element->Retrieve< AgentKnowledges >() : 0;
+    const TacticalHierarchies* hierarchies = element ? element->Retrieve< TacticalHierarchies >() : 0;
+    owner_ = hierarchies ? & hierarchies->GetTop() : 0;
     if( ! k || k != selected_ )
     {
         selected_ = k;

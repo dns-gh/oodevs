@@ -55,6 +55,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    kernel::Team_ABC& team_;
     //@}
 };
 

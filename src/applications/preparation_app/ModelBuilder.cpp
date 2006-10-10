@@ -24,6 +24,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -99,6 +100,8 @@ bool ModelBuilder::OnDelete()
         delete (const Team_ABC*)selectedTeam_;
     else if( selectedFormation_ )
         delete (const Formation_ABC*)selectedFormation_;
+    else if( selectedAutomat_ )
+        delete (const Automat_ABC*)selectedAutomat_;
     else
         return false;
     return true;
@@ -173,7 +176,7 @@ void ModelBuilder::Select( const Formation_ABC& element )
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Select
-// Created: SBO 2006-10-09
+// Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const kernel::Automat_ABC& element )
 {

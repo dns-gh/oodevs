@@ -21,9 +21,8 @@ IDManager KnowledgeGroup::idManager_( 0 );
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller, const Team_ABC& team )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
     : controller_( controller )
-    , team_( team )
     , nID_ ( nId )
 {
     RegisterSelf( *this );
@@ -51,26 +50,6 @@ void KnowledgeGroup::DoUpdate( const kernel::InstanciationComplete& )
 }   
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::AddAutomat
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::AddAutomat( unsigned long id, Automat_ABC& automat )
-{
-    Resolver< Automat_ABC >::Register( id, automat );
-    controller_.Update( *(KnowledgeGroup_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::RemoveAutomat
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::RemoveAutomat( unsigned long id )
-{
-    Resolver< Automat_ABC >::Remove( id );
-    controller_.Update( *(KnowledgeGroup_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::GetId
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
@@ -86,14 +65,5 @@ unsigned long KnowledgeGroup::GetId() const
 QString KnowledgeGroup::GetName() const
 {
     return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetTeam
-// Created: AGE 2006-02-24
-// -----------------------------------------------------------------------------
-const Team_ABC& KnowledgeGroup::GetTeam() const
-{
-    return team_;
 }
 

@@ -43,7 +43,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const Team_ABC& GetTeam() const = 0;
+    virtual const Team_ABC& GetTeam() const = 0; // $$$$ AGE 2006-10-09: 
     virtual ObjectType& GetType() const = 0;
     //@}
 

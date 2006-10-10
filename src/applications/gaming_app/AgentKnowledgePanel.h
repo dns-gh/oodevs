@@ -20,7 +20,7 @@ namespace kernel
     class Controllers;
     class KnowledgeGroup_ABC;
     class Displayer_ABC;
-    class Team_ABC;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -103,7 +103,7 @@ private:
     gui::DisplayBuilder* display_;
     gui::ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
-    kernel::SafePointer< kernel::Team_ABC >        owner_;
+    kernel::SafePointer< kernel::Entity_ABC >        owner_;
     kernel::SafePointer< AgentKnowledges > selected_;
     kernel::SafePointer< AgentKnowledge >  subSelected_;
     kernel::SafePointer< AgentKnowledge >  selectionCandidate_;

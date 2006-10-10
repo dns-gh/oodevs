@@ -23,9 +23,8 @@ using namespace xml;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team, IdManager& idManager )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager )
     : controller_( controller )
-    , team_( team )
     , id_ ( idManager.GetNextId() )
     , type_( "Standard" ) // $$$$ SBO 2006-09-06: 
 {
@@ -38,9 +37,8 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, const Team_ABC& team, Id
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, const kernel::Team_ABC& team, IdManager& idManager )
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager )
     : controller_( controller )
-    , team_( team )
 {
     std::string type;
     xis >> attribute( "id", (int&)id_ )
@@ -59,30 +57,8 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    DeleteAll();
-    const_cast< Team_ABC& >( team_ ).Resolver< KnowledgeGroup_ABC >::Remove( id_ ); // $$$$ SBO 2006-10-03: 
     DestroyExtensions();
     controller_.Delete( *(KnowledgeGroup_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::AddAutomat
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::AddAutomat( unsigned long id, Automat_ABC& automat )
-{
-    Resolver< Automat_ABC >::Register( id, automat );
-    controller_.Update( *(KnowledgeGroup_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::RemoveAutomat
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::RemoveAutomat( unsigned long id )
-{
-    Resolver< Automat_ABC >::Remove( id );
-    controller_.Update( *(KnowledgeGroup_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,42 +77,6 @@ unsigned long KnowledgeGroup::GetId() const
 QString KnowledgeGroup::GetName() const
 {
     return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetTeam
-// Created: AGE 2006-02-24
-// -----------------------------------------------------------------------------
-const Team_ABC& KnowledgeGroup::GetTeam() const
-{
-    return team_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Select( ActionController& controller ) const
-{
-    controller.Select( *this );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    controller.ContextMenu( *this, where );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Activate( ActionController& controller ) const
-{
-    controller.Activate( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -67,8 +67,8 @@ Agent::Agent( xistream& xis, const Automat_ABC& automat, Controller& controller,
 // -----------------------------------------------------------------------------
 Agent::~Agent()
 {
-    DestroyExtensions();
     controller_.Delete( *(Agent_ABC*)this );
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

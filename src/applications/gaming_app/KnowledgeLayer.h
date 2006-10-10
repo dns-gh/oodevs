@@ -11,6 +11,7 @@
 #define __KnowledgeLayer_h_
 
 #include "clients_gui/EntityLayer.h"
+#include "clients_kernel/Team_ABC.h"
 
 // =============================================================================
 /** @class  KnowledgeLayer

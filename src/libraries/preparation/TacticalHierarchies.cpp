@@ -19,9 +19,9 @@
 TacticalHierarchies::TacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
     : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder )
     , controller_( controller )
+    , superior_( superior )
 {
-    if( superior )
-        SetSuperior( superior );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,9 +31,6 @@ TacticalHierarchies::TacticalHierarchies( kernel::Controller& controller, kernel
 TacticalHierarchies::~TacticalHierarchies()
 {
     DeleteAll(); // $$$$ SBO 2006-10-09: 
-    if( GetSuperior() )
-        if( kernel::TacticalHierarchies* hierarchies = GetSuperior()->Retrieve< kernel::TacticalHierarchies >() )
-            hierarchies->UnregisterSubordinate( GetEntity() );
     controller_.Delete( *(kernel::TacticalHierarchies*)this );
 }
 
@@ -43,7 +40,7 @@ TacticalHierarchies::~TacticalHierarchies()
 // -----------------------------------------------------------------------------
 void TacticalHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 {
-    RegisterToSuperior();
+    SetSuperior( superior_ );
     controller_.Create( *(kernel::TacticalHierarchies*)this );
 }
 
@@ -53,30 +50,7 @@ void TacticalHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 // -----------------------------------------------------------------------------
 void TacticalHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 {
-    RemoveFromSuperior();
     SetSuperior( &superior );
-    RegisterToSuperior();
     controller_.Update( *(kernel::TacticalHierarchies*)this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: TacticalHierarchies::RegisterToSuperior
-// Created: SBO 2006-09-28
-// -----------------------------------------------------------------------------
-void TacticalHierarchies::RegisterToSuperior()
-{
-    if( GetSuperior() )
-        if( kernel::TacticalHierarchies* hierarchies = GetSuperior()->Retrieve< kernel::TacticalHierarchies >() )
-            hierarchies->AddSubordinate( GetEntity() );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: TacticalHierarchies::RemoveFromSuperior
-// Created: SBO 2006-09-28
-// -----------------------------------------------------------------------------
-void TacticalHierarchies::RemoveFromSuperior()
-{
-    if( GetSuperior() )
-        if( kernel::TacticalHierarchies* hierarchies = GetSuperior()->Retrieve< kernel::TacticalHierarchies >() )
-            hierarchies->RemoveSubordinate( GetEntity() );
-}

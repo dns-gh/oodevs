@@ -35,17 +35,14 @@ class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const kernel::Team_ABC& team );
+             KnowledgeGroup( unsigned long nId, kernel::Controller& controller );
     virtual ~KnowledgeGroup();
     //@}
 
     //! @name Accessors & Modifiers
     //@{
-    virtual const kernel::Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
-    virtual void AddAutomat( unsigned long id, kernel::Automat_ABC& automat );
-    virtual void RemoveAutomat( unsigned long id );
     virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
@@ -60,7 +57,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Team_ABC& team_;
     unsigned long      nID_;
     QString name_;
     //@}

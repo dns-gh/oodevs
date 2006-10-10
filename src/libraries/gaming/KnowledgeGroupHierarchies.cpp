@@ -22,8 +22,9 @@ using namespace kernel;
 KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Team_ABC& team, KnowledgeGroup_ABC& holder )
     : EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_( controller )
+    , team_( team )
 {
-    SetSuperior( &team );
+    // NOTHING   
 }
 
 // -----------------------------------------------------------------------------
@@ -32,8 +33,7 @@ KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Te
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 {
-    if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-        hierarchies->RemoveSubordinate( GetEntity() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,9 +42,6 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupHierarchies::DoUpdate( const kernel::InstanciationComplete& )
 {
-    if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-    {
-        hierarchies->AddSubordinate( GetEntity() );
-        controller_.Update( *(CommunicationHierarchies*)this );
-    }
+    SetSuperior( &team_ );
+    controller_.Update( *(CommunicationHierarchies*)this );
 }

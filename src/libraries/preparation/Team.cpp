@@ -55,7 +55,6 @@ Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFa
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    DeleteAll();
     DestroyExtensions();
     controller_.Delete( *(Team_ABC*)this );
 }
@@ -93,9 +92,7 @@ unsigned long Team::GetId() const
 // -----------------------------------------------------------------------------
 void Team::CreateKnowledgeGroup()
 {
-    KnowledgeGroup_ABC* group = factory_.CreateKnowledgeGroup( *this );
-    Resolver< KnowledgeGroup_ABC >::Register( group->GetId(), *group );
-    controller_.Update( *(Team_ABC*)this );
+    factory_.CreateKnowledgeGroup( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,9 +101,7 @@ void Team::CreateKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void Team::CreateKnowledgeGroup( xml::xistream& xis )
 {
-    KnowledgeGroup_ABC* group = factory_.CreateKnowledgeGroup( xis, *this );
-    Resolver< KnowledgeGroup_ABC >::Register( group->GetId(), *group );
-    controller_.Update( *(Team_ABC*)this );
+    factory_.CreateKnowledgeGroup( xis, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,13 +122,5 @@ void Team::Rename( const QString& name )
 void Team::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "name", name_.ascii() )
-        << start( "communication" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        xos << start( "knowledge-group" );
-        it->second->Serialize( xos );
-        xos << end();
-    }
-    xos << end();
+        << attribute( "name", name_.ascii() );
 }

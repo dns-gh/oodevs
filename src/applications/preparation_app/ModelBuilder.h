@@ -89,11 +89,11 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
-    kernel::SafePointer< kernel::Team_ABC > selectedTeam_;
+    kernel::SafePointer< kernel::Team_ABC >           selectedTeam_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedGroup_;
-    kernel::SafePointer< kernel::Agent_ABC > selectedAgent_;
-    kernel::SafePointer< kernel::Automat_ABC > selectedAutomat_;
-    kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
+    kernel::SafePointer< kernel::Agent_ABC >          selectedAgent_;
+    kernel::SafePointer< kernel::Automat_ABC >        selectedAutomat_;
+    kernel::SafePointer< kernel::Formation_ABC >      selectedFormation_;
     //@}
 };
 

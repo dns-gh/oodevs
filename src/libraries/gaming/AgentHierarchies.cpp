@@ -33,9 +33,7 @@ AgentHierarchies::AgentHierarchies( Controller& controller, Entity_ABC& holder,
 // -----------------------------------------------------------------------------
 AgentHierarchies::~AgentHierarchies()
 {
-    if( GetSuperior() )
-        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-            hierarchies->UnregisterSubordinate( GetEntity() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,12 +42,7 @@ AgentHierarchies::~AgentHierarchies()
 // -----------------------------------------------------------------------------
 void AgentHierarchies::UpdateSuperior( Entity_ABC& superior )
 {
-    if( GetSuperior() )
-        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-            hierarchies->RemoveSubordinate( GetEntity() );
     SetSuperior( &superior );
-    if( CommunicationHierarchies* hierarchies = superior.Retrieve< CommunicationHierarchies >() )
-        hierarchies->AddSubordinate( GetEntity() );
     controller_.Update( *(CommunicationHierarchies*)this );
 }
 

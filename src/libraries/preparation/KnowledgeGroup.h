@@ -38,25 +38,19 @@ class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, const kernel::Team_ABC& team, IdManager& idManager );
-             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, const kernel::Team_ABC& team, IdManager& idManager );
+             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
     virtual ~KnowledgeGroup();
     //@}
 
     //! @name Accessors & Modifiers
     //@{
-    virtual const kernel::Team_ABC& GetTeam() const;
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
-    virtual void AddAutomat( unsigned long id, kernel::Automat_ABC& automat );
-    virtual void RemoveAutomat( unsigned long id );
     //@}
 
     //! @name Operations
     //@{
-    virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
@@ -71,7 +65,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Team_ABC& team_;
     unsigned long id_;
     QString name_;
     QString type_;

@@ -41,8 +41,8 @@ public:
 private:
     //! @name Copy/Assignement
     //@{
-    PopulationFlow_ABC( const PopulationFlow_ABC& );
-    PopulationFlow_ABC& operator=( const PopulationFlow_ABC& );
+    PopulationFlow_ABC( const PopulationFlow_ABC& );            //!< Copy constructor
+    PopulationFlow_ABC& operator=( const PopulationFlow_ABC& ); //!< Assignement operator
     //@}
 };
 

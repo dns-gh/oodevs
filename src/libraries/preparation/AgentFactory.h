@@ -57,6 +57,7 @@ private:
     //! @name Helpers
     //@{
     void AttachExtensions( kernel::Entity_ABC& agent );
+    kernel::Entity_ABC* FindKnowledgeGroup( const kernel::Entity_ABC& parent );
     //@}
 
 private:

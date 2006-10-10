@@ -18,6 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -89,12 +90,18 @@ Team_ABC* TeamsModel::FindTeam( const QString& name ) const
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
     {
-        Resolver_ABC< KnowledgeGroup_ABC >& team = *it->second;
-        KnowledgeGroup_ABC* group = team.Find( id );
-        if( group )
-            return group;
+        Team_ABC& team = *it->second;
+        const CommunicationHierarchies& hierarchies = team.Get< CommunicationHierarchies >();
+        Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
+        while( subIt.HasMoreElements() )
+        {
+            const Entity_ABC& kg = subIt.NextElement();
+            if( kg.GetId() == id )
+                // $$$$ AGE 2006-10-09: 
+                return const_cast< KnowledgeGroup_ABC* >( static_cast< const KnowledgeGroup_ABC* >( &kg ) );
+        };
     }
     return 0;
 }

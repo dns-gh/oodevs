@@ -21,9 +21,9 @@ using namespace kernel;
 EntityCommunications::EntityCommunications( Controller& controller, Entity_ABC& holder, Entity_ABC* superior )
     : kernel::EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_( controller )
+    , superior_( superior )
 {
-    if( superior )
-        SetSuperior( superior );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,9 +33,6 @@ EntityCommunications::EntityCommunications( Controller& controller, Entity_ABC& 
 EntityCommunications::~EntityCommunications()
 {
     DeleteAll(); // $$$$ SBO 2006-10-09: 
-    if( GetSuperior() )
-        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-            hierarchies->UnregisterSubordinate( GetEntity() );
     controller_.Delete( *(CommunicationHierarchies*)this );
 }
 
@@ -45,7 +42,7 @@ EntityCommunications::~EntityCommunications()
 // -----------------------------------------------------------------------------
 void EntityCommunications::DoUpdate( const kernel::InstanciationComplete& )
 {
-    RegisterToSuperior();
+    SetSuperior( superior_ );
     controller_.Create( *(CommunicationHierarchies*)this );
 }
 
@@ -55,30 +52,6 @@ void EntityCommunications::DoUpdate( const kernel::InstanciationComplete& )
 // -----------------------------------------------------------------------------
 void EntityCommunications::ChangeSuperior( kernel::Entity_ABC& superior )
 {
-    RemoveFromSuperior();
     SetSuperior( &superior );
-    RegisterToSuperior();
     controller_.Update( *(CommunicationHierarchies*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityCommunications::RegisterToSuperior
-// Created: SBO 2006-09-26
-// -----------------------------------------------------------------------------
-void EntityCommunications::RegisterToSuperior()
-{
-    if( GetSuperior() )
-        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-            hierarchies->AddSubordinate( GetEntity() );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: EntityCommunications::RemoveFromSuperior
-// Created: SBO 2006-09-26
-// -----------------------------------------------------------------------------
-void EntityCommunications::RemoveFromSuperior()
-{
-    if( GetSuperior() )
-        if( CommunicationHierarchies* hierarchies = GetSuperior()->Retrieve< CommunicationHierarchies >() )
-            hierarchies->RemoveSubordinate( GetEntity() );
 }

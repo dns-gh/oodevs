@@ -24,7 +24,6 @@ namespace kernel
 // Created: SBO 2006-08-08
 // =============================================================================
 class Team_ABC : public Entity_ABC
-               , public Resolver< KnowledgeGroup_ABC >
 {
 
 public:

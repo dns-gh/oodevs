@@ -14,6 +14,7 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -116,9 +117,10 @@ private:
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
 
-    const kernel::Object_ABC*     selectedObject_;
-    const kernel::Agent_ABC*      selectedAgent_;
-    const kernel::Population_ABC* selectedPopulation_;
+    kernel::SafePointer< kernel::Object_ABC >     selectedObject_;
+    kernel::SafePointer< kernel::Agent_ABC >      selectedAgent_;
+    kernel::SafePointer< kernel::Population_ABC > selectedPopulation_;
+
     const TacticalLine_ABC* selectedLine_;
 
     T_TeamColors teamColors_;

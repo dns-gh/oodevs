@@ -26,6 +26,7 @@ namespace kernel
     class Displayer_ABC;
     class KnowledgeGroup_ABC;
     class InstanciationComplete;
+    class Entity_ABC; 
 }
 
 class PopulationPartKnowledge_ABC;
@@ -57,7 +58,7 @@ public:
     void Display( kernel::Displayer_ABC& displayer ) const;
     void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     bool IsInTeam( const kernel::Team_ABC& team ) const;
-    bool KnowledgeIsInTeam( const kernel::Team_ABC& team ) const;
+    bool KnowledgeIsInTeam( const kernel::Entity_ABC& team ) const;
     const kernel::Team_ABC* GetKnowledgeTeam() const;
 
     const kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;

@@ -53,14 +53,13 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& );
-    void RegisterToSuperior();
-    void RemoveFromSuperior();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    kernel::Entity_ABC* superior_;
     //@}
 };
 

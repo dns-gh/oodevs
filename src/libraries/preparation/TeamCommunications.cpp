@@ -9,6 +9,10 @@
 
 #include "preparation_pch.h"
 #include "TeamCommunications.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: TeamCommunications constructor
@@ -35,5 +39,13 @@ TeamCommunications::~TeamCommunications()
 // -----------------------------------------------------------------------------
 void TeamCommunications::DoSerialize( xml::xostream& xos ) const
 {
-    // $$$$ SBO 2006-09-25: todo
+    xos << start( "communication" );
+    Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        xos << start( "knowledge-group" );
+        it.NextElement().Serialize( xos );
+        xos << end();
+    }
+    xos << end();
 }

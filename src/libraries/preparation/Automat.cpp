@@ -60,7 +60,8 @@ Automat::Automat( xistream& xis, Controller& controller, IdManager& idManager, c
 // -----------------------------------------------------------------------------
 Automat::~Automat()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(Automat_ABC*)this );
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

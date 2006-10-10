@@ -25,7 +25,6 @@ namespace kernel
 // Created: SBO 2006-08-09
 // =============================================================================
 class KnowledgeGroup_ABC : public Entity_ABC
-                         , public Resolver< Automat_ABC > // $$$$ AGE 2006-10-06: degager....
 {
 
 public:
@@ -33,14 +32,6 @@ public:
     //@{
              KnowledgeGroup_ABC();
     virtual ~KnowledgeGroup_ABC();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual const Team_ABC& GetTeam() const = 0;
-
-    virtual void AddAutomat( unsigned long id, Automat_ABC& automat ) = 0;
-    virtual void RemoveAutomat( unsigned long id ) = 0;
     //@}
 
     //! @name Operations

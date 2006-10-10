@@ -64,7 +64,7 @@ public:
 
     virtual void Serialize( xml::xostream& xos ) const
     {
-        const_cast< Entity_ABC* >( this )->Apply( & Serializable_ABC::DoSerialize, xos );
+        Interface().Apply( & Serializable_ABC::DoSerialize, xos );
     }
 
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;

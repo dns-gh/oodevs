@@ -39,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
-             AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
+             AutomatCommunications( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
     virtual ~AutomatCommunications();
     //@}
 
@@ -53,6 +53,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoSerialize( xml::xostream& xos ) const;
+    static kernel::KnowledgeGroup_ABC* ReadKnowledgeGroup( xml::xistream& xis, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
     //@}
 };
 

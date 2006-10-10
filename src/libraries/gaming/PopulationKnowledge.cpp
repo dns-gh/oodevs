@@ -194,7 +194,7 @@ bool PopulationKnowledge::IsInTeam( const Team_ABC& team ) const
 // Name: PopulationKnowledge::KnowledgeIsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool PopulationKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
+bool PopulationKnowledge::KnowledgeIsInTeam( const Entity_ABC& team ) const
 {
     return & popu_.GetTeam() == & team;
 }

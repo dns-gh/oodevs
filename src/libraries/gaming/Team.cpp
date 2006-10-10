@@ -19,9 +19,8 @@ using namespace kernel;
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGroupFactory_ABC& factory )
+Team::Team( uint id, DIN::DIN_Input& input, Controller& controller )
     : controller_( controller )
-    , factory_( factory )
     , id_( id )
 {
     RegisterSelf( *this );
@@ -36,7 +35,6 @@ Team::Team( uint id, DIN::DIN_Input& input, Controller& controller, KnowledgeGro
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    DeleteAll();
     controller_.Delete( *(Team_ABC*)this );
 }
 
@@ -49,21 +47,6 @@ void Team::DoUpdate( const kernel::InstanciationComplete& )
     controller_.Create( *(Team_ABC*)this );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Team::Update
-// Created: SBO 2006-08-08
-// -----------------------------------------------------------------------------
-void Team::DoUpdate( const KnowledgeGroupCreationMessage& message )
-{
-    unsigned long id;
-    message >> id;
-    if( ! Resolver< KnowledgeGroup_ABC >::Find( id ) )
-    {
-        KnowledgeGroup_ABC* group = factory_.CreateKnowledgeGroup( id, *this );
-        Resolver< KnowledgeGroup_ABC >::Register( id, *group );
-        controller_.Update( *(Team_ABC*)this );
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: Team::GetId

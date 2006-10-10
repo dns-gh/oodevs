@@ -68,5 +68,5 @@ KnowledgeGroup_ABC& KnowledgeGroupsModel::Get( const unsigned long& identifier )
 // -----------------------------------------------------------------------------
 Iterator< const kernel::KnowledgeGroup_ABC& > KnowledgeGroupsModel::CreateIterator() const
 {
-    return teams_.CreateKnowledgeGroupIterator();
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

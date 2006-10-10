@@ -20,6 +20,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -190,14 +191,15 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 bool AgentKnowledge::IsInTeam( const Team_ABC& team ) const
 {
-    return & group_.GetTeam() == & team;
+    const CommunicationHierarchies* hierarchies = group_.Retrieve< CommunicationHierarchies >();
+    return hierarchies->IsSubordinateOf( team );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::KnowledgeIsInTeam
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-bool AgentKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
+bool AgentKnowledge::KnowledgeIsInTeam( const Entity_ABC& team ) const
 {
     return team_ == & team;
 }

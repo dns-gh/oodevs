@@ -83,14 +83,29 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
+    // $$$$ AGE 2006-10-10: AutomatHierarchies ?
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
 
-    const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
-    result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, const_cast< Entity_ABC* >( &team ) ) );
+    Entity_ABC* kg = FindKnowledgeGroup( parent );
+    result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::FindKnowledgeGroup
+// Created: AGE 2006-10-10
+// -----------------------------------------------------------------------------
+Entity_ABC* AgentFactory::FindKnowledgeGroup( const kernel::Entity_ABC& parent )
+{
+    const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
+    const CommunicationHierarchies& teamHierarchy = team.Get< CommunicationHierarchies >();
+    Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
+    if( it.HasMoreElements() )
+        return const_cast< Entity_ABC* >( &it.NextElement() );
+    return const_cast< Entity_ABC* >( &team );
 }
 
 // -----------------------------------------------------------------------------

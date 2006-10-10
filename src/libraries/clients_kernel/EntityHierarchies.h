@@ -52,6 +52,7 @@ public:
 protected:
     //! @name Modifiers
     //@{
+    Interface* SuperiorHierarchy();
     void SetSuperior( Entity_ABC* superior );
     Entity_ABC* GetSuperior();
     Entity_ABC& GetEntity();
