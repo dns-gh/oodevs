@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "FormationModel.h"
 #include "Diplomacies.h"
+#include "Exceptions.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -167,6 +168,8 @@ void TeamsModel::Load( const std::string& filename, Model& model )
                 >> list( "side", *this, &TeamsModel::ReadDiplomacy )
             >> end()
         >> end();
+
+    CheckSanity();
 }
 
 // -----------------------------------------------------------------------------
@@ -197,4 +200,27 @@ void TeamsModel::ReadDiplomacy( xml::xistream& xis )
     int id;
     xis >> attribute( "id", id );
     Get( id ).Get< Diplomacies >().Load( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::CheckSanity
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void TeamsModel::CheckSanity() const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        const CommunicationHierarchies& hierarchies = it->second->Get< CommunicationHierarchies >();
+        Iterator< const Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
+        if( !itSub.HasMoreElements() )
+            throw InvalidModelException( tools::translate( "Preparation", "Communication model" )
+                                       , tools::translate( "Preparation", "Team '%1' has no knowledge group" ).arg( it->second->GetName() ) );
+        while( itSub.HasMoreElements() )
+        {
+            const Entity_ABC* entity = &itSub.NextElement();
+            if( !dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
+                throw InvalidModelException( tools::translate( "Preparation", "Communication model" )
+                                           , tools::translate( "Preparation", "Unit '%1' in team '%2' has no knowledge group" ).arg( entity->GetName() ).arg( it->second->GetName() ) );
+        }
+    }
 }

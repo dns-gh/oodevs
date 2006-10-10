@@ -67,6 +67,7 @@ void StaticModel::Purge()
 {
     types_.Purge();
     objectTypes_.Purge();
+    controllers_.controller_.Update( ModelUnLoaded() );
 }
 
     

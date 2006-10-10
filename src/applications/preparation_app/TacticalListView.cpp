@@ -11,17 +11,14 @@
 #include "TacticalListView.h"
 #include "ModelBuilder.h"
 #include "preparation/Team.h"
-#include "preparation/Model.h"
-#include "preparation/TeamsModel.h"
 #include "preparation/AutomatDecisions.h"
 #include "preparation/FormationLevels.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/Level.h"
-#include "clients_gui/Tools.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_gui/Tools.h"
 
 using namespace gui;
 #include "moc_TacticalListView.cpp"
@@ -37,7 +34,6 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , factory_( factory )
     , modelBuilder_( modelBuilder )
     , levels_( levels )
-    , selectedFormation_( controllers )
 {
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
@@ -156,9 +152,7 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
 {
     if( !isVisible() )
         return;
-    if( &formation != selectedFormation_ )
-        selectedFormation_ = &formation;
-    const HierarchyLevel_ABC* level = &selectedFormation_->GetLevel();
+    const HierarchyLevel_ABC* level = &formation.GetLevel();
     if( level && level->GetNext() )
     {
         QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
@@ -213,33 +207,6 @@ void TacticalListView::Disengage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalListView::BeforeSelection
-// Created: SBO 2006-09-25
-// -----------------------------------------------------------------------------
-void TacticalListView::BeforeSelection()
-{
-    selectedFormation_ = 0;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: TacticalListView::AfterSelection
-// Created: SBO 2006-09-25
-// -----------------------------------------------------------------------------
-void TacticalListView::AfterSelection()
-{
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: TacticalListView::Select
-// Created: SBO 2006-09-25
-// -----------------------------------------------------------------------------
-void TacticalListView::Select( const Formation_ABC& element )
-{
-    selectedFormation_ = &element;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalListView::Drop
 // Created: SBO 2006-09-26
 // -----------------------------------------------------------------------------
@@ -263,10 +230,10 @@ namespace
 {
     bool ChangeSuperior( const Entity_ABC& entity, const Entity_ABC& superior ) // $$$$ SBO 2006-09-28: cast-machine
     {
-        if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        Entity_ABC& ent = const_cast< Entity_ABC& >( entity );
+        if( kernel::TacticalHierarchies* hierarchies = ent.Retrieve< kernel::TacticalHierarchies >() )
         {
-            const ::TacticalHierarchies* hierarchy = static_cast< const ::TacticalHierarchies* >( hierarchies );
-            const_cast< ::TacticalHierarchies* >( hierarchy )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
+            static_cast< ::TacticalHierarchies* >( hierarchies )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
             return true;
          }
         return false;

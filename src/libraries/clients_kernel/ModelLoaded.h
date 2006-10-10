@@ -42,6 +42,13 @@ private:
     //@}
 };
 
+class ModelUnLoaded
+{
+public:
+             ModelUnLoaded() {}
+    virtual ~ModelUnLoaded() {}
+};
+
 }
 
 #endif // __ModelLoaded_h_

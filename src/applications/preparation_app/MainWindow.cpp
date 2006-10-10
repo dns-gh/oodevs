@@ -26,6 +26,7 @@
 #include "AgentsLayer.h"
 #include "ModelBuilder.h"
 #include "Dialogs.h"
+#include "preparation/Exceptions.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -254,8 +255,16 @@ void MainWindow::New()
 void MainWindow::Open()
 {
     New();
-    if( !scipioXml_.empty() )
-        model_.Load( scipioXml_ ); // $$$$ SBO 2006-10-05: should be a different file
+    try
+    {
+        if( !scipioXml_.empty() )
+            model_.Load( scipioXml_ ); // $$$$ SBO 2006-10-05: should be a different file
+    }
+    catch( InvalidModelException& e )
+    {
+        Close();
+        QMessageBox::critical( 0, APP_NAME, e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -288,6 +297,7 @@ void MainWindow::Load( const std::string& scipioXml )
 void MainWindow::Close()
 {
     model_.Purge();
+    staticModel_.Purge();
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
     glPlaceHolder_->show();

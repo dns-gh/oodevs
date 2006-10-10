@@ -19,6 +19,7 @@ namespace kernel
     class AutomatComposition;
     class AutomatType;
     class ModelLoaded;
+    class ModelUnLoaded;
     class Controllers;
 }
 
@@ -36,6 +37,7 @@ namespace gui
 class UnitListView : public gui::ListView< UnitListView >
                    , public kernel::Observer_ABC
                    , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                   , public kernel::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
 
 public:
@@ -63,6 +65,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void DisplayList();
     virtual QDragObject* dragObject();
     //@}

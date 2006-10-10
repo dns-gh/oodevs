@@ -75,6 +75,7 @@ private:
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     void ReadTeam( xml::xistream& xis, Model& model );
     void ReadDiplomacy( xml::xistream& xis );
+    void CheckSanity() const;
     //@}
 
 private:

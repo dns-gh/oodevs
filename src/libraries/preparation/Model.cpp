@@ -100,7 +100,7 @@ void Model::Load( const std::string& filename )
     std::string orbat;
     xis >> start( "Scipio" )
             >> start( "Donnees" )
-                >> content( "ODB", orbat );
+            >> content( "ODB", orbat );
     teams_.Load( path_tools::BuildChildPath( filename, orbat ), *this );
 //    objects_.Load( orbat );
 }

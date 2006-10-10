@@ -11,7 +11,6 @@
 #define __TacticalListView_h_
 
 #include "clients_gui/HierarchyListView.h"
-#include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 namespace kernel
@@ -38,7 +37,6 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                       , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
@@ -80,9 +78,6 @@ private:
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
 
-    virtual void BeforeSelection();
-    virtual void AfterSelection();
-    virtual void Select( const kernel::Formation_ABC& element );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
@@ -95,7 +90,6 @@ private:
     gui::ItemFactory_ABC& factory_;
     ModelBuilder& modelBuilder_;
     const FormationLevels& levels_;
-    kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     //@}
 };
 

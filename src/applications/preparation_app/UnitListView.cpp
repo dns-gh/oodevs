@@ -77,6 +77,15 @@ void UnitListView::NotifyUpdated( const ModelLoaded& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitListView::NotifyUpdated
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void UnitListView::NotifyUpdated( const ModelUnLoaded& )
+{
+    clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitListView::DisplayList
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
