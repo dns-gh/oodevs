@@ -53,8 +53,7 @@ TacticalListView::~TacticalListView()
 // -----------------------------------------------------------------------------
 void TacticalListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
 {
-    if( ! hierarchy.GetSuperior() )
-        item->setRenameEnabled( 0, true );
+    item->setRenameEnabled( 0, true );
     gui::HierarchyListView< kernel::TacticalHierarchies >::Display( hierarchy, item );
 }
 

@@ -30,7 +30,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager )
 {
     RegisterSelf( *this );
     controller_.Create( *(KnowledgeGroup_ABC*)this );
-    name_ = QString( "Gtia %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
+    name_ = QString( "Knowledge group %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
 
     RegisterSelf( *this );
     controller_.Create( *(KnowledgeGroup_ABC*)this );
-    name_ = QString( "Gtia %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
+    name_ = QString( "Knowledge group %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +77,17 @@ unsigned long KnowledgeGroup::GetId() const
 QString KnowledgeGroup::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Rename
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Rename( const QString& name )
+{
+    name_ = name;
+    controller_.Update( *(KnowledgeGroup_ABC*)this );
+    controller_.Update( *(Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

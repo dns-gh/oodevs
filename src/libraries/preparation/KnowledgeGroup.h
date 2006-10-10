@@ -51,6 +51,7 @@ public:
 
     //! @name Operations
     //@{
+    void Rename( const QString& name );
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 

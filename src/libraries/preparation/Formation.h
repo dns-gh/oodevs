@@ -53,6 +53,7 @@ public:
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
+    void Rename( const QString& name );
     //@}
 
 private:

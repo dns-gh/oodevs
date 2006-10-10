@@ -58,6 +58,7 @@ public:
     virtual unsigned long GetId() const;
 
     virtual const kernel::AgentType& GetType() const;
+    void Rename( const QString& name );
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 

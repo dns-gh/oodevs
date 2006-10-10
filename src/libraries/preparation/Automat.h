@@ -57,6 +57,7 @@ public:
     virtual unsigned long GetId() const;
 
     virtual const kernel::AutomatType& GetType() const;
+    void Rename( const QString& name );
     //@}
 
     //! @name Extensions

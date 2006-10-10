@@ -77,7 +77,7 @@ void Formation::DoUpdate( const kernel::InstanciationComplete& )
 // -----------------------------------------------------------------------------
 QString Formation::GetName() const
 {
-    return level_->GetName();
+    return level_->GetName() + ( name_.isEmpty() ? "" : " - " + name_ );
 }
     
 // -----------------------------------------------------------------------------
@@ -96,6 +96,17 @@ unsigned long Formation::GetId() const
 const HierarchyLevel_ABC& Formation::GetLevel() const
 {
     return *level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Rename
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void Formation::Rename( const QString& name )
+{
+    name_ = name;
+    controller_.Update( *(Formation_ABC*)this );
+    controller_.Update( *(Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

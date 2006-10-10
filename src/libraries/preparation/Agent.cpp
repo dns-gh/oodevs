@@ -120,6 +120,17 @@ const AgentType& Agent::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::Rename
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void Agent::Rename( const QString& name )
+{
+    name_ = name;
+    controller_.Update( *(Agent_ABC*)this );
+    controller_.Update( *(Entity_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::CreateDictionary
 // Created: AGE 2006-06-27
 // -----------------------------------------------------------------------------

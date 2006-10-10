@@ -17,15 +17,13 @@
 #include "preparation/FormationLevels.h"
 #include "preparation/Level.h"
 #include "preparation/Team.h"
+#include "preparation/Formation.h"
+#include "preparation/KnowledgeGroup.h"
+#include "preparation/Automat.h"
+#include "preparation/Agent.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -194,6 +192,16 @@ void ModelBuilder::Select( const kernel::Automat_ABC& element )
     selectedAutomat_ = &element;
 }
 
+namespace
+{
+    template< typename Concrete, typename T >
+    void Rename( T& entity, const QString& text )
+    {
+        if( Concrete* concrete = dynamic_cast< Concrete* >( entity.ConstCast() ) )
+            concrete->Rename( text );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::OnRename
 // Created: SBO 2006-09-28
@@ -201,8 +209,13 @@ void ModelBuilder::Select( const kernel::Automat_ABC& element )
 void ModelBuilder::OnRename( QListViewItem*, int, const QString& text )
 {
     if( selectedTeam_ )
-    {
-        if( Team* concreteTeam = dynamic_cast< Team* >( selectedTeam_.ConstCast() ) )
-            concreteTeam->Rename( text );
-    }
+        Rename< Team >( selectedTeam_, text );
+    else if( selectedAgent_ )
+        Rename< Agent >( selectedAgent_, text );
+    else if( selectedAutomat_ )
+        Rename< Automat >( selectedAutomat_, text );
+    else if( selectedFormation_ )
+        Rename< Formation >( selectedFormation_, text );
+    else if( selectedGroup_ )
+        Rename< KnowledgeGroup >( selectedGroup_, text );
 }

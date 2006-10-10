@@ -92,6 +92,17 @@ const AutomatType& Automat::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Automat::Rename
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void Automat::Rename( const QString& name )
+{
+    name_ = name;
+    controller_.Update( *(Automat_ABC*)this );
+    controller_.Update( *(Entity_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
