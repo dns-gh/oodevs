@@ -77,6 +77,8 @@ Agent::~Agent()
 // -----------------------------------------------------------------------------
 QString Agent::GetName() const
 {
+    if( commandPost_ )
+        return QString( "[PC] - %1 [%2]" ).arg( name_ ).arg( id_ );
     return QString( "%1 [%2]" ).arg( name_ ).arg( id_ );
 }
 
@@ -139,5 +141,5 @@ void Agent::DoSerialize( xml::xostream& xos ) const
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_->GetName().ascii() )
         << attribute( "name", name_.ascii() )
-        << attribute( "commandPost", commandPost_ );
+        << attribute( "command-post", commandPost_ );
 }

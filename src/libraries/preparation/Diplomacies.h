@@ -12,12 +12,17 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
-#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
     class Team_ABC;
     class Controller;
+}
+
+namespace xml
+{
+    class xistream;
+    class xostream;
 }
 
 class Diplomacy;
@@ -29,7 +34,6 @@ class Diplomacy;
 // Created: AGE 2006-02-14
 // =============================================================================
 class Diplomacies : public kernel::Extension_ABC
-                  , public kernel::Serializable_ABC
 {
 
 public:
@@ -43,7 +47,8 @@ public:
     //@{
     const Diplomacy& GetDiplomacy( const kernel::Team_ABC& team );
     void SetDiplomacy( const kernel::Team_ABC& team, const Diplomacy& diplomacy );
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    void Load( xml::xistream& xis );
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -51,6 +56,11 @@ private:
     //@{
     Diplomacies( const Diplomacies& );            //!< Copy constructor
     Diplomacies& operator=( const Diplomacies& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadRelationship( xml::xistream& xis );
     //@}
 
     //! @name Types

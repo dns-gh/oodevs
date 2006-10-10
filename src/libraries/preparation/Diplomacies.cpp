@@ -58,18 +58,39 @@ void Diplomacies::SetDiplomacy( const Team_ABC& team, const Diplomacy& diplomacy
 }
 
 // -----------------------------------------------------------------------------
-// Name: Diplomacies::DoSerialize
-// Created: SBO 2006-09-06
+// Name: Diplomacies::Serialize
+// Created: SBO 2006-10-10
 // -----------------------------------------------------------------------------
-void Diplomacies::DoSerialize( xml::xostream& xos ) const
+void Diplomacies::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "diplomacies" );
+    xos << attribute( "id", int( team_.GetId() ) );
     for( CIT_Diplomacies it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        xos << start( "side" )
-                << attribute( "name", it->first->team_.GetName() )
-                << attribute( "relation", it->second.GetValue() )
+        xos << start( "relationship" )
+                << attribute( "team", int( it->first->team_.GetId() ) )
+                << attribute( "diplomacy", it->second.GetValue() )
             << end();
     }
-    xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Diplomacies::Load
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void Diplomacies::Load( xml::xistream& xis )
+{
+    xis >> list( "relationship", *this, &Diplomacies::ReadRelationship );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Diplomacies::ReadRelationship
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void Diplomacies::ReadRelationship( xml::xistream& xis )
+{
+    int id;
+    std::string diplomacy;
+    xis >> attribute( "team", id )
+        >> attribute( "diplomacy", diplomacy );
+    SetDiplomacy( resolver_.Get( id ), Diplomacy::Resolve( diplomacy.c_str() ) );
 }

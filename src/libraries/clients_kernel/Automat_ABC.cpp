@@ -37,7 +37,7 @@ Automat_ABC::~Automat_ABC()
 // -----------------------------------------------------------------------------
 void Automat_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *(const Entity_ABC*)this );
+    controller.Select( *this, *(const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ void Automat_ABC::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void Automat_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *(const Entity_ABC*)this, where );
+    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,5 +55,5 @@ void Automat_ABC::ContextMenu( ActionController& controller, const QPoint& where
 // -----------------------------------------------------------------------------
 void Automat_ABC::Activate( ActionController& controller ) const
 {
-    controller.Activate( *(const Entity_ABC*)this );
+    controller.Activate( *this, *(const Entity_ABC*)this );
 }

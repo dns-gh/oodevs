@@ -11,10 +11,10 @@
 #include "Diplomacy.h"
 #include "clients_gui/Tools.h"
 
-Diplomacy Diplomacy::unknown_( "inconnu", tools::translate( "Preparation", "inconnu" ) );
-Diplomacy Diplomacy::friend_ ( "ami"    , tools::translate( "Preparation", "ami"     ) );
-Diplomacy Diplomacy::enemy_  ( "ennemi" , tools::translate( "Preparation", "ennemi"  ) );
-Diplomacy Diplomacy::neutral_( "neutre" , tools::translate( "Preparation", "neutre"  ) );
+Diplomacy Diplomacy::unknown_( "unknown", tools::translate( "Preparation", "inconnu" ) );
+Diplomacy Diplomacy::friend_ ( "friend" , tools::translate( "Preparation", "ami"     ) );
+Diplomacy Diplomacy::enemy_  ( "enemy"  , tools::translate( "Preparation", "ennemi"  ) );
+Diplomacy Diplomacy::neutral_( "neutral", tools::translate( "Preparation", "neutre"  ) );
 
 // -----------------------------------------------------------------------------
 // Name: Diplomacy constructor
@@ -121,4 +121,19 @@ Diplomacy& Diplomacy::operator=( const Diplomacy& rhs )
     value_ = rhs.value_;
     name_  = rhs.name_;
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Diplomacy::Resolve
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+Diplomacy Diplomacy::Resolve( const QString& value )
+{
+    if( value == friend_.value_ )
+        return friend_;
+    if( value == enemy_.value_ )
+        return enemy_;
+    if( value == neutral_.value_ )
+        return neutral_;
+    return unknown_;
 }

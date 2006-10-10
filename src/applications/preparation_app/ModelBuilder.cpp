@@ -20,6 +20,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -36,6 +37,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
     , selectedTeam_( controllers )
     , selectedGroup_( controllers )
     , selectedAgent_( controllers )
+    , selectedAutomat_( controllers )
     , selectedFormation_( controllers )
 {
     controllers_.Register( *this );
@@ -89,6 +91,8 @@ bool ModelBuilder::OnDelete()
 {
     if( selectedAgent_ )
         delete (const Agent_ABC*)selectedAgent_;
+    else if( selectedAutomat_ )
+        delete (const Automat_ABC*)selectedAutomat_;
     else if( selectedGroup_ )
         delete (const KnowledgeGroup_ABC*)selectedGroup_;
     else if( selectedTeam_ )
@@ -109,6 +113,7 @@ void ModelBuilder::ClearSelection()
     selectedTeam_ = 0;
     selectedGroup_ = 0;
     selectedAgent_ = 0;
+    selectedAutomat_ = 0;
     selectedFormation_ = 0;
 }
 
@@ -164,6 +169,15 @@ void ModelBuilder::Select( const Agent_ABC& element )
 void ModelBuilder::Select( const Formation_ABC& element )
 {
     selectedFormation_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::Select
+// Created: SBO 2006-10-09
+// -----------------------------------------------------------------------------
+void ModelBuilder::Select( const kernel::Automat_ABC& element )
+{
+    selectedAutomat_ = &element;
 }
 
 // -----------------------------------------------------------------------------

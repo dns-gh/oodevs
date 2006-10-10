@@ -20,8 +20,9 @@ namespace kernel
     class ContextMenu;
     class Team_ABC;
     class KnowledgeGroup_ABC;
-    class Agent_ABC;
     class Formation_ABC;
+    class Agent_ABC;
+    class Automat_ABC;
 }
 
 class Model;
@@ -38,6 +39,7 @@ class ModelBuilder : public QObject
                    , public kernel::SelectionObserver_Base< kernel::Team_ABC >
                    , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
                    , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
+                   , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
                    , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
 {
     Q_OBJECT;
@@ -78,6 +80,7 @@ private:
     virtual void Select( const kernel::Team_ABC& element );
     virtual void Select( const kernel::KnowledgeGroup_ABC& element );
     virtual void Select( const kernel::Agent_ABC& element );
+    virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
     //@}
 
@@ -89,6 +92,7 @@ private:
     kernel::SafePointer< kernel::Team_ABC > selectedTeam_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedGroup_;
     kernel::SafePointer< kernel::Agent_ABC > selectedAgent_;
+    kernel::SafePointer< kernel::Automat_ABC > selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC > selectedFormation_;
     //@}
 };

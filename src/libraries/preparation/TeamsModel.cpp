@@ -13,6 +13,7 @@
 #include "TeamFactory_ABC.h"
 #include "Model.h"
 #include "FormationModel.h"
+#include "Diplomacies.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -121,6 +122,15 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
         xos << end();
     }
     xos << end();
+
+    xos << start( "diplomacies" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        xos << start( "side" );
+        it->second->Get< Diplomacies >().Serialize( xos );
+        xos << end();
+    }
+    xos << end();
 }
 
 // -----------------------------------------------------------------------------
@@ -145,6 +155,9 @@ void TeamsModel::Load( const std::string& filename, Model& model )
             >> start( "sides" )
                 >> list( "side", *this, &TeamsModel::ReadTeam, model )
             >> end()
+            >> start( "diplomacies" )
+                >> list( "side", *this, &TeamsModel::ReadDiplomacy )
+            >> end()
         >> end();
 }
 
@@ -161,9 +174,19 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
     xis >> start( "communication" )
             >> list( "knowledge-group", static_cast< Team& >( *team ), &Team::CreateKnowledgeGroup )
         >> end();
-//    team->Get< Diplomacies >().Load( xis );
     xis >> start( "tactical" )
             >> list( "formation", model.formations_, &FormationModel::Create, *team, model )
         >> end();
     
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::ReadDiplomacy
+// Created: SBO 2006-10-10
+// -----------------------------------------------------------------------------
+void TeamsModel::ReadDiplomacy( xml::xistream& xis )
+{
+    int id;
+    xis >> attribute( "id", id );
+    Get( id ).Get< Diplomacies >().Load( xis );
 }

@@ -36,7 +36,8 @@ public:
     static Diplomacy Friend ();
     static Diplomacy Enemy  ();
     static Diplomacy Neutral();
-
+    static Diplomacy Resolve( const QString& value );
+    
     Diplomacy& operator=( const Diplomacy& );
     //@}
 
