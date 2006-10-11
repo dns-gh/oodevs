@@ -17,16 +17,15 @@
     </target>
 
     <target name="library.ASN" description="build ASN static library">
-        <build-lib name="ASN">
+        <build-lib name="ASN" warnings="production">
             <includepath path="${include.dir}/asn"/>
-            <compilerarg value="/W3"/>
         </build-lib>
     </target>
 
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT"/>
     </target>
-    
+
     <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools_Scipio, library.ASN">
         <build-lib name="dispatcher">
             <includepath path="${include.dir}/ASN"/>
@@ -86,7 +85,7 @@
 
     <target name="applications.clients" description="build Astec Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
-            
+
     <target name="application.dispatcher_app" description="build Astec Dispatcher executable" depends="library.dispatcher">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
                    libs="masalloc,paranoia
@@ -95,7 +94,7 @@
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${include.dir}/ASN"/>
-        </build-app>    
+        </build-app>
     </target>
 
     <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions, library.dispatcher">
