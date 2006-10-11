@@ -88,7 +88,7 @@
 
     <target name="application.dispatcher_app" description="build Astec Dispatcher executable" depends="library.dispatcher">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
-                   libs="masalloc,paranoia,xeumeuleu,tools
+                   libs="masalloc,paranoia,xeumeuleu,tools,xeumeuleu
                          MT_Tools_Scipio,ASN,asn1per
                          dispatcher">
             <syslibset libs="dbghelp,psapi"/>
@@ -99,7 +99,7 @@
 
     <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions, library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
-                   libs="HLA,libFedTime,masalloc,paranoia,tools
+                   libs="HLA,libFedTime,masalloc,paranoia,tools,xeumeuleu
                          MT_Tools_Scipio,ASN,asn1per,
                          simulation_terrain,simulation_kernel,simulation_missions,dispatcher">
             <syslibset libs="dbghelp,psapi"/>
