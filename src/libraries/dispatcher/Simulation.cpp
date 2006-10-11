@@ -58,7 +58,6 @@ Simulation::~Simulation()
 // MESSAGES
 // =============================================================================
 
-//  $$$
 #define DISPATCH_ASN_MSG( NAME )                                        \
     case T_MsgsOutSim_msg_msg_##NAME:                                   \
     {                                                                   \

@@ -115,7 +115,6 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
 // RECEIVED MESSAGES
 // =============================================================================
 
-//$$$ TMP MESSAGES DIN
 #define DECLARE_DIN_CALLBACK( MSG )                                                                \
     void SimulationNetworker::OnReceiveMsg##MSG( DIN::DIN_Link& linkFrom, DIN::DIN_Input& msg )    \
     {                                                                                              \

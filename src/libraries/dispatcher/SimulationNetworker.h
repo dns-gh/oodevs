@@ -63,7 +63,6 @@ private:
     void OnReceiveMsgOutSim                                ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
     bool OnErrorReceivingMessage                           ( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
 
-    //$$$ TMP DIN
     void OnReceiveMsgInit                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgProfilingValues                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgTrace                                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

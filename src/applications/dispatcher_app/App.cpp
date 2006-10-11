@@ -71,8 +71,11 @@ int App::Execute()
     assert( pDispatcher_ );
     try
     {
-        ::Sleep( 10 );
-        pDispatcher_->Update();
+        while( 1 )
+        {
+            ::Sleep( 10 );
+            pDispatcher_->Update();
+        }
     }
     catch( std::exception& e )
     {

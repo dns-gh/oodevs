@@ -87,8 +87,12 @@ bool Client::CheckRights( const ASN1T_MsgsOutClient& asnMsg ) const
 bool Client::CheckRights( const ASN1T_MsgsInClient& asnMsg ) const
 {
     //$$$$ TMP
+    if( asnMsg.msg.t == T_MsgsInClient_msg_msg_auth_login_ack )
+        return true;
+
     if( !pProfile_ )
-        return false;    
+        return false;
+
     return true;
 }
 

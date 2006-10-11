@@ -38,8 +38,7 @@ public:
     virtual void Send( const ASN1T_MsgsInSim&    msg );
     virtual void Send( const ASN1T_MsgsInClient& msg );
 
-    //$$ TMP DIN
-    virtual void                     Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg ); //$$$ TMP DIN
+    virtual void                     Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
     virtual DIN::DIN_BufferedMessage GetDinMsg();
     //@}
 

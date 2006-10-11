@@ -126,7 +126,6 @@ void SimulationModel::Send( Publisher_ABC& publisher ) const
     asn.Send( publisher );
 
 
-    //$$$ TMP DIN
     DIN_BufferedMessage msg = publisher.GetDinMsg();
     msg << bSendVisionCones_
         << bProfilingEnabled_

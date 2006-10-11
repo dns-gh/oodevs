@@ -66,7 +66,6 @@ private:
     void OnReceiveMsgOutClient             ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     bool OnErrorReceivingMessage           ( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
 
-    //$$$ TMP DIN
     void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgEnableProfiling       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
