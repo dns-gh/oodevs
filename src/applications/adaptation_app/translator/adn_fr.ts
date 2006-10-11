@@ -1346,7 +1346,7 @@
     </message>
     <message>
         <source>Pion ALAT EvacuationSanitaire</source>
-        <translation>Pion ALAT EvacuationSanitaire</translation>
+        <translation type="obsolete">Pion ALAT EvacuationSanitaire</translation>
     </message>
     <message>
         <source>Pion ALAT ReconnaitreDansLaProfondeur</source>
@@ -1390,7 +1390,7 @@
     </message>
     <message>
         <source>Pion ALAT EffectuerRechercheEtSauvetage</source>
-        <translation>Pion ALAT EffectuerRechercheEtSauvetage</translation>
+        <translation type="obsolete">Pion ALAT EffectuerRechercheEtSauvetage</translation>
     </message>
     <message>
         <source>Pion ALAT IMEX</source>
@@ -1426,7 +1426,7 @@
     </message>
     <message>
         <source>Automate ALAT ExtrairePersonnel</source>
-        <translation>Automate ALAT ExtrairePersonnel</translation>
+        <translation type="obsolete">Automate ALAT ExtrairePersonnel</translation>
     </message>
     <message>
         <source>Automate ALAT Appuyer</source>
@@ -1478,7 +1478,7 @@
     </message>
     <message>
         <source>Automate ALAT EffectuerRechercheEtSauvetage</source>
-        <translation>Automate ALAT EffectuerRechercheEtSauvetage</translation>
+        <translation type="obsolete">Automate ALAT EffectuerRechercheEtSauvetage</translation>
     </message>
     <message>
         <source>Automate ASA DefendreZone</source>

@@ -13,11 +13,11 @@
 
 /**************************************************************/
 /*                                                            */
-/*  EnumMissionALAT_PorteeAction                              */
+/*  Enum_ALAT_PorteeAction                                    */
 /*                                                            */
 /**************************************************************/
 
-struct EXTERN EnumMissionALAT_PorteeAction {
+struct EXTERN Enum_ALAT_PorteeAction {
    enum Root {
       courte_portee = 0,
       moyenne_portee = 1,
@@ -26,30 +26,30 @@ struct EXTERN EnumMissionALAT_PorteeAction {
    } ;
 } ;
 
-typedef EnumMissionALAT_PorteeAction::Root ASN1T_EnumMissionALAT_PorteeAction;
+typedef Enum_ALAT_PorteeAction::Root ASN1T_Enum_ALAT_PorteeAction;
 
-class EXTERN ASN1C_EnumMissionALAT_PorteeAction : public ASN1CType {
+class EXTERN ASN1C_Enum_ALAT_PorteeAction : public ASN1CType {
 public:
-   ASN1T_EnumMissionALAT_PorteeAction& msgData;
-   ASN1C_EnumMissionALAT_PorteeAction (
-      ASN1MessageBuffer& msgBuf, ASN1T_EnumMissionALAT_PorteeAction& data);
+   ASN1T_Enum_ALAT_PorteeAction& msgData;
+   ASN1C_Enum_ALAT_PorteeAction (
+      ASN1MessageBuffer& msgBuf, ASN1T_Enum_ALAT_PorteeAction& data);
    int Encode ();
    int Decode ();
    void Print (ASN1ConstCharPtr name);
 } ;
 
-EXTERN int asn1PE_EnumMissionALAT_PorteeAction (ASN1CTXT* ctxt_p, ASN1T_EnumMissionALAT_PorteeAction value);
-EXTERN int asn1PD_EnumMissionALAT_PorteeAction (ASN1CTXT* ctxt_p, ASN1T_EnumMissionALAT_PorteeAction* pvalue);
+EXTERN int asn1PE_Enum_ALAT_PorteeAction (ASN1CTXT* ctxt_p, ASN1T_Enum_ALAT_PorteeAction value);
+EXTERN int asn1PD_Enum_ALAT_PorteeAction (ASN1CTXT* ctxt_p, ASN1T_Enum_ALAT_PorteeAction* pvalue);
 
-EXTERN void asn1Print_EnumMissionALAT_PorteeAction (ASN1ConstCharPtr name, ASN1T_EnumMissionALAT_PorteeAction* pvalue);
+EXTERN void asn1Print_Enum_ALAT_PorteeAction (ASN1ConstCharPtr name, ASN1T_Enum_ALAT_PorteeAction* pvalue);
 
 /**************************************************************/
 /*                                                            */
-/*  EnumMissionALAT_AmbianceMission                           */
+/*  Enum_ALAT_AmbianceMission                                 */
 /*                                                            */
 /**************************************************************/
 
-struct EXTERN EnumMissionALAT_AmbianceMission {
+struct EXTERN Enum_ALAT_AmbianceMission {
    enum Root {
       aa = 0,
       as = 1,
@@ -57,22 +57,22 @@ struct EXTERN EnumMissionALAT_AmbianceMission {
    } ;
 } ;
 
-typedef EnumMissionALAT_AmbianceMission::Root ASN1T_EnumMissionALAT_AmbianceMission;
+typedef Enum_ALAT_AmbianceMission::Root ASN1T_Enum_ALAT_AmbianceMission;
 
-class EXTERN ASN1C_EnumMissionALAT_AmbianceMission : public ASN1CType {
+class EXTERN ASN1C_Enum_ALAT_AmbianceMission : public ASN1CType {
 public:
-   ASN1T_EnumMissionALAT_AmbianceMission& msgData;
-   ASN1C_EnumMissionALAT_AmbianceMission (
-      ASN1MessageBuffer& msgBuf, ASN1T_EnumMissionALAT_AmbianceMission& data);
+   ASN1T_Enum_ALAT_AmbianceMission& msgData;
+   ASN1C_Enum_ALAT_AmbianceMission (
+      ASN1MessageBuffer& msgBuf, ASN1T_Enum_ALAT_AmbianceMission& data);
    int Encode ();
    int Decode ();
    void Print (ASN1ConstCharPtr name);
 } ;
 
-EXTERN int asn1PE_EnumMissionALAT_AmbianceMission (ASN1CTXT* ctxt_p, ASN1T_EnumMissionALAT_AmbianceMission value);
-EXTERN int asn1PD_EnumMissionALAT_AmbianceMission (ASN1CTXT* ctxt_p, ASN1T_EnumMissionALAT_AmbianceMission* pvalue);
+EXTERN int asn1PE_Enum_ALAT_AmbianceMission (ASN1CTXT* ctxt_p, ASN1T_Enum_ALAT_AmbianceMission value);
+EXTERN int asn1PD_Enum_ALAT_AmbianceMission (ASN1CTXT* ctxt_p, ASN1T_Enum_ALAT_AmbianceMission* pvalue);
 
-EXTERN void asn1Print_EnumMissionALAT_AmbianceMission (ASN1ConstCharPtr name, ASN1T_EnumMissionALAT_AmbianceMission* pvalue);
+EXTERN void asn1Print_Enum_ALAT_AmbianceMission (ASN1ConstCharPtr name, ASN1T_Enum_ALAT_AmbianceMission* pvalue);
 
 /**************************************************************/
 /*                                                            */
@@ -82,8 +82,8 @@ EXTERN void asn1Print_EnumMissionALAT_AmbianceMission (ASN1ConstCharPtr name, AS
 
 typedef struct EXTERN ASN1T_Mission_Pion_ALAT_AllerSeRecompleter {
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_AllerSeRecompleter;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_AllerSeRecompleter : public ASN1CType {
@@ -103,35 +103,6 @@ EXTERN void asn1Print_Mission_Pion_ALAT_AllerSeRecompleter (ASN1ConstCharPtr nam
 
 /**************************************************************/
 /*                                                            */
-/*  Mission_Pion_ALAT_EvacuationSanitaire                     */
-/*                                                            */
-/**************************************************************/
-
-typedef struct EXTERN ASN1T_Mission_Pion_ALAT_EvacuationSanitaire {
-   ASN1T_Point  point_debarquement;
-   ASN1T_Polygon  zone_extraction;
-   ASN1T_Point  point_regroupement;
-   ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-} ASN1T_Mission_Pion_ALAT_EvacuationSanitaire;
-
-class EXTERN ASN1C_Mission_Pion_ALAT_EvacuationSanitaire : public ASN1CType {
-public:
-   ASN1T_Mission_Pion_ALAT_EvacuationSanitaire& msgData;
-   ASN1C_Mission_Pion_ALAT_EvacuationSanitaire (
-      ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_EvacuationSanitaire& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_Mission_Pion_ALAT_EvacuationSanitaire (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_EvacuationSanitaire* pvalue);
-EXTERN int asn1PD_Mission_Pion_ALAT_EvacuationSanitaire (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_EvacuationSanitaire* pvalue);
-
-EXTERN void asn1Print_Mission_Pion_ALAT_EvacuationSanitaire (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_EvacuationSanitaire* pvalue);
-
-/**************************************************************/
-/*                                                            */
 /*  Mission_Pion_ALAT_ReconnaitreDansLaProfondeur             */
 /*                                                            */
 /**************************************************************/
@@ -139,8 +110,8 @@ EXTERN void asn1Print_Mission_Pion_ALAT_EvacuationSanitaire (ASN1ConstCharPtr na
 typedef struct EXTERN ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur {
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
    ASN1T_Point  point_dislocation;
    ASN1T_Localisation  zone;
 } ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur;
@@ -169,8 +140,8 @@ EXTERN void asn1Print_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ASN1ConstCh
 typedef struct EXTERN ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi {
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi : public ASN1CType {
@@ -200,8 +171,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
    ASN1BOOL  neutraliser;
 } ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone;
 
@@ -230,8 +201,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_DetruireAeromobile {
    ASN1T_ListKnowledgeAgent  unite_a_detruire;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_DetruireAeromobile;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_DetruireAeromobile : public ASN1CType {
@@ -259,8 +230,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Freiner {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_Freiner;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_Freiner : public ASN1CType {
@@ -288,8 +259,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Jalonner {
    ASN1T_Point  point_regroupement;
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_Jalonner;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_Jalonner : public ASN1CType {
@@ -318,8 +289,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Escorter {
    ASN1T_Point  point_regroupement;
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_Escorter;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_Escorter : public ASN1CType {
@@ -349,7 +320,7 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Heliporter {
    ASN1T_Point  point_embarquement;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
    ASN1BOOL  avec_materiel;
 
    ASN1T_Mission_Pion_ALAT_Heliporter () {
@@ -382,7 +353,7 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavit
    ASN1T_Point  point_debarquement;
    ASN1T_Point  position_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
 } ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement : public ASN1CType {
@@ -412,7 +383,7 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Helitransporter {
    ASN1T_Point  point_embarquement;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
    ASN1BOOL  avec_materiel;
 
    ASN1T_Mission_Pion_ALAT_Helitransporter () {
@@ -437,34 +408,6 @@ EXTERN void asn1Print_Mission_Pion_ALAT_Helitransporter (ASN1ConstCharPtr name, 
 
 /**************************************************************/
 /*                                                            */
-/*  Mission_Pion_ALAT_EffectuerRechercheEtSauvetage           */
-/*                                                            */
-/**************************************************************/
-
-typedef struct EXTERN ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage {
-   ASN1T_ListAgent  unites_a_secourir;
-   ASN1T_Point  point_regroupement;
-   ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-} ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage;
-
-class EXTERN ASN1C_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage : public ASN1CType {
-public:
-   ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage& msgData;
-   ASN1C_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage (
-      ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage* pvalue);
-EXTERN int asn1PD_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage* pvalue);
-
-EXTERN void asn1Print_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage* pvalue);
-
-/**************************************************************/
-/*                                                            */
 /*  Mission_Pion_ALAT_IMEX                                    */
 /*                                                            */
 /**************************************************************/
@@ -473,7 +416,7 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_IMEX {
    ASN1T_ListAgent  unites_a_appuyer;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
 } ASN1T_Mission_Pion_ALAT_IMEX;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_IMEX : public ASN1CType {
@@ -500,8 +443,8 @@ EXTERN void asn1Print_Mission_Pion_ALAT_IMEX (ASN1ConstCharPtr name, ASN1T_Missi
 typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Eclairer {
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_Eclairer;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_Eclairer : public ASN1CType {
@@ -529,8 +472,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Surveiller {
    ASN1T_Polygon  zone;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_Surveiller;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_Surveiller : public ASN1CType {
@@ -559,8 +502,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact {
    ASN1T_ListAgent  unites_a_appuyer;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact : public ASN1CType {
@@ -589,8 +532,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Couvrir {
    ASN1T_ListAgent  unites_a_couvrir;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_Couvrir;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_Couvrir : public ASN1CType {
@@ -618,8 +561,8 @@ typedef struct EXTERN ASN1T_Mission_Pion_ALAT_Attaquer {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_EnumMissionALAT_PorteeAction  portee_action;
-   ASN1T_EnumMissionALAT_AmbianceMission  ambiance_mission;
+   ASN1T_Enum_ALAT_PorteeAction  portee_action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Pion_ALAT_Attaquer;
 
 class EXTERN ASN1C_Mission_Pion_ALAT_Attaquer : public ASN1CType {

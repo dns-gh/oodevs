@@ -135,7 +135,7 @@
     </message>
     <message>
         <source>Automate ALAT ExtrairePersonnel</source>
-        <translation>Automate ALAT ExtrairePersonnel</translation>
+        <translation type="obsolete">Automate ALAT ExtrairePersonnel</translation>
     </message>
     <message>
         <source>Automate ALAT Appuyer</source>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <source>Automate ALAT EffectuerRechercheEtSauvetage</source>
-        <translation>Automate ALAT EffectuerRechercheEtSauvetage</translation>
+        <translation type="obsolete">Automate ALAT EffectuerRechercheEtSauvetage</translation>
     </message>
     <message>
         <source>Automate ASA DefendreZone</source>
@@ -479,7 +479,7 @@
     </message>
     <message>
         <source>Pion ALAT EvacuationSanitaire</source>
-        <translation>Pion ALAT EvacuationSanitaire</translation>
+        <translation type="obsolete">Pion ALAT EvacuationSanitaire</translation>
     </message>
     <message>
         <source>Pion ALAT ReconnaitreDansLaProfondeur</source>
@@ -523,7 +523,7 @@
     </message>
     <message>
         <source>Pion ALAT EffectuerRechercheEtSauvetage</source>
-        <translation>Pion ALAT EffectuerRechercheEtSauvetage</translation>
+        <translation type="obsolete">Pion ALAT EffectuerRechercheEtSauvetage</translation>
     </message>
     <message>
         <source>Pion ALAT IMEX</source>
@@ -1842,10 +1842,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate: Reagir Face AEni</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automate: Affecter Pion AObstacle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1943,6 +1939,10 @@
     </message>
     <message>
         <source>Pion ALAT AllerSeRecompleter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changer Parametres Recompletement ALAT</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3205,14 +3205,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mos</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mos light</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>running</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3362,34 +3354,6 @@
     </message>
     <message>
         <source>error camps incompatibles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid scenario identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error error scenario init</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid data path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid checkpoint identifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error error checkpoint init</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error sim killed by remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3714,18 +3678,6 @@
     </message>
     <message>
         <source>vitesse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>detruire moyens</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>defendre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>demonter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

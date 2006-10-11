@@ -232,7 +232,7 @@ protected:
         eRC_DebutLiaison,
         eRC_FinLiaison,
         eRC_EtablissementLiaisonImpossible,
-        eRC_UniteTropDistante,
+        eRC_UniteTropDistante, // Parametre : T_Pion
         eRC_EnregistrementDonnes,
         eRC_ExploitationDonnees,
         eRC_ExtractionDonnes,
@@ -310,6 +310,7 @@ protected:
         eRC_TransportEnCours,
         eRC_TransportEmbarquement,
         eRC_TransportDebarquement,
+        eRC_TransportImpossiblePasDeMoyens,
         eRC_VehiculeLaisseSurPosition,
         eRC_RejointPositionEmbarquement,
         eRC_EnAttenteTransporteurs,

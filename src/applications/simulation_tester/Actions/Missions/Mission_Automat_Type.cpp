@@ -11,8 +11,6 @@
 #include "Mission_Automat_Type.h"
 
 #include "Automat/Mission_Automat_ALAT_AllerSeRecompleter.cpp"
-#include "Automat/Mission_Automat_ALAT_EffectuerRechercheEtSauvetage.cpp"
-#include "Automat/Mission_Automat_ALAT_ExtrairePersonnel.cpp"
 #include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur.cpp"
 #include "Automat/Mission_Automat_ALAT_DetruireNeutraliserDansZone.cpp"
 #include "Automat/Mission_Automat_ALAT_DonnerCoupArret.cpp"
@@ -196,8 +194,6 @@ Mission_Automat_Type::~Mission_Automat_Type()
 void Mission_Automat_Type::Initialize()
 {
     Register< Mission_Automat_ALAT_AllerSeRecompleter >( "Automate ALAT AllerSeRecompleter" );
-    Register< Mission_Automat_ALAT_EffectuerRechercheEtSauvetage >( "Automate ALAT EffectuerRechercheEtSauvetage" );
-    Register< Mission_Automat_ALAT_ExtrairePersonnel >( "Automate ALAT ExtrairePersonnel" );
     Register< Mission_Automat_ALAT_DetruireNeutraliserDansProfondeur >( "Automate ALAT DetruireNeutraliserDansProfondeur" );
     Register< Mission_Automat_ALAT_DetruireNeutraliserDansZone >( "Automate ALAT DetruireNeutraliserDansZone" );
     Register< Mission_Automat_ALAT_DonnerCoupArret >( "Automate ALAT DonnerCoupArret" );

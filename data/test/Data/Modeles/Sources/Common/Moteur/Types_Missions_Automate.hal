@@ -10,26 +10,6 @@ id porteeAction_;
 id ambianceMission_;
 };
 
-typedef struct T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage : T_Mission_Automate
-{
-T_ListePions unitesASecourir_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-};
-
-typedef struct T_Mission_Automate_ALAT_ExtrairePersonnel : T_Mission_Automate
-{
-T_ListePions unitesAHelitransporter_;
-T_Point pointDebarquement_;
-T_Point pointEmbarquement_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
-bool avecMateriel_;
-};
-
 typedef struct T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur : T_Mission_Automate
 {
 T_Localisation zone_;

@@ -22,8 +22,6 @@
 ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
 {
     T_ConverterSMission("Automate ALAT AllerSeRecompleter", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate ALAT AllerSeRecompleter"), eSMission_Automate_ALAT_AllerSeRecompleter ),
-    T_ConverterSMission("Automate ALAT EffectuerRechercheEtSauvetage", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate ALAT EffectuerRechercheEtSauvetage"), eSMission_Automate_ALAT_EffectuerRechercheEtSauvetage ),
-    T_ConverterSMission("Automate ALAT ExtrairePersonnel", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate ALAT ExtrairePersonnel"), eSMission_Automate_ALAT_ExtrairePersonnel ),
     T_ConverterSMission("Automate ALAT DetruireNeutraliserDansProfondeur", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate ALAT DetruireNeutraliserDansProfondeur"), eSMission_Automate_ALAT_DetruireNeutraliserDansProfondeur ),
     T_ConverterSMission("Automate ALAT DetruireNeutraliserDansZone", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate ALAT DetruireNeutraliserDansZone"), eSMission_Automate_ALAT_DetruireNeutraliserDansZone ),
     T_ConverterSMission("Automate ALAT DonnerCoupArret", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate ALAT DonnerCoupArret"), eSMission_Automate_ALAT_DonnerCoupArret ),
@@ -175,7 +173,6 @@ ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
     T_ConverterSMission("Automate RENS RADINT RenseignerSur", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate RENS RADINT RenseignerSur"), eSMission_Automate_RENS_RADINT_RenseignerSur ),
     T_ConverterSMission("Automate TRANS Commander", QT_TRANSLATE_NOOP( "ADN_Enums", "Automate TRANS Commander"), eSMission_Automate_TRANS_Commander ),
     T_ConverterSMission("Pion ALAT AllerSeRecompleter", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT AllerSeRecompleter"), eSMission_Pion_ALAT_AllerSeRecompleter ),
-    T_ConverterSMission("Pion ALAT EvacuationSanitaire", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT EvacuationSanitaire"), eSMission_Pion_ALAT_EvacuationSanitaire ),
     T_ConverterSMission("Pion ALAT ReconnaitreDansLaProfondeur", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT ReconnaitreDansLaProfondeur"), eSMission_Pion_ALAT_ReconnaitreDansLaProfondeur ),
     T_ConverterSMission("Pion ALAT ReconnaitreContourEnnemi", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT ReconnaitreContourEnnemi"), eSMission_Pion_ALAT_ReconnaitreContourEnnemi ),
     T_ConverterSMission("Pion ALAT DetruireNeutraliserDansZone", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT DetruireNeutraliserDansZone"), eSMission_Pion_ALAT_DetruireNeutraliserDansZone ),
@@ -186,7 +183,6 @@ ADN_Tr::T_ConverterSMission ADN_Tr::smissionConverter_[] =
     T_ConverterSMission("Pion ALAT Heliporter", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT Heliporter"), eSMission_Pion_ALAT_Heliporter ),
     T_ConverterSMission("Pion ALAT HeliporterHelitransporterPlotRavitaillement", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT HeliporterHelitransporterPlotRavitaillement"), eSMission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement ),
     T_ConverterSMission("Pion ALAT Helitransporter", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT Helitransporter"), eSMission_Pion_ALAT_Helitransporter ),
-    T_ConverterSMission("Pion ALAT EffectuerRechercheEtSauvetage", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT EffectuerRechercheEtSauvetage"), eSMission_Pion_ALAT_EffectuerRechercheEtSauvetage ),
     T_ConverterSMission("Pion ALAT IMEX", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT IMEX"), eSMission_Pion_ALAT_IMEX ),
     T_ConverterSMission("Pion ALAT Eclairer", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT Eclairer"), eSMission_Pion_ALAT_Eclairer ),
     T_ConverterSMission("Pion ALAT Surveiller", QT_TRANSLATE_NOOP( "ADN_Enums", "Pion ALAT Surveiller"), eSMission_Pion_ALAT_Surveiller ),

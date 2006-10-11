@@ -72,7 +72,7 @@ CR-DesactivationSystemeEcouteRadar          ::= NULL
 CR-DebutLiaison                             ::= NULL
 CR-FinLiaison                               ::= NULL
 CR-EtablissementLiaisonImpossible           ::= NULL
-CR-UniteTropDistante                        ::= NULL
+CR-UniteTropDistante                        ::= Agent
 CR-EnregistrementDonnes                     ::= NULL
 CR-ExploitationDonnees                      ::= NULL
 CR-ExtractionDonnes                         ::= NULL
@@ -189,6 +189,7 @@ CR-TransportUnitePrete                      ::= Agent
 CR-TransportEnCours                         ::= NULL
 CR-TransportEmbarquement                    ::= NULL
 CR-TransportDebarquement                    ::= NULL
+CR-TransportImpossiblePasDeMoyens           ::= NULL
 CR-VehiculeLaisseSurPosition                ::= NULL
 CR-RejointPositionEmbarquement              ::= NULL
 CR-EnAttenteTransporteurs                   ::= NULL
@@ -518,7 +519,8 @@ MsgCR ::= SEQUENCE
         cr-transport-unite-prete                                        CR-TransportUnitePrete,
         cr-transport-en-cours                                           CR-TransportEnCours,
         cr-transport-embarquement                                       CR-TransportEmbarquement,
-        cr-transport-debarquement                                       CR-TransportDebarquement,        
+        cr-transport-debarquement                                       CR-TransportDebarquement,
+        cr-transport-impossible-pas-de-moyens                           CR-TransportImpossiblePasDeMoyens,
         cr-vehicule-laisse-sur-position                                 CR-VehiculeLaisseSurPosition,
         cr-rejoint-position-embarquement                                CR-RejointPositionEmbarquement,
         cr-en-attente-transporteurs                                     CR-EnAttenteTransporteurs,  

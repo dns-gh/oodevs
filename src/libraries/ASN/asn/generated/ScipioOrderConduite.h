@@ -16,6 +16,7 @@
 #include "ScipioLogSante.h"
 #include "ScipioUnitAttr.h"
 #include "ScipioPopulation.h"
+#include "ScipioPionMission_ALAT.h"
 
 /**************************************************************/
 /*                                                            */
@@ -319,6 +320,32 @@ EXTERN int asn1PE_OrderConduite_ChangerReglesEngagement (ASN1CTXT* ctxt_p, ASN1T
 EXTERN int asn1PD_OrderConduite_ChangerReglesEngagement (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_ChangerReglesEngagement* pvalue);
 
 EXTERN void asn1Print_OrderConduite_ChangerReglesEngagement (ASN1ConstCharPtr name, ASN1T_OrderConduite_ChangerReglesEngagement* pvalue);
+
+/**************************************************************/
+/*                                                            */
+/*  OrderConduite_ChangerParametresRecompletementALAT         */
+/*                                                            */
+/**************************************************************/
+
+typedef struct EXTERN ASN1T_OrderConduite_ChangerParametresRecompletementALAT {
+   ASN1T_Enum_ALAT_PorteeAction  portee_Action;
+   ASN1T_Enum_ALAT_AmbianceMission  ambiance_Mission;
+} ASN1T_OrderConduite_ChangerParametresRecompletementALAT;
+
+class EXTERN ASN1C_OrderConduite_ChangerParametresRecompletementALAT : public ASN1CType {
+public:
+   ASN1T_OrderConduite_ChangerParametresRecompletementALAT& msgData;
+   ASN1C_OrderConduite_ChangerParametresRecompletementALAT (
+      ASN1MessageBuffer& msgBuf, ASN1T_OrderConduite_ChangerParametresRecompletementALAT& data);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE_OrderConduite_ChangerParametresRecompletementALAT (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_ChangerParametresRecompletementALAT* pvalue);
+EXTERN int asn1PD_OrderConduite_ChangerParametresRecompletementALAT (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_ChangerParametresRecompletementALAT* pvalue);
+
+EXTERN void asn1Print_OrderConduite_ChangerParametresRecompletementALAT (ASN1ConstCharPtr name, ASN1T_OrderConduite_ChangerParametresRecompletementALAT* pvalue);
 
 /**************************************************************/
 /*                                                            */
@@ -945,63 +972,6 @@ EXTERN void asn1Print_OrderConduite_Automate_DesequiperSiteFranchissement (ASN1C
 
 /**************************************************************/
 /*                                                            */
-/*  EnumActionReagirFaceAEni                                  */
-/*                                                            */
-/**************************************************************/
-
-struct EXTERN EnumActionReagirFaceAEni {
-   enum Root {
-      detruire_moyens = 0,
-      defendre = 1,
-      demonter = 2
-   } ;
-} ;
-
-typedef EnumActionReagirFaceAEni::Root ASN1T_EnumActionReagirFaceAEni;
-
-class EXTERN ASN1C_EnumActionReagirFaceAEni : public ASN1CType {
-public:
-   ASN1T_EnumActionReagirFaceAEni& msgData;
-   ASN1C_EnumActionReagirFaceAEni (
-      ASN1MessageBuffer& msgBuf, ASN1T_EnumActionReagirFaceAEni& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_EnumActionReagirFaceAEni (ASN1CTXT* ctxt_p, ASN1T_EnumActionReagirFaceAEni value);
-EXTERN int asn1PD_EnumActionReagirFaceAEni (ASN1CTXT* ctxt_p, ASN1T_EnumActionReagirFaceAEni* pvalue);
-
-EXTERN void asn1Print_EnumActionReagirFaceAEni (ASN1ConstCharPtr name, ASN1T_EnumActionReagirFaceAEni* pvalue);
-
-/**************************************************************/
-/*                                                            */
-/*  OrderConduite_Automate_ReagirFaceAEni                     */
-/*                                                            */
-/**************************************************************/
-
-typedef struct EXTERN ASN1T_OrderConduite_Automate_ReagirFaceAEni {
-   ASN1T_KnowledgeObject  site_franchissement;
-   ASN1T_EnumActionReagirFaceAEni  action;
-} ASN1T_OrderConduite_Automate_ReagirFaceAEni;
-
-class EXTERN ASN1C_OrderConduite_Automate_ReagirFaceAEni : public ASN1CType {
-public:
-   ASN1T_OrderConduite_Automate_ReagirFaceAEni& msgData;
-   ASN1C_OrderConduite_Automate_ReagirFaceAEni (
-      ASN1MessageBuffer& msgBuf, ASN1T_OrderConduite_Automate_ReagirFaceAEni& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_OrderConduite_Automate_ReagirFaceAEni (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Automate_ReagirFaceAEni* pvalue);
-EXTERN int asn1PD_OrderConduite_Automate_ReagirFaceAEni (ASN1CTXT* ctxt_p, ASN1T_OrderConduite_Automate_ReagirFaceAEni* pvalue);
-
-EXTERN void asn1Print_OrderConduite_Automate_ReagirFaceAEni (ASN1ConstCharPtr name, ASN1T_OrderConduite_Automate_ReagirFaceAEni* pvalue);
-
-/**************************************************************/
-/*                                                            */
 /*  OrderConduite_Automate_AffecterPionAObstacle              */
 /*                                                            */
 /**************************************************************/
@@ -1195,34 +1165,34 @@ EXTERN void asn1Print_OrderConduite_Population_ChangerAttitude (ASN1ConstCharPtr
 #define T_MsgOrderConduite_order_conduite_order_conduite_interrompre 10
 #define T_MsgOrderConduite_order_conduite_order_conduite_changer_ambiance 11
 #define T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement 12
-#define T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population 13
-#define T_MsgOrderConduite_order_conduite_order_conduite_deboucher 14
-#define T_MsgOrderConduite_order_conduite_order_conduite_decrocher 15
-#define T_MsgOrderConduite_order_conduite_order_conduite_acquerir_objectif 16
-#define T_MsgOrderConduite_order_conduite_order_conduite_brouiller 17
-#define T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement 18
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_changer_de_position 19
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_contourner 20
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_envoyer_vehicule 21
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_activer_obstacle 22
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux 23
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_executer_tir 24
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_emettre 25
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_stopper_emission 26
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_vs_ram 27
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_vs_ram 28
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram 29
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs 30
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs 31
-#define T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs 32
-#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_regime_travail_maintenance 33
-#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations 34
-#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses 35
-#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_reparations 36
-#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_blesses 37
-#define T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement 38
-#define T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement 39
-#define T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni 40
+#define T_MsgOrderConduite_order_conduite_order_conduite_changer_parametres_recompletement_alat 13
+#define T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population 14
+#define T_MsgOrderConduite_order_conduite_order_conduite_deboucher 15
+#define T_MsgOrderConduite_order_conduite_order_conduite_decrocher 16
+#define T_MsgOrderConduite_order_conduite_order_conduite_acquerir_objectif 17
+#define T_MsgOrderConduite_order_conduite_order_conduite_brouiller 18
+#define T_MsgOrderConduite_order_conduite_order_conduite_changer_position_debarquement 19
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_changer_de_position 20
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_contourner 21
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_envoyer_vehicule 22
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_activer_obstacle 23
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux 24
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_executer_tir 25
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_emettre 26
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_stopper_emission 27
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_vs_ram 28
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_vs_ram 29
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_vs_ram 30
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_renforcer_en_remorqueurs 31
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_transferer_remorqueurs 32
+#define T_MsgOrderConduite_order_conduite_order_conduite_pion_reprendre_aux_ordres_remorqueurs 33
+#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_regime_travail_maintenance 34
+#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_reparations 35
+#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_blesses 36
+#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_reparations 37
+#define T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_blesses 38
+#define T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement 39
+#define T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement 40
 #define T_MsgOrderConduite_order_conduite_order_conduite_automate_affecter_pion_a_obstacle 41
 #define T_MsgOrderConduite_order_conduite_order_conduite_automate_reconnaitre_zone_implantation 42
 #define T_MsgOrderConduite_order_conduite_order_conduite_automate_tc2_gerer_materiel_avant_deplacement 43
@@ -1248,52 +1218,52 @@ typedef struct EXTERN ASN1T_MsgOrderConduite_order_conduite {
       /* t = 12 */
       ASN1T_OrderConduite_ChangerReglesEngagement  order_conduite_changer_regles_engagement;
       /* t = 13 */
-      ASN1T_OrderConduite_ChangerReglesEngagementPopulation  order_conduite_changer_regles_engagement_population;
+      ASN1T_OrderConduite_ChangerParametresRecompletementALAT *order_conduite_changer_parametres_recompletement_alat;
       /* t = 14 */
+      ASN1T_OrderConduite_ChangerReglesEngagementPopulation  order_conduite_changer_regles_engagement_population;
       /* t = 15 */
       /* t = 16 */
-      ASN1T_OrderConduite_AcquerirObjectif *order_conduite_acquerir_objectif;
       /* t = 17 */
+      ASN1T_OrderConduite_AcquerirObjectif *order_conduite_acquerir_objectif;
       /* t = 18 */
-      ASN1T_OrderConduite_ChangerPositionDebarquement *order_conduite_changer_position_debarquement;
       /* t = 19 */
-      ASN1T_OrderConduite_Pion_ChangerDePosition *order_conduite_pion_changer_de_position;
+      ASN1T_OrderConduite_ChangerPositionDebarquement *order_conduite_changer_position_debarquement;
       /* t = 20 */
+      ASN1T_OrderConduite_Pion_ChangerDePosition *order_conduite_pion_changer_de_position;
       /* t = 21 */
       /* t = 22 */
       /* t = 23 */
-      ASN1T_OrderConduite_Pion_AppliquerFeux *order_conduite_pion_appliquer_feux;
       /* t = 24 */
+      ASN1T_OrderConduite_Pion_AppliquerFeux *order_conduite_pion_appliquer_feux;
       /* t = 25 */
       /* t = 26 */
       /* t = 27 */
-      ASN1T_OrderConduite_Pion_RenforcerEnVSRAM *order_conduite_pion_renforcer_en_vs_ram;
       /* t = 28 */
-      ASN1T_OrderConduite_Pion_TransfererVSRAM *order_conduite_pion_transferer_vs_ram;
+      ASN1T_OrderConduite_Pion_RenforcerEnVSRAM *order_conduite_pion_renforcer_en_vs_ram;
       /* t = 29 */
-      ASN1T_OrderConduite_Pion_ReprendreAuxOrdresVSRAM *order_conduite_pion_reprendre_aux_ordres_vs_ram;
+      ASN1T_OrderConduite_Pion_TransfererVSRAM *order_conduite_pion_transferer_vs_ram;
       /* t = 30 */
-      ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs *order_conduite_pion_renforcer_en_remorqueurs;
+      ASN1T_OrderConduite_Pion_ReprendreAuxOrdresVSRAM *order_conduite_pion_reprendre_aux_ordres_vs_ram;
       /* t = 31 */
-      ASN1T_OrderConduite_Pion_TransfererRemorqueurs *order_conduite_pion_transferer_remorqueurs;
+      ASN1T_OrderConduite_Pion_RenforcerEnRemorqueurs *order_conduite_pion_renforcer_en_remorqueurs;
       /* t = 32 */
-      ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs *order_conduite_pion_reprendre_aux_ordres_remorqueurs;
+      ASN1T_OrderConduite_Pion_TransfererRemorqueurs *order_conduite_pion_transferer_remorqueurs;
       /* t = 33 */
-      ASN1T_OrderConduite_ModifierRegimeTravailMaintenance  order_conduite_modifier_regime_travail_maintenance;
+      ASN1T_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs *order_conduite_pion_reprendre_aux_ordres_remorqueurs;
       /* t = 34 */
-      ASN1T_OrderConduite_ModifierPrioritesReparations *order_conduite_modifier_priorites_reparations;
+      ASN1T_OrderConduite_ModifierRegimeTravailMaintenance  order_conduite_modifier_regime_travail_maintenance;
       /* t = 35 */
-      ASN1T_OrderConduite_ModifierPrioritesBlesses *order_conduite_modifier_priorites_blesses;
+      ASN1T_OrderConduite_ModifierPrioritesReparations *order_conduite_modifier_priorites_reparations;
       /* t = 36 */
-      ASN1T_OrderConduite_ModifierPrioritesTactiquesReparations *order_conduite_modifier_priorites_tactiques_reparations;
+      ASN1T_OrderConduite_ModifierPrioritesBlesses *order_conduite_modifier_priorites_blesses;
       /* t = 37 */
-      ASN1T_OrderConduite_ModifierPrioritesTactiquesBlesses *order_conduite_modifier_priorites_tactiques_blesses;
+      ASN1T_OrderConduite_ModifierPrioritesTactiquesReparations *order_conduite_modifier_priorites_tactiques_reparations;
       /* t = 38 */
-      ASN1T_OrderConduite_Automate_RealiserVariantement *order_conduite_automate_realiser_variantement;
+      ASN1T_OrderConduite_ModifierPrioritesTactiquesBlesses *order_conduite_modifier_priorites_tactiques_blesses;
       /* t = 39 */
-      ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement *order_conduite_automate_desequiper_site_franchissement;
+      ASN1T_OrderConduite_Automate_RealiserVariantement *order_conduite_automate_realiser_variantement;
       /* t = 40 */
-      ASN1T_OrderConduite_Automate_ReagirFaceAEni *order_conduite_automate_reagir_face_a_eni;
+      ASN1T_OrderConduite_Automate_DesequiperSiteFranchissement *order_conduite_automate_desequiper_site_franchissement;
       /* t = 41 */
       ASN1T_OrderConduite_Automate_AffecterPionAObstacle *order_conduite_automate_affecter_pion_a_obstacle;
       /* t = 42 */

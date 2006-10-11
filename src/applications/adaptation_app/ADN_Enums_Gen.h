@@ -195,7 +195,6 @@ enum E_SMission
     eSMission_Pion_ALAT_Debut,
 
     eSMission_Pion_ALAT_AllerSeRecompleter,
-    eSMission_Pion_ALAT_EvacuationSanitaire,
     eSMission_Pion_ALAT_ReconnaitreDansLaProfondeur,
     eSMission_Pion_ALAT_ReconnaitreContourEnnemi,
     eSMission_Pion_ALAT_DetruireNeutraliserDansZone,
@@ -206,7 +205,6 @@ enum E_SMission
     eSMission_Pion_ALAT_Heliporter,
     eSMission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement,
     eSMission_Pion_ALAT_Helitransporter,
-    eSMission_Pion_ALAT_EffectuerRechercheEtSauvetage,
     eSMission_Pion_ALAT_IMEX,
     eSMission_Pion_ALAT_Eclairer,
     eSMission_Pion_ALAT_Surveiller,
@@ -464,8 +462,6 @@ enum E_SMission
     eSMission_Automate_ALAT_Debut,
 
     eSMission_Automate_ALAT_AllerSeRecompleter,
-    eSMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
-    eSMission_Automate_ALAT_ExtrairePersonnel,
     eSMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
     eSMission_Automate_ALAT_DetruireNeutraliserDansZone,
     eSMission_Automate_ALAT_DonnerCoupArret,

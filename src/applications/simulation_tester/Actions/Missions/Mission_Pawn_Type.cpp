@@ -11,7 +11,6 @@
 #include "Mission_Pawn_Type.h"
 
 #include "Pawn/Mission_Pawn_ALAT_AllerSeRecompleter.cpp"
-#include "Pawn/Mission_Pawn_ALAT_EvacuationSanitaire.cpp"
 #include "Pawn/Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur.cpp"
 #include "Pawn/Mission_Pawn_ALAT_ReconnaitreContourEnnemi.cpp"
 #include "Pawn/Mission_Pawn_ALAT_DetruireNeutraliserDansZone.cpp"
@@ -22,7 +21,6 @@
 #include "Pawn/Mission_Pawn_ALAT_Heliporter.cpp"
 #include "Pawn/Mission_Pawn_ALAT_HeliporterHelitransporterPlotRavitaillement.cpp"
 #include "Pawn/Mission_Pawn_ALAT_Helitransporter.cpp"
-#include "Pawn/Mission_Pawn_ALAT_EffectuerRechercheEtSauvetage.cpp"
 #include "Pawn/Mission_Pawn_ALAT_IMEX.cpp"
 #include "Pawn/Mission_Pawn_ALAT_Eclairer.cpp"
 #include "Pawn/Mission_Pawn_ALAT_Surveiller.cpp"
@@ -255,7 +253,6 @@ Mission_Pawn_Type::~Mission_Pawn_Type()
 void Mission_Pawn_Type::Initialize()
 {
     Register< Mission_Pawn_ALAT_AllerSeRecompleter >( "Pion ALAT AllerSeRecompleter" );
-    Register< Mission_Pawn_ALAT_EvacuationSanitaire >( "Pion ALAT EvacuationSanitaire" );
     Register< Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur >( "Pion ALAT ReconnaitreDansLaProfondeur" );
     Register< Mission_Pawn_ALAT_ReconnaitreContourEnnemi >( "Pion ALAT ReconnaitreContourEnnemi" );
     Register< Mission_Pawn_ALAT_DetruireNeutraliserDansZone >( "Pion ALAT DetruireNeutraliserDansZone" );
@@ -266,7 +263,6 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_ALAT_Heliporter >( "Pion ALAT Heliporter" );
     Register< Mission_Pawn_ALAT_HeliporterHelitransporterPlotRavitaillement >( "Pion ALAT HeliporterHelitransporterPlotRavitaillement" );
     Register< Mission_Pawn_ALAT_Helitransporter >( "Pion ALAT Helitransporter" );
-    Register< Mission_Pawn_ALAT_EffectuerRechercheEtSauvetage >( "Pion ALAT EffectuerRechercheEtSauvetage" );
     Register< Mission_Pawn_ALAT_IMEX >( "Pion ALAT IMEX" );
     Register< Mission_Pawn_ALAT_Eclairer >( "Pion ALAT Eclairer" );
     Register< Mission_Pawn_ALAT_Surveiller >( "Pion ALAT Surveiller" );

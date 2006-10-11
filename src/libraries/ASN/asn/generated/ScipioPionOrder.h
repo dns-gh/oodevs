@@ -32,217 +32,215 @@
 /* Choice tag constants */
 
 #define T_Mission_Pion_mission_pion_alat_aller_se_recompleter 1
-#define T_Mission_Pion_mission_pion_alat_evacuation_sanitaire 2
-#define T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur 3
-#define T_Mission_Pion_mission_pion_alat_reconnaitre_contour_ennemi 4
-#define T_Mission_Pion_mission_pion_alat_detruire_neutraliser_dans_zone 5
-#define T_Mission_Pion_mission_pion_alat_detruire_aeromobile 6
-#define T_Mission_Pion_mission_pion_alat_freiner 7
-#define T_Mission_Pion_mission_pion_alat_jalonner 8
-#define T_Mission_Pion_mission_pion_alat_escorter 9
-#define T_Mission_Pion_mission_pion_alat_heliporter 10
-#define T_Mission_Pion_mission_pion_alat_heliporter_helitransporter_plot_ravitaillement 11
-#define T_Mission_Pion_mission_pion_alat_helitransporter 12
-#define T_Mission_Pion_mission_pion_alat_effectuer_recherche_et_sauvetage 13
-#define T_Mission_Pion_mission_pion_alat_imex 14
-#define T_Mission_Pion_mission_pion_alat_eclairer 15
-#define T_Mission_Pion_mission_pion_alat_surveiller 16
-#define T_Mission_Pion_mission_pion_alat_appuyer_direct_au_contact 17
-#define T_Mission_Pion_mission_pion_alat_couvrir 18
-#define T_Mission_Pion_mission_pion_alat_attaquer 19
-#define T_Mission_Pion_mission_pion_asa_defendre_site 20
-#define T_Mission_Pion_mission_pion_asa_defendre_site_a_partir_position 21
-#define T_Mission_Pion_mission_pion_asa_defendre_zone 22
-#define T_Mission_Pion_mission_pion_asa_defendre_zone_a_partir_position 23
-#define T_Mission_Pion_mission_pion_asa_surveiller 24
-#define T_Mission_Pion_mission_pion_asa_defendre_unites 25
-#define T_Mission_Pion_mission_pion_asa_mistral_defendre_site 26
-#define T_Mission_Pion_mission_pion_asa_mistral_defendre_site_a_partir_position 27
-#define T_Mission_Pion_mission_pion_asa_mistral_defendre_zone 28
-#define T_Mission_Pion_mission_pion_asa_mistral_defendre_zone_a_partir_position 29
-#define T_Mission_Pion_mission_pion_asa_mistral_surveiller 30
-#define T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre 31
-#define T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre_sur_position 32
-#define T_Mission_Pion_mission_pion_ass_reconnaitre_zone_deploiement 33
-#define T_Mission_Pion_mission_pion_ass_acquerir_lanceurs_eni 34
-#define T_Mission_Pion_mission_pion_ass_eo_acquerir_objectifs 35
-#define T_Mission_Pion_mission_pion_ass_eop_acquerir_objectifs 36
-#define T_Mission_Pion_mission_pion_ass_ratac_acquerir_objectifs 37
-#define T_Mission_Pion_mission_pion_abc_reconnaitre_axe 38
-#define T_Mission_Pion_mission_pion_abc_soutenir 39
-#define T_Mission_Pion_mission_pion_abc_couvrir 40
-#define T_Mission_Pion_mission_pion_abc_flanc_garder 41
-#define T_Mission_Pion_mission_pion_abc_reduire 42
-#define T_Mission_Pion_mission_pion_abc_appuyer 43
-#define T_Mission_Pion_mission_pion_abc_fixer 44
-#define T_Mission_Pion_mission_pion_abc_renseigner_sur 45
-#define T_Mission_Pion_mission_pion_abc_controler_zone 46
-#define T_Mission_Pion_mission_pion_abc_surveiller 47
-#define T_Mission_Pion_mission_pion_abc_barrer 48
-#define T_Mission_Pion_mission_pion_abc_attaquer 49
-#define T_Mission_Pion_mission_pion_abc_reconnaitre_point 50
-#define T_Mission_Pion_mission_pion_abc_eclairer 51
-#define T_Mission_Pion_mission_pion_abc_jalonner 52
-#define T_Mission_Pion_mission_pion_abc_contre_attaquer 53
-#define T_Mission_Pion_mission_pion_abc_semparer_zone 54
-#define T_Mission_Pion_mission_pion_abc_relever_unite 55
-#define T_Mission_Pion_mission_pion_abc_armer_pia 56
-#define T_Mission_Pion_mission_pion_abc_ouvrir_itineraire 57
-#define T_Mission_Pion_mission_pion_abc_freiner 58
-#define T_Mission_Pion_mission_pion_abc_escorter_unite 59
-#define T_Mission_Pion_mission_pion_abc_escorter_unites 60
-#define T_Mission_Pion_mission_pion_abc_armer_point_de_controle 61
-#define T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies 62
-#define T_Mission_Pion_mission_pion_abc_appuyer_sur_position 63
-#define T_Mission_Pion_mission_pion_abc_rasit_renseigner_sur 64
-#define T_Mission_Pion_mission_pion_gen_realiser_fosse_ac 65
-#define T_Mission_Pion_mission_pion_gen_realiser_abattis_mine 66
-#define T_Mission_Pion_mission_pion_gen_realiser_point_mine 67
-#define T_Mission_Pion_mission_pion_gen_realiser_barricade 68
-#define T_Mission_Pion_mission_pion_gen_realiser_eboulement 69
-#define T_Mission_Pion_mission_pion_gen_realiser_bouchon_mine 70
-#define T_Mission_Pion_mission_pion_gen_detruire_route 71
-#define T_Mission_Pion_mission_pion_gen_detruire_pont 72
-#define T_Mission_Pion_mission_pion_gen_securiser_itineraire 73
-#define T_Mission_Pion_mission_pion_gen_degager_abattis_mine 74
-#define T_Mission_Pion_mission_pion_gen_degager_eboulement 75
-#define T_Mission_Pion_mission_pion_gen_degager_rues 76
-#define T_Mission_Pion_mission_pion_gen_combler_entonnoir 77
-#define T_Mission_Pion_mission_pion_gen_combler_fosse_ac 78
-#define T_Mission_Pion_mission_pion_gen_creer_contournement 79
-#define T_Mission_Pion_mission_pion_gen_realiser_zone_minee_lineaire 80
-#define T_Mission_Pion_mission_pion_gen_ouvrir_trouee 81
-#define T_Mission_Pion_mission_pion_gen_renforcer 82
-#define T_Mission_Pion_mission_pion_gen_franchir_entonnoir 83
-#define T_Mission_Pion_mission_pion_gen_franchir_fosse_ac 84
-#define T_Mission_Pion_mission_pion_gen_realiser_zone_minee_par_dispersion 85
-#define T_Mission_Pion_mission_pion_gen_realiser_postes_tir 86
-#define T_Mission_Pion_mission_pion_gen_realiser_travaux_protection 87
-#define T_Mission_Pion_mission_pion_gen_retablir_itineraire 88
-#define T_Mission_Pion_mission_pion_gen_equiper_exploiter 89
-#define T_Mission_Pion_mission_pion_gen_executer_variantement 90
-#define T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement 91
-#define T_Mission_Pion_mission_pion_gen_reconnaitre_itineraire 92
-#define T_Mission_Pion_mission_pion_gen_deminer_site_franchissement 93
-#define T_Mission_Pion_mission_pion_gen_reconnaitre_zone 94
-#define T_Mission_Pion_mission_pion_gen_creer_plate_forme 95
-#define T_Mission_Pion_mission_pion_gen_creer_piste 96
-#define T_Mission_Pion_mission_pion_gen_creer_aire_poser 97
-#define T_Mission_Pion_mission_pion_gen_neutraliser_engins_explosifs 98
-#define T_Mission_Pion_mission_pion_gen_activer_obstacle 99
-#define T_Mission_Pion_mission_pion_gen_ameliorer_mobilite 100
-#define T_Mission_Pion_mission_pion_gen_realiser_aire_logistique 101
-#define T_Mission_Pion_mission_pion_gen_depolluer_zone 102
-#define T_Mission_Pion_mission_pion_gen_amenager_terrain_poser 103
-#define T_Mission_Pion_mission_pion_gen_realiser_plate_forme_deploiement 104
-#define T_Mission_Pion_mission_pion_gen_reprendre_mission_construction 105
-#define T_Mission_Pion_mission_pion_gen_realiser_zone_poser_helicoptere 106
-#define T_Mission_Pion_mission_pion_gen_appuyer_debarquement_troupes_gu 107
-#define T_Mission_Pion_mission_pion_gen_realiser_camp_prisonniers 108
-#define T_Mission_Pion_mission_pion_gen_realiser_camp_refugies 109
-#define T_Mission_Pion_mission_pion_inf_reconnaitre_axe 110
-#define T_Mission_Pion_mission_pion_inf_couvrir 111
-#define T_Mission_Pion_mission_pion_inf_reduire 112
-#define T_Mission_Pion_mission_pion_inf_appuyer 113
-#define T_Mission_Pion_mission_pion_inf_fixer 114
-#define T_Mission_Pion_mission_pion_inf_controler_secteur 115
-#define T_Mission_Pion_mission_pion_inf_surveiller_secteur 116
-#define T_Mission_Pion_mission_pion_inf_barrer 117
-#define T_Mission_Pion_mission_pion_inf_reconnaitre_point 118
-#define T_Mission_Pion_mission_pion_inf_eclairer 119
-#define T_Mission_Pion_mission_pion_inf_interdire 120
-#define T_Mission_Pion_mission_pion_inf_semparer 121
-#define T_Mission_Pion_mission_pion_inf_prendre_preciser_contact 122
-#define T_Mission_Pion_mission_pion_inf_defendre 123
-#define T_Mission_Pion_mission_pion_inf_detruire_embuscade 124
-#define T_Mission_Pion_mission_pion_inf_contre_attaquer 125
-#define T_Mission_Pion_mission_pion_inf_freiner 126
-#define T_Mission_Pion_mission_pion_inf_flanc_garder 127
-#define T_Mission_Pion_mission_pion_inf_organiser_un_check_point 128
-#define T_Mission_Pion_mission_pion_inf_harceler 129
-#define T_Mission_Pion_mission_pion_inf_detruire_par_coup_de_main 130
-#define T_Mission_Pion_mission_pion_inf_escorter_unite 131
-#define T_Mission_Pion_mission_pion_inf_escorter_unites 132
-#define T_Mission_Pion_mission_pion_inf_renseigner_sur 133
-#define T_Mission_Pion_mission_pion_inf_soutenir 134
-#define T_Mission_Pion_mission_pion_inf_securiser 135
-#define T_Mission_Pion_mission_pion_inf_recueillir 136
-#define T_Mission_Pion_mission_pion_inf_repondre_a_aggression 137
-#define T_Mission_Pion_mission_pion_inf_appuyer_sur_position 138
-#define T_Mission_Pion_mission_pion_log_se_deployer 139
-#define T_Mission_Pion_mission_pion_log_renforcer 140
-#define T_Mission_Pion_mission_pion_log_preparer_bascule 141
-#define T_Mission_Pion_mission_pion_log_decontaminer_blesses 142
-#define T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses 143
-#define T_Mission_Pion_mission_pion_log_trier_blesses 144
-#define T_Mission_Pion_mission_pion_log_traiter_blesses 145
-#define T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales 146
-#define T_Mission_Pion_mission_pion_log_convoyer 147
-#define T_Mission_Pion_mission_pion_log_reparer 148
-#define T_Mission_Pion_mission_pion_log_appuyer_mouvement 149
-#define T_Mission_Pion_mission_pion_log_reconnaitre_itineraire 150
-#define T_Mission_Pion_mission_pion_log_transporter_unite 151
-#define T_Mission_Pion_mission_pion_log_reconnaitre_zone_contaminee 152
-#define T_Mission_Pion_mission_pion_log_appuyer_mouvement_dans_zone 153
-#define T_Mission_Pion_mission_pion_log_mettre_en_oeuvre_zone_stationnement 154
-#define T_Mission_Pion_mission_pion_log_appuyer_franchissement_sur_un_point 155
-#define T_Mission_Pion_mission_pion_log_bloquer_zone 156
-#define T_Mission_Pion_mission_pion_log_reconnaitre_zone_de_deploiement 157
-#define T_Mission_Pion_mission_pion_log_armer_pia 158
-#define T_Mission_Pion_mission_pion_log_surveiller 159
-#define T_Mission_Pion_mission_pion_test_heliporter 160
-#define T_Mission_Pion_mission_pion_test_move_to 161
-#define T_Mission_Pion_mission_pion_test_create_object 162
-#define T_Mission_Pion_mission_pion_test_destroy_object 163
-#define T_Mission_Pion_mission_pion_test_create_bypass 164
-#define T_Mission_Pion_mission_pion_test_fire 165
-#define T_Mission_Pion_mission_pion_test_change_posture 166
-#define T_Mission_Pion_mission_pion_test_path_find 167
-#define T_Mission_Pion_mission_pion_test_find_position 168
-#define T_Mission_Pion_mission_pion_test_reinforce 169
-#define T_Mission_Pion_mission_pion_plastron_ennemi 170
-#define T_Mission_Pion_mission_pion_faire_mouvement 171
-#define T_Mission_Pion_mission_pion_suivre 172
-#define T_Mission_Pion_mission_pion_se_faire_decontaminer 173
-#define T_Mission_Pion_mission_pion_franchir 174
-#define T_Mission_Pion_mission_pion_decrocher 175
-#define T_Mission_Pion_mission_pion_stationner 176
-#define T_Mission_Pion_mission_pion_se_faire_transporter 177
-#define T_Mission_Pion_mission_pion_interdire_franchissement_populations 178
-#define T_Mission_Pion_mission_pion_filtrer_populations 179
-#define T_Mission_Pion_mission_pion_renseigner_sur_populations 180
-#define T_Mission_Pion_mission_pion_canaliser_populations 181
-#define T_Mission_Pion_mission_pion_controler_populations_dans_zone 182
-#define T_Mission_Pion_mission_pion_securiser_zone_contre_populations 183
-#define T_Mission_Pion_mission_pion_generique 184
-#define T_Mission_Pion_mission_pion_milice_provoquer 185
-#define T_Mission_Pion_mission_pion_milice_prendre_et_tenir 186
-#define T_Mission_Pion_mission_pion_milice_detruire_embuscade 187
-#define T_Mission_Pion_mission_pion_joint_marine_transporter 188
-#define T_Mission_Pion_mission_pion_joint_air_effectuer_raid 189
-#define T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination 190
-#define T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire 191
-#define T_Mission_Pion_mission_pion_nbc_reconnaitre_zone 192
-#define T_Mission_Pion_mission_pion_nbc_decontaminer_zone 193
-#define T_Mission_Pion_mission_pion_nbc_reconnaitre_un_site_rota 194
-#define T_Mission_Pion_mission_pion_rens_rohum_renseigner_sur 195
-#define T_Mission_Pion_mission_pion_rens_rohum_sexfiltrer 196
-#define T_Mission_Pion_mission_pion_rens_rohum_orienter_guider 197
-#define T_Mission_Pion_mission_pion_rens_roem_appuyer 198
-#define T_Mission_Pion_mission_pion_rens_roem_renseigner_sur 199
-#define T_Mission_Pion_mission_pion_rens_roem_mettre_en_oeuvre 200
-#define T_Mission_Pion_mission_pion_rens_radint_renseigner_sur 201
-#define T_Mission_Pion_mission_pion_rens_radint_mettre_en_oeuvre 202
-#define T_Mission_Pion_mission_pion_rens_roim_mettre_en_oeuvre 203
-#define T_Mission_Pion_mission_pion_rens_roim_sdti_renseigner_sur 204
-#define T_Mission_Pion_mission_pion_rens_roim_cl289_renseigner_sur 205
-#define T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison 206
-#define T_Mission_Pion_mission_pion_asy_sinfiltrer 207
-#define T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation 208
-#define T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees 209
-#define T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation 210
-#define T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone 211
-#define T_Mission_Pion_mission_pion_asy_renseigner 212
+#define T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur 2
+#define T_Mission_Pion_mission_pion_alat_reconnaitre_contour_ennemi 3
+#define T_Mission_Pion_mission_pion_alat_detruire_neutraliser_dans_zone 4
+#define T_Mission_Pion_mission_pion_alat_detruire_aeromobile 5
+#define T_Mission_Pion_mission_pion_alat_freiner 6
+#define T_Mission_Pion_mission_pion_alat_jalonner 7
+#define T_Mission_Pion_mission_pion_alat_escorter 8
+#define T_Mission_Pion_mission_pion_alat_heliporter 9
+#define T_Mission_Pion_mission_pion_alat_heliporter_helitransporter_plot_ravitaillement 10
+#define T_Mission_Pion_mission_pion_alat_helitransporter 11
+#define T_Mission_Pion_mission_pion_alat_imex 12
+#define T_Mission_Pion_mission_pion_alat_eclairer 13
+#define T_Mission_Pion_mission_pion_alat_surveiller 14
+#define T_Mission_Pion_mission_pion_alat_appuyer_direct_au_contact 15
+#define T_Mission_Pion_mission_pion_alat_couvrir 16
+#define T_Mission_Pion_mission_pion_alat_attaquer 17
+#define T_Mission_Pion_mission_pion_asa_defendre_site 18
+#define T_Mission_Pion_mission_pion_asa_defendre_site_a_partir_position 19
+#define T_Mission_Pion_mission_pion_asa_defendre_zone 20
+#define T_Mission_Pion_mission_pion_asa_defendre_zone_a_partir_position 21
+#define T_Mission_Pion_mission_pion_asa_surveiller 22
+#define T_Mission_Pion_mission_pion_asa_defendre_unites 23
+#define T_Mission_Pion_mission_pion_asa_mistral_defendre_site 24
+#define T_Mission_Pion_mission_pion_asa_mistral_defendre_site_a_partir_position 25
+#define T_Mission_Pion_mission_pion_asa_mistral_defendre_zone 26
+#define T_Mission_Pion_mission_pion_asa_mistral_defendre_zone_a_partir_position 27
+#define T_Mission_Pion_mission_pion_asa_mistral_surveiller 28
+#define T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre 29
+#define T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre_sur_position 30
+#define T_Mission_Pion_mission_pion_ass_reconnaitre_zone_deploiement 31
+#define T_Mission_Pion_mission_pion_ass_acquerir_lanceurs_eni 32
+#define T_Mission_Pion_mission_pion_ass_eo_acquerir_objectifs 33
+#define T_Mission_Pion_mission_pion_ass_eop_acquerir_objectifs 34
+#define T_Mission_Pion_mission_pion_ass_ratac_acquerir_objectifs 35
+#define T_Mission_Pion_mission_pion_abc_reconnaitre_axe 36
+#define T_Mission_Pion_mission_pion_abc_soutenir 37
+#define T_Mission_Pion_mission_pion_abc_couvrir 38
+#define T_Mission_Pion_mission_pion_abc_flanc_garder 39
+#define T_Mission_Pion_mission_pion_abc_reduire 40
+#define T_Mission_Pion_mission_pion_abc_appuyer 41
+#define T_Mission_Pion_mission_pion_abc_fixer 42
+#define T_Mission_Pion_mission_pion_abc_renseigner_sur 43
+#define T_Mission_Pion_mission_pion_abc_controler_zone 44
+#define T_Mission_Pion_mission_pion_abc_surveiller 45
+#define T_Mission_Pion_mission_pion_abc_barrer 46
+#define T_Mission_Pion_mission_pion_abc_attaquer 47
+#define T_Mission_Pion_mission_pion_abc_reconnaitre_point 48
+#define T_Mission_Pion_mission_pion_abc_eclairer 49
+#define T_Mission_Pion_mission_pion_abc_jalonner 50
+#define T_Mission_Pion_mission_pion_abc_contre_attaquer 51
+#define T_Mission_Pion_mission_pion_abc_semparer_zone 52
+#define T_Mission_Pion_mission_pion_abc_relever_unite 53
+#define T_Mission_Pion_mission_pion_abc_armer_pia 54
+#define T_Mission_Pion_mission_pion_abc_ouvrir_itineraire 55
+#define T_Mission_Pion_mission_pion_abc_freiner 56
+#define T_Mission_Pion_mission_pion_abc_escorter_unite 57
+#define T_Mission_Pion_mission_pion_abc_escorter_unites 58
+#define T_Mission_Pion_mission_pion_abc_armer_point_de_controle 59
+#define T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies 60
+#define T_Mission_Pion_mission_pion_abc_appuyer_sur_position 61
+#define T_Mission_Pion_mission_pion_abc_rasit_renseigner_sur 62
+#define T_Mission_Pion_mission_pion_gen_realiser_fosse_ac 63
+#define T_Mission_Pion_mission_pion_gen_realiser_abattis_mine 64
+#define T_Mission_Pion_mission_pion_gen_realiser_point_mine 65
+#define T_Mission_Pion_mission_pion_gen_realiser_barricade 66
+#define T_Mission_Pion_mission_pion_gen_realiser_eboulement 67
+#define T_Mission_Pion_mission_pion_gen_realiser_bouchon_mine 68
+#define T_Mission_Pion_mission_pion_gen_detruire_route 69
+#define T_Mission_Pion_mission_pion_gen_detruire_pont 70
+#define T_Mission_Pion_mission_pion_gen_securiser_itineraire 71
+#define T_Mission_Pion_mission_pion_gen_degager_abattis_mine 72
+#define T_Mission_Pion_mission_pion_gen_degager_eboulement 73
+#define T_Mission_Pion_mission_pion_gen_degager_rues 74
+#define T_Mission_Pion_mission_pion_gen_combler_entonnoir 75
+#define T_Mission_Pion_mission_pion_gen_combler_fosse_ac 76
+#define T_Mission_Pion_mission_pion_gen_creer_contournement 77
+#define T_Mission_Pion_mission_pion_gen_realiser_zone_minee_lineaire 78
+#define T_Mission_Pion_mission_pion_gen_ouvrir_trouee 79
+#define T_Mission_Pion_mission_pion_gen_renforcer 80
+#define T_Mission_Pion_mission_pion_gen_franchir_entonnoir 81
+#define T_Mission_Pion_mission_pion_gen_franchir_fosse_ac 82
+#define T_Mission_Pion_mission_pion_gen_realiser_zone_minee_par_dispersion 83
+#define T_Mission_Pion_mission_pion_gen_realiser_postes_tir 84
+#define T_Mission_Pion_mission_pion_gen_realiser_travaux_protection 85
+#define T_Mission_Pion_mission_pion_gen_retablir_itineraire 86
+#define T_Mission_Pion_mission_pion_gen_equiper_exploiter 87
+#define T_Mission_Pion_mission_pion_gen_executer_variantement 88
+#define T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement 89
+#define T_Mission_Pion_mission_pion_gen_reconnaitre_itineraire 90
+#define T_Mission_Pion_mission_pion_gen_deminer_site_franchissement 91
+#define T_Mission_Pion_mission_pion_gen_reconnaitre_zone 92
+#define T_Mission_Pion_mission_pion_gen_creer_plate_forme 93
+#define T_Mission_Pion_mission_pion_gen_creer_piste 94
+#define T_Mission_Pion_mission_pion_gen_creer_aire_poser 95
+#define T_Mission_Pion_mission_pion_gen_neutraliser_engins_explosifs 96
+#define T_Mission_Pion_mission_pion_gen_activer_obstacle 97
+#define T_Mission_Pion_mission_pion_gen_ameliorer_mobilite 98
+#define T_Mission_Pion_mission_pion_gen_realiser_aire_logistique 99
+#define T_Mission_Pion_mission_pion_gen_depolluer_zone 100
+#define T_Mission_Pion_mission_pion_gen_amenager_terrain_poser 101
+#define T_Mission_Pion_mission_pion_gen_realiser_plate_forme_deploiement 102
+#define T_Mission_Pion_mission_pion_gen_reprendre_mission_construction 103
+#define T_Mission_Pion_mission_pion_gen_realiser_zone_poser_helicoptere 104
+#define T_Mission_Pion_mission_pion_gen_appuyer_debarquement_troupes_gu 105
+#define T_Mission_Pion_mission_pion_gen_realiser_camp_prisonniers 106
+#define T_Mission_Pion_mission_pion_gen_realiser_camp_refugies 107
+#define T_Mission_Pion_mission_pion_inf_reconnaitre_axe 108
+#define T_Mission_Pion_mission_pion_inf_couvrir 109
+#define T_Mission_Pion_mission_pion_inf_reduire 110
+#define T_Mission_Pion_mission_pion_inf_appuyer 111
+#define T_Mission_Pion_mission_pion_inf_fixer 112
+#define T_Mission_Pion_mission_pion_inf_controler_secteur 113
+#define T_Mission_Pion_mission_pion_inf_surveiller_secteur 114
+#define T_Mission_Pion_mission_pion_inf_barrer 115
+#define T_Mission_Pion_mission_pion_inf_reconnaitre_point 116
+#define T_Mission_Pion_mission_pion_inf_eclairer 117
+#define T_Mission_Pion_mission_pion_inf_interdire 118
+#define T_Mission_Pion_mission_pion_inf_semparer 119
+#define T_Mission_Pion_mission_pion_inf_prendre_preciser_contact 120
+#define T_Mission_Pion_mission_pion_inf_defendre 121
+#define T_Mission_Pion_mission_pion_inf_detruire_embuscade 122
+#define T_Mission_Pion_mission_pion_inf_contre_attaquer 123
+#define T_Mission_Pion_mission_pion_inf_freiner 124
+#define T_Mission_Pion_mission_pion_inf_flanc_garder 125
+#define T_Mission_Pion_mission_pion_inf_organiser_un_check_point 126
+#define T_Mission_Pion_mission_pion_inf_harceler 127
+#define T_Mission_Pion_mission_pion_inf_detruire_par_coup_de_main 128
+#define T_Mission_Pion_mission_pion_inf_escorter_unite 129
+#define T_Mission_Pion_mission_pion_inf_escorter_unites 130
+#define T_Mission_Pion_mission_pion_inf_renseigner_sur 131
+#define T_Mission_Pion_mission_pion_inf_soutenir 132
+#define T_Mission_Pion_mission_pion_inf_securiser 133
+#define T_Mission_Pion_mission_pion_inf_recueillir 134
+#define T_Mission_Pion_mission_pion_inf_repondre_a_aggression 135
+#define T_Mission_Pion_mission_pion_inf_appuyer_sur_position 136
+#define T_Mission_Pion_mission_pion_log_se_deployer 137
+#define T_Mission_Pion_mission_pion_log_renforcer 138
+#define T_Mission_Pion_mission_pion_log_preparer_bascule 139
+#define T_Mission_Pion_mission_pion_log_decontaminer_blesses 140
+#define T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses 141
+#define T_Mission_Pion_mission_pion_log_trier_blesses 142
+#define T_Mission_Pion_mission_pion_log_traiter_blesses 143
+#define T_Mission_Pion_mission_pion_log_prendre_en_compte_reactions_mentales 144
+#define T_Mission_Pion_mission_pion_log_convoyer 145
+#define T_Mission_Pion_mission_pion_log_reparer 146
+#define T_Mission_Pion_mission_pion_log_appuyer_mouvement 147
+#define T_Mission_Pion_mission_pion_log_reconnaitre_itineraire 148
+#define T_Mission_Pion_mission_pion_log_transporter_unite 149
+#define T_Mission_Pion_mission_pion_log_reconnaitre_zone_contaminee 150
+#define T_Mission_Pion_mission_pion_log_appuyer_mouvement_dans_zone 151
+#define T_Mission_Pion_mission_pion_log_mettre_en_oeuvre_zone_stationnement 152
+#define T_Mission_Pion_mission_pion_log_appuyer_franchissement_sur_un_point 153
+#define T_Mission_Pion_mission_pion_log_bloquer_zone 154
+#define T_Mission_Pion_mission_pion_log_reconnaitre_zone_de_deploiement 155
+#define T_Mission_Pion_mission_pion_log_armer_pia 156
+#define T_Mission_Pion_mission_pion_log_surveiller 157
+#define T_Mission_Pion_mission_pion_test_heliporter 158
+#define T_Mission_Pion_mission_pion_test_move_to 159
+#define T_Mission_Pion_mission_pion_test_create_object 160
+#define T_Mission_Pion_mission_pion_test_destroy_object 161
+#define T_Mission_Pion_mission_pion_test_create_bypass 162
+#define T_Mission_Pion_mission_pion_test_fire 163
+#define T_Mission_Pion_mission_pion_test_change_posture 164
+#define T_Mission_Pion_mission_pion_test_path_find 165
+#define T_Mission_Pion_mission_pion_test_find_position 166
+#define T_Mission_Pion_mission_pion_test_reinforce 167
+#define T_Mission_Pion_mission_pion_plastron_ennemi 168
+#define T_Mission_Pion_mission_pion_faire_mouvement 169
+#define T_Mission_Pion_mission_pion_suivre 170
+#define T_Mission_Pion_mission_pion_se_faire_decontaminer 171
+#define T_Mission_Pion_mission_pion_franchir 172
+#define T_Mission_Pion_mission_pion_decrocher 173
+#define T_Mission_Pion_mission_pion_stationner 174
+#define T_Mission_Pion_mission_pion_se_faire_transporter 175
+#define T_Mission_Pion_mission_pion_interdire_franchissement_populations 176
+#define T_Mission_Pion_mission_pion_filtrer_populations 177
+#define T_Mission_Pion_mission_pion_renseigner_sur_populations 178
+#define T_Mission_Pion_mission_pion_canaliser_populations 179
+#define T_Mission_Pion_mission_pion_controler_populations_dans_zone 180
+#define T_Mission_Pion_mission_pion_securiser_zone_contre_populations 181
+#define T_Mission_Pion_mission_pion_generique 182
+#define T_Mission_Pion_mission_pion_milice_provoquer 183
+#define T_Mission_Pion_mission_pion_milice_prendre_et_tenir 184
+#define T_Mission_Pion_mission_pion_milice_detruire_embuscade 185
+#define T_Mission_Pion_mission_pion_joint_marine_transporter 186
+#define T_Mission_Pion_mission_pion_joint_air_effectuer_raid 187
+#define T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination 188
+#define T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire 189
+#define T_Mission_Pion_mission_pion_nbc_reconnaitre_zone 190
+#define T_Mission_Pion_mission_pion_nbc_decontaminer_zone 191
+#define T_Mission_Pion_mission_pion_nbc_reconnaitre_un_site_rota 192
+#define T_Mission_Pion_mission_pion_rens_rohum_renseigner_sur 193
+#define T_Mission_Pion_mission_pion_rens_rohum_sexfiltrer 194
+#define T_Mission_Pion_mission_pion_rens_rohum_orienter_guider 195
+#define T_Mission_Pion_mission_pion_rens_roem_appuyer 196
+#define T_Mission_Pion_mission_pion_rens_roem_renseigner_sur 197
+#define T_Mission_Pion_mission_pion_rens_roem_mettre_en_oeuvre 198
+#define T_Mission_Pion_mission_pion_rens_radint_renseigner_sur 199
+#define T_Mission_Pion_mission_pion_rens_radint_mettre_en_oeuvre 200
+#define T_Mission_Pion_mission_pion_rens_roim_mettre_en_oeuvre 201
+#define T_Mission_Pion_mission_pion_rens_roim_sdti_renseigner_sur 202
+#define T_Mission_Pion_mission_pion_rens_roim_cl289_renseigner_sur 203
+#define T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison 204
+#define T_Mission_Pion_mission_pion_asy_sinfiltrer 205
+#define T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation 206
+#define T_Mission_Pion_mission_pion_asy_commettre_attentatContreForcesArmees 207
+#define T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation 208
+#define T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone 209
+#define T_Mission_Pion_mission_pion_asy_renseigner 210
 
 typedef struct EXTERN ASN1T_Mission_Pion {
    int t;
@@ -250,426 +248,422 @@ typedef struct EXTERN ASN1T_Mission_Pion {
       /* t = 1 */
       ASN1T_Mission_Pion_ALAT_AllerSeRecompleter *mission_pion_alat_aller_se_recompleter;
       /* t = 2 */
-      ASN1T_Mission_Pion_ALAT_EvacuationSanitaire *mission_pion_alat_evacuation_sanitaire;
-      /* t = 3 */
       ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur *mission_pion_alat_reconnaitre_dans_la_profondeur;
-      /* t = 4 */
+      /* t = 3 */
       ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi *mission_pion_alat_reconnaitre_contour_ennemi;
-      /* t = 5 */
+      /* t = 4 */
       ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone *mission_pion_alat_detruire_neutraliser_dans_zone;
-      /* t = 6 */
+      /* t = 5 */
       ASN1T_Mission_Pion_ALAT_DetruireAeromobile *mission_pion_alat_detruire_aeromobile;
-      /* t = 7 */
+      /* t = 6 */
       ASN1T_Mission_Pion_ALAT_Freiner *mission_pion_alat_freiner;
-      /* t = 8 */
+      /* t = 7 */
       ASN1T_Mission_Pion_ALAT_Jalonner *mission_pion_alat_jalonner;
-      /* t = 9 */
+      /* t = 8 */
       ASN1T_Mission_Pion_ALAT_Escorter *mission_pion_alat_escorter;
-      /* t = 10 */
+      /* t = 9 */
       ASN1T_Mission_Pion_ALAT_Heliporter *mission_pion_alat_heliporter;
-      /* t = 11 */
+      /* t = 10 */
       ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement *mission_pion_alat_heliporter_helitransporter_plot_ravitaillement;
-      /* t = 12 */
+      /* t = 11 */
       ASN1T_Mission_Pion_ALAT_Helitransporter *mission_pion_alat_helitransporter;
-      /* t = 13 */
-      ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage *mission_pion_alat_effectuer_recherche_et_sauvetage;
-      /* t = 14 */
+      /* t = 12 */
       ASN1T_Mission_Pion_ALAT_IMEX *mission_pion_alat_imex;
-      /* t = 15 */
+      /* t = 13 */
       ASN1T_Mission_Pion_ALAT_Eclairer *mission_pion_alat_eclairer;
-      /* t = 16 */
+      /* t = 14 */
       ASN1T_Mission_Pion_ALAT_Surveiller *mission_pion_alat_surveiller;
-      /* t = 17 */
+      /* t = 15 */
       ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact *mission_pion_alat_appuyer_direct_au_contact;
-      /* t = 18 */
+      /* t = 16 */
       ASN1T_Mission_Pion_ALAT_Couvrir *mission_pion_alat_couvrir;
-      /* t = 19 */
+      /* t = 17 */
       ASN1T_Mission_Pion_ALAT_Attaquer *mission_pion_alat_attaquer;
-      /* t = 20 */
+      /* t = 18 */
       ASN1T_Mission_Pion_ASA_DefendreSite *mission_pion_asa_defendre_site;
-      /* t = 21 */
+      /* t = 19 */
       ASN1T_Mission_Pion_ASA_DefendreSiteAPartirPosition *mission_pion_asa_defendre_site_a_partir_position;
-      /* t = 22 */
+      /* t = 20 */
       ASN1T_Mission_Pion_ASA_DefendreZone *mission_pion_asa_defendre_zone;
-      /* t = 23 */
+      /* t = 21 */
       ASN1T_Mission_Pion_ASA_DefendreZoneAPartirPosition *mission_pion_asa_defendre_zone_a_partir_position;
-      /* t = 24 */
+      /* t = 22 */
       ASN1T_Mission_Pion_ASA_Surveiller *mission_pion_asa_surveiller;
-      /* t = 25 */
+      /* t = 23 */
       ASN1T_Mission_Pion_ASA_DefendreUnites *mission_pion_asa_defendre_unites;
-      /* t = 26 */
+      /* t = 24 */
       ASN1T_Mission_Pion_ASA_MISTRAL_DefendreSite *mission_pion_asa_mistral_defendre_site;
-      /* t = 27 */
+      /* t = 25 */
       ASN1T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition *mission_pion_asa_mistral_defendre_site_a_partir_position;
-      /* t = 28 */
+      /* t = 26 */
       ASN1T_Mission_Pion_ASA_MISTRAL_DefendreZone *mission_pion_asa_mistral_defendre_zone;
-      /* t = 29 */
+      /* t = 27 */
       ASN1T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition *mission_pion_asa_mistral_defendre_zone_a_partir_position;
-      /* t = 30 */
+      /* t = 28 */
       ASN1T_Mission_Pion_ASA_MISTRAL_Surveiller *mission_pion_asa_mistral_surveiller;
-      /* t = 31 */
+      /* t = 29 */
       ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvre *mission_pion_ass_assurer_mise_en_oeuvre;
-      /* t = 32 */
+      /* t = 30 */
       ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition *mission_pion_ass_assurer_mise_en_oeuvre_sur_position;
-      /* t = 33 */
+      /* t = 31 */
       ASN1T_Mission_Pion_ASS_ReconnaitreZoneDeploiement *mission_pion_ass_reconnaitre_zone_deploiement;
-      /* t = 34 */
+      /* t = 32 */
       ASN1T_Mission_Pion_ASS_AcquerirLanceursEni *mission_pion_ass_acquerir_lanceurs_eni;
-      /* t = 35 */
+      /* t = 33 */
       ASN1T_Mission_Pion_ASS_EO_AcquerirObjectifs *mission_pion_ass_eo_acquerir_objectifs;
-      /* t = 36 */
+      /* t = 34 */
       ASN1T_Mission_Pion_ASS_EOP_AcquerirObjectifs *mission_pion_ass_eop_acquerir_objectifs;
-      /* t = 37 */
+      /* t = 35 */
       ASN1T_Mission_Pion_ASS_RATAC_AcquerirObjectifs *mission_pion_ass_ratac_acquerir_objectifs;
-      /* t = 38 */
+      /* t = 36 */
       ASN1T_Mission_Pion_ABC_ReconnaitreAxe *mission_pion_abc_reconnaitre_axe;
-      /* t = 39 */
+      /* t = 37 */
       ASN1T_Mission_Pion_ABC_Soutenir *mission_pion_abc_soutenir;
-      /* t = 40 */
+      /* t = 38 */
       ASN1T_Mission_Pion_ABC_Couvrir *mission_pion_abc_couvrir;
-      /* t = 41 */
+      /* t = 39 */
       ASN1T_Mission_Pion_ABC_FlancGarder *mission_pion_abc_flanc_garder;
-      /* t = 42 */
+      /* t = 40 */
       ASN1T_Mission_Pion_ABC_Reduire *mission_pion_abc_reduire;
-      /* t = 43 */
+      /* t = 41 */
       ASN1T_Mission_Pion_ABC_Appuyer *mission_pion_abc_appuyer;
-      /* t = 44 */
+      /* t = 42 */
       ASN1T_Mission_Pion_ABC_Fixer *mission_pion_abc_fixer;
-      /* t = 45 */
+      /* t = 43 */
       ASN1T_Mission_Pion_ABC_RenseignerSur *mission_pion_abc_renseigner_sur;
-      /* t = 46 */
+      /* t = 44 */
       ASN1T_Mission_Pion_ABC_ControlerZone *mission_pion_abc_controler_zone;
-      /* t = 47 */
+      /* t = 45 */
       ASN1T_Mission_Pion_ABC_Surveiller *mission_pion_abc_surveiller;
-      /* t = 48 */
+      /* t = 46 */
       ASN1T_Mission_Pion_ABC_Barrer *mission_pion_abc_barrer;
-      /* t = 49 */
+      /* t = 47 */
       ASN1T_Mission_Pion_ABC_Attaquer *mission_pion_abc_attaquer;
-      /* t = 50 */
+      /* t = 48 */
       ASN1T_Mission_Pion_ABC_ReconnaitrePoint *mission_pion_abc_reconnaitre_point;
-      /* t = 51 */
+      /* t = 49 */
       ASN1T_Mission_Pion_ABC_Eclairer *mission_pion_abc_eclairer;
-      /* t = 52 */
+      /* t = 50 */
       ASN1T_Mission_Pion_ABC_Jalonner *mission_pion_abc_jalonner;
-      /* t = 53 */
+      /* t = 51 */
       ASN1T_Mission_Pion_ABC_ContreAttaquer *mission_pion_abc_contre_attaquer;
-      /* t = 54 */
+      /* t = 52 */
       ASN1T_Mission_Pion_ABC_SemparerZone *mission_pion_abc_semparer_zone;
-      /* t = 55 */
+      /* t = 53 */
       ASN1T_Mission_Pion_ABC_ReleverUnite *mission_pion_abc_relever_unite;
-      /* t = 56 */
+      /* t = 54 */
       ASN1T_Mission_Pion_ABC_ArmerPIA *mission_pion_abc_armer_pia;
-      /* t = 57 */
+      /* t = 55 */
       ASN1T_Mission_Pion_ABC_OuvrirItineraire *mission_pion_abc_ouvrir_itineraire;
-      /* t = 58 */
+      /* t = 56 */
       ASN1T_Mission_Pion_ABC_Freiner *mission_pion_abc_freiner;
-      /* t = 59 */
+      /* t = 57 */
       ASN1T_Mission_Pion_ABC_EscorterUnite *mission_pion_abc_escorter_unite;
-      /* t = 60 */
+      /* t = 58 */
       ASN1T_Mission_Pion_ABC_EscorterUnites *mission_pion_abc_escorter_unites;
-      /* t = 61 */
+      /* t = 59 */
       ASN1T_Mission_Pion_ABC_ArmerPointDeControle *mission_pion_abc_armer_point_de_controle;
-      /* t = 62 */
+      /* t = 60 */
       ASN1T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies *mission_pion_abc_organiser_accueil_colonne_refugies;
-      /* t = 63 */
+      /* t = 61 */
       ASN1T_Mission_Pion_ABC_AppuyerSurPosition *mission_pion_abc_appuyer_sur_position;
-      /* t = 64 */
+      /* t = 62 */
       ASN1T_Mission_Pion_ABC_RASIT_RenseignerSur *mission_pion_abc_rasit_renseigner_sur;
-      /* t = 65 */
+      /* t = 63 */
       ASN1T_Mission_Pion_GEN_RealiserFosseAC *mission_pion_gen_realiser_fosse_ac;
-      /* t = 66 */
+      /* t = 64 */
       ASN1T_Mission_Pion_GEN_RealiserAbattisMine *mission_pion_gen_realiser_abattis_mine;
-      /* t = 67 */
+      /* t = 65 */
       ASN1T_Mission_Pion_GEN_RealiserPointMine *mission_pion_gen_realiser_point_mine;
-      /* t = 68 */
+      /* t = 66 */
       ASN1T_Mission_Pion_GEN_RealiserBarricade *mission_pion_gen_realiser_barricade;
-      /* t = 69 */
+      /* t = 67 */
       ASN1T_Mission_Pion_GEN_RealiserEboulement *mission_pion_gen_realiser_eboulement;
-      /* t = 70 */
+      /* t = 68 */
       ASN1T_Mission_Pion_GEN_RealiserBouchonMine *mission_pion_gen_realiser_bouchon_mine;
-      /* t = 71 */
+      /* t = 69 */
       ASN1T_Mission_Pion_GEN_DetruireRoute *mission_pion_gen_detruire_route;
-      /* t = 72 */
+      /* t = 70 */
       ASN1T_Mission_Pion_GEN_DetruirePont *mission_pion_gen_detruire_pont;
-      /* t = 73 */
+      /* t = 71 */
       ASN1T_Mission_Pion_GEN_SecuriserItineraire *mission_pion_gen_securiser_itineraire;
-      /* t = 74 */
+      /* t = 72 */
       ASN1T_Mission_Pion_GEN_DegagerAbattisMine *mission_pion_gen_degager_abattis_mine;
-      /* t = 75 */
+      /* t = 73 */
       ASN1T_Mission_Pion_GEN_DegagerEboulement *mission_pion_gen_degager_eboulement;
-      /* t = 76 */
+      /* t = 74 */
       ASN1T_Mission_Pion_GEN_DegagerRues *mission_pion_gen_degager_rues;
-      /* t = 77 */
+      /* t = 75 */
       ASN1T_Mission_Pion_GEN_ComblerEntonnoir *mission_pion_gen_combler_entonnoir;
-      /* t = 78 */
+      /* t = 76 */
       ASN1T_Mission_Pion_GEN_ComblerFosseAC *mission_pion_gen_combler_fosse_ac;
-      /* t = 79 */
+      /* t = 77 */
       ASN1T_Mission_Pion_GEN_CreerContournement *mission_pion_gen_creer_contournement;
-      /* t = 80 */
+      /* t = 78 */
       ASN1T_Mission_Pion_GEN_RealiserZoneMineeLineaire *mission_pion_gen_realiser_zone_minee_lineaire;
-      /* t = 81 */
+      /* t = 79 */
       ASN1T_Mission_Pion_GEN_OuvrirTrouee *mission_pion_gen_ouvrir_trouee;
-      /* t = 82 */
+      /* t = 80 */
       ASN1T_Mission_Pion_GEN_Renforcer *mission_pion_gen_renforcer;
-      /* t = 83 */
+      /* t = 81 */
       ASN1T_Mission_Pion_GEN_FranchirEntonnoir *mission_pion_gen_franchir_entonnoir;
-      /* t = 84 */
+      /* t = 82 */
       ASN1T_Mission_Pion_GEN_FranchirFosseAC *mission_pion_gen_franchir_fosse_ac;
-      /* t = 85 */
+      /* t = 83 */
       ASN1T_Mission_Pion_GEN_RealiserZoneMineeParDispersion *mission_pion_gen_realiser_zone_minee_par_dispersion;
-      /* t = 86 */
+      /* t = 84 */
       ASN1T_Mission_Pion_GEN_RealiserPostesTir *mission_pion_gen_realiser_postes_tir;
-      /* t = 87 */
+      /* t = 85 */
       ASN1T_Mission_Pion_GEN_RealiserTravauxProtection *mission_pion_gen_realiser_travaux_protection;
-      /* t = 88 */
+      /* t = 86 */
       ASN1T_Mission_Pion_GEN_RetablirItineraire *mission_pion_gen_retablir_itineraire;
-      /* t = 89 */
+      /* t = 87 */
       ASN1T_Mission_Pion_GEN_EquiperExploiter *mission_pion_gen_equiper_exploiter;
-      /* t = 90 */
+      /* t = 88 */
       ASN1T_Mission_Pion_GEN_ExecuterVariantement *mission_pion_gen_executer_variantement;
-      /* t = 91 */
+      /* t = 89 */
       ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement *mission_pion_gen_reconnaitre_site_franchissement;
-      /* t = 92 */
+      /* t = 90 */
       ASN1T_Mission_Pion_GEN_ReconnaitreItineraire *mission_pion_gen_reconnaitre_itineraire;
-      /* t = 93 */
+      /* t = 91 */
       ASN1T_Mission_Pion_GEN_DeminerSiteFranchissement *mission_pion_gen_deminer_site_franchissement;
-      /* t = 94 */
+      /* t = 92 */
       ASN1T_Mission_Pion_GEN_ReconnaitreZone *mission_pion_gen_reconnaitre_zone;
-      /* t = 95 */
+      /* t = 93 */
       ASN1T_Mission_Pion_GEN_CreerPlateForme *mission_pion_gen_creer_plate_forme;
-      /* t = 96 */
+      /* t = 94 */
       ASN1T_Mission_Pion_GEN_CreerPiste *mission_pion_gen_creer_piste;
-      /* t = 97 */
+      /* t = 95 */
       ASN1T_Mission_Pion_GEN_CreerAirePoser *mission_pion_gen_creer_aire_poser;
-      /* t = 98 */
+      /* t = 96 */
       ASN1T_Mission_Pion_GEN_NeutraliserEnginsExplosifs *mission_pion_gen_neutraliser_engins_explosifs;
-      /* t = 99 */
+      /* t = 97 */
       ASN1T_Mission_Pion_GEN_ActiverObstacle *mission_pion_gen_activer_obstacle;
-      /* t = 100 */
+      /* t = 98 */
       ASN1T_Mission_Pion_GEN_AmeliorerMobilite *mission_pion_gen_ameliorer_mobilite;
-      /* t = 101 */
+      /* t = 99 */
       ASN1T_Mission_Pion_GEN_RealiserAireLogistique *mission_pion_gen_realiser_aire_logistique;
-      /* t = 102 */
+      /* t = 100 */
       ASN1T_Mission_Pion_GEN_DepolluerZone *mission_pion_gen_depolluer_zone;
-      /* t = 103 */
+      /* t = 101 */
       ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser *mission_pion_gen_amenager_terrain_poser;
-      /* t = 104 */
+      /* t = 102 */
       ASN1T_Mission_Pion_GEN_RealiserPlateFormeDeploiement *mission_pion_gen_realiser_plate_forme_deploiement;
-      /* t = 105 */
+      /* t = 103 */
       ASN1T_Mission_Pion_GEN_ReprendreMissionConstruction *mission_pion_gen_reprendre_mission_construction;
-      /* t = 106 */
+      /* t = 104 */
       ASN1T_Mission_Pion_GEN_RealiserZonePoserHelicoptere *mission_pion_gen_realiser_zone_poser_helicoptere;
-      /* t = 107 */
+      /* t = 105 */
       ASN1T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU *mission_pion_gen_appuyer_debarquement_troupes_gu;
-      /* t = 108 */
+      /* t = 106 */
       ASN1T_Mission_Pion_GEN_RealiserCampPrisonniers *mission_pion_gen_realiser_camp_prisonniers;
-      /* t = 109 */
+      /* t = 107 */
       ASN1T_Mission_Pion_GEN_RealiserCampRefugies *mission_pion_gen_realiser_camp_refugies;
-      /* t = 110 */
+      /* t = 108 */
       ASN1T_Mission_Pion_INF_ReconnaitreAxe *mission_pion_inf_reconnaitre_axe;
-      /* t = 111 */
+      /* t = 109 */
       ASN1T_Mission_Pion_INF_Couvrir *mission_pion_inf_couvrir;
-      /* t = 112 */
+      /* t = 110 */
       ASN1T_Mission_Pion_INF_Reduire *mission_pion_inf_reduire;
-      /* t = 113 */
+      /* t = 111 */
       ASN1T_Mission_Pion_INF_Appuyer *mission_pion_inf_appuyer;
-      /* t = 114 */
+      /* t = 112 */
       ASN1T_Mission_Pion_INF_Fixer *mission_pion_inf_fixer;
-      /* t = 115 */
+      /* t = 113 */
       ASN1T_Mission_Pion_INF_ControlerSecteur *mission_pion_inf_controler_secteur;
-      /* t = 116 */
+      /* t = 114 */
       ASN1T_Mission_Pion_INF_SurveillerSecteur *mission_pion_inf_surveiller_secteur;
-      /* t = 117 */
+      /* t = 115 */
       ASN1T_Mission_Pion_INF_Barrer *mission_pion_inf_barrer;
-      /* t = 118 */
+      /* t = 116 */
       ASN1T_Mission_Pion_INF_ReconnaitrePoint *mission_pion_inf_reconnaitre_point;
-      /* t = 119 */
+      /* t = 117 */
       ASN1T_Mission_Pion_INF_Eclairer *mission_pion_inf_eclairer;
-      /* t = 120 */
+      /* t = 118 */
       ASN1T_Mission_Pion_INF_Interdire *mission_pion_inf_interdire;
-      /* t = 121 */
+      /* t = 119 */
       ASN1T_Mission_Pion_INF_Semparer *mission_pion_inf_semparer;
-      /* t = 122 */
+      /* t = 120 */
       ASN1T_Mission_Pion_INF_PrendrePreciserContact *mission_pion_inf_prendre_preciser_contact;
-      /* t = 123 */
+      /* t = 121 */
       ASN1T_Mission_Pion_INF_Defendre *mission_pion_inf_defendre;
-      /* t = 124 */
+      /* t = 122 */
       ASN1T_Mission_Pion_INF_DetruireEmbuscade *mission_pion_inf_detruire_embuscade;
-      /* t = 125 */
+      /* t = 123 */
       ASN1T_Mission_Pion_INF_ContreAttaquer *mission_pion_inf_contre_attaquer;
-      /* t = 126 */
+      /* t = 124 */
       ASN1T_Mission_Pion_INF_Freiner *mission_pion_inf_freiner;
-      /* t = 127 */
+      /* t = 125 */
       ASN1T_Mission_Pion_INF_FlancGarder *mission_pion_inf_flanc_garder;
-      /* t = 128 */
+      /* t = 126 */
       ASN1T_Mission_Pion_INF_OrganiserUnCheckPoint *mission_pion_inf_organiser_un_check_point;
-      /* t = 129 */
+      /* t = 127 */
       ASN1T_Mission_Pion_INF_Harceler *mission_pion_inf_harceler;
-      /* t = 130 */
+      /* t = 128 */
       ASN1T_Mission_Pion_INF_DetruireParCoupDeMain *mission_pion_inf_detruire_par_coup_de_main;
-      /* t = 131 */
+      /* t = 129 */
       ASN1T_Mission_Pion_INF_EscorterUnite *mission_pion_inf_escorter_unite;
-      /* t = 132 */
+      /* t = 130 */
       ASN1T_Mission_Pion_INF_EscorterUnites *mission_pion_inf_escorter_unites;
-      /* t = 133 */
+      /* t = 131 */
       ASN1T_Mission_Pion_INF_RenseignerSur *mission_pion_inf_renseigner_sur;
-      /* t = 134 */
+      /* t = 132 */
       ASN1T_Mission_Pion_INF_Soutenir *mission_pion_inf_soutenir;
-      /* t = 135 */
+      /* t = 133 */
       ASN1T_Mission_Pion_INF_Securiser *mission_pion_inf_securiser;
-      /* t = 136 */
+      /* t = 134 */
       ASN1T_Mission_Pion_INF_Recueillir *mission_pion_inf_recueillir;
-      /* t = 137 */
+      /* t = 135 */
       ASN1T_Mission_Pion_INF_RepondreAAggression *mission_pion_inf_repondre_a_aggression;
-      /* t = 138 */
+      /* t = 136 */
       ASN1T_Mission_Pion_INF_AppuyerSurPosition *mission_pion_inf_appuyer_sur_position;
-      /* t = 139 */
+      /* t = 137 */
       ASN1T_Mission_Pion_LOG_SeDeployer *mission_pion_log_se_deployer;
-      /* t = 140 */
+      /* t = 138 */
       ASN1T_Mission_Pion_LOG_Renforcer *mission_pion_log_renforcer;
-      /* t = 141 */
+      /* t = 139 */
       ASN1T_Mission_Pion_LOG_PreparerBascule *mission_pion_log_preparer_bascule;
-      /* t = 142 */
+      /* t = 140 */
       ASN1T_Mission_Pion_LOG_DecontaminerBlesses *mission_pion_log_decontaminer_blesses;
-      /* t = 143 */
+      /* t = 141 */
       ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses *mission_pion_log_trier_et_traiter_blesses;
-      /* t = 144 */
+      /* t = 142 */
       ASN1T_Mission_Pion_LOG_TrierBlesses *mission_pion_log_trier_blesses;
-      /* t = 145 */
+      /* t = 143 */
       ASN1T_Mission_Pion_LOG_TraiterBlesses *mission_pion_log_traiter_blesses;
-      /* t = 146 */
+      /* t = 144 */
       ASN1T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales *mission_pion_log_prendre_en_compte_reactions_mentales;
-      /* t = 147 */
+      /* t = 145 */
       ASN1T_Mission_Pion_LOG_Convoyer *mission_pion_log_convoyer;
-      /* t = 148 */
+      /* t = 146 */
       ASN1T_Mission_Pion_LOG_Reparer *mission_pion_log_reparer;
-      /* t = 149 */
+      /* t = 147 */
       ASN1T_Mission_Pion_LOG_AppuyerMouvement *mission_pion_log_appuyer_mouvement;
-      /* t = 150 */
+      /* t = 148 */
       ASN1T_Mission_Pion_LOG_ReconnaitreItineraire *mission_pion_log_reconnaitre_itineraire;
-      /* t = 151 */
+      /* t = 149 */
       ASN1T_Mission_Pion_LOG_TransporterUnite *mission_pion_log_transporter_unite;
-      /* t = 152 */
+      /* t = 150 */
       ASN1T_Mission_Pion_LOG_ReconnaitreZoneContaminee *mission_pion_log_reconnaitre_zone_contaminee;
-      /* t = 153 */
+      /* t = 151 */
       ASN1T_Mission_Pion_LOG_AppuyerMouvementDansZone *mission_pion_log_appuyer_mouvement_dans_zone;
-      /* t = 154 */
+      /* t = 152 */
       ASN1T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement *mission_pion_log_mettre_en_oeuvre_zone_stationnement;
-      /* t = 155 */
+      /* t = 153 */
       ASN1T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint *mission_pion_log_appuyer_franchissement_sur_un_point;
-      /* t = 156 */
+      /* t = 154 */
       ASN1T_Mission_Pion_LOG_BloquerZone *mission_pion_log_bloquer_zone;
-      /* t = 157 */
+      /* t = 155 */
       ASN1T_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement *mission_pion_log_reconnaitre_zone_de_deploiement;
-      /* t = 158 */
+      /* t = 156 */
       ASN1T_Mission_Pion_LOG_ArmerPIA *mission_pion_log_armer_pia;
-      /* t = 159 */
+      /* t = 157 */
       ASN1T_Mission_Pion_LOG_Surveiller *mission_pion_log_surveiller;
-      /* t = 160 */
+      /* t = 158 */
       ASN1T_Mission_Pion_Test_Heliporter *mission_pion_test_heliporter;
-      /* t = 161 */
+      /* t = 159 */
       ASN1T_Mission_Pion_Test_MoveTo *mission_pion_test_move_to;
-      /* t = 162 */
+      /* t = 160 */
       ASN1T_Mission_Pion_Test_CreateObject *mission_pion_test_create_object;
-      /* t = 163 */
+      /* t = 161 */
       ASN1T_Mission_Pion_Test_DestroyObject *mission_pion_test_destroy_object;
-      /* t = 164 */
+      /* t = 162 */
       ASN1T_Mission_Pion_Test_CreateBypass *mission_pion_test_create_bypass;
-      /* t = 165 */
+      /* t = 163 */
       ASN1T_Mission_Pion_Test_Fire *mission_pion_test_fire;
-      /* t = 166 */
+      /* t = 164 */
       ASN1T_Mission_Pion_Test_ChangePosture *mission_pion_test_change_posture;
-      /* t = 167 */
+      /* t = 165 */
       ASN1T_Mission_Pion_Test_PathFind *mission_pion_test_path_find;
-      /* t = 168 */
+      /* t = 166 */
       ASN1T_Mission_Pion_Test_FindPosition *mission_pion_test_find_position;
-      /* t = 169 */
+      /* t = 167 */
       ASN1T_Mission_Pion_Test_Reinforce *mission_pion_test_reinforce;
-      /* t = 170 */
+      /* t = 168 */
       ASN1T_Mission_Pion_PlastronEnnemi *mission_pion_plastron_ennemi;
-      /* t = 171 */
+      /* t = 169 */
       ASN1T_Mission_Pion_FaireMouvement *mission_pion_faire_mouvement;
-      /* t = 172 */
+      /* t = 170 */
       ASN1T_Mission_Pion_Suivre *mission_pion_suivre;
-      /* t = 173 */
+      /* t = 171 */
       ASN1T_Mission_Pion_SeFaireDecontaminer *mission_pion_se_faire_decontaminer;
-      /* t = 174 */
+      /* t = 172 */
       ASN1T_Mission_Pion_Franchir *mission_pion_franchir;
-      /* t = 175 */
+      /* t = 173 */
       ASN1T_Mission_Pion_Decrocher *mission_pion_decrocher;
-      /* t = 176 */
+      /* t = 174 */
       ASN1T_Mission_Pion_Stationner *mission_pion_stationner;
-      /* t = 177 */
+      /* t = 175 */
       ASN1T_Mission_Pion_SeFaireTransporter *mission_pion_se_faire_transporter;
-      /* t = 178 */
+      /* t = 176 */
       ASN1T_Mission_Pion_InterdireFranchissementPopulations *mission_pion_interdire_franchissement_populations;
-      /* t = 179 */
+      /* t = 177 */
       ASN1T_Mission_Pion_FiltrerPopulations *mission_pion_filtrer_populations;
-      /* t = 180 */
+      /* t = 178 */
       ASN1T_Mission_Pion_RenseignerSurPopulations *mission_pion_renseigner_sur_populations;
-      /* t = 181 */
+      /* t = 179 */
       ASN1T_Mission_Pion_CanaliserPopulations *mission_pion_canaliser_populations;
-      /* t = 182 */
+      /* t = 180 */
       ASN1T_Mission_Pion_ControlerPopulationsDansZone *mission_pion_controler_populations_dans_zone;
-      /* t = 183 */
+      /* t = 181 */
       ASN1T_Mission_Pion_SecuriserZoneContrePopulations *mission_pion_securiser_zone_contre_populations;
-      /* t = 184 */
+      /* t = 182 */
       ASN1T_Mission_Pion_Generique *mission_pion_generique;
-      /* t = 185 */
+      /* t = 183 */
       ASN1T_Mission_Pion_MILICE_Provoquer *mission_pion_milice_provoquer;
-      /* t = 186 */
+      /* t = 184 */
       ASN1T_Mission_Pion_MILICE_PrendreEtTenir *mission_pion_milice_prendre_et_tenir;
-      /* t = 187 */
+      /* t = 185 */
       ASN1T_Mission_Pion_MILICE_DetruireEmbuscade *mission_pion_milice_detruire_embuscade;
-      /* t = 188 */
+      /* t = 186 */
       ASN1T_Mission_Pion_JOINT_MARINE_Transporter *mission_pion_joint_marine_transporter;
-      /* t = 189 */
+      /* t = 187 */
       ASN1T_Mission_Pion_JOINT_AIR_EffectuerRaid *mission_pion_joint_air_effectuer_raid;
-      /* t = 190 */
+      /* t = 188 */
       ASN1T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination *mission_pion_nbc_animer_un_plot_de_decontamination;
-      /* t = 191 */
+      /* t = 189 */
       ASN1T_Mission_Pion_NBC_ReconnaitreItineraire *mission_pion_nbc_reconnaitre_itineraire;
-      /* t = 192 */
+      /* t = 190 */
       ASN1T_Mission_Pion_NBC_ReconnaitreZone *mission_pion_nbc_reconnaitre_zone;
-      /* t = 193 */
+      /* t = 191 */
       ASN1T_Mission_Pion_NBC_DecontaminerZone *mission_pion_nbc_decontaminer_zone;
-      /* t = 194 */
+      /* t = 192 */
       ASN1T_Mission_Pion_NBC_ReconnaitreUnSiteROTA *mission_pion_nbc_reconnaitre_un_site_rota;
-      /* t = 195 */
+      /* t = 193 */
       ASN1T_Mission_Pion_RENS_ROHUM_RenseignerSur *mission_pion_rens_rohum_renseigner_sur;
-      /* t = 196 */
+      /* t = 194 */
       ASN1T_Mission_Pion_RENS_ROHUM_SExfiltrer *mission_pion_rens_rohum_sexfiltrer;
-      /* t = 197 */
+      /* t = 195 */
       ASN1T_Mission_Pion_RENS_ROHUM_OrienterGuider *mission_pion_rens_rohum_orienter_guider;
-      /* t = 198 */
+      /* t = 196 */
       ASN1T_Mission_Pion_RENS_ROEM_Appuyer *mission_pion_rens_roem_appuyer;
-      /* t = 199 */
+      /* t = 197 */
       ASN1T_Mission_Pion_RENS_ROEM_RenseignerSur *mission_pion_rens_roem_renseigner_sur;
-      /* t = 200 */
+      /* t = 198 */
       ASN1T_Mission_Pion_RENS_ROEM_MettreEnOeuvre *mission_pion_rens_roem_mettre_en_oeuvre;
-      /* t = 201 */
+      /* t = 199 */
       ASN1T_Mission_Pion_RENS_RADINT_RenseignerSur *mission_pion_rens_radint_renseigner_sur;
-      /* t = 202 */
+      /* t = 200 */
       ASN1T_Mission_Pion_RENS_RADINT_MettreEnOeuvre *mission_pion_rens_radint_mettre_en_oeuvre;
-      /* t = 203 */
+      /* t = 201 */
       ASN1T_Mission_Pion_RENS_ROIM_MettreEnOeuvre *mission_pion_rens_roim_mettre_en_oeuvre;
-      /* t = 204 */
+      /* t = 202 */
       ASN1T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur *mission_pion_rens_roim_sdti_renseigner_sur;
-      /* t = 205 */
+      /* t = 203 */
       ASN1T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur *mission_pion_rens_roim_cl289_renseigner_sur;
-      /* t = 206 */
+      /* t = 204 */
       ASN1T_Mission_Pion_TRANS_EtablirGererLiaison *mission_pion_trans_etablir_gerer_liaison;
-      /* t = 207 */
+      /* t = 205 */
       ASN1T_Mission_Pion_ASY_SInfiltrer *mission_pion_asy_sinfiltrer;
-      /* t = 208 */
+      /* t = 206 */
       ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation *mission_pion_asy_commettre_attentatContrePopulation;
-      /* t = 209 */
+      /* t = 207 */
       ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees *mission_pion_asy_commettre_attentatContreForcesArmees;
-      /* t = 210 */
+      /* t = 208 */
       ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation *mission_pion_asy_commettre_attentatContreInstallation;
-      /* t = 211 */
+      /* t = 209 */
       ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone *mission_pion_asy_commettre_exactions_sur_population_dans_zone;
-      /* t = 212 */
+      /* t = 210 */
       ASN1T_Mission_Pion_ASY_Renseigner *mission_pion_asy_renseigner;
    } u;
 } ASN1T_Mission_Pion;

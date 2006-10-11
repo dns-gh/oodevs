@@ -18,8 +18,6 @@
 #include "simulation_kernel/Entities/Orders/Conduite/MIL_OrderConduiteType.h"
 
 #include "Automate\MIL_AutomateMission_ALAT_AllerSeRecompleter.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage.cpp"
-#include "Automate\MIL_AutomateMission_ALAT_ExtrairePersonnel.cpp"
 #include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur.cpp"
 #include "Automate\MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone.cpp"
 #include "Automate\MIL_AutomateMission_ALAT_DonnerCoupArret.cpp"
@@ -171,7 +169,6 @@
 #include "Automate\MIL_AutomateMission_RENS_RADINT_RenseignerSur.cpp"
 #include "Automate\MIL_AutomateMission_TRANS_Commander.cpp"
 #include "Pion\MIL_PionMission_ALAT_AllerSeRecompleter.cpp"
-#include "Pion\MIL_PionMission_ALAT_EvacuationSanitaire.cpp"
 #include "Pion\MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur.cpp"
 #include "Pion\MIL_PionMission_ALAT_ReconnaitreContourEnnemi.cpp"
 #include "Pion\MIL_PionMission_ALAT_DetruireNeutraliserDansZone.cpp"
@@ -182,7 +179,6 @@
 #include "Pion\MIL_PionMission_ALAT_Heliporter.cpp"
 #include "Pion\MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement.cpp"
 #include "Pion\MIL_PionMission_ALAT_Helitransporter.cpp"
-#include "Pion\MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage.cpp"
 #include "Pion\MIL_PionMission_ALAT_IMEX.cpp"
 #include "Pion\MIL_PionMission_ALAT_Eclairer.cpp"
 #include "Pion\MIL_PionMission_ALAT_Surveiller.cpp"
@@ -397,6 +393,7 @@
 #include "Conduite\MIL_OrderConduite_Interrompre.cpp"
 #include "Conduite\MIL_OrderConduite_ChangerAmbiance.cpp"
 #include "Conduite\MIL_OrderConduite_ChangerReglesEngagement.cpp"
+#include "Conduite\MIL_OrderConduite_ChangerParametresRecompletementALAT.cpp"
 #include "Conduite\MIL_OrderConduite_ChangerReglesEngagementPopulation.cpp"
 #include "Conduite\MIL_OrderConduite_Deboucher.cpp"
 #include "Conduite\MIL_OrderConduite_Decrocher.cpp"
@@ -424,7 +421,6 @@
 #include "Conduite\MIL_OrderConduite_ModifierPrioritesTactiquesBlesses.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_RealiserVariantement.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_DesequiperSiteFranchissement.cpp"
-#include "Conduite\MIL_OrderConduite_Automate_ReagirFaceAEni.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_AffecterPionAObstacle.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_ReconnaitreZoneImplantation.cpp"
 #include "Conduite\MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement.cpp"
@@ -466,8 +462,6 @@ void missions::RegisterPopulationMissions()
 void missions::RegisterAutomateMissions()
 {
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_AllerSeRecompleter>( "Automate ALAT AllerSeRecompleter", eMission_Automate_ALAT_AllerSeRecompleter, T_Mission_Automate_mission_automate_alat_aller_se_recompleter, "T_Mission_Automate_ALAT_AllerSeRecompleter", "MIS_Automate_MRT_ALAT_AllerSeRecompleter", "MIS_Automate_CDT_ALAT_AllerSeRecompleter");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_EffectuerRechercheEtSauvetage>( "Automate ALAT EffectuerRechercheEtSauvetage", eMission_Automate_ALAT_EffectuerRechercheEtSauvetage, T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage, "T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_MRT_ALAT_EffectuerRechercheEtSauvetage", "MIS_Automate_CDT_ALAT_EffectuerRechercheEtSauvetage");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_ExtrairePersonnel>( "Automate ALAT ExtrairePersonnel", eMission_Automate_ALAT_ExtrairePersonnel, T_Mission_Automate_mission_automate_alat_extraire_personnel, "T_Mission_Automate_ALAT_ExtrairePersonnel", "MIS_Automate_MRT_ALAT_ExtrairePersonnel", "MIS_Automate_CDT_ALAT_ExtrairePersonnel");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur>( "Automate ALAT DetruireNeutraliserDansProfondeur", eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur, "T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone>( "Automate ALAT DetruireNeutraliserDansZone", eMission_Automate_ALAT_DetruireNeutraliserDansZone, T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone, "T_Mission_Automate_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone", "MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ALAT_DonnerCoupArret>( "Automate ALAT DonnerCoupArret", eMission_Automate_ALAT_DonnerCoupArret, T_Mission_Automate_mission_automate_alat_donner_coup_arret, "T_Mission_Automate_ALAT_DonnerCoupArret", "MIS_Automate_MRT_ALAT_DonnerCoupArret", "MIS_Automate_CDT_ALAT_DonnerCoupArret");
@@ -628,7 +622,6 @@ void missions::RegisterAutomateMissions()
 void missions::RegisterPionMissions()
 {
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_AllerSeRecompleter>( "Pion ALAT AllerSeRecompleter", eMission_Pion_ALAT_AllerSeRecompleter, T_Mission_Pion_mission_pion_alat_aller_se_recompleter, "T_Mission_Pion_ALAT_AllerSeRecompleter", "MIS_Pion_ALAT_AllerSeRecompleter");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_EvacuationSanitaire>( "Pion ALAT EvacuationSanitaire", eMission_Pion_ALAT_EvacuationSanitaire, T_Mission_Pion_mission_pion_alat_evacuation_sanitaire, "T_Mission_Pion_ALAT_EvacuationSanitaire", "MIS_Pion_ALAT_EvacuationSanitaire");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur>( "Pion ALAT ReconnaitreDansLaProfondeur", eMission_Pion_ALAT_ReconnaitreDansLaProfondeur, T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur, "T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur", "MIS_Pion_ALAT_ReconnaitreDansLaProfondeur");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_ReconnaitreContourEnnemi>( "Pion ALAT ReconnaitreContourEnnemi", eMission_Pion_ALAT_ReconnaitreContourEnnemi, T_Mission_Pion_mission_pion_alat_reconnaitre_contour_ennemi, "T_Mission_Pion_ALAT_ReconnaitreContourEnnemi", "MIS_Pion_ALAT_ReconnaitreContourEnnemi");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_DetruireNeutraliserDansZone>( "Pion ALAT DetruireNeutraliserDansZone", eMission_Pion_ALAT_DetruireNeutraliserDansZone, T_Mission_Pion_mission_pion_alat_detruire_neutraliser_dans_zone, "T_Mission_Pion_ALAT_DetruireNeutraliserDansZone", "MIS_Pion_ALAT_DetruireNeutraliserDansZone");
@@ -639,7 +632,6 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_Heliporter>( "Pion ALAT Heliporter", eMission_Pion_ALAT_Heliporter, T_Mission_Pion_mission_pion_alat_heliporter, "T_Mission_Pion_ALAT_Heliporter", "MIS_Pion_ALAT_Heliporter");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement>( "Pion ALAT HeliporterHelitransporterPlotRavitaillement", eMission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, T_Mission_Pion_mission_pion_alat_heliporter_helitransporter_plot_ravitaillement, "T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement", "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_Helitransporter>( "Pion ALAT Helitransporter", eMission_Pion_ALAT_Helitransporter, T_Mission_Pion_mission_pion_alat_helitransporter, "T_Mission_Pion_ALAT_Helitransporter", "MIS_Pion_ALAT_Helitransporter");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_EffectuerRechercheEtSauvetage>( "Pion ALAT EffectuerRechercheEtSauvetage", eMission_Pion_ALAT_EffectuerRechercheEtSauvetage, T_Mission_Pion_mission_pion_alat_effectuer_recherche_et_sauvetage, "T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage", "MIS_Pion_ALAT_EffectuerRechercheEtSauvetage");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_IMEX>( "Pion ALAT IMEX", eMission_Pion_ALAT_IMEX, T_Mission_Pion_mission_pion_alat_imex, "T_Mission_Pion_ALAT_IMEX", "MIS_Pion_ALAT_IMEX");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_Eclairer>( "Pion ALAT Eclairer", eMission_Pion_ALAT_Eclairer, T_Mission_Pion_mission_pion_alat_eclairer, "T_Mission_Pion_ALAT_Eclairer", "MIS_Pion_ALAT_Eclairer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ALAT_Surveiller>( "Pion ALAT Surveiller", eMission_Pion_ALAT_Surveiller, T_Mission_Pion_mission_pion_alat_surveiller, "T_Mission_Pion_ALAT_Surveiller", "MIS_Pion_ALAT_Surveiller");
@@ -860,6 +852,7 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Interrompre>( "Interrompre", eOrdreConduite_Interrompre, T_MsgOrderConduite_order_conduite_order_conduite_interrompre, "Rep_OrderConduite_Interrompre", true, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerAmbiance>( "ChangerAmbiance", eOrdreConduite_ChangerAmbiance, T_MsgOrderConduite_order_conduite_order_conduite_changer_ambiance, "Rep_OrderConduite_ChangerAmbiance", true, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerReglesEngagement>( "ChangerReglesEngagement", eOrdreConduite_ChangerReglesEngagement, T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement, "Rep_OrderConduite_ChangerReglesEngagement", true, true );
+    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerParametresRecompletementALAT>( "ChangerParametresRecompletementALAT", eOrdreConduite_ChangerParametresRecompletementALAT, T_MsgOrderConduite_order_conduite_order_conduite_changer_parametres_recompletement_alat, "Rep_OrderConduite_ChangerParametresRecompletementALAT", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ChangerReglesEngagementPopulation>( "ChangerReglesEngagementPopulation", eOrdreConduite_ChangerReglesEngagementPopulation, T_MsgOrderConduite_order_conduite_order_conduite_changer_regles_engagement_population, "Rep_OrderConduite_ChangerReglesEngagementPopulation", true, true );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Deboucher>( "Deboucher", eOrdreConduite_Deboucher, T_MsgOrderConduite_order_conduite_order_conduite_deboucher, "Rep_OrderConduite_Deboucher", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Decrocher>( "Decrocher", eOrdreConduite_Decrocher, T_MsgOrderConduite_order_conduite_order_conduite_decrocher, "Rep_OrderConduite_Decrocher", false, false );
@@ -887,7 +880,6 @@ void missions::RegisterOrderConduites()
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_ModifierPrioritesTactiquesBlesses>( "ModifierPrioritesTactiquesBlesses", eOrdreConduite_ModifierPrioritesTactiquesBlesses, T_MsgOrderConduite_order_conduite_order_conduite_modifier_priorites_tactiques_blesses, "Rep_OrderConduite_ModifierPrioritesTactiquesBlesses", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_RealiserVariantement>( "Automate RealiserVariantement", eOrdreConduite_Automate_RealiserVariantement, T_MsgOrderConduite_order_conduite_order_conduite_automate_realiser_variantement, "Rep_OrderConduite_Automate_RealiserVariantement", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_DesequiperSiteFranchissement>( "Automate DesequiperSiteFranchissement", eOrdreConduite_Automate_DesequiperSiteFranchissement, T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement, "Rep_OrderConduite_Automate_DesequiperSiteFranchissement", false, false );
-    MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_ReagirFaceAEni>( "Automate ReagirFaceAEni", eOrdreConduite_Automate_ReagirFaceAEni, T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni, "Rep_OrderConduite_Automate_ReagirFaceAEni", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_AffecterPionAObstacle>( "Automate AffecterPionAObstacle", eOrdreConduite_Automate_AffecterPionAObstacle, T_MsgOrderConduite_order_conduite_order_conduite_automate_affecter_pion_a_obstacle, "Rep_OrderConduite_Automate_AffecterPionAObstacle", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_ReconnaitreZoneImplantation>( "Automate ReconnaitreZoneImplantation", eOrdreConduite_Automate_ReconnaitreZoneImplantation, T_MsgOrderConduite_order_conduite_order_conduite_automate_reconnaitre_zone_implantation, "Rep_OrderConduite_Automate_ReconnaitreZoneImplantation", false, false );
     MIL_OrderConduiteType::RegisterOrderConduite< MIL_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement>( "Automate TC2 GererMaterielAvantDeplacement", eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement, T_MsgOrderConduite_order_conduite_order_conduite_automate_tc2_gerer_materiel_avant_deplacement, "Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement", false, false );

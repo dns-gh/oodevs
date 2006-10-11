@@ -25,7 +25,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 211);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 209);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -44,18 +44,8 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
 
          break;
 
-      /* mission_pion_alat_evacuation_sanitaire */
-      case 2:
-         PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_evacuation_sanitaire");
-
-         stat = asn1PE_Mission_Pion_ALAT_EvacuationSanitaire (ctxt_p, pvalue->u.mission_pion_alat_evacuation_sanitaire);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
       /* mission_pion_alat_reconnaitre_dans_la_profondeur */
-      case 3:
+      case 2:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_reconnaitre_dans_la_profondeur");
 
          stat = asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ctxt_p, pvalue->u.mission_pion_alat_reconnaitre_dans_la_profondeur);
@@ -65,7 +55,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_reconnaitre_contour_ennemi */
-      case 4:
+      case 3:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_reconnaitre_contour_ennemi");
 
          stat = asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi (ctxt_p, pvalue->u.mission_pion_alat_reconnaitre_contour_ennemi);
@@ -75,7 +65,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_detruire_neutraliser_dans_zone */
-      case 5:
+      case 4:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_detruire_neutraliser_dans_zone");
 
          stat = asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone (ctxt_p, pvalue->u.mission_pion_alat_detruire_neutraliser_dans_zone);
@@ -85,7 +75,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_detruire_aeromobile */
-      case 6:
+      case 5:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_detruire_aeromobile");
 
          stat = asn1PE_Mission_Pion_ALAT_DetruireAeromobile (ctxt_p, pvalue->u.mission_pion_alat_detruire_aeromobile);
@@ -95,7 +85,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_freiner */
-      case 7:
+      case 6:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_freiner");
 
          stat = asn1PE_Mission_Pion_ALAT_Freiner (ctxt_p, pvalue->u.mission_pion_alat_freiner);
@@ -105,7 +95,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_jalonner */
-      case 8:
+      case 7:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_jalonner");
 
          stat = asn1PE_Mission_Pion_ALAT_Jalonner (ctxt_p, pvalue->u.mission_pion_alat_jalonner);
@@ -115,7 +105,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_escorter */
-      case 9:
+      case 8:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_escorter");
 
          stat = asn1PE_Mission_Pion_ALAT_Escorter (ctxt_p, pvalue->u.mission_pion_alat_escorter);
@@ -125,7 +115,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_heliporter */
-      case 10:
+      case 9:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_heliporter");
 
          stat = asn1PE_Mission_Pion_ALAT_Heliporter (ctxt_p, pvalue->u.mission_pion_alat_heliporter);
@@ -135,7 +125,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_heliporter_helitransporter_plot_ravitaillement */
-      case 11:
+      case 10:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement");
 
          stat = asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (ctxt_p, pvalue->u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement);
@@ -145,7 +135,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_helitransporter */
-      case 12:
+      case 11:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_helitransporter");
 
          stat = asn1PE_Mission_Pion_ALAT_Helitransporter (ctxt_p, pvalue->u.mission_pion_alat_helitransporter);
@@ -154,18 +144,8 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
 
          break;
 
-      /* mission_pion_alat_effectuer_recherche_et_sauvetage */
-      case 13:
-         PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_effectuer_recherche_et_sauvetage");
-
-         stat = asn1PE_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage (ctxt_p, pvalue->u.mission_pion_alat_effectuer_recherche_et_sauvetage);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
       /* mission_pion_alat_imex */
-      case 14:
+      case 12:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_imex");
 
          stat = asn1PE_Mission_Pion_ALAT_IMEX (ctxt_p, pvalue->u.mission_pion_alat_imex);
@@ -175,7 +155,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_eclairer */
-      case 15:
+      case 13:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_eclairer");
 
          stat = asn1PE_Mission_Pion_ALAT_Eclairer (ctxt_p, pvalue->u.mission_pion_alat_eclairer);
@@ -185,7 +165,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_surveiller */
-      case 16:
+      case 14:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_surveiller");
 
          stat = asn1PE_Mission_Pion_ALAT_Surveiller (ctxt_p, pvalue->u.mission_pion_alat_surveiller);
@@ -195,7 +175,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_appuyer_direct_au_contact */
-      case 17:
+      case 15:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_appuyer_direct_au_contact");
 
          stat = asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact (ctxt_p, pvalue->u.mission_pion_alat_appuyer_direct_au_contact);
@@ -205,7 +185,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_couvrir */
-      case 18:
+      case 16:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_couvrir");
 
          stat = asn1PE_Mission_Pion_ALAT_Couvrir (ctxt_p, pvalue->u.mission_pion_alat_couvrir);
@@ -215,7 +195,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_attaquer */
-      case 19:
+      case 17:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_attaquer");
 
          stat = asn1PE_Mission_Pion_ALAT_Attaquer (ctxt_p, pvalue->u.mission_pion_alat_attaquer);
@@ -225,7 +205,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_site */
-      case 20:
+      case 18:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_site");
 
          stat = asn1PE_Mission_Pion_ASA_DefendreSite (ctxt_p, pvalue->u.mission_pion_asa_defendre_site);
@@ -235,7 +215,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_site_a_partir_position */
-      case 21:
+      case 19:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_site_a_partir_position");
 
          stat = asn1PE_Mission_Pion_ASA_DefendreSiteAPartirPosition (ctxt_p, pvalue->u.mission_pion_asa_defendre_site_a_partir_position);
@@ -245,7 +225,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_zone */
-      case 22:
+      case 20:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_zone");
 
          stat = asn1PE_Mission_Pion_ASA_DefendreZone (ctxt_p, pvalue->u.mission_pion_asa_defendre_zone);
@@ -255,7 +235,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_zone_a_partir_position */
-      case 23:
+      case 21:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_zone_a_partir_position");
 
          stat = asn1PE_Mission_Pion_ASA_DefendreZoneAPartirPosition (ctxt_p, pvalue->u.mission_pion_asa_defendre_zone_a_partir_position);
@@ -265,7 +245,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_surveiller */
-      case 24:
+      case 22:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_surveiller");
 
          stat = asn1PE_Mission_Pion_ASA_Surveiller (ctxt_p, pvalue->u.mission_pion_asa_surveiller);
@@ -275,7 +255,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_unites */
-      case 25:
+      case 23:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_unites");
 
          stat = asn1PE_Mission_Pion_ASA_DefendreUnites (ctxt_p, pvalue->u.mission_pion_asa_defendre_unites);
@@ -285,7 +265,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_site */
-      case 26:
+      case 24:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_site");
 
          stat = asn1PE_Mission_Pion_ASA_MISTRAL_DefendreSite (ctxt_p, pvalue->u.mission_pion_asa_mistral_defendre_site);
@@ -295,7 +275,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_site_a_partir_position */
-      case 27:
+      case 25:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_site_a_partir_position");
 
          stat = asn1PE_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition (ctxt_p, pvalue->u.mission_pion_asa_mistral_defendre_site_a_partir_position);
@@ -305,7 +285,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_zone */
-      case 28:
+      case 26:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_zone");
 
          stat = asn1PE_Mission_Pion_ASA_MISTRAL_DefendreZone (ctxt_p, pvalue->u.mission_pion_asa_mistral_defendre_zone);
@@ -315,7 +295,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_zone_a_partir_position */
-      case 29:
+      case 27:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_zone_a_partir_position");
 
          stat = asn1PE_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition (ctxt_p, pvalue->u.mission_pion_asa_mistral_defendre_zone_a_partir_position);
@@ -325,7 +305,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_surveiller */
-      case 30:
+      case 28:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_surveiller");
 
          stat = asn1PE_Mission_Pion_ASA_MISTRAL_Surveiller (ctxt_p, pvalue->u.mission_pion_asa_mistral_surveiller);
@@ -335,7 +315,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_assurer_mise_en_oeuvre */
-      case 31:
+      case 29:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_assurer_mise_en_oeuvre");
 
          stat = asn1PE_Mission_Pion_ASS_AssurerMiseEnOeuvre (ctxt_p, pvalue->u.mission_pion_ass_assurer_mise_en_oeuvre);
@@ -345,7 +325,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_assurer_mise_en_oeuvre_sur_position */
-      case 32:
+      case 30:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position");
 
          stat = asn1PE_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition (ctxt_p, pvalue->u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position);
@@ -355,7 +335,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_reconnaitre_zone_deploiement */
-      case 33:
+      case 31:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_reconnaitre_zone_deploiement");
 
          stat = asn1PE_Mission_Pion_ASS_ReconnaitreZoneDeploiement (ctxt_p, pvalue->u.mission_pion_ass_reconnaitre_zone_deploiement);
@@ -365,7 +345,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_acquerir_lanceurs_eni */
-      case 34:
+      case 32:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_acquerir_lanceurs_eni");
 
          stat = asn1PE_Mission_Pion_ASS_AcquerirLanceursEni (ctxt_p, pvalue->u.mission_pion_ass_acquerir_lanceurs_eni);
@@ -375,7 +355,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_eo_acquerir_objectifs */
-      case 35:
+      case 33:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_eo_acquerir_objectifs");
 
          stat = asn1PE_Mission_Pion_ASS_EO_AcquerirObjectifs (ctxt_p, pvalue->u.mission_pion_ass_eo_acquerir_objectifs);
@@ -385,7 +365,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_eop_acquerir_objectifs */
-      case 36:
+      case 34:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_eop_acquerir_objectifs");
 
          stat = asn1PE_Mission_Pion_ASS_EOP_AcquerirObjectifs (ctxt_p, pvalue->u.mission_pion_ass_eop_acquerir_objectifs);
@@ -395,7 +375,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_ratac_acquerir_objectifs */
-      case 37:
+      case 35:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_ratac_acquerir_objectifs");
 
          stat = asn1PE_Mission_Pion_ASS_RATAC_AcquerirObjectifs (ctxt_p, pvalue->u.mission_pion_ass_ratac_acquerir_objectifs);
@@ -405,7 +385,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_reconnaitre_axe */
-      case 38:
+      case 36:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_reconnaitre_axe");
 
          stat = asn1PE_Mission_Pion_ABC_ReconnaitreAxe (ctxt_p, pvalue->u.mission_pion_abc_reconnaitre_axe);
@@ -415,7 +395,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_soutenir */
-      case 39:
+      case 37:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_soutenir");
 
          stat = asn1PE_Mission_Pion_ABC_Soutenir (ctxt_p, pvalue->u.mission_pion_abc_soutenir);
@@ -425,7 +405,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_couvrir */
-      case 40:
+      case 38:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_couvrir");
 
          stat = asn1PE_Mission_Pion_ABC_Couvrir (ctxt_p, pvalue->u.mission_pion_abc_couvrir);
@@ -435,7 +415,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_flanc_garder */
-      case 41:
+      case 39:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_flanc_garder");
 
          stat = asn1PE_Mission_Pion_ABC_FlancGarder (ctxt_p, pvalue->u.mission_pion_abc_flanc_garder);
@@ -445,7 +425,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_reduire */
-      case 42:
+      case 40:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_reduire");
 
          stat = asn1PE_Mission_Pion_ABC_Reduire (ctxt_p, pvalue->u.mission_pion_abc_reduire);
@@ -455,7 +435,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_appuyer */
-      case 43:
+      case 41:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_appuyer");
 
          stat = asn1PE_Mission_Pion_ABC_Appuyer (ctxt_p, pvalue->u.mission_pion_abc_appuyer);
@@ -465,7 +445,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_fixer */
-      case 44:
+      case 42:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_fixer");
 
          stat = asn1PE_Mission_Pion_ABC_Fixer (ctxt_p, pvalue->u.mission_pion_abc_fixer);
@@ -475,7 +455,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_renseigner_sur */
-      case 45:
+      case 43:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_ABC_RenseignerSur (ctxt_p, pvalue->u.mission_pion_abc_renseigner_sur);
@@ -485,7 +465,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_controler_zone */
-      case 46:
+      case 44:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_controler_zone");
 
          stat = asn1PE_Mission_Pion_ABC_ControlerZone (ctxt_p, pvalue->u.mission_pion_abc_controler_zone);
@@ -495,7 +475,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_surveiller */
-      case 47:
+      case 45:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_surveiller");
 
          stat = asn1PE_Mission_Pion_ABC_Surveiller (ctxt_p, pvalue->u.mission_pion_abc_surveiller);
@@ -505,7 +485,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_barrer */
-      case 48:
+      case 46:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_barrer");
 
          stat = asn1PE_Mission_Pion_ABC_Barrer (ctxt_p, pvalue->u.mission_pion_abc_barrer);
@@ -515,7 +495,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_attaquer */
-      case 49:
+      case 47:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_attaquer");
 
          stat = asn1PE_Mission_Pion_ABC_Attaquer (ctxt_p, pvalue->u.mission_pion_abc_attaquer);
@@ -525,7 +505,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_reconnaitre_point */
-      case 50:
+      case 48:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_reconnaitre_point");
 
          stat = asn1PE_Mission_Pion_ABC_ReconnaitrePoint (ctxt_p, pvalue->u.mission_pion_abc_reconnaitre_point);
@@ -535,7 +515,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_eclairer */
-      case 51:
+      case 49:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_eclairer");
 
          stat = asn1PE_Mission_Pion_ABC_Eclairer (ctxt_p, pvalue->u.mission_pion_abc_eclairer);
@@ -545,7 +525,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_jalonner */
-      case 52:
+      case 50:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_jalonner");
 
          stat = asn1PE_Mission_Pion_ABC_Jalonner (ctxt_p, pvalue->u.mission_pion_abc_jalonner);
@@ -555,7 +535,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_contre_attaquer */
-      case 53:
+      case 51:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_contre_attaquer");
 
          stat = asn1PE_Mission_Pion_ABC_ContreAttaquer (ctxt_p, pvalue->u.mission_pion_abc_contre_attaquer);
@@ -565,7 +545,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_semparer_zone */
-      case 54:
+      case 52:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_semparer_zone");
 
          stat = asn1PE_Mission_Pion_ABC_SemparerZone (ctxt_p, pvalue->u.mission_pion_abc_semparer_zone);
@@ -575,7 +555,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_relever_unite */
-      case 55:
+      case 53:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_relever_unite");
 
          stat = asn1PE_Mission_Pion_ABC_ReleverUnite (ctxt_p, pvalue->u.mission_pion_abc_relever_unite);
@@ -585,7 +565,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_armer_pia */
-      case 56:
+      case 54:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_armer_pia");
 
          stat = asn1PE_Mission_Pion_ABC_ArmerPIA (ctxt_p, pvalue->u.mission_pion_abc_armer_pia);
@@ -595,7 +575,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_ouvrir_itineraire */
-      case 57:
+      case 55:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_ouvrir_itineraire");
 
          stat = asn1PE_Mission_Pion_ABC_OuvrirItineraire (ctxt_p, pvalue->u.mission_pion_abc_ouvrir_itineraire);
@@ -605,7 +585,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_freiner */
-      case 58:
+      case 56:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_freiner");
 
          stat = asn1PE_Mission_Pion_ABC_Freiner (ctxt_p, pvalue->u.mission_pion_abc_freiner);
@@ -615,7 +595,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_escorter_unite */
-      case 59:
+      case 57:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_escorter_unite");
 
          stat = asn1PE_Mission_Pion_ABC_EscorterUnite (ctxt_p, pvalue->u.mission_pion_abc_escorter_unite);
@@ -625,7 +605,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_escorter_unites */
-      case 60:
+      case 58:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_escorter_unites");
 
          stat = asn1PE_Mission_Pion_ABC_EscorterUnites (ctxt_p, pvalue->u.mission_pion_abc_escorter_unites);
@@ -635,7 +615,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_armer_point_de_controle */
-      case 61:
+      case 59:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_armer_point_de_controle");
 
          stat = asn1PE_Mission_Pion_ABC_ArmerPointDeControle (ctxt_p, pvalue->u.mission_pion_abc_armer_point_de_controle);
@@ -645,7 +625,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_organiser_accueil_colonne_refugies */
-      case 62:
+      case 60:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_organiser_accueil_colonne_refugies");
 
          stat = asn1PE_Mission_Pion_ABC_OrganiserAccueilColonneRefugies (ctxt_p, pvalue->u.mission_pion_abc_organiser_accueil_colonne_refugies);
@@ -655,7 +635,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_appuyer_sur_position */
-      case 63:
+      case 61:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_appuyer_sur_position");
 
          stat = asn1PE_Mission_Pion_ABC_AppuyerSurPosition (ctxt_p, pvalue->u.mission_pion_abc_appuyer_sur_position);
@@ -665,7 +645,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_rasit_renseigner_sur */
-      case 64:
+      case 62:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_rasit_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_ABC_RASIT_RenseignerSur (ctxt_p, pvalue->u.mission_pion_abc_rasit_renseigner_sur);
@@ -675,7 +655,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_fosse_ac */
-      case 65:
+      case 63:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_fosse_ac");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserFosseAC (ctxt_p, pvalue->u.mission_pion_gen_realiser_fosse_ac);
@@ -685,7 +665,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_abattis_mine */
-      case 66:
+      case 64:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_abattis_mine");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserAbattisMine (ctxt_p, pvalue->u.mission_pion_gen_realiser_abattis_mine);
@@ -695,7 +675,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_point_mine */
-      case 67:
+      case 65:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_point_mine");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserPointMine (ctxt_p, pvalue->u.mission_pion_gen_realiser_point_mine);
@@ -705,7 +685,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_barricade */
-      case 68:
+      case 66:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_barricade");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserBarricade (ctxt_p, pvalue->u.mission_pion_gen_realiser_barricade);
@@ -715,7 +695,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_eboulement */
-      case 69:
+      case 67:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_eboulement");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserEboulement (ctxt_p, pvalue->u.mission_pion_gen_realiser_eboulement);
@@ -725,7 +705,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_bouchon_mine */
-      case 70:
+      case 68:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_bouchon_mine");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserBouchonMine (ctxt_p, pvalue->u.mission_pion_gen_realiser_bouchon_mine);
@@ -735,7 +715,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_detruire_route */
-      case 71:
+      case 69:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_detruire_route");
 
          stat = asn1PE_Mission_Pion_GEN_DetruireRoute (ctxt_p, pvalue->u.mission_pion_gen_detruire_route);
@@ -745,7 +725,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_detruire_pont */
-      case 72:
+      case 70:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_detruire_pont");
 
          stat = asn1PE_Mission_Pion_GEN_DetruirePont (ctxt_p, pvalue->u.mission_pion_gen_detruire_pont);
@@ -755,7 +735,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_securiser_itineraire */
-      case 73:
+      case 71:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_securiser_itineraire");
 
          stat = asn1PE_Mission_Pion_GEN_SecuriserItineraire (ctxt_p, pvalue->u.mission_pion_gen_securiser_itineraire);
@@ -765,7 +745,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_degager_abattis_mine */
-      case 74:
+      case 72:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_degager_abattis_mine");
 
          stat = asn1PE_Mission_Pion_GEN_DegagerAbattisMine (ctxt_p, pvalue->u.mission_pion_gen_degager_abattis_mine);
@@ -775,7 +755,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_degager_eboulement */
-      case 75:
+      case 73:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_degager_eboulement");
 
          stat = asn1PE_Mission_Pion_GEN_DegagerEboulement (ctxt_p, pvalue->u.mission_pion_gen_degager_eboulement);
@@ -785,7 +765,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_degager_rues */
-      case 76:
+      case 74:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_degager_rues");
 
          stat = asn1PE_Mission_Pion_GEN_DegagerRues (ctxt_p, pvalue->u.mission_pion_gen_degager_rues);
@@ -795,7 +775,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_combler_entonnoir */
-      case 77:
+      case 75:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_combler_entonnoir");
 
          stat = asn1PE_Mission_Pion_GEN_ComblerEntonnoir (ctxt_p, pvalue->u.mission_pion_gen_combler_entonnoir);
@@ -805,7 +785,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_combler_fosse_ac */
-      case 78:
+      case 76:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_combler_fosse_ac");
 
          stat = asn1PE_Mission_Pion_GEN_ComblerFosseAC (ctxt_p, pvalue->u.mission_pion_gen_combler_fosse_ac);
@@ -815,7 +795,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_contournement */
-      case 79:
+      case 77:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_contournement");
 
          stat = asn1PE_Mission_Pion_GEN_CreerContournement (ctxt_p, pvalue->u.mission_pion_gen_creer_contournement);
@@ -825,7 +805,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_zone_minee_lineaire */
-      case 80:
+      case 78:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_zone_minee_lineaire");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserZoneMineeLineaire (ctxt_p, pvalue->u.mission_pion_gen_realiser_zone_minee_lineaire);
@@ -835,7 +815,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_ouvrir_trouee */
-      case 81:
+      case 79:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_ouvrir_trouee");
 
          stat = asn1PE_Mission_Pion_GEN_OuvrirTrouee (ctxt_p, pvalue->u.mission_pion_gen_ouvrir_trouee);
@@ -845,7 +825,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_renforcer */
-      case 82:
+      case 80:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_renforcer");
 
          stat = asn1PE_Mission_Pion_GEN_Renforcer (ctxt_p, pvalue->u.mission_pion_gen_renforcer);
@@ -855,7 +835,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_franchir_entonnoir */
-      case 83:
+      case 81:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_franchir_entonnoir");
 
          stat = asn1PE_Mission_Pion_GEN_FranchirEntonnoir (ctxt_p, pvalue->u.mission_pion_gen_franchir_entonnoir);
@@ -865,7 +845,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_franchir_fosse_ac */
-      case 84:
+      case 82:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_franchir_fosse_ac");
 
          stat = asn1PE_Mission_Pion_GEN_FranchirFosseAC (ctxt_p, pvalue->u.mission_pion_gen_franchir_fosse_ac);
@@ -875,7 +855,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_zone_minee_par_dispersion */
-      case 85:
+      case 83:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_zone_minee_par_dispersion");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserZoneMineeParDispersion (ctxt_p, pvalue->u.mission_pion_gen_realiser_zone_minee_par_dispersion);
@@ -885,7 +865,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_postes_tir */
-      case 86:
+      case 84:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_postes_tir");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserPostesTir (ctxt_p, pvalue->u.mission_pion_gen_realiser_postes_tir);
@@ -895,7 +875,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_travaux_protection */
-      case 87:
+      case 85:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_travaux_protection");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserTravauxProtection (ctxt_p, pvalue->u.mission_pion_gen_realiser_travaux_protection);
@@ -905,7 +885,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_retablir_itineraire */
-      case 88:
+      case 86:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_retablir_itineraire");
 
          stat = asn1PE_Mission_Pion_GEN_RetablirItineraire (ctxt_p, pvalue->u.mission_pion_gen_retablir_itineraire);
@@ -915,7 +895,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_equiper_exploiter */
-      case 89:
+      case 87:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_equiper_exploiter");
 
          stat = asn1PE_Mission_Pion_GEN_EquiperExploiter (ctxt_p, pvalue->u.mission_pion_gen_equiper_exploiter);
@@ -925,7 +905,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_executer_variantement */
-      case 90:
+      case 88:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_executer_variantement");
 
          stat = asn1PE_Mission_Pion_GEN_ExecuterVariantement (ctxt_p, pvalue->u.mission_pion_gen_executer_variantement);
@@ -935,7 +915,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reconnaitre_site_franchissement */
-      case 91:
+      case 89:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reconnaitre_site_franchissement");
 
          stat = asn1PE_Mission_Pion_GEN_ReconnaitreSiteFranchissement (ctxt_p, pvalue->u.mission_pion_gen_reconnaitre_site_franchissement);
@@ -945,7 +925,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reconnaitre_itineraire */
-      case 92:
+      case 90:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reconnaitre_itineraire");
 
          stat = asn1PE_Mission_Pion_GEN_ReconnaitreItineraire (ctxt_p, pvalue->u.mission_pion_gen_reconnaitre_itineraire);
@@ -955,7 +935,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_deminer_site_franchissement */
-      case 93:
+      case 91:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_deminer_site_franchissement");
 
          stat = asn1PE_Mission_Pion_GEN_DeminerSiteFranchissement (ctxt_p, pvalue->u.mission_pion_gen_deminer_site_franchissement);
@@ -965,7 +945,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reconnaitre_zone */
-      case 94:
+      case 92:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reconnaitre_zone");
 
          stat = asn1PE_Mission_Pion_GEN_ReconnaitreZone (ctxt_p, pvalue->u.mission_pion_gen_reconnaitre_zone);
@@ -975,7 +955,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_plate_forme */
-      case 95:
+      case 93:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_plate_forme");
 
          stat = asn1PE_Mission_Pion_GEN_CreerPlateForme (ctxt_p, pvalue->u.mission_pion_gen_creer_plate_forme);
@@ -985,7 +965,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_piste */
-      case 96:
+      case 94:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_piste");
 
          stat = asn1PE_Mission_Pion_GEN_CreerPiste (ctxt_p, pvalue->u.mission_pion_gen_creer_piste);
@@ -995,7 +975,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_aire_poser */
-      case 97:
+      case 95:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_aire_poser");
 
          stat = asn1PE_Mission_Pion_GEN_CreerAirePoser (ctxt_p, pvalue->u.mission_pion_gen_creer_aire_poser);
@@ -1005,7 +985,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_neutraliser_engins_explosifs */
-      case 98:
+      case 96:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_neutraliser_engins_explosifs");
 
          stat = asn1PE_Mission_Pion_GEN_NeutraliserEnginsExplosifs (ctxt_p, pvalue->u.mission_pion_gen_neutraliser_engins_explosifs);
@@ -1015,7 +995,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_activer_obstacle */
-      case 99:
+      case 97:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_activer_obstacle");
 
          stat = asn1PE_Mission_Pion_GEN_ActiverObstacle (ctxt_p, pvalue->u.mission_pion_gen_activer_obstacle);
@@ -1025,7 +1005,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_ameliorer_mobilite */
-      case 100:
+      case 98:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_ameliorer_mobilite");
 
          stat = asn1PE_Mission_Pion_GEN_AmeliorerMobilite (ctxt_p, pvalue->u.mission_pion_gen_ameliorer_mobilite);
@@ -1035,7 +1015,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_aire_logistique */
-      case 101:
+      case 99:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_aire_logistique");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserAireLogistique (ctxt_p, pvalue->u.mission_pion_gen_realiser_aire_logistique);
@@ -1045,7 +1025,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_depolluer_zone */
-      case 102:
+      case 100:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_depolluer_zone");
 
          stat = asn1PE_Mission_Pion_GEN_DepolluerZone (ctxt_p, pvalue->u.mission_pion_gen_depolluer_zone);
@@ -1055,7 +1035,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_amenager_terrain_poser */
-      case 103:
+      case 101:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_amenager_terrain_poser");
 
          stat = asn1PE_Mission_Pion_GEN_AmenagerTerrainPoser (ctxt_p, pvalue->u.mission_pion_gen_amenager_terrain_poser);
@@ -1065,7 +1045,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_plate_forme_deploiement */
-      case 104:
+      case 102:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_plate_forme_deploiement");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserPlateFormeDeploiement (ctxt_p, pvalue->u.mission_pion_gen_realiser_plate_forme_deploiement);
@@ -1075,7 +1055,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reprendre_mission_construction */
-      case 105:
+      case 103:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reprendre_mission_construction");
 
          stat = asn1PE_Mission_Pion_GEN_ReprendreMissionConstruction (ctxt_p, pvalue->u.mission_pion_gen_reprendre_mission_construction);
@@ -1085,7 +1065,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_zone_poser_helicoptere */
-      case 106:
+      case 104:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_zone_poser_helicoptere");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserZonePoserHelicoptere (ctxt_p, pvalue->u.mission_pion_gen_realiser_zone_poser_helicoptere);
@@ -1095,7 +1075,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_appuyer_debarquement_troupes_gu */
-      case 107:
+      case 105:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_appuyer_debarquement_troupes_gu");
 
          stat = asn1PE_Mission_Pion_GEN_AppuyerDebarquementTroupesGU (ctxt_p, pvalue->u.mission_pion_gen_appuyer_debarquement_troupes_gu);
@@ -1105,7 +1085,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_camp_prisonniers */
-      case 108:
+      case 106:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_camp_prisonniers");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserCampPrisonniers (ctxt_p, pvalue->u.mission_pion_gen_realiser_camp_prisonniers);
@@ -1115,7 +1095,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_camp_refugies */
-      case 109:
+      case 107:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_camp_refugies");
 
          stat = asn1PE_Mission_Pion_GEN_RealiserCampRefugies (ctxt_p, pvalue->u.mission_pion_gen_realiser_camp_refugies);
@@ -1125,7 +1105,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_reconnaitre_axe */
-      case 110:
+      case 108:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_reconnaitre_axe");
 
          stat = asn1PE_Mission_Pion_INF_ReconnaitreAxe (ctxt_p, pvalue->u.mission_pion_inf_reconnaitre_axe);
@@ -1135,7 +1115,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_couvrir */
-      case 111:
+      case 109:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_couvrir");
 
          stat = asn1PE_Mission_Pion_INF_Couvrir (ctxt_p, pvalue->u.mission_pion_inf_couvrir);
@@ -1145,7 +1125,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_reduire */
-      case 112:
+      case 110:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_reduire");
 
          stat = asn1PE_Mission_Pion_INF_Reduire (ctxt_p, pvalue->u.mission_pion_inf_reduire);
@@ -1155,7 +1135,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_appuyer */
-      case 113:
+      case 111:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_appuyer");
 
          stat = asn1PE_Mission_Pion_INF_Appuyer (ctxt_p, pvalue->u.mission_pion_inf_appuyer);
@@ -1165,7 +1145,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_fixer */
-      case 114:
+      case 112:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_fixer");
 
          stat = asn1PE_Mission_Pion_INF_Fixer (ctxt_p, pvalue->u.mission_pion_inf_fixer);
@@ -1175,7 +1155,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_controler_secteur */
-      case 115:
+      case 113:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_controler_secteur");
 
          stat = asn1PE_Mission_Pion_INF_ControlerSecteur (ctxt_p, pvalue->u.mission_pion_inf_controler_secteur);
@@ -1185,7 +1165,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_surveiller_secteur */
-      case 116:
+      case 114:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_surveiller_secteur");
 
          stat = asn1PE_Mission_Pion_INF_SurveillerSecteur (ctxt_p, pvalue->u.mission_pion_inf_surveiller_secteur);
@@ -1195,7 +1175,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_barrer */
-      case 117:
+      case 115:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_barrer");
 
          stat = asn1PE_Mission_Pion_INF_Barrer (ctxt_p, pvalue->u.mission_pion_inf_barrer);
@@ -1205,7 +1185,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_reconnaitre_point */
-      case 118:
+      case 116:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_reconnaitre_point");
 
          stat = asn1PE_Mission_Pion_INF_ReconnaitrePoint (ctxt_p, pvalue->u.mission_pion_inf_reconnaitre_point);
@@ -1215,7 +1195,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_eclairer */
-      case 119:
+      case 117:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_eclairer");
 
          stat = asn1PE_Mission_Pion_INF_Eclairer (ctxt_p, pvalue->u.mission_pion_inf_eclairer);
@@ -1225,7 +1205,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_interdire */
-      case 120:
+      case 118:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_interdire");
 
          stat = asn1PE_Mission_Pion_INF_Interdire (ctxt_p, pvalue->u.mission_pion_inf_interdire);
@@ -1235,7 +1215,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_semparer */
-      case 121:
+      case 119:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_semparer");
 
          stat = asn1PE_Mission_Pion_INF_Semparer (ctxt_p, pvalue->u.mission_pion_inf_semparer);
@@ -1245,7 +1225,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_prendre_preciser_contact */
-      case 122:
+      case 120:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_prendre_preciser_contact");
 
          stat = asn1PE_Mission_Pion_INF_PrendrePreciserContact (ctxt_p, pvalue->u.mission_pion_inf_prendre_preciser_contact);
@@ -1255,7 +1235,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_defendre */
-      case 123:
+      case 121:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_defendre");
 
          stat = asn1PE_Mission_Pion_INF_Defendre (ctxt_p, pvalue->u.mission_pion_inf_defendre);
@@ -1265,7 +1245,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_detruire_embuscade */
-      case 124:
+      case 122:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_detruire_embuscade");
 
          stat = asn1PE_Mission_Pion_INF_DetruireEmbuscade (ctxt_p, pvalue->u.mission_pion_inf_detruire_embuscade);
@@ -1275,7 +1255,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_contre_attaquer */
-      case 125:
+      case 123:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_contre_attaquer");
 
          stat = asn1PE_Mission_Pion_INF_ContreAttaquer (ctxt_p, pvalue->u.mission_pion_inf_contre_attaquer);
@@ -1285,7 +1265,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_freiner */
-      case 126:
+      case 124:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_freiner");
 
          stat = asn1PE_Mission_Pion_INF_Freiner (ctxt_p, pvalue->u.mission_pion_inf_freiner);
@@ -1295,7 +1275,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_flanc_garder */
-      case 127:
+      case 125:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_flanc_garder");
 
          stat = asn1PE_Mission_Pion_INF_FlancGarder (ctxt_p, pvalue->u.mission_pion_inf_flanc_garder);
@@ -1305,7 +1285,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_organiser_un_check_point */
-      case 128:
+      case 126:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_organiser_un_check_point");
 
          stat = asn1PE_Mission_Pion_INF_OrganiserUnCheckPoint (ctxt_p, pvalue->u.mission_pion_inf_organiser_un_check_point);
@@ -1315,7 +1295,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_harceler */
-      case 129:
+      case 127:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_harceler");
 
          stat = asn1PE_Mission_Pion_INF_Harceler (ctxt_p, pvalue->u.mission_pion_inf_harceler);
@@ -1325,7 +1305,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_detruire_par_coup_de_main */
-      case 130:
+      case 128:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_detruire_par_coup_de_main");
 
          stat = asn1PE_Mission_Pion_INF_DetruireParCoupDeMain (ctxt_p, pvalue->u.mission_pion_inf_detruire_par_coup_de_main);
@@ -1335,7 +1315,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_escorter_unite */
-      case 131:
+      case 129:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_escorter_unite");
 
          stat = asn1PE_Mission_Pion_INF_EscorterUnite (ctxt_p, pvalue->u.mission_pion_inf_escorter_unite);
@@ -1345,7 +1325,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_escorter_unites */
-      case 132:
+      case 130:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_escorter_unites");
 
          stat = asn1PE_Mission_Pion_INF_EscorterUnites (ctxt_p, pvalue->u.mission_pion_inf_escorter_unites);
@@ -1355,7 +1335,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_renseigner_sur */
-      case 133:
+      case 131:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_INF_RenseignerSur (ctxt_p, pvalue->u.mission_pion_inf_renseigner_sur);
@@ -1365,7 +1345,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_soutenir */
-      case 134:
+      case 132:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_soutenir");
 
          stat = asn1PE_Mission_Pion_INF_Soutenir (ctxt_p, pvalue->u.mission_pion_inf_soutenir);
@@ -1375,7 +1355,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_securiser */
-      case 135:
+      case 133:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_securiser");
 
          stat = asn1PE_Mission_Pion_INF_Securiser (ctxt_p, pvalue->u.mission_pion_inf_securiser);
@@ -1385,7 +1365,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_recueillir */
-      case 136:
+      case 134:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_recueillir");
 
          stat = asn1PE_Mission_Pion_INF_Recueillir (ctxt_p, pvalue->u.mission_pion_inf_recueillir);
@@ -1395,7 +1375,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_repondre_a_aggression */
-      case 137:
+      case 135:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_repondre_a_aggression");
 
          stat = asn1PE_Mission_Pion_INF_RepondreAAggression (ctxt_p, pvalue->u.mission_pion_inf_repondre_a_aggression);
@@ -1405,7 +1385,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_appuyer_sur_position */
-      case 138:
+      case 136:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_appuyer_sur_position");
 
          stat = asn1PE_Mission_Pion_INF_AppuyerSurPosition (ctxt_p, pvalue->u.mission_pion_inf_appuyer_sur_position);
@@ -1415,7 +1395,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_se_deployer */
-      case 139:
+      case 137:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_se_deployer");
 
          stat = asn1PE_Mission_Pion_LOG_SeDeployer (ctxt_p, pvalue->u.mission_pion_log_se_deployer);
@@ -1425,7 +1405,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_renforcer */
-      case 140:
+      case 138:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_renforcer");
 
          stat = asn1PE_Mission_Pion_LOG_Renforcer (ctxt_p, pvalue->u.mission_pion_log_renforcer);
@@ -1435,7 +1415,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_preparer_bascule */
-      case 141:
+      case 139:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_preparer_bascule");
 
          stat = asn1PE_Mission_Pion_LOG_PreparerBascule (ctxt_p, pvalue->u.mission_pion_log_preparer_bascule);
@@ -1445,7 +1425,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_decontaminer_blesses */
-      case 142:
+      case 140:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_decontaminer_blesses");
 
          stat = asn1PE_Mission_Pion_LOG_DecontaminerBlesses (ctxt_p, pvalue->u.mission_pion_log_decontaminer_blesses);
@@ -1455,7 +1435,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_trier_et_traiter_blesses */
-      case 143:
+      case 141:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_trier_et_traiter_blesses");
 
          stat = asn1PE_Mission_Pion_LOG_TrierEtTraiterBlesses (ctxt_p, pvalue->u.mission_pion_log_trier_et_traiter_blesses);
@@ -1465,7 +1445,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_trier_blesses */
-      case 144:
+      case 142:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_trier_blesses");
 
          stat = asn1PE_Mission_Pion_LOG_TrierBlesses (ctxt_p, pvalue->u.mission_pion_log_trier_blesses);
@@ -1475,7 +1455,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_traiter_blesses */
-      case 145:
+      case 143:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_traiter_blesses");
 
          stat = asn1PE_Mission_Pion_LOG_TraiterBlesses (ctxt_p, pvalue->u.mission_pion_log_traiter_blesses);
@@ -1485,7 +1465,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_prendre_en_compte_reactions_mentales */
-      case 146:
+      case 144:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_prendre_en_compte_reactions_mentales");
 
          stat = asn1PE_Mission_Pion_LOG_PrendreEnCompteReactionsMentales (ctxt_p, pvalue->u.mission_pion_log_prendre_en_compte_reactions_mentales);
@@ -1495,7 +1475,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_convoyer */
-      case 147:
+      case 145:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_convoyer");
 
          stat = asn1PE_Mission_Pion_LOG_Convoyer (ctxt_p, pvalue->u.mission_pion_log_convoyer);
@@ -1505,7 +1485,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reparer */
-      case 148:
+      case 146:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reparer");
 
          stat = asn1PE_Mission_Pion_LOG_Reparer (ctxt_p, pvalue->u.mission_pion_log_reparer);
@@ -1515,7 +1495,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_appuyer_mouvement */
-      case 149:
+      case 147:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_appuyer_mouvement");
 
          stat = asn1PE_Mission_Pion_LOG_AppuyerMouvement (ctxt_p, pvalue->u.mission_pion_log_appuyer_mouvement);
@@ -1525,7 +1505,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reconnaitre_itineraire */
-      case 150:
+      case 148:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reconnaitre_itineraire");
 
          stat = asn1PE_Mission_Pion_LOG_ReconnaitreItineraire (ctxt_p, pvalue->u.mission_pion_log_reconnaitre_itineraire);
@@ -1535,7 +1515,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_transporter_unite */
-      case 151:
+      case 149:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_transporter_unite");
 
          stat = asn1PE_Mission_Pion_LOG_TransporterUnite (ctxt_p, pvalue->u.mission_pion_log_transporter_unite);
@@ -1545,7 +1525,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reconnaitre_zone_contaminee */
-      case 152:
+      case 150:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reconnaitre_zone_contaminee");
 
          stat = asn1PE_Mission_Pion_LOG_ReconnaitreZoneContaminee (ctxt_p, pvalue->u.mission_pion_log_reconnaitre_zone_contaminee);
@@ -1555,7 +1535,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_appuyer_mouvement_dans_zone */
-      case 153:
+      case 151:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_appuyer_mouvement_dans_zone");
 
          stat = asn1PE_Mission_Pion_LOG_AppuyerMouvementDansZone (ctxt_p, pvalue->u.mission_pion_log_appuyer_mouvement_dans_zone);
@@ -1565,7 +1545,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_mettre_en_oeuvre_zone_stationnement */
-      case 154:
+      case 152:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_mettre_en_oeuvre_zone_stationnement");
 
          stat = asn1PE_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement (ctxt_p, pvalue->u.mission_pion_log_mettre_en_oeuvre_zone_stationnement);
@@ -1575,7 +1555,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_appuyer_franchissement_sur_un_point */
-      case 155:
+      case 153:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_appuyer_franchissement_sur_un_point");
 
          stat = asn1PE_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint (ctxt_p, pvalue->u.mission_pion_log_appuyer_franchissement_sur_un_point);
@@ -1585,7 +1565,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_bloquer_zone */
-      case 156:
+      case 154:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_bloquer_zone");
 
          stat = asn1PE_Mission_Pion_LOG_BloquerZone (ctxt_p, pvalue->u.mission_pion_log_bloquer_zone);
@@ -1595,7 +1575,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reconnaitre_zone_de_deploiement */
-      case 157:
+      case 155:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reconnaitre_zone_de_deploiement");
 
          stat = asn1PE_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement (ctxt_p, pvalue->u.mission_pion_log_reconnaitre_zone_de_deploiement);
@@ -1605,7 +1585,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_armer_pia */
-      case 158:
+      case 156:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_armer_pia");
 
          stat = asn1PE_Mission_Pion_LOG_ArmerPIA (ctxt_p, pvalue->u.mission_pion_log_armer_pia);
@@ -1615,7 +1595,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_surveiller */
-      case 159:
+      case 157:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_surveiller");
 
          stat = asn1PE_Mission_Pion_LOG_Surveiller (ctxt_p, pvalue->u.mission_pion_log_surveiller);
@@ -1625,7 +1605,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_heliporter */
-      case 160:
+      case 158:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_heliporter");
 
          stat = asn1PE_Mission_Pion_Test_Heliporter (ctxt_p, pvalue->u.mission_pion_test_heliporter);
@@ -1635,7 +1615,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_move_to */
-      case 161:
+      case 159:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_move_to");
 
          stat = asn1PE_Mission_Pion_Test_MoveTo (ctxt_p, pvalue->u.mission_pion_test_move_to);
@@ -1645,7 +1625,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_create_object */
-      case 162:
+      case 160:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_create_object");
 
          stat = asn1PE_Mission_Pion_Test_CreateObject (ctxt_p, pvalue->u.mission_pion_test_create_object);
@@ -1655,7 +1635,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_destroy_object */
-      case 163:
+      case 161:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_destroy_object");
 
          stat = asn1PE_Mission_Pion_Test_DestroyObject (ctxt_p, pvalue->u.mission_pion_test_destroy_object);
@@ -1665,7 +1645,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_create_bypass */
-      case 164:
+      case 162:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_create_bypass");
 
          stat = asn1PE_Mission_Pion_Test_CreateBypass (ctxt_p, pvalue->u.mission_pion_test_create_bypass);
@@ -1675,7 +1655,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_fire */
-      case 165:
+      case 163:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_fire");
 
          stat = asn1PE_Mission_Pion_Test_Fire (ctxt_p, pvalue->u.mission_pion_test_fire);
@@ -1685,7 +1665,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_change_posture */
-      case 166:
+      case 164:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_change_posture");
 
          stat = asn1PE_Mission_Pion_Test_ChangePosture (ctxt_p, pvalue->u.mission_pion_test_change_posture);
@@ -1695,7 +1675,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_path_find */
-      case 167:
+      case 165:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_path_find");
 
          stat = asn1PE_Mission_Pion_Test_PathFind (ctxt_p, pvalue->u.mission_pion_test_path_find);
@@ -1705,7 +1685,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_find_position */
-      case 168:
+      case 166:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_find_position");
 
          stat = asn1PE_Mission_Pion_Test_FindPosition (ctxt_p, pvalue->u.mission_pion_test_find_position);
@@ -1715,7 +1695,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_reinforce */
-      case 169:
+      case 167:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_reinforce");
 
          stat = asn1PE_Mission_Pion_Test_Reinforce (ctxt_p, pvalue->u.mission_pion_test_reinforce);
@@ -1725,7 +1705,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_plastron_ennemi */
-      case 170:
+      case 168:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_plastron_ennemi");
 
          stat = asn1PE_Mission_Pion_PlastronEnnemi (ctxt_p, pvalue->u.mission_pion_plastron_ennemi);
@@ -1735,7 +1715,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_faire_mouvement */
-      case 171:
+      case 169:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_faire_mouvement");
 
          stat = asn1PE_Mission_Pion_FaireMouvement (ctxt_p, pvalue->u.mission_pion_faire_mouvement);
@@ -1745,7 +1725,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_suivre */
-      case 172:
+      case 170:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_suivre");
 
          stat = asn1PE_Mission_Pion_Suivre (ctxt_p, pvalue->u.mission_pion_suivre);
@@ -1755,7 +1735,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_se_faire_decontaminer */
-      case 173:
+      case 171:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_se_faire_decontaminer");
 
          stat = asn1PE_Mission_Pion_SeFaireDecontaminer (ctxt_p, pvalue->u.mission_pion_se_faire_decontaminer);
@@ -1765,7 +1745,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_franchir */
-      case 174:
+      case 172:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_franchir");
 
          stat = asn1PE_Mission_Pion_Franchir (ctxt_p, pvalue->u.mission_pion_franchir);
@@ -1775,7 +1755,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_decrocher */
-      case 175:
+      case 173:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_decrocher");
 
          stat = asn1PE_Mission_Pion_Decrocher (ctxt_p, pvalue->u.mission_pion_decrocher);
@@ -1785,7 +1765,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_stationner */
-      case 176:
+      case 174:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_stationner");
 
          stat = asn1PE_Mission_Pion_Stationner (ctxt_p, pvalue->u.mission_pion_stationner);
@@ -1795,7 +1775,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_se_faire_transporter */
-      case 177:
+      case 175:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_se_faire_transporter");
 
          stat = asn1PE_Mission_Pion_SeFaireTransporter (ctxt_p, pvalue->u.mission_pion_se_faire_transporter);
@@ -1805,7 +1785,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_interdire_franchissement_populations */
-      case 178:
+      case 176:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_interdire_franchissement_populations");
 
          stat = asn1PE_Mission_Pion_InterdireFranchissementPopulations (ctxt_p, pvalue->u.mission_pion_interdire_franchissement_populations);
@@ -1815,7 +1795,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_filtrer_populations */
-      case 179:
+      case 177:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_filtrer_populations");
 
          stat = asn1PE_Mission_Pion_FiltrerPopulations (ctxt_p, pvalue->u.mission_pion_filtrer_populations);
@@ -1825,7 +1805,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_renseigner_sur_populations */
-      case 180:
+      case 178:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_renseigner_sur_populations");
 
          stat = asn1PE_Mission_Pion_RenseignerSurPopulations (ctxt_p, pvalue->u.mission_pion_renseigner_sur_populations);
@@ -1835,7 +1815,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_canaliser_populations */
-      case 181:
+      case 179:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_canaliser_populations");
 
          stat = asn1PE_Mission_Pion_CanaliserPopulations (ctxt_p, pvalue->u.mission_pion_canaliser_populations);
@@ -1845,7 +1825,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_controler_populations_dans_zone */
-      case 182:
+      case 180:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_controler_populations_dans_zone");
 
          stat = asn1PE_Mission_Pion_ControlerPopulationsDansZone (ctxt_p, pvalue->u.mission_pion_controler_populations_dans_zone);
@@ -1855,7 +1835,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_securiser_zone_contre_populations */
-      case 183:
+      case 181:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_securiser_zone_contre_populations");
 
          stat = asn1PE_Mission_Pion_SecuriserZoneContrePopulations (ctxt_p, pvalue->u.mission_pion_securiser_zone_contre_populations);
@@ -1865,7 +1845,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_generique */
-      case 184:
+      case 182:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_generique");
 
          stat = asn1PE_Mission_Pion_Generique (ctxt_p, pvalue->u.mission_pion_generique);
@@ -1875,7 +1855,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_milice_provoquer */
-      case 185:
+      case 183:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_milice_provoquer");
 
          stat = asn1PE_Mission_Pion_MILICE_Provoquer (ctxt_p, pvalue->u.mission_pion_milice_provoquer);
@@ -1885,7 +1865,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_milice_prendre_et_tenir */
-      case 186:
+      case 184:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_milice_prendre_et_tenir");
 
          stat = asn1PE_Mission_Pion_MILICE_PrendreEtTenir (ctxt_p, pvalue->u.mission_pion_milice_prendre_et_tenir);
@@ -1895,7 +1875,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_milice_detruire_embuscade */
-      case 187:
+      case 185:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_milice_detruire_embuscade");
 
          stat = asn1PE_Mission_Pion_MILICE_DetruireEmbuscade (ctxt_p, pvalue->u.mission_pion_milice_detruire_embuscade);
@@ -1905,7 +1885,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_joint_marine_transporter */
-      case 188:
+      case 186:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_joint_marine_transporter");
 
          stat = asn1PE_Mission_Pion_JOINT_MARINE_Transporter (ctxt_p, pvalue->u.mission_pion_joint_marine_transporter);
@@ -1915,7 +1895,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_joint_air_effectuer_raid */
-      case 189:
+      case 187:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_joint_air_effectuer_raid");
 
          stat = asn1PE_Mission_Pion_JOINT_AIR_EffectuerRaid (ctxt_p, pvalue->u.mission_pion_joint_air_effectuer_raid);
@@ -1925,7 +1905,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_animer_un_plot_de_decontamination */
-      case 190:
+      case 188:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_animer_un_plot_de_decontamination");
 
          stat = asn1PE_Mission_Pion_NBC_AnimerUnPlotDeDecontamination (ctxt_p, pvalue->u.mission_pion_nbc_animer_un_plot_de_decontamination);
@@ -1935,7 +1915,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_reconnaitre_itineraire */
-      case 191:
+      case 189:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_reconnaitre_itineraire");
 
          stat = asn1PE_Mission_Pion_NBC_ReconnaitreItineraire (ctxt_p, pvalue->u.mission_pion_nbc_reconnaitre_itineraire);
@@ -1945,7 +1925,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_reconnaitre_zone */
-      case 192:
+      case 190:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_reconnaitre_zone");
 
          stat = asn1PE_Mission_Pion_NBC_ReconnaitreZone (ctxt_p, pvalue->u.mission_pion_nbc_reconnaitre_zone);
@@ -1955,7 +1935,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_decontaminer_zone */
-      case 193:
+      case 191:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_decontaminer_zone");
 
          stat = asn1PE_Mission_Pion_NBC_DecontaminerZone (ctxt_p, pvalue->u.mission_pion_nbc_decontaminer_zone);
@@ -1965,7 +1945,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_reconnaitre_un_site_rota */
-      case 194:
+      case 192:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_reconnaitre_un_site_rota");
 
          stat = asn1PE_Mission_Pion_NBC_ReconnaitreUnSiteROTA (ctxt_p, pvalue->u.mission_pion_nbc_reconnaitre_un_site_rota);
@@ -1975,7 +1955,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_rohum_renseigner_sur */
-      case 195:
+      case 193:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_rohum_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_RENS_ROHUM_RenseignerSur (ctxt_p, pvalue->u.mission_pion_rens_rohum_renseigner_sur);
@@ -1985,7 +1965,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_rohum_sexfiltrer */
-      case 196:
+      case 194:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_rohum_sexfiltrer");
 
          stat = asn1PE_Mission_Pion_RENS_ROHUM_SExfiltrer (ctxt_p, pvalue->u.mission_pion_rens_rohum_sexfiltrer);
@@ -1995,7 +1975,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_rohum_orienter_guider */
-      case 197:
+      case 195:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_rohum_orienter_guider");
 
          stat = asn1PE_Mission_Pion_RENS_ROHUM_OrienterGuider (ctxt_p, pvalue->u.mission_pion_rens_rohum_orienter_guider);
@@ -2005,7 +1985,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roem_appuyer */
-      case 198:
+      case 196:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roem_appuyer");
 
          stat = asn1PE_Mission_Pion_RENS_ROEM_Appuyer (ctxt_p, pvalue->u.mission_pion_rens_roem_appuyer);
@@ -2015,7 +1995,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roem_renseigner_sur */
-      case 199:
+      case 197:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roem_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_RENS_ROEM_RenseignerSur (ctxt_p, pvalue->u.mission_pion_rens_roem_renseigner_sur);
@@ -2025,7 +2005,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roem_mettre_en_oeuvre */
-      case 200:
+      case 198:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roem_mettre_en_oeuvre");
 
          stat = asn1PE_Mission_Pion_RENS_ROEM_MettreEnOeuvre (ctxt_p, pvalue->u.mission_pion_rens_roem_mettre_en_oeuvre);
@@ -2035,7 +2015,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_radint_renseigner_sur */
-      case 201:
+      case 199:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_radint_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_RENS_RADINT_RenseignerSur (ctxt_p, pvalue->u.mission_pion_rens_radint_renseigner_sur);
@@ -2045,7 +2025,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_radint_mettre_en_oeuvre */
-      case 202:
+      case 200:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_radint_mettre_en_oeuvre");
 
          stat = asn1PE_Mission_Pion_RENS_RADINT_MettreEnOeuvre (ctxt_p, pvalue->u.mission_pion_rens_radint_mettre_en_oeuvre);
@@ -2055,7 +2035,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roim_mettre_en_oeuvre */
-      case 203:
+      case 201:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roim_mettre_en_oeuvre");
 
          stat = asn1PE_Mission_Pion_RENS_ROIM_MettreEnOeuvre (ctxt_p, pvalue->u.mission_pion_rens_roim_mettre_en_oeuvre);
@@ -2065,7 +2045,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roim_sdti_renseigner_sur */
-      case 204:
+      case 202:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roim_sdti_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur (ctxt_p, pvalue->u.mission_pion_rens_roim_sdti_renseigner_sur);
@@ -2075,7 +2055,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roim_cl289_renseigner_sur */
-      case 205:
+      case 203:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roim_cl289_renseigner_sur");
 
          stat = asn1PE_Mission_Pion_RENS_ROIM_CL289_RenseignerSur (ctxt_p, pvalue->u.mission_pion_rens_roim_cl289_renseigner_sur);
@@ -2085,7 +2065,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_trans_etablir_gerer_liaison */
-      case 206:
+      case 204:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_trans_etablir_gerer_liaison");
 
          stat = asn1PE_Mission_Pion_TRANS_EtablirGererLiaison (ctxt_p, pvalue->u.mission_pion_trans_etablir_gerer_liaison);
@@ -2095,7 +2075,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_sinfiltrer */
-      case 207:
+      case 205:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_sinfiltrer");
 
          stat = asn1PE_Mission_Pion_ASY_SInfiltrer (ctxt_p, pvalue->u.mission_pion_asy_sinfiltrer);
@@ -2105,7 +2085,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_attentatContrePopulation */
-      case 208:
+      case 206:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_attentatContrePopulation");
 
          stat = asn1PE_Mission_Pion_ASY_CommettreAttentatContrePopulation (ctxt_p, pvalue->u.mission_pion_asy_commettre_attentatContrePopulation);
@@ -2115,7 +2095,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_attentatContreForcesArmees */
-      case 209:
+      case 207:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_attentatContreForcesArmees");
 
          stat = asn1PE_Mission_Pion_ASY_CommettreAttentatContreForcesArmees (ctxt_p, pvalue->u.mission_pion_asy_commettre_attentatContreForcesArmees);
@@ -2125,7 +2105,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_attentatContreInstallation */
-      case 210:
+      case 208:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_attentatContreInstallation");
 
          stat = asn1PE_Mission_Pion_ASY_CommettreAttentatContreInstallation (ctxt_p, pvalue->u.mission_pion_asy_commettre_attentatContreInstallation);
@@ -2135,7 +2115,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_exactions_sur_population_dans_zone */
-      case 211:
+      case 209:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_exactions_sur_population_dans_zone");
 
          stat = asn1PE_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone (ctxt_p, pvalue->u.mission_pion_asy_commettre_exactions_sur_population_dans_zone);
@@ -2145,7 +2125,7 @@ EXTERN int asn1PE_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_renseigner */
-      case 212:
+      case 210:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_renseigner");
 
          stat = asn1PE_Mission_Pion_ASY_Renseigner (ctxt_p, pvalue->u.mission_pion_asy_renseigner);
@@ -2178,7 +2158,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 211);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 209);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    else pvalue->t = ui + 1;
 
@@ -2200,23 +2180,8 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
 
          break;
 
-      /* mission_pion_alat_evacuation_sanitaire */
-      case 1:
-         PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_evacuation_sanitaire");
-
-         pvalue->u.mission_pion_alat_evacuation_sanitaire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_EvacuationSanitaire);
-         if (pvalue->u.mission_pion_alat_evacuation_sanitaire == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_Mission_Pion_ALAT_EvacuationSanitaire (ctxt_p, pvalue->u.mission_pion_alat_evacuation_sanitaire);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
       /* mission_pion_alat_reconnaitre_dans_la_profondeur */
-      case 2:
+      case 1:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_reconnaitre_dans_la_profondeur");
 
          pvalue->u.mission_pion_alat_reconnaitre_dans_la_profondeur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur);
@@ -2231,7 +2196,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_reconnaitre_contour_ennemi */
-      case 3:
+      case 2:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_reconnaitre_contour_ennemi");
 
          pvalue->u.mission_pion_alat_reconnaitre_contour_ennemi = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi);
@@ -2246,7 +2211,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_detruire_neutraliser_dans_zone */
-      case 4:
+      case 3:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_detruire_neutraliser_dans_zone");
 
          pvalue->u.mission_pion_alat_detruire_neutraliser_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone);
@@ -2261,7 +2226,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_detruire_aeromobile */
-      case 5:
+      case 4:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_detruire_aeromobile");
 
          pvalue->u.mission_pion_alat_detruire_aeromobile = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireAeromobile);
@@ -2276,7 +2241,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_freiner */
-      case 6:
+      case 5:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_freiner");
 
          pvalue->u.mission_pion_alat_freiner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Freiner);
@@ -2291,7 +2256,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_jalonner */
-      case 7:
+      case 6:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_jalonner");
 
          pvalue->u.mission_pion_alat_jalonner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Jalonner);
@@ -2306,7 +2271,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_escorter */
-      case 8:
+      case 7:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_escorter");
 
          pvalue->u.mission_pion_alat_escorter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Escorter);
@@ -2321,7 +2286,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_heliporter */
-      case 9:
+      case 8:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_heliporter");
 
          pvalue->u.mission_pion_alat_heliporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Heliporter);
@@ -2336,7 +2301,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_heliporter_helitransporter_plot_ravitaillement */
-      case 10:
+      case 9:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement");
 
          pvalue->u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement);
@@ -2351,7 +2316,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_helitransporter */
-      case 11:
+      case 10:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_helitransporter");
 
          pvalue->u.mission_pion_alat_helitransporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Helitransporter);
@@ -2365,23 +2330,8 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
 
          break;
 
-      /* mission_pion_alat_effectuer_recherche_et_sauvetage */
-      case 12:
-         PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_effectuer_recherche_et_sauvetage");
-
-         pvalue->u.mission_pion_alat_effectuer_recherche_et_sauvetage = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage);
-         if (pvalue->u.mission_pion_alat_effectuer_recherche_et_sauvetage == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage (ctxt_p, pvalue->u.mission_pion_alat_effectuer_recherche_et_sauvetage);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
       /* mission_pion_alat_imex */
-      case 13:
+      case 11:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_imex");
 
          pvalue->u.mission_pion_alat_imex = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_IMEX);
@@ -2396,7 +2346,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_eclairer */
-      case 14:
+      case 12:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_eclairer");
 
          pvalue->u.mission_pion_alat_eclairer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Eclairer);
@@ -2411,7 +2361,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_surveiller */
-      case 15:
+      case 13:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_surveiller");
 
          pvalue->u.mission_pion_alat_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Surveiller);
@@ -2426,7 +2376,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_appuyer_direct_au_contact */
-      case 16:
+      case 14:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_appuyer_direct_au_contact");
 
          pvalue->u.mission_pion_alat_appuyer_direct_au_contact = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact);
@@ -2441,7 +2391,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_couvrir */
-      case 17:
+      case 15:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_couvrir");
 
          pvalue->u.mission_pion_alat_couvrir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Couvrir);
@@ -2456,7 +2406,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_alat_attaquer */
-      case 18:
+      case 16:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_alat_attaquer");
 
          pvalue->u.mission_pion_alat_attaquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ALAT_Attaquer);
@@ -2471,7 +2421,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_site */
-      case 19:
+      case 17:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_site");
 
          pvalue->u.mission_pion_asa_defendre_site = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_DefendreSite);
@@ -2486,7 +2436,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_site_a_partir_position */
-      case 20:
+      case 18:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_site_a_partir_position");
 
          pvalue->u.mission_pion_asa_defendre_site_a_partir_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_DefendreSiteAPartirPosition);
@@ -2501,7 +2451,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_zone */
-      case 21:
+      case 19:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_zone");
 
          pvalue->u.mission_pion_asa_defendre_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_DefendreZone);
@@ -2516,7 +2466,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_zone_a_partir_position */
-      case 22:
+      case 20:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_zone_a_partir_position");
 
          pvalue->u.mission_pion_asa_defendre_zone_a_partir_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_DefendreZoneAPartirPosition);
@@ -2531,7 +2481,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_surveiller */
-      case 23:
+      case 21:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_surveiller");
 
          pvalue->u.mission_pion_asa_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_Surveiller);
@@ -2546,7 +2496,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_defendre_unites */
-      case 24:
+      case 22:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_defendre_unites");
 
          pvalue->u.mission_pion_asa_defendre_unites = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_DefendreUnites);
@@ -2561,7 +2511,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_site */
-      case 25:
+      case 23:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_site");
 
          pvalue->u.mission_pion_asa_mistral_defendre_site = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_MISTRAL_DefendreSite);
@@ -2576,7 +2526,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_site_a_partir_position */
-      case 26:
+      case 24:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_site_a_partir_position");
 
          pvalue->u.mission_pion_asa_mistral_defendre_site_a_partir_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition);
@@ -2591,7 +2541,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_zone */
-      case 27:
+      case 25:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_zone");
 
          pvalue->u.mission_pion_asa_mistral_defendre_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_MISTRAL_DefendreZone);
@@ -2606,7 +2556,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_defendre_zone_a_partir_position */
-      case 28:
+      case 26:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_defendre_zone_a_partir_position");
 
          pvalue->u.mission_pion_asa_mistral_defendre_zone_a_partir_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition);
@@ -2621,7 +2571,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asa_mistral_surveiller */
-      case 29:
+      case 27:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asa_mistral_surveiller");
 
          pvalue->u.mission_pion_asa_mistral_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASA_MISTRAL_Surveiller);
@@ -2636,7 +2586,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_assurer_mise_en_oeuvre */
-      case 30:
+      case 28:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_assurer_mise_en_oeuvre");
 
          pvalue->u.mission_pion_ass_assurer_mise_en_oeuvre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvre);
@@ -2651,7 +2601,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_assurer_mise_en_oeuvre_sur_position */
-      case 31:
+      case 29:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position");
 
          pvalue->u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition);
@@ -2666,7 +2616,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_reconnaitre_zone_deploiement */
-      case 32:
+      case 30:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_reconnaitre_zone_deploiement");
 
          pvalue->u.mission_pion_ass_reconnaitre_zone_deploiement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASS_ReconnaitreZoneDeploiement);
@@ -2681,7 +2631,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_acquerir_lanceurs_eni */
-      case 33:
+      case 31:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_acquerir_lanceurs_eni");
 
          pvalue->u.mission_pion_ass_acquerir_lanceurs_eni = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASS_AcquerirLanceursEni);
@@ -2696,7 +2646,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_eo_acquerir_objectifs */
-      case 34:
+      case 32:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_eo_acquerir_objectifs");
 
          pvalue->u.mission_pion_ass_eo_acquerir_objectifs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASS_EO_AcquerirObjectifs);
@@ -2711,7 +2661,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_eop_acquerir_objectifs */
-      case 35:
+      case 33:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_eop_acquerir_objectifs");
 
          pvalue->u.mission_pion_ass_eop_acquerir_objectifs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASS_EOP_AcquerirObjectifs);
@@ -2726,7 +2676,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_ass_ratac_acquerir_objectifs */
-      case 36:
+      case 34:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_ass_ratac_acquerir_objectifs");
 
          pvalue->u.mission_pion_ass_ratac_acquerir_objectifs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASS_RATAC_AcquerirObjectifs);
@@ -2741,7 +2691,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_reconnaitre_axe */
-      case 37:
+      case 35:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_reconnaitre_axe");
 
          pvalue->u.mission_pion_abc_reconnaitre_axe = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_ReconnaitreAxe);
@@ -2756,7 +2706,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_soutenir */
-      case 38:
+      case 36:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_soutenir");
 
          pvalue->u.mission_pion_abc_soutenir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Soutenir);
@@ -2771,7 +2721,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_couvrir */
-      case 39:
+      case 37:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_couvrir");
 
          pvalue->u.mission_pion_abc_couvrir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Couvrir);
@@ -2786,7 +2736,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_flanc_garder */
-      case 40:
+      case 38:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_flanc_garder");
 
          pvalue->u.mission_pion_abc_flanc_garder = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_FlancGarder);
@@ -2801,7 +2751,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_reduire */
-      case 41:
+      case 39:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_reduire");
 
          pvalue->u.mission_pion_abc_reduire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Reduire);
@@ -2816,7 +2766,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_appuyer */
-      case 42:
+      case 40:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_appuyer");
 
          pvalue->u.mission_pion_abc_appuyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Appuyer);
@@ -2831,7 +2781,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_fixer */
-      case 43:
+      case 41:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_fixer");
 
          pvalue->u.mission_pion_abc_fixer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Fixer);
@@ -2846,7 +2796,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_renseigner_sur */
-      case 44:
+      case 42:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_renseigner_sur");
 
          pvalue->u.mission_pion_abc_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_RenseignerSur);
@@ -2861,7 +2811,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_controler_zone */
-      case 45:
+      case 43:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_controler_zone");
 
          pvalue->u.mission_pion_abc_controler_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_ControlerZone);
@@ -2876,7 +2826,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_surveiller */
-      case 46:
+      case 44:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_surveiller");
 
          pvalue->u.mission_pion_abc_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Surveiller);
@@ -2891,7 +2841,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_barrer */
-      case 47:
+      case 45:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_barrer");
 
          pvalue->u.mission_pion_abc_barrer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Barrer);
@@ -2906,7 +2856,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_attaquer */
-      case 48:
+      case 46:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_attaquer");
 
          pvalue->u.mission_pion_abc_attaquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Attaquer);
@@ -2921,7 +2871,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_reconnaitre_point */
-      case 49:
+      case 47:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_reconnaitre_point");
 
          pvalue->u.mission_pion_abc_reconnaitre_point = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_ReconnaitrePoint);
@@ -2936,7 +2886,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_eclairer */
-      case 50:
+      case 48:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_eclairer");
 
          pvalue->u.mission_pion_abc_eclairer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Eclairer);
@@ -2951,7 +2901,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_jalonner */
-      case 51:
+      case 49:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_jalonner");
 
          pvalue->u.mission_pion_abc_jalonner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Jalonner);
@@ -2966,7 +2916,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_contre_attaquer */
-      case 52:
+      case 50:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_contre_attaquer");
 
          pvalue->u.mission_pion_abc_contre_attaquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_ContreAttaquer);
@@ -2981,7 +2931,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_semparer_zone */
-      case 53:
+      case 51:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_semparer_zone");
 
          pvalue->u.mission_pion_abc_semparer_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_SemparerZone);
@@ -2996,7 +2946,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_relever_unite */
-      case 54:
+      case 52:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_relever_unite");
 
          pvalue->u.mission_pion_abc_relever_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_ReleverUnite);
@@ -3011,7 +2961,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_armer_pia */
-      case 55:
+      case 53:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_armer_pia");
 
          pvalue->u.mission_pion_abc_armer_pia = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_ArmerPIA);
@@ -3026,7 +2976,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_ouvrir_itineraire */
-      case 56:
+      case 54:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_ouvrir_itineraire");
 
          pvalue->u.mission_pion_abc_ouvrir_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_OuvrirItineraire);
@@ -3041,7 +2991,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_freiner */
-      case 57:
+      case 55:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_freiner");
 
          pvalue->u.mission_pion_abc_freiner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_Freiner);
@@ -3056,7 +3006,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_escorter_unite */
-      case 58:
+      case 56:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_escorter_unite");
 
          pvalue->u.mission_pion_abc_escorter_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_EscorterUnite);
@@ -3071,7 +3021,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_escorter_unites */
-      case 59:
+      case 57:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_escorter_unites");
 
          pvalue->u.mission_pion_abc_escorter_unites = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_EscorterUnites);
@@ -3086,7 +3036,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_armer_point_de_controle */
-      case 60:
+      case 58:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_armer_point_de_controle");
 
          pvalue->u.mission_pion_abc_armer_point_de_controle = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_ArmerPointDeControle);
@@ -3101,7 +3051,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_organiser_accueil_colonne_refugies */
-      case 61:
+      case 59:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_organiser_accueil_colonne_refugies");
 
          pvalue->u.mission_pion_abc_organiser_accueil_colonne_refugies = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies);
@@ -3116,7 +3066,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_appuyer_sur_position */
-      case 62:
+      case 60:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_appuyer_sur_position");
 
          pvalue->u.mission_pion_abc_appuyer_sur_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_AppuyerSurPosition);
@@ -3131,7 +3081,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_abc_rasit_renseigner_sur */
-      case 63:
+      case 61:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_abc_rasit_renseigner_sur");
 
          pvalue->u.mission_pion_abc_rasit_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ABC_RASIT_RenseignerSur);
@@ -3146,7 +3096,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_fosse_ac */
-      case 64:
+      case 62:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_fosse_ac");
 
          pvalue->u.mission_pion_gen_realiser_fosse_ac = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserFosseAC);
@@ -3161,7 +3111,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_abattis_mine */
-      case 65:
+      case 63:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_abattis_mine");
 
          pvalue->u.mission_pion_gen_realiser_abattis_mine = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserAbattisMine);
@@ -3176,7 +3126,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_point_mine */
-      case 66:
+      case 64:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_point_mine");
 
          pvalue->u.mission_pion_gen_realiser_point_mine = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserPointMine);
@@ -3191,7 +3141,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_barricade */
-      case 67:
+      case 65:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_barricade");
 
          pvalue->u.mission_pion_gen_realiser_barricade = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserBarricade);
@@ -3206,7 +3156,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_eboulement */
-      case 68:
+      case 66:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_eboulement");
 
          pvalue->u.mission_pion_gen_realiser_eboulement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserEboulement);
@@ -3221,7 +3171,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_bouchon_mine */
-      case 69:
+      case 67:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_bouchon_mine");
 
          pvalue->u.mission_pion_gen_realiser_bouchon_mine = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserBouchonMine);
@@ -3236,7 +3186,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_detruire_route */
-      case 70:
+      case 68:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_detruire_route");
 
          pvalue->u.mission_pion_gen_detruire_route = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_DetruireRoute);
@@ -3251,7 +3201,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_detruire_pont */
-      case 71:
+      case 69:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_detruire_pont");
 
          pvalue->u.mission_pion_gen_detruire_pont = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_DetruirePont);
@@ -3266,7 +3216,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_securiser_itineraire */
-      case 72:
+      case 70:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_securiser_itineraire");
 
          pvalue->u.mission_pion_gen_securiser_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_SecuriserItineraire);
@@ -3281,7 +3231,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_degager_abattis_mine */
-      case 73:
+      case 71:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_degager_abattis_mine");
 
          pvalue->u.mission_pion_gen_degager_abattis_mine = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_DegagerAbattisMine);
@@ -3296,7 +3246,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_degager_eboulement */
-      case 74:
+      case 72:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_degager_eboulement");
 
          pvalue->u.mission_pion_gen_degager_eboulement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_DegagerEboulement);
@@ -3311,7 +3261,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_degager_rues */
-      case 75:
+      case 73:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_degager_rues");
 
          pvalue->u.mission_pion_gen_degager_rues = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_DegagerRues);
@@ -3326,7 +3276,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_combler_entonnoir */
-      case 76:
+      case 74:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_combler_entonnoir");
 
          pvalue->u.mission_pion_gen_combler_entonnoir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ComblerEntonnoir);
@@ -3341,7 +3291,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_combler_fosse_ac */
-      case 77:
+      case 75:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_combler_fosse_ac");
 
          pvalue->u.mission_pion_gen_combler_fosse_ac = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ComblerFosseAC);
@@ -3356,7 +3306,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_contournement */
-      case 78:
+      case 76:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_contournement");
 
          pvalue->u.mission_pion_gen_creer_contournement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_CreerContournement);
@@ -3371,7 +3321,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_zone_minee_lineaire */
-      case 79:
+      case 77:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_zone_minee_lineaire");
 
          pvalue->u.mission_pion_gen_realiser_zone_minee_lineaire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserZoneMineeLineaire);
@@ -3386,7 +3336,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_ouvrir_trouee */
-      case 80:
+      case 78:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_ouvrir_trouee");
 
          pvalue->u.mission_pion_gen_ouvrir_trouee = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_OuvrirTrouee);
@@ -3401,7 +3351,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_renforcer */
-      case 81:
+      case 79:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_renforcer");
 
          pvalue->u.mission_pion_gen_renforcer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_Renforcer);
@@ -3416,7 +3366,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_franchir_entonnoir */
-      case 82:
+      case 80:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_franchir_entonnoir");
 
          pvalue->u.mission_pion_gen_franchir_entonnoir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_FranchirEntonnoir);
@@ -3431,7 +3381,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_franchir_fosse_ac */
-      case 83:
+      case 81:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_franchir_fosse_ac");
 
          pvalue->u.mission_pion_gen_franchir_fosse_ac = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_FranchirFosseAC);
@@ -3446,7 +3396,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_zone_minee_par_dispersion */
-      case 84:
+      case 82:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_zone_minee_par_dispersion");
 
          pvalue->u.mission_pion_gen_realiser_zone_minee_par_dispersion = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserZoneMineeParDispersion);
@@ -3461,7 +3411,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_postes_tir */
-      case 85:
+      case 83:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_postes_tir");
 
          pvalue->u.mission_pion_gen_realiser_postes_tir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserPostesTir);
@@ -3476,7 +3426,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_travaux_protection */
-      case 86:
+      case 84:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_travaux_protection");
 
          pvalue->u.mission_pion_gen_realiser_travaux_protection = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserTravauxProtection);
@@ -3491,7 +3441,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_retablir_itineraire */
-      case 87:
+      case 85:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_retablir_itineraire");
 
          pvalue->u.mission_pion_gen_retablir_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RetablirItineraire);
@@ -3506,7 +3456,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_equiper_exploiter */
-      case 88:
+      case 86:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_equiper_exploiter");
 
          pvalue->u.mission_pion_gen_equiper_exploiter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_EquiperExploiter);
@@ -3521,7 +3471,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_executer_variantement */
-      case 89:
+      case 87:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_executer_variantement");
 
          pvalue->u.mission_pion_gen_executer_variantement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ExecuterVariantement);
@@ -3536,7 +3486,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reconnaitre_site_franchissement */
-      case 90:
+      case 88:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reconnaitre_site_franchissement");
 
          pvalue->u.mission_pion_gen_reconnaitre_site_franchissement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement);
@@ -3551,7 +3501,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reconnaitre_itineraire */
-      case 91:
+      case 89:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reconnaitre_itineraire");
 
          pvalue->u.mission_pion_gen_reconnaitre_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ReconnaitreItineraire);
@@ -3566,7 +3516,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_deminer_site_franchissement */
-      case 92:
+      case 90:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_deminer_site_franchissement");
 
          pvalue->u.mission_pion_gen_deminer_site_franchissement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_DeminerSiteFranchissement);
@@ -3581,7 +3531,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reconnaitre_zone */
-      case 93:
+      case 91:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reconnaitre_zone");
 
          pvalue->u.mission_pion_gen_reconnaitre_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ReconnaitreZone);
@@ -3596,7 +3546,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_plate_forme */
-      case 94:
+      case 92:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_plate_forme");
 
          pvalue->u.mission_pion_gen_creer_plate_forme = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_CreerPlateForme);
@@ -3611,7 +3561,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_piste */
-      case 95:
+      case 93:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_piste");
 
          pvalue->u.mission_pion_gen_creer_piste = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_CreerPiste);
@@ -3626,7 +3576,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_creer_aire_poser */
-      case 96:
+      case 94:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_creer_aire_poser");
 
          pvalue->u.mission_pion_gen_creer_aire_poser = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_CreerAirePoser);
@@ -3641,7 +3591,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_neutraliser_engins_explosifs */
-      case 97:
+      case 95:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_neutraliser_engins_explosifs");
 
          pvalue->u.mission_pion_gen_neutraliser_engins_explosifs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_NeutraliserEnginsExplosifs);
@@ -3656,7 +3606,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_activer_obstacle */
-      case 98:
+      case 96:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_activer_obstacle");
 
          pvalue->u.mission_pion_gen_activer_obstacle = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ActiverObstacle);
@@ -3671,7 +3621,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_ameliorer_mobilite */
-      case 99:
+      case 97:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_ameliorer_mobilite");
 
          pvalue->u.mission_pion_gen_ameliorer_mobilite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_AmeliorerMobilite);
@@ -3686,7 +3636,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_aire_logistique */
-      case 100:
+      case 98:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_aire_logistique");
 
          pvalue->u.mission_pion_gen_realiser_aire_logistique = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserAireLogistique);
@@ -3701,7 +3651,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_depolluer_zone */
-      case 101:
+      case 99:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_depolluer_zone");
 
          pvalue->u.mission_pion_gen_depolluer_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_DepolluerZone);
@@ -3716,7 +3666,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_amenager_terrain_poser */
-      case 102:
+      case 100:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_amenager_terrain_poser");
 
          pvalue->u.mission_pion_gen_amenager_terrain_poser = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser);
@@ -3731,7 +3681,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_plate_forme_deploiement */
-      case 103:
+      case 101:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_plate_forme_deploiement");
 
          pvalue->u.mission_pion_gen_realiser_plate_forme_deploiement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserPlateFormeDeploiement);
@@ -3746,7 +3696,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_reprendre_mission_construction */
-      case 104:
+      case 102:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_reprendre_mission_construction");
 
          pvalue->u.mission_pion_gen_reprendre_mission_construction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_ReprendreMissionConstruction);
@@ -3761,7 +3711,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_zone_poser_helicoptere */
-      case 105:
+      case 103:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_zone_poser_helicoptere");
 
          pvalue->u.mission_pion_gen_realiser_zone_poser_helicoptere = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserZonePoserHelicoptere);
@@ -3776,7 +3726,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_appuyer_debarquement_troupes_gu */
-      case 106:
+      case 104:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_appuyer_debarquement_troupes_gu");
 
          pvalue->u.mission_pion_gen_appuyer_debarquement_troupes_gu = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU);
@@ -3791,7 +3741,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_camp_prisonniers */
-      case 107:
+      case 105:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_camp_prisonniers");
 
          pvalue->u.mission_pion_gen_realiser_camp_prisonniers = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserCampPrisonniers);
@@ -3806,7 +3756,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_gen_realiser_camp_refugies */
-      case 108:
+      case 106:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_gen_realiser_camp_refugies");
 
          pvalue->u.mission_pion_gen_realiser_camp_refugies = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_GEN_RealiserCampRefugies);
@@ -3821,7 +3771,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_reconnaitre_axe */
-      case 109:
+      case 107:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_reconnaitre_axe");
 
          pvalue->u.mission_pion_inf_reconnaitre_axe = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_ReconnaitreAxe);
@@ -3836,7 +3786,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_couvrir */
-      case 110:
+      case 108:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_couvrir");
 
          pvalue->u.mission_pion_inf_couvrir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Couvrir);
@@ -3851,7 +3801,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_reduire */
-      case 111:
+      case 109:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_reduire");
 
          pvalue->u.mission_pion_inf_reduire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Reduire);
@@ -3866,7 +3816,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_appuyer */
-      case 112:
+      case 110:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_appuyer");
 
          pvalue->u.mission_pion_inf_appuyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Appuyer);
@@ -3881,7 +3831,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_fixer */
-      case 113:
+      case 111:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_fixer");
 
          pvalue->u.mission_pion_inf_fixer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Fixer);
@@ -3896,7 +3846,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_controler_secteur */
-      case 114:
+      case 112:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_controler_secteur");
 
          pvalue->u.mission_pion_inf_controler_secteur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_ControlerSecteur);
@@ -3911,7 +3861,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_surveiller_secteur */
-      case 115:
+      case 113:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_surveiller_secteur");
 
          pvalue->u.mission_pion_inf_surveiller_secteur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_SurveillerSecteur);
@@ -3926,7 +3876,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_barrer */
-      case 116:
+      case 114:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_barrer");
 
          pvalue->u.mission_pion_inf_barrer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Barrer);
@@ -3941,7 +3891,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_reconnaitre_point */
-      case 117:
+      case 115:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_reconnaitre_point");
 
          pvalue->u.mission_pion_inf_reconnaitre_point = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_ReconnaitrePoint);
@@ -3956,7 +3906,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_eclairer */
-      case 118:
+      case 116:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_eclairer");
 
          pvalue->u.mission_pion_inf_eclairer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Eclairer);
@@ -3971,7 +3921,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_interdire */
-      case 119:
+      case 117:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_interdire");
 
          pvalue->u.mission_pion_inf_interdire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Interdire);
@@ -3986,7 +3936,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_semparer */
-      case 120:
+      case 118:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_semparer");
 
          pvalue->u.mission_pion_inf_semparer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Semparer);
@@ -4001,7 +3951,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_prendre_preciser_contact */
-      case 121:
+      case 119:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_prendre_preciser_contact");
 
          pvalue->u.mission_pion_inf_prendre_preciser_contact = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_PrendrePreciserContact);
@@ -4016,7 +3966,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_defendre */
-      case 122:
+      case 120:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_defendre");
 
          pvalue->u.mission_pion_inf_defendre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Defendre);
@@ -4031,7 +3981,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_detruire_embuscade */
-      case 123:
+      case 121:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_detruire_embuscade");
 
          pvalue->u.mission_pion_inf_detruire_embuscade = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_DetruireEmbuscade);
@@ -4046,7 +3996,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_contre_attaquer */
-      case 124:
+      case 122:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_contre_attaquer");
 
          pvalue->u.mission_pion_inf_contre_attaquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_ContreAttaquer);
@@ -4061,7 +4011,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_freiner */
-      case 125:
+      case 123:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_freiner");
 
          pvalue->u.mission_pion_inf_freiner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Freiner);
@@ -4076,7 +4026,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_flanc_garder */
-      case 126:
+      case 124:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_flanc_garder");
 
          pvalue->u.mission_pion_inf_flanc_garder = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_FlancGarder);
@@ -4091,7 +4041,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_organiser_un_check_point */
-      case 127:
+      case 125:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_organiser_un_check_point");
 
          pvalue->u.mission_pion_inf_organiser_un_check_point = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_OrganiserUnCheckPoint);
@@ -4106,7 +4056,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_harceler */
-      case 128:
+      case 126:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_harceler");
 
          pvalue->u.mission_pion_inf_harceler = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Harceler);
@@ -4121,7 +4071,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_detruire_par_coup_de_main */
-      case 129:
+      case 127:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_detruire_par_coup_de_main");
 
          pvalue->u.mission_pion_inf_detruire_par_coup_de_main = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_DetruireParCoupDeMain);
@@ -4136,7 +4086,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_escorter_unite */
-      case 130:
+      case 128:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_escorter_unite");
 
          pvalue->u.mission_pion_inf_escorter_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_EscorterUnite);
@@ -4151,7 +4101,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_escorter_unites */
-      case 131:
+      case 129:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_escorter_unites");
 
          pvalue->u.mission_pion_inf_escorter_unites = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_EscorterUnites);
@@ -4166,7 +4116,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_renseigner_sur */
-      case 132:
+      case 130:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_renseigner_sur");
 
          pvalue->u.mission_pion_inf_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_RenseignerSur);
@@ -4181,7 +4131,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_soutenir */
-      case 133:
+      case 131:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_soutenir");
 
          pvalue->u.mission_pion_inf_soutenir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Soutenir);
@@ -4196,7 +4146,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_securiser */
-      case 134:
+      case 132:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_securiser");
 
          pvalue->u.mission_pion_inf_securiser = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Securiser);
@@ -4211,7 +4161,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_recueillir */
-      case 135:
+      case 133:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_recueillir");
 
          pvalue->u.mission_pion_inf_recueillir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_Recueillir);
@@ -4226,7 +4176,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_repondre_a_aggression */
-      case 136:
+      case 134:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_repondre_a_aggression");
 
          pvalue->u.mission_pion_inf_repondre_a_aggression = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_RepondreAAggression);
@@ -4241,7 +4191,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_inf_appuyer_sur_position */
-      case 137:
+      case 135:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_inf_appuyer_sur_position");
 
          pvalue->u.mission_pion_inf_appuyer_sur_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_INF_AppuyerSurPosition);
@@ -4256,7 +4206,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_se_deployer */
-      case 138:
+      case 136:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_se_deployer");
 
          pvalue->u.mission_pion_log_se_deployer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_SeDeployer);
@@ -4271,7 +4221,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_renforcer */
-      case 139:
+      case 137:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_renforcer");
 
          pvalue->u.mission_pion_log_renforcer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_Renforcer);
@@ -4286,7 +4236,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_preparer_bascule */
-      case 140:
+      case 138:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_preparer_bascule");
 
          pvalue->u.mission_pion_log_preparer_bascule = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_PreparerBascule);
@@ -4301,7 +4251,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_decontaminer_blesses */
-      case 141:
+      case 139:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_decontaminer_blesses");
 
          pvalue->u.mission_pion_log_decontaminer_blesses = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_DecontaminerBlesses);
@@ -4316,7 +4266,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_trier_et_traiter_blesses */
-      case 142:
+      case 140:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_trier_et_traiter_blesses");
 
          pvalue->u.mission_pion_log_trier_et_traiter_blesses = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses);
@@ -4331,7 +4281,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_trier_blesses */
-      case 143:
+      case 141:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_trier_blesses");
 
          pvalue->u.mission_pion_log_trier_blesses = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_TrierBlesses);
@@ -4346,7 +4296,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_traiter_blesses */
-      case 144:
+      case 142:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_traiter_blesses");
 
          pvalue->u.mission_pion_log_traiter_blesses = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_TraiterBlesses);
@@ -4361,7 +4311,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_prendre_en_compte_reactions_mentales */
-      case 145:
+      case 143:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_prendre_en_compte_reactions_mentales");
 
          pvalue->u.mission_pion_log_prendre_en_compte_reactions_mentales = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales);
@@ -4376,7 +4326,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_convoyer */
-      case 146:
+      case 144:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_convoyer");
 
          pvalue->u.mission_pion_log_convoyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_Convoyer);
@@ -4391,7 +4341,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reparer */
-      case 147:
+      case 145:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reparer");
 
          pvalue->u.mission_pion_log_reparer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_Reparer);
@@ -4406,7 +4356,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_appuyer_mouvement */
-      case 148:
+      case 146:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_appuyer_mouvement");
 
          pvalue->u.mission_pion_log_appuyer_mouvement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_AppuyerMouvement);
@@ -4421,7 +4371,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reconnaitre_itineraire */
-      case 149:
+      case 147:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reconnaitre_itineraire");
 
          pvalue->u.mission_pion_log_reconnaitre_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_ReconnaitreItineraire);
@@ -4436,7 +4386,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_transporter_unite */
-      case 150:
+      case 148:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_transporter_unite");
 
          pvalue->u.mission_pion_log_transporter_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_TransporterUnite);
@@ -4451,7 +4401,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reconnaitre_zone_contaminee */
-      case 151:
+      case 149:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reconnaitre_zone_contaminee");
 
          pvalue->u.mission_pion_log_reconnaitre_zone_contaminee = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_ReconnaitreZoneContaminee);
@@ -4466,7 +4416,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_appuyer_mouvement_dans_zone */
-      case 152:
+      case 150:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_appuyer_mouvement_dans_zone");
 
          pvalue->u.mission_pion_log_appuyer_mouvement_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_AppuyerMouvementDansZone);
@@ -4481,7 +4431,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_mettre_en_oeuvre_zone_stationnement */
-      case 153:
+      case 151:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_mettre_en_oeuvre_zone_stationnement");
 
          pvalue->u.mission_pion_log_mettre_en_oeuvre_zone_stationnement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement);
@@ -4496,7 +4446,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_appuyer_franchissement_sur_un_point */
-      case 154:
+      case 152:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_appuyer_franchissement_sur_un_point");
 
          pvalue->u.mission_pion_log_appuyer_franchissement_sur_un_point = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint);
@@ -4511,7 +4461,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_bloquer_zone */
-      case 155:
+      case 153:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_bloquer_zone");
 
          pvalue->u.mission_pion_log_bloquer_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_BloquerZone);
@@ -4526,7 +4476,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_reconnaitre_zone_de_deploiement */
-      case 156:
+      case 154:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_reconnaitre_zone_de_deploiement");
 
          pvalue->u.mission_pion_log_reconnaitre_zone_de_deploiement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement);
@@ -4541,7 +4491,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_armer_pia */
-      case 157:
+      case 155:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_armer_pia");
 
          pvalue->u.mission_pion_log_armer_pia = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_ArmerPIA);
@@ -4556,7 +4506,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_log_surveiller */
-      case 158:
+      case 156:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_log_surveiller");
 
          pvalue->u.mission_pion_log_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_LOG_Surveiller);
@@ -4571,7 +4521,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_heliporter */
-      case 159:
+      case 157:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_heliporter");
 
          pvalue->u.mission_pion_test_heliporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_Heliporter);
@@ -4586,7 +4536,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_move_to */
-      case 160:
+      case 158:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_move_to");
 
          pvalue->u.mission_pion_test_move_to = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_MoveTo);
@@ -4601,7 +4551,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_create_object */
-      case 161:
+      case 159:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_create_object");
 
          pvalue->u.mission_pion_test_create_object = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_CreateObject);
@@ -4616,7 +4566,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_destroy_object */
-      case 162:
+      case 160:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_destroy_object");
 
          pvalue->u.mission_pion_test_destroy_object = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_DestroyObject);
@@ -4631,7 +4581,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_create_bypass */
-      case 163:
+      case 161:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_create_bypass");
 
          pvalue->u.mission_pion_test_create_bypass = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_CreateBypass);
@@ -4646,7 +4596,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_fire */
-      case 164:
+      case 162:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_fire");
 
          pvalue->u.mission_pion_test_fire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_Fire);
@@ -4661,7 +4611,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_change_posture */
-      case 165:
+      case 163:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_change_posture");
 
          pvalue->u.mission_pion_test_change_posture = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_ChangePosture);
@@ -4676,7 +4626,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_path_find */
-      case 166:
+      case 164:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_path_find");
 
          pvalue->u.mission_pion_test_path_find = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_PathFind);
@@ -4691,7 +4641,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_find_position */
-      case 167:
+      case 165:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_find_position");
 
          pvalue->u.mission_pion_test_find_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_FindPosition);
@@ -4706,7 +4656,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_test_reinforce */
-      case 168:
+      case 166:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_test_reinforce");
 
          pvalue->u.mission_pion_test_reinforce = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Test_Reinforce);
@@ -4721,7 +4671,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_plastron_ennemi */
-      case 169:
+      case 167:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_plastron_ennemi");
 
          pvalue->u.mission_pion_plastron_ennemi = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_PlastronEnnemi);
@@ -4736,7 +4686,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_faire_mouvement */
-      case 170:
+      case 168:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_faire_mouvement");
 
          pvalue->u.mission_pion_faire_mouvement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_FaireMouvement);
@@ -4751,7 +4701,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_suivre */
-      case 171:
+      case 169:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_suivre");
 
          pvalue->u.mission_pion_suivre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Suivre);
@@ -4766,7 +4716,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_se_faire_decontaminer */
-      case 172:
+      case 170:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_se_faire_decontaminer");
 
          pvalue->u.mission_pion_se_faire_decontaminer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_SeFaireDecontaminer);
@@ -4781,7 +4731,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_franchir */
-      case 173:
+      case 171:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_franchir");
 
          pvalue->u.mission_pion_franchir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Franchir);
@@ -4796,7 +4746,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_decrocher */
-      case 174:
+      case 172:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_decrocher");
 
          pvalue->u.mission_pion_decrocher = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Decrocher);
@@ -4811,7 +4761,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_stationner */
-      case 175:
+      case 173:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_stationner");
 
          pvalue->u.mission_pion_stationner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Stationner);
@@ -4826,7 +4776,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_se_faire_transporter */
-      case 176:
+      case 174:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_se_faire_transporter");
 
          pvalue->u.mission_pion_se_faire_transporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_SeFaireTransporter);
@@ -4841,7 +4791,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_interdire_franchissement_populations */
-      case 177:
+      case 175:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_interdire_franchissement_populations");
 
          pvalue->u.mission_pion_interdire_franchissement_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_InterdireFranchissementPopulations);
@@ -4856,7 +4806,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_filtrer_populations */
-      case 178:
+      case 176:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_filtrer_populations");
 
          pvalue->u.mission_pion_filtrer_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_FiltrerPopulations);
@@ -4871,7 +4821,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_renseigner_sur_populations */
-      case 179:
+      case 177:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_renseigner_sur_populations");
 
          pvalue->u.mission_pion_renseigner_sur_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RenseignerSurPopulations);
@@ -4886,7 +4836,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_canaliser_populations */
-      case 180:
+      case 178:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_canaliser_populations");
 
          pvalue->u.mission_pion_canaliser_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_CanaliserPopulations);
@@ -4901,7 +4851,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_controler_populations_dans_zone */
-      case 181:
+      case 179:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_controler_populations_dans_zone");
 
          pvalue->u.mission_pion_controler_populations_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ControlerPopulationsDansZone);
@@ -4916,7 +4866,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_securiser_zone_contre_populations */
-      case 182:
+      case 180:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_securiser_zone_contre_populations");
 
          pvalue->u.mission_pion_securiser_zone_contre_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_SecuriserZoneContrePopulations);
@@ -4931,7 +4881,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_generique */
-      case 183:
+      case 181:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_generique");
 
          pvalue->u.mission_pion_generique = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_Generique);
@@ -4946,7 +4896,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_milice_provoquer */
-      case 184:
+      case 182:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_milice_provoquer");
 
          pvalue->u.mission_pion_milice_provoquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_MILICE_Provoquer);
@@ -4961,7 +4911,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_milice_prendre_et_tenir */
-      case 185:
+      case 183:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_milice_prendre_et_tenir");
 
          pvalue->u.mission_pion_milice_prendre_et_tenir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_MILICE_PrendreEtTenir);
@@ -4976,7 +4926,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_milice_detruire_embuscade */
-      case 186:
+      case 184:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_milice_detruire_embuscade");
 
          pvalue->u.mission_pion_milice_detruire_embuscade = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_MILICE_DetruireEmbuscade);
@@ -4991,7 +4941,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_joint_marine_transporter */
-      case 187:
+      case 185:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_joint_marine_transporter");
 
          pvalue->u.mission_pion_joint_marine_transporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_JOINT_MARINE_Transporter);
@@ -5006,7 +4956,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_joint_air_effectuer_raid */
-      case 188:
+      case 186:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_joint_air_effectuer_raid");
 
          pvalue->u.mission_pion_joint_air_effectuer_raid = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_JOINT_AIR_EffectuerRaid);
@@ -5021,7 +4971,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_animer_un_plot_de_decontamination */
-      case 189:
+      case 187:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_animer_un_plot_de_decontamination");
 
          pvalue->u.mission_pion_nbc_animer_un_plot_de_decontamination = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination);
@@ -5036,7 +4986,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_reconnaitre_itineraire */
-      case 190:
+      case 188:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_reconnaitre_itineraire");
 
          pvalue->u.mission_pion_nbc_reconnaitre_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_NBC_ReconnaitreItineraire);
@@ -5051,7 +5001,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_reconnaitre_zone */
-      case 191:
+      case 189:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_reconnaitre_zone");
 
          pvalue->u.mission_pion_nbc_reconnaitre_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_NBC_ReconnaitreZone);
@@ -5066,7 +5016,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_decontaminer_zone */
-      case 192:
+      case 190:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_decontaminer_zone");
 
          pvalue->u.mission_pion_nbc_decontaminer_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_NBC_DecontaminerZone);
@@ -5081,7 +5031,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_nbc_reconnaitre_un_site_rota */
-      case 193:
+      case 191:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_nbc_reconnaitre_un_site_rota");
 
          pvalue->u.mission_pion_nbc_reconnaitre_un_site_rota = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_NBC_ReconnaitreUnSiteROTA);
@@ -5096,7 +5046,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_rohum_renseigner_sur */
-      case 194:
+      case 192:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_rohum_renseigner_sur");
 
          pvalue->u.mission_pion_rens_rohum_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROHUM_RenseignerSur);
@@ -5111,7 +5061,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_rohum_sexfiltrer */
-      case 195:
+      case 193:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_rohum_sexfiltrer");
 
          pvalue->u.mission_pion_rens_rohum_sexfiltrer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROHUM_SExfiltrer);
@@ -5126,7 +5076,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_rohum_orienter_guider */
-      case 196:
+      case 194:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_rohum_orienter_guider");
 
          pvalue->u.mission_pion_rens_rohum_orienter_guider = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROHUM_OrienterGuider);
@@ -5141,7 +5091,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roem_appuyer */
-      case 197:
+      case 195:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roem_appuyer");
 
          pvalue->u.mission_pion_rens_roem_appuyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROEM_Appuyer);
@@ -5156,7 +5106,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roem_renseigner_sur */
-      case 198:
+      case 196:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roem_renseigner_sur");
 
          pvalue->u.mission_pion_rens_roem_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROEM_RenseignerSur);
@@ -5171,7 +5121,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roem_mettre_en_oeuvre */
-      case 199:
+      case 197:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roem_mettre_en_oeuvre");
 
          pvalue->u.mission_pion_rens_roem_mettre_en_oeuvre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROEM_MettreEnOeuvre);
@@ -5186,7 +5136,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_radint_renseigner_sur */
-      case 200:
+      case 198:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_radint_renseigner_sur");
 
          pvalue->u.mission_pion_rens_radint_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_RADINT_RenseignerSur);
@@ -5201,7 +5151,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_radint_mettre_en_oeuvre */
-      case 201:
+      case 199:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_radint_mettre_en_oeuvre");
 
          pvalue->u.mission_pion_rens_radint_mettre_en_oeuvre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_RADINT_MettreEnOeuvre);
@@ -5216,7 +5166,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roim_mettre_en_oeuvre */
-      case 202:
+      case 200:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roim_mettre_en_oeuvre");
 
          pvalue->u.mission_pion_rens_roim_mettre_en_oeuvre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROIM_MettreEnOeuvre);
@@ -5231,7 +5181,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roim_sdti_renseigner_sur */
-      case 203:
+      case 201:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roim_sdti_renseigner_sur");
 
          pvalue->u.mission_pion_rens_roim_sdti_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur);
@@ -5246,7 +5196,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_rens_roim_cl289_renseigner_sur */
-      case 204:
+      case 202:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_rens_roim_cl289_renseigner_sur");
 
          pvalue->u.mission_pion_rens_roim_cl289_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur);
@@ -5261,7 +5211,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_trans_etablir_gerer_liaison */
-      case 205:
+      case 203:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_trans_etablir_gerer_liaison");
 
          pvalue->u.mission_pion_trans_etablir_gerer_liaison = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_TRANS_EtablirGererLiaison);
@@ -5276,7 +5226,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_sinfiltrer */
-      case 206:
+      case 204:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_sinfiltrer");
 
          pvalue->u.mission_pion_asy_sinfiltrer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASY_SInfiltrer);
@@ -5291,7 +5241,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_attentatContrePopulation */
-      case 207:
+      case 205:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_attentatContrePopulation");
 
          pvalue->u.mission_pion_asy_commettre_attentatContrePopulation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation);
@@ -5306,7 +5256,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_attentatContreForcesArmees */
-      case 208:
+      case 206:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_attentatContreForcesArmees");
 
          pvalue->u.mission_pion_asy_commettre_attentatContreForcesArmees = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees);
@@ -5321,7 +5271,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_attentatContreInstallation */
-      case 209:
+      case 207:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_attentatContreInstallation");
 
          pvalue->u.mission_pion_asy_commettre_attentatContreInstallation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation);
@@ -5336,7 +5286,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_commettre_exactions_sur_population_dans_zone */
-      case 210:
+      case 208:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_commettre_exactions_sur_population_dans_zone");
 
          pvalue->u.mission_pion_asy_commettre_exactions_sur_population_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone);
@@ -5351,7 +5301,7 @@ EXTERN int asn1PD_Mission_Pion (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion* pvalue)
          break;
 
       /* mission_pion_asy_renseigner */
-      case 211:
+      case 209:
          PU_PUSHNAME (ctxt_p, "u.mission_pion_asy_renseigner");
 
          pvalue->u.mission_pion_asy_renseigner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Pion_ASY_Renseigner);

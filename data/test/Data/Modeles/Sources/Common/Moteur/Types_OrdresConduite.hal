@@ -53,6 +53,12 @@ typedef struct Rep_OrderConduite_ChangerReglesEngagement : Rep_OrdreConduite
 id orderConduiteChangerReglesEngagement_;
 };
 
+typedef struct Rep_OrderConduite_ChangerParametresRecompletementALAT : Rep_OrdreConduite
+{
+id porteeAction_;
+id ambianceMission_;
+};
+
 typedef struct Rep_OrderConduite_ChangerReglesEngagementPopulation : Rep_OrdreConduite
 {
 id orderConduiteChangerReglesEngagementPopulation_;
@@ -188,12 +194,6 @@ T_ConnaissanceObjet siteFranchissementVariante_;
 typedef struct Rep_OrderConduite_Automate_DesequiperSiteFranchissement : Rep_OrdreConduite
 {
 T_ConnaissanceObjet siteFranchissement_;
-};
-
-typedef struct Rep_OrderConduite_Automate_ReagirFaceAEni : Rep_OrdreConduite
-{
-T_ConnaissanceObjet siteFranchissement_;
-id action_;
 };
 
 typedef struct Rep_OrderConduite_Automate_AffecterPionAObstacle : Rep_OrdreConduite

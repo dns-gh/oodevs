@@ -10,15 +10,6 @@ id porteeAction_;
 id ambianceMission_;
 };
 
-typedef struct T_Mission_Pion_ALAT_EvacuationSanitaire : T_Mission_Pion
-{
-T_Point pointDebarquement_;
-T_Localisation zoneExtraction_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-};
-
 typedef struct T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur : T_Mission_Pion
 {
 T_Point pointRegroupement_;
@@ -114,14 +105,6 @@ T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
 id porteeAction_;
 bool avecMateriel_;
-};
-
-typedef struct T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage : T_Mission_Pion
-{
-T_ListePions unitesASecourir_;
-T_Point pointRegroupement_;
-T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
 };
 
 typedef struct T_Mission_Pion_ALAT_IMEX : T_Mission_Pion

@@ -72,7 +72,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -80,7 +80,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -177,7 +177,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -186,7 +186,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -265,7 +265,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -273,7 +273,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -326,7 +326,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -335,7 +335,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -419,7 +419,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -427,7 +427,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -524,7 +524,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -533,7 +533,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -565,222 +565,6 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T
 int ASN1C_Mission_Automate_ALAT_Helitransporter::Decode ()
 {
    return asn1PD_Mission_Automate_ALAT_Helitransporter (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Automate_ALAT_ExtrairePersonnel                   */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Automate_ALAT_ExtrairePersonnel::ASN1C_Mission_Automate_ALAT_ExtrairePersonnel (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Automate_ALAT_ExtrairePersonnel& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Automate_ALAT_ExtrairePersonnel (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate_ALAT_ExtrairePersonnel* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Automate_ALAT_ExtrairePersonnel: start\n");
-
-   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
-
-   stat = pe_bit (ctxt_p, (ASN1BOOL)(pvalue->avec_materiel != FALSE));
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* encode unites_a_helitransporter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_helitransporter");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_helitransporter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_embarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_embarquement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_embarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode avec_materiel */
-
-   if (pvalue->avec_materiel != FALSE) {
-      PU_PUSHNAME (ctxt_p, "avec_materiel");
-
-      PU_NEWFIELD (ctxt_p, "boolean");
-
-      stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->avec_materiel);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_SETBITCOUNT (ctxt_p);
-      PU_POPNAME (ctxt_p);
-   }
-
-
-   rtdiag ("asn1PE_Mission_Automate_ALAT_ExtrairePersonnel: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Automate_ALAT_ExtrairePersonnel::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Automate_ALAT_ExtrairePersonnel (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Automate_ALAT_ExtrairePersonnel (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate_ALAT_ExtrairePersonnel* pvalue)
-{
-   int stat = ASN_OK;
-   ASN1BOOL optbit;
-   ASN1BOOL avec_materielPresent;
-
-   rtdiag ("asn1PD_Mission_Automate_ALAT_ExtrairePersonnel: start\n");
-
-   /* optional bits */
-
-   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
-
-   stat = pd_bit (ctxt_p, &optbit);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else avec_materielPresent = optbit;
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* decode unites_a_helitransporter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_helitransporter");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_helitransporter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_embarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_embarquement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_embarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode avec_materiel */
-
-   if (avec_materielPresent) {
-      PU_PUSHNAME (ctxt_p, "avec_materiel");
-
-      PU_NEWFIELD (ctxt_p, "boolean");
-
-      stat = pd_bit (ctxt_p, &pvalue->avec_materiel);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_SETBITCOUNT (ctxt_p);
-
-      PU_POPNAME (ctxt_p);
-   }
-   else {
-      pvalue->avec_materiel = FALSE;
-   }
-
-
-   rtdiag ("asn1PD_Mission_Automate_ALAT_ExtrairePersonnel: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Automate_ALAT_ExtrairePersonnel::Decode ()
-{
-   return asn1PD_Mission_Automate_ALAT_ExtrairePersonnel (mpContext->GetPtr(), &msgData);
 }
 
 /**************************************************************/
@@ -852,7 +636,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Appuyer (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -860,7 +644,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Appuyer (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -940,7 +724,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Appuyer (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -949,7 +733,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Appuyer (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1018,7 +802,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1026,7 +810,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1088,7 +872,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1097,7 +881,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1158,7 +942,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1166,7 +950,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1227,7 +1011,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1236,7 +1020,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Miss
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1298,7 +1082,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Reconnaitre (ASN1CTXT* ctxt_p, ASN1T_Mis
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1306,7 +1090,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Reconnaitre (ASN1CTXT* ctxt_p, ASN1T_Mis
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1350,7 +1134,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Reconnaitre (ASN1CTXT* ctxt_p, ASN1T_Mis
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1359,7 +1143,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Reconnaitre (ASN1CTXT* ctxt_p, ASN1T_Mis
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1420,7 +1204,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1428,7 +1212,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1481,7 +1265,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1490,7 +1274,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1559,7 +1343,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1567,7 +1351,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1629,7 +1413,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1638,7 +1422,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1699,7 +1483,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1707,7 +1491,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1760,7 +1544,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1769,7 +1553,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Missio
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1838,7 +1622,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_RecueillirFormationAeromobile (ASN1CTXT*
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1846,7 +1630,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_RecueillirFormationAeromobile (ASN1CTXT*
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1908,7 +1692,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_RecueillirFormationAeromobile (ASN1CTXT*
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1917,7 +1701,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_RecueillirFormationAeromobile (ASN1CTXT*
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -1978,7 +1762,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_AttaquerFormationAeromobile (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -1986,7 +1770,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_AttaquerFormationAeromobile (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2039,7 +1823,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_AttaquerFormationAeromobile (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2048,7 +1832,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_AttaquerFormationAeromobile (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2117,7 +1901,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_DonnerCoupArret (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2125,7 +1909,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_DonnerCoupArret (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2187,7 +1971,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_DonnerCoupArret (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2196,7 +1980,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_DonnerCoupArret (ASN1CTXT* ctxt_p, ASN1T
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2273,7 +2057,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur (ASN1C
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2281,7 +2065,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur (ASN1C
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2364,7 +2148,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur (ASN1C
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2373,7 +2157,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur (ASN1C
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2463,7 +2247,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2471,7 +2255,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2554,7 +2338,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2563,7 +2347,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* c
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2590,120 +2374,6 @@ EXTERN int asn1PD_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* c
 int ASN1C_Mission_Automate_ALAT_DetruireNeutraliserDansZone::Decode ()
 {
    return asn1PD_Mission_Automate_ALAT_DetruireNeutraliserDansZone (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Automate_ALAT_EffectuerRechercheEtSauvetage       */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage::ASN1C_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage: start\n");
-
-   /* encode unites_a_secourir */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_secourir");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_secourir);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage: start\n");
-
-   /* decode unites_a_secourir */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_secourir");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_secourir);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage::Decode ()
-{
-   return asn1PD_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage (mpContext->GetPtr(), &msgData);
 }
 
 /**************************************************************/
@@ -2735,7 +2405,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, AS
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PE_EnumMissionALAT_PorteeAction (ctxt_p, pvalue->portee_action);
+   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2743,7 +2413,7 @@ EXTERN int asn1PE_Mission_Automate_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, AS
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PE_EnumMissionALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
+   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
@@ -2778,7 +2448,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, AS
 
    PU_PUSHNAME (ctxt_p, "portee_action");
 
-   stat = asn1PD_EnumMissionALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
+   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -2787,7 +2457,7 @@ EXTERN int asn1PD_Mission_Automate_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, AS
 
    PU_PUSHNAME (ctxt_p, "ambiance_mission");
 
-   stat = asn1PD_EnumMissionALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
+   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);

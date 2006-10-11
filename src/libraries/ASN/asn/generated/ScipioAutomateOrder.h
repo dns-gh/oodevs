@@ -33,158 +33,156 @@
 /* Choice tag constants */
 
 #define T_Mission_Automate_mission_automate_alat_aller_se_recompleter 1
-#define T_Mission_Automate_mission_automate_alat_effectuer_recherche_et_sauvetage 2
-#define T_Mission_Automate_mission_automate_alat_extraire_personnel 3
-#define T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur 4
-#define T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone 5
-#define T_Mission_Automate_mission_automate_alat_donner_coup_arret 6
-#define T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile 7
-#define T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile 8
-#define T_Mission_Automate_mission_automate_alat_heliporter 9
-#define T_Mission_Automate_mission_automate_alat_jalonner 10
-#define T_Mission_Automate_mission_automate_alat_helitransporter 11
-#define T_Mission_Automate_mission_automate_alat_appuyer 12
-#define T_Mission_Automate_mission_automate_alat_couvrir 13
-#define T_Mission_Automate_mission_automate_alat_surveiller 14
-#define T_Mission_Automate_mission_automate_alat_reconnaitre 15
-#define T_Mission_Automate_mission_automate_alat_freiner 16
-#define T_Mission_Automate_mission_automate_alat_escorter 17
-#define T_Mission_Automate_mission_automate_alat_attaquer 18
-#define T_Mission_Automate_mission_automate_asa_defendre_site 19
-#define T_Mission_Automate_mission_automate_asa_defendre_zone 20
-#define T_Mission_Automate_mission_automate_asa_defendre_unites 21
-#define T_Mission_Automate_mission_automate_asa_surveiller 22
-#define T_Mission_Automate_mission_automate_asa_defendre_itineraire 23
-#define T_Mission_Automate_mission_automate_asa_mistral_defendre_zone 24
-#define T_Mission_Automate_mission_automate_asa_mistral_defendre_site 25
-#define T_Mission_Automate_mission_automate_asa_mistral_surveiller 26
-#define T_Mission_Automate_mission_automate_asa_hawk_defendre_zone 27
-#define T_Mission_Automate_mission_automate_asa_hawk_defendre_site 28
-#define T_Mission_Automate_mission_automate_asa_hawk_surveiller 29
-#define T_Mission_Automate_mission_automate_ass_se_deployer 30
-#define T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement 31
-#define T_Mission_Automate_mission_automate_ass_acquerir_objectifs 32
-#define T_Mission_Automate_mission_automate_abc_appuyer 33
-#define T_Mission_Automate_mission_automate_abc_attaquer 34
-#define T_Mission_Automate_mission_automate_abc_contre_attaquer 35
-#define T_Mission_Automate_mission_automate_abc_controler 36
-#define T_Mission_Automate_mission_automate_abc_couvrir 37
-#define T_Mission_Automate_mission_automate_abc_donner_coup_arret 38
-#define T_Mission_Automate_mission_automate_abc_eclairer 39
-#define T_Mission_Automate_mission_automate_abc_effectuer_raid 40
-#define T_Mission_Automate_mission_automate_abc_interdire 41
-#define T_Mission_Automate_mission_automate_abc_jalonner 42
-#define T_Mission_Automate_mission_automate_abc_prendre_preciser_contact 43
-#define T_Mission_Automate_mission_automate_abc_reconnaitre 44
-#define T_Mission_Automate_mission_automate_abc_reconnaitre_point 45
-#define T_Mission_Automate_mission_automate_abc_reduire 46
-#define T_Mission_Automate_mission_automate_abc_relever_en_depassant 47
-#define T_Mission_Automate_mission_automate_abc_semparer 48
-#define T_Mission_Automate_mission_automate_abc_tenir 49
-#define T_Mission_Automate_mission_automate_abc_soutenir 50
-#define T_Mission_Automate_mission_automate_abc_surveiller 51
-#define T_Mission_Automate_mission_automate_abc_flanc_garder 52
-#define T_Mission_Automate_mission_automate_abc_renseigner_sur 53
-#define T_Mission_Automate_mission_automate_abc_fixer 54
-#define T_Mission_Automate_mission_automate_abc_freiner 55
-#define T_Mission_Automate_mission_automate_abc_surveiller_itineraire 56
-#define T_Mission_Automate_mission_automate_abc_renseigner_sur_un_axe 57
-#define T_Mission_Automate_mission_automate_abc_recueillir_unite 58
-#define T_Mission_Automate_mission_automate_abc_escorter_unite 59
-#define T_Mission_Automate_mission_automate_abc_escorter_unites 60
-#define T_Mission_Automate_mission_automate_abc_armer_point_de_controle 61
-#define T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies 62
-#define T_Mission_Automate_mission_automate_abc_proteger_pc 63
-#define T_Mission_Automate_mission_automate_abc_appuyer_sur_position 64
-#define T_Mission_Automate_mission_automate_gen_se_deployer 65
-#define T_Mission_Automate_mission_automate_gen_faire_franchir 66
-#define T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles 67
-#define T_Mission_Automate_mission_automate_gen_franchir_de_vive_force 68
-#define T_Mission_Automate_mission_automate_gen_retablir_itineraires 69
-#define T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement 70
-#define T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire 71
-#define T_Mission_Automate_mission_automate_gen_realiser_zone_poser 72
-#define T_Mission_Automate_mission_automate_gen_reconnaitre_zone_deploiement 73
-#define T_Mission_Automate_mission_automate_gen_realiser_camp_prisonniers 74
-#define T_Mission_Automate_mission_automate_gen_realiser_camp_refugies 75
-#define T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial 76
-#define T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population 77
-#define T_Mission_Automate_mission_automate_gen_appuyer_debarquement_troupes 78
-#define T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression 79
-#define T_Mission_Automate_mission_automate_inf_attaquer_souplesse 80
-#define T_Mission_Automate_mission_automate_inf_appuyer 81
-#define T_Mission_Automate_mission_automate_inf_controler 82
-#define T_Mission_Automate_mission_automate_inf_couvrir 83
-#define T_Mission_Automate_mission_automate_inf_donner_coup_arret 84
-#define T_Mission_Automate_mission_automate_inf_eclairer 85
-#define T_Mission_Automate_mission_automate_inf_flanc_garder 86
-#define T_Mission_Automate_mission_automate_inf_freiner 87
-#define T_Mission_Automate_mission_automate_inf_harceler 88
-#define T_Mission_Automate_mission_automate_inf_interdire 89
-#define T_Mission_Automate_mission_automate_inf_mener_defense_usure 90
-#define T_Mission_Automate_mission_automate_inf_prendre_preciser_maintenir_contact 91
-#define T_Mission_Automate_mission_automate_inf_reconnaissance_offensive 92
-#define T_Mission_Automate_mission_automate_inf_recueillir_unite 93
-#define T_Mission_Automate_mission_automate_inf_reduire 94
-#define T_Mission_Automate_mission_automate_inf_relever 95
-#define T_Mission_Automate_mission_automate_inf_rompre_contact 96
-#define T_Mission_Automate_mission_automate_inf_surveiller 97
-#define T_Mission_Automate_mission_automate_inf_semparer 98
-#define T_Mission_Automate_mission_automate_inf_fixer 99
-#define T_Mission_Automate_mission_automate_inf_attaquer_en_terrain_difficile 100
-#define T_Mission_Automate_mission_automate_inf_barrer_direction 101
-#define T_Mission_Automate_mission_automate_inf_defendre_ferme 102
-#define T_Mission_Automate_mission_automate_inf_tenir 103
-#define T_Mission_Automate_mission_automate_inf_appuyer_un_freinage 104
-#define T_Mission_Automate_mission_automate_inf_appuyer_une_attaque 105
-#define T_Mission_Automate_mission_automate_inf_soutenir 106
-#define T_Mission_Automate_mission_automate_inf_escorter_unite 107
-#define T_Mission_Automate_mission_automate_inf_escorter_unites 108
-#define T_Mission_Automate_mission_automate_inf_appuyer_sur_position 109
-#define T_Mission_Automate_mission_automate_log_se_deployer 110
-#define T_Mission_Automate_mission_automate_log_appuyer_mouvement 111
-#define T_Mission_Automate_mission_automate_log_reconnaitre_itineraire 112
-#define T_Mission_Automate_mission_automate_log_transporter_unites 113
-#define T_Mission_Automate_mission_automate_log_appuyer_mouvement_dans_zone 114
-#define T_Mission_Automate_mission_automate_log_mettre_en_oeuvre_zone_stationnement 115
-#define T_Mission_Automate_mission_automate_log_appuyer_franchissement_dans_zone 116
-#define T_Mission_Automate_mission_automate_log_bloquer_zone 117
-#define T_Mission_Automate_mission_automate_log_reconnaitre_zone_contaminee 118
-#define T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement 119
-#define T_Mission_Automate_mission_automate_log_surveiller 120
-#define T_Mission_Automate_mission_automate_log_armer_pias 121
-#define T_Mission_Automate_mission_automate_test_move_to 122
-#define T_Mission_Automate_mission_automate_decrocher 123
-#define T_Mission_Automate_mission_automate_relever_sur_place 124
-#define T_Mission_Automate_mission_automate_faire_mouvement 125
-#define T_Mission_Automate_mission_automate_se_faire_decontaminer 126
-#define T_Mission_Automate_mission_automate_franchir 127
-#define T_Mission_Automate_mission_automate_stationner 128
-#define T_Mission_Automate_mission_automate_se_faire_transporter 129
-#define T_Mission_Automate_mission_automate_se_recompleter 130
-#define T_Mission_Automate_mission_automate_se_rendre 131
-#define T_Mission_Automate_mission_automate_faire_mouvement_vers_camp_refugies 132
-#define T_Mission_Automate_mission_automate_interdire_franchissement_populations 133
-#define T_Mission_Automate_mission_automate_filtrer_populations 134
-#define T_Mission_Automate_mission_automate_canaliser_populations 135
-#define T_Mission_Automate_mission_automate_controler_populations_dans_zone 136
-#define T_Mission_Automate_mission_automate_securiser_zone_contre_populations 137
-#define T_Mission_Automate_mission_automate_asy_commettre_exactions_sur_population_dans_zone 138
-#define T_Mission_Automate_mission_automate_generique 139
-#define T_Mission_Automate_mission_automate_nbc_reconnaitre_un_axe 140
-#define T_Mission_Automate_mission_automate_nbc_reconnaitre_une_zone 141
-#define T_Mission_Automate_mission_automate_nbc_armer_un_site_de_decontamination 142
-#define T_Mission_Automate_mission_automate_nbc_decontaminer_une_zone 143
-#define T_Mission_Automate_mission_automate_nbc_reconnaitre_des_sites_rota 144
-#define T_Mission_Automate_mission_automate_rens_rohum_renseigner_sur 145
-#define T_Mission_Automate_mission_automate_rens_rohum_orienter_guider 146
-#define T_Mission_Automate_mission_automate_rens_rohum_sexfiltrer 147
-#define T_Mission_Automate_mission_automate_rens_roim_cl289_renseigner_sur 148
-#define T_Mission_Automate_mission_automate_rens_roim_sdti_renseigner_sur 149
-#define T_Mission_Automate_mission_automate_rens_roem_appuyer 150
-#define T_Mission_Automate_mission_automate_rens_roem_renseignersur 151
-#define T_Mission_Automate_mission_automate_rens_radint_renseignersur 152
-#define T_Mission_Automate_mission_automate_trans_commander 153
+#define T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_profondeur 2
+#define T_Mission_Automate_mission_automate_alat_detruire_neutraliser_dans_zone 3
+#define T_Mission_Automate_mission_automate_alat_donner_coup_arret 4
+#define T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile 5
+#define T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile 6
+#define T_Mission_Automate_mission_automate_alat_heliporter 7
+#define T_Mission_Automate_mission_automate_alat_jalonner 8
+#define T_Mission_Automate_mission_automate_alat_helitransporter 9
+#define T_Mission_Automate_mission_automate_alat_appuyer 10
+#define T_Mission_Automate_mission_automate_alat_couvrir 11
+#define T_Mission_Automate_mission_automate_alat_surveiller 12
+#define T_Mission_Automate_mission_automate_alat_reconnaitre 13
+#define T_Mission_Automate_mission_automate_alat_freiner 14
+#define T_Mission_Automate_mission_automate_alat_escorter 15
+#define T_Mission_Automate_mission_automate_alat_attaquer 16
+#define T_Mission_Automate_mission_automate_asa_defendre_site 17
+#define T_Mission_Automate_mission_automate_asa_defendre_zone 18
+#define T_Mission_Automate_mission_automate_asa_defendre_unites 19
+#define T_Mission_Automate_mission_automate_asa_surveiller 20
+#define T_Mission_Automate_mission_automate_asa_defendre_itineraire 21
+#define T_Mission_Automate_mission_automate_asa_mistral_defendre_zone 22
+#define T_Mission_Automate_mission_automate_asa_mistral_defendre_site 23
+#define T_Mission_Automate_mission_automate_asa_mistral_surveiller 24
+#define T_Mission_Automate_mission_automate_asa_hawk_defendre_zone 25
+#define T_Mission_Automate_mission_automate_asa_hawk_defendre_site 26
+#define T_Mission_Automate_mission_automate_asa_hawk_surveiller 27
+#define T_Mission_Automate_mission_automate_ass_se_deployer 28
+#define T_Mission_Automate_mission_automate_ass_reconnaitre_zones_deploiement 29
+#define T_Mission_Automate_mission_automate_ass_acquerir_objectifs 30
+#define T_Mission_Automate_mission_automate_abc_appuyer 31
+#define T_Mission_Automate_mission_automate_abc_attaquer 32
+#define T_Mission_Automate_mission_automate_abc_contre_attaquer 33
+#define T_Mission_Automate_mission_automate_abc_controler 34
+#define T_Mission_Automate_mission_automate_abc_couvrir 35
+#define T_Mission_Automate_mission_automate_abc_donner_coup_arret 36
+#define T_Mission_Automate_mission_automate_abc_eclairer 37
+#define T_Mission_Automate_mission_automate_abc_effectuer_raid 38
+#define T_Mission_Automate_mission_automate_abc_interdire 39
+#define T_Mission_Automate_mission_automate_abc_jalonner 40
+#define T_Mission_Automate_mission_automate_abc_prendre_preciser_contact 41
+#define T_Mission_Automate_mission_automate_abc_reconnaitre 42
+#define T_Mission_Automate_mission_automate_abc_reconnaitre_point 43
+#define T_Mission_Automate_mission_automate_abc_reduire 44
+#define T_Mission_Automate_mission_automate_abc_relever_en_depassant 45
+#define T_Mission_Automate_mission_automate_abc_semparer 46
+#define T_Mission_Automate_mission_automate_abc_tenir 47
+#define T_Mission_Automate_mission_automate_abc_soutenir 48
+#define T_Mission_Automate_mission_automate_abc_surveiller 49
+#define T_Mission_Automate_mission_automate_abc_flanc_garder 50
+#define T_Mission_Automate_mission_automate_abc_renseigner_sur 51
+#define T_Mission_Automate_mission_automate_abc_fixer 52
+#define T_Mission_Automate_mission_automate_abc_freiner 53
+#define T_Mission_Automate_mission_automate_abc_surveiller_itineraire 54
+#define T_Mission_Automate_mission_automate_abc_renseigner_sur_un_axe 55
+#define T_Mission_Automate_mission_automate_abc_recueillir_unite 56
+#define T_Mission_Automate_mission_automate_abc_escorter_unite 57
+#define T_Mission_Automate_mission_automate_abc_escorter_unites 58
+#define T_Mission_Automate_mission_automate_abc_armer_point_de_controle 59
+#define T_Mission_Automate_mission_automate_abc_organiser_accueil_colonne_refugies 60
+#define T_Mission_Automate_mission_automate_abc_proteger_pc 61
+#define T_Mission_Automate_mission_automate_abc_appuyer_sur_position 62
+#define T_Mission_Automate_mission_automate_gen_se_deployer 63
+#define T_Mission_Automate_mission_automate_gen_faire_franchir 64
+#define T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles 65
+#define T_Mission_Automate_mission_automate_gen_franchir_de_vive_force 66
+#define T_Mission_Automate_mission_automate_gen_retablir_itineraires 67
+#define T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement 68
+#define T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire 69
+#define T_Mission_Automate_mission_automate_gen_realiser_zone_poser 70
+#define T_Mission_Automate_mission_automate_gen_reconnaitre_zone_deploiement 71
+#define T_Mission_Automate_mission_automate_gen_realiser_camp_prisonniers 72
+#define T_Mission_Automate_mission_automate_gen_realiser_camp_refugies 73
+#define T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial 74
+#define T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population 75
+#define T_Mission_Automate_mission_automate_gen_appuyer_debarquement_troupes 76
+#define T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression 77
+#define T_Mission_Automate_mission_automate_inf_attaquer_souplesse 78
+#define T_Mission_Automate_mission_automate_inf_appuyer 79
+#define T_Mission_Automate_mission_automate_inf_controler 80
+#define T_Mission_Automate_mission_automate_inf_couvrir 81
+#define T_Mission_Automate_mission_automate_inf_donner_coup_arret 82
+#define T_Mission_Automate_mission_automate_inf_eclairer 83
+#define T_Mission_Automate_mission_automate_inf_flanc_garder 84
+#define T_Mission_Automate_mission_automate_inf_freiner 85
+#define T_Mission_Automate_mission_automate_inf_harceler 86
+#define T_Mission_Automate_mission_automate_inf_interdire 87
+#define T_Mission_Automate_mission_automate_inf_mener_defense_usure 88
+#define T_Mission_Automate_mission_automate_inf_prendre_preciser_maintenir_contact 89
+#define T_Mission_Automate_mission_automate_inf_reconnaissance_offensive 90
+#define T_Mission_Automate_mission_automate_inf_recueillir_unite 91
+#define T_Mission_Automate_mission_automate_inf_reduire 92
+#define T_Mission_Automate_mission_automate_inf_relever 93
+#define T_Mission_Automate_mission_automate_inf_rompre_contact 94
+#define T_Mission_Automate_mission_automate_inf_surveiller 95
+#define T_Mission_Automate_mission_automate_inf_semparer 96
+#define T_Mission_Automate_mission_automate_inf_fixer 97
+#define T_Mission_Automate_mission_automate_inf_attaquer_en_terrain_difficile 98
+#define T_Mission_Automate_mission_automate_inf_barrer_direction 99
+#define T_Mission_Automate_mission_automate_inf_defendre_ferme 100
+#define T_Mission_Automate_mission_automate_inf_tenir 101
+#define T_Mission_Automate_mission_automate_inf_appuyer_un_freinage 102
+#define T_Mission_Automate_mission_automate_inf_appuyer_une_attaque 103
+#define T_Mission_Automate_mission_automate_inf_soutenir 104
+#define T_Mission_Automate_mission_automate_inf_escorter_unite 105
+#define T_Mission_Automate_mission_automate_inf_escorter_unites 106
+#define T_Mission_Automate_mission_automate_inf_appuyer_sur_position 107
+#define T_Mission_Automate_mission_automate_log_se_deployer 108
+#define T_Mission_Automate_mission_automate_log_appuyer_mouvement 109
+#define T_Mission_Automate_mission_automate_log_reconnaitre_itineraire 110
+#define T_Mission_Automate_mission_automate_log_transporter_unites 111
+#define T_Mission_Automate_mission_automate_log_appuyer_mouvement_dans_zone 112
+#define T_Mission_Automate_mission_automate_log_mettre_en_oeuvre_zone_stationnement 113
+#define T_Mission_Automate_mission_automate_log_appuyer_franchissement_dans_zone 114
+#define T_Mission_Automate_mission_automate_log_bloquer_zone 115
+#define T_Mission_Automate_mission_automate_log_reconnaitre_zone_contaminee 116
+#define T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement 117
+#define T_Mission_Automate_mission_automate_log_surveiller 118
+#define T_Mission_Automate_mission_automate_log_armer_pias 119
+#define T_Mission_Automate_mission_automate_test_move_to 120
+#define T_Mission_Automate_mission_automate_decrocher 121
+#define T_Mission_Automate_mission_automate_relever_sur_place 122
+#define T_Mission_Automate_mission_automate_faire_mouvement 123
+#define T_Mission_Automate_mission_automate_se_faire_decontaminer 124
+#define T_Mission_Automate_mission_automate_franchir 125
+#define T_Mission_Automate_mission_automate_stationner 126
+#define T_Mission_Automate_mission_automate_se_faire_transporter 127
+#define T_Mission_Automate_mission_automate_se_recompleter 128
+#define T_Mission_Automate_mission_automate_se_rendre 129
+#define T_Mission_Automate_mission_automate_faire_mouvement_vers_camp_refugies 130
+#define T_Mission_Automate_mission_automate_interdire_franchissement_populations 131
+#define T_Mission_Automate_mission_automate_filtrer_populations 132
+#define T_Mission_Automate_mission_automate_canaliser_populations 133
+#define T_Mission_Automate_mission_automate_controler_populations_dans_zone 134
+#define T_Mission_Automate_mission_automate_securiser_zone_contre_populations 135
+#define T_Mission_Automate_mission_automate_asy_commettre_exactions_sur_population_dans_zone 136
+#define T_Mission_Automate_mission_automate_generique 137
+#define T_Mission_Automate_mission_automate_nbc_reconnaitre_un_axe 138
+#define T_Mission_Automate_mission_automate_nbc_reconnaitre_une_zone 139
+#define T_Mission_Automate_mission_automate_nbc_armer_un_site_de_decontamination 140
+#define T_Mission_Automate_mission_automate_nbc_decontaminer_une_zone 141
+#define T_Mission_Automate_mission_automate_nbc_reconnaitre_des_sites_rota 142
+#define T_Mission_Automate_mission_automate_rens_rohum_renseigner_sur 143
+#define T_Mission_Automate_mission_automate_rens_rohum_orienter_guider 144
+#define T_Mission_Automate_mission_automate_rens_rohum_sexfiltrer 145
+#define T_Mission_Automate_mission_automate_rens_roim_cl289_renseigner_sur 146
+#define T_Mission_Automate_mission_automate_rens_roim_sdti_renseigner_sur 147
+#define T_Mission_Automate_mission_automate_rens_roem_appuyer 148
+#define T_Mission_Automate_mission_automate_rens_roem_renseignersur 149
+#define T_Mission_Automate_mission_automate_rens_radint_renseignersur 150
+#define T_Mission_Automate_mission_automate_trans_commander 151
 
 typedef struct EXTERN ASN1T_Mission_Automate {
    int t;
@@ -192,308 +190,304 @@ typedef struct EXTERN ASN1T_Mission_Automate {
       /* t = 1 */
       ASN1T_Mission_Automate_ALAT_AllerSeRecompleter *mission_automate_alat_aller_se_recompleter;
       /* t = 2 */
-      ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage *mission_automate_alat_effectuer_recherche_et_sauvetage;
-      /* t = 3 */
-      ASN1T_Mission_Automate_ALAT_ExtrairePersonnel *mission_automate_alat_extraire_personnel;
-      /* t = 4 */
       ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur *mission_automate_alat_detruire_neutraliser_dans_profondeur;
-      /* t = 5 */
+      /* t = 3 */
       ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone *mission_automate_alat_detruire_neutraliser_dans_zone;
-      /* t = 6 */
+      /* t = 4 */
       ASN1T_Mission_Automate_ALAT_DonnerCoupArret *mission_automate_alat_donner_coup_arret;
-      /* t = 7 */
+      /* t = 5 */
       ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile *mission_automate_alat_attaquer_formation_aeromobile;
-      /* t = 8 */
+      /* t = 6 */
       ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile *mission_automate_alat_recueillir_formation_aeromobile;
-      /* t = 9 */
+      /* t = 7 */
       ASN1T_Mission_Automate_ALAT_Heliporter *mission_automate_alat_heliporter;
-      /* t = 10 */
+      /* t = 8 */
       ASN1T_Mission_Automate_ALAT_Jalonner *mission_automate_alat_jalonner;
-      /* t = 11 */
+      /* t = 9 */
       ASN1T_Mission_Automate_ALAT_Helitransporter *mission_automate_alat_helitransporter;
-      /* t = 12 */
+      /* t = 10 */
       ASN1T_Mission_Automate_ALAT_Appuyer *mission_automate_alat_appuyer;
-      /* t = 13 */
+      /* t = 11 */
       ASN1T_Mission_Automate_ALAT_Couvrir *mission_automate_alat_couvrir;
-      /* t = 14 */
+      /* t = 12 */
       ASN1T_Mission_Automate_ALAT_Surveiller *mission_automate_alat_surveiller;
-      /* t = 15 */
+      /* t = 13 */
       ASN1T_Mission_Automate_ALAT_Reconnaitre *mission_automate_alat_reconnaitre;
-      /* t = 16 */
+      /* t = 14 */
       ASN1T_Mission_Automate_ALAT_Freiner *mission_automate_alat_freiner;
-      /* t = 17 */
+      /* t = 15 */
       ASN1T_Mission_Automate_ALAT_Escorter *mission_automate_alat_escorter;
-      /* t = 18 */
+      /* t = 16 */
       ASN1T_Mission_Automate_ALAT_Attaquer *mission_automate_alat_attaquer;
-      /* t = 19 */
+      /* t = 17 */
       ASN1T_Mission_Automate_ASA_DefendreSite *mission_automate_asa_defendre_site;
-      /* t = 20 */
+      /* t = 18 */
       ASN1T_Mission_Automate_ASA_DefendreZone *mission_automate_asa_defendre_zone;
-      /* t = 21 */
+      /* t = 19 */
       ASN1T_Mission_Automate_ASA_DefendreUnites *mission_automate_asa_defendre_unites;
-      /* t = 22 */
+      /* t = 20 */
       ASN1T_Mission_Automate_ASA_Surveiller *mission_automate_asa_surveiller;
-      /* t = 23 */
+      /* t = 21 */
       ASN1T_Mission_Automate_ASA_DefendreItineraire *mission_automate_asa_defendre_itineraire;
-      /* t = 24 */
+      /* t = 22 */
       ASN1T_Mission_Automate_ASA_MISTRAL_DefendreZone *mission_automate_asa_mistral_defendre_zone;
-      /* t = 25 */
+      /* t = 23 */
       ASN1T_Mission_Automate_ASA_MISTRAL_DefendreSite *mission_automate_asa_mistral_defendre_site;
-      /* t = 26 */
+      /* t = 24 */
       ASN1T_Mission_Automate_ASA_MISTRAL_Surveiller *mission_automate_asa_mistral_surveiller;
-      /* t = 27 */
+      /* t = 25 */
       ASN1T_Mission_Automate_ASA_HAWK_DefendreZone *mission_automate_asa_hawk_defendre_zone;
-      /* t = 28 */
+      /* t = 26 */
       ASN1T_Mission_Automate_ASA_HAWK_DefendreSite *mission_automate_asa_hawk_defendre_site;
-      /* t = 29 */
+      /* t = 27 */
       ASN1T_Mission_Automate_ASA_HAWK_Surveiller *mission_automate_asa_hawk_surveiller;
-      /* t = 30 */
+      /* t = 28 */
       ASN1T_Mission_Automate_ASS_SeDeployer *mission_automate_ass_se_deployer;
-      /* t = 31 */
+      /* t = 29 */
       ASN1T_Mission_Automate_ASS_ReconnaitreZonesDeploiement *mission_automate_ass_reconnaitre_zones_deploiement;
-      /* t = 32 */
+      /* t = 30 */
       ASN1T_Mission_Automate_ASS_AcquerirObjectifs *mission_automate_ass_acquerir_objectifs;
-      /* t = 33 */
+      /* t = 31 */
       ASN1T_Mission_Automate_ABC_Appuyer *mission_automate_abc_appuyer;
-      /* t = 34 */
+      /* t = 32 */
       ASN1T_Mission_Automate_ABC_Attaquer *mission_automate_abc_attaquer;
-      /* t = 35 */
+      /* t = 33 */
       ASN1T_Mission_Automate_ABC_ContreAttaquer *mission_automate_abc_contre_attaquer;
-      /* t = 36 */
+      /* t = 34 */
       ASN1T_Mission_Automate_ABC_Controler *mission_automate_abc_controler;
-      /* t = 37 */
+      /* t = 35 */
       ASN1T_Mission_Automate_ABC_Couvrir *mission_automate_abc_couvrir;
-      /* t = 38 */
+      /* t = 36 */
       ASN1T_Mission_Automate_ABC_DonnerCoupArret *mission_automate_abc_donner_coup_arret;
-      /* t = 39 */
+      /* t = 37 */
       ASN1T_Mission_Automate_ABC_Eclairer *mission_automate_abc_eclairer;
-      /* t = 40 */
+      /* t = 38 */
       ASN1T_Mission_Automate_ABC_EffectuerRaid *mission_automate_abc_effectuer_raid;
-      /* t = 41 */
+      /* t = 39 */
       ASN1T_Mission_Automate_ABC_Interdire *mission_automate_abc_interdire;
-      /* t = 42 */
+      /* t = 40 */
       ASN1T_Mission_Automate_ABC_Jalonner *mission_automate_abc_jalonner;
-      /* t = 43 */
+      /* t = 41 */
       ASN1T_Mission_Automate_ABC_PrendrePreciserContact *mission_automate_abc_prendre_preciser_contact;
-      /* t = 44 */
+      /* t = 42 */
       ASN1T_Mission_Automate_ABC_Reconnaitre *mission_automate_abc_reconnaitre;
-      /* t = 45 */
+      /* t = 43 */
       ASN1T_Mission_Automate_ABC_ReconnaitrePoint *mission_automate_abc_reconnaitre_point;
-      /* t = 46 */
+      /* t = 44 */
       ASN1T_Mission_Automate_ABC_Reduire *mission_automate_abc_reduire;
-      /* t = 47 */
+      /* t = 45 */
       ASN1T_Mission_Automate_ABC_ReleverEnDepassant *mission_automate_abc_relever_en_depassant;
-      /* t = 48 */
+      /* t = 46 */
       ASN1T_Mission_Automate_ABC_Semparer *mission_automate_abc_semparer;
-      /* t = 49 */
+      /* t = 47 */
       ASN1T_Mission_Automate_ABC_Tenir *mission_automate_abc_tenir;
-      /* t = 50 */
+      /* t = 48 */
       ASN1T_Mission_Automate_ABC_Soutenir *mission_automate_abc_soutenir;
-      /* t = 51 */
+      /* t = 49 */
       ASN1T_Mission_Automate_ABC_Surveiller *mission_automate_abc_surveiller;
-      /* t = 52 */
+      /* t = 50 */
       ASN1T_Mission_Automate_ABC_FlancGarder *mission_automate_abc_flanc_garder;
-      /* t = 53 */
+      /* t = 51 */
       ASN1T_Mission_Automate_ABC_RenseignerSur *mission_automate_abc_renseigner_sur;
-      /* t = 54 */
+      /* t = 52 */
       ASN1T_Mission_Automate_ABC_Fixer *mission_automate_abc_fixer;
-      /* t = 55 */
+      /* t = 53 */
       ASN1T_Mission_Automate_ABC_Freiner *mission_automate_abc_freiner;
-      /* t = 56 */
+      /* t = 54 */
       ASN1T_Mission_Automate_ABC_SurveillerItineraire *mission_automate_abc_surveiller_itineraire;
-      /* t = 57 */
+      /* t = 55 */
       ASN1T_Mission_Automate_ABC_RenseignerSurUnAxe *mission_automate_abc_renseigner_sur_un_axe;
-      /* t = 58 */
+      /* t = 56 */
       ASN1T_Mission_Automate_ABC_RecueillirUnite *mission_automate_abc_recueillir_unite;
-      /* t = 59 */
+      /* t = 57 */
       ASN1T_Mission_Automate_ABC_EscorterUnite *mission_automate_abc_escorter_unite;
-      /* t = 60 */
+      /* t = 58 */
       ASN1T_Mission_Automate_ABC_EscorterUnites *mission_automate_abc_escorter_unites;
-      /* t = 61 */
+      /* t = 59 */
       ASN1T_Mission_Automate_ABC_ArmerPointDeControle *mission_automate_abc_armer_point_de_controle;
-      /* t = 62 */
+      /* t = 60 */
       ASN1T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies *mission_automate_abc_organiser_accueil_colonne_refugies;
-      /* t = 63 */
+      /* t = 61 */
       ASN1T_Mission_Automate_ABC_ProtegerPC *mission_automate_abc_proteger_pc;
-      /* t = 64 */
+      /* t = 62 */
       ASN1T_Mission_Automate_ABC_AppuyerSurPosition *mission_automate_abc_appuyer_sur_position;
-      /* t = 65 */
+      /* t = 63 */
       ASN1T_Mission_Automate_GEN_SeDeployer *mission_automate_gen_se_deployer;
-      /* t = 66 */
+      /* t = 64 */
       ASN1T_Mission_Automate_GEN_FaireFranchir *mission_automate_gen_faire_franchir;
-      /* t = 67 */
+      /* t = 65 */
       ASN1T_Mission_Automate_GEN_RealiserSystemeObstacles *mission_automate_gen_realiser_systeme_obstacles;
-      /* t = 68 */
+      /* t = 66 */
       ASN1T_Mission_Automate_GEN_FranchirDeViveForce *mission_automate_gen_franchir_de_vive_force;
-      /* t = 69 */
+      /* t = 67 */
       ASN1T_Mission_Automate_GEN_RetablirItineraires *mission_automate_gen_retablir_itineraires;
-      /* t = 70 */
+      /* t = 68 */
       ASN1T_Mission_Automate_GEN_AmenagerAireStationnement *mission_automate_gen_amenager_aire_stationnement;
-      /* t = 71 */
+      /* t = 69 */
       ASN1T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire *mission_automate_gen_amenager_terrain_poser_sommaire;
-      /* t = 72 */
+      /* t = 70 */
       ASN1T_Mission_Automate_GEN_RealiserZonePoser *mission_automate_gen_realiser_zone_poser;
-      /* t = 73 */
+      /* t = 71 */
       ASN1T_Mission_Automate_GEN_ReconnaitreZoneDeploiement *mission_automate_gen_reconnaitre_zone_deploiement;
-      /* t = 74 */
+      /* t = 72 */
       ASN1T_Mission_Automate_GEN_RealiserCampPrisonniers *mission_automate_gen_realiser_camp_prisonniers;
-      /* t = 75 */
+      /* t = 73 */
       ASN1T_Mission_Automate_GEN_RealiserCampRefugies *mission_automate_gen_realiser_camp_refugies;
-      /* t = 76 */
+      /* t = 74 */
       ASN1T_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial *mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial;
-      /* t = 77 */
+      /* t = 75 */
       ASN1T_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation *mission_automate_gen_realiser_travaux_sommaires_au_profit_population;
-      /* t = 78 */
+      /* t = 76 */
       ASN1T_Mission_Automate_GEN_AppuyerDebarquementTroupes *mission_automate_gen_appuyer_debarquement_troupes;
-      /* t = 79 */
+      /* t = 77 */
       ASN1T_Mission_Automate_GEN_OuvrirAxesProgression *mission_automate_gen_ouvrir_axes_progression;
-      /* t = 80 */
+      /* t = 78 */
       ASN1T_Mission_Automate_INF_AttaquerSouplesse *mission_automate_inf_attaquer_souplesse;
-      /* t = 81 */
+      /* t = 79 */
       ASN1T_Mission_Automate_INF_Appuyer *mission_automate_inf_appuyer;
-      /* t = 82 */
+      /* t = 80 */
       ASN1T_Mission_Automate_INF_Controler *mission_automate_inf_controler;
-      /* t = 83 */
+      /* t = 81 */
       ASN1T_Mission_Automate_INF_Couvrir *mission_automate_inf_couvrir;
-      /* t = 84 */
+      /* t = 82 */
       ASN1T_Mission_Automate_INF_DonnerCoupArret *mission_automate_inf_donner_coup_arret;
-      /* t = 85 */
+      /* t = 83 */
       ASN1T_Mission_Automate_INF_Eclairer *mission_automate_inf_eclairer;
-      /* t = 86 */
+      /* t = 84 */
       ASN1T_Mission_Automate_INF_FlancGarder *mission_automate_inf_flanc_garder;
-      /* t = 87 */
+      /* t = 85 */
       ASN1T_Mission_Automate_INF_Freiner *mission_automate_inf_freiner;
-      /* t = 88 */
+      /* t = 86 */
       ASN1T_Mission_Automate_INF_Harceler *mission_automate_inf_harceler;
-      /* t = 89 */
+      /* t = 87 */
       ASN1T_Mission_Automate_INF_Interdire *mission_automate_inf_interdire;
-      /* t = 90 */
+      /* t = 88 */
       ASN1T_Mission_Automate_INF_MenerDefenseUsure *mission_automate_inf_mener_defense_usure;
-      /* t = 91 */
+      /* t = 89 */
       ASN1T_Mission_Automate_INF_PrendrePreciserMaintenirContact *mission_automate_inf_prendre_preciser_maintenir_contact;
-      /* t = 92 */
+      /* t = 90 */
       ASN1T_Mission_Automate_INF_ReconnaissanceOffensive *mission_automate_inf_reconnaissance_offensive;
-      /* t = 93 */
+      /* t = 91 */
       ASN1T_Mission_Automate_INF_RecueillirUnite *mission_automate_inf_recueillir_unite;
-      /* t = 94 */
+      /* t = 92 */
       ASN1T_Mission_Automate_INF_Reduire *mission_automate_inf_reduire;
-      /* t = 95 */
+      /* t = 93 */
       ASN1T_Mission_Automate_INF_Relever *mission_automate_inf_relever;
-      /* t = 96 */
+      /* t = 94 */
       ASN1T_Mission_Automate_INF_RompreContact *mission_automate_inf_rompre_contact;
-      /* t = 97 */
+      /* t = 95 */
       ASN1T_Mission_Automate_INF_Surveiller *mission_automate_inf_surveiller;
-      /* t = 98 */
+      /* t = 96 */
       ASN1T_Mission_Automate_INF_Semparer *mission_automate_inf_semparer;
-      /* t = 99 */
+      /* t = 97 */
       ASN1T_Mission_Automate_INF_Fixer *mission_automate_inf_fixer;
-      /* t = 100 */
+      /* t = 98 */
       ASN1T_Mission_Automate_INF_AttaquerEnTerrainDifficile *mission_automate_inf_attaquer_en_terrain_difficile;
-      /* t = 101 */
+      /* t = 99 */
       ASN1T_Mission_Automate_INF_BarrerDirection *mission_automate_inf_barrer_direction;
-      /* t = 102 */
+      /* t = 100 */
       ASN1T_Mission_Automate_INF_DefendreFerme *mission_automate_inf_defendre_ferme;
-      /* t = 103 */
+      /* t = 101 */
       ASN1T_Mission_Automate_INF_Tenir *mission_automate_inf_tenir;
-      /* t = 104 */
+      /* t = 102 */
       ASN1T_Mission_Automate_INF_AppuyerUnFreinage *mission_automate_inf_appuyer_un_freinage;
-      /* t = 105 */
+      /* t = 103 */
       ASN1T_Mission_Automate_INF_AppuyerUneAttaque *mission_automate_inf_appuyer_une_attaque;
-      /* t = 106 */
+      /* t = 104 */
       ASN1T_Mission_Automate_INF_Soutenir *mission_automate_inf_soutenir;
-      /* t = 107 */
+      /* t = 105 */
       ASN1T_Mission_Automate_INF_EscorterUnite *mission_automate_inf_escorter_unite;
-      /* t = 108 */
+      /* t = 106 */
       ASN1T_Mission_Automate_INF_EscorterUnites *mission_automate_inf_escorter_unites;
-      /* t = 109 */
+      /* t = 107 */
       ASN1T_Mission_Automate_INF_AppuyerSurPosition *mission_automate_inf_appuyer_sur_position;
-      /* t = 110 */
+      /* t = 108 */
       ASN1T_Mission_Automate_LOG_SeDeployer *mission_automate_log_se_deployer;
-      /* t = 111 */
+      /* t = 109 */
       ASN1T_Mission_Automate_LOG_AppuyerMouvement *mission_automate_log_appuyer_mouvement;
-      /* t = 112 */
+      /* t = 110 */
       ASN1T_Mission_Automate_LOG_ReconnaitreItineraire *mission_automate_log_reconnaitre_itineraire;
-      /* t = 113 */
+      /* t = 111 */
       ASN1T_Mission_Automate_LOG_TransporterUnites *mission_automate_log_transporter_unites;
-      /* t = 114 */
+      /* t = 112 */
       ASN1T_Mission_Automate_LOG_AppuyerMouvementDansZone *mission_automate_log_appuyer_mouvement_dans_zone;
-      /* t = 115 */
+      /* t = 113 */
       ASN1T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement *mission_automate_log_mettre_en_oeuvre_zone_stationnement;
-      /* t = 116 */
+      /* t = 114 */
       ASN1T_Mission_Automate_LOG_AppuyerFranchissementDansZone *mission_automate_log_appuyer_franchissement_dans_zone;
-      /* t = 117 */
+      /* t = 115 */
       ASN1T_Mission_Automate_LOG_BloquerZone *mission_automate_log_bloquer_zone;
-      /* t = 118 */
+      /* t = 116 */
       ASN1T_Mission_Automate_LOG_ReconnaitreZoneContaminee *mission_automate_log_reconnaitre_zone_contaminee;
-      /* t = 119 */
+      /* t = 117 */
       ASN1T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement *mission_automate_log_reconnaitre_zone_de_deploiement;
-      /* t = 120 */
+      /* t = 118 */
       ASN1T_Mission_Automate_LOG_Surveiller *mission_automate_log_surveiller;
-      /* t = 121 */
+      /* t = 119 */
       ASN1T_Mission_Automate_LOG_ArmerPIAs *mission_automate_log_armer_pias;
-      /* t = 122 */
+      /* t = 120 */
       ASN1T_Mission_Automate_Test_MoveTo *mission_automate_test_move_to;
-      /* t = 123 */
+      /* t = 121 */
       ASN1T_Mission_Automate_Decrocher *mission_automate_decrocher;
-      /* t = 124 */
+      /* t = 122 */
       ASN1T_Mission_Automate_ReleverSurPlace *mission_automate_relever_sur_place;
-      /* t = 125 */
+      /* t = 123 */
       ASN1T_Mission_Automate_FaireMouvement *mission_automate_faire_mouvement;
-      /* t = 126 */
+      /* t = 124 */
       ASN1T_Mission_Automate_SeFaireDecontaminer *mission_automate_se_faire_decontaminer;
-      /* t = 127 */
+      /* t = 125 */
       ASN1T_Mission_Automate_Franchir *mission_automate_franchir;
-      /* t = 128 */
+      /* t = 126 */
       ASN1T_Mission_Automate_Stationner *mission_automate_stationner;
-      /* t = 129 */
+      /* t = 127 */
       ASN1T_Mission_Automate_SeFaireTransporter *mission_automate_se_faire_transporter;
-      /* t = 130 */
+      /* t = 128 */
       ASN1T_Mission_Automate_SeRecompleter *mission_automate_se_recompleter;
-      /* t = 131 */
+      /* t = 129 */
       ASN1T_Mission_Automate_SeRendre *mission_automate_se_rendre;
-      /* t = 132 */
+      /* t = 130 */
       ASN1T_Mission_Automate_FaireMouvementVersCampRefugies *mission_automate_faire_mouvement_vers_camp_refugies;
-      /* t = 133 */
+      /* t = 131 */
       ASN1T_Mission_Automate_InterdireFranchissementPopulations *mission_automate_interdire_franchissement_populations;
-      /* t = 134 */
+      /* t = 132 */
       ASN1T_Mission_Automate_FiltrerPopulations *mission_automate_filtrer_populations;
-      /* t = 135 */
+      /* t = 133 */
       ASN1T_Mission_Automate_CanaliserPopulations *mission_automate_canaliser_populations;
-      /* t = 136 */
+      /* t = 134 */
       ASN1T_Mission_Automate_ControlerPopulationsDansZone *mission_automate_controler_populations_dans_zone;
-      /* t = 137 */
+      /* t = 135 */
       ASN1T_Mission_Automate_SecuriserZoneContrePopulations *mission_automate_securiser_zone_contre_populations;
-      /* t = 138 */
+      /* t = 136 */
       ASN1T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone *mission_automate_asy_commettre_exactions_sur_population_dans_zone;
-      /* t = 139 */
+      /* t = 137 */
       ASN1T_Mission_Automate_Generique *mission_automate_generique;
-      /* t = 140 */
+      /* t = 138 */
       ASN1T_Mission_Automate_NBC_ReconnaitreUnAxe *mission_automate_nbc_reconnaitre_un_axe;
-      /* t = 141 */
+      /* t = 139 */
       ASN1T_Mission_Automate_NBC_ReconnaitreUneZone *mission_automate_nbc_reconnaitre_une_zone;
-      /* t = 142 */
+      /* t = 140 */
       ASN1T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination *mission_automate_nbc_armer_un_site_de_decontamination;
-      /* t = 143 */
+      /* t = 141 */
       ASN1T_Mission_Automate_NBC_DecontaminerUneZone *mission_automate_nbc_decontaminer_une_zone;
-      /* t = 144 */
+      /* t = 142 */
       ASN1T_Mission_Automate_NBC_ReconnaitreDesSitesROTA *mission_automate_nbc_reconnaitre_des_sites_rota;
-      /* t = 145 */
+      /* t = 143 */
       ASN1T_Mission_Automate_RENS_ROHUM_RenseignerSur *mission_automate_rens_rohum_renseigner_sur;
-      /* t = 146 */
+      /* t = 144 */
       ASN1T_Mission_Automate_RENS_ROHUM_OrienterGuider *mission_automate_rens_rohum_orienter_guider;
-      /* t = 147 */
+      /* t = 145 */
       ASN1T_Mission_Automate_RENS_ROHUM_SExfiltrer *mission_automate_rens_rohum_sexfiltrer;
-      /* t = 148 */
+      /* t = 146 */
       ASN1T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur *mission_automate_rens_roim_cl289_renseigner_sur;
-      /* t = 149 */
+      /* t = 147 */
       ASN1T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur *mission_automate_rens_roim_sdti_renseigner_sur;
-      /* t = 150 */
+      /* t = 148 */
       ASN1T_Mission_Automate_RENS_ROEM_Appuyer *mission_automate_rens_roem_appuyer;
-      /* t = 151 */
+      /* t = 149 */
       ASN1T_Mission_Automate_RENS_ROEM_RenseignerSur *mission_automate_rens_roem_renseignersur;
-      /* t = 152 */
+      /* t = 150 */
       ASN1T_Mission_Automate_RENS_RADINT_RenseignerSur *mission_automate_rens_radint_renseignersur;
-      /* t = 153 */
+      /* t = 151 */
       ASN1T_Mission_Automate_TRANS_Commander *mission_automate_trans_commander;
    } u;
 } ASN1T_Mission_Automate;

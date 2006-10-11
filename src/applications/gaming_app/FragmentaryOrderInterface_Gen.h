@@ -19,6 +19,7 @@
     void CreateOrder_Interrompre();
     void CreateOrder_ChangerAmbiance();
     void CreateOrder_ChangerReglesEngagement();
+    void CreateOrder_ChangerParametresRecompletementALAT();
     void CreateOrder_ChangerReglesEngagementPopulation();
     void CreateOrder_Deboucher();
     void CreateOrder_Decrocher();
@@ -46,7 +47,6 @@
     void CreateOrder_ModifierPrioritesTactiquesBlesses();
     void CreateOrder_Automate_RealiserVariantement();
     void CreateOrder_Automate_DesequiperSiteFranchissement();
-    void CreateOrder_Automate_ReagirFaceAEni();
     void CreateOrder_Automate_AffecterPionAObstacle();
     void CreateOrder_Automate_ReconnaitreZoneImplantation();
     void CreateOrder_Automate_TC2_GererMaterielAvantDeplacement();

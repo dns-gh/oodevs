@@ -22,6 +22,7 @@
 #include "MIL_RC_PointTenuParEni.h"
 #include "MIL_RC_ProgressionVersEni.h"
 #include "MIL_RC_EniSurObjectif.h"
+#include "MIL_RC_UniteTropDistante.h"
 #include "MIL_RC_Releve.h"
 #include "MIL_RC_SurLima.h"
 #include "MIL_RC_ReussiteRenforcement.h"
@@ -215,7 +216,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_DebutLiaison ] = new MIL_RC( eRC_DebutLiaison, T_MsgCR_cr_cr_debut_liaison );
 	rcs_[ eRC_FinLiaison ] = new MIL_RC( eRC_FinLiaison, T_MsgCR_cr_cr_fin_liaison );
 	rcs_[ eRC_EtablissementLiaisonImpossible ] = new MIL_RC( eRC_EtablissementLiaisonImpossible, T_MsgCR_cr_cr_etablissement_liaison_impossible );
-	rcs_[ eRC_UniteTropDistante ] = new MIL_RC( eRC_UniteTropDistante, T_MsgCR_cr_cr_unite_trop_distante );
+	rcs_[ eRC_UniteTropDistante ] = new MIL_RC_UniteTropDistante( eRC_UniteTropDistante, T_MsgCR_cr_cr_unite_trop_distante );
 	rcs_[ eRC_EnregistrementDonnes ] = new MIL_RC( eRC_EnregistrementDonnes, T_MsgCR_cr_cr_enregistrement_donnes );
 	rcs_[ eRC_ExploitationDonnees ] = new MIL_RC( eRC_ExploitationDonnees, T_MsgCR_cr_cr_exploitation_donnees );
 	rcs_[ eRC_ExtractionDonnes ] = new MIL_RC( eRC_ExtractionDonnes, T_MsgCR_cr_cr_extraction_donnes );
@@ -293,6 +294,7 @@ void MIL_RC::Initialize()
 	rcs_[ eRC_TransportEnCours ] = new MIL_RC( eRC_TransportEnCours, T_MsgCR_cr_cr_transport_en_cours );
 	rcs_[ eRC_TransportEmbarquement ] = new MIL_RC( eRC_TransportEmbarquement, T_MsgCR_cr_cr_transport_embarquement );
 	rcs_[ eRC_TransportDebarquement ] = new MIL_RC( eRC_TransportDebarquement, T_MsgCR_cr_cr_transport_debarquement );
+	rcs_[ eRC_TransportImpossiblePasDeMoyens ] = new MIL_RC( eRC_TransportImpossiblePasDeMoyens, T_MsgCR_cr_cr_transport_impossible_pas_de_moyens );
 	rcs_[ eRC_VehiculeLaisseSurPosition ] = new MIL_RC( eRC_VehiculeLaisseSurPosition, T_MsgCR_cr_cr_vehicule_laisse_sur_position );
 	rcs_[ eRC_RejointPositionEmbarquement ] = new MIL_RC( eRC_RejointPositionEmbarquement, T_MsgCR_cr_cr_rejoint_position_embarquement );
 	rcs_[ eRC_EnAttenteTransporteurs ] = new MIL_RC( eRC_EnAttenteTransporteurs, T_MsgCR_cr_cr_en_attente_transporteurs );

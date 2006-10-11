@@ -8,7 +8,6 @@
 // *****************************************************************************
 
     void CreateMission_ALAT_AllerSeRecompleter();
-    void CreateMission_ALAT_EvacuationSanitaire();
     void CreateMission_ALAT_ReconnaitreDansLaProfondeur();
     void CreateMission_ALAT_ReconnaitreContourEnnemi();
     void CreateMission_ALAT_DetruireNeutraliserDansZone();
@@ -19,7 +18,6 @@
     void CreateMission_ALAT_Heliporter();
     void CreateMission_ALAT_HeliporterHelitransporterPlotRavitaillement();
     void CreateMission_ALAT_Helitransporter();
-    void CreateMission_ALAT_EffectuerRechercheEtSauvetage();
     void CreateMission_ALAT_IMEX();
     void CreateMission_ALAT_Eclairer();
     void CreateMission_ALAT_Surveiller();

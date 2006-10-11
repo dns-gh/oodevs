@@ -111,7 +111,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_debut_liaison : strMsg << "debut liaison"; break;
         case T_MsgCR_cr_cr_fin_liaison : strMsg << "fin liaison"; break;
         case T_MsgCR_cr_cr_etablissement_liaison_impossible : strMsg << "etablissement liaison impossible"; break;
-        case T_MsgCR_cr_cr_unite_trop_distante : strMsg << "unite trop distante"; break;
+        case T_MsgCR_cr_cr_unite_trop_distante : strMsg << "unite trop distante" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_unite_trop_distante ); break;
         case T_MsgCR_cr_cr_enregistrement_donnes : strMsg << "enregistrement donnes"; break;
         case T_MsgCR_cr_cr_exploitation_donnees : strMsg << "exploitation donnees"; break;
         case T_MsgCR_cr_cr_extraction_donnes : strMsg << "extraction donnes"; break;
@@ -189,6 +189,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_transport_en_cours : strMsg << "transport en cours"; break;
         case T_MsgCR_cr_cr_transport_embarquement : strMsg << "transport embarquement"; break;
         case T_MsgCR_cr_cr_transport_debarquement : strMsg << "transport debarquement"; break;
+        case T_MsgCR_cr_cr_transport_impossible_pas_de_moyens : strMsg << "transport impossible pas de moyens"; break;
         case T_MsgCR_cr_cr_vehicule_laisse_sur_position : strMsg << "vehicule laisse sur position"; break;
         case T_MsgCR_cr_cr_rejoint_position_embarquement : strMsg << "rejoint position embarquement"; break;
         case T_MsgCR_cr_cr_en_attente_transporteurs : strMsg << "en attente transporteurs"; break;

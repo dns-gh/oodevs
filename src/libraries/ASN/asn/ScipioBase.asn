@@ -217,7 +217,6 @@ EnumUnitNatureCategory  ::= ENUMERATED
     soutien-logistique (2),
     combat-support     (3),
     inconnu            (4)
-
 }
 
 EnumUnitNatureMobility  ::= ENUMERATED 

@@ -32,8 +32,6 @@ namespace missions
     enum E_AutomateMission
     {
         eMission_Automate_ALAT_AllerSeRecompleter,
-        eMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
-        eMission_Automate_ALAT_ExtrairePersonnel,
         eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
         eMission_Automate_ALAT_DetruireNeutraliserDansZone,
         eMission_Automate_ALAT_DonnerCoupArret,
@@ -191,7 +189,6 @@ namespace missions
     enum E_PionMission
     {
         eMission_Pion_ALAT_AllerSeRecompleter,
-        eMission_Pion_ALAT_EvacuationSanitaire,
         eMission_Pion_ALAT_ReconnaitreDansLaProfondeur,
         eMission_Pion_ALAT_ReconnaitreContourEnnemi,
         eMission_Pion_ALAT_DetruireNeutraliserDansZone,
@@ -202,7 +199,6 @@ namespace missions
         eMission_Pion_ALAT_Heliporter,
         eMission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement,
         eMission_Pion_ALAT_Helitransporter,
-        eMission_Pion_ALAT_EffectuerRechercheEtSauvetage,
         eMission_Pion_ALAT_IMEX,
         eMission_Pion_ALAT_Eclairer,
         eMission_Pion_ALAT_Surveiller,
@@ -420,6 +416,7 @@ namespace missions
         eOrdreConduite_Interrompre,
         eOrdreConduite_ChangerAmbiance,
         eOrdreConduite_ChangerReglesEngagement,
+        eOrdreConduite_ChangerParametresRecompletementALAT,
         eOrdreConduite_ChangerReglesEngagementPopulation,
         eOrdreConduite_Deboucher,
         eOrdreConduite_Decrocher,
@@ -447,7 +444,6 @@ namespace missions
         eOrdreConduite_ModifierPrioritesTactiquesBlesses,
         eOrdreConduite_Automate_RealiserVariantement,
         eOrdreConduite_Automate_DesequiperSiteFranchissement,
-        eOrdreConduite_Automate_ReagirFaceAEni,
         eOrdreConduite_Automate_AffecterPionAObstacle,
         eOrdreConduite_Automate_ReconnaitreZoneImplantation,
         eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement,

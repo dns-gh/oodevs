@@ -30,9 +30,7 @@ IMPORTS Mission-Automate-ALAT-Heliporter,
         Mission-Automate-ALAT-RecueillirFormationAeromobile,
         Mission-Automate-ALAT-DetruireNeutraliserDansProfondeur,
         Mission-Automate-ALAT-DetruireNeutraliserDansZone,
-        Mission-Automate-ALAT-ExtrairePersonnel,
         Mission-Automate-ALAT-DonnerCoupArret,
-        Mission-Automate-ALAT-EffectuerRechercheEtSauvetage,
         Mission-Automate-ALAT-AllerSeRecompleter FROM ScipioAutomateMission_ALAT
         
 IMPORTS Mission-Automate-ASA-DefendreSite,
@@ -183,8 +181,6 @@ IMPORTS Mission-Automate-TRANS-Commander FROM ScipioAutomateMission_TRANS;
 Mission-Automate ::= CHOICE
 {
     mission-automate-alat-aller-se-recompleter                                      Mission-Automate-ALAT-AllerSeRecompleter,
-    mission-automate-alat-effectuer-recherche-et-sauvetage                          Mission-Automate-ALAT-EffectuerRechercheEtSauvetage,
-    mission-automate-alat-extraire-personnel                                        Mission-Automate-ALAT-ExtrairePersonnel,
     mission-automate-alat-detruire-neutraliser-dans-profondeur                      Mission-Automate-ALAT-DetruireNeutraliserDansProfondeur,
     mission-automate-alat-detruire-neutraliser-dans-zone                            Mission-Automate-ALAT-DetruireNeutraliserDansZone,    
     mission-automate-alat-donner-coup-arret                                         Mission-Automate-ALAT-DonnerCoupArret,

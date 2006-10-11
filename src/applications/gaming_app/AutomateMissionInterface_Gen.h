@@ -8,8 +8,6 @@
 // *****************************************************************************
 
     void CreateMission_ALAT_AllerSeRecompleter();
-    void CreateMission_ALAT_EffectuerRechercheEtSauvetage();
-    void CreateMission_ALAT_ExtrairePersonnel();
     void CreateMission_ALAT_DetruireNeutraliserDansProfondeur();
     void CreateMission_ALAT_DetruireNeutraliserDansZone();
     void CreateMission_ALAT_DonnerCoupArret();

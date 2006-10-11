@@ -25,7 +25,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 152);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 150);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -44,28 +44,8 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
 
          break;
 
-      /* mission_automate_alat_effectuer_recherche_et_sauvetage */
-      case 2:
-         PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_effectuer_recherche_et_sauvetage");
-
-         stat = asn1PE_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage (ctxt_p, pvalue->u.mission_automate_alat_effectuer_recherche_et_sauvetage);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* mission_automate_alat_extraire_personnel */
-      case 3:
-         PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_extraire_personnel");
-
-         stat = asn1PE_Mission_Automate_ALAT_ExtrairePersonnel (ctxt_p, pvalue->u.mission_automate_alat_extraire_personnel);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
       /* mission_automate_alat_detruire_neutraliser_dans_profondeur */
-      case 4:
+      case 2:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_detruire_neutraliser_dans_profondeur");
 
          stat = asn1PE_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur (ctxt_p, pvalue->u.mission_automate_alat_detruire_neutraliser_dans_profondeur);
@@ -75,7 +55,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_detruire_neutraliser_dans_zone */
-      case 5:
+      case 3:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_detruire_neutraliser_dans_zone");
 
          stat = asn1PE_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ctxt_p, pvalue->u.mission_automate_alat_detruire_neutraliser_dans_zone);
@@ -85,7 +65,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_donner_coup_arret */
-      case 6:
+      case 4:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_donner_coup_arret");
 
          stat = asn1PE_Mission_Automate_ALAT_DonnerCoupArret (ctxt_p, pvalue->u.mission_automate_alat_donner_coup_arret);
@@ -95,7 +75,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_attaquer_formation_aeromobile */
-      case 7:
+      case 5:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_attaquer_formation_aeromobile");
 
          stat = asn1PE_Mission_Automate_ALAT_AttaquerFormationAeromobile (ctxt_p, pvalue->u.mission_automate_alat_attaquer_formation_aeromobile);
@@ -105,7 +85,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_recueillir_formation_aeromobile */
-      case 8:
+      case 6:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_recueillir_formation_aeromobile");
 
          stat = asn1PE_Mission_Automate_ALAT_RecueillirFormationAeromobile (ctxt_p, pvalue->u.mission_automate_alat_recueillir_formation_aeromobile);
@@ -115,7 +95,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_heliporter */
-      case 9:
+      case 7:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_heliporter");
 
          stat = asn1PE_Mission_Automate_ALAT_Heliporter (ctxt_p, pvalue->u.mission_automate_alat_heliporter);
@@ -125,7 +105,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_jalonner */
-      case 10:
+      case 8:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_jalonner");
 
          stat = asn1PE_Mission_Automate_ALAT_Jalonner (ctxt_p, pvalue->u.mission_automate_alat_jalonner);
@@ -135,7 +115,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_helitransporter */
-      case 11:
+      case 9:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_helitransporter");
 
          stat = asn1PE_Mission_Automate_ALAT_Helitransporter (ctxt_p, pvalue->u.mission_automate_alat_helitransporter);
@@ -145,7 +125,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_appuyer */
-      case 12:
+      case 10:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_appuyer");
 
          stat = asn1PE_Mission_Automate_ALAT_Appuyer (ctxt_p, pvalue->u.mission_automate_alat_appuyer);
@@ -155,7 +135,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_couvrir */
-      case 13:
+      case 11:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_couvrir");
 
          stat = asn1PE_Mission_Automate_ALAT_Couvrir (ctxt_p, pvalue->u.mission_automate_alat_couvrir);
@@ -165,7 +145,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_surveiller */
-      case 14:
+      case 12:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_surveiller");
 
          stat = asn1PE_Mission_Automate_ALAT_Surveiller (ctxt_p, pvalue->u.mission_automate_alat_surveiller);
@@ -175,7 +155,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_reconnaitre */
-      case 15:
+      case 13:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_reconnaitre");
 
          stat = asn1PE_Mission_Automate_ALAT_Reconnaitre (ctxt_p, pvalue->u.mission_automate_alat_reconnaitre);
@@ -185,7 +165,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_freiner */
-      case 16:
+      case 14:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_freiner");
 
          stat = asn1PE_Mission_Automate_ALAT_Freiner (ctxt_p, pvalue->u.mission_automate_alat_freiner);
@@ -195,7 +175,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_escorter */
-      case 17:
+      case 15:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_escorter");
 
          stat = asn1PE_Mission_Automate_ALAT_Escorter (ctxt_p, pvalue->u.mission_automate_alat_escorter);
@@ -205,7 +185,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_attaquer */
-      case 18:
+      case 16:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_attaquer");
 
          stat = asn1PE_Mission_Automate_ALAT_Attaquer (ctxt_p, pvalue->u.mission_automate_alat_attaquer);
@@ -215,7 +195,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_site */
-      case 19:
+      case 17:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_site");
 
          stat = asn1PE_Mission_Automate_ASA_DefendreSite (ctxt_p, pvalue->u.mission_automate_asa_defendre_site);
@@ -225,7 +205,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_zone */
-      case 20:
+      case 18:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_zone");
 
          stat = asn1PE_Mission_Automate_ASA_DefendreZone (ctxt_p, pvalue->u.mission_automate_asa_defendre_zone);
@@ -235,7 +215,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_unites */
-      case 21:
+      case 19:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_unites");
 
          stat = asn1PE_Mission_Automate_ASA_DefendreUnites (ctxt_p, pvalue->u.mission_automate_asa_defendre_unites);
@@ -245,7 +225,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_surveiller */
-      case 22:
+      case 20:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_surveiller");
 
          stat = asn1PE_Mission_Automate_ASA_Surveiller (ctxt_p, pvalue->u.mission_automate_asa_surveiller);
@@ -255,7 +235,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_itineraire */
-      case 23:
+      case 21:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_itineraire");
 
          stat = asn1PE_Mission_Automate_ASA_DefendreItineraire (ctxt_p, pvalue->u.mission_automate_asa_defendre_itineraire);
@@ -265,7 +245,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_mistral_defendre_zone */
-      case 24:
+      case 22:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_mistral_defendre_zone");
 
          stat = asn1PE_Mission_Automate_ASA_MISTRAL_DefendreZone (ctxt_p, pvalue->u.mission_automate_asa_mistral_defendre_zone);
@@ -275,7 +255,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_mistral_defendre_site */
-      case 25:
+      case 23:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_mistral_defendre_site");
 
          stat = asn1PE_Mission_Automate_ASA_MISTRAL_DefendreSite (ctxt_p, pvalue->u.mission_automate_asa_mistral_defendre_site);
@@ -285,7 +265,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_mistral_surveiller */
-      case 26:
+      case 24:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_mistral_surveiller");
 
          stat = asn1PE_Mission_Automate_ASA_MISTRAL_Surveiller (ctxt_p, pvalue->u.mission_automate_asa_mistral_surveiller);
@@ -295,7 +275,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_hawk_defendre_zone */
-      case 27:
+      case 25:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_hawk_defendre_zone");
 
          stat = asn1PE_Mission_Automate_ASA_HAWK_DefendreZone (ctxt_p, pvalue->u.mission_automate_asa_hawk_defendre_zone);
@@ -305,7 +285,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_hawk_defendre_site */
-      case 28:
+      case 26:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_hawk_defendre_site");
 
          stat = asn1PE_Mission_Automate_ASA_HAWK_DefendreSite (ctxt_p, pvalue->u.mission_automate_asa_hawk_defendre_site);
@@ -315,7 +295,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_hawk_surveiller */
-      case 29:
+      case 27:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_hawk_surveiller");
 
          stat = asn1PE_Mission_Automate_ASA_HAWK_Surveiller (ctxt_p, pvalue->u.mission_automate_asa_hawk_surveiller);
@@ -325,7 +305,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_ass_se_deployer */
-      case 30:
+      case 28:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_ass_se_deployer");
 
          stat = asn1PE_Mission_Automate_ASS_SeDeployer (ctxt_p, pvalue->u.mission_automate_ass_se_deployer);
@@ -335,7 +315,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_ass_reconnaitre_zones_deploiement */
-      case 31:
+      case 29:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_ass_reconnaitre_zones_deploiement");
 
          stat = asn1PE_Mission_Automate_ASS_ReconnaitreZonesDeploiement (ctxt_p, pvalue->u.mission_automate_ass_reconnaitre_zones_deploiement);
@@ -345,7 +325,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_ass_acquerir_objectifs */
-      case 32:
+      case 30:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_ass_acquerir_objectifs");
 
          stat = asn1PE_Mission_Automate_ASS_AcquerirObjectifs (ctxt_p, pvalue->u.mission_automate_ass_acquerir_objectifs);
@@ -355,7 +335,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_appuyer */
-      case 33:
+      case 31:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_appuyer");
 
          stat = asn1PE_Mission_Automate_ABC_Appuyer (ctxt_p, pvalue->u.mission_automate_abc_appuyer);
@@ -365,7 +345,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_attaquer */
-      case 34:
+      case 32:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_attaquer");
 
          stat = asn1PE_Mission_Automate_ABC_Attaquer (ctxt_p, pvalue->u.mission_automate_abc_attaquer);
@@ -375,7 +355,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_contre_attaquer */
-      case 35:
+      case 33:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_contre_attaquer");
 
          stat = asn1PE_Mission_Automate_ABC_ContreAttaquer (ctxt_p, pvalue->u.mission_automate_abc_contre_attaquer);
@@ -385,7 +365,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_controler */
-      case 36:
+      case 34:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_controler");
 
          stat = asn1PE_Mission_Automate_ABC_Controler (ctxt_p, pvalue->u.mission_automate_abc_controler);
@@ -395,7 +375,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_couvrir */
-      case 37:
+      case 35:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_couvrir");
 
          stat = asn1PE_Mission_Automate_ABC_Couvrir (ctxt_p, pvalue->u.mission_automate_abc_couvrir);
@@ -405,7 +385,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_donner_coup_arret */
-      case 38:
+      case 36:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_donner_coup_arret");
 
          stat = asn1PE_Mission_Automate_ABC_DonnerCoupArret (ctxt_p, pvalue->u.mission_automate_abc_donner_coup_arret);
@@ -415,7 +395,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_eclairer */
-      case 39:
+      case 37:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_eclairer");
 
          stat = asn1PE_Mission_Automate_ABC_Eclairer (ctxt_p, pvalue->u.mission_automate_abc_eclairer);
@@ -425,7 +405,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_effectuer_raid */
-      case 40:
+      case 38:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_effectuer_raid");
 
          stat = asn1PE_Mission_Automate_ABC_EffectuerRaid (ctxt_p, pvalue->u.mission_automate_abc_effectuer_raid);
@@ -435,7 +415,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_interdire */
-      case 41:
+      case 39:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_interdire");
 
          stat = asn1PE_Mission_Automate_ABC_Interdire (ctxt_p, pvalue->u.mission_automate_abc_interdire);
@@ -445,7 +425,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_jalonner */
-      case 42:
+      case 40:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_jalonner");
 
          stat = asn1PE_Mission_Automate_ABC_Jalonner (ctxt_p, pvalue->u.mission_automate_abc_jalonner);
@@ -455,7 +435,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_prendre_preciser_contact */
-      case 43:
+      case 41:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_prendre_preciser_contact");
 
          stat = asn1PE_Mission_Automate_ABC_PrendrePreciserContact (ctxt_p, pvalue->u.mission_automate_abc_prendre_preciser_contact);
@@ -465,7 +445,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_reconnaitre */
-      case 44:
+      case 42:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_reconnaitre");
 
          stat = asn1PE_Mission_Automate_ABC_Reconnaitre (ctxt_p, pvalue->u.mission_automate_abc_reconnaitre);
@@ -475,7 +455,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_reconnaitre_point */
-      case 45:
+      case 43:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_reconnaitre_point");
 
          stat = asn1PE_Mission_Automate_ABC_ReconnaitrePoint (ctxt_p, pvalue->u.mission_automate_abc_reconnaitre_point);
@@ -485,7 +465,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_reduire */
-      case 46:
+      case 44:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_reduire");
 
          stat = asn1PE_Mission_Automate_ABC_Reduire (ctxt_p, pvalue->u.mission_automate_abc_reduire);
@@ -495,7 +475,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_relever_en_depassant */
-      case 47:
+      case 45:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_relever_en_depassant");
 
          stat = asn1PE_Mission_Automate_ABC_ReleverEnDepassant (ctxt_p, pvalue->u.mission_automate_abc_relever_en_depassant);
@@ -505,7 +485,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_semparer */
-      case 48:
+      case 46:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_semparer");
 
          stat = asn1PE_Mission_Automate_ABC_Semparer (ctxt_p, pvalue->u.mission_automate_abc_semparer);
@@ -515,7 +495,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_tenir */
-      case 49:
+      case 47:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_tenir");
 
          stat = asn1PE_Mission_Automate_ABC_Tenir (ctxt_p, pvalue->u.mission_automate_abc_tenir);
@@ -525,7 +505,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_soutenir */
-      case 50:
+      case 48:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_soutenir");
 
          stat = asn1PE_Mission_Automate_ABC_Soutenir (ctxt_p, pvalue->u.mission_automate_abc_soutenir);
@@ -535,7 +515,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_surveiller */
-      case 51:
+      case 49:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_surveiller");
 
          stat = asn1PE_Mission_Automate_ABC_Surveiller (ctxt_p, pvalue->u.mission_automate_abc_surveiller);
@@ -545,7 +525,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_flanc_garder */
-      case 52:
+      case 50:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_flanc_garder");
 
          stat = asn1PE_Mission_Automate_ABC_FlancGarder (ctxt_p, pvalue->u.mission_automate_abc_flanc_garder);
@@ -555,7 +535,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_renseigner_sur */
-      case 53:
+      case 51:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_renseigner_sur");
 
          stat = asn1PE_Mission_Automate_ABC_RenseignerSur (ctxt_p, pvalue->u.mission_automate_abc_renseigner_sur);
@@ -565,7 +545,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_fixer */
-      case 54:
+      case 52:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_fixer");
 
          stat = asn1PE_Mission_Automate_ABC_Fixer (ctxt_p, pvalue->u.mission_automate_abc_fixer);
@@ -575,7 +555,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_freiner */
-      case 55:
+      case 53:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_freiner");
 
          stat = asn1PE_Mission_Automate_ABC_Freiner (ctxt_p, pvalue->u.mission_automate_abc_freiner);
@@ -585,7 +565,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_surveiller_itineraire */
-      case 56:
+      case 54:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_surveiller_itineraire");
 
          stat = asn1PE_Mission_Automate_ABC_SurveillerItineraire (ctxt_p, pvalue->u.mission_automate_abc_surveiller_itineraire);
@@ -595,7 +575,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_renseigner_sur_un_axe */
-      case 57:
+      case 55:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_renseigner_sur_un_axe");
 
          stat = asn1PE_Mission_Automate_ABC_RenseignerSurUnAxe (ctxt_p, pvalue->u.mission_automate_abc_renseigner_sur_un_axe);
@@ -605,7 +585,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_recueillir_unite */
-      case 58:
+      case 56:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_recueillir_unite");
 
          stat = asn1PE_Mission_Automate_ABC_RecueillirUnite (ctxt_p, pvalue->u.mission_automate_abc_recueillir_unite);
@@ -615,7 +595,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_escorter_unite */
-      case 59:
+      case 57:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_escorter_unite");
 
          stat = asn1PE_Mission_Automate_ABC_EscorterUnite (ctxt_p, pvalue->u.mission_automate_abc_escorter_unite);
@@ -625,7 +605,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_escorter_unites */
-      case 60:
+      case 58:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_escorter_unites");
 
          stat = asn1PE_Mission_Automate_ABC_EscorterUnites (ctxt_p, pvalue->u.mission_automate_abc_escorter_unites);
@@ -635,7 +615,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_armer_point_de_controle */
-      case 61:
+      case 59:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_armer_point_de_controle");
 
          stat = asn1PE_Mission_Automate_ABC_ArmerPointDeControle (ctxt_p, pvalue->u.mission_automate_abc_armer_point_de_controle);
@@ -645,7 +625,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_organiser_accueil_colonne_refugies */
-      case 62:
+      case 60:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_organiser_accueil_colonne_refugies");
 
          stat = asn1PE_Mission_Automate_ABC_OrganiserAccueilColonneRefugies (ctxt_p, pvalue->u.mission_automate_abc_organiser_accueil_colonne_refugies);
@@ -655,7 +635,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_proteger_pc */
-      case 63:
+      case 61:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_proteger_pc");
 
          stat = asn1PE_Mission_Automate_ABC_ProtegerPC (ctxt_p, pvalue->u.mission_automate_abc_proteger_pc);
@@ -665,7 +645,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_appuyer_sur_position */
-      case 64:
+      case 62:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_appuyer_sur_position");
 
          stat = asn1PE_Mission_Automate_ABC_AppuyerSurPosition (ctxt_p, pvalue->u.mission_automate_abc_appuyer_sur_position);
@@ -675,7 +655,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_se_deployer */
-      case 65:
+      case 63:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_se_deployer");
 
          stat = asn1PE_Mission_Automate_GEN_SeDeployer (ctxt_p, pvalue->u.mission_automate_gen_se_deployer);
@@ -685,7 +665,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_faire_franchir */
-      case 66:
+      case 64:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_faire_franchir");
 
          stat = asn1PE_Mission_Automate_GEN_FaireFranchir (ctxt_p, pvalue->u.mission_automate_gen_faire_franchir);
@@ -695,7 +675,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_systeme_obstacles */
-      case 67:
+      case 65:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_systeme_obstacles");
 
          stat = asn1PE_Mission_Automate_GEN_RealiserSystemeObstacles (ctxt_p, pvalue->u.mission_automate_gen_realiser_systeme_obstacles);
@@ -705,7 +685,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_franchir_de_vive_force */
-      case 68:
+      case 66:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_franchir_de_vive_force");
 
          stat = asn1PE_Mission_Automate_GEN_FranchirDeViveForce (ctxt_p, pvalue->u.mission_automate_gen_franchir_de_vive_force);
@@ -715,7 +695,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_retablir_itineraires */
-      case 69:
+      case 67:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_retablir_itineraires");
 
          stat = asn1PE_Mission_Automate_GEN_RetablirItineraires (ctxt_p, pvalue->u.mission_automate_gen_retablir_itineraires);
@@ -725,7 +705,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_amenager_aire_stationnement */
-      case 70:
+      case 68:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_amenager_aire_stationnement");
 
          stat = asn1PE_Mission_Automate_GEN_AmenagerAireStationnement (ctxt_p, pvalue->u.mission_automate_gen_amenager_aire_stationnement);
@@ -735,7 +715,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_amenager_terrain_poser_sommaire */
-      case 71:
+      case 69:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_amenager_terrain_poser_sommaire");
 
          stat = asn1PE_Mission_Automate_GEN_AmenagerTerrainPoserSommaire (ctxt_p, pvalue->u.mission_automate_gen_amenager_terrain_poser_sommaire);
@@ -745,7 +725,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_zone_poser */
-      case 72:
+      case 70:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_zone_poser");
 
          stat = asn1PE_Mission_Automate_GEN_RealiserZonePoser (ctxt_p, pvalue->u.mission_automate_gen_realiser_zone_poser);
@@ -755,7 +735,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_reconnaitre_zone_deploiement */
-      case 73:
+      case 71:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_reconnaitre_zone_deploiement");
 
          stat = asn1PE_Mission_Automate_GEN_ReconnaitreZoneDeploiement (ctxt_p, pvalue->u.mission_automate_gen_reconnaitre_zone_deploiement);
@@ -765,7 +745,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_camp_prisonniers */
-      case 74:
+      case 72:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_camp_prisonniers");
 
          stat = asn1PE_Mission_Automate_GEN_RealiserCampPrisonniers (ctxt_p, pvalue->u.mission_automate_gen_realiser_camp_prisonniers);
@@ -775,7 +755,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_camp_refugies */
-      case 75:
+      case 73:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_camp_refugies");
 
          stat = asn1PE_Mission_Automate_GEN_RealiserCampRefugies (ctxt_p, pvalue->u.mission_automate_gen_realiser_camp_refugies);
@@ -785,7 +765,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial */
-      case 76:
+      case 74:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial");
 
          stat = asn1PE_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial (ctxt_p, pvalue->u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial);
@@ -795,7 +775,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_travaux_sommaires_au_profit_population */
-      case 77:
+      case 75:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population");
 
          stat = asn1PE_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation (ctxt_p, pvalue->u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population);
@@ -805,7 +785,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_appuyer_debarquement_troupes */
-      case 78:
+      case 76:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_appuyer_debarquement_troupes");
 
          stat = asn1PE_Mission_Automate_GEN_AppuyerDebarquementTroupes (ctxt_p, pvalue->u.mission_automate_gen_appuyer_debarquement_troupes);
@@ -815,7 +795,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_ouvrir_axes_progression */
-      case 79:
+      case 77:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_ouvrir_axes_progression");
 
          stat = asn1PE_Mission_Automate_GEN_OuvrirAxesProgression (ctxt_p, pvalue->u.mission_automate_gen_ouvrir_axes_progression);
@@ -825,7 +805,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_attaquer_souplesse */
-      case 80:
+      case 78:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_attaquer_souplesse");
 
          stat = asn1PE_Mission_Automate_INF_AttaquerSouplesse (ctxt_p, pvalue->u.mission_automate_inf_attaquer_souplesse);
@@ -835,7 +815,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer */
-      case 81:
+      case 79:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer");
 
          stat = asn1PE_Mission_Automate_INF_Appuyer (ctxt_p, pvalue->u.mission_automate_inf_appuyer);
@@ -845,7 +825,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_controler */
-      case 82:
+      case 80:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_controler");
 
          stat = asn1PE_Mission_Automate_INF_Controler (ctxt_p, pvalue->u.mission_automate_inf_controler);
@@ -855,7 +835,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_couvrir */
-      case 83:
+      case 81:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_couvrir");
 
          stat = asn1PE_Mission_Automate_INF_Couvrir (ctxt_p, pvalue->u.mission_automate_inf_couvrir);
@@ -865,7 +845,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_donner_coup_arret */
-      case 84:
+      case 82:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_donner_coup_arret");
 
          stat = asn1PE_Mission_Automate_INF_DonnerCoupArret (ctxt_p, pvalue->u.mission_automate_inf_donner_coup_arret);
@@ -875,7 +855,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_eclairer */
-      case 85:
+      case 83:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_eclairer");
 
          stat = asn1PE_Mission_Automate_INF_Eclairer (ctxt_p, pvalue->u.mission_automate_inf_eclairer);
@@ -885,7 +865,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_flanc_garder */
-      case 86:
+      case 84:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_flanc_garder");
 
          stat = asn1PE_Mission_Automate_INF_FlancGarder (ctxt_p, pvalue->u.mission_automate_inf_flanc_garder);
@@ -895,7 +875,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_freiner */
-      case 87:
+      case 85:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_freiner");
 
          stat = asn1PE_Mission_Automate_INF_Freiner (ctxt_p, pvalue->u.mission_automate_inf_freiner);
@@ -905,7 +885,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_harceler */
-      case 88:
+      case 86:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_harceler");
 
          stat = asn1PE_Mission_Automate_INF_Harceler (ctxt_p, pvalue->u.mission_automate_inf_harceler);
@@ -915,7 +895,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_interdire */
-      case 89:
+      case 87:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_interdire");
 
          stat = asn1PE_Mission_Automate_INF_Interdire (ctxt_p, pvalue->u.mission_automate_inf_interdire);
@@ -925,7 +905,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_mener_defense_usure */
-      case 90:
+      case 88:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_mener_defense_usure");
 
          stat = asn1PE_Mission_Automate_INF_MenerDefenseUsure (ctxt_p, pvalue->u.mission_automate_inf_mener_defense_usure);
@@ -935,7 +915,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_prendre_preciser_maintenir_contact */
-      case 91:
+      case 89:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_prendre_preciser_maintenir_contact");
 
          stat = asn1PE_Mission_Automate_INF_PrendrePreciserMaintenirContact (ctxt_p, pvalue->u.mission_automate_inf_prendre_preciser_maintenir_contact);
@@ -945,7 +925,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_reconnaissance_offensive */
-      case 92:
+      case 90:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_reconnaissance_offensive");
 
          stat = asn1PE_Mission_Automate_INF_ReconnaissanceOffensive (ctxt_p, pvalue->u.mission_automate_inf_reconnaissance_offensive);
@@ -955,7 +935,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_recueillir_unite */
-      case 93:
+      case 91:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_recueillir_unite");
 
          stat = asn1PE_Mission_Automate_INF_RecueillirUnite (ctxt_p, pvalue->u.mission_automate_inf_recueillir_unite);
@@ -965,7 +945,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_reduire */
-      case 94:
+      case 92:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_reduire");
 
          stat = asn1PE_Mission_Automate_INF_Reduire (ctxt_p, pvalue->u.mission_automate_inf_reduire);
@@ -975,7 +955,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_relever */
-      case 95:
+      case 93:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_relever");
 
          stat = asn1PE_Mission_Automate_INF_Relever (ctxt_p, pvalue->u.mission_automate_inf_relever);
@@ -985,7 +965,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_rompre_contact */
-      case 96:
+      case 94:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_rompre_contact");
 
          stat = asn1PE_Mission_Automate_INF_RompreContact (ctxt_p, pvalue->u.mission_automate_inf_rompre_contact);
@@ -995,7 +975,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_surveiller */
-      case 97:
+      case 95:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_surveiller");
 
          stat = asn1PE_Mission_Automate_INF_Surveiller (ctxt_p, pvalue->u.mission_automate_inf_surveiller);
@@ -1005,7 +985,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_semparer */
-      case 98:
+      case 96:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_semparer");
 
          stat = asn1PE_Mission_Automate_INF_Semparer (ctxt_p, pvalue->u.mission_automate_inf_semparer);
@@ -1015,7 +995,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_fixer */
-      case 99:
+      case 97:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_fixer");
 
          stat = asn1PE_Mission_Automate_INF_Fixer (ctxt_p, pvalue->u.mission_automate_inf_fixer);
@@ -1025,7 +1005,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_attaquer_en_terrain_difficile */
-      case 100:
+      case 98:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_attaquer_en_terrain_difficile");
 
          stat = asn1PE_Mission_Automate_INF_AttaquerEnTerrainDifficile (ctxt_p, pvalue->u.mission_automate_inf_attaquer_en_terrain_difficile);
@@ -1035,7 +1015,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_barrer_direction */
-      case 101:
+      case 99:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_barrer_direction");
 
          stat = asn1PE_Mission_Automate_INF_BarrerDirection (ctxt_p, pvalue->u.mission_automate_inf_barrer_direction);
@@ -1045,7 +1025,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_defendre_ferme */
-      case 102:
+      case 100:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_defendre_ferme");
 
          stat = asn1PE_Mission_Automate_INF_DefendreFerme (ctxt_p, pvalue->u.mission_automate_inf_defendre_ferme);
@@ -1055,7 +1035,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_tenir */
-      case 103:
+      case 101:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_tenir");
 
          stat = asn1PE_Mission_Automate_INF_Tenir (ctxt_p, pvalue->u.mission_automate_inf_tenir);
@@ -1065,7 +1045,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer_un_freinage */
-      case 104:
+      case 102:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer_un_freinage");
 
          stat = asn1PE_Mission_Automate_INF_AppuyerUnFreinage (ctxt_p, pvalue->u.mission_automate_inf_appuyer_un_freinage);
@@ -1075,7 +1055,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer_une_attaque */
-      case 105:
+      case 103:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer_une_attaque");
 
          stat = asn1PE_Mission_Automate_INF_AppuyerUneAttaque (ctxt_p, pvalue->u.mission_automate_inf_appuyer_une_attaque);
@@ -1085,7 +1065,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_soutenir */
-      case 106:
+      case 104:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_soutenir");
 
          stat = asn1PE_Mission_Automate_INF_Soutenir (ctxt_p, pvalue->u.mission_automate_inf_soutenir);
@@ -1095,7 +1075,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_escorter_unite */
-      case 107:
+      case 105:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_escorter_unite");
 
          stat = asn1PE_Mission_Automate_INF_EscorterUnite (ctxt_p, pvalue->u.mission_automate_inf_escorter_unite);
@@ -1105,7 +1085,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_escorter_unites */
-      case 108:
+      case 106:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_escorter_unites");
 
          stat = asn1PE_Mission_Automate_INF_EscorterUnites (ctxt_p, pvalue->u.mission_automate_inf_escorter_unites);
@@ -1115,7 +1095,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer_sur_position */
-      case 109:
+      case 107:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer_sur_position");
 
          stat = asn1PE_Mission_Automate_INF_AppuyerSurPosition (ctxt_p, pvalue->u.mission_automate_inf_appuyer_sur_position);
@@ -1125,7 +1105,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_se_deployer */
-      case 110:
+      case 108:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_se_deployer");
 
          stat = asn1PE_Mission_Automate_LOG_SeDeployer (ctxt_p, pvalue->u.mission_automate_log_se_deployer);
@@ -1135,7 +1115,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_appuyer_mouvement */
-      case 111:
+      case 109:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_appuyer_mouvement");
 
          stat = asn1PE_Mission_Automate_LOG_AppuyerMouvement (ctxt_p, pvalue->u.mission_automate_log_appuyer_mouvement);
@@ -1145,7 +1125,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_reconnaitre_itineraire */
-      case 112:
+      case 110:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_reconnaitre_itineraire");
 
          stat = asn1PE_Mission_Automate_LOG_ReconnaitreItineraire (ctxt_p, pvalue->u.mission_automate_log_reconnaitre_itineraire);
@@ -1155,7 +1135,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_transporter_unites */
-      case 113:
+      case 111:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_transporter_unites");
 
          stat = asn1PE_Mission_Automate_LOG_TransporterUnites (ctxt_p, pvalue->u.mission_automate_log_transporter_unites);
@@ -1165,7 +1145,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_appuyer_mouvement_dans_zone */
-      case 114:
+      case 112:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_appuyer_mouvement_dans_zone");
 
          stat = asn1PE_Mission_Automate_LOG_AppuyerMouvementDansZone (ctxt_p, pvalue->u.mission_automate_log_appuyer_mouvement_dans_zone);
@@ -1175,7 +1155,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_mettre_en_oeuvre_zone_stationnement */
-      case 115:
+      case 113:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_mettre_en_oeuvre_zone_stationnement");
 
          stat = asn1PE_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement (ctxt_p, pvalue->u.mission_automate_log_mettre_en_oeuvre_zone_stationnement);
@@ -1185,7 +1165,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_appuyer_franchissement_dans_zone */
-      case 116:
+      case 114:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_appuyer_franchissement_dans_zone");
 
          stat = asn1PE_Mission_Automate_LOG_AppuyerFranchissementDansZone (ctxt_p, pvalue->u.mission_automate_log_appuyer_franchissement_dans_zone);
@@ -1195,7 +1175,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_bloquer_zone */
-      case 117:
+      case 115:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_bloquer_zone");
 
          stat = asn1PE_Mission_Automate_LOG_BloquerZone (ctxt_p, pvalue->u.mission_automate_log_bloquer_zone);
@@ -1205,7 +1185,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_reconnaitre_zone_contaminee */
-      case 118:
+      case 116:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_reconnaitre_zone_contaminee");
 
          stat = asn1PE_Mission_Automate_LOG_ReconnaitreZoneContaminee (ctxt_p, pvalue->u.mission_automate_log_reconnaitre_zone_contaminee);
@@ -1215,7 +1195,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_reconnaitre_zone_de_deploiement */
-      case 119:
+      case 117:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_reconnaitre_zone_de_deploiement");
 
          stat = asn1PE_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement (ctxt_p, pvalue->u.mission_automate_log_reconnaitre_zone_de_deploiement);
@@ -1225,7 +1205,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_surveiller */
-      case 120:
+      case 118:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_surveiller");
 
          stat = asn1PE_Mission_Automate_LOG_Surveiller (ctxt_p, pvalue->u.mission_automate_log_surveiller);
@@ -1235,7 +1215,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_armer_pias */
-      case 121:
+      case 119:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_armer_pias");
 
          stat = asn1PE_Mission_Automate_LOG_ArmerPIAs (ctxt_p, pvalue->u.mission_automate_log_armer_pias);
@@ -1245,7 +1225,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_test_move_to */
-      case 122:
+      case 120:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_test_move_to");
 
          stat = asn1PE_Mission_Automate_Test_MoveTo (ctxt_p, pvalue->u.mission_automate_test_move_to);
@@ -1255,7 +1235,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_decrocher */
-      case 123:
+      case 121:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_decrocher");
 
          stat = asn1PE_Mission_Automate_Decrocher (ctxt_p, pvalue->u.mission_automate_decrocher);
@@ -1265,7 +1245,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_relever_sur_place */
-      case 124:
+      case 122:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_relever_sur_place");
 
          stat = asn1PE_Mission_Automate_ReleverSurPlace (ctxt_p, pvalue->u.mission_automate_relever_sur_place);
@@ -1275,7 +1255,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_faire_mouvement */
-      case 125:
+      case 123:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_faire_mouvement");
 
          stat = asn1PE_Mission_Automate_FaireMouvement (ctxt_p, pvalue->u.mission_automate_faire_mouvement);
@@ -1285,7 +1265,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_faire_decontaminer */
-      case 126:
+      case 124:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_faire_decontaminer");
 
          stat = asn1PE_Mission_Automate_SeFaireDecontaminer (ctxt_p, pvalue->u.mission_automate_se_faire_decontaminer);
@@ -1295,7 +1275,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_franchir */
-      case 127:
+      case 125:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_franchir");
 
          stat = asn1PE_Mission_Automate_Franchir (ctxt_p, pvalue->u.mission_automate_franchir);
@@ -1305,7 +1285,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_stationner */
-      case 128:
+      case 126:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_stationner");
 
          stat = asn1PE_Mission_Automate_Stationner (ctxt_p, pvalue->u.mission_automate_stationner);
@@ -1315,7 +1295,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_faire_transporter */
-      case 129:
+      case 127:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_faire_transporter");
 
          stat = asn1PE_Mission_Automate_SeFaireTransporter (ctxt_p, pvalue->u.mission_automate_se_faire_transporter);
@@ -1325,7 +1305,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_recompleter */
-      case 130:
+      case 128:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_recompleter");
 
          stat = asn1PE_Mission_Automate_SeRecompleter (ctxt_p, pvalue->u.mission_automate_se_recompleter);
@@ -1335,7 +1315,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_rendre */
-      case 131:
+      case 129:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_rendre");
 
          stat = asn1PE_Mission_Automate_SeRendre (ctxt_p, pvalue->u.mission_automate_se_rendre);
@@ -1345,7 +1325,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_faire_mouvement_vers_camp_refugies */
-      case 132:
+      case 130:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_faire_mouvement_vers_camp_refugies");
 
          stat = asn1PE_Mission_Automate_FaireMouvementVersCampRefugies (ctxt_p, pvalue->u.mission_automate_faire_mouvement_vers_camp_refugies);
@@ -1355,7 +1335,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_interdire_franchissement_populations */
-      case 133:
+      case 131:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_interdire_franchissement_populations");
 
          stat = asn1PE_Mission_Automate_InterdireFranchissementPopulations (ctxt_p, pvalue->u.mission_automate_interdire_franchissement_populations);
@@ -1365,7 +1345,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_filtrer_populations */
-      case 134:
+      case 132:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_filtrer_populations");
 
          stat = asn1PE_Mission_Automate_FiltrerPopulations (ctxt_p, pvalue->u.mission_automate_filtrer_populations);
@@ -1375,7 +1355,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_canaliser_populations */
-      case 135:
+      case 133:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_canaliser_populations");
 
          stat = asn1PE_Mission_Automate_CanaliserPopulations (ctxt_p, pvalue->u.mission_automate_canaliser_populations);
@@ -1385,7 +1365,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_controler_populations_dans_zone */
-      case 136:
+      case 134:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_controler_populations_dans_zone");
 
          stat = asn1PE_Mission_Automate_ControlerPopulationsDansZone (ctxt_p, pvalue->u.mission_automate_controler_populations_dans_zone);
@@ -1395,7 +1375,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_securiser_zone_contre_populations */
-      case 137:
+      case 135:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_securiser_zone_contre_populations");
 
          stat = asn1PE_Mission_Automate_SecuriserZoneContrePopulations (ctxt_p, pvalue->u.mission_automate_securiser_zone_contre_populations);
@@ -1405,7 +1385,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asy_commettre_exactions_sur_population_dans_zone */
-      case 138:
+      case 136:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asy_commettre_exactions_sur_population_dans_zone");
 
          stat = asn1PE_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone (ctxt_p, pvalue->u.mission_automate_asy_commettre_exactions_sur_population_dans_zone);
@@ -1415,7 +1395,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_generique */
-      case 139:
+      case 137:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_generique");
 
          stat = asn1PE_Mission_Automate_Generique (ctxt_p, pvalue->u.mission_automate_generique);
@@ -1425,7 +1405,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_reconnaitre_un_axe */
-      case 140:
+      case 138:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_reconnaitre_un_axe");
 
          stat = asn1PE_Mission_Automate_NBC_ReconnaitreUnAxe (ctxt_p, pvalue->u.mission_automate_nbc_reconnaitre_un_axe);
@@ -1435,7 +1415,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_reconnaitre_une_zone */
-      case 141:
+      case 139:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_reconnaitre_une_zone");
 
          stat = asn1PE_Mission_Automate_NBC_ReconnaitreUneZone (ctxt_p, pvalue->u.mission_automate_nbc_reconnaitre_une_zone);
@@ -1445,7 +1425,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_armer_un_site_de_decontamination */
-      case 142:
+      case 140:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_armer_un_site_de_decontamination");
 
          stat = asn1PE_Mission_Automate_NBC_ArmerUnSiteDeDecontamination (ctxt_p, pvalue->u.mission_automate_nbc_armer_un_site_de_decontamination);
@@ -1455,7 +1435,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_decontaminer_une_zone */
-      case 143:
+      case 141:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_decontaminer_une_zone");
 
          stat = asn1PE_Mission_Automate_NBC_DecontaminerUneZone (ctxt_p, pvalue->u.mission_automate_nbc_decontaminer_une_zone);
@@ -1465,7 +1445,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_reconnaitre_des_sites_rota */
-      case 144:
+      case 142:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_reconnaitre_des_sites_rota");
 
          stat = asn1PE_Mission_Automate_NBC_ReconnaitreDesSitesROTA (ctxt_p, pvalue->u.mission_automate_nbc_reconnaitre_des_sites_rota);
@@ -1475,7 +1455,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_rohum_renseigner_sur */
-      case 145:
+      case 143:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_rohum_renseigner_sur");
 
          stat = asn1PE_Mission_Automate_RENS_ROHUM_RenseignerSur (ctxt_p, pvalue->u.mission_automate_rens_rohum_renseigner_sur);
@@ -1485,7 +1465,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_rohum_orienter_guider */
-      case 146:
+      case 144:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_rohum_orienter_guider");
 
          stat = asn1PE_Mission_Automate_RENS_ROHUM_OrienterGuider (ctxt_p, pvalue->u.mission_automate_rens_rohum_orienter_guider);
@@ -1495,7 +1475,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_rohum_sexfiltrer */
-      case 147:
+      case 145:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_rohum_sexfiltrer");
 
          stat = asn1PE_Mission_Automate_RENS_ROHUM_SExfiltrer (ctxt_p, pvalue->u.mission_automate_rens_rohum_sexfiltrer);
@@ -1505,7 +1485,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roim_cl289_renseigner_sur */
-      case 148:
+      case 146:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roim_cl289_renseigner_sur");
 
          stat = asn1PE_Mission_Automate_RENS_ROIM_CL289_RenseignerSur (ctxt_p, pvalue->u.mission_automate_rens_roim_cl289_renseigner_sur);
@@ -1515,7 +1495,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roim_sdti_renseigner_sur */
-      case 149:
+      case 147:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roim_sdti_renseigner_sur");
 
          stat = asn1PE_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur (ctxt_p, pvalue->u.mission_automate_rens_roim_sdti_renseigner_sur);
@@ -1525,7 +1505,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roem_appuyer */
-      case 150:
+      case 148:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roem_appuyer");
 
          stat = asn1PE_Mission_Automate_RENS_ROEM_Appuyer (ctxt_p, pvalue->u.mission_automate_rens_roem_appuyer);
@@ -1535,7 +1515,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roem_renseignersur */
-      case 151:
+      case 149:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roem_renseignersur");
 
          stat = asn1PE_Mission_Automate_RENS_ROEM_RenseignerSur (ctxt_p, pvalue->u.mission_automate_rens_roem_renseignersur);
@@ -1545,7 +1525,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_radint_renseignersur */
-      case 152:
+      case 150:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_radint_renseignersur");
 
          stat = asn1PE_Mission_Automate_RENS_RADINT_RenseignerSur (ctxt_p, pvalue->u.mission_automate_rens_radint_renseignersur);
@@ -1555,7 +1535,7 @@ EXTERN int asn1PE_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_trans_commander */
-      case 153:
+      case 151:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_trans_commander");
 
          stat = asn1PE_Mission_Automate_TRANS_Commander (ctxt_p, pvalue->u.mission_automate_trans_commander);
@@ -1588,7 +1568,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 152);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 150);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    else pvalue->t = ui + 1;
 
@@ -1610,38 +1590,8 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
 
          break;
 
-      /* mission_automate_alat_effectuer_recherche_et_sauvetage */
-      case 1:
-         PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_effectuer_recherche_et_sauvetage");
-
-         pvalue->u.mission_automate_alat_effectuer_recherche_et_sauvetage = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage);
-         if (pvalue->u.mission_automate_alat_effectuer_recherche_et_sauvetage == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_Mission_Automate_ALAT_EffectuerRechercheEtSauvetage (ctxt_p, pvalue->u.mission_automate_alat_effectuer_recherche_et_sauvetage);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* mission_automate_alat_extraire_personnel */
-      case 2:
-         PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_extraire_personnel");
-
-         pvalue->u.mission_automate_alat_extraire_personnel = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_ExtrairePersonnel);
-         if (pvalue->u.mission_automate_alat_extraire_personnel == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_Mission_Automate_ALAT_ExtrairePersonnel (ctxt_p, pvalue->u.mission_automate_alat_extraire_personnel);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
       /* mission_automate_alat_detruire_neutraliser_dans_profondeur */
-      case 3:
+      case 1:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_detruire_neutraliser_dans_profondeur");
 
          pvalue->u.mission_automate_alat_detruire_neutraliser_dans_profondeur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur);
@@ -1656,7 +1606,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_detruire_neutraliser_dans_zone */
-      case 4:
+      case 2:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_detruire_neutraliser_dans_zone");
 
          pvalue->u.mission_automate_alat_detruire_neutraliser_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone);
@@ -1671,7 +1621,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_donner_coup_arret */
-      case 5:
+      case 3:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_donner_coup_arret");
 
          pvalue->u.mission_automate_alat_donner_coup_arret = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_DonnerCoupArret);
@@ -1686,7 +1636,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_attaquer_formation_aeromobile */
-      case 6:
+      case 4:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_attaquer_formation_aeromobile");
 
          pvalue->u.mission_automate_alat_attaquer_formation_aeromobile = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile);
@@ -1701,7 +1651,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_recueillir_formation_aeromobile */
-      case 7:
+      case 5:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_recueillir_formation_aeromobile");
 
          pvalue->u.mission_automate_alat_recueillir_formation_aeromobile = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile);
@@ -1716,7 +1666,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_heliporter */
-      case 8:
+      case 6:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_heliporter");
 
          pvalue->u.mission_automate_alat_heliporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Heliporter);
@@ -1731,7 +1681,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_jalonner */
-      case 9:
+      case 7:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_jalonner");
 
          pvalue->u.mission_automate_alat_jalonner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Jalonner);
@@ -1746,7 +1696,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_helitransporter */
-      case 10:
+      case 8:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_helitransporter");
 
          pvalue->u.mission_automate_alat_helitransporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Helitransporter);
@@ -1761,7 +1711,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_appuyer */
-      case 11:
+      case 9:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_appuyer");
 
          pvalue->u.mission_automate_alat_appuyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Appuyer);
@@ -1776,7 +1726,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_couvrir */
-      case 12:
+      case 10:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_couvrir");
 
          pvalue->u.mission_automate_alat_couvrir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Couvrir);
@@ -1791,7 +1741,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_surveiller */
-      case 13:
+      case 11:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_surveiller");
 
          pvalue->u.mission_automate_alat_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Surveiller);
@@ -1806,7 +1756,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_reconnaitre */
-      case 14:
+      case 12:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_reconnaitre");
 
          pvalue->u.mission_automate_alat_reconnaitre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Reconnaitre);
@@ -1821,7 +1771,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_freiner */
-      case 15:
+      case 13:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_freiner");
 
          pvalue->u.mission_automate_alat_freiner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Freiner);
@@ -1836,7 +1786,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_escorter */
-      case 16:
+      case 14:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_escorter");
 
          pvalue->u.mission_automate_alat_escorter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Escorter);
@@ -1851,7 +1801,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_alat_attaquer */
-      case 17:
+      case 15:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_alat_attaquer");
 
          pvalue->u.mission_automate_alat_attaquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ALAT_Attaquer);
@@ -1866,7 +1816,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_site */
-      case 18:
+      case 16:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_site");
 
          pvalue->u.mission_automate_asa_defendre_site = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_DefendreSite);
@@ -1881,7 +1831,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_zone */
-      case 19:
+      case 17:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_zone");
 
          pvalue->u.mission_automate_asa_defendre_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_DefendreZone);
@@ -1896,7 +1846,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_unites */
-      case 20:
+      case 18:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_unites");
 
          pvalue->u.mission_automate_asa_defendre_unites = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_DefendreUnites);
@@ -1911,7 +1861,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_surveiller */
-      case 21:
+      case 19:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_surveiller");
 
          pvalue->u.mission_automate_asa_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_Surveiller);
@@ -1926,7 +1876,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_defendre_itineraire */
-      case 22:
+      case 20:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_defendre_itineraire");
 
          pvalue->u.mission_automate_asa_defendre_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_DefendreItineraire);
@@ -1941,7 +1891,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_mistral_defendre_zone */
-      case 23:
+      case 21:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_mistral_defendre_zone");
 
          pvalue->u.mission_automate_asa_mistral_defendre_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_MISTRAL_DefendreZone);
@@ -1956,7 +1906,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_mistral_defendre_site */
-      case 24:
+      case 22:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_mistral_defendre_site");
 
          pvalue->u.mission_automate_asa_mistral_defendre_site = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_MISTRAL_DefendreSite);
@@ -1971,7 +1921,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_mistral_surveiller */
-      case 25:
+      case 23:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_mistral_surveiller");
 
          pvalue->u.mission_automate_asa_mistral_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_MISTRAL_Surveiller);
@@ -1986,7 +1936,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_hawk_defendre_zone */
-      case 26:
+      case 24:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_hawk_defendre_zone");
 
          pvalue->u.mission_automate_asa_hawk_defendre_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_HAWK_DefendreZone);
@@ -2001,7 +1951,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_hawk_defendre_site */
-      case 27:
+      case 25:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_hawk_defendre_site");
 
          pvalue->u.mission_automate_asa_hawk_defendre_site = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_HAWK_DefendreSite);
@@ -2016,7 +1966,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asa_hawk_surveiller */
-      case 28:
+      case 26:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asa_hawk_surveiller");
 
          pvalue->u.mission_automate_asa_hawk_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASA_HAWK_Surveiller);
@@ -2031,7 +1981,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_ass_se_deployer */
-      case 29:
+      case 27:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_ass_se_deployer");
 
          pvalue->u.mission_automate_ass_se_deployer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASS_SeDeployer);
@@ -2046,7 +1996,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_ass_reconnaitre_zones_deploiement */
-      case 30:
+      case 28:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_ass_reconnaitre_zones_deploiement");
 
          pvalue->u.mission_automate_ass_reconnaitre_zones_deploiement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASS_ReconnaitreZonesDeploiement);
@@ -2061,7 +2011,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_ass_acquerir_objectifs */
-      case 31:
+      case 29:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_ass_acquerir_objectifs");
 
          pvalue->u.mission_automate_ass_acquerir_objectifs = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASS_AcquerirObjectifs);
@@ -2076,7 +2026,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_appuyer */
-      case 32:
+      case 30:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_appuyer");
 
          pvalue->u.mission_automate_abc_appuyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Appuyer);
@@ -2091,7 +2041,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_attaquer */
-      case 33:
+      case 31:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_attaquer");
 
          pvalue->u.mission_automate_abc_attaquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Attaquer);
@@ -2106,7 +2056,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_contre_attaquer */
-      case 34:
+      case 32:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_contre_attaquer");
 
          pvalue->u.mission_automate_abc_contre_attaquer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_ContreAttaquer);
@@ -2121,7 +2071,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_controler */
-      case 35:
+      case 33:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_controler");
 
          pvalue->u.mission_automate_abc_controler = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Controler);
@@ -2136,7 +2086,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_couvrir */
-      case 36:
+      case 34:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_couvrir");
 
          pvalue->u.mission_automate_abc_couvrir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Couvrir);
@@ -2151,7 +2101,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_donner_coup_arret */
-      case 37:
+      case 35:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_donner_coup_arret");
 
          pvalue->u.mission_automate_abc_donner_coup_arret = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_DonnerCoupArret);
@@ -2166,7 +2116,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_eclairer */
-      case 38:
+      case 36:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_eclairer");
 
          pvalue->u.mission_automate_abc_eclairer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Eclairer);
@@ -2181,7 +2131,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_effectuer_raid */
-      case 39:
+      case 37:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_effectuer_raid");
 
          pvalue->u.mission_automate_abc_effectuer_raid = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_EffectuerRaid);
@@ -2196,7 +2146,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_interdire */
-      case 40:
+      case 38:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_interdire");
 
          pvalue->u.mission_automate_abc_interdire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Interdire);
@@ -2211,7 +2161,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_jalonner */
-      case 41:
+      case 39:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_jalonner");
 
          pvalue->u.mission_automate_abc_jalonner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Jalonner);
@@ -2226,7 +2176,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_prendre_preciser_contact */
-      case 42:
+      case 40:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_prendre_preciser_contact");
 
          pvalue->u.mission_automate_abc_prendre_preciser_contact = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_PrendrePreciserContact);
@@ -2241,7 +2191,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_reconnaitre */
-      case 43:
+      case 41:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_reconnaitre");
 
          pvalue->u.mission_automate_abc_reconnaitre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Reconnaitre);
@@ -2256,7 +2206,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_reconnaitre_point */
-      case 44:
+      case 42:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_reconnaitre_point");
 
          pvalue->u.mission_automate_abc_reconnaitre_point = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_ReconnaitrePoint);
@@ -2271,7 +2221,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_reduire */
-      case 45:
+      case 43:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_reduire");
 
          pvalue->u.mission_automate_abc_reduire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Reduire);
@@ -2286,7 +2236,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_relever_en_depassant */
-      case 46:
+      case 44:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_relever_en_depassant");
 
          pvalue->u.mission_automate_abc_relever_en_depassant = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_ReleverEnDepassant);
@@ -2301,7 +2251,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_semparer */
-      case 47:
+      case 45:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_semparer");
 
          pvalue->u.mission_automate_abc_semparer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Semparer);
@@ -2316,7 +2266,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_tenir */
-      case 48:
+      case 46:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_tenir");
 
          pvalue->u.mission_automate_abc_tenir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Tenir);
@@ -2331,7 +2281,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_soutenir */
-      case 49:
+      case 47:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_soutenir");
 
          pvalue->u.mission_automate_abc_soutenir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Soutenir);
@@ -2346,7 +2296,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_surveiller */
-      case 50:
+      case 48:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_surveiller");
 
          pvalue->u.mission_automate_abc_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Surveiller);
@@ -2361,7 +2311,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_flanc_garder */
-      case 51:
+      case 49:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_flanc_garder");
 
          pvalue->u.mission_automate_abc_flanc_garder = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_FlancGarder);
@@ -2376,7 +2326,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_renseigner_sur */
-      case 52:
+      case 50:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_renseigner_sur");
 
          pvalue->u.mission_automate_abc_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_RenseignerSur);
@@ -2391,7 +2341,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_fixer */
-      case 53:
+      case 51:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_fixer");
 
          pvalue->u.mission_automate_abc_fixer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Fixer);
@@ -2406,7 +2356,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_freiner */
-      case 54:
+      case 52:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_freiner");
 
          pvalue->u.mission_automate_abc_freiner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_Freiner);
@@ -2421,7 +2371,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_surveiller_itineraire */
-      case 55:
+      case 53:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_surveiller_itineraire");
 
          pvalue->u.mission_automate_abc_surveiller_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_SurveillerItineraire);
@@ -2436,7 +2386,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_renseigner_sur_un_axe */
-      case 56:
+      case 54:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_renseigner_sur_un_axe");
 
          pvalue->u.mission_automate_abc_renseigner_sur_un_axe = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_RenseignerSurUnAxe);
@@ -2451,7 +2401,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_recueillir_unite */
-      case 57:
+      case 55:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_recueillir_unite");
 
          pvalue->u.mission_automate_abc_recueillir_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_RecueillirUnite);
@@ -2466,7 +2416,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_escorter_unite */
-      case 58:
+      case 56:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_escorter_unite");
 
          pvalue->u.mission_automate_abc_escorter_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_EscorterUnite);
@@ -2481,7 +2431,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_escorter_unites */
-      case 59:
+      case 57:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_escorter_unites");
 
          pvalue->u.mission_automate_abc_escorter_unites = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_EscorterUnites);
@@ -2496,7 +2446,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_armer_point_de_controle */
-      case 60:
+      case 58:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_armer_point_de_controle");
 
          pvalue->u.mission_automate_abc_armer_point_de_controle = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_ArmerPointDeControle);
@@ -2511,7 +2461,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_organiser_accueil_colonne_refugies */
-      case 61:
+      case 59:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_organiser_accueil_colonne_refugies");
 
          pvalue->u.mission_automate_abc_organiser_accueil_colonne_refugies = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies);
@@ -2526,7 +2476,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_proteger_pc */
-      case 62:
+      case 60:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_proteger_pc");
 
          pvalue->u.mission_automate_abc_proteger_pc = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_ProtegerPC);
@@ -2541,7 +2491,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_abc_appuyer_sur_position */
-      case 63:
+      case 61:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_abc_appuyer_sur_position");
 
          pvalue->u.mission_automate_abc_appuyer_sur_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ABC_AppuyerSurPosition);
@@ -2556,7 +2506,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_se_deployer */
-      case 64:
+      case 62:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_se_deployer");
 
          pvalue->u.mission_automate_gen_se_deployer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_SeDeployer);
@@ -2571,7 +2521,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_faire_franchir */
-      case 65:
+      case 63:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_faire_franchir");
 
          pvalue->u.mission_automate_gen_faire_franchir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_FaireFranchir);
@@ -2586,7 +2536,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_systeme_obstacles */
-      case 66:
+      case 64:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_systeme_obstacles");
 
          pvalue->u.mission_automate_gen_realiser_systeme_obstacles = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_RealiserSystemeObstacles);
@@ -2601,7 +2551,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_franchir_de_vive_force */
-      case 67:
+      case 65:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_franchir_de_vive_force");
 
          pvalue->u.mission_automate_gen_franchir_de_vive_force = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_FranchirDeViveForce);
@@ -2616,7 +2566,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_retablir_itineraires */
-      case 68:
+      case 66:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_retablir_itineraires");
 
          pvalue->u.mission_automate_gen_retablir_itineraires = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_RetablirItineraires);
@@ -2631,7 +2581,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_amenager_aire_stationnement */
-      case 69:
+      case 67:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_amenager_aire_stationnement");
 
          pvalue->u.mission_automate_gen_amenager_aire_stationnement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_AmenagerAireStationnement);
@@ -2646,7 +2596,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_amenager_terrain_poser_sommaire */
-      case 70:
+      case 68:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_amenager_terrain_poser_sommaire");
 
          pvalue->u.mission_automate_gen_amenager_terrain_poser_sommaire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire);
@@ -2661,7 +2611,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_zone_poser */
-      case 71:
+      case 69:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_zone_poser");
 
          pvalue->u.mission_automate_gen_realiser_zone_poser = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_RealiserZonePoser);
@@ -2676,7 +2626,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_reconnaitre_zone_deploiement */
-      case 72:
+      case 70:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_reconnaitre_zone_deploiement");
 
          pvalue->u.mission_automate_gen_reconnaitre_zone_deploiement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_ReconnaitreZoneDeploiement);
@@ -2691,7 +2641,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_camp_prisonniers */
-      case 73:
+      case 71:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_camp_prisonniers");
 
          pvalue->u.mission_automate_gen_realiser_camp_prisonniers = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_RealiserCampPrisonniers);
@@ -2706,7 +2656,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_camp_refugies */
-      case 74:
+      case 72:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_camp_refugies");
 
          pvalue->u.mission_automate_gen_realiser_camp_refugies = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_RealiserCampRefugies);
@@ -2721,7 +2671,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial */
-      case 75:
+      case 73:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial");
 
          pvalue->u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial);
@@ -2736,7 +2686,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_realiser_travaux_sommaires_au_profit_population */
-      case 76:
+      case 74:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population");
 
          pvalue->u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation);
@@ -2751,7 +2701,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_appuyer_debarquement_troupes */
-      case 77:
+      case 75:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_appuyer_debarquement_troupes");
 
          pvalue->u.mission_automate_gen_appuyer_debarquement_troupes = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_AppuyerDebarquementTroupes);
@@ -2766,7 +2716,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_gen_ouvrir_axes_progression */
-      case 78:
+      case 76:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_gen_ouvrir_axes_progression");
 
          pvalue->u.mission_automate_gen_ouvrir_axes_progression = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_GEN_OuvrirAxesProgression);
@@ -2781,7 +2731,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_attaquer_souplesse */
-      case 79:
+      case 77:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_attaquer_souplesse");
 
          pvalue->u.mission_automate_inf_attaquer_souplesse = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_AttaquerSouplesse);
@@ -2796,7 +2746,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer */
-      case 80:
+      case 78:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer");
 
          pvalue->u.mission_automate_inf_appuyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Appuyer);
@@ -2811,7 +2761,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_controler */
-      case 81:
+      case 79:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_controler");
 
          pvalue->u.mission_automate_inf_controler = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Controler);
@@ -2826,7 +2776,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_couvrir */
-      case 82:
+      case 80:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_couvrir");
 
          pvalue->u.mission_automate_inf_couvrir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Couvrir);
@@ -2841,7 +2791,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_donner_coup_arret */
-      case 83:
+      case 81:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_donner_coup_arret");
 
          pvalue->u.mission_automate_inf_donner_coup_arret = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_DonnerCoupArret);
@@ -2856,7 +2806,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_eclairer */
-      case 84:
+      case 82:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_eclairer");
 
          pvalue->u.mission_automate_inf_eclairer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Eclairer);
@@ -2871,7 +2821,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_flanc_garder */
-      case 85:
+      case 83:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_flanc_garder");
 
          pvalue->u.mission_automate_inf_flanc_garder = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_FlancGarder);
@@ -2886,7 +2836,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_freiner */
-      case 86:
+      case 84:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_freiner");
 
          pvalue->u.mission_automate_inf_freiner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Freiner);
@@ -2901,7 +2851,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_harceler */
-      case 87:
+      case 85:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_harceler");
 
          pvalue->u.mission_automate_inf_harceler = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Harceler);
@@ -2916,7 +2866,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_interdire */
-      case 88:
+      case 86:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_interdire");
 
          pvalue->u.mission_automate_inf_interdire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Interdire);
@@ -2931,7 +2881,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_mener_defense_usure */
-      case 89:
+      case 87:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_mener_defense_usure");
 
          pvalue->u.mission_automate_inf_mener_defense_usure = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_MenerDefenseUsure);
@@ -2946,7 +2896,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_prendre_preciser_maintenir_contact */
-      case 90:
+      case 88:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_prendre_preciser_maintenir_contact");
 
          pvalue->u.mission_automate_inf_prendre_preciser_maintenir_contact = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_PrendrePreciserMaintenirContact);
@@ -2961,7 +2911,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_reconnaissance_offensive */
-      case 91:
+      case 89:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_reconnaissance_offensive");
 
          pvalue->u.mission_automate_inf_reconnaissance_offensive = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_ReconnaissanceOffensive);
@@ -2976,7 +2926,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_recueillir_unite */
-      case 92:
+      case 90:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_recueillir_unite");
 
          pvalue->u.mission_automate_inf_recueillir_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_RecueillirUnite);
@@ -2991,7 +2941,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_reduire */
-      case 93:
+      case 91:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_reduire");
 
          pvalue->u.mission_automate_inf_reduire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Reduire);
@@ -3006,7 +2956,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_relever */
-      case 94:
+      case 92:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_relever");
 
          pvalue->u.mission_automate_inf_relever = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Relever);
@@ -3021,7 +2971,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_rompre_contact */
-      case 95:
+      case 93:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_rompre_contact");
 
          pvalue->u.mission_automate_inf_rompre_contact = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_RompreContact);
@@ -3036,7 +2986,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_surveiller */
-      case 96:
+      case 94:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_surveiller");
 
          pvalue->u.mission_automate_inf_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Surveiller);
@@ -3051,7 +3001,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_semparer */
-      case 97:
+      case 95:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_semparer");
 
          pvalue->u.mission_automate_inf_semparer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Semparer);
@@ -3066,7 +3016,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_fixer */
-      case 98:
+      case 96:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_fixer");
 
          pvalue->u.mission_automate_inf_fixer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Fixer);
@@ -3081,7 +3031,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_attaquer_en_terrain_difficile */
-      case 99:
+      case 97:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_attaquer_en_terrain_difficile");
 
          pvalue->u.mission_automate_inf_attaquer_en_terrain_difficile = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_AttaquerEnTerrainDifficile);
@@ -3096,7 +3046,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_barrer_direction */
-      case 100:
+      case 98:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_barrer_direction");
 
          pvalue->u.mission_automate_inf_barrer_direction = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_BarrerDirection);
@@ -3111,7 +3061,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_defendre_ferme */
-      case 101:
+      case 99:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_defendre_ferme");
 
          pvalue->u.mission_automate_inf_defendre_ferme = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_DefendreFerme);
@@ -3126,7 +3076,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_tenir */
-      case 102:
+      case 100:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_tenir");
 
          pvalue->u.mission_automate_inf_tenir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Tenir);
@@ -3141,7 +3091,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer_un_freinage */
-      case 103:
+      case 101:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer_un_freinage");
 
          pvalue->u.mission_automate_inf_appuyer_un_freinage = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_AppuyerUnFreinage);
@@ -3156,7 +3106,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer_une_attaque */
-      case 104:
+      case 102:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer_une_attaque");
 
          pvalue->u.mission_automate_inf_appuyer_une_attaque = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_AppuyerUneAttaque);
@@ -3171,7 +3121,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_soutenir */
-      case 105:
+      case 103:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_soutenir");
 
          pvalue->u.mission_automate_inf_soutenir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_Soutenir);
@@ -3186,7 +3136,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_escorter_unite */
-      case 106:
+      case 104:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_escorter_unite");
 
          pvalue->u.mission_automate_inf_escorter_unite = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_EscorterUnite);
@@ -3201,7 +3151,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_escorter_unites */
-      case 107:
+      case 105:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_escorter_unites");
 
          pvalue->u.mission_automate_inf_escorter_unites = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_EscorterUnites);
@@ -3216,7 +3166,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_inf_appuyer_sur_position */
-      case 108:
+      case 106:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_inf_appuyer_sur_position");
 
          pvalue->u.mission_automate_inf_appuyer_sur_position = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_INF_AppuyerSurPosition);
@@ -3231,7 +3181,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_se_deployer */
-      case 109:
+      case 107:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_se_deployer");
 
          pvalue->u.mission_automate_log_se_deployer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_SeDeployer);
@@ -3246,7 +3196,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_appuyer_mouvement */
-      case 110:
+      case 108:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_appuyer_mouvement");
 
          pvalue->u.mission_automate_log_appuyer_mouvement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_AppuyerMouvement);
@@ -3261,7 +3211,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_reconnaitre_itineraire */
-      case 111:
+      case 109:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_reconnaitre_itineraire");
 
          pvalue->u.mission_automate_log_reconnaitre_itineraire = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_ReconnaitreItineraire);
@@ -3276,7 +3226,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_transporter_unites */
-      case 112:
+      case 110:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_transporter_unites");
 
          pvalue->u.mission_automate_log_transporter_unites = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_TransporterUnites);
@@ -3291,7 +3241,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_appuyer_mouvement_dans_zone */
-      case 113:
+      case 111:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_appuyer_mouvement_dans_zone");
 
          pvalue->u.mission_automate_log_appuyer_mouvement_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_AppuyerMouvementDansZone);
@@ -3306,7 +3256,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_mettre_en_oeuvre_zone_stationnement */
-      case 114:
+      case 112:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_mettre_en_oeuvre_zone_stationnement");
 
          pvalue->u.mission_automate_log_mettre_en_oeuvre_zone_stationnement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement);
@@ -3321,7 +3271,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_appuyer_franchissement_dans_zone */
-      case 115:
+      case 113:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_appuyer_franchissement_dans_zone");
 
          pvalue->u.mission_automate_log_appuyer_franchissement_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_AppuyerFranchissementDansZone);
@@ -3336,7 +3286,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_bloquer_zone */
-      case 116:
+      case 114:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_bloquer_zone");
 
          pvalue->u.mission_automate_log_bloquer_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_BloquerZone);
@@ -3351,7 +3301,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_reconnaitre_zone_contaminee */
-      case 117:
+      case 115:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_reconnaitre_zone_contaminee");
 
          pvalue->u.mission_automate_log_reconnaitre_zone_contaminee = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_ReconnaitreZoneContaminee);
@@ -3366,7 +3316,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_reconnaitre_zone_de_deploiement */
-      case 118:
+      case 116:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_reconnaitre_zone_de_deploiement");
 
          pvalue->u.mission_automate_log_reconnaitre_zone_de_deploiement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement);
@@ -3381,7 +3331,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_surveiller */
-      case 119:
+      case 117:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_surveiller");
 
          pvalue->u.mission_automate_log_surveiller = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_Surveiller);
@@ -3396,7 +3346,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_log_armer_pias */
-      case 120:
+      case 118:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_log_armer_pias");
 
          pvalue->u.mission_automate_log_armer_pias = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_LOG_ArmerPIAs);
@@ -3411,7 +3361,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_test_move_to */
-      case 121:
+      case 119:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_test_move_to");
 
          pvalue->u.mission_automate_test_move_to = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_Test_MoveTo);
@@ -3426,7 +3376,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_decrocher */
-      case 122:
+      case 120:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_decrocher");
 
          pvalue->u.mission_automate_decrocher = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_Decrocher);
@@ -3441,7 +3391,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_relever_sur_place */
-      case 123:
+      case 121:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_relever_sur_place");
 
          pvalue->u.mission_automate_relever_sur_place = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ReleverSurPlace);
@@ -3456,7 +3406,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_faire_mouvement */
-      case 124:
+      case 122:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_faire_mouvement");
 
          pvalue->u.mission_automate_faire_mouvement = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_FaireMouvement);
@@ -3471,7 +3421,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_faire_decontaminer */
-      case 125:
+      case 123:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_faire_decontaminer");
 
          pvalue->u.mission_automate_se_faire_decontaminer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_SeFaireDecontaminer);
@@ -3486,7 +3436,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_franchir */
-      case 126:
+      case 124:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_franchir");
 
          pvalue->u.mission_automate_franchir = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_Franchir);
@@ -3501,7 +3451,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_stationner */
-      case 127:
+      case 125:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_stationner");
 
          pvalue->u.mission_automate_stationner = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_Stationner);
@@ -3516,7 +3466,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_faire_transporter */
-      case 128:
+      case 126:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_faire_transporter");
 
          pvalue->u.mission_automate_se_faire_transporter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_SeFaireTransporter);
@@ -3531,7 +3481,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_recompleter */
-      case 129:
+      case 127:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_recompleter");
 
          pvalue->u.mission_automate_se_recompleter = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_SeRecompleter);
@@ -3546,7 +3496,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_se_rendre */
-      case 130:
+      case 128:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_se_rendre");
 
          pvalue->u.mission_automate_se_rendre = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_SeRendre);
@@ -3561,7 +3511,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_faire_mouvement_vers_camp_refugies */
-      case 131:
+      case 129:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_faire_mouvement_vers_camp_refugies");
 
          pvalue->u.mission_automate_faire_mouvement_vers_camp_refugies = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_FaireMouvementVersCampRefugies);
@@ -3576,7 +3526,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_interdire_franchissement_populations */
-      case 132:
+      case 130:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_interdire_franchissement_populations");
 
          pvalue->u.mission_automate_interdire_franchissement_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_InterdireFranchissementPopulations);
@@ -3591,7 +3541,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_filtrer_populations */
-      case 133:
+      case 131:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_filtrer_populations");
 
          pvalue->u.mission_automate_filtrer_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_FiltrerPopulations);
@@ -3606,7 +3556,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_canaliser_populations */
-      case 134:
+      case 132:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_canaliser_populations");
 
          pvalue->u.mission_automate_canaliser_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_CanaliserPopulations);
@@ -3621,7 +3571,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_controler_populations_dans_zone */
-      case 135:
+      case 133:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_controler_populations_dans_zone");
 
          pvalue->u.mission_automate_controler_populations_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ControlerPopulationsDansZone);
@@ -3636,7 +3586,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_securiser_zone_contre_populations */
-      case 136:
+      case 134:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_securiser_zone_contre_populations");
 
          pvalue->u.mission_automate_securiser_zone_contre_populations = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_SecuriserZoneContrePopulations);
@@ -3651,7 +3601,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_asy_commettre_exactions_sur_population_dans_zone */
-      case 137:
+      case 135:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_asy_commettre_exactions_sur_population_dans_zone");
 
          pvalue->u.mission_automate_asy_commettre_exactions_sur_population_dans_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone);
@@ -3666,7 +3616,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_generique */
-      case 138:
+      case 136:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_generique");
 
          pvalue->u.mission_automate_generique = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_Generique);
@@ -3681,7 +3631,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_reconnaitre_un_axe */
-      case 139:
+      case 137:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_reconnaitre_un_axe");
 
          pvalue->u.mission_automate_nbc_reconnaitre_un_axe = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_NBC_ReconnaitreUnAxe);
@@ -3696,7 +3646,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_reconnaitre_une_zone */
-      case 140:
+      case 138:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_reconnaitre_une_zone");
 
          pvalue->u.mission_automate_nbc_reconnaitre_une_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_NBC_ReconnaitreUneZone);
@@ -3711,7 +3661,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_armer_un_site_de_decontamination */
-      case 141:
+      case 139:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_armer_un_site_de_decontamination");
 
          pvalue->u.mission_automate_nbc_armer_un_site_de_decontamination = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination);
@@ -3726,7 +3676,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_decontaminer_une_zone */
-      case 142:
+      case 140:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_decontaminer_une_zone");
 
          pvalue->u.mission_automate_nbc_decontaminer_une_zone = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_NBC_DecontaminerUneZone);
@@ -3741,7 +3691,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_nbc_reconnaitre_des_sites_rota */
-      case 143:
+      case 141:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_nbc_reconnaitre_des_sites_rota");
 
          pvalue->u.mission_automate_nbc_reconnaitre_des_sites_rota = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_NBC_ReconnaitreDesSitesROTA);
@@ -3756,7 +3706,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_rohum_renseigner_sur */
-      case 144:
+      case 142:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_rohum_renseigner_sur");
 
          pvalue->u.mission_automate_rens_rohum_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_ROHUM_RenseignerSur);
@@ -3771,7 +3721,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_rohum_orienter_guider */
-      case 145:
+      case 143:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_rohum_orienter_guider");
 
          pvalue->u.mission_automate_rens_rohum_orienter_guider = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_ROHUM_OrienterGuider);
@@ -3786,7 +3736,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_rohum_sexfiltrer */
-      case 146:
+      case 144:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_rohum_sexfiltrer");
 
          pvalue->u.mission_automate_rens_rohum_sexfiltrer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_ROHUM_SExfiltrer);
@@ -3801,7 +3751,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roim_cl289_renseigner_sur */
-      case 147:
+      case 145:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roim_cl289_renseigner_sur");
 
          pvalue->u.mission_automate_rens_roim_cl289_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur);
@@ -3816,7 +3766,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roim_sdti_renseigner_sur */
-      case 148:
+      case 146:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roim_sdti_renseigner_sur");
 
          pvalue->u.mission_automate_rens_roim_sdti_renseigner_sur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur);
@@ -3831,7 +3781,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roem_appuyer */
-      case 149:
+      case 147:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roem_appuyer");
 
          pvalue->u.mission_automate_rens_roem_appuyer = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_ROEM_Appuyer);
@@ -3846,7 +3796,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_roem_renseignersur */
-      case 150:
+      case 148:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_roem_renseignersur");
 
          pvalue->u.mission_automate_rens_roem_renseignersur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_ROEM_RenseignerSur);
@@ -3861,7 +3811,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_rens_radint_renseignersur */
-      case 151:
+      case 149:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_rens_radint_renseignersur");
 
          pvalue->u.mission_automate_rens_radint_renseignersur = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_RENS_RADINT_RenseignerSur);
@@ -3876,7 +3826,7 @@ EXTERN int asn1PD_Mission_Automate (ASN1CTXT* ctxt_p, ASN1T_Mission_Automate* pv
          break;
 
       /* mission_automate_trans_commander */
-      case 152:
+      case 150:
          PU_PUSHNAME (ctxt_p, "u.mission_automate_trans_commander");
 
          pvalue->u.mission_automate_trans_commander = ALLOC_ASN1ELEM (ctxt_p, ASN1T_Mission_Automate_TRANS_Commander);

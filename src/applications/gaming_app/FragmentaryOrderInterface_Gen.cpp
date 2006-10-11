@@ -15,6 +15,9 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
 {
     switch( pASNMsgOrder_->GetAsnMsg().order_conduite.t )
     {
+        case T_MsgOrderConduite_order_conduite_order_conduite_changer_parametres_recompletement_alat :
+             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_changer_parametres_recompletement_alat;
+             break;
         case T_MsgOrderConduite_order_conduite_order_conduite_pion_appliquer_feux :
              delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_pion_appliquer_feux;
              break;
@@ -41,9 +44,6 @@ FragmentaryOrderInterface::~FragmentaryOrderInterface()
              break;
         case T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement :
              delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_desequiper_site_franchissement;
-             break;
-        case T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni :
-             delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni;
              break;
         case T_MsgOrderConduite_order_conduite_order_conduite_automate_affecter_pion_a_obstacle :
              delete pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_affecter_pion_a_obstacle;
@@ -99,6 +99,9 @@ void FragmentaryOrderInterface::CreateInterface()
              break;
         case eOrdreConduite_ChangerReglesEngagement :
              CreateOrder_ChangerReglesEngagement();
+             break;
+        case eOrdreConduite_ChangerParametresRecompletementALAT :
+             CreateOrder_ChangerParametresRecompletementALAT();
              break;
         case eOrdreConduite_ChangerReglesEngagementPopulation :
              CreateOrder_ChangerReglesEngagementPopulation();
@@ -180,9 +183,6 @@ void FragmentaryOrderInterface::CreateInterface()
              break;
         case eOrdreConduite_Automate_DesequiperSiteFranchissement :
              CreateOrder_Automate_DesequiperSiteFranchissement();
-             break;
-        case eOrdreConduite_Automate_ReagirFaceAEni :
-             CreateOrder_Automate_ReagirFaceAEni();
              break;
         case eOrdreConduite_Automate_AffecterPionAObstacle :
              CreateOrder_Automate_AffecterPionAObstacle();
@@ -319,6 +319,26 @@ void FragmentaryOrderInterface::CreateOrder_ChangerReglesEngagement()
     pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir sur riposte", EnumRoe::tir_sur_riposte );
     pSelector_order_conduite_changer_regles_engagement->AddItem( "Tir interdit", EnumRoe::tir_interdit );
 #undef asnMission
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragmentaryOrderInterface::CreateOrder_ChangerParametresRecompletementALAT
+// Created: AGR
+// -----------------------------------------------------------------------------
+void FragmentaryOrderInterface::CreateOrder_ChangerParametresRecompletementALAT()
+{
+    ASN1T_OrderConduite_ChangerParametresRecompletementALAT& asnMission = *new ASN1T_OrderConduite_ChangerParametresRecompletementALAT();
+    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_changer_parametres_recompletement_alat;
+    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_changer_parametres_recompletement_alat = &asnMission;
+    ParamComboBox< ASN1T_Enum_ALAT_PorteeAction >* pSelector_portee_Action = &CreateVarList( asnMission.portee_Action, "Portee Action");
+    pSelector_portee_Action->AddItem( "Courte portee", Enum_ALAT_PorteeAction::courte_portee );
+    pSelector_portee_Action->AddItem( "Moyenne portee", Enum_ALAT_PorteeAction::moyenne_portee );
+    pSelector_portee_Action->AddItem( "Longue portee", Enum_ALAT_PorteeAction::longue_portee );
+    pSelector_portee_Action->AddItem( "Sans munitions", Enum_ALAT_PorteeAction::sans_munitions );
+    ParamComboBox< ASN1T_Enum_ALAT_AmbianceMission >* pSelector_ambiance_Mission = &CreateVarList( asnMission.ambiance_Mission, "Ambiance Mission");
+    pSelector_ambiance_Mission->AddItem( "Aa", Enum_ALAT_AmbianceMission::aa );
+    pSelector_ambiance_Mission->AddItem( "As", Enum_ALAT_AmbianceMission::as );
+    pSelector_ambiance_Mission->AddItem( "Polyvalent", Enum_ALAT_AmbianceMission::polyvalent );
 }
 
 // -----------------------------------------------------------------------------
@@ -627,22 +647,6 @@ void FragmentaryOrderInterface::CreateOrder_Automate_DesequiperSiteFranchissemen
     pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_desequiper_site_franchissement;
     pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_desequiper_site_franchissement = &asnMission;
     CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
-}
-
-// -----------------------------------------------------------------------------
-// Name: FragmentaryOrderInterface::CreateOrder_Automate_ReagirFaceAEni
-// Created: AGR
-// -----------------------------------------------------------------------------
-void FragmentaryOrderInterface::CreateOrder_Automate_ReagirFaceAEni()
-{
-    ASN1T_OrderConduite_Automate_ReagirFaceAEni& asnMission = *new ASN1T_OrderConduite_Automate_ReagirFaceAEni();
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = T_MsgOrderConduite_order_conduite_order_conduite_automate_reagir_face_a_eni;
-    pASNMsgOrder_->GetAsnMsg().order_conduite.u.order_conduite_automate_reagir_face_a_eni = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
-    ParamComboBox< ASN1T_EnumActionReagirFaceAEni >* pSelector_action = &CreateVarList( asnMission.action, "Action");
-    pSelector_action->AddItem( "Detruire moyens", EnumActionReagirFaceAEni::detruire_moyens );
-    pSelector_action->AddItem( "Defendre", EnumActionReagirFaceAEni::defendre );
-    pSelector_action->AddItem( "Demonter", EnumActionReagirFaceAEni::demonter );
 }
 
 // -----------------------------------------------------------------------------

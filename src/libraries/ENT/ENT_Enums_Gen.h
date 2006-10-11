@@ -338,22 +338,153 @@ enum E_HumanRank
 };
 
 
-enum E_MissionALAT_PorteeAction
+enum E_EtatRapFor
 {
-    eMissionALAT_PorteeAction_CourtePortee,
-    eMissionALAT_PorteeAction_MoyennePortee,
-    eMissionALAT_PorteeAction_LonguePortee,
-    eMissionALAT_PorteeAction_SansMunitions,
-    eNbrMissionALAT_PorteeAction
+    eEtatRapFor_None,
+    eEtatRapFor_Neutre,
+    eEtatRapFor_Favorable,
+    eEtatRapFor_Defavorable,
+    eNbrEtatRapFor
 };
 
 
-enum E_MissionALAT_AmbianceMission
+enum E_EtatCombatRencontre
 {
-    eMissionALAT_AmbianceMission_aa,
-    eMissionALAT_AmbianceMission_As,
-    eMissionALAT_AmbianceMission_Polyvalent,
-    eNbrMissionALAT_AmbianceMission
+    eEtatCombatRencontre_None,
+    eEtatCombatRencontre_EtatEsquive,
+    eEtatCombatRencontre_EtatFixe,
+    eEtatCombatRencontre_EtatPoursuiteMission,
+    eNbrEtatCombatRencontre
+};
+
+
+enum E_EtatOperationnel
+{
+    eEtatOperationnel_DetruitTotalement,
+    eEtatOperationnel_DetruitTactiquement,
+    eEtatOperationnel_Operationnel,
+    eNbrEtatOperationnel
+};
+
+
+enum E_Roe
+{
+    eRoe_None,
+    eRoe_TirLibre,
+    eRoe_TirSurRiposte,
+    eRoe_TirInterdit,
+    eNbrRoe
+};
+
+
+enum E_UnitAttrErrorCode
+{
+    eUnitAttrErrorCode_NoError,
+    eUnitAttrErrorCode_ErrorInvalidUnit,
+    eUnitAttrErrorCode_ErrorAutomateEmbraye,
+    eUnitAttrErrorCode_ErrorInvalidAttribute,
+    eUnitAttrErrorCode_ErrorUnitSurrendered,
+    eNbrUnitAttrErrorCode
+};
+
+
+enum E_UnitPosture
+{
+    eUnitPosture_PostureMouvement,
+    eUnitPosture_PostureMouvementDiscret,
+    eUnitPosture_PostureArret,
+    eUnitPosture_PosturePosteReflexe,
+    eUnitPosture_PosturePoste,
+    eUnitPosture_PosturePosteAmenage,
+    eUnitPosture_PosturePostePrepareGenie,
+    eNbrUnitPosture
+};
+
+
+enum E_DisponibiliteAuTir
+{
+    eDisponibiliteAuTir_None,
+    eDisponibiliteAuTir_PretAuTir,
+    eDisponibiliteAuTir_Indisponible,
+    eNbrDisponibiliteAuTir
+};
+
+
+enum E_RoePopulation
+{
+    eRoePopulation_None,
+    eRoePopulation_EmploiForceInterdit,
+    eRoePopulation_MaintienADistanceParMoyensNonLetaux,
+    eRoePopulation_DispersionParMoyensDeDefenseActifs,
+    eRoePopulation_ArmesLetalesAutorisees,
+    eNbrRoePopulation
+};
+
+
+enum E_UnitFatigue
+{
+    eUnitFatigue_Normal,
+    eUnitFatigue_Fatigue,
+    eUnitFatigue_Epuise,
+    eNbrUnitFatigue
+};
+
+
+enum E_UnitMoral
+{
+    eUnitMoral_Fanatique,
+    eUnitMoral_Bon,
+    eUnitMoral_Moyen,
+    eUnitMoral_Mauvais,
+    eNbrUnitMoral
+};
+
+
+enum E_UnitExperience
+{
+    eUnitExperience_Veteran,
+    eUnitExperience_Experimente,
+    eUnitExperience_Conscrit,
+    eNbrUnitExperience
+};
+
+
+enum E_AutomateState
+{
+    eAutomateState_Embraye,
+    eAutomateState_Debraye,
+    eNbrAutomateState
+};
+
+
+enum E_SetAutomateModeErrorCode
+{
+    eSetAutomateModeErrorCode_NoError,
+    eSetAutomateModeErrorCode_ErrorInvalidUnit,
+    eSetAutomateModeErrorCode_ErrorUnitNotAutomate,
+    eSetAutomateModeErrorCode_ErrorAlreadyEmbraye,
+    eSetAutomateModeErrorCode_ErrorAlreadyDebraye,
+    eSetAutomateModeErrorCode_ErrorUnitSurrendered,
+    eNbrSetAutomateModeErrorCode
+};
+
+
+enum E__ALAT_PorteeAction
+{
+    e_ALAT_PorteeAction_CourtePortee,
+    e_ALAT_PorteeAction_MoyennePortee,
+    e_ALAT_PorteeAction_LonguePortee,
+    e_ALAT_PorteeAction_SansMunitions,
+    eNbr_ALAT_PorteeAction
+};
+
+
+enum E__ALAT_AmbianceMission
+{
+    e_ALAT_AmbianceMission_aa,
+    e_ALAT_AmbianceMission_As,
+    e_ALAT_AmbianceMission_Polyvalent,
+    eNbr_ALAT_AmbianceMission
 };
 
 
@@ -559,14 +690,6 @@ enum E_CtrlErrorCode
 };
 
 
-enum E_MsgCtrlClientAnnouncement
-{
-    eMsgCtrlClientAnnouncement_Mos,
-    eMsgCtrlClientAnnouncement_MosLight,
-    eNbrMsgCtrlClientAnnouncement
-};
-
-
 enum E_EtatSim
 {
     eEtatSim_Running,
@@ -703,25 +826,6 @@ enum E_ChangeAutomateErrorCode
 };
 
 
-enum E_CtrlErrorCodeLauncher
-{
-    eCtrlErrorCodeLauncher_NoError,
-    eCtrlErrorCodeLauncher_ErrorAlreadyStarted,
-    eCtrlErrorCodeLauncher_ErrorNotStarted,
-    eCtrlErrorCodeLauncher_ErrorNotPaused,
-    eCtrlErrorCodeLauncher_ErrorAlreadyPaused,
-    eCtrlErrorCodeLauncher_ErrorInvalidTimeFactor,
-    eCtrlErrorCodeLauncher_ErrorInvalidScenarioIdentifier,
-    eCtrlErrorCodeLauncher_ErrorErrorScenarioInit,
-    eCtrlErrorCodeLauncher_ErrorInvalidDataPath,
-    eCtrlErrorCodeLauncher_ErrorInvalidData,
-    eCtrlErrorCodeLauncher_ErrorInvalidCheckpointIdentifier,
-    eCtrlErrorCodeLauncher_ErrorErrorCheckpointInit,
-    eCtrlErrorCodeLauncher_ErrorSimKilledByRemote,
-    eNbrCtrlErrorCodeLauncher
-};
-
-
 enum E_LogMaintenanceRegimeTravail
 {
     eLogMaintenanceRegimeTravail_Regime1,
@@ -783,151 +887,11 @@ enum E_MsgLogRavitaillementPousserFluxAck
 };
 
 
-enum E_AutomateState
-{
-    eAutomateState_Embraye,
-    eAutomateState_Debraye,
-    eNbrAutomateState
-};
-
-
-enum E_UnitPosture
-{
-    eUnitPosture_PostureMouvement,
-    eUnitPosture_PostureMouvementDiscret,
-    eUnitPosture_PostureArret,
-    eUnitPosture_PosturePosteReflexe,
-    eUnitPosture_PosturePoste,
-    eUnitPosture_PosturePosteAmenage,
-    eUnitPosture_PosturePostePrepareGenie,
-    eNbrUnitPosture
-};
-
-
-enum E_EtatRapFor
-{
-    eEtatRapFor_None,
-    eEtatRapFor_Neutre,
-    eEtatRapFor_Favorable,
-    eEtatRapFor_Defavorable,
-    eNbrEtatRapFor
-};
-
-
-enum E_EtatCombatRencontre
-{
-    eEtatCombatRencontre_None,
-    eEtatCombatRencontre_EtatEsquive,
-    eEtatCombatRencontre_EtatFixe,
-    eEtatCombatRencontre_EtatPoursuiteMission,
-    eNbrEtatCombatRencontre
-};
-
-
-enum E_EtatOperationnel
-{
-    eEtatOperationnel_DetruitTotalement,
-    eEtatOperationnel_DetruitTactiquement,
-    eEtatOperationnel_Operationnel,
-    eNbrEtatOperationnel
-};
-
-
-enum E_DisponibiliteAuTir
-{
-    eDisponibiliteAuTir_None,
-    eDisponibiliteAuTir_PretAuTir,
-    eDisponibiliteAuTir_Indisponible,
-    eNbrDisponibiliteAuTir
-};
-
-
-enum E_Roe
-{
-    eRoe_None,
-    eRoe_TirLibre,
-    eRoe_TirSurRiposte,
-    eRoe_TirInterdit,
-    eNbrRoe
-};
-
-
-enum E_RoePopulation
-{
-    eRoePopulation_None,
-    eRoePopulation_EmploiForceInterdit,
-    eRoePopulation_MaintienADistanceParMoyensNonLetaux,
-    eRoePopulation_DispersionParMoyensDeDefenseActifs,
-    eRoePopulation_ArmesLetalesAutorisees,
-    eNbrRoePopulation
-};
-
-
-enum E_UnitFatigue
-{
-    eUnitFatigue_Normal,
-    eUnitFatigue_Fatigue,
-    eUnitFatigue_Epuise,
-    eNbrUnitFatigue
-};
-
-
-enum E_UnitMoral
-{
-    eUnitMoral_Fanatique,
-    eUnitMoral_Bon,
-    eUnitMoral_Moyen,
-    eUnitMoral_Mauvais,
-    eNbrUnitMoral
-};
-
-
-enum E_UnitExperience
-{
-    eUnitExperience_Veteran,
-    eUnitExperience_Experimente,
-    eUnitExperience_Conscrit,
-    eNbrUnitExperience
-};
-
-
-enum E_SetAutomateModeErrorCode
-{
-    eSetAutomateModeErrorCode_NoError,
-    eSetAutomateModeErrorCode_ErrorInvalidUnit,
-    eSetAutomateModeErrorCode_ErrorUnitNotAutomate,
-    eSetAutomateModeErrorCode_ErrorAlreadyEmbraye,
-    eSetAutomateModeErrorCode_ErrorAlreadyDebraye,
-    eSetAutomateModeErrorCode_ErrorUnitSurrendered,
-    eNbrSetAutomateModeErrorCode
-};
-
-
-enum E_UnitAttrErrorCode
-{
-    eUnitAttrErrorCode_NoError,
-    eUnitAttrErrorCode_ErrorInvalidUnit,
-    eUnitAttrErrorCode_ErrorAutomateEmbraye,
-    eUnitAttrErrorCode_ErrorInvalidAttribute,
-    eUnitAttrErrorCode_ErrorUnitSurrendered,
-    eNbrUnitAttrErrorCode
-};
-
-
 enum E_AmbianceMission
 {
     eAmbianceMission_Surete,
     eAmbianceMission_Vitesse,
     eNbrAmbianceMission
-};
-
-
-enum E_ActionReagirFaceAEni
-{
-    eActionReagirFaceAEni_DetruireMoyens,
-    eActionReagirFaceAEni_Defendre,
-    eActionReagirFaceAEni_Demonter,
-    eNbrActionReagirFaceAEni
 };
 
 
@@ -946,8 +910,6 @@ enum E_TC2GererMaterielAvantDeplacement
 enum E_AutomataMission
 {
     eMission_Automate_ALAT_AllerSeRecompleter = 1,
-    eMission_Automate_ALAT_EffectuerRechercheEtSauvetage,
-    eMission_Automate_ALAT_ExtrairePersonnel,
     eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
     eMission_Automate_ALAT_DetruireNeutraliserDansZone,
     eMission_Automate_ALAT_DonnerCoupArret,
@@ -1106,7 +1068,6 @@ enum E_AutomataMission
 enum E_UnitMission
 {
     eMission_Pion_ALAT_AllerSeRecompleter = 1,
-    eMission_Pion_ALAT_EvacuationSanitaire,
     eMission_Pion_ALAT_ReconnaitreDansLaProfondeur,
     eMission_Pion_ALAT_ReconnaitreContourEnnemi,
     eMission_Pion_ALAT_DetruireNeutraliserDansZone,
@@ -1117,7 +1078,6 @@ enum E_UnitMission
     eMission_Pion_ALAT_Heliporter,
     eMission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement,
     eMission_Pion_ALAT_Helitransporter,
-    eMission_Pion_ALAT_EffectuerRechercheEtSauvetage,
     eMission_Pion_ALAT_IMEX,
     eMission_Pion_ALAT_Eclairer,
     eMission_Pion_ALAT_Surveiller,
@@ -1344,6 +1304,7 @@ enum E_FragOrder
     eOrdreConduite_Interrompre,
     eOrdreConduite_ChangerAmbiance,
     eOrdreConduite_ChangerReglesEngagement,
+    eOrdreConduite_ChangerParametresRecompletementALAT,
     eOrdreConduite_ChangerReglesEngagementPopulation,
     eOrdreConduite_Deboucher,
     eOrdreConduite_Decrocher,
@@ -1371,7 +1332,6 @@ enum E_FragOrder
     eOrdreConduite_ModifierPrioritesTactiquesBlesses,
     eOrdreConduite_Automate_RealiserVariantement,
     eOrdreConduite_Automate_DesequiperSiteFranchissement,
-    eOrdreConduite_Automate_ReagirFaceAEni,
     eOrdreConduite_Automate_AffecterPionAObstacle,
     eOrdreConduite_Automate_ReconnaitreZoneImplantation,
     eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement,

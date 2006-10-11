@@ -21,14 +21,12 @@ IMPORTS Mission-Pion-ALAT-ReconnaitreDansLaProfondeur,
         Mission-Pion-ALAT-Heliporter,
         Mission-Pion-ALAT-HeliporterHelitransporterPlotRavitaillement,
         Mission-Pion-ALAT-Helitransporter,
-        Mission-Pion-ALAT-EffectuerRechercheEtSauvetage,
         Mission-Pion-ALAT-IMEX,
         Mission-Pion-ALAT-Eclairer,
         Mission-Pion-ALAT-Surveiller,
         Mission-Pion-ALAT-AppuyerDirectAuContact,
         Mission-Pion-ALAT-Couvrir,
         Mission-Pion-ALAT-Attaquer,
-        Mission-Pion-ALAT-EvacuationSanitaire,
         Mission-Pion-ALAT-AllerSeRecompleter FROM ScipioPionMission_ALAT
         
 IMPORTS Mission-Pion-ASA-DefendreSite,
@@ -239,7 +237,6 @@ IMPORTS Mission-Pion-TRANS-EtablirGererLiaison FROM ScipioPionMission_TRANS;
 Mission-Pion ::= CHOICE
 {
     mission-pion-alat-aller-se-recompleter                              Mission-Pion-ALAT-AllerSeRecompleter,
-    mission-pion-alat-evacuation-sanitaire                              Mission-Pion-ALAT-EvacuationSanitaire,
     mission-pion-alat-reconnaitre-dans-la-profondeur                    Mission-Pion-ALAT-ReconnaitreDansLaProfondeur,
     mission-pion-alat-reconnaitre-contour-ennemi                        Mission-Pion-ALAT-ReconnaitreContourEnnemi,
     mission-pion-alat-detruire-neutraliser-dans-zone                    Mission-Pion-ALAT-DetruireNeutraliserDansZone,
@@ -250,7 +247,6 @@ Mission-Pion ::= CHOICE
     mission-pion-alat-heliporter                                        Mission-Pion-ALAT-Heliporter,
     mission-pion-alat-heliporter-helitransporter-plot-ravitaillement    Mission-Pion-ALAT-HeliporterHelitransporterPlotRavitaillement,
     mission-pion-alat-helitransporter                                   Mission-Pion-ALAT-Helitransporter,
-    mission-pion-alat-effectuer-recherche-et-sauvetage                  Mission-Pion-ALAT-EffectuerRechercheEtSauvetage,
     mission-pion-alat-imex                                              Mission-Pion-ALAT-IMEX,
     mission-pion-alat-eclairer                                          Mission-Pion-ALAT-Eclairer,
     mission-pion-alat-surveiller                                        Mission-Pion-ALAT-Surveiller,
