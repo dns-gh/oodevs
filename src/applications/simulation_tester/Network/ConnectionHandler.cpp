@@ -101,7 +101,6 @@ void ConnectionHandler::OnConnected( DIN_Link& link )
 	networkManager_.GetMessageMgr().Enable( link );
     
 	MOS_ASN_MsgCtrlClientAnnouncement asnMsg;
-    asnMsg.GetAsnMsg() = MsgCtrlClientAnnouncement::mos_light;
     asnMsg.Send();
 }
 

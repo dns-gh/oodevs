@@ -81,7 +81,7 @@ public:                                                                         
         ASN1T_MsgsInSim    globalAsnMsg;                                            \
                                                                                     \
         globalAsnMsg.context = nCtx;                                                \
-        globalAsnMsg.t       = T_MsgsInSim_msg_msg_##ASNVAR;                        \
+        globalAsnMsg.msg.t   = T_MsgsInSim_msg_msg_##ASNVAR;                        \
         Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgInSim( globalAsnMsg ); \
     }                                                                               \
 };                                                 
@@ -90,7 +90,7 @@ public:                                                                         
 // GENERATE ASN MESSAGES
 //=============================================================================
 
-MOS_GENERATE_SEND_ASN_MSG_NOPTR( CtrlClientAnnouncement, ctrl_client_announcement   )
+MOS_GENERATE_SEND_ASN_MSG_NOMSG( CtrlClientAnnouncement, ctrl_client_announcement   )
 MOS_GENERATE_SEND_ASN_MSG_NOPTR( CtrlChangeTimeFactor, ctrl_change_time_factor )
 MOS_GENERATE_SEND_ASN_MSG_PTR( ObjectMagicAction, object_magic_action )
 MOS_GENERATE_SEND_ASN_MSG_PTR( UnitMagicAction  , unit_magic_action   )
