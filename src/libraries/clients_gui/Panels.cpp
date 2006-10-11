@@ -24,6 +24,7 @@ Panels::Panels( QWidget* pParent )
     setMinimumSize( 1, 1 );
 
     QHBox* box = new QHBox( this );
+    box->setMaximumHeight( 20 );
     previous_ = new QPushButton( "<", box );
     previous_->setMaximumSize( 20, 20 );
     next_ = new QPushButton( ">", box );
