@@ -14,7 +14,6 @@
 #include "clients_kernel/Units.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/ListDisplayer.h"
-#include "clients_gui/SubItemDisplayer.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/LogMaintenanceConsign.h"
 #include "gaming/MaintenanceStates.h"

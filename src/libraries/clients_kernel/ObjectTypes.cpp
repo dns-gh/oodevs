@@ -65,7 +65,7 @@ void ObjectTypes::Load( const std::string& scipioXml )
 void ObjectTypes::Purge()
 {
     Resolver< ObjectType >::DeleteAll();
-    Resolver< DotationType >::DeleteAll();
+    Resolver2< DotationType >::DeleteAll();
     Resolver< EquipmentType >::DeleteAll();
     Resolver< NBCAgent >::DeleteAll();
     Resolver< BreakdownType >::DeleteAll();
@@ -134,7 +134,7 @@ void ObjectTypes::ReadDotation( xml::xistream& xis )
 void ObjectTypes::ReadCategory( xml::xistream& xis, const std::string& name )
 {
     DotationType* dotation = new DotationType( name.c_str(), xis );
-    Resolver< DotationType >::Register( dotation->GetId(), *dotation );
+    Resolver2< DotationType >::Register( dotation->GetId(), dotation->GetCategory(), *dotation );
 }
 
 // -----------------------------------------------------------------------------

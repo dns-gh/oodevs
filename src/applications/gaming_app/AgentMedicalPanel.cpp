@@ -12,7 +12,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Units.h"
-#include "clients_gui/SubItemDisplayer.h"
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "gaming/LogMedicalConsign.h"

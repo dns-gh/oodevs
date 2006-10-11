@@ -11,6 +11,7 @@
 #define __ObjectTypes_h_
 
 #include "Resolver.h"
+#include "Resolver2.h"
 #include "IDManager.h"
 
 namespace xml { class xistream; };
@@ -31,7 +32,7 @@ namespace kernel
 // =============================================================================
 class ObjectTypes
     : public Resolver< ObjectType >
-    , public Resolver< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
+    , public Resolver2< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
     , public Resolver< EquipmentType >
     , public Resolver< NBCAgent >
     , public Resolver< BreakdownType >

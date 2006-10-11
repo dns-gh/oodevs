@@ -24,6 +24,7 @@
 #include "AutomatPositions.h"
 #include "AgentHierarchies.h"
 #include "AutomatCommunications.h"
+#include "Dotations.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -31,6 +32,7 @@
 #include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "StaticModel.h"
 
 using namespace kernel;
@@ -68,6 +70,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+    result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_ ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );
@@ -124,6 +127,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+    result->Attach( *new Dotations( xis, controllers_.controller_, static_.objectTypes_ ) );
 
     AttachExtensions( *result );
     result->Update( InstanciationComplete() );

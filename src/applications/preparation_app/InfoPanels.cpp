@@ -10,6 +10,8 @@
 #include "preparation_app_pch.h"
 #include "InfoPanels.h"
 #include "preparation/StaticModel.h"
+#include "AgentStatePanel.h"
+#include "AgentResourcesPanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -21,6 +23,8 @@ using namespace gui;
 InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, const StaticModel& model, ItemFactory_ABC& factory )
     : Panels( parent )
 {
+    AddPanel( new AgentStatePanel( this, *this, controllers, factory ) );
+    AddPanel( new AgentResourcesPanel( this, *this, controllers, factory ) );
 }
 
 // -----------------------------------------------------------------------------

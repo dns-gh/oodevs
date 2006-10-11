@@ -270,7 +270,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
 void LogisticSupplyRecompletionDialog::InitializeDotations()
 {
     dotationsTable_->setNumRows( 0 );
-    const Resolver< DotationType >& dotations = static_.objectTypes_;
+    const Resolver_ABC< DotationType >& dotations = static_.objectTypes_;
     Iterator< const DotationType& > it = dotations.CreateIterator();
     std::set< unsigned long > inserted;
     while( it.HasMoreElements() )

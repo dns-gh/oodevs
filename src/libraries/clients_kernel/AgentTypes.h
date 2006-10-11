@@ -22,7 +22,6 @@ namespace kernel
     class SensorType;
     class AutomatType;
     class PopulationType;
-    class DotationType;
     class MissionFactory;
     class Mission;
     class SymbolFactory;
