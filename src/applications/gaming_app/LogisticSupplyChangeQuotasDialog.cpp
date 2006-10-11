@@ -48,14 +48,13 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
 
-    table_ = new QTable( 0, 3, this );
+    table_ = new QTable( 0, 2, this );
     table_->setMargin( 5 );
     table_->horizontalHeader()->setLabel( 0, tr( "Dotation" ) );
-    table_->horizontalHeader()->setLabel( 1, tr( "Quantité" ) );
-    table_->horizontalHeader()->setLabel( 2, tr( "Quota" ) );
+    table_->horizontalHeader()->setLabel( 1, tr( "Quota" ) );
+//    table_->horizontalHeader()->setLabel( 2, tr( "Quota" ) );
     table_->setLeftMargin( 0 );
     table_->setMinimumSize( 220, 200 );
-    table_->setColumnReadOnly( 2, true );
     layout->addWidget( table_ );
 
     box = new QHBox( this );
@@ -178,14 +177,19 @@ void LogisticSupplyChangeQuotasDialog::Reject()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
 {
-    const Automat_ABC* agent = targetCombo_->GetValue();
-    // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
-    const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
-    Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+    supplies_.clear();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    while( children.HasMoreElements() )
-        AddDotation( children.NextElement() );
+    const Automat_ABC* agent = targetCombo_->GetValue();
+    if( agent )
+    {
+        // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
+        const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
+        Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+        
+        while( children.HasMoreElements() )
+            AddDotation( children.NextElement() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -242,19 +246,19 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
             item.setCurrentItem( current );
         }
         table_->setCurrentCell( row, 1 );
-        if( ! table_->text( row, 0 ).isEmpty() )
-        {
-            const Dotation& dotation = supplies_[ table_->text( row, 0 ) ];
-            table_->setText( row, 2, QString::number( dotation.quantity_ ) );
-            table_->adjustColumn( 0 );
-            table_->adjustColumn( 1 );
-            table_->adjustColumn( 2 );
-        }
-        else
-        {
-            table_->setText( row, 1, "" );
-            table_->setText( row, 2, "" );
-        }
+//        if( ! table_->text( row, 0 ).isEmpty() )
+//        {
+//            const Dotation& dotation = supplies_[ table_->text( row, 0 ) ];
+//            table_->setText( row, 2, QString::number( dotation.quantity_ ) );
+//            table_->adjustColumn( 0 );
+//            table_->adjustColumn( 1 );
+//            table_->adjustColumn( 2 );
+//        }
+//        else
+//        {
+//            table_->setText( row, 1, "" );
+//            table_->setText( row, 2, "" );
+//        }
     }
     else if( col == 1 )
     {

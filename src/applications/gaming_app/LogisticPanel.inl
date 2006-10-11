@@ -14,6 +14,7 @@
 template< typename ConcretePanel, typename Consign >
 LogisticPanel< ConcretePanel, Consign >::LogisticPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const QString& tabName )
     : gui::InfoPanel_ABC( parent, panel, tabName )
+    , potential_( 0 )
     , selected_( controllers )
 {
     pConsignListView_ = new gui::ListDisplayer< ConcretePanel >( this, (ConcretePanel&)*this, factory );
@@ -56,21 +57,31 @@ void LogisticPanel< ConcretePanel, Consign >::AddConsignColumn( const char* colu
 template< typename ConcretePanel, typename Consign >
 void LogisticPanel< ConcretePanel, Consign >::showEvent( QShowEvent* )
 {
-    const Agent_ABC* selected = selected_;
+    potential_ = selected_;
     selected_ = 0;
-    NotifySelected( selected );
+    AfterSelection();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticPanel::NotifySelected
-// Created: AGE 2006-07-04
+// Name: LogisticPanel::BeforeSelection
+// Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
 template< typename ConcretePanel, typename Consign >
-void LogisticPanel< ConcretePanel, Consign >::NotifySelected( const kernel::Agent_ABC* agent )
+void LogisticPanel< ConcretePanel, Consign >::BeforeSelection()
 {
-    if( ! agent || agent != selected_ )
+    potential_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPanel::AfterSelection
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+template< typename ConcretePanel, typename Consign >
+void LogisticPanel< ConcretePanel, Consign >::AfterSelection()
+{
+    if( ! potential_ || potential_ != selected_ )
     {
-        selected_ = agent;
+        selected_ = potential_;
         if( selected_ )
         {
             pConsignListView_->hide();
@@ -80,6 +91,26 @@ void LogisticPanel< ConcretePanel, Consign >::NotifySelected( const kernel::Agen
         else
             Hide();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPanel::Select
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+template< typename ConcretePanel, typename Consign >
+void LogisticPanel< ConcretePanel, Consign >::Select( const kernel::Automat_ABC& agent )
+{
+    potential_ = &agent;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPanel::Select
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+template< typename ConcretePanel, typename Consign >
+void LogisticPanel< ConcretePanel, Consign >::Select( const kernel::Agent_ABC&   agent )
+{
+    potential_ = &agent;
 }
 
 // -----------------------------------------------------------------------------

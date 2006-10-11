@@ -13,15 +13,19 @@
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
-#include "gaming/LogisticConsigns.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/SubItemDisplayer.h"
+#include "gaming/LogisticConsigns.h"
 
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
     class Agent_ABC;
+    class Automat_ABC;
 }
 
 namespace gui
@@ -38,7 +42,9 @@ namespace gui
 template< typename ConcretePanel, typename Consign >
 class LogisticPanel : public gui::InfoPanel_ABC
                     , public kernel::Observer_ABC
-                    , public kernel::SelectionObserver< kernel::Agent_ABC >
+                    , public kernel::SelectionObserver_ABC
+                    , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
+                    , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
                     , public kernel::ElementObserver_ABC< LogisticConsigns >
                     , public kernel::ElementObserver_ABC< Consign >
 {
@@ -66,8 +72,12 @@ protected:
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* );
-    virtual void NotifySelected( const kernel::Agent_ABC* agent );
-    virtual void NotifySelected( const kernel::Agent_ABC& agent ) = 0;
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const kernel::Automat_ABC& agent );
+    virtual void Select( const kernel::Agent_ABC&   agent );
+    virtual void NotifySelected( const kernel::Entity_ABC& agent ) = 0;
+
     virtual void NotifyUpdated( const LogisticConsigns& consigns );
     virtual void NotifyUpdated( const Consign& consigns );
 
@@ -85,7 +95,9 @@ protected:
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    const kernel::Entity_ABC* potential_;
+    kernel::SafePointer< kernel::Entity_ABC >   selected_;
+
     gui::ListDisplayer< ConcretePanel >* pConsignListView_;
     gui::ListDisplayer< ConcretePanel >* pConsignHandledListView_;
     gui::SubItemDisplayer* logDisplay_;

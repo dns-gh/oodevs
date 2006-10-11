@@ -35,7 +35,6 @@ class Logistics : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceEtat >
                 , public kernel::Updatable_ABC< ASN1T_MsgLogSanteEtat >
                 , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
-                , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
 {
 
 public:
@@ -57,7 +56,6 @@ private:
     virtual void DoUpdate( const ASN1T_MsgLogSanteEtat& message );
     virtual void DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message );
     virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
-    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
     SupplyStates& InstanciateSupplyState();
     //@}
 

@@ -12,6 +12,9 @@
 
 #include "Model.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/InstanciationComplete.h"
 #include "Agent.h"
 #include "Automat.h"
 #include "Population.h"
@@ -60,15 +63,13 @@
 #include "Lives.h"
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/DataDictionary.h"
-#include "clients_kernel/InstanciationComplete.h"
 #include "StaticModel.h"
 #include "RcEntityResolver.h"
 #include "AgentHierarchies.h"
 #include "AutomatLives.h"
 #include "AutomatPositions.h"
 #include "AutomatHierarchies.h"
+#include "Quotas.h"
 
 using namespace kernel;
 
@@ -105,11 +106,14 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_ );
     DataDictionary& dico = result->Get< DataDictionary >();
+
     result->Attach< CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     result->Attach( *new AutomatLives( *result ) );
     result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< Positions >( *new AutomatPositions( *result ) );
+    result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
+    result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
 
     result->Update( asnMsg );
     return result;
@@ -122,6 +126,8 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_ );
+    DataDictionary& dico = result->Get< DataDictionary >();
+
     result->Attach( *new Lives() );
     result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
@@ -129,8 +135,11 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
-    AttachExtensions( *result );
+    result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
+    result->Attach( *new LogisticConsigns( controllers_.controller_ ) );
     result->Attach< CommunicationHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, model_.agents_ ) );
+    AttachExtensions( *result );
+
     result->Update( asnMsg );
     result->Update( InstanciationComplete() );
     return result;
@@ -143,9 +152,11 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
 {
     Population* result = new Population( asnMsg, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.types_ );
+
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach( *new PopulationDecisions( *result ) );
     AttachExtensions( *result );
+
 //    result->Update( InstanciationComplete() );
     return result;
 }
@@ -170,10 +181,8 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, rcResolver_ ) );
     agent.Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Troops( controllers_.controller_ ) );
-    agent.Attach( *new Logistics( agent, controllers_.controller_, model_, static_, dico ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_ ) );
-    agent.Attach( *new LogisticConsigns( controllers_.controller_ ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
 }

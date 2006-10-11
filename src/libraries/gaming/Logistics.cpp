@@ -91,13 +91,3 @@ void Logistics::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
     if( ! holder_.Retrieve< SupplyStates >() )
         InstanciateSupplyState().DoUpdate( message );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Logistics::DoUpdate
-// Created: AGE 2006-03-01
-// -----------------------------------------------------------------------------
-void Logistics::DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message )
-{
-    if( ! holder_.Retrieve< SupplyStates >() )
-        InstanciateSupplyState().DoUpdate( message );
-}

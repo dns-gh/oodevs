@@ -14,11 +14,8 @@
 
 namespace kernel
 {
-    class Agent_ABC;
-    class KnowledgeGroup_ABC;
+    class Entity_ABC;
     class Team_ABC;
-    class Object_ABC;
-    class Population_ABC;
 }
 
 // =============================================================================
@@ -28,11 +25,7 @@ namespace kernel
 // Created: AGE 2006-02-24
 // =============================================================================
 class TeamSelectionObserver : public kernel::SelectionObserver_ABC
-                            , public kernel::SelectionObserver_Base< kernel::Team_ABC >
-                            , public kernel::SelectionObserver_Base< kernel::KnowledgeGroup_ABC >
-                            , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
-                            , public kernel::SelectionObserver_Base< kernel::Object_ABC >
-                            , public kernel::SelectionObserver_Base< kernel::Population_ABC>
+                            , public kernel::SelectionObserver_Base< kernel::Entity_ABC >
 {
 
 public:
@@ -54,11 +47,7 @@ protected:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const kernel::Team_ABC& element );
-    virtual void Select( const kernel::KnowledgeGroup_ABC& element );
-    virtual void Select( const kernel::Agent_ABC& element );
-    virtual void Select( const kernel::Object_ABC& element );
-    virtual void Select( const kernel::Population_ABC& element );
+    virtual void Select( const kernel::Entity_ABC& element );
     virtual void Select( const kernel::Team_ABC* ) = 0;
     //@}
 

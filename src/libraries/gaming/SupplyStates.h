@@ -13,9 +13,9 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "clients_kernel/Resolver.h"
 #include "Availability.h"
 #include "Dotation.h"
-#include "clients_kernel/Resolver.h"
 
 namespace kernel
 {
@@ -29,12 +29,12 @@ namespace kernel
 // =============================================================================
 /** @class  SupplyStates
     @brief  SupplyStates
+    // $$$$ AGE 2006-10-11: separer les quotas, qui sont de niveau automate, des stocks, qui est niveau pion
 */
 // Created: AGE 2006-02-14
 // =============================================================================
 class SupplyStates : public kernel::Extension_ABC
                    , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementEtat >
-                   , public kernel::Updatable_ABC< ASN1T_MsgLogRavitaillementQuotas >
                    , public kernel::Resolver< Dotation >
 {
 public:
@@ -48,7 +48,6 @@ public:
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message );
-    virtual void DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message );
     //@}
 
 private:
@@ -61,7 +60,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< Availability >         T_Availabilities;
-    typedef std::vector< Dotation >             T_Dotations;
     //@}
 
 public:
@@ -73,7 +71,6 @@ public:
 
     bool             bChainEnabled_;
     T_Availabilities dispoTransporters_;
-    T_Dotations      quotas_;
     //@}
 };
 

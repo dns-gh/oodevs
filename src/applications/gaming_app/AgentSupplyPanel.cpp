@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AgentSupplyPanel.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Units.h"
 #include "clients_gui/ListDisplayer.h"
@@ -20,6 +20,7 @@
 #include "gaming/SupplyStates.h"
 #include "gaming/LogisticConsigns.h"
 #include "gaming/DotationRequest.h"
+#include "gaming/Quotas.h"
 
 using namespace kernel;
 using namespace gui;
@@ -74,25 +75,27 @@ AgentSupplyPanel::~AgentSupplyPanel()
 // Name: AgentSupplyPanel::NotifySelected
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentSupplyPanel::NotifySelected( const Agent_ABC& agent )
+void AgentSupplyPanel::NotifySelected( const Entity_ABC& agent )
 {
     display_->Hide();
     pStocks_->hide();
     pQuotas_->hide();
     pDispoTransporters_->hide();
 
-    const SupplyStates* states = agent.Retrieve< SupplyStates >();
+    const SupplyStates*     states = agent.Retrieve< SupplyStates >();
+    const Quotas*           quotas = agent.Retrieve< Quotas >();
     const LogisticConsigns* consigns = agent.Retrieve< LogisticConsigns >();
+
     if( ( consigns && ! consigns->requestedSupplies_.empty() ) 
-       || states )
+       || states 
+       || quotas )
         Show();
     else
         Hide();
 
-    if( consigns )
-        Parent::NotifyUpdated( *consigns );
-    if( states )
-        NotifyUpdated( *states );
+    if( consigns ) Parent::NotifyUpdated( *consigns );
+    if( quotas )   NotifyUpdated( *quotas );
+    if( states )   NotifyUpdated( *states );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,12 +181,22 @@ void AgentSupplyPanel::NotifyUpdated( const SupplyStates& consigns )
         pDispoTransporters_->DisplayList( consigns.dispoTransporters_.begin(), consigns.dispoTransporters_.end() )
         );
 
-    pQuotas_->DeleteTail( 
-        pQuotas_->DisplayList( consigns.quotas_.begin(), consigns.quotas_.end() )
-        );
-
     pStocks_->DeleteTail( 
         pStocks_->DisplayList( consigns.CreateIterator() )
+        );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentSupplyPanel::NotifyUpdated
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void AgentSupplyPanel::NotifyUpdated( const Quotas& quotas )
+{
+    if( ! ShouldUpdate( quotas ) )
+        return;
+
+    pQuotas_->DeleteTail( 
+        pQuotas_->DisplayList( quotas.quotas_.begin(), quotas.quotas_.end() )
         );
 }
 

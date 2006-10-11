@@ -1103,8 +1103,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
 void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& message, unsigned long /*nCtx*/ )
 {
     if( CheckAcknowledge( message, "PionOrderAck" ) )
-        GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
-    // $$$$ AGE 2006-10-09: GetAgent ?
+        GetModel().agents_.GetAgent( message.oid_unite_executante ).Update( message );
 }
 
 //-----------------------------------------------------------------------------

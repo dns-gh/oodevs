@@ -17,6 +17,7 @@
 
 namespace kernel
 {
+    class Agent_ABC;
     class Team_ABC;
     class Controllers;
     class Displayer_ABC;

@@ -176,16 +176,19 @@ void LogisticSupplyPushFlowDialog::Reject()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnSelectionChanged()
 {
-    const Automat_ABC* agent = targetCombo_->GetValue();
-    if( ! agent )
-        return;
-    // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
-    const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
-    Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+    supplies_.clear();
     dotationTypes_.clear();
     dotationTypes_.append( "" );
-    while( children.HasMoreElements() )
-        AddDotation( children.NextElement() );
+    const Automat_ABC* agent = targetCombo_->GetValue();
+    if( agent )
+    {
+        // $$$$ AGE 2006-10-06: use LogisticHierarchies ?
+        const CommunicationHierarchies& hierarchies = agent->Get< CommunicationHierarchies >();
+        Iterator< const Entity_ABC& > children = hierarchies.CreateSubordinateIterator();
+        
+        while( children.HasMoreElements() )
+            AddDotation( children.NextElement() );
+    }
 }
 
 // -----------------------------------------------------------------------------

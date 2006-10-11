@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AgentMaintenancePanel.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Units.h"
 #include "clients_gui/DisplayBuilder.h"
@@ -72,7 +72,7 @@ AgentMaintenancePanel::~AgentMaintenancePanel()
 // Name: AgentMaintenancePanel::NotifySelected
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void AgentMaintenancePanel::NotifySelected( const Agent_ABC& agent )
+void AgentMaintenancePanel::NotifySelected( const Entity_ABC& agent )
 {
     display_->Hide();
     dispoHaulers_->hide();

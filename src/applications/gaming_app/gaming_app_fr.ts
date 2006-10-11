@@ -769,10 +769,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Quantit&#xe9;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Quota</source>
         <translation type="unfinished"></translation>
     </message>

@@ -54,7 +54,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const kernel::Agent_ABC& agent );
+    virtual void NotifySelected( const kernel::Entity_ABC& agent );
     virtual void NotifyUpdated( const MaintenanceStates& consigns );
 
     virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< AgentMaintenancePanel >* list );

@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AgentMedicalPanel.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Units.h"
 #include "clients_gui/SubItemDisplayer.h"
@@ -78,7 +78,7 @@ AgentMedicalPanel::~AgentMedicalPanel()
 // Name: AgentMedicalPanel::NotifySelected
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-void AgentMedicalPanel::NotifySelected( const Agent_ABC& agent )
+void AgentMedicalPanel::NotifySelected( const Entity_ABC& agent )
 {
     display_->Hide();
     dispoReleveAmbulances_->hide();

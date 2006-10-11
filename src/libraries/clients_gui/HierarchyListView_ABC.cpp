@@ -95,7 +95,7 @@ ValuedListItem* HierarchyListView_ABC::RecursiveCreateHierarchy( const Entity_AB
 {
     if( !entity )
         return 0;
-    ValuedListItem* item = FindItem( entity, firstChild() );
+    ValuedListItem* item = FindItem( entity, firstChild() ); // $$$$ AGE 2006-10-11: pas terrible
     if( item )
         return item;
     if( const Hierarchies* hierarchy = RetrieveHierarchy( *entity ) )

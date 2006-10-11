@@ -72,19 +72,6 @@ void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyStates::DoUpdate
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementQuotas& message )
-{
-    quotas_.resize( message.quotas.n );
-    for( uint i = 0; i < message.quotas.n; ++i )
-        quotas_[ i ] = Dotation( dotationResolver_.Get( message.quotas.elem[i].ressource_id )
-                               , message.quotas.elem[i].quota_disponible );
-    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SupplyStates::Display
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------

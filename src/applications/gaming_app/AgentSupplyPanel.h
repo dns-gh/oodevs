@@ -30,6 +30,7 @@ class SupplyStates;
 class Availability;
 class DotationRequest;
 class Dotation;
+class Quotas;
 
 // =============================================================================
 /** @class  AgentSupplyPanel
@@ -39,6 +40,7 @@ class Dotation;
 // =============================================================================
 class AgentSupplyPanel : public LogisticPanel< AgentSupplyPanel, LogSupplyConsign >
                        , public kernel::ElementObserver_ABC< SupplyStates >
+                       , public kernel::ElementObserver_ABC< Quotas >
 {
 
 public:
@@ -59,8 +61,9 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifySelected( const kernel::Agent_ABC& agent );
+    virtual void NotifySelected( const kernel::Entity_ABC& agent );
     virtual void NotifyUpdated( const SupplyStates& consigns );
+    virtual void NotifyUpdated( const Quotas& consigns );
 
     virtual void DisplayRequested( const LogisticConsigns& consigns, gui::ListDisplayer< AgentSupplyPanel >* list );
     virtual void DisplayHandled( const LogisticConsigns& consigns, gui::ListDisplayer< AgentSupplyPanel >* list );

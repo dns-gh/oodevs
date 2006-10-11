@@ -25,10 +25,10 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controll
                   const Resolver_ABC< AutomatType >& resolver )
     : controller_   ( controller )
     , type_         ( resolver.Get( message.type_automate ) )
-    , name_         ( "$$$$Automate$$$$" ) // $$$$ AGE 2006-10-06: 
     , id_           ( message.oid_automate )
 {
     RegisterSelf( *this );
+    name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
 
     DataDictionary& dictionary = *new DataDictionary();
     Attach( dictionary );
