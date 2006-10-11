@@ -28,8 +28,8 @@ class InterfaceContainer
 public:
     //! @name Constructors/Destructor
     //@{
-             InterfaceContainer() {};
-    virtual ~InterfaceContainer() {};
+             InterfaceContainer();
+    virtual ~InterfaceContainer();
     //@}
 
     //! @name Operations

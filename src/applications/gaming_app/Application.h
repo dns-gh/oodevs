@@ -23,6 +23,7 @@ class MainWindow;
 class StaticModel;
 class Model;
 class Simulation;
+class Profile;
 
 // =============================================================================
 /** @class  Application
@@ -66,6 +67,7 @@ private:
     StaticModel* staticModel_;
     Model* model_;
     Simulation* simulation_;
+    Profile* profile_;
     kernel::Workers* workers_;
     Network* network_;
     MainWindow* mainWindow_;

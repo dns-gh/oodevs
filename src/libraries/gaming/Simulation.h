@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Controllers;
+    class Controller;
 }
 
 // =============================================================================
@@ -34,7 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Simulation( kernel::Controllers& controllers );
+    explicit Simulation( kernel::Controller& controller );
     virtual ~Simulation();
     //@}
 
@@ -68,7 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controller& controller_;
     unsigned int tickDuration_;
     unsigned int timeFactor_;
     int time_;

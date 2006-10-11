@@ -14,6 +14,11 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
+namespace kernel
+{
+    class Controllers;
+}
+
 // =============================================================================
 /** @class  StatusBar
     @brief  StatusBar

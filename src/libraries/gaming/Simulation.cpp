@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Simulation.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "Network.h"
 
@@ -19,8 +18,8 @@ using namespace kernel;
 // Name: Simulation constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-Simulation::Simulation( Controllers& controllers )
-    : controllers_( controllers )
+Simulation::Simulation( Controller& controller )
+    : controller_( controller )
     , tickDuration_( 10 )
     , time_( 0 )
     , paused_( false )
@@ -46,7 +45,7 @@ void Simulation::Connect( const std::string& host )
 {
     connected_ = true;
     simulationHost_ = host;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +55,7 @@ void Simulation::Connect( const std::string& host )
 void Simulation::Disconnect()
 {
     connected_ = false;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +65,7 @@ void Simulation::Disconnect()
 void Simulation::Pause( bool paused )
 {
     paused_ = paused;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +75,7 @@ void Simulation::Pause( bool paused )
 void Simulation::ChangeSpeed( int timeFactor )
 {
     timeFactor_ = timeFactor;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +88,7 @@ void Simulation::Update( const ASN1T_MsgCtrlInfo& message )
     paused_       = message.etat == EnumEtatSim::paused;
     timeFactor_   = message.time_factor;
     time_         = message.current_tick * tickDuration_;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,8 +107,8 @@ void Simulation::Update( const ProfilingValuesMessage& message )
 void Simulation::BeginTick( int tick )
 {
     time_ = tick * tickDuration_;
-    controllers_.controller_.Update( startTick_ );
-    controllers_.controller_.Update( *this );
+    controller_.Update( startTick_ );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +117,8 @@ void Simulation::BeginTick( int tick )
 // -----------------------------------------------------------------------------
 void Simulation::EndTick()
 {
-    controllers_.controller_.Update( endTick_ );
-    controllers_.controller_.Update( *this );
+    controller_.Update( endTick_ );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +128,7 @@ void Simulation::EndTick()
 void Simulation::SetConfigPath( const std::string& path )
 {
     configPath_ = path;
-    controllers_.controller_.Update( *this );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

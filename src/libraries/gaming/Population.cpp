@@ -53,6 +53,7 @@ Population::~Population()
     controller_.Delete( *(Population_ABC*)this );
     Resolver< PopulationFlow_ABC >::DeleteAll();
     Resolver< PopulationConcentration_ABC >::DeleteAll();
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

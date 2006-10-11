@@ -12,7 +12,6 @@
 
 #include "ASN_Types.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/IDManager.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -60,9 +59,6 @@ private:
     unsigned long      nID_;
     QString name_;
     //@}
-
-private:
-    static kernel::IDManager     idManager_;
 };
 
 #endif // __KnowledgeGroup_h_

@@ -36,6 +36,7 @@ Team::Team( uint id, DIN::DIN_Input& input, Controller& controller )
 Team::~Team()
 {
     controller_.Delete( *(Team_ABC*)this );
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

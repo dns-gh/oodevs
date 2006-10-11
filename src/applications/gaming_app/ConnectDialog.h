@@ -39,7 +39,6 @@ private slots:
     //! @name Main methods
     //@{
     void Validate();
-    void Reject();
     //@}
 
 private:

@@ -17,6 +17,7 @@
 #include "gaming/StaticModel.h"
 #include "gaming/Model.h"
 #include "gaming/Simulation.h"
+#include "gaming/Profile.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
 #include "gaming/AgentServerMsgMgr.h"
@@ -88,9 +89,10 @@ void Application::Initialize( int argc, char** argv )
     po::notify( vm );
 
     controllers_ = new Controllers();
-    simulation_  = new Simulation( *controllers_ );
+    simulation_  = new Simulation( controllers_->controller_  );
+    profile_     = new Profile( controllers_->controller_ );
     workers_     = new Workers();
-    network_     = new Network( *controllers_, *simulation_ );
+    network_     = new Network( *controllers_, *simulation_, *profile_ );
     staticModel_ = new StaticModel( *controllers_ );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr() );
     network_->GetMessageMgr().SetModel( *model_ );

@@ -63,6 +63,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
 Object::~Object()
 {
     controller_.Delete( *(Object_ABC*)this );
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

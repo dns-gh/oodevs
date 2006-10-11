@@ -18,6 +18,30 @@ template< typename BaseType >
 unsigned int InterfaceContainer< BaseType >::id_ = 0;
 
 // -----------------------------------------------------------------------------
+// Name: InterfaceContainer constructor
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+template< typename BaseType >
+InterfaceContainer< BaseType >::InterfaceContainer()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: InterfaceContainer destructor
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+template< typename BaseType >
+InterfaceContainer< BaseType >::~InterfaceContainer()
+{
+    while( ! implementations_.empty() )
+    {
+        delete implementations_.back();
+        implementations_.pop_back();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: InterfaceContainer< BaseType >::GetInterfaceId
 // Created: AGE 2006-02-06
 // -----------------------------------------------------------------------------

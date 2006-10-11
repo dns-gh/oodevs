@@ -14,6 +14,7 @@
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
 #include "Simulation.h"
+#include "Profile.h"
 
 #include "DIN/DIN_Engine.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
@@ -27,10 +28,11 @@ using namespace kernel;
 // Name: Network constructor
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
-Network::Network( kernel::Controllers& controllers, Simulation& simu )
+Network::Network( kernel::Controllers& controllers, Simulation& simu, Profile& profile )
     : simu_( simu )
+    , profile_( profile )
     , engine_( new DIN::DIN_Engine() )
-    , manager_( new AgentServerMsgMgr( controllers, *engine_, simu, mutex_ ) )
+    , manager_( new AgentServerMsgMgr( controllers, *engine_, simu, profile, mutex_ ) )
     , session_( 0 )
     , terminated_( false )
 {
@@ -139,13 +141,8 @@ void Network::Update()
             {
                 MT_LOG_INFO_MSG( tools::translate( "Reseau", "Connecté à " ) << it->link_->GetRemoteAddress().GetAddressAsString() );
                 manager_->Enable( *session_ );
-
-                ASN_MsgAuthLogin asnMsg;
-                asnMsg.GetAsnMsg().login    = "test";
-                asnMsg.GetAsnMsg().password = "cock";
-                asnMsg.Send( *manager_ );
-                
                 simu_.Connect( it->address_ );
+                profile_.Login( *manager_ );
             }
             else if( it->lost_ )
             {

@@ -41,10 +41,12 @@ class Spy;
 class Model;
 class StaticModel;
 class Simulation;
+class Profile;
 class Network;
 class MissionPanel;
 class ObjectCreationPanel;
 class GraphicSetup_ABC;
+class LoginDialog;
 
 // =============================================================================
 /** @class  MainWindow
@@ -62,6 +64,7 @@ class MainWindow : public QMainWindow
                  , public kernel::Observer_ABC
                  , public kernel::OptionsObserver_ABC
                  , public kernel::ElementObserver_ABC< Simulation >
+                 , public kernel::ElementObserver_ABC< Profile >
 {
     Q_OBJECT;
 
@@ -97,6 +100,7 @@ private:
 
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const Profile& profile );
 
     void CompareConfigPath( const std::string& server, const std::string& serverPath );
     static std::string BuildRemotePath( std::string server, std::string path );

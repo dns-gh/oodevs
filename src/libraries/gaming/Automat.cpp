@@ -44,7 +44,8 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controll
 // -----------------------------------------------------------------------------
 Automat::~Automat()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(Automat_ABC*)this );
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

@@ -15,8 +15,6 @@
 
 using namespace kernel;
 
-IDManager KnowledgeGroup::idManager_( 0 );
-
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
@@ -26,7 +24,6 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
     , nID_ ( nId )
 {
     RegisterSelf( *this );
-    idManager_.LockIdentifier( nID_ );
     name_ = QString( "Gtia %1" ).arg( nID_ ); // $$$$ AGE 2006-08-23: 
 }
 
@@ -37,7 +34,7 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
 KnowledgeGroup::~KnowledgeGroup()
 {
     controller_.Delete( *(KnowledgeGroup_ABC*)this );
-    idManager_.ReleaseIdentifier( nID_ );
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

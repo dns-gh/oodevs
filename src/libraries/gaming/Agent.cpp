@@ -45,6 +45,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,
 Agent::~Agent()
 {
     controller_.Delete( *(Agent_ABC*)this );
+    DestroyExtensions();
 }
 
 // -----------------------------------------------------------------------------

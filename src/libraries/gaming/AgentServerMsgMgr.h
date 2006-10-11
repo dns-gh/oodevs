@@ -36,6 +36,7 @@ class MsgRecorder;
 class Model;
 class Simulation;
 class DIN_InputDeepCopy;
+class Profile;
 
 namespace DIN
 {
@@ -53,7 +54,7 @@ class AgentServerMsgMgr : public kernel::Observer_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             AgentServerMsgMgr( kernel::Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, boost::mutex& mutex ); 
+             AgentServerMsgMgr( kernel::Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex ); 
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -138,6 +139,7 @@ private:
     void OnReceiveMsgAutomateCreation         ( const ASN1T_MsgAutomateCreation& asnMsg );
     void OnReceiveMsgPionCreation             ( const ASN1T_MsgPionCreation& asnMsg );
     void OnReceiveMsgChangeDiplomatie         ( const ASN1T_MsgChangeDiplomatie& asnMsg );
+    void OnReveiveMsgAuthLoginAck             ( const ASN1T_MsgAuthLoginAck& asnMsg );
 
     // Attributes
     void OnReceiveMsgUnitAttributes    ( const ASN1T_MsgUnitAttributes& asnMsg );
@@ -276,6 +278,7 @@ private:
     kernel::Controllers& controllers_;
     Model*       model_;
     Simulation& simulation_;
+    Profile&    profile_;
     boost::mutex& mutex_;
     MsgRecorder* msgRecorder_;
 

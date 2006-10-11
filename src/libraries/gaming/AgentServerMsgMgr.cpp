@@ -20,6 +20,7 @@
 #include "LogSupplyConsign.h"
 #include "PopulationKnowledge.h"
 #include "Simulation.h"
+#include "Profile.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "FiresModel.h"
@@ -85,9 +86,10 @@ static enum
 // Name: AgentServerMsgMgr constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, boost::mutex& mutex )
+AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine& engine, Simulation& simu, Profile& profile, boost::mutex& mutex )
     : controllers_     ( controllers )
     , simulation_      ( simu )
+    , profile_         ( profile )
     , session_         ( 0 )
     , bReceivingState_ ( true )
     , mutex_           ( mutex )
@@ -1568,6 +1570,15 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
     CheckAcknowledge( message, "PopulationMagicActionAck" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReveiveMsgAuthLoginAck
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReveiveMsgAuthLoginAck( const ASN1T_MsgAuthLoginAck& asnMsg )
+{
+    profile_.Update( asnMsg );
+}
+
 //=============================================================================
 // ASN
 //=============================================================================
@@ -1649,7 +1660,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
-        case T_MsgsInClient_msg_msg_auth_login_ack:                       /*//$$$$ TODO*/; break;
+        case T_MsgsInClient_msg_msg_auth_login_ack:                       OnReveiveMsgAuthLoginAck              ( *message.msg.u.msg_auth_login_ack ); break;
         case T_MsgsInClient_msg_msg_ctrl_profile_creation:                /*//$$$$ TODO*/; break;
         case T_MsgsInClient_msg_msg_ctrl_profile_update:                  /*//$$$$ TODO*/; break;
         case T_MsgsInClient_msg_msg_ctrl_profile_destruction:             /*//$$$$ TODO*/; break;

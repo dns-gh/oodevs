@@ -104,15 +104,6 @@ void ConnectDialog::Validate()
     accept();
 }
 
-//-----------------------------------------------------------------------------
-// Name: ConnectDialog::Validate
-// Created:  NLD 2002-01-03 
-//-----------------------------------------------------------------------------
-void ConnectDialog::Reject()
-{
-    reject();
-}
-
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog::LoadDefaultConfig
@@ -120,7 +111,7 @@ void ConnectDialog::Reject()
 //-----------------------------------------------------------------------------
 void ConnectDialog::LoadDefaultConfig()
 {
-    pPortSpinBox_->setValue( 10000 );
+    pPortSpinBox_->setValue( 10001 );
 
     QSettings settings;
     settings.setPath( "MASA", "Astec" );

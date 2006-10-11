@@ -35,6 +35,7 @@
 #include "Spy.h"
 #include "AgentList.h"
 #include "TacticalLinesSaver.h"
+#include "LoginDialog.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -51,6 +52,7 @@
 #include "gaming/Population.h"
 #include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
+#include "gaming/Profile.h"
 
 #include "clients_gui/Gl3dWidget.h"
 #include "clients_gui/GlWidget.h"
@@ -489,6 +491,20 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     }
     if( simulation.IsConnected() )
         CompareConfigPath( simulation.GetSimulationHost(), simulation.GetConfigPath() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyUpdated
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyUpdated( const Profile& profile )
+{
+    if( ! profile.IsLoggedIn() )
+    {
+        static LoginDialog* dialog = new LoginDialog( this, profile, network_.GetMessageMgr() );
+        // $$$$ AGE 2006-10-11: exec would create a reentrance...
+        QTimer::singleShot( 0, dialog, SLOT(exec()) );
+    }
 }
 
 // -----------------------------------------------------------------------------

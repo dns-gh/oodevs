@@ -17,6 +17,7 @@
 class AgentServerMsgMgr;
 class Model;
 class Simulation;
+class Profile;
 
 namespace kernel
 {
@@ -43,7 +44,7 @@ class Network : public tools::thread::Thread
 public:
     //! @name Constructors/Destructor
     //@{
-             Network( kernel::Controllers& controllers, Simulation& simu );
+             Network( kernel::Controllers& controllers, Simulation& simu, Profile& profile );
     virtual ~Network();
     //@}
 
@@ -92,6 +93,7 @@ private:
     boost::mutex mutex_;
     T_Messages messages_;
     Simulation& simu_;
+    Profile& profile_;
     DIN::DIN_Engine* engine_;
     DIN::DIN_ConnectionServiceClientUserCbk< Network >* pConnService_;
 
