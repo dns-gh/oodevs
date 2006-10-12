@@ -25,7 +25,7 @@
     </target>
 
     <target name="library.ENT" description="build ENT static library">
-        <build-lib name="ENT"/>
+        <build-lib name="ENT" depends="qt"/>
     </target>
 
     <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools_Scipio,library.ASN">
