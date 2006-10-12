@@ -29,7 +29,7 @@
     </target>
 
     <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools_Scipio,library.ASN">
-        <build-lib name="dispatcher">
+        <build-lib name="dispatcher" depends="mt">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
