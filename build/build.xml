@@ -46,7 +46,7 @@
     </target>
 
     <target name="library.simulation_missions" description="build simulation_missions static library" depends="library.simulation_kernel">
-        <build-lib name="simulation_missions" excludes="**/MIL_*">
+        <build-lib name="simulation_missions" excludes="**/MIL_*" depends="mt">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
