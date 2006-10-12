@@ -67,7 +67,7 @@
     </target>
 
     <target name="library.preparation" description="build gaming static library" depends="library.clients_gui">
-        <build-lib name="preparation" depends="qt"/>
+        <build-lib name="preparation" depends="mt,qt"/>
     </target>
 
     <!--
