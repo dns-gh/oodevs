@@ -171,6 +171,7 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     rB0_ = vOutPoint_.rY_ - rA0_ * vOutPoint_.rX_;
     rB1_ = vOutPoint_.rX_ - rA1_ * vOutPoint_.rY_;
     rDl_ = rCellSize * sqrt( 1. + rA0_ * rA0_ );
+    rDl_ *= rDz_;
 
 	rRemainingLength_ = rDl_ * rDx / rCellSize;
 
