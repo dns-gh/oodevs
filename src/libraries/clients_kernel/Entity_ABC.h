@@ -57,16 +57,12 @@ public:
     template< typename T >
     void Update( const T& updateMessage ) 
     {
-        const unsigned int applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
+        const unsigned applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
         if( ! applied )
-            throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() ) + " could be updated with message type " + typeid( T ).name() );
+            CheckUpdate( typeid( updateMessage ) );
     }
 
-    virtual void Serialize( xml::xostream& xos ) const
-    {
-        Interface().Apply( & Serializable_ABC::DoSerialize, xos );
-    }
-
+    virtual void Serialize( xml::xostream& xos ) const;
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
 
     InterfaceContainer< Extension_ABC >& Interface() const;
@@ -75,6 +71,7 @@ public:
 protected:
     //! @name Helpers
     //@{
+    void CheckUpdate( const type_info& type );
     void RegisterSelf( Extension_ABC& ext );
     //@}
 

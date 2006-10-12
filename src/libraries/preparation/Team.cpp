@@ -25,9 +25,8 @@ using namespace xml;
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
 Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager )
-    : controller_( controller )
+    : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
     , factory_( factory )
-    , id_( idManager.GetNextId() )
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Preparation", "Armée %1" ).arg( id_ );
@@ -38,15 +37,11 @@ Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManage
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager )
-    : controller_( controller )
+    : EntityImplementation< Team_ABC >( controller, ReadId( xis ), ReadName( xis ) )
     , factory_( factory )
 {
-    std::string name;
-    xis >> attribute( "id", (int&)id_ )
-        >> attribute( "name", name );
-    name_ = name.c_str();
-    idManager.Lock( id_ );
     RegisterSelf( *this );
+    idManager.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,35 +50,29 @@ Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFa
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    DestroyExtensions();
-    controller_.Delete( *(Team_ABC*)this );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::DoUpdate
-// Created: SBO 2006-09-20
+// Name: Team::ReadId
+// Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-void Team::DoUpdate( const kernel::InstanciationComplete& )
+unsigned long Team::ReadId( xml::xistream& xis )
 {
-    controller_.Create( *(Team_ABC*)this );
+    int id;
+    xis >> attribute( "id", id );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::GetName
-// Created: SBO 2006-08-29
+// Name: Team::ReadName
+// Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-QString Team::GetName() const
+QString Team::ReadName( xml::xistream& xis )
 {
-    return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::GetId
-// Created: SBO 2006-08-29
-// -----------------------------------------------------------------------------
-unsigned long Team::GetId() const
-{
-    return id_;
+    std::string name;
+    xis >> attribute( "name", name );
+    return name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -111,8 +100,7 @@ void Team::CreateKnowledgeGroup( xml::xistream& xis )
 void Team::Rename( const QString& name )
 {
     name_ = name;
-    controller_.Update( *(Team_ABC*)this );
-    controller_.Update( *(Entity_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------

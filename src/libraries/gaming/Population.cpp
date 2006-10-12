@@ -13,13 +13,10 @@
 
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PopulationType.h"
+#include "clients_kernel/Displayer_ABC.h"
 
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
-#include "Model.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/ActionController.h"
 #include "Tools.h"
 
 using namespace geometry;
@@ -32,16 +29,13 @@ unsigned long Population::nMaxId_ = 200;
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team_ABC >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
-    : controller_   ( controller )
+    : EntityImplementation< Population_ABC >( controller, message.oid_population, message.nom )
     , converter_    ( converter )
-    , nPopulationID_( message.oid_population )
-    , strName_      ( message.nom )
     , type_         ( typeResolver.Get( message.type_population ) )
     , team_         ( resolver.Get( message.oid_camp ) )
 {
     RegisterSelf( *this );
     Attach( *new DataDictionary() );
-    controller_.Create( *(Population_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,10 +44,9 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
-    controller_.Delete( *(Population_ABC*)this );
     Resolver< PopulationFlow_ABC >::DeleteAll();
     Resolver< PopulationConcentration_ABC >::DeleteAll();
-    DestroyExtensions();
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +106,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
     static_cast< PopulationConcentration& >( Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid_concentration ) ).Update( asnMsg );
-    controller_.Update( *(Population_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +119,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxCreation& asnMsg )
     {
         Resolver< PopulationFlow_ABC >::Register( asnMsg.oid_flux, *new PopulationFlow( asnMsg, converter_ ) );
         ComputeCenter();
-        controller_.Update( *(Population_ABC*)this );
+        Touch();
     }
 }
 
@@ -140,7 +133,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationCreation& asnMs
     {
         Resolver< PopulationConcentration_ABC >::Register( asnMsg.oid_concentration, *new PopulationConcentration( asnMsg, converter_, type_.GetDensity() ) );
         ComputeCenter();
-        controller_.Update( *(Population_ABC*)this );
+        Touch();
     }
 }
 
@@ -153,7 +146,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxDestruction& asnMsg )
     delete Resolver< PopulationFlow_ABC >::Find( asnMsg.oid_flux );
     Resolver< PopulationFlow_ABC >::Remove( asnMsg.oid_flux );
     ComputeCenter();
-    controller_.Update( *(Population_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +158,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& as
     delete Resolver< PopulationConcentration_ABC >::Find( asnMsg.oid_concentration );
     Resolver< PopulationConcentration_ABC >::Remove( asnMsg.oid_concentration );
     ComputeCenter();
-    controller_.Update( *(Population_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -176,24 +169,6 @@ void Population::DoUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
 {
     if( asnMsg.m.etat_dominationPresent ) 
         nDomination_ = asnMsg.etat_domination;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetId
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-unsigned long Population::GetId() const
-{
-    return nPopulationID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetName
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-QString Population::GetName() const
-{
-    return strName_;
 }
 
 // -----------------------------------------------------------------------------

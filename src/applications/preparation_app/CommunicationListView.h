@@ -39,6 +39,11 @@ public:
     virtual ~CommunicationListView();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -53,9 +58,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual void keyPressEvent( QKeyEvent* event );
-
-    virtual void Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item );
-    //@}
+   //@}
 
 private:
     //! @name Member data

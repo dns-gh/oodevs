@@ -9,9 +9,6 @@
 
 #include "gaming_pch.h"
 #include "KnowledgeGroup.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/ActionController.h"
 
 using namespace kernel;
 
@@ -20,11 +17,9 @@ using namespace kernel;
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
-    : controller_( controller )
-    , nID_ ( nId )
+    : EntityImplementation< KnowledgeGroup_ABC >( controller, nId, QString( "Groupe %1" ).arg( nId ) )
 {
-    RegisterSelf( *this );
-    name_ = QString( "Gtia %1" ).arg( nID_ ); // $$$$ AGE 2006-08-23: 
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,34 +28,5 @@ KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    controller_.Delete( *(KnowledgeGroup_ABC*)this );
-    DestroyExtensions();
+    Destroy();
 }
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *(KnowledgeGroup_ABC*)this );
-}   
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetId
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-unsigned long KnowledgeGroup::GetId() const
-{
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetName
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-QString KnowledgeGroup::GetName() const
-{
-    return name_;
-}
-

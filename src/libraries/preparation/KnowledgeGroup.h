@@ -10,13 +10,9 @@
 #ifndef __KnowledgeGroup_h_
 #define __KnowledgeGroup_h_
 
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-
-namespace kernel
-{
-    class Controller;
-}
 
 namespace xml
 {
@@ -31,7 +27,7 @@ class IdManager;
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class KnowledgeGroup : public kernel::KnowledgeGroup_ABC
+class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
                      , public kernel::Extension_ABC
                      , public kernel::Serializable_ABC
 {
@@ -41,12 +37,6 @@ public:
              KnowledgeGroup( kernel::Controller& controller, IdManager& idManager );
              KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
     virtual ~KnowledgeGroup();
-    //@}
-
-    //! @name Accessors & Modifiers
-    //@{
-    virtual unsigned long GetId() const;
-    virtual QString GetName() const;
     //@}
 
     //! @name Operations
@@ -62,12 +52,14 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& );
     //@}
 
+    //! @name Helpers
+    //@{
+    static unsigned long ReadId  ( xml::xistream& xis );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    unsigned long id_;
-    QString name_;
     QString type_;
     //@}
 };

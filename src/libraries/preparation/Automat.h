@@ -10,6 +10,7 @@
 #ifndef __Automat_h_
 #define __Automat_h_
 
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -37,7 +38,7 @@ class IdManager;
 */
 // Created: AGE 2006-10-06
 // =============================================================================
-class Automat : public kernel::Automat_ABC
+class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
               , public kernel::Extension_ABC
               , public kernel::Drawable_ABC
               , public kernel::Serializable_ABC
@@ -53,9 +54,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetName() const;
-    virtual unsigned long GetId() const;
-
     virtual const kernel::AutomatType& GetType() const;
     void Rename( const QString& name );
     //@}
@@ -76,15 +74,15 @@ private:
     //@{
     virtual void DoSerialize( xml::xostream& xos ) const;
     void CreateDictionary();
+
+    static unsigned long ReadId  ( xml::xistream& xis );
+    static QString       ReadName( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     const kernel::AutomatType* type_;
-    QString name_;
-    unsigned long id_;
     //@}
 };
 

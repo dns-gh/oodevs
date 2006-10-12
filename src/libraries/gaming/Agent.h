@@ -11,6 +11,7 @@
 #define __Agent_h_
 
 #include "ASN_Types.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -31,10 +32,9 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public kernel::Agent_ABC
+class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Drawable_ABC
-            , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 
 public:
@@ -48,8 +48,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetName() const;
-    virtual unsigned long GetId() const;
     virtual const kernel::AgentType& GetType() const;
     //@}
 
@@ -62,7 +60,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     void CreateDictionary();
     //@}
@@ -70,9 +67,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    unsigned long id_;
-    QString   name_;
     kernel::AgentType&   type_;
     bool isPc_;
     //@}

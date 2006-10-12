@@ -13,8 +13,6 @@
 #include "Net_Def.h"
 #include "Tools.h"
 #include "clients_kernel/IDManager.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
@@ -29,11 +27,9 @@ using namespace kernel;
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
 Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team_ABC >& teamResolver, const Resolver_ABC< ObjectType >& typeResolver, const Resolver_ABC< DotationType >& dotationResolver )
-    : controller_                    ( controller )
+    : EntityImplementation< Object_ABC >( controller, message.oid, QString( "%1 [%2]" ).arg( message.nom ).arg( message.oid ) )
     , converter_                     ( converter )
     , type_                          ( typeResolver.Get( message.type ) )
-    , nId_                           ( message.oid )
-    , strName_                       ( message.nom )
     , team_                          ( teamResolver.Get( message.camp ) )
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
@@ -53,7 +49,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     if( message.m.type_dotation_valorisationPresent )
         valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
 
-    type_.manager_.LockIdentifier( nId_ );
+    type_.manager_.LockIdentifier( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,35 +58,7 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-    controller_.Delete( *(Object_ABC*)this );
-    DestroyExtensions();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void Object::DoUpdate( const  kernel::InstanciationComplete& )
-{
-    controller_.Create( *(Object_ABC*)this );
-}   
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetId
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-unsigned long Object::GetId() const
-{
-    return nId_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetName
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-QString Object::GetName() const
-{
-    return QString( "%1 [%2]" ).arg( strName_ ).arg( nId_ );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +99,7 @@ void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
     if( message.m.pourcentage_creation_contournementPresent )
         rBypassConstructionPercentage_ = message.pourcentage_creation_contournement;
 
-    controller_.Update( *(Object_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -141,9 +109,9 @@ void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 void Object::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Informations" ) )
-             .Display( tools::translate( "Object", "Id:" ), nId_ )
-             .Display( tools::translate( "Object", "Nom:" ), strName_ )
-             .Display( tools::translate( "Object", "Type:" ), type_.GetName() )
+             .Display( tools::translate( "Object", "Id:" ), id_ )
+             .Display( tools::translate( "Object", "Nom:" ), name_ )
+             .Display( tools::translate( "Object", "Type:" ), type_ )
              .Display( tools::translate( "Object", "Position:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Valorisation:" ), rValorizationPercentage_ * Units::percentage )

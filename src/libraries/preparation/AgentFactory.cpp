@@ -29,7 +29,6 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -65,15 +64,14 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
 {
-    Agent* result = new Agent( parent, type, controllers_.controller_, idManager_, commandPost );
-    DataDictionary& dico = result->Get< DataDictionary >();
+    Agent* result = new Agent( type, controllers_.controller_, idManager_, commandPost );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_ ) );
 
     AttachExtensions( *result );
-    result->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }
 
@@ -83,7 +81,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 // -----------------------------------------------------------------------------
 kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
 {
-    Automat_ABC* result = new Automat( type, controllers_.controller_, idManager_ );
+    Automat* result = new Automat( type, controllers_.controller_, idManager_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
@@ -94,7 +92,7 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
 
     AttachExtensions( *result );
-    result->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }
 
@@ -122,7 +120,7 @@ Entity_ABC* AgentFactory::FindKnowledgeGroup( const kernel::Entity_ABC& parent )
 // -----------------------------------------------------------------------------
 kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC& parent )
 {
-    Agent* result = new Agent( xis, parent, controllers_.controller_, idManager_, static_.types_ );
+    Agent* result = new Agent( xis, controllers_.controller_, idManager_, static_.types_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
@@ -130,7 +128,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach( *new Dotations( xis, controllers_.controller_, static_.objectTypes_ ) );
 
     AttachExtensions( *result );
-    result->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }
     
@@ -140,7 +138,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
 // -----------------------------------------------------------------------------
 kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation_ABC& parent )
 {
-    Automat_ABC* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
+    Automat* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
     DataDictionary& dico = result->Get< DataDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
@@ -148,7 +146,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
 
     AttachExtensions( *result );
-    result->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }
 

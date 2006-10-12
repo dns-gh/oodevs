@@ -49,7 +49,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item );
     virtual void Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item );
     //@}
 

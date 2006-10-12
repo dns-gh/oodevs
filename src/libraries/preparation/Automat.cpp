@@ -25,14 +25,12 @@ using namespace xml;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager )
-    : controller_   ( controller )
+    : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_         ( &type )
-    , name_         ( "$$$$Automate$$$$" ) // $$$$ AGE 2006-10-06: 
-    , id_           ( idManager.GetNextId() )
 {
+    name_ = QString( "Automate %1" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary();
-    controller_.Create( *(Automat_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,18 +38,14 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
 Automat::Automat( xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
-    : controller_( controller )
+    : EntityImplementation< Automat_ABC >( controller, ReadId( xis ), ReadName( xis ) )
 {
-    std::string name, type;
-    xis >> attribute( "id", (int&)id_ )
-        >> attribute( "name", name )
-        >> attribute( "type", type );
-    name_ = name.c_str();
+    std::string type;
+    xis >> attribute( "type", type );
     type_ = &agentTypes.Resolver< AutomatType, QString >::Get( type.c_str() );
-    idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary();
-    controller_.Create( *(Automat_ABC*)this );
+    idManager.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,26 +54,29 @@ Automat::Automat( xistream& xis, Controller& controller, IdManager& idManager, c
 // -----------------------------------------------------------------------------
 Automat::~Automat()
 {
-    controller_.Delete( *(Automat_ABC*)this );
-    DestroyExtensions();
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::GetName
-// Created: AGE 2006-10-06
+// Name: Automat::ReadId
+// Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-QString Automat::GetName() const
+unsigned long Automat::ReadId( xml::xistream& xis )
 {
-    return name_;
+    int id;
+    xis >> attribute( "id", id );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::GetId
-// Created: AGE 2006-10-06
+// Name: Automat::ReadName
+// Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-unsigned long Automat::GetId() const
+QString Automat::ReadName( xml::xistream& xis )
 {
-    return id_;
+    std::string name;
+    xis >> attribute( "name", name );
+    return name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,8 +95,7 @@ const AutomatType& Automat::GetType() const
 void Automat::Rename( const QString& name )
 {
     name_ = name;
-    controller_.Update( *(Automat_ABC*)this );
-    controller_.Update( *(Entity_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------

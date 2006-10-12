@@ -79,5 +79,6 @@ kernel::Object_ABC* ObjectFactory::CreateObject( kernel::ObjectType& type, kerne
     default:
         break;
     };
+    result->Polish();
     return result;
 }

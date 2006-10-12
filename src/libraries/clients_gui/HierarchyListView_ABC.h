@@ -13,7 +13,6 @@
 #include "ListView.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
 
 namespace kernel
@@ -21,6 +20,7 @@ namespace kernel
     class Controllers;
     class Hierarchies;
     class Entity_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -38,7 +38,7 @@ class HierarchyListView_ABC : public ListView< HierarchyListView_ABC >
                             , public kernel::Observer_ABC
                             , public kernel::SelectionObserver< kernel::Entity_ABC >
                             , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
-                            , public kernel::OptionsObserver_ABC
+                            , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
 {
    Q_OBJECT;
 
@@ -60,7 +60,6 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
-    virtual void Display( const kernel::Hierarchies& hierarchy, ValuedListItem* item );
     //@}
 
 private:
@@ -85,15 +84,16 @@ protected:
     virtual void NotifyCreated( const kernel::Hierarchies& hierarchies );
     virtual void NotifyUpdated( const kernel::Hierarchies& hierarchies );
     virtual void NotifyDeleted( const kernel::Hierarchies& hierarchies );
+
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    ValuedListItem* RecursiveCreateHierarchy( const kernel::Entity_ABC* entity );
+    ValuedListItem* FindOrCreate( const kernel::Entity_ABC* entity );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     virtual QDragObject* dragObject();
     virtual void dropEvent( QDropEvent* pEvent );
@@ -108,7 +108,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    const kernel::Team_ABC* currentTeam_;
+    const kernel::Profile_ABC* profile_;
     //@}
 };
 

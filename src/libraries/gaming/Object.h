@@ -11,7 +11,7 @@
 #define __Object_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/IDManager.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -26,15 +26,13 @@ namespace kernel
     class DotationType;
     class Displayer_ABC;
     class CoordinateConverter_ABC;
-    class InstanciationComplete;
 }
 
 // =============================================================================
 // Created: SBO 2005-09-02
 // =============================================================================
-class Object : public kernel::Object_ABC
+class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< kernel::InstanciationComplete >
              , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
              , public kernel::Drawable_ABC
 {
@@ -57,8 +55,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId() const;
-    virtual QString GetName() const;
     virtual const kernel::Team_ABC& GetTeam() const;
     virtual kernel::ObjectType& GetType() const;
     //@}
@@ -73,18 +69,14 @@ private:
 private:
     //! @name Operations
     //@{
-    virtual void DoUpdate( const  kernel::InstanciationComplete& );
     virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
     //@}
 
 public:
     //! @name Member data
     //@{
-    kernel::Controller&   controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::ObjectType&   type_;
-    unsigned long nId_;
-    QString   strName_;
     kernel::Team_ABC&     team_;
 
     float rConstructionPercentage_;
@@ -94,7 +86,7 @@ public:
     bool bPrepared_;
     //@}
 
-public:
+public: // $$$$ AGE 2006-10-12: 
     //! @name Member data
     //@{
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;

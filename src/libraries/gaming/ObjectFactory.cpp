@@ -23,7 +23,6 @@
 #include "clients_kernel/Controllers.h"
 #include "ObjectPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/InstanciationComplete.h"
 #include "StaticModel.h"
 
 using namespace kernel;
@@ -85,6 +84,6 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
         ;
     };
     result->Update( message );
-    result->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }

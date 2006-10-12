@@ -51,18 +51,9 @@ TacticalListView::~TacticalListView()
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
-{
-    item->setRenameEnabled( 0, true );
-    gui::HierarchyListView< kernel::TacticalHierarchies >::Display( hierarchy, item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalListView::Display
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
 void TacticalListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item )
 {
+    item->setRenameEnabled( 0, true );
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 0, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );

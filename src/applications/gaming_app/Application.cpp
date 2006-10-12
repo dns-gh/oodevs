@@ -90,7 +90,7 @@ void Application::Initialize( int argc, char** argv )
 
     controllers_ = new Controllers();
     simulation_  = new Simulation( controllers_->controller_  );
-    profile_     = new Profile( controllers_->controller_ );
+    profile_     = new Profile( *controllers_ );
     workers_     = new Workers();
     network_     = new Network( *controllers_, *simulation_, *profile_ );
     staticModel_ = new StaticModel( *controllers_ );

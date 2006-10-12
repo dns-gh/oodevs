@@ -9,9 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Team.h"
-#include "KnowledgeGroupFactory_ABC.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
 
 using namespace kernel;
 
@@ -20,13 +17,9 @@ using namespace kernel;
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
 Team::Team( uint id, DIN::DIN_Input& input, Controller& controller )
-    : controller_( controller )
-    , id_( id )
+    : EntityImplementation< Team_ABC >( controller, id, ReadName( input ) )
 {
-    RegisterSelf( *this );
-    std::string name;
-    input >> name;
-    name_ = name.c_str();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,34 +28,16 @@ Team::Team( uint id, DIN::DIN_Input& input, Controller& controller )
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    controller_.Delete( *(Team_ABC*)this );
-    DestroyExtensions();
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::DoUpdate
-// Created: AGE 2006-09-20
+// Name: Team::ReadName
+// Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-void Team::DoUpdate( const kernel::InstanciationComplete& )
+QString Team::ReadName( DIN::DIN_Input& input )
 {
-    controller_.Create( *(Team_ABC*)this );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: Team::GetId
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-unsigned long Team::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::GetName
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-QString Team::GetName() const
-{
-    return name_;
+    std::string name;
+    input >> name;
+    return name.c_str();
 }

@@ -10,9 +10,9 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "clients_kernel/Types.h"
 #include "ASN_Types.h"
-
+#include "clients_kernel/Types.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -36,7 +36,7 @@ class PopulationFlow;
 // =============================================================================
 // Created: HME 2005-09-29
 // =============================================================================
-class Population : public kernel::Population_ABC
+class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxUpdate >
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxDestruction >
@@ -72,8 +72,6 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::Team_ABC& GetTeam() const;
-    virtual unsigned long GetId() const;
-    virtual QString   GetName() const;
     const kernel::PopulationType& GetType() const;
     //@}
     
@@ -103,15 +101,12 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller&                controller_;
     const kernel::CoordinateConverter_ABC& converter_;
-	unsigned long              nPopulationID_;
-	QString                strName_;
-    const kernel::PopulationType&      type_;
-	kernel::Team_ABC&                  team_;
+    const kernel::PopulationType&          type_;
+	kernel::Team_ABC&                      team_;
 
-    geometry::Point2f          center_;
-    kernel::OptionalValue< int >       nDomination_;
+    geometry::Point2f                      center_;
+    kernel::OptionalValue< int >           nDomination_;
     //@}
 
 private:

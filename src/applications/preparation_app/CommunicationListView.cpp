@@ -60,12 +60,12 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::Display
-// Created: AGE 2006-09-20
+// Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void CommunicationListView::Display( const kernel::Hierarchies& hierarchy, gui::ValuedListItem* item )
+void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
     item->setRenameEnabled( 0, true );
-    gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( hierarchy, item );
+    gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
 }
 
 // -----------------------------------------------------------------------------

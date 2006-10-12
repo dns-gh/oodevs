@@ -24,31 +24,28 @@ using namespace xml;
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager )
-    : controller_( controller )
-    , id_ ( idManager.GetNextId() )
+    : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( "Standard" ) // $$$$ SBO 2006-09-06: 
 {
     RegisterSelf( *this );
-    controller_.Create( *(KnowledgeGroup_ABC*)this );
-    name_ = QString( "Knowledge group %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
+    name_ = QString( "Knowledge group %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: au moins tr
 }
 
+// $$$$ AGE 2006-10-12: sauvegarder et relier le nom ?
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager )
-    : controller_( controller )
+    : EntityImplementation< KnowledgeGroup_ABC >( controller, ReadId( xis ), "" )
 {
     std::string type;
-    xis >> attribute( "id", (int&)id_ )
-        >> attribute( "type", type );
+    xis >> attribute( "type", type );
     type_ = type.c_str();
-    idManager.Lock( id_ );
-
+    
     RegisterSelf( *this );
-    controller_.Create( *(KnowledgeGroup_ABC*)this );
-    name_ = QString( "Knowledge group %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: 
+    name_ = QString( "Knowledge group %1" ).arg( id_ ); // $$$$ AGE 2006-08-23: tr
+    idManager.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,26 +54,18 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    DestroyExtensions();
-    controller_.Delete( *(KnowledgeGroup_ABC*)this );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetId
-// Created: AGE 2006-02-16
+// Name: KnowledgeGroup::ReadId
+// Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-unsigned long KnowledgeGroup::GetId() const
+unsigned long KnowledgeGroup::ReadId( xml::xistream& xis )
 {
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetName
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-QString KnowledgeGroup::GetName() const
-{
-    return name_;
+    int id;
+    xis >> attribute( "id", id );
+    return id;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +75,7 @@ QString KnowledgeGroup::GetName() const
 void KnowledgeGroup::Rename( const QString& name )
 {
     name_ = name;
-    controller_.Update( *(KnowledgeGroup_ABC*)this );
-    controller_.Update( *(Entity_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------

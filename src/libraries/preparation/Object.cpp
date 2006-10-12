@@ -30,11 +30,9 @@ using namespace xml;
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
 Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, kernel::ObjectType& type, Team_ABC& team, IdManager& idManager )
-    : controller_                    ( controller )
+    : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_                     ( converter )
     , type_                          ( type )
-    , nId_                           ( idManager.GetNextId() )
-    , strName_                       ( type.GetName() )
     , team_                          ( team )
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
@@ -46,7 +44,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
     , nDotationValorization_         ( 0 )
 {
     RegisterSelf( *this );
-
+    name_ = QString( "%1 [%2]" ).arg( type.GetName() ).arg( id_ );
 //    if( message.m.type_dotation_constructionPresent )
 //        construction_ = & dotationResolver.Get( message.type_dotation_construction );
 //    
@@ -54,8 +52,6 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 //        valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
 
 //    type_.manager_.LockIdentifier( nId_ );
-
-    controller_.Create( *(Object_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,26 +60,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-    DestroyExtensions();
-    controller_.Delete( *(Object_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetId
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-unsigned long Object::GetId() const
-{
-    return nId_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetName
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-QString Object::GetName() const
-{
-    return QString( "%1 [%2]" ).arg( strName_ ).arg( nId_ );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -111,9 +88,9 @@ ObjectType& Object::GetType() const
 void Object::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Informations" ) )
-             .Display( tools::translate( "Object", "Id:" ), nId_ )
-             .Display( tools::translate( "Object", "Nom:" ), strName_ )
-             .Display( tools::translate( "Object", "Type:" ), type_.GetName() )
+             .Display( tools::translate( "Object", "Id:" ), id_ )
+             .Display( tools::translate( "Object", "Nom:" ), name_ )
+             .Display( tools::translate( "Object", "Type:" ), type_ )
              .Display( tools::translate( "Object", "Position:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
              .Display( tools::translate( "Object", "Valorisation:" ), rValorizationPercentage_ * Units::percentage )
@@ -155,8 +132,8 @@ void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& 
 // -----------------------------------------------------------------------------
 void Object::DoSerialize( xml::xostream& xos ) const
 {
-    xos << attribute( "id", long( nId_ ) )
+    xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_.GetName().ascii() )
-        << content( "name", strName_ )
+        << content( "name", name_ )
         << content( "side", team_.GetName() );
 }

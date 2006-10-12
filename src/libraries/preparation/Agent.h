@@ -10,6 +10,7 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -37,7 +38,7 @@ class IdManager;
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Agent : public kernel::Agent_ABC
+class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Drawable_ABC
             , public kernel::Serializable_ABC
@@ -46,20 +47,18 @@ class Agent : public kernel::Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const kernel::Automat_ABC& parent, const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager, bool commandPost = false );
-             Agent( xml::xistream& xis, const kernel::Automat_ABC& parent, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
+             Agent( const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager, bool commandPost = false );
+             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
-    virtual const kernel::Automat_ABC& GetAutomat() const;
-    virtual QString GetName() const;
-    virtual unsigned long GetId() const;
-
     virtual const kernel::AgentType& GetType() const;
-    void Rename( const QString& name );
     virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+
+    void Rename( const QString& name );
     //@}
 
 private:
@@ -71,17 +70,13 @@ private:
 
     //! @name Helpers
     //@{
-    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     void CreateDictionary();
+    static unsigned long ReadId  ( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    unsigned long id_;
-    QString name_;
-    const kernel::Automat_ABC& automat_;
     const kernel::AgentType* type_;
     bool commandPost_;
     //@}

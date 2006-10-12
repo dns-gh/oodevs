@@ -7,90 +7,96 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
-#include "Entity_ABC.h"
-#include "Drawable_ABC.h"
-#include "Drawer.h"
+#include "Controller.h"
+#include "InstanciationComplete.h"
 
-using namespace kernel;
+namespace kernel
+{
 
 // -----------------------------------------------------------------------------
-// Name: Entity_ABC constructor
-// Created: AGE 2006-02-07
+// Name: EntityImplementation constructor
+// Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-Entity_ABC::Entity_ABC()
-    : drawer_( new Drawer() )
+template< typename I >
+EntityImplementation< I >::EntityImplementation( Controller& controller, unsigned long id, const QString& name )
+    : controller_( controller )
+    , id_( id )
+    , name_( name )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Entity_ABC destructor
-// Created: AGE 2006-02-07
-// -----------------------------------------------------------------------------
-Entity_ABC::~Entity_ABC()
-{
-    delete drawer_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::RegisterSelf
-// Created: AGE 2006-08-10
-// -----------------------------------------------------------------------------
-void Entity_ABC::RegisterSelf( Extension_ABC& ext )
-{
-    AddExtension( ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::AddExtension
-// Created: AGE 2006-02-07
-// -----------------------------------------------------------------------------
-void Entity_ABC::AddExtension( Extension_ABC& ext )
-{
-    Register( ext );
-    drawer_->Register( ext );
-    Extendable< Extension_ABC >::AddExtension( ext );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::Serialize
+// Name: EntityImplementation destructor
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-void Entity_ABC::Serialize( xml::xostream& xos ) const
+template< typename I >
+EntityImplementation< I >::~EntityImplementation()
 {
-    Interface().Apply( & Serializable_ABC::DoSerialize, xos );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Entity_ABC::Draw
-// Created: AGE 2006-03-31
-// -----------------------------------------------------------------------------
-void Entity_ABC::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
-{
-    drawer_->Draw( where, viewport, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InterfaceContainer< Extension_ABC >& Entity_ABC::Interface
-// Created: AGE 2006-05-02
-// -----------------------------------------------------------------------------
-InterfaceContainer< Extension_ABC >& Entity_ABC::Interface() const
-{
-    return *const_cast< Entity_ABC* >( this );
-}
-
-// $$$$ AGE 2006-10-12: 
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::CheckUpdate
+// Name: EntityImplementation::GetName
 // Created: AGE 2006-10-12
 // -----------------------------------------------------------------------------
-void Entity_ABC::CheckUpdate( const type_info& /*type*/ )
+template< typename I >
+QString EntityImplementation< I >::GetName() const
 {
-    /*
-    throw std::runtime_error( "Nothing in " + std::string( typeid( *this ).name() )
-                            + " could be updated with message type " + type );
-    */
+    return name_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::GetId
+// Created: AGE 2006-10-12
+// -----------------------------------------------------------------------------
+template< typename I >
+unsigned long EntityImplementation< I >::GetId() const
+{
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::Polish
+// Created: AGE 2006-10-12
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::Polish()
+{
+    Update( InstanciationComplete() );
+    controller_.Create( This() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::Touch
+// Created: AGE 2006-10-12
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::Touch()
+{
+    controller_.Update( This() );
+    controller_.Update( *(Entity_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::Destroy
+// Created: AGE 2006-10-12
+// -----------------------------------------------------------------------------
+template< typename I >
+void EntityImplementation< I >::Destroy()
+{
+    controller_.Delete( This() );
+    DestroyExtensions();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityImplementation::This
+// Created: AGE 2006-10-12
+// -----------------------------------------------------------------------------
+template< typename I >
+I& EntityImplementation< I >::This()
+{
+    return *this;
+}
+
+}

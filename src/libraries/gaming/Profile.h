@@ -11,10 +11,16 @@
 #define __Profile_h_
 
 #include "ASN_Types.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
     class Controller;
+    class Controllers;
+    class Automat_ABC;
+    class Team_ABC;
+    class Population_ABC;
 }
 
 class Publisher_ABC;
@@ -25,13 +31,18 @@ class Publisher_ABC;
 */
 // Created: AGE 2006-10-11
 // =============================================================================
-class Profile
+class Profile : public kernel::Profile_ABC
+              , public kernel::Observer_ABC
+              , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
+              , public kernel::ElementObserver_ABC< kernel::Population_ABC >
+              , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+                
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Profile( kernel::Controller& controller );
+    explicit Profile( kernel::Controllers& controllers );
     virtual ~Profile();
     //@}
 
@@ -41,10 +52,16 @@ public:
     void Login( Publisher_ABC& publisher, const std::string& login, const std::string& password ) const;
     void Update( const ASN1T_MsgAuthLoginAck& asnMsg );
     //@}
-
+    
     //! @name Accessors
     //@{
     bool IsLoggedIn() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -54,17 +71,47 @@ private:
     Profile& operator=( const Profile& ); //!< Assignement operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< unsigned long >   T_Ids;
+    typedef T_Ids::const_iterator        CIT_Ids;
+
+    typedef std::set< const kernel::Entity_ABC* > T_Entities;
+    //@}
+
     //! @name Helpers
     //@{
+    template< typename T >
+    void ReadList( const T& idList, T_Ids& ids );
+    virtual void NotifyCreated( const kernel::Automat_ABC& automat );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
+    virtual void NotifyCreated( const kernel::Population_ABC& popu );
+    virtual void NotifyDeleted( const kernel::Population_ABC& popu );
+    virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    void Add   ( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
+    void Remove( const kernel::Entity_ABC& entity );
+    static bool IsPresent( const kernel::Entity_ABC* entity, const T_Entities& entities );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     kernel::Controller& controller_;
     mutable std::string login_;
     mutable std::string password_;
     bool loggedIn_;
+
+    T_Entities readEntities_;
+    T_Entities readWriteEntities_;
+
+    T_Ids readTeams_;
+    T_Ids writeTeams_;
+    T_Ids readAutomats_;
+    T_Ids writeAutomats_;
+    T_Ids readPopulations_;
+    T_Ids writePopulations_;
     //@}
 };
 

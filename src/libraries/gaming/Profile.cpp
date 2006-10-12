@@ -9,19 +9,29 @@
 
 #include "gaming_pch.h"
 #include "Profile.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "ASN_Messages.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Profile constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-Profile::Profile( kernel::Controller& controller )
-    : controller_( controller )
+Profile::Profile( Controllers& controllers )
+    : controllers_( controllers )
+    , controller_( controllers.controller_ )
+    , login_( "test" )
+    , password_( "cock" )
     , loggedIn_( false )
 {
-//    login_    = "test";
-//    password_ = "cock";
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,7 +40,7 @@ Profile::Profile( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +67,19 @@ void Profile::Login( Publisher_ABC& publisher, const std::string& login, const s
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profile::ReadList
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+template< typename T >
+void Profile::ReadList( const T& idList, T_Ids& ids )
+{
+    ids.reserve( idList.n );
+    for( unsigned i = 0; i < idList.n; ++i )
+        ids.push_back( idList.elem[ i ] );
+    std::sort( ids.begin(), ids.end() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Profile::Update
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
@@ -65,7 +88,21 @@ void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
     loggedIn_ = message.etat == 0;
     if( message.m.profilePresent )
     {
-        // $$$$ AGE 2006-10-11: 
+        if( message.profile.m.read_only_campsPresent )
+            ReadList( message.profile.read_only_camps, readTeams_ );
+        if( message.profile.m.read_write_campsPresent )
+            ReadList( message.profile.read_write_camps, writeTeams_ );
+
+        if( message.profile.m.read_only_automatesPresent )
+            ReadList( message.profile.read_only_automates, readAutomats_ );
+        if( message.profile.m.read_write_automatesPresent )
+            ReadList( message.profile.read_write_automates, writeAutomats_ );
+
+        if( message.profile.m.read_only_populationsPresent )
+            ReadList( message.profile.read_only_populations, readPopulations_ );
+        if( message.profile.m.read_write_populationsPresent )
+            ReadList( message.profile.read_write_populations, writePopulations_ );
+        controller_.Update( *(Profile_ABC*)this );
     };
     controller_.Update( *this );
 }
@@ -79,3 +116,115 @@ bool Profile::IsLoggedIn() const
     return loggedIn_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Profile::IsVisible
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+bool Profile::IsVisible( const Entity_ABC& entity ) const
+{
+    return true;
+//    return IsPresent( &entity, readEntities_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::CanBeOrdered
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
+{
+    return true;
+//    return IsPresent( &entity, readWriteEntities_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsPresent
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+bool Profile::IsPresent( const Entity_ABC* entity, const T_Entities& entities )
+{
+    if( ! entity )
+        return false;
+    if( entities.find( entity ) != entities.end() )
+        return true;
+    const TacticalHierarchies* hierarchies = entity->Retrieve< TacticalHierarchies >();
+    return hierarchies && IsPresent( hierarchies->GetSuperior(), entities );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyCreated
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::NotifyCreated( const Automat_ABC& automat )
+{
+    Add( automat, readAutomats_, writeAutomats_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyDeleted
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::NotifyDeleted( const Automat_ABC& automat )
+{
+    Remove( automat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyCreated
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::NotifyCreated( const Population_ABC& popu )
+{
+    Add( popu, readPopulations_, writePopulations_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyDeleted
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::NotifyDeleted( const Population_ABC& popu )
+{
+    Remove( popu );
+}   
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyCreated
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::NotifyCreated( const Team_ABC& team )
+{
+    Add( team, readTeams_, writeTeams_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyDeleted
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::NotifyDeleted( const Team_ABC& team )
+{
+    Remove( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Add
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::Add( const Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds )
+{
+    const unsigned long id = entity.GetId();
+    const bool canBeOrdered = std::find( readWriteIds.begin(), readWriteIds.end(), id ) != readWriteIds.end();
+    const bool isVisible    = canBeOrdered  || std::find( readIds.begin(), readIds.end(), id ) != readIds.end();
+    if( canBeOrdered )
+        readWriteEntities_.insert( &entity );
+    if( isVisible )
+        readEntities_.insert( &entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Remove
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void Profile::Remove( const Entity_ABC& entity )
+{
+    readEntities_.erase( &entity );
+    readWriteEntities_.erase( &entity );
+}

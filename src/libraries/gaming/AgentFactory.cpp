@@ -116,6 +116,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
 
     result->Update( asnMsg );
+    
     return result;
 }
 
@@ -141,7 +142,8 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     AttachExtensions( *result );
 
     result->Update( asnMsg );
-    result->Update( InstanciationComplete() );
+    result->Polish();
+
     return result;
 }
 
@@ -156,8 +158,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach( *new PopulationDecisions( *result ) );
     AttachExtensions( *result );
-
-//    result->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }
 

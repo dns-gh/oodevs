@@ -10,6 +10,7 @@
 #ifndef __Team_h_
 #define __Team_h_
 
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -35,9 +36,8 @@ class IdManager;
 */
 // Created: SBO 2006-08-29
 // =============================================================================
-class Team : public kernel::Team_ABC
+class Team : public kernel::EntityImplementation< kernel::Team_ABC >
            , public kernel::Extension_ABC
-           , public kernel::Updatable_ABC< kernel::InstanciationComplete >
            , public kernel::Serializable_ABC
 {
 
@@ -47,12 +47,6 @@ public:
              Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager );
              Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager );
     virtual ~Team();
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual QString GetName() const;
-    virtual unsigned long GetId() const;
     //@}
 
     //! @name Operations
@@ -72,16 +66,14 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
+    static unsigned long ReadId  ( xml::xistream& xis );
+    static QString       ReadName( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
     KnowledgeGroupFactory_ABC& factory_;
-    QString name_;
-    unsigned long id_;
     //@}
 };
 

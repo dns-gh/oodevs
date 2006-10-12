@@ -23,19 +23,15 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controller, 
                   const Resolver_ABC< AutomatType >& resolver )
-    : controller_   ( controller )
+    : EntityImplementation< Automat_ABC >( controller, message.oid_automate, QString( "%1 [%2]" ).arg( message.nom ).arg( message.oid_automate ) )
     , type_         ( resolver.Get( message.type_automate ) )
-    , id_           ( message.oid_automate )
 {
     RegisterSelf( *this );
-    name_ = QString( "%1 [%2]" ).arg( message.nom ).arg( id_ );
-
     DataDictionary& dictionary = *new DataDictionary();
     Attach( dictionary );
     // $$$$ AGE 2006-10-06: 
     dictionary.Register( tools::translate( "Automat", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Automat", "Info/Nom" ), name_ );
-    controller_.Create( *(Automat_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,26 +40,7 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controll
 // -----------------------------------------------------------------------------
 Automat::~Automat()
 {
-    controller_.Delete( *(Automat_ABC*)this );
-    DestroyExtensions();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetName
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-QString Automat::GetName() const
-{
-    return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetId
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-unsigned long Automat::GetId() const
-{
-    return id_;
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------

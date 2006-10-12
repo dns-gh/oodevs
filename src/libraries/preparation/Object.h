@@ -11,6 +11,7 @@
 #define __Object_h_
 
 #include "clients_kernel/IDManager.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
@@ -37,7 +38,7 @@ class IdManager;
 // =============================================================================
 // Created: SBO 2005-09-02
 // =============================================================================
-class Object : public kernel::Object_ABC
+class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
              , public kernel::Drawable_ABC
              , public kernel::Serializable_ABC
@@ -61,8 +62,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId() const;
-    virtual QString GetName() const;
     virtual const kernel::Team_ABC& GetTeam() const;
     virtual kernel::ObjectType& GetType() const;
     //@}
@@ -77,11 +76,8 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Controller&   controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::ObjectType&   type_;
-    unsigned long nId_;
-    QString   strName_;
     kernel::Team_ABC&     team_;
 
     float rConstructionPercentage_;

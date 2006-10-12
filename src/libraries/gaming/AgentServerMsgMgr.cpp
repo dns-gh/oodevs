@@ -1574,9 +1574,9 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
 // Name: AgentServerMsgMgr::OnReveiveMsgAuthLoginAck
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReveiveMsgAuthLoginAck( const ASN1T_MsgAuthLoginAck& asnMsg )
+void AgentServerMsgMgr::OnReveiveMsgAuthLoginAck( const ASN1T_MsgAuthLoginAck& message )
 {
-    profile_.Update( asnMsg );
+    profile_.Update( message );
 }
 
 //=============================================================================

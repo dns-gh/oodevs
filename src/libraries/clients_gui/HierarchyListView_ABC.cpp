@@ -11,13 +11,14 @@
 #include "HierarchyListView_ABC.h"
 #include "moc_HierarchyListView_ABC.cpp"
 
-#include "ValuedListItem.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Hierarchies.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 
 using namespace kernel;
@@ -33,7 +34,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     : ListView< HierarchyListView_ABC >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
-    , currentTeam_( 0 )
+    , profile_( 0 )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Unités" ) );
@@ -62,8 +63,8 @@ HierarchyListView_ABC::~HierarchyListView_ABC()
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy )
 {   
-    RecursiveCreateHierarchy( &hierarchy.GetEntity() );
-    NotifyUpdated( hierarchy );
+    const Entity_ABC& entity = hierarchy.GetEntity();
+    Display( entity, FindOrCreate( &entity ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +75,7 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy 
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
-        Display( hierarchy, item );
+        Display( entity, item );
 }   
 
 // -----------------------------------------------------------------------------
@@ -91,20 +92,17 @@ void HierarchyListView_ABC::NotifyDeleted( const kernel::Hierarchies& hierarchy 
 // Name: HierarchyListView_ABC::RecursiveCreateHierarchy
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-ValuedListItem* HierarchyListView_ABC::RecursiveCreateHierarchy( const Entity_ABC* entity )
+ValuedListItem* HierarchyListView_ABC::FindOrCreate( const Entity_ABC* entity )
 {
     if( !entity )
         return 0;
-    ValuedListItem* item = FindItem( entity, firstChild() ); // $$$$ AGE 2006-10-11: pas terrible
-    if( item )
-        return item;
-    if( const Hierarchies* hierarchy = RetrieveHierarchy( *entity ) )
-        item = RecursiveCreateHierarchy( hierarchy->GetSuperior() );
-    if( !item )
-        item = factory_.CreateItem( this );
-    else
-        item = factory_.CreateItem( item );
-    item->SetNamed( *entity );
+    const Hierarchies* hierarchy = RetrieveHierarchy( *entity );
+    const Entity_ABC* superior = hierarchy ? hierarchy->GetSuperior() : 0;
+    ValuedListItem* superiorItem = FindOrCreate( superior );
+    ValuedListItem* item         = superiorItem ? FindChild  ( entity, superiorItem )
+                                                : FindSibling( entity, firstChild() );
+    if( ! item )
+        item = superiorItem ? factory_.CreateItem( superiorItem ) : factory_.CreateItem( this );
     return item;
 }
 
@@ -114,21 +112,11 @@ ValuedListItem* HierarchyListView_ABC::RecursiveCreateHierarchy( const Entity_AB
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
-        Display( *hierarchy, item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::Display
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void HierarchyListView_ABC::Display( const Hierarchies& hierarchy, ValuedListItem* item )
-{
-    item->SetNamed( hierarchy.GetEntity() );
+    item->SetNamed( entity );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-
-    DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy.CreateSubordinateIterator(), item ) );
+    if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
+        DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,22 +173,6 @@ void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
             setSelected( item, true );
         }
         ensureItemVisible( selectedItem() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::OptionChanged
-// Created: AGE 2006-03-27
-// -----------------------------------------------------------------------------
-void HierarchyListView_ABC::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team_ABC* >();
-    ValuedListItem* item = (ValuedListItem*)( firstChild() );
-    while( item )
-    {
-        item->setVisible( ! currentTeam_ || item->Holds( (const Entity_ABC*)currentTeam_ ) );
-        item = (ValuedListItem*)( item->nextSibling() );
     }
 }
 
@@ -279,4 +251,14 @@ void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
     ValuedListItem* item = FindItem( &element, firstChild() );    
     if( item )
         ensureItemVisible( item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::NotifyUpdated
+// Created: AGE 2006-10-12
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
+{
+    profile_ = &profile;
+    // $$$$ AGE 2006-10-12: redraw
 }
