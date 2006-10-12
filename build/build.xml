@@ -13,7 +13,9 @@
                      library.clients_kernel,library.clients_gui"/>
 
     <target name="library.MT_Tools_Scipio" description="build MT_Tools_Scipio static library">
-        <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
+        <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch">
+            <defineset define="WIN32"/>
+        </build-lib>
     </target>
 
     <target name="library.ASN" description="build ASN static library">
@@ -26,18 +28,18 @@
         <build-lib name="ENT"/>
     </target>
 
-    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools_Scipio, library.ASN">
+    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools_Scipio,library.ASN">
         <build-lib name="dispatcher">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
 
     <target name="library.simulation_terrain" description="build simulation_terrain static library" depends="library.MT_Tools_Scipio">
-        <build-lib name="simulation_terrain"/>
+        <build-lib name="simulation_terrain" depends="mt"/>
     </target>
 
     <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.ASN,library.simulation_terrain">
-        <build-lib name="simulation_kernel">
+        <build-lib name="simulation_kernel" depends="mt">
             <includepath path="${include.dir}/ASN"/>
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
         </build-lib>
@@ -51,17 +53,17 @@
     </target>
 
     <target name="library.clients_kernel" description="build clients_kernel static library" depends="">
-        <build-lib name="clients_kernel"/>
+        <build-lib name="clients_kernel" depends="mt"/>
     </target>
 
     <target name="library.clients_gui" description="build clients_gui static library" depends="library.ASN,library.clients_kernel">
-        <build-lib name="clients_gui" excludes="**/font/*">
+        <build-lib name="clients_gui" excludes="**/font/*" depends="mt">
             <includepath path="${include.dir}/ASN"/> <!-- $$ DEVRAIT VIRER -->
         </build-lib>
     </target>
 
     <target name="library.gaming" description="build gaming static library" depends="library.ASN,library.clients_gui">
-        <build-lib name="gaming">
+        <build-lib name="gaming" depends="mt">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
@@ -97,7 +99,7 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions, library.dispatcher">
+    <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions,library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
                    libs="HLA,libFedTime,masalloc,paranoia,tools,xeumeuleu
                          MT_Tools_Scipio,ASN,asn1per,
@@ -137,7 +139,7 @@
 
     <target name="application.preparation_app" description="build Astec Gaming executable" depends="library.preparation,library.gaming">
         <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="ASN,ENT,preparation,clients_gui,clients_kernel,asn1per,gaming,svgl"><!-- $$$ temporary, dependency to gaming will disapear -->
+                   libs="ASN,ENT,preparation,clients_gui,clients_kernel,asn1per,gaming,svgl"><!-- $$$ temporary,dependency to gaming will disapear -->
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
