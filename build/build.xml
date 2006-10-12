@@ -63,7 +63,7 @@
     </target>
 
     <target name="library.gaming" description="build gaming static library" depends="library.ASN,library.clients_gui">
-        <build-lib name="gaming" depends="mt">
+        <build-lib name="gaming" depends="mt,qt">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
