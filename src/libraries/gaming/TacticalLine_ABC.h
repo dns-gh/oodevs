@@ -11,7 +11,7 @@
 #define __TacticalLine_ABC_h_
 
 #include "clients_kernel/Types.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 #include "ASN_Types.h"
 
 namespace kernel
@@ -35,7 +35,7 @@ class Publisher_ABC;
 */
 // Created: APE 2004-04-14
 // =============================================================================
-class TacticalLine_ABC : public kernel::Entity_ABC
+class TacticalLine_ABC : public kernel::TacticalLine_ABC
 {
 
 public:

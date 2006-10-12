@@ -11,7 +11,7 @@
 #define __AgentKnowledge_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/IDManager.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Resolver_ABC.h"
@@ -35,12 +35,17 @@ namespace kernel
 */
 // Created: APE 2004-03-10
 // =============================================================================
-class AgentKnowledge : public kernel::Entity_ABC
+class AgentKnowledge : public kernel::Knowledge_ABC
                      , public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
                      , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                      , public kernel::Drawable_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
 
 public:
     //! @name Constructor / Destructor
@@ -64,10 +69,11 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId       () const;
-    virtual QString       GetName     () const;
-    kernel::Agent_ABC&                GetRealAgent() const;
-    const kernel::Team_ABC*           GetKnowledgeTeam() const;
+    virtual unsigned long             GetId() const;
+    virtual QString                   GetName() const;
+    virtual QString                   GetTypeName() const;
+    virtual const kernel::Entity_ABC* GetEntity() const;
+    kernel::Agent_ABC&                GetRealAgent() const; // $$$$ SBO 2006-10-12: 
     const kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     //@}
 

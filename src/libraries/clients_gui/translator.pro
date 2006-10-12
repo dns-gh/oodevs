@@ -10,7 +10,6 @@ SOURCES         = GraphicsPanel.cpp   \
                   ObjectListView.cpp \
                   PopulationListView.cpp \
                   BaseDisplayer.cpp \
-                  LimitsLayer.cpp \
                   TerrainPreference.cpp \
                   AgentsLayer.cpp \
                   MetricsLayer.cpp \

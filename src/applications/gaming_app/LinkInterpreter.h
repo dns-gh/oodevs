@@ -33,12 +33,7 @@ class ObjectKnowledge;
 // =============================================================================
 class LinkInterpreter : public gui::LinkInterpreter_ABC
                       , public kernel::Observer_ABC
-                      , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
-                      , public kernel::ElementObserver_ABC< kernel::Population_ABC >
-                      , public kernel::ElementObserver_ABC< kernel::Object_ABC >
-                      , public kernel::ElementObserver_ABC< AgentKnowledge >
-                      , public kernel::ElementObserver_ABC< PopulationKnowledge >
-                      , public kernel::ElementObserver_ABC< ObjectKnowledge >
+                      , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
 {
 
 public:
@@ -57,18 +52,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Agent_ABC& agent );
-    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
-    virtual void NotifyCreated( const kernel::Population_ABC& popu );
-    virtual void NotifyDeleted( const kernel::Population_ABC& popu );
-    virtual void NotifyCreated( const kernel::Object_ABC& object );
-    virtual void NotifyDeleted( const kernel::Object_ABC& object );
-    virtual void NotifyCreated( const AgentKnowledge& agent );
-    virtual void NotifyDeleted( const AgentKnowledge& agent );
-    virtual void NotifyCreated( const PopulationKnowledge& popu );
-    virtual void NotifyDeleted( const PopulationKnowledge& popu );
-    virtual void NotifyCreated( const ObjectKnowledge& object );
-    virtual void NotifyDeleted( const ObjectKnowledge& object );
+    virtual void NotifyCreated( const kernel::Entity_ABC& entity );
+    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
 
 private:

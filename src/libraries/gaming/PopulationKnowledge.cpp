@@ -23,6 +23,8 @@
 
 using namespace kernel;
 
+const QString PopulationKnowledge::typeName_ = "populationKnowledge";
+
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
@@ -74,6 +76,15 @@ unsigned long PopulationKnowledge::GetId() const
 QString PopulationKnowledge::GetName() const
 {
     return popu_.GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetTypeName
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+QString PopulationKnowledge::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,12 +229,12 @@ const Population_ABC& PopulationKnowledge::GetRealPopulation() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetKnowledgeTeam
-// Created: AGE 2006-05-18
+// Name: PopulationKnowledge::GetEntity
+// Created: SBO 2006-10-12
 // -----------------------------------------------------------------------------
-const Team_ABC* PopulationKnowledge::GetKnowledgeTeam() const
+const kernel::Entity_ABC* PopulationKnowledge::GetEntity() const
 {
-    return & popu_.GetTeam();
+    return &popu_;
 }
 
 // -----------------------------------------------------------------------------

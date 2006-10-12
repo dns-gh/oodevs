@@ -147,7 +147,7 @@ void Limit::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 void Limit::Select( ActionController& actions ) const
 {
-    actions.Select( *this );
+    actions.Select( *this, *(kernel::TacticalLine_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ void Limit::Select( ActionController& actions ) const
 // -----------------------------------------------------------------------------
 void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
 {
-    actions.ContextMenu( *this, point );
+    actions.ContextMenu( *this, *(kernel::TacticalLine_ABC*)this, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
 // -----------------------------------------------------------------------------
 void Limit::Activate( ActionController& actions ) const
 {
-    actions.Activate( *this );
+    actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

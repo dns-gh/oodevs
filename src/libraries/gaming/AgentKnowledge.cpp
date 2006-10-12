@@ -25,6 +25,7 @@
 
 using namespace kernel;
 
+const QString AgentKnowledge::typeName_ = "agentKnowledge";
 IDManager AgentKnowledge::idManager_( 158 );
 
 // -----------------------------------------------------------------------------
@@ -139,6 +140,15 @@ unsigned long AgentKnowledge::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetEntity
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* AgentKnowledge::GetEntity() const
+{
+    return &realAgent_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::GetRealAgent
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
@@ -154,6 +164,15 @@ Agent_ABC& AgentKnowledge::GetRealAgent() const
 QString AgentKnowledge::GetName() const
 {
     return realAgent_.GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetTypeName
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+QString AgentKnowledge::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,15 +237,6 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Recta
     }
     else
         tools.DrawApp6Symbol( "roles/Unknown.svg", where );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetKnowledgeTeam
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-const Team_ABC* AgentKnowledge::GetKnowledgeTeam() const
-{
-    return team_;
 }
 
 // -----------------------------------------------------------------------------

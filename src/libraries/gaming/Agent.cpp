@@ -15,6 +15,8 @@
 
 using namespace kernel;
 
+const QString Agent::typeName_ = "agent";
+
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
 // Created: AGE 2006-02-14
@@ -54,6 +56,15 @@ void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& v
 const AgentType& Agent::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetTypeName
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+QString Agent::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

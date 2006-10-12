@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "BaseDisplayer.h"
+#include "InternalLinks.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Team_ABC.h"
@@ -22,7 +23,6 @@
 #include "clients_kernel/BreakdownType.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Mission.h"
-#include "gaming/InternalLinks.h"
 #include "Tools.h"
 
 using namespace kernel;

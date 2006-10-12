@@ -961,7 +961,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
 {
     if( CheckAcknowledge( message, "LimitCreationAck" ) )
     {
-        TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
+        ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
         if( limit )
             limit->Update( message );
         else
@@ -977,7 +977,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAc
 {
     if( CheckAcknowledge( message, "LimitUpdateAck" ) )
     {
-        TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
+        ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
         if( limit )
             limit->Update( message );
     }
@@ -1002,7 +1002,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreation
 {
     if( CheckAcknowledge( message, "LimaCreationAck" ) )
     {
-        TacticalLine_ABC* lima = GetModel().limits_.Find( message.oid );
+        ::TacticalLine_ABC* lima = GetModel().limits_.Find( message.oid );
         if( lima )
             lima->Update( message );
         else
@@ -1018,7 +1018,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck&
 {
     if( CheckAcknowledge( message, "LimaUpdateAck" ) )
     {
-        TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
+        ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
         if( limit )
             limit->Update( message );
     }

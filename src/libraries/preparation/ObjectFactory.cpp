@@ -23,6 +23,7 @@
 #include "ObjectPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "StaticModel.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 
@@ -59,21 +60,21 @@ kernel::Object_ABC* ObjectFactory::CreateObject( kernel::ObjectType& type, kerne
     
     switch( type.id_ )
     {
-    case EnumObjectType::camp_prisonniers:
-    case EnumObjectType::camp_refugies:
+    case eObjectType_CampPrisonniers:
+    case eObjectType_CampRefugies:
         result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_ ) );
         break;
-    case EnumObjectType::itineraire_logistique:
+    case eObjectType_ItineraireLogistique:
         result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes() );
         break;
-    case EnumObjectType::nuage_nbc:
-    case EnumObjectType::zone_nbc:
+    case eObjectType_NuageNbc:
+    case eObjectType_ZoneNbc:
         result->Attach< NBCAttributes_ABC >( *new NBCAttributes() );
         break;
-    case EnumObjectType::rota:
+    case eObjectType_Rota:
         result->Attach< RotaAttributes_ABC >( *new RotaAttributes() );
         break;
-    case EnumObjectType::site_franchissement:
+    case eObjectType_SiteFranchissement:
         result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes() );
         break;
     default:

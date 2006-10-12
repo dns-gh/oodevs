@@ -13,7 +13,7 @@
 #include "ASN_Types.h"
 #include "clients_kernel/IDManager.h"
 #include "clients_kernel/Resolver.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 
@@ -36,13 +36,19 @@ class PopulationFlowKnowledge;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public kernel::Entity_ABC
+class PopulationKnowledge : public kernel::Knowledge_ABC
                           , public kernel::Resolver< PopulationConcentrationKnowledge >
                           , public kernel::Resolver< PopulationFlowKnowledge >
                           , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                           , public kernel::Extension_ABC
                           , public kernel::Drawable_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
+
 public:
     //! @name Constructor/Destructor
     //@{
@@ -54,12 +60,13 @@ public:
     //@{
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
+    virtual QString GetTypeName() const;
+    virtual const kernel::Entity_ABC* GetEntity() const;
 
     void Display( kernel::Displayer_ABC& displayer ) const;
     void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     bool IsInTeam( const kernel::Team_ABC& team ) const;
     bool KnowledgeIsInTeam( const kernel::Entity_ABC& team ) const;
-    const kernel::Team_ABC* GetKnowledgeTeam() const;
 
     const kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
     const kernel::Population_ABC& GetRealPopulation() const;

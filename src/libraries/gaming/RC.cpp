@@ -9,11 +9,15 @@
 
 #include "gaming_pch.h"
 #include "RC.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "InternalLinks.h"
+#include "Agent.h"
+#include "AgentKnowledge.h"
+#include "ObjectKnowledge.h"
+#include "PopulationKnowledge.h"
 #include "RcEntityResolver_ABC.h"
+#include "clients_gui/InternalLinks.h"
 
 using namespace kernel;
+using namespace gui;
 
 //-----------------------------------------------------------------------------
 // Name: RC constructor
@@ -354,7 +358,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 // -----------------------------------------------------------------------------
 std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
-    return InternalLinks::CreateLink( InternalLinks::objectKnowledge_, nId, QString::number( nId ) ).ascii();
+    return InternalLinks::CreateLink( ObjectKnowledge::typeName_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -363,7 +367,7 @@ std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 {
-    return InternalLinks::CreateLink( InternalLinks::agentKnowledge_, nId, QString::number( nId ) ).ascii();
+    return InternalLinks::CreateLink( AgentKnowledge::typeName_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -372,7 +376,7 @@ std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 {
-    return InternalLinks::CreateLink( InternalLinks::populationKnowledge_, nId, QString::number( nId ) ).ascii();
+    return InternalLinks::CreateLink( PopulationKnowledge::typeName_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -381,5 +385,5 @@ std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentLink( ASN1T_OID nId )
 {
-    return InternalLinks::CreateLink( InternalLinks::agent_, nId, QString::number( nId ) ).ascii();
+    return InternalLinks::CreateLink( Agent::typeName_, nId, QString::number( nId ) ).ascii();
 }

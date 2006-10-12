@@ -48,6 +48,7 @@ public:
     }
 
     void Display( const QString& name, Displayer_ABC& displayer ) const;
+    void Display( Displayer_ABC& displayer ) const;
     //@}
 
 private:

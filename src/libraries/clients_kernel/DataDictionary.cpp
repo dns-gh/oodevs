@@ -44,6 +44,16 @@ void DataDictionary::Display( const QString& name, Displayer_ABC& displayer ) co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DataDictionary::Display
+// Created: SBO 2006-10-11
+// -----------------------------------------------------------------------------
+void DataDictionary::Display( Displayer_ABC& displayer ) const
+{
+    for( CIT_Data it = data_.begin(); it != data_.end(); ++it )
+        it->second->Display( displayer );
+}
+
+// -----------------------------------------------------------------------------
 // Name: QStringList DataDictionary::FindKey
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------

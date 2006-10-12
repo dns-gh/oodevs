@@ -16,13 +16,11 @@
 #include "Publisher_ABC.h"
 #include "xeumeuleu/xml.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-LimitsModel::LimitsModel( Controllers& controllers, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+LimitsModel::LimitsModel( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
     : controllers_( controllers )
     , converter_( converter )
     , publisher_( publisher )
@@ -36,7 +34,7 @@ LimitsModel::LimitsModel( Controllers& controllers, const CoordinateConverter_AB
 // -----------------------------------------------------------------------------
 LimitsModel::~LimitsModel()
 {
-    Resolver< TacticalLine_ABC >::DeleteAll();
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +43,7 @@ LimitsModel::~LimitsModel()
 // -----------------------------------------------------------------------------
 void LimitsModel::UpdateToSim()
 {
-    for( Resolver< TacticalLine_ABC >::CIT_Elements it = Resolver< TacticalLine_ABC >::elements_.begin(); it != Resolver< TacticalLine_ABC >::elements_.end(); ++it )
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         TacticalLine_ABC& line = *it->second;
         line.UpdateToSim();
@@ -158,7 +156,7 @@ void LimitsModel::Save( const std::string& tacticalLines ) const
 {
     xml::xofstream xos( tacticalLines );
     xos << xml::start( "lines" );
-    for( Resolver< TacticalLine_ABC >::CIT_Elements it = Resolver< TacticalLine_ABC >::elements_.begin(); it != Resolver< TacticalLine_ABC >::elements_.end(); ++it )
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         TacticalLine_ABC& line = *it->second;
         line.Serialize( xos );

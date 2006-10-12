@@ -15,12 +15,9 @@ namespace kernel
     class Agent_ABC;
     class Object_ABC;
     class Population_ABC;
+    class Knowledge_ABC;
+    class TacticalLine_ABC;
 }
-
-class AgentKnowledge;
-class ObjectKnowledge;
-class PopulationKnowledge;
-class TacticalLine_ABC;
 
 namespace gui
 {
@@ -46,10 +43,8 @@ public:
     virtual void SelectColor( const kernel::Agent_ABC& agent ) = 0;
     virtual void SelectColor( const kernel::Object_ABC& object ) = 0;
     virtual void SelectColor( const kernel::Population_ABC& population ) = 0;
-    virtual void SelectColor( const AgentKnowledge& k ) = 0;
-    virtual void SelectColor( const ObjectKnowledge& k ) = 0;
-    virtual void SelectColor( const PopulationKnowledge& k ) = 0;
-    virtual void SelectColor( const TacticalLine_ABC& line ) = 0;
+    virtual void SelectColor( const kernel::Knowledge_ABC& knowledge ) = 0;
+    virtual void SelectColor( const kernel::TacticalLine_ABC& line ) = 0;
     //@}
 };
 

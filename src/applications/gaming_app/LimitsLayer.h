@@ -10,11 +10,11 @@
 #ifndef __LimitsLayer_h_
 #define __LimitsLayer_h_
 
-#include "Layer_ABC.h"
+#include "clients_gui/Layer_ABC.h"
+#include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "ShapeHandler_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -26,12 +26,8 @@ namespace kernel
     class Location_ABC;
 }
 
-class Lima;
-class Limit;
-class LimitsModel;
-class TacticalLine_ABC;
-
-namespace xml {
+namespace xml
+{
     class xistream;
 }
 
@@ -39,6 +35,12 @@ namespace gui
 {
     class ColorStrategy_ABC;
     class ParametersLayer;
+}
+
+class Lima;
+class Limit;
+class LimitsModel;
+class TacticalLine_ABC;
 
 // =============================================================================
 /** @class  LimitsLayer
@@ -49,13 +51,13 @@ namespace gui
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public QObject
-                  , public Layer_ABC
+                  , public gui::Layer_ABC
                   , public kernel::Observer_ABC
                   , public kernel::ElementObserver_ABC< Lima >
                   , public kernel::ElementObserver_ABC< Limit >
                   , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                   , public kernel::OptionsObserver_ABC
-                  , private ShapeHandler_ABC
+                  , private gui::ShapeHandler_ABC
                   , private kernel::LocationVisitor_ABC
                   
 {
@@ -64,7 +66,7 @@ class LimitsLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model );
+             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, LimitsModel& model );
     virtual ~LimitsLayer();
     //@}
 
@@ -105,8 +107,8 @@ private:
     void Add( const TacticalLine_ABC& line );
     void Remove( const TacticalLine_ABC& line );
 
-    virtual bool HandleKeyPress        ( QKeyEvent* key );
-    virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool HandleKeyPress  ( QKeyEvent* key );
+    virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );
 
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu );
 
@@ -139,8 +141,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
-    ColorStrategy_ABC& strategy_;
-    ParametersLayer& parameters_;
+    gui::ColorStrategy_ABC& strategy_;
+    gui::ParametersLayer& parameters_;
     LimitsModel& model_;
 
     kernel::TristateOption drawLines_;
@@ -149,7 +151,5 @@ private:
     int type_;
     //@}
 };
-
-}
 
 #endif // __LimitsLayer_h_

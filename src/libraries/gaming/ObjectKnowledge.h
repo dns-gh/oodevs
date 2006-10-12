@@ -11,7 +11,7 @@
 #define __ObjectKnowledge_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -36,12 +36,17 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledge : public kernel::Entity_ABC
+class ObjectKnowledge : public kernel::Knowledge_ABC
                       , public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                       , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                       , public kernel::Drawable_ABC
 {
+public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -58,6 +63,8 @@ public:
     //@{
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
+    virtual QString GetTypeName() const;
+    virtual const kernel::Entity_ABC* GetEntity() const;
 
     void Display( kernel::Displayer_ABC& displayer ) const;
     void DisplayInList( kernel::Displayer_ABC& displayer ) const;
@@ -67,7 +74,6 @@ public:
     const kernel::Team_ABC& GetTeam() const; // $$$$ AGE 2006-09-15: 
 
     bool KnowledgeIsInTeam( const kernel::Team_ABC& team ) const;
-    const kernel::Team_ABC* GetKnowledgeTeam() const;
 
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;

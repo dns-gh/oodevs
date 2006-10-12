@@ -12,14 +12,11 @@
 
 namespace kernel
 {
-    class Agent_ABC;
-    class Object_ABC;
-    class Population_ABC;
+    class Entity_ABC;
 }
 
-class AgentKnowledge;
-class ObjectKnowledge;
-class PopulationKnowledge;
+namespace gui
+{
 
 // =============================================================================
 /** @class  InternalLinks
@@ -30,28 +27,9 @@ class PopulationKnowledge;
 class InternalLinks
 {
 public:
-    //! @name Constants
-    //@{
-    const static QString agent_;
-    const static QString object_;
-    const static QString population_;
-
-    const static QString agentKnowledge_;
-    const static QString objectKnowledge_;
-    const static QString populationKnowledge_;
-    //@}
-
-public:
     //! @name Operations
     //@{
-    static QString CreateLink( const kernel::Agent_ABC& entity, const QString& message );
-    static QString CreateLink( const kernel::Object_ABC& entity, const QString& message );
-    static QString CreateLink( const kernel::Population_ABC& entity, const QString& message );
-
-    static QString CreateLink( const AgentKnowledge& entity, const QString& message );
-    static QString CreateLink( const ObjectKnowledge& entity, const QString& message );
-    static QString CreateLink( const PopulationKnowledge& entity, const QString& message );
-
+    static QString CreateLink( const kernel::Entity_ABC& entity, const QString& message );
     static QString CreateLink( const QString& type, unsigned long id, const QString& message );
     //@}
 
@@ -61,5 +39,7 @@ private:
     static QString Embed( const QString& message, const QString& classId, unsigned long id );
     //@}
 };
+
+}
 
 #endif // __InternalLinks_h_

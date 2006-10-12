@@ -78,17 +78,6 @@
     </message>
 </context>
 <context>
-    <name>LimitsLayer</name>
-    <message>
-        <source>Cr&#xe9;er limite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cr&#xe9;er lima</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Localisation</name>
     <message>
         <source>Point</source>

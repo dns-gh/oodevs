@@ -20,17 +20,11 @@ namespace kernel
 {
     class Entity_ABC;
     class Team_ABC;
-    class Agent_ABC;
     class Automat_ABC;
-    class Object_ABC;
-    class Population_ABC;
     class Controllers;
     class GlTools_ABC;
+    class TacticalLine_ABC;
 }
-
-class Lima;
-class Limit;
-class TacticalLine_ABC;
 
 namespace gui
 {
@@ -48,8 +42,7 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
                     , public kernel::SelectionObserver_Base< kernel::Object_ABC >
                     , public kernel::SelectionObserver_Base< kernel::Population_ABC >
-                    , public kernel::SelectionObserver_Base< Lima >
-                    , public kernel::SelectionObserver_Base< Limit >
+                    , public kernel::SelectionObserver_Base< kernel::TacticalLine_ABC >
 {
 
 public:
@@ -64,10 +57,8 @@ public:
     virtual void SelectColor( const kernel::Agent_ABC& agent );
     virtual void SelectColor( const kernel::Object_ABC& object );
     virtual void SelectColor( const kernel::Population_ABC& population );
-    virtual void SelectColor( const AgentKnowledge& k );
-    virtual void SelectColor( const ObjectKnowledge& k );
-    virtual void SelectColor( const PopulationKnowledge& k );
-    virtual void SelectColor( const TacticalLine_ABC& line );
+    virtual void SelectColor( const kernel::Knowledge_ABC& knowledge );
+    virtual void SelectColor( const kernel::TacticalLine_ABC& line );
     //@}
 
 private:
@@ -87,8 +78,7 @@ private:
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Object_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
-    virtual void Select( const Lima& element );
-    virtual void Select( const Limit& element );
+    virtual void Select( const kernel::TacticalLine_ABC& element );
     virtual void AfterSelection();
 
     void InitializeSynonyms();
@@ -117,11 +107,10 @@ private:
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
 
-    kernel::SafePointer< kernel::Object_ABC >     selectedObject_;
-    kernel::SafePointer< kernel::Agent_ABC >      selectedAgent_;
-    kernel::SafePointer< kernel::Population_ABC > selectedPopulation_;
-
-    const TacticalLine_ABC* selectedLine_;
+    kernel::SafePointer< kernel::Object_ABC >       selectedObject_;
+    kernel::SafePointer< kernel::Agent_ABC >        selectedAgent_;
+    kernel::SafePointer< kernel::Population_ABC >   selectedPopulation_;
+    kernel::SafePointer< kernel::TacticalLine_ABC > selectedLine_;
 
     T_TeamColors teamColors_;
     T_Synonyms   synonyms_;

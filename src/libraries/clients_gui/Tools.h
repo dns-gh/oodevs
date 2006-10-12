@@ -10,7 +10,6 @@
 #ifndef __Gui_Tools_h_
 #define __Gui_Tools_h_
 
-#include "gaming/Tools.h"
-
+#include "clients_kernel/Tools.h"
 
 #endif // __Gui_Tools_h_

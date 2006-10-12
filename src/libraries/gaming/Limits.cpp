@@ -12,13 +12,11 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "TacticalLine_ABC.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: Limits constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Limits::Limits( const Resolver_ABC< TacticalLine_ABC >& resolver )
+Limits::Limits( const kernel::Resolver_ABC< TacticalLine_ABC >& resolver )
     : resolver_( resolver )
     , acknowledged_( false )
     , left_( 0 )
@@ -62,7 +60,7 @@ void Limits::DoUpdate( const ASN1T_MsgPionOrderAck& message )
 // Name: Limits::Draw
 // Created: AGE 2006-04-06
 // -----------------------------------------------------------------------------
-void Limits::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Limits::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2006-04-21: viewport
     if( ! tools.ShouldDisplay( "TacticalLines", false ) 

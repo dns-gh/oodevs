@@ -48,6 +48,12 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Positions
 {
 public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
+
+public:
     //! @name Constructor/Destructor
     //@{
              Population( const ASN1T_MsgPopulationCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
@@ -73,6 +79,7 @@ public:
     //@{
     virtual const kernel::Team_ABC& GetTeam() const;
     const kernel::PopulationType& GetType() const;
+    virtual QString GetTypeName() const;
     //@}
     
 private:

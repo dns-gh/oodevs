@@ -10,6 +10,6 @@
 #ifndef __Gui_Types_h_
 #define __Gui_Types_h_
 
-#include "gaming/Types.h"
+#include "clients_kernel/Types.h"
 
 #endif // __Gui_Types_h_

@@ -9,14 +9,15 @@
 
 #include "gaming_pch.h"
 #include "RcEntityResolver.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "Agent.h"
 #include "ObjectKnowledge.h"
 #include "AgentKnowledge.h"
 #include "PopulationKnowledge.h"
-#include "InternalLinks.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_gui/InternalLinks.h"
 
 using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: RcEntityResolver constructor
@@ -115,13 +116,13 @@ void RcEntityResolver::NotifyDeleted( const PopulationKnowledge& element )
 // -----------------------------------------------------------------------------
 QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) const
 {
-    if( type == InternalLinks::agent_ )
+    if( type == Agent::typeName_ )
         return CreateLink< Agent_ABC >( id );
-    else if( type == InternalLinks::objectKnowledge_ )
+    else if( type == ObjectKnowledge::typeName_ )
         return CreateLink< ObjectKnowledge >( id );
-    else if( type == InternalLinks::agentKnowledge_ )
+    else if( type == AgentKnowledge::typeName_ )
         return CreateLink< AgentKnowledge >( id );
-    else if( type == InternalLinks::populationKnowledge_ )
+    else if( type == PopulationKnowledge::typeName_ )
         return CreateLink< PopulationKnowledge >( id );
     return QString::number( id );
 }

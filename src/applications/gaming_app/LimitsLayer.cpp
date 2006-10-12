@@ -7,22 +7,21 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
+#include "gaming_app_pch.h"
 #include "LimitsLayer.h"
 #include "moc_LimitsLayer.cpp"
 
+#include "gaming/Lima.h"
+#include "gaming/Limit.h"
+#include "gaming/LimitsModel.h"
+#include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "gaming/Lima.h"
-#include "gaming/Limit.h"
-#include "gaming/LimitsModel.h"
-#include "ColorStrategy_ABC.h"
-#include "Tools.h"
-#include "ParametersLayer.h"
-
+#include "clients_gui/ColorStrategy_ABC.h"
+#include "clients_gui/ParametersLayer.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -166,7 +165,7 @@ void LimitsLayer::NotifyDeleted( const Limit& limit )
 // Name: LimitsLayer::Add
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsLayer::Add( const TacticalLine_ABC& line )
+void LimitsLayer::Add( const ::TacticalLine_ABC& line )
 {
     lines_.push_back( &line );
 }
@@ -175,7 +174,7 @@ void LimitsLayer::Add( const TacticalLine_ABC& line )
 // Name: LimitsLayer::Remove
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsLayer::Remove( const TacticalLine_ABC& line )
+void LimitsLayer::Remove( const ::TacticalLine_ABC& line )
 {
     IT_Lines it = std::find( lines_.begin(), lines_.end(), &line );
     if( it != lines_.end() )
@@ -204,7 +203,7 @@ bool LimitsLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f&
 
     for( ; selected_ < lines_.size(); ++selected_ )
     {
-        const TacticalLine_ABC& line = *lines_[ selected_ ];
+        const ::TacticalLine_ABC& line = *lines_[ selected_ ];
         if( IsInSelection( line, point ) )
         {
             if( button == Qt::LeftButton )
@@ -221,7 +220,7 @@ bool LimitsLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f&
 // Name: LimitsLayer::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsLayer::Select( const TacticalLine_ABC& line )
+void LimitsLayer::Select( const ::TacticalLine_ABC& line )
 {
     line.Select( controllers_.actions_ );
 }
@@ -230,7 +229,7 @@ void LimitsLayer::Select( const TacticalLine_ABC& line )
 // Name: LimitsLayer::ContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsLayer::ContextMenu( const TacticalLine_ABC& line, const QPoint& point )
+void LimitsLayer::ContextMenu( const ::TacticalLine_ABC& line, const QPoint& point )
 {
     line.ContextMenu( controllers_.actions_, point );
 }
@@ -239,7 +238,7 @@ void LimitsLayer::ContextMenu( const TacticalLine_ABC& line, const QPoint& point
 // Name: LimitsLayer::IsInSelection
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-bool LimitsLayer::IsInSelection( const TacticalLine_ABC& line, const geometry::Point2f& point ) const
+bool LimitsLayer::IsInSelection( const ::TacticalLine_ABC& line, const geometry::Point2f& point ) const
 {
     return line.IsAt( point, 10.f * tools_.Pixels() );
 }
@@ -253,7 +252,7 @@ bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
     const int key = k->key();
     if( ( key == Qt::Key_BackSpace || key == Qt::Key_Delete ) && selected_ < lines_.size() )
     {
-        const_cast< TacticalLine_ABC* >( lines_[ selected_ ] )->Delete(); // $$$$ AGE 2006-03-24: 
+        const_cast< ::TacticalLine_ABC* >( lines_[ selected_ ] )->Delete(); // $$$$ AGE 2006-03-24: 
         return true;
     }
     return false;

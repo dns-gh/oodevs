@@ -14,14 +14,13 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
-using namespace kernel;
 using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
     : converter_    ( converter )
     , publisher_    ( publisher )
     , id_           ( id )
@@ -36,7 +35,7 @@ TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, c
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const T_PointVector& points, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const T_PointVector& points, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
     : converter_    ( converter )
     , publisher_    ( publisher )
     , id_           ( id )
@@ -52,7 +51,7 @@ TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, c
 // Name: TacticalLine_ABC constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const ASN1T_Line& line, const CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
+TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const ASN1T_Line& line, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
     : converter_    ( converter )
     , publisher_    ( publisher )
     , id_           ( id )
@@ -232,7 +231,7 @@ void TacticalLine_ABC::UpdateToSim()
 // Name: TacticalLine_ABC::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Draw( const GlTools_ABC& tools ) const
+void TacticalLine_ABC::Draw( const kernel::GlTools_ABC& tools ) const
 {
     tools.DrawLines( pointList_ );
 }
@@ -241,7 +240,7 @@ void TacticalLine_ABC::Draw( const GlTools_ABC& tools ) const
 // Name: TacticalLine_ABC::DrawName
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::DrawName( const GlTools_ABC& tools ) const
+void TacticalLine_ABC::DrawName( const kernel::GlTools_ABC& tools ) const
 {
     if( ! pointList_.empty() )
         tools.Print( strName_.ascii(), pointList_.front() );

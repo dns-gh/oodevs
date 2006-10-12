@@ -22,6 +22,8 @@
 
 using namespace kernel;
 
+const QString ObjectKnowledge::typeName_ = "objectKnowledge";
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
@@ -171,12 +173,21 @@ QString ObjectKnowledge::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetKnowledgeTeam
-// Created: AGE 2006-05-18
+// Name: ObjectKnowledge::GetTypeName
+// Created: SBO 2006-10-12
 // -----------------------------------------------------------------------------
-const Team_ABC* ObjectKnowledge::GetKnowledgeTeam() const
+QString ObjectKnowledge::GetTypeName() const
 {
-    return pRealObject_ ? & pRealObject_->GetTeam() : 0;
+    return typeName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetEntity
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ObjectKnowledge::GetEntity() const
+{
+    return pRealObject_;
 }
 
 // -----------------------------------------------------------------------------

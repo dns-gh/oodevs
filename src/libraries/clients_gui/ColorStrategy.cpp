@@ -17,13 +17,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "gaming/Lima.h"
-#include "gaming/Limit.h"
-#include "gaming/ObjectKnowledge.h"
-#include "gaming/PopulationKnowledge.h"
-#include "gaming/AgentKnowledge.h"
+#include "clients_kernel/TacticalLine_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -38,7 +35,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     , selectedObject_    ( controllers )
     , selectedAgent_     ( controllers )
     , selectedPopulation_( controllers )
-    , selectedLine_      ( 0 )
+    , selectedLine_      ( controllers )
 {
     InitializeSynonyms();
     InitializeColors();
@@ -95,16 +92,7 @@ void ColorStrategy::Select( const Population_ABC& element )
 // Name: ColorStrategy::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Lima& element )
-{
-    selectedLine_ = &element;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::Select
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void ColorStrategy::Select( const Limit& element )
+void ColorStrategy::Select( const kernel::TacticalLine_ABC& element )
 {
     selectedLine_ = &element;
 }
@@ -187,40 +175,11 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const AgentKnowledge& k )
+void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
     QColor color( 255, 255, 255 );
-    const Team_ABC* team = k.GetKnowledgeTeam();
-    if( team )
-        color = teamColors_[ team ].second;
-    color = KnowledgeColor( color );
-    ApplyColor( color );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::SelectColor
-// Created: AGE 2006-05-18
-// -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const ObjectKnowledge& k )
-{
-    QColor color( 255, 255, 255 );
-    const Team_ABC* team = k.GetKnowledgeTeam();
-    if( team )
-        color = teamColors_[ team ].second;
-    color = KnowledgeColor( color );
-    ApplyColor( color );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorStrategy::SelectColor
-// Created: AGE 2006-05-18
-// -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const PopulationKnowledge& k )
-{
-    QColor color( 255, 255, 255 );
-    const Team_ABC* team = k.GetKnowledgeTeam();
-    if( team )
-        color = teamColors_[ team ].second;
+    if( knowledge.GetEntity() )
+        color = FindColor( *knowledge.GetEntity() );
     color = KnowledgeColor( color );
     ApplyColor( color );
 }
@@ -229,7 +188,7 @@ void ColorStrategy::SelectColor( const PopulationKnowledge& k )
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
+void ColorStrategy::SelectColor( const kernel::TacticalLine_ABC& line )
 {
     if( & line == selectedLine_ )
         glColor3f( 1.f, 0.5f, 0.05f );

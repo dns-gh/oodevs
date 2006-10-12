@@ -33,6 +33,8 @@
 #include "NBCPrototype_ABC.h"
 #include "RotaPrototype_ABC.h"
 
+#include "ENT/ENT_Tr.h"
+
 using namespace kernel;
 using namespace gui;
 
@@ -200,21 +202,21 @@ void ObjectPrototype_ABC::OnTypeChanged( int )
 
     switch( type->id_ )
     {
-        case EnumObjectType::camp_prisonniers:
-        case EnumObjectType::camp_refugies:
+        case eObjectType_CampPrisonniers:
+        case eObjectType_CampRefugies:
             activeAttributes_ = campAttributes_;
             break;
-        case EnumObjectType::itineraire_logistique:
+        case eObjectType_ItineraireLogistique:
             activeAttributes_ = logisticRouteAttributes_;
             break;
-        case EnumObjectType::nuage_nbc:
-        case EnumObjectType::zone_nbc:
+        case eObjectType_NuageNbc:
+        case eObjectType_ZoneNbc:
             activeAttributes_ = nbcAttributes_;
             break;
-        case EnumObjectType::rota:
+        case eObjectType_Rota:
             activeAttributes_ = rotaAttributes_;
             break;
-        case EnumObjectType::site_franchissement:
+        case eObjectType_SiteFranchissement:
             activeAttributes_ = crossingSiteAttributes_;
             break;
         default:

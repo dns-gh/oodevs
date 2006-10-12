@@ -38,6 +38,12 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
 {
 
 public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              Agent( const ASN1T_MsgPionCreation& message,
@@ -49,6 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AgentType& GetType() const;
+    virtual QString GetTypeName() const;
     //@}
 
 private:

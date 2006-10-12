@@ -22,6 +22,7 @@
 using namespace geometry;
 using namespace kernel;
 
+const QString Population::typeName_ = "population";
 unsigned long Population::nMaxId_ = 200;
 
 // -----------------------------------------------------------------------------
@@ -339,6 +340,15 @@ geometry::Rectangle2f Population::GetBoundingBox() const
 const PopulationType& Population::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetTypeName
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+QString Population::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------
