@@ -15,6 +15,7 @@
 #include "preparation/FormationLevels.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/Level.h"
+#include "preparation/EntityCommunications.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -218,11 +219,33 @@ bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
 
 namespace 
 {
+    Entity_ABC& GetFirstCommunicationChild( const Entity_ABC& entity )
+    {
+        Iterator< const Entity_ABC& > it = entity.Get< kernel::CommunicationHierarchies >().CreateSubordinateIterator();
+        if( it.HasMoreElements() )
+            return const_cast< Entity_ABC& >( it.NextElement() );
+        throw std::runtime_error( "No communication child found" );
+    }
+
+    void UpdateCommunicationHierarchies( Entity_ABC& entity, const Entity_ABC& superior )
+    {
+        const Entity_ABC& tacticalTop = superior.Get< kernel::TacticalHierarchies >().GetTop();
+        kernel::CommunicationHierarchies* com = entity.Retrieve< kernel::CommunicationHierarchies >();
+
+        if( com && &com->GetTop() != &tacticalTop )
+            static_cast< ::EntityCommunications* >( com )->ChangeSuperior( GetFirstCommunicationChild( tacticalTop ) );
+
+        Iterator< const Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            UpdateCommunicationHierarchies( const_cast< Entity_ABC& >( it.NextElement() ), superior );
+    }
+
     bool ChangeSuperior( const Entity_ABC& entity, const Entity_ABC& superior ) // $$$$ SBO 2006-09-28: cast-machine
     {
         Entity_ABC& ent = const_cast< Entity_ABC& >( entity );
         if( kernel::TacticalHierarchies* hierarchies = ent.Retrieve< kernel::TacticalHierarchies >() )
         {
+            UpdateCommunicationHierarchies( ent, superior );
             static_cast< ::TacticalHierarchies* >( hierarchies )->ChangeSuperior( const_cast< Entity_ABC& >( superior ) );
             return true;
          }

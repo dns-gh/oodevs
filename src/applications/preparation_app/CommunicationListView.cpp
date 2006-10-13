@@ -90,6 +90,8 @@ bool CommunicationListView::Drop( const Entity_ABC& item, const Entity_ABC& targ
     if( automat && group )
     {
         CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( automat->Get< CommunicationHierarchies >() );
+        if( &com.GetTop() != &target.Get< CommunicationHierarchies >().GetTop() )
+            return false;
         static_cast< AutomatCommunications& >( com ).ChangeSuperior( const_cast< Entity_ABC& >( target ) );
         return true;
     }
