@@ -68,6 +68,7 @@ Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xis
     : TacticalLine_ABC( xis, converter, publisher )
     , controller_( controller )
 {
+    idManager_.LockIdentifier( GetId() );
     controller_.Create( *this );
 }
 

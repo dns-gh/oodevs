@@ -72,6 +72,7 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistr
     int type = 0;
     xis >> xml::attribute( "type", type );
     nFuncType_ = E_FuncLimaType( type );
+    idManager_.LockIdentifier( GetId() );
     controller_.Create( *this );
 }
  
