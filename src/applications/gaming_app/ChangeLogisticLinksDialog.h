@@ -19,6 +19,7 @@ namespace kernel
 {
     class Controllers;
     class Automat_ABC;
+    class Profile_ABC;
 }
 
 class Publisher_ABC;
@@ -40,7 +41,7 @@ class ChangeLogisticLinksDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher );
+             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile );
     virtual ~ChangeLogisticLinksDialog();
     //@}
 
@@ -71,6 +72,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    const kernel::Profile_ABC& profile_;
+
     gui::ValuedComboBox< const kernel::Automat_ABC* >* tc2Combo_;
     gui::ValuedComboBox< const kernel::Automat_ABC* >* maintenanceCombo_;
     gui::ValuedComboBox< const kernel::Automat_ABC* >* medicalCombo_;

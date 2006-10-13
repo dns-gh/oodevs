@@ -15,6 +15,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
 
 #include <qgrid.h>
 
@@ -25,10 +26,11 @@ using namespace gui;
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher )
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile )
     : QDialog( parent )
     , controllers_( controllers )
     , publisher_( publisher )
+    , profile_( profile )
     , selected_( controllers )
 {
     setCaption( tr( "Changement des liens logisitiques" ) );
@@ -202,8 +204,9 @@ void ChangeLogisticLinksDialog::Reject()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( !agent.Retrieve< LogisticLinks_ABC >() )
-        return;
-    selected_ = &agent;
-    menu.InsertItem( "Commande", tr( "Changer les liens logistiques" ), this, SLOT( Show() ) );
+    if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks_ABC >() )
+    {
+        selected_ = &agent;
+        menu.InsertItem( "Commande", tr( "Changer les liens logistiques" ), this, SLOT( Show() ) );
+    }
 }

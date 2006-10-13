@@ -20,6 +20,7 @@ namespace kernel
     class Controllers;
     class Automat_ABC;
     class Entity_ABC;
+    class Profile_ABC;
 }
 
 class Model;
@@ -42,7 +43,7 @@ class LogisticSupplyPushFlowDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const Model& model );
+             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const Model& model, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -85,6 +86,8 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const Model& model_;
+    const kernel::Profile_ABC& profile_;
+
     gui::ValuedComboBox< const kernel::Automat_ABC* >* targetCombo_;
     QTable* table_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;

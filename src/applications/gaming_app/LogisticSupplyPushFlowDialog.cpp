@@ -22,6 +22,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Iterator.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 
 using namespace kernel;
@@ -31,11 +32,12 @@ using namespace gui;
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, const Profile_ABC& profile )
     : QDialog( parent, "Pousser flux log" )
     , controllers_( controllers )
     , publisher_( publisher )
     , model_( model )
+    , profile_( profile )
     , selected_( controllers )
 {
     setCaption( tr( "Pousser des flux" ) );
@@ -90,11 +92,15 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    const AutomatType& type = agent.GetType();
-    if( !type.IsLogisticSupply() )
-        return;
-    selected_ = &agent;
-    menu.InsertItem( "Commande", tr( "Pousser des flux" ), this, SLOT( Show() ) );
+    if( profile_.CanBeOrdered( agent ) )
+    {
+        const AutomatType& type = agent.GetType();
+        if( type.IsLogisticSupply() )
+        {
+            selected_ = &agent;
+            menu.InsertItem( "Commande", tr( "Pousser des flux" ), this, SLOT( Show() ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

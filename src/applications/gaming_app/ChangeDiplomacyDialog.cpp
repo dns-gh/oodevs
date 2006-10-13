@@ -13,6 +13,7 @@
 #include "gaming/ASN_Messages.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -21,10 +22,11 @@ using namespace gui;
 // Name: ChangeDiplomacyDialog constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher )
+ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Profile_ABC& profile )
     : QDialog( parent )
     , controllers_( controllers )
     , publisher_( publisher )
+    , profile_( profile )
 {
     setCaption( tr( "Diplomatie" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
@@ -125,6 +127,9 @@ void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
-    pArmy1ComboBox_->SetCurrentItem( team.GetId() );
-    menu.InsertItem( "Commande", tr( "Diplomatie" ), this, SLOT( show() ) );
+    if( profile_.CanDoMagic( team ) )
+    {
+        pArmy1ComboBox_->SetCurrentItem( team.GetId() );
+        menu.InsertItem( "Commande", tr( "Diplomatie" ), this, SLOT( show() ) );
+    }
 }

@@ -22,15 +22,15 @@ using namespace kernel;
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher )
+Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const kernel::Profile_ABC& profile )
     : QObject( parent )
 {
-    new ChangeDiplomacyDialog( parent, controllers, publisher );
-    new ChangeLogisticLinksDialog( parent, controllers, publisher );
-    new LogisticSupplyChangeQuotasDialog( parent, controllers, publisher, model );
-    new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model );
-    new LogisticSupplyRecompletionDialog( parent, controllers, publisher, staticModel );
-    new ChangeHumanFactorsDialog( parent, controllers, publisher );
+    new ChangeDiplomacyDialog( parent, controllers, publisher, profile );
+    new ChangeLogisticLinksDialog( parent, controllers, publisher, profile  );
+    new LogisticSupplyChangeQuotasDialog( parent, controllers, publisher, model, profile  );
+    new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model, profile  );
+    new LogisticSupplyRecompletionDialog( parent, controllers, publisher, staticModel, profile );
+    new ChangeHumanFactorsDialog( parent, controllers, publisher, profile );
 }
 
 // -----------------------------------------------------------------------------

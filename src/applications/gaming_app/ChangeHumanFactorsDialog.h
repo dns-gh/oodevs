@@ -20,6 +20,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Controllers;
+    class Profile_ABC;
 }
 
 class Publisher_ABC;
@@ -42,7 +43,7 @@ class ChangeHumanFactorsDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher );
+             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
@@ -79,6 +80,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    const kernel::Profile_ABC& profile_;
+
     kernel::SafePointer< kernel::Agent_ABC > selected_;
     gui::ValuedComboBox< E_UnitFatigue >*     pTirednessCombo_;
     gui::ValuedComboBox< E_UnitMoral >*       pMoralCombo_;

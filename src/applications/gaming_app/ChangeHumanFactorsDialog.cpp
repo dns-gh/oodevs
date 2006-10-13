@@ -12,10 +12,10 @@
 #include "moc_ChangeHumanFactorsDialog.cpp"
 #include "gaming/ASN_Messages.h"
 #include "gaming/HumanFactors.h"
-#include "gaming/MagicOrders.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Profile_ABC.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -39,10 +39,11 @@ namespace
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher )
+ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, const Profile_ABC& profile )
     : QDialog( pParent, "Facteurs Humains" )
     , controllers_( controllers )
     , publisher_( publisher )
+    , profile_( profile )
     , selected_( controllers )
 {
     setCaption( "Facteurs humains" );
@@ -189,9 +190,10 @@ QSize ChangeHumanFactorsDialog::sizeHint() const
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    if( !agent.Retrieve< MagicOrders >() )
-        return;
-    selected_ = &agent;
-    QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
-    subMenu->insertItem( tr( "Facteurs humains" ), this, SLOT( Show() ) );
+    if( profile_.CanDoMagic( agent ) )
+    {
+        selected_ = &agent;
+        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+        subMenu->insertItem( tr( "Facteurs humains" ), this, SLOT( Show() ) );
+    }
 }

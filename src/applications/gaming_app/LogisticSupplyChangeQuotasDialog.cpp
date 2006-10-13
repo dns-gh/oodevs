@@ -22,6 +22,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Iterator.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 
 using namespace kernel;
@@ -31,11 +32,12 @@ using namespace gui;
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model )
+LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, const Profile_ABC& profile )
     : QDialog( parent, "Affecter quotas ravitaillement" )
     , controllers_( controllers )
     , publisher_( publisher )
     , model_( model )
+    , profile_( profile )
     , selected_( controllers )
 {
     setCaption( tr( "Affecter des quotas ravitaillement" ) );
@@ -89,11 +91,15 @@ LogisticSupplyChangeQuotasDialog::~LogisticSupplyChangeQuotasDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    const AutomatType& type = agent.GetType();
-    if( !type.IsLogisticSupply() )
-        return;
-    selected_ = &agent;
-    menu.InsertItem( "Commande", tr( "Affecter des quotas ravitaillement" ), this, SLOT( Show() ) );
+    if( profile_.CanBeOrdered( agent ) )
+    {
+        const AutomatType& type = agent.GetType();
+        if( type.IsLogisticSupply() )
+        {
+            selected_ = &agent;
+            menu.InsertItem( "Commande", tr( "Affecter des quotas ravitaillement" ), this, SLOT( Show() ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -121,7 +121,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
-    new Dialogs( this, controllers, model_, staticModel, publisher );
+    new Dialogs( this, controllers, model_, staticModel, publisher, profile );
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );

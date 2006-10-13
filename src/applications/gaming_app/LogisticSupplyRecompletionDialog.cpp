@@ -15,7 +15,6 @@
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
 #include "gaming/Equipments.h"
-#include "gaming/MagicOrders.h"
 #include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
@@ -25,6 +24,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Profile_ABC.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -81,11 +81,12 @@ private:
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, const kernel::Profile_ABC& profile )
     : QDialog( parent, "Recompletement" )
     , controllers_( controllers )
     , publisher_( publisher )
     , static_( staticModel )
+    , profile_( profile )
     , selected_( controllers )
 {
     setCaption( tr( "Recompletement" ) );
@@ -730,9 +731,10 @@ void LogisticSupplyRecompletionDialog::OnStockChanged( int nRow, int nCol )
 // -----------------------------------------------------------------------------
 void LogisticSupplyRecompletionDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    if( !agent.Retrieve< MagicOrders >() )
-        return;
-    selected_ = &agent;
-    QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
-    subMenu->insertItem( tr( "Recompletement partiel" ), this, SLOT( Show() ) );
+    if( profile_.CanDoMagic( agent ) )
+    {
+        selected_ = &agent;
+        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+        subMenu->insertItem( tr( "Recompletement partiel" ), this, SLOT( Show() ) );
+    }
 }

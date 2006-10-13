@@ -20,6 +20,7 @@ namespace kernel
 {
     class Team_ABC;
     class Controllers;
+    class Profile_ABC;
 }
 
 class Publisher_ABC;
@@ -37,7 +38,7 @@ class ChangeDiplomacyDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher );
+             ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile );
     virtual ~ChangeDiplomacyDialog();
     //@}
 
@@ -68,6 +69,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    const kernel::Profile_ABC& profile_;
+
     gui::ValuedComboBox< unsigned long >*      pArmy1ComboBox_;
     gui::ValuedComboBox< unsigned long >*      pArmy2ComboBox_;
     gui::ValuedComboBox<ASN1T_EnumDiplomatie>* pDiplomacyComboBox_;

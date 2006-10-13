@@ -17,6 +17,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Controllers;
+    class Profile_ABC;
 }
 
 class StaticModel;
@@ -37,7 +38,7 @@ class LogisticSupplyRecompletionDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel );
+             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
@@ -107,6 +108,8 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const StaticModel& static_;
+    const kernel::Profile_ABC& profile_;
+
     kernel::SafePointer< kernel::Agent_ABC > selected_;
 
     QTable*          equipmentsTable_;

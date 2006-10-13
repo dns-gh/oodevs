@@ -64,7 +64,7 @@ MagicOrdersInterface::~MagicOrdersInterface()
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    if( !profile_.CanBeOrdered( agent ) )
+    if( !profile_.CanDoMagic( agent ) )
         return;
 
     selectedEntity_ = &agent;
@@ -92,8 +92,9 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
 {
-    if( !profile_.CanBeOrdered( agent ) )
+    if( !profile_.CanDoMagic( agent ) )
         return;
+
     selectedEntity_ = &agent;
     QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
     AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
@@ -111,8 +112,9 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, 
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, ContextMenu& menu )
 {   
-    if( !profile_.CanBeOrdered( group ) )
+    if( !profile_.CanDoMagic( group ) )
         return;
+
     selectedEntity_ = &group;
     QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
     FillCommonOrders( magicMenu );
@@ -124,8 +126,9 @@ void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, C
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
-    if( !profile_.CanBeOrdered( team ) )
+    if( !profile_.CanDoMagic( team ) )
         return;
+
     selectedEntity_ = &team;
     QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
     FillCommonOrders( magicMenu );

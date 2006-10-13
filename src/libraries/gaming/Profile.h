@@ -64,6 +64,7 @@ public:
     //@{
     virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -109,6 +110,7 @@ private:
     mutable std::string login_;
     mutable std::string password_;
     bool loggedIn_;
+    bool supervision_;
     bool firstTicked_;
 
     T_Entities readEntities_;

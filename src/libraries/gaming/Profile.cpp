@@ -30,6 +30,7 @@ Profile::Profile( Controllers& controllers )
     , login_( "test" )
     , password_( "cock" )
     , loggedIn_( false )
+    , supervision_( false )
     , firstTicked_( false )
 {
     controllers_.Register( *this );
@@ -104,6 +105,8 @@ void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
         if( message.profile.m.read_write_populationsPresent )
             ReadList( message.profile.read_write_populations, writePopulations_ );
 
+        supervision_ = message.profile.superviseur;
+
         controller_.Update( *(Profile_ABC*)this );
     };
     controller_.Update( *this );
@@ -134,6 +137,15 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity, readWriteEntities_, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::CanDoMagic
+// Created: AGE 2006-10-13
+// -----------------------------------------------------------------------------
+bool Profile::CanDoMagic( const kernel::Entity_ABC& entity ) const
+{
+    return supervision_ && CanBeOrdered( entity );
 }
 
 // -----------------------------------------------------------------------------
