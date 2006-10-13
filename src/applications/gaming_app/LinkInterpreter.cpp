@@ -37,7 +37,7 @@ LinkInterpreter::~LinkInterpreter()
 
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter::NotifyCreated
-// Created: SBO 2006-10-12
+// Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
 void LinkInterpreter::NotifyCreated( const kernel::Entity_ABC& entity )
 {
@@ -46,9 +46,117 @@ void LinkInterpreter::NotifyCreated( const kernel::Entity_ABC& entity )
     
 // -----------------------------------------------------------------------------
 // Name: LinkInterpreter::NotifyDeleted
-// Created: SBO 2006-10-12
+// Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
 void LinkInterpreter::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     RemoveEntity( entity.GetTypeName(), entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyCreated
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyCreated( const kernel::Agent_ABC& entity )
+{
+    NotifyCreated( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyDeleted
+// Created: SBO 2006-10-12
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyDeleted( const kernel::Agent_ABC& entity )
+{
+    NotifyDeleted( (const Entity_ABC&)entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyCreated
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyCreated( const kernel::Population_ABC& entity )
+{
+    NotifyCreated( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyDeleted
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyDeleted( const kernel::Population_ABC& entity )
+{
+    NotifyDeleted( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyCreated
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyCreated( const kernel::Object_ABC& entity )
+{
+    NotifyCreated( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyDeleted
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyDeleted( const kernel::Object_ABC& entity )
+{
+    NotifyDeleted( (const Entity_ABC&)entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyCreated
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyCreated( const AgentKnowledge& entity )
+{
+    NotifyCreated( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyDeleted
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyDeleted( const AgentKnowledge& entity )
+{
+    NotifyDeleted( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyCreated
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyCreated( const ObjectKnowledge& entity )
+{
+    NotifyCreated( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyDeleted
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyDeleted( const ObjectKnowledge& entity )
+{
+    NotifyDeleted( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyCreated
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyCreated( const PopulationKnowledge& entity )
+{
+    NotifyCreated( (const Entity_ABC&)entity );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: LinkInterpreter::NotifyDeleted
+// Created: SBO 2006-10-13
+// -----------------------------------------------------------------------------
+void LinkInterpreter::NotifyDeleted( const PopulationKnowledge& entity )
+{
+    NotifyDeleted( (const Entity_ABC&)entity );
 }
