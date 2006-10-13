@@ -32,7 +32,6 @@ public:
     //@{
     QString GetName() const;
     QString GetValue() const;
-    static Diplomacy Unknown();
     static Diplomacy Friend ();
     static Diplomacy Enemy  ();
     static Diplomacy Neutral();
@@ -51,7 +50,6 @@ private:
 private:
     //! @name Static members
     //@{
-    static Diplomacy unknown_;
     static Diplomacy friend_;
     static Diplomacy enemy_;
     static Diplomacy neutral_;

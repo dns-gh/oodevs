@@ -11,7 +11,6 @@
 #include "Diplomacy.h"
 #include "clients_gui/Tools.h"
 
-Diplomacy Diplomacy::unknown_( "unknown", tools::translate( "Preparation", "inconnu" ) );
 Diplomacy Diplomacy::friend_ ( "friend" , tools::translate( "Preparation", "ami"     ) );
 Diplomacy Diplomacy::enemy_  ( "enemy"  , tools::translate( "Preparation", "ennemi"  ) );
 Diplomacy Diplomacy::neutral_( "neutral", tools::translate( "Preparation", "neutre"  ) );
@@ -21,8 +20,8 @@ Diplomacy Diplomacy::neutral_( "neutral", tools::translate( "Preparation", "neut
 // Created: SBO 2006-09-07
 // -----------------------------------------------------------------------------
 Diplomacy::Diplomacy()
-    : value_( unknown_.value_ )
-    , name_( unknown_.name_ )
+    : value_( neutral_.value_ )
+    , name_( neutral_.name_ )
 {
     // NOTHING
 }
@@ -77,15 +76,6 @@ QString Diplomacy::GetValue() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Diplomacy::Unknown
-// Created: SBO 2006-09-07
-// -----------------------------------------------------------------------------
-Diplomacy Diplomacy::Unknown()
-{
-    return unknown_;
-}
-    
-// -----------------------------------------------------------------------------
 // Name: Diplomacy::Friend
 // Created: SBO 2006-09-07
 // -----------------------------------------------------------------------------
@@ -133,7 +123,5 @@ Diplomacy Diplomacy::Resolve( const QString& value )
         return friend_;
     if( value == enemy_.value_ )
         return enemy_;
-    if( value == neutral_.value_ )
-        return neutral_;
-    return unknown_;
+    return neutral_;
 }

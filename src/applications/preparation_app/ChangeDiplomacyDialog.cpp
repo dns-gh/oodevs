@@ -24,7 +24,6 @@ namespace
     DiplomacyCell* BuildDiplomacyCell( QTable* table, const QStringList& list )
     {
         DiplomacyCell* cell = new DiplomacyCell( table, list );
-        cell->SetColor( Diplomacy::Unknown(), QColor( 255, 255, 200 ) );
         cell->SetColor( Diplomacy::Friend() , QColor( 200, 200, 255 ) );
         cell->SetColor( Diplomacy::Enemy()  , QColor( 255, 200, 200 ) );
         cell->SetColor( Diplomacy::Neutral(), QColor( 200, 255, 200 ) );
@@ -59,7 +58,6 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& cont
     okBtn->setMaximumWidth( 100 );
     cancelBtn->setMaximumWidth( 100 );
 
-    list_.append( Diplomacy::Unknown().GetName() );
     list_.append( Diplomacy::Friend().GetName() );
     list_.append( Diplomacy::Enemy().GetName() );
     list_.append( Diplomacy::Neutral().GetName() );

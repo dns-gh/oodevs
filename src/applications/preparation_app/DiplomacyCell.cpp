@@ -67,7 +67,7 @@ Diplomacy DiplomacyCell::GetValue() const
     std::map< const QString, Diplomacy >::const_iterator it = diplomacies_.find( QTableItem::text() );
     if( it != diplomacies_.end() )
         return it->second;
-    return Diplomacy::Unknown();
+    return Diplomacy::Neutral();
 }
 
 // -----------------------------------------------------------------------------
