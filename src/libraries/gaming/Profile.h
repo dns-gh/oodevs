@@ -13,6 +13,7 @@
 #include "ASN_Types.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "Simulation.h"
 
 namespace kernel
 {
@@ -21,6 +22,7 @@ namespace kernel
     class Automat_ABC;
     class Team_ABC;
     class Population_ABC;
+    class CommunicationHierarchies; // $$$$ AGE 2006-10-13: should be tactical
 }
 
 class Publisher_ABC;
@@ -36,7 +38,7 @@ class Profile : public kernel::Profile_ABC
               , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
               , public kernel::ElementObserver_ABC< kernel::Population_ABC >
               , public kernel::ElementObserver_ABC< kernel::Team_ABC >
-                
+              , public kernel::ElementObserver_ABC< Simulation::sEndTick >
 {
 
 public:
@@ -77,6 +79,7 @@ private:
     typedef T_Ids::const_iterator        CIT_Ids;
 
     typedef std::set< const kernel::Entity_ABC* > T_Entities;
+    typedef T_Entities::const_iterator          CIT_Entities;
     //@}
 
     //! @name Helpers
@@ -89,9 +92,13 @@ private:
     virtual void NotifyDeleted( const kernel::Population_ABC& popu );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
+
+    virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
+    
     void Add   ( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
-    static bool IsPresent( const kernel::Entity_ABC* entity, const T_Entities& entities );
+    static bool IsInHierarchy( const kernel::Entity_ABC& entity, const T_Entities& entities, bool childOnly );
+    static bool IsInHierarchy( const kernel::Entity_ABC& entity, const kernel::CommunicationHierarchies& hierarchy, const kernel::Entity_ABC& other, bool childOnly );
     //@}
 
 private:
@@ -102,6 +109,7 @@ private:
     mutable std::string login_;
     mutable std::string password_;
     bool loggedIn_;
+    bool firstTicked_;
 
     T_Entities readEntities_;
     T_Entities readWriteEntities_;

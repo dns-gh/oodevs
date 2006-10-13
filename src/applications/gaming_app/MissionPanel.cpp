@@ -17,6 +17,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/FragOrder.h"
+#include "clients_kernel/Profile_ABC.h"
 
 #include "gaming/Decisions.h"
 #include "gaming/AutomatDecisions.h"
@@ -38,7 +39,7 @@ using namespace gui;
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools )
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile )
     : QDockWindow       ( pParent )
     , controllers_      ( controllers )
     , static_           ( model )
@@ -46,6 +47,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , layer_            ( layer )
     , converter_        ( static_.coordinateConverter_ )
     , tools_            ( tools )
+    , profile_          ( profile )
     , pMissionInterface_( 0 )
     , selectedEntity_   ( controllers )
 {
@@ -74,9 +76,12 @@ MissionPanel::~MissionPanel()
 // -----------------------------------------------------------------------------
 void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    selectedEntity_ = &agent;
-    if( const Decisions* decisions = agent.Retrieve< Decisions >() )
-        AddAgentMissions( *decisions, menu );
+    if( profile_.CanBeOrdered( agent ) )
+    {
+        selectedEntity_ = &agent;
+        if( const Decisions* decisions = agent.Retrieve< Decisions >() )
+            AddAgentMissions( *decisions, menu );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -85,11 +90,12 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu 
 // -----------------------------------------------------------------------------
 void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
 {
-    selectedEntity_ = &agent;
-    if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
+    if( profile_.CanBeOrdered( agent ) )
     {
-        AddAutomatMissions( *decisions, menu );
-        if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
+        selectedEntity_ = &agent;
+        const AutomatDecisions& decisions = agent.Get< AutomatDecisions >();
+        AddAutomatMissions( decisions, menu );
+        if( ! decisions.IsEmbraye() )
             menu.InsertItem( "Commande", tr( "Embrayer" ), this, SLOT( Engage() ) );
         else
             menu.InsertItem( "Commande", tr( "Debrayer" ), this, SLOT( Disengage() ) );
@@ -231,18 +237,21 @@ void MissionPanel::ActivateFragOrder( int id )
 // -----------------------------------------------------------------------------
 void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& menu )
 {
-    selectedEntity_ = &agent;
-    if( const PopulationDecisions* decisions = agent.Retrieve< PopulationDecisions >() )
+    if( profile_.CanBeOrdered( agent ) )
     {
-        QPopupMenu& missions = *new QPopupMenu( menu );
-        Iterator< const Mission& > it = decisions->GetMissions();
-        while( it.HasMoreElements() )
+        selectedEntity_ = &agent;
+        if( const PopulationDecisions* decisions = agent.Retrieve< PopulationDecisions >() )
         {
-            const Mission& mission = it.NextElement();
-            int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
-            missions.setItemParameter( nId, mission.GetId() );
+            QPopupMenu& missions = *new QPopupMenu( menu );
+            Iterator< const Mission& > it = decisions->GetMissions();
+            while( it.HasMoreElements() )
+            {
+                const Mission& mission = it.NextElement();
+                int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
+                missions.setItemParameter( nId, mission.GetId() );
+            }
+            menu.InsertItem( "Ordre", tr( "Missions Population" ), &missions  );
         }
-        menu.InsertItem( "Ordre", tr( "Missions Population" ), &missions  );
     }
 }
 

@@ -12,7 +12,6 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 
@@ -22,7 +21,9 @@ namespace kernel
     class Agent_ABC;
     class KnowledgeGroup_ABC;
     class Team_ABC;
+    class Automat_ABC;
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -45,7 +46,7 @@ class MagicOrdersInterface : public QObject
                            , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                           , public kernel::OptionsObserver_ABC
+                           , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                            , public gui::ShapeHandler_ABC
                            , private kernel::LocationVisitor_ABC
 {
@@ -54,7 +55,7 @@ class MagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, gui::ParametersLayer& layer );
+             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~MagicOrdersInterface();
     //@}
 
@@ -63,7 +64,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void Handle( kernel::Location_ABC& location );
     //@}
 
@@ -104,10 +105,8 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     const StaticModel& static_;
-    bool controller_;
-    kernel::SafePointer< kernel::Agent_ABC > selectedAgent_;
-    kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedGroup_;
-    kernel::SafePointer< kernel::Team_ABC > selectedTeam_;
+    const kernel::Profile_ABC& profile_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;
     gui::LocationCreator* magicMoveLocation_;
     //@}

@@ -33,8 +33,8 @@ class Automat
 public:
     //! @name Constructors/Destructor
     //@{
-    Automat( Model& model, const ASN1T_MsgAutomateCreation& msg );
-    ~Automat();
+             Automat( Model& model, const ASN1T_MsgAutomateCreation& msg );
+    virtual ~Automat();
     //@}
 
     //! @name Accessors

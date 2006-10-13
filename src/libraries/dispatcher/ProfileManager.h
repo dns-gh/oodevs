@@ -19,7 +19,7 @@ class Profile;
 
 // =============================================================================
 /** @class  ProfileManager
-    @brief  ProfilerManager
+    @brief  Profile manager
 */
 // Created: NLD 2006-09-19
 // =============================================================================
@@ -28,7 +28,7 @@ class ProfileManager
 public:
     //! @name Constructors/Destructor
     //@{
-    ProfileManager( Dispatcher& dispatcher, const std::string& strFile );
+             ProfileManager( Dispatcher& dispatcher, const std::string& strFile );
     virtual ~ProfileManager();
     //@}
 

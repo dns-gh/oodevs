@@ -12,13 +12,12 @@
 
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
     class Controllers;
     class Population_ABC;
-    class Team_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -34,8 +33,8 @@ namespace gui
 class PopulationListView : public QListView
                          , public kernel::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::Population_ABC >
+                         , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
                          , public kernel::SelectionObserver< kernel::Population_ABC >
-                         , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
@@ -67,7 +66,7 @@ private:
     virtual void NotifyCreated( const kernel::Population_ABC& popu );
     virtual void NotifyDeleted( const kernel::Population_ABC& popu );
     virtual void NotifySelected( const kernel::Population_ABC* popu );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     //@}
 
 private:
@@ -75,8 +74,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    QPopupMenu* pPopupMenu_;
-    const kernel::Team_ABC* currentTeam_;
+    const kernel::Profile_ABC* profile_;
     //@}
 };
 

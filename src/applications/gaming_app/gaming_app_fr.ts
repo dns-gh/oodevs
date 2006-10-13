@@ -968,6 +968,10 @@
         <source>R&#xe9;cup&#xe9;rer transporteurs</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Se rendre</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

@@ -10,19 +10,23 @@
 #include "gaming_app_pch.h"
 #include "MagicOrdersInterface.h"
 #include "moc_MagicOrdersInterface.cpp"
-#include "clients_kernel/Controllers.h"
-#include "gaming/StaticModel.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "gaming/MagicOrders.h"
-#include "clients_kernel/OptionVariant.h"
-#include "gaming/ASN_Messages.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
+
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Profile_ABC.h"
+
+#include "gaming/StaticModel.h"
+#include "gaming/MagicOrders.h"
+#include "gaming/AutomatDecisions.h"
+#include "gaming/ASN_Messages.h"
 
 using namespace kernel;
 using namespace gui;
@@ -31,15 +35,13 @@ using namespace gui;
 // Name: MagicOrdersInterface constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, ParametersLayer& layer )
+MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, ParametersLayer& layer, const kernel::Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
     , publisher_( publisher )
     , static_( staticModel )
-    , selectedAgent_( controllers )
-    , selectedGroup_( controllers )
-    , selectedTeam_( controllers )
-    , controller_( true )
+    , profile_( profile )
+    , selectedEntity_( controllers )
     , magicMove_( false )
 {
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
@@ -62,27 +64,22 @@ MagicOrdersInterface::~MagicOrdersInterface()
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
-    if( !controller_ )
+    if( !profile_.CanBeOrdered( agent ) )
         return;
 
-    selectedAgent_ = &agent;
-    selectedGroup_ = 0;
+    selectedEntity_ = &agent;
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
         QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
 
         int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
-//        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() ); // $$$$ AGE 2006-10-06: 
+        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() ); // $$$$ AGE 2006-10-06: 
         AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
         AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
         AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
         AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
         AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
         AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
-
-        // $$$$ AGE 2006-10-06: 
-//        if( orders->CanSurrender() )
-//            AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
 
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
@@ -91,15 +88,32 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::NotifyContextMenu
+// Created: AGE 2006-10-13
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu )
+{
+    if( !profile_.CanBeOrdered( agent ) )
+        return;
+    selectedEntity_ = &agent;
+    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+    AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
+    int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
+    bool bMoveAllowed = false;
+    if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
+        bMoveAllowed = decisions->IsEmbraye();
+    magicMenu->setItemEnabled( moveId, bMoveAllowed ); // $$$$ AGE 2006-10-06: 
+    FillCommonOrders( magicMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, ContextMenu& menu )
 {   
-    if( !controller_ )
+    if( !profile_.CanBeOrdered( group ) )
         return;
-    selectedAgent_ = 0;
-    selectedGroup_ = &group;
-    selectedTeam_ = 0;
+    selectedEntity_ = &group;
     QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
     FillCommonOrders( magicMenu );
 } 
@@ -110,11 +124,9 @@ void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, C
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
-    if( !controller_ )
+    if( !profile_.CanBeOrdered( team ) )
         return;
-    selectedAgent_ = 0;
-    selectedGroup_ = 0;
-    selectedTeam_ = &team;
+    selectedEntity_ = &team;
     QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
     FillCommonOrders( magicMenu );
 }
@@ -130,16 +142,6 @@ void MagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
     AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
     AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
     AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MagicOrdersInterface::OptionChanged
-// Created: AGE 2006-04-28
-// -----------------------------------------------------------------------------
-void MagicOrdersInterface::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "CurrentTeam" )
-        controller_ = value.To< const Team_ABC* >() == 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -203,22 +205,9 @@ namespace
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::Magic( int type )
 {
-    if( selectedAgent_ )
-    {
-        MagicFunctor functor( publisher_, type );
-        functor( *selectedAgent_ );
-        selectedAgent_ = 0;
-    } 
-    else if( selectedGroup_ )
-    {
-        ApplyOnHierarchy( *selectedGroup_, type );
-        selectedGroup_ = 0;
-    }
-    else if( selectedTeam_ )
-    {
-        ApplyOnHierarchy( *selectedTeam_, type );
-        selectedTeam_ = 0;
-    }
+    if( selectedEntity_ )
+        ApplyOnHierarchy( *selectedEntity_, type );
+    selectedEntity_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -237,8 +226,8 @@ void MagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entity, i
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::DestroyComponent()
 {
-    if( selectedAgent_ )
-        publisher_.SendMagicDestruction( *selectedAgent_ ); // $$$$ SBO 2006-07-06: 
+    if( selectedEntity_ )
+        publisher_.SendMagicDestruction( *selectedEntity_ ); // $$$$ SBO 2006-07-06: 
 }
     
 // -----------------------------------------------------------------------------
@@ -272,14 +261,17 @@ void MagicOrdersInterface::Handle( Location_ABC& location )
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
 {
-    ASN_MsgUnitMagicAction message;
-    message.GetAsnMsg().oid = selectedAgent_->GetId();
-    message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
+    if( selectedEntity_ )
+    {
+        ASN_MsgUnitMagicAction message;
+        message.GetAsnMsg().oid = selectedEntity_->GetId();
+        message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
 
-    ASN1T_CoordUTM utm;
-    utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
-    message.GetAsnMsg().action.u.move_to = &utm;
-    message.Send( publisher_, 56 );
+        ASN1T_CoordUTM utm;
+        utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
+        message.GetAsnMsg().action.u.move_to = &utm;
+        message.Send( publisher_, 56 );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -288,10 +280,10 @@ void MagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::Surrender()
 {
-    if( selectedAgent_ )
+    if( selectedEntity_ )
     {
         ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid      = selectedAgent_->GetId();
+        asnMsg.GetAsnMsg().oid      = selectedEntity_->GetId();
         asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_se_rendre;
         asnMsg.Send( publisher_ );
     }
@@ -303,10 +295,10 @@ void MagicOrdersInterface::Surrender()
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::RecoverHumanTransporters()
 {
-    if( selectedAgent_ )
+    if( selectedEntity_ )
     {
         ASN_MsgUnitMagicAction asnMsg;
-        asnMsg.GetAsnMsg().oid      = selectedAgent_ ->GetId();
+        asnMsg.GetAsnMsg().oid      = selectedEntity_ ->GetId();
         asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_recuperer_transporteurs;
         asnMsg.Send( publisher_ );
     }

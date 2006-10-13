@@ -32,8 +32,8 @@ class Profile
 public:
     //! @name Constructors/Destructor
     //@{
-     Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xistream& xis );
-    ~Profile();
+             Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xistream& xis );
+    virtual ~Profile();
     //@}
 
     //! @name Main

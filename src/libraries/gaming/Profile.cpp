@@ -12,7 +12,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h" // $$$$ AGE 2006-10-13: Should be TacticalHierarchies
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -30,6 +30,7 @@ Profile::Profile( Controllers& controllers )
     , login_( "test" )
     , password_( "cock" )
     , loggedIn_( false )
+    , firstTicked_( false )
 {
     controllers_.Register( *this );
 }
@@ -102,6 +103,7 @@ void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
             ReadList( message.profile.read_only_populations, readPopulations_ );
         if( message.profile.m.read_write_populationsPresent )
             ReadList( message.profile.read_write_populations, writePopulations_ );
+
         controller_.Update( *(Profile_ABC*)this );
     };
     controller_.Update( *this );
@@ -122,8 +124,7 @@ bool Profile::IsLoggedIn() const
 // -----------------------------------------------------------------------------
 bool Profile::IsVisible( const Entity_ABC& entity ) const
 {
-    return true;
-//    return IsPresent( &entity, readEntities_ );
+    return IsInHierarchy( entity, readEntities_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,22 +133,39 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::CanBeOrdered( const Entity_ABC& entity ) const
 {
-    return true;
-//    return IsPresent( &entity, readWriteEntities_ );
+    return IsInHierarchy( entity, readWriteEntities_, true );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Profile::IsPresent
+// Name: Profile::IsInHierarchy
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-bool Profile::IsPresent( const Entity_ABC* entity, const T_Entities& entities )
+bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entities, bool childOnly )
 {
-    if( ! entity )
-        return false;
-    if( entities.find( entity ) != entities.end() )
+    if( entities.find( &entity ) != entities.end() )
         return true;
-    const TacticalHierarchies* hierarchies = entity->Retrieve< TacticalHierarchies >();
-    return hierarchies && IsPresent( hierarchies->GetSuperior(), entities );
+    if( const CommunicationHierarchies* hierarchies = entity.Retrieve< CommunicationHierarchies >() )
+        for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
+        {
+            const Entity_ABC& possibleSuperior = **it;
+            if( IsInHierarchy( entity, *hierarchies, possibleSuperior, childOnly ) )
+                return true;
+        }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsInHierarchy
+// Created: AGE 2006-10-13
+// -----------------------------------------------------------------------------
+bool Profile::IsInHierarchy( const Entity_ABC& entity, const CommunicationHierarchies& hierarchy, const Entity_ABC& other, bool childOnly )
+{
+    if( hierarchy.IsSubordinateOf( other ) )
+        return true;
+    if( childOnly )
+        return false;
+    const CommunicationHierarchies* otherHierarchies = other.Retrieve< CommunicationHierarchies >();
+    return otherHierarchies && otherHierarchies->IsSubordinateOf( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -213,6 +231,7 @@ void Profile::Add( const Entity_ABC& entity, const T_Ids& readIds, const T_Ids& 
     const unsigned long id = entity.GetId();
     const bool canBeOrdered = std::find( readWriteIds.begin(), readWriteIds.end(), id ) != readWriteIds.end();
     const bool isVisible    = canBeOrdered  || std::find( readIds.begin(), readIds.end(), id ) != readIds.end();
+
     if( canBeOrdered )
         readWriteEntities_.insert( &entity );
     if( isVisible )
@@ -227,4 +246,18 @@ void Profile::Remove( const Entity_ABC& entity )
 {
     readEntities_.erase( &entity );
     readWriteEntities_.erase( &entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyUpdated
+// Created: AGE 2006-10-13
+// -----------------------------------------------------------------------------
+void Profile::NotifyUpdated( const Simulation::sEndTick& endTick )
+{
+    // $$$$ AGE 2006-10-13: pas terrible...
+    if( ! firstTicked_ )
+    {
+        firstTicked_ = true;
+        controller_.Update( *(Profile_ABC*)this );
+    }
 }

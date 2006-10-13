@@ -279,7 +279,7 @@ enum E_UnitMagicAction
 // Name: AgentServerMsgMgr::SendMagicDestruction
 // Created: SBO 2006-07-06
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::SendMagicDestruction( const Agent_ABC& agent )
+void AgentServerMsgMgr::SendMagicDestruction( const Entity_ABC& agent )
 {
     DIN_BufferedMessage dinMsg = BuildMessage();
     dinMsg << agent.GetId();

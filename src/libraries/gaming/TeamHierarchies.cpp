@@ -26,7 +26,7 @@ TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& hold
     , holder_( holder )
     , factory_( factory )
 {
-    controller_.Create( *(CommunicationHierarchies*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& hold
 // -----------------------------------------------------------------------------
 TeamHierarchies::~TeamHierarchies()
 {
-    controller_.Delete( *(CommunicationHierarchies*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

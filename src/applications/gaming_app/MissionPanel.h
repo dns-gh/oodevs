@@ -25,6 +25,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class GlTools_ABC;
     class Mission;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -57,7 +58,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+    MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile );
     virtual ~MissionPanel();
     //@}
 
@@ -107,6 +108,7 @@ private:
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::GlTools_ABC& tools_;
+    const kernel::Profile_ABC& profile_;
 
     AgentKnowledgeConverter_ABC* knowledgeConverter_;
     ObjectKnowledgeConverter_ABC* objectKnowledgeConverter_;

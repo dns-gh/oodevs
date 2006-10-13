@@ -96,7 +96,7 @@ void Application::Initialize( int argc, char** argv )
     staticModel_ = new StaticModel( *controllers_ );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr() );
     network_->GetMessageMgr().SetModel( *model_ );
-    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_ );
+    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_, *profile_ );
 
     if( bfs::exists( bfs::path( conffile, bfs::native ) ) )
         mainWindow_->Load( conffile );

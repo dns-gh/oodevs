@@ -10,8 +10,8 @@
 #include "gaming_pch.h"
 #include "MagicOrders.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "AutomatDecisions.h"
 #include "clients_kernel/Controller.h"
+#include "Decisions.h"
 
 using namespace kernel;
 
@@ -52,4 +52,13 @@ void MagicOrders::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 bool MagicOrders::CanRetrieveTransporters() const
 {
     return ! transportersReady_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrders::CanMagicMove
+// Created: AGE 2006-10-13
+// -----------------------------------------------------------------------------
+bool MagicOrders::CanMagicMove() const
+{
+    return ! agent_.Get< Decisions >().IsEmbraye();
 }

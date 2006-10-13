@@ -10,7 +10,6 @@
             </readonly>
             
             <readwrite>
-                <automat id="5000001"/>
                 <automat id="5000000"/>
                 <automat id="1458"/>                    
             </readwrite>

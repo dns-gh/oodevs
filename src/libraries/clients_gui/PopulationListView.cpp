@@ -9,16 +9,15 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationListView.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/OptionVariant.h"
-#include "ItemFactory_ABC.h"
-#include "ValuedListItem.h"
 
 #include "moc_PopulationListView.cpp"
+
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "ItemFactory_ABC.h"
+#include "ValuedListItem.h"
 
 using namespace kernel;
 using namespace gui;
@@ -31,8 +30,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controllers& controlle
     : QListView   ( pParent )
     , controllers_( controllers )
     , factory_( factory )
-    , pPopupMenu_ ( 0 )
-    , currentTeam_( 0 )
+    , profile_( 0 )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Populations" ) );
@@ -143,17 +141,12 @@ void PopulationListView::NotifySelected( const Population_ABC* popu )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationListView::OptionChanged
-// Created: AGE 2006-03-27
+// Name: PopulationListView::NotifyUpdated
+// Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
-void PopulationListView::OptionChanged( const std::string& name, const OptionVariant& value )
+void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team_ABC* >();
-    ValuedListItem* item = (ValuedListItem*)( firstChild() );
-    while( item )
-    {
-        item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
-        item = (ValuedListItem*)( item->nextSibling() );
-    }
+    profile_ = &profile;
+    // $$$$ AGE 2006-10-13: Should be a HierarchyListView...
 }
+

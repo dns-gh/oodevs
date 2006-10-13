@@ -103,7 +103,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& profile )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_( controllers )
     , staticModel_( staticModel )
@@ -172,7 +172,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_ );
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_ );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
@@ -200,7 +200,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     
-    new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer );
+    new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
     new SIMControlToolbar( this, controllers, network, publisher );
     new MapToolbar( this, controllers );
     new ControllerToolbar( this, controllers );

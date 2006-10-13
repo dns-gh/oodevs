@@ -21,7 +21,7 @@ namespace kernel
 
 // =============================================================================
 /** @class  MagicOrders
-    @brief  MagicOrders
+    @brief  MagicOrders. Pas terrible
 */
 // Created: AGE 2006-04-28
 // =============================================================================
@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     bool CanRetrieveTransporters() const;
+    bool CanMagicMove() const;
     //@}
 
 private:

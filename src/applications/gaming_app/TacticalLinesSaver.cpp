@@ -11,6 +11,13 @@
 #include "TacticalLinesSaver.h"
 #include "gaming/LimitsModel.h"
 
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
+namespace bfs = boost::filesystem;
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesSaver constructor
 // Created: AGE 2006-09-20
@@ -68,7 +75,9 @@ void TacticalLinesSaver::LoadLimits()
 {
     try
     {
-        model_.Load( "TacticalLines.xml" );
+        const std::string filename( "TacticalLines.xml" );
+        if( bfs::exists( bfs::path( filename, bfs::native ) ) )
+            model_.Load( filename );
     }
     catch( ... )
     {

@@ -18,6 +18,7 @@ namespace kernel
 {
     class Options;
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -71,7 +72,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Network& network );
+    MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& profile );
     virtual ~MainWindow();
     //@}
 

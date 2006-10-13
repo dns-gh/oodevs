@@ -69,7 +69,7 @@ public:
     void Flush();
 
     virtual void Send( ASN1T_MsgsOutClient& message );
-    virtual void SendMagicDestruction( const kernel::Agent_ABC& agent );
+    virtual void SendMagicDestruction( const kernel::Entity_ABC& agent );
 
     DIN::DIN_BufferedMessage BuildMessage();
     void SendMsgOutClient           ( ASN1OCTET* pMsg, int nMsgLength );

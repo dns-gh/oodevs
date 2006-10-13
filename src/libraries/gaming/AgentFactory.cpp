@@ -116,6 +116,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
 
     result->Update( asnMsg );
+    result->Polish();
     
     return result;
 }

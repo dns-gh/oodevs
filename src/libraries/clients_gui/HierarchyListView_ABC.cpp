@@ -63,8 +63,8 @@ HierarchyListView_ABC::~HierarchyListView_ABC()
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy )
 {   
-    const Entity_ABC& entity = hierarchy.GetEntity();
-    Display( entity, FindOrCreate( &entity ) );
+    // $$$$ AGE 2006-10-13: never happens...
+    NotifyUpdated( hierarchy );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,8 +74,7 @@ void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy 
 void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy )
 {
     const Entity_ABC& entity = hierarchy.GetEntity();
-    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
-        Display( entity, item );
+    Display( entity, FindOrCreate( &entity ) );
 }   
 
 // -----------------------------------------------------------------------------
@@ -84,6 +83,7 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy 
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyDeleted( const kernel::Hierarchies& hierarchy )
 {
+    // $$$$ AGE 2006-10-13: never happens...
     const Entity_ABC& entity = hierarchy.GetEntity();
     delete FindItem( &entity, firstChild() );
 }
@@ -112,11 +112,15 @@ ValuedListItem* HierarchyListView_ABC::FindOrCreate( const Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
+    const bool isVisible = ! profile_ || profile_->IsVisible( entity );
     item->SetNamed( entity );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
-        DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
+    item->setVisible( isVisible );
+    if( isVisible )
+        if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
+            DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
+    
 }
 
 // -----------------------------------------------------------------------------
@@ -260,5 +264,16 @@ void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
     profile_ = &profile;
-    // $$$$ AGE 2006-10-12: redraw
+    
+    ValuedListItem* item = (ValuedListItem*)( firstChild() );
+    while( item )
+    {
+        QListViewItem* next = item->nextSibling();
+        if( item->IsA< const Entity_ABC* >() )
+        {
+            const Entity_ABC& entity = *item->GetValue< const Entity_ABC* >();
+            Display( entity, item );
+        }
+        item = (ValuedListItem*)( next );
+    }
 }
