@@ -150,7 +150,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Attributs", "Etat opérationnel:" ),      nRawOpState_ * Units::percentage )
                 .Display( tools::translate( "Attributs", "Mort:" ),                   bDead_ )
                 .Display( tools::translate( "Attributs", "Neutralisé:" ),             bNeutralized_ )
-                .Display( tools::translate( "Attributs", "Vitesse:" ),                nSpeed_ * Units::metersPerSecond )
+                .Display( tools::translate( "Attributs", "Vitesse:" ),                nSpeed_ * Units::kilometersPerHour )
                 .Display( tools::translate( "Attributs", "Direction:" ),              nDirection_ * Units::degrees )
                 .Display( tools::translate( "Attributs", "Altitude:" ),               nAltitude_  * Units::meters )
                 .Display( tools::translate( "Attributs", "Troupes:" ),                bLoadingState_ ? tools::translate( "Attributs", "Embarqué" ) : tools::translate( "Attributs", "Débarqué" ) )

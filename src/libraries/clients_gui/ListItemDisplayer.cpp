@@ -62,8 +62,22 @@ Displayer_ABC& ListItemDisplayer::operator()( RichListItem* item )
 void ListItemDisplayer::Call( const QColor& color )
 {
     if( ! item_ )
-        throw std::runtime_error( "ListItemDisplayer : Item not set" );
+        throw std::runtime_error( __FUNCTION__ );
     item_->SetFontColor( color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListItemDisplayer::Call
+// Created: AGE 2006-10-16
+// -----------------------------------------------------------------------------
+void ListItemDisplayer::Call( const kernel::Styles::Style& style )
+{
+    if( ! item_ )
+        throw std::runtime_error( __FUNCTION__ );
+
+    QFont boldFont = item_->listView()->font();
+    boldFont.setBold( &style == &Styles::bold );
+    item_->SetFont( boldFont );
 }
 
 // -----------------------------------------------------------------------------

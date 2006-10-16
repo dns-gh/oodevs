@@ -43,6 +43,17 @@ LabelDisplayer::~LabelDisplayer()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LabelDisplayer::Call
+// Created: AGE 2006-10-16
+// -----------------------------------------------------------------------------
+void LabelDisplayer::Call( const Styles::Style& style )
+{
+    QFont boldFont = valueLabel_->font();
+    boldFont.setBold( &style == &Styles::bold );
+    valueLabel_->setFont( boldFont );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LabelDisplayer::SubItem
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------

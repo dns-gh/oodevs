@@ -390,12 +390,16 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ )
     // $$$$ AGE 2006-04-10: hard coded voodoo numbers
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = factor * 600.f * 0.062f;
+
+    const float y = where.Y() - deltaHeight;
+    const float x = where.X();
+    const float xdelta = h * halfWidth;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 3 );
         glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11: 
         glBegin( GL_LINES );
-            glVertex2f( where.X()     - halfWidth, where.Y() - deltaHeight );
-            glVertex2f( where.X() + h * halfWidth, where.Y() - deltaHeight);
+            glVertex2f( x - xdelta, y );
+            glVertex2f( x + xdelta, y );
         glEnd();
     glPopAttrib();
 }

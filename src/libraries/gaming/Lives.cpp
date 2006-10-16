@@ -40,10 +40,7 @@ void Lives::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& v
 {
     if( ! viewport.IsInside( where ) )
         return;
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( 1, 1, 1, 0.4f ); // $$$$ AGE 2006-10-06: jaune pour le pc embrayé ?
     tools.DrawLife( where, life_ );
-    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

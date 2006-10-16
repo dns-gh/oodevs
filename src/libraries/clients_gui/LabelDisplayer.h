@@ -11,6 +11,7 @@
 #define __LabelDisplayer_h_
 
 #include "BaseDisplayer.h"
+#include "clients_kernel/Styles.h"
 
 namespace gui
 {
@@ -24,6 +25,7 @@ namespace gui
 // Created: AGE 2006-02-09
 // =============================================================================
 class LabelDisplayer : public BaseDisplayer
+                     , public kernel::Caller< kernel::Styles::Style >
 {
 
 public:
@@ -51,6 +53,8 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
+
+    virtual void Call( const kernel::Styles::Style& );
     //@}
 
 private:

@@ -43,10 +43,7 @@ void AutomatLives::Draw( const geometry::Point2f& where, const geometry::Rectang
 {
     if( ! viewport.IsInside( where ) )
         return;
-    glPushAttrib( GL_CURRENT_BIT );
-    glColor4f( 1, 1, 0, 0.4f );
     tools.DrawLife( where, GetLife(), 2 );
-    glPopAttrib();
 }   
 
 // -----------------------------------------------------------------------------

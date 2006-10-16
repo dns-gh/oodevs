@@ -11,6 +11,7 @@
 #define __ListItemDisplayer_h_
 
 #include "BaseDisplayer.h"
+#include "clients_kernel/Styles.h"
 
 namespace gui
 {
@@ -24,6 +25,7 @@ namespace gui
 // =============================================================================
 class ListItemDisplayer : public BaseDisplayer
                         , public kernel::Caller< QColor >
+                        , public kernel::Caller< kernel::Styles::Style >
 {
 
 public:
@@ -56,6 +58,8 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const QColor& color );
+    virtual void Call( const kernel::Styles::Style& );
+
     virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );

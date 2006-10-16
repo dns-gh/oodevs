@@ -12,6 +12,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Styles.h"
 #include "Simulation.h"
 #include "Tools.h"
 
@@ -132,7 +133,7 @@ QColor Report_ABC::GetColor( E_Type type )
 void Report_ABC::Display( Displayer_ABC& displayer ) const
 {
     displayer.Display( 0, GetColor( eType_ ) );
+    displayer.Display( 0, bNew_ ? Styles::bold : Styles::weak );
     displayer.Display( tools::translate( "CR", "Reçu" ), QTime().addSecs( nTime_ ) );
     displayer.Display( tools::translate( "CR", "Compte-rendu" ), strTitle_ );
-    // $$$$ AGE 2006-07-03: bold si isNew !
 }
