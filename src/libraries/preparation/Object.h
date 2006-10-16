@@ -62,7 +62,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const kernel::Team_ABC& GetTeam() const;
     virtual kernel::ObjectType& GetType() const;
     //@}
     

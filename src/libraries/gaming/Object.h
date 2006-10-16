@@ -21,7 +21,6 @@
 namespace kernel
 {
     class Controller;
-    class Team_ABC;
     class ObjectType;
     class DotationType;
     class Displayer_ABC;
@@ -46,8 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( const ASN1T_MsgObjectCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver, const kernel::Resolver_ABC< kernel::ObjectType >& typeResolver,
-                     const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver );
+                     const kernel::Resolver_ABC< kernel::ObjectType >& typeResolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver );
     virtual ~Object();
     //@}
 
@@ -60,7 +58,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const kernel::Team_ABC& GetTeam() const; // $$$$ AGE 2006-10-16: remove
     virtual kernel::ObjectType& GetType() const;
     virtual QString GetTypeName() const;
     //@}
@@ -83,7 +80,6 @@ public:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::ObjectType&   type_;
-    kernel::Team_ABC&     team_;
 
     float rConstructionPercentage_;
     float rValorizationPercentage_;
