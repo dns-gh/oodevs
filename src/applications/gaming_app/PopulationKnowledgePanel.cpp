@@ -178,7 +178,8 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
 // -----------------------------------------------------------------------------
 void PopulationKnowledgePanel::Display( const PopulationKnowledge_ABC& knowledge, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! knowledge.KnowledgeIsInTeam( *owner_ ) )
+    // $$$$ AGE 2006-10-16: 
+//    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! knowledge.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &knowledge );
         knowledge.DisplayInList( displayer );

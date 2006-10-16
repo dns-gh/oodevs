@@ -125,24 +125,6 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::IsInTeam
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-bool ObjectKnowledge::IsInTeam( const Team_ABC& team ) const
-{
-    return & owner_ == & team;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::KnowledgeIsInTeam
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-bool ObjectKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
-{
-    return pRealObject_ && pRealObject_->Get< TacticalHierarchies >().IsSubordinateOf( team );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::GetName
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------

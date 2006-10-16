@@ -122,13 +122,14 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::Display( const ObjectKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
+    // $$$$ AGE 2006-10-16: 
+//    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &k );
         k.DisplayInList( displayer );
     }
-    else
-        delete item;
+//    else
+//        delete item;
 }
 
 // -----------------------------------------------------------------------------

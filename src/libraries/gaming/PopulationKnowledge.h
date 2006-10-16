@@ -52,8 +52,6 @@ public:
 
     void Display( kernel::Displayer_ABC& displayer ) const;
     void DisplayInList( kernel::Displayer_ABC& displayer ) const;
-    bool IsInTeam( const kernel::Team_ABC& team ) const;
-    bool KnowledgeIsInTeam( const kernel::Entity_ABC& team ) const;
 
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}

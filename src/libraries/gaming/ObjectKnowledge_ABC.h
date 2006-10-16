@@ -50,8 +50,6 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const = 0;
-    virtual bool IsInTeam( const kernel::Team_ABC& team ) const = 0;
-    virtual bool KnowledgeIsInTeam( const kernel::Team_ABC& team ) const = 0;
     //@}
 
     //! @name Operations

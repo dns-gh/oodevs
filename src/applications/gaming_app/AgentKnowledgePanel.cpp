@@ -136,13 +136,14 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::Display( const AgentKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
+    // $$$$ AGE 2006-10-16: 
+//    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &k );
         displayer.Display( "Agents connus", k.GetEntity() );
     }
-    else
-        delete item;
+//    else
+//        delete item;
 }
 
 // -----------------------------------------------------------------------------

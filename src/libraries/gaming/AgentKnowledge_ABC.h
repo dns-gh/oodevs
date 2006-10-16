@@ -51,8 +51,6 @@ public:
     //! @name To Remove // $$$$ AGE 2006-10-16: 
     //@{
     virtual void Display          ( kernel::Displayer_ABC& displayer ) const = 0;
-    virtual bool IsInTeam         ( const kernel::Team_ABC& team ) const = 0;
-    virtual bool KnowledgeIsInTeam( const kernel::Entity_ABC& team ) const = 0;
     //@}
 
     //! @name Operations

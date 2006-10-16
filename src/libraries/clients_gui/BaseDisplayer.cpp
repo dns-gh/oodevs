@@ -88,7 +88,7 @@ void BaseDisplayer::Call( const Team_ABC& value )
 // Name: BaseDisplayer::Call
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-void BaseDisplayer::Call( const kernel::Entity_ABC& value )
+void BaseDisplayer::Call( const Entity_ABC& value )
 {
     AddToDisplay( value.GetName() );
 }

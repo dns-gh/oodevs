@@ -17,7 +17,6 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -172,24 +171,6 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Population", "Id:" ), id_ )
                 .Display( tools::translate( "Population", "Population associée:" ), popu_ )
                 .Display( tools::translate( "Population", "Camp:" ), popu_.GetTeam() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::IsInTeam
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-bool PopulationKnowledge::IsInTeam( const Team_ABC& team ) const
-{
-     return group_.Get< CommunicationHierarchies >().IsSubordinateOf( team );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::KnowledgeIsInTeam
-// Created: AGE 2006-05-17
-// -----------------------------------------------------------------------------
-bool PopulationKnowledge::KnowledgeIsInTeam( const Entity_ABC& team ) const
-{
-    return & popu_.GetTeam() == & team;
 }
 
 // -----------------------------------------------------------------------------
