@@ -90,7 +90,6 @@ private slots:
     //@{
     void OnSelectionChanged( QListViewItem* );
     void OnContextMenuRequested( QListViewItem*, const QPoint& );
-    void ToggleDisplayOwnTeam();
     void OnRequestCenter( QListViewItem* );
     //@}
 
@@ -103,11 +102,9 @@ private:
     gui::DisplayBuilder* display_;
     gui::ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
-    kernel::SafePointer< kernel::Entity_ABC >        owner_;
     kernel::SafePointer< AgentKnowledges > selected_;
     kernel::SafePointer< AgentKnowledge_ABC >  subSelected_;
     kernel::SafePointer< AgentKnowledge_ABC >  selectionCandidate_;
-    QCheckBox* pOwnTeamCheckBox_;
     //@}
 };
 

@@ -33,16 +33,12 @@ using namespace gui;
 PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, "Connaissances population" )
     , controllers_ ( controllers )
-    , owner_       ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
     knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
     knowledgeList_->AddColumn( "Populations connues" );
-
-    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
-    pOwnTeamCheckBox_->setChecked( true );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Détails" )
@@ -73,8 +69,6 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
 
     connect( knowledgeList_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( knowledgeList_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
-
-    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() )                    , this, SLOT( ToggleDisplayOwnTeam() ) );
 
     controllers_.Register( *this );
 }
@@ -110,15 +104,6 @@ void PopulationKnowledgePanel::showEvent( QShowEvent* )
 {
     if( selected_ )
         NotifyUpdated( *selected_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledgePanel::ToggleDisplayOwnTeam
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::ToggleDisplayOwnTeam()
-{
-    showEvent( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,15 +163,11 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
 // -----------------------------------------------------------------------------
 void PopulationKnowledgePanel::Display( const PopulationKnowledge_ABC& knowledge, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    // $$$$ AGE 2006-10-16: 
-//    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! knowledge.KnowledgeIsInTeam( *owner_ ) )
-    {
-        item->SetValue( &knowledge );
-        knowledge.DisplayInList( displayer );
-        ValuedListItem* subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationConcentrationKnowledge >::CreateIterator(), item );
-        subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationFlowKnowledge >::CreateIterator(), item, subItem );
-        knowledgeList_->DeleteTail( subItem );
-    }
+    item->SetValue( &knowledge );
+    knowledge.DisplayInList( displayer );
+    ValuedListItem* subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationConcentrationKnowledge >::CreateIterator(), item );
+    subItem = knowledgeList_->DisplayList( knowledge.Resolver< PopulationFlowKnowledge >::CreateIterator(), item, subItem );
+    knowledgeList_->DeleteTail( subItem );
 }
 
 // -----------------------------------------------------------------------------
@@ -239,9 +220,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationConcentrationKnowl
 // -----------------------------------------------------------------------------
 void PopulationKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 {
-    const PopulationKnowledges* k               = element ? element->Retrieve< PopulationKnowledges >() : 0;
-    const CommunicationHierarchies* hierarchies = element ? element->Retrieve< CommunicationHierarchies >() : 0;
-    owner_ = hierarchies ? & hierarchies->GetTop() : 0;
+    const PopulationKnowledges* k = element ? element->Retrieve< PopulationKnowledges >() : 0;
     if( ! k || k != selected_ )
     {
         selected_ = k;

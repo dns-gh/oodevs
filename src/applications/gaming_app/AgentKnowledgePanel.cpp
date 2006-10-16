@@ -34,7 +34,6 @@ using namespace gui;
 AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, tr( "Connaissances agent" ) )
     , controllers_ ( controllers )
-    , owner_       ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
     , selectionCandidate_( controllers )
@@ -43,9 +42,6 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( tr( "Agents connus" ) );
     
-    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
-    pOwnTeamCheckBox_->setChecked( true );
-
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tr( "Détails" ) )
                 .AddLabel( tr( "Id:" ) )
@@ -73,8 +69,6 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Agent" ) ).
                           AddColumn( tr( "Niveau perception" ) );
-
-    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) ); 
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
@@ -136,14 +130,8 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 // -----------------------------------------------------------------------------
 void AgentKnowledgePanel::Display( const AgentKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    // $$$$ AGE 2006-10-16: 
-//    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
-    {
-        item->SetValue( &k );
-        displayer.Display( "Agents connus", k.GetEntity() );
-    }
-//    else
-//        delete item;
+    item->SetValue( &k );
+    displayer.Display( "Agents connus", k.GetEntity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,8 +176,6 @@ void AgentKnowledgePanel::AfterSelection()
 void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 {
     const AgentKnowledges* k     = element ? element->Retrieve< AgentKnowledges >() : 0;
-    const TacticalHierarchies* hierarchies = element ? element->Retrieve< TacticalHierarchies >() : 0;
-    owner_ = hierarchies ? & hierarchies->GetTop() : 0;
     if( ! k || k != selected_ )
     {
         selected_ = k;
@@ -250,15 +236,6 @@ void AgentKnowledgePanel::OnRequestCenter( QListViewItem* i )
         ValuedListItem* item = (ValuedListItem*)( i );
         item->Activate( controllers_.actions_ );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledgePanel::ToggleDisplayOwnTeam
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-void AgentKnowledgePanel::ToggleDisplayOwnTeam()
-{
-    showEvent( 0 );
 }
 
 // -----------------------------------------------------------------------------

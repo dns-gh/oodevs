@@ -67,7 +67,6 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( QListViewItem* i );
-    void ToggleDisplayOwnTeam(); // $$$$ AGE 2006-03-13: factoriser tous ces slots classiques
     void OnContextMenuRequested( QListViewItem*, const QPoint& );
     //@}
 
@@ -93,14 +92,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Entity_ABC > owner_;
     gui::ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     gui::DisplayBuilder* display_;
     kernel::SafePointer< PopulationKnowledges >        selected_;
     kernel::SafePointer< PopulationKnowledge_ABC >     subSelected_;
     kernel::SafePointer< PopulationPartKnowledge_ABC > selectedPart_; // $$$$ AGE 2006-04-20: won't do
-
-    QCheckBox* pOwnTeamCheckBox_;
     //@}
 };
 

@@ -30,15 +30,11 @@ using namespace gui;
 ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, tr( "Connaissances objet" ) )
     , controllers_ ( controllers )
-    , owner_       ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pKnowledgeListView_->AddColumn( "Objets connus" );
-
-    pOwnTeamCheckBox_ = new QCheckBox( tr( "Afficher propre camp" ), this );
-    pOwnTeamCheckBox_->setChecked( true );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( "Détails" )
@@ -79,7 +75,6 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( "Agent" );
 
-    connect( pOwnTeamCheckBox_,   SIGNAL( clicked() ),                          this, SLOT( ToggleDisplayOwnTeam() ) );
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
 
@@ -123,14 +118,8 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::Display( const ObjectKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    // $$$$ AGE 2006-10-16: 
-//    if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
-    {
-        item->SetValue( &k );
-        k.DisplayInList( displayer );
-    }
-//    else
-//        delete item;
+    item->SetValue( &k );
+    k.DisplayInList( displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +218,6 @@ void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes_ABC& element )
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::Select( const Team_ABC* team )
 {
-    owner_ = team;
     const ObjectKnowledges* k = team ? team->Retrieve< ObjectKnowledges >() : 0;
     if( ! k || k != selected_ )
     {
@@ -277,15 +265,6 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
             UpdateExtension< RotaAttributes_ABC >( *subSelected_ );
         }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledgePanel::ToggleDisplayOwnTeam
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::ToggleDisplayOwnTeam()
-{
-    showEvent( 0 );
 }
 
 // $$$$ AGE 2006-03-13: Factor these

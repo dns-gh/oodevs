@@ -77,7 +77,6 @@ private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged( QListViewItem* );
-    void ToggleDisplayOwnTeam();
     void OnContextMenuRequested( QListViewItem* pItem, const QPoint& pos );
     //@}
 
@@ -112,11 +111,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
 
-    kernel::SafePointer< kernel::Team_ABC > owner_;
     kernel::SafePointer< ObjectKnowledges > selected_;
     gui::ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
-    QCheckBox* pOwnTeamCheckBox_;
     kernel::SafePointer< ObjectKnowledge_ABC > subSelected_;
     gui::DisplayBuilder* display_;
 

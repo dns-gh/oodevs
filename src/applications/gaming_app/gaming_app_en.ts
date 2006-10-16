@@ -21,10 +21,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher propre camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Agents connus</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1281,10 +1277,6 @@
         <source>Connaissances objet</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Afficher propre camp</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ParamAgentType</name>
@@ -1428,10 +1420,6 @@
 </context>
 <context>
     <name>PopulationKnowledgePanel</name>
-    <message>
-        <source>Afficher propre camp</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RecorderToolbar</name>
