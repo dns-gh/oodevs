@@ -111,7 +111,7 @@ void LinkInterpreter::NotifyDeleted( const kernel::Object_ABC& entity )
 // Name: LinkInterpreter::NotifyCreated
 // Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyCreated( const AgentKnowledge& entity )
+void LinkInterpreter::NotifyCreated( const AgentKnowledge_ABC& entity )
 {
     NotifyCreated( (const Entity_ABC&)entity );
 }
@@ -120,7 +120,7 @@ void LinkInterpreter::NotifyCreated( const AgentKnowledge& entity )
 // Name: LinkInterpreter::NotifyDeleted
 // Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyDeleted( const AgentKnowledge& entity )
+void LinkInterpreter::NotifyDeleted( const AgentKnowledge_ABC& entity )
 {
     NotifyDeleted( (const Entity_ABC&)entity );
 }
@@ -129,7 +129,7 @@ void LinkInterpreter::NotifyDeleted( const AgentKnowledge& entity )
 // Name: LinkInterpreter::NotifyCreated
 // Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyCreated( const ObjectKnowledge& entity )
+void LinkInterpreter::NotifyCreated( const ObjectKnowledge_ABC& entity )
 {
     NotifyCreated( (const Entity_ABC&)entity );
 }
@@ -138,7 +138,7 @@ void LinkInterpreter::NotifyCreated( const ObjectKnowledge& entity )
 // Name: LinkInterpreter::NotifyDeleted
 // Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyDeleted( const ObjectKnowledge& entity )
+void LinkInterpreter::NotifyDeleted( const ObjectKnowledge_ABC& entity )
 {
     NotifyDeleted( (const Entity_ABC&)entity );
 }
@@ -147,7 +147,7 @@ void LinkInterpreter::NotifyDeleted( const ObjectKnowledge& entity )
 // Name: LinkInterpreter::NotifyCreated
 // Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyCreated( const PopulationKnowledge& entity )
+void LinkInterpreter::NotifyCreated( const PopulationKnowledge_ABC& entity )
 {
     NotifyCreated( (const Entity_ABC&)entity );
 }
@@ -156,7 +156,7 @@ void LinkInterpreter::NotifyCreated( const PopulationKnowledge& entity )
 // Name: LinkInterpreter::NotifyDeleted
 // Created: SBO 2006-10-13
 // -----------------------------------------------------------------------------
-void LinkInterpreter::NotifyDeleted( const PopulationKnowledge& entity )
+void LinkInterpreter::NotifyDeleted( const PopulationKnowledge_ABC& entity )
 {
     NotifyDeleted( (const Entity_ABC&)entity );
 }

@@ -18,7 +18,6 @@
 #include "clients_kernel/Controllers.h"
 #include "AgentKnowledgePositions.h"
 #include "PopulationKnowledgePositions.h"
-#include "clients_kernel/InstanciationComplete.h"
 
 using namespace kernel;
 
@@ -47,12 +46,12 @@ AgentKnowledgeFactory::~AgentKnowledgeFactory()
 // Name: AgentKnowledgeFactory::CreateAgentKnowledge
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message )
+AgentKnowledge_ABC* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message )
 {
     AgentKnowledge* result = new AgentKnowledge( group, message, controllers_.controller_, converter_, model_.agents_, model_.teams_ );
     result->Attach( *new PerceptionMap( controllers_.controller_, model_.agents_ ) );
     result->Attach< Positions >( *new AgentKnowledgePositions( converter_ ) );
-    result->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }
 
@@ -60,10 +59,10 @@ AgentKnowledge* AgentKnowledgeFactory::CreateAgentKnowledge( const KnowledgeGrou
 // Name: AgentKnowledgeFactory::CreatePopulationKnowledge
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-PopulationKnowledge* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message )
+PopulationKnowledge_ABC* AgentKnowledgeFactory::CreatePopulationKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message )
 {
     PopulationKnowledge* result = new PopulationKnowledge( group, controllers_.controller_, converter_, model_.agents_, message );
     result->Attach< Positions >( *new PopulationKnowledgePositions( *result ) );
-    ((Entity_ABC*)result)->Update( InstanciationComplete() );
+    result->Polish();
     return result;
 }

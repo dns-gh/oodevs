@@ -16,7 +16,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "gaming/AgentKnowledge.h"
+#include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledges.h"
 #include "gaming/PerceptionMap.h"
 #include "clients_gui/DisplayBuilder.h"
@@ -134,12 +134,12 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 // Name: AgentKnowledgePanel::Display
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Display( const AgentKnowledge& k, Displayer_ABC& displayer, ValuedListItem* item )
+void AgentKnowledgePanel::Display( const AgentKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
     if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
     {
         item->SetValue( &k );
-        displayer.Display( "Agents connus", k.GetRealAgent().GetName() ); // .GetName() to prevent link
+        displayer.Display( "Agents connus", k.GetEntity() );
     }
     else
         delete item;
@@ -159,7 +159,7 @@ void AgentKnowledgePanel::BeforeSelection()
 // Name: AgentKnowledgePanel::Select
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::Select( const AgentKnowledge& k )
+void AgentKnowledgePanel::Select( const AgentKnowledge_ABC& k )
 {
     selectionCandidate_ = &k;
 }
@@ -172,7 +172,7 @@ void AgentKnowledgePanel::AfterSelection()
 {
     if( selectionCandidate_ )
     {
-        ValuedListItem* item = FindItem( (const AgentKnowledge*)selectionCandidate_, pKnowledgeListView_->firstChild() );
+        ValuedListItem* item = FindItem( (const AgentKnowledge_ABC*)selectionCandidate_, pKnowledgeListView_->firstChild() );
         if( item )
             pKnowledgeListView_->setSelected( item, true );
     }
@@ -209,10 +209,10 @@ void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    if( ! item || ! item->IsA< const AgentKnowledge* >() )
+    if( ! item || ! item->IsA< const AgentKnowledge_ABC* >() )
         subSelected_ = 0;
     else
-        subSelected_ = item->GetValue< const AgentKnowledge* >();
+        subSelected_ = item->GetValue< const AgentKnowledge_ABC* >();
 
     if( subSelected_ )
     {
@@ -264,7 +264,7 @@ void AgentKnowledgePanel::ToggleDisplayOwnTeam()
 // Name: AgentKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge& k )
+void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge_ABC& k )
 {
     if( ! IsVisible() || subSelected_ != & k )
         return;

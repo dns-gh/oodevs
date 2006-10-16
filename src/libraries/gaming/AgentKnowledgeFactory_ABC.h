@@ -17,7 +17,7 @@ namespace kernel
     class KnowledgeGroup_ABC;
 }
 
-class AgentKnowledge;
+class AgentKnowledge_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgeFactory_ABC
@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentKnowledge* CreateAgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message ) = 0;
+    virtual AgentKnowledge_ABC* CreateAgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message ) = 0;
     //@}
 };
 

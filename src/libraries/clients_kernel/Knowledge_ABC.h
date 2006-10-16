@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual const Entity_ABC* GetEntity() const = 0;
+    virtual const Entity_ABC& GetOwner() const = 0;
     //@}
 
 private:

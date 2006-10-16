@@ -109,7 +109,7 @@ private:
     void BuildIconLayout();
 
     void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, 
-                       gui::AgentsLayer& agents, gui::DrawerLayer& drawer, GraphicSetup_ABC& setup );
+                       gui::AgentsLayer& agents, gui::DrawerLayer& drawer, GraphicSetup_ABC& setup, const kernel::Profile_ABC& profile );
     //@}
 
     //! @name Copy/Assignment

@@ -25,7 +25,7 @@ namespace kernel
     class PopulationFlow_ABC;
 }
 
-class PopulationKnowledge;
+class PopulationKnowledge_ABC;
 
 // =============================================================================
 // Created: APE 2004-03-10

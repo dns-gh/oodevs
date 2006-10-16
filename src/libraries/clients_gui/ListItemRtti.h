@@ -30,9 +30,9 @@ namespace kernel
 class Model; // $$$$ SBO 2006-08-30: 
 class Dotation;
 class Equipment;
-class AgentKnowledge;
-class PopulationKnowledge;
-class ObjectKnowledge;
+class AgentKnowledge_ABC;
+class PopulationKnowledge_ABC;
+class ObjectKnowledge_ABC;
 class PopulationPartKnowledge_ABC;
 class DotationRequest;
 class LogSupplyConsign;
@@ -110,17 +110,17 @@ struct ListItemRtti< const Equipment* > {
 };
 
 template< >
-struct ListItemRtti< const AgentKnowledge* > {
+struct ListItemRtti< const AgentKnowledge_ABC* > {
     enum { rtti = 1010 };
 };
 
 template< >
-struct ListItemRtti< const PopulationKnowledge* > {
+struct ListItemRtti< const PopulationKnowledge_ABC* > {
     enum { rtti = 1011 };
 };
 
 template< >
-struct ListItemRtti< const ObjectKnowledge* > {
+struct ListItemRtti< const ObjectKnowledge_ABC* > {
     enum { rtti = 1012 };
 };
 

@@ -27,6 +27,7 @@ namespace kernel
     class Mission;
     class CoordinateConverter_ABC;
     class PopulationConcentration_ABC;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -39,20 +40,21 @@ namespace gui
 // Created: AGE 2006-02-09
 // =============================================================================
 class BaseDisplayer : public kernel::Displayer_ABC
-                  , public kernel::Caller< bool >
-                  , public kernel::Caller< kernel::Population_ABC>
-                  , public kernel::Caller< kernel::PopulationConcentration_ABC >
-                  , public kernel::Caller< kernel::Agent_ABC >
-                  , public kernel::Caller< kernel::Object_ABC >
-                  , public kernel::Caller< kernel::Team_ABC >
-                  , public kernel::Caller< kernel::DotationType >
-                  , public kernel::Caller< kernel::EquipmentType >
-                  , public kernel::Caller< kernel::NBCAgent >
-                  , public kernel::Caller< kernel::ComponentType >
-                  , public kernel::Caller< kernel::BreakdownType >
-                  , public kernel::Caller< kernel::ObjectType >
-                  , public kernel::Caller< QTime >
-                  , public kernel::Caller< kernel::Mission >
+                    , public kernel::Caller< bool >
+                    , public kernel::Caller< kernel::Population_ABC>
+                    , public kernel::Caller< kernel::PopulationConcentration_ABC >
+                    , public kernel::Caller< kernel::Agent_ABC >
+                    , public kernel::Caller< kernel::Object_ABC >
+                    , public kernel::Caller< kernel::Team_ABC >
+                    , public kernel::Caller< kernel::Entity_ABC >
+                    , public kernel::Caller< kernel::DotationType >
+                    , public kernel::Caller< kernel::EquipmentType >
+                    , public kernel::Caller< kernel::NBCAgent >
+                    , public kernel::Caller< kernel::ComponentType >
+                    , public kernel::Caller< kernel::BreakdownType >
+                    , public kernel::Caller< kernel::ObjectType >
+                    , public kernel::Caller< QTime >
+                    , public kernel::Caller< kernel::Mission >
 {
 
 public:
@@ -77,6 +79,7 @@ private:
     virtual void Call( const kernel::PopulationConcentration_ABC& value );
     virtual void Call( const kernel::Object_ABC& value );
     virtual void Call( const kernel::Team_ABC& value );
+    virtual void Call( const kernel::Entity_ABC& value );
     virtual void Call( const kernel::DotationType& value );
     virtual void Call( const kernel::EquipmentType& value );
     virtual void Call( const kernel::NBCAgent& value );

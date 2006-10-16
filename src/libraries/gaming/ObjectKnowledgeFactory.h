@@ -18,7 +18,7 @@ namespace kernel
     class Team_ABC;
 }
 
-class ObjectKnowledge;
+class ObjectKnowledge_ABC;
 class Model;
 class StaticModel;
 
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual ObjectKnowledge* Create( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
+    virtual ObjectKnowledge_ABC* Create( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
     //@}
 
 private:

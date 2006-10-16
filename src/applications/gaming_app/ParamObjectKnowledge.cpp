@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ParamObjectKnowledge.h"
-#include "gaming/ObjectKnowledge.h"
+#include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -22,7 +22,7 @@ using namespace kernel;
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 ParamObjectKnowledge::ParamObjectKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
-    : EntityParameter< ObjectKnowledge >( pParent, id, label, menu )
+    : EntityParameter< ObjectKnowledge_ABC >( pParent, id, label, menu )
     , converter_( converter )
     , agent_( agent )
 {
@@ -45,7 +45,7 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 void ParamObjectKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( agent_.Get< CommunicationHierarchies >().GetTop() );
-    const ObjectKnowledge* knowledge = converter_.Find( entity, team );
+    const ObjectKnowledge_ABC* knowledge = converter_.Find( entity, team );
     if( knowledge )
-        EntityParameter< ObjectKnowledge >::NotifyContextMenu( *knowledge, menu );
+        EntityParameter< ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationKnowledgePositions.h"
-#include "PopulationKnowledge.h"
+#include "PopulationKnowledge_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 
 using namespace kernel;
@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: PopulationKnowledgePositions constructor
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-PopulationKnowledgePositions::PopulationKnowledgePositions( const PopulationKnowledge& k )
+PopulationKnowledgePositions::PopulationKnowledgePositions( const PopulationKnowledge_ABC& k )
     : knowledge_( k )
 {
     // NOTHING
@@ -42,7 +42,7 @@ PopulationKnowledgePositions::~PopulationKnowledgePositions()
 const Positions& PopulationKnowledgePositions::GetRealPosition() const
 {
     // $$$$ AGE 2006-08-07: pas terribule atole
-    return knowledge_.GetRealPopulation().Get< Positions >();
+    return knowledge_.GetEntity()->Get< Positions >();
 }
 
 // -----------------------------------------------------------------------------

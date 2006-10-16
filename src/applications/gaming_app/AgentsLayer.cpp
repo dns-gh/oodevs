@@ -21,8 +21,8 @@ using namespace kernel;
 // Name: AgentsLayer constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view )
-    : gui::AgentsLayer( controllers, tools, strategy, view )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+    : gui::AgentsLayer( controllers, tools, strategy, view, profile )
 {
     // NOTHING
 }

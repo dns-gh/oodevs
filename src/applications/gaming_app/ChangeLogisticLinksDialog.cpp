@@ -127,6 +127,7 @@ void ChangeLogisticLinksDialog::Show()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 {
+    // $$$$ AGE 2006-10-13: add only if agent is seen ?
     const AutomatType& type = agent.GetType();
     if( type.IsTC2() )
         tc2Combo_->AddItem( agent.GetName(), &agent );

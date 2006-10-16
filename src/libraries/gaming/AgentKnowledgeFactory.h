@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentKnowledge*      CreateAgentKnowledge     ( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message );
-    virtual PopulationKnowledge* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message );
+    virtual AgentKnowledge_ABC*      CreateAgentKnowledge     ( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message );
+    virtual PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message );
     //@}
 
 private:

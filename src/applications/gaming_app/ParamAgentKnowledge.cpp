@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ParamAgentKnowledge.h"
-#include "gaming/AgentKnowledge.h"
+#include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 
@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 ParamAgentKnowledge::ParamAgentKnowledge( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityParameter< AgentKnowledge >( pParent, id, label, menu )
+    : EntityParameter< AgentKnowledge_ABC >( pParent, id, label, menu )
     , converter_( converter )
     , agent_    ( agent )
 {
@@ -42,7 +42,7 @@ ParamAgentKnowledge::~ParamAgentKnowledge()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledge::NotifyContextMenu( const Agent_ABC& entity, ContextMenu& menu )
 {
-    const AgentKnowledge* knowledge = converter_.Find( entity, agent_ );
+    const AgentKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
     if( knowledge )
-        EntityParameter< AgentKnowledge >::NotifyContextMenu( *knowledge, menu );
+        EntityParameter< AgentKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }

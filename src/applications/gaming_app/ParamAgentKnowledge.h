@@ -18,7 +18,7 @@ namespace kernel
     class Entity_ABC;
 }
 
-class AgentKnowledge;
+class AgentKnowledge_ABC;
 class AgentKnowledgeConverter_ABC;
 
 // =============================================================================
@@ -27,7 +27,7 @@ class AgentKnowledgeConverter_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamAgentKnowledge : public EntityParameter< AgentKnowledge >
+class ParamAgentKnowledge : public EntityParameter< AgentKnowledge_ABC >
                           , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
 

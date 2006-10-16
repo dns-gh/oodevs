@@ -7,44 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __Agent_ABC_h_
-#define __Agent_ABC_h_
+#ifndef __PreparationProfile_h_
+#define __PreparationProfile_h_
 
-#include "Entity_ABC.h"
-
-namespace kernel
-{
-    class AgentType;
+#include "clients_kernel/Profile_ABC.h"
 
 // =============================================================================
-/** @class  Agent_ABC
-    @brief  Agent definition
+/** @class  PreparationProfile
+    @brief  Preparation profile
 */
-// Created: AGE 2006-02-13
+// Created: AGE 2006-10-16
 // =============================================================================
-class Agent_ABC : public Entity_ABC
+class PreparationProfile : public kernel::Profile_ABC, public QObject
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent_ABC();
-    virtual ~Agent_ABC();
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual const AgentType& GetType() const = 0;
+    explicit PreparationProfile( QObject* parent );
+    virtual ~PreparationProfile();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Select( ActionController& controller ) const;
-    virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( ActionController& controller ) const;
+    virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
+    virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
     //@}
 };
 
-}
-
-#endif // __Agent_ABC_h_
+#endif // __PreparationProfile_h_

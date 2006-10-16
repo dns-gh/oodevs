@@ -22,9 +22,9 @@ namespace kernel
     class Knowledge_ABC;
 }
 
-class AgentKnowledge;
-class ObjectKnowledge;
-class PopulationKnowledge;
+class AgentKnowledge_ABC;
+class ObjectKnowledge_ABC;
+class PopulationKnowledge_ABC;
 
 // =============================================================================
 /** @class  LinkInterpreter
@@ -37,9 +37,9 @@ class LinkInterpreter : public gui::LinkInterpreter_ABC
                       , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
                       , public kernel::ElementObserver_ABC< kernel::Population_ABC >
                       , public kernel::ElementObserver_ABC< kernel::Object_ABC >
-                      , public kernel::ElementObserver_ABC< AgentKnowledge >
-                      , public kernel::ElementObserver_ABC< ObjectKnowledge >
-                      , public kernel::ElementObserver_ABC< PopulationKnowledge >
+                      , public kernel::ElementObserver_ABC< AgentKnowledge_ABC >
+                      , public kernel::ElementObserver_ABC< ObjectKnowledge_ABC>
+                      , public kernel::ElementObserver_ABC< PopulationKnowledge_ABC>
 {
 
 public:
@@ -64,12 +64,12 @@ private:
     virtual void NotifyDeleted( const kernel::Population_ABC& entity );
     virtual void NotifyCreated( const kernel::Object_ABC& entity );
     virtual void NotifyDeleted( const kernel::Object_ABC& entity );
-    virtual void NotifyCreated( const AgentKnowledge& entity );
-    virtual void NotifyDeleted( const AgentKnowledge& entity );
-    virtual void NotifyCreated( const ObjectKnowledge& entity );
-    virtual void NotifyDeleted( const ObjectKnowledge& entity );
-    virtual void NotifyCreated( const PopulationKnowledge& entity );
-    virtual void NotifyDeleted( const PopulationKnowledge& entity );
+    virtual void NotifyCreated( const AgentKnowledge_ABC& entity );
+    virtual void NotifyDeleted( const AgentKnowledge_ABC& entity );
+    virtual void NotifyCreated( const ObjectKnowledge_ABC& entity );
+    virtual void NotifyDeleted( const ObjectKnowledge_ABC& entity );
+    virtual void NotifyCreated( const PopulationKnowledge_ABC& entity );
+    virtual void NotifyDeleted( const PopulationKnowledge_ABC& entity );
 
     void NotifyCreated( const kernel::Entity_ABC& entity );
     void NotifyDeleted( const kernel::Entity_ABC& entity );

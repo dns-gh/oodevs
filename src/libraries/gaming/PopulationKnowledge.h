@@ -12,21 +12,16 @@
 
 #include "ASN_Types.h"
 #include "clients_kernel/IDManager.h"
-#include "clients_kernel/Resolver.h"
-#include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/EntityImplementation.h"
+#include "PopulationKnowledge_ABC.h"
 
 namespace kernel
 {
-    class Controller;
     class CoordinateConverter_ABC;
     class Team_ABC;
-    class Population_ABC;
     class Displayer_ABC;
-    class KnowledgeGroup_ABC;
-    class InstanciationComplete;
-    class Entity_ABC; 
 }
 
 class PopulationPartKnowledge_ABC;
@@ -36,18 +31,10 @@ class PopulationFlowKnowledge;
 // =============================================================================
 // Created: APE 2004-03-10
 // =============================================================================
-class PopulationKnowledge : public kernel::Knowledge_ABC
-                          , public kernel::Resolver< PopulationConcentrationKnowledge >
-                          , public kernel::Resolver< PopulationFlowKnowledge >
-                          , public kernel::Updatable_ABC< kernel::InstanciationComplete >
+class PopulationKnowledge : public kernel::EntityImplementation< PopulationKnowledge_ABC >
                           , public kernel::Extension_ABC
                           , public kernel::Drawable_ABC
 {
-public:
-    //! @name Static
-    //@{
-    static const QString typeName_;
-    //@}
 
 public:
     //! @name Constructor/Destructor
@@ -58,25 +45,17 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId() const;
     virtual QString GetName() const;
     virtual QString GetTypeName() const;
-    virtual const kernel::Entity_ABC* GetEntity() const;
+    virtual const kernel::Population_ABC*     GetEntity() const;
+    virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
 
     void Display( kernel::Displayer_ABC& displayer ) const;
     void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     bool IsInTeam( const kernel::Team_ABC& team ) const;
     bool KnowledgeIsInTeam( const kernel::Entity_ABC& team ) const;
 
-    const kernel::KnowledgeGroup_ABC& GetKnowledgeGroup() const;
-    const kernel::Population_ABC& GetRealPopulation() const;
-
-    virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
-
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
     //! @name Network
@@ -106,7 +85,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
 
     const kernel::Population_ABC& popu_;
-    unsigned long nID_;
     unsigned int domination_;
     //@}
 };

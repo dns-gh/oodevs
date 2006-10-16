@@ -22,8 +22,8 @@ using namespace gui;
 // Name: AgentsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : EntityLayer< Agent_ABC >( controllers, tools, strategy, view )
+AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
+    : EntityLayer< Agent_ABC >( controllers, tools, strategy, view, profile )
     , selected_( controllers )
 {
     // NOTHING

@@ -38,7 +38,7 @@ class AgentsLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~AgentsLayer();
     //@}
 

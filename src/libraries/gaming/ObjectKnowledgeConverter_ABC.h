@@ -16,7 +16,7 @@ namespace kernel
     class Object_ABC;
 }
 
-class ObjectKnowledge;
+class ObjectKnowledge_ABC;
 
 // =============================================================================
 /** @class  ObjectKnowledgeConverter_ABC
@@ -36,8 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual const ObjectKnowledge* Find( const ObjectKnowledge& base,    const kernel::Team_ABC& owner ) = 0;
-    virtual const ObjectKnowledge* Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner ) = 0;
+    virtual const ObjectKnowledge_ABC* Find( const ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner ) = 0;
+    virtual const ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner ) = 0;
     //@}
 
 private:

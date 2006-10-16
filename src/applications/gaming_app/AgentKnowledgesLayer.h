@@ -11,7 +11,7 @@
 #define __AgentKnowledgesLayer_h_
 
 #include "KnowledgeLayer.h"
-#include "gaming/AgentKnowledge.h"
+#include "gaming/AgentKnowledge_ABC.h"
 
 // =============================================================================
 /** @class  AgentKnowledgesLayer
@@ -19,13 +19,13 @@
 */
 // Created: AGE 2006-05-17
 // =============================================================================
-class AgentKnowledgesLayer : public KnowledgeLayer< AgentKnowledge >
+class AgentKnowledgesLayer : public KnowledgeLayer< AgentKnowledge_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
+             AgentKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~AgentKnowledgesLayer();
     //@}
 

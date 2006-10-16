@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Positions.h"
 
-class PopulationKnowledge;
+class PopulationKnowledge_ABC;
 
 // =============================================================================
 /** @class  PopulationKnowledgePositions
@@ -26,7 +26,7 @@ class PopulationKnowledgePositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationKnowledgePositions( const PopulationKnowledge& k );
+    explicit PopulationKnowledgePositions( const PopulationKnowledge_ABC& k );
     virtual ~PopulationKnowledgePositions();
     //@}
 
@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const PopulationKnowledge& knowledge_;
+    const PopulationKnowledge_ABC& knowledge_;
     //@}
 };
 

@@ -11,7 +11,7 @@
 #define __ObjectKnowledgesLayer_h_
 
 #include "KnowledgeLayer.h"
-#include "gaming/ObjectKnowledge.h"
+#include "gaming/ObjectKnowledge_ABC.h"
 
 // =============================================================================
 /** @class  ObjectKnowledgesLayer
@@ -19,13 +19,13 @@
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class ObjectKnowledgesLayer : public KnowledgeLayer< ObjectKnowledge >
+class ObjectKnowledgesLayer : public KnowledgeLayer< ObjectKnowledge_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
+             ObjectKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~ObjectKnowledgesLayer();
     //@}
 

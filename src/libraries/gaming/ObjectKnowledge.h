@@ -11,23 +11,21 @@
 #define __ObjectKnowledge_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/Knowledge_ABC.h"
+#include "ObjectKnowledge_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/EntityImplementation.h"
 
 namespace kernel
 {
     class Displayer_ABC;
-    class Object_ABC;
     class Controller;
     class Agent_ABC;
-    class Team_ABC;
     class CoordinateConverter_ABC;
     class ObjectType;
-    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -36,18 +34,11 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class ObjectKnowledge : public kernel::Knowledge_ABC
+class ObjectKnowledge : public kernel::EntityImplementation< ObjectKnowledge_ABC >
                       , public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
-                      , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                       , public kernel::Drawable_ABC
 {
-public:
-    //! @name Static
-    //@{
-    static const QString typeName_;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -61,25 +52,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual unsigned long GetId() const;
     virtual QString GetName() const;
     virtual QString GetTypeName() const;
-    virtual const kernel::Entity_ABC* GetEntity() const;
+    virtual const kernel::Object_ABC* GetEntity() const;
+    virtual const kernel::Team_ABC&   GetOwner() const;
 
     void Display( kernel::Displayer_ABC& displayer ) const;
     void DisplayInList( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     bool IsInTeam( const kernel::Team_ABC& team ) const;
-    const kernel::Team_ABC& GetTeam() const; // $$$$ AGE 2006-09-15: 
-
     bool KnowledgeIsInTeam( const kernel::Team_ABC& team ) const;
-
-    virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
-
-    const kernel::Object_ABC* GetRealObject() const; // $$$$ AGE 2006-09-15: 
     //@}
 
 private:
@@ -97,7 +80,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:
@@ -106,10 +88,8 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
-    kernel::Controller& controller_;
     const kernel::Team_ABC& owner_;
 
-    unsigned long id_;
     const kernel::ObjectType* type_;
 
     std::string position_;

@@ -22,7 +22,7 @@ namespace kernel
     class InstanciationComplete;
 }
 
-class ObjectKnowledge;
+class ObjectKnowledge_ABC;
 class ObjectKnowledgeFactory;
 
 // =============================================================================
@@ -36,7 +36,7 @@ class ObjectKnowledges : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
                        , public kernel::Updatable_ABC< kernel::InstanciationComplete >
-                       , public kernel::Resolver< ObjectKnowledge >
+                       , public kernel::Resolver< ObjectKnowledge_ABC >
 {
 
 public:

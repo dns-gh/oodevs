@@ -17,8 +17,8 @@ using namespace gui;
 // Name: PopulationKnowledgesLayer constructor
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-PopulationKnowledgesLayer::PopulationKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view )
-    : KnowledgeLayer< PopulationKnowledge >( controllers, tools, strategy, view )
+PopulationKnowledgesLayer::PopulationKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
+    : KnowledgeLayer< PopulationKnowledge_ABC >( controllers, tools, strategy, view, profile )
 {
     // NOTHING
 }

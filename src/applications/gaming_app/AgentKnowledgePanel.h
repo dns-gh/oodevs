@@ -32,7 +32,7 @@ namespace gui
 }
 
 class AgentKnowledges;
-class AgentKnowledge;
+class AgentKnowledge_ABC;
 class PerceptionMap;
 class Perception;
 
@@ -45,9 +45,9 @@ class Perception;
 class AgentKnowledgePanel : public gui::InfoPanel_ABC
                           , public kernel::Observer_ABC
                           , public kernel::ElementObserver_ABC< AgentKnowledges >
-                          , public kernel::ElementObserver_ABC< AgentKnowledge >
+                          , public kernel::ElementObserver_ABC< AgentKnowledge_ABC >
                           , public kernel::ElementObserver_ABC< PerceptionMap >
-                          , public kernel::SelectionObserver_Base< AgentKnowledge >
+                          , public kernel::SelectionObserver_Base< AgentKnowledge_ABC >
                           , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
@@ -60,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const AgentKnowledge& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const AgentKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     void Display( const Perception& perception, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
@@ -75,13 +75,13 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const AgentKnowledges& knowledges );
-    virtual void NotifyUpdated( const AgentKnowledge& knowledge );
+    virtual void NotifyUpdated( const AgentKnowledge_ABC& knowledge );
     virtual void NotifyUpdated( const PerceptionMap& perceptions );
-    virtual void Select( const AgentKnowledge& k );
+    virtual void Select( const AgentKnowledge_ABC& k );
     virtual void BeforeSelection();
     virtual void AfterSelection();
     void Select( const kernel::KnowledgeGroup_ABC* group );
-    void Display( const AgentKnowledge& k );
+    void Display( const AgentKnowledge_ABC& k );
     void showEvent( QShowEvent* );
     //@}
 
@@ -105,8 +105,8 @@ private:
 
     kernel::SafePointer< kernel::Entity_ABC >        owner_;
     kernel::SafePointer< AgentKnowledges > selected_;
-    kernel::SafePointer< AgentKnowledge >  subSelected_;
-    kernel::SafePointer< AgentKnowledge >  selectionCandidate_;
+    kernel::SafePointer< AgentKnowledge_ABC >  subSelected_;
+    kernel::SafePointer< AgentKnowledge_ABC >  selectionCandidate_;
     QCheckBox* pOwnTeamCheckBox_;
     //@}
 };

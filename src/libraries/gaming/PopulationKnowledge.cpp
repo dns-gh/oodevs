@@ -12,7 +12,6 @@
 
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
-#include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -23,17 +22,15 @@
 
 using namespace kernel;
 
-const QString PopulationKnowledge::typeName_ = "populationKnowledge";
-
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
-    : group_     ( group )
+    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.oid_connaissance, "" )
+    , group_     ( group )
     , controller_( controller )
     , converter_ ( converter )
-    , nID_       ( message.oid_connaissance )
     , popu_      ( resolver.Get( message.oid_population_reelle ) )
     , domination_( 0 )
 {
@@ -48,25 +45,7 @@ PopulationKnowledge::~PopulationKnowledge()
 {
     Resolver< PopulationFlowKnowledge >::DeleteAll();
     Resolver< PopulationConcentrationKnowledge >::DeleteAll();
-    controller_.Delete( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetId
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-unsigned long PopulationKnowledge::GetId() const
-{
-    return nID_;
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +73,10 @@ QString PopulationKnowledge::GetTypeName() const
 void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& message )
 {
     if( message.m.etat_dominationPresent )
+    {
         domination_ = message.etat_domination;
+        Touch();
+    }
 }
 
 // =============================================================================
@@ -111,8 +93,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
     {
         PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, converter_, popu_, message );
         Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
+        Touch();
     };
-    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +115,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 {
     delete Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
     Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
-    controller_.Update( *this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,8 +128,8 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
     {
         PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, converter_, popu_, message );
         Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux, *pKnowledge );
+        Touch();
     };
-    controller_.Update( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -168,7 +150,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 {
     delete Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
     Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
-    controller_.Update( *this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +159,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Population", "Populations connues" ) ).Start( popu_ ).Add( " - " ).Add( nID_ ).End();
+    displayer.Item( tools::translate( "Population", "Populations connues" ) ).Start( popu_ ).Add( " - " ).Add( id_ ).End();
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +169,7 @@ void PopulationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 {
    displayer.Group( tools::translate( "Population", "Détails" ) )
-                .Display( tools::translate( "Population", "Id:" ), nID_ )
+                .Display( tools::translate( "Population", "Id:" ), id_ )
                 .Display( tools::translate( "Population", "Population associée:" ), popu_ )
                 .Display( tools::translate( "Population", "Camp:" ), popu_.GetTeam() );
 }
@@ -211,30 +193,21 @@ bool PopulationKnowledge::KnowledgeIsInTeam( const Entity_ABC& team ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetKnowledgeGroup
-// Created: AGE 2006-05-18
-// -----------------------------------------------------------------------------
-const KnowledgeGroup_ABC& PopulationKnowledge::GetKnowledgeGroup() const
-{
-    return group_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::GetRealPopulation
-// Created: AGE 2006-05-18
-// -----------------------------------------------------------------------------
-const Population_ABC& PopulationKnowledge::GetRealPopulation() const
-{
-    return popu_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::GetEntity
-// Created: SBO 2006-10-12
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* PopulationKnowledge::GetEntity() const
+const kernel::Population_ABC* PopulationKnowledge::GetEntity() const
 {
     return &popu_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetOwner
+// Created: AGE 2006-10-16
+// -----------------------------------------------------------------------------
+const kernel::KnowledgeGroup_ABC& PopulationKnowledge::GetOwner() const
+{
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -244,31 +217,4 @@ const kernel::Entity_ABC* PopulationKnowledge::GetEntity() const
 void PopulationKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2006-05-18: 
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationKnowledge::Select( ActionController& controller ) const
-{
-    controller.Select( *this );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    controller.ContextMenu( *this, where );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void PopulationKnowledge::Activate( ActionController& controller ) const
-{
-    controller.Activate( *this );
 }

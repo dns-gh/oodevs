@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationKnowledges.h"
-#include "PopulationKnowledge.h"
+#include "PopulationKnowledge_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "PopulationKnowledgeFactory_ABC.h"
 
@@ -65,7 +65,7 @@ void PopulationKnowledges::DoUpdate( const ASN1T_MsgPopulationKnowledgeCreation&
 {
     if( ! Find( message.oid_connaissance ) )
     {
-        PopulationKnowledge* knowledge = factory_.CreatePopulationKnowledge( owner_, message );
+        PopulationKnowledge_ABC* knowledge = factory_.CreatePopulationKnowledge( owner_, message );
         Register( message.oid_connaissance, *knowledge );
         controller_.Update( *this );
     }

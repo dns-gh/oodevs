@@ -14,6 +14,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
 
@@ -24,14 +25,14 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, View_ABC& view, const Profile_ABC& profile )
     : controllers_( controllers )
     , tools_      ( tools )
     , view_       ( view )
+    , profile_    ( profile )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
     , tooltip_    ( new GlTooltip() )
     , selected_   ( 0 )
-    , currentTeam_( controllers )
 {
     // NOTHING
 }
@@ -85,17 +86,7 @@ void EntityLayerBase::Draw( const Entity_ABC& entity, const geometry::Rectangle2
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::ShouldDisplay( const Entity_ABC& entity )
 {
-    return ! currentTeam_ || IsInTeam( entity, *currentTeam_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::IsInTeam
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-bool EntityLayerBase::IsInTeam( const kernel::Entity_ABC& entity, const kernel::Team_ABC& team )
-{
-    const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
-    return !hierarchies || hierarchies->IsSubordinateOf( team );
+    return profile_.IsVisible( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,16 +190,6 @@ bool EntityLayerBase::DisplayTooltip( unsigned i, const geometry::Point2f& point
 bool EntityLayerBase::DisplayTooltip( const Entity_ABC&, Displayer_ABC& )
 {
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::OptionChanged
-// Created: AGE 2006-03-28
-// -----------------------------------------------------------------------------
-void EntityLayerBase::OptionChanged( const std::string& name, const OptionVariant& value )
-{
-    if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team_ABC* >();
 }
 
 // -----------------------------------------------------------------------------

@@ -14,10 +14,10 @@
 
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
-#include "PopulationKnowledge.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "PopulationKnowledge_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;

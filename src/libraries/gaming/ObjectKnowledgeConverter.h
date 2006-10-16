@@ -27,7 +27,7 @@ namespace kernel
 // =============================================================================
 class ObjectKnowledgeConverter : public ObjectKnowledgeConverter_ABC
                                , public kernel::Observer_ABC
-                               , public kernel::ElementObserver_ABC< ObjectKnowledge >
+                               , public kernel::ElementObserver_ABC< ObjectKnowledge_ABC >
 {
 
 public:
@@ -39,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual const ObjectKnowledge* Find( const ObjectKnowledge& base,    const kernel::Team_ABC& owner );
-    virtual const ObjectKnowledge* Find( const kernel::Object_ABC& base, const kernel::Team_ABC& owner );
+    virtual const ObjectKnowledge_ABC* Find( const ObjectKnowledge_ABC& base, const kernel::Team_ABC& owner );
+    virtual const ObjectKnowledge_ABC* Find( const kernel::Object_ABC& base,  const kernel::Team_ABC& owner );
     //@}
 
 private:
@@ -52,14 +52,14 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const ObjectKnowledge& );
-    virtual void NotifyDeleted( const ObjectKnowledge& );
+    virtual void NotifyCreated( const ObjectKnowledge_ABC& );
+    virtual void NotifyDeleted( const ObjectKnowledge_ABC& );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Object_ABC*, const ObjectKnowledge* >    T_KnowledgeMap;
-    typedef std::map< const kernel::Team_ABC*, T_KnowledgeMap >              T_Knowledges;
+    typedef std::map< const kernel::Object_ABC*, const ObjectKnowledge_ABC* >    T_KnowledgeMap;
+    typedef std::map< const kernel::Team_ABC*, T_KnowledgeMap >                  T_Knowledges;
     //@}
 
 private:

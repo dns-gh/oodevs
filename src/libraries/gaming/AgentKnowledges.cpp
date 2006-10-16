@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "AgentKnowledges.h"
-#include "AgentKnowledge.h"
+#include "AgentKnowledge_ABC.h"
 #include "AgentKnowledgeFactory_ABC.h"
 #include "clients_kernel/Controller.h"
 
@@ -34,7 +34,7 @@ AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup_A
 AgentKnowledges::~AgentKnowledges()
 {
     controller_.Delete( *this );
-    Resolver< AgentKnowledge >::DeleteAll();
+    Resolver< AgentKnowledge_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation& message )
 {
     if( ! Find( message.oid_connaissance ) )
     {
-        AgentKnowledge* pAgentKnowledge = factory_.CreateAgentKnowledge( group_, message );
+        AgentKnowledge_ABC* pAgentKnowledge = factory_.CreateAgentKnowledge( group_, message );
         Register( message.oid_connaissance, *pAgentKnowledge );
         controller_.Update( *this );
     }

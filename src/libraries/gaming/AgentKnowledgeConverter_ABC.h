@@ -17,8 +17,8 @@ namespace kernel
     class Population_ABC;
 }
 
-class AgentKnowledge;
-class PopulationKnowledge;
+class AgentKnowledge_ABC;
+class PopulationKnowledge_ABC;
 
 // =============================================================================
 /** @class  AgentKnowledgeConverter_ABC
@@ -38,10 +38,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual const AgentKnowledge*      Find( const AgentKnowledge& base, const kernel::Entity_ABC& owner ) = 0;
-    virtual const AgentKnowledge*      Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner ) = 0;
-    virtual const PopulationKnowledge* Find( const PopulationKnowledge& base, const kernel::Entity_ABC& owner ) = 0;
-    virtual const PopulationKnowledge* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner ) = 0;
+    virtual const AgentKnowledge_ABC*      Find( const AgentKnowledge_ABC& base, const kernel::Entity_ABC& owner ) = 0;
+    virtual const AgentKnowledge_ABC*      Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner ) = 0;
+    virtual const PopulationKnowledge_ABC* Find( const PopulationKnowledge_ABC& base, const kernel::Entity_ABC& owner ) = 0;
+    virtual const PopulationKnowledge_ABC* Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner ) = 0;
     //@}
 
 private:

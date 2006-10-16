@@ -10,9 +10,9 @@
 #include "gaming_pch.h"
 #include "RC.h"
 #include "Agent.h"
-#include "AgentKnowledge.h"
-#include "ObjectKnowledge.h"
-#include "PopulationKnowledge.h"
+#include "AgentKnowledge_ABC.h"
+#include "ObjectKnowledge_ABC.h"
+#include "PopulationKnowledge_ABC.h"
 #include "RcEntityResolver_ABC.h"
 #include "clients_gui/InternalLinks.h"
 
@@ -358,7 +358,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 // -----------------------------------------------------------------------------
 std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 {
-    return InternalLinks::CreateLink( ObjectKnowledge::typeName_, nId, QString::number( nId ) ).ascii();
+    return InternalLinks::CreateLink( ObjectKnowledge_ABC::typeName_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -367,7 +367,7 @@ std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 {
-    return InternalLinks::CreateLink( AgentKnowledge::typeName_, nId, QString::number( nId ) ).ascii();
+    return InternalLinks::CreateLink( AgentKnowledge_ABC::typeName_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -376,7 +376,7 @@ std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
 // -----------------------------------------------------------------------------
 std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
 {
-    return InternalLinks::CreateLink( PopulationKnowledge::typeName_, nId, QString::number( nId ) ).ascii();
+    return InternalLinks::CreateLink( PopulationKnowledge_ABC::typeName_, nId, QString::number( nId ) ).ascii();
 }
 
 // -----------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "gaming/ObjectKnowledges.h"
-#include "gaming/ObjectKnowledge.h"
+#include "gaming/ObjectKnowledge_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"
 
@@ -120,7 +120,7 @@ void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledges& element )
 // Name: ObjectKnowledgePanel::Display
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& displayer, ValuedListItem* item )
+void ObjectKnowledgePanel::Display( const ObjectKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
     if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! k.KnowledgeIsInTeam( *owner_ ) )
     {
@@ -135,15 +135,16 @@ void ObjectKnowledgePanel::Display( const ObjectKnowledge& k, Displayer_ABC& dis
 // Name: ObjectKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge& element )
+void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge_ABC& element )
 {
-    if( ! IsVisible() || &element != subSelected_ )
-        return;
-    display_->Hide();
-    element.Display( *display_ );
-    pPerceptionListView_->DeleteTail(
-        pPerceptionListView_->DisplayList( element.detectingAutomats_.begin(), element.detectingAutomats_.end() )
-    );
+    // $$$$ AGE 2006-10-16: 
+//    if( ! IsVisible() || &element != subSelected_ )
+//        return;
+//    display_->Hide();
+//    element.Display( *display_ );
+//    pPerceptionListView_->DeleteTail(
+//        pPerceptionListView_->DisplayList( element.detectingAutomats_.begin(), element.detectingAutomats_.end() )
+//    );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +239,7 @@ void ObjectKnowledgePanel::Select( const Team_ABC* team )
 // Created: AGE 2006-08-03
 // -----------------------------------------------------------------------------
 template< typename T >
-void ObjectKnowledgePanel::UpdateExtension( const ObjectKnowledge& k )
+void ObjectKnowledgePanel::UpdateExtension( const ObjectKnowledge_ABC& k )
 {
     const T* extension = k.Retrieve< T >();
     if( extension )
@@ -252,9 +253,9 @@ void ObjectKnowledgePanel::UpdateExtension( const ObjectKnowledge& k )
 void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    if( item->IsA< const ObjectKnowledge* >() )
+    if( item->IsA< const ObjectKnowledge_ABC* >() )
     {
-        subSelected_ = item->GetValue< const ObjectKnowledge* >();
+        subSelected_ = item->GetValue< const ObjectKnowledge_ABC* >();
         if( subSelected_ )
         {
             NotifyUpdated( *subSelected_ );

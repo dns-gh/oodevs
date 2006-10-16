@@ -18,7 +18,6 @@
 #include "LogMaintenanceConsign.h"
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
-#include "PopulationKnowledge.h"
 #include "Simulation.h"
 #include "Profile.h"
 #include "Model.h"

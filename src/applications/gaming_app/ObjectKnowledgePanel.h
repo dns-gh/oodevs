@@ -37,7 +37,7 @@ namespace gui
 }
 
 class ObjectKnowledges;
-class ObjectKnowledge;
+class ObjectKnowledge_ABC;
 class ObjectKnowledges;
 
 // =============================================================================
@@ -49,7 +49,7 @@ class ObjectKnowledges;
 class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public kernel::Observer_ABC
                            , public kernel::ElementObserver_ABC< ObjectKnowledges >
-                           , public kernel::ElementObserver_ABC< ObjectKnowledge >
+                           , public kernel::ElementObserver_ABC< ObjectKnowledge_ABC >
                            , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
@@ -67,7 +67,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const ObjectKnowledge& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const ObjectKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     void Display( const kernel::Agent_ABC* agent, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
@@ -91,7 +91,7 @@ private:
     //@{
     void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const ObjectKnowledges& element );
-    virtual void NotifyUpdated( const ObjectKnowledge& element );
+    virtual void NotifyUpdated( const ObjectKnowledge_ABC& element );
     virtual void NotifyUpdated( const kernel::CampAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::CrossingSiteAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& element );
@@ -100,7 +100,7 @@ private:
     template< typename T >
     void DisplayExtension( const T& extension );
     template< typename T >
-    void UpdateExtension( const ObjectKnowledge& k );
+    void UpdateExtension( const ObjectKnowledge_ABC& k );
     virtual void Select( const kernel::Team_ABC* );
     //@}
 
@@ -114,7 +114,7 @@ private:
     gui::ListDisplayer< ObjectKnowledgePanel >* pKnowledgeListView_;
 
     QCheckBox* pOwnTeamCheckBox_;
-    kernel::SafePointer< ObjectKnowledge > subSelected_;
+    kernel::SafePointer< ObjectKnowledge_ABC > subSelected_;
     gui::DisplayBuilder* display_;
 
     gui::ListDisplayer< ObjectKnowledgePanel >* pPerceptionListView_;

@@ -21,7 +21,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/InstanciationComplete.h"
 #include "ObjectKnowledgePositions.h"
 #include "StaticModel.h"
 
@@ -52,7 +51,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // Name: ObjectKnowledgeFactory::Create
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message )
+ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message )
 {
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, model_.agents_, static_.objectTypes_ );
     knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_ ) );
@@ -78,6 +77,6 @@ ObjectKnowledge* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const AS
     default:
         ;
     };
-    knowledge->Update( InstanciationComplete() );
+    knowledge->Polish();
     return knowledge;
 }

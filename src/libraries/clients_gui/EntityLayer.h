@@ -25,6 +25,7 @@ namespace kernel
     class Entity_ABC;
     class Team_ABC;
     class Displayer_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -41,12 +42,11 @@ namespace gui
 // =============================================================================
 class EntityLayerBase : public Layer_ABC
                       , public kernel::Observer_ABC
-                      , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{    
-             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, View_ABC& view );
+             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~EntityLayerBase();
     //@}    
 
@@ -60,7 +60,6 @@ protected:
     //@{    
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
     //! @name Helpers
@@ -77,7 +76,6 @@ protected:
     virtual void Select     ( const kernel::Entity_ABC&, bool );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual bool IsInTeam     ( const kernel::Entity_ABC&, const kernel::Team_ABC& team );
 
     virtual bool ShouldDisplayTooltip( unsigned i, const geometry::Point2f& point );
     virtual bool DisplayTooltip( unsigned i, const geometry::Point2f& point );
@@ -110,7 +108,7 @@ private:
 
 protected: // $$$$ AGE 2006-05-17: 
     unsigned selected_;
-    kernel::SafePointer< kernel::Team_ABC > currentTeam_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 
@@ -131,7 +129,7 @@ class EntityLayer : public EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~EntityLayer();
     //@}
 

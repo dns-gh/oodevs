@@ -12,7 +12,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "gaming/ObjectKnowledge.h"
+#include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/ObjectKnowledgeConverter_ABC.h"
 
 using namespace kernel;
@@ -22,7 +22,7 @@ using namespace kernel;
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
-    : EntityListParameter< ObjectKnowledge >( pParent, asn.n, asn.elem, label, menu )
+    : EntityListParameter< ObjectKnowledge_ABC >( pParent, asn.n, asn.elem, label, menu )
     , converter_( converter )
     , agent_( agent )
 {
@@ -45,7 +45,7 @@ ParamObjectKnowledgeList::~ParamObjectKnowledgeList()
 void ParamObjectKnowledgeList::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
     const Team_ABC& team = static_cast< const Team_ABC& >( agent_.Get< CommunicationHierarchies >().GetTop() );
-    const ObjectKnowledge* knowledge = converter_.Find( entity, team );
+    const ObjectKnowledge_ABC* knowledge = converter_.Find( entity, team );
     if( knowledge )
-        EntityListParameter< ObjectKnowledge >::NotifyContextMenu( *knowledge, menu );
+        EntityListParameter< ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }

@@ -11,7 +11,7 @@
 #define __KnowledgeLayer_h_
 
 #include "clients_gui/EntityLayer.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 
 // =============================================================================
 /** @class  KnowledgeLayer
@@ -26,7 +26,7 @@ class KnowledgeLayer : public gui::EntityLayer< KnowledgeType >
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
+             KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~KnowledgeLayer();
     //@}
 
@@ -48,8 +48,8 @@ private:
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
 template< typename KnowledgeType >
-KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view )
-    : gui::EntityLayer< KnowledgeType >( controllers, tools, strategy, view )
+KnowledgeLayer< KnowledgeType >::KnowledgeLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+    : gui::EntityLayer< KnowledgeType >( controllers, tools, strategy, view, profile )
 {
     // NOTHING
 }
@@ -71,10 +71,10 @@ KnowledgeLayer< KnowledgeType >::~KnowledgeLayer()
 template< typename KnowledgeType >
 bool KnowledgeLayer< KnowledgeType >::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    const KnowledgeType& k = static_cast< const KnowledgeType& >( entity );
-    return currentTeam_
-        && k.IsInTeam( *currentTeam_ )
-        && ! k.KnowledgeIsInTeam( *currentTeam_ );
+    const kernel::Knowledge_ABC& k = static_cast< const kernel::Knowledge_ABC& >( entity );
+    const kernel::Entity_ABC* e = k.GetEntity();
+    return e && ! profile_.IsVisible( *e )
+             &&   profile_.IsVisible( k.GetOwner() );
 }
 
 #endif // __KnowledgeLayer_h_

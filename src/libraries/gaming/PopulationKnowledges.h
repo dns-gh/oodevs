@@ -22,7 +22,7 @@ namespace kernel
     class InstanciationComplete;
 }
 
-class PopulationKnowledge;
+class PopulationKnowledge_ABC;
 class PopulationKnowledgeFactory_ABC;
 
 // =============================================================================
@@ -42,7 +42,7 @@ class PopulationKnowledges : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
                            , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeDestruction >
                            , public kernel::Updatable_ABC< kernel::InstanciationComplete >
-                           , public kernel::Resolver< PopulationKnowledge >
+                           , public kernel::Resolver< PopulationKnowledge_ABC >
 {
 
 public:

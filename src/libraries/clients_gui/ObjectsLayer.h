@@ -28,7 +28,7 @@ class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~ObjectsLayer();
     //@}
 
@@ -36,6 +36,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DisplayTooltip( const kernel::Object_ABC& entity, kernel::Displayer_ABC& displayer );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     //@}
 
 private:

@@ -28,7 +28,7 @@ class PopulationsLayer : public EntityLayer< kernel::Population_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view );
+    PopulationsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~PopulationsLayer();
     //@}
 

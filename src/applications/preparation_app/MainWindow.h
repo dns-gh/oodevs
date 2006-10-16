@@ -16,6 +16,7 @@ namespace kernel
 {
     class Options;
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -80,7 +81,7 @@ private:
     //! @name Helpers
     //@{
     void BuildIconLayout();
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

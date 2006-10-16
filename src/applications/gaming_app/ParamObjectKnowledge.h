@@ -18,7 +18,7 @@ namespace kernel
     class Entity_ABC;
 }
 
-class ObjectKnowledge;
+class ObjectKnowledge_ABC;
 class ObjectKnowledgeConverter_ABC;
 
 // =============================================================================
@@ -27,7 +27,7 @@ class ObjectKnowledgeConverter_ABC;
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge >
+class ParamObjectKnowledge : public EntityParameter< ObjectKnowledge_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
 

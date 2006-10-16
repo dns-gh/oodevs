@@ -22,20 +22,17 @@
 
 using namespace kernel;
 
-const QString ObjectKnowledge::typeName_ = "objectKnowledge";
-
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
                                   const Resolver_ABC< Object_ABC >& objectResolver , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
-    : owner_         ( owner )
+    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid_connaissance, "" )
     , converter_     ( converter )
+    , owner_         ( owner )
     , objectResolver_( objectResolver )
     , agentResolver_ ( agentResolver )
-    , controller_    ( controller )
-    , id_            ( message.oid_connaissance ) 
     , type_          ( & typeResolver.Get( message.type ) )
     , pRealObject_   ( 0 )
 {
@@ -49,16 +46,7 @@ ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKn
 // -----------------------------------------------------------------------------
 ObjectKnowledge::~ObjectKnowledge()
 {
-    controller_.Delete( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *this );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +86,7 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
             detectingAutomats_.insert( & agentResolver_.Get( message.perception_par_compagnie.elem[i] ) );
     }
 
-    controller_.Update( *this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,15 +142,6 @@ bool ObjectKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetId
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-unsigned long ObjectKnowledge::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::GetName
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -183,11 +162,20 @@ QString ObjectKnowledge::GetTypeName() const
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::GetEntity
-// Created: SBO 2006-10-12
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* ObjectKnowledge::GetEntity() const
+const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 {
     return pRealObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetOwner
+// Created: AGE 2006-10-16
+// -----------------------------------------------------------------------------
+const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
+{
+    return owner_;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,49 +190,4 @@ void ObjectKnowledge::Draw( const geometry::Point2f& where, const geometry::Rect
         pRealObject_->Entity_ABC::Draw( where, viewport, tools );
         tools.Select( backupState );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::Select( ActionController& controller ) const
-{
-    controller.Select( *this );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    controller.ContextMenu( *this, where );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::Activate( ActionController& controller ) const
-{
-    controller.Activate( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetRealObject
-// Created: AGE 2006-09-15
-// -----------------------------------------------------------------------------
-const kernel::Object_ABC* ObjectKnowledge::GetRealObject() const
-{
-    return pRealObject_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::GetTeam
-// Created: AGE 2006-09-15
-// -----------------------------------------------------------------------------
-const kernel::Team_ABC& ObjectKnowledge::GetTeam() const
-{
-    return owner_;
 }

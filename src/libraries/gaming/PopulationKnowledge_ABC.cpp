@@ -8,64 +8,63 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "ObjectKnowledgeConverter.h"
-#include "clients_kernel/Controllers.h"
-#include "ObjectKnowledge_ABC.h"
+#include "PopulationKnowledge_ABC.h"
+#include "clients_kernel/ActionController.h"
 
 using namespace kernel;
 
+const QString PopulationKnowledge_ABC::typeName_ = "populationKnowledge";
+
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter constructor
-// Created: AGE 2006-09-15
+// Name: PopulationKnowledge_ABC constructor
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectKnowledgeConverter::ObjectKnowledgeConverter( Controllers& controller )
-    : controller_( controller )
+PopulationKnowledge_ABC::PopulationKnowledge_ABC()
 {
-    controller_.Register( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter destructor
-// Created: AGE 2006-09-15
+// Name: PopulationKnowledge_ABC destructor
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectKnowledgeConverter::~ObjectKnowledgeConverter()
+PopulationKnowledge_ABC::~PopulationKnowledge_ABC()
 {
-    controller_.Remove( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter::Find
-// Created: AGE 2006-09-15
+// Name: PopulationKnowledge_ABC::GetTypeName
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const ObjectKnowledge_ABC& base, const Team_ABC& owner )
+QString PopulationKnowledge_ABC::GetTypeName() const
 {
-    const Object_ABC* real = base.GetEntity();
-    return real ? Find( *real, owner ) : 0;
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter::Find
-// Created: AGE 2006-09-15
+// Name: PopulationKnowledge_ABC::Select
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-const ObjectKnowledge_ABC* ObjectKnowledgeConverter::Find( const Object_ABC& base, const Team_ABC& owner )
+void PopulationKnowledge_ABC::Select( ActionController& controller ) const
 {
-    return knowledges_[ & owner ][ & base ];
+    controller.Select( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter::NotifyCreated
-// Created: AGE 2006-09-15
+// Name: PopulationKnowledge_ABC::ContextMenu
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeConverter::NotifyCreated( const ObjectKnowledge_ABC& k )
+void PopulationKnowledge_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    knowledges_[ & k.GetOwner() ][ k.GetEntity() ] = &k;
+    controller.ContextMenu( *this, where );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectKnowledgeConverter::NotifyDeleted
-// Created: AGE 2006-09-15
+// Name: PopulationKnowledge_ABC::Activate
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectKnowledgeConverter::NotifyDeleted( const ObjectKnowledge_ABC& k )
+void PopulationKnowledge_ABC::Activate( ActionController& controller ) const
 {
-    knowledges_[ & k.GetOwner() ].erase( k.GetEntity() );
+    controller.Activate( *this );
 }

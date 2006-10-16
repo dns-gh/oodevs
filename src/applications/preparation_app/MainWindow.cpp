@@ -26,6 +26,7 @@
 #include "AgentsLayer.h"
 #include "ModelBuilder.h"
 #include "Dialogs.h"
+#include "PreparationProfile.h"
 #include "preparation/Exceptions.h"
 
 #include "clients_kernel/ActionController.h"
@@ -156,9 +157,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setCaption( tr( "Informations" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
+    Profile_ABC& profile = *new PreparationProfile( this );
+
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_ );
+    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, profile );
 
     // object creation window
     ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.objects_, *paramLayer, *glProxy_ );
@@ -174,7 +177,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setCentralWidget( glPlaceHolder_ );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences(), profile );
 
     pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
 //    controllers_.Register( *this );
@@ -190,7 +193,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, ::AgentsLayer& agents, GraphicSetup_ABC& setup )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, ::AgentsLayer& agents, GraphicSetup_ABC& setup, const Profile_ABC& profile )
 {
     CircularEventStrategy* eventStrategy = new CircularEventStrategy();
     eventStrategy_ = eventStrategy;
@@ -200,8 +203,8 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
 //    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.limits_ );
-    Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
-    Layer_ABC& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_ );
+    Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
 //    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     

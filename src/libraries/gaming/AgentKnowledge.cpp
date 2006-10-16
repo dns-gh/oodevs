@@ -25,20 +25,16 @@
 
 using namespace kernel;
 
-const QString AgentKnowledge::typeName_ = "agentKnowledge";
-IDManager AgentKnowledge::idManager_( 158 );
-
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Agent_ABC >& resolver, const Resolver_ABC< Team_ABC >& teamResolver )
-    : controller_  ( controller )
+    : EntityImplementation< AgentKnowledge_ABC >( controller, message.oid_connaissance, "" )
     , converter_   ( converter )
     , resolver_    ( resolver )
     , teamResolver_( teamResolver )
     , group_       ( group )
-    , nID_         ( message.oid_connaissance )
     , realAgent_   ( resolver_.Get( message.oid_unite_reelle ) )
     , team_        ( 0 )
 {
@@ -51,16 +47,7 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_Msg
 // -----------------------------------------------------------------------------
 AgentKnowledge::~AgentKnowledge()
 {
-    controller_.Delete( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void AgentKnowledge::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *this );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -127,34 +114,25 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
     if( message.m.refugie_pris_en_comptePresent )
         bRefugies_ = message.refugie_pris_en_compte;
 
-    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetId
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-unsigned long AgentKnowledge::GetId() const
-{
-    return nID_;
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::GetEntity
 // Created: SBO 2006-10-12
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC* AgentKnowledge::GetEntity() const
+const kernel::Agent_ABC* AgentKnowledge::GetEntity() const
 {
     return &realAgent_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetRealAgent
-// Created: AGE 2006-02-21
+// Name: AgentKnowledge::GetOwner
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-Agent_ABC& AgentKnowledge::GetRealAgent() const
+const kernel::KnowledgeGroup_ABC& AgentKnowledge::GetOwner() const
 {
-    return realAgent_;
+    return group_;
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +159,7 @@ QString AgentKnowledge::GetTypeName() const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "AgentKnowledge", "Id:" ), nID_ )
+    displayer.Display( tools::translate( "AgentKnowledge", "Id:" ), id_ )
              .Display( tools::translate( "AgentKnowledge", "Agent associé:" ), realAgent_ )
              .Display( tools::translate( "AgentKnowledge", "Position:" ), strPosition_ )
              .Display( tools::translate( "AgentKnowledge", "Direction:" ), nDirection_ * Units::degrees )
@@ -237,40 +215,4 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Recta
     }
     else
         tools.DrawApp6Symbol( "roles/Unknown.svg", where );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::GetKnowledgeGroup
-// Created: AGE 2006-05-18
-// -----------------------------------------------------------------------------
-const KnowledgeGroup_ABC& AgentKnowledge::GetKnowledgeGroup() const
-{
-    return group_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::Select
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void AgentKnowledge::Select( ActionController& controller ) const
-{
-     controller.Select( *this );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::ContextMenu
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void AgentKnowledge::ContextMenu( ActionController& controller, const QPoint& where ) const
-{
-    controller.ContextMenu( *this, where );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::Activate
-// Created: SBO 2006-08-02
-// -----------------------------------------------------------------------------
-void AgentKnowledge::Activate( ActionController& controller ) const
-{
-    controller.Activate( *this );
 }

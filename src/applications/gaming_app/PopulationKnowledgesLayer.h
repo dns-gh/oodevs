@@ -11,7 +11,7 @@
 #define __PopulationKnowledgesLayer_h_
 
 #include "KnowledgeLayer.h"
-#include "gaming/PopulationKnowledge.h"
+#include "gaming/PopulationKnowledge_ABC.h"
 
 // =============================================================================
 /** @class  PopulationKnowledgesLayer
@@ -19,13 +19,13 @@
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class PopulationKnowledgesLayer : public KnowledgeLayer< PopulationKnowledge >
+class PopulationKnowledgesLayer : public KnowledgeLayer< PopulationKnowledge_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view );
+             PopulationKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~PopulationKnowledgesLayer();
     //@}
 

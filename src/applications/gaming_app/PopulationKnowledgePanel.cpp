@@ -15,7 +15,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "gaming/PopulationKnowledges.h"
-#include "gaming/PopulationKnowledge.h"
+#include "gaming/PopulationKnowledge_ABC.h"
 #include "gaming/PopulationConcentrationKnowledge.h"
 #include "gaming/PopulationFlowKnowledge.h"
 #include "clients_gui/DisplayBuilder.h"
@@ -143,8 +143,8 @@ void PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* i )
     ValuedListItem* item = (ValuedListItem*)( i );
     display_->Group( "Flux" ).Hide();
     display_->Group( "Concentration" ).Hide();
-    if( item && item->IsA< const PopulationKnowledge* >() ) {
-        subSelected_ = item->GetValue< const PopulationKnowledge* >();
+    if( item && item->IsA< const PopulationKnowledge_ABC* >() ) {
+        subSelected_ = item->GetValue< const PopulationKnowledge_ABC* >();
         subSelected_->Display( *display_ );
     }
     else if( item && item->IsA< const PopulationPartKnowledge_ABC* >() ) {
@@ -176,7 +176,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledges& elemen
 // Name: PopulationKnowledgePanel::Display
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::Display( const PopulationKnowledge& knowledge, Displayer_ABC& displayer, ValuedListItem* item )
+void PopulationKnowledgePanel::Display( const PopulationKnowledge_ABC& knowledge, Displayer_ABC& displayer, ValuedListItem* item )
 {
     if( pOwnTeamCheckBox_->isChecked() || ! owner_ || ! knowledge.KnowledgeIsInTeam( *owner_ ) )
     {
@@ -201,7 +201,7 @@ void PopulationKnowledgePanel::Display( const PopulationPartKnowledge_ABC& knowl
 // Name: PopulationKnowledgePanel::NotifyUpdated
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledge& element )
+void PopulationKnowledgePanel::NotifyUpdated( const PopulationKnowledge_ABC& element )
 {
     if( ! IsVisible() || subSelected_ != &element )
         return;

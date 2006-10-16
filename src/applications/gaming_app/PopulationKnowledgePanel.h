@@ -33,7 +33,7 @@ namespace gui
 }
 
 class PopulationKnowledges;
-class PopulationKnowledge;
+class PopulationKnowledge_ABC;
 class PopulationFlowKnowledge;
 class PopulationConcentrationKnowledge;
 class PopulationPartKnowledge_ABC;
@@ -45,7 +45,7 @@ class PopulationKnowledgePanel : public gui::InfoPanel_ABC
                                , public kernel::Observer_ABC
                                , public KnowledgeGroupSelectionObserver
                                , public kernel::ElementObserver_ABC< PopulationKnowledges >
-                               , public kernel::ElementObserver_ABC< PopulationKnowledge >
+                               , public kernel::ElementObserver_ABC< PopulationKnowledge_ABC >
                                , public kernel::ElementObserver_ABC< PopulationFlowKnowledge >
                                , public kernel::ElementObserver_ABC< PopulationConcentrationKnowledge >
 {
@@ -59,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const PopulationKnowledge& knowledge, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const PopulationKnowledge_ABC& knowledge, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     void Display( const PopulationPartKnowledge_ABC& knowledge, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
@@ -83,7 +83,7 @@ private:
     //@{
     void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const PopulationKnowledges& element );
-    virtual void NotifyUpdated( const PopulationKnowledge& element );
+    virtual void NotifyUpdated( const PopulationKnowledge_ABC& element );
     virtual void NotifyUpdated( const PopulationFlowKnowledge& element );
     virtual void NotifyUpdated( const PopulationConcentrationKnowledge& element );
     virtual void Select( const kernel::KnowledgeGroup_ABC* element );
@@ -97,7 +97,7 @@ private:
     gui::ListDisplayer< PopulationKnowledgePanel >* knowledgeList_;
     gui::DisplayBuilder* display_;
     kernel::SafePointer< PopulationKnowledges >        selected_;
-    kernel::SafePointer< PopulationKnowledge >         subSelected_;
+    kernel::SafePointer< PopulationKnowledge_ABC >     subSelected_;
     kernel::SafePointer< PopulationPartKnowledge_ABC > selectedPart_; // $$$$ AGE 2006-04-20: won't do
 
     QCheckBox* pOwnTeamCheckBox_;

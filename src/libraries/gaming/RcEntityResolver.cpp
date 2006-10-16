@@ -10,9 +10,9 @@
 #include "gaming_pch.h"
 #include "RcEntityResolver.h"
 #include "Agent.h"
-#include "ObjectKnowledge.h"
-#include "AgentKnowledge.h"
-#include "PopulationKnowledge.h"
+#include "ObjectKnowledge_ABC.h"
+#include "AgentKnowledge_ABC.h"
+#include "PopulationKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/InternalLinks.h"
 
@@ -60,54 +60,54 @@ void RcEntityResolver::NotifyDeleted( const kernel::Agent_ABC& element )
 // Name: RcEntityResolver::NotifyCreated
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyCreated( const ObjectKnowledge& element )
+void RcEntityResolver::NotifyCreated( const ObjectKnowledge_ABC& element )
 {
-    Resolver< ObjectKnowledge >::Register( element.GetId(), const_cast< ObjectKnowledge& >( element ) );
+    Resolver< ObjectKnowledge_ABC >::Register( element.GetId(), const_cast< ObjectKnowledge_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RcEntityResolver::NotifyDeleted
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyDeleted( const ObjectKnowledge& element )
+void RcEntityResolver::NotifyDeleted( const ObjectKnowledge_ABC& element )
 {
-    Resolver< ObjectKnowledge >::Remove( element.GetId() );
+    Resolver< ObjectKnowledge_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RcEntityResolver::NotifyCreated
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyCreated( const AgentKnowledge& element )
+void RcEntityResolver::NotifyCreated( const AgentKnowledge_ABC& element )
 {
-    Resolver< AgentKnowledge >::Register( element.GetId(), const_cast< AgentKnowledge& >( element ) );
+    Resolver< AgentKnowledge_ABC >::Register( element.GetId(), const_cast< AgentKnowledge_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RcEntityResolver::NotifyDeleted
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyDeleted( const AgentKnowledge& element )
+void RcEntityResolver::NotifyDeleted( const AgentKnowledge_ABC& element )
 {
-    Resolver< AgentKnowledge >::Remove( element.GetId() );
+    Resolver< AgentKnowledge_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RcEntityResolver::NotifyCreated
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyCreated( const PopulationKnowledge& element )
+void RcEntityResolver::NotifyCreated( const PopulationKnowledge_ABC& element )
 {
-    Resolver< PopulationKnowledge >::Register( element.GetId(), const_cast< PopulationKnowledge& >( element ) );
+    Resolver< PopulationKnowledge_ABC >::Register( element.GetId(), const_cast< PopulationKnowledge_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RcEntityResolver::NotifyDeleted
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyDeleted( const PopulationKnowledge& element )
+void RcEntityResolver::NotifyDeleted( const PopulationKnowledge_ABC& element )
 {
-    Resolver< PopulationKnowledge >::Remove( element.GetId() );
+    Resolver< PopulationKnowledge_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,12 +118,12 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
 {
     if( type == Agent::typeName_ )
         return CreateLink< Agent_ABC >( id );
-    else if( type == ObjectKnowledge::typeName_ )
-        return CreateLink< ObjectKnowledge >( id );
-    else if( type == AgentKnowledge::typeName_ )
-        return CreateLink< AgentKnowledge >( id );
-    else if( type == PopulationKnowledge::typeName_ )
-        return CreateLink< PopulationKnowledge >( id );
+    else if( type == ObjectKnowledge_ABC::typeName_ )
+        return CreateLink< ObjectKnowledge_ABC >( id );
+    else if( type == AgentKnowledge_ABC::typeName_ )
+        return CreateLink< AgentKnowledge_ABC >( id );
+    else if( type == PopulationKnowledge_ABC::typeName_ )
+        return CreateLink< PopulationKnowledge_ABC >( id );
     return QString::number( id );
 }
 

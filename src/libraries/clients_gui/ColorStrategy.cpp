@@ -178,8 +178,8 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
     QColor color( 255, 255, 255 );
-    if( knowledge.GetEntity() )
-        color = FindColor( *knowledge.GetEntity() );
+    if( const Entity_ABC* entity = knowledge.GetEntity() )
+        color = FindColor( *entity );
     color = KnowledgeColor( color );
     ApplyColor( color );
 }
