@@ -34,9 +34,9 @@ using namespace gui;
 ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
     : QListView   ( pParent )
     , controllers_( controllers )
-    , factory_( factory )
-    , pPopupMenu_ ( 0 )
+    , factory_    ( factory )
     , currentTeam_( 0 )
+    , selected_   ( controllers )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Objets" ) );
@@ -44,9 +44,10 @@ ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, Item
     setResizeMode( QListView::LastColumn );
     header()->hide();
 
-    connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChange( QListViewItem* ) ) );
-    connect( this, SIGNAL( doubleClicked   ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( spacePressed    ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
+    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
 
     controllers_.Register( *this );
 }
@@ -143,11 +144,12 @@ QSize ObjectListView::sizeHint() const
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView::Select
-// Created: AGE 2006-03-21
+// Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectListView::Select( const Object_ABC& object )
+void ObjectListView::Select( const kernel::Object_ABC& object )
 {
-    setSelected( FindItem( &object, firstChild() ), true );
+    selected_ = &object;
+    setSelected( FindItem( selected_, firstChild() ), true );
     ensureItemVisible( selectedItem() );
 }
 
@@ -165,4 +167,14 @@ void ObjectListView::OptionChanged( const std::string& name, const OptionVariant
         item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
         item = (ValuedListItem*)( item->nextSibling() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::OnContextMenuRequested
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void ObjectListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
+{
+    if( ValuedListItem* item = (ValuedListItem*)( i ) )
+        item->ContextMenu( controllers_.actions_, pos );
 }

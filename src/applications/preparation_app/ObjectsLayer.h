@@ -7,35 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __gui_ObjectsLayer_h_
-#define __gui_ObjectsLayer_h_
+#ifndef __ObjectsLayer_h_
+#define __ObjectsLayer_h_
 
-#include "EntityLayer.h"
-#include "clients_kernel/Object_ABC.h"
-
-namespace gui
-{
+#include "clients_gui/ObjectsLayer.h"
 
 // =============================================================================
 /** @class  ObjectsLayer
     @brief  ObjectsLayer
 */
-// Created: AGE 2006-03-23
+// Created: SBO 2006-10-16
 // =============================================================================
-class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
+class ObjectsLayer : public gui::ObjectsLayer
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~ObjectsLayer();
     //@}
 
-private:
-    //! @name Helpers
+    //! @name Operations
     //@{
-    virtual void DisplayTooltip( const kernel::Object_ABC& entity, kernel::Displayer_ABC& displayer );
+    virtual bool HandleKeyPress( QKeyEvent* key );
     //@}
 
 private:
@@ -44,8 +39,17 @@ private:
     ObjectsLayer( const ObjectsLayer& );            //!< Copy constructor
     ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignement operator
     //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Object_ABC* object );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::SafePointer< kernel::Object_ABC > selected_;
+    //@}
 };
 
-}
-
-#endif // __gui_ObjectsLayer_h_
+#endif // __ObjectsLayer_h_

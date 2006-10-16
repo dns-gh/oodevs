@@ -19,10 +19,12 @@
 //#include "MapToolbar.h"
 #include "Menu.h"
 #include "ObjectCreationPanel.h"
+#include "ObjectsLayer.h"
 //#include "UnitToolbar.h"
 //#include "LinkInterpreter.h"
 #include "TacticalListView.h"
 #include "CommunicationListView.h"
+#include "ObjectListView.h"
 #include "AgentsLayer.h"
 #include "ModelBuilder.h"
 #include "Dialogs.h"
@@ -47,7 +49,6 @@
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GraphicPreferences.h"
 //#include "clients_gui/Logger.h"
-#include "clients_gui/ObjectList.h"
 #include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
@@ -66,7 +67,6 @@
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/MissionLayer.h"
 //#include "clients_gui/LimitsLayer.h"
-#include "clients_gui/ObjectsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/IconLayout.h"
@@ -129,7 +129,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
 
     pListsTabWidget->addTab( pAgentsTabWidget, tr( "Agents" ) );
-    pListsTabWidget->addTab( new ObjectList( controllers, *factory ), tr( "Objets" ) );
+
+    listsTabBox = new QVBox( pListsTabWidget );
+    new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
+    new ::ObjectListView( listsTabBox, controllers, *factory );
+    pListsTabWidget->addTab( listsTabBox, tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory ), tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
@@ -203,7 +207,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
 //    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.limits_ );
-    Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
 //    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );

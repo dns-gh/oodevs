@@ -10,7 +10,19 @@
 #ifndef __astec_preparation_pch_h_
 #define __astec_preparation_pch_h_
 
+#pragma warning( disable : 4290 )
+#pragma warning( disable : 4702 )
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#undef min
+#undef max
+#undef Yield
+#undef GetObject
+#undef GetMessage
+
 #include <qstring.h>
+#include <qgl.h>
 #include <string>
 #include <map>
 #include <vector>

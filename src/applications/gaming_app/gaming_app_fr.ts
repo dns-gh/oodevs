@@ -1419,9 +1419,6 @@
     </message>
 </context>
 <context>
-    <name>PopulationKnowledgePanel</name>
-</context>
-<context>
     <name>RecorderToolbar</name>
     <message>
         <source>Enregisteur d&apos;ordres</source>

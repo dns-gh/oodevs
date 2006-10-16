@@ -11,6 +11,7 @@
 #include "ObjectPositions.h"
 #include "LocationSerializer.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -24,7 +25,7 @@ ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter, cons
     : converter_( converter )
     , location_( &location.Clone() )
 {
-    // NOTHING
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +43,9 @@ ObjectPositions::~ObjectPositions()
 // -----------------------------------------------------------------------------
 geometry::Point2f ObjectPositions::GetPosition() const
 {
-    return center_;
+    if( ! points_.empty() )
+        return points_.front();
+    return geometry::Point2f();
 }
     
 // -----------------------------------------------------------------------------
@@ -60,7 +63,21 @@ float ObjectPositions::GetHeight() const
 // -----------------------------------------------------------------------------
 bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/ ) const
 {
-    return false; // $$$$ SBO 2006-09-11: todo
+    precision*=precision;
+    if( points_.empty() )
+        return false;
+    if( points_.size() == 1 )
+        return points_.front().SquareDistance( pos ) <= precision;
+
+    CIT_PointVector previous = points_.begin();
+    for( CIT_PointVector current = previous + 1; current != points_.end(); ++current )
+    {
+        const geometry::Segment2f segment( *previous, *current );
+        if( segment.SquareDistance( pos ) < precision )
+            return true;
+        previous = current;
+    }
+    return false;
 }
     
 // -----------------------------------------------------------------------------
@@ -69,7 +86,7 @@ bool ObjectPositions::IsAt( const geometry::Point2f& pos, float precision /*= 10
 // -----------------------------------------------------------------------------
 bool ObjectPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
-    return false; // $$$$ SBO 2006-09-11: todo
+    return ! boundingBox_.Intersect( rectangle ).IsEmpty();
 }
     
 // -----------------------------------------------------------------------------
@@ -91,4 +108,76 @@ void ObjectPositions::DoSerialize( xml::xostream& xos ) const
     xos << start( "shape" );
     serializer.Serialize( *location_, xos );
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::Update
+// Created: SBO 2006-10-16
+// -----------------------------------------------------------------------------
+void ObjectPositions::Update()
+{
+    location_->Accept( *this );
+    boundingBox_.Set( 0, 0, 0, 0 );
+    for( unsigned int i = 0; i < points_.size(); ++i )
+        boundingBox_.Incorporate( points_[i] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::VisitLines
+// Created: SBO 2006-10-16
+// -----------------------------------------------------------------------------
+void ObjectPositions::VisitLines( const T_PointVector& points )
+{
+    points_ = points;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::VisitPolygon
+// Created: SBO 2006-10-16
+// -----------------------------------------------------------------------------
+void ObjectPositions::VisitPolygon( const T_PointVector& points )
+{
+    points_ = points;
+    points_.push_back( points.front() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::VisitCircle
+// Created: SBO 2006-10-16
+// -----------------------------------------------------------------------------
+void ObjectPositions::VisitCircle( const geometry::Point2f& center, float radius )
+{
+    static const double PI = 3.1415926539;
+    points_.clear();
+    for( double angle = 0.; angle <= 2 * PI; angle += PI / 8. )
+        points_.push_back( geometry::Point2f( center.X() + radius * std::cos( angle )
+                                            , center.Y() + radius * std::sin( angle ) ) );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::VisitPoint
+// Created: SBO 2006-10-16
+// -----------------------------------------------------------------------------
+void ObjectPositions::VisitPoint( const geometry::Point2f& point )
+{
+    points_.clear();
+    points_.push_back( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::Draw
+// Created: SBO 2006-10-16
+// -----------------------------------------------------------------------------
+void ObjectPositions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( viewport.Intersect( boundingBox_ ).IsEmpty() || points_.empty() )
+        return;
+
+    glPushAttrib( GL_LINE_BIT );
+    glLineWidth( 2.f );
+    if( points_.size() >= 2 )
+        tools.DrawLines( points_ );
+    else
+        tools.DrawCross( points_.front(), GL_CROSSSIZE );
+    glPopAttrib();
 }

@@ -13,6 +13,8 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 
 namespace kernel
 {
@@ -28,6 +30,8 @@ namespace kernel
 // =============================================================================
 class ObjectPositions : public kernel::Positions
                       , public kernel::Serializable_ABC
+                      , public kernel::Drawable_ABC
+                      , public kernel::LocationVisitor_ABC
 {
 
 public:
@@ -45,6 +49,7 @@ public:
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -54,13 +59,23 @@ private:
     ObjectPositions& operator=( const ObjectPositions& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void Update();
+    virtual void VisitLines  ( const T_PointVector& points );
+    virtual void VisitPolygon( const T_PointVector& points );
+    virtual void VisitCircle ( const geometry::Point2f& center, float radius );
+    virtual void VisitPoint  ( const geometry::Point2f& point );
+    //@}
+
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::Location_ABC* location_;
     geometry::Rectangle2f boundingBox_;
-    geometry::Point2f center_;
+
+    T_PointVector points_;
     //@}
 
 };

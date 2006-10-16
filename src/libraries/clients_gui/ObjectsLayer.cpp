@@ -28,7 +28,7 @@ ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, 
 // -----------------------------------------------------------------------------
 // Name: ObjectsLayer destructor
 // Created: AGE 2006-03-23
-// -----------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 ObjectsLayer::~ObjectsLayer()
 {
     // NOTHING

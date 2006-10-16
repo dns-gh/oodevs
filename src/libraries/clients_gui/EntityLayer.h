@@ -105,9 +105,9 @@ private:
     T_Entities entities_;
     unsigned tooltiped_;
     GlTooltip* tooltip_;
+    unsigned selected_;
 
 protected: // $$$$ AGE 2006-05-17: 
-    unsigned selected_;
     const kernel::Profile_ABC& profile_;
     //@}
 };

@@ -7,12 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectListView_h_
-#define __ObjectListView_h_
+#ifndef __gui_ObjectListView_h_
+#define __gui_ObjectListView_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -55,6 +56,7 @@ private slots:
     //@{
     void OnSelectionChange( QListViewItem* item );
     void OnRequestCenter();
+    void OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int );
     //@}
 
 private:
@@ -77,11 +79,16 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    QPopupMenu* pPopupMenu_;
     const kernel::Team_ABC* currentTeam_;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    kernel::SafePointer< kernel::Object_ABC > selected_;
     //@}
 };
 
 }
 
-#endif // __ObjectListView_h_
+#endif // __gui_ObjectListView_h_
