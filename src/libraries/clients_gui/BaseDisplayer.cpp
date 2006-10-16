@@ -11,6 +11,7 @@
 #include "BaseDisplayer.h"
 #include "InternalLinks.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/EquipmentType.h"
@@ -64,6 +65,15 @@ void BaseDisplayer::Call( const bool& value )
 void BaseDisplayer::Call( const Agent_ABC& value )
 {
     AddToDisplay( InternalLinks::CreateLink( value, value.GetName() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: AGE 2006-10-16
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::Automat_ABC& value )
+{
+    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------

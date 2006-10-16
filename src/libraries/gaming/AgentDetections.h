@@ -57,7 +57,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const kernel::Agent_ABC*, E_UnitVisType > T_AgentDetections;
-    typedef T_AgentDetections::const_iterator     CIT_AgentDetections;
+    typedef T_AgentDetections::const_iterator                 CIT_AgentDetections;
     //@}
 
     //! @name Helpers

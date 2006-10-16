@@ -114,6 +114,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
+    result->Attach( *new LogisticConsigns( controllers_.controller_ ) );
 
     result->Update( asnMsg );
     result->Polish();

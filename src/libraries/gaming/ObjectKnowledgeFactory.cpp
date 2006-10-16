@@ -22,6 +22,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "ObjectKnowledgePositions.h"
+#include "ObjectPerceptions.h"
 #include "StaticModel.h"
 
 using namespace kernel;
@@ -53,8 +54,9 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // -----------------------------------------------------------------------------
 ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, model_.agents_, static_.objectTypes_ );
+    ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, static_.objectTypes_ );
     knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_ ) );
+    knowledge->Attach( *new ObjectPerceptions( controllers_.controller_, model_.agents_ ) );
     switch( message.type )
     {
     case EnumObjectType::camp_prisonniers:

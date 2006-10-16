@@ -17,7 +17,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Automat_ABC;
     class Team_ABC;
     class Controllers;
     class Displayer_ABC;
@@ -39,6 +39,7 @@ namespace gui
 class ObjectKnowledges;
 class ObjectKnowledge_ABC;
 class ObjectKnowledges;
+class ObjectPerceptions;
 
 // =============================================================================
 /** @class  ObjectKnowledgePanel
@@ -50,6 +51,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public kernel::Observer_ABC
                            , public kernel::ElementObserver_ABC< ObjectKnowledges >
                            , public kernel::ElementObserver_ABC< ObjectKnowledge_ABC >
+                           , public kernel::ElementObserver_ABC< ObjectPerceptions >
                            , public kernel::ElementObserver_ABC< kernel::CampAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::CrossingSiteAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
@@ -68,7 +70,7 @@ public:
     //! @name Operations
     //@{
     void Display( const ObjectKnowledge_ABC& k, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
-    void Display( const kernel::Agent_ABC* agent, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
+    void Display( const kernel::Automat_ABC* agent, kernel::Displayer_ABC& displayer, gui::ValuedListItem* );
     //@}
 
 private slots:
@@ -92,6 +94,7 @@ private:
     void showEvent( QShowEvent* );
     virtual void NotifyUpdated( const ObjectKnowledges& element );
     virtual void NotifyUpdated( const ObjectKnowledge_ABC& element );
+    virtual void NotifyUpdated( const ObjectPerceptions& element );
     virtual void NotifyUpdated( const kernel::CampAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::CrossingSiteAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& element );

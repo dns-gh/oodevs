@@ -16,6 +16,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "gaming/ObjectKnowledges.h"
 #include "gaming/ObjectKnowledge_ABC.h"
+#include "gaming/ObjectPerceptions.h"
 #include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"
 
@@ -138,21 +139,30 @@ void ObjectKnowledgePanel::Display( const ObjectKnowledge_ABC& k, Displayer_ABC&
 // -----------------------------------------------------------------------------
 void ObjectKnowledgePanel::NotifyUpdated( const ObjectKnowledge_ABC& element )
 {
-    // $$$$ AGE 2006-10-16: 
-//    if( ! IsVisible() || &element != subSelected_ )
-//        return;
-//    display_->Hide();
-//    element.Display( *display_ );
-//    pPerceptionListView_->DeleteTail(
-//        pPerceptionListView_->DisplayList( element.detectingAutomats_.begin(), element.detectingAutomats_.end() )
-//    );
+    if( ! IsVisible() || &element != subSelected_ )
+        return;
+    display_->Hide();
+    element.Display( *display_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-10-16
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const ObjectPerceptions& element )
+{
+    if( ! IsVisible() || ! subSelected_ || subSelected_->Retrieve< ObjectPerceptions >() != &element )
+        return;
+    pPerceptionListView_->DeleteTail(
+        pPerceptionListView_->DisplayList( element.detectingAutomats_.begin(), element.detectingAutomats_.end() )
+    );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel::Display
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePanel::Display( const Agent_ABC* agent, Displayer_ABC& displayer, ValuedListItem* )
+void ObjectKnowledgePanel::Display( const Automat_ABC* agent, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( agent );
 }

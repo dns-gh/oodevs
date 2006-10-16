@@ -45,7 +45,6 @@ public:
              ObjectKnowledge( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
                               kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                               const kernel::Resolver_ABC< kernel::Object_ABC >& objectResolver,
-                              const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
                               const kernel::Resolver_ABC< kernel::ObjectType >& typeResolver );
     virtual ~ObjectKnowledge();
     //@}
@@ -68,11 +67,6 @@ private:
     ObjectKnowledge( const ObjectKnowledge& );            //!< Copy constructor
     ObjectKnowledge& operator=( const ObjectKnowledge& ); //!< Assignement operator
     //@}
-    
-    //! @name Types
-    //@{
-    typedef std::set< const kernel::Agent_ABC* > T_Agents;
-    //@}
 
     //! @name Helpers
     //@{
@@ -84,7 +78,6 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver_;
     const kernel::Team_ABC& owner_;
 
     const kernel::ObjectType* type_;
@@ -98,9 +91,6 @@ private:
     kernel::OptionalValue< bool >          bEnPreparation_;
     kernel::OptionalValue< bool >          bIsPerceived_;
     kernel::OptionalValue< uint >          nRelevance_;
-
-public: // $$$$ AGE 2006-03-13: 
-    T_Agents detectingAutomats_; // $$$$ AGE 2006-03-13: move in an extension ?
     //@}
 };
 

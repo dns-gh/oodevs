@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Automat_ABC;
     class Agent_ABC;
     class Object_ABC;
     class Team_ABC;
@@ -44,6 +45,7 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public kernel::Caller< kernel::Population_ABC>
                     , public kernel::Caller< kernel::PopulationConcentration_ABC >
                     , public kernel::Caller< kernel::Agent_ABC >
+                    , public kernel::Caller< kernel::Automat_ABC >
                     , public kernel::Caller< kernel::Object_ABC >
                     , public kernel::Caller< kernel::Team_ABC >
                     , public kernel::Caller< kernel::Entity_ABC >
@@ -75,6 +77,7 @@ private:
     //@{
     virtual void Call( const bool& value );
     virtual void Call( const kernel::Agent_ABC& value );
+    virtual void Call( const kernel::Automat_ABC& value );
     virtual void Call( const kernel::Population_ABC& value );
     virtual void Call( const kernel::PopulationConcentration_ABC& value );
     virtual void Call( const kernel::Object_ABC& value );

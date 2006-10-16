@@ -28,12 +28,11 @@ using namespace kernel;
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
-                                  const Resolver_ABC< Object_ABC >& objectResolver , const Resolver_ABC< Agent_ABC >& agentResolver, const Resolver_ABC< ObjectType >& typeResolver )
+                                  const Resolver_ABC< Object_ABC >& objectResolver, const Resolver_ABC< ObjectType >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid_connaissance, "" )
     , converter_     ( converter )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
-    , agentResolver_ ( agentResolver )
     , type_          ( & typeResolver.Get( message.type ) )
     , pRealObject_   ( 0 )
 {
@@ -79,13 +78,6 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
     
     if( message.m.est_percuPresent )
         bIsPerceived_ = message.est_percu;
-
-    if( message.m.perception_par_compagniePresent )
-    {
-        detectingAutomats_.clear();
-        for( uint i = 0; i < message.perception_par_compagnie.n; ++i )
-            detectingAutomats_.insert( & agentResolver_.Get( message.perception_par_compagnie.elem[i] ) );
-    }
 
     Touch();
 }
