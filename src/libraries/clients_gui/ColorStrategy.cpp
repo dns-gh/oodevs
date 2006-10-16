@@ -149,8 +149,7 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Object_ABC& object )
 {
-    const Team_ABC& team = object.GetTeam();
-    QColor color = teamColors_[ &team ].second;
+    QColor color = FindColor( object );
     if( selectedObject_ == &object )
         color = SelectedColor( color );
     tools_.Select( selectedObject_ == &object );

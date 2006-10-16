@@ -36,7 +36,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DisplayTooltip( const kernel::Object_ABC& entity, kernel::Displayer_ABC& displayer );
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     //@}
 
 private:

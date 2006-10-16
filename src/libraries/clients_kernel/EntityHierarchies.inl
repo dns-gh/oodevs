@@ -142,8 +142,11 @@ const Entity_ABC& EntityHierarchies< Interface >::GetUp( unsigned int nLevel /*=
 {
     if( nLevel == 0 )
         return GetEntity();
-    if( ! superior_ )
+    const Entity_ABC* superior = GetSuperior();
+    if( ! superior )
         throw std::runtime_error( __FUNCTION__ );
+    if( nLevel == 1 )
+        return *superior_;
     return superior_->Get< Interface >().GetUp( nLevel - 1 );
 }
 

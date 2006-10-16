@@ -260,24 +260,24 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
 
     // ordre de dessin
-//    glProxy_->Register( defaultLayer );
+    glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );
-//    glProxy_->Register( elevation3d );
+    glProxy_->Register( elevation3d );
     glProxy_->Register( terrain );
-//    glProxy_->Register( grid );
-//    glProxy_->Register( meteo );
-//    glProxy_->Register( limits );
+    glProxy_->Register( grid );
+    glProxy_->Register( meteo );
+    glProxy_->Register( limits );
     glProxy_->Register( objectKnowledges );
-//    glProxy_->Register( populationKnowledges );
-//    glProxy_->Register( agentKnowledges );
-//    glProxy_->Register( objectsLayer );
-//    glProxy_->Register( populations );
-//    glProxy_->Register( agents );
-//    glProxy_->Register( missionsLayer );
-//    glProxy_->Register( objectCreationLayer );
-//    glProxy_->Register( parameters );
-//    glProxy_->Register( metrics );
-//    glProxy_->Register( drawer );
+    glProxy_->Register( populationKnowledges );
+    glProxy_->Register( agentKnowledges );
+    glProxy_->Register( objectsLayer );
+    glProxy_->Register( populations );
+    glProxy_->Register( agents );
+    glProxy_->Register( missionsLayer );
+    glProxy_->Register( objectCreationLayer );
+    glProxy_->Register( parameters );
+    glProxy_->Register( metrics );
+    glProxy_->Register( drawer );
 
     // ordre des evenements
     forward_->Register( parameters );

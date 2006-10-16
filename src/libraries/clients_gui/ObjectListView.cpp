@@ -20,6 +20,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 using namespace kernel;
 using namespace gui;
@@ -91,7 +92,8 @@ void ObjectListView::OnRequestCenter()
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyCreated( const Object_ABC& object )
 {
-    const Team_ABC& team = object.GetTeam();
+    // $$$$ AGE 2006-10-16: 
+    const Team_ABC& team = static_cast< const Team_ABC& >( object.Get< TacticalHierarchies >().GetUp() );
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {

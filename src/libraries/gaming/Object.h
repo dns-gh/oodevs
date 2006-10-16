@@ -60,7 +60,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const kernel::Team_ABC& GetTeam() const;
+    virtual const kernel::Team_ABC& GetTeam() const; // $$$$ AGE 2006-10-16: remove
     virtual kernel::ObjectType& GetType() const;
     virtual QString GetTypeName() const;
     //@}

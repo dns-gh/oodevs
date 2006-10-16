@@ -18,6 +18,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -138,7 +139,7 @@ bool ObjectKnowledge::IsInTeam( const Team_ABC& team ) const
 // -----------------------------------------------------------------------------
 bool ObjectKnowledge::KnowledgeIsInTeam( const Team_ABC& team ) const
 {
-    return pRealObject_ && & pRealObject_->GetTeam() == & team;
+    return pRealObject_ && pRealObject_->Get< TacticalHierarchies >().IsSubordinateOf( team );
 }
 
 // -----------------------------------------------------------------------------

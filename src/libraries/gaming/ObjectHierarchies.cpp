@@ -7,38 +7,38 @@
 //
 // *****************************************************************************
 
-#include "clients_gui_pch.h"
-#include "ObjectsLayer.h"
-#include "clients_kernel/Profile_ABC.h"
+#include "gaming_pch.h"
+#include "ObjectHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: ObjectsLayer constructor
-// Created: AGE 2006-03-23
+// Name: ObjectHierarchies constructor
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
-    : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile )
+ObjectHierarchies::ObjectHierarchies( Controller& controller, Entity_ABC& entity, const Resolver_ABC< Team_ABC >& teamResolver )
+    : EntityHierarchies< TacticalHierarchies >( controller, entity )
+    , teamResolver_( teamResolver )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectsLayer destructor
-// Created: AGE 2006-03-23
+// Name: ObjectHierarchies destructor
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectsLayer::~ObjectsLayer()
+ObjectHierarchies::~ObjectHierarchies()
 {
     // NOTHING
 }
 
+
 // -----------------------------------------------------------------------------
-// Name: ObjectsLayer::DisplayTooltip
-// Created: AGE 2006-06-29
+// Name: ObjectHierarchies::DoUpdate
+// Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectsLayer::DisplayTooltip( const Object_ABC& entity, Displayer_ABC& displayer )
+void ObjectHierarchies::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    entity.DisplayInTooltip( displayer );
+    SetSuperior( &teamResolver_.Get( message.camp ) );
 }

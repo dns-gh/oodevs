@@ -22,6 +22,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "ObjectPositions.h"
+#include "ObjectHierarchies.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "StaticModel.h"
 
@@ -57,6 +58,7 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.objectTypes_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< Positions >( *new ObjectPositions( static_.coordinateConverter_ ) );
+    result->Attach< TacticalHierarchies >( *new ObjectHierarchies( controllers_.controller_, *result, model_.teams_ ) );
     switch( message.type )
     {
     case EnumObjectType::camp_prisonniers:
