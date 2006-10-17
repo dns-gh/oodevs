@@ -17,6 +17,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/OptionalValue.h"
 
 namespace kernel
 {
@@ -81,11 +82,11 @@ public:
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::ObjectType&   type_;
 
-    float rConstructionPercentage_;
-    float rValorizationPercentage_;
-    float rBypassConstructionPercentage_;
+    kernel::OptionalValue< float > rConstructionPercentage_;
+    kernel::OptionalValue< float > rValorizationPercentage_;
+    kernel::OptionalValue< float > rBypassConstructionPercentage_;
 
-    bool bPrepared_;
+    kernel::OptionalValue< bool >  bPrepared_;
     //@}
 
 public: // $$$$ AGE 2006-10-12: 
@@ -94,8 +95,8 @@ public: // $$$$ AGE 2006-10-12:
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;
-    unsigned int nDotationConstruction_;
-    unsigned int nDotationValorization_;
+    kernel::OptionalValue< unsigned int > nDotationConstruction_;
+    kernel::OptionalValue< unsigned int > nDotationValorization_;
     //@}
 };
 

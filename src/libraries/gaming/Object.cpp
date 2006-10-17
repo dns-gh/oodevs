@@ -32,15 +32,9 @@ Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, 
     : EntityImplementation< Object_ABC >( controller, message.oid, QString( "%1 [%2]" ).arg( message.nom ).arg( message.oid ) )
     , converter_                     ( converter )
     , type_                          ( typeResolver.Get( message.type ) )
-    , rConstructionPercentage_       ( 0.0 )
-    , rValorizationPercentage_       ( 0.0 )
-    , rBypassConstructionPercentage_ ( 0.0 )
-    , bPrepared_                     ( false )
     , nTypeLocalisation_             ( message.localisation.type )
     , construction_                  ( 0 )
     , valorization_                  ( 0 )
-    , nDotationConstruction_         ( 0 )
-    , nDotationValorization_         ( 0 )
 {
     RegisterSelf( *this );
 
@@ -86,18 +80,20 @@ QString Object::GetTypeName() const
 // -----------------------------------------------------------------------------
 void Object::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 {
-    bPrepared_ = message.en_preparation;
+     // $$$$ AGE 2006-10-17: toooo bad. NLD sux !
+    if( type_.CanBePrepared() )
+        bPrepared_ = message.en_preparation;
 
     if( message.m.nb_dotation_constructionPresent )
         nDotationConstruction_ = message.nb_dotation_construction;
-    if( message.m.nb_dotation_valorisationPresent )
+    if( message.m.nb_dotation_valorisationPresent && type_.CanBeValorized() )
         nDotationValorization_ = message.nb_dotation_valorisation;
 
     if( message.m.pourcentage_constructionPresent )
         rConstructionPercentage_ = message.pourcentage_construction;
-    if( message.m.pourcentage_valorisationPresent )
+    if( message.m.pourcentage_valorisationPresent && type_.CanBeValorized() )
         rValorizationPercentage_ = message.pourcentage_valorisation;
-    if( message.m.pourcentage_creation_contournementPresent )
+    if( message.m.pourcentage_creation_contournementPresent && type_.CanBeBypassed() )
         rBypassConstructionPercentage_ = message.pourcentage_creation_contournement;
 
     Touch();

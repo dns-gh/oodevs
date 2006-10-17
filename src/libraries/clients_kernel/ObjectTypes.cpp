@@ -39,19 +39,21 @@ void ObjectTypes::Load( const std::string& scipioXml )
     Purge();
 
     xml::xifstream scipio( scipioXml );
-    std::string idFile, dotations, equipments, nbc, pannes;
+    std::string idFile, dotations, equipments, nbc, pannes, objects;
     scipio >> start( "Scipio" )
                 >> start( "Donnees" )
                     >> content( "ClasseIDs", idFile )
                     >> content( "Dotations", dotations )
                     >> content( "Composantes", equipments )
                     >> content( "NBC", nbc )
-                    >> content( "Pannes", pannes );
+                    >> content( "Pannes", pannes )
+                    >> content( "Objets", objects );
 
     xml::xifstream xis( path_tools::BuildChildPath( scipioXml, idFile ) );
     xis >> start( "Classes" )
-		>> list( "Classe", *this, &ObjectTypes::ReadObjectTypes );
-
+		>> list( "Classe", *this, &ObjectTypes::ReadObjectClasses );
+    
+    ReadObjectTypes( path_tools::BuildChildPath( scipioXml, objects ) );
     ReadDotations( path_tools::BuildChildPath( scipioXml, dotations ) );
     ReadEquipments( path_tools::BuildChildPath( scipioXml, equipments ) );
     ReadNBC( path_tools::BuildChildPath( scipioXml, nbc ) );
@@ -84,7 +86,7 @@ ObjectTypes::~ObjectTypes()
 // Name: ObjectTypes::ReadObjectTypes
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
+void ObjectTypes::ReadObjectClasses( xml::xistream& xis )
 {
     std::string strObjectName;
     int nId;
@@ -99,8 +101,32 @@ void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
         IDManager*& pManager = managers_[ nId ];
         if( ! pManager )
             pManager = new IDManager( nId );
-        Resolver< ObjectType >::Register( nType, *new ObjectType( nType, strObjectName.c_str(), *pManager ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadObjectTypes
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadObjectTypes( const std::string& objects )
+{
+    xifstream xis( objects );
+    xis >> start( "Objets" )
+        >> start( "ObjetsReels" )
+        >> list ( "Objet", *this, &ObjectTypes::ReadObjectType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadObjectType
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadObjectType( xml::xistream& xis )
+{
+    std::string type;
+    xis >> attribute( "type", type );
+    int nType = ENT_Tr::ConvertToObjectType( type );
+    // $$$$ AGE 2006-10-17: checks
+    Resolver< ObjectType >::Register( nType, *new ObjectType( xis, nType, *managers_[ objectIds_[ nType ] ] ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,6 +31,7 @@ class SpinBoxDisplayer : public kernel::Displayer_ABC
                        , public kernel::Caller< float >
                        , public kernel::Caller< int >
                        , public kernel::Caller< kernel::Unit >
+                       , public kernel::Caller< kernel::ValueNotSet >
 {
 
 public:
@@ -64,6 +65,7 @@ private:
     virtual void Call( const float& value );
     virtual void Call( const int& value );
     virtual void Call( const kernel::Unit& value );
+    virtual void Call( const kernel::ValueNotSet& value );
     //@}
 
 private:

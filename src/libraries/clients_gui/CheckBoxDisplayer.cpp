@@ -56,7 +56,7 @@ Displayer_ABC& CheckBoxDisplayer::SubItem( const QString& )
 // -----------------------------------------------------------------------------
 void CheckBoxDisplayer::StartDisplay()
 {
-    // NOTHING
+    box_->setTristate( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +84,16 @@ void CheckBoxDisplayer::EndDisplay()
 void CheckBoxDisplayer::Call( const bool& value )
 {
     box_->setChecked( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CheckBoxDisplayer::Call
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+void CheckBoxDisplayer::Call( const kernel::ValueNotSet& )
+{
+    box_->setTristate( true );
+    box_->setNoChange();
 }
 
 // -----------------------------------------------------------------------------

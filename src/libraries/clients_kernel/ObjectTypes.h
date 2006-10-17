@@ -66,7 +66,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadObjectTypes( xml::xistream& xis );
+    void ReadObjectClasses( xml::xistream& xis );
+    void ReadObjectTypes( const std::string& objects );
+    void ReadObjectType( xml::xistream& xis );
     void ReadDotations( const std::string& dotations );
     void ReadDotation( xml::xistream& xis );
     void ReadCategory( xml::xistream& xis, const std::string& name );

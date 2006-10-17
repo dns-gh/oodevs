@@ -12,6 +12,8 @@
 
 #include "Drawable_ABC.h"
 
+namespace xml { class xistream; };
+
 namespace kernel
 {
     class IDManager;
@@ -28,7 +30,7 @@ class ObjectType : public Drawable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectType( unsigned long id, const QString& name, IDManager& manager );
+             ObjectType( xml::xistream& xis, unsigned long id, IDManager& manager );
     virtual ~ObjectType();
     //@}
 
@@ -36,6 +38,10 @@ public:
     //@{
     QString GetName() const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+
+    bool CanBePrepared() const;
+    bool CanBeValorized() const;
+    bool CanBeBypassed() const;
     //@}
 
 private:
@@ -58,6 +64,10 @@ public:
     unsigned long id_;
     QString name_;
     const char** xpm_;
+
+    bool canBePrepared_;
+    bool canBeValorized_;
+    bool canBeBypassed_;
     //@}
 };
 

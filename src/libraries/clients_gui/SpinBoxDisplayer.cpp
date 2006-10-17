@@ -57,7 +57,7 @@ Displayer_ABC& SpinBoxDisplayer::SubItem( const QString& )
 // -----------------------------------------------------------------------------
 void SpinBoxDisplayer::StartDisplay()
 {
-    // NOTHING
+    edit_->setSpecialValueText( QString::null );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +112,16 @@ void SpinBoxDisplayer::Call( const int& value )
 void SpinBoxDisplayer::Call( const Unit& value )
 {
     edit_->setSuffix( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpinBoxDisplayer::Call
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+void SpinBoxDisplayer::Call( const kernel::ValueNotSet& )
+{
+    edit_->setSpecialValueText( "---" );
+    edit_->setValue( edit_->minValue() );
 }
 
 // -----------------------------------------------------------------------------

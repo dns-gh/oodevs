@@ -23,6 +23,7 @@ namespace gui
 // =============================================================================
 class CheckBoxDisplayer : public kernel::Displayer_ABC
                         , public kernel::Caller< bool >
+                        , public kernel::Caller< kernel::ValueNotSet >
 {
 
 public:
@@ -52,6 +53,7 @@ private:
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
     virtual void Call( const bool& value );
+    virtual void Call( const kernel::ValueNotSet& value );
     //@}
 
 private:

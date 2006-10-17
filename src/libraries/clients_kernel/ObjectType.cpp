@@ -12,19 +12,26 @@
 #include "GlTools_ABC.h"
 #include "objecticons.h"
 #include "ENT/ENT_Tr.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectType constructor
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType::ObjectType( unsigned long id, const QString& name, IDManager& manager )
+ObjectType::ObjectType( xistream& xis, unsigned long id, IDManager& manager )
     : manager_( manager )
     , id_( id )
-    , name_( name )
 {
     xpm_ = TypeIcon();
+    std::string name;
+    xis >> attribute( "type", name )
+        >> content( "PeutEtrePrepare", canBePrepared_ )
+        >> content( "PeutEtreValorise", canBeValorized_ )
+        >> content( "PeutEtreContourne", canBeBypassed_ );
+    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +50,33 @@ ObjectType::~ObjectType()
 QString ObjectType::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CanBePrepared
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBePrepared() const
+{
+    return canBePrepared_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CanBeValorized
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBeValorized() const
+{
+    return canBeValorized_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::CanBeBypassed
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBeBypassed() const
+{
+    return canBeBypassed_;
 }
 
 // -----------------------------------------------------------------------------
