@@ -118,7 +118,7 @@ void Report_ABC::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QColor Report_ABC::GetColor( E_Type type )
 {
-    static QColor colors[] = { QColor( 200, 0, 0 ),     // eRC      = 1000,
+    static QColor colors[] = { QColor( 0, 0, 0 ),       // eRC      = 1000,
                                QColor( 150, 150, 150 ), // eTrace   = 1001,
                                QColor( 32, 200, 64 ),   // eEvent   = 1002,
                                QColor( 0, 0, 200 ),     // eMessage = 1003,

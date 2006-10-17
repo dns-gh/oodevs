@@ -12,8 +12,9 @@
 
 #include "clients_gui/ListDisplayer.h"
 #include "clients_kernel/Observer_ABC.h"
-#include "gaming/AgentSelectionObserver.h"
+#include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "gaming/AgentSelectionObserver.h"
 
 namespace kernel
 {
@@ -55,6 +56,8 @@ public slots:
     //@{
     void OnOptionsChanged();
     void OnRequestPopup( QListViewItem*, const QPoint&, int );
+    void OnSelectionChanged();
+    void OnReadTimerOut();
     void OnClearAll();
     void OnClearTrace();
     void OnRequestCenter();
@@ -85,8 +88,10 @@ private:
     kernel::Controllers&       controllers_;
     gui::ItemFactory_ABC&      factory_;
     const ReportFilterOptions& filter_;
-    const kernel::Entity_ABC*  selected_; // $$$$ AGE 2006-04-20: watch deletions !
-    QPopupMenu*                menu_;
+
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    QPopupMenu*                               menu_;
+    QTimer*                                   readTimer_;
     //@}
 };
 

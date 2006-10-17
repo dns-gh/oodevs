@@ -31,8 +31,9 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     , controllers_( controllers )
     , filter_( filter )
     , factory_( factory )
-    , selected_( 0 )
+    , selected_( controllers )
     , menu_( new QPopupMenu( this ) )
+    , readTimer_( new QTimer( this ) )
 {
     AddColumn( "Reçu" );
     AddColumn( "Compte-rendu" );
@@ -41,9 +42,11 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     setSorting( 0, false );
     setSorting( -1, false );
 
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
-    connect( this, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),        this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( spacePressed( QListViewItem* ) ),                             this, SLOT( OnRequestCenter() ) );
+    connect( this,       SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
+    connect( this,       SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),        this, SLOT( OnRequestCenter() ) );
+    connect( this,       SIGNAL( spacePressed( QListViewItem* ) ),                             this, SLOT( OnRequestCenter() ) );
+    connect( this,       SIGNAL( selectionChanged() ),                                         this, SLOT( OnSelectionChanged() ) );
+    connect( readTimer_, SIGNAL( timeout() ),                                                  this, SLOT( OnReadTimerOut() ) );
 
     controllers_.Register( *this );
 }
@@ -127,7 +130,10 @@ void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer
     if( report && & report->GetAgent() == selected_ )
     {
         if( filter_.ShouldDisplay( *report ) )
+        {
+            item->SetValue( report );
             report->Display( displayer );
+        }
         else
             delete item;
     }
@@ -145,7 +151,32 @@ void ReportListView::NotifyCreated( const Report_ABC& report )
         return;
 
     ValuedListItem* item = factory_.CreateItem( this );
+    item->SetValue( &report );
     report.Display( GetItemDisplayer( item ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::OnSelectionChanged
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+void ReportListView::OnSelectionChanged()
+{
+    readTimer_->start( 1500, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportListView::OnReadTimerOut
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+void ReportListView::OnReadTimerOut()
+{
+    ValuedListItem* item = (ValuedListItem*)( selectedItem() );
+    if( item )
+    {
+        const Report_ABC* report = item->GetValue< const Report_ABC* >();
+        const_cast< Report_ABC* >( report )->Read();
+        report->Display( GetItemDisplayer( item ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
