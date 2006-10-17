@@ -83,6 +83,7 @@ std::string AGR_KnowledgeObjectType::MOS2RCCode( const std::string& strAsnParam 
     std::stringstream strTmp;
     strTmp << "ObjectKnowledgeLink( "
            << strAsnParam
+           << ", rcResolver"
            << " )";
     return strTmp.str();
 }

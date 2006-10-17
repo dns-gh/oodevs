@@ -58,7 +58,6 @@ public:
     std::string SerializationCleaningCode      ( const AGR_Member& member ) const;
 
     virtual std::string MOS2RCCode                     ( const std::string& strAsnParam ) const;
-    virtual std::string MOSRCCode                      ( const std::string& strAsnParam ) const;
 
     virtual std::string ASNInitialisationCode          ( const AGR_Member& member ) const;
     virtual std::string Mos2InitialisationCode         ( const AGR_Member& member ) const;

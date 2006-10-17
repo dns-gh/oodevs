@@ -11,6 +11,7 @@
 #define __RC_h_
 
 #include "clients_kernel/Types.h"
+#include "clients_kernel/Resolver_ABC.h"
 #include "Attr_Def.h"
 #include "ASN_Types.h"
 #include "Report_ABC.h"
@@ -18,6 +19,8 @@
 namespace kernel
 {
     class Entity_ABC;
+    class DotationType;
+    class EquipmentType;
 }
 
 enum E_OrderConduiteID;
@@ -32,7 +35,10 @@ class RC : public Report_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             RC( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg, const RcEntityResolver_ABC& rcResolver );
+             RC( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg, 
+                 const RcEntityResolver_ABC& rcResolver,
+                 const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                 const kernel::Resolver_ABC< kernel::EquipmentType >& equimentResolver );
     virtual ~RC();
     //@}
 
@@ -45,18 +51,16 @@ private:
 
     //! @name Helpers
     //@{
-    std::string ObjectKnowledgeLink( ASN1T_OID nId );
-    std::string AgentKnowledgeLink ( ASN1T_OID nId );
-    std::string PopulationKnowledgeLink ( ASN1T_OID nId );
-    std::string AgentLink          ( ASN1T_OID nId );
+    std::string ObjectKnowledgeLink     ( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver );
+    std::string AgentKnowledgeLink      ( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver );
+    std::string PopulationKnowledgeLink ( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver );
+    std::string AgentLink               ( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver );
+    std::string DotationLink            ( ASN1T_OID nId, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver);
+    std::string EquipmentLink           ( ASN1T_OID nId, const kernel::Resolver_ABC< kernel::EquipmentType >& equimentResolver );
 
-    void Initialize( const ASN1T_MsgCR& asnMsg );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const RcEntityResolver_ABC& rcResolver_;
+    void Initialize( const ASN1T_MsgCR& asnMsg, const RcEntityResolver_ABC& rcResolver,
+                     const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                     const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
     //@}
 };
 

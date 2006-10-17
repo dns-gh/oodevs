@@ -267,43 +267,6 @@ std::string AGR_TypeRC::GenerateMOS2( const AGR_RC& rcInstance ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_TypeRC::GenerateMOS
-// Created: NLD 2005-09-07
-// -----------------------------------------------------------------------------
-std::string AGR_TypeRC::GenerateMOS( const AGR_RC& rcInstance ) const
-{
-    std::stringstream strTmp;
-
-    strTmp << "case T_MsgCR_cr_" << rcInstance.GetAsnName() 
-           << " : strMsg << \"" << strHumanName_ << "\"";
-
-
-    if( pType_ )
-    {
-        assert( params_.empty() );
-        strTmp << " << \" - " << pType_->GetHumanName() << " : \""
-               << " << \" \" << "
-               << pType_->MOSRCCode( "asnMsg.cr.u." + rcInstance.GetAsnName() );
-
-    }
-    else if( !params_.empty() )
-    {
-        for( CIT_ParamVector it = params_.begin(); it != params_.end(); ++it )
-        {
-            strTmp << " << \" - "
-                   << (**it).strName_
-                   << " : "
-                   << "\" << "
-                   << (**it).pType_->MOSRCCode( "asnMsg.cr.u." + rcInstance.GetAsnName() + "->" + (**it).strName_ );        
-        }
-
-    }
-
-    strTmp << "; break;" << std::endl;
-    return strTmp.str();
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_TypeRC::Initialize
 // Created: SBO 2005-09-14
 // -----------------------------------------------------------------------------

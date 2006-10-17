@@ -180,7 +180,7 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach( *new Limits( model_.limits_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
-    agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, rcResolver_ ) );
+    agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, rcResolver_, static_.objectTypes_, static_.objectTypes_ ) );
     agent.Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Troops( controllers_.controller_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );

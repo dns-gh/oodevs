@@ -9,23 +9,33 @@
 
 #include "gaming_pch.h"
 #include "RC.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/EquipmentType.h"
+#include "RcEntityResolver_ABC.h"
 #include "Agent.h"
 #include "AgentKnowledge_ABC.h"
 #include "ObjectKnowledge_ABC.h"
 #include "PopulationKnowledge_ABC.h"
-#include "RcEntityResolver_ABC.h"
 
 using namespace kernel;
+
+// $$$$ AGR 2006-10-17: Ne pas me modifier !
+// $$$$ AGR 2006-10-17: Modifier pluto le fichier applications\AGR\skel\MOS2_RC.cpp.skel
+// $$$$ AGR 2006-10-17: Tout manquement à cette règle se traduira par une perte irrémédiable des modifications !
+// $$$$ AGR 2006-10-17: Bwaaaahahahahaa !
+
 
 //-----------------------------------------------------------------------------
 // Name: RC constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-RC::RC( const Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg, const RcEntityResolver_ABC& rcResolver )
+RC::RC( const Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR& asnMsg, 
+        const RcEntityResolver_ABC& rcResolver, 
+        const Resolver_ABC< DotationType >& dotationResolver,
+        const Resolver_ABC< EquipmentType >& equipmentResolver )
     : Report_ABC( agent, simulation )
-    , rcResolver_( rcResolver )
 {
-    Initialize( asnMsg  );
+    Initialize( asnMsg, rcResolver, dotationResolver, equipmentResolver );
 }
 
 //-----------------------------------------------------------------------------
@@ -41,14 +51,16 @@ RC::~RC()
 // Name: RC::Initialize
 // Created: NLD 2002-10-07
 //-----------------------------------------------------------------------------
-void RC::Initialize( const ASN1T_MsgCR& asnMsg )
+void RC::Initialize( const ASN1T_MsgCR& asnMsg, const RcEntityResolver_ABC& rcResolver
+                   , const Resolver_ABC< DotationType >& dotationResolver
+                   , const Resolver_ABC< EquipmentType >& equipmentResolver )
 {
     std::stringstream strMsg;
     switch( asnMsg.cr.t )
     {
     
         case T_MsgCR_cr_cr_ras : strMsg << "ras"; break;
-        case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle ); break;
+        case T_MsgCR_cr_cr_en_poste_face_a_obstacle : strMsg << "en poste face a obstacle" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_en_poste_face_a_obstacle, rcResolver ); break;
         case T_MsgCR_cr_cr_en_contournement_obstacle : strMsg << "en contournement obstacle"; break;
         case T_MsgCR_cr_cr_mission_impossible : strMsg << "mission impossible"; break;
         case T_MsgCR_cr_cr_progression_sur_axe : strMsg << "progression sur axe"; break;
@@ -71,9 +83,9 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_en_couverture : strMsg << "en couverture"; break;
         case T_MsgCR_cr_cr_en_eclairage : strMsg << "en eclairage"; break;
         case T_MsgCR_cr_cr_en_manoeuvre_ravitaillement : strMsg << "en manoeuvre ravitaillement"; break;
-        case T_MsgCR_cr_cr_sur_pia : strMsg << "sur pia" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_sur_pia ); break;
+        case T_MsgCR_cr_cr_sur_pia : strMsg << "sur pia" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_sur_pia, rcResolver ); break;
         case T_MsgCR_cr_cr_passage_sur_pia : strMsg << "passage sur pia"; break;
-        case T_MsgCR_cr_cr_unite_recueillie : strMsg << "unite recueillie" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_unite_recueillie ); break;
+        case T_MsgCR_cr_cr_unite_recueillie : strMsg << "unite recueillie" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_unite_recueillie, rcResolver ); break;
         case T_MsgCR_cr_cr_en_cours_de_franchissement : strMsg << "en cours de franchissement"; break;
         case T_MsgCR_cr_cr_attente_ordre_poursuivre : strMsg << "attente ordre poursuivre"; break;
         case T_MsgCR_cr_cr_attente_ordre_deboucher : strMsg << "attente ordre deboucher"; break;
@@ -81,14 +93,14 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_en_esquive : strMsg << "en esquive"; break;
         case T_MsgCR_cr_cr_prise_contact : strMsg << "prise contact"; break;
         case T_MsgCR_cr_cr_rupture_contact : strMsg << "rupture contact"; break;
-        case T_MsgCR_cr_cr_precision_contact : strMsg << "precision contact" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_precision_contact ); break;
-        case T_MsgCR_cr_cr_ennemi_detruit : strMsg << "ennemi detruit" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_ennemi_detruit ); break;
+        case T_MsgCR_cr_cr_precision_contact : strMsg << "precision contact" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_precision_contact, rcResolver ); break;
+        case T_MsgCR_cr_cr_ennemi_detruit : strMsg << "ennemi detruit" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_ennemi_detruit, rcResolver ); break;
         case T_MsgCR_cr_cr_pris_a_partie_par_tir_direct : strMsg << "pris a partie par tir direct"; break;
         case T_MsgCR_cr_cr_pris_sous_tir_artillerie : strMsg << "pris sous tir artillerie"; break;
-        case T_MsgCR_cr_cr_point_tenu_par_eni : strMsg << "point tenu par eni" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_point_tenu_par_eni ); break;
-        case T_MsgCR_cr_cr_progression_vers_eni : strMsg << "progression vers eni" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_progression_vers_eni ); break;
+        case T_MsgCR_cr_cr_point_tenu_par_eni : strMsg << "point tenu par eni" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_point_tenu_par_eni, rcResolver ); break;
+        case T_MsgCR_cr_cr_progression_vers_eni : strMsg << "progression vers eni" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_progression_vers_eni, rcResolver ); break;
         case T_MsgCR_cr_cr_decroche : strMsg << "decroche"; break;
-        case T_MsgCR_cr_cr_eni_sur_objectif : strMsg << "eni sur objectif" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_eni_sur_objectif ); break;
+        case T_MsgCR_cr_cr_eni_sur_objectif : strMsg << "eni sur objectif" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_eni_sur_objectif, rcResolver ); break;
         case T_MsgCR_cr_cr_riposte : strMsg << "riposte"; break;
         case T_MsgCR_cr_cr_pret_pour_engagement_sur_ennemi : strMsg << "pret pour engagement sur ennemi"; break;
         case T_MsgCR_cr_cr_debut_controle_zone : strMsg << "debut controle zone"; break;
@@ -113,11 +125,11 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_debut_liaison : strMsg << "debut liaison"; break;
         case T_MsgCR_cr_cr_fin_liaison : strMsg << "fin liaison"; break;
         case T_MsgCR_cr_cr_etablissement_liaison_impossible : strMsg << "etablissement liaison impossible"; break;
-        case T_MsgCR_cr_cr_unite_trop_distante : strMsg << "unite trop distante" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_unite_trop_distante ); break;
+        case T_MsgCR_cr_cr_unite_trop_distante : strMsg << "unite trop distante" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_unite_trop_distante, rcResolver ); break;
         case T_MsgCR_cr_cr_enregistrement_donnes : strMsg << "enregistrement donnes"; break;
         case T_MsgCR_cr_cr_exploitation_donnees : strMsg << "exploitation donnees"; break;
         case T_MsgCR_cr_cr_extraction_donnes : strMsg << "extraction donnes"; break;
-        case T_MsgCR_cr_cr_releve : strMsg << "releve" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_releve ); break;
+        case T_MsgCR_cr_cr_releve : strMsg << "releve" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_releve, rcResolver ); break;
         case T_MsgCR_cr_cr_suit_unite : strMsg << "suit unite"; break;
         case T_MsgCR_cr_cr_passe_en_appui : strMsg << "passe en appui"; break;
         case T_MsgCR_cr_cr_en_appui : strMsg << "en appui"; break;
@@ -136,24 +148,24 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_attente_renforcement : strMsg << "attente renforcement"; break;
         case T_MsgCR_cr_cr_debut_exploitation_site_franchissement : strMsg << "debut exploitation site franchissement"; break;
         case T_MsgCR_cr_cr_fin_exploitation_site_franchissement : strMsg << "fin exploitation site franchissement"; break;
-        case T_MsgCR_cr_cr_reussite_renforcement : strMsg << "reussite renforcement" << " - pion_renforcant : " << AgentLink( asnMsg.cr.u.cr_reussite_renforcement->pion_renforcant ) << " - automate_renforce : " << AgentLink( asnMsg.cr.u.cr_reussite_renforcement->automate_renforce ); break;
-        case T_MsgCR_cr_cr_echec_renforcement : strMsg << "echec renforcement" << " - pion_renforcant : " << AgentLink( asnMsg.cr.u.cr_echec_renforcement->pion_renforcant ) << " - automate_renforce : " << AgentLink( asnMsg.cr.u.cr_echec_renforcement->automate_renforce ); break;
-        case T_MsgCR_cr_cr_obstacle_en_attente_activation : strMsg << "obstacle en attente activation" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_obstacle_en_attente_activation ); break;
+        case T_MsgCR_cr_cr_reussite_renforcement : strMsg << "reussite renforcement" << " - pion_renforcant : " << AgentLink( asnMsg.cr.u.cr_reussite_renforcement->pion_renforcant, rcResolver ) << " - automate_renforce : " << AgentLink( asnMsg.cr.u.cr_reussite_renforcement->automate_renforce, rcResolver ); break;
+        case T_MsgCR_cr_cr_echec_renforcement : strMsg << "echec renforcement" << " - pion_renforcant : " << AgentLink( asnMsg.cr.u.cr_echec_renforcement->pion_renforcant, rcResolver ) << " - automate_renforce : " << AgentLink( asnMsg.cr.u.cr_echec_renforcement->automate_renforce, rcResolver ); break;
+        case T_MsgCR_cr_cr_obstacle_en_attente_activation : strMsg << "obstacle en attente activation" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_obstacle_en_attente_activation, rcResolver ); break;
         case T_MsgCR_cr_cr_debut_amenagement_berges : strMsg << "debut amenagement berges"; break;
         case T_MsgCR_cr_cr_fin_amenagement_berges : strMsg << "fin amenagement berges"; break;
         case T_MsgCR_cr_cr_regime_maintenance_delai_depasse : strMsg << "regime maintenance delai depasse"; break;
         case T_MsgCR_cr_cr_section_deployee : strMsg << "section deployee"; break;
         case T_MsgCR_cr_cr_a_nouveau_disponible_apres_reparation : strMsg << "a nouveau disponible apres reparation"; break;
-        case T_MsgCR_cr_cr_materiel_retour_de_maintenance : strMsg << "materiel retour de maintenance" << " - TypeEquipement : " << " " << asnMsg.cr.u.cr_materiel_retour_de_maintenance; break;
-        case T_MsgCR_cr_cr_materiel_repare_sur_place : strMsg << "materiel repare sur place" << " - TypeEquipement : " << " " << asnMsg.cr.u.cr_materiel_repare_sur_place; break;
+        case T_MsgCR_cr_cr_materiel_retour_de_maintenance : strMsg << "materiel retour de maintenance" << " - TypeEquipement : " << " " << EquipmentLink( asnMsg.cr.u.cr_materiel_retour_de_maintenance, equipmentResolver ); break;
+        case T_MsgCR_cr_cr_materiel_repare_sur_place : strMsg << "materiel repare sur place" << " - TypeEquipement : " << " " << EquipmentLink( asnMsg.cr.u.cr_materiel_repare_sur_place, equipmentResolver ); break;
         case T_MsgCR_cr_cr_demande_ravitaillement_dotations : strMsg << "demande ravitaillement dotations"; break;
         case T_MsgCR_cr_cr_demande_ravitaillement_stock : strMsg << "demande ravitaillement stock"; break;
         case T_MsgCR_cr_cr_demande_evacuation_sanitaire : strMsg << "demande evacuation sanitaire"; break;
         case T_MsgCR_cr_cr_demande_evacuation_materiel : strMsg << "demande evacuation materiel"; break;
-        case T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee : strMsg << "allocation consentie bientot epuisee" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_allocation_consentie_bientot_epuisee; break;
+        case T_MsgCR_cr_cr_allocation_consentie_bientot_epuisee : strMsg << "allocation consentie bientot epuisee" << " - TypeDotation : " << " " << DotationLink( asnMsg.cr.u.cr_allocation_consentie_bientot_epuisee, dotationResolver ); break;
         case T_MsgCR_cr_cr_depassement_capacite_stockage : strMsg << "depassement capacite stockage"; break;
-        case T_MsgCR_cr_cr_seuil_logistique_dotation_depasse : strMsg << "seuil logistique dotation depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_dotation_depasse; break;
-        case T_MsgCR_cr_cr_seuil_logistique_stock_depasse : strMsg << "seuil logistique stock depasse" << " - TypeDotation : " << " " << asnMsg.cr.u.cr_seuil_logistique_stock_depasse; break;
+        case T_MsgCR_cr_cr_seuil_logistique_dotation_depasse : strMsg << "seuil logistique dotation depasse" << " - TypeDotation : " << " " << DotationLink( asnMsg.cr.u.cr_seuil_logistique_dotation_depasse, dotationResolver ); break;
+        case T_MsgCR_cr_cr_seuil_logistique_stock_depasse : strMsg << "seuil logistique stock depasse" << " - TypeDotation : " << " " << DotationLink( asnMsg.cr.u.cr_seuil_logistique_stock_depasse, dotationResolver ); break;
         case T_MsgCR_cr_cr_ravitaillement_dotations_effectue : strMsg << "ravitaillement dotations effectue"; break;
         case T_MsgCR_cr_cr_ravitaillement_stock_effectue : strMsg << "ravitaillement stock effectue"; break;
         case T_MsgCR_cr_cr_ravitaillement_dotations_annule : strMsg << "ravitaillement dotations annule"; break;
@@ -186,8 +198,8 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_ravitaillement_termine : strMsg << "ravitaillement termine"; break;
         case T_MsgCR_cr_cr_helicoptere_en_observation : strMsg << "helicoptere en observation"; break;
         case T_MsgCR_cr_cr_perte_info_guidage : strMsg << "perte info guidage"; break;
-        case T_MsgCR_cr_cr_transport_unite_pas_prete : strMsg << "transport unite pas prete" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_transport_unite_pas_prete ); break;
-        case T_MsgCR_cr_cr_transport_unite_prete : strMsg << "transport unite prete" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_transport_unite_prete ); break;
+        case T_MsgCR_cr_cr_transport_unite_pas_prete : strMsg << "transport unite pas prete" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_transport_unite_pas_prete, rcResolver ); break;
+        case T_MsgCR_cr_cr_transport_unite_prete : strMsg << "transport unite prete" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_transport_unite_prete, rcResolver ); break;
         case T_MsgCR_cr_cr_transport_en_cours : strMsg << "transport en cours"; break;
         case T_MsgCR_cr_cr_transport_embarquement : strMsg << "transport embarquement"; break;
         case T_MsgCR_cr_cr_transport_debarquement : strMsg << "transport debarquement"; break;
@@ -208,7 +220,7 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_zone_decontaminee : strMsg << "zone decontaminee"; break;
         case T_MsgCR_cr_cr_site_rota_reconnu : strMsg << "site rota reconnu"; break;
         case T_MsgCR_cr_cr_incident_nbc_termine : strMsg << "incident nbc termine"; break;
-        case T_MsgCR_cr_cr_unite_decontaminee : strMsg << "unite decontaminee" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_unite_decontaminee ); break;
+        case T_MsgCR_cr_cr_unite_decontaminee : strMsg << "unite decontaminee" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_unite_decontaminee, rcResolver ); break;
         case T_MsgCR_cr_cr_site_sature : strMsg << "site sature"; break;
         case T_MsgCR_cr_cr_debut_mesure : strMsg << "debut mesure"; break;
         case T_MsgCR_cr_cr_fin_mesure : strMsg << "fin mesure"; break;
@@ -237,12 +249,12 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_pas_de_camp_prisonniers_disponible : strMsg << "pas de camp prisonniers disponible"; break;
         case T_MsgCR_cr_cr_rendu : strMsg << "rendu"; break;
         case T_MsgCR_cr_cr_tir_dans_zone_interdite : strMsg << "tir dans zone interdite"; break;
-        case T_MsgCR_cr_cr_tir_sur_camp_ami : strMsg << "tir sur camp ami" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_camp_ami ); break;
-        case T_MsgCR_cr_cr_tire_par_camp_ami : strMsg << "tire par camp ami" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_camp_ami ); break;
-        case T_MsgCR_cr_cr_tir_sur_camp_neutre : strMsg << "tir sur camp neutre" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_camp_neutre ); break;
-        case T_MsgCR_cr_cr_tire_par_camp_neutre : strMsg << "tire par camp neutre" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_camp_neutre ); break;
-        case T_MsgCR_cr_cr_tir_sur_civil : strMsg << "tir sur civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_civil ); break;
-        case T_MsgCR_cr_cr_tire_par_civil : strMsg << "tire par civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_civil ); break;
+        case T_MsgCR_cr_cr_tir_sur_camp_ami : strMsg << "tir sur camp ami" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_camp_ami, rcResolver ); break;
+        case T_MsgCR_cr_cr_tire_par_camp_ami : strMsg << "tire par camp ami" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_camp_ami, rcResolver ); break;
+        case T_MsgCR_cr_cr_tir_sur_camp_neutre : strMsg << "tir sur camp neutre" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_camp_neutre, rcResolver ); break;
+        case T_MsgCR_cr_cr_tire_par_camp_neutre : strMsg << "tire par camp neutre" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_camp_neutre, rcResolver ); break;
+        case T_MsgCR_cr_cr_tir_sur_civil : strMsg << "tir sur civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tir_sur_civil, rcResolver ); break;
+        case T_MsgCR_cr_cr_tire_par_civil : strMsg << "tire par civil" << " - Pion : " << " " << AgentLink( asnMsg.cr.u.cr_tire_par_civil, rcResolver ); break;
         case T_MsgCR_cr_cr_tir_indirect_fratricide : strMsg << "tir indirect fratricide"; break;
         case T_MsgCR_cr_cr_tir_indirect_sur_population : strMsg << "tir indirect sur population"; break;
         case T_MsgCR_cr_cr_destruction_pc : strMsg << "destruction pc"; break;
@@ -265,23 +277,23 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_tir_restreint : strMsg << "tir restreint"; break;
         case T_MsgCR_cr_cr_tir_interdit : strMsg << "tir interdit"; break;
         case T_MsgCR_cr_cr_tir_libre : strMsg << "tir libre"; break;
-        case T_MsgCR_cr_cr_unite_detectee : strMsg << "unite detectee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_detectee ); break;
-        case T_MsgCR_cr_cr_unite_amie_reconnue : strMsg << "unite amie reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_amie_reconnue ); break;
-        case T_MsgCR_cr_cr_unite_ennemie_reconnue : strMsg << "unite ennemie reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_ennemie_reconnue ); break;
-        case T_MsgCR_cr_cr_unite_neutre_reconnue : strMsg << "unite neutre reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_neutre_reconnue ); break;
-        case T_MsgCR_cr_cr_unite_amie_identifiee : strMsg << "unite amie identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_amie_identifiee ); break;
-        case T_MsgCR_cr_cr_unite_ennemie_identifiee : strMsg << "unite ennemie identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_ennemie_identifiee ); break;
-        case T_MsgCR_cr_cr_unite_neutre_identifiee : strMsg << "unite neutre identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_neutre_identifiee ); break;
-        case T_MsgCR_cr_cr_objet_detecte : strMsg << "objet detecte" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_objet_detecte ); break;
+        case T_MsgCR_cr_cr_unite_detectee : strMsg << "unite detectee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_detectee, rcResolver ); break;
+        case T_MsgCR_cr_cr_unite_amie_reconnue : strMsg << "unite amie reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_amie_reconnue, rcResolver ); break;
+        case T_MsgCR_cr_cr_unite_ennemie_reconnue : strMsg << "unite ennemie reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_ennemie_reconnue, rcResolver ); break;
+        case T_MsgCR_cr_cr_unite_neutre_reconnue : strMsg << "unite neutre reconnue" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_neutre_reconnue, rcResolver ); break;
+        case T_MsgCR_cr_cr_unite_amie_identifiee : strMsg << "unite amie identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_amie_identifiee, rcResolver ); break;
+        case T_MsgCR_cr_cr_unite_ennemie_identifiee : strMsg << "unite ennemie identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_ennemie_identifiee, rcResolver ); break;
+        case T_MsgCR_cr_cr_unite_neutre_identifiee : strMsg << "unite neutre identifiee" << " - ConnaissanceAgent : " << " " << AgentKnowledgeLink( asnMsg.cr.u.cr_unite_neutre_identifiee, rcResolver ); break;
+        case T_MsgCR_cr_cr_objet_detecte : strMsg << "objet detecte" << " - ConnaissanceObjet : " << " " << ObjectKnowledgeLink( asnMsg.cr.u.cr_objet_detecte, rcResolver ); break;
         case T_MsgCR_cr_cr_trace : strMsg << "trace" << " - message : " << " " << asnMsg.cr.u.cr_trace; break;
         case T_MsgCR_cr_cr_trace_id : strMsg << "trace id" << " - float : " << " " << asnMsg.cr.u.cr_trace_id; break;
         case T_MsgCR_cr_cr_emploi_force_interdit : strMsg << "emploi force interdit"; break;
         case T_MsgCR_cr_cr_maintien_a_distance_par_moyens_non_letaux : strMsg << "maintien a distance par moyens non letaux"; break;
         case T_MsgCR_cr_cr_dispersion_par_moyens_de_defense_actifs : strMsg << "dispersion par moyens de defense actifs"; break;
         case T_MsgCR_cr_cr_armes_letales_autorisees : strMsg << "armes letales autorisees"; break;
-        case T_MsgCR_cr_cr_population_detectee : strMsg << "population detectee" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_population_detectee ); break;
-        case T_MsgCR_cr_cr_prise_a_partie_par_population : strMsg << "prise a partie par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_prise_a_partie_par_population ); break;
-        case T_MsgCR_cr_cr_riposte_contre_population : strMsg << "riposte contre population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_population ); break;
+        case T_MsgCR_cr_cr_population_detectee : strMsg << "population detectee" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_population_detectee, rcResolver ); break;
+        case T_MsgCR_cr_cr_prise_a_partie_par_population : strMsg << "prise a partie par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_prise_a_partie_par_population, rcResolver ); break;
+        case T_MsgCR_cr_cr_riposte_contre_population : strMsg << "riposte contre population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_population, rcResolver ); break;
         case T_MsgCR_cr_cr_population_dangereuse_a_proximite : strMsg << "population dangereuse a proximite"; break;
         case T_MsgCR_cr_cr_esquive_face_a_population : strMsg << "esquive face a population"; break;
         case T_MsgCR_cr_cr_decrochage_face_a_population : strMsg << "decrochage face a population"; break;
@@ -303,9 +315,9 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
         case T_MsgCR_cr_cr_population_temporairement_controlee : strMsg << "population temporairement controlee"; break;
         case T_MsgCR_cr_cr_population_temporairement_repoussee : strMsg << "population temporairement repoussee"; break;
         case T_MsgCR_cr_cr_reprise_des_affrontements : strMsg << "reprise des affrontements"; break;
-        case T_MsgCR_cr_cr_agression_de_population : strMsg << "agression de population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_de_population ); break;
-        case T_MsgCR_cr_cr_agression_par_population : strMsg << "agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_par_population ); break;
-        case T_MsgCR_cr_cr_riposte_contre_agression_par_population : strMsg << "riposte contre agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_agression_par_population ); break;
+        case T_MsgCR_cr_cr_agression_de_population : strMsg << "agression de population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_de_population, rcResolver ); break;
+        case T_MsgCR_cr_cr_agression_par_population : strMsg << "agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_agression_par_population, rcResolver ); break;
+        case T_MsgCR_cr_cr_riposte_contre_agression_par_population : strMsg << "riposte contre agression par population" << " - ConnaissancePopulation : " << " " << PopulationKnowledgeLink( asnMsg.cr.u.cr_riposte_contre_agression_par_population, rcResolver ); break;
         case T_MsgCR_cr_cr_attaque_installation : strMsg << "attaque installation"; break;
         case T_MsgCR_cr_cr_en_stationnement : strMsg << "en stationnement"; break;
         case T_MsgCR_cr_cr_bloquee : strMsg << "bloquee"; break;
@@ -352,34 +364,53 @@ void RC::Initialize( const ASN1T_MsgCR& asnMsg )
 // Name: RC::ObjectKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string RC::ObjectKnowledgeLink( ASN1T_OID nId )
+std::string RC::ObjectKnowledgeLink( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver )
 {
-    return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, nId ).ascii();
+    return rcResolver.CreateLink( ObjectKnowledge_ABC::typeName_, nId ).ascii();
 }
 
 // -----------------------------------------------------------------------------
 // Name: RC::AgentKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string RC::AgentKnowledgeLink( ASN1T_OID nId )
+std::string RC::AgentKnowledgeLink( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver )
 {
-    return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, nId ).ascii();
+    return rcResolver.CreateLink( AgentKnowledge_ABC::typeName_, nId ).ascii();
 }
 
 // -----------------------------------------------------------------------------
 // Name: RC::PopulationKnowledgeLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string RC::PopulationKnowledgeLink( ASN1T_OID nId )
+std::string RC::PopulationKnowledgeLink( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver )
 {
-    return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, nId ).ascii();
+    return rcResolver.CreateLink( PopulationKnowledge_ABC::typeName_, nId ).ascii();
 }
 
 // -----------------------------------------------------------------------------
 // Name: RC::AgentLink
 // Created: APE 2004-09-09
 // -----------------------------------------------------------------------------
-std::string RC::AgentLink( ASN1T_OID nId )
+std::string RC::AgentLink( ASN1T_OID nId, const RcEntityResolver_ABC& rcResolver )
 {
-    return rcResolver_.CreateLink( Agent::typeName_, nId ).ascii();
+    return rcResolver.CreateLink( Agent::typeName_, nId ).ascii();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MOS2_RC.cpp::DotationLink
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+std::string RC::DotationLink( ASN1T_OID nId, const kernel::Resolver_ABC< DotationType >& dotationResolver )
+{
+    return dotationResolver.Get( nId ).GetCategory().ascii();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MOS2_RC.cpp::EquipmentLink
+// Created: AGE 2006-10-17
+// -----------------------------------------------------------------------------
+std::string RC::EquipmentLink( ASN1T_OID nId, const kernel::Resolver_ABC< EquipmentType >& equipmentResolver )
+{
+    return equipmentResolver.Get( nId ).GetName().ascii();
+}
+

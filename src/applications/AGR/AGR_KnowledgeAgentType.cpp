@@ -82,6 +82,7 @@ std::string AGR_KnowledgeAgentType::MOS2RCCode( const std::string& strAsnParam )
     std::stringstream strTmp;
     strTmp << "AgentKnowledgeLink( "
            << strAsnParam
+           << ", rcResolver"
            << " )";
     return strTmp.str();
 }

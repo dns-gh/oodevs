@@ -83,6 +83,7 @@ std::string AGR_KnowledgePopulationType::MOS2RCCode( const std::string& strAsnPa
     std::stringstream strTmp;
     strTmp << "PopulationKnowledgeLink( "
            << strAsnParam
+           << ", rcResolver"
            << " )";
     return strTmp.str();
 }

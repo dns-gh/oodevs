@@ -48,7 +48,6 @@ public:
     std::string GenerateMILRCClassBodyInitialize( const AGR_RC& rcInstance ) const;
     std::string GenerateMILRCClassBodyIncludes  ( const AGR_RC& rcInstance ) const;
     std::string GenerateMOS2                    ( const AGR_RC& rcInstance ) const;
-    std::string GenerateMOS                     ( const AGR_RC& rcInstance ) const;
     std::string GenerateTIC                     ( const AGR_RC& rcInstance ) const;
     //@}
 

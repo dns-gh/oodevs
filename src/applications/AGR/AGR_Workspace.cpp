@@ -27,6 +27,8 @@
 #include "AGR_TypeRC.h"
 #include "AGR_RC.h"
 #include "AGR_DotationDType.h"
+#include "AGR_DotationType.h"
+#include "AGR_EquipmentType.h"
 
 #include <windows.h>
 
@@ -81,8 +83,8 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:ListPolygon", "PolygonList", "T_ListeLocalisations", "T_LocationVector", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:MaintenancePriorites", "MaintenancePriorities", "T_MaintenancePriorites", "", true ) );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:SantePriorites", "MedicalPriorities", "T_SantePriorites", "T_IdVector", true ) );
-    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TypeEquipement", "TypeEquipement", "TypeEquipement", "TypeEquipement", true ) );
-    typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TypeDotation", "TypeDotation", "TypeDotation", "TypeDotation", true ) );
+    typeList_.push_back( new AGR_EquipmentType() );
+    typeList_.push_back( new AGR_DotationType() );
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:TirPion", "TirPion", "TirPion", "TirPion", true ) );
     typeList_.push_back( new AGR_Type_ABC( "xsd::string", "message", "message", "message", true ) );
 

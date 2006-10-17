@@ -98,17 +98,6 @@ std::string AGR_RC::GenerateMOS2() const
     return pType_->GenerateMOS2( *this );
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: AGR_RC::GenerateMOS
-// Created: NLD 2005-09-07
-// -----------------------------------------------------------------------------
-std::string AGR_RC::GenerateMOS() const
-{
-    assert( pType_ );
-    return pType_->GenerateMOS( *this );
-}
-
 // -----------------------------------------------------------------------------
 // Name: AGR_RC::GenerateTICRCClassBodyInitialize
 // Created: SBO 2005-09-14

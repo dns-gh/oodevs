@@ -41,7 +41,6 @@ public:
     std::string GenerateMILRCClassBodyInitialize() const;
     std::string GenerateMILRCClassBodyIncludes  () const;
     std::string GenerateMOS2                    () const;
-    std::string GenerateMOS                     () const;
     std::string GenerateTICRCClassBodyInitialize() const;
     //@}
 

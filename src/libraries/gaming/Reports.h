@@ -15,6 +15,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 class Report_ABC;
 class Simulation;
@@ -24,6 +25,8 @@ namespace kernel
     class Controller;
     class Entity_ABC;
     class Displayer_ABC;
+    class DotationType;
+    class EquipmentType;
 }
 
 class RcEntityResolver_ABC;
@@ -43,7 +46,10 @@ class Reports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const Simulation& simulation, const RcEntityResolver_ABC& rcResolver );
+             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const Simulation& simulation, 
+                      const RcEntityResolver_ABC& rcResolver, 
+                      const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver,
+                      const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
     virtual ~Reports();
     //@}
 
@@ -83,8 +89,11 @@ public: // $$$$ AGE 2006-03-09:
     const kernel::Entity_ABC& agent_;
     kernel::Controller& controller_;
     const Simulation& simulation_;
-    T_Reports reports_;
     const RcEntityResolver_ABC& rcResolver_;
+    const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
+    const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
+
+    T_Reports reports_;
     //@}
 };
 

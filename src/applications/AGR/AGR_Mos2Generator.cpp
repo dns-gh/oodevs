@@ -231,6 +231,17 @@ void AGR_Mos2Generator::GenerateMos2MissionInterfaceCppFiles( const AGR_Workspac
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/applications/gaming_app/FragmentaryOrderInterface_Gen.cpp" );
 }
 
+namespace
+{
+    std::string RcWarning()
+    {
+        return "// $$$$ AGR 2006-10-17: Ne pas me modifier !\n"
+               "// $$$$ AGR 2006-10-17: Modifier pluto le fichier applications\\AGR\\skel\\MOS2_RC.cpp.skel\n"
+               "// $$$$ AGR 2006-10-17: Tout manquement à cette règle se traduira par une perte irrémédiable des modifications !\n"
+               "// $$$$ AGR 2006-10-17: Bwaaaahahahahaa !\n";
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AGR_Mos2Generator::GenerateMos2Rcs
 // Created: NLD 2005-09-07
@@ -251,6 +262,7 @@ void AGR_Mos2Generator::GenerateMos2Rcs( const AGR_Workspace& workspace, const s
         strTmp << rc.GenerateMOS2();
     }
 
+    workspace.ReplaceInString( strBaseContent, "$AGR_MOS2_RC_WARNING$", RcWarning() );
     workspace.ReplaceInString( strBaseContent, "$AGR_MOS2_RC$", strTmp.str() );
     workspace.WriteStringInFile( strBaseContent, strOutputPath + "/src/libraries/gaming/RC.cpp" );
 }

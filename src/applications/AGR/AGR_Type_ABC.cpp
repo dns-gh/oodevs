@@ -335,15 +335,6 @@ std::string AGR_Type_ABC::MOS2RCCode( const std::string& strAsnParam ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_Type_ABC::MOSRCCode
-// Created: NLD 2005-09-07
-// -----------------------------------------------------------------------------
-std::string AGR_Type_ABC::MOSRCCode( const std::string& strAsnParam ) const
-{
-    return strAsnParam;
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_Type_ABC::GetHumanName
 // Created: NLD 2005-09-07
 // -----------------------------------------------------------------------------

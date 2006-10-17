@@ -21,11 +21,14 @@ using namespace kernel;
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation, const RcEntityResolver_ABC& rcResolver )
+Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation, const RcEntityResolver_ABC& rcResolver,
+                  const Resolver_ABC< DotationType >& dotationResolver, const Resolver_ABC< EquipmentType >& equipmentResolver )
     : agent_( agent )
     , controller_( controller )
     , simulation_( simulation )
     , rcResolver_( rcResolver )
+    , dotationResolver_( dotationResolver )
+    , equipmentResolver_( equipmentResolver )
 {
     // NOTHING
 }
@@ -46,7 +49,7 @@ Reports::~Reports()
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const ASN1T_MsgCR& message )
 {   
-    Report_ABC& rc = *new RC( agent_, simulation_, message, rcResolver_ );
+    Report_ABC& rc = *new RC( agent_, simulation_, message, rcResolver_, dotationResolver_, equipmentResolver_ );
     reports_.push_back( &rc );
     controller_.Create( rc );
 }
