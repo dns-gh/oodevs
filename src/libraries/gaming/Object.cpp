@@ -120,7 +120,7 @@ void Object::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "En préparation:" ), bPrepared_ )
              .Item( tools::translate( "Object", "Dotation construction:" ) )
                 .Start( nDotationConstruction_ )
-                .Add( " " ).Add( construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
+                .Add( " " ).Add( construction_ ).End(); // $$$ AGE 2006-02-22: End devrait renvoyer le parent
     displayer.Group( tools::translate( "Object", "Informations" ) )
              .Item( tools::translate( "Object", "Dotation valorisation:" ) )
                 .Start( nDotationValorization_ )

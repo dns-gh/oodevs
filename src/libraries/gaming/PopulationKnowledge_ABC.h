@@ -32,7 +32,7 @@ class PopulationFlowKnowledge;
 // Created: AGE 2006-10-16
 // =============================================================================
 class PopulationKnowledge_ABC : public kernel::Knowledge_ABC
-                              , public kernel::Resolver< PopulationConcentrationKnowledge > // $$$$ AGE 2006-10-16: 
+                              , public kernel::Resolver< PopulationConcentrationKnowledge >
                               , public kernel::Resolver< PopulationFlowKnowledge >
 {
 public:
@@ -52,10 +52,7 @@ public:
     //@{
     virtual const kernel::Population_ABC*     GetEntity() const = 0;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const = 0;
-    //@}
 
-    //! @name To Remove // $$$$ AGE 2006-10-16: 
-    //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const = 0;
     //@}

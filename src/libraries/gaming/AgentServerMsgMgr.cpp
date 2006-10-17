@@ -964,7 +964,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreati
         if( limit )
             limit->Update( message );
         else
-            Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu. probablement buggué aussi
+            Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu.
     }
 }
 

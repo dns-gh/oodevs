@@ -33,13 +33,13 @@ using namespace kernel;
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher )
+Model::Model( Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver )
     : controllers_( controllers )
     , static_( staticModel )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this, staticModel ) )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, simulation, workers ) )
+    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, simulation, workers, rcResolver ) )
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel ) )
     , fireFactory_( *new FireFactory( *this ) )
     , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )

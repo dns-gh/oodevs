@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "gaming_app_pch.h"
 #include "RcEntityResolver.h"
-#include "Agent.h"
-#include "ObjectKnowledge_ABC.h"
-#include "AgentKnowledge_ABC.h"
-#include "PopulationKnowledge_ABC.h"
+#include "gaming/Agent.h"
+#include "gaming/ObjectKnowledge_ABC.h"
+#include "gaming/AgentKnowledge_ABC.h"
+#include "gaming/PopulationKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/InternalLinks.h"
 
@@ -23,8 +23,9 @@ using namespace gui;
 // Name: RcEntityResolver constructor
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-RcEntityResolver::RcEntityResolver( kernel::Controllers& controllers )
-    : controllers_( controllers )
+RcEntityResolver::RcEntityResolver( QObject* parent, kernel::Controllers& controllers )
+    : QObject( parent )
+    , controllers_( controllers )
 {
     controllers_.Register( *this );
 }

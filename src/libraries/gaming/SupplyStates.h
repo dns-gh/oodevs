@@ -29,7 +29,6 @@ namespace kernel
 // =============================================================================
 /** @class  SupplyStates
     @brief  SupplyStates
-    // $$$$ AGE 2006-10-11: separer les quotas, qui sont de niveau automate, des stocks, qui est niveau pion
 */
 // Created: AGE 2006-02-14
 // =============================================================================

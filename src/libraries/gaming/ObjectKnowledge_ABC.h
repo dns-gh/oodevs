@@ -44,10 +44,7 @@ public:
     //@{
     virtual const kernel::Object_ABC* GetEntity() const = 0;
     virtual const kernel::Team_ABC&   GetOwner() const = 0;
-    //@}
 
-    //! @name A dégager  // $$$$ AGE 2006-10-16: 
-    //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const = 0;
     //@}

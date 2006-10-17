@@ -35,6 +35,7 @@ class FireFactory;
 class WeatherModel;
 class Publisher_ABC;
 class StaticModel;
+class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -48,7 +49,7 @@ class Model
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher );
+             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver );
     virtual ~Model();
     //@}
 

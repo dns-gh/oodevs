@@ -64,7 +64,6 @@
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
 #include "StaticModel.h"
-#include "RcEntityResolver.h"
 #include "AgentHierarchies.h"
 #include "AutomatLives.h"
 #include "AutomatPositions.h"
@@ -77,14 +76,14 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, Workers& workers, const RcEntityResolver_ABC& rcResolver )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
     , publisher_( publisher )
     , simulation_( simulation )
     , workers_( workers )
-    , rcResolver_( *new RcEntityResolver( controllers ) )
+    , rcResolver_( rcResolver )
 {
     // NOTHING
 }
@@ -95,7 +94,7 @@ AgentFactory::AgentFactory( Controllers& controllers, Model& model, const Static
 // -----------------------------------------------------------------------------
 AgentFactory::~AgentFactory()
 {
-    delete &rcResolver_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

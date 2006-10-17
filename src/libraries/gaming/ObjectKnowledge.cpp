@@ -122,8 +122,7 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString ObjectKnowledge::GetName() const
 {
-    // $$$$ AGE 2006-08-23: 
-    return pRealObject_ ? pRealObject_->GetName() : "Unknown Object";
+    return pRealObject_ ? pRealObject_->GetName() : tools::translate( "Object", "Unknown Object" );
 }
 
 // -----------------------------------------------------------------------------

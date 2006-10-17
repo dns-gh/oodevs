@@ -38,7 +38,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, kernel::Workers& workers );
+             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const Simulation& simulation, kernel::Workers& workers, const RcEntityResolver_ABC& rcResolver );
     virtual ~AgentFactory();
     //@}
 
@@ -70,7 +70,7 @@ private:
     Publisher_ABC& publisher_;
     const Simulation& simulation_;
     kernel::Workers& workers_;
-    RcEntityResolver_ABC& rcResolver_;
+    const RcEntityResolver_ABC& rcResolver_;
     //@}
 };
 

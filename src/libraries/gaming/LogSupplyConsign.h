@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2004-03-18 $
-// $Archive: /MVW_v10/Build/SDK/Light2/src/LogSupplyConsign.h $
-// $Author: Age $
-// $Modtime: 1/04/05 11:07 $
-// $Revision: 1 $
-// $Workfile: LogSupplyConsign.h $
-//
-// *****************************************************************************
 
 #ifndef __LogSupplyConsign_h_
 #define __LogSupplyConsign_h_

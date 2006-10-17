@@ -194,12 +194,16 @@ void RichListItem::SetBackgroundColor( const QColor& color1, const QColor& color
 void RichListItem::SetFont( const QFont& font )
 {
     font_ = font;
-    int height = 0;
-    for( IT_RichTexts it = columns_.begin(); it != columns_.end(); ++it ) {
-        it->rich->setDefaultFont( font_ );
-        height = std::max( height, it->rich->height() );
+    // $$$$ AGE 2006-10-17: met une hauteur bugguée...
+//    int height = 0;
+    for( IT_RichTexts it = columns_.begin(); it != columns_.end(); ++it )
+    {
+        QSimpleRichText& rich = *it->rich;
+        rich.setDefaultFont( font_ );
+//        rich.adjustSize();
+//        height = std::max( height, rich.height() );
     }
-    setHeight( height );
+//    setHeight( height );
     widthChanged();
 }
 

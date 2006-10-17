@@ -21,6 +21,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
 #include "gaming/AgentServerMsgMgr.h"
+#include "RcEntityResolver.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -94,7 +95,7 @@ void Application::Initialize( int argc, char** argv )
     workers_     = new Workers();
     network_     = new Network( *controllers_, *simulation_, *profile_ );
     staticModel_ = new StaticModel( *controllers_ );
-    model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr() );
+    model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *new RcEntityResolver( this, *controllers_ ) );
     network_->GetMessageMgr().SetModel( *model_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_, *profile_ );
 

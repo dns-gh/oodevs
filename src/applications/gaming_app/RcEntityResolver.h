@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "RcEntityResolver_ABC.h"
+#include "gaming/RcEntityResolver_ABC.h"
 
 namespace kernel
 {
@@ -31,7 +31,8 @@ class PopulationKnowledge_ABC;
 */
 // Created: SBO 2006-09-18
 // =============================================================================
-class RcEntityResolver : public RcEntityResolver_ABC
+class RcEntityResolver : public QObject
+                       , public RcEntityResolver_ABC
                        , public kernel::Resolver< kernel::Agent_ABC >
                        , public kernel::Resolver< ObjectKnowledge_ABC >
                        , public kernel::Resolver< AgentKnowledge_ABC >
@@ -46,7 +47,7 @@ class RcEntityResolver : public RcEntityResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit RcEntityResolver( kernel::Controllers& controllers );
+             RcEntityResolver( QObject* parent, kernel::Controllers& controllers );
     virtual ~RcEntityResolver();
     //@}
 

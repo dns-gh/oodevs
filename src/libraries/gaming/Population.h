@@ -112,6 +112,7 @@ private:
     const kernel::PopulationType&          type_;
 	kernel::Team_ABC&                      team_;
 
+    geometry::Rectangle2f                  boundingBox_;
     geometry::Point2f                      center_;
     kernel::OptionalValue< int >           nDomination_;
     //@}

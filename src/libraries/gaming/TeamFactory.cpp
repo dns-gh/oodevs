@@ -67,7 +67,7 @@ KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned long id, Team_AB
     KnowledgeGroup* result = new KnowledgeGroup( id, controllers_.controller_ );
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
-    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, team, *result ) ); // $$$$ AGE 2006-09-20: 
+    result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, team, *result ) );
     result->Polish();
     return result;
 }

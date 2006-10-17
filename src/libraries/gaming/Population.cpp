@@ -107,7 +107,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
 {
     static_cast< PopulationConcentration& >( Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid_concentration ) ).Update( asnMsg );
-    Touch();
+    ComputeCenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -199,38 +199,32 @@ void Population::Draw( const geometry::Point2f& where, const geometry::Rectangle
     }
 }
 
+namespace
+{
+    template< typename Entity, typename ConcreteEntity >
+    void IncorporateBoundingBox( const Resolver< Entity >& resolver, geometry::Rectangle2f& boundingBox )
+    {
+        Iterator< const Entity& > it = resolver.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const ConcreteEntity& concreteEntity = static_cast< const ConcreteEntity& >( it.NextElement() );
+            const geometry::Rectangle2f bbox = concreteEntity.GetBoundingBox();
+            boundingBox.Incorporate( bbox.TopRight() );
+            boundingBox.Incorporate( bbox.BottomLeft() );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Population::ComputeCenter
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
 void Population::ComputeCenter()
 {
-    center_.Set( 0, 0 );
-    float nParts = 0;
-
-    // $$$$ AGE 2006-04-10: Crappy crap !
-    {
-        Iterator< const PopulationConcentration_ABC& > it = Resolver< PopulationConcentration_ABC >::CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const PopulationConcentration& concreteEntity = static_cast< const PopulationConcentration& >( it.NextElement() );
-            const Point2f center = concreteEntity.GetPosition();
-            center_.Set( center_.X() + center.X(), center_.Y() + center.Y() );
-            ++nParts;
-        }
-    }
-    {
-        Iterator< const PopulationFlow_ABC& > it = Resolver< PopulationFlow_ABC >::CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const PopulationFlow& concreteEntity = static_cast< const PopulationFlow& >( it.NextElement() );
-            const Point2f center = concreteEntity.GetPosition();
-            center_.Set( center_.X() + center.X(), center_.Y() + center.Y() );
-            ++nParts;
-        }
-    }
-    if( nParts )
-        center_.Set( center_.X() / nParts, center_.Y() / nParts );
+    boundingBox_ = Rectangle2f();
+    IncorporateBoundingBox< PopulationConcentration_ABC, PopulationConcentration >( *this, boundingBox_ );
+    IncorporateBoundingBox< PopulationFlow_ABC, PopulationFlow >( *this, boundingBox_ );
+    center_ = boundingBox_.Center();
 }
 
 // -----------------------------------------------------------------------------
@@ -305,32 +299,13 @@ bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
     return false;
 }
 
-namespace
-{
-    template< typename Entity, typename ConcreteEntity >
-    void IncorporateBoundingBox( const Resolver< Entity >& resolver, geometry::Rectangle2f& boundingBox )
-    {
-        Iterator< const Entity& > it = resolver.CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const ConcreteEntity& concreteEntity = static_cast< const ConcreteEntity& >( it.NextElement() );
-            const geometry::Rectangle2f bbox = concreteEntity.GetBoundingBox();
-            boundingBox.Incorporate( bbox.TopRight() );
-            boundingBox.Incorporate( bbox.BottomLeft() );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Population::GetBoundingBox
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f Population::GetBoundingBox() const
 {
-    geometry::Rectangle2f boundingBox;
-    IncorporateBoundingBox< PopulationConcentration_ABC, PopulationConcentration >( *this, boundingBox );
-    IncorporateBoundingBox< PopulationFlow_ABC, PopulationFlow >( *this, boundingBox );
-    return boundingBox;
+    return boundingBox_;
 }
 
 // -----------------------------------------------------------------------------

@@ -11,7 +11,7 @@
 #include "AutomatHierarchies.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/DataDictionary.h"
-#include "clients_gui/Tools.h"
+#include "Tools.h"
 
 using namespace kernel;
 
