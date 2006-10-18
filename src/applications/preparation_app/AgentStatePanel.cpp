@@ -15,6 +15,8 @@
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/Tools.h"
+#include "clients_gui/PropertiesTable.h"
+#include "clients_kernel/PropertiesDictionary.h"
 
 using namespace kernel;
 using namespace gui;
@@ -28,20 +30,23 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
     , controllers_( controllers )
     , selected_( controllers )
 {
-    display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Info" ) )
-                .AddLabel( tr( "Nom:" ), true );
+    properties_ = new PropertiesTable( this );
 
-    display_->AddGroup( tr( "Facteurs humains" ) )
-                .AddLabel( tr( "Experience:" ) )
-                .AddLabel( tr( "Moral:" ) )
-                .AddLabel( tr( "Fatigue:" ) );
 
-    display_->AddGroup( tr( "Liens logistiques" ) )
-                .AddLabel( tr( "TC2:" ) )
-                .AddLabel( tr( "Supérieur maintenance:" ) )
-                .AddLabel( tr( "Supérieur santé:" ) )
-                .AddLabel( tr( "Supérieur ravitaillement:" ) );
+//    display_ = new DisplayBuilder( this, factory );
+//    display_->AddGroup( tr( "Info" ) )
+//                .AddLabel( tr( "Nom:" ), true );
+//
+//    display_->AddGroup( tr( "Facteurs humains" ) )
+//                .AddLabel( tr( "Experience:" ) )
+//                .AddLabel( tr( "Moral:" ) )
+//                .AddLabel( tr( "Fatigue:" ) );
+//
+//    display_->AddGroup( tr( "Liens logistiques" ) )
+//                .AddLabel( tr( "TC2:" ) )
+//                .AddLabel( tr( "Supérieur maintenance:" ) )
+//                .AddLabel( tr( "Supérieur santé:" ) )
+//                .AddLabel( tr( "Supérieur ravitaillement:" ) );
 
     controllers_.Register( *this );
 }
@@ -78,7 +83,9 @@ void AgentStatePanel::NotifySelected( const kernel::Agent_ABC* element )
         if( selected_ )
         {
             Show();
-            display_->Group( "Info" ) .Display( "Nom:", selected_ );
+            PropertiesDictionary& dico = const_cast< kernel::Agent_ABC* >( element )->Get< PropertiesDictionary >();
+            dico.Display( *properties_ );
+//            display_->Group( "Info" ) .Display( "Nom:", selected_ );
         }
         else
             Hide();

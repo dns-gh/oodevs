@@ -25,6 +25,7 @@ namespace gui
 {
     class DisplayBuilder;
     class ItemFactory_ABC;
+    class PropertiesTable;
 }
 
 // =============================================================================
@@ -67,8 +68,9 @@ private:
 private:
     //! @name Member data
     //@{
+    gui::PropertiesTable* properties_;
     kernel::Controllers& controllers_;
-    gui::DisplayBuilder* display_;
+//    gui::DisplayBuilder* display_;
     kernel::SafePointer< kernel::Agent_ABC > selected_;
     //@}
 };

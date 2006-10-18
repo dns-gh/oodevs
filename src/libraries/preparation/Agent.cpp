@@ -13,6 +13,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h" // $$$$ SBO 2006-10-17: move to prepa
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
@@ -30,7 +31,7 @@ Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManage
     , commandPost_( commandPost )
 {
     RegisterSelf( *this );
-    CreateDictionary();
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,7 +51,7 @@ Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const
     idManager.Lock( id_ );
     
     RegisterSelf( *this );
-    CreateDictionary();
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,12 +107,16 @@ void Agent::Rename( const QString& name )
 // Name: Agent::CreateDictionary
 // Created: AGE 2006-06-27
 // -----------------------------------------------------------------------------
-void Agent::CreateDictionary()
+void Agent::CreateDictionary( kernel::Controller& controller )
 {
     DataDictionary& dictionary = *new DataDictionary();
     Attach( dictionary );
     dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
+
+    PropertiesDictionary& dico = *new PropertiesDictionary( controller );
+    Attach( dico );
+    dico.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Nom" ), name_ );
 }
 
 // -----------------------------------------------------------------------------

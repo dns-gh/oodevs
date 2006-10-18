@@ -70,7 +70,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary();
+    void CreateDictionary( kernel::Controller& controller );
     static unsigned long ReadId  ( xml::xistream& xis );
     //@}
 
