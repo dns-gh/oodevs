@@ -83,7 +83,7 @@ private:
     virtual void DoUpdate( const TraceMessage& msg );
     //@}
 
-public: // $$$$ AGE 2006-03-09: 
+private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& agent_;
@@ -92,7 +92,7 @@ public: // $$$$ AGE 2006-03-09:
     const RcEntityResolver_ABC& rcResolver_;
     const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
-
+public:  // $$$$ AGE 2006-03-09: 
     T_Reports reports_;
     //@}
 };

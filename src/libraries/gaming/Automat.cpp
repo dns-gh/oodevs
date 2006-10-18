@@ -29,7 +29,7 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controll
     RegisterSelf( *this );
     DataDictionary& dictionary = *new DataDictionary();
     Attach( dictionary );
-    // $$$$ AGE 2006-10-06: 
+    
     dictionary.Register( tools::translate( "Automat", "Info/Identifiant" ), id_ );
     dictionary.Register( tools::translate( "Automat", "Info/Nom" ), name_ );
 }

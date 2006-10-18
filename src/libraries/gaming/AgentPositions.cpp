@@ -48,7 +48,6 @@ Point2f AgentPositions::GetPosition() const
 {
     if( ! aggregated_ )
         return position_;
-    // $$$$ AGE 2006-10-06: 
     return agent_.Get< CommunicationHierarchies >().GetUp().Get< Positions >().GetPosition();
 }
 

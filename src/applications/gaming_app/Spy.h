@@ -91,7 +91,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_Agents spied_;
-    const kernel::Entity_ABC* selected_; // $$$$ AGE 2006-06-30: watch deletions
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     QToolBox* toolBox_;
     //@}
 };

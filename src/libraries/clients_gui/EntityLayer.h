@@ -115,7 +115,6 @@ protected: // $$$$ AGE 2006-05-17:
 // =============================================================================
 /** @class  EntityLayer
     @brief  Entity layer
-    // $$$$ AGE 2006-05-18: use interfaces instead of templates. On entities and knowledges
 */
 // Created: AGE 2006-03-23
 // =============================================================================

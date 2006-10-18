@@ -24,7 +24,7 @@ using namespace gui;
 ReportPanel::ReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
     : InfoPanel_ABC     ( parent, panel, tr( "Rapports" ) )
     , controllers_      ( controllers )
-    , selected_         ( 0 )
+    , selected_         ( controllers )
 {
     pFilterOptions_      = new ReportFilterOptions( this );
     pReportListView_     = new ReportListView( this, controllers_, *pFilterOptions_, factory );

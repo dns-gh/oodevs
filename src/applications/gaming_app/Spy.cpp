@@ -32,7 +32,7 @@ using namespace gui;
 Spy::Spy( QWidget* parent, Controllers& controllers )
     : QVBox( parent, "Espion" )
     , controllers_( controllers )
-    , selected_( 0 )
+    , selected_( controllers )
 {
     QVBox* box = new QVBox( this );
     QPushButton* button = new QPushButton( MAKE_ICON( cross ), tr( "Vider" ), box );

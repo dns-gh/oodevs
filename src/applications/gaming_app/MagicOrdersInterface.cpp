@@ -73,7 +73,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
         QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
 
         int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
-        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() ); // $$$$ AGE 2006-10-06: 
+        magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
         AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
         AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
@@ -102,7 +102,7 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, 
     bool bMoveAllowed = false;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         bMoveAllowed = decisions->IsEmbraye();
-    magicMenu->setItemEnabled( moveId, bMoveAllowed ); // $$$$ AGE 2006-10-06: 
+    magicMenu->setItemEnabled( moveId, bMoveAllowed );
     FillCommonOrders( magicMenu );
 }
 

@@ -46,7 +46,6 @@ PopulationConcentration::~PopulationConcentration()
 // -----------------------------------------------------------------------------
 QString PopulationConcentration::GetName() const
 {
-    // $$$$ AGE 2006-08-23: 
     static QString concentration( "Concentration" );
     return concentration;
 }
@@ -117,7 +116,7 @@ unsigned int PopulationConcentration::GetDensity() const
 // -----------------------------------------------------------------------------
 std::string PopulationConcentration::GetAttitude() const
 {
-    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ ); // $$$$ AGE 2006-02-20: 
+    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ );
 }
 
 // -----------------------------------------------------------------------------

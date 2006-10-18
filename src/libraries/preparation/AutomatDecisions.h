@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     const kernel::Automat_ABC& GetAgent() const;
-    bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
+    bool IsEmbraye() const;
     void Engage();
     void Disengage();
     virtual void DoSerialize( xml::xostream& xos ) const;

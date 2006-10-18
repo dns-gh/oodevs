@@ -76,7 +76,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
@@ -89,7 +89,7 @@ public:
     kernel::OptionalValue< bool >  bPrepared_;
     //@}
 
-public: // $$$$ AGE 2006-10-12: 
+private:
     //! @name Member data
     //@{
     ASN1T_EnumTypeLocalisation nTypeLocalisation_;

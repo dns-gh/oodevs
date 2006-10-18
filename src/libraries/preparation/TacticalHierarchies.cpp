@@ -30,7 +30,7 @@ TacticalHierarchies::TacticalHierarchies( kernel::Controller& controller, kernel
 // -----------------------------------------------------------------------------
 TacticalHierarchies::~TacticalHierarchies()
 {
-    DeleteAll(); // $$$$ SBO 2006-10-09: 
+    DeleteAll();
     controller_.Delete( *(kernel::TacticalHierarchies*)this );
 }
 

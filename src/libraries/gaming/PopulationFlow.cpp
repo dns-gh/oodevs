@@ -48,7 +48,6 @@ PopulationFlow::~PopulationFlow()
 // -----------------------------------------------------------------------------
 QString PopulationFlow::GetName() const
 {
-    // $$$$ AGE 2006-08-23: 
     static const QString flow( "Flow" );
     return flow;
 }
@@ -142,7 +141,7 @@ unsigned int PopulationFlow::GetDeadHumans() const
 // -----------------------------------------------------------------------------
 std::string PopulationFlow::GetAttitude() const
 {
-    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ ); // $$$$ AGE 2006-02-20: 
+    return ENT_Tr::ConvertFromPopulationAttitude( attitude_ );
 }
     
 // -----------------------------------------------------------------------------

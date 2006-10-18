@@ -891,7 +891,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
 {
     bReceivingState_ = false;
     if( bUseMosLimits_ )
-        GetModel().limits_.UpdateToSim(); // $$$$ AGE 2006-02-15: WTF
+        GetModel().limits_.UpdateToSim();
 }
 
 // -----------------------------------------------------------------------------
@@ -1133,7 +1133,6 @@ void AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderManagem
 {
     // $$$$ AGE 2006-07-06: ? 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomateMRT

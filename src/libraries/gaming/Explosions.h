@@ -58,7 +58,6 @@ private:
 
     //! @name Types
     //@{
-    // $$$$ AGE 2006-03-10: somehow make an abc !
     typedef std::deque< AgentFireResult* >  T_AgentFires;
     typedef T_AgentFires::const_iterator  CIT_AgentFires;
 

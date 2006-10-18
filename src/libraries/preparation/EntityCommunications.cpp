@@ -32,7 +32,7 @@ EntityCommunications::EntityCommunications( Controller& controller, Entity_ABC& 
 // -----------------------------------------------------------------------------
 EntityCommunications::~EntityCommunications()
 {
-    DeleteAll(); // $$$$ SBO 2006-10-09: 
+    DeleteAll();
     controller_.Delete( *(CommunicationHierarchies*)this );
 }
 

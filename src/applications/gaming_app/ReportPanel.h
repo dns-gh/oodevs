@@ -12,6 +12,7 @@
 
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "gaming/AgentSelectionObserver.h"
 
 namespace kernel
@@ -62,7 +63,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::Entity_ABC*     selected_; // $$$$ AGE 2006-04-20: watch deletions !
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     ReportFilterOptions* pFilterOptions_;
     ReportListView*      pReportListView_;
     FireResultListView*  pFireResultListView_;
