@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<orbat>
+  <sides>
+    <side id="1" name="rouge">
+      <tactical>
+        <formation id="17" level="x" name="">
+          <automat engaged="true" id="18" knowledge-group="23" name="$$$$Automate$$$$" type="BLD Sante">
+            <unit command-post="true" id="19" name="PC BLD Sante" position="30TYT2238066816" type="PC BLD Sante"/>
+          </automat>
+          <automat engaged="true" id="20" knowledge-group="2" name="$$$$Automate$$$$" type="BLT Maintenance">
+            <unit command-post="true" id="21" name="PC BLT Maintenance" position="30TYT2224763907" type="PC BLT Maintenance"/>
+          </automat>
+        </formation>
+      </tactical>
+      <logistic>
+        <automat id="18">
+            <subordinate automat="18" link="tc2"/>
+            <subordinate automat="20" link="maintenance"/>
+        </automat>
+      </logistic>      
+      <communication>
+        <knowledge-group id="2" type="Standard"/>
+        <knowledge-group id="23" type="Standard"/>
+      </communication>
+      <populations/> 
+    </side> 
+    <side id="3" name="bleu">
+      <tactical>
+        <formation id="5" level="xxx" name="">    
+          <formation id="6" level="iii" name="">
+            <formation id="7" level="oo" name="">
+              <automat engaged="true" id="9" knowledge-group="22" name="automate pas nommé" type="Compagnie GEN Lourde">
+                <unit command-post="true" id="10" name="Section Combat GEN" position="30TYT1896868099" type="Section Combat GEN"/>
+                <unit command-post="false" id="11" name="Section Combat GEN" position="30TYT1948867619" type="Section Combat GEN"/>
+                <unit command-post="false" id="12" name="Section Combat GEN" position="30TYT1900667101" type="Section Combat GEN"/>
+              </automat>
+            </formation>
+            <formation id="8" level="ooo" name="">
+              <automat engaged="true" id="13" knowledge-group="4" name="rav" type="BLD Ravitaillement">
+                <unit command-post="true" id="14" name="PC BLD Ravitaillement" position="30TYT1983765228" type="PC BLD Ravitaillement">
+                    <stocks>
+                        <dotation name="gasoil" quantity="6"/>
+                        <dotation name="Balle Classique 12,7" quantity="1"/>
+                    </stocks>
+                </unit>
+              </automat>
+              <automat engaged="true" id="15" knowledge-group="4" name="$$$$Automate$$$$" type="Automate Refugie">
+                <unit command-post="true" id="16" name="Pion Refugie" position="30TYT1869564961" type="Pion Refugie"/>
+              </automat>
+            </formation>
+          </formation>
+          <automat engaged="true" id="1500" knowledge-group="4" name="$$$$Automate$$$$" type="BLD Ravitaillement">
+            <unit command-post="true" id="1600" name="Pion Refugie" position="30TYT1869564961" type="Pion Refugie">
+                <dotations>
+                    <dotation name="gasoil" quantity="6"/>
+                    <dotation name="Balle Classique 12,7" quantity="1"/>
+                </dotations>
+            </unit>
+          </automat>        
+      </formation>
+      </tactical>
+      <logistic>
+        <automat id="13">
+            <subordinate automat="13" link="tc2"/>
+            <subordinate automat="15" link="maintenance"/>
+        </automat>
+        <automat id="1500">
+            <subordinate automat="1500" link="supply">
+                <quotas>
+                    <dotation name="gasoil" quantity="6"/>
+                    <dotation name="Balle Classique 12,7" quantity="1"/>
+                </quotas>
+            </subordinate>
+        </automat>        
+      </logistic>
+                     
+      <communication>
+        <knowledge-group id="4" type="Standard"/>
+        <knowledge-group id="22" type="Standard"/>
+      </communication>            
+      <populations> 
+        <population id="654" type="test1" name="Parisiens" position="31TBN9374781012" attitude="agitee" humans="10000"/>
+      </populations> 
+    </side>
+  </sides>
+  <diplomacies>
+    <side id="1">
+      <relationship diplomacy="enemy" team="3"/>
+    </side>
+    <side id="3">
+      <relationship diplomacy="enemy" team="1"/>
+    </side>
+  </diplomacies>
+  <objects/>
+</orbat>
