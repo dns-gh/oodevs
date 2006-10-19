@@ -42,8 +42,7 @@ T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P& param )
         return *pModel;
 
     pModel = new T( model, param );
-
-    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
+//    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
     return *pModel;
 }
 
@@ -59,7 +58,7 @@ T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P1& param1, P2
         return *pModel;
 
     pModel = new T( model, param1, param2 );
-    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
+//    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
     return *pModel;
 }
 

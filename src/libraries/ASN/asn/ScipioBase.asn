@@ -63,6 +63,7 @@ ListKnowledgeAgent      ::= SEQUENCE OF KnowledgeAgent
 ListKnowledgeObject     ::= SEQUENCE OF KnowledgeObject
 ListCamp                ::= SEQUENCE OF Camp
 ListPopulation          ::= SEQUENCE OF Population
+ListFormation           ::= SEQUENCE OF Formation
 TypeEquipement          ::= OID
 TypeDotation            ::= OID
 TypeDotationTrancheD    ::= OID

@@ -19,6 +19,7 @@ namespace dispatcher
 class Dispatcher;
 class Automat;
 class Side;
+class Formation;
 class Population;
 
 // =============================================================================
@@ -53,6 +54,7 @@ private:
     //@{
     typedef std::set< Automat* >    T_AutomatSet;
     typedef std::set< Side* >       T_SideSet;
+    typedef std::set< Formation* >  T_FormationSet;
     typedef std::set< Population* > T_PopulationSet;
     //@}
 
@@ -67,6 +69,7 @@ private:
     //@{
     void ReadAutomatRights   ( xml::xistream& xis, T_AutomatSet&    container );
     void ReadSideRights      ( xml::xistream& xis, T_SideSet&       container );
+    void ReadFormationRights ( xml::xistream& xis, T_FormationSet&  container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
     //@}
 
@@ -78,11 +81,13 @@ private:
     // Read only
     T_AutomatSet    readOnlyAutomats_;
     T_SideSet       readOnlySides_;
+    T_FormationSet  readOnlyFormations_;
     T_PopulationSet readOnlyPopulations_;
 
     // Read write
     T_AutomatSet    readWriteAutomats_;
     T_SideSet       readWriteSides_;
+    T_FormationSet  readWriteFormations_;
     T_PopulationSet readWritePopulations_;
 
     // Supervision

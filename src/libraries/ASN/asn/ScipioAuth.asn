@@ -14,6 +14,8 @@ Profile ::= SEQUENCE
 {
     login                   VisibleString,
     password                VisibleString  OPTIONAL,
+    read-only-formations    ListFormation  OPTIONAL,
+    read-write-formations   ListFormation  OPTIONAL,
     read-only-automates     ListAutomate   OPTIONAL,
     read-write-automates    ListAutomate   OPTIONAL,
     read-only-camps         ListCamp       OPTIONAL,

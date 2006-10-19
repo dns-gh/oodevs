@@ -16,6 +16,7 @@
 #include "Network_Def.h"
 #include "Automat.h"
 #include "Side.h"
+#include "Formation.h"
 #include "Population.h"
 #include "xeumeuleu/xml.h"
 
@@ -31,23 +32,27 @@ Profile::Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xist
     , strPassword_          () 
     , readOnlyAutomats_     ()
     , readOnlySides_        ()
+    , readOnlyFormations_   ()
     , readOnlyPopulations_  ()
     , readWriteAutomats_    ()
     , readWriteSides_       ()
+    , readWriteFormations_  ()
     , readWritePopulations_ ()
     , bSupervision_         ( false )
 {
     xis >> xml::content( "password", strPassword_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
-                >> xml::list( "automat"   , *this, & Profile::ReadAutomatRights   , readOnlyAutomats_    )
-                >> xml::list( "side"      , *this, & Profile::ReadSideRights      , readOnlySides_       )
-                >> xml::list( "population", *this, & Profile::ReadPopulationRights, readOnlyPopulations_ )
+                >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
+                >> xml::list( "side"      , *this, &Profile::ReadSideRights      , readOnlySides_       )
+                >> xml::list( "formation" , *this, &Profile::ReadFormationRights , readOnlyFormations_  )
+                >> xml::list( "population", *this, &Profile::ReadPopulationRights, readOnlyPopulations_ )
             >> xml::end()
             >> xml::start( "readwrite" )
-                >> xml::list( "automat"   , *this, & Profile::ReadAutomatRights   , readWriteAutomats_    )
-                >> xml::list( "side"      , *this, & Profile::ReadSideRights      , readWriteSides_       )
-                >> xml::list( "population", *this, & Profile::ReadPopulationRights, readWritePopulations_ )
+                >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readWriteAutomats_    )
+                >> xml::list( "side"      , *this, &Profile::ReadSideRights      , readWriteSides_       )
+                >> xml::list( "formation" , *this, &Profile::ReadFormationRights , readWriteFormations_  )
+                >> xml::list( "population", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end()
             >> xml::optional() >> xml::content( "supervision", bSupervision_ )
         >> xml::end();
@@ -77,6 +82,8 @@ void Profile::ReadAutomatRights( xml::xistream& xis, T_AutomatSet& container )
     Automat* pAutomat = dispatcher_.GetModel().GetAutomats().Find( nID );
     if( pAutomat )
         container.insert( pAutomat );
+    else
+        MT_LOG_ERROR_MSG( "Invalid automat id ('" << nID << "') while reading profiles" );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,6 +98,24 @@ void Profile::ReadSideRights( xml::xistream& xis, T_SideSet& container )
     Side* pSide = dispatcher_.GetModel().GetSides().Find( nID );
     if( pSide )
         container.insert( pSide );
+    else
+        MT_LOG_ERROR_MSG( "Invalid side id ('" << nID << "') while reading profiles" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::ReadFormationRights
+// Created: NLD 2006-10-19
+// -----------------------------------------------------------------------------
+void Profile::ReadFormationRights( xml::xistream& xis, T_FormationSet&  container )
+{
+    int nID;
+    xis >> xml::attribute( "id", nID );
+
+    Formation* pFormation = dispatcher_.GetModel().GetFormations().Find( nID );
+    if( pFormation )
+        container.insert( pFormation );
+    else
+        MT_LOG_ERROR_MSG( "Invalid formation id ('" << nID << "') while reading profiles" );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +130,8 @@ void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& contain
     Population* pPopulation = dispatcher_.GetModel().GetPopulations().Find( nID );
     if( pPopulation )
         container.insert( pPopulation );
+    else
+        MT_LOG_ERROR_MSG( "Invalid population id ('" << nID << "') while reading profiles" );
 
 }
 
@@ -178,9 +205,11 @@ void Profile::Send( ASN1T_Profile& asn ) const
 {
     asn.m.read_only_automatesPresent    = 1;  
     asn.m.read_only_campsPresent        = 1;
+    asn.m.read_only_formationsPresent   = 1;
     asn.m.read_only_populationsPresent  = 1;  
     asn.m.read_write_automatesPresent   = 1;
     asn.m.read_write_campsPresent       = 1;
+    asn.m.read_write_formationsPresent  = 1;
     asn.m.read_write_populationsPresent = 1;
 
     asn.login = strLogin_.c_str();
@@ -192,6 +221,9 @@ void Profile::Send( ASN1T_Profile& asn ) const
 
     SendContainerRefs< ASN1T_ListCamp, ASN1T_Camp, T_SideSet >( readOnlySides_ , asn.read_only_camps  );
     SendContainerRefs< ASN1T_ListCamp, ASN1T_Camp, T_SideSet >( readWriteSides_, asn.read_write_camps );
+
+    SendContainerRefs< ASN1T_ListFormation, ASN1T_Formation, T_FormationSet >( readOnlyFormations_ , asn.read_only_formations  );
+    SendContainerRefs< ASN1T_ListFormation, ASN1T_Formation, T_FormationSet >( readWriteFormations_, asn.read_write_formations );
     
     SendContainerRefs< ASN1T_ListPopulation, ASN1T_Population, T_PopulationSet >( readOnlyPopulations_ , asn.read_only_populations  );
     SendContainerRefs< ASN1T_ListPopulation, ASN1T_Population, T_PopulationSet >( readWritePopulations_, asn.read_write_populations );
@@ -212,6 +244,11 @@ void Profile::AsnDelete( ASN1T_Profile& asn )
         delete [] asn.read_only_camps.elem;
     if( asn.m.read_write_campsPresent && asn.read_write_camps.n > 0 )
         delete [] asn.read_write_camps.elem;
+
+    if( asn.m.read_only_formationsPresent && asn.read_only_formations.n > 0 )
+        delete [] asn.read_only_formations.elem;
+    if( asn.m.read_write_formationsPresent && asn.read_write_formations.n > 0 )
+        delete [] asn.read_write_formations.elem;
 
     if( asn.m.read_only_populationsPresent && asn.read_only_populations.n > 0 )
         delete [] asn.read_only_populations.elem;

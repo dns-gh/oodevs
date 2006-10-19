@@ -108,6 +108,8 @@ void asn1Print_Profile (ASN1ConstCharPtr name, ASN1T_Profile* pvalue)
    char namebuf[512];
 
    printf ("%s.m.passwordPresent = %d\n", name, (int)pvalue->m.passwordPresent);
+   printf ("%s.m.read_only_formationsPresent = %d\n", name, (int)pvalue->m.read_only_formationsPresent);
+   printf ("%s.m.read_write_formationsPresent = %d\n", name, (int)pvalue->m.read_write_formationsPresent);
    printf ("%s.m.read_only_automatesPresent = %d\n", name, (int)pvalue->m.read_only_automatesPresent);
    printf ("%s.m.read_write_automatesPresent = %d\n", name, (int)pvalue->m.read_write_automatesPresent);
    printf ("%s.m.read_only_campsPresent = %d\n", name, (int)pvalue->m.read_only_campsPresent);
@@ -120,6 +122,16 @@ void asn1Print_Profile (ASN1ConstCharPtr name, ASN1T_Profile* pvalue)
    if (pvalue->m.passwordPresent) {
       sprintf (namebuf, "%s.password", name);
       rtPrintCharStr (namebuf, pvalue->password);
+   }
+
+   if (pvalue->m.read_only_formationsPresent) {
+      sprintf (namebuf, "%s.read_only_formations", name);
+      asn1Print_ListFormation (namebuf, &pvalue->read_only_formations);
+   }
+
+   if (pvalue->m.read_write_formationsPresent) {
+      sprintf (namebuf, "%s.read_write_formations", name);
+      asn1Print_ListFormation (namebuf, &pvalue->read_write_formations);
    }
 
    if (pvalue->m.read_only_automatesPresent) {
@@ -4154,6 +4166,38 @@ void ASN1C_Camp::Print (ASN1ConstCharPtr name)
    asn1Print_Camp (name, &msgData);
 }
 
+void asn1Print_Formation (ASN1ConstCharPtr name, ASN1T_Formation* pvalue)
+{
+   asn1Print_OID (name, pvalue);
+}
+
+void ASN1C_Formation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Formation (name, &msgData);
+}
+
+void asn1Print_ListFormation (ASN1ConstCharPtr name, ASN1T_ListFormation* pvalue)
+{
+   char namebuf[512];
+
+   printf ("%s.n = %d\n", name, pvalue->n);
+   {
+   ASN1UINT xx1;
+   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
+      sprintf (namebuf, "%s.elem[%d]", name, xx1);
+      asn1Print_Formation (namebuf, &pvalue->elem[xx1]);
+   }
+   }
+
+}
+
+void ASN1C_ListFormation::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_ListFormation (name, &msgData);
+}
+
 void asn1Print_Automate (ASN1ConstCharPtr name, ASN1T_Automate* pvalue)
 {
    asn1Print_OID (name, pvalue);
@@ -4651,17 +4695,6 @@ void ASN1C_TirPopulation::Print (ASN1ConstCharPtr name)
 
 {
    asn1Print_TirPopulation (name, &msgData);
-}
-
-void asn1Print_Formation (ASN1ConstCharPtr name, ASN1T_Formation* pvalue)
-{
-   asn1Print_OID (name, pvalue);
-}
-
-void ASN1C_Formation::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Formation (name, &msgData);
 }
 
 void asn1Print_KnowledgeGroup (ASN1ConstCharPtr name, ASN1T_KnowledgeGroup* pvalue)
