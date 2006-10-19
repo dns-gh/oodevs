@@ -35,7 +35,7 @@ public:
     
     //! @name Init
     //@{
-    virtual void Initialize( MIL_Army& army, const TER_Localisation& localisation );
+    virtual void Initialize( const MIL_Army& army, const TER_Localisation& localisation );
     //@}
 
     //! @name CheckPoints
@@ -66,9 +66,9 @@ public:
 
     //! @name Accessors
     //@{
-    bool      IsMarkedForDestruction() const;
-    bool      IsReadyForDeletion    () const;
-    MIL_Army& GetArmy               () const;
+          bool      IsMarkedForDestruction() const;
+          bool      IsReadyForDeletion    () const;
+    const MIL_Army& GetArmy               () const;
 
     virtual bool IsReal() const = 0;
     //@}
@@ -97,9 +97,9 @@ protected:
     //@}
 
 private:
-    MIL_Army* pArmy_;
-    bool      bMarkedForDestruction_;
-    bool      bReadyForDeletion_;
+    const MIL_Army* pArmy_;
+          bool      bMarkedForDestruction_;
+          bool      bReadyForDeletion_;
 
     // Link with agents
     T_AgentSet agentInsideSet_;

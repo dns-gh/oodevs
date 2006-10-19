@@ -12,6 +12,7 @@
 #include "KnowledgeGroup.h"
 
 #include "Side.h"
+#include "Model.h"
 #include "Publisher_ABC.h"
 #include "Network_Def.h"
 
@@ -21,9 +22,9 @@ using namespace dispatcher;
 // Name: KnowledgeGroup constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Model& /*model*/, unsigned int nID, Side& side )
-    : nID_     ( nID )
-    , side_    ( side )
+KnowledgeGroup::KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreation& msg )
+    : nID_     ( msg.oid )
+    , side_    ( model.GetSides().Get( msg.oid_camp ) )
     , automats_()
 {
     side_.GetKnowledgeGroups().Register( *this );
@@ -48,8 +49,19 @@ KnowledgeGroup::~KnowledgeGroup()
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SendCreation( Publisher_ABC& publisher ) const
 {
-    DIN::DIN_BufferedMessage msg = publisher.GetDinMsg();
-    msg << side_.GetID()
-        << nID_;        
-    publisher.Send( eMsgKnowledgeGroup, msg );
+    AsnMsgInClientKnowledgeGroupCreation asn;
+    
+    asn().oid      = nID_;
+    asn().oid_camp = side_.GetID();
+
+    asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::SendFullUpdate
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::SendFullUpdate( Publisher_ABC& /*publisher*/ ) const
+{
+	// NOTHING
 }

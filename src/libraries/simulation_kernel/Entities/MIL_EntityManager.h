@@ -21,12 +21,13 @@ class MIL_ObjectManager;
 class MIL_Army;
 class MIL_AgentPion;
 class MIL_Automate;
-class MIL_Effect_ABC;
-class MIL_Effect_IndirectFire;
+class MIL_Formation;
 class MIL_VirtualObject_ABC;
 class MIL_AgentTypePion;
 class MIL_RealObject_ABC;
 class MIL_Population;
+class MIL_PopulationType;
+class MIL_AutomateType;
 class TER_Localisation;
 
 class HLA_Federate;
@@ -63,8 +64,8 @@ class MIL_EntityManager
 public:
     //! @name Types
     //@{
-    typedef std::map< const std::string, MIL_Army*, sCaseInsensitiveLess > T_ArmyMap;
-    typedef T_ArmyMap::const_iterator                                      CIT_ArmyMap;
+    typedef std::map< uint, MIL_Army*> T_ArmyMap;
+    typedef T_ArmyMap::const_iterator  CIT_ArmyMap;
     //@}
 
 public:
@@ -73,6 +74,15 @@ public:
     ~MIL_EntityManager();
 
     static void Initialize( MIL_InputArchive& archive );
+
+    //! @name Factory
+    //@{
+    MIL_Population& CreatePopulation( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive );
+    MIL_Formation&  CreateFormation ( uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent = 0 );
+    MIL_Automate&   CreateAutomate  ( const MIL_AutomateType&  type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive );
+    MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , MIL_InputArchive& archive );
+    MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
+    //@}
 
     //! @name Accessors
     //@{
@@ -101,7 +111,7 @@ public:
     //! @name Operations
     //@{
     void ReadODB             ( MIL_InputArchive& archive );
-    void SendStateToNewClient();
+    void SendStateToNewClient() const;
     void Update              ();
     void Clean               ();
 
@@ -112,9 +122,9 @@ public:
     //@{
     void OnReceiveMsgUnitMagicAction      ( DIN::DIN_Input&                         msg );
     void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgPopulationOrder      ( ASN1T_MsgPopulationOrder&               msg, MIL_MOSContextID nCtx );     
     void OnReceiveMsgPionOrder            ( ASN1T_MsgPionOrder&                     msg, MIL_MOSContextID nCtx ); 
     void OnReceiveMsgAutomateOrder        ( ASN1T_MsgAutomateOrder&                 msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgPopulationOrder      ( ASN1T_MsgPopulationOrder&               msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgOrderConduite        ( ASN1T_MsgOrderConduite&                 msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgObjectMagicAction    ( ASN1T_MsgObjectMagicAction&             msg, MIL_MOSContextID nCtx );
@@ -129,15 +139,10 @@ public:
 
     //! @name Objects
     //@{
-    MIL_RealObject_ABC* CreateObject  ( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
+    MIL_RealObject_ABC* CreateObject  ( const MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
     void                RegisterObject( MIL_VirtualObject_ABC& object );
     void                RegisterObject( MIL_RealObject_ABC&    object );
     MIL_RealObject_ABC* FindRealObject( uint nID ) const;
-    //@}
-
-    //! @name Dynamic pions
-    //@{
-    MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
     //@}
 
     //! @name Population channeling
@@ -164,6 +169,9 @@ private:
     typedef std::map< uint, MIL_Automate* > T_AutomateMap;
     typedef T_AutomateMap::const_iterator   CIT_AutomateMap;
 
+    typedef std::map< uint, MIL_Formation* > T_FormationMap;
+    typedef T_FormationMap::const_iterator   CIT_FormationMap;
+
     typedef std::map< uint, MIL_Population* > T_PopulationMap;
     typedef T_PopulationMap::const_iterator   CIT_PopulationMap;
     
@@ -183,8 +191,6 @@ private:
     // ODB
     void InitializeArmies     ( MIL_InputArchive& archive );
     void InitializeDiplomacy  ( MIL_InputArchive& archive );
-    void InitializeAutomates  ( MIL_InputArchive& archive );
-    void InitializePions      ( MIL_InputArchive& archive );
     void InitializePopulations( MIL_InputArchive& archive );
     //@}
 
@@ -204,8 +210,12 @@ private:
     MIL_ObjectManager* pObjectManager_;
 
     T_ArmyMap       armies_;
-    T_PionMap       pions_;   // Contient le pion PC
+    T_FormationMap  formations_;
+    T_PionMap       pions_;
     T_AutomateMap   automates_;
+
+
+
     T_PopulationMap populations_;
 
     // Profiling

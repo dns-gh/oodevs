@@ -25,8 +25,7 @@ class MIL_AgentPionLOGMedical : public MIL_AgentPionLOG_ABC
     MT_COPYNOTALLOWED( MIL_AgentPionLOGMedical )
 
 public:
-             MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive );
-             MIL_AgentPionLOGMedical( MIL_Automate& automate, MIL_InputArchive& archive );
+             MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );
              MIL_AgentPionLOGMedical( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOGMedical();
     virtual ~MIL_AgentPionLOGMedical();

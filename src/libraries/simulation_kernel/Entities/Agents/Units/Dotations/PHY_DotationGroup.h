@@ -55,7 +55,7 @@ public:
     
     //! @name Init
     //@{
-    void ReadValues( MIL_InputArchive& archive );
+    void ReadValues( MIL_InputArchive& archive, const PHY_DotationCategory& category ); //$$$ A VIRER
     //@}
 
     //! @name Operations

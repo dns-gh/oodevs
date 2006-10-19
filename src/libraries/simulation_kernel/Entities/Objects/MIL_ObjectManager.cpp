@@ -192,7 +192,7 @@ void MIL_ObjectManager::RegisterObject( MIL_RealObject_ABC& object )
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( const MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
 {
     uint nObjectTypeID = diaParameters[ nCurrentParamIdx++ ].ToId();
     const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( nObjectTypeID );

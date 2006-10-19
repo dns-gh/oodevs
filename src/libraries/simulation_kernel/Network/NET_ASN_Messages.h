@@ -109,13 +109,29 @@ NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlCheckPointSaveNowAck     , ctrl_checkpoint_
 NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlSendCurrentStateBegin    , ctrl_send_current_state_begin     )
 NET_GENERATE_SEND_ASN_MSG_NOMSG( CtrlSendCurrentStateEnd      , ctrl_send_current_state_end       )
                                                                                             
-// Unit attributes
+// Unit
+NET_GENERATE_SEND_ASN_MSG_PTR( PionCreation       , pion_creation         )
 NET_GENERATE_SEND_ASN_MSG_PTR( UnitAttributes     , unit_attributes       )
 NET_GENERATE_SEND_ASN_MSG_PTR( UnitMagicActionAck , unit_magic_action_ack )
 NET_GENERATE_SEND_ASN_MSG_PTR( UnitPathFind       , unit_pathfind         )
 
-// Automate attributes
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateAttributes , automate_attributes   )
+// Automate
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateCreation   , automate_creation   )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateAttributes , automate_attributes )
+
+// Army / formation / knowledge groups
+NET_GENERATE_SEND_ASN_MSG_PTR( FormationCreation     , formation_creation       )
+NET_GENERATE_SEND_ASN_MSG_PTR( KnowledgeGroupCreation, knowledge_group_creation )
+NET_GENERATE_SEND_ASN_MSG_PTR( SideCreation          , side_creation            )
+
+// Hierarchie update
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatieAck        , change_diplomatie_ack          )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeGroupeConnaissanceAck, change_groupe_connaissance_ack )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeLiensLogistiquesAck  , change_liens_logistiques_ack   )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeLiensLogistiques     , change_liens_logistiques       )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomate             , change_automate                )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomateAck          , change_automate_ack            )
+NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie           , change_diplomatie              )
 
 // Logistic
 NET_GENERATE_SEND_ASN_MSG_PTR( LogMaintenanceTraitementEquipementCreation   , log_maintenance_traitement_equipement_creation    )
@@ -191,16 +207,6 @@ NET_GENERATE_SEND_ASN_MSG_PTR  ( ObjectMagicActionAck , object_magic_action_ack 
 NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeCreation   , object_knowledge_creation    )
 NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeUpdate     , object_knowledge_update      )
 NET_GENERATE_SEND_ASN_MSG_PTR( ObjectKnowledgeDestruction, object_knowledge_destruction )
-
-// Hierarchie / init
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatieAck        , change_diplomatie_ack          )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeGroupeConnaissanceAck, change_groupe_connaissance_ack )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeLiensLogistiquesAck  , change_liens_logistiques_ack   )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomate             , change_automate                )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeAutomateAck          , change_automate_ack            )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateCreation           , automate_creation              )
-NET_GENERATE_SEND_ASN_MSG_PTR( PionCreation               , pion_creation                  )
-NET_GENERATE_SEND_ASN_MSG_PTR( ChangeDiplomatie           , change_diplomatie              )
 
 // Logistique - Rav
 NET_GENERATE_SEND_ASN_MSG_NOPTR( LogRavitaillementChangeQuotasAck, log_ravitaillement_change_quotas_ack )

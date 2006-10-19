@@ -6,8 +6,7 @@
 
 ScipioAutomateMission_ASA DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, ListPolygon, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase;
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, ListPolygon, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase;
         
 EnumModeDeploiement ::= ENUMERATED
 {        

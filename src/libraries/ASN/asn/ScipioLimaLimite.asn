@@ -6,8 +6,6 @@
 
 ScipioLimaLimite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, Localisation, GDH, OID FROM ScipioBase;
-
 -- Limit
 MsgLimitCreation ::= SEQUENCE 
 {

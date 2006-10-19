@@ -74,7 +74,7 @@ void MIL_Object_ABC::ProcessAgentInside( MIL_Agent_ABC& /*agent*/ )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-MIL_Army& MIL_Object_ABC::GetArmy() const
+const MIL_Army& MIL_Object_ABC::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;

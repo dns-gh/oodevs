@@ -60,7 +60,7 @@ private:
     const ASN1T_EnumObjectType nType_; // XML reference - no resolved by dispatcher
     const std::string          strName_;
           Localisation         localisation_;
-    const Side&                side_;
+          Side&                side_;
     const unsigned long        nPlannedID_; // $$$ Bullshit !
     const unsigned int         nTypeDotationForConstruction_; // XML reference - no resolved by dispatcher
     const unsigned int         nTypeDotationForMining_; // XML reference - no resolved by dispatcher

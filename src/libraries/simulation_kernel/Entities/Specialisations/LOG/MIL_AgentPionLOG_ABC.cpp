@@ -25,23 +25,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOG_ABC, "MIL_AgentPionLOG_ABC" )
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive )
-    : MIL_AgentPion   ( type, nID, archive )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
+    : MIL_AgentPion   ( type, nID, automate, archive )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     if( !GetAutomate().GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "The automata of this pion is not a logistic one", archive.GetContext() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOG_ABC constructor
-// Created: NLD 2004-10-04
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPion   ( automate, archive )
-    , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
-{
-    if ( !automate.GetType().IsLogistic() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "The automata of this pion is not a logistic one", archive.GetContext() );
 }
 

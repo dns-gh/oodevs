@@ -16,6 +16,7 @@
 
 class MIL_AgentTypePion;
 class MIL_Automate;
+class MIL_Formation;
 class DEC_ModelAutomate;
 
 // =============================================================================
@@ -42,7 +43,7 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_InputArchive& archive ) const;
+    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& formation, MIL_InputArchive& archive ) const;
     //@}
 
     //! @name Accessors

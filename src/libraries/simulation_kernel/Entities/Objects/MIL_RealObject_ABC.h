@@ -57,10 +57,10 @@ public:
     
     //! @name Init
     //@{
-    virtual bool                      Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
     virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asn );
-    virtual void                      Initialize( MIL_Army& army, const TER_Localisation& localisation );
+    virtual void                      Initialize( const MIL_Army& army, const TER_Localisation& localisation );
     //@}
 
     //! @name CheckPoints
@@ -220,7 +220,7 @@ private:
     //! @name Tools
     //@{
     void InitializeAvoidanceLocalisation();
-    void InitializeCommon               ( MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID = 0 );
+    void InitializeCommon               ( const MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID = 0 );
 
     void ChangeConstructionPercentage   ( MT_Float rNewConstructionPercentage );
     void ChangeMiningPercentage         ( MT_Float rNewMiningPercentage       );

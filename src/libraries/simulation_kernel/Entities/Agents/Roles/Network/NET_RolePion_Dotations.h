@@ -43,8 +43,8 @@ public:
     
     //! @name Network
     //@{
-    void SendChangedState();
-    void SendFullState   ();
+    void SendChangedState() const;
+    void SendFullState   () const;
     //@}
 
 private:
@@ -56,8 +56,8 @@ private:
 
 private:
     const MIL_AgentPion* pPion_;
-          bool           bLastStateDead_;
-          bool           bLastStateNeutralized_;
+    mutable bool         bLastStateDead_;
+    mutable bool         bLastStateNeutralized_;
 };
 
 #include "NET_RolePion_Dotations.inl"

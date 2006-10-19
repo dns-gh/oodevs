@@ -67,7 +67,7 @@ MIL_AgentHLA::~MIL_AgentHLA()
 // Name: MIL_AgentHLA::GetArmy
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_AgentHLA::GetArmy() const
+const MIL_Army& MIL_AgentHLA::GetArmy() const
 {
     if( pArmy_ )
         return *pArmy_;

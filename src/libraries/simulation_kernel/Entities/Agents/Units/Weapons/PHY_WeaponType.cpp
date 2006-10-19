@@ -89,7 +89,7 @@ void PHY_WeaponType::Terminate()
 // -----------------------------------------------------------------------------
 PHY_WeaponType::PHY_WeaponType( const std::string& strLauncher, const std::string& strAmmunition, MIL_InputArchive& archive )
     : pLauncherType_      ( PHY_LauncherType::FindLauncherType( strLauncher ) )
-    , pDotationCategory_  ( PHY_DotationType::munition_.FindDotationCategory( strAmmunition ) )
+    , pDotationCategory_  ( PHY_DotationType::FindDotationCategory( strAmmunition ) )
     , nNbrAmmoPerBurst_   ( 1 )
     , rBurstDuration_     ( 1. )
     , nNbrAmmoPerLoader_  ( 1 )

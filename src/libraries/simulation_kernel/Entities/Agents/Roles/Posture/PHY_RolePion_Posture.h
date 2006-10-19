@@ -90,8 +90,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg );
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg );
+    void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
     //@}
 
     //! @name HLA
@@ -130,8 +130,9 @@ private:
           bool           bPercentageCrossed50_;
           bool           bStealthFactorHasChanged_;
           bool           bPercentageHasChanged_;
-          MT_Float       rLastPostureCompletionPercentageSent_;
-          MT_Float       rLastInstallationStateSent_;
+
+    mutable MT_Float     rLastPostureCompletionPercentageSent_;
+    mutable MT_Float     rLastInstallationStateSent_;
 
 private:
     static MT_Random  random_;

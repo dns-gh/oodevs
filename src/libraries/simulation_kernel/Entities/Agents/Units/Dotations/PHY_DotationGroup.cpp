@@ -125,31 +125,13 @@ void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: PHY_DotationGroup::ReadValues
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::ReadValues( MIL_InputArchive& archive )
+void PHY_DotationGroup::ReadValues( MIL_InputArchive& archive, const PHY_DotationCategory& category )
 {
-    assert( pType_ );
-    
-    archive.BeginList( "Categories" );
+    PHY_Dotation* pDotation = GetDotation( category );
+    if( !pDotation )        
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation", archive.GetContext() );
 
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Categorie" );
-
-        std::string strCategoryName;
-        archive.ReadAttribute( "nom", strCategoryName );
-
-        const PHY_DotationCategory* pDotationCategory = pType_->FindDotationCategory( strCategoryName );
-        if( !pDotationCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
-
-        PHY_Dotation* pDotation = GetDotation( *pDotationCategory );
-        if( !pDotation )        
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation", archive.GetContext() );
-
-        pDotation->ReadValue( archive );
-        archive.EndSection(); // Categorie
-    }
-    archive.EndList(); // Categories    
+    pDotation->ReadValue( archive );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,7 +37,7 @@ public:
     //@{
     static MIL_RealObject_ABC& Create();
 
-    virtual bool Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual bool Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     //@}
 };
 

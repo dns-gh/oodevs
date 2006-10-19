@@ -66,8 +66,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState();
-    void SendFullState   ();
+    void SendChangedState() const;
+    void SendFullState   () const;
     //@}
 
     //! @name Tools

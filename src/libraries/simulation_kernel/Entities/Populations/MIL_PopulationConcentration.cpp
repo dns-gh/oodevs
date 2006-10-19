@@ -53,10 +53,10 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 {
     // Position
     std::string strPosition;
-    archive.ReadField( "Position", strPosition );
+    archive.ReadAttribute( "position", strPosition );
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
     MT_Float rNbrHumans;
-    archive.ReadField( "NombreHumains", rNbrHumans, CheckValueGreater( 0. ) );
+    archive.ReadAttribute( "humans", rNbrHumans, CheckValueGreater( 0. ) );
     PushHumans( T_Humans( rNbrHumans, 0. ) );
         
     UpdateLocation();

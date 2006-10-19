@@ -13,8 +13,7 @@
 
 #include "MIL_KnowledgeGroup.h"
 
-#include "Network/NET_AS_MOSServerMsgMgr.h"
-#include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Messages.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -39,6 +38,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_           ()
 {
+    pArmy_->RegisterKnowledgeGroup( *this );
     if ( !ids_.insert( nID_ ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "KnowledgeGroup id %d is already used", nID_ ) );
 }
@@ -62,6 +62,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
+    pArmy_->UnregisterKnowledgeGroup( *this );
     delete pKnowledgeBlackBoard_;
     ids_.erase( nID_ );
 }
@@ -95,7 +96,6 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const uint )
 void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     assert( pType_ );
-    
     file << pType_->GetID()
          << nID_
          << pArmy_
@@ -110,10 +110,10 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const uint ) cons
 void MIL_KnowledgeGroup::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
     assert( pType_ );
-    archive.Section( "GroupeConnaissance" );
+    archive.Section( "knowledge-group" );
     archive.WriteAttribute( "id", nID_ );
     archive.WriteAttribute( "type", pType_->GetName() );
-    archive.EndSection(); // GroupeConnaissance
+    archive.EndSection(); // knowledge-group
 }
 
 // =============================================================================
@@ -185,24 +185,34 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) co
 // Name: MIL_KnowledgeGroup::SendCreation
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SendCreation()
+void MIL_KnowledgeGroup::SendCreation() const
 {
     assert( pArmy_ );
 
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    NET_ASN_MsgKnowledgeGroupCreation asn;   
+    asn.GetAsnMsg().oid      = nID_;
+    asn.GetAsnMsg().oid_camp = pArmy_->GetID();
+    asn.Send();
+}
 
-    DIN::DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    msg << (uint32)pArmy_->GetID();
-    msg << (uint32)nID_;
-    msgMgr.SendMsgKnowledgeGroup( msg );
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::SendFullState
+// Created: NLD 2006-10-13
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::SendFullState() const
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::SendKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SendKnowledge()
+void MIL_KnowledgeGroup::SendKnowledge() const
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->SendFullState();   
+
+    for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
+        (**it).SendKnowledge();
 }

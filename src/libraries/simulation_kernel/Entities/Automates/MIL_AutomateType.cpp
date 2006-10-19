@@ -509,7 +509,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_InputArchive& archive ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Formation& formation, MIL_InputArchive& archive ) const
 {
-    return *new MIL_Automate( *this, nID, archive );
+    return *new MIL_Automate( *this, nID, formation, archive );
 }

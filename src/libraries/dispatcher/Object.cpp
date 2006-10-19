@@ -68,6 +68,7 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
                 pAttributes_ = 0;
         }
     }
+	side_.GetObjects().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +77,7 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-
+	side_.GetObjects().Unregister( *this );
 }
 
 // =============================================================================

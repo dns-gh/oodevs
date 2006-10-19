@@ -72,11 +72,7 @@ Serializer& operator<<( Serializer& serializer, const TER_Localisation& localisa
     serializer << TER_Localisation::ConvertLocalisationType( localisation.GetType() );
     std::vector< std::string > coordinates; coordinates.reserve( localisation.GetPoints().size() );
     for( CIT_PointVector it = localisation.GetPoints().begin(); it != localisation.GetPoints().end(); ++it )
-    {
-        std::string strCoordinate;
-        MIL_Tools::ConvertCoordSimToMos( *it, strCoordinate );
-        coordinates.push_back( strCoordinate );
-    }
+        coordinates.push_back( MIL_Tools::ConvertCoordSimToMos( *it ) );
     return serializer << coordinates;
 }
 

@@ -32,7 +32,7 @@ class KnowledgeGroup
 public:
     //! @name Constructors/Destructor
     //@{
-     KnowledgeGroup( Model& model, unsigned int nID, Side& side );
+     KnowledgeGroup( Model& model, const ASN1T_MsgKnowledgeGroupCreation& msg );
     ~KnowledgeGroup();
     //@}
 
@@ -45,6 +45,7 @@ public:
     //! @name Main
     //@{
     void SendCreation( Publisher_ABC& publisher ) const;
+	void SendFullUpdate( Publisher_ABC& publisher ) const;
     //@}
 
 private:

@@ -56,7 +56,7 @@ void MIL_ZoneMineeLineaire::serialize( Archive& file, const uint )
 // Name: MIL_ZoneMineeLineaire::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool MIL_ZoneMineeLineaire::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneMineeLineaire::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
         return false;

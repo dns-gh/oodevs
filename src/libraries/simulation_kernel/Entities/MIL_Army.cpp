@@ -18,10 +18,16 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "Entities/Populations/MIL_PopulationType.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "Entities/Automates/MIL_AutomateType.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "MIL_Formation.h"
 #include "MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
+#include "Tools/MIL_IDManager.h"
 
-MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::relationConverter_( eUnknown );
+MT_Converter< std::string, MIL_Army::E_Diplomacy > MIL_Army::diplomacyConverter_( eUnknown );
 
 BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
 
@@ -31,10 +37,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_Army, "MIL_Army" )
 // -----------------------------------------------------------------------------
 void MIL_Army::Initialize()
 {
-    MT_LOG_INFO_MSG( "Initializing armies relations" );
-    relationConverter_.Register( "Ennemi", eEnemy   );
-    relationConverter_.Register( "Ami"   , eFriend  );
-    relationConverter_.Register( "Neutre", eNeutral );
+    MT_LOG_INFO_MSG( "Initializing armies diplomacies" );
+    
+    diplomacyConverter_.Register( "enemy"  , eEnemy   );
+    diplomacyConverter_.Register( "friend" , eFriend  );
+    diplomacyConverter_.Register( "neutral", eNeutral );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,40 +52,28 @@ void MIL_Army::Terminate()
 {
 }
 
+// =============================================================================
+// 
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Army constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( const std::string& strName, uint nID, MIL_InputArchive& archive )
-    : strName_             ( strName )
-    , nID_                 ( nID )
+MIL_Army::MIL_Army( uint nID, MIL_InputArchive& archive )
+    : nID_                 ( nID )
+    , strName_             ()
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
+    , knowledgeGroups_     ()
+    , diplomacies_         ()
+    , formations_          ()
 {
-    archive.BeginList( "GroupesConnaissance" );
-
-    while( archive.NextListElement() )
-    {
-        archive.Section( "GroupeConnaissance" );
-
-        uint        nID;
-        std::string strType;
-        archive.ReadAttribute( "id"  , nID     );
-        archive.ReadAttribute( "type", strType );
-
-        const MIL_KnowledgeGroupType* pType = MIL_KnowledgeGroupType::FindType( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group type doesn't exist", archive.GetContext() );
-
-        MIL_KnowledgeGroup*& pKnowledgeGroup = knowledgeGroups_[ nID ];
-        if( pKnowledgeGroup )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group id already defined", archive.GetContext() );
-
-        pKnowledgeGroup = &pType->InstanciateKnowledgeGroup( nID, *this, archive );
-
-        archive.EndSection(); // GroupeConnaissance
-    }
-
-    archive.EndList(); // GroupesConnaissance
+    archive.ReadAttribute( "name", strName_ );
+   
+    InitializeCommunication( archive );
+    InitializeTactical     ( archive );
+    InitializeLogistic     ( archive );
+    InitializePopulations  ( archive );    
 }
 
 // -----------------------------------------------------------------------------
@@ -113,16 +108,16 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, MIL_Army::T_ArmyRelationMap& map, const uint nVersion )
+        void serialize( Archive& file, MIL_Army::T_DiplomacyMap& map, const uint nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const MIL_Army::T_ArmyRelationMap& map, const uint )
+        void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const uint )
         {
             file << map.size();
-            for ( MIL_Army::CIT_ArmyRelationMap it = map.begin(); it != map.end(); ++it )
+            for ( MIL_Army::CIT_DiplomacyMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
                      << it->second;
@@ -130,7 +125,7 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, MIL_Army::T_ArmyRelationMap& map, const uint )
+        void load( Archive& file, MIL_Army::T_DiplomacyMap& map, const uint )
         {
             uint nNbr;
             file >> nNbr;
@@ -148,26 +143,16 @@ namespace boost
 // Name: MIL_Army::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void MIL_Army::load( MIL_CheckPointInArchive& file, const uint )
+template< typename Archive > 
+void MIL_Army::serialize( Archive& file, const uint )
 {
-    file >> const_cast< std::string& >( strName_ )
-         >> const_cast< uint& >( nID_ )
-         >> knowledgeGroups_
-         >> relations_
-         >> pKnowledgeBlackBoard_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Army::save
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void MIL_Army::save( MIL_CheckPointOutArchive& file, const uint ) const
-{
-    file << strName_
-         << nID_
-         << knowledgeGroups_
-         << relations_
-         << pKnowledgeBlackBoard_;
+    file & const_cast< std::string& >( strName_ )
+         & const_cast< uint& >( nID_ )
+         & diplomacies_
+         & knowledgeGroups_
+         & formations_
+         & populations_
+         & pKnowledgeBlackBoard_;
 }
 
 // -----------------------------------------------------------------------------
@@ -176,26 +161,48 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    archive.Section( "Armee" );
-    archive.WriteAttribute( "id" , nID_ );
-    archive.WriteAttribute( "nom", strName_ );
-    
-    archive.Section( "GroupesConnaissance" );
+    archive.Section( "side" );
+    archive.WriteAttribute( "id"  , nID_ );
+    archive.WriteAttribute( "name", strName_ );
+
+    archive.Section( "communication" );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->WriteODB( archive );
-    archive.EndSection(); // GroupesConnaissance
+    archive.EndSection(); // communication
 
-    archive.Section( "Diplomatie" );
-    for( CIT_ArmyRelationMap it = relations_.begin(); it != relations_.end(); ++it )
+    archive.Section( "tactical" );
+    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
+        (**it).WriteODB( archive );
+    archive.EndSection(); // tactical
+
+    archive.Section( "logistic" );
+    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
+        (**it).WriteLogisticLinksODB( archive );
+    archive.EndSection(); // logistic
+
+    archive.Section( "populations" );
+    for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
+        (**it).WriteODB( archive );
+    archive.EndSection(); // populations
+
+    archive.EndSection(); // side
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::WriteDiplomacyODB
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+void MIL_Army::WriteDiplomacyODB( MT_XXmlOutputArchive& archive ) const
+{
+    archive.Section( "side" );    
+    for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        archive.Section( "Armee" );
-        archive.WriteAttribute( "nom", it->first->GetName() );
-        archive.WriteAttribute( "relation", relationConverter_.RevertConvert( it->second ) );
-        archive.EndSection(); // Armee
+        archive.Section( "relationship" );
+        archive.WriteAttribute( "side"     , it->first->GetName() );
+        archive.WriteAttribute( "diplomacy", diplomacyConverter_.RevertConvert( it->second ) );
+        archive.EndSection(); // relationship
     }
-    archive.EndSection(); // Diplomatie 
-    
-    archive.EndSection(); // Armee
+    archive.EndSection(); // side
 }
 
 // =============================================================================
@@ -206,43 +213,183 @@ void MIL_Army::WriteODB( MT_XXmlOutputArchive& archive ) const
 // Name: MIL_Army::InitializeDiplomacy
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_Army::InitializeDiplomacy( const MIL_EntityManager& entityManager, MIL_InputArchive& archive )
+void MIL_Army::InitializeDiplomacy( MIL_InputArchive& archive )
 {
-    archive.BeginList( "Diplomatie" );
-
     while( archive.NextListElement() )
     {
-        archive.Section( "Armee" );
+        archive.Section( "relationship" );
 
-        std::string strName;
-        std::string strRelation;
+        uint        nTeam;
+        std::string strDiplomacy;
 
-        archive.ReadAttribute( "nom", strName );
-        archive.ReadAttribute( "relation", strRelation );
+        archive.ReadAttribute( "team"     , nTeam );
+        archive.ReadAttribute( "diplomacy", strDiplomacy );
 
-        E_Diplomacy nRelation = relationConverter_.Convert( strRelation );
-        if( nRelation == eUnknown )
+        E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
+        if( nDiplomacy == eUnknown )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown diplomacy relation between armies", archive.GetContext() );
 
-        MIL_Army* pArmy = entityManager.FindArmy( strName );
+        MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( nTeam );
         if( !pArmy )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army name", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
 
-        if( relations_.find( pArmy ) != relations_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relation between armies already exist", archive.GetContext() );
+        if( diplomacies_.find( pArmy ) != diplomacies_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Diplomacy between armies already exist", archive.GetContext() );
         if( pArmy == this )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Self relation not allowed", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Self diplomacy not allowed", archive.GetContext() );
 
-        relations_[ pArmy ] = nRelation;
+        diplomacies_[ pArmy ] = nDiplomacy;
 
-        archive.EndSection(); // Armee
+        archive.EndSection(); // relationship
     }
-    archive.EndList(); // Diplomatie
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::InitializeCommunication
+// Created: NLD 2006-10-11
+// -----------------------------------------------------------------------------
+void MIL_Army::InitializeCommunication( MIL_InputArchive& archive )
+{
+    archive.BeginList( "communication" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "knowledge-group" );
+
+        uint        nID;
+        std::string strType;
+        archive.ReadAttribute( "id"  , nID     );
+        archive.ReadAttribute( "type", strType );
+
+        const MIL_KnowledgeGroupType* pType = MIL_KnowledgeGroupType::FindType( strType );
+        if( !pType )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group type doesn't exist", archive.GetContext() );
+
+        if( knowledgeGroups_.find( nID ) != knowledgeGroups_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Knowledge group id already defined", archive.GetContext() );
+        pType->InstanciateKnowledgeGroup( nID, *this, archive ); // Auto-registration
+
+        archive.EndSection(); // knowledge-group
+    }
+    archive.EndList(); // communication
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::InitializeTactical
+// Created: NLD 2006-10-11
+// -----------------------------------------------------------------------------
+void MIL_Army::InitializeTactical( MIL_InputArchive& archive )
+{
+    archive.BeginList( "tactical" );
+    while( archive.NextListElement() )
+    {
+        if( archive.BeginList( "formation" ) )
+        {
+            uint nID;
+            archive.ReadAttribute( "id", nID );
+
+            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateFormation( nID, *this, archive ); // Auto-registration
+            archive.EndList(); // formation
+        }
+    }
+    archive.EndList(); // tactical
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::InitializeLogistic
+// Created: NLD 2006-10-19
+// -----------------------------------------------------------------------------
+void MIL_Army::InitializeLogistic( MIL_InputArchive& archive )
+{
+    archive.BeginList( "logistic" );
+    while( archive.NextListElement() )
+    {
+        archive.BeginList( "automat" );
+
+        uint nID;
+        archive.ReadAttribute( "id", nID );
+    
+        MIL_Automate* pSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nID );
+        if( !pSuperior )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat", archive.GetContext() );
+        if( pSuperior->GetArmy() != *this )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)", archive.GetContext() );
+        if( !pSuperior->GetType().IsLogistic() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat isn't a logistic automat", archive.GetContext() );
+
+        while( archive.NextListElement() )
+        {
+            archive.Section( "subordinate" );
+            
+            uint        nSubordinateID;
+            std::string strLink;
+            archive.ReadAttribute( "automat", nSubordinateID );
+
+            MIL_Automate* pSubordinate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nSubordinateID );
+            if( !pSubordinate )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat", archive.GetContext() );
+            if( pSubordinate->GetArmy() != *this )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid automat (not in specified side)", archive.GetContext() );
+    
+            pSubordinate->ReadLogisticLink( static_cast< MIL_AutomateLOG& >( *pSuperior ), archive );
+
+            archive.EndSection(); // subordinate
+        }
+
+        archive.EndList(); // automat
+    }
+    archive.EndList(); // logistic
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::InitializePopulations
+// Created: NLD 2004-08-11
+// -----------------------------------------------------------------------------
+void MIL_Army::InitializePopulations( MIL_InputArchive& archive )
+{
+    archive.BeginList( "populations" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "population" );
+
+        uint        nID;
+        std::string strType;
+
+        archive.ReadAttribute( "id"  , nID     );
+        archive.ReadAttribute( "type", strType );
+
+        const MIL_PopulationType* pPopulationType = MIL_PopulationType::Find( strType );
+        if( !pPopulationType )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type", archive.GetContext() );
+
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePopulation( *pPopulationType, MIL_IDManager::populations_.ConvertSimIDToMosID( nID ), *this, archive ); // Auto-registration
+        archive.EndSection(); // population
+    }
+    archive.EndList(); // populations
 }
 
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::RegisterKnowledgeGroup
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+void MIL_Army::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
+{
+    bool bOut = knowledgeGroups_.insert( std::make_pair( knowledgeGroup.GetID(), &knowledgeGroup ) ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::UnregisterKnowledgeGroup
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+void MIL_Army::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
+{
+    int nOut = knowledgeGroups_.erase( knowledgeGroup.GetID() );
+    assert( nOut == 1 );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::UpdateKnowledges
@@ -286,7 +433,7 @@ bool MIL_Army::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAnEnemy( const MIL_Army& army ) const
 {
-    E_Diplomacy nRelation = GetRelationWith( army );
+    E_Diplomacy nRelation = GetDiplomacy( army );
     switch( nRelation )
     {
         case eUnknown : return eTristate_DontKnow;
@@ -327,7 +474,7 @@ E_Tristate MIL_Army::IsAnEnemy( const DEC_Knowledge_Population& knowledge ) cons
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsAFriend( const MIL_Army& army ) const
 {
-    E_Diplomacy nRelation = GetRelationWith( army );
+    E_Diplomacy nRelation = GetDiplomacy( army );
     switch( nRelation )
     {
         case eUnknown : return eTristate_DontKnow;
@@ -359,7 +506,7 @@ E_Tristate MIL_Army::IsAFriend( const DEC_Knowledge_Agent& knowledge ) const
 // -----------------------------------------------------------------------------
 E_Tristate MIL_Army::IsNeutral( const MIL_Army& army ) const
 {
-    E_Diplomacy nRelation = GetRelationWith( army );
+    E_Diplomacy nRelation = GetDiplomacy( army );
     switch( nRelation )
     {
         case eUnknown : return eTristate_DontKnow;
@@ -380,42 +527,53 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army& army ) const
 // Name: MIL_Army::SendCreation
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_Army::SendCreation()
+void MIL_Army::SendCreation() const
 {
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
+    NET_ASN_MsgSideCreation asn;
+    asn.GetAsnMsg().oid = nID_;
+    asn.GetAsnMsg().nom = strName_.c_str();
+    asn.Send();
 
-    DIN::DIN_BufferedMessage msg = msgMgr.BuildMessage();
-    msg << (uint32)nID_;
-    msg << strName_;
-    msgMgr.SendMsgArmy( msg );
+    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->SendCreation();
 
-    for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        itKnowledgeGroup->second->SendCreation();
+    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
+        (**it).SendCreation();    
+
+    for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
+        (**it).SendCreation();    
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::SendFullState
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void MIL_Army::SendFullState()
+void MIL_Army::SendFullState() const
 {
-    for( CIT_ArmyRelationMap it = relations_.begin(); it != relations_.end(); ++it )
+    for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         NET_ASN_MsgChangeDiplomatie asn;
-
         asn.GetAsnMsg().oid_camp1  = nID_;
         asn.GetAsnMsg().oid_camp2  = it->first->GetID();
         asn.GetAsnMsg().diplomatie = (ASN1T_EnumDiplomatie)( it->second );
-
         asn.Send();
     }
+
+    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        it->second->SendFullState();
+
+    for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
+        (**it).SendFullState();
+
+    for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
+        (**it).SendFullState();    
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::SendKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_Army::SendKnowledge()
+void MIL_Army::SendKnowledge() const
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->SendFullState();
@@ -448,7 +606,7 @@ void MIL_Army::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg, M
             case EnumDiplomatie::ennemi : nDiplomacy = eEnemy;   break;
             case EnumDiplomatie::neutre : nDiplomacy = eNeutral; break;
         }
-        relations_[ pArmy2 ] = nDiplomacy;
+        diplomacies_[ pArmy2 ] = nDiplomacy;
     }
     asnReplyMsg.Send( nCtx );
 }

@@ -6,8 +6,7 @@
 
 ScipioCR DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS Objet, EnumUnitIdentificationLevel, KnowledgeAgent, KnowledgeObject, KnowledgePopulation, Agent, OID, CoordUTM, Line, max-uint64, 
-        max-uint32, max-uint16, max-uint8 FROM ScipioBase
+IMPORTS Objet, EnumUnitIdentificationLevel, KnowledgeAgent, KnowledgeObject, KnowledgePopulation, Agent, OID, CoordUTM, Line FROM ScipioBase
 IMPORTS EnumPopulationAttitude From ScipioPopulation
 IMPORTS EnumTypeLima FROM ScipioLimaLimite;
 

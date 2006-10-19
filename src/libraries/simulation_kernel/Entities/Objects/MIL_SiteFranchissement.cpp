@@ -84,7 +84,7 @@ void MIL_SiteFranchissement::WriteSpecificAttributes( MT_XXmlOutputArchive& arch
 // Name: MIL_SiteFranchissement::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_SiteFranchissement::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_SiteFranchissement::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     return MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
 }

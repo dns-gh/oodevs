@@ -29,8 +29,8 @@ class ClientPublisher : public Publisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ClientPublisher( Client& client );
-    ~ClientPublisher();
+    explicit ClientPublisher( Client& client );
+    virtual ~ClientPublisher();
     //@}
 
     //! @name Operations

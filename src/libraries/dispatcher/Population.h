@@ -68,7 +68,7 @@ private:
     const unsigned long nID_;
     const unsigned long nType_;
     const std::string   strName_;
-    const Side&         side_;
+          Side&         side_;
     
     unsigned int        nDominationState_;
 

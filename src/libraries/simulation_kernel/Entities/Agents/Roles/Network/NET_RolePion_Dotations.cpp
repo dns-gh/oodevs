@@ -163,7 +163,7 @@ void NET_RolePion_Dotations::SendMsg( NET_ASN_MsgUnitAttributes& asnMsg ) const
 // Name: NET_RolePion_Dotations::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendChangedState()
+void NET_RolePion_Dotations::SendChangedState() const
 {
     // Debug - Cones de vision
     if( MIL_AgentServer::GetWorkspace().GetAgentServer().MustSendUnitVisionCones() )
@@ -233,7 +233,7 @@ void NET_RolePion_Dotations::SendChangedState()
 // Name: NET_RolePion_Dotations::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendFullState()
+void NET_RolePion_Dotations::SendFullState() const
 {
     // MsgUnitAttributes
     assert( pPion_ );

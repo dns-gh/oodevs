@@ -56,7 +56,7 @@ void MIL_Barricade::serialize( Archive& file, const uint )
 // Name: MIL_Barricade::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_Barricade::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_Barricade::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
         return false;

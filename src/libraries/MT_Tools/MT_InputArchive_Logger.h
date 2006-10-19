@@ -96,6 +96,8 @@ public:
     bool ReadTime( T& value, const CheckPolicy& checker, ErrorPolicyType nCheckErrorPolicy = eThrow, ErrorPolicyType nReadErrorPolicy = eThrow );
     template <typename T>
     bool ReadTime( T& value, ErrorPolicyType nErrorPolicy = eThrow );    
+
+    std::string GetCurrentElementName();
     //@}
 
 private:

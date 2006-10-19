@@ -6,8 +6,7 @@
 
 ScipioAutomateMission_TRANS DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, Polygon, ListPolygon, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase;
+IMPORTS Polygon FROM ScipioBase;
 
 Mission-Automate-TRANS-Commander ::= SEQUENCE
 {

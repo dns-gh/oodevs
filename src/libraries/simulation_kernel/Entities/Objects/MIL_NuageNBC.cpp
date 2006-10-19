@@ -108,7 +108,7 @@ void MIL_NuageNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) cons
 // Created: JVT 02-10-22
 // Modified: JVT 2004-10-28
 //-----------------------------------------------------------------------------
-bool MIL_NuageNBC::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_NuageNBC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
     return false;
@@ -118,7 +118,7 @@ bool MIL_NuageNBC::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, ui
 // Name: MIL_NuageNBC::Initialize
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void MIL_NuageNBC::Initialize( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent )
+void MIL_NuageNBC::Initialize( const MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent )
 {
     MIL_RealObject_ABC::Initialize( army, localisation );
 

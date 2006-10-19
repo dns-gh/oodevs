@@ -66,8 +66,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg );
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg );
+    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
+    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors

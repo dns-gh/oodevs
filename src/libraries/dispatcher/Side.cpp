@@ -14,6 +14,10 @@
 #include "Network_Def.h"
 #include "Publisher_ABC.h"
 #include "Model.h"
+#include "Formation.h"
+#include "KnowledgeGroup.h"
+#include "Object.h"
+#include "Population.h"
 
 using namespace dispatcher;
 
@@ -21,15 +25,16 @@ using namespace dispatcher;
 // Name: Side constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Side::Side( Model& model, unsigned int nID, DIN::DIN_Input& msg )
+Side::Side( Model& model, const ASN1T_MsgSideCreation& msg )
     : model_          ( model )
-    , nID_            ( nID )
-    , strName_        ()
+    , nID_            ( msg.oid )
+    , strName_        ( msg.nom )
     , knowledgeGroups_()
-    , automats_       ()
-    , diplomacies_    ()
+    , formations_     ()
+    , diplomacies_    ()    
+	, objects_		  ()
+	, populations_    ()
 {
-    msg >> strName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,10 +75,16 @@ void Side::Update( const ASN1T_MsgChangeDiplomatieAck& asnMsg )
 // -----------------------------------------------------------------------------
 void Side::SendCreation( Publisher_ABC& publisher ) const
 {
-    DIN::DIN_BufferedMessage msg = publisher.GetDinMsg();
-    msg << nID_
-        << strName_;
-    publisher.Send( eMsgArmy, msg );
+    AsnMsgInClientSideCreation asn;
+
+    asn().oid = nID_;
+    asn().nom = strName_.c_str();
+    asn.Send( publisher );
+
+	knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendCreation ), publisher );
+	formations_		.Apply( std::mem_fun_ref( &Formation     ::SendCreation ), publisher );
+	objects_		.Apply( std::mem_fun_ref( &Object        ::SendCreation ), publisher );
+	populations_	.Apply( std::mem_fun_ref( &Population    ::SendCreation ), publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,4 +101,9 @@ void Side::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().diplomatie = it->second;
         asn.Send( publisher );
     }
+
+	knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendFullUpdate ), publisher );
+	formations_		.Apply( std::mem_fun_ref( &Formation     ::SendFullUpdate ), publisher );
+	objects_		.Apply( std::mem_fun_ref( &Object        ::SendFullUpdate ), publisher );
+	populations_	.Apply( std::mem_fun_ref( &Population    ::SendFullUpdate ), publisher );
 }

@@ -5,9 +5,7 @@
 --
 
 
-ScipioUnitAttr DEFINITIONS AUTOMATIC TAGS ::= BEGIN
-
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory FROM ScipioBase;
+ScipioUnit DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 EquipementPrete ::= SEQUENCE
 {
@@ -27,32 +25,32 @@ EquipementEmprunte ::= SEQUENCE
 DotationPersonnel ::= SEQUENCE 
 {
     rang                         EnumHumanRank,
-    nb-total                     INTEGER (0..max-uint32), 
-    nb-operationnels             INTEGER (0..max-uint32), 
-    nb-morts                     INTEGER (0..max-uint32), 
-    nb-blesses                   INTEGER (0..max-uint32), 
-    nb-blesses-mentaux           INTEGER (0..max-uint32), 
-    nb-contamines-nbc            INTEGER (0..max-uint32),
-    nb-dans-chaine-sante         INTEGER (0..max-uint32),
-    nb-utilises-pour-maintenance INTEGER (0..max-uint32)
+    nb-total                     INTEGER, 
+    nb-operationnels             INTEGER, 
+    nb-morts                     INTEGER, 
+    nb-blesses                   INTEGER, 
+    nb-blesses-mentaux           INTEGER, 
+    nb-contamines-nbc            INTEGER,
+    nb-dans-chaine-sante         INTEGER,
+    nb-utilises-pour-maintenance INTEGER
 }
 
 -- Equipement
 DotationEquipement ::= SEQUENCE
 {
     type-equipement            TypeEquipement,
-    nb-disponibles             INTEGER (0..max-uint32),
-    nb-indisponibles           INTEGER (0..max-uint32),
-    nb-reparables              INTEGER (0..max-uint32),
-    nb-dans-chaine-maintenance INTEGER (0..max-uint32), -- En réparation
-    nb-prisonniers             INTEGER (0..max-uint32)
+    nb-disponibles             INTEGER,
+    nb-indisponibles           INTEGER,
+    nb-reparables              INTEGER,
+    nb-dans-chaine-maintenance INTEGER, -- En réparation
+    nb-prisonniers             INTEGER
 }
 
 -- Ressources
 DotationRessource ::= SEQUENCE 
 {
     ressource-id        TypeDotation,
-    quantite-disponible INTEGER (0..max-uint32)
+    quantite-disponible INTEGER
 }
 
 EnumUnitFatigue ::= ENUMERATED
@@ -135,7 +133,15 @@ EnumDisponibiliteAuTir ::= ENUMERATED
     indisponible (2)
 }
 
--- Msg envoyé
+
+MsgPionCreation ::= SEQUENCE
+{
+    oid-pion        Agent,
+    type-pion       TypePion,
+    nom             VisibleString,
+    oid-automate    Automate    
+}
+
 MsgUnitAttributes ::= SEQUENCE
 {
     oid-pion                      Agent,
@@ -236,7 +242,7 @@ RecompletementPersonnel ::= SEQUENCE
 RecompletementStock ::= SEQUENCE
 {
     ressource-id        TypeDotation,
-    quantite-disponible INTEGER (0..max-uint32)
+    quantite-disponible INTEGER
 }
 
 MagicActionRecompletementPartiel ::= SEQUENCE
@@ -289,4 +295,4 @@ MsgUnitPathFind ::= SEQUENCE
     itineraire  Itineraire
 }
 
-END -- ScipioUnitAttr
+END -- ScipioUnit

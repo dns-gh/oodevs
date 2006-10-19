@@ -16,6 +16,7 @@
 #include "MIL_AutomateType.h"
 #include "DEC_AutomateDecision.h"
 
+#include "Entities/MIL_Formation.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
@@ -51,55 +52,45 @@ BOOST_CLASS_EXPORT_GUID( MIL_Automate, "MIL_Automate" )
 // Name: MIL_Automate constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArchive& archive )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive )
     : pType_                             ( &type )
     , nID_                               ( nID )
+    , pFormation_                        ( &formation )
+    , strName_                           ( type.GetName() )
+    , bEmbraye_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pPionPC_                           ( 0 )
     , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
-    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
-    , bEmbraye_                          ( true )
+    , pPionPC_                           ( 0 )
+    , pions_                             ()
+    , recycledPions_                     ()
     , bAutomateModeChanged_              ( true )
     , pTC2_                              ( 0 )
     , pNominalTC2_                       ( 0 )
     , bDotationSupplyNeeded_             ( false )
     , bDotationSupplyExplicitlyRequested_( false )
     , dotationSupplyStates_              ( )
+    , nTickRcDotationSupplyQuerySent_    ( 0 )
+    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) )
     , bSurrendered_                      ( false )
     , bPrisoner_                         ( false )
     , pPrisonerCamp_                     ( 0 )
     , pRefugeeCamp_                      ( false )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
 {
-    // Name
-    if( !archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing ) )
-        strName_ = pType_->GetName();
-
-    pDecision_ = new DEC_AutomateDecision( *this );
-
-    // Liens hiérarchiques
-    archive.Section( "LiensHierarchiques" );
-
-    std::string strArmy;
-    archive.ReadField( "Armee", strArmy );
-    const MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );
-    if( !pArmy )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
+    archive.ReadAttribute( "engaged", bEmbraye_, MIL_InputArchive::eNothing );
+    archive.ReadAttribute( "name"   , strName_ , MIL_InputArchive::eNothing );
 
     uint nKnowledgeGroup;
-    archive.ReadField( "GroupeConnaissance", nKnowledgeGroup );
-    pKnowledgeGroup_ = pArmy->FindKnowledgeGroup( nKnowledgeGroup );
+    archive.ReadAttribute( "knowledge-group", nKnowledgeGroup );
+    pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown knowledge group", archive.GetContext() );
     pKnowledgeGroup_->RegisterAutomate( *this );
+    pFormation_     ->RegisterAutomate( *this );
 
-    archive.EndSection(); //  LiensHierarchiques
+    pDecision_ = new DEC_AutomateDecision( *this ); //$$$ BULLSHIT : strName_ must be initialized ...
 
-    pPionPC_ = &type.GetTypePionPC().InstanciatePion( *this, archive );
-
-    // Embraye
-    archive.ReadField( "Embraye", bEmbraye_, MIL_InputArchive::eNothing );
+    InitializeSubordinates( archive );    
 }
 
 // -----------------------------------------------------------------------------
@@ -109,23 +100,27 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArc
 MIL_Automate::MIL_Automate()
     : pType_                             ( 0 )
     , nID_                               ( 0 )
+    , pFormation_                        ( 0 )
+    , strName_                           ()
+    , bEmbraye_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
-    , pPionPC_                           ( 0 )
     , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
-    , pKnowledgeBlackBoard_              ( 0 )
-    , bEmbraye_                          ( true )
+    , pPionPC_                           ( 0 )
+    , pions_                             ()
+    , recycledPions_                     ()
     , bAutomateModeChanged_              ( true )
     , pTC2_                              ( 0 )
     , pNominalTC2_                       ( 0 )
     , bDotationSupplyNeeded_             ( false )
     , bDotationSupplyExplicitlyRequested_( false )
     , dotationSupplyStates_              ( )
+    , nTickRcDotationSupplyQuerySent_    ( 0 )
+    , pKnowledgeBlackBoard_              ( 0 )
     , bSurrendered_                      ( false )
     , bPrisoner_                         ( false )
     , pPrisonerCamp_                     ( 0 )
-    , pRefugeeCamp_                      ( 0 )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
+    , pRefugeeCamp_                      ( false )
 {
 }
 
@@ -135,8 +130,8 @@ MIL_Automate::MIL_Automate()
 // -----------------------------------------------------------------------------
 MIL_Automate::~MIL_Automate()
 {
+    pFormation_     ->UnregisterAutomate( *this );
     pKnowledgeGroup_->UnregisterAutomate( *this );
-    delete pPionPC_;
     delete pDecision_;
 }
 
@@ -196,6 +191,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
     assert( pType_ );
     
     file >> const_cast< uint& >( nID_ )
+         >> pFormation_
          >> strName_
          >> bEmbraye_
          >> pKnowledgeGroup_
@@ -244,6 +240,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << pNominalTC2_
          << pType_->GetID()
          << nID_
+         << pFormation_
          << strName_
          << bEmbraye_
          << pKnowledgeGroup_
@@ -264,6 +261,74 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::InitializeSubordinates
+// Created: NLD 2006-10-11
+// -----------------------------------------------------------------------------
+void MIL_Automate::InitializeSubordinates( MIL_InputArchive& archive )
+{
+    while( archive.NextListElement() )
+    {
+        archive.Section( "unit" );
+
+        uint        nID;
+        std::string strType;
+        bool        bPC = false;
+
+        archive.ReadAttribute( "id"          , nID     );
+        archive.ReadAttribute( "type"        , strType );
+        archive.ReadAttribute( "command-post", bPC, MIL_InputArchive::eNothing );
+
+        if( bPC && pPionPC_ )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post already defined", archive.GetContext() );
+
+        const MIL_AgentTypePion* pType = MIL_AgentTypePion::FindPionType( strType );
+        if( !pType )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type", archive.GetContext() );
+
+        MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, nID, *this, archive ); // Auto-registration
+        if( bPC )
+            pPionPC_ = &pion;
+
+        archive.EndSection(); // unit
+    }
+}
+
+
+// =============================================================================
+// DYNAMIC PIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreatePion
+// Created: NLD 2005-02-08
+// -----------------------------------------------------------------------------
+MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition )
+{
+    for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
+    {
+        MIL_AgentPion& pion = **it;
+        if( pion.GetType() == type )
+        {
+            recycledPions_.erase( it.base() - 1 );
+            pion.ChangeAutomate( *this );
+            pion.GetRole< PHY_RolePion_Location >().MagicMove( vPosition );
+            return pion;
+        }
+    }
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::DestroyPion
+// Created: NLD 2005-02-08
+// -----------------------------------------------------------------------------
+void MIL_Automate::DestroyPion( MIL_AgentPion& pion )
+{
+    assert( pion.IsDead() );
+    recycledPions_.push_back( &pion );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
@@ -271,74 +336,60 @@ void MIL_Automate::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
     assert( pType_ );
     assert( pKnowledgeGroup_ );
-    assert( pPionPC_ );
 
-    archive.Section( "Automate" );
-    archive.WriteAttribute( "id", nID_ );
-    archive.WriteAttribute( "type", pType_->GetName() );
-    
-    archive.WriteField( "Embraye", bEmbraye_ );
-    archive.WriteField( "Nom"    , strName_  );
+    archive.Section( "automat" );
+    archive.WriteAttribute( "id"             , nID_ );
+    archive.WriteAttribute( "name"           , strName_ );
+    archive.WriteAttribute( "engaged"        , bEmbraye_ );
+    archive.WriteAttribute( "knowledge-group", pKnowledgeGroup_->GetID() ); 
+    archive.WriteAttribute( "type"           , pType_->GetName() );
 
-    archive.Section( "LiensHierarchiques" );
-    archive.WriteField( "Armee"             , pKnowledgeGroup_->GetArmy().GetName() );
-    archive.WriteField( "GroupeConnaissance", pKnowledgeGroup_->GetID() );
-    WriteLogisticHierarchy( archive );
-    archive.EndSection(); // LiensHierarchiques
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        (**it).WriteODB( archive );
 
-    pPionPC_->WriteODB( archive, true /*PC*/ );
-
-    archive.EndSection(); // Automate
+    archive.EndSection(); // automat
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::ReadOverloading
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void MIL_Automate::ReadOverloading( MIL_InputArchive& archive )
+void MIL_Automate::ReadOverloading( MIL_InputArchive& /*archive*/ )
 {
-    assert( pPionPC_ );
-    pPionPC_->ReadOverloading( archive );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::ReadLogisticHierarchy
-// Created: NLD 2004-12-21
+// Name: MIL_Automate::ReadLogisticLink
+// Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-void MIL_Automate::ReadLogisticHierarchy( MIL_InputArchive& archive )
+void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArchive& archive )
 {
-    archive.Section( "LiensHierarchiques" );
+    std::string strLink;
+    archive.ReadAttribute( "link", strLink );
 
-    pTC2_ = 0;
-    if( archive.Section( "TC2", MIL_InputArchive::eNothing  ) )
+    if( sCaseInsensitiveEqual()( strLink, "tc2" ) )
     {
-        uint nTc2ID;
-        archive.ReadAttribute( "automate", nTc2ID );
-        MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTc2ID );
-        if( !pTC2 )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automata", archive.GetContext() );
-
-        if( !pTC2->GetType().IsLogistic() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automata isn't a logistic automata", archive.GetContext() );
-
-        pTC2_        = static_cast< MIL_AutomateLOG* >( pTC2 );
+        pTC2_        = &superior;
         pNominalTC2_ = pTC2_;
-        archive.EndSection(); // TC2
     }
-    archive.EndSection(); // LiensHierarchiques
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::WriteLogisticHierarchy
-// Created: NLD 2006-05-29
+// Name: MIL_Automate::WriteLogisticLinksODB
+// Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-void MIL_Automate::WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const
+void MIL_Automate::WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const
 {
     if( pTC2_ )
     {
-        archive.Section( "TC2" );
-        archive.WriteAttribute( "automate", pTC2_->GetID() );
-        archive.EndSection(); // TC2
+        archive.Section( "automat" );
+        archive.WriteAttribute( "id", pTC2_->GetID() );
+        archive.Section( "subordinate" );
+        archive.WriteAttribute( "automat", GetID() );
+        archive.WriteAttribute( "link", "tc2" );
+        archive.EndSection(); // subordinate
+        archive.EndSection(); // automat
     }
 }
 
@@ -446,41 +497,6 @@ void MIL_Automate::Clean()
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->Clean();
     pDecision_->Clean();
-}
-
-// =============================================================================
-// DYNAMIC PIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreatePion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition )
-{
-    for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
-    {
-        MIL_AgentPion& pion = **it;
-        if( pion.GetType() == type )
-        {
-            recycledPions_.erase( it.base() - 1 );
-            pion.ChangeAutomate( *this );
-            pion.GetRole< PHY_RolePion_Location >().MagicMove( vPosition );
-            return pion;
-        }
-    }
-
-    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::DestroyPion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-void MIL_Automate::DestroyPion( MIL_AgentPion& pion )
-{
-    assert( pion.IsDead() );
-    recycledPions_.push_back( &pion );
 }
 
 // =============================================================================
@@ -593,9 +609,10 @@ bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 // Name: MIL_Automate::GetArmy
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_Automate::GetArmy() const
+const MIL_Army& MIL_Automate::GetArmy() const
 {
-    return GetKnowledgeGroup().GetArmy();
+    assert( pFormation_ );
+    return pFormation_->GetArmy();
 }
 
 // =============================================================================
@@ -773,35 +790,22 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::WriteCreationMsg
-// Created: NLD 2005-02-14
-// -----------------------------------------------------------------------------
-void MIL_Automate::WriteCreationMsg( NET_ASN_MsgAutomateCreation& asnMsg ) const
-{
-    assert( pType_ );
-    
-    asnMsg.GetAsnMsg().oid_automate                 = nID_;
-    asnMsg.GetAsnMsg().type_automate                = pType_->GetID();
-    asnMsg.GetAsnMsg().oid_camp                     = GetArmy().GetID();
-    asnMsg.GetAsnMsg().oid_groupe_connaissance      = GetKnowledgeGroup().GetID();
-    asnMsg.GetAsnMsg().nom                          = strName_.c_str(); // !! pointeur sur const char*
-
-    if( pTC2_ )
-    {
-        asnMsg.GetAsnMsg().m.oid_tc2Present = 1;
-        asnMsg.GetAsnMsg().oid_tc2          = pTC2_->GetID();
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::SendCreation
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
 void MIL_Automate::SendCreation() const
 {
-    NET_ASN_MsgAutomateCreation asnMsg;
-    WriteCreationMsg( asnMsg );
-    asnMsg.Send();
+    NET_ASN_MsgAutomateCreation asn;
+    asn.GetAsnMsg().oid_automate            = nID_;
+    asn.GetAsnMsg().type_automate           = pType_->GetID();
+    asn.GetAsnMsg().oid_camp                = GetArmy().GetID();
+    asn.GetAsnMsg().oid_groupe_connaissance = GetKnowledgeGroup().GetID();
+    asn.GetAsnMsg().oid_formation           = pFormation_->GetID();
+    asn.GetAsnMsg().nom                     = strName_.c_str();
+    asn.Send();
+
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        (**it).SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -812,17 +816,52 @@ void MIL_Automate::SendFullState() const
 {
     assert( pDecision_ );
 
-    NET_ASN_MsgAutomateAttributes msg;
-    msg.GetAsnMsg().oid_automate = nID_;
+    NET_ASN_MsgAutomateAttributes asn;
+    asn.GetAsnMsg().oid_automate = nID_;
+    asn.GetAsnMsg().m.etat_automatePresent = 1;
+    asn.GetAsnMsg().etat_automate = bEmbraye_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
+    pDecision_->SendFullState( asn );
+    asn.Send();
 
-    msg.GetAsnMsg().m.etat_automatePresent = 1;
-    msg.GetAsnMsg().etat_automate = bEmbraye_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
-
-    pDecision_->SendFullState( msg );
-    msg.Send();
+    SendLogisticLinks();
 
     for( CIT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
         it->second->SendFullState();
+
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        (**it).SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::SendKnowledge
+// Created: NLD 2006-10-13
+// -----------------------------------------------------------------------------
+void MIL_Automate::SendKnowledge() const
+{
+    assert( pKnowledgeBlackBoard_ );
+    pKnowledgeBlackBoard_->SendFullState();   
+
+    for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+        (**it).SendKnowledge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::SendLogisticLinks
+// Created: NLD 2005-02-14
+// -----------------------------------------------------------------------------
+void MIL_Automate::SendLogisticLinks() const
+{
+    NET_ASN_MsgChangeLiensLogistiques asn;
+
+    asn.GetAsnMsg().oid_automate = nID_;
+
+    if( pTC2_ )
+    {
+        asn.GetAsnMsg().m.oid_tc2Present = 1;
+        asn.GetAsnMsg().oid_tc2          = pTC2_->GetID();
+    }
+
+    asn.Send();
 }
 
 // -----------------------------------------------------------------------------
@@ -913,7 +952,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnai
     asnReplyMsg.GetAsnMsg().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
     
     MIL_Army* pNewArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp );
-    if( !pNewArmy )
+    if( !pNewArmy || *pNewArmy != GetArmy() )
     {
         asnReplyMsg.GetAsnMsg().error_code = EnumChangeGroupeConnaissanceErrorCode::error_invalid_camp;
         asnReplyMsg.Send( nCtx );
@@ -928,7 +967,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnai
         return;
     }
 
-    if( pKnowledgeGroup_ != pNewKnowledgeGroup )
+    if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
     {
         pKnowledgeGroup_->UnregisterAutomate( *this );
         pKnowledgeGroup_ = pNewKnowledgeGroup;

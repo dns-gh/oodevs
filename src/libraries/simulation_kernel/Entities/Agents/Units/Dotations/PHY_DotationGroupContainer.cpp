@@ -137,34 +137,54 @@ void PHY_DotationGroupContainer::serialize( Archive& file, const uint )
 // INIT
 // =============================================================================
 
+/*
+            std::string strType;
+            uint        nQuantity;
+            archive.Section( "dotation" );
+            archive.ReadAttribute( "name"    , strType );
+            archive.ReadAttribute( "quantity", nQuantity, CheckValueGreaterOrEqual( 0 ) );
+
+            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+            if ( !pDotationCategory )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation", archive.GetContext() );
+
+            if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Quota already defined", archive.GetContext() );
+
+            sDotationQuota quota;
+            quota.rQuota_          = nQuantity;
+            quota.rQuotaThreshold_ = nQuantity * 0.1; //$$ fichier de conf cpp ;)
+            stockQuotas_[ pDotationCategory ] = quota;
+            */
+
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::ReadValues
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadValues( MIL_InputArchive& archive )
 {
-    if ( !archive.BeginList( "Dotations", MIL_InputArchive::eNothing ) )
+    if ( !archive.BeginList( "dotations", MIL_InputArchive::eNothing ) )
         return;
 
     while( archive.NextListElement() )
     {
-        archive.Section( "Dotation" );
+        std::string strType;
 
-        std::string strDotationType;
-        archive.ReadAttribute( "nom", strDotationType  );
+        archive.Section( "dotation" );
+        archive.ReadAttribute( "name"    , strType );
 
-        const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
-        if( !pDotationType )
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+        if( !pDotationCategory )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
 
-        PHY_DotationGroup* pGroup = GetDotationGroup( *pDotationType );
+        PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
         if( !pGroup )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation", archive.GetContext() );
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Dotation type cannot be overloaded: not in types", archive.GetContext() );
 
-        pGroup->ReadValues( archive );
-        archive.EndSection(); // Dotation
+        pGroup->ReadValues( archive, *pDotationCategory );
+        archive.EndSection(); // dotation
     }
-    archive.EndList(); // Dotations
+    archive.EndList(); // dotations
 }
 
 // -----------------------------------------------------------------------------

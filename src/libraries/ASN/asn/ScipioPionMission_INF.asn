@@ -6,8 +6,6 @@
 
 ScipioPionMission_INF DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS KnowledgeAgent, ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
 IMPORTS EnumObjectType FROM ScipioObject;
 
 ------------------------------------------

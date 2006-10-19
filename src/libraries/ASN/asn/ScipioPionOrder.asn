@@ -7,7 +7,7 @@
 
 ScipioPionOrder DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListOID, OID, Point, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH FROM ScipioBase
+IMPORTS ListOID, OID, Point, CoordUTM, GDH FROM ScipioBase
 IMPORTS Itineraire, Point, Direction, Segment, ListAgent FROM ScipioBase
 IMPORTS EnumOrderErrorCode FROM ScipioOrder
 

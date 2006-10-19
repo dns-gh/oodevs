@@ -6,14 +6,12 @@
 
 ScipioLogRavitaillement DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory FROM ScipioBase;
-
 DemandeDotation ::= SEQUENCE
 {
     ressource-id        TypeDotation,
-    quantite-demandee   INTEGER(0..max-uint32),
-    quantite-accordee   INTEGER(0..max-uint32),
-    quantite-en-transit INTEGER(0..max-uint32)
+    quantite-demandee   INTEGER,
+    quantite-accordee   INTEGER,
+    quantite-en-transit INTEGER
 }
 
 MsgLogRavitaillementTraitementCreation ::= SEQUENCE
@@ -66,7 +64,7 @@ RavitaillementDisponibiliteMoyens ::= SEQUENCE
 DotationStock ::= SEQUENCE 
 {
     ressource-id        TypeDotation,
-    quantite-disponible INTEGER (0..max-uint32)
+    quantite-disponible INTEGER
 }
 
 MsgLogRavitaillementEtat ::= SEQUENCE
@@ -81,7 +79,7 @@ MsgLogRavitaillementEtat ::= SEQUENCE
 DotationQuota ::= SEQUENCE
 {
     ressource-id        TypeDotation,
-    quota-disponible    INTEGER (0..max-uint32)
+    quota-disponible    INTEGER
 }
 
 MsgLogRavitaillementChangeQuotas ::= SEQUENCE

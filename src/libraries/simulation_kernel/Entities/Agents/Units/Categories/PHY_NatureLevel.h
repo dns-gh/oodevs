@@ -31,12 +31,13 @@ public:
     static void Terminate ();
 
     static const PHY_NatureLevel* Find( const std::string& strName );
+    static const PHY_NatureLevel* Find( uint nID );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&    GetName () const;
-          uint            GetID   () const;
+    const std::string&          GetName () const;
+          uint                  GetID   () const;
           ASN1T_EnumNatureLevel GetAsnID() const;
     //@}
 
@@ -73,7 +74,7 @@ private:
     const ASN1T_EnumNatureLevel nAsnID_;
 
 private:
-    static T_NatureLevelMap natureLevel_;
+    static T_NatureLevelMap natureLevels_;
 };
 
 #include "PHY_NatureLevel.inl"

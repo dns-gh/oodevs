@@ -13,7 +13,7 @@
 
 #include "PHY_NatureLevel.h"
 
-PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevel_;
+PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
 
 // =============================================================================
 // MANAGER
@@ -25,18 +25,18 @@ PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevel_;
 // -----------------------------------------------------------------------------
 void PHY_NatureLevel::Initialize()
 {
-    natureLevel_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , EnumNatureLevel::none  );
-    natureLevel_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , EnumNatureLevel::o     );
-    natureLevel_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , EnumNatureLevel::oo    );
-    natureLevel_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , EnumNatureLevel::ooo   );
-    natureLevel_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , EnumNatureLevel::i     );
-    natureLevel_[ "ii"    ] = new PHY_NatureLevel( "ii"   , eNatureLevel_ii   , EnumNatureLevel::ii    );
-    natureLevel_[ "iii"   ] = new PHY_NatureLevel( "iii"  , eNatureLevel_iii  , EnumNatureLevel::iii   );
-    natureLevel_[ "x"     ] = new PHY_NatureLevel( "x"    , eNatureLevel_x    , EnumNatureLevel::x     );
-    natureLevel_[ "xx"    ] = new PHY_NatureLevel( "xx"   , eNatureLevel_xx   , EnumNatureLevel::xx    );
-    natureLevel_[ "xxx"   ] = new PHY_NatureLevel( "xxx"  , eNatureLevel_xxx  , EnumNatureLevel::xxx   );
-    natureLevel_[ "xxxx"  ] = new PHY_NatureLevel( "xxxx" , eNatureLevel_xxxx , EnumNatureLevel::xxxx  );
-    natureLevel_[ "xxxxx" ] = new PHY_NatureLevel( "xxxxx", eNatureLevel_xxxxx, EnumNatureLevel::xxxxx );
+    natureLevels_[ "none"  ] = new PHY_NatureLevel( "none" , eNatureLevel_none , EnumNatureLevel::none  );
+    natureLevels_[ "o"     ] = new PHY_NatureLevel( "o"    , eNatureLevel_o    , EnumNatureLevel::o     );
+    natureLevels_[ "oo"    ] = new PHY_NatureLevel( "oo"   , eNatureLevel_oo   , EnumNatureLevel::oo    );
+    natureLevels_[ "ooo"   ] = new PHY_NatureLevel( "ooo"  , eNatureLevel_ooo  , EnumNatureLevel::ooo   );
+    natureLevels_[ "i"     ] = new PHY_NatureLevel( "i"    , eNatureLevel_i    , EnumNatureLevel::i     );
+    natureLevels_[ "ii"    ] = new PHY_NatureLevel( "ii"   , eNatureLevel_ii   , EnumNatureLevel::ii    );
+    natureLevels_[ "iii"   ] = new PHY_NatureLevel( "iii"  , eNatureLevel_iii  , EnumNatureLevel::iii   );
+    natureLevels_[ "x"     ] = new PHY_NatureLevel( "x"    , eNatureLevel_x    , EnumNatureLevel::x     );
+    natureLevels_[ "xx"    ] = new PHY_NatureLevel( "xx"   , eNatureLevel_xx   , EnumNatureLevel::xx    );
+    natureLevels_[ "xxx"   ] = new PHY_NatureLevel( "xxx"  , eNatureLevel_xxx  , EnumNatureLevel::xxx   );
+    natureLevels_[ "xxxx"  ] = new PHY_NatureLevel( "xxxx" , eNatureLevel_xxxx , EnumNatureLevel::xxxx  );
+    natureLevels_[ "xxxxx" ] = new PHY_NatureLevel( "xxxxx", eNatureLevel_xxxxx, EnumNatureLevel::xxxxx );
 }
 
 // -----------------------------------------------------------------------------

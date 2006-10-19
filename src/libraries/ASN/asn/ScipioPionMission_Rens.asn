@@ -4,9 +4,6 @@
 
 ScipioPionMission_RENS DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, KnowledgeAgent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase;
-
 -- ROHUM (RBRR + URH)
 Mission-Pion-RENS-ROHUM-RenseignerSur ::= SEQUENCE
 {

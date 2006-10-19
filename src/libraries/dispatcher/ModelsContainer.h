@@ -49,15 +49,9 @@ public:
     T*    Find   ( unsigned long nID ) const;    
     void  Clear  ();
 
-    template< typename F >
-    void  Apply( F functor ) const;
-    template< typename F, typename P1 >
-    void  Apply( F functor, P1& param1 ) const;
-
-    const T_ModelMap& GetContainer() const;
-
-    template< typename L, typename E > 
-    void Send( L& asnList ) const;
+    template< typename F >				void Apply( F functor ) const;
+    template< typename F, typename P1 >	void Apply( F functor, P1& param1 ) const;
+    template< typename L, typename E >  void Send ( L& asnList ) const;
     //@}
 
 private:

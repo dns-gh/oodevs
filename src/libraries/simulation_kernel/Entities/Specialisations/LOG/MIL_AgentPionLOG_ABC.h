@@ -28,8 +28,7 @@ class MIL_AgentPionLOG_ABC : public MIL_AgentPion
     MT_COPYNOTALLOWED( MIL_AgentPionLOG_ABC )
 
 public:
-             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive );
-             MIL_AgentPionLOG_ABC( MIL_Automate& automate, MIL_InputArchive& archive );
+             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOG_ABC();
     virtual ~MIL_AgentPionLOG_ABC();

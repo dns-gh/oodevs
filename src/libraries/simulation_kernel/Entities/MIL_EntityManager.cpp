@@ -71,6 +71,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "RC/MIL_RC.h"
 #include "MIL_Army.h"
+#include "MIL_Formation.h"
 #include "Network/NET_ASN_Messages.h"
 #include "HLA/HLA_Federate.h"
 
@@ -245,10 +246,7 @@ void MIL_EntityManager::InitializeType( MIL_InputArchive& archive, const std::st
 // -----------------------------------------------------------------------------
 MIL_EntityManager::~MIL_EntityManager()
 {
-    // ODB
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        pions_.erase( itAutomate->second->GetPionPC().GetID() );
-
+    // ODB - $$$ Virer ça ... utiliser des factories
     for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         delete itPion->second;
 
@@ -310,37 +308,6 @@ MIL_EntityManager::~MIL_EntityManager()
     delete pObjectManager_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::InitializeArmies
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeArmies( MIL_InputArchive& archive )
-{
-    MT_LOG_INFO_MSG( "Initializing armies" );    
-
-    archive.BeginList( "Armees" );
-
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Armee" );
-
-        uint        nID;
-        std::string strName;
-
-        archive.ReadAttribute( "id", nID );
-        archive.ReadAttribute( "nom", strName );
-
-        MIL_Army*& pArmy = armies_[ strName ];
-        if( pArmy )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army id", archive.GetContext() );
-        
-        pArmy = new MIL_Army( strName, nID, archive );
-        archive.EndSection(); // Camp
-    }
-
-    archive.EndList(); // Camps
-}
-
 // =============================================================================
 // ODB INIT
 // =============================================================================
@@ -351,13 +318,10 @@ void MIL_EntityManager::InitializeArmies( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ReadODB( MIL_InputArchive& archive )
 {
-    archive.Section( "ODB" );
+    archive.Section( "orbat" );
 
     InitializeArmies     ( archive );
     InitializeDiplomacy  ( archive );
-    InitializeAutomates  ( archive );
-    InitializePions      ( archive );
-    InitializePopulations( archive );
     pObjectManager_->ReadODB( archive );    
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
@@ -388,160 +352,131 @@ void MIL_EntityManager::InitializeDiplomacy( MIL_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing diplomacy" );
 
-    archive.BeginList( "Armees" );
-
+    archive.BeginList( "diplomacies" );
     while( archive.NextListElement() )
     {
-        archive.Section( "Armee" );
+        archive.BeginList( "side" );
 
-        std::string strName;
-        archive.ReadAttribute( "nom", strName );
-
-        MIL_Army* pArmy = FindArmy( strName );
-        assert( pArmy );
-        pArmy->InitializeDiplomacy( *this, archive );
-        archive.EndSection(); // Camp
-    }
-
-    archive.EndList(); // Camps
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::InitializeAutomates
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeAutomates( MIL_InputArchive& archive )
-{
-    MT_LOG_INFO_MSG( "Initializing automates" );
-
-    archive.BeginList( "Automates" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Automate" );
-
-        uint        nID;
-        std::string strType;
-        
-        archive.ReadAttribute( "id", nID );
-        archive.ReadAttribute( "type", strType );
-
-        const MIL_AutomateType* pAutomateType = MIL_AutomateType::FindAutomateType( strType );
-        if( !pAutomateType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automata type", archive.GetContext() );
-
-        // Check if the ID is unique
-        if( pions_.find( nID ) != pions_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automata id already used", archive.GetContext() );
-
-        MIL_Automate*& pAutomate = automates_[ nID ];
-        if( pAutomate )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automata of this id is already instanciated", archive.GetContext() );
-
-        pAutomate = &pAutomateType->InstanciateAutomate( nID, archive );
-        pAutomate->ReadOverloading( archive );
-        pions_[ nID ] = &pAutomate->GetPionPC();
-
-        archive.EndSection(); // Automate
-    }
-    archive.EndList(); // Automates
-
-    // Hierarchie
-    archive.BeginList( "Automates" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Automate" );
-
-        uint        nID;
-        std::string strType;
-        
+        uint nID;
         archive.ReadAttribute( "id", nID );
 
-        MIL_Automate* pAutomate = FindAutomate( nID );
-        if( !pAutomate )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automata", archive.GetContext() );
+        MIL_Army* pArmy = FindArmy( nID );
+        if( !pArmy )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown side", archive.GetContext() );
+        pArmy->InitializeDiplomacy( archive );
 
-        pAutomate->ReadLogisticHierarchy( archive );
-
-        archive.EndSection(); // Automate
+        archive.EndList(); // side
     }
-    archive.EndList(); // Automates
-
+    archive.EndList(); // diplomacies
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::InitializePions
+// Name: MIL_EntityManager::InitializeArmies
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializePions( MIL_InputArchive& archive )
+void MIL_EntityManager::InitializeArmies( MIL_InputArchive& archive )
 {
-    MT_LOG_INFO_MSG( "Initializing pions" );
+    MT_LOG_INFO_MSG( "Initializing armies" );    
 
-    archive.BeginList( "Pions" );
+    assert( armies_.empty() );
 
+    archive.BeginList( "sides" );
     while( archive.NextListElement() )
     {
-        archive.Section( "Pion" );
+        archive.Section( "side" );
 
-        uint        nID;
-        std::string strType;
+        uint nID;
+        archive.ReadAttribute( "id", nID );
 
-        archive.ReadAttribute( "id"  , nID     );
-        archive.ReadAttribute( "type", strType );
-
-        const MIL_AgentTypePion* pPionType = MIL_AgentTypePion::FindPionType( strType );
-        if( !pPionType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type", archive.GetContext() );
-
-        // Check if the ID is unique
-        if( automates_.find( nID ) != automates_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn id already used", archive.GetContext() );
-
-        MIL_AgentPion*& pPion = pions_[ nID ];
-        if( pPion )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn of this id is already instanciated", archive.GetContext() );
-
-        pPion = &pPionType->InstanciatePion( nID, archive );
-        pPion->ReadOverloading( archive );
-        archive.EndSection(); // Pion
+        MIL_Army*& pArmy = armies_[ nID ];
+        if( pArmy )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Army already exists", archive.GetContext() );
+        
+        pArmy = new MIL_Army( nID, archive );
+        archive.EndSection(); // side
     }
-    archive.EndList(); // Pions
+    archive.EndList(); // sides
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::InitializePopulations
-// Created: NLD 2004-08-11
+// Name: MIL_EntityManager::CreateFormation
+// Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializePopulations( MIL_InputArchive& archive )
+MIL_Formation& MIL_EntityManager::CreateFormation( uint nID, MIL_Army& army, MIL_InputArchive& archive, MIL_Formation* pParent )
 {
-    MT_LOG_INFO_MSG( "Initializing populations" );
+    MIL_Formation*& pFormation = formations_[ nID ];
+    if( pFormation )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Formation using this id already exists", archive.GetContext() );
+    pFormation = new MIL_Formation( nID, army, archive, pParent );
+    return *pFormation;
+}
 
-    archive.BeginList( "Populations" );
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateAutomate
+// Created: NLD 2006-10-11
+// -----------------------------------------------------------------------------
+MIL_Automate& MIL_EntityManager::CreateAutomate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive )
+{
+    MIL_Automate*& pAutomate = automates_[ nID ];
+    if( pAutomate )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat using this id already exists", archive.GetContext() );
+    
+    pAutomate = &type.InstanciateAutomate( nID, formation, archive );
+    pAutomate->ReadOverloading( archive );
+    // $$$ Network
+    return *pAutomate;
+}
 
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Population" );
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreatePion
+// Created: NLD 2006-10-11
+// -----------------------------------------------------------------------------
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
+{
+    MIL_AgentPion*& pPion = pions_[ nID ];
+    if( pPion )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Pawn using this id already exists", archive.GetContext() );
 
-        uint        nID;
-        std::string strType;
+    pPion = &type.InstanciatePion( nID, automate, archive );
+    pPion->ReadOverloading( archive );
 
-        archive.ReadAttribute( "id"  , nID     );
-        archive.ReadAttribute( "type", strType );
+    if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
+        MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( *pPion );
+    // $$$ Network
+    return *pPion;
+}
 
-        const MIL_PopulationType* pPopulationType = MIL_PopulationType::Find( strType );
-        if( !pPopulationType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type", archive.GetContext() );
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreatePion
+// Created: NLD 2005-02-08
+// -----------------------------------------------------------------------------
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
+{
+    MIL_AgentPion& pion = type.InstanciatePion( MIL_IDManager::units_.GetFreeSimID(), automate, vPosition );
+    assert( pions_[ pion.GetID() ] == 0 );
+    pions_[ pion.GetID() ] = &pion;
 
-        nID = MIL_IDManager::populations_.ConvertSimIDToMosID( nID );
+    if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
+        MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( pion );
 
-        // Check if the ID is unique
-        MIL_Population*& pPopulation = populations_[ nID ];
-        if( pPopulation )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population of this id is already instanciated", archive.GetContext() );
+    pion.SendCreation ();
+    pion.SendFullState();
+    pion.SendKnowledge();
+    return pion;
+}
 
-        pPopulation = &pPopulationType->InstanciatePopulation( nID, archive );        
-        archive.EndSection(); // Population
-    }
-    archive.EndList(); // Populations
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreatePopulation
+// Created: NLD 2005-02-08
+// -----------------------------------------------------------------------------
+MIL_Population& MIL_EntityManager::CreatePopulation( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
+{
+    MIL_Population*& pPopulation = populations_[ nID ];
+    if( pPopulation )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Population using this id already exists", archive.GetContext() );
+
+    pPopulation = &type.InstanciatePopulation( nID, army, archive );
+    return *pPopulation;
 }
 
 // =============================================================================
@@ -550,12 +485,12 @@ void MIL_EntityManager::InitializePopulations( MIL_InputArchive& archive )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindArmy
-// Created: NLD 2004-09-01
+// Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Army* MIL_EntityManager::FindArmy( uint nID ) const
+MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
 {
     for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
-        if( it->second->GetID() == nID )
+        if( sCaseInsensitiveLess()( it->second->GetName(), strName ) )
             return it->second;
     return 0;
 }
@@ -584,7 +519,7 @@ void MIL_EntityManager::RegisterObject( MIL_RealObject_ABC& object )
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_EntityManager::CreateObject( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_RealObject_ABC* MIL_EntityManager::CreateObject( const MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
 {
     assert( pObjectManager_ );
     return pObjectManager_->CreateObject( army, diaParameters, nCurrentParamIdx );
@@ -794,29 +729,6 @@ void MIL_EntityManager::Clean()
 }
 
 // =============================================================================
-// DYNAMIC PIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreatePion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
-{
-    MIL_AgentPion& pion = type.InstanciatePion( MIL_IDManager::units_.GetFreeSimID(), automate, vPosition );
-    assert( pions_[ pion.GetID() ] == 0 );
-    pions_[ pion.GetID() ] = &pion;
-
-    if( MIL_AgentServer::GetWorkspace().GetHLAFederate() )
-        MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( pion );
-
-    pion.SendCreation ();
-    pion.SendFullState();
-    pion.SendKnowledge();
-    return pion;
-}
-
-// =============================================================================
 // NETWORK
 // =============================================================================
 
@@ -824,40 +736,21 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 // Name: MIL_EntityManager::SendStateToNewClient
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::SendStateToNewClient()
+void MIL_EntityManager::SendStateToNewClient() const
 {
-    // Armies / knowledge groups
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         itArmy->second->SendCreation();
+
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         itArmy->second->SendFullState();
 
-    // Automates / pions / populationcs creation
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        itAutomate->second->SendCreation();
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->SendCreation();
-    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-        itPopulation->second->SendCreation();
-
+    //$$$ à déplacer
     assert( pObjectManager_ );
-    pObjectManager_->SendStateToNewClient();
-
-    // Automates / pions state
-    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-        itAutomate->second->SendFullState();
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->SendFullState();
-    for( CIT_PopulationMap itPopulation = populations_.begin(); itPopulation != populations_.end(); ++itPopulation )
-        itPopulation->second->SendFullState();
+    pObjectManager_->SendStateToNewClient(); 
 
     // Knowledge
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         itArmy->second->SendKnowledge();
-//    for( CIT_AutomateMap itAutomate = automates_.begin(); itAutomate != automates_.end(); ++itAutomate )
-//        itAutomate->second->SendKnowledge );
-    for( CIT_PionMap itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-        itPion->second->SendKnowledge();
 }
 
 // -----------------------------------------------------------------------------
@@ -1173,6 +1066,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
 {
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> armies_
+         >> formations_
          >> pions_
          >> automates_
          >> populations_
@@ -1199,6 +1093,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << armies_
+         << formations_
          << pions_
          << automates_
          << populations_
@@ -1219,26 +1114,16 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    archive.Section( "Armees" );
+    archive.Section( "sides" );
     for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
         it->second->WriteODB( archive );
-    archive.EndSection(); // Armees
+    archive.EndSection(); // sides
 
-    archive.Section( "Automates" );
-    for( CIT_AutomateMap it = automates_.begin(); it != automates_.end(); ++it )
-        it->second->WriteODB( archive );
-    archive.EndSection();
-
-    archive.Section( "Pions" );
-    for( CIT_PionMap it = pions_.begin(); it != pions_.end(); ++it )
-        it->second->WriteODB( archive );
-    archive.EndSection();
+    archive.Section( "diplomacies" );
+    for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
+        it->second->WriteDiplomacyODB( archive );
+    archive.EndSection(); // diplomacies
 
     assert( pObjectManager_ );
     pObjectManager_->WriteODB( archive );
-
-    archive.Section( "Populations" );
-    for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-        it->second->WriteODB( archive );
-    archive.EndSection();
 }

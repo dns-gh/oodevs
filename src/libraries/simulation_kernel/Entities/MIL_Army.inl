@@ -10,6 +10,50 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Army::RegisterFormation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+inline
+void MIL_Army::RegisterFormation( MIL_Formation& formation )
+{
+    bool bOut = formations_.insert( &formation ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::UnregisterFormation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+inline
+void MIL_Army::UnregisterFormation( MIL_Formation& formation )
+{
+    int nOut = formations_.erase( &formation );
+    assert( nOut == 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::RegisterPopulation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+inline
+void MIL_Army::RegisterPopulation( MIL_Population& population )
+{
+    bool bOut = populations_.insert( &population ).second;
+    assert( bOut );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::UnregisterPopulation
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+inline
+void MIL_Army::UnregisterPopulation( MIL_Population& population )
+{
+    int nOut = populations_.erase( &population );
+    assert( nOut == 1 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Army::FindKnowledgeGroup
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
@@ -74,20 +118,20 @@ DEC_KnowledgeBlackBoard_Army& MIL_Army::GetKnowledge() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_Army::GetRelationWith
+// Name: MIL_Army::GetDiplomacy
 // Created: NLD 2004-03-24
 //-----------------------------------------------------------------------------
 inline
-MIL_Army::E_Diplomacy MIL_Army::GetRelationWith( const MIL_Army& otherArmy ) const
+MIL_Army::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army& otherArmy ) const
 {
     if( &otherArmy == this )
         return eFriend;
 
-    CIT_ArmyRelationMap itRelation = relations_.find( &otherArmy );
-    if( itRelation == relations_.end() )
+    CIT_DiplomacyMap it = diplomacies_.find( &otherArmy );
+    if( it == diplomacies_.end() )
         return eUnknown;
     else
-        return itRelation->second;
+        return it->second;
 }
 
 // -----------------------------------------------------------------------------

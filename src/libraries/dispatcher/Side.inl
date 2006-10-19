@@ -11,6 +11,16 @@ namespace dispatcher
 {
 
 // -----------------------------------------------------------------------------
+// Name: ModelRefsContainer< Formation >& Side::GetFormations
+// Created: NLD 2006-10-13
+// -----------------------------------------------------------------------------
+inline
+ModelRefsContainer< Formation >& Side::GetFormations()
+{
+    return formations_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelRefsContainer< KnowledgeGroup >& Side::GetKnowledgeGroups
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
@@ -21,13 +31,23 @@ ModelRefsContainer< KnowledgeGroup >& Side::GetKnowledgeGroups()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelRefsContainer< Automat        >& Side::GetAutomats
-// Created: NLD 2006-09-26
+// Name: ModelRefsContainer< Object >& Side::GetObjects
+// Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 inline
-ModelRefsContainer< Automat >& Side::GetAutomats()
+ModelRefsContainer< Object >& Side::GetObjects()
 {
-    return automats_;
+    return objects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelRefsContainer< Population >& Side::GetPopulations
+// Created: NLD 2006-09-25
+// -----------------------------------------------------------------------------
+inline
+ModelRefsContainer< Population >& Side::GetPopulations()
+{
+    return populations_;
 }
 
 // -----------------------------------------------------------------------------

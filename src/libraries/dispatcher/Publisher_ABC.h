@@ -25,8 +25,8 @@ class Publisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     Publisher_ABC();
-    ~Publisher_ABC();
+    Publisher_ABC();
+    virtual ~Publisher_ABC();
     //@}
 
     //! @name Operations

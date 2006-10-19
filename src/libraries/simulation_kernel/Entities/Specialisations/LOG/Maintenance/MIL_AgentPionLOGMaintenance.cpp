@@ -21,18 +21,8 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGMaintenance, "MIL_AgentPionLOGMaintenan
 // Name: MIL_AgentPionLOGMaintenance constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive )
-    : MIL_AgentPionLOG_ABC( type, nID, archive )
-{
-    RegisterRole< PHY_RolePionLOG_Maintenance >( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGMaintenance constructor
-// Created: NLD 2004-10-04
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPionLOG_ABC( automate, archive )
+MIL_AgentPionLOGMaintenance::MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, archive )
 {
     RegisterRole< PHY_RolePionLOG_Maintenance >( *this );
 }

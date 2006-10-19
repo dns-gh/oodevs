@@ -100,7 +100,7 @@ void MIL_ZoneNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 // Name: MIL_ZoneNBC::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_ZoneNBC::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneNBC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
     return false;

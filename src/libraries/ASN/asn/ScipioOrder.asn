@@ -6,7 +6,7 @@
 
 ScipioOrder DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS OID, Point, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH FROM ScipioBase;
+IMPORTS OID, Point, CoordUTM, GDH FROM ScipioBase;
 
 EnumOrderErrorCode ::= ENUMERATED
 {

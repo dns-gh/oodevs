@@ -145,10 +145,10 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
 MIL_RealObject_ABC* HLA_DistantObject::InstanciateObject()
 {
     const MIL_RealObjectType* pType = MIL_RealObjectType::FindObjectType( strObjectType_ );
-    if( ! pType )
+    if( !pType )
         return 0;
-    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );
-    if( ! pArmy )
+    const MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );
+    if( !pArmy )
         return 0;
     if( localisation_.GetType() == TER_Localisation::eNone )
         return 0;

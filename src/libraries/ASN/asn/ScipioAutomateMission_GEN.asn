@@ -6,8 +6,7 @@
 
 ScipioAutomateMission_GEN DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, 
-        max-uint16, max-uint8, Point, ListPoint, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, Point, ListPoint, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase
 IMPORTS EnumMissionGenUrgence, EnumMissionGenSousTypeObstacle FROM ScipioObject;
 
 -- Sous types

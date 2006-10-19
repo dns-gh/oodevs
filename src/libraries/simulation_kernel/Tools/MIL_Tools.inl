@@ -44,9 +44,11 @@ void MIL_Tools::ConvertCoordMosToSim( const ASN1T_CoordUTM& asnCoordUTM, MT_Vect
 // Last modified: JVT 02-08-08
 //-----------------------------------------------------------------------------
 inline
-void MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos, std::string& strMosPos )
+std::string MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos )
 {
+    std::string strMosPos;
     TER_World::GetWorld().SimToMosMgrsCoord( vSimPos, strMosPos );
+    return strMosPos;
 }
 
 

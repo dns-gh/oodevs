@@ -31,6 +31,16 @@ ModelsContainer< KnowledgeGroup >& Model::GetKnowledgeGroups()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelsContainer< Formation >& Model::GetFormations
+// Created: NLD 2006-10-13
+// -----------------------------------------------------------------------------
+inline
+ModelsContainer< Formation >& Model::GetFormations()
+{
+    return formations_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelsContainer< Automat > Model::GetAutomats
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------

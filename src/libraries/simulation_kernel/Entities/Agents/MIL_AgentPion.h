@@ -37,8 +37,7 @@ class MIL_AgentPion : public MIL_Agent_ABC
     MT_COPYNOTALLOWED( MIL_AgentPion )
 
 public:
-    MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive );                            // Pion dans ODB
-    MIL_AgentPion( MIL_Automate& automate, MIL_InputArchive& archive );                                             // Pion PC pour automate dans ODB
+    MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );    // Pion dans ODB
     MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ); // Creation dynamique (convois, ...)
     MIL_AgentPion();
     virtual ~MIL_AgentPion();
@@ -50,7 +49,7 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     
-    virtual void WriteODB( MT_XXmlOutputArchive& archive, bool bPC = false ) const;
+    virtual void WriteODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Init
@@ -67,8 +66,8 @@ public:
           DEC_RolePion_Decision&             GetDecision    (); //$$$ Dérolifier DEC_RolePion_Decision
     const DEC_RolePion_Decision&             GetDecision    () const; //$$$ Dérolifier DEC_RolePion_Decision
     
-    virtual MIL_Army&                 GetArmy            () const;
-            MIL_KnowledgeGroup&       GetKnowledgeGroup  () const;
+    virtual const MIL_Army&           GetArmy            () const;
+                  MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
     virtual const MIL_Automate&       GetAutomate        () const;
     virtual       MIL_Automate&       GetAutomate        ();
     virtual const MIL_AgentTypePion&  GetType            () const;
@@ -105,9 +104,9 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation ();
-    void SendFullState();
-    void SendKnowledge();
+    void SendCreation () const;
+    void SendFullState() const;
+    void SendKnowledge() const;
     void OnReceiveMsgUnitMagicAction( DIN::DIN_Input&           msg );
     void OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgPionOrder      ( ASN1T_MsgPionOrder&       msg, MIL_MOSContextID nCtx ); 
@@ -156,7 +155,7 @@ private:
 
 private:
     const MIL_AgentTypePion*  pType_;
-    const bool                bIsPC_;
+          bool                bIsPC_;
           std::string         strName_;
           MIL_Automate*       pAutomate_;
 

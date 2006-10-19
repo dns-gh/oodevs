@@ -148,7 +148,11 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( lima_destruction                                  );
         DISPATCH_ASN_MSG( automate_creation                                 );
         DISPATCH_ASN_MSG( pion_creation                                     );
+        DISPATCH_ASN_MSG( side_creation                                     );
+        DISPATCH_ASN_MSG( knowledge_group_creation                          );
+        DISPATCH_ASN_MSG( formation_creation                                );
         DISPATCH_ASN_MSG( change_diplomatie                                 );
+        DISPATCH_ASN_MSG( change_liens_logistiques                          );
         DISPATCH_ASN_MSG( unit_knowledge_creation                           );
         DISPATCH_ASN_MSG( unit_knowledge_update                             );
         DISPATCH_ASN_MSG( unit_knowledge_destruction                        );
@@ -204,6 +208,8 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( population_flux_knowledge_creation                );
         DISPATCH_ASN_MSG( population_flux_knowledge_destruction             );
         DISPATCH_ASN_MSG( population_flux_knowledge_update                  );
+        default:
+            assert( false );
     }
 }
 

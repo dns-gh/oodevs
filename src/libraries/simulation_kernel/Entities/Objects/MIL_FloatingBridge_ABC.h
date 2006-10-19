@@ -31,7 +31,7 @@ public:
 
     //! @name Init
     //@{
-    virtual bool                      Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
     virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject );
     //@}

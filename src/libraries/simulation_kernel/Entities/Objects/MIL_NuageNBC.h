@@ -42,8 +42,8 @@ public:
     //@{
     static MIL_RealObject_ABC& Create();
 
-            void                      Initialize( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent );
-    virtual bool                      Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+            void                      Initialize( const MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent );
+    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
     virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject );
     //@}

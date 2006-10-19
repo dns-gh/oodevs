@@ -17,8 +17,10 @@ namespace dispatcher
 {
     class Dispatcher;
     class KnowledgeGroup;
-    class Automat;
+    class Formation;
     class Model;
+	class Object;
+	class Population;
     class Publisher_ABC;
 
 // =============================================================================
@@ -32,14 +34,16 @@ class Side
 public:
     //! @name Constructors/Destructor
     //@{
-    Side( Model& model, unsigned int nID, DIN::DIN_Input& msg );
+    Side( Model& model, const ASN1T_MsgSideCreation& msg );
     ~Side();
     //@}
 
     //! @name Accessors
     //@{
     ModelRefsContainer< KnowledgeGroup >& GetKnowledgeGroups();
-    ModelRefsContainer< Automat        >& GetAutomats       ();
+    ModelRefsContainer< Formation      >& GetFormations     ();
+	ModelRefsContainer< Object         >& GetObjects        ();
+	ModelRefsContainer< Population     >& GetPopulations    ();
     unsigned long                         GetID             () const;
     //@}
 
@@ -70,7 +74,9 @@ private:
     const unsigned long                        nID_;
           std::string                          strName_;
           ModelRefsContainer< KnowledgeGroup > knowledgeGroups_;
-          ModelRefsContainer< Automat        > automats_;
+          ModelRefsContainer< Formation      > formations_;
+		  ModelRefsContainer< Object		 > objects_;
+		  ModelRefsContainer< Population     > populations_;
           T_DiplomacyMap                       diplomacies_;
 };
 

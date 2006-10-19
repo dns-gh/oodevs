@@ -52,9 +52,6 @@ public:
     void SendMsgProfilingValues( DIN::DIN_BufferedMessage& msg );
 
     // Debug
-    void SendMsgKnowledgeGroup                        ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgArmy                                  ( DIN::DIN_BufferedMessage& msg );
-
     void SendMsgInit                                  ( NET_AS_MOSServer& mosServer, DIN::DIN_BufferedMessage& msg );
     void SendMsgTrace                                 ( DIN::DIN_BufferedMessage& msg );
     void SendMsgUnitVisionCones                       ( DIN::DIN_BufferedMessage& msg );

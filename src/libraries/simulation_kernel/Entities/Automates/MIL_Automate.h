@@ -17,6 +17,7 @@
 #include "Entities/Actions/PHY_Actor.h"
 #include "Entities/Orders/Automate/MIL_AutomateOrderManager.h"
 
+class MIL_Formation;
 class MIL_AutomateType;
 class MIL_AgentPion;
 class MIL_Army;
@@ -56,7 +57,7 @@ public:
     //@}
 
 public:
-             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_InputArchive& archive );
+             MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive );
              MIL_Automate();
     virtual ~MIL_Automate();
 
@@ -67,13 +68,14 @@ public:
     void load( MIL_CheckPointInArchive&, const uint );
     void save( MIL_CheckPointOutArchive&, const uint ) const;
 
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+            void WriteODB             ( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Initialize
     //@{
-            void ReadOverloading       ( MIL_InputArchive& archive );
-    virtual void ReadLogisticHierarchy ( MIL_InputArchive& archive );
+            void ReadOverloading ( MIL_InputArchive& archive );
+    virtual void ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArchive& archive );
     //@}
 
     //! @name Accessors
@@ -81,7 +83,7 @@ public:
     const std::string&                      GetName          () const;
           uint                              GetID            () const;
     const MIL_AutomateType&                 GetType          () const;
-          MIL_Army&                         GetArmy          () const;
+    const MIL_Army&                         GetArmy          () const;
           MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
           MIL_AutomateLOG*                  GetTC2           () const;
     const MIL_AutomateOrderManager&         GetOrderManager  () const;
@@ -137,6 +139,8 @@ public:
     //@{
             void SendCreation                     () const;
     virtual void SendFullState                    () const;
+            void SendKnowledge                    () const;
+
             void OnReceiveMsgAutomateOrder        ( ASN1T_MsgAutomateOrder&                 msg, MIL_MOSContextID nCtx );
             void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, MIL_MOSContextID nCtx );
             void OnReceiveMsgOrderConduite        ( ASN1T_MsgOrderConduite&                 msg, MIL_MOSContextID nCtx );
@@ -174,9 +178,14 @@ public:
 protected:
     //! @name Tools
     //@{
-    virtual void WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const;
-    virtual void WriteCreationMsg      ( NET_ASN_MsgAutomateCreation& asnMsg ) const;
-            void Surrender             ();
+    virtual void SendLogisticLinks() const;
+            void Surrender        ();
+    //@}
+
+private:
+    //! @name Tools
+    //@{
+    void InitializeSubordinates( MIL_InputArchive& archive );
     //@}
 
 protected:
@@ -187,6 +196,7 @@ protected:
 private:
     const MIL_AutomateType* pType_;
     const uint              nID_;
+          MIL_Formation*    pFormation_;
           std::string       strName_;
           bool              bEmbraye_;
 

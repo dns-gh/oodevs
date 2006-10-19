@@ -36,7 +36,7 @@
     <Maintenance>Data/Maintenance.xml</Maintenance>
     <Ravitaillement>Data/Ravitaillement.xml</Ravitaillement>
     <Communications>Data/Communications.xml</Communications>
-    <ODB>Data/ODB.xml</ODB>
+    <ODB>Data/odb_new.xml</ODB>
     <Pathfind>Data/Pathfind.xml</Pathfind>
     <Missions>Data/Missions.xml</Missions>
     <HLA>Data/HLA.xml</HLA>

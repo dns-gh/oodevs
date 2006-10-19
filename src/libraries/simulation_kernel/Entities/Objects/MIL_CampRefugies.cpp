@@ -78,7 +78,7 @@ void MIL_CampRefugies::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) 
 // Name: MIL_CampRefugies::Initialize
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-bool MIL_CampRefugies::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_CampRefugies::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
         return false;

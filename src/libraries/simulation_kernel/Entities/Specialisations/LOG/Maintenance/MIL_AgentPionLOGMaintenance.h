@@ -25,8 +25,7 @@ class MIL_AgentPionLOGMaintenance : public MIL_AgentPionLOG_ABC
     MT_COPYNOTALLOWED( MIL_AgentPionLOGMaintenance )
 
 public:
-             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive );
-             MIL_AgentPionLOGMaintenance( MIL_Automate& automate, MIL_InputArchive& archive );
+             MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive );
              MIL_AgentPionLOGMaintenance( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition );
              MIL_AgentPionLOGMaintenance();
     virtual ~MIL_AgentPionLOGMaintenance();

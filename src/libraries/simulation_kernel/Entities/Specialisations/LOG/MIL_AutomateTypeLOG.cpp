@@ -72,7 +72,7 @@ bool MIL_AutomateTypeLOG::IsLogistic() const
 // Name: MIL_AutomateTypeLOG::InstanciateAutomate
 // Created: NLD 2004-12-27
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_InputArchive& archive ) const
+MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( uint nID, MIL_Formation& formation, MIL_InputArchive& archive ) const
 {
-    return *new MIL_AutomateLOG( *this, nID, archive );
+    return *new MIL_AutomateLOG( *this, nID, formation, archive );
 }

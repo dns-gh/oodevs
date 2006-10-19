@@ -6,10 +6,7 @@
 
 ScipioAutomateMission_ALAT DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, NatureAtlas, ListPolygon, Point, Itineraire, 
-        EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase 
-        
+IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, NatureAtlas, ListPolygon, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase
 IMPORTS Enum_ALAT_PorteeAction, Enum_ALAT_AmbianceMission FROM ScipioPionMission_ALAT;
         
 Mission-Automate-ALAT-Heliporter ::= SEQUENCE

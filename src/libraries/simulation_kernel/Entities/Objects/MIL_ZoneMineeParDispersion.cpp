@@ -56,7 +56,7 @@ void MIL_ZoneMineeParDispersion::serialize( Archive& file, const uint )
 // Name: MIL_ZoneMineeParDispersion::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool MIL_ZoneMineeParDispersion::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneMineeParDispersion::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
         return false;
@@ -95,7 +95,7 @@ ASN1T_EnumObjectErrorCode MIL_ZoneMineeParDispersion::Initialize( uint nID, cons
 // Name: MIL_ZoneMineeParDispersion::Initialize
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void MIL_ZoneMineeParDispersion::Initialize( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines )
+void MIL_ZoneMineeParDispersion::Initialize( const MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines )
 {
     MIL_RealObject_ABC::Initialize( army, localisation );
     

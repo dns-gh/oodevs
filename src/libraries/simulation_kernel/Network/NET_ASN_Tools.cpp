@@ -446,9 +446,7 @@ void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, ASN1T_L
 // static
 void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_CoordUTM& asnCoordUTM )
 {
-    static std::string strPos;
-    MIL_Tools::ConvertCoordSimToMos( vPos, strPos );
-    asnCoordUTM = strPos.c_str();
+    asnCoordUTM = MIL_Tools::ConvertCoordSimToMos( vPos ).c_str();
 }
 
 //-----------------------------------------------------------------------------

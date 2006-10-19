@@ -333,7 +333,7 @@ template <typename Archive>
 template <typename T>
 bool MT_InputArchive_Logger<Archive>::ReadAttribute( const std::string& strAttribute, T& value, ErrorPolicyType nErrorPolicy )
 {
-    if ( archive_.ReadAttribute( strAttribute, value ) )
+    if( archive_.ReadAttribute( strAttribute, value ) )
     {
         std::stringstream strFormatAttr;
         strFormatAttr << strAttribute << "=\"" << value << '\"';
@@ -574,11 +574,22 @@ template< typename Archive >
 inline
 bool MT_InputArchive_Logger<Archive>::EndList( ErrorPolicyType nErrorPolicy )
 {
-    if ( archive_.EndList() )
+    if( archive_.EndList() )
     {
         contexts_.pop_back();
         return true;
     }
     ProcessError( std::string( "close list " ) += contexts_.back().sName_, nErrorPolicy );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MT_InputArchive_Logger::GetCurrentElementName
+// Created: NLD 2006-10-19
+// -----------------------------------------------------------------------------
+template< typename Archive >
+inline
+std::string MT_InputArchive_Logger<Archive>::GetCurrentElementName()
+{
+    return archive_.GetCurrentElementName();
 }

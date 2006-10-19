@@ -42,8 +42,9 @@ public:
     void Register  ( T& t );
     void Unregister( T& t );
 
-    template< typename L, typename E > 
-    void Send( L& asnList ) const;
+	template< typename F >				void Apply( F functor ) const;
+    template< typename F, typename P1 > void Apply( F functor, P1& param1 ) const;
+    template< typename L, typename E >  void Send ( L& asnList ) const;
     //@}
 
 private:

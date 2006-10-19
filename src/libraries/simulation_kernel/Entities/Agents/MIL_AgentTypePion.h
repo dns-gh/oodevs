@@ -46,8 +46,7 @@ public:
 
     //! @name Instanciation
     //@{
-    virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_InputArchive& archive ) const;
-    virtual MIL_AgentPion& InstanciatePion( MIL_Automate& automate, MIL_InputArchive& archive ) const;
+    virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_Automate& automate, MIL_InputArchive& archive ) const;
     virtual MIL_AgentPion& InstanciatePion( uint nID, MIL_Automate& automate, const MT_Vector2D& vPosition ) const; 
     //@}
 

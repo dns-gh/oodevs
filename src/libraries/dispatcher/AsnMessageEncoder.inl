@@ -60,7 +60,7 @@ void AsnMessageEncoder< T, C >::Encode()
         throw std::runtime_error( "Error while encoding asn message" );
     }
 
-//    Dump();
+    Dump();
     dinMsg_.GetOutput().Append( asnBuffer_.GetMsgPtr(), asnBuffer_.GetMsgLen() );
 }
 

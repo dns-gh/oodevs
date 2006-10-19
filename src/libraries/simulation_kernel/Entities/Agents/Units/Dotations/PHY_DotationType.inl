@@ -10,19 +10,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationType::FindDotationCategory
-// Created: NLD 2004-08-04
-// -----------------------------------------------------------------------------
-inline
-const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::string& strName ) const
-{
-    CIT_DotationCategoryMap it = dotationCategories_.find( strName );
-    if( it == dotationCategories_.end() )
-        return 0;
-    return it->second;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DotationType::FindDotationType
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
@@ -73,6 +60,22 @@ const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( uint nID )
     for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
         const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( nID );
+        if( pDotationCategory ) 
+            return pDotationCategory;
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationType::FindDotationCategory
+// Created: NLD 2006-10-19
+// -----------------------------------------------------------------------------
+inline
+const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( const std::string& strName )
+{
+    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
+    {
+        const PHY_DotationCategory* pDotationCategory = it->second->InternalFindDotationCategory( strName );
         if( pDotationCategory ) 
             return pDotationCategory;
     }

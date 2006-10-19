@@ -6,9 +6,7 @@
 
 ScipioObjectKnowledge DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, GDH, Localisation, OID FROM ScipioBase
-IMPORTS EnumObjectType, AttrObjectSpecific FROM ScipioObject;
-
+IMPORTS EnumObjectType FROM ScipioObject;
 
 ---------------------------
 -- Connaissance objet
@@ -17,7 +15,7 @@ IMPORTS EnumObjectType, AttrObjectSpecific FROM ScipioObject;
 -- SIM -> MOS
 MsgObjectKnowledgeCreation ::= SEQUENCE
 {
-    oid-connaissance            OID, 
+    oid-connaissance            KnowledgeObject, 
     oid-camp-possesseur         Camp, 
     oid-objet-reel              OID, -- id de l'objet réel pointé par la connaissance
     type                        EnumObjectType,
@@ -27,7 +25,7 @@ MsgObjectKnowledgeCreation ::= SEQUENCE
 
 MsgObjectKnowledgeUpdate ::= SEQUENCE
 {
-    oid-connaissance           OID,
+    oid-connaissance           KnowledgeObject,
     oid-camp-possesseur        Camp,
     oid-objet-reel             OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
     pertinence                 INTEGER( 0..100 )  OPTIONAL,
@@ -45,7 +43,7 @@ MsgObjectKnowledgeUpdate ::= SEQUENCE
 
 MsgObjectKnowledgeDestruction ::= SEQUENCE
 {
-    oid-connaissance    OID,    
+    oid-connaissance    KnowledgeObject,    
     oid-camp-possesseur Camp     
 }
 

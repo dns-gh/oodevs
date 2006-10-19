@@ -48,7 +48,7 @@ class MIL_Population : public PHY_Actor
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive );
+     MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive );
      MIL_Population();
     ~MIL_Population();
     //@}
@@ -205,7 +205,7 @@ private:
 private:
     const MIL_PopulationType*        pType_;
     const uint                       nID_;
-    const MIL_Army*                  pArmy_;
+          MIL_Army*                  pArmy_;
           std::string                strName_;
     const MIL_PopulationAttitude*    pDefaultAttitude_;
           MT_Float                   rPeopleCount_;

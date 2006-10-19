@@ -14,23 +14,10 @@
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 inline
-MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
+MIL_Army* MIL_EntityManager::FindArmy( uint nID ) const
 {
-    CIT_ArmyMap it = armies_.find( strName );
+    CIT_ArmyMap it = armies_.find( nID );
     if( it == armies_.end() )
-        return 0;
-    return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindPopulation
-// Created: NLD 2004-08-30
-// -----------------------------------------------------------------------------
-inline
-MIL_Population* MIL_EntityManager::FindPopulation( uint nID ) const
-{
-    CIT_PopulationMap it = populations_.find( nID );
-    if( it == populations_.end() )
         return 0;
     return it->second;
 }
@@ -61,6 +48,18 @@ MIL_AgentPion* MIL_EntityManager::FindAgentPion( uint nID ) const
     return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindPopulation
+// Created: NLD 2004-08-30
+// -----------------------------------------------------------------------------
+inline
+MIL_Population* MIL_EntityManager::FindPopulation( uint nID ) const
+{
+    CIT_PopulationMap it = populations_.find( nID );
+    if( it == populations_.end() )
+        return 0;
+    return it->second;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::GetArmies

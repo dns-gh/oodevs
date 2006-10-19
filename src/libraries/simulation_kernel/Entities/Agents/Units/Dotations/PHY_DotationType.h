@@ -49,11 +49,11 @@ public:
     static const PHY_DotationType*     FindDotationType    ( ASN1T_EnumFamilleDotation nAsnID );
     static const PHY_DotationType*     FindDotationType    ( uint nID );
     static const PHY_DotationCategory* FindDotationCategory( uint nID );
+    static const PHY_DotationCategory* FindDotationCategory( const std::string& strName );
     //@}
 
     //! @name Accessors
     //@{
-    const PHY_DotationCategory*     FindDotationCategory  ( const std::string& strName ) const;
     const std::string&              GetName               () const;
           ASN1T_EnumFamilleDotation GetAsnID              () const;
           uint                      GetID                 () const;
@@ -96,6 +96,7 @@ private:
     //! @name Initialisation
     //@{
     const PHY_DotationCategory* InternalFindDotationCategory( uint nID ) const;
+    const PHY_DotationCategory* InternalFindDotationCategory( const std::string& strName ) const;
 
     void RegisterDotationCategory( const std::string& strCategoryName, MIL_InputArchive& archive );
     //@}

@@ -57,7 +57,7 @@ void MIL_FosseAntiChar::serialize( Archive& file, const uint )
 // Name: MIL_FosseAntiChar::Initialize
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool MIL_FosseAntiChar::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_FosseAntiChar::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
         return false;

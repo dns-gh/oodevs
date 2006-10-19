@@ -43,7 +43,7 @@ T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P& param )
 
     pModel = new T( model, param );
 
-    //MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
+    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
     return *pModel;
 }
 
@@ -59,7 +59,7 @@ T& ModelsContainer< T >::Create( Model& model, unsigned long nID, P1& param1, P2
         return *pModel;
 
     pModel = new T( model, param1, param2 );
-    //MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
+    MT_LOG_INFO_MSG( "New element type '" << typeid( T ).name() << "' '" << nID << "' " );
     return *pModel;
 }
 
@@ -137,16 +137,6 @@ void ModelsContainer< T >::ThrowError( unsigned long nID, const std::string& str
     std::stringstream str;
     str << "Element type '" << typeid( T ).name() << "' '" << nID << "' " << strMessage;
     throw std::runtime_error( str.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ModelsContainer::GetContainer
-// Created: NLD 2006-09-28
-// -----------------------------------------------------------------------------
-template< typename T > inline
-const typename ModelsContainer< T >::T_ModelMap& ModelsContainer< T >::GetContainer() const
-{
-    return models_;
 }
 
 // -----------------------------------------------------------------------------

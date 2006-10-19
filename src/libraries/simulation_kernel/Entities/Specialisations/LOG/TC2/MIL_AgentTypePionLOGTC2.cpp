@@ -40,18 +40,9 @@ MIL_AgentTypePionLOGTC2::~MIL_AgentTypePionLOGTC2()
 // Name: MIL_AgentTypePionLOGTC2::InstanciatePion
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGTC2::InstanciatePion( MIL_Automate& automate, MIL_InputArchive& archive ) const
+MIL_AgentPion& MIL_AgentTypePionLOGTC2::InstanciatePion( uint nID, MIL_Automate& automate, MIL_InputArchive& archive ) const
 {
-    return *new MIL_AgentPionLOGTC2( automate, archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePionLOGTC2::InstanciatePion
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_AgentTypePionLOGTC2::InstanciatePion( uint nID, MIL_InputArchive& archive ) const
-{
-    return *new MIL_AgentPionLOGTC2( *this, nID, archive );
+    return *new MIL_AgentPionLOGTC2( *this, nID, automate, archive );
 }
 
 // -----------------------------------------------------------------------------

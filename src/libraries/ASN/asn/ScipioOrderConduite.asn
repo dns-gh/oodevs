@@ -5,17 +5,16 @@
 
 ScipioOrderConduite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS OID, CoordUTM, max-uint64, max-uint32, max-uint16, max-uint8, GDH, Agent, KnowledgeObject FROM ScipioBase
+IMPORTS OID, CoordUTM, GDH, Agent, KnowledgeObject FROM ScipioBase
 IMPORTS Itineraire, Point, Direction, Segment, TypeEquipement, ListAgent FROM ScipioBase
-IMPORTS EnumOrderErrorCode                                  FROM ScipioOrder
-IMPORTS MissionGenObject                                    FROM ScipioAutomateMission_GEN
-IMPORTS MaintenancePriorites                                FROM ScipioLogMaintenance
-IMPORTS SantePriorites                                      FROM ScipioLogSante
-IMPORTS EnumRoe, EnumRoePopulation                          FROM ScipioUnitAttr
-IMPORTS EnumLogMaintenanceRegimeTravail                     FROM ScipioLogMaintenance
-IMPORTS EnumPopulationAttitude                              FROM ScipioPopulation
-IMPORTS Enum_ALAT_PorteeAction, Enum_ALAT_AmbianceMission   FROM ScipioPionMission_ALAT
-;
+IMPORTS EnumOrderErrorCode                                FROM ScipioOrder
+IMPORTS MissionGenObject                                  FROM ScipioAutomateMission_GEN
+IMPORTS MaintenancePriorites                              FROM ScipioLogMaintenance
+IMPORTS SantePriorites                                    FROM ScipioLogSante
+IMPORTS EnumRoe, EnumRoePopulation                        FROM ScipioUnit
+IMPORTS EnumLogMaintenanceRegimeTravail                   FROM ScipioLogMaintenance
+IMPORTS EnumPopulationAttitude                            FROM ScipioPopulation
+IMPORTS Enum_ALAT_PorteeAction, Enum_ALAT_AmbianceMission FROM ScipioPionMission_ALAT;
 
 EnumAmbianceMission ::= ENUMERATED
 {

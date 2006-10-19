@@ -51,8 +51,6 @@ static enum
     eMsgObjectInterVisibility                  = 1010,
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
-    eMsgKnowledgeGroup                         = 1013,
-    eMsgArmy                                   = 1014,
     eMsgDebugDrawPoints                        = 1015,
     eMsgEnvironmentType                        = 1016,
     eMsgPopulationCollision                    = 1017
@@ -201,24 +199,6 @@ void NET_AS_MOSServerMsgMgr::SendMsgInit( NET_AS_MOSServer& mosServer, DIN_Buffe
 {
     MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
     messageService_.Send( mosServer.GetLink(), eMsgInit, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgKnowledgeGroup
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgKnowledgeGroup( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgKnowledgeGroup, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgArmy
-// Created: NLD 2005-02-14
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgArmy( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgArmy, msg );
 }
 
 //-----------------------------------------------------------------------------

@@ -23,22 +23,10 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPionLOGTC2, "MIL_AgentPionLOGTC2" )
 // Name: MIL_AgentPionLOGTC2 constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive )
-    : MIL_AgentPionLOG_ABC( type, nID, archive )
+MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
+    : MIL_AgentPionLOG_ABC( type, nID, automate, archive )
 {
     RegisterRole< PHY_RolePionLOG_Maintenance >( *this );
-    RegisterRole< PHY_RolePionLOG_Medical     >( *this );  
-    RegisterRole< PHY_RolePionLOG_Supply      >( *this );  
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGTC2 constructor
-// Created: NLD 2004-10-04
-// -----------------------------------------------------------------------------
-MIL_AgentPionLOGTC2::MIL_AgentPionLOGTC2( MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_AgentPionLOG_ABC( automate, archive )
-{
-    RegisterRole< PHY_RolePionLOG_Maintenance >( *this );  
     RegisterRole< PHY_RolePionLOG_Medical     >( *this );  
     RegisterRole< PHY_RolePionLOG_Supply      >( *this );  
 }

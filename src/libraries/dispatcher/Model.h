@@ -18,6 +18,7 @@ namespace dispatcher
 class Dispatcher;
 class Side;
 class KnowledgeGroup;
+class Formation;
 class Automat;
 class Agent;    
 class Object;
@@ -60,6 +61,7 @@ public:
     //@{
           ModelsContainer< Side           >& GetSides          ();
           ModelsContainer< KnowledgeGroup >& GetKnowledgeGroups();
+          ModelsContainer< Formation      >& GetFormations     ();
           ModelsContainer< Automat        >& GetAutomats       ();
           ModelsContainer< Agent          >& GetAgents         ();
     const ModelsContainer< Agent          >& GetAgents         () const;
@@ -74,18 +76,13 @@ private:
     Model& operator=( const Model& ); //!< Assignement operator
     //@}
 
-    //! @name 
-    //@{
-    void OnReceiveMsgCreateSide          ( DIN::DIN_Input& msg );
-    void OnReceiveMsgCreateKnowledgeGroup( DIN::DIN_Input& msg );
-    //@}
-
 private:
     Dispatcher&         dispatcher_;
     SimulationModel*    pSimulationModel_;
 
     ModelsContainer< Side                   > sides_;
     ModelsContainer< KnowledgeGroup         > knowledgeGroups_;
+    ModelsContainer< Formation              > formations_;
     ModelsContainer< Automat                > automats_;
     ModelsContainer< Agent                  > agents_;
     ModelsContainer< Object                 > objects_;

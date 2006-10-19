@@ -37,13 +37,13 @@ public:
     /** @name Units converters */
     //-------------------------------------------------------------------------
     //@{    
-    static MT_Float ConvertMeterSquareToSim( MT_Float );
-    static float    ConvertSimToMeterSquare( MT_Float );
-    static MT_Float ConvertMeterToSim      ( MT_Float );
-    static float    ConvertSimToMeter      ( MT_Float );
-    static void     ConvertCoordMosToSim   ( const std::string& strMosPos, MT_Vector2D& vSimPos );
-    static void     ConvertCoordMosToSim   ( const ASN1T_CoordUTM& asnCoordUTM, MT_Vector2D& vSimPos );
-    static void     ConvertCoordSimToMos   ( const MT_Vector2D& vSimPos, std::string& strMosPos );
+    static MT_Float    ConvertMeterSquareToSim( MT_Float );
+    static float       ConvertSimToMeterSquare( MT_Float );
+    static MT_Float    ConvertMeterToSim      ( MT_Float );
+    static float       ConvertSimToMeter      ( MT_Float );
+    static void        ConvertCoordMosToSim   ( const std::string& strMosPos, MT_Vector2D& vSimPos );
+    static void        ConvertCoordMosToSim   ( const ASN1T_CoordUTM& asnCoordUTM, MT_Vector2D& vSimPos );
+    static std::string ConvertCoordSimToMos   ( const MT_Vector2D& vSimPos );
 
     static MT_Float ConvertSpeedMosToSim( MT_Float ); // km/h         -> pixel/DeltaT
     static MT_Float ConvertSpeedSimToMos( MT_Float ); // pixel/DeltaT -> km/h

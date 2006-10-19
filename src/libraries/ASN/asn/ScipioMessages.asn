@@ -6,6 +6,8 @@
 
 ScipioMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
+IMPORTS MsgFormationCreation FROM ScipioFormation;
+
 --
 -- 
 --  
@@ -65,18 +67,24 @@ MsgsOutSim ::= SEQUENCE
         msg-lima-creation                                       MsgLimaCreation,
         msg-lima-destruction                                    MsgLimaDestruction, 
         
+        msg-formation-creation                                  MsgFormationCreation,
+        msg-knowledge-group-creation                            MsgKnowledgeGroupCreation,
+        msg-side-creation                                       MsgSideCreation,
+                
         msg-automate-creation                                   MsgAutomateCreation,
+        msg-automate-attributes                                 MsgAutomateAttributes,
+        
         msg-pion-creation                                       MsgPionCreation,
+        msg-unit-attributes                                     MsgUnitAttributes,
+        msg-unit-pathfind                                       MsgUnitPathFind,                
+        
         msg-change-diplomatie                                   MsgChangeDiplomatie,
-
+        msg-change-automate                                     MsgChangeAutomate,        
+        msg-change-liens-logistiques                            MsgChangeLiensLogistiques,
+        
         msg-unit-knowledge-creation                             MsgUnitKnowledgeCreation,
         msg-unit-knowledge-update                               MsgUnitKnowledgeUpdate,
-        msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,
-
-        msg-unit-attributes                                     MsgUnitAttributes,
-        msg-unit-pathfind                                       MsgUnitPathFind,
-        
-        msg-automate-attributes                                 MsgAutomateAttributes,
+        msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,      
 
         msg-start-pion-fire                                     MsgStartPionFire,
         msg-stop-pion-fire                                      MsgStopPionFire,
@@ -99,9 +107,7 @@ MsgsOutSim ::= SEQUENCE
         msg-object-knowledge-creation                           MsgObjectKnowledgeCreation,
         msg-object-knowledge-update                             MsgObjectKnowledgeUpdate,
         msg-object-knowledge-destruction                        MsgObjectKnowledgeDestruction,
-        
-        msg-change-automate                                     MsgChangeAutomate,
-           
+                  
         msg-log-sante-traitement-humain-creation                MsgLogSanteTraitementHumainCreation,
         msg-log-sante-traitement-humain-update                  MsgLogSanteTraitementHumainUpdate,
         msg-log-sante-traitement-humain-destruction             MsgLogSanteTraitementHumainDestruction,
@@ -212,6 +218,7 @@ MsgsInClient ::= SEQUENCE
         msg-change-diplomatie-ack                               MsgChangeDiplomatieAck,
         msg-change-groupe-connaissance-ack                      MsgChangeGroupeConnaissanceAck,
         msg-change-liens-logistiques-ack                        MsgChangeLiensLogistiquesAck,
+        msg-change-liens-logistiques                            MsgChangeLiensLogistiques,
         msg-change-automate-ack                                 MsgChangeAutomateAck,   
         
         msg-log-ravitaillement-pousser-flux-ack                 MsgLogRavitaillementPousserFluxAck,
@@ -246,18 +253,22 @@ MsgsInClient ::= SEQUENCE
         msg-lima-creation                                       MsgLimaCreation,
         msg-lima-destruction                                    MsgLimaDestruction, 
         
+        msg-formation-creation                                  MsgFormationCreation,
+        msg-knowledge-group-creation                            MsgKnowledgeGroupCreation,
+        msg-side-creation                                       MsgSideCreation,
+                
         msg-automate-creation                                   MsgAutomateCreation,
+        msg-automate-attributes                                 MsgAutomateAttributes,        
+        
         msg-pion-creation                                       MsgPionCreation,
+        msg-unit-attributes                                     MsgUnitAttributes,
+        msg-unit-pathfind                                       MsgUnitPathFind,
+                
         msg-change-diplomatie                                   MsgChangeDiplomatie,
 
         msg-unit-knowledge-creation                             MsgUnitKnowledgeCreation,
         msg-unit-knowledge-update                               MsgUnitKnowledgeUpdate,
         msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,
-
-        msg-unit-attributes                                     MsgUnitAttributes,
-        msg-unit-pathfind                                       MsgUnitPathFind,
-        
-        msg-automate-attributes                                 MsgAutomateAttributes,        
 
         msg-start-pion-fire                                     MsgStartPionFire,
         msg-stop-pion-fire                                      MsgStopPionFire,

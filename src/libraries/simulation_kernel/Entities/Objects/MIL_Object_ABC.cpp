@@ -47,7 +47,7 @@ MIL_Object_ABC::~MIL_Object_ABC()
 // Name: MIL_Object_ABC::Initialize
 // Created: NLD 2004-10-26
 // -----------------------------------------------------------------------------
-void MIL_Object_ABC::Initialize( MIL_Army& army, const TER_Localisation& localisation )
+void MIL_Object_ABC::Initialize( const MIL_Army& army, const TER_Localisation& localisation )
 {
     TER_Object_ABC::Initialize( localisation );    
     pArmy_ = &army;
@@ -70,7 +70,7 @@ void MIL_Object_ABC::Initialize( MIL_Army& army, const TER_Localisation& localis
 void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< TER_Object_ABC >( *this );
-    file >> pArmy_
+    file >> const_cast< MIL_Army*& >( pArmy_ )
          >> bMarkedForDestruction_
          >> bReadyForDeletion_
          >> agentInsideSet_

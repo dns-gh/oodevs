@@ -460,11 +460,9 @@ void PHY_RolePion_Location::SendFullState( NET_ASN_MsgUnitAttributes& msg ) cons
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    static std::string strPos;
-    MIL_Tools::ConvertCoordSimToMos( vPosition_, strPos );
-    functor.Serialize( "position",  bPositionHasChanged_,     strPos        );
-    functor.Serialize( "hauteur",   bHeightHasChanged_,       rHeight_      );
-    functor.Serialize( "direction", bDirectionHasChanged_,    vDirection_   );
-    functor.Serialize( "vitesse",   bCurrentSpeedHasChanged_, rCurrentSpeed_);
+    functor.Serialize( "position" , bPositionHasChanged_    , MIL_Tools::ConvertCoordSimToMos( vPosition_ ) );
+    functor.Serialize( "hauteur"  , bHeightHasChanged_      , rHeight_       );
+    functor.Serialize( "direction", bDirectionHasChanged_   , vDirection_    );
+    functor.Serialize( "vitesse"  , bCurrentSpeedHasChanged_, rCurrentSpeed_ );
 }
 

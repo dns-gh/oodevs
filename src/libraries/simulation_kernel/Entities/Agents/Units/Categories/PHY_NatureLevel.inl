@@ -16,10 +16,22 @@
 inline
 const PHY_NatureLevel* PHY_NatureLevel::Find( const std::string& strName )
 {
-    CIT_NatureLevelMap it = natureLevel_.find( strName );
-    return it == natureLevel_.end() ? 0 : it->second;
+    CIT_NatureLevelMap it = natureLevels_.find( strName );
+    return it == natureLevels_.end() ? 0 : it->second;
 }
 
+// -----------------------------------------------------------------------------
+// Name: phy_naturelevel::Find
+// Created: NLD 2006-10-18
+// -----------------------------------------------------------------------------
+inline
+const PHY_NatureLevel* PHY_NatureLevel::Find( uint nID )
+{
+    for( CIT_NatureLevelMap it = natureLevels_.begin(); it != natureLevels_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureLevel::GetName

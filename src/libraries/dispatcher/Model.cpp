@@ -13,6 +13,7 @@
 #include "Network_Def.h"
 #include "Side.h"
 #include "KnowledgeGroup.h"
+#include "Formation.h"
 #include "Automat.h"
 #include "Agent.h"
 #include "Object.h"
@@ -38,6 +39,7 @@ Model::Model( Dispatcher& dispatcher )
     , pSimulationModel_      ( 0 )
     , sides_                 ()
     , knowledgeGroups_       ()
+    , formations_            ()
     , automats_              ()
     , agents_                ()
     , objects_               ()
@@ -85,6 +87,7 @@ void Model::Reset()
     agents_                 .Clear();
     automats_               .Clear();
     knowledgeGroups_        .Clear();
+    formations_             .Clear();
     sides_                  .Clear();
 }
 
@@ -111,9 +114,12 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_object_magic_action_ack 13
 //        case T_MsgsOutSim_msg_msg_population_magic_action_ack 14
         case T_MsgsOutSim_msg_msg_change_diplomatie_ack:                sides_.Get( asnMsg.msg.u.msg_change_diplomatie_ack->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie_ack ); break;
+        case T_MsgsOutSim_msg_msg_change_diplomatie:                    sides_.Get( asnMsg.msg.u.msg_change_diplomatie->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie ); break;
         case T_MsgsOutSim_msg_msg_change_groupe_connaissance_ack:       automats_.Get( asnMsg.msg.u.msg_change_groupe_connaissance_ack->oid_automate ).Update( *asnMsg.msg.u.msg_change_groupe_connaissance_ack ); break;
         case T_MsgsOutSim_msg_msg_change_liens_logistiques_ack:         automats_.Get( asnMsg.msg.u.msg_change_liens_logistiques_ack->oid_automate ).Update( *asnMsg.msg.u.msg_change_liens_logistiques_ack ); break;
+        case T_MsgsOutSim_msg_msg_change_liens_logistiques:             automats_.Get( asnMsg.msg.u.msg_change_liens_logistiques->oid_automate ).Update( *asnMsg.msg.u.msg_change_liens_logistiques ); break;
         case T_MsgsOutSim_msg_msg_change_automate_ack:                  agents_.Get( asnMsg.msg.u.msg_change_automate_ack->oid_pion ).Update( *asnMsg.msg.u.msg_change_automate_ack ); break;   
+        case T_MsgsOutSim_msg_msg_change_automate:                      agents_.Get( asnMsg.msg.u.msg_change_automate->oid_pion ).Update( *asnMsg.msg.u.msg_change_automate ); break;
 //        case T_MsgsOutSim_msg_msg_log_ravitaillement_pousser_flux_ack 19
 //        case T_MsgsOutSim_msg_msg_log_ravitaillement_change_quotas_ack 20
 
@@ -143,9 +149,15 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_unit_knowledge_creation:              agentKnowledges_.Create( *this, asnMsg.msg.u.msg_unit_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_unit_knowledge_creation ); break;
         case T_MsgsOutSim_msg_msg_unit_knowledge_update:                agentKnowledges_.Get( asnMsg.msg.u.msg_unit_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_unit_knowledge_update ); break;
         case T_MsgsOutSim_msg_msg_unit_knowledge_destruction:           agentKnowledges_.Destroy( asnMsg.msg.u.msg_unit_knowledge_destruction->oid_connaissance ); break;
-//
-        case T_MsgsOutSim_msg_msg_unit_attributes:                    agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid_pion ).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
-        case T_MsgsOutSim_msg_msg_automate_attributes:                automats_.Get( asnMsg.msg.u.msg_automate_attributes->oid_automate ).Update( *asnMsg.msg.u.msg_automate_attributes  ); break;
+
+        case T_MsgsOutSim_msg_msg_side_creation:                        sides_          .Create( *this, asnMsg.msg.u.msg_side_creation->oid, *asnMsg.msg.u.msg_side_creation ); break;
+        case T_MsgsOutSim_msg_msg_knowledge_group_creation:             knowledgeGroups_.Create( *this, asnMsg.msg.u.msg_knowledge_group_creation->oid, *asnMsg.msg.u.msg_knowledge_group_creation ); break;
+        case T_MsgsOutSim_msg_msg_formation_creation:                   formations_     .Create( *this, asnMsg.msg.u.msg_formation_creation->oid, *asnMsg.msg.u.msg_formation_creation ); break;
+        case T_MsgsOutSim_msg_msg_pion_creation:                        agents_         .Create( *this, asnMsg.msg.u.msg_pion_creation    ->oid_pion    , *asnMsg.msg.u.msg_pion_creation     ); break;
+        case T_MsgsOutSim_msg_msg_automate_creation:                    automats_       .Create( *this, asnMsg.msg.u.msg_automate_creation->oid_automate, *asnMsg.msg.u.msg_automate_creation ); break;
+
+        case T_MsgsOutSim_msg_msg_unit_attributes:                      agents_.Get( asnMsg.msg.u.msg_unit_attributes->oid_pion ).Update( *asnMsg.msg.u.msg_unit_attributes ); break;
+        case T_MsgsOutSim_msg_msg_automate_attributes:                  automats_.Get( asnMsg.msg.u.msg_automate_attributes->oid_automate ).Update( *asnMsg.msg.u.msg_automate_attributes  ); break;
 
 //        case T_MsgsOutSim_msg_msg_unit_pathfind:                        OnReceiveMsgUnitPathFind              ( *message.u.msg_unit_pathfind                       ); break;
 
@@ -169,12 +181,6 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_object_knowledge_creation:            objectKnowledges_.Create( *this, asnMsg.msg.u.msg_object_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_object_knowledge_creation ); break;
         case T_MsgsOutSim_msg_msg_object_knowledge_update:              objectKnowledges_.Get( asnMsg.msg.u.msg_object_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_object_knowledge_update ); break;
         case T_MsgsOutSim_msg_msg_object_knowledge_destruction:         objectKnowledges_.Destroy( asnMsg.msg.u.msg_object_knowledge_destruction->oid_connaissance ); break;
-
-        case T_MsgsOutSim_msg_msg_change_automate:                      agents_.Get( asnMsg.msg.u.msg_change_automate->oid_pion ).Update( *asnMsg.msg.u.msg_change_automate ); break;
-
-        case T_MsgsOutSim_msg_msg_pion_creation:                        agents_  .Create( *this, asnMsg.msg.u.msg_pion_creation    ->oid_pion    , *asnMsg.msg.u.msg_pion_creation     ); break;
-        case T_MsgsOutSim_msg_msg_automate_creation:                    automats_.Create( *this, asnMsg.msg.u.msg_automate_creation->oid_automate, *asnMsg.msg.u.msg_automate_creation ); break;
-        case T_MsgsOutSim_msg_msg_change_diplomatie:                    sides_.Get( asnMsg.msg.u.msg_change_diplomatie->oid_camp1 ).Update( *asnMsg.msg.u.msg_change_diplomatie ); break;
 
         case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_creation:    logConsignsMaintenance_.Create( *this, asnMsg.msg.u.msg_log_maintenance_traitement_equipement_creation->oid_consigne, *asnMsg.msg.u.msg_log_maintenance_traitement_equipement_creation ); break;
         case T_MsgsOutSim_msg_msg_log_maintenance_traitement_equipement_destruction: logConsignsMaintenance_.Destroy( asnMsg.msg.u.msg_log_maintenance_traitement_equipement_destruction->oid_consigne ); break;
@@ -210,34 +216,10 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_population_flux_knowledge_creation             : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flux_knowledge_creation->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flux_knowledge_creation ); break;
         case T_MsgsOutSim_msg_msg_population_flux_knowledge_update               : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flux_knowledge_update->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flux_knowledge_update ); break;
         case T_MsgsOutSim_msg_msg_population_flux_knowledge_destruction          : populationKnowledges_.Get( asnMsg.msg.u.msg_population_flux_knowledge_destruction->oid_connaissance_population ).Update( *asnMsg.msg.u.msg_population_flux_knowledge_destruction ); break;
+
+//        default:
+//            assert( false );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Model::OnReceiveMsgCreateSide
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Model::OnReceiveMsgCreateSide( DIN_Input& msg )
-{
-    unsigned long nID;
-    msg >> nID;
-    sides_.Create( *this, nID, nID, msg ); 
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Model::OnReceiveMsgCreateKnowledgeGroup
-// Created: NLD 2006-09-25
-// -----------------------------------------------------------------------------
-void Model::OnReceiveMsgCreateKnowledgeGroup( DIN_Input& msg )
-{
-    unsigned long nSideID;
-    unsigned long nID;
-
-    msg >> nSideID;
-    msg >> nID;
-
-    Side& side = sides_.Get( nSideID );
-    knowledgeGroups_.Create( *this, nID, nID, side );
 }
 
 // -----------------------------------------------------------------------------
@@ -261,9 +243,6 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 //        case eMsgObjectInterVisibility                  : break;
 //        case eMsgPopulationConcentrationInterVisibility : break;
 //        case eMsgPopulationFlowInterVisibility          : break;
-        case eMsgKnowledgeGroup                         : OnReceiveMsgCreateKnowledgeGroup( msg ); break;
-        case eMsgArmy                                   : OnReceiveMsgCreateSide( msg ); break;
-
 //        case eMsgDebugDrawPoints                        : break;
 //        case eMsgEnvironmentType                        : break;
 //        case eMsgPopulationCollision                    : break;
@@ -288,17 +267,7 @@ void Model::Send( Publisher_ABC& publisher ) const
     */
 
     sides_          .Apply( /*std::bind2nd( */std::mem_fun_ref( &Side::SendCreation ), publisher /*)*/ ); //$$$$ booouh std::bind2nd sucks
-    knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendCreation ), publisher );
-    automats_       .Apply( std::mem_fun_ref( &Automat       ::SendCreation ), publisher );
-    agents_         .Apply( std::mem_fun_ref( &Agent         ::SendCreation ), publisher );
-    objects_        .Apply( std::mem_fun_ref( &Object        ::SendCreation ), publisher );
-    populations_    .Apply( std::mem_fun_ref( &Population    ::SendCreation ), publisher );
-
     sides_          .Apply( std::mem_fun_ref( &Side      ::SendFullUpdate ), publisher );
-    automats_       .Apply( std::mem_fun_ref( &Automat   ::SendFullUpdate ), publisher );
-    agents_         .Apply( std::mem_fun_ref( &Agent     ::SendFullUpdate ), publisher );
-    objects_        .Apply( std::mem_fun_ref( &Object    ::SendFullUpdate ), publisher );
-    populations_    .Apply( std::mem_fun_ref( &Population::SendFullUpdate ), publisher );
 
     // Logistic
     logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::SendCreation   ), publisher );

@@ -41,11 +41,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 // Name: MIL_Population constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_InputArchive& archive )
+MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
     : PHY_Actor               ()
     , pType_                  ( &type )
     , nID_                    ( nID )
-    , pArmy_                  ( 0 )
+    , pArmy_                  ( &army )
     , strName_                ( type.GetName() )
     , pDefaultAttitude_       ( 0 )
     , rPeopleCount_           ( 0. )
@@ -56,20 +56,10 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
 {
-    archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing );
-
-    std::stringstream strTmp;
-    strTmp << strName_ << " - [" << nID_ << "]";
-    strName_ = strTmp.str();
-
-    std::string strArmy;
-    archive.ReadField( "Camp", strArmy );
-    pArmy_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );
-    if( !pArmy_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
+    archive.ReadAttribute( "name", strName_, MIL_InputArchive::eNothing );
 
     std::string strAttitude;
-    archive.ReadField( "Attitude", strAttitude );
+    archive.ReadAttribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown attitude", archive.GetContext() );
@@ -80,6 +70,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, uint nID, MIL_In
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, archive );
     concentrations_.push_back( pConcentration );
     rPeopleCount_ = pConcentration->GetNbrAliveHumans();
+
+    pArmy_->RegisterPopulation( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +102,7 @@ MIL_Population::MIL_Population()
 // -----------------------------------------------------------------------------
 MIL_Population::~MIL_Population()
 {
+    pArmy_->UnregisterPopulation( *this );
     delete pDecision_;
     delete pKnowledge_;
 }
@@ -188,23 +181,19 @@ void MIL_Population::WriteODB( MT_XXmlOutputArchive& archive ) const
     assert( pDefaultAttitude_ );
     assert( !concentrations_.empty() || !flows_.empty() );
 
-    archive.Section( "Population" );
-    archive.WriteAttribute( "id"  , nID_ );
-    archive.WriteAttribute( "type", pType_->GetName() );    
-    archive.WriteField( "Nom", strName_ );
-    archive.WriteField( "Camp", pArmy_->GetName() );
-    archive.WriteField( "NombreHumains", GetNbrAliveHumans() + GetNbrDeadHumans() );
-    archive.WriteField( "Attitude", pDefaultAttitude_->GetName() );
+    archive.Section( "population" );
+    archive.WriteAttribute( "id"      , nID_ );
+    archive.WriteAttribute( "type"    , pType_->GetName() );    
+    archive.WriteAttribute( "name"    , strName_ );
+    archive.WriteAttribute( "humans"  , GetNbrAliveHumans() + GetNbrDeadHumans() );
+    archive.WriteAttribute( "attitude", pDefaultAttitude_->GetName() );
     
-    std::string strPosition;
     if( !concentrations_.empty() )
-        MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition(), strPosition );
+        archive.WriteAttribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else
-        MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition(), strPosition );
+        archive.WriteAttribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
 
-    archive.WriteField( "Position", strPosition );
-
-    archive.EndSection(); // Population
+    archive.EndSection(); // population
 }
 
 // =============================================================================

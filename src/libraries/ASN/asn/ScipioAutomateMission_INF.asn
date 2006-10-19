@@ -6,8 +6,8 @@
 
 ScipioAutomateMission_INF DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListItineraire, ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, 
-        max-uint16, max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation, ListLocalisation FROM ScipioBase;
+IMPORTS EnumObjectType FROM ScipioObject;
+
 
 ------------------------------------------
 -- Mission INF

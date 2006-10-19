@@ -78,38 +78,11 @@ BOOST_CLASS_EXPORT_GUID( MIL_AgentPion, "MIL_AgentPion" )
 // Name: MIL_AgentPion constructor
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_InputArchive& archive )
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, uint nID, MIL_Automate& automate, MIL_InputArchive& archive )
     : MIL_Agent_ABC            ( nID )
     , PHY_Actor                ()
     , pType_                   ( &type )
     , bIsPC_                   ( false )
-    , strName_                 ( pType_->GetName() )
-    , pAutomate_               ( 0 )
-    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
-{
-    // Liens hiérarchiques
-    archive.Section( "LiensHierarchiques" );
-
-    uint nAutomateID;
-    archive.ReadField( "Automate", nAutomateID );
-    pAutomate_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nAutomateID );
-    if( !pAutomate_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknwon automata id %d", nAutomateID ), archive.GetContext() );
-    archive.EndSection(); //  LiensHierarchiques
-
-    Initialize( archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion constructor
-// Created: NLD 2004-08-11
-// -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( MIL_Automate& automate, MIL_InputArchive& archive )
-    : MIL_Agent_ABC            ( automate.GetID() )
-    , PHY_Actor                ()
-    , pType_                   ( &automate.GetType().GetTypePionPC() )
-    , bIsPC_                   ( true )
     , strName_                 ( pType_->GetName() )
     , pAutomate_               ( &automate )
     , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
@@ -251,40 +224,24 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: MIL_AgentPion::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::WriteODB( MT_XXmlOutputArchive& archive, bool bPC ) const
+void MIL_AgentPion::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    //$$ TMP séparation PC / Automate
-    if( IsPC() && !bPC )
-        return;
+    assert( pType_ );
 
-    if( !IsPC() )
-    {
-        assert( pAutomate_ );
-        assert( pType_ );
+    archive.Section( "unit" );
 
-        archive.Section( "Pion" );
-
-        archive.WriteAttribute( "id"  , GetID() );
-        archive.WriteAttribute( "type", pType_->GetName());
-        
-        archive.Section( "LiensHierarchiques" );
-        archive.WriteField( "Automate", pAutomate_->GetID() );
-        archive.EndSection(); // LiensHierarchiques
-
-        archive.WriteField( "Nom", strName_ );
-    }
-
-    std::string strPos;
-    MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition(), strPos );
-    archive.WriteField( "Position", strPos );
+    archive.WriteAttribute( "id"          , GetID() );
+    archive.WriteAttribute( "name"        , strName_ );
+    archive.WriteAttribute( "type"        , pType_->GetName());
+    archive.WriteAttribute( "command-post", bIsPC_ );
+    archive.WriteAttribute( "position"    , MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
 
     GetRole< PHY_RolePion_Composantes >().WriteODB( archive ); // Equipements
     GetRole< PHY_RolePion_Humans      >().WriteODB( archive ); // Personnels
     GetRole< PHY_RolePion_Dotations   >().WriteODB( archive ); // Dotations
     GetRole< PHY_RolePion_Supply      >().WriteODB( archive ); // Stocks
        
-    if( !IsPC() )
-        archive.EndSection(); // Pion
+    archive.EndSection(); // unit
 }
 
 // -----------------------------------------------------------------------------
@@ -338,13 +295,15 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Initialize( MIL_InputArchive& archive )
 {
+    archive.ReadAttribute( "command-post", bIsPC_, MIL_InputArchive::eNothing );
+
     // Position - $$$ DEGEU
     std::string strPosition;
-    archive.ReadField( "Position", strPosition );
+    archive.ReadAttribute( "position", strPosition );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
 
-    archive.ReadField( "Nom", strName_, MIL_InputArchive::eNothing );
+    archive.ReadField( "name", strName_, MIL_InputArchive::eNothing );
     Initialize( vPosTmp );
 }
 
@@ -569,7 +528,7 @@ const DEC_RolePion_Decision& MIL_AgentPion::GetDecision() const
 // Name: MIL_AgentPion::GetArmy
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_Army& MIL_AgentPion::GetArmy() const
+const MIL_Army& MIL_AgentPion::GetArmy() const
 {
     assert( pAutomate_ );
     return pAutomate_->GetArmy();
@@ -615,16 +574,15 @@ DEC_Knowledge_Agent& MIL_AgentPion::CreateKnowledge( const MIL_KnowledgeGroup& k
 // Name: MIL_AgentPion::SendCreation
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SendCreation()
+void MIL_AgentPion::SendCreation() const
 {
-    NET_ASN_MsgPionCreation asnMsg;
-   
     assert( pType_ );
+
+    NET_ASN_MsgPionCreation asnMsg;
     asnMsg.GetAsnMsg().oid_pion     = GetID();
     asnMsg.GetAsnMsg().type_pion    = pType_->GetID();
     asnMsg.GetAsnMsg().nom          = strName_.c_str(); // !! pointeur sur const char*
-    asnMsg.GetAsnMsg().oid_automate = GetAutomate().GetID();
-    
+    asnMsg.GetAsnMsg().oid_automate = GetAutomate().GetID();    
     asnMsg.Send();
 }
 
@@ -632,7 +590,7 @@ void MIL_AgentPion::SendCreation()
 // Name: MIL_AgentPion::SendFullState
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SendFullState()
+void MIL_AgentPion::SendFullState() const
 {
     GetRole< NET_RolePion_Dotations >().SendFullState();
 }
@@ -641,7 +599,7 @@ void MIL_AgentPion::SendFullState()
 // Name: MIL_AgentPion::SendKnowledge
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SendKnowledge()
+void MIL_AgentPion::SendKnowledge() const
 {
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->SendFullState();

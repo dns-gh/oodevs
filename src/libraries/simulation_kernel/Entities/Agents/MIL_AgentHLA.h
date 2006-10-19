@@ -37,7 +37,7 @@ public:
         
     //! @name Operations
     //@{
-    virtual MIL_Army&                 GetArmy          () const;
+    virtual const MIL_Army&           GetArmy          () const;
     virtual const MIL_AgentType_ABC&  GetType          () const;
     virtual bool                      IsDead           () const;
     virtual bool                      IsNeutralized    () const;
@@ -80,9 +80,9 @@ private:
 private:
     //! @name Member data
     //@{
-          MIL_Army*          pArmy_;
+    const MIL_Army*          pArmy_;
     const MIL_AgentType_ABC* pType_;
-    bool                     bPc_;
+          bool               bPc_;
     //@}
 };
 

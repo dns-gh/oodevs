@@ -33,6 +33,7 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
     , concentrations_  ()
     , flows_           ()
 {
+	side_.GetPopulations().Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
 // -----------------------------------------------------------------------------
 Population::~Population()
 {
+	side_.GetPopulations().Unregister( *this );
 }
 
 // =============================================================================

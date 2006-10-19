@@ -37,8 +37,6 @@ static enum
     eMsgObjectInterVisibility                  = 1010,
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
-    eMsgKnowledgeGroup                         = 1013,
-    eMsgArmy                                   = 1014,
     eMsgDebugDrawPoints                        = 1015,
     eMsgEnvironmentType                        = 1016,
     eMsgPopulationCollision                    = 1017
@@ -117,6 +115,7 @@ GENERATE_ASN_MSG_SENDER         ( Client, PopulationMagicActionAck              
 GENERATE_ASN_MSG_SENDER         ( Client, ChangeDiplomatieAck                           , change_diplomatie_ack                             );
 GENERATE_ASN_MSG_SENDER         ( Client, ChangeGroupeConnaissanceAck                   , change_groupe_connaissance_ack                    );
 GENERATE_ASN_MSG_SENDER         ( Client, ChangeLiensLogistiquesAck                     , change_liens_logistiques_ack                      );
+GENERATE_ASN_MSG_SENDER         ( Client, ChangeLiensLogistiques                        , change_liens_logistiques                          );
 GENERATE_ASN_MSG_SENDER         ( Client, ChangeAutomateAck                             , change_automate_ack                               );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LogRavitaillementPousserFluxAck               , log_ravitaillement_pousser_flux_ack               );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LogRavitaillementChangeQuotasAck              , log_ravitaillement_change_quotas_ack              );
@@ -141,15 +140,18 @@ GENERATE_ASN_MSG_SENDER         ( Client, LimitCreation                         
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimitDestruction                              , limit_destruction                                 );
 GENERATE_ASN_MSG_SENDER         ( Client, LimaCreation                                  , lima_creation                                     );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimaDestruction                               , lima_destruction                                  );
+GENERATE_ASN_MSG_SENDER         ( Client, SideCreation                                  , side_creation                                     );
+GENERATE_ASN_MSG_SENDER         ( Client, KnowledgeGroupCreation                        , knowledge_group_creation                          );
+GENERATE_ASN_MSG_SENDER         ( Client, FormationCreation                             , formation_creation                                );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateCreation                              , automate_creation                                 );
+GENERATE_ASN_MSG_SENDER         ( Client, AutomateAttributes                            , automate_attributes                               );
 GENERATE_ASN_MSG_SENDER         ( Client, PionCreation                                  , pion_creation                                     );
+GENERATE_ASN_MSG_SENDER         ( Client, UnitAttributes                                , unit_attributes                                   );
+GENERATE_ASN_MSG_SENDER         ( Client, UnitPathFind                                  , unit_pathfind                                     );
 GENERATE_ASN_MSG_SENDER         ( Client, ChangeDiplomatie                              , change_diplomatie                                 );
 GENERATE_ASN_MSG_SENDER         ( Client, UnitKnowledgeCreation                         , unit_knowledge_creation                           );
 GENERATE_ASN_MSG_SENDER         ( Client, UnitKnowledgeUpdate                           , unit_knowledge_update                             );
 GENERATE_ASN_MSG_SENDER         ( Client, UnitKnowledgeDestruction                      , unit_knowledge_destruction                        );
-GENERATE_ASN_MSG_SENDER         ( Client, UnitAttributes                                , unit_attributes                                   );
-GENERATE_ASN_MSG_SENDER         ( Client, AutomateAttributes                            , automate_attributes                               );
-GENERATE_ASN_MSG_SENDER         ( Client, UnitPathFind                                  , unit_pathfind                                     );
 GENERATE_ASN_MSG_SENDER         ( Client, StartPionFire                                 , start_pion_fire                                   );
 GENERATE_ASN_MSG_SENDER         ( Client, StopPionFire                                  , stop_pion_fire                                    );
 GENERATE_ASN_MSG_SENDER         ( Client, StartPopulationFire                           , start_population_fire                             );

@@ -38,8 +38,8 @@ BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_InputArchive& archive )
-    : MIL_Automate                ( type, nID, archive )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive )
+    : MIL_Automate                ( type, nID, formation, archive )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
     , pSupplySuperior_            ( 0 )
@@ -153,203 +153,105 @@ void MIL_AutomateLOG::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::ReadMaintenanceData
-// Created: NLD 2005-01-26
+// Name: MIL_AutomateLOG::ReadLogisticLink
+// Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ReadMaintenanceData( MIL_InputArchive& archive )
+void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArchive& archive )
 {
-    pMaintenanceSuperior_ = 0;
-    if( !archive.Section( "Maintenance", MIL_InputArchive::eNothing ) )
-        return;
-
-    uint nAutomateID;
-    archive.ReadAttribute( "automate", nAutomateID );
-
-    MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nAutomateID );
-    if( !pAutomate )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown Maintenance automata", archive.GetContext() );
-    if( !pAutomate->GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Maintenance automata isn't a logistic automata", archive.GetContext() );
-    pMaintenanceSuperior_ = static_cast< MIL_AutomateLOG* >( pAutomate );
-
-    archive.EndSection(); // Maintenance
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::ReadMedicalData
-// Created: NLD 2005-01-26
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ReadMedicalData( MIL_InputArchive& archive )
-{
-    pMedicalSuperior_ = 0;
-    if( !archive.Section( "Sante", MIL_InputArchive::eNothing ) )
-        return;
-
-    uint nAutomateID;
-    archive.ReadAttribute( "automate", nAutomateID );
-
-    MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nAutomateID );
-    if( !pAutomate )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown Medical automata", archive.GetContext() );
-    if( !pAutomate->GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Medical automata isn't a logistic automata", archive.GetContext() );
-    pMedicalSuperior_ = static_cast< MIL_AutomateLOG* >( pAutomate );
-
-    archive.EndSection(); // Sante
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::ReadDotationQuotaCategories
-// Created: NLD 2004-09-30
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ReadDotationQuotaCategories( MIL_InputArchive& archive, const PHY_DotationType& dotationType )
-{
-    archive.BeginList( "Categories" );
-
-    while ( archive.NextListElement() )
-    {
-        archive.Section( "Categorie" );
-        
-        std::string strCategoryName;
-        archive.ReadAttribute( "nom", strCategoryName );
-
-        const PHY_DotationCategory* pDotationCategory = dotationType.FindDotationCategory( strCategoryName );
-        if ( !pDotationCategory )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
-
-        if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Quota already defined", archive.GetContext() );
-
-        MT_Float rQuota;
-        archive.ReadAttribute( "quota", rQuota );
-
-        sDotationQuota quota;
-        quota.rQuota_           = rQuota;
-        quota.rQuotaThreshold_  = rQuota * 0.1; //$$ fichier de conf cpp ;)
-        stockQuotas_[ pDotationCategory ] = quota;
+    MIL_Automate::ReadLogisticLink( superior, archive );
     
-        archive.EndSection(); // Categorie
-    }
-    archive.EndList(); // Categories    
-}
+    std::string strLink;
+    archive.ReadAttribute( "link", strLink );
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::ReadSupplyData
-// Created: NLD 2005-01-26
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ReadSupplyData( MIL_InputArchive& archive )
-{
-    pSupplySuperior_ = 0;
-    if( !archive.Section( "Ravitaillement", MIL_InputArchive::eNothing ) )
-        return;
-
-    uint nAutomateID;
-    archive.ReadAttribute( "automate", nAutomateID );
-
-    MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nAutomateID );
-    if( !pAutomate )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown Supply automata", archive.GetContext() );
-    if( !pAutomate->GetType().IsLogistic() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Supply automata isn't a logistic automata", archive.GetContext() );
-    pSupplySuperior_ = static_cast< MIL_AutomateLOG* >( pAutomate );
-
-    archive.BeginList( "Quotas" );
-    while( archive.NextListElement() )
+    if( sCaseInsensitiveEqual()( strLink, "maintenance" ) )
+        pMaintenanceSuperior_ = &superior;
+    else if( sCaseInsensitiveEqual()( strLink, "medical" ) )
+        pMedicalSuperior_ = &superior;
+    else if( sCaseInsensitiveEqual()( strLink, "supply" ) )
     {
-        archive.Section( "Dotation" );
+        pSupplySuperior_ = &superior;
+        archive.BeginList( "quotas" );
+        while( archive.NextListElement() )
+        {
+            archive.Section( "dotation" );
 
-        std::string strDotationType;
-        archive.ReadAttribute( "nom", strDotationType );
+            std::string strType;           
+            archive.ReadAttribute( "name", strType );
 
-        const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
-        if ( !pDotationType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
-       
-        ReadDotationQuotaCategories( archive, *pDotationType );
-        archive.EndSection(); // Dotation
+            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+            if ( !pDotationCategory )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
+
+            if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Quota already defined", archive.GetContext() );
+
+            uint        nQuantity;            
+            archive.ReadAttribute( "quantity", nQuantity, CheckValueGreaterOrEqual( 0 ) );
+
+            sDotationQuota quota;
+            quota.rQuota_          = nQuantity;
+            quota.rQuotaThreshold_ = nQuantity * 0.1; //$$ fichier de conf cpp ;)
+            stockQuotas_[ pDotationCategory ] = quota;
+
+            archive.EndSection(); // dotation
+        }
+        archive.EndList(); // quotas
     }
-    archive.EndList(); // Quotas
-    archive.EndSection(); // Ravitaillement
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::ReadLogisticHierarchy
-// Created: NLD 2004-12-21
-// -----------------------------------------------------------------------------
-void MIL_AutomateLOG::ReadLogisticHierarchy( MIL_InputArchive& archive )
-{
-    MIL_Automate::ReadLogisticHierarchy( archive );
-
-    pMaintenanceSuperior_ = 0;
-    pMedicalSuperior_     = 0;
-    pSupplySuperior_      = 0;
-
-    archive.Section( "LiensHierarchiques" );
-    if( !archive.Section( "Logistique", MIL_InputArchive::eNothing ) )
-    {
-        archive.EndSection(); // LiensHierarchiques
-        return;
-    }
-
-    ReadMaintenanceData( archive );
-    ReadMedicalData    ( archive );
-    ReadSupplyData     ( archive );
- 
-    archive.EndSection(); // Logistique
-    archive.EndSection(); // LiensHierarchiques
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::WriteLogisticHierarchy
+// Name: MIL_AutomateLOG::WriteLogisticLinksODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const
+void MIL_AutomateLOG::WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const
 {
-    MIL_Automate::WriteLogisticHierarchy( archive );
+    MIL_Automate::WriteLogisticLinksODB( archive );
 
-    if( !pMaintenanceSuperior_ && !pMedicalSuperior_ && !pSupplySuperior_ )
-        return;
-    
-    archive.Section( "Logistique" );
     if( pMaintenanceSuperior_ )
     {
-        archive.Section( "Maintenance" );
-        archive.WriteAttribute( "automate", pMaintenanceSuperior_->GetID() );
-        archive.EndSection(); // Maintenance
+        archive.Section( "automat" );
+        archive.WriteAttribute( "id", pMaintenanceSuperior_->GetID() );
+        archive.Section( "subordinate" );
+        archive.WriteAttribute( "automat", GetID() );
+        archive.WriteAttribute( "link", "maintenance" );
+        archive.EndSection(); // subordinate
+        archive.EndSection(); // automat
     }
-    
+
     if( pMedicalSuperior_ )
     {
-        archive.Section( "Sante" );
-        archive.WriteAttribute( "automate", pMedicalSuperior_->GetID() );
-        archive.EndSection(); // Sante
+        archive.Section( "automat" );
+        archive.WriteAttribute( "id", pMedicalSuperior_->GetID() );
+        archive.Section( "subordinate" );
+        archive.WriteAttribute( "automat", GetID() );
+        archive.WriteAttribute( "link", "medical" );
+        archive.EndSection(); // subordinate
+        archive.EndSection(); // automat
     }
 
     if( pSupplySuperior_ )
     {
-        archive.Section( "Ravitaillement" );
-        archive.WriteAttribute( "automate", pSupplySuperior_->GetID() );
+        archive.Section( "automat" );
+        archive.WriteAttribute( "id", pSupplySuperior_->GetID() );
+        archive.Section( "subordinate" );
+        archive.WriteAttribute( "automat", GetID() );
+        archive.WriteAttribute( "link", "supply" );
 
-        archive.Section( "Quotas" );
+        archive.Section( "quotas" );
         for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it )
         {
-            const PHY_DotationCategory& dotationCategory = *it->first;
+            const PHY_DotationCategory& dotation = *it->first;
 
-            archive.Section( "Dotation" );
-            archive.WriteAttribute( "nom", dotationCategory.GetType().GetName() );
-            archive.Section( "Categories" );
-            archive.Section( "Categorie" );
-            archive.WriteAttribute( "nom"  , dotationCategory.GetName() );
-            archive.WriteAttribute( "quota", it->second.rQuota_ );
-            archive.EndSection(); // Categorie
-            archive.EndSection(); // Categories
-            archive.EndSection(); // Dotation
+            archive.Section( "dotation" );
+            archive.WriteAttribute( "name"    , dotation.GetName() );
+            archive.WriteAttribute( "quantity", it->second.rQuota_ );
+            archive.EndSection(); // dotation
         }           
-        archive.EndSection(); // Quotas
+        archive.EndSection(); // quotas
 
-        archive.EndSection(); // Ravitaillement
+        archive.EndSection(); // subordinate
+        archive.EndSection(); // automat
     }
-    archive.EndSection(); // Logistique
 }
 
 // =============================================================================
@@ -1048,26 +950,36 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::WriteCreationMsg
+// Name: MIL_AutomateLOG::SendLogisticLinks
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::WriteCreationMsg( NET_ASN_MsgAutomateCreation& asnMsg ) const
+void MIL_AutomateLOG::SendLogisticLinks() const
 {
-    MIL_Automate::WriteCreationMsg( asnMsg );    
+    NET_ASN_MsgChangeLiensLogistiques asn;
+
+    asn.GetAsnMsg().oid_automate = GetID();
+
+    if( GetTC2() )
+    {
+        asn.GetAsnMsg().m.oid_tc2Present = 1;
+        asn.GetAsnMsg().oid_tc2          = GetTC2()->GetID();
+    }
 
     if( pMaintenanceSuperior_ )
     {
-        asnMsg.GetAsnMsg().m.oid_maintenancePresent = 1;
-        asnMsg.GetAsnMsg().oid_maintenance          = pMaintenanceSuperior_->GetID();
+        asn.GetAsnMsg().m.oid_maintenancePresent = 1;
+        asn.GetAsnMsg().oid_maintenance          = pMaintenanceSuperior_->GetID();
     }
     if( pMedicalSuperior_ )
     {
-        asnMsg.GetAsnMsg().m.oid_santePresent = 1;
-        asnMsg.GetAsnMsg().oid_sante          = pMedicalSuperior_->GetID();
+        asn.GetAsnMsg().m.oid_santePresent = 1;
+        asn.GetAsnMsg().oid_sante          = pMedicalSuperior_->GetID();
     }
     if( pSupplySuperior_ )
     {
-        asnMsg.GetAsnMsg().m.oid_ravitaillementPresent = 1;
-        asnMsg.GetAsnMsg().oid_ravitaillement          = pSupplySuperior_->GetID();
+        asn.GetAsnMsg().m.oid_ravitaillementPresent = 1;
+        asn.GetAsnMsg().oid_ravitaillement          = pSupplySuperior_->GetID();
     }
+
+    asn.Send();
 }

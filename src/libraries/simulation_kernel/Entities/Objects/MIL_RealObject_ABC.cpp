@@ -259,7 +259,7 @@ void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
 // Name: MIL_RealObject_ABC::InitializeCommon
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::InitializeCommon( MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID )
+void MIL_RealObject_ABC::InitializeCommon( const MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID )
 {
     assert( pType_ );
 
@@ -288,7 +288,7 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( uint nID, const ASN1T_
     if ( !pType_->GetIDManager().IsMosIDValid( nID ) || !pType_->GetIDManager().LockMosID( nID ) )
         return EnumObjectErrorCode::error_invalid_id;
 
-    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnCreateObject.camp );
+    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnCreateObject.oid_camp );
     if( !pArmy )
         return EnumObjectErrorCode::error_invalid_camp;
 
@@ -309,7 +309,7 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( uint nID, const ASN1T_
 // Name: MIL_RealObject_ABC::Initialize
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool MIL_RealObject_ABC::Initialize( MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_RealObject_ABC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
     assert( DEC_Tools::CheckTypeID          ( diaParameters[ nCurrentParamIdx     ] ) );
     assert( DEC_Tools::CheckTypeLocalisation( diaParameters[ nCurrentParamIdx + 1 ] ) );
@@ -338,10 +338,10 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
     }
 
     // Armee
-    std::string strArmy;
-    archive.ReadField( "Armee", strArmy );
-    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy );
-    if ( pArmy == 0 )
+    uint nArmy;
+    archive.ReadField( "Armee", nArmy );
+    const MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( nArmy );
+    if( pArmy == 0 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
 
     // Localisation
@@ -361,7 +361,7 @@ void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
 // Name: MIL_RealObject_ABC::Initialize
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::Initialize( MIL_Army& army, const TER_Localisation& localisation )
+void MIL_RealObject_ABC::Initialize( const MIL_Army& army, const TER_Localisation& localisation )
 {
     assert( pType_ );
     InitializeCommon( army, localisation, pType_->GetIDManager().GetFreeSimID(), "" );

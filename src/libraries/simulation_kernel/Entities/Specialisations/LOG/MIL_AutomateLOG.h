@@ -51,7 +51,7 @@ public:
     };
     
 public:
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_InputArchive& archive );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive );
              MIL_AutomateLOG();
     virtual ~MIL_AutomateLOG();
 
@@ -62,7 +62,7 @@ public:
     
     //! @name Initialize
     //@{
-    virtual void ReadLogisticHierarchy( MIL_InputArchive& archive );
+    virtual void ReadLogisticLink( MIL_AutomateLOG& superior, MIL_InputArchive& archive );
     //@}
 
     //! @name Operations
@@ -142,26 +142,18 @@ private:
     //@}
 
 private:
-    //! @name Checkpoint
+    //! @name Tools
     //@{
-    virtual void WriteLogisticHierarchy( MT_XXmlOutputArchive& archive ) const;
+    MIL_AutomateLOG* GetLogisticAutomate   ( uint nID );
+    void             SendQuotas            () const;
+    bool             IsSupplyInProgress    ( const PHY_DotationCategory& dotationCategory ) const;
+    void             RemoveSupplyStockState( const PHY_SupplyStockState& supplyState );
     //@}
 
     //! @name Tools
     //@{
-    MIL_AutomateLOG* GetLogisticAutomate        ( uint nID );
-    void             ReadMaintenanceData        ( MIL_InputArchive& archive );
-    void             ReadMedicalData            ( MIL_InputArchive& archive );
-    void             ReadSupplyData             ( MIL_InputArchive& archive );
-    void             ReadDotationQuotaCategories( MIL_InputArchive& archive, const PHY_DotationType& dotationType );
-    void             SendQuotas                 () const;
-    bool             IsSupplyInProgress         ( const PHY_DotationCategory& dotationCategory ) const;
-    void             RemoveSupplyStockState     ( const PHY_SupplyStockState& supplyState );
-    //@}
-
-    //! @name Network tools
-    //@{
-    virtual void WriteCreationMsg( NET_ASN_MsgAutomateCreation& asnMsg ) const;
+    virtual void SendLogisticLinks    () const;
+    virtual void WriteLogisticLinksODB( MT_XXmlOutputArchive& archive ) const;
     //@}
     
 private:

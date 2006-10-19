@@ -6,8 +6,7 @@
 
 ScipioAutomateMission_ASS DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS NatureAtlas, ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32,
-        max-uint16, max-uint8, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase
+IMPORTS NatureAtlas, ListAgent, Agent, Direction, OID, CoordUTM, Point, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase
 IMPORTS EnumModeTir FROM ScipioOrder;
 
 ------------------------------------------

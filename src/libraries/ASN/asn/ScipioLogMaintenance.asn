@@ -6,8 +6,6 @@
 
 ScipioLogMaintenance DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, GDH, CoordUTM, Itineraire, ListAgent, OID, EnumHumanRank, EnumHumanCategory FROM ScipioBase;
-
 EnumLogMaintenanceRegimeTravail ::= ENUMERATED
 {
     regime-1,

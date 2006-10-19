@@ -150,7 +150,7 @@ void PHY_DotationStockContainer::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    archive.Section( "Stocks") ;
+    archive.Section( "stocks") ;
 
     for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
     {
@@ -179,40 +179,25 @@ void PHY_DotationStockContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::ReadValues( MIL_InputArchive& archive )
 {
-    if ( !archive.BeginList( "Stocks", MIL_InputArchive::eNothing ) )
+    if ( !archive.BeginList( "stocks", MIL_InputArchive::eNothing ) )
         return;
 
     while( archive.NextListElement() )
     {
-        archive.Section( "Dotation" );
+        archive.Section( "dotation" );
 
-        std::string strDotationType;
-        archive.ReadAttribute( "nom", strDotationType  );
+        std::string strType;
+        archive.ReadAttribute( "name", strType );
 
-        const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( strDotationType );
-        if( !pDotationType )
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+        if( !pDotationCategory )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation type", archive.GetContext() );
 
-        archive.BeginList( "Categories" );
-        while ( archive.NextListElement() )
-        {
-            archive.Section( "Categorie" );
+        AddStock( *pDotationCategory, archive );
 
-            std::string strCategoryName;
-            archive.ReadAttribute( "nom", strCategoryName );
-
-            const PHY_DotationCategory* pDotationCategory = pDotationType->FindDotationCategory( strCategoryName );
-            if( !pDotationCategory )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation category", archive.GetContext() );
-
-            AddStock( *pDotationCategory, archive );
-
-            archive.EndSection(); // Categorie
-        }
-        archive.EndList(); // Categories    
-        archive.EndSection(); // Dotation
+        archive.EndSection(); // dotation
     }
-    archive.EndList(); // Stocks
+    archive.EndList(); // stocks
 }
 
 // =============================================================================
@@ -240,7 +225,6 @@ void PHY_DotationStockContainer::RemoveReservation( const PHY_DotationCategory& 
     assert( it != stocks_.end() );
     it->second->RemoveReservation( rNbr );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::GetValue
@@ -273,7 +257,7 @@ PHY_DotationStock* PHY_DotationStockContainer::GetStock( const PHY_DotationCateg
 PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCategory& category, MIL_InputArchive& archive )
 {
     MT_Float rValue;
-    archive.Read( rValue, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "quantity", rValue, CheckValueGreaterOrEqual( 0. ) );
 
     const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
 
@@ -324,8 +308,6 @@ void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category,
 // =============================================================================
 // STOCK CAPACITIES CHECKER
 // =============================================================================
-
-
 
 namespace
 {

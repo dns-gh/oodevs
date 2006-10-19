@@ -104,6 +104,7 @@ void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const uint ) const
 // =============================================================================
 // OPERATIONS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation::ReadValue
 // Created: NLD 2005-01-21
@@ -111,7 +112,7 @@ void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const uint ) const
 void PHY_Dotation::ReadValue( MIL_InputArchive& archive )
 {
     MT_Float rValue;
-    archive.Read( rValue, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadAttribute( "quantity", rValue, CheckValueGreaterOrEqual( 0. ) );
 
     if( rValue > rCapacity_ )
     {

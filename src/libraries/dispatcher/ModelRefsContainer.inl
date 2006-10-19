@@ -91,4 +91,26 @@ void ModelRefsContainer< T >::Send( L& asnList ) const
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ModelRefsContainer::Apply
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+template< typename T > template< typename F > inline
+void ModelRefsContainer< T >::Apply( F functor ) const
+{
+    for( CIT_ModelRefMap it = modelRefs_.begin(); it != modelRefs_.end(); ++it )
+        functor( *it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelRefsContainer::Apply
+// Created: NLD 2006-09-27
+// -----------------------------------------------------------------------------
+template< typename T > template< typename F, typename P1 > inline
+void ModelRefsContainer< T >::Apply( F functor, P1& param1 ) const
+{
+    for( CIT_ModelRefMap it = modelRefs_.begin(); it != modelRefs_.end(); ++it )
+        functor( *it->second, param1 );
+}
+
 }

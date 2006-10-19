@@ -6,10 +6,6 @@
 
 ScipioPionMission_ALAT DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, ListKnowledgeObject, NatureAtlas, ListPoint, ListPolygon, Point, 
-        ListKnowledgeAgent, Itineraire, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase;
-
 Enum_ALAT_PorteeAction ::= ENUMERATED
 {
     courte-portee   (0),

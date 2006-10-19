@@ -6,8 +6,6 @@
 
 ScipioControl DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8 FROM ScipioBase;
-
 -- Definition de tous les messages de controle (MOS->SIM et SIM->MOS)
 EnumCtrlErrorCode ::= ENUMERATED
 {
@@ -28,17 +26,17 @@ MsgCtrlPauseAck ::= EnumCtrlErrorCode
 MsgCtrlResume    ::= NULL
 MsgCtrlResumeAck ::= EnumCtrlErrorCode
 
-MsgCtrlChangeTimeFactor    ::= INTEGER(1..max-uint8)
+MsgCtrlChangeTimeFactor    ::= INTEGER
 MsgCtrlChangeTimeFactorAck ::= SEQUENCE
 {
-    time-factor INTEGER (1..max-uint8),
+    time-factor INTEGER,
     error-code  EnumCtrlErrorCode
 }
 
-MsgCtrlBeginTick ::= INTEGER (0..max-uint32)  -- Current tick
+MsgCtrlBeginTick ::= INTEGER  -- Current tick
 MsgCtrlEndTick   ::= SEQUENCE
 {
-    current-tick        INTEGER (0..max-uint32),
+    current-tick        INTEGER,
     tick-duration       INTEGER,    -- En millisecondes
     nb-pathfinds-longs  INTEGER,
     nb-pathfinds-courts INTEGER
@@ -55,10 +53,10 @@ EnumEtatSim ::= ENUMERATED
 
 MsgCtrlInfo ::= SEQUENCE
 {
-    current-tick            INTEGER (0..max-uint32),     
-    tick-duration           INTEGER (0..max-uint16),  -- En secondes
-    time-factor             INTEGER (0..max-uint8),
-    id-exercice             INTEGER (0..8),
+    current-tick            INTEGER,     
+    tick-duration           INTEGER,  -- En secondes
+    time-factor             INTEGER,
+    id-exercice             INTEGER,
     checkpoint-frequence    INTEGER, -- En minutes
     etat                    EnumEtatSim
 }

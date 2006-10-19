@@ -28,8 +28,8 @@ class SimulationPublisher : public Publisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     SimulationPublisher( Simulation& simulation );
-    ~SimulationPublisher();
+    explicit SimulationPublisher( Simulation& simulation );
+    virtual ~SimulationPublisher();
     //@}
 
     //! @name Operations

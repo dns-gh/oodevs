@@ -22,6 +22,8 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Population;
 class MIL_KnowledgeGroup;
 class MIL_EntityManager;
+class MIL_Formation;
+class MIL_Population;
 struct ASN1T_MsgChangeDiplomatie;
 
 // =============================================================================
@@ -35,23 +37,37 @@ class MIL_Army
 public:
     //! @name Types
     //@{
+    enum E_Diplomacy
+    {
+        eUnknown,
+        eFriend,
+        eEnemy,
+        eNeutral
+    };
+
     typedef std::map< uint, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
     typedef T_KnowledgeGroupMap::const_iterator   CIT_KnowledgeGroupMap;
+
+    typedef std::map< const MIL_Army*, E_Diplomacy > T_DiplomacyMap;
+    typedef T_DiplomacyMap::const_iterator           CIT_DiplomacyMap;
+
+    typedef std::set< MIL_Formation* >      T_FormationSet;
+    typedef T_FormationSet::const_iterator  CIT_FormationSet;
+    
+    typedef std::set< MIL_Population* >      T_PopulationSet;
+    typedef T_PopulationSet::const_iterator  CIT_PopulationSet;
     //@}
 
 public:
-     MIL_Army( const std::string& strName, uint nID, MIL_InputArchive& archive );
+     MIL_Army( uint nID, MIL_InputArchive& archive );
      MIL_Army();
     ~MIL_Army();
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
-
-    void WriteODB( MT_XXmlOutputArchive& archive ) const;
+    template< typename Archive > void serialize( Archive&, const uint );
+    void WriteODB         ( MT_XXmlOutputArchive& archive ) const;
+    void WriteDiplomacyODB( MT_XXmlOutputArchive& archive ) const;
     //@}
 
     //! @name Manager
@@ -62,7 +78,26 @@ public:
 
     //! @name Init
     //@{
-    void InitializeDiplomacy( const MIL_EntityManager& entityManager, MIL_InputArchive& archive );
+    void InitializeDiplomacy( MIL_InputArchive& archive );
+    //@}
+
+    //! @name Knowledge
+    //@{
+    void UpdateKnowledges  ();
+    void CleanKnowledges   ();
+    //@}
+
+    //! @name Hierarchy
+    //@{
+    void RegisterFormation  ( MIL_Formation& formation );
+    void UnregisterFormation( MIL_Formation& formation );
+
+    void RegisterPopulation  ( MIL_Population& population );
+    void UnregisterPopulation( MIL_Population& population );
+
+    MIL_KnowledgeGroup* FindKnowledgeGroup      ( uint nID ) const;
+    void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
+    void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     //@}
 
     //! @name Operations
@@ -78,13 +113,6 @@ public:
     bool       operator!= ( const MIL_Army& rhs )                        const;
     //@}
 
-    //! @name Knowledge
-    //@{
-    void                UpdateKnowledges  ();
-    void                CleanKnowledges   ();
-    MIL_KnowledgeGroup* FindKnowledgeGroup( uint nID ) const;
-    //@}
-
     //! @name Accessors
     //@{
           uint                          GetID             () const;
@@ -95,44 +123,36 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation               ();
-    void SendFullState              ();
-    void SendKnowledge              ();
+    void SendCreation               () const;
+    void SendFullState              () const;
+    void SendKnowledge              () const;
+
     void OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& msg, MIL_MOSContextID nCtx );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    enum E_Diplomacy
-    {
-        eUnknown,
-        eFriend,
-        eEnemy,
-        eNeutral
-    };
-
-public:
-    typedef std::map< const MIL_Army*, E_Diplomacy > T_ArmyRelationMap;
-    typedef T_ArmyRelationMap::const_iterator        CIT_ArmyRelationMap;
     //@}
 
 private:
     //! @name Tools
     //@{
-    E_Diplomacy GetRelationWith( const MIL_Army& army ) const;
+    E_Diplomacy GetDiplomacy( const MIL_Army& army ) const;
+
+    void InitializeCommunication( MIL_InputArchive& archive );
+    void InitializeTactical     ( MIL_InputArchive& archive );
+    void InitializePopulations  ( MIL_InputArchive& archive );
+    void InitializeLogistic     ( MIL_InputArchive& archive );
     //@}
 
 private:
-    const std::string   strName_;
     const uint          nID_;
+          std::string   strName_;
+    T_DiplomacyMap      diplomacies_;
     T_KnowledgeGroupMap knowledgeGroups_;
-    T_ArmyRelationMap   relations_;
+    T_FormationSet      formations_;
+    T_PopulationSet     populations_;
 
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
 
 private:
-    static MT_Converter< std::string, E_Diplomacy > relationConverter_;
+    static MT_Converter< std::string, E_Diplomacy > diplomacyConverter_;
 };
 
 #include "MIL_Army.inl"

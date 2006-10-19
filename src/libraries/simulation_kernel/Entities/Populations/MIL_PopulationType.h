@@ -22,6 +22,7 @@ class PHY_Volume;
 class PHY_Protection;
 class PHY_RoePopulation;
 class DEC_ModelPopulation;
+class MIL_Army;
 
 // =============================================================================
 // @class  MIL_PopulationType
@@ -54,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    MIL_Population& InstanciatePopulation( uint nID, MIL_InputArchive& archive ) const;
+    MIL_Population& InstanciatePopulation( uint nID, MIL_Army& army, MIL_InputArchive& archive ) const;
     //@}
 
     //! @name Effects

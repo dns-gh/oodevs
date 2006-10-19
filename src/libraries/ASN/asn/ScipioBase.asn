@@ -7,14 +7,6 @@
 ScipioBase DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 --
--- Limits
---
-max-uint64 INTEGER ::= 18446744073709551616
-max-uint32 INTEGER ::= 4294967295
-max-uint16 INTEGER ::= 65535
-max-uint8  INTEGER ::= 255
-
---
 -- Géométrie
 --
 EnumTypeLocalisation ::= ENUMERATED
@@ -52,7 +44,7 @@ ListPoint        ::= SEQUENCE OF Point
 --
 -- Types
 --
-OID                     ::= INTEGER (0..max-uint32)
+OID                     ::= INTEGER
 ListOID                 ::= SEQUENCE OF OID
 TirPion                 ::= OID
 TirPopulation           ::= OID
@@ -60,6 +52,8 @@ Agent                   ::= OID
 Automate                ::= OID
 Population              ::= OID
 Camp                    ::= OID
+Formation               ::= OID
+KnowledgeGroup          ::= OID
 KnowledgeAgent          ::= OID
 KnowledgeObject         ::= OID
 KnowledgePopulation     ::= OID
@@ -77,15 +71,15 @@ TypePion                ::= OID
 TypeAutomate            ::= OID
 TypePopulation          ::= OID
 Pourcentage             ::= INTEGER(0..100)
-PourcentageLibre        ::= INTEGER(0..max-uint32)
-Hauteur                 ::= INTEGER(0..max-uint32)
-Altitude                ::= INTEGER(0..max-uint32)
-Vitesse                 ::= INTEGER(0..max-uint32)
+PourcentageLibre        ::= INTEGER
+Hauteur                 ::= INTEGER
+Altitude                ::= INTEGER
+Vitesse                 ::= INTEGER
 Angle                   ::= INTEGER(0..360)
 Direction               ::= INTEGER(0..<360)
 GDH                     ::= SEQUENCE 
 {
-    datation        INTEGER (0..max-uint32),
+    datation        INTEGER,
     qualificatif    EnumGDH_Qualificatif 
 }
 

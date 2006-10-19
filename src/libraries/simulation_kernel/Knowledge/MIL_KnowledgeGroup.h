@@ -79,8 +79,9 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation ();
-    void SendKnowledge();
+    void SendCreation () const;
+    void SendFullState() const;
+    void SendKnowledge() const;
     //@}
     
 private:

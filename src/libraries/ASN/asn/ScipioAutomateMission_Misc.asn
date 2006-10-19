@@ -6,8 +6,7 @@
 
 ScipioAutomateMission_Misc DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS ListAgent, Agent, KnowledgeAgent, Direction, OID, CoordUTM, max-uint64, max-uint32, max-uint16, 
-        max-uint8, Point, Itineraire, ListPolygon, ListLocalisation, ListPoint, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
+IMPORTS ListAgent, Agent, KnowledgeAgent, Direction, OID, CoordUTM, Point, Itineraire, ListPolygon, ListLocalisation, ListPoint, EnumUnitIdentificationLevel, Segment, GDH FROM ScipioBase
 IMPORTS EnumObjectType FROM ScipioObject;
 
 Mission-Automate-Test-MoveTo ::= SEQUENCE

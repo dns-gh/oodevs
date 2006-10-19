@@ -44,8 +44,6 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
     messageService_.RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, &SimulationNetworker::OnReceiveMsgObjectInterVisibility                  );
     messageService_.RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, &SimulationNetworker::OnReceiveMsgPopulationConcentrationInterVisibility );
     messageService_.RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, &SimulationNetworker::OnReceiveMsgPopulationFlowInterVisibility          );
-    messageService_.RegisterReceivedMessage( eMsgKnowledgeGroup                        , *this, &SimulationNetworker::OnReceiveMsgKnowledgeGroup                         );
-    messageService_.RegisterReceivedMessage( eMsgArmy                                  , *this, &SimulationNetworker::OnReceiveMsgArmy                                   );
     messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, &SimulationNetworker::OnReceiveMsgDebugDrawPoints                        );
     messageService_.RegisterReceivedMessage( eMsgEnvironmentType                       , *this, &SimulationNetworker::OnReceiveMsgEnvironmentType                        );
     messageService_.RegisterReceivedMessage( eMsgPopulationCollision                   , *this, &SimulationNetworker::OnReceiveMsgPopulationCollision                    );
@@ -130,8 +128,6 @@ DECLARE_DIN_CALLBACK( UnitInterVisibility                    )
 DECLARE_DIN_CALLBACK( ObjectInterVisibility                  )
 DECLARE_DIN_CALLBACK( PopulationConcentrationInterVisibility )
 DECLARE_DIN_CALLBACK( PopulationFlowInterVisibility          )
-DECLARE_DIN_CALLBACK( KnowledgeGroup                         )
-DECLARE_DIN_CALLBACK( Army                                   )
 DECLARE_DIN_CALLBACK( DebugDrawPoints                        )
 DECLARE_DIN_CALLBACK( EnvironmentType                        )
 DECLARE_DIN_CALLBACK( PopulationCollision                    )

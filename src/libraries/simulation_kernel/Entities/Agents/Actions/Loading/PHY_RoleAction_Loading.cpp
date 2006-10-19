@@ -275,7 +275,7 @@ void PHY_RoleAction_Loading::CheckConsistency()
 // Name: PHY_RoleAction_Loading::SendFullState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::SendFullState( NET_ASN_MsgUnitAttributes& msg )
+void PHY_RoleAction_Loading::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     msg.GetAsnMsg().m.embarquePresent = 1;
     msg.GetAsnMsg().embarque = bIsLoaded_;
@@ -285,7 +285,7 @@ void PHY_RoleAction_Loading::SendFullState( NET_ASN_MsgUnitAttributes& msg )
 // Name: PHY_RoleAction_Loading::SendChangedState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::SendChangedState( NET_ASN_MsgUnitAttributes& msg )
+void PHY_RoleAction_Loading::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

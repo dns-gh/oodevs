@@ -6,8 +6,6 @@
 
 ScipioObject DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS max-uint64, max-uint32, max-uint16, max-uint8, CoordUTM, GDH, Localisation, OID FROM ScipioBase;
-
 
 EnumMissionGenUrgence ::= ENUMERATED
 {
@@ -143,7 +141,7 @@ MsgObjectCreation ::= SEQUENCE
     type                        EnumObjectType,
     localisation                Localisation,
     nom                         VisibleString,
-    camp                        OID,
+    camp                        Camp,
     oid-objet-planifie          OID                OPTIONAL,
     attributs-specifiques       AttrObjectSpecific OPTIONAL,
     type-dotation-construction  TypeDotation       OPTIONAL,
@@ -180,7 +178,7 @@ MagicActionUpdateObject ::= SEQUENCE
 
 MagicActionCreateObject ::= SEQUENCE
 {
-    camp                    OID, 
+    oid-camp                Camp, 
     type                    EnumObjectType,
     localisation            Localisation,
     nom                     VisibleString      OPTIONAL,    

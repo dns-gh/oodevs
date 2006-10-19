@@ -362,7 +362,7 @@ void PHY_RolePion_Posture::Uninstall()
 // Name: PHY_RolePion_Posture::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg )
+void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     if( bPostureHasChanged_ )
     {
@@ -397,7 +397,7 @@ void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg )
 // Name: PHY_RolePion_Posture::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg )
+void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
     msg.GetAsnMsg().m.posture_oldPresent = 1;
     msg.GetAsnMsg().m.posture_newPresent = 1;
