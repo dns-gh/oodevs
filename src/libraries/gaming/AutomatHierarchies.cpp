@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "AutomatHierarchies.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -19,12 +19,12 @@ using namespace kernel;
 // Name: AutomatHierarchies constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AutomatHierarchies::AutomatHierarchies( Controller& controller, Entity_ABC& holder, const Resolver_ABC< KnowledgeGroup_ABC >& groupResolver, DataDictionary& dictionary )
+AutomatHierarchies::AutomatHierarchies( Controller& controller, Entity_ABC& holder, const Resolver_ABC< KnowledgeGroup_ABC >& groupResolver, PropertiesDictionary& dictionary )
     : EntityHierarchies< CommunicationHierarchies >( controller, holder )
     , controller_   ( controller )
     , groupResolver_( groupResolver ) 
 {
-    dictionary.Register( tools::translate( "Automat", "Hiérarchie/Supérieur" ), GetSuperior() );
+    CreateDictionary( dictionary ); 
 }
 
 // -----------------------------------------------------------------------------

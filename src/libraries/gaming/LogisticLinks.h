@@ -22,7 +22,7 @@ namespace kernel
     class Automat_ABC;
     class Displayer_ABC;
     class AutomatType;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -40,7 +40,7 @@ class LogisticLinks : public kernel::LogisticLinks_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticLinks( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::AutomatType& type, kernel::DataDictionary& dictionary );
+             LogisticLinks( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver, const kernel::AutomatType& type, kernel::PropertiesDictionary& dictionary );
     virtual ~LogisticLinks();
     //@}
 
@@ -72,6 +72,7 @@ private:
 
     kernel::Automat_ABC* Resolve( kernel::Automat_ABC*& agent, unsigned long id ) const;
     void DrawLink( const geometry::Point2f& from, kernel::Automat_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
 private:

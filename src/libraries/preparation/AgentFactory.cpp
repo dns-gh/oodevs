@@ -30,7 +30,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "StaticModel.h"
 
@@ -82,7 +82,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_ );
-    DataDictionary& dico = result->Get< DataDictionary >();
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     // $$$$ AGE 2006-10-10: AutomatHierarchies ?
@@ -121,7 +121,7 @@ Entity_ABC* AgentFactory::FindKnowledgeGroup( const kernel::Entity_ABC& parent )
 kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC& parent )
 {
     Agent* result = new Agent( xis, controllers_.controller_, idManager_, static_.types_ );
-    DataDictionary& dico = result->Get< DataDictionary >();
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
@@ -139,7 +139,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
 kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation_ABC& parent )
 {
     Automat* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
-    DataDictionary& dico = result->Get< DataDictionary >();
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );

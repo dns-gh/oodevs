@@ -13,7 +13,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "Equipment.h"
 #include "clients_kernel/Units.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -22,15 +22,12 @@ using namespace kernel;
 // Name: MaintenanceStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, DataDictionary& dico )
+MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , agentResolver_( agentResolver )
 {
-    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Chaine activée" ), bChainEnabled_ );
-    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Priorités" ), priorities_ );
-    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Priorités tactiques" ), tacticalPriorities_ );
-    dico.Register( tools::translate( "Logistique", "Chaine maintenance/Régime de travail" ), nWorkRate_ );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +37,18 @@ MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC
 MaintenanceStates::~MaintenanceStates()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceStates::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Chaine activée" ), bChainEnabled_ );
+    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Priorités" ), priorities_ );
+    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Priorités tactiques" ), tacticalPriorities_ );
+    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Régime de travail" ), nWorkRate_ );
 }
 
 // -----------------------------------------------------------------------------

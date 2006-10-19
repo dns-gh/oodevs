@@ -16,7 +16,7 @@ class QListBox;
 
 namespace kernel
 {
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -31,7 +31,7 @@ class AttributeViewCell : public QTableItem
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributeViewCell( QTable* parent, const kernel::DataDictionary& dictionary );
+             AttributeViewCell( QTable* parent, kernel::PropertiesDictionary& dictionary );
     virtual ~AttributeViewCell();
     //@}
 
@@ -50,7 +50,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::DataDictionary& dictionary_;
+    kernel::PropertiesDictionary& dictionary_;
     //@}
 };
 

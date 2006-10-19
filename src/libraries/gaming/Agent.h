@@ -13,7 +13,6 @@
 #include "ASN_Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
@@ -68,7 +67,7 @@ private:
     //! @name Helpers
     //@{
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-    void CreateDictionary();
+    void CreateDictionary( kernel::Controller& controller );
     //@}
 
 private:

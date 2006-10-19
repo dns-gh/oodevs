@@ -19,7 +19,7 @@
 namespace kernel
 {
     class Entity_ABC;
-    class DataDictionary;
+    class PropertiesDictionary;
     class Controllers;
 }
 
@@ -76,7 +76,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::DataDictionary& dictionary_;
+    kernel::PropertiesDictionary& dictionary_;
     int currentRow_;
     QString message_;
     //@}

@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Agent.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -27,7 +27,7 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,  con
     , isPc_( message.oid_pion == message.oid_automate )
 {
     RegisterSelf( *this );
-    CreateDictionary();
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,10 +71,11 @@ QString Agent::GetTypeName() const
 // Name: Agent::CreateDictionary
 // Created: AGE 2006-06-27
 // -----------------------------------------------------------------------------
-void Agent::CreateDictionary()
+void Agent::CreateDictionary( kernel::Controller& controller )
 {
-    DataDictionary& dictionary = *new DataDictionary();
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    dictionary.Register( tools::translate( "Agent", "Info/Identifiant" ), id_ );
-    dictionary.Register( tools::translate( "Agent", "Info/Nom" ), name_ );
+    const Agent& self = *this;
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifiant" ), self.id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Nom" ), self.name_ );
 }

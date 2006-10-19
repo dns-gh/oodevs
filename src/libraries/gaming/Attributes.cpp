@@ -14,7 +14,7 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "statusicons.h"
 #include "Tools.h"
 
@@ -25,25 +25,12 @@ using namespace kernel;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, DataDictionary& dictionary )
+Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary )
     : controller_( controller )
     , converter_ ( converter )
     , aggregated_( false ) 
 {
-    // $$$$ AGE 2006-06-22: unité !
-    dictionary.Register( tools::translate( "Attributs", "Info/Etat opérationnel" ),               nRawOpState_ );
-    dictionary.Register( tools::translate( "Attributs", "Info/Vitesse" ),                         nSpeed_ );
-    dictionary.Register( tools::translate( "Attributs", "Info/Direction" ),                       nDirection_ );
-    dictionary.Register( tools::translate( "Attributs", "Postures/Posture courante" ),            nCurrentPosture_ );
-    dictionary.Register( tools::translate( "Attributs", "Communications/Brouillé" ),              bCommJammed_ );
-    dictionary.Register( tools::translate( "Attributs", "Communications/Silence radio" ),         bRadioSilence_ );
-    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/Etat opérationnel" ),   nOpState_ );
-    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/RoE" ),                 nRulesOfEngagementState_ );
-    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/Contact combat" ),      nCloseCombatState_ );
-    dictionary.Register( tools::translate( "Attributs", "Etat décisionnel/Rapport de force" ),    nFightRateState_ );
-    dictionary.Register( tools::translate( "Attributs", "Etat martial/Fait prisonnier" ),         bPrisoner_ );
-    dictionary.Register( tools::translate( "Attributs", "Etat martial/Rendu" ),                   bSurrendered_ );
-    dictionary.Register( tools::translate( "Attributs", "Etat martial/Réfugiés pris en compte" ), bRefugeesManaged_ );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,6 +40,28 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
 Attributes::~Attributes()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Attributes::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
+{
+    // $$$$ AGE 2006-06-22: unité !
+    dictionary.Register( *this, tools::translate( "Attributs", "Info/Etat opérationnel" ),               nRawOpState_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Info/Vitesse" ),                         nSpeed_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Info/Direction" ),                       nDirection_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Postures/Posture courante" ),            nCurrentPosture_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Communications/Brouillé" ),              bCommJammed_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Communications/Silence radio" ),         bRadioSilence_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Etat décisionnel/Etat opérationnel" ),   nOpState_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Etat décisionnel/RoE" ),                 nRulesOfEngagementState_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Etat décisionnel/Contact combat" ),      nCloseCombatState_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Etat décisionnel/Rapport de force" ),    nFightRateState_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Etat martial/Fait prisonnier" ),         bPrisoner_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Etat martial/Rendu" ),                   bSurrendered_ );
+    dictionary.Register( *this, tools::translate( "Attributs", "Etat martial/Réfugiés pris en compte" ), bRefugeesManaged_ );
 }
 
 // -----------------------------------------------------------------------------

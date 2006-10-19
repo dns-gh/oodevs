@@ -9,6 +9,7 @@
 
 #include "Entity_ABC.h"
 #include "Controller.h"
+#include "PropertiesDictionary.h"
 
 namespace kernel
 {
@@ -192,6 +193,16 @@ template< typename Interface >
 Entity_ABC& EntityHierarchies< Interface >::GetEntity()
 {
     return entity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+template< typename Interface >
+void EntityHierarchies< Interface >::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *(const Interface*)this, tools::translate( "EntityHierarchies", "Hiérarchie/Supérieur" ), superior_ );
 }
 
 }

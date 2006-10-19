@@ -22,7 +22,7 @@ namespace kernel
     class EquipmentType;
     class Agent_ABC;
     class Displayer_ABC;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -37,7 +37,7 @@ class MedicalStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, kernel::DataDictionary& dico );
+             MedicalStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, kernel::PropertiesDictionary& dico );
     virtual ~MedicalStates();
     //@}
 
@@ -52,6 +52,11 @@ private:
     //@{
     MedicalStates( const MedicalStates& );            //!< Copy constructor
     MedicalStates& operator=( const MedicalStates& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
     //! @name Types

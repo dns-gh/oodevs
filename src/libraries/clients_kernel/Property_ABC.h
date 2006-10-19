@@ -13,6 +13,7 @@
 #include "ValueEditor.h"
 #include "Controller.h"
 #include "EditorFactory_ABC.h"
+#include "Displayer_ABC.h"
 
 namespace kernel
 {
@@ -49,6 +50,17 @@ private:
     //@}
 };
 
+template< typename T >
+struct dynamic_const_cast
+{
+    T* operator()( T* p ) const { return p; };
+};
+template< typename T >
+struct dynamic_const_cast< const T >
+{
+    T* operator()( const T* ) const { return 0; };
+};
+
 template< typename T, typename Owner >
 class Property : public Property_ABC
 {
@@ -71,11 +83,14 @@ public:
 
     virtual void SetValueFromEditor( QWidget* editor )
     {
-        ValueEditor< T >* ed = dynamic_cast< ValueEditor< T >* >( editor );
-        if( ed )
+        if( dynamic_const_cast< T >()( data_ ) )
         {
-            *data_ = ed->GetValue();
-            controller_.Update( owner_ );
+            ValueEditor< T >* ed = dynamic_cast< ValueEditor< T >* >( editor );
+            if( ed )
+            {
+                *dynamic_const_cast< T >()( data_ ) = ed->GetValue();
+                controller_.Update( owner_ );
+            }
         }
     }
 

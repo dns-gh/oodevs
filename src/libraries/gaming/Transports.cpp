@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "Transports.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "Tools.h"
 
@@ -20,13 +20,12 @@ using namespace kernel;
 // Name: Transports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Transports::Transports( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, DataDictionary& dico )
+Transports::Transports( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , transporter_( 0 )
 {
-    dico.Register( tools::translate( "Transport", "Transport/Transporteur" ), transporter_ );
-    dico.Register( tools::translate( "Transport", "Transport/Pions Transportés" ), transported_ );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,6 +35,16 @@ Transports::Transports( Controller& controller, const Resolver_ABC< Agent_ABC >&
 Transports::~Transports()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Transports::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void Transports::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Transport", "Transport/Transporteur" ), transporter_ );
+    dico.Register( *this, tools::translate( "Transport", "Transport/Pions Transportés" ), transported_ );
 }
 
 // -----------------------------------------------------------------------------

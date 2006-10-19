@@ -12,7 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "statusicons.h"
 #include "Tools.h"
 
@@ -22,13 +22,11 @@ using namespace kernel;
 // Name: Contaminations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver, DataDictionary& dico )
+Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
 {
-    dico.Register( tools::translate( "NBC", "NBC/Tenue NBC mise" ), bNbcProtectionSuitWorn_ );
-    dico.Register( tools::translate( "NBC", "NBC/Agents contaminants" ), contaminatingNbcAgents_ );
-    dico.Register( tools::translate( "NBC", "NBC/Niveau de contamination" ), nContamination_ );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +36,17 @@ Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCA
 Contaminations::~Contaminations()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Contaminations::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "NBC", "NBC/Tenue NBC mise" ), bNbcProtectionSuitWorn_ );
+    dico.Register( *this, tools::translate( "NBC", "NBC/Agents contaminants" ), contaminatingNbcAgents_ );
+    dico.Register( *this, tools::translate( "NBC", "NBC/Niveau de contamination" ), nContamination_ );
 }
 
 // -----------------------------------------------------------------------------

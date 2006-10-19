@@ -24,7 +24,7 @@ using namespace kernel;
 // Name: Logistics constructor
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
-Logistics::Logistics( Entity_ABC& holder, Controller& controller, Model& model, const StaticModel& staticModel, DataDictionary& dico )
+Logistics::Logistics( Entity_ABC& holder, Controller& controller, Model& model, const StaticModel& staticModel, PropertiesDictionary& dico )
     : holder_    ( holder )
     , controller_( controller )
     , model_     ( model )

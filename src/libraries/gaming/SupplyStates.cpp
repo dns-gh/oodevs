@@ -11,7 +11,7 @@
 #include "SupplyStates.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -20,12 +20,12 @@ using namespace kernel;
 // Name: SupplyStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-SupplyStates::SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver, DataDictionary& dico )
+SupplyStates::SupplyStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< DotationType >& dotationResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , dotationResolver_( dotationResolver )
 {
-    dico.Register( tools::translate( "Logistique", "Chaine ravitaillement/Chaine activée" ), bChainEnabled_ );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +35,15 @@ SupplyStates::SupplyStates( Controller& controller, const Resolver_ABC< Equipmen
 SupplyStates::~SupplyStates()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStates::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Logistique", "Chaine ravitaillement/Chaine activée" ), bChainEnabled_ );
 }
 
 // -----------------------------------------------------------------------------

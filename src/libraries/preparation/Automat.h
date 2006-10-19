@@ -73,7 +73,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoSerialize( xml::xostream& xos ) const;
-    void CreateDictionary();
+    void CreateDictionary( kernel::Controller& controller );
 
     static unsigned long ReadId  ( xml::xistream& xis );
     static QString       ReadName( xml::xistream& xis );

@@ -20,7 +20,7 @@ namespace kernel
     class Agent_ABC;
     class Controller;
     class Displayer_ABC;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -36,7 +36,7 @@ class Reinforcements : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reinforcements( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::DataDictionary& dico );
+             Reinforcements( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Reinforcements();
     //@}
 
@@ -54,6 +54,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 

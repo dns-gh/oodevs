@@ -13,7 +13,7 @@
 #include "Dotation.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "statusicons.h"
 #include "Tools.h"
 
@@ -23,13 +23,13 @@ using namespace kernel;
 // Name: Dotations constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, DataDictionary& dictionary )
+Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
-    , dictionary_( dictionary )
+    , dictionary_( dico )
     , bEmptyGasTank_( false )
 {
-    dictionary_.Register( tools::translate( "Dotations", "Dotations/Plus de carburant" ), bEmptyGasTank_ );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,6 +39,15 @@ Dotations::Dotations( Controller& controller, const Resolver_ABC< DotationType >
 Dotations::~Dotations()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dotations::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Dotations", "Dotations/Plus de carburant" ), bEmptyGasTank_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +71,7 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         {
             Dotation& newDotation = *new Dotation( type, value.quantite_disponible );
             Register( value.ressource_id, newDotation );
-            dictionary_.Register( tools::translate( "Dotations", "Dotations" ) + "/" + type.GetCategory(), newDotation.quantity_ ); // $$$$ AGE 2006-06-22: 
+            dictionary_.Register( *this, tools::translate( "Dotations", "Dotations" ) + "/" + type.GetCategory(), (const Dotation&)newDotation.quantity_ ); // $$$$ AGE 2006-06-22: 
         }
         if( type.IsGas() )
             bEmptyGasTank_ = ( value.quantite_disponible == 0 );

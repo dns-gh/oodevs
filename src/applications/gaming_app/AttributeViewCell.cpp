@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AttributeViewCell.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "AttributeViewCellEditor.h"
 
 using namespace kernel;
@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: AttributeViewCell constructor
 // Created: AGE 2006-06-22
 // -----------------------------------------------------------------------------
-AttributeViewCell::AttributeViewCell( QTable* parent, const DataDictionary& dictionary )
+AttributeViewCell::AttributeViewCell( QTable* parent, PropertiesDictionary& dictionary )
     : QTableItem( parent, WhenCurrent )
     , dictionary_( dictionary )
 {

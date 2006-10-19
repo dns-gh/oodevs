@@ -11,7 +11,7 @@
 #include "HumanFactors.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -20,15 +20,13 @@ using namespace kernel;
 // Name: HumanFactors constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-HumanFactors::HumanFactors( Controller& controller, DataDictionary& dictionary )
+HumanFactors::HumanFactors( Controller& controller, PropertiesDictionary& dictionary )
     : controller_( controller )
     , experience_( (E_UnitExperience)0 )
     , tiredness_( (E_UnitFatigue)0 )
     , morale_( (E_UnitMoral)0 )
 {
-    dictionary.Register( tools::translate( "Facteurs Humains", "Facteurs Humains/Experience" ), experience_ );
-    dictionary.Register( tools::translate( "Facteurs Humains", "Facteurs Humains/Fatigue" ), tiredness_ );
-    dictionary.Register( tools::translate( "Facteurs Humains", "Facteurs Humains/Moral" ), morale_ );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +36,17 @@ HumanFactors::HumanFactors( Controller& controller, DataDictionary& dictionary )
 HumanFactors::~HumanFactors()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HumanFactors::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) const
+{
+    dictionary.Register( *this, tools::translate( "Facteurs Humains", "Facteurs Humains/Experience" ), experience_ );
+    dictionary.Register( *this, tools::translate( "Facteurs Humains", "Facteurs Humains/Fatigue" ), tiredness_ );
+    dictionary.Register( *this, tools::translate( "Facteurs Humains", "Facteurs Humains/Moral" ), morale_ );
 }
 
 // -----------------------------------------------------------------------------

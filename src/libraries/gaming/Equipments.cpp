@@ -11,7 +11,7 @@
 #include "Equipments.h"
 #include "clients_kernel/Controller.h"
 #include "Equipment.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: Equipments constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, DataDictionary& dico )
+Equipments::Equipments( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , dico_( dico )
@@ -70,8 +70,8 @@ void Equipments::AddToDictionary( const Equipment& equipment )
 {
     const QString baseName = tools::translate( "Composantes", "Composantes" ) + "/" + equipment.GetName() + "/";
 
-    dico_.Register( baseName + tools::translate( "Composantes", "Disponible" ), equipment.available_ );
-    dico_.Register( baseName + tools::translate( "Composantes", "Indisponible" ), equipment.unavailable_ );
-    dico_.Register( baseName + tools::translate( "Composantes", "Réparables" ), equipment.repairable_ );
-    dico_.Register( baseName + tools::translate( "Composantes", "En maintenance" ), equipment.inMaintenance_ );
+    dico_.Register( *this, baseName + tools::translate( "Composantes", "Disponible" ), equipment.available_ );
+    dico_.Register( *this, baseName + tools::translate( "Composantes", "Indisponible" ), equipment.unavailable_ );
+    dico_.Register( *this, baseName + tools::translate( "Composantes", "Réparables" ), equipment.repairable_ );
+    dico_.Register( *this, baseName + tools::translate( "Composantes", "En maintenance" ), equipment.inMaintenance_ );
 }

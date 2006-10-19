@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controller;
+    class PropertiesDictionary;
 
 // =============================================================================
 /** @class  EntityHierarchies
@@ -56,6 +57,7 @@ protected:
     void SetSuperior( Entity_ABC* superior );
     Entity_ABC* GetSuperior();
     Entity_ABC& GetEntity();
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
 private:

@@ -12,7 +12,6 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 

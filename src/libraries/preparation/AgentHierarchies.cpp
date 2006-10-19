@@ -11,7 +11,6 @@
 #include "AgentHierarchies.h"
 #include "AutomatDecisions.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/DataDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 

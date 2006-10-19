@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "AttributeViewCellEditor.h"
 #include "moc_AttributeViewCellEditor.cpp"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include <qtable.h>
 
 using namespace kernel;
@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: AttributeViewCellEditor constructor
 // Created: AGE 2006-06-23
 // -----------------------------------------------------------------------------
-AttributeViewCellEditor::AttributeViewCellEditor( QWidget* parent, const DataDictionary& dictionary, QTableItem* myItem )
+AttributeViewCellEditor::AttributeViewCellEditor( QWidget* parent, PropertiesDictionary& dictionary, QTableItem* myItem )
     : QLineEdit( myItem->text(), parent )
     , dictionary_( dictionary )
     , myItem_( myItem )

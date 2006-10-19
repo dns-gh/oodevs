@@ -14,7 +14,7 @@ class QTableItem;
 
 namespace kernel
 {
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -30,7 +30,7 @@ class AttributeViewCellEditor : public QLineEdit
 public:
     //! @name Constructors/Destructor
     //@{
-             AttributeViewCellEditor( QWidget* parent, const kernel::DataDictionary& dictionary, QTableItem* myItem );
+             AttributeViewCellEditor( QWidget* parent, kernel::PropertiesDictionary& dictionary, QTableItem* myItem );
     virtual ~AttributeViewCellEditor();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::DataDictionary& dictionary_;
+    kernel::PropertiesDictionary& dictionary_;
     QTableItem* myItem_;
     QPopupMenu* menu_;
     QListBox* list_;

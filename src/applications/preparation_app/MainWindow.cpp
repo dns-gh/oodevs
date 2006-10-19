@@ -33,7 +33,6 @@
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DataDictionary.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"

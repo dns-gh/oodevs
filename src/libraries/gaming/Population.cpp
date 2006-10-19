@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Population.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PopulationType.h"
@@ -36,7 +36,7 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     , team_         ( resolver.Get( message.oid_camp ) )
 {
     RegisterSelf( *this );
-    Attach( *new DataDictionary() );
+    Attach( *new PropertiesDictionary( controller ) );
 }
 
 // -----------------------------------------------------------------------------

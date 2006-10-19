@@ -11,7 +11,7 @@
 #include "Reinforcements.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -20,13 +20,12 @@ using namespace kernel;
 // Name: Reinforcements constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, DataDictionary& dico )
+Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , reinforced_( 0 )
 {
-    dico.Register( tools::translate( "Renforts", "Renforts/Renforce" ), reinforced_ );
-    dico.Register( tools::translate( "Renforts", "Renforts/Est renforcé par" ), reinforcements_ );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,6 +35,16 @@ Reinforcements::Reinforcements( Controller& controller, const Resolver_ABC< Agen
 Reinforcements::~Reinforcements()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Reinforcements::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void Reinforcements::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Renforts", "Renforts/Renforce" ), reinforced_ );
+    dico.Register( *this, tools::translate( "Renforts", "Renforts/Est renforcé par" ), reinforcements_ );
 }
 
 // -----------------------------------------------------------------------------

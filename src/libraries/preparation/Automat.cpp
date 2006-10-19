@@ -13,7 +13,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -30,7 +30,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 {
     name_ = QString( "Automate %1" ).arg( id_ );
     RegisterSelf( *this );
-    CreateDictionary();
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ Automat::Automat( xistream& xis, Controller& controller, IdManager& idManager, c
     xis >> attribute( "type", type );
     type_ = &agentTypes.Resolver< AutomatType, QString >::Get( type.c_str() );
     RegisterSelf( *this );
-    CreateDictionary();
+    CreateDictionary( controller );
     idManager.Lock( id_ );
 }
 
@@ -112,12 +112,12 @@ void Automat::Draw( const geometry::Point2f& where, const geometry::Rectangle2f&
 // Name: Automat::CreateDictionary
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void Automat::CreateDictionary()
+void Automat::CreateDictionary( kernel::Controller& controller )
 {
-    DataDictionary& dictionary = *new DataDictionary();
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    dictionary.Register( tools::translate( "Automat", "Info/Identifiant" ), id_ );
-    dictionary.Register( tools::translate( "Automat", "Info/Nom" ), name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), (const unsigned long)id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_ );
 }
 
 // -----------------------------------------------------------------------------

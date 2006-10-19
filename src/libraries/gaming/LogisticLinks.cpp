@@ -15,7 +15,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -24,7 +24,7 @@ using namespace kernel;
 // Name: LogisticLinks constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const AutomatType& type, DataDictionary& dictionary )
+LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver, const AutomatType& type, PropertiesDictionary& dictionary )
     : controller_( controller )
     , resolver_( resolver )
     , type_( type )
@@ -33,10 +33,7 @@ LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Automa
     , medicalSuperior_( 0 )
     , supplySuperior_( 0 )
 {
-    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/TC2" ), tc2_ );
-    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/Superieur maintenance" ), maintenanceSuperior_ );
-    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/Superieur médical" ), medicalSuperior_ );
-    dictionary.Register( tools::translate( "Logistique", "Liens logistiques/Superieur ravitaillement" ), supplySuperior_ );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +43,18 @@ LogisticLinks::LogisticLinks( Controller& controller, const Resolver_ABC< Automa
 LogisticLinks::~LogisticLinks()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/TC2" ), tc2_ );
+    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/Superieur maintenance" ), maintenanceSuperior_ );
+    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/Superieur médical" ), medicalSuperior_ );
+    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/Superieur ravitaillement" ), supplySuperior_ );
 }
 
 // -----------------------------------------------------------------------------

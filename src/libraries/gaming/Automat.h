@@ -21,6 +21,7 @@
 namespace kernel
 {
     class Controller;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -57,6 +58,11 @@ private:
     //@{
     Automat( const Automat& );            //!< Copy constructor
     Automat& operator=( const Automat& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
 private:

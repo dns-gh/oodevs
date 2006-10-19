@@ -18,7 +18,7 @@ namespace kernel
 {
     class Controller;
     class Displayer_ABC;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -34,7 +34,7 @@ class HumanFactors : public kernel::HumanFactors_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HumanFactors( kernel::Controller& controller, kernel::DataDictionary& dictionary );
+             HumanFactors( kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
     virtual ~HumanFactors();
     //@}
 
@@ -59,6 +59,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     //@}
 

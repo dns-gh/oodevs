@@ -67,7 +67,7 @@ void Diplomacies::Serialize( xml::xostream& xos ) const
     for( CIT_Diplomacies it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         xos << start( "relationship" )
-                << attribute( "team", int( it->first->team_.GetId() ) )
+                << attribute( "side", int( it->first->team_.GetId() ) )
                 << attribute( "diplomacy", it->second.GetValue() )
             << end();
     }

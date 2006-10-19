@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "AttributeView.h"
 #include "moc_AttributeView.cpp"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "AttributeViewCell.h"
 #include "AttributeViewCellEditor.h"
@@ -26,7 +26,7 @@ using namespace gui;
 AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const Entity_ABC& agent )
     : QTable( 1, 2, parent )
     , controllers_( controllers )
-    , dictionary_( agent.Get< DataDictionary >() )
+    , dictionary_( const_cast< Entity_ABC& >( agent ).Get< PropertiesDictionary >() ) // $$$$ SBO 2006-10-19: 
     , currentRow_( 0 )
 {
     setSelectionMode( QTable::Single );
@@ -61,13 +61,13 @@ AttributeView::~AttributeView()
 // -----------------------------------------------------------------------------
 void AttributeView::OnValueChanged( int row, int )
 {
-    const QString attribut = text( row, 0 );
-    if( attribut.isEmpty() && row != numRows() - 1 )
+    const QString attribute = text( row, 0 );
+    if( attribute.isEmpty() && row != numRows() - 1 )
         removeRow( row );
-    else if( ! attribut.isEmpty() )
+    else if( ! attribute.isEmpty() )
     {
         currentRow_ = row;
-        dictionary_.Display( attribut, *this );
+        dictionary_.Display( attribute, *this );
         adjustColumn( 0 );
         adjustColumn( 1 );
         if( row == numRows() - 1 )

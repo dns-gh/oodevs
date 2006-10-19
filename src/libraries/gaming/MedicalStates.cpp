@@ -12,7 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -21,14 +21,12 @@ using namespace kernel;
 // Name: MedicalStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, DataDictionary& dico )
+MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< EquipmentType >& resolver, const Resolver_ABC< Agent_ABC >& agentResolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
     , agentResolver_( agentResolver )
 {
-    dico.Register( tools::translate( "Logistique", "Chaine médicale/Chaine activée" ), bChainEnabled_ );
-    dico.Register( tools::translate( "Logistique", "Chaine médicale/Priorités" ), priorities_ );
-    dico.Register( tools::translate( "Logistique", "Chaine médicale/Priorités tactiques" ), tacticalPriorities_ );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,6 +36,17 @@ MedicalStates::MedicalStates( Controller& controller, const Resolver_ABC< Equipm
 MedicalStates::~MedicalStates()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalStates::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Logistique", "Chaine médicale/Chaine activée" ), bChainEnabled_ );
+    dico.Register( *this, tools::translate( "Logistique", "Chaine médicale/Priorités" ), priorities_ );
+    dico.Register( *this, tools::translate( "Logistique", "Chaine médicale/Priorités tactiques" ), tacticalPriorities_ );
 }
 
 // -----------------------------------------------------------------------------

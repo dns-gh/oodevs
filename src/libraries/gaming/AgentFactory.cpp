@@ -13,7 +13,7 @@
 #include "Model.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/InstanciationComplete.h"
 #include "Agent.h"
 #include "Automat.h"
@@ -104,7 +104,7 @@ AgentFactory::~AgentFactory()
 Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 {
     Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_ );
-    DataDictionary& dico = result->Get< DataDictionary >();
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach< CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     result->Attach( *new AutomatLives( *result ) );
@@ -128,10 +128,10 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
 Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 {
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_ );
-    DataDictionary& dico = result->Get< DataDictionary >();
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach( *new Lives() );
-    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, result->Get< DataDictionary >() ) );
+    result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
@@ -169,7 +169,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
 // -----------------------------------------------------------------------------
 void AgentFactory::AttachExtensions( Entity_ABC& agent )
 {
-    DataDictionary& dico = agent.Get< DataDictionary >();
+    PropertiesDictionary& dico = agent.Get< PropertiesDictionary >();
     agent.Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico ) );

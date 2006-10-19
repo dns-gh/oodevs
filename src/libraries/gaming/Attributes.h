@@ -21,7 +21,7 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class CoordinateConverter_ABC;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -39,7 +39,7 @@ class Attributes : public kernel::Attributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Attributes( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, kernel::DataDictionary& dictionary );
+             Attributes( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, kernel::PropertiesDictionary& dictionary );
     virtual ~Attributes();
     //@}
 
@@ -61,6 +61,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     virtual void Aggregate( const bool& );
     //@}

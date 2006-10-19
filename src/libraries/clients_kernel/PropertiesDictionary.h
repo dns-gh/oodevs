@@ -37,6 +37,8 @@ public:
 
     //! @name Operations
     //@{
+    QStringList FindKey( QString name ) const;
+
     template< typename T, typename Owner >
     void Register( const Owner& owner, const QString& name, T& value )
     {
@@ -46,6 +48,7 @@ public:
     }
 
     void Display( Displayer_ABC& displayer );
+    void Display( const QString& name, Displayer_ABC& displayer );
     //@}
 
 private:

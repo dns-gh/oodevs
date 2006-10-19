@@ -23,7 +23,7 @@ namespace kernel
     class EquipmentType;
     class DotationType;
     class Displayer_ABC;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -39,7 +39,7 @@ class SupplyStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, kernel::DataDictionary& dico );
+             SupplyStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver, kernel::PropertiesDictionary& dico );
     virtual ~SupplyStates();
     //@}
 
@@ -54,6 +54,11 @@ private:
     //@{
     SupplyStates( const SupplyStates& );            //!< Copy constructor
     SupplyStates& operator=( const SupplyStates& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
     //! @name Types

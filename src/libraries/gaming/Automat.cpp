@@ -12,7 +12,7 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/DataDictionary.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -24,14 +24,12 @@ using namespace kernel;
 Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controller, 
                   const Resolver_ABC< AutomatType >& resolver )
     : EntityImplementation< Automat_ABC >( controller, message.oid_automate, QString( "%1 [%2]" ).arg( message.nom ).arg( message.oid_automate ) )
-    , type_         ( resolver.Get( message.type_automate ) )
+    , type_( resolver.Get( message.type_automate ) )
 {
     RegisterSelf( *this );
-    DataDictionary& dictionary = *new DataDictionary();
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    
-    dictionary.Register( tools::translate( "Automat", "Info/Identifiant" ), id_ );
-    dictionary.Register( tools::translate( "Automat", "Info/Nom" ), name_ );
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +39,16 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controll
 Automat::~Automat()
 {
     Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::CreateDictionary
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void Automat::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+{
+    dico.Register( *this, tools::translate( "Automat", "Info/Identifiant" ), id_ );
+    dico.Register( *this, tools::translate( "Automat", "Info/Nom" ), name_ );
 }
 
 // -----------------------------------------------------------------------------

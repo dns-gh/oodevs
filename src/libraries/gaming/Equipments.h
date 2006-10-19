@@ -19,7 +19,7 @@ namespace kernel
 {
     class Controller;
     class EquipmentType;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 class Equipment;
@@ -38,7 +38,7 @@ class Equipments : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::DataDictionary& dico );
+             Equipments( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Equipments();
     //@}
 
@@ -60,7 +60,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::EquipmentType >& resolver_;
-    kernel::DataDictionary& dico_;
+    kernel::PropertiesDictionary& dico_;
     //@}
 };
 

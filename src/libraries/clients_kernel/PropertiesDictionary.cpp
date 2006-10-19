@@ -34,6 +34,21 @@ PropertiesDictionary::~PropertiesDictionary()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PropertiesDictionary::FindKey
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+QStringList PropertiesDictionary::FindKey( QString name ) const
+{
+    QStringList result;
+    for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
+    {
+        if( it->first.find( name, 0, false ) != -1 )
+            result.append( it->first );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PropertiesDictionary::Display
 // Created: SBO 2006-10-17
 // -----------------------------------------------------------------------------
@@ -41,4 +56,15 @@ void PropertiesDictionary::Display( Displayer_ABC& displayer )
 {
     for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
         displayer.Display( it->first, it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesDictionary::Display
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void PropertiesDictionary::Display( const QString& name, Displayer_ABC& displayer )
+{
+    CIT_Properties it = properties_.find( name );
+    if( it != properties_.end() )
+        it->second->Display( displayer );
 }

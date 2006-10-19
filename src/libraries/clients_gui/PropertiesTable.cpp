@@ -27,7 +27,9 @@ PropertiesTable::PropertiesTable( QWidget* parent )
     , itemDisplayer_( *new TableItemDisplayer() )
     , row_( 0 )
 {
+    setSelectionMode( QTable::SingleRow );
     setNumCols( 2 );
+    setColumnReadOnly( 0, true );
     verticalHeader()->hide();
     setLeftMargin( 0 );
     horizontalHeader()->hide();

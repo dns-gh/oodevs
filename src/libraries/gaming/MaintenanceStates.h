@@ -22,7 +22,7 @@ namespace kernel
     class Displayer_ABC;
     class EquipmentType;
     class Agent_ABC;
-    class DataDictionary;
+    class PropertiesDictionary;
 }
 
 // =============================================================================
@@ -37,7 +37,7 @@ class MaintenanceStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MaintenanceStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, kernel::DataDictionary& dico );
+             MaintenanceStates( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::EquipmentType >& resolver, const kernel::Resolver_ABC< kernel::Agent_ABC >& agentResolver, kernel::PropertiesDictionary& dico );
     virtual ~MaintenanceStates();
     //@}
 
@@ -52,6 +52,11 @@ private:
     //@{
     MaintenanceStates( const MaintenanceStates& );            //!< Copy constructor
     MaintenanceStates& operator=( const MaintenanceStates& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 
     //! @name Types
