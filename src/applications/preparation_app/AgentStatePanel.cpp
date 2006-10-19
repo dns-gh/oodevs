@@ -15,7 +15,7 @@
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/Tools.h"
-#include "clients_gui/PropertiesTable.h"
+#include "clients_gui/PropertiesWidget.h"
 #include "clients_kernel/PropertiesDictionary.h"
 
 using namespace kernel;
@@ -30,7 +30,7 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
     , controllers_( controllers )
     , selected_( controllers )
 {
-    properties_ = new PropertiesTable( this );
+    properties_ = new PropertiesWidget( this, "Properties" );
 
 
 //    display_ = new DisplayBuilder( this, factory );

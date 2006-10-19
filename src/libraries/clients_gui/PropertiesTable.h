@@ -33,6 +33,7 @@ class PropertiesTable : public QTable
                       , public kernel::Displayer_ABC
                       , public kernel::Caller< kernel::Property_ABC* >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -45,6 +46,12 @@ public:
     //@{
     virtual void Hide();
     virtual void Call( kernel::Property_ABC* const& property );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void Show( bool );
     //@}
 
 private:

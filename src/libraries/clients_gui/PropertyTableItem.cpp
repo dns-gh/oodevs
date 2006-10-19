@@ -21,12 +21,13 @@ using namespace gui;
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
 PropertyTableItem::PropertyTableItem( QTable* table, Property_ABC& property, TableItemDisplayer& displayer, EditorFactory_ABC& factory )
-    : QTableItem( table, QTableItem::OnTyping )
+    : QTableItem( table, QTableItem::OnTyping, "" )
     , factory_( factory )
     , displayer_( displayer )
     , property_( property )
 {
-    // NOTHING
+    displayer_.SetItem( this );
+    property_.Display( displayer_ );
 }
     
 // -----------------------------------------------------------------------------

@@ -75,5 +75,7 @@ DECLARE_ICON( recplay );
 DECLARE_ICON( recstop );
 DECLARE_ICON( flare );
 DECLARE_ICON( smoke );
+DECLARE_ICON( plus );
+DECLARE_ICON( minus );
 
 #endif // __demo_resources_h_

@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "PropertiesTable.h"
+#include "moc_PropertiesTable.cpp"
 #include "TableItemDisplayer.h"
 #include "PropertyTableItem.h"
 #include "EditorFactory.h"
@@ -28,8 +29,11 @@ PropertiesTable::PropertiesTable( QWidget* parent )
 {
     setNumCols( 2 );
     verticalHeader()->hide();
-    horizontalHeader()->setLabel( 0, "Property" );
-    horizontalHeader()->setLabel( 1, "Value" );
+    setLeftMargin( 0 );
+    horizontalHeader()->hide();
+    setTopMargin( 0 );
+    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Minimum );
+    setFrameStyle( MenuBarPanel );
 }
     
 // -----------------------------------------------------------------------------
@@ -51,11 +55,21 @@ void PropertiesTable::Hide()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PropertiesTable::Show
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+void PropertiesTable::Show( bool b )
+{
+    setShown( b && numRows() > 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PropertiesTable::SubItem
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
 Displayer_ABC& PropertiesTable::SubItem( const QString& name )
 {
+    show();
     CIT_PropertyRows it = rows_.find( name );
     row_ = 0;
     if( it == rows_.end() )
@@ -64,6 +78,7 @@ Displayer_ABC& PropertiesTable::SubItem( const QString& name )
         insertRows( row_ );
         rows_[name] = row_;
         setText( row_, 0, name );
+        adjustColumn( 0 );
     }
     else
         row_ = it->second;
@@ -104,4 +119,5 @@ void PropertiesTable::EndDisplay()
 void PropertiesTable::Call( kernel::Property_ABC* const& property )
 {
     setItem( row_, 1, new PropertyTableItem( this, *property, itemDisplayer_, factory_ ) );
+    adjustColumn( 1 );
 }
