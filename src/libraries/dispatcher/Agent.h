@@ -80,6 +80,7 @@ private:
     const unsigned long  nType_; // XML reference - no resolved by dispatcher
     const std::string    strName_;
           Automat*       pAutomat_;
+    const bool           bPC_;
 
     Position                      position_;
     unsigned int                  nDirection_;

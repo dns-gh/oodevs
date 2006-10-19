@@ -583,6 +583,7 @@ void MIL_AgentPion::SendCreation() const
     asnMsg.GetAsnMsg().type_pion    = pType_->GetID();
     asnMsg.GetAsnMsg().nom          = strName_.c_str(); // !! pointeur sur const char*
     asnMsg.GetAsnMsg().oid_automate = GetAutomate().GetID();    
+    asnMsg.GetAsnMsg().pc           = IsPC();
     asnMsg.Send();
 }
 

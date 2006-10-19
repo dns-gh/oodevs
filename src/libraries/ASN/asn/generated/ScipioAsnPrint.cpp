@@ -20695,6 +20695,9 @@ void asn1Print_MsgPionCreation (ASN1ConstCharPtr name, ASN1T_MsgPionCreation* pv
    sprintf (namebuf, "%s.oid_automate", name);
    asn1Print_Automate (namebuf, &pvalue->oid_automate);
 
+   sprintf (namebuf, "%s.pc", name);
+   rtPrintBoolean (namebuf, pvalue->pc);
+
 }
 
 void ASN1C_MsgPionCreation::Print (ASN1ConstCharPtr name)

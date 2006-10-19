@@ -34,6 +34,7 @@ Agent::Agent( Model& model, const ASN1T_MsgPionCreation& msg )
     , nType_                        ( msg.type_pion )
     , strName_                      ( msg.nom )
     , pAutomat_                     ( &model.GetAutomats().Get( msg.oid_automate ) )
+    , bPC_                          ( msg.pc )
     , position_                     ()
     , nDirection_                   ( 0 )
     , nHeight_                      ( 0 )
@@ -291,6 +292,7 @@ void Agent::SendCreation( Publisher_ABC& publisher ) const
     asn().type_pion     = nType_;
     asn().nom           = strName_.c_str(); // !! pointeur sur const char*
     asn().oid_automate  = pAutomat_->GetID();
+    asn().pc            = bPC_;
     asn.Send( publisher );
 }
 

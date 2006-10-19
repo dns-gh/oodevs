@@ -473,6 +473,18 @@ EXTERN int asn1PE_MsgPionCreation (ASN1CTXT* ctxt_p, ASN1T_MsgPionCreation* pval
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
+   /* encode pc */
+
+   PU_PUSHNAME (ctxt_p, "pc");
+
+   PU_NEWFIELD (ctxt_p, "boolean");
+
+   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->pc);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
+   PU_POPNAME (ctxt_p);
+
 
    rtdiag ("asn1PE_MsgPionCreation: end\n");
    return (stat);
@@ -524,6 +536,19 @@ EXTERN int asn1PD_MsgPionCreation (ASN1CTXT* ctxt_p, ASN1T_MsgPionCreation* pval
 
    stat = asn1PD_Automate (ctxt_p, &pvalue->oid_automate);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode pc */
+
+   PU_PUSHNAME (ctxt_p, "pc");
+
+   PU_NEWFIELD (ctxt_p, "boolean");
+
+   stat = pd_bit (ctxt_p, &pvalue->pc);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
 
    PU_POPNAME (ctxt_p);
 

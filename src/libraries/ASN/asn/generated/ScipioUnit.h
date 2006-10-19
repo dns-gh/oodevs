@@ -208,6 +208,7 @@ typedef struct EXTERN ASN1T_MsgPionCreation {
    ASN1T_TypePion  type_pion;
    ASN1VisibleString  nom;
    ASN1T_Automate  oid_automate;
+   ASN1BOOL  pc;
 } ASN1T_MsgPionCreation;
 
 class EXTERN ASN1C_MsgPionCreation : public ASN1CType {

@@ -139,7 +139,8 @@ MsgPionCreation ::= SEQUENCE
     oid-pion        Agent,
     type-pion       TypePion,
     nom             VisibleString,
-    oid-automate    Automate    
+    oid-automate    Automate,
+    pc              BOOLEAN
 }
 
 MsgUnitAttributes ::= SEQUENCE
