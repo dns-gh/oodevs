@@ -13,6 +13,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TristateOption.h"
 #include "svgl/svgl.h"
+#include "svgl/TextRenderer.h"
 #include "GlFont.h"
 
 using namespace geometry;
@@ -27,6 +28,7 @@ using namespace svg;
 GlToolsBase::GlToolsBase( Controllers& controllers )
     : controllers_( controllers )
     , selected_( false ) 
+    , renderer_( new TextRenderer() )
     , references_( new References() )
 {
     // NOTHING
@@ -144,7 +146,7 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangl
     if( ! node.first )
     {
         // $$$$ AGE 2006-09-11: error management !
-        SVGFactory factory;
+        SVGFactory factory( *renderer_ );
         // $$$$ AGE 2006-09-11: 
         node.first  = factory.Compile( "symbols/" + symbol, *references_, 10  ); // $$$$ AGE 2006-09-11: 
         node.second = factory.Compile( "symbols/" + symbol, *references_, 100 ); // $$$$ AGE 2006-09-11: 

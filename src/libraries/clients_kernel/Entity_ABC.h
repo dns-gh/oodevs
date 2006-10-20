@@ -14,9 +14,13 @@
 #include "InterfaceContainer.h"
 #include "Updatable_ABC.h"
 #include "Extension_ABC.h"
-#include "Serializable_ABC.h"
 
 class QPoint;
+
+namespace xml 
+{
+    class xostream;
+}
 
 namespace kernel
 {

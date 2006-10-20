@@ -11,6 +11,7 @@
 #include "Entity_ABC.h"
 #include "Drawable_ABC.h"
 #include "Drawer.h"
+#include "Serializable_ABC.h"
 
 using namespace kernel;
 

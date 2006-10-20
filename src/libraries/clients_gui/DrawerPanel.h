@@ -12,14 +12,16 @@
 
 class QToolBox;
 
-namespace xml
-{
+namespace xml {
     class xistream;
 }
 
-namespace kernel
-{
+namespace kernel {
     class GlTools_ABC;
+}
+
+namespace svg {
+    class TextRenderer;
 }
 
 namespace gui
@@ -79,6 +81,7 @@ private:
     //! @name Member data
     //@{
     DrawerLayer& layer_;
+    svg::TextRenderer* renderer_;
     ColorButton* color_;
     QToolBox* toolBox_;
     //@}

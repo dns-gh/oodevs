@@ -16,6 +16,7 @@ namespace svg
 {
     class Node_ABC;
     class References;
+    class TextRenderer;
 }
 
 namespace gui
@@ -76,11 +77,9 @@ private:
 
     T_Icons         icons_;
 
+    svg::TextRenderer* renderer_;
     svg::References* references_;
     T_Symbols        symbols_;
-
-//    GlFont* app6Font_;
-//    GlFont* app6OutlinedFont_;
     //@}
 };
 

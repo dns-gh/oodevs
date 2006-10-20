@@ -15,6 +15,8 @@
 #include "DrawerCategory.h"
 #include "DrawerLayer.h"
 #include "ColorButton.h"
+#include "svgl/TextRenderer.h"
+
 
 using namespace gui;
 
@@ -25,6 +27,7 @@ using namespace gui;
 DrawerPanel::DrawerPanel( QWidget* parent, DrawerLayer& layer, kernel::GlTools_ABC& tools )
     : QVBox( parent, "Drawer" )
     , layer_( layer )
+    , renderer_( new svg::TextRenderer() )
 {
     color_ = new ColorButton( this, "" );
     toolBox_ = new QToolBox( this );
@@ -60,7 +63,7 @@ void DrawerPanel::ReadTemplates( kernel::GlTools_ABC& tools )
 // -----------------------------------------------------------------------------
 void DrawerPanel::ReadCategory( xml::xistream& input, kernel::GlTools_ABC& tools )
 {
-    DrawerCategory* category = new DrawerCategory( this, tools, input );
+    DrawerCategory* category = new DrawerCategory( this, tools, input, *renderer_ );
     connect( category, SIGNAL( Selected( DrawerStyle& ) ), this, SLOT( OnSelect( DrawerStyle& ) ) );
     int id = toolBox_->addItem( category, category->GetName() );
     toolBox_->setItemToolTip ( id, category->GetDescription() );

@@ -21,7 +21,6 @@ namespace kernel
 // =============================================================================
 /** @class  PropertiesDictionary
     @brief  PropertiesDictionary
-    // $$$$ SBO 2006-10-17: DataDictionary... factor...
 */
 // Created: SBO 2006-10-17
 // =============================================================================

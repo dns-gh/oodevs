@@ -19,8 +19,9 @@ using namespace gui;
 // Name: DrawerCategory constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerCategory::DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input )
+DrawerCategory::DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input, svg::TextRenderer& renderer )
     : QVButtonGroup( parent )
+    , renderer_( renderer )
 {
     setExclusive( true );
     setMargin( 0 );
@@ -80,7 +81,7 @@ void DrawerCategory::ReadTemplates( xml::xistream& input, kernel::GlTools_ABC& t
 // -----------------------------------------------------------------------------
 void DrawerCategory::ReadTemplate( xml::xistream& input, kernel::GlTools_ABC& tools )
 {
-    DrawerStyle* style = new DrawerStyle( input, tools );
+    DrawerStyle* style = new DrawerStyle( input, tools, renderer_ );
     QPushButton* button = new QPushButton( style->GetName(), this, style->GetName() );
     button->setToggleButton( true );
     button->setBackgroundColor( Qt::white );

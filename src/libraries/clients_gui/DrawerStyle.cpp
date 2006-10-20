@@ -20,15 +20,16 @@ using namespace gui;
 // Name: DrawerStyle constructor
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-DrawerStyle::DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools )
+DrawerStyle::DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer )
     : tools_       ( tools )
     , references_  ( new svg::References() )
+    , renderer_    ( renderer )
     , line_        ( 0 )
     , markerStart_ ( 0 )
     , markerMiddle_( 0 )
     , markerEnd_   ( 0 )
 {
-    SVGFactory factory;
+    SVGFactory factory( renderer_ );
     
     std::string name, description;
     input >> xml::attribute( "name", name )
@@ -83,7 +84,7 @@ QString DrawerStyle::GetDescription() const
 // -----------------------------------------------------------------------------
 void DrawerStyle::ReadMarker( xml::xistream& input, svg::Node_ABC*& node, Unit& unit )
 {
-    SVGFactory factory;
+    SVGFactory factory( renderer_ );
     node = factory.Compile( input, *references_, 1 ); // $$$$ AGE 2006-08-31: 
     unit = ReadUnit( input );
 }   

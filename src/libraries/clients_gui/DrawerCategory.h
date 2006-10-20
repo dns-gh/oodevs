@@ -12,14 +12,16 @@
 
 #include <qvbuttongroup.h>
 
-namespace xml
-{
+namespace xml {
     class xistream;
 }
 
-namespace kernel
-{
+namespace kernel {
     class GlTools_ABC;
+}
+
+namespace svg {
+    class TextRenderer;
 }
 
 namespace gui
@@ -39,7 +41,7 @@ class DrawerCategory : public QVButtonGroup
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input );
+    DrawerCategory( QWidget* parent, kernel::GlTools_ABC& tools, xml::xistream& input, svg::TextRenderer& renderer );
     virtual ~DrawerCategory();
     //@}
 
@@ -83,6 +85,7 @@ private:
 private:
     //! @name Member data
     //@{
+    svg::TextRenderer& renderer_;
     QString name_;
     QString description_;
     T_Styles styles_;

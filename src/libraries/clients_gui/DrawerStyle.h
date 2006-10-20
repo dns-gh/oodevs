@@ -25,6 +25,7 @@ namespace svg
     class Node_ABC;
     class RenderingContext_ABC;
     class References;
+    class TextRenderer;
 }
 
 namespace gui
@@ -43,7 +44,7 @@ class DrawerStyle
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools );
+             DrawerStyle( xml::xistream& input, kernel::GlTools_ABC& tools, svg::TextRenderer& renderer );
     virtual ~DrawerStyle();
     //@}
 
@@ -89,6 +90,7 @@ private:
     //! @name Member data
     //@{
     kernel::GlTools_ABC& tools_;
+    svg::TextRenderer& renderer_;
     QString name_;
     QString description_;
     svg::References* references_;
