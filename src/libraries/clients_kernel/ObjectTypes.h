@@ -31,10 +31,10 @@ namespace kernel
 // Created: AGE 2006-02-16
 // =============================================================================
 class ObjectTypes
-    : public Resolver< ObjectType >
+    : public Resolver2< ObjectType >
     , public Resolver2< DotationType > // $$$$ AGE 2006-04-05: pas du tout des objets...
     , public Resolver< EquipmentType >
-    , public Resolver< NBCAgent >
+    , public Resolver2< NBCAgent >
     , public Resolver< BreakdownType >
 {
 

@@ -27,6 +27,20 @@ CrossingSiteAttributes::CrossingSiteAttributes()
 }
 
 // -----------------------------------------------------------------------------
+// Name: CrossingSiteAttributes constructor
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+CrossingSiteAttributes::CrossingSiteAttributes( xml::xistream& xis )
+{
+    xis >> start( "specific-attributes" )
+            >> content( "width", (int&)width_ )
+            >> content( "depth", (int&)depth_ )
+            >> content( "speed", (int&)speed_ )
+            >> content( "construction-needed", (bool&)needsConstruction_ )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: CrossingSiteAttributes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------

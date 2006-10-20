@@ -22,7 +22,7 @@ using namespace gui;
 // Name: RotaPrototype_ABC constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-RotaPrototype_ABC::RotaPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >& resolver )
+RotaPrototype_ABC::RotaPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver )
     : ObjectPrototypeAttributes_ABC( parent, tr( "ROTA" ) )
     , resolver_( resolver )
 {

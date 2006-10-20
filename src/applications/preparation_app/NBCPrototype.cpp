@@ -19,7 +19,7 @@ using namespace kernel;
 // Name: NBCPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype::NBCPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, Object_ABC*& creation )
+NBCPrototype::NBCPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, Object_ABC*& creation )
     : NBCPrototype_ABC( parent, resolver )
     , creation_( creation )
 {

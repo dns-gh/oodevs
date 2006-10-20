@@ -53,6 +53,6 @@ void IdManager::Reset()
 // -----------------------------------------------------------------------------
 void IdManager::Lock( unsigned long id )
 {
-    if( id > currentId_ )
+    if( id >= currentId_ )
         currentId_ = id + 1;
 }

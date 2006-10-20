@@ -12,6 +12,7 @@
 #include "Model.h"
 #include "StaticModel.h"
 #include "TeamsModel.h"
+#include "AgentsModel.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
 #include "Diplomacies.h"
@@ -28,6 +29,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectTypes.h"
 
 using namespace kernel;
 
@@ -111,7 +113,7 @@ kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xi
 // -----------------------------------------------------------------------------
 kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location )
 {
-    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, team, idManager_ );
+    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ );
     result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( controllers_.controller_, *result, &team ) );
     
@@ -147,6 +149,31 @@ kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, k
 // -----------------------------------------------------------------------------
 kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_ABC& team )
 {
-    // $$$$ SBO 2006-10-19: TODO
-    return 0;
+    Object* result = new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, staticModel_.objectTypes_, idManager_ );
+    result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( controllers_.controller_, *result, &team ) );
+    switch( result->GetType().id_ )
+    {
+    case eObjectType_CampPrisonniers:
+    case eObjectType_CampRefugies:
+        result->Attach< CampAttributes_ABC >( *new CampAttributes( xis, controllers_, model_.agents_ ) );
+        break;
+    case eObjectType_ItineraireLogistique:
+        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( xis ) );
+        break;
+    case eObjectType_NuageNbc:
+    case eObjectType_ZoneNbc:
+        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( xis, staticModel_.objectTypes_ ) );
+        break;
+    case eObjectType_Rota:
+        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( xis, staticModel_.objectTypes_ ) );
+        break;
+    case eObjectType_SiteFranchissement:
+        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( xis ) );
+        break;
+    default:
+        break;
+    };
+    result->Polish();
+    return result;
 }

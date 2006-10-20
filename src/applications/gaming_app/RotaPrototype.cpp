@@ -9,12 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "RotaPrototype.h"
-
-#include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/Iterator.h"
-#include "gaming/ASN_Messages.h"
+#include "clients_kernel/NBCAgent.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ValuedListItem.h"
+#include "gaming/ASN_Messages.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,7 +22,7 @@ using namespace gui;
 // Name: RotaPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-RotaPrototype::RotaPrototype( QWidget* parent, const Resolver< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg )
+RotaPrototype::RotaPrototype( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver, ASN1T_MagicActionCreateObject& msg )
     : RotaPrototype_ABC( parent, resolver )
     , msg_( msg )
     , attr_( 0 )

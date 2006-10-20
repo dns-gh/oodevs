@@ -19,6 +19,11 @@ namespace kernel
     class Displayer_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  LogisticRouteAttributes
     @brief  LogisticRouteAttributes
@@ -33,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticRouteAttributes();
+    explicit LogisticRouteAttributes( xml::xistream& xis );
     virtual ~LogisticRouteAttributes();
     //@}
 

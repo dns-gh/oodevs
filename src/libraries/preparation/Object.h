@@ -21,7 +21,6 @@
 namespace kernel
 {
     class Controller;
-    class Team_ABC;
     class ObjectType;
     class DotationType;
     class Displayer_ABC;
@@ -31,6 +30,7 @@ namespace kernel
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 class IdManager;
@@ -48,7 +48,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const kernel::ObjectType& type, kernel::Team_ABC& team, IdManager& idManager );
+                     const kernel::ObjectType& type, IdManager& idManager );
+             Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, 
+                     const kernel::Resolver_ABC< kernel::ObjectType, QString >& types, IdManager& idManager );
     virtual ~Object();
     //@}
 
@@ -72,23 +74,24 @@ private:
     Object& operator=( const Object& );
     //@}
 
-public:
-    //! @name Member data
+    //! @name Helpers
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::ObjectType& type_;
-    kernel::Team_ABC&     team_;
-
-    float rConstructionPercentage_;
-    float rValorizationPercentage_;
-    float rBypassConstructionPercentage_;
-
-    bool bPrepared_;
+    static unsigned long             ReadId  ( xml::xistream& xis );
+    static QString                   ReadName( xml::xistream& xis );
+    static const kernel::ObjectType& ReadType( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, QString >& types );
     //@}
 
 public:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
+    const kernel::ObjectType& type_;
+
+    float rConstructionPercentage_;
+    float rValorizationPercentage_;
+    float rBypassConstructionPercentage_;
+    bool bPrepared_;
+
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;
     unsigned int nDotationConstruction_;

@@ -10,8 +10,13 @@
 #include "preparation_pch.h"
 #include "ObjectPositions.h"
 #include "LocationSerializer.h"
+#include "clients_kernel/Polygon.h"
+#include "clients_kernel/Lines.h"
+#include "clients_kernel/Circle.h"
+#include "clients_kernel/Point.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -29,12 +34,60 @@ ObjectPositions::ObjectPositions( const CoordinateConverter_ABC& converter, cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectPositions constructor
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+ObjectPositions::ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+    : converter_( converter )
+    , location_( 0 )
+{
+    ReadLocation( xis );
+    Update();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectPositions destructor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
 ObjectPositions::~ObjectPositions()
 {
     delete location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::ReadLocation
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+void ObjectPositions::ReadLocation( xml::xistream& xis )
+{
+    std::string type;
+    xis >> start( "shape" )
+            >> attribute( "type", type );
+    if( type == "polygone" )
+        location_ = new kernel::Polygon();
+    else if( type == "ligne" )
+        location_ = new kernel::Lines();
+    else if( type == "cercle" )
+        location_ = new kernel::Circle();
+    else if( type == "point" )
+        location_ = new kernel::Point();
+    else
+        return;
+    xis     >> start( "points" )
+                >> list( "point", *this, &ObjectPositions::ReadPoint )
+            >> end()
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::ReadPoint
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+void ObjectPositions::ReadPoint( xml::xistream& xis )
+{
+    std::string position;
+    xis >> position;
+    location_->AddPoint( converter_.ConvertToXY( position ) );
 }
 
 // -----------------------------------------------------------------------------

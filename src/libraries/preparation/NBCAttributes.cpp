@@ -28,6 +28,19 @@ NBCAttributes::NBCAttributes()
 }
 
 // -----------------------------------------------------------------------------
+// Name: NBCAttributes constructor
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
+{
+    std::string name;
+    xis >> start( "specific-attributes" )
+            >> content( "nbc-agent", name )
+        >> end();
+    nbc_ = nbcAgents.Find( name.c_str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NBCAttributes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------

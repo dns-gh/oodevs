@@ -12,12 +12,6 @@
 
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Serializable_ABC.h"
-
-namespace kernel
-{
-    class Team_ABC;
-}
 
 // =============================================================================
 /** @class  ObjectHierarchies
@@ -26,7 +20,6 @@ namespace kernel
 // Created: SBO 2006-10-19
 // =============================================================================
 class ObjectHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
-                        , public kernel::Serializable_ABC
 {
 
 public:
@@ -46,11 +39,6 @@ private:
     //@{
     ObjectHierarchies( const ObjectHierarchies& );            //!< Copy constructor
     ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 
 private:

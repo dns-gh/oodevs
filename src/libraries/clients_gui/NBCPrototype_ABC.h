@@ -11,7 +11,7 @@
 #define __NBCPrototype_ABC_h_
 
 #include "ObjectPrototypeAttributes_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "clients_kernel/Resolver_ABC.h"
 #include "ValuedComboBox.h"
 
 namespace kernel
@@ -34,7 +34,7 @@ class NBCPrototype_ABC : public ObjectPrototypeAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype_ABC( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver );
+             NBCPrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver );
     virtual ~NBCPrototype_ABC();
     //@}
 
@@ -61,7 +61,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const kernel::Resolver< kernel::NBCAgent >& resolver_;
+    const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;
     ValuedComboBox< const kernel::NBCAgent* >* nbcAgents_;
     //@}
 };

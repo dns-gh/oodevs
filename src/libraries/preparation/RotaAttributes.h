@@ -13,11 +13,17 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
     class Displayer_ABC;
     class NBCAgent;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 // =============================================================================
@@ -34,6 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              RotaAttributes();
+             RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents );
     virtual ~RotaAttributes();
     //@}
 
@@ -54,6 +61,11 @@ private:
     //@{
     RotaAttributes( const RotaAttributes& );            //!< Copy constructor
     RotaAttributes& operator=( const RotaAttributes& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents );
     //@}
 
     //! @name Types

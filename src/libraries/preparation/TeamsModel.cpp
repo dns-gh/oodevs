@@ -197,9 +197,9 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
     xis >> start( "tactical" )
             >> list( "formation", model.formations_, &FormationModel::Create, *team, model )
         >> end();
-//    xis >> start( "objects" )
-//            >> list( "object", static_cast< Team& >( *team ), &Team::CreateObject )
-//        >> end();
+    xis >> start( "objects" )
+            >> list( "object", static_cast< Team& >( *team ), &Team::CreateObject )
+        >> end();
 }
 
 // -----------------------------------------------------------------------------

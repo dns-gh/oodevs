@@ -19,7 +19,7 @@ using namespace gui;
 // Name: NBCPrototype_ABC constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver< NBCAgent >& resolver )
+NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver )
     : ObjectPrototypeAttributes_ABC( parent, tr( "Paramètres NBC" ) )
     , resolver_( resolver )
 {

@@ -9,6 +9,9 @@
 
 #include "preparation_pch.h"
 #include "Object.h"
+#include "IdManager.h"
+#include "ObjectHierarchies.h"
+#include "Team.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/IDManager.h"
 #include "clients_kernel/Controller.h"
@@ -16,11 +19,10 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Team_ABC.h"
 #include "xeumeuleu/xml.h"
-#include "IdManager.h"
 
 using namespace kernel;
 using namespace xml;
@@ -29,11 +31,10 @@ using namespace xml;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, Team_ABC& team, IdManager& idManager )
+Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_                     ( converter )
     , type_                          ( type )
-    , team_                          ( team )
     , rConstructionPercentage_       ( 0.0 )
     , rValorizationPercentage_       ( 0.0 )
     , rBypassConstructionPercentage_ ( 0.0 )
@@ -45,13 +46,27 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 {
     RegisterSelf( *this );
     name_ = QString( "%1 [%2]" ).arg( type.GetName() ).arg( id_ );
-//    if( message.m.type_dotation_constructionPresent )
-//        construction_ = & dotationResolver.Get( message.type_dotation_construction );
-//    
-//    if( message.m.type_dotation_valorisationPresent )
-//        valorization_ = & dotationResolver.Get( message.type_dotation_valorisation );
+}
 
-//    type_.manager_.LockIdentifier( nId_ );
+// -----------------------------------------------------------------------------
+// Name: Object constructor
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const Resolver_ABC< ObjectType, QString >& types, IdManager& idManager )
+    : EntityImplementation< Object_ABC >( controller, ReadId( xis ), ReadName( xis ) )
+    , converter_                     ( converter )
+    , type_                          ( ReadType( xis, types ) )
+    , rConstructionPercentage_       ( 0.0 )
+    , rValorizationPercentage_       ( 0.0 )
+    , rBypassConstructionPercentage_ ( 0.0 )
+    , bPrepared_                     ( false )
+    , construction_                  ( 0 )
+    , valorization_                  ( 0 )
+    , nDotationConstruction_         ( 0 )
+    , nDotationValorization_         ( 0 )
+{
+    idManager.Lock( id_ );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +75,42 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
+    if( Entity_ABC* superior = const_cast< Entity_ABC* >( Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+        static_cast< Team* >( superior )->Resolver< kernel::Object_ABC >::Remove( id_ ); // $$$$ SBO 2006-10-20: 
     Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::ReadId
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+unsigned long Object::ReadId( xml::xistream& xis )
+{
+    int id;
+    xis >> attribute( "id", id );
+    return (unsigned long)id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::ReadName
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+QString Object::ReadName( xml::xistream& xis )
+{
+    std::string name;
+    xis >> attribute( "name", name );
+    return name.c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::ReadType
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_ABC< ObjectType, QString >& types )
+{
+    std::string type;
+    xis >> attribute( "type", type );
+    return types.Get( QString( type.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------

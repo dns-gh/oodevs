@@ -66,10 +66,10 @@ void ObjectTypes::Load( const std::string& scipioXml )
 // -----------------------------------------------------------------------------
 void ObjectTypes::Purge()
 {
-    Resolver< ObjectType >::DeleteAll();
+    Resolver2< ObjectType >::DeleteAll();
     Resolver2< DotationType >::DeleteAll();
     Resolver< EquipmentType >::DeleteAll();
-    Resolver< NBCAgent >::DeleteAll();
+    Resolver2< NBCAgent >::DeleteAll();
     Resolver< BreakdownType >::DeleteAll();
 }
 
@@ -126,7 +126,7 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
     xis >> attribute( "type", type );
     int nType = ENT_Tr::ConvertToObjectType( type );
     // $$$$ AGE 2006-10-17: checks
-    Resolver< ObjectType >::Register( nType, *new ObjectType( xis, nType, *managers_[ objectIds_[ nType ] ] ) );
+    Resolver2< ObjectType >::Register( nType, type.c_str(), *new ObjectType( xis, nType, *managers_[ objectIds_[ nType ] ] ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ void ObjectTypes::ReadNBC( const std::string& nbc )
 void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
 {
     NBCAgent* nbc = new NBCAgent( xis );
-    Resolver< NBCAgent >::Register( nbc->GetId(), *nbc );
+    Resolver2< NBCAgent >::Register( nbc->GetId(), nbc->GetName(), *nbc );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,12 +27,37 @@ RotaAttributes::RotaAttributes()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RotaAttributes constructor
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+RotaAttributes::RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
+{
+    xis >> start( "specific-attributes" )
+            >> content( "danger", (int&)danger_ )
+            >> start( "nbc-agents" )
+                >> list( "nbc-agent", *this, &RotaAttributes::ReadNbcAgent, nbcAgents )
+            >> end()
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: RotaAttributes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 RotaAttributes::~RotaAttributes()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaAttributes::ReadNbcAgent
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+void RotaAttributes::ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
+{
+    std::string name;
+    xis >> content( "nbc-agent", name );
+    AddAgent( nbcAgents.Get( name.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------

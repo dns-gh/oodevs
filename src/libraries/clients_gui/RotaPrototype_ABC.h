@@ -11,7 +11,7 @@
 #define __RotaPrototype_ABC_h_
 
 #include "ObjectPrototypeAttributes_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ class RotaPrototype_ABC : public ObjectPrototypeAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RotaPrototype_ABC( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver );
+             RotaPrototype_ABC( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver );
     virtual ~RotaPrototype_ABC();
     //@}
 
@@ -66,7 +66,7 @@ protected:
 
     //! @name Member data
     //@{
-    const kernel::Resolver< kernel::NBCAgent >& resolver_;
+    const kernel::Resolver_ABC< kernel::NBCAgent >& resolver_;
     RichLabel* nbcAgentsLabel_;
     QSpinBox* danger_;
     QListView* nbcAgents_;

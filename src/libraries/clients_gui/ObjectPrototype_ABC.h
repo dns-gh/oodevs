@@ -13,7 +13,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "clients_kernel/Resolver.h"
+#include "clients_kernel/Resolver_ABC.h"
 #include "ShapeHandler_ABC.h"
 #include "ValuedComboBox.h"
 
@@ -54,7 +54,7 @@ class ObjectPrototype_ABC : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver< kernel::ObjectType >& resolver, ParametersLayer& layer );
+             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::ObjectType >& resolver, ParametersLayer& layer );
     virtual ~ObjectPrototype_ABC();
     //@}
 
@@ -94,7 +94,7 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::Resolver< kernel::ObjectType >& resolver_;
+    const kernel::Resolver_ABC< kernel::ObjectType >& resolver_;
 
     ValuedComboBox< const kernel::Team_ABC* >* teams_;
     ValuedComboBox< const kernel::ObjectType* >* objectTypes_;

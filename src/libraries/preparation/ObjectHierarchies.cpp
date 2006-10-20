@@ -38,12 +38,3 @@ const kernel::Entity_ABC* ObjectHierarchies::GetSuperior() const
 {
     return superior_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: ObjectHierarchies::DoSerialize
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-void ObjectHierarchies::DoSerialize( xml::xostream& xos ) const
-{
-    // $$$$ SBO 2006-10-19: ?
-}

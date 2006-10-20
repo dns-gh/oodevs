@@ -13,11 +13,17 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace kernel
 {
     class Automat_ABC;
     class Displayer_ABC;
+}
+
+namespace xml
+{
+    class xistream;
 }
 
 // =============================================================================
@@ -34,6 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit CampAttributes( kernel::Controllers& controllers );
+    CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
     virtual ~CampAttributes();
     //@}
 

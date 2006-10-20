@@ -19,6 +19,11 @@ namespace kernel
     class Displayer_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  CrossingSiteAttributes
     @brief  CrossingSiteAttributes
@@ -33,6 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              CrossingSiteAttributes();
+    explicit CrossingSiteAttributes( xml::xistream& xis );
     virtual ~CrossingSiteAttributes();
     //@}
 

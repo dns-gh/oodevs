@@ -22,6 +22,11 @@ namespace kernel
     class Location_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  ObjectPositions
     @brief  ObjectPositions
@@ -38,6 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
+             ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ObjectPositions();
     //@}
 
@@ -61,6 +67,8 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadLocation( xml::xistream& xis );
+    void ReadPoint( xml::xistream& xis );
     void Update();
     virtual void VisitLines  ( const T_PointVector& points );
     virtual void VisitPolygon( const T_PointVector& points );
@@ -72,7 +80,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::Location_ABC* location_;
+    kernel::Location_ABC* location_;
     geometry::Rectangle2f boundingBox_;
 
     T_PointVector points_;

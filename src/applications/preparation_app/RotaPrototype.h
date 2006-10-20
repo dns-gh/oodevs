@@ -29,7 +29,7 @@ class RotaPrototype : public gui::RotaPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RotaPrototype( QWidget* parent, const kernel::Resolver< kernel::NBCAgent >& resolver, kernel::Object_ABC*& creation );
+             RotaPrototype( QWidget* parent, const kernel::Resolver_ABC< kernel::NBCAgent >& resolver, kernel::Object_ABC*& creation );
     virtual ~RotaPrototype();
     //@}
 

@@ -27,6 +27,21 @@ LogisticRouteAttributes::LogisticRouteAttributes()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticRouteAttributes constructor
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+LogisticRouteAttributes::LogisticRouteAttributes( xml::xistream& xis )
+{
+    xis >> start( "specific-attributes" )
+            >> content( "flow", (int&)flow_ )
+            >> content( "width", (int&)width_ )
+            >> content( "length", (int&)length_ )
+            >> content( "max-weight", (int&)maxWeight_ )
+            >> content( "equipped", (bool&)equipped_ )
+        >> end();
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticRouteAttributes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------

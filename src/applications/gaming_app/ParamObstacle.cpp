@@ -31,7 +31,7 @@ ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject
 
     typeCombo_ = new ValuedComboBox< const ObjectType* >( this );
     typeCombo_->setSorting( true );
-    Iterator< const ObjectType& > it = objectTypes.Resolver< ObjectType >::CreateIterator();
+    Iterator< const ObjectType& > it = objectTypes.Resolver2< ObjectType, unsigned long >::CreateIterator();
     while( it.HasMoreElements() )
     {
         const ObjectType& type = it.NextElement();

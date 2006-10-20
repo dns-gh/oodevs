@@ -42,7 +42,7 @@ using namespace gui;
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver< ObjectType >& resolver, ParametersLayer& layer )
+ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver_ABC< ObjectType >& resolver, ParametersLayer& layer )
     : QGroupBox( 2, Qt::Horizontal, tr( "Informations" ), parent )
     , controllers_( controllers )
     , resolver_( resolver )

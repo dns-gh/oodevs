@@ -28,6 +28,20 @@ CampAttributes::CampAttributes( Controllers& controllers )
 }
 
 // -----------------------------------------------------------------------------
+// Name: CampAttributes constructor
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+CampAttributes::CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const Resolver_ABC< Automat_ABC >& automats )
+    : tc2_( controllers )
+{
+    int id;
+    xis >> start( "specific-attributes" )
+            >> content( "TC2", id )
+        >> end();
+    tc2_ = automats.Find( id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CampAttributes destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
