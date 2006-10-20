@@ -116,11 +116,27 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     item->SetNamed( entity );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    item->setVisible( isVisible );
-    if( isVisible )
-        if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
-            DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
     
+    if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
+        DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
+    item->setVisible( isVisible || HasVisibleChild( item ) );
+    // $$$$ AGE 2006-10-20: to display knowledge groups 
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::HasVisibleChild
+// Created: AGE 2006-10-20
+// -----------------------------------------------------------------------------
+bool HierarchyListView_ABC::HasVisibleChild( QListViewItem* item ) const
+{
+    QListViewItem* child = item ? item->firstChild() : 0;
+    while( child )
+    {
+        if( child->isVisible() || HasVisibleChild( child ) )
+            return true;
+        child = child->nextSibling();
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

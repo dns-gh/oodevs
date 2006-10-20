@@ -101,6 +101,7 @@ private:
 
     bool Drop( ValuedListItem& item, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
+    bool HasVisibleChild( QListViewItem* item ) const;
     //@}
 
 private:
