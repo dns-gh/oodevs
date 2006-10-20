@@ -29,7 +29,7 @@ namespace gui
 
 class ObjectPrototype;
 class StaticModel;
-class ObjectsModel;
+class TeamsModel;
 
 // =============================================================================
 /** @class  ObjectCreationPanel
@@ -46,7 +46,7 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~ObjectCreationPanel();
     //@}
 

@@ -9,8 +9,8 @@
 
 #include "preparation_pch.h"
 #include "Formation.h"
-#include "FormationLevels.h"
 #include "IdManager.h"
+#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"

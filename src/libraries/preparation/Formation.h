@@ -18,6 +18,7 @@ namespace kernel
 {
     class Controller;
     class InstanciationComplete;
+    class FormationLevels;
 }
 
 namespace xml
@@ -26,7 +27,6 @@ namespace xml
 }
 
 class IdManager;
-class FormationLevels;
 
 // =============================================================================
 /** @class  Formation
@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Formation( kernel::Controller& controller, const kernel::HierarchyLevel_ABC& level, IdManager& idManager );
-             Formation( xml::xistream& xis, kernel::Controller& controller, const FormationLevels& levels, IdManager& idManager );
+             Formation( xml::xistream& xis, kernel::Controller& controller, const kernel::FormationLevels& levels, IdManager& idManager );
     virtual ~Formation();
     //@}
 

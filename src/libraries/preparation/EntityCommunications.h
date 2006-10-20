@@ -28,7 +28,6 @@ namespace kernel
 // Created: SBO 2006-10-09
 // =============================================================================
 class EntityCommunications : public kernel::DelayedEntityHierarchies< kernel::CommunicationHierarchies >
-                           , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 
 public:

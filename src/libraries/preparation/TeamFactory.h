@@ -12,6 +12,7 @@
 
 #include "TeamFactory_ABC.h"
 #include "KnowledgeGroupFactory_ABC.h"
+#include "ObjectFactory_ABC.h"
 
 namespace kernel
 {
@@ -19,6 +20,7 @@ namespace kernel
 }
 
 class Model;
+class StaticModel;
 class IdManager;
 
 // =============================================================================
@@ -29,12 +31,13 @@ class IdManager;
 // =============================================================================
 class TeamFactory : public TeamFactory_ABC
                   , public KnowledgeGroupFactory_ABC
+                  , public ObjectFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( kernel::Controllers& controllers, Model& model, IdManager& idManager );
+             TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager );
     virtual ~TeamFactory();
     //@}
 
@@ -42,8 +45,12 @@ public:
     //@{
     virtual kernel::Team_ABC* CreateTeam();
     virtual kernel::Team_ABC* CreateTeam( xml::xistream& xis );
+
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( kernel::Team_ABC& team );
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team );
+
+    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location );
+    virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, kernel::Team_ABC& team );
     //@}
 
 private:
@@ -58,6 +65,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
+    const StaticModel& staticModel_;
     IdManager& idManager_;
     //@}
 };

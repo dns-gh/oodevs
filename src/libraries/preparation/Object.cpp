@@ -29,7 +29,7 @@ using namespace xml;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, kernel::ObjectType& type, Team_ABC& team, IdManager& idManager )
+Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, Team_ABC& team, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_                     ( converter )
     , type_                          ( type )
@@ -67,7 +67,7 @@ Object::~Object()
 // Name: Object::GetType
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
-ObjectType& Object::GetType() const
+const ObjectType& Object::GetType() const
 {
     return type_;
 }
@@ -125,6 +125,5 @@ void Object::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_.GetName().ascii() )
-        << content( "name", name_ )
-        << content( "side", team_.GetName() );
+        << attribute( "name", name_ );
 }

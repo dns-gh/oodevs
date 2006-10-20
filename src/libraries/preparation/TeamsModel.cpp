@@ -75,6 +75,15 @@ void TeamsModel::CreateKnowledgeGroup( const kernel::Team_ABC& team )
 }
 
 // -----------------------------------------------------------------------------
+// Name: TeamsModel::CreateObject
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+Object_ABC* TeamsModel::CreateObject( const kernel::Team_ABC& team, kernel::ObjectType& type, const kernel::Location_ABC& location )
+{
+    return static_cast< Team& >( Get( team.GetId() ) ).CreateObject( type, location );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TeamsModel::FindTeam
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
@@ -188,7 +197,9 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
     xis >> start( "tactical" )
             >> list( "formation", model.formations_, &FormationModel::Create, *team, model )
         >> end();
-    
+//    xis >> start( "objects" )
+//            >> list( "object", static_cast< Team& >( *team ), &Team::CreateObject )
+//        >> end();
 }
 
 // -----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ namespace kernel
 }
 
 class StaticModel;
-class ObjectsModel;
+class TeamsModel;
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -33,7 +33,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, gui::ParametersLayer& layer );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer );
     virtual ~ObjectPrototype();
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ObjectsModel& objectsModel_;
+    TeamsModel& teamsModel_;
     kernel::Object_ABC* creation_;
     //@}
 };

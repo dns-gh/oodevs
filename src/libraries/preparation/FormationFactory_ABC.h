@@ -15,14 +15,13 @@ namespace kernel
     class Entity_ABC;
     class Formation_ABC;
     class HierarchyLevel_ABC;
+    class FormationLevels;
 }
 
 namespace xml
 {
     class xistream;
 }
-
-class FormationLevels;
 
 // =============================================================================
 /** @class  FormationFactory_ABC
@@ -43,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::Formation_ABC* Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level ) = 0;
-    virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent, const FormationLevels& levels ) = 0;
+    virtual kernel::Formation_ABC* Create( xml::xistream& xis, kernel::Entity_ABC& parent, const kernel::FormationLevels& levels ) = 0;
     //@}
 };
 

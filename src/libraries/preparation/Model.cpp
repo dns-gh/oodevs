@@ -15,8 +15,6 @@
 #include "KnowledgeGroupsModel.h"
 #include "AgentFactory.h"
 #include "AgentsModel.h"
-#include "ObjectFactory.h"
-#include "ObjectsModel.h"
 #include "FormationFactory.h"
 #include "FormationModel.h"
 #include "IdManager.h"
@@ -35,14 +33,12 @@ using namespace xml;
 Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : controllers_( controllers )
     , idManager_( *new IdManager() )
-    , teamFactory_( *new TeamFactory( controllers, *this, idManager_ ) )
+    , teamFactory_( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
-    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
-    , objects_( *new ObjectsModel( objectFactory_ ) )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
 {
     // NOTHING
@@ -56,8 +52,6 @@ Model::~Model()
 {
     delete &formations_;
     delete &formationFactory_;
-    delete &objects_;
-    delete &objectFactory_;
     delete &agents_;
     delete &agentFactory_;
     delete &knowledgeGroups_;
@@ -86,7 +80,6 @@ void Model::Serialize( xml::xostream& xos ) const
 {
     xos << start( "orbat" );
     teams_.Serialize( xos );
-    objects_.Serialize( xos );
     xos << end();
 }
 
@@ -102,5 +95,4 @@ void Model::Load( const std::string& filename )
             >> start( "Donnees" )
             >> content( "ODB", orbat );
     teams_.Load( path_tools::BuildChildPath( filename, orbat ), *this );
-//    objects_.Load( orbat );
 }

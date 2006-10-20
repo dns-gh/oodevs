@@ -13,7 +13,6 @@
 #include "ObjectPrototype.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Controllers.h"
-#include "preparation/ObjectsModel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -22,11 +21,11 @@ using namespace gui;
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, ParametersLayer& layer, const GlTools_ABC& tools )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, const GlTools_ABC& tools )
     : InfoPanel_ABC( parent, panel, tr( "Objets" ) )
     , controllers_( controllers )
     , tools_( tools )
-    , created_( new ObjectPrototype( this, controllers, model, objectsModel, layer ) )
+    , created_( new ObjectPrototype( this, controllers, model, teamsModel, layer ) )
 {
     QPushButton* pOkButton = new QPushButton( tr( "Créer" ), this );
     connect( pOkButton, SIGNAL( clicked() ), this, SLOT( Commit() ) );

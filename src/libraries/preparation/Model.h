@@ -29,8 +29,6 @@ class TeamFactory_ABC;
 class KnowledgeGroupsModel;
 class AgentsModel;
 class AgentFactory_ABC;
-class ObjectsModel;
-class ObjectFactory_ABC;
 class FormationModel;
 class FormationFactory_ABC;
 class IdManager;
@@ -65,7 +63,6 @@ private:
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;
-    ObjectFactory_ABC& objectFactory_;
     FormationFactory_ABC& formationFactory_;
     //@}
 
@@ -75,7 +72,6 @@ public:
     TeamsModel& teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
     AgentsModel& agents_;
-    ObjectsModel& objects_;
     FormationModel& formations_;
     //@}
 

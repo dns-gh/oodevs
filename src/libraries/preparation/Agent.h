@@ -71,6 +71,7 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     static unsigned long ReadId  ( xml::xistream& xis );
+    static QString       ReadName( xml::xistream& xis );
     //@}
 
 private:

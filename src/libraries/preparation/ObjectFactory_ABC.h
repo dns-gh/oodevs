@@ -18,6 +18,11 @@ namespace kernel
     class Location_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 // =============================================================================
 /** @class  ObjectFactory_ABC
     @brief  Object factory definition
@@ -36,7 +41,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Object_ABC* CreateObject( kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location ) = 0;
+    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location ) = 0;
+    virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, kernel::Team_ABC& team ) = 0;
     //@}
 };
 

@@ -18,11 +18,11 @@ namespace kernel
     class ModelLoaded;
     class Formation_ABC;
     class Automat_ABC;
+    class FormationLevels;
 }
 
 class AutomatDecisions;
 class ModelBuilder;
-class FormationLevels;
 
 // =============================================================================
 /** @class  TacticalListView
@@ -43,7 +43,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, const FormationLevels& levels );
+    TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, const kernel::FormationLevels& levels );
     virtual ~TacticalListView();
     //@}
 
@@ -88,7 +88,7 @@ private:
     //@{
     gui::ItemFactory_ABC& factory_;
     ModelBuilder& modelBuilder_;
-    const FormationLevels& levels_;
+    const kernel::FormationLevels& levels_;
     //@}
 };
 

@@ -25,6 +25,9 @@ namespace kernel
     class KnowledgeGroup_ABC;
     class Controllers;
     class Entity_ABC;
+    class ObjectType;
+    class Location_ABC;
+    class Object_ABC;
 }
 
 class TeamFactory_ABC;
@@ -54,6 +57,7 @@ public:
     void Purge();
     void CreateTeam();
     void CreateKnowledgeGroup( const kernel::Team_ABC& team );
+    kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, kernel::ObjectType& type, const kernel::Location_ABC& location );
 
     kernel::Team_ABC* FindTeam( const QString& name ) const;
     kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& id ) const;

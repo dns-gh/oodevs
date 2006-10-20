@@ -19,6 +19,7 @@ namespace kernel
     class Entity_ABC;
     class Formation_ABC;
     class Team_ABC;
+    class FormationLevels;
 }
 
 namespace xml
@@ -28,7 +29,6 @@ namespace xml
 }
 
 class FormationFactory_ABC;
-class FormationLevels;
 class Model;
 
 // =============================================================================
@@ -78,7 +78,7 @@ private:
 public:
     //! @name Member data
     //@{
-    FormationLevels& levels_;
+    kernel::FormationLevels& levels_;
     //@}
 };
 

@@ -10,14 +10,24 @@
 #include "preparation_pch.h"
 #include "TeamFactory.h"
 #include "Model.h"
+#include "StaticModel.h"
 #include "TeamsModel.h"
 #include "Team.h"
 #include "KnowledgeGroup.h"
 #include "Diplomacies.h"
 #include "TeamHierarchies.h"
 #include "TeamCommunications.h"
+#include "Object.h"
+#include "ObjectPositions.h"
+#include "LogisticRouteAttributes.h"
+#include "NBCAttributes.h"
+#include "RotaAttributes.h"
+#include "CrossingSiteAttributes.h"
+#include "CampAttributes.h"
+#include "ObjectHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InstanciationComplete.h"
+#include "clients_kernel/ObjectType.h"
 
 using namespace kernel;
 
@@ -25,9 +35,10 @@ using namespace kernel;
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( Controllers& controllers, Model& model, IdManager& idManager )
+TeamFactory::TeamFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager )
     : controllers_( controllers )
     , model_( model )
+    , staticModel_( staticModel )
     , idManager_( idManager )
 {
     // NOTHING
@@ -48,7 +59,7 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamFactory::CreateTeam()
 {
-    Team* result = new Team( controllers_.controller_, *this, idManager_ );
+    Team* result = new Team( controllers_.controller_, *this, *this, idManager_ );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
@@ -62,7 +73,7 @@ Team_ABC* TeamFactory::CreateTeam()
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 {
-    Team* result = new Team( xis, controllers_.controller_, *this, idManager_ );
+    Team* result = new Team( xis, controllers_.controller_, *this, *this, idManager_ );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
@@ -92,4 +103,50 @@ kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xi
     result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::CreateObject
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location )
+{
+    Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, team, idManager_ );
+    result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, location ) );
+    result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( controllers_.controller_, *result, &team ) );
+    
+    switch( type.id_ )
+    {
+    case eObjectType_CampPrisonniers:
+    case eObjectType_CampRefugies:
+        result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_ ) );
+        break;
+    case eObjectType_ItineraireLogistique:
+        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes() );
+        break;
+    case eObjectType_NuageNbc:
+    case eObjectType_ZoneNbc:
+        result->Attach< NBCAttributes_ABC >( *new NBCAttributes() );
+        break;
+    case eObjectType_Rota:
+        result->Attach< RotaAttributes_ABC >( *new RotaAttributes() );
+        break;
+    case eObjectType_SiteFranchissement:
+        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes() );
+        break;
+    default:
+        break;
+    };
+    result->Polish();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::CreateObject
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_ABC& team )
+{
+    // $$$$ SBO 2006-10-19: TODO
+    return 0;
 }

@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ObjectPrototype.h"
 #include "preparation/StaticModel.h"
-#include "preparation/ObjectsModel.h"
+#include "preparation/TeamsModel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Team_ABC.h"
@@ -28,9 +28,9 @@ using namespace gui;
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, ParametersLayer& layer )
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer )
     : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer )
-    , objectsModel_( objectsModel )
+    , teamsModel_( teamsModel )
     , creation_( 0 )
 {
     campAttributes_          = new CampPrototype         ( parent, controllers, creation_ );        campAttributes_->hide();
@@ -55,7 +55,7 @@ ObjectPrototype::~ObjectPrototype()
 // -----------------------------------------------------------------------------
 void ObjectPrototype::Commit()
 {
-    creation_ = objectsModel_.CreateObject( const_cast< ObjectType& >( GetType() ), const_cast< Team_ABC& >( *teams_->GetValue() ), *location_ );
+    creation_ = teamsModel_.CreateObject( *teams_->GetValue(), const_cast< ObjectType& >( GetType() ), *location_ );
     if( creation_ && activeAttributes_ )
         activeAttributes_->Commit();
     creation_ = 0;

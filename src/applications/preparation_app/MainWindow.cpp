@@ -38,6 +38,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/PathTools.h"
+#include "clients_kernel/FormationLevels.h"
 
 #include "preparation/Model.h"
 //#include "gaming/Population.h"
@@ -167,7 +168,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, profile );
 
     // object creation window
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.objects_, *paramLayer, *glProxy_ );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_ );
     pCreationPanel->AddPanel( objectCreationPanel );
 
 //    new MapToolbar( this, controllers );

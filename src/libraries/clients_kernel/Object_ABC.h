@@ -43,7 +43,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual ObjectType& GetType() const = 0;
+    virtual const ObjectType& GetType() const = 0;
     //@}
 
     //! @name Operations

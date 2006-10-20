@@ -14,11 +14,15 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Resolver.h"
 
 namespace kernel
 {
     class Controller;
     class InstanciationComplete;
+    class ObjectType;
+    class Location_ABC;
+    class Object_ABC;
 }
 
 namespace xml
@@ -28,6 +32,7 @@ namespace xml
 }
 
 class KnowledgeGroupFactory_ABC;
+class ObjectFactory_ABC;
 class IdManager;
 
 // =============================================================================
@@ -39,13 +44,14 @@ class IdManager;
 class Team : public kernel::EntityImplementation< kernel::Team_ABC >
            , public kernel::Extension_ABC
            , public kernel::Serializable_ABC
+           , public kernel::Resolver< kernel::Object_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager );
-             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager );
+             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
+             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
     virtual ~Team();
     //@}
 
@@ -53,6 +59,8 @@ public:
     //@{
     void CreateKnowledgeGroup();
     void CreateKnowledgeGroup( xml::xistream& xis );
+    kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const kernel::Location_ABC& location );
+    void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
@@ -73,7 +81,8 @@ private:
 private:
     //! @name Member data
     //@{
-    KnowledgeGroupFactory_ABC& factory_;
+    KnowledgeGroupFactory_ABC& kgFactory_;
+    ObjectFactory_ABC& objectFactory_;
     //@}
 };
 

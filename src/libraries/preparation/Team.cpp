@@ -10,7 +10,9 @@
 #include "preparation_pch.h"
 #include "Team.h"
 #include "KnowledgeGroupFactory_ABC.h"
+#include "ObjectFactory_ABC.h"
 #include "KnowledgeGroup.h"
+#include "Object.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_gui/Tools.h"
@@ -24,9 +26,10 @@ using namespace xml;
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager )
+Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
-    , factory_( factory )
+    , kgFactory_( kgFactory )
+    , objectFactory_( objectFactory )
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Preparation", "Armée %1" ).arg( id_ );
@@ -36,9 +39,10 @@ Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManage
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, IdManager& idManager )
+Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, ReadId( xis ), ReadName( xis ) )
-    , factory_( factory )
+    , kgFactory_( kgFactory )
+    , objectFactory_( objectFactory )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -50,6 +54,7 @@ Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFa
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
+    Resolver< Object_ABC >::DeleteAll();
     Destroy();
 }
 
@@ -81,7 +86,7 @@ QString Team::ReadName( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void Team::CreateKnowledgeGroup()
 {
-    factory_.CreateKnowledgeGroup( *this );
+    kgFactory_.CreateKnowledgeGroup( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +95,28 @@ void Team::CreateKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void Team::CreateKnowledgeGroup( xml::xistream& xis )
 {
-    factory_.CreateKnowledgeGroup( xis, *this );
+    kgFactory_.CreateKnowledgeGroup( xis, *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateObject
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const kernel::Location_ABC& location )
+{
+    Object_ABC* object = objectFactory_.CreateObject( type, *this, location );
+    Resolver< Object_ABC >::Register( object->GetId(), *object );
+    return object;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateObject
+// Created: SBO 2006-10-19
+// -----------------------------------------------------------------------------
+void Team::CreateObject( xml::xistream& xis )
+{
+    Object_ABC* object = objectFactory_.CreateObject( xis, *this );
+    Resolver< Object_ABC >::Register( object->GetId(), *object );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,4 +137,13 @@ void Team::DoSerialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() );
+
+    xos << start( "objects" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        xos << start( "object" );
+        it->second->Serialize( xos );
+        xos << end();
+    }
+    xos << end();
 }

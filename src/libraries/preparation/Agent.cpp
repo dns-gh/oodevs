@@ -38,14 +38,12 @@ Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManage
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
-    : EntityImplementation< Agent_ABC >( controller, ReadId( xis ), "" )
+    : EntityImplementation< Agent_ABC >( controller, ReadId( xis ), ReadName( xis ) )
     , commandPost_( false )
 {
-    std::string type, name;
+    std::string type;
     xis >> attribute( "type", type )
-        >> attribute( "name", name )
         >> optional() >> attribute( "command-post", commandPost_ );
-    name_ = QString( "%1 [%2]" ).arg( name.c_str() ).arg( id_ );
     type_ = &agentTypes.Resolver< AgentType, QString >::Get( type.c_str() );
     idManager.Lock( id_ );
     
@@ -71,6 +69,17 @@ unsigned long Agent::ReadId( xml::xistream& xis )
     int id;
     xis >> attribute( "id", id );
     return id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ReadName
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+QString Agent::ReadName( xml::xistream& xis )
+{
+    std::string name;
+    xis >> attribute( "name", name );
+    return name.c_str();
 }
 
 // -----------------------------------------------------------------------------

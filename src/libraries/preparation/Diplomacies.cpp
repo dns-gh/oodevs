@@ -90,7 +90,7 @@ void Diplomacies::ReadRelationship( xml::xistream& xis )
 {
     int id;
     std::string diplomacy;
-    xis >> attribute( "team", id )
+    xis >> attribute( "side", id )
         >> attribute( "diplomacy", diplomacy );
     SetDiplomacy( resolver_.Get( id ), Diplomacy::Resolve( diplomacy.c_str() ) );
 }

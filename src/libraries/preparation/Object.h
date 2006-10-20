@@ -48,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     kernel::ObjectType& type, kernel::Team_ABC& team, IdManager& idManager );
+                     const kernel::ObjectType& type, kernel::Team_ABC& team, IdManager& idManager );
     virtual ~Object();
     //@}
 
@@ -62,7 +62,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual kernel::ObjectType& GetType() const;
+    virtual const kernel::ObjectType& GetType() const;
     //@}
     
 private:
@@ -76,7 +76,7 @@ public:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    kernel::ObjectType&   type_;
+    const kernel::ObjectType& type_;
     kernel::Team_ABC&     team_;
 
     float rConstructionPercentage_;
