@@ -874,13 +874,6 @@ void MIL_AgentPion::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg,
     asnReplyMsg.GetAsnMsg().oid_pion     = asnMsg.oid_pion;
     asnReplyMsg.GetAsnMsg().oid_automate = asnMsg.oid_automate;
 
-    if( IsPC() )
-    {
-        asnReplyMsg.GetAsnMsg().error_code = EnumChangeAutomateErrorCode::error_invalid_pion;
-        asnReplyMsg.Send( nCtx );
-        return;
-    }
-
     MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnMsg.oid_automate );
     if( !pNewAutomate )
     {

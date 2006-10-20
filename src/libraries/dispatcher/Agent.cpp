@@ -276,9 +276,12 @@ void Agent::Update( const ASN1T_MsgChangeAutomate& asnMsg )
 // -----------------------------------------------------------------------------
 void Agent::Update( const ASN1T_MsgChangeAutomateAck& asnMsg )
 {
-    pAutomat_->GetAgents().Unregister( *this );
-    pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
-    pAutomat_->GetAgents().Register( *this );
+    if( asnMsg.error_code == EnumChangeAutomateErrorCode::no_error )
+    {
+        pAutomat_->GetAgents().Unregister( *this );
+        pAutomat_ = &model_.GetAutomats().Get( asnMsg.oid_automate );
+        pAutomat_->GetAgents().Register( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
