@@ -34,6 +34,9 @@ PropertiesTable::PropertiesTable( QWidget* parent )
     setLeftMargin( 0 );
     horizontalHeader()->hide();
     setTopMargin( 0 );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
+    setHScrollBarMode( QScrollView::AlwaysOff );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Minimum );
     setFrameStyle( MenuBarPanel );
 }
@@ -80,7 +83,6 @@ Displayer_ABC& PropertiesTable::SubItem( const QString& name )
         insertRows( row_ );
         rows_[name] = row_;
         setText( row_, 0, name );
-        adjustColumn( 0 );
     }
     else
         row_ = it->second;
@@ -111,7 +113,7 @@ void PropertiesTable::DisplayFormatted( const QString& )
 // -----------------------------------------------------------------------------
 void PropertiesTable::EndDisplay()
 {
-    // NOTHING
+    clearSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -121,5 +123,14 @@ void PropertiesTable::EndDisplay()
 void PropertiesTable::Call( kernel::Property_ABC* const& property )
 {
     setItem( row_, 1, new PropertyTableItem( this, *property, itemDisplayer_, factory_ ) );
-    adjustColumn( 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTable::focusOutEvent
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+void PropertiesTable::focusOutEvent( QFocusEvent* event )
+{
+    clearSelection();
+    QTable::focusOutEvent( event );
 }

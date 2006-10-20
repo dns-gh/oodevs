@@ -63,6 +63,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void focusOutEvent( QFocusEvent* );
     virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );

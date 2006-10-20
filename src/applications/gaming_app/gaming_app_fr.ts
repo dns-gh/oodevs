@@ -1007,6 +1007,10 @@
         <source>ODB</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapToolbar</name>

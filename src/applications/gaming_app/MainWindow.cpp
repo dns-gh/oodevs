@@ -37,6 +37,7 @@
 #include "AgentList.h"
 #include "TacticalLinesSaver.h"
 #include "LoginDialog.h"
+#include "Properties.h"
 #include "TacticalList.h"
 
 #include "clients_kernel/ActionController.h"
@@ -157,6 +158,16 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     MiniViews* miniviews = new MiniViews( this, controllers_, widget2d_ ); // $$$$ AGE 2006-08-21: widget2d en *& dégueu. Instancier l'un quand l'autre
     miniviews->hide();
+
+    // Properties
+    QDockWindow* pPropertiesWnd = new QDockWindow( this );
+    moveDockWindow( pPropertiesWnd, Qt::DockLeft );
+    Properties* properties = new Properties( pPropertiesWnd, controllers );
+    pPropertiesWnd->setWidget( properties );
+    pPropertiesWnd->setResizeEnabled( true );
+    pPropertiesWnd->setCloseMode( QDockWindow::Always );
+    pPropertiesWnd->setCaption( tr( "Properties" ) );
+    setDockEnabled( pPropertiesWnd, Qt::DockTop, false );
 
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this );
