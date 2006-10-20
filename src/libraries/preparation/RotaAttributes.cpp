@@ -55,9 +55,9 @@ RotaAttributes::~RotaAttributes()
 // -----------------------------------------------------------------------------
 void RotaAttributes::ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
 {
-    std::string name;
-    xis >> content( "nbc-agent", name );
-    AddAgent( nbcAgents.Get( name.c_str() ) );
+    std::string type;
+    xis >> attribute( "type", type );
+    AddAgent( nbcAgents.Get( type.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,11 @@ void RotaAttributes::DoSerialize( xml::xostream& xos ) const
             << content( "danger", int( danger_ ) )
             << start( "nbc-agents" );
     for( T_Nbcs::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
-        xos     << content( "nbc-agent", (*it)->GetName() );
-    xos     << end()
+    {
+        xos << start( "nbc-agent" )
+                << attribute( "type", (*it)->GetName() )
+            << end();
+    }
+    xos << end()
         << end();
 }

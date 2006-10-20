@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "AgentStatePanel.h"
+#include "ObjectStatePanel.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_gui/Tools.h"
 #include "clients_gui/PropertiesWidget.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -19,11 +19,11 @@ using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel constructor
-// Created: SBO 2006-10-11
+// Name: ObjectStatePanel constructor
+// Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers )
-    : InfoPanel_ABC( parent, panel, tools::translate( "Preparation", "Agent State" ) )
+ObjectStatePanel::ObjectStatePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers )
+    : InfoPanel_ABC( parent, panel, tools::translate( "Preparation", "Object State" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
@@ -32,30 +32,19 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
 }
     
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel destructor
-// Created: SBO 2006-10-11
+// Name: ObjectStatePanel destructor
+// Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-AgentStatePanel::~AgentStatePanel()
+ObjectStatePanel::~ObjectStatePanel()
 {
     controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel::showEvent
-// Created: SBO 2006-10-11
+// Name: ObjectStatePanel::NotifySelected
+// Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-void AgentStatePanel::showEvent( QShowEvent* )
-{
-    const Agent_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentStatePanel::NotifySelected
-// Created: SBO 2006-10-11
-// -----------------------------------------------------------------------------
-void AgentStatePanel::NotifySelected( const kernel::Agent_ABC* element )
+void ObjectStatePanel::NotifySelected( const kernel::Object_ABC* element )
 {
     if( selected_ != element || ! element )
     {
@@ -63,7 +52,7 @@ void AgentStatePanel::NotifySelected( const kernel::Agent_ABC* element )
         if( selected_ )
         {
             Show();
-            PropertiesDictionary& dico = const_cast< kernel::Agent_ABC* >( element )->Get< PropertiesDictionary >();
+            PropertiesDictionary& dico = const_cast< kernel::Object_ABC* >( element )->Get< PropertiesDictionary >();
             dico.Display( *properties_ );
         }
         else
@@ -71,13 +60,23 @@ void AgentStatePanel::NotifySelected( const kernel::Agent_ABC* element )
     }
 }
 
-// $$$$ AGE 2006-02-16: Centraliser tout ca : 
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel::NotifyDeleted
-// Created: AGE 2006-02-16
+// Name: ObjectStatePanel::showEvent
+// Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyDeleted( const Agent_ABC& agent )
+void ObjectStatePanel::showEvent( QShowEvent* )
 {
-    if( selected_ = & agent )
+    const Object_ABC* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectStatePanel::NotifyDeleted
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+void ObjectStatePanel::NotifyDeleted( const kernel::Object_ABC& object )
+{
+    if( selected_ = & object )
         NotifySelected( 0 );
 }

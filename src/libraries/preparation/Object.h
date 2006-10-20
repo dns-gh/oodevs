@@ -76,6 +76,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::Controller& controller );
     static unsigned long             ReadId  ( xml::xistream& xis );
     static QString                   ReadName( xml::xistream& xis );
     static const kernel::ObjectType& ReadType( xml::xistream& xis, const kernel::Resolver_ABC< kernel::ObjectType, QString >& types );

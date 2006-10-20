@@ -22,6 +22,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -46,6 +47,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 {
     RegisterSelf( *this );
     name_ = QString( "%1 [%2]" ).arg( type.GetName() ).arg( id_ );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,6 +69,7 @@ Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel
 {
     idManager.Lock( id_ );
     RegisterSelf( *this );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,4 +179,18 @@ void Object::DoSerialize( xml::xostream& xos ) const
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_.GetName().ascii() )
         << attribute( "name", name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::CreateDictionary
+// Created: SBO 2006-10-20
+// -----------------------------------------------------------------------------
+void Object::CreateDictionary( kernel::Controller& controller )
+{
+    PropertiesDictionary& dico = *new PropertiesDictionary( controller );
+    Attach( dico );
+    const Object& constSelf = *this;
+    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
+    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Name" ), name_ );
+//    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), type_ );
 }

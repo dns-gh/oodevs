@@ -33,11 +33,13 @@ NBCAttributes::NBCAttributes()
 // -----------------------------------------------------------------------------
 NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
 {
-    std::string name;
+    std::string type;
     xis >> start( "specific-attributes" )
-            >> content( "nbc-agent", name )
+            >> start( "nbc-agent" )
+                >> attribute( "type", type )
+            >> end()
         >> end();
-    nbc_ = nbcAgents.Find( name.c_str() );
+    nbc_ = nbcAgents.Find( type.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +78,8 @@ void NBCAttributes::SetAgent( const kernel::NBCAgent& agent )
 void NBCAttributes::DoSerialize( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
-            << content( "nbc-agent", nbc_->GetName() )
+            << start( "nbc-agent" )
+                << attribute( "type", nbc_->GetName() )
+            << end()
         << end();
 }

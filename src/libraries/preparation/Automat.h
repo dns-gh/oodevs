@@ -15,6 +15,7 @@
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {

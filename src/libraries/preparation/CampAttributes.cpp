@@ -36,7 +36,9 @@ CampAttributes::CampAttributes( xml::xistream& xis, kernel::Controllers& control
 {
     int id;
     xis >> start( "specific-attributes" )
-            >> content( "TC2", id )
+            >> start( "tc2" )
+                >> attribute( "id", id )
+            >> end()
         >> end();
     tc2_ = automats.Find( id );
 }
@@ -76,6 +78,8 @@ void CampAttributes::Display( Displayer_ABC& displayer ) const
 void CampAttributes::DoSerialize( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
-            << content( "TC2", long( tc2_->GetId() ) )
+            << start( "tc2" )
+                << attribute( "id", long( tc2_->GetId() ) )
+            << end()
         << end();
 }

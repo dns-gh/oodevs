@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentStatePanel_h_
-#define __AgentStatePanel_h_
+#ifndef __ObjectStatePanel_h_
+#define __ObjectStatePanel_h_
 
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
@@ -17,7 +17,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Object_ABC;
     class Controllers;
 }
 
@@ -27,40 +27,40 @@ namespace gui
 }
 
 // =============================================================================
-/** @class  AgentStatePanel
-    @brief  AgentStatePanel
+/** @class  ObjectStatePanel
+    @brief  ObjectStatePanel
 */
-// Created: SBO 2006-10-11
+// Created: SBO 2006-10-20
 // =============================================================================
-class AgentStatePanel : public gui::InfoPanel_ABC
-                      , public kernel::Observer_ABC
-                      , public kernel::SelectionObserver< kernel::Agent_ABC >
-                      , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
+class ObjectStatePanel : public gui::InfoPanel_ABC
+                       , public kernel::Observer_ABC
+                       , public kernel::SelectionObserver< kernel::Object_ABC >
+                       , public kernel::ElementObserver_ABC< kernel::Object_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers );
-    virtual ~AgentStatePanel();
+             ObjectStatePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers );
+    virtual ~ObjectStatePanel();
     //@}
 
     //! @name Operations
     //@{
-    virtual void NotifySelected( const kernel::Agent_ABC* element );
+    virtual void NotifySelected( const kernel::Object_ABC* element );
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    AgentStatePanel( const AgentStatePanel& );            //!< Copy constructor
-    AgentStatePanel& operator=( const AgentStatePanel& ); //!< Assignement operator
+    ObjectStatePanel( const ObjectStatePanel& );            //!< Copy constructor
+    ObjectStatePanel& operator=( const ObjectStatePanel& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
     void showEvent( QShowEvent* );
-    virtual void NotifyDeleted( const kernel::Agent_ABC& );
+    virtual void NotifyDeleted( const kernel::Object_ABC& );
     //@}
 
 private:
@@ -68,8 +68,8 @@ private:
     //@{
     gui::PropertiesWidget* properties_;
     kernel::Controllers& controllers_;
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Object_ABC > selected_;
     //@}
 };
 
-#endif // __AgentStatePanel_h_
+#endif // __ObjectStatePanel_h_
