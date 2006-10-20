@@ -12,10 +12,12 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h" // $$$$ AGE 2006-10-13: Should be TacticalHierarchies
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "ASN_Messages.h"
 
 using namespace kernel;
@@ -105,6 +107,11 @@ void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
         if( message.profile.m.read_write_populationsPresent )
             ReadList( message.profile.read_write_populations, writePopulations_ );
 
+        if( message.profile.m.read_only_formationsPresent )
+            ReadList( message.profile.read_only_formations, readFormations_ );
+        if( message.profile.m.read_write_formationsPresent )
+            ReadList( message.profile.read_write_formations, writeFormations_ );
+
         supervision_ = message.profile.superviseur;
 
         controller_.Update( *(Profile_ABC*)this );
@@ -156,7 +163,8 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
 {
     if( entities.find( &entity ) != entities.end() )
         return true;
-    if( const CommunicationHierarchies* hierarchies = entity.Retrieve< CommunicationHierarchies >() )
+
+    if( const Hierarchies* hierarchies = FindHierarchies( entity ) )
         for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
         {
             const Entity_ABC& possibleSuperior = **it;
@@ -170,14 +178,26 @@ bool Profile::IsInHierarchy( const Entity_ABC& entity, const T_Entities& entitie
 // Name: Profile::IsInHierarchy
 // Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
-bool Profile::IsInHierarchy( const Entity_ABC& entity, const CommunicationHierarchies& hierarchy, const Entity_ABC& other, bool childOnly )
+bool Profile::IsInHierarchy( const Entity_ABC& entity, const Hierarchies& hierarchy, const Entity_ABC& other, bool childOnly )
 {
     if( hierarchy.IsSubordinateOf( other ) )
         return true;
     if( childOnly )
         return false;
-    const CommunicationHierarchies* otherHierarchies = other.Retrieve< CommunicationHierarchies >();
+    const Hierarchies* otherHierarchies = FindHierarchies( other );
     return otherHierarchies && otherHierarchies->IsSubordinateOf( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::FindHierarchies
+// Created: AGE 2006-10-20
+// -----------------------------------------------------------------------------
+const kernel::Hierarchies* Profile::FindHierarchies( const kernel::Entity_ABC& entity )
+{
+    const Hierarchies* result = entity.Retrieve< TacticalHierarchies >();
+    if( ! result )
+        result = entity.Retrieve< CommunicationHierarchies >();
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -232,6 +252,24 @@ void Profile::NotifyCreated( const Team_ABC& team )
 void Profile::NotifyDeleted( const Team_ABC& team )
 {
     Remove( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyCreated
+// Created: AGE 2006-10-20
+// -----------------------------------------------------------------------------
+void Profile::NotifyCreated( const kernel::Formation_ABC& formation )
+{
+    Add( formation, readFormations_, writeFormations_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::NotifyDeleted
+// Created: AGE 2006-10-20
+// -----------------------------------------------------------------------------
+void Profile::NotifyDeleted( const kernel::Formation_ABC& formation )
+{
+    Remove( formation );
 }
 
 // -----------------------------------------------------------------------------

@@ -1003,6 +1003,10 @@
         <source>Cr&#xe9;ation d&apos;objet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ODB</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapToolbar</name>

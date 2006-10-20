@@ -3,7 +3,7 @@
   <sides>
     <side id="1" name="rouge">
       <tactical>
-        <formation id="17" level="x" name="">
+        <formation id="17" level="x" name="Niveau x">
           <automat engaged="true" id="18" knowledge-group="23" name="$$$$Automate$$$$" type="BLD Sante">
             <unit command-post="true" id="19" name="PC BLD Sante" position="30TYT2238066816" type="PC BLD Sante"/>
           </automat>
@@ -26,16 +26,16 @@
     </side> 
     <side id="3" name="bleu">
       <tactical>
-        <formation id="5" level="xxx" name="">    
-          <formation id="6" level="iii" name="">
-            <formation id="7" level="oo" name="">
+        <formation id="5" level="xxx" name="Niveau xxx">
+          <formation id="6" level="iii" name="Niveau iii">
+            <formation id="7" level="oo" name="Niveau oo">
               <automat engaged="true" id="9" knowledge-group="22" name="automate pas nommé" type="Compagnie GEN Lourde">
                 <unit command-post="true" id="10" name="Section Combat GEN" position="30TYT1896868099" type="Section Combat GEN"/>
                 <unit command-post="false" id="11" name="Section Combat GEN" position="30TYT1948867619" type="Section Combat GEN"/>
                 <unit command-post="false" id="12" name="Section Combat GEN" position="30TYT1900667101" type="Section Combat GEN"/>
               </automat>
             </formation>
-            <formation id="8" level="ooo" name="">
+            <formation id="8" level="ooo" name="Niveau ooo">
               <automat engaged="true" id="13" knowledge-group="4" name="rav" type="BLD Ravitaillement">
                 <unit command-post="true" id="14" name="PC BLD Ravitaillement" position="30TYT1983765228" type="PC BLD Ravitaillement">
                     <stocks>

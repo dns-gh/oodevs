@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentList_h_
-#define __AgentList_h_
+#ifndef __TacticalList_h_
+#define __TacticalList_h_
 
 namespace kernel
 {
@@ -20,30 +20,28 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class Publisher_ABC;
-
 // =============================================================================
-/** @class  AgentList
-    @brief  AgentList
+/** @class  TacticalList
+    @brief  TacticalList
 */
-// Created: AGE 2006-08-29
+// Created: AGE 2006-10-20
 // =============================================================================
-class AgentList : public QVBox
+class TacticalList : public QVBox
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentList( kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory );
-    virtual ~AgentList();
+             TacticalList( kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+    virtual ~TacticalList();
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    AgentList( const AgentList& );            //!< Copy constructor
-    AgentList& operator=( const AgentList& ); //!< Assignement operator
+    TacticalList( const TacticalList& );            //!< Copy constructor
+    TacticalList& operator=( const TacticalList& ); //!< Assignement operator
     //@}
 };
 
-#endif // __AgentList_h_
+#endif // __TacticalList_h_

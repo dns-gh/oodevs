@@ -37,6 +37,7 @@
 #include "AgentList.h"
 #include "TacticalLinesSaver.h"
 #include "LoginDialog.h"
+#include "TacticalList.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -135,6 +136,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
     pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory ),            tr( "ODB" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );

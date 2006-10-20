@@ -20,6 +20,7 @@
 #include "AgentKnowledgeFactory.h"
 #include "KnowledgeGroupHierarchies.h"
 #include "TeamHierarchies.h"
+#include "TeamTacticalHierarchies.h"
 #include "FormationHierarchy.h"
 #include "Formation.h"
 #include "StaticModel.h"
@@ -57,7 +58,8 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
     Team* result = new Team( asnMsg, controllers_.controller_ );
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
-    result->Attach< CommunicationHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, *this ) );
+    result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
+    result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     result->Polish();
     return result;
 }

@@ -22,7 +22,8 @@ namespace kernel
     class Automat_ABC;
     class Team_ABC;
     class Population_ABC;
-    class CommunicationHierarchies; // $$$$ AGE 2006-10-13: should be tactical
+    class Hierarchies;
+    class Formation_ABC;
 }
 
 class Publisher_ABC;
@@ -38,6 +39,7 @@ class Profile : public kernel::Profile_ABC
               , public kernel::ElementObserver_ABC< kernel::Automat_ABC >
               , public kernel::ElementObserver_ABC< kernel::Population_ABC >
               , public kernel::ElementObserver_ABC< kernel::Team_ABC >
+              , public kernel::ElementObserver_ABC< kernel::Formation_ABC >
               , public kernel::ElementObserver_ABC< Simulation::sEndTick >
 {
 
@@ -93,13 +95,16 @@ private:
     virtual void NotifyDeleted( const kernel::Population_ABC& popu );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    virtual void NotifyCreated( const kernel::Formation_ABC& formation );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
 
     virtual void NotifyUpdated( const Simulation::sEndTick& endTick );
     
     void Add   ( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds );
     void Remove( const kernel::Entity_ABC& entity );
     static bool IsInHierarchy( const kernel::Entity_ABC& entity, const T_Entities& entities, bool childOnly );
-    static bool IsInHierarchy( const kernel::Entity_ABC& entity, const kernel::CommunicationHierarchies& hierarchy, const kernel::Entity_ABC& other, bool childOnly );
+    static bool IsInHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies& hierarchy, const kernel::Entity_ABC& other, bool childOnly );
+    static const kernel::Hierarchies* FindHierarchies( const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -122,6 +127,8 @@ private:
     T_Ids writeAutomats_;
     T_Ids readPopulations_;
     T_Ids writePopulations_;
+    T_Ids readFormations_;
+    T_Ids writeFormations_;
     //@}
 };
 
