@@ -63,7 +63,7 @@ void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 Automat_ABC* LogisticLinks::GetTC2() const
 {
-    return Resolve( tc2_, idTc2_ );
+    return tc2_;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ Automat_ABC* LogisticLinks::GetTC2() const
 // -----------------------------------------------------------------------------
 Automat_ABC* LogisticLinks::GetMaintenance() const
 {
-    return Resolve( maintenanceSuperior_, idMaintenance_);
+    return maintenanceSuperior_;
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ Automat_ABC* LogisticLinks::GetMaintenance() const
 // -----------------------------------------------------------------------------
 Automat_ABC* LogisticLinks::GetMedical() const
 {
-    return Resolve( medicalSuperior_, idMedical_ );
+    return medicalSuperior_;
 }
 
 // -----------------------------------------------------------------------------
@@ -90,49 +90,7 @@ Automat_ABC* LogisticLinks::GetMedical() const
 // -----------------------------------------------------------------------------
 Automat_ABC* LogisticLinks::GetSupply() const
 {
-    return Resolve( supplySuperior_, idSupply_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticLinks::Resolve
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-Automat_ABC* LogisticLinks::Resolve( Automat_ABC*& agent, unsigned long id ) const
-{
-    if( ! agent )
-        agent = resolver_.Find( id );
-    return agent;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticLinks::UpdateData
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-template< typename T >
-void LogisticLinks::UpdateData( const T& message )
-{
-    if( message.m.oid_tc2Present ) {
-        idTc2_ = message.oid_tc2; tc2_ = 0;
-    }
-    if( message.m.oid_maintenancePresent ) {
-        idMaintenance_ = message.oid_maintenance; maintenanceSuperior_ = 0;
-    }
-    if( message.m.oid_santePresent ) {
-        idMedical_ = message.oid_sante; medicalSuperior_ = 0;
-    }
-    if( message.m.oid_ravitaillementPresent ) {
-        idSupply_ = message.oid_ravitaillement; supplySuperior_ = 0;
-    }
-    controller_.Update( *(LogisticLinks_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticLinks::DoUpdate
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void LogisticLinks::DoUpdate( const ASN1T_MsgAutomateCreation& message )
-{
-    UpdateData( message );
+    return supplySuperior_;
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +99,16 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message )
 {
-    UpdateData( message );
+    if( message.m.oid_tc2Present )
+        tc2_ = &resolver_.Get( message.oid_tc2 );
+    if( message.m.oid_maintenancePresent )
+        maintenanceSuperior_ = &resolver_.Get( message.oid_maintenance );
+    if( message.m.oid_santePresent )
+         medicalSuperior_ = &resolver_.Get( message.oid_sante );
+    if( message.m.oid_ravitaillementPresent )
+        supplySuperior_ = &resolver_.Get( message.oid_ravitaillement );
+
+    controller_.Update( *(LogisticLinks_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

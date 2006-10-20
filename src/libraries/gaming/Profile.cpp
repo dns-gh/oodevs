@@ -264,7 +264,7 @@ void Profile::Remove( const Entity_ABC& entity )
 // Name: Profile::NotifyUpdated
 // Created: AGE 2006-10-13
 // -----------------------------------------------------------------------------
-void Profile::NotifyUpdated( const Simulation::sEndTick& endTick )
+void Profile::NotifyUpdated( const Simulation::sEndTick& )
 {
     // $$$$ AGE 2006-10-13: pas terrible...
     if( ! firstTicked_ )

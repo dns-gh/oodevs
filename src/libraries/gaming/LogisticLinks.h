@@ -33,7 +33,6 @@ namespace kernel
 // =============================================================================
 class LogisticLinks : public kernel::LogisticLinks_ABC
                     , public kernel::Updatable_ABC< ASN1T_MsgChangeLiensLogistiquesAck >
-                    , public kernel::Updatable_ABC< ASN1T_MsgAutomateCreation >
                     , public kernel::Drawable_ABC
 {
 
@@ -66,11 +65,6 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
-    template< typename T >
-    void UpdateData( const T& message );
-
-    kernel::Automat_ABC* Resolve( kernel::Automat_ABC*& agent, unsigned long id ) const;
     void DrawLink( const geometry::Point2f& from, kernel::Automat_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
@@ -82,10 +76,10 @@ private:
     const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver_;
     const kernel::AutomatType& type_;
 
-    unsigned long idTc2_;         mutable kernel::Automat_ABC* tc2_;
-    unsigned long idMaintenance_; mutable kernel::Automat_ABC* maintenanceSuperior_;
-    unsigned long idMedical_;     mutable kernel::Automat_ABC* medicalSuperior_;
-    unsigned long idSupply_;      mutable kernel::Automat_ABC* supplySuperior_;
+    kernel::Automat_ABC* tc2_;
+    kernel::Automat_ABC* maintenanceSuperior_;
+    kernel::Automat_ABC* medicalSuperior_;
+    kernel::Automat_ABC* supplySuperior_;
     //@}
 };
 

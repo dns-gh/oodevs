@@ -17,7 +17,7 @@ using namespace kernel;
 // Name: PerceptionMap constructor
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-PerceptionMap::PerceptionMap( Controller& controller, const Resolver_ABC< Agent_ABC >& resolver )
+PerceptionMap::PerceptionMap( Controller& controller, const Resolver_ABC< Automat_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
 {
@@ -45,7 +45,7 @@ void PerceptionMap::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
         perceptions_.reserve( message.perception_par_compagnie.n );
         for( uint i = 0; i < message.perception_par_compagnie.n; ++i )
         {
-            const Agent_ABC& agent = resolver_.Get( message.perception_par_compagnie.elem[i].oid_compagnie );
+            const Automat_ABC& agent = resolver_.Get( message.perception_par_compagnie.elem[i].oid_compagnie );
             // $$$$ AGE 2006-02-22: 
             perceptions_.push_back( Perception( agent, (E_PerceptionResult)( 3 - message.perception_par_compagnie.elem[i].identification_level ) ) );
         }

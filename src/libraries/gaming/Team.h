@@ -10,7 +10,7 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "DIN_Types.h"
+#include "ASN_Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
 
@@ -26,7 +26,7 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( uint id, DIN::DIN_Input& input, kernel::Controller& controller );
+             Team( const ASN1T_MsgSideCreation& asnMsg, kernel::Controller& controller );
     virtual ~Team();
     //@}
 
@@ -35,11 +35,6 @@ private:
     //@{
     Team( const Team& );
     Team& operator=( const Team& );
-    //@}
-
-    //! @name Helpers
-    //@{
-    static QString ReadName( DIN::DIN_Input& input );
     //@}
 };
 

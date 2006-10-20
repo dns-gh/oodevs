@@ -8,42 +8,40 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "TeamHierarchies.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "AutomatTacticalHierarchies.h"
 #include "clients_kernel/Controller.h"
-#include "KnowledgeGroupFactory_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: TeamHierarchies constructor
-// Created: AGE 2006-09-20
+// Name: AutomatTacticalHierarchies constructor
+// Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& holder, KnowledgeGroupFactory_ABC& factory )
-    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
+AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, Entity_ABC& holder, const Resolver_ABC< Formation_ABC >& resolver, PropertiesDictionary& dictionary )
+    : EntityHierarchies< TacticalHierarchies >( controller, holder )
     , controller_( controller )
-    , holder_( holder )
-    , factory_( factory )
+    , resolver_( resolver )
+{
+    // NOTHING
+    // $$$$ AGE 2006-10-19: dico !
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatTacticalHierarchies destructor
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+AutomatTacticalHierarchies::~AutomatTacticalHierarchies()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamHierarchies destructor
-// Created: AGE 2006-09-20
+// Name: AutomatTacticalHierarchies::DoUpdate
+// Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-TeamHierarchies::~TeamHierarchies()
+void AutomatTacticalHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamHierarchies::DoUpdate
-// Created: AGE 2006-10-09
-// -----------------------------------------------------------------------------
-void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message )
-{
-    if( ! Find( message.oid ) )
-        factory_.CreateKnowledgeGroup( message.oid, holder_ );
+    SetSuperior( &resolver_.Get( message.oid_formation ) );
+    controller_.Update( *(TacticalHierarchies*)this );
 }

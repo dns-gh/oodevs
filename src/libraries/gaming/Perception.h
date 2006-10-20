@@ -14,7 +14,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Automat_ABC;
 }
 
 // =============================================================================
@@ -29,14 +29,14 @@ class Perception
 public:
     //! @name Constructors/Destructor
     //@{
-             Perception( const kernel::Agent_ABC& detected, kernel::E_PerceptionResult level );
+             Perception( const kernel::Automat_ABC& detected, kernel::E_PerceptionResult level );
     virtual ~Perception();
     //@}
 
 public:
     //! @name Member data
     //@{
-    const kernel::Agent_ABC* detected_;
+    const kernel::Automat_ABC* detected_;
     kernel::E_PerceptionResult level_;
     //@}
 };

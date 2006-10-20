@@ -15,10 +15,14 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/InstanciationComplete.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Controllers.h"
+
 #include "Agent.h"
 #include "Automat.h"
 #include "Population.h"
-
 #include "Attributes.h"
 #include "Contaminations.h"
 #include "DebugPoints.h"
@@ -48,8 +52,6 @@
 #include "LimitsModel.h"
 #include "AgentFactory.h"
 #include "ObjectFactory.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "PopulationDetections.h"
 #include "LogisticConsigns.h"
 #include "Logistics.h"
@@ -59,7 +61,6 @@
 #include "Fires.h"
 #include "AgentPositions.h"
 #include "PopulationPositions.h"
-#include "clients_kernel/Controllers.h"
 #include "Lives.h"
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
@@ -68,6 +69,8 @@
 #include "AutomatLives.h"
 #include "AutomatPositions.h"
 #include "AutomatHierarchies.h"
+#include "AutomatTacticalHierarchies.h"
+
 #include "Quotas.h"
 
 using namespace kernel;
@@ -106,7 +109,8 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
-    result->Attach< CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
+    result->Attach< CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
+    result->Attach< TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, model_.teams_, dico ) );
     result->Attach( *new AutomatLives( *result ) );
     result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
@@ -139,7 +143,8 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new MagicOrders( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
     result->Attach( *new LogisticConsigns( controllers_.controller_ ) );
-    result->Attach< CommunicationHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, model_.agents_ ) );
+    result->Attach< CommunicationHierarchies >( *new AgentHierarchies< CommunicationHierarchies >( controllers_.controller_, *result, model_.agents_ ) );
+    result->Attach< TacticalHierarchies >     ( *new AgentHierarchies< TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
     AttachExtensions( *result );
 
     result->Update( asnMsg );

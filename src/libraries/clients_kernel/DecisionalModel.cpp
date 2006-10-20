@@ -100,6 +100,7 @@ void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory )
     RegisterFragOrder( factory, "ChangerReglesEngagement" );
     RegisterFragOrder( factory, "RecupererTransporteurs" );
     RegisterFragOrder( factory, "ChangerReglesEngagementPopulation" );
+    RegisterFragOrder( factory, "ChangerAmbiance" );
 }
 
 // -----------------------------------------------------------------------------

@@ -19,9 +19,8 @@ using namespace kernel;
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
 EntityCommunications::EntityCommunications( Controller& controller, Entity_ABC& holder, Entity_ABC* superior )
-    : kernel::EntityHierarchies< CommunicationHierarchies >( controller, holder )
+    : DelayedEntityHierarchies< CommunicationHierarchies >( controller, holder, superior )
     , controller_( controller )
-    , superior_( superior )
 {
     // NOTHING
 }
@@ -40,9 +39,9 @@ EntityCommunications::~EntityCommunications()
 // Name: EntityCommunications::DoUpdate
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void EntityCommunications::DoUpdate( const kernel::InstanciationComplete& )
+void EntityCommunications::DoUpdate( const kernel::InstanciationComplete& ic )
 {
-    SetSuperior( superior_ );
+    DelayedEntityHierarchies< CommunicationHierarchies >::DoUpdate( ic );
     controller_.Create( *(CommunicationHierarchies*)this );
 }
 

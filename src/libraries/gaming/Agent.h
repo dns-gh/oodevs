@@ -18,11 +18,8 @@
 
 namespace kernel
 {
-    class Automat_ABC;
     class Controller;
     class AgentType;
-    class AutomatType;
-    class InstanciationComplete;
 }
 
 // =============================================================================

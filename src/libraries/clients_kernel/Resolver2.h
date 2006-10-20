@@ -62,18 +62,11 @@ public:
 
     void Register( const Identifier1& identifier1, const Identifier2& identifier2, T& element )
     {
-        {
-            T*& p = elements1_[ identifier1 ];
-            if( p )
-                Error( identifier1, "already registered" );
-            p = &element;
-        }
-        {
-            T*& p = elements2_[ identifier2 ];
-            if( p )
-                Error( identifier2, "already registered" );
-            p = &element;
-        }
+        T*& p1 = elements1_[ identifier1 ];
+        T*& p2 = elements2_[ identifier2 ];
+        if( p1 || p2 )
+            Error( identifier1, "already registered" );
+        p1 = p2 = &element;
     }
     void Remove( const Identifier1& identifier )
     {

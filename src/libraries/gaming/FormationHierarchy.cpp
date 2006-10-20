@@ -8,26 +8,25 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "Perception.h"
+#include "FormationHierarchy.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Perception constructor
-// Created: AGE 2006-02-22
+// Name: FormationHierarchy constructor
+// Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Perception::Perception( const Automat_ABC& detected, E_PerceptionResult level )
-    : detected_( &detected )
-    , level_( level )
+FormationHierarchy::FormationHierarchy( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
+    : DelayedEntityHierarchies< TacticalHierarchies >( controller, entity, superior )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception destructor
-// Created: AGE 2006-02-22
+// Name: FormationHierarchy destructor
+// Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Perception::~Perception()
+FormationHierarchy::~FormationHierarchy()
 {
     // NOTHING
 }

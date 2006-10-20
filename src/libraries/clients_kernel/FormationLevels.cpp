@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "clients_kernel_pch.h"
 #include "FormationLevels.h"
 #include "Level.h"
 
@@ -29,17 +29,19 @@ FormationLevels::FormationLevels()
 // -----------------------------------------------------------------------------
 FormationLevels::~FormationLevels()
 {
-    // NOTHING
+    DeleteAll();
 }
 
-namespace 
+// -----------------------------------------------------------------------------
+// Name: FormationLevels::AddLevel
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+HierarchyLevel_ABC* FormationLevels::AddLevel( HierarchyLevel_ABC& root, const QString& name )
 {
-    HierarchyLevel_ABC* AddLevel( HierarchyLevel_ABC& root, const QString& name )
-    {
-        HierarchyLevel_ABC* newLevel = new Level( name, &root );
-        root.SetNext( *newLevel );
-        return newLevel;
-    }
+    HierarchyLevel_ABC* newLevel = new Level( name, &root );
+    root.SetNext( *newLevel );
+    Register( newLevel->GetId(), newLevel->GetName(), *newLevel );
+    return newLevel;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +51,7 @@ namespace
 void FormationLevels::Initialize()
 {
     HierarchyLevel_ABC* root = new Level( "xxxx", 0 );
+    Register( root->GetId(), root->GetName(), *root );
     root_ = root;
     root = AddLevel( *root, "xxx" );
     root = AddLevel( *root, "xx" );
@@ -76,14 +79,7 @@ const HierarchyLevel_ABC* FormationLevels::GetRoot() const
 // -----------------------------------------------------------------------------
 const HierarchyLevel_ABC* FormationLevels::Resolve( const QString& name ) const
 {
-    const HierarchyLevel_ABC* root = root_;
-    while( root )
-    {
-        if( root->GetName() == name )
-            return root;
-        root = root->GetNext();
-    }
-    return root;
+    return Find( name );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,12 +88,5 @@ const HierarchyLevel_ABC* FormationLevels::Resolve( const QString& name ) const
 // -----------------------------------------------------------------------------
 const HierarchyLevel_ABC* FormationLevels::Resolve( unsigned int id ) const
 {
-    const HierarchyLevel_ABC* root = root_;
-    while( root )
-    {
-        if( root->GetId() == id )
-            return root;
-        root = root->GetNext();
-    }
-    return root;
+    return Find( id );
 }

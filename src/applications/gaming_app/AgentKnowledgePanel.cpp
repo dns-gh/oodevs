@@ -12,6 +12,7 @@
 #include "moc_AgentKnowledgePanel.cpp"
 
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Units.h"

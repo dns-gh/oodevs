@@ -17,6 +17,7 @@ namespace kernel
     class DetectionMap;
     class Controllers;
     class CoordinateConverter_ABC;
+    class FormationLevels;
 }
 
 class SurfaceFactory;
@@ -51,6 +52,7 @@ public:
     kernel::DetectionMap&            detection_;
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
+    kernel::FormationLevels&         levels_;
     SurfaceFactory&                  surfaceFactory_;
     //@}
 

@@ -33,6 +33,14 @@ ObjectHierarchies::~ObjectHierarchies()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ObjectHierarchies::GetSuperior
+// Created: AGE 2006-10-20
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ObjectHierarchies::GetSuperior() const
+{
+    return superior_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectHierarchies::DoUpdate
@@ -40,5 +48,5 @@ ObjectHierarchies::~ObjectHierarchies()
 // -----------------------------------------------------------------------------
 void ObjectHierarchies::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
-    SetSuperior( &teamResolver_.Get( message.camp ) );
+    superior_ = &teamResolver_.Get( message.camp );
 }

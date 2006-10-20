@@ -10,10 +10,11 @@
 #ifndef __FormationLevels_h_
 #define __FormationLevels_h_
 
+#include "Resolver2.h"
+
 namespace kernel
 {
     class HierarchyLevel_ABC;
-}
 
 // =============================================================================
 /** @class  FormationLevels
@@ -21,7 +22,7 @@ namespace kernel
 */
 // Created: SBO 2006-09-21
 // =============================================================================
-class FormationLevels
+class FormationLevels : public Resolver2< HierarchyLevel_ABC >
 {
 
 public:
@@ -33,9 +34,9 @@ public:
 
     //! @name Accessors
     //@{
-    const kernel::HierarchyLevel_ABC* Resolve( const QString& name ) const;
-    const kernel::HierarchyLevel_ABC* Resolve( unsigned int id ) const;
-    const kernel::HierarchyLevel_ABC* GetRoot() const;
+    const HierarchyLevel_ABC* Resolve( const QString& name ) const;
+    const HierarchyLevel_ABC* Resolve( unsigned int id ) const;
+    const HierarchyLevel_ABC* GetRoot() const;
     //@}
 
 private:
@@ -48,13 +49,16 @@ private:
     //! @name Helpers
     //@{
     void Initialize();
+    HierarchyLevel_ABC* AddLevel( HierarchyLevel_ABC& root, const QString& name );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::HierarchyLevel_ABC* root_;
+    HierarchyLevel_ABC* root_;
     //@}
 };
+
+}
 
 #endif // __FormationLevels_h_

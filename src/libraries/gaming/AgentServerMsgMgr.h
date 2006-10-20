@@ -98,7 +98,6 @@ private:
     void OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgArmy                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgPopulationCollision                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
@@ -114,7 +113,6 @@ private:
     void _OnReceiveMsgPopulationConcentrationInterVisibility( DIN::DIN_Input& input );
     void _OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
     void _OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Input& input );
-    void _OnReceiveMsgArmy                                  ( DIN::DIN_Input& input );
     void _OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgPopulationCollision                   ( DIN::DIN_Input& input );
     void _OnReceiveMsgInClient                                ( DIN::DIN_Input& input );    
@@ -140,6 +138,10 @@ private:
     void OnReceiveMsgPionCreation             ( const ASN1T_MsgPionCreation& asnMsg );
     void OnReceiveMsgChangeDiplomatie         ( const ASN1T_MsgChangeDiplomatie& asnMsg );
     void OnReveiveMsgAuthLoginAck             ( const ASN1T_MsgAuthLoginAck& asnMsg );
+
+    void OnReveiveMsgKnowledgeGroupCreation   ( const ASN1T_MsgKnowledgeGroupCreation& asnMsg );
+    void OnReveiveMsgSideCreation             ( const ASN1T_MsgSideCreation& asnMsg );
+    void OnReveiveMsgFormationCreation        ( const ASN1T_MsgFormationCreation& asnMsg );
 
     // Attributes
     void OnReceiveMsgUnitAttributes    ( const ASN1T_MsgUnitAttributes& asnMsg );

@@ -18,7 +18,7 @@
 
 namespace kernel
 {
-    class Agent_ABC;
+    class Automat_ABC;
     class Controller;
 }
 
@@ -35,7 +35,7 @@ class PerceptionMap : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PerceptionMap( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver );
+             PerceptionMap( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver );
     virtual ~PerceptionMap();
     //@}
 
@@ -64,7 +64,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const kernel::Resolver_ABC< kernel::Automat_ABC >& resolver_;
     T_Perceptions perceptions_;
     //@}
 };

@@ -158,7 +158,7 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 
 namespace
 {
-    unsigned int SetId( ValuedComboBox< const Automat_ABC* >& combo, unsigned int& id )
+    unsigned int SetId( ValuedComboBox< const Automat_ABC* >& combo, int& id )
     {
         if( combo.isEnabled() )
         {

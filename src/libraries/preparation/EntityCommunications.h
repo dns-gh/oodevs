@@ -10,7 +10,7 @@
 #ifndef __EntityCommunications_h_
 #define __EntityCommunications_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/DelayedEntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -27,7 +27,7 @@ namespace kernel
 */
 // Created: SBO 2006-10-09
 // =============================================================================
-class EntityCommunications : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
+class EntityCommunications : public kernel::DelayedEntityHierarchies< kernel::CommunicationHierarchies >
                            , public kernel::Updatable_ABC< kernel::InstanciationComplete >
 {
 
@@ -59,7 +59,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::Entity_ABC* superior_;
     //@}
 };
 

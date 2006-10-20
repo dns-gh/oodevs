@@ -39,7 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam( unsigned long id, DIN::DIN_Input& input );
+    virtual kernel::Team_ABC* CreateTeam( const ASN1T_MsgSideCreation& asnMsg );
+    virtual kernel::Formation_ABC* CreateFormation( const ASN1T_MsgFormationCreation& asnMsg );
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( unsigned long id, kernel::Team_ABC& team );
     //@}
 

@@ -65,7 +65,7 @@ void ObjectPrototype::Commit( Publisher_ABC& publisher )
         creation_.m.nomPresent = 1;
         creation_.nom = name_->text().ascii();
     }
-    creation_.camp = teams_->GetValue()->GetId();
+    creation_.oid_camp = teams_->GetValue()->GetId();
     creation_.type = (ASN1T_EnumObjectType)objectTypes_->GetValue()->id_;
     if( location_ )
         serializer_.Serialize( *location_ );

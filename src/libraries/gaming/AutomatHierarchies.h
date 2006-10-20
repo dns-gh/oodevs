@@ -17,7 +17,6 @@
 
 namespace kernel
 {
-    class Controller;
     class KnowledgeGroup_ABC;
     class PropertiesDictionary;
 }

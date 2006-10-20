@@ -52,7 +52,7 @@ void RotaPrototype::Commit()
     attr_ = new ASN1T_AttrObjectROTA();
     
     attr_->agents_nbc.n = GetAgentCount();
-    attr_->agents_nbc.elem  = new uint[ attr_->agents_nbc.n ];
+    attr_->agents_nbc.elem  = new ASN1T_OID[ attr_->agents_nbc.n ];
     unsigned i = 0;
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )

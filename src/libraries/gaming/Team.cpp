@@ -16,8 +16,8 @@ using namespace kernel;
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( uint id, DIN::DIN_Input& input, Controller& controller )
-    : EntityImplementation< Team_ABC >( controller, id, ReadName( input ) )
+Team::Team( const ASN1T_MsgSideCreation& asnMsg, Controller& controller )
+    : EntityImplementation< Team_ABC >( controller, asnMsg.oid, asnMsg.nom )
 {
     // NOTHING
 }
@@ -29,15 +29,4 @@ Team::Team( uint id, DIN::DIN_Input& input, Controller& controller )
 Team::~Team()
 {
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::ReadName
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-QString Team::ReadName( DIN::DIN_Input& input )
-{
-    std::string name;
-    input >> name;
-    return name.c_str();
 }

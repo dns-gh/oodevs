@@ -16,6 +16,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelLoaded.h"
+#include "clients_kernel/FormationLevels.h"
 #include "SurfaceFactory.h"
 
 using namespace kernel;
@@ -30,6 +31,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , detection_          ( *new DetectionMap() )
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
+    , levels_             ( *new FormationLevels() )
     , surfaceFactory_     ( *new SurfaceFactory( detection_, types_ ) )
 {
     // NOTHING
@@ -41,6 +43,8 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &surfaceFactory_;
+    delete &levels_;
     delete &objectTypes_;
     delete &types_;
     delete &detection_;

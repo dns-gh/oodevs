@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual void DoUpdate( const ASN1T_MsgObjectCreation& );
     //@}
 
@@ -54,6 +55,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
+    const kernel::Team_ABC* superior_;
     //@}
 };
 

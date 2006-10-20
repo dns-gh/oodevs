@@ -24,7 +24,7 @@ const QString Agent::typeName_ = "agent";
 Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,  const Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.oid_pion, QString( "%1 [%2]" ).arg( message.nom ).arg( message.oid_pion ) )
     , type_( resolver.Get( message.type_pion ) )
-    , isPc_( message.oid_pion == message.oid_automate )
+    , isPc_( false ) // $$$$ AGE 2006-10-19: 
 {
     RegisterSelf( *this );
     CreateDictionary( controller );

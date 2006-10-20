@@ -10,7 +10,7 @@
 #ifndef __TeamHierarchies_h_
 #define __TeamHierarchies_h_
 
-#include "DIN_Types.h"
+#include "ASN_Types.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -29,7 +29,7 @@ class KnowledgeGroupFactory_ABC;
 // Created: AGE 2006-09-20
 // =============================================================================
 class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                      , public kernel::Updatable_ABC< KnowledgeGroupCreationMessage >
+                      , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupCreation >
 {
 
 public:
@@ -42,7 +42,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void DoUpdate( const KnowledgeGroupCreationMessage& message );
+    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message );
     //@}
 
 private:

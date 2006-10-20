@@ -20,6 +20,10 @@
 #include "AgentKnowledgeFactory.h"
 #include "KnowledgeGroupHierarchies.h"
 #include "TeamHierarchies.h"
+#include "FormationHierarchy.h"
+#include "Formation.h"
+#include "StaticModel.h"
+#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace kernel;
@@ -48,12 +52,28 @@ TeamFactory::~TeamFactory()
 // Name: TeamFactory::CreateTeam
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Team_ABC* TeamFactory::CreateTeam( unsigned long id, DIN::DIN_Input& input )
+Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
 {
-    Team* result = new Team( id, input, controllers_.controller_ );
+    Team* result = new Team( asnMsg, controllers_.controller_ );
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, *this ) );
+    result->Polish();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::CreateFormation
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCreation& asnMsg )
+{
+    Entity_ABC* superior = asnMsg.m.oid_formation_parentePresent ? 
+        (Entity_ABC*) &model_.teams_.Resolver< Formation_ABC >::Get( asnMsg.oid_formation_parente ) :
+        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
+
+    Formation* result = new Formation( asnMsg, controllers_.controller_, model_.static_.levels_ );
+    result->Attach< TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
     result->Polish();
     return result;
 }

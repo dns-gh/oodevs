@@ -49,14 +49,25 @@ void TeamsModel::Purge()
 // Name: TeamsModel::CreateTeam
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateTeam( DIN::DIN_Input& input )
+void TeamsModel::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
 {
-    unsigned long id;
-    input >> id;
-    if( ! Resolver< Team_ABC >::Find( id ) )
+    if( ! Resolver< Team_ABC >::Find( asnMsg.oid ) )
     {
-        Team_ABC* team = factory_.CreateTeam( id, input );
-        Resolver< Team_ABC >::Register( id, *team );
+        Team_ABC* team = factory_.CreateTeam( asnMsg );
+        Resolver< Team_ABC >::Register( asnMsg.oid, *team );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::CreateFormation
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+void TeamsModel::CreateFormation( const ASN1T_MsgFormationCreation& asnMsg )
+{
+    if( ! Resolver< Formation_ABC >::Find( asnMsg.oid ) )
+    {
+        Formation_ABC* formation = factory_.CreateFormation( asnMsg );
+        Resolver< Formation_ABC >::Register( asnMsg.oid, *formation );
     }
 }
  

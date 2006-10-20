@@ -10,11 +10,12 @@
 #ifndef __TeamFactory_ABC_h_
 #define __TeamFactory_ABC_h_
 
-namespace DIN { class DIN_Input; }
+#include "ASN_Types.h"
 
 namespace kernel
 {
     class Team_ABC;
+    class Formation_ABC;
 }
 
 // =============================================================================
@@ -35,7 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam( unsigned long id, DIN::DIN_Input& input ) = 0;
+    virtual kernel::Team_ABC*      CreateTeam     ( const ASN1T_MsgSideCreation& asnMsg ) = 0;
+    virtual kernel::Formation_ABC* CreateFormation( const ASN1T_MsgFormationCreation& asnMsg ) = 0;
     //@}
 };
 

@@ -73,8 +73,6 @@ static enum
     eMsgObjectInterVisibility                  = 1010,
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
-    eMsgKnowledgeGroup                         = 1013,
-    eMsgArmy                                   = 1014,
     eMsgDebugDrawPoints                        = 1015,
     eMsgEnvironmentType                        = 1016,
     eMsgPopulationCollision                    = 1017
@@ -108,8 +106,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     pMessageService_->RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, & AgentServerMsgMgr::OnReceiveMsgObjectInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, & AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility );
-    pMessageService_->RegisterReceivedMessage( eMsgKnowledgeGroup                        , *this, & AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup        );
-    pMessageService_->RegisterReceivedMessage( eMsgArmy                                  , *this, & AgentServerMsgMgr::OnReceiveMsgArmy        );
     pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
     pMessageService_->RegisterReceivedMessage( eMsgPopulationCollision                   , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationCollision );
     pMessageService_->RegisterReceivedMessage( eMsgInClient           , *this, & AgentServerMsgMgr::OnReceiveMsgInClient            );
@@ -358,44 +354,6 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateCreation( const ASN1T_MsgAutomateCre
 void AgentServerMsgMgr::OnReceiveMsgPionCreation( const ASN1T_MsgPionCreation& message )
 {
     GetModel().agents_.CreateAgent( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup
-// Created: NLD 2004-09-09
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgKnowledgeGroup );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroup
-// Created: NLD 2004-09-09
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgKnowledgeGroup( DIN::DIN_Input& input )
-{
-    unsigned long team;
-    input >> team;
-    GetModel().teams_.Get( team ).Update( KnowledgeGroupCreationMessage( input ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgArmy
-// Created: NLD 2005-02-14
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgArmy( DIN::DIN_Link& , DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgArmy );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgArmy
-// Created: NLD 2005-02-14
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgArmy( DIN::DIN_Input& input )
-{
-    GetModel().teams_.CreateTeam( input );
 }
 
 //-----------------------------------------------------------------------------
@@ -874,6 +832,33 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlMeteoLocalAck()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupCreation
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& asnMsg )
+{
+    GetModel().teams_.GetTeam( asnMsg.oid_camp ).Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReveiveMsgSideCreation
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReveiveMsgSideCreation( const ASN1T_MsgSideCreation& asnMsg )
+{
+    GetModel().teams_.CreateTeam( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReveiveMsgFormationCreation
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReveiveMsgFormationCreation( const ASN1T_MsgFormationCreation& asnMsg )
+{
+    GetModel().teams_.CreateFormation( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin
 // Created: NLD 2003-10-09
 // -----------------------------------------------------------------------------
@@ -1262,7 +1247,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUni
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& message )
 {
-    GetModel().teams_.Get( message.oid_camp_possesseur ).Update( message );
+    GetModel().teams_.GetTeam( message.oid_camp_possesseur ).Update( message );
 }
 
 
@@ -1272,7 +1257,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObje
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 {
-    GetModel().teams_.Get( message.oid_camp_possesseur ).Update( message );
+    GetModel().teams_.GetTeam( message.oid_camp_possesseur ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1281,7 +1266,7 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObject
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& message )
 {
-    GetModel().teams_.Get( message.oid_camp_possesseur ).Update( message );
+    GetModel().teams_.GetTeam( message.oid_camp_possesseur ).Update( message );
 }
 
 // =============================================================================
@@ -1483,8 +1468,8 @@ void AgentServerMsgMgr::OnReceiveMsgStopPopulationFire( const ASN1T_MsgStopPopul
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomatie( const ASN1T_MsgChangeDiplomatie& message )
 {
-    GetModel().teams_.Get( message.oid_camp1 ).Update( message );
-    GetModel().teams_.Get( message.oid_camp2 ).Update( message );
+    GetModel().teams_.GetTeam( message.oid_camp1 ).Update( message );
+    GetModel().teams_.GetTeam( message.oid_camp2 ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1639,7 +1624,6 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *message.msg.u.msg_population_magic_action_ack         , message.context ); break;
 //        case T_MsgsInClient_msg_msg_population_order_ack  : break; //$$$ TODO
 
-
         case T_MsgsInClient_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.msg.u.msg_ctrl_info                           ); break;
         case T_MsgsInClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
         case T_MsgsInClient_msg_msg_ctrl_end_tick:                        OnReceiveMsgCtrlEndTick               ( *message.msg.u.msg_ctrl_end_tick                       ); break;
@@ -1663,11 +1647,14 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_ctrl_profile_update:                  /*//$$$$ TODO*/; break;
         case T_MsgsInClient_msg_msg_ctrl_profile_destruction:             /*//$$$$ TODO*/; break;
 
-
         case T_MsgsInClient_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.msg.u.msg_limit_creation                      ); break;
         case T_MsgsInClient_msg_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.msg.u.msg_limit_destruction                    ); break;
         case T_MsgsInClient_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.msg.u.msg_lima_creation                       ); break;
         case T_MsgsInClient_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.msg.u.msg_lima_destruction                     ); break;
+
+        case T_MsgsInClient_msg_msg_knowledge_group_creation:             OnReveiveMsgKnowledgeGroupCreation    ( *message.msg.u.msg_knowledge_group_creation            ); break;
+        case T_MsgsInClient_msg_msg_side_creation:                        OnReveiveMsgSideCreation              ( *message.msg.u.msg_side_creation                       ); break;
+        case T_MsgsInClient_msg_msg_formation_creation:                   OnReveiveMsgFormationCreation         ( *message.msg.u.msg_formation_creation                  ); break;
 
         case T_MsgsInClient_msg_msg_unit_knowledge_creation:              OnReceiveMsgUnitKnowledgeCreation     ( *message.msg.u.msg_unit_knowledge_creation             ); break;
         case T_MsgsInClient_msg_msg_unit_knowledge_update:                OnReceiveMsgUnitKnowledgeUpdate       ( *message.msg.u.msg_unit_knowledge_update               ); break;

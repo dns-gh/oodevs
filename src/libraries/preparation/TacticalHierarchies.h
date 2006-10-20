@@ -10,7 +10,7 @@
 #ifndef __TacticalHierarchies_h_
 #define __TacticalHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/DelayedEntityHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -27,8 +27,7 @@ namespace kernel
 */
 // Created: AGE 2006-09-19
 // =============================================================================
-class TacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
-                          , public kernel::Updatable_ABC< kernel::InstanciationComplete >
+class TacticalHierarchies : public kernel::DelayedEntityHierarchies< kernel::TacticalHierarchies >
 {
 
 public:
@@ -59,7 +58,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::Entity_ABC* superior_;
     //@}
 };
 

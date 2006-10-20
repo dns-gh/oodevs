@@ -17,9 +17,8 @@
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
 TacticalHierarchies::TacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder )
+    : kernel::DelayedEntityHierarchies< kernel::TacticalHierarchies >( controller, holder, superior )
     , controller_( controller )
-    , superior_( superior )
 {
     // NOTHING
 }
@@ -38,9 +37,9 @@ TacticalHierarchies::~TacticalHierarchies()
 // Name: TacticalHierarchies::DoUpdate
 // Created: SBO 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalHierarchies::DoUpdate( const kernel::InstanciationComplete& )
+void TacticalHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 {
-    SetSuperior( superior_ );
+    kernel::DelayedEntityHierarchies< kernel::TacticalHierarchies >::DoUpdate( ic );
     controller_.Create( *(kernel::TacticalHierarchies*)this );
 }
 

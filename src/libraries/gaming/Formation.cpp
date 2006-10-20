@@ -8,26 +8,35 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "Perception.h"
+#include "Formation.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Perception constructor
-// Created: AGE 2006-02-22
+// Name: Formation constructor
+// Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Perception::Perception( const Automat_ABC& detected, E_PerceptionResult level )
-    : detected_( &detected )
-    , level_( level )
+Formation::Formation( const ASN1T_MsgFormationCreation& message, Controller& controller, const Resolver_ABC< HierarchyLevel_ABC >& resolver  )
+    : EntityImplementation< Formation_ABC >( controller, message.oid, message.nom )
+    , level_( resolver.Get( message.niveau ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Perception destructor
-// Created: AGE 2006-02-22
+// Name: Formation destructor
+// Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Perception::~Perception()
+Formation::~Formation()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::GetLevel
+// Created: AGE 2006-10-19
+// -----------------------------------------------------------------------------
+const HierarchyLevel_ABC& Formation::GetLevel() const
+{
+    return level_;
 }

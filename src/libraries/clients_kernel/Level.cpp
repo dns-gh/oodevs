@@ -7,12 +7,10 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "clients_kernel_pch.h"
 #include "Level.h"
 
 using namespace kernel;
-
-unsigned int Level::idManager_ = 1;
 
 // -----------------------------------------------------------------------------
 // Name: Level constructor
@@ -20,11 +18,12 @@ unsigned int Level::idManager_ = 1;
 // -----------------------------------------------------------------------------
 Level::Level( const QString& name, const HierarchyLevel_ABC* previous )
     : name_( name )
-    , id_( idManager_++ )
+    , id_( 1 )
     , previous_( previous )
     , next_( 0 )
 {
-    // NOTHING
+    if( previous )
+        id_ = previous->GetId() + 1;
 }
     
 // -----------------------------------------------------------------------------

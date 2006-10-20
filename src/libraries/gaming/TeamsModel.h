@@ -17,11 +17,8 @@ namespace kernel
 {
     class Team_ABC;
     class KnowledgeGroup_ABC;
+    class Formation_ABC;
 }
-
-namespace DIN {
-    class DIN_Input;
-};
 
 class TeamFactory_ABC;
 
@@ -32,6 +29,7 @@ class TeamFactory_ABC;
 // Created: AGE 2006-02-10
 // =============================================================================
 class TeamsModel : public kernel::Resolver< kernel::Team_ABC >
+                 , public kernel::Resolver< kernel::Formation_ABC >
 {
 
 public:
@@ -45,7 +43,9 @@ public:
     //@{
     void Purge();
 
-    void CreateTeam( DIN::DIN_Input& );
+    void CreateTeam( const ASN1T_MsgSideCreation& asnMsg );
+    void CreateFormation( const ASN1T_MsgFormationCreation& asnMsg ); // $$$$ AGE 2006-10-19: 
+
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );
 
