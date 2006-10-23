@@ -32,6 +32,7 @@ enum E_SMission
     eSMission_Pion_PlastronEnnemi,
     eSMission_Pion_FaireMouvement,
     eSMission_Pion_Suivre,
+    eSMission_Pion_Transporter,
     eSMission_Pion_SeFaireDecontaminer,
     eSMission_Pion_Franchir,
     eSMission_Pion_Decrocher,
@@ -229,7 +230,6 @@ enum E_SMission
     eSMission_Pion_LOG_Reparer,
     eSMission_Pion_LOG_AppuyerMouvement,
     eSMission_Pion_LOG_ReconnaitreItineraire,
-    eSMission_Pion_LOG_TransporterUnite,
     eSMission_Pion_LOG_ReconnaitreZoneContaminee,
     eSMission_Pion_LOG_AppuyerMouvementDansZone,
     eSMission_Pion_LOG_MettreEnOeuvreZoneStationnement,
@@ -281,7 +281,6 @@ enum E_SMission
     // JOINT
     eSMission_Pion_JOINT_Debut,
 
-    eSMission_Pion_JOINT_MARINE_Transporter,
     eSMission_Pion_JOINT_AIR_EffectuerRaid,
 
     eSMission_Pion_JOINT_Fin,
@@ -312,6 +311,7 @@ enum E_SMission
     eSMission_Automate_Franchir,
     eSMission_Automate_Stationner,
     eSMission_Automate_SeFaireTransporter,
+    eSMission_Automate_Transporter,
     eSMission_Automate_SeRecompleter,
     eSMission_Automate_SeRendre,
     eSMission_Automate_FaireMouvementVersCampRefugies,
@@ -426,7 +426,6 @@ enum E_SMission
     eSMission_Automate_LOG_SeDeployer,
     eSMission_Automate_LOG_AppuyerMouvement,
     eSMission_Automate_LOG_ReconnaitreItineraire,
-    eSMission_Automate_LOG_TransporterUnites,
     eSMission_Automate_LOG_AppuyerMouvementDansZone,
     eSMission_Automate_LOG_MettreEnOeuvreZoneStationnement,
     eSMission_Automate_LOG_AppuyerFranchissementDansZone,

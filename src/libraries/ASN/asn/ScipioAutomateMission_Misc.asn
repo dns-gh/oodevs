@@ -52,6 +52,14 @@ Mission-Automate-SeFaireTransporter ::= SEQUENCE
 	zone-embarquement Polygon
 }
 
+Mission-Automate-Transporter ::= SEQUENCE
+{
+    unites-a-transporter            ListAgent,
+    point-debarquement              Point,
+    point-embarquement              Point,
+    avec-materiel                   BOOLEAN DEFAULT FALSE
+}
+
 Mission-Automate-SeRecompleter ::= SEQUENCE
 {
 	zone-ravitaillement Polygon

@@ -338,6 +338,24 @@ enum E_HumanRank
 };
 
 
+enum E_Diplomatie
+{
+    eDiplomatie_Inconnu,
+    eDiplomatie_Ami,
+    eDiplomatie_Ennemi,
+    eDiplomatie_Neutre,
+    eNbrDiplomatie
+};
+
+
+enum E_ChangeDiplomatieErrorCode
+{
+    eChangeDiplomatieErrorCode_NoError,
+    eChangeDiplomatieErrorCode_ErrorInvalidCamp,
+    eNbrChangeDiplomatieErrorCode
+};
+
+
 enum E_EtatRapFor
 {
     eEtatRapFor_None,
@@ -466,6 +484,29 @@ enum E_SetAutomateModeErrorCode
     eSetAutomateModeErrorCode_ErrorAlreadyDebraye,
     eSetAutomateModeErrorCode_ErrorUnitSurrendered,
     eNbrSetAutomateModeErrorCode
+};
+
+
+enum E_ChangeAutomateErrorCode
+{
+    eChangeAutomateErrorCode_NoError,
+    eChangeAutomateErrorCode_ErrorInvalidPion,
+    eChangeAutomateErrorCode_ErrorInvalidAutomate,
+    eChangeAutomateErrorCode_ErrorCampsIncompatibles,
+    eNbrChangeAutomateErrorCode
+};
+
+
+enum E_ChangeLiensLogistiquesErrorCode
+{
+    eChangeLiensLogistiquesErrorCode_NoError,
+    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomate,
+    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateTc2,
+    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateMaintenance,
+    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateSante,
+    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateRavitaillement,
+    eChangeLiensLogistiquesErrorCode_ErrorUnitSurrendered,
+    eNbrChangeLiensLogistiquesErrorCode
 };
 
 
@@ -775,24 +816,6 @@ enum E_FireEffectType
 };
 
 
-enum E_Diplomatie
-{
-    eDiplomatie_Inconnu,
-    eDiplomatie_Ami,
-    eDiplomatie_Ennemi,
-    eDiplomatie_Neutre,
-    eNbrDiplomatie
-};
-
-
-enum E_ChangeDiplomatieErrorCode
-{
-    eChangeDiplomatieErrorCode_NoError,
-    eChangeDiplomatieErrorCode_ErrorInvalidCamp,
-    eNbrChangeDiplomatieErrorCode
-};
-
-
 enum E_ChangeGroupeConnaissanceErrorCode
 {
     eChangeGroupeConnaissanceErrorCode_NoError,
@@ -800,29 +823,6 @@ enum E_ChangeGroupeConnaissanceErrorCode
     eChangeGroupeConnaissanceErrorCode_ErrorInvalidCamp,
     eChangeGroupeConnaissanceErrorCode_ErrorInvalidGroupeConnaissance,
     eNbrChangeGroupeConnaissanceErrorCode
-};
-
-
-enum E_ChangeLiensLogistiquesErrorCode
-{
-    eChangeLiensLogistiquesErrorCode_NoError,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomate,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateTc2,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateMaintenance,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateSante,
-    eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateRavitaillement,
-    eChangeLiensLogistiquesErrorCode_ErrorUnitSurrendered,
-    eNbrChangeLiensLogistiquesErrorCode
-};
-
-
-enum E_ChangeAutomateErrorCode
-{
-    eChangeAutomateErrorCode_NoError,
-    eChangeAutomateErrorCode_ErrorInvalidPion,
-    eChangeAutomateErrorCode_ErrorInvalidAutomate,
-    eChangeAutomateErrorCode_ErrorCampsIncompatibles,
-    eNbrChangeAutomateErrorCode
 };
 
 
@@ -1019,7 +1019,6 @@ enum E_AutomataMission
     eMission_Automate_LOG_SeDeployer,
     eMission_Automate_LOG_AppuyerMouvement,
     eMission_Automate_LOG_ReconnaitreItineraire,
-    eMission_Automate_LOG_TransporterUnites,
     eMission_Automate_LOG_AppuyerMouvementDansZone,
     eMission_Automate_LOG_MettreEnOeuvreZoneStationnement,
     eMission_Automate_LOG_AppuyerFranchissementDansZone,
@@ -1036,6 +1035,7 @@ enum E_AutomataMission
     eMission_Automate_Franchir,
     eMission_Automate_Stationner,
     eMission_Automate_SeFaireTransporter,
+    eMission_Automate_Transporter,
     eMission_Automate_SeRecompleter,
     eMission_Automate_SeRendre,
     eMission_Automate_FaireMouvementVersCampRefugies,
@@ -1215,7 +1215,6 @@ enum E_UnitMission
     eMission_Pion_LOG_Reparer,
     eMission_Pion_LOG_AppuyerMouvement,
     eMission_Pion_LOG_ReconnaitreItineraire,
-    eMission_Pion_LOG_TransporterUnite,
     eMission_Pion_LOG_ReconnaitreZoneContaminee,
     eMission_Pion_LOG_AppuyerMouvementDansZone,
     eMission_Pion_LOG_MettreEnOeuvreZoneStationnement,
@@ -1237,6 +1236,7 @@ enum E_UnitMission
     eMission_Pion_PlastronEnnemi,
     eMission_Pion_FaireMouvement,
     eMission_Pion_Suivre,
+    eMission_Pion_Transporter,
     eMission_Pion_SeFaireDecontaminer,
     eMission_Pion_Franchir,
     eMission_Pion_Decrocher,
@@ -1252,7 +1252,6 @@ enum E_UnitMission
     eMission_Pion_MILICE_Provoquer,
     eMission_Pion_MILICE_PrendreEtTenir,
     eMission_Pion_MILICE_DetruireEmbuscade,
-    eMission_Pion_JOINT_MARINE_Transporter,
     eMission_Pion_JOINT_AIR_EffectuerRaid,
     eMission_Pion_NBC_AnimerUnPlotDeDecontamination,
     eMission_Pion_NBC_ReconnaitreItineraire,

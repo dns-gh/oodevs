@@ -28,13 +28,6 @@ Mission-Automate-LOG-Surveiller ::= SEQUENCE
     zone Polygon
 }
 
-Mission-Automate-LOG-TransporterUnites ::= SEQUENCE
-{
-    unites-a-transporter  ListAgent,
-    point-rendez-vous     Point,
-    point-destination     Point
-}
-
 Mission-Automate-LOG-AppuyerMouvementDansZone ::= SEQUENCE
 {
     zone Polygon

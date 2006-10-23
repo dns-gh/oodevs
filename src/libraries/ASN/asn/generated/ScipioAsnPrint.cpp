@@ -1036,12 +1036,6 @@ void asn1Print_Mission_Automate_ALAT_Heliporter (ASN1ConstCharPtr name, ASN1T_Mi
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
 
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
    sprintf (namebuf, "%s.avec_materiel", name);
    rtPrintBoolean (namebuf, pvalue->avec_materiel);
 
@@ -1065,12 +1059,6 @@ void asn1Print_Mission_Automate_ALAT_Jalonner (ASN1ConstCharPtr name, ASN1T_Miss
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
 }
 
@@ -1098,12 +1086,6 @@ void asn1Print_Mission_Automate_ALAT_Helitransporter (ASN1ConstCharPtr name, ASN
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
    sprintf (namebuf, "%s.avec_materiel", name);
    rtPrintBoolean (namebuf, pvalue->avec_materiel);
@@ -1138,12 +1120,6 @@ void asn1Print_Mission_Automate_ALAT_Appuyer (ASN1ConstCharPtr name, ASN1T_Missi
    sprintf (namebuf, "%s.zone", name);
    asn1Print_Polygon (namebuf, &pvalue->zone);
 
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
 }
 
 void ASN1C_Mission_Automate_ALAT_Appuyer::Print (ASN1ConstCharPtr name)
@@ -1168,12 +1144,6 @@ void asn1Print_Mission_Automate_ALAT_Couvrir (ASN1ConstCharPtr name, ASN1T_Missi
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
 
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
 }
 
 void ASN1C_Mission_Automate_ALAT_Couvrir::Print (ASN1ConstCharPtr name)
@@ -1194,12 +1164,6 @@ void asn1Print_Mission_Automate_ALAT_Surveiller (ASN1ConstCharPtr name, ASN1T_Mi
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
    sprintf (namebuf, "%s.point_logistique", name);
    asn1Print_Point (namebuf, &pvalue->point_logistique);
@@ -1222,12 +1186,6 @@ void asn1Print_Mission_Automate_ALAT_Reconnaitre (ASN1ConstCharPtr name, ASN1T_M
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
 
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
 }
 
 void ASN1C_Mission_Automate_ALAT_Reconnaitre::Print (ASN1ConstCharPtr name)
@@ -1248,12 +1206,6 @@ void asn1Print_Mission_Automate_ALAT_Freiner (ASN1ConstCharPtr name, ASN1T_Missi
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
 }
 
@@ -1279,12 +1231,6 @@ void asn1Print_Mission_Automate_ALAT_Escorter (ASN1ConstCharPtr name, ASN1T_Miss
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
 
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
 }
 
 void ASN1C_Mission_Automate_ALAT_Escorter::Print (ASN1ConstCharPtr name)
@@ -1305,12 +1251,6 @@ void asn1Print_Mission_Automate_ALAT_Attaquer (ASN1ConstCharPtr name, ASN1T_Miss
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
 }
 
@@ -1336,12 +1276,6 @@ void asn1Print_Mission_Automate_ALAT_RecueillirFormationAeromobile (ASN1ConstCha
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
 
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
 }
 
 void ASN1C_Mission_Automate_ALAT_RecueillirFormationAeromobile::Print (ASN1ConstCharPtr name)
@@ -1362,12 +1296,6 @@ void asn1Print_Mission_Automate_ALAT_AttaquerFormationAeromobile (ASN1ConstCharP
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
 }
 
@@ -1392,12 +1320,6 @@ void asn1Print_Mission_Automate_ALAT_DonnerCoupArret (ASN1ConstCharPtr name, ASN
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
 }
 
@@ -1425,12 +1347,6 @@ void asn1Print_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur (ASN1Cons
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
    sprintf (namebuf, "%s.neutraliser", name);
    rtPrintBoolean (namebuf, pvalue->neutraliser);
@@ -1462,12 +1378,6 @@ void asn1Print_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ASN1ConstCharP
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
 
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
    sprintf (namebuf, "%s.neutraliser", name);
    rtPrintBoolean (namebuf, pvalue->neutraliser);
 
@@ -1485,12 +1395,6 @@ void asn1Print_Mission_Automate_ALAT_AllerSeRecompleter (ASN1ConstCharPtr name, 
 
    sprintf (namebuf, "%s.plots_ravitaillement", name);
    asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
 
 }
 
@@ -2618,27 +2522,6 @@ void ASN1C_Mission_Automate_LOG_Surveiller::Print (ASN1ConstCharPtr name)
    asn1Print_Mission_Automate_LOG_Surveiller (name, &msgData);
 }
 
-void asn1Print_Mission_Automate_LOG_TransporterUnites (ASN1ConstCharPtr name, ASN1T_Mission_Automate_LOG_TransporterUnites* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unites_a_transporter", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_transporter);
-
-   sprintf (namebuf, "%s.point_rendez_vous", name);
-   asn1Print_Point (namebuf, &pvalue->point_rendez_vous);
-
-   sprintf (namebuf, "%s.point_destination", name);
-   asn1Print_Point (namebuf, &pvalue->point_destination);
-
-}
-
-void ASN1C_Mission_Automate_LOG_TransporterUnites::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Automate_LOG_TransporterUnites (name, &msgData);
-}
-
 void asn1Print_Mission_Automate_LOG_AppuyerMouvementDansZone (ASN1ConstCharPtr name, ASN1T_Mission_Automate_LOG_AppuyerMouvementDansZone* pvalue)
 {
    char namebuf[512];
@@ -2870,6 +2753,30 @@ void ASN1C_Mission_Automate_SeFaireTransporter::Print (ASN1ConstCharPtr name)
 
 {
    asn1Print_Mission_Automate_SeFaireTransporter (name, &msgData);
+}
+
+void asn1Print_Mission_Automate_Transporter (ASN1ConstCharPtr name, ASN1T_Mission_Automate_Transporter* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.unites_a_transporter", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_transporter);
+
+   sprintf (namebuf, "%s.point_debarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_debarquement);
+
+   sprintf (namebuf, "%s.point_embarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_embarquement);
+
+   sprintf (namebuf, "%s.avec_materiel", name);
+   rtPrintBoolean (namebuf, pvalue->avec_materiel);
+
+}
+
+void ASN1C_Mission_Automate_Transporter::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Automate_Transporter (name, &msgData);
 }
 
 void asn1Print_Mission_Automate_SeRecompleter (ASN1ConstCharPtr name, ASN1T_Mission_Automate_SeRecompleter* pvalue)
@@ -3814,88 +3721,88 @@ void asn1Print_Mission_Automate (ASN1ConstCharPtr name, ASN1T_Mission_Automate* 
          break;
 
       case 111:
-         sprintf (namebuf, "%s.u.mission_automate_log_transporter_unites", name);
-         asn1Print_Mission_Automate_LOG_TransporterUnites (namebuf, pvalue->u.mission_automate_log_transporter_unites);
-         break;
-
-      case 112:
          sprintf (namebuf, "%s.u.mission_automate_log_appuyer_mouvement_dans_zone", name);
          asn1Print_Mission_Automate_LOG_AppuyerMouvementDansZone (namebuf, pvalue->u.mission_automate_log_appuyer_mouvement_dans_zone);
          break;
 
-      case 113:
+      case 112:
          sprintf (namebuf, "%s.u.mission_automate_log_mettre_en_oeuvre_zone_stationnement", name);
          asn1Print_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement (namebuf, pvalue->u.mission_automate_log_mettre_en_oeuvre_zone_stationnement);
          break;
 
-      case 114:
+      case 113:
          sprintf (namebuf, "%s.u.mission_automate_log_appuyer_franchissement_dans_zone", name);
          asn1Print_Mission_Automate_LOG_AppuyerFranchissementDansZone (namebuf, pvalue->u.mission_automate_log_appuyer_franchissement_dans_zone);
          break;
 
-      case 115:
+      case 114:
          sprintf (namebuf, "%s.u.mission_automate_log_bloquer_zone", name);
          asn1Print_Mission_Automate_LOG_BloquerZone (namebuf, pvalue->u.mission_automate_log_bloquer_zone);
          break;
 
-      case 116:
+      case 115:
          sprintf (namebuf, "%s.u.mission_automate_log_reconnaitre_zone_contaminee", name);
          asn1Print_Mission_Automate_LOG_ReconnaitreZoneContaminee (namebuf, pvalue->u.mission_automate_log_reconnaitre_zone_contaminee);
          break;
 
-      case 117:
+      case 116:
          sprintf (namebuf, "%s.u.mission_automate_log_reconnaitre_zone_de_deploiement", name);
          asn1Print_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement (namebuf, pvalue->u.mission_automate_log_reconnaitre_zone_de_deploiement);
          break;
 
-      case 118:
+      case 117:
          sprintf (namebuf, "%s.u.mission_automate_log_surveiller", name);
          asn1Print_Mission_Automate_LOG_Surveiller (namebuf, pvalue->u.mission_automate_log_surveiller);
          break;
 
-      case 119:
+      case 118:
          sprintf (namebuf, "%s.u.mission_automate_log_armer_pias", name);
          asn1Print_Mission_Automate_LOG_ArmerPIAs (namebuf, pvalue->u.mission_automate_log_armer_pias);
          break;
 
-      case 120:
+      case 119:
          sprintf (namebuf, "%s.u.mission_automate_test_move_to", name);
          asn1Print_Mission_Automate_Test_MoveTo (namebuf, pvalue->u.mission_automate_test_move_to);
          break;
 
-      case 121:
+      case 120:
          sprintf (namebuf, "%s.u.mission_automate_decrocher", name);
          asn1Print_Mission_Automate_Decrocher (namebuf, pvalue->u.mission_automate_decrocher);
          break;
 
-      case 122:
+      case 121:
          sprintf (namebuf, "%s.u.mission_automate_relever_sur_place", name);
          asn1Print_Mission_Automate_ReleverSurPlace (namebuf, pvalue->u.mission_automate_relever_sur_place);
          break;
 
-      case 123:
+      case 122:
          sprintf (namebuf, "%s.u.mission_automate_faire_mouvement", name);
          asn1Print_Mission_Automate_FaireMouvement (namebuf, pvalue->u.mission_automate_faire_mouvement);
          break;
 
-      case 124:
+      case 123:
          sprintf (namebuf, "%s.u.mission_automate_se_faire_decontaminer", name);
          asn1Print_Mission_Automate_SeFaireDecontaminer (namebuf, pvalue->u.mission_automate_se_faire_decontaminer);
          break;
 
-      case 125:
+      case 124:
          sprintf (namebuf, "%s.u.mission_automate_franchir", name);
          asn1Print_Mission_Automate_Franchir (namebuf, pvalue->u.mission_automate_franchir);
          break;
 
-      case 126:
+      case 125:
          sprintf (namebuf, "%s.u.mission_automate_stationner", name);
          asn1Print_Mission_Automate_Stationner (namebuf, pvalue->u.mission_automate_stationner);
          break;
 
-      case 127:
+      case 126:
          sprintf (namebuf, "%s.u.mission_automate_se_faire_transporter", name);
          asn1Print_Mission_Automate_SeFaireTransporter (namebuf, pvalue->u.mission_automate_se_faire_transporter);
+         break;
+
+      case 127:
+         sprintf (namebuf, "%s.u.mission_automate_transporter", name);
+         asn1Print_Mission_Automate_Transporter (namebuf, pvalue->u.mission_automate_transporter);
          break;
 
       case 128:
@@ -14896,6 +14803,390 @@ void ASN1C_Mission_Pion_ABC_RASIT_RenseignerSur::Print (ASN1ConstCharPtr name)
 
 #include "ScipioPionMission_ALAT.h"
 
+void asn1Print_Mission_Pion_ALAT_AllerSeRecompleter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_AllerSeRecompleter (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+   sprintf (namebuf, "%s.point_dislocation", name);
+   asn1Print_Point (namebuf, &pvalue->point_dislocation);
+
+   sprintf (namebuf, "%s.zone", name);
+   asn1Print_Localisation (namebuf, &pvalue->zone);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_ReconnaitreContourEnnemi (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_ReconnaitreContourEnnemi (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_DetruireNeutraliserDansZone (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.zone", name);
+   asn1Print_Polygon (namebuf, &pvalue->zone);
+
+   sprintf (namebuf, "%s.point_dislocation", name);
+   asn1Print_Point (namebuf, &pvalue->point_dislocation);
+
+   sprintf (namebuf, "%s.cibles_prioritaires", name);
+   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+   sprintf (namebuf, "%s.neutraliser", name);
+   rtPrintBoolean (namebuf, pvalue->neutraliser);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_DetruireNeutraliserDansZone (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_DetruireAeromobile (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_DetruireAeromobile* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.unite_a_detruire", name);
+   asn1Print_ListKnowledgeAgent (namebuf, &pvalue->unite_a_detruire);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_DetruireAeromobile::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_DetruireAeromobile (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Freiner (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Freiner* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.cibles_prioritaires", name);
+   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Freiner::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Freiner (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Jalonner (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Jalonner* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.cibles_prioritaires", name);
+   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Jalonner::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Jalonner (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Escorter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Escorter* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.unites_a_escorter", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_escorter);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.cibles_prioritaires", name);
+   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Escorter::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Escorter (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Heliporter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Heliporter* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.unites_a_heliporter", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_heliporter);
+
+   sprintf (namebuf, "%s.point_debarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_debarquement);
+
+   sprintf (namebuf, "%s.point_embarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_embarquement);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+   sprintf (namebuf, "%s.avec_materiel", name);
+   rtPrintBoolean (namebuf, pvalue->avec_materiel);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Heliporter::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Heliporter (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.point_debarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_debarquement);
+
+   sprintf (namebuf, "%s.position_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->position_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Helitransporter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Helitransporter* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.unites_a_helitransporter", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_helitransporter);
+
+   sprintf (namebuf, "%s.point_debarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_debarquement);
+
+   sprintf (namebuf, "%s.point_embarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_embarquement);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+   sprintf (namebuf, "%s.avec_materiel", name);
+   rtPrintBoolean (namebuf, pvalue->avec_materiel);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Helitransporter::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Helitransporter (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_IMEX (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_IMEX* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.unites_a_appuyer", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_appuyer);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_IMEX::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_IMEX (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Eclairer (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Eclairer* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Eclairer::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Eclairer (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Surveiller (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Surveiller* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.zone", name);
+   asn1Print_Polygon (namebuf, &pvalue->zone);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Surveiller::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Surveiller (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_AppuyerDirectAuContact (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.cibles_prioritaires", name);
+   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
+
+   sprintf (namebuf, "%s.unites_a_appuyer", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_appuyer);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_AppuyerDirectAuContact (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Couvrir (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Couvrir* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.cibles_prioritaires", name);
+   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
+
+   sprintf (namebuf, "%s.unites_a_couvrir", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_couvrir);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Couvrir::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Couvrir (name, &msgData);
+}
+
+void asn1Print_Mission_Pion_ALAT_Attaquer (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Attaquer* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.cibles_prioritaires", name);
+   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
+
+   sprintf (namebuf, "%s.point_regroupement", name);
+   asn1Print_Point (namebuf, &pvalue->point_regroupement);
+
+   sprintf (namebuf, "%s.plots_ravitaillement", name);
+   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
+
+}
+
+void ASN1C_Mission_Pion_ALAT_Attaquer::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_ALAT_Attaquer (name, &msgData);
+}
+
 void asn1Print_Enum_ALAT_PorteeAction (ASN1ConstCharPtr name, ASN1T_Enum_ALAT_PorteeAction* pvalue)
 {
    printf ("%s = ", name);
@@ -14929,480 +15220,6 @@ void ASN1C_Enum_ALAT_AmbianceMission::Print (ASN1ConstCharPtr name)
 
 {
    asn1Print_Enum_ALAT_AmbianceMission (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_AllerSeRecompleter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_AllerSeRecompleter (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-   sprintf (namebuf, "%s.point_dislocation", name);
-   asn1Print_Point (namebuf, &pvalue->point_dislocation);
-
-   sprintf (namebuf, "%s.zone", name);
-   asn1Print_Localisation (namebuf, &pvalue->zone);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_ReconnaitreContourEnnemi (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_ReconnaitreContourEnnemi (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_DetruireNeutraliserDansZone (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.zone", name);
-   asn1Print_Polygon (namebuf, &pvalue->zone);
-
-   sprintf (namebuf, "%s.point_dislocation", name);
-   asn1Print_Point (namebuf, &pvalue->point_dislocation);
-
-   sprintf (namebuf, "%s.cibles_prioritaires", name);
-   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-   sprintf (namebuf, "%s.neutraliser", name);
-   rtPrintBoolean (namebuf, pvalue->neutraliser);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_DetruireNeutraliserDansZone (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_DetruireAeromobile (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_DetruireAeromobile* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unite_a_detruire", name);
-   asn1Print_ListKnowledgeAgent (namebuf, &pvalue->unite_a_detruire);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_DetruireAeromobile::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_DetruireAeromobile (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Freiner (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Freiner* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.cibles_prioritaires", name);
-   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Freiner::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Freiner (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Jalonner (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Jalonner* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.cibles_prioritaires", name);
-   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Jalonner::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Jalonner (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Escorter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Escorter* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unites_a_escorter", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_escorter);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.cibles_prioritaires", name);
-   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Escorter::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Escorter (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Heliporter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Heliporter* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unites_a_heliporter", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_heliporter);
-
-   sprintf (namebuf, "%s.point_debarquement", name);
-   asn1Print_Point (namebuf, &pvalue->point_debarquement);
-
-   sprintf (namebuf, "%s.point_embarquement", name);
-   asn1Print_Point (namebuf, &pvalue->point_embarquement);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.avec_materiel", name);
-   rtPrintBoolean (namebuf, pvalue->avec_materiel);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Heliporter::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Heliporter (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.point_debarquement", name);
-   asn1Print_Point (namebuf, &pvalue->point_debarquement);
-
-   sprintf (namebuf, "%s.position_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->position_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Helitransporter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Helitransporter* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unites_a_helitransporter", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_helitransporter);
-
-   sprintf (namebuf, "%s.point_debarquement", name);
-   asn1Print_Point (namebuf, &pvalue->point_debarquement);
-
-   sprintf (namebuf, "%s.point_embarquement", name);
-   asn1Print_Point (namebuf, &pvalue->point_embarquement);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.avec_materiel", name);
-   rtPrintBoolean (namebuf, pvalue->avec_materiel);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Helitransporter::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Helitransporter (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_IMEX (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_IMEX* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unites_a_appuyer", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_appuyer);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_IMEX::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_IMEX (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Eclairer (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Eclairer* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Eclairer::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Eclairer (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Surveiller (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Surveiller* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.zone", name);
-   asn1Print_Polygon (namebuf, &pvalue->zone);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Surveiller::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Surveiller (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_AppuyerDirectAuContact (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.cibles_prioritaires", name);
-   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
-
-   sprintf (namebuf, "%s.unites_a_appuyer", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_appuyer);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_AppuyerDirectAuContact (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Couvrir (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Couvrir* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.cibles_prioritaires", name);
-   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
-
-   sprintf (namebuf, "%s.unites_a_couvrir", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_couvrir);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Couvrir::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Couvrir (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_ALAT_Attaquer (ASN1ConstCharPtr name, ASN1T_Mission_Pion_ALAT_Attaquer* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.cibles_prioritaires", name);
-   asn1Print_NatureAtlas (namebuf, &pvalue->cibles_prioritaires);
-
-   sprintf (namebuf, "%s.point_regroupement", name);
-   asn1Print_Point (namebuf, &pvalue->point_regroupement);
-
-   sprintf (namebuf, "%s.plots_ravitaillement", name);
-   asn1Print_ListKnowledgeObject (namebuf, &pvalue->plots_ravitaillement);
-
-   sprintf (namebuf, "%s.portee_action", name);
-   asn1Print_Enum_ALAT_PorteeAction (namebuf, &pvalue->portee_action);
-
-   sprintf (namebuf, "%s.ambiance_mission", name);
-   asn1Print_Enum_ALAT_AmbianceMission (namebuf, &pvalue->ambiance_mission);
-
-}
-
-void ASN1C_Mission_Pion_ALAT_Attaquer::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_ALAT_Attaquer (name, &msgData);
 }
 
 /* This file was generated by ASN1C V5.31 on 19-Oct-2006 */
@@ -17316,27 +17133,6 @@ void ASN1C_Mission_Pion_LOG_ReconnaitreItineraire::Print (ASN1ConstCharPtr name)
    asn1Print_Mission_Pion_LOG_ReconnaitreItineraire (name, &msgData);
 }
 
-void asn1Print_Mission_Pion_LOG_TransporterUnite (ASN1ConstCharPtr name, ASN1T_Mission_Pion_LOG_TransporterUnite* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unites_a_transporter", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_transporter);
-
-   sprintf (namebuf, "%s.point_rendez_vous", name);
-   asn1Print_Point (namebuf, &pvalue->point_rendez_vous);
-
-   sprintf (namebuf, "%s.point_destination", name);
-   asn1Print_Point (namebuf, &pvalue->point_destination);
-
-}
-
-void ASN1C_Mission_Pion_LOG_TransporterUnite::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_LOG_TransporterUnite (name, &msgData);
-}
-
 void asn1Print_Mission_Pion_LOG_ReconnaitreZoneContaminee (ASN1ConstCharPtr name, ASN1T_Mission_Pion_LOG_ReconnaitreZoneContaminee* pvalue)
 {
    char namebuf[512];
@@ -17861,6 +17657,30 @@ void ASN1C_Mission_Pion_Suivre::Print (ASN1ConstCharPtr name)
    asn1Print_Mission_Pion_Suivre (name, &msgData);
 }
 
+void asn1Print_Mission_Pion_Transporter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_Transporter* pvalue)
+{
+   char namebuf[512];
+
+   sprintf (namebuf, "%s.unites_a_transporter", name);
+   asn1Print_ListAgent (namebuf, &pvalue->unites_a_transporter);
+
+   sprintf (namebuf, "%s.point_debarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_debarquement);
+
+   sprintf (namebuf, "%s.point_embarquement", name);
+   asn1Print_Point (namebuf, &pvalue->point_embarquement);
+
+   sprintf (namebuf, "%s.avec_materiel", name);
+   rtPrintBoolean (namebuf, pvalue->avec_materiel);
+
+}
+
+void ASN1C_Mission_Pion_Transporter::Print (ASN1ConstCharPtr name)
+
+{
+   asn1Print_Mission_Pion_Transporter (name, &msgData);
+}
+
 void asn1Print_Mission_Pion_SeFaireDecontaminer (ASN1ConstCharPtr name, ASN1T_Mission_Pion_SeFaireDecontaminer* pvalue)
 {
    char namebuf[512];
@@ -18099,30 +17919,6 @@ void ASN1C_Mission_Pion_MILICE_DetruireEmbuscade::Print (ASN1ConstCharPtr name)
 
 {
    asn1Print_Mission_Pion_MILICE_DetruireEmbuscade (name, &msgData);
-}
-
-void asn1Print_Mission_Pion_JOINT_MARINE_Transporter (ASN1ConstCharPtr name, ASN1T_Mission_Pion_JOINT_MARINE_Transporter* pvalue)
-{
-   char namebuf[512];
-
-   sprintf (namebuf, "%s.unites_a_transporter", name);
-   asn1Print_ListAgent (namebuf, &pvalue->unites_a_transporter);
-
-   sprintf (namebuf, "%s.point_debarquement", name);
-   asn1Print_Point (namebuf, &pvalue->point_debarquement);
-
-   sprintf (namebuf, "%s.point_embarquement", name);
-   asn1Print_Point (namebuf, &pvalue->point_embarquement);
-
-   sprintf (namebuf, "%s.avec_materiel", name);
-   rtPrintBoolean (namebuf, pvalue->avec_materiel);
-
-}
-
-void ASN1C_Mission_Pion_JOINT_MARINE_Transporter::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_Mission_Pion_JOINT_MARINE_Transporter (name, &msgData);
 }
 
 void asn1Print_Mission_Pion_JOINT_AIR_EffectuerRaid (ASN1ConstCharPtr name, ASN1T_Mission_Pion_JOINT_AIR_EffectuerRaid* pvalue)
@@ -19309,113 +19105,113 @@ void asn1Print_Mission_Pion (ASN1ConstCharPtr name, ASN1T_Mission_Pion* pvalue)
          break;
 
       case 149:
-         sprintf (namebuf, "%s.u.mission_pion_log_transporter_unite", name);
-         asn1Print_Mission_Pion_LOG_TransporterUnite (namebuf, pvalue->u.mission_pion_log_transporter_unite);
-         break;
-
-      case 150:
          sprintf (namebuf, "%s.u.mission_pion_log_reconnaitre_zone_contaminee", name);
          asn1Print_Mission_Pion_LOG_ReconnaitreZoneContaminee (namebuf, pvalue->u.mission_pion_log_reconnaitre_zone_contaminee);
          break;
 
-      case 151:
+      case 150:
          sprintf (namebuf, "%s.u.mission_pion_log_appuyer_mouvement_dans_zone", name);
          asn1Print_Mission_Pion_LOG_AppuyerMouvementDansZone (namebuf, pvalue->u.mission_pion_log_appuyer_mouvement_dans_zone);
          break;
 
-      case 152:
+      case 151:
          sprintf (namebuf, "%s.u.mission_pion_log_mettre_en_oeuvre_zone_stationnement", name);
          asn1Print_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement (namebuf, pvalue->u.mission_pion_log_mettre_en_oeuvre_zone_stationnement);
          break;
 
-      case 153:
+      case 152:
          sprintf (namebuf, "%s.u.mission_pion_log_appuyer_franchissement_sur_un_point", name);
          asn1Print_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint (namebuf, pvalue->u.mission_pion_log_appuyer_franchissement_sur_un_point);
          break;
 
-      case 154:
+      case 153:
          sprintf (namebuf, "%s.u.mission_pion_log_bloquer_zone", name);
          asn1Print_Mission_Pion_LOG_BloquerZone (namebuf, pvalue->u.mission_pion_log_bloquer_zone);
          break;
 
-      case 155:
+      case 154:
          sprintf (namebuf, "%s.u.mission_pion_log_reconnaitre_zone_de_deploiement", name);
          asn1Print_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement (namebuf, pvalue->u.mission_pion_log_reconnaitre_zone_de_deploiement);
          break;
 
-      case 156:
+      case 155:
          sprintf (namebuf, "%s.u.mission_pion_log_armer_pia", name);
          asn1Print_Mission_Pion_LOG_ArmerPIA (namebuf, pvalue->u.mission_pion_log_armer_pia);
          break;
 
-      case 157:
+      case 156:
          sprintf (namebuf, "%s.u.mission_pion_log_surveiller", name);
          asn1Print_Mission_Pion_LOG_Surveiller (namebuf, pvalue->u.mission_pion_log_surveiller);
          break;
 
-      case 158:
+      case 157:
          sprintf (namebuf, "%s.u.mission_pion_test_heliporter", name);
          asn1Print_Mission_Pion_Test_Heliporter (namebuf, pvalue->u.mission_pion_test_heliporter);
          break;
 
-      case 159:
+      case 158:
          sprintf (namebuf, "%s.u.mission_pion_test_move_to", name);
          asn1Print_Mission_Pion_Test_MoveTo (namebuf, pvalue->u.mission_pion_test_move_to);
          break;
 
-      case 160:
+      case 159:
          sprintf (namebuf, "%s.u.mission_pion_test_create_object", name);
          asn1Print_Mission_Pion_Test_CreateObject (namebuf, pvalue->u.mission_pion_test_create_object);
          break;
 
-      case 161:
+      case 160:
          sprintf (namebuf, "%s.u.mission_pion_test_destroy_object", name);
          asn1Print_Mission_Pion_Test_DestroyObject (namebuf, pvalue->u.mission_pion_test_destroy_object);
          break;
 
-      case 162:
+      case 161:
          sprintf (namebuf, "%s.u.mission_pion_test_create_bypass", name);
          asn1Print_Mission_Pion_Test_CreateBypass (namebuf, pvalue->u.mission_pion_test_create_bypass);
          break;
 
-      case 163:
+      case 162:
          sprintf (namebuf, "%s.u.mission_pion_test_fire", name);
          asn1Print_Mission_Pion_Test_Fire (namebuf, pvalue->u.mission_pion_test_fire);
          break;
 
-      case 164:
+      case 163:
          sprintf (namebuf, "%s.u.mission_pion_test_change_posture", name);
          asn1Print_Mission_Pion_Test_ChangePosture (namebuf, pvalue->u.mission_pion_test_change_posture);
          break;
 
-      case 165:
+      case 164:
          sprintf (namebuf, "%s.u.mission_pion_test_path_find", name);
          asn1Print_Mission_Pion_Test_PathFind (namebuf, pvalue->u.mission_pion_test_path_find);
          break;
 
-      case 166:
+      case 165:
          sprintf (namebuf, "%s.u.mission_pion_test_find_position", name);
          asn1Print_Mission_Pion_Test_FindPosition (namebuf, pvalue->u.mission_pion_test_find_position);
          break;
 
-      case 167:
+      case 166:
          sprintf (namebuf, "%s.u.mission_pion_test_reinforce", name);
          asn1Print_Mission_Pion_Test_Reinforce (namebuf, pvalue->u.mission_pion_test_reinforce);
          break;
 
-      case 168:
+      case 167:
          sprintf (namebuf, "%s.u.mission_pion_plastron_ennemi", name);
          asn1Print_Mission_Pion_PlastronEnnemi (namebuf, pvalue->u.mission_pion_plastron_ennemi);
          break;
 
-      case 169:
+      case 168:
          sprintf (namebuf, "%s.u.mission_pion_faire_mouvement", name);
          asn1Print_Mission_Pion_FaireMouvement (namebuf, pvalue->u.mission_pion_faire_mouvement);
          break;
 
-      case 170:
+      case 169:
          sprintf (namebuf, "%s.u.mission_pion_suivre", name);
          asn1Print_Mission_Pion_Suivre (namebuf, pvalue->u.mission_pion_suivre);
+         break;
+
+      case 170:
+         sprintf (namebuf, "%s.u.mission_pion_transporter", name);
+         asn1Print_Mission_Pion_Transporter (namebuf, pvalue->u.mission_pion_transporter);
          break;
 
       case 171:
@@ -19494,126 +19290,121 @@ void asn1Print_Mission_Pion (ASN1ConstCharPtr name, ASN1T_Mission_Pion* pvalue)
          break;
 
       case 186:
-         sprintf (namebuf, "%s.u.mission_pion_joint_marine_transporter", name);
-         asn1Print_Mission_Pion_JOINT_MARINE_Transporter (namebuf, pvalue->u.mission_pion_joint_marine_transporter);
-         break;
-
-      case 187:
          sprintf (namebuf, "%s.u.mission_pion_joint_air_effectuer_raid", name);
          asn1Print_Mission_Pion_JOINT_AIR_EffectuerRaid (namebuf, pvalue->u.mission_pion_joint_air_effectuer_raid);
          break;
 
-      case 188:
+      case 187:
          sprintf (namebuf, "%s.u.mission_pion_nbc_animer_un_plot_de_decontamination", name);
          asn1Print_Mission_Pion_NBC_AnimerUnPlotDeDecontamination (namebuf, pvalue->u.mission_pion_nbc_animer_un_plot_de_decontamination);
          break;
 
-      case 189:
+      case 188:
          sprintf (namebuf, "%s.u.mission_pion_nbc_reconnaitre_itineraire", name);
          asn1Print_Mission_Pion_NBC_ReconnaitreItineraire (namebuf, pvalue->u.mission_pion_nbc_reconnaitre_itineraire);
          break;
 
-      case 190:
+      case 189:
          sprintf (namebuf, "%s.u.mission_pion_nbc_reconnaitre_zone", name);
          asn1Print_Mission_Pion_NBC_ReconnaitreZone (namebuf, pvalue->u.mission_pion_nbc_reconnaitre_zone);
          break;
 
-      case 191:
+      case 190:
          sprintf (namebuf, "%s.u.mission_pion_nbc_decontaminer_zone", name);
          asn1Print_Mission_Pion_NBC_DecontaminerZone (namebuf, pvalue->u.mission_pion_nbc_decontaminer_zone);
          break;
 
-      case 192:
+      case 191:
          sprintf (namebuf, "%s.u.mission_pion_nbc_reconnaitre_un_site_rota", name);
          asn1Print_Mission_Pion_NBC_ReconnaitreUnSiteROTA (namebuf, pvalue->u.mission_pion_nbc_reconnaitre_un_site_rota);
          break;
 
-      case 193:
+      case 192:
          sprintf (namebuf, "%s.u.mission_pion_rens_rohum_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROHUM_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_rohum_renseigner_sur);
          break;
 
-      case 194:
+      case 193:
          sprintf (namebuf, "%s.u.mission_pion_rens_rohum_sexfiltrer", name);
          asn1Print_Mission_Pion_RENS_ROHUM_SExfiltrer (namebuf, pvalue->u.mission_pion_rens_rohum_sexfiltrer);
          break;
 
-      case 195:
+      case 194:
          sprintf (namebuf, "%s.u.mission_pion_rens_rohum_orienter_guider", name);
          asn1Print_Mission_Pion_RENS_ROHUM_OrienterGuider (namebuf, pvalue->u.mission_pion_rens_rohum_orienter_guider);
          break;
 
-      case 196:
+      case 195:
          sprintf (namebuf, "%s.u.mission_pion_rens_roem_appuyer", name);
          asn1Print_Mission_Pion_RENS_ROEM_Appuyer (namebuf, pvalue->u.mission_pion_rens_roem_appuyer);
          break;
 
-      case 197:
+      case 196:
          sprintf (namebuf, "%s.u.mission_pion_rens_roem_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROEM_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_roem_renseigner_sur);
          break;
 
-      case 198:
+      case 197:
          sprintf (namebuf, "%s.u.mission_pion_rens_roem_mettre_en_oeuvre", name);
          asn1Print_Mission_Pion_RENS_ROEM_MettreEnOeuvre (namebuf, pvalue->u.mission_pion_rens_roem_mettre_en_oeuvre);
          break;
 
-      case 199:
+      case 198:
          sprintf (namebuf, "%s.u.mission_pion_rens_radint_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_RADINT_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_radint_renseigner_sur);
          break;
 
-      case 200:
+      case 199:
          sprintf (namebuf, "%s.u.mission_pion_rens_radint_mettre_en_oeuvre", name);
          asn1Print_Mission_Pion_RENS_RADINT_MettreEnOeuvre (namebuf, pvalue->u.mission_pion_rens_radint_mettre_en_oeuvre);
          break;
 
-      case 201:
+      case 200:
          sprintf (namebuf, "%s.u.mission_pion_rens_roim_mettre_en_oeuvre", name);
          asn1Print_Mission_Pion_RENS_ROIM_MettreEnOeuvre (namebuf, pvalue->u.mission_pion_rens_roim_mettre_en_oeuvre);
          break;
 
-      case 202:
+      case 201:
          sprintf (namebuf, "%s.u.mission_pion_rens_roim_sdti_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_roim_sdti_renseigner_sur);
          break;
 
-      case 203:
+      case 202:
          sprintf (namebuf, "%s.u.mission_pion_rens_roim_cl289_renseigner_sur", name);
          asn1Print_Mission_Pion_RENS_ROIM_CL289_RenseignerSur (namebuf, pvalue->u.mission_pion_rens_roim_cl289_renseigner_sur);
          break;
 
-      case 204:
+      case 203:
          sprintf (namebuf, "%s.u.mission_pion_trans_etablir_gerer_liaison", name);
          asn1Print_Mission_Pion_TRANS_EtablirGererLiaison (namebuf, pvalue->u.mission_pion_trans_etablir_gerer_liaison);
          break;
 
-      case 205:
+      case 204:
          sprintf (namebuf, "%s.u.mission_pion_asy_sinfiltrer", name);
          asn1Print_Mission_Pion_ASY_SInfiltrer (namebuf, pvalue->u.mission_pion_asy_sinfiltrer);
          break;
 
-      case 206:
+      case 205:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_attentatContrePopulation", name);
          asn1Print_Mission_Pion_ASY_CommettreAttentatContrePopulation (namebuf, pvalue->u.mission_pion_asy_commettre_attentatContrePopulation);
          break;
 
-      case 207:
+      case 206:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_attentatContreForcesArmees", name);
          asn1Print_Mission_Pion_ASY_CommettreAttentatContreForcesArmees (namebuf, pvalue->u.mission_pion_asy_commettre_attentatContreForcesArmees);
          break;
 
-      case 208:
+      case 207:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_attentatContreInstallation", name);
          asn1Print_Mission_Pion_ASY_CommettreAttentatContreInstallation (namebuf, pvalue->u.mission_pion_asy_commettre_attentatContreInstallation);
          break;
 
-      case 209:
+      case 208:
          sprintf (namebuf, "%s.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone", name);
          asn1Print_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone (namebuf, pvalue->u.mission_pion_asy_commettre_exactions_sur_population_dans_zone);
          break;
 
-      case 210:
+      case 209:
          sprintf (namebuf, "%s.u.mission_pion_asy_renseigner", name);
          asn1Print_Mission_Pion_ASY_Renseigner (namebuf, pvalue->u.mission_pion_asy_renseigner);
          break;

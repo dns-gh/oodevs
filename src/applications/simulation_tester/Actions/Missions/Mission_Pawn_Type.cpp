@@ -158,7 +158,6 @@
 #include "Pawn/Mission_Pawn_LOG_Reparer.cpp"
 #include "Pawn/Mission_Pawn_LOG_AppuyerMouvement.cpp"
 #include "Pawn/Mission_Pawn_LOG_ReconnaitreItineraire.cpp"
-#include "Pawn/Mission_Pawn_LOG_TransporterUnite.cpp"
 #include "Pawn/Mission_Pawn_LOG_ReconnaitreZoneContaminee.cpp"
 #include "Pawn/Mission_Pawn_LOG_AppuyerMouvementDansZone.cpp"
 #include "Pawn/Mission_Pawn_LOG_MettreEnOeuvreZoneStationnement.cpp"
@@ -180,6 +179,7 @@
 #include "Pawn/Mission_Pawn_PlastronEnnemi.cpp"
 #include "Pawn/Mission_Pawn_FaireMouvement.cpp"
 #include "Pawn/Mission_Pawn_Suivre.cpp"
+#include "Pawn/Mission_Pawn_Transporter.cpp"
 #include "Pawn/Mission_Pawn_SeFaireDecontaminer.cpp"
 #include "Pawn/Mission_Pawn_Franchir.cpp"
 #include "Pawn/Mission_Pawn_Decrocher.cpp"
@@ -195,7 +195,6 @@
 #include "Pawn/Mission_Pawn_MILICE_Provoquer.cpp"
 #include "Pawn/Mission_Pawn_MILICE_PrendreEtTenir.cpp"
 #include "Pawn/Mission_Pawn_MILICE_DetruireEmbuscade.cpp"
-#include "Pawn/Mission_Pawn_JOINT_MARINE_Transporter.cpp"
 #include "Pawn/Mission_Pawn_JOINT_AIR_EffectuerRaid.cpp"
 #include "Pawn/Mission_Pawn_NBC_AnimerUnPlotDeDecontamination.cpp"
 #include "Pawn/Mission_Pawn_NBC_ReconnaitreItineraire.cpp"
@@ -400,7 +399,6 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_LOG_Reparer >( "Pion LOG Reparer" );
     Register< Mission_Pawn_LOG_AppuyerMouvement >( "Pion LOG AppuyerMouvement" );
     Register< Mission_Pawn_LOG_ReconnaitreItineraire >( "Pion LOG ReconnaitreItineraire" );
-    Register< Mission_Pawn_LOG_TransporterUnite >( "Pion LOG TransporterUnite" );
     Register< Mission_Pawn_LOG_ReconnaitreZoneContaminee >( "Pion LOG ReconnaitreZoneContaminee" );
     Register< Mission_Pawn_LOG_AppuyerMouvementDansZone >( "Pion LOG AppuyerMouvementDansZone" );
     Register< Mission_Pawn_LOG_MettreEnOeuvreZoneStationnement >( "Pion LOG MettreEnOeuvreZoneStationnement" );
@@ -422,6 +420,7 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_PlastronEnnemi >( "Pion PlastronEnnemi" );
     Register< Mission_Pawn_FaireMouvement >( "Pion FaireMouvement" );
     Register< Mission_Pawn_Suivre >( "Pion Suivre" );
+    Register< Mission_Pawn_Transporter >( "Pion Transporter" );
     Register< Mission_Pawn_SeFaireDecontaminer >( "Pion SeFaireDecontaminer" );
     Register< Mission_Pawn_Franchir >( "Pion Franchir" );
     Register< Mission_Pawn_Decrocher >( "Pion Decrocher" );
@@ -437,7 +436,6 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_MILICE_Provoquer >( "Pion MILICE Provoquer" );
     Register< Mission_Pawn_MILICE_PrendreEtTenir >( "Pion MILICE PrendreEtTenir" );
     Register< Mission_Pawn_MILICE_DetruireEmbuscade >( "Pion MILICE DetruireEmbuscade" );
-    Register< Mission_Pawn_JOINT_MARINE_Transporter >( "Pion JOINT MARINE Transporter" );
     Register< Mission_Pawn_JOINT_AIR_EffectuerRaid >( "Pion JOINT AIR EffectuerRaid" );
     Register< Mission_Pawn_NBC_AnimerUnPlotDeDecontamination >( "Pion NBC AnimerUnPlotDeDecontamination" );
     Register< Mission_Pawn_NBC_ReconnaitreItineraire >( "Pion NBC ReconnaitreItineraire" );

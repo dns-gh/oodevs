@@ -83,13 +83,6 @@ Mission-Pion-LOG-Surveiller ::= SEQUENCE
     zone Polygon
 }
 
-Mission-Pion-LOG-TransporterUnite ::= SEQUENCE
-{
-    unites-a-transporter  ListAgent,
-    point-rendez-vous     Point,
-    point-destination     Point
-}
-
 Mission-Pion-LOG-ReconnaitreZoneContaminee ::= SEQUENCE
 {
     zone Polygon

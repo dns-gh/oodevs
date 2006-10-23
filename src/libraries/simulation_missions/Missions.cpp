@@ -127,7 +127,6 @@
 #include "Automate\MIL_AutomateMission_LOG_SeDeployer.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerMouvement.cpp"
 #include "Automate\MIL_AutomateMission_LOG_ReconnaitreItineraire.cpp"
-#include "Automate\MIL_AutomateMission_LOG_TransporterUnites.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerMouvementDansZone.cpp"
 #include "Automate\MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement.cpp"
 #include "Automate\MIL_AutomateMission_LOG_AppuyerFranchissementDansZone.cpp"
@@ -144,6 +143,7 @@
 #include "Automate\MIL_AutomateMission_Franchir.cpp"
 #include "Automate\MIL_AutomateMission_Stationner.cpp"
 #include "Automate\MIL_AutomateMission_SeFaireTransporter.cpp"
+#include "Automate\MIL_AutomateMission_Transporter.cpp"
 #include "Automate\MIL_AutomateMission_SeRecompleter.cpp"
 #include "Automate\MIL_AutomateMission_SeRendre.cpp"
 #include "Automate\MIL_AutomateMission_FaireMouvementVersCampRefugies.cpp"
@@ -316,7 +316,6 @@
 #include "Pion\MIL_PionMission_LOG_Reparer.cpp"
 #include "Pion\MIL_PionMission_LOG_AppuyerMouvement.cpp"
 #include "Pion\MIL_PionMission_LOG_ReconnaitreItineraire.cpp"
-#include "Pion\MIL_PionMission_LOG_TransporterUnite.cpp"
 #include "Pion\MIL_PionMission_LOG_ReconnaitreZoneContaminee.cpp"
 #include "Pion\MIL_PionMission_LOG_AppuyerMouvementDansZone.cpp"
 #include "Pion\MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement.cpp"
@@ -338,6 +337,7 @@
 #include "Pion\MIL_PionMission_PlastronEnnemi.cpp"
 #include "Pion\MIL_PionMission_FaireMouvement.cpp"
 #include "Pion\MIL_PionMission_Suivre.cpp"
+#include "Pion\MIL_PionMission_Transporter.cpp"
 #include "Pion\MIL_PionMission_SeFaireDecontaminer.cpp"
 #include "Pion\MIL_PionMission_Franchir.cpp"
 #include "Pion\MIL_PionMission_Decrocher.cpp"
@@ -353,7 +353,6 @@
 #include "Pion\MIL_PionMission_MILICE_Provoquer.cpp"
 #include "Pion\MIL_PionMission_MILICE_PrendreEtTenir.cpp"
 #include "Pion\MIL_PionMission_MILICE_DetruireEmbuscade.cpp"
-#include "Pion\MIL_PionMission_JOINT_MARINE_Transporter.cpp"
 #include "Pion\MIL_PionMission_JOINT_AIR_EffectuerRaid.cpp"
 #include "Pion\MIL_PionMission_NBC_AnimerUnPlotDeDecontamination.cpp"
 #include "Pion\MIL_PionMission_NBC_ReconnaitreItineraire.cpp"
@@ -571,7 +570,6 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_SeDeployer>( "Automate LOG SeDeployer", eMission_Automate_LOG_SeDeployer, T_Mission_Automate_mission_automate_log_se_deployer, "T_Mission_Automate_LOG_SeDeployer", "MIS_Automate_MRT_LOG_SeDeployer", "MIS_Automate_CDT_LOG_SeDeployer");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerMouvement>( "Automate LOG AppuyerMouvement", eMission_Automate_LOG_AppuyerMouvement, T_Mission_Automate_mission_automate_log_appuyer_mouvement, "T_Mission_Automate_LOG_AppuyerMouvement", "MIS_Automate_MRT_LOG_AppuyerMouvement", "MIS_Automate_CDT_LOG_AppuyerMouvement");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_ReconnaitreItineraire>( "Automate LOG ReconnaitreItineraire", eMission_Automate_LOG_ReconnaitreItineraire, T_Mission_Automate_mission_automate_log_reconnaitre_itineraire, "T_Mission_Automate_LOG_ReconnaitreItineraire", "MIS_Automate_MRT_LOG_ReconnaitreItineraire", "MIS_Automate_CDT_LOG_ReconnaitreItineraire");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_TransporterUnites>( "Automate LOG TransporterUnites", eMission_Automate_LOG_TransporterUnites, T_Mission_Automate_mission_automate_log_transporter_unites, "T_Mission_Automate_LOG_TransporterUnites", "MIS_Automate_MRT_LOG_TransporterUnites", "MIS_Automate_CDT_LOG_TransporterUnites");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerMouvementDansZone>( "Automate LOG AppuyerMouvementDansZone", eMission_Automate_LOG_AppuyerMouvementDansZone, T_Mission_Automate_mission_automate_log_appuyer_mouvement_dans_zone, "T_Mission_Automate_LOG_AppuyerMouvementDansZone", "MIS_Automate_MRT_LOG_AppuyerMouvementDansZone", "MIS_Automate_CDT_LOG_AppuyerMouvementDansZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement>( "Automate LOG MettreEnOeuvreZoneStationnement", eMission_Automate_LOG_MettreEnOeuvreZoneStationnement, T_Mission_Automate_mission_automate_log_mettre_en_oeuvre_zone_stationnement, "T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement", "MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement", "MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_LOG_AppuyerFranchissementDansZone>( "Automate LOG AppuyerFranchissementDansZone", eMission_Automate_LOG_AppuyerFranchissementDansZone, T_Mission_Automate_mission_automate_log_appuyer_franchissement_dans_zone, "T_Mission_Automate_LOG_AppuyerFranchissementDansZone", "MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone", "MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone");
@@ -588,6 +586,7 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_Franchir>( "Automate Franchir", eMission_Automate_Franchir, T_Mission_Automate_mission_automate_franchir, "T_Mission_Automate_Franchir", "MIS_Automate_MRT_Franchir", "MIS_Automate_CDT_Franchir");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_Stationner>( "Automate Stationner", eMission_Automate_Stationner, T_Mission_Automate_mission_automate_stationner, "T_Mission_Automate_Stationner", "MIS_Automate_MRT_Stationner", "MIS_Automate_CDT_Stationner");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_SeFaireTransporter>( "Automate SeFaireTransporter", eMission_Automate_SeFaireTransporter, T_Mission_Automate_mission_automate_se_faire_transporter, "T_Mission_Automate_SeFaireTransporter", "MIS_Automate_MRT_SeFaireTransporter", "MIS_Automate_CDT_SeFaireTransporter");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_Transporter>( "Automate Transporter", eMission_Automate_Transporter, T_Mission_Automate_mission_automate_transporter, "T_Mission_Automate_Transporter", "MIS_Automate_MRT_Transporter", "MIS_Automate_CDT_Transporter");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_SeRecompleter>( "Automate SeRecompleter", eMission_Automate_SeRecompleter, T_Mission_Automate_mission_automate_se_recompleter, "T_Mission_Automate_SeRecompleter", "MIS_Automate_MRT_SeRecompleter", "MIS_Automate_CDT_SeRecompleter");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_SeRendre>( "Automate SeRendre", eMission_Automate_SeRendre, T_Mission_Automate_mission_automate_se_rendre, "T_Mission_Automate_SeRendre", "MIS_Automate_MRT_SeRendre", "MIS_Automate_CDT_SeRendre");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_FaireMouvementVersCampRefugies>( "Automate FaireMouvementVersCampRefugies", eMission_Automate_FaireMouvementVersCampRefugies, T_Mission_Automate_mission_automate_faire_mouvement_vers_camp_refugies, "T_Mission_Automate_FaireMouvementVersCampRefugies", "MIS_Automate_MRT_FaireMouvementVersCampRefugies", "MIS_Automate_CDT_FaireMouvementVersCampRefugies");
@@ -769,7 +768,6 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_Reparer>( "Pion LOG Reparer", eMission_Pion_LOG_Reparer, T_Mission_Pion_mission_pion_log_reparer, "T_Mission_Pion_LOG_Reparer", "MIS_Pion_LOG_Reparer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_AppuyerMouvement>( "Pion LOG AppuyerMouvement", eMission_Pion_LOG_AppuyerMouvement, T_Mission_Pion_mission_pion_log_appuyer_mouvement, "T_Mission_Pion_LOG_AppuyerMouvement", "MIS_Pion_LOG_AppuyerMouvement");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_ReconnaitreItineraire>( "Pion LOG ReconnaitreItineraire", eMission_Pion_LOG_ReconnaitreItineraire, T_Mission_Pion_mission_pion_log_reconnaitre_itineraire, "T_Mission_Pion_LOG_ReconnaitreItineraire", "MIS_Pion_LOG_ReconnaitreItineraire");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_TransporterUnite>( "Pion LOG TransporterUnite", eMission_Pion_LOG_TransporterUnite, T_Mission_Pion_mission_pion_log_transporter_unite, "T_Mission_Pion_LOG_TransporterUnite", "MIS_Pion_LOG_TransporterUnite");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_ReconnaitreZoneContaminee>( "Pion LOG ReconnaitreZoneContaminee", eMission_Pion_LOG_ReconnaitreZoneContaminee, T_Mission_Pion_mission_pion_log_reconnaitre_zone_contaminee, "T_Mission_Pion_LOG_ReconnaitreZoneContaminee", "MIS_Pion_LOG_ReconnaitreZoneContaminee");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_AppuyerMouvementDansZone>( "Pion LOG AppuyerMouvementDansZone", eMission_Pion_LOG_AppuyerMouvementDansZone, T_Mission_Pion_mission_pion_log_appuyer_mouvement_dans_zone, "T_Mission_Pion_LOG_AppuyerMouvementDansZone", "MIS_Pion_LOG_AppuyerMouvementDansZone");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement>( "Pion LOG MettreEnOeuvreZoneStationnement", eMission_Pion_LOG_MettreEnOeuvreZoneStationnement, T_Mission_Pion_mission_pion_log_mettre_en_oeuvre_zone_stationnement, "T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement", "MIS_Pion_LOG_MettreEnOeuvreZoneStationnement");
@@ -791,6 +789,7 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_PlastronEnnemi>( "Pion PlastronEnnemi", eMission_Pion_PlastronEnnemi, T_Mission_Pion_mission_pion_plastron_ennemi, "T_Mission_Pion_PlastronEnnemi", "MIS_Pion_PlastronEnnemi");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_FaireMouvement>( "Pion FaireMouvement", eMission_Pion_FaireMouvement, T_Mission_Pion_mission_pion_faire_mouvement, "T_Mission_Pion_FaireMouvement", "MIS_Pion_FaireMouvement");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_Suivre>( "Pion Suivre", eMission_Pion_Suivre, T_Mission_Pion_mission_pion_suivre, "T_Mission_Pion_Suivre", "MIS_Pion_Suivre");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_Transporter>( "Pion Transporter", eMission_Pion_Transporter, T_Mission_Pion_mission_pion_transporter, "T_Mission_Pion_Transporter", "MIS_Pion_Transporter");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_SeFaireDecontaminer>( "Pion SeFaireDecontaminer", eMission_Pion_SeFaireDecontaminer, T_Mission_Pion_mission_pion_se_faire_decontaminer, "T_Mission_Pion_SeFaireDecontaminer", "MIS_Pion_SeFaireDecontaminer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_Franchir>( "Pion Franchir", eMission_Pion_Franchir, T_Mission_Pion_mission_pion_franchir, "T_Mission_Pion_Franchir", "MIS_Pion_Franchir");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_Decrocher>( "Pion Decrocher", eMission_Pion_Decrocher, T_Mission_Pion_mission_pion_decrocher, "T_Mission_Pion_Decrocher", "MIS_Pion_Decrocher");
@@ -806,7 +805,6 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_MILICE_Provoquer>( "Pion MILICE Provoquer", eMission_Pion_MILICE_Provoquer, T_Mission_Pion_mission_pion_milice_provoquer, "T_Mission_Pion_MILICE_Provoquer", "MIS_Pion_MILICE_Provoquer");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_MILICE_PrendreEtTenir>( "Pion MILICE PrendreEtTenir", eMission_Pion_MILICE_PrendreEtTenir, T_Mission_Pion_mission_pion_milice_prendre_et_tenir, "T_Mission_Pion_MILICE_PrendreEtTenir", "MIS_Pion_MILICE_PrendreEtTenir");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_MILICE_DetruireEmbuscade>( "Pion MILICE DetruireEmbuscade", eMission_Pion_MILICE_DetruireEmbuscade, T_Mission_Pion_mission_pion_milice_detruire_embuscade, "T_Mission_Pion_MILICE_DetruireEmbuscade", "MIS_Pion_MILICE_DetruireEmbuscade");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_JOINT_MARINE_Transporter>( "Pion JOINT MARINE Transporter", eMission_Pion_JOINT_MARINE_Transporter, T_Mission_Pion_mission_pion_joint_marine_transporter, "T_Mission_Pion_JOINT_MARINE_Transporter", "MIS_Pion_JOINT_MARINE_Transporter");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_JOINT_AIR_EffectuerRaid>( "Pion JOINT AIR EffectuerRaid", eMission_Pion_JOINT_AIR_EffectuerRaid, T_Mission_Pion_mission_pion_joint_air_effectuer_raid, "T_Mission_Pion_JOINT_AIR_EffectuerRaid", "MIS_Pion_JOINT_AIR_EffectuerRaid");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_AnimerUnPlotDeDecontamination>( "Pion NBC AnimerUnPlotDeDecontamination", eMission_Pion_NBC_AnimerUnPlotDeDecontamination, T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination, "T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination", "MIS_Pion_NBC_AnimerUnPlotDeDecontamination");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_NBC_ReconnaitreItineraire>( "Pion NBC ReconnaitreItineraire", eMission_Pion_NBC_ReconnaitreItineraire, T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire, "T_Mission_Pion_NBC_ReconnaitreItineraire", "MIS_Pion_NBC_ReconnaitreItineraire");

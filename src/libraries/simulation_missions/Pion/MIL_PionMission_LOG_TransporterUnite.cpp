@@ -71,7 +71,7 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_LOG_TransporterUnite::Initialize( const
     if( nCode != EnumOrderErrorCode::no_error )
         return nCode;        
 
-    const ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *asnMsg.mission.u.mission_pion_log_transporter_unite;
+    const ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *asnMsg.mission.u.$$$$NotDefined$$$$;
     if( !NET_ASN_Tools::CopyAgentList( asnMission.unites_a_transporter, GetVariable( nDIAUnitesATransporterIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_rendez_vous, GetVariable( nDIAPointRendezVousIdx_ ) ) )
@@ -136,8 +136,8 @@ void MIL_PionMission_LOG_TransporterUnite::Serialize( ASN1T_MsgPionOrder& asnMsg
     MIL_PionMission_ABC::Serialize( asnMsg );
     
     ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *new ASN1T_Mission_Pion_LOG_TransporterUnite();
-    asnMsg.mission.t                           = T_Mission_Pion_mission_pion_log_transporter_unite;
-    asnMsg.mission.u.mission_pion_log_transporter_unite  = &asnMission;
+    asnMsg.mission.t                           = T_Mission_Pion_$$$$NotDefined$$$$;
+    asnMsg.mission.u.$$$$NotDefined$$$$  = &asnMission;
 
     NET_ASN_Tools::CopyAgentList( GetVariable( nDIAUnitesATransporterIdx_ ), asnMission.unites_a_transporter );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRendezVousIdx_ ), asnMission.point_rendez_vous );
@@ -151,8 +151,8 @@ void MIL_PionMission_LOG_TransporterUnite::Serialize( ASN1T_MsgPionOrder& asnMsg
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_TransporterUnite::CleanAfterSerialization( ASN1T_MsgPionOrder& asnMsg )
 {
-    assert( asnMsg.mission.t == T_Mission_Pion_mission_pion_log_transporter_unite );
-    ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *asnMsg.mission.u.mission_pion_log_transporter_unite;
+    assert( asnMsg.mission.t == T_Mission_Pion_$$$$NotDefined$$$$ );
+    ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *asnMsg.mission.u.$$$$NotDefined$$$$;
 
     NET_ASN_Tools::Delete( asnMission.unites_a_transporter );
     NET_ASN_Tools::Delete( asnMission.point_rendez_vous );

@@ -117,7 +117,6 @@
     void CreateMission_LOG_SeDeployer();
     void CreateMission_LOG_AppuyerMouvement();
     void CreateMission_LOG_ReconnaitreItineraire();
-    void CreateMission_LOG_TransporterUnites();
     void CreateMission_LOG_AppuyerMouvementDansZone();
     void CreateMission_LOG_MettreEnOeuvreZoneStationnement();
     void CreateMission_LOG_AppuyerFranchissementDansZone();
@@ -134,6 +133,7 @@
     void CreateMission_Franchir();
     void CreateMission_Stationner();
     void CreateMission_SeFaireTransporter();
+    void CreateMission_Transporter();
     void CreateMission_SeRecompleter();
     void CreateMission_SeRendre();
     void CreateMission_FaireMouvementVersCampRefugies();

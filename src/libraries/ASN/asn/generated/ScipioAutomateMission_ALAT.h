@@ -10,7 +10,6 @@
 #include "asn1per.h"
 #include "asn1PerCppTypes.h"
 #include "ScipioBase.h"
-#include "ScipioPionMission_ALAT.h"
 
 /**************************************************************/
 /*                                                            */
@@ -24,8 +23,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Heliporter {
    ASN1T_Point  point_embarquement;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
    ASN1BOOL  avec_materiel;
 
    ASN1T_Mission_Automate_ALAT_Heliporter () {
@@ -58,8 +55,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Jalonner {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_Jalonner;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_Jalonner : public ASN1CType {
@@ -89,8 +84,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Helitransporter {
    ASN1T_Point  point_embarquement;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
    ASN1BOOL  avec_materiel;
 
    ASN1T_Mission_Automate_ALAT_Helitransporter () {
@@ -126,8 +119,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Appuyer {
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
    ASN1T_Point  point_dislocation;
    ASN1T_Polygon  zone;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_Appuyer;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_Appuyer : public ASN1CType {
@@ -156,8 +147,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Couvrir {
    ASN1T_Point  point_regroupement;
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_Couvrir;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_Couvrir : public ASN1CType {
@@ -185,8 +174,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Surveiller {
    ASN1T_Polygon  zone;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
    ASN1T_Point  point_logistique;
 } ASN1T_Mission_Automate_ALAT_Surveiller;
 
@@ -214,8 +201,6 @@ EXTERN void asn1Print_Mission_Automate_ALAT_Surveiller (ASN1ConstCharPtr name, A
 typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Reconnaitre {
    ASN1T_Point  pointRegroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_Reconnaitre;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_Reconnaitre : public ASN1CType {
@@ -243,8 +228,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Freiner {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_Freiner;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_Freiner : public ASN1CType {
@@ -273,8 +256,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Escorter {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_Escorter;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_Escorter : public ASN1CType {
@@ -302,8 +283,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_Attaquer {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_Attaquer;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_Attaquer : public ASN1CType {
@@ -332,8 +311,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile 
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_RecueillirFormationAeromobile : public ASN1CType {
@@ -361,8 +338,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile {
    ASN1T_ListKnowledgeAgent  unites_a_attaquer;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_AttaquerFormationAeromobile : public ASN1CType {
@@ -391,8 +366,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_DonnerCoupArret {
    ASN1T_NatureAtlas  cibles_prioritaires;
    ASN1T_Point  point_regroupement;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_DonnerCoupArret;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_DonnerCoupArret : public ASN1CType {
@@ -422,8 +395,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfond
    ASN1T_Point  point_regroupement;
    ASN1T_Point  point_dislocation;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
    ASN1BOOL  neutraliser;
 } ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur;
 
@@ -454,8 +425,6 @@ typedef struct EXTERN ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone {
    ASN1T_Point  point_regroupement;
    ASN1T_Point  point_dislocation;
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
    ASN1BOOL  neutraliser;
 } ASN1T_Mission_Automate_ALAT_DetruireNeutraliserDansZone;
 
@@ -482,8 +451,6 @@ EXTERN void asn1Print_Mission_Automate_ALAT_DetruireNeutraliserDansZone (ASN1Con
 
 typedef struct EXTERN ASN1T_Mission_Automate_ALAT_AllerSeRecompleter {
    ASN1T_ListKnowledgeObject  plots_ravitaillement;
-   ASN1T_Enum_ALAT_PorteeAction  portee_action;
-   ASN1T_Enum_ALAT_AmbianceMission  ambiance_mission;
 } ASN1T_Mission_Automate_ALAT_AllerSeRecompleter;
 
 class EXTERN ASN1C_Mission_Automate_ALAT_AllerSeRecompleter : public ASN1CType {

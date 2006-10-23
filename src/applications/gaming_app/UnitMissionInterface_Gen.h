@@ -155,7 +155,6 @@
     void CreateMission_LOG_Reparer();
     void CreateMission_LOG_AppuyerMouvement();
     void CreateMission_LOG_ReconnaitreItineraire();
-    void CreateMission_LOG_TransporterUnite();
     void CreateMission_LOG_ReconnaitreZoneContaminee();
     void CreateMission_LOG_AppuyerMouvementDansZone();
     void CreateMission_LOG_MettreEnOeuvreZoneStationnement();
@@ -177,6 +176,7 @@
     void CreateMission_PlastronEnnemi();
     void CreateMission_FaireMouvement();
     void CreateMission_Suivre();
+    void CreateMission_Transporter();
     void CreateMission_SeFaireDecontaminer();
     void CreateMission_Franchir();
     void CreateMission_Decrocher();
@@ -192,7 +192,6 @@
     void CreateMission_MILICE_Provoquer();
     void CreateMission_MILICE_PrendreEtTenir();
     void CreateMission_MILICE_DetruireEmbuscade();
-    void CreateMission_JOINT_MARINE_Transporter();
     void CreateMission_JOINT_AIR_EffectuerRaid();
     void CreateMission_NBC_AnimerUnPlotDeDecontamination();
     void CreateMission_NBC_ReconnaitreItineraire();

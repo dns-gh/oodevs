@@ -47,8 +47,6 @@ private:
     static int nDIAPlotsRavitaillementIdx_;
     static int nDIAPointDislocationIdx_;
     static int nDIAZoneIdx_;
-    static int nDIAPorteeActionIdx_;
-    static int nDIAAmbianceMissionIdx_;
 
 };
 

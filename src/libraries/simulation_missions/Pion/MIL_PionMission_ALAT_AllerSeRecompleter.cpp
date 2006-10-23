@@ -21,8 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_ALAT_AllerSeRecompleter::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_PionMission_ALAT_AllerSeRecompleter::nDIAPorteeActionIdx_ = 0 ;
-int MIL_PionMission_ALAT_AllerSeRecompleter::nDIAAmbianceMissionIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -34,8 +32,6 @@ void MIL_PionMission_ALAT_AllerSeRecompleter::InitializeDIA( const MIL_PionMissi
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
-    nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
 }
 
@@ -74,10 +70,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_AllerSeRecompleter::Initialize( co
     const ASN1T_Mission_Pion_ALAT_AllerSeRecompleter& asnMission = *asnMsg.mission.u.mission_pion_alat_aller_se_recompleter;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -92,7 +84,7 @@ bool MIL_PionMission_ALAT_AllerSeRecompleter::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
+    
     return true;    
 }
 
@@ -107,8 +99,6 @@ bool MIL_PionMission_ALAT_AllerSeRecompleter::Initialize( MIL_PionMission_ABC& m
     MIL_PionMission_ALAT_AllerSeRecompleter& mission = static_cast< MIL_PionMission_ALAT_AllerSeRecompleter& >( missionTmp );
 
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
-    NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAAmbianceMissionIdx_ ), GetVariable( nDIAAmbianceMissionIdx_ ) );
 
     return true;
 }                                                                    
@@ -140,8 +130,6 @@ void MIL_PionMission_ALAT_AllerSeRecompleter::Serialize( ASN1T_MsgPionOrder& asn
     asnMsg.mission.u.mission_pion_alat_aller_se_recompleter  = &asnMission;
 
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, pion_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
-    NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 
 }
 

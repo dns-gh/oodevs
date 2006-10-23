@@ -44,8 +44,8 @@ void Mission_Pawn_LOG_TransporterUnite::Serialize()
     Mission_Pawn_ABC::Serialize();
 
     ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *new ASN1T_Mission_Pion_LOG_TransporterUnite();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_transporter_unite;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_transporter_unite = &asnMission;
+    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_$$$$NotDefined$$$$;
+    asnMsg_.GetAsnMsg().mission.u.$$$$NotDefined$$$$ = &asnMission;
 
     const T_IdVector& unitesATransporter_ = pTarget_->GetTestParam_AgentList();
     const Position& pointRendezVous_ = pTarget_->GetTestParam_Point();
@@ -67,8 +67,8 @@ void Mission_Pawn_LOG_TransporterUnite::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_TransporterUnite::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_transporter_unite );
-    ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_transporter_unite;
+    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_$$$$NotDefined$$$$ );
+    ASN1T_Mission_Pion_LOG_TransporterUnite& asnMission = *asnMsg_.GetAsnMsg().mission.u.$$$$NotDefined$$$$;
 
     ASN_Tools::Delete( asnMission.unites_a_transporter );
     ASN_Tools::Delete( asnMission.point_rendez_vous );

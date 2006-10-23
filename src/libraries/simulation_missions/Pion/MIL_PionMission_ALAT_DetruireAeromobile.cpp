@@ -23,8 +23,6 @@
 int MIL_PionMission_ALAT_DetruireAeromobile::nDIAUniteADetruireIdx_ = 0 ;
 int MIL_PionMission_ALAT_DetruireAeromobile::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_PionMission_ALAT_DetruireAeromobile::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_PionMission_ALAT_DetruireAeromobile::nDIAPorteeActionIdx_ = 0 ;
-int MIL_PionMission_ALAT_DetruireAeromobile::nDIAAmbianceMissionIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -38,8 +36,6 @@ void MIL_PionMission_ALAT_DetruireAeromobile::InitializeDIA( const MIL_PionMissi
     nDIAUniteADetruireIdx_ = DEC_Tools::InitializeDIAField( "uniteADetruire_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
-    nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
 }
 
@@ -82,10 +78,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_ALAT_DetruireAeromobile::Initialize( co
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -100,7 +92,7 @@ bool MIL_PionMission_ALAT_DetruireAeromobile::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                    
+            
     return true;    
 }
 
@@ -117,8 +109,6 @@ bool MIL_PionMission_ALAT_DetruireAeromobile::Initialize( MIL_PionMission_ABC& m
     NET_ASN_Tools::CopyAgentKnowledgeList( mission.GetVariable( nDIAUniteADetruireIdx_ ), GetVariable( nDIAUniteADetruireIdx_ ) );
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyObjectKnowledgeList( mission.GetVariable( nDIAPlotsRavitaillementIdx_ ), GetVariable( nDIAPlotsRavitaillementIdx_ ) );
-    NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAPorteeActionIdx_ ), GetVariable( nDIAPorteeActionIdx_ ) );
-    NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAAmbianceMissionIdx_ ), GetVariable( nDIAAmbianceMissionIdx_ ) );
 
     return true;
 }                                                                    
@@ -152,8 +142,6 @@ void MIL_PionMission_ALAT_DetruireAeromobile::Serialize( ASN1T_MsgPionOrder& asn
     NET_ASN_Tools::CopyAgentKnowledgeList( GetVariable( nDIAUniteADetruireIdx_ ), asnMission.unite_a_detruire, pion_.GetKnowledgeGroup() );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, pion_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
-    NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 
 }
 

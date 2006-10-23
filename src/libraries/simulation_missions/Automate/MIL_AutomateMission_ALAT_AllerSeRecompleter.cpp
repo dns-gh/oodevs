@@ -19,8 +19,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_AutomateMission_ALAT_AllerSeRecompleter::nDIAPlotsRavitaillementIdx_ = 0 ;
-int MIL_AutomateMission_ALAT_AllerSeRecompleter::nDIAPorteeActionIdx_ = 0 ;
-int MIL_AutomateMission_ALAT_AllerSeRecompleter::nDIAAmbianceMissionIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -56,8 +54,6 @@ void MIL_AutomateMission_ALAT_AllerSeRecompleter::InitializeDIA( const MIL_Autom
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPlotsRavitaillementIdx_ = DEC_Tools::InitializeDIAField( "plotsRavitaillement_", diaType );
-    nDIAPorteeActionIdx_ = DEC_Tools::InitializeDIAField( "porteeAction_", diaType );
-    nDIAAmbianceMissionIdx_ = DEC_Tools::InitializeDIAField( "ambianceMission_", diaType );
 
 }
 
@@ -73,10 +69,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_AllerSeRecompleter::Initialize
 
     const ASN1T_Mission_Automate_ALAT_AllerSeRecompleter& asnMission = *asnMsg.mission.u.mission_automate_alat_aller_se_recompleter;
     if( !NET_ASN_Tools::CopyObjectKnowledgeList( asnMission.plots_ravitaillement, GetVariable( nDIAPlotsRavitaillementIdx_ ), automate_.GetKnowledgeGroup() ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.portee_action, GetVariable( nDIAPorteeActionIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyEnumeration( asnMission.ambiance_mission, GetVariable( nDIAAmbianceMissionIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -109,8 +101,6 @@ void MIL_AutomateMission_ALAT_AllerSeRecompleter::Serialize( ASN1T_MsgAutomateOr
     asnMsg.mission.u.mission_automate_alat_aller_se_recompleter  = &asnMission;
 
     NET_ASN_Tools::CopyObjectKnowledgeList( GetVariable( nDIAPlotsRavitaillementIdx_ ), asnMission.plots_ravitaillement, automate_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAPorteeActionIdx_ ), asnMission.portee_action );
-    NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAAmbianceMissionIdx_ ), asnMission.ambiance_mission );
 
 }
 

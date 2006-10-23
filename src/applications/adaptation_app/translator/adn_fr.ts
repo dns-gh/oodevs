@@ -2490,7 +2490,7 @@
     </message>
     <message>
         <source>Pion JOINT MARINE Transporter</source>
-        <translation>Pion JOINT MARINE Transporter</translation>
+        <translation type="obsolete">Pion JOINT MARINE Transporter</translation>
     </message>
     <message>
         <source>Pion JOINT AIR EffectuerRaid</source>
@@ -2642,11 +2642,11 @@
     </message>
     <message>
         <source>Automate LOG TransporterUnites</source>
-        <translation>Automate LOG TransporterUnites</translation>
+        <translation type="obsolete">Automate LOG TransporterUnites</translation>
     </message>
     <message>
         <source>Pion LOG TransporterUnite</source>
-        <translation>Pion LOG TransporterUnite</translation>
+        <translation type="obsolete">Pion LOG TransporterUnite</translation>
     </message>
     <message>
         <source>Pion ASY SInfiltrer</source>
@@ -2783,6 +2783,14 @@
     <message>
         <source>Automate ALAT AllerSeRecompleter</source>
         <translation>Automate ALAT AllerSeRecompleter</translation>
+    </message>
+    <message>
+        <source>Automate Transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion Transporter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

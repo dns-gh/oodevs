@@ -270,7 +270,7 @@ Mission-Pion-MILICE-DetruireEmbuscade ::= SEQUENCE
 }
 
 -- 
-Mission-Pion-JOINT-MARINE-Transporter ::= SEQUENCE
+Mission-Pion-Transporter ::= SEQUENCE
 {
     unites-a-transporter    ListAgent, 
     point-debarquement      Point,

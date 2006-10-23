@@ -6,6 +6,1884 @@
 
 /**************************************************************/
 /*                                                            */
+/*  Mission_Pion_ALAT_AllerSeRecompleter                      */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::ASN1C_Mission_Pion_ALAT_AllerSeRecompleter (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_AllerSeRecompleter: start\n");
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_AllerSeRecompleter: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_AllerSeRecompleter (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_AllerSeRecompleter: start\n");
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_AllerSeRecompleter: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_AllerSeRecompleter (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_ReconnaitreDansLaProfondeur             */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: start\n");
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_dislocation */
+
+   PU_PUSHNAME (ctxt_p, "point_dislocation");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_dislocation);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode zone */
+
+   PU_PUSHNAME (ctxt_p, "zone");
+
+   stat = asn1PE_Localisation (ctxt_p, &pvalue->zone);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: start\n");
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_dislocation */
+
+   PU_PUSHNAME (ctxt_p, "point_dislocation");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_dislocation);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode zone */
+
+   PU_PUSHNAME (ctxt_p, "zone");
+
+   stat = asn1PD_Localisation (ctxt_p, &pvalue->zone);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_ReconnaitreContourEnnemi                */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi: start\n");
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi: start\n");
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_DetruireNeutraliserDansZone             */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone: start\n");
+
+   /* encode zone */
+
+   PU_PUSHNAME (ctxt_p, "zone");
+
+   stat = asn1PE_Polygon (ctxt_p, &pvalue->zone);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_dislocation */
+
+   PU_PUSHNAME (ctxt_p, "point_dislocation");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_dislocation);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode neutraliser */
+
+   PU_PUSHNAME (ctxt_p, "neutraliser");
+
+   PU_NEWFIELD (ctxt_p, "boolean");
+
+   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->neutraliser);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone: start\n");
+
+   /* decode zone */
+
+   PU_PUSHNAME (ctxt_p, "zone");
+
+   stat = asn1PD_Polygon (ctxt_p, &pvalue->zone);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_dislocation */
+
+   PU_PUSHNAME (ctxt_p, "point_dislocation");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_dislocation);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode neutraliser */
+
+   PU_PUSHNAME (ctxt_p, "neutraliser");
+
+   PU_NEWFIELD (ctxt_p, "boolean");
+
+   stat = pd_bit (ctxt_p, &pvalue->neutraliser);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_DetruireAeromobile                      */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_DetruireAeromobile::ASN1C_Mission_Pion_ALAT_DetruireAeromobile (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_DetruireAeromobile& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_DetruireAeromobile (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireAeromobile* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireAeromobile: start\n");
+
+   /* encode unite_a_detruire */
+
+   PU_PUSHNAME (ctxt_p, "unite_a_detruire");
+
+   stat = asn1PE_ListKnowledgeAgent (ctxt_p, &pvalue->unite_a_detruire);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireAeromobile: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_DetruireAeromobile::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_DetruireAeromobile (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_DetruireAeromobile (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireAeromobile* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireAeromobile: start\n");
+
+   /* decode unite_a_detruire */
+
+   PU_PUSHNAME (ctxt_p, "unite_a_detruire");
+
+   stat = asn1PD_ListKnowledgeAgent (ctxt_p, &pvalue->unite_a_detruire);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireAeromobile: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_DetruireAeromobile::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_DetruireAeromobile (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Freiner                                 */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Freiner::ASN1C_Mission_Pion_ALAT_Freiner (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Freiner& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Freiner* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Freiner: start\n");
+
+   /* encode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Freiner: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Freiner::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Freiner (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Freiner* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Freiner: start\n");
+
+   /* decode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Freiner: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Freiner::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Freiner (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Jalonner                                */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Jalonner::ASN1C_Mission_Pion_ALAT_Jalonner (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Jalonner& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Jalonner* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Jalonner: start\n");
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Jalonner: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Jalonner::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Jalonner (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Jalonner* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Jalonner: start\n");
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Jalonner: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Jalonner::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Jalonner (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Escorter                                */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Escorter::ASN1C_Mission_Pion_ALAT_Escorter (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Escorter& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Escorter* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Escorter: start\n");
+
+   /* encode unites_a_escorter */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_escorter");
+
+   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_escorter);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Escorter: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Escorter::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Escorter (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Escorter* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Escorter: start\n");
+
+   /* decode unites_a_escorter */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_escorter");
+
+   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_escorter);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Escorter: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Escorter::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Escorter (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Heliporter                              */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Heliporter::ASN1C_Mission_Pion_ALAT_Heliporter (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Heliporter& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Heliporter* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Heliporter: start\n");
+
+   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
+
+   stat = pe_bit (ctxt_p, (ASN1BOOL)(pvalue->avec_materiel != FALSE));
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
+
+   /* encode unites_a_heliporter */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_heliporter");
+
+   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_heliporter);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_debarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_debarquement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_debarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_embarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_embarquement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_embarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode avec_materiel */
+
+   if (pvalue->avec_materiel != FALSE) {
+      PU_PUSHNAME (ctxt_p, "avec_materiel");
+
+      PU_NEWFIELD (ctxt_p, "boolean");
+
+      stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->avec_materiel);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_SETBITCOUNT (ctxt_p);
+      PU_POPNAME (ctxt_p);
+   }
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Heliporter: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Heliporter::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Heliporter (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Heliporter* pvalue)
+{
+   int stat = ASN_OK;
+   ASN1BOOL optbit;
+   ASN1BOOL avec_materielPresent;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Heliporter: start\n");
+
+   /* optional bits */
+
+   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
+
+   stat = pd_bit (ctxt_p, &optbit);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   else avec_materielPresent = optbit;
+
+   PU_SETBITCOUNT (ctxt_p);
+
+   /* decode unites_a_heliporter */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_heliporter");
+
+   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_heliporter);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_debarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_debarquement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_debarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_embarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_embarquement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_embarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode avec_materiel */
+
+   if (avec_materielPresent) {
+      PU_PUSHNAME (ctxt_p, "avec_materiel");
+
+      PU_NEWFIELD (ctxt_p, "boolean");
+
+      stat = pd_bit (ctxt_p, &pvalue->avec_materiel);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_SETBITCOUNT (ctxt_p);
+
+      PU_POPNAME (ctxt_p);
+   }
+   else {
+      pvalue->avec_materiel = FALSE;
+   }
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Heliporter: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Heliporter::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Heliporter (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaill  */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: start\n");
+
+   /* encode point_debarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_debarquement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_debarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode position_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "position_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->position_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: start\n");
+
+   /* decode point_debarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_debarquement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_debarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode position_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "position_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->position_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Helitransporter                         */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Helitransporter::ASN1C_Mission_Pion_ALAT_Helitransporter (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Helitransporter& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Helitransporter* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Helitransporter: start\n");
+
+   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
+
+   stat = pe_bit (ctxt_p, (ASN1BOOL)(pvalue->avec_materiel != FALSE));
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_SETBITCOUNT (ctxt_p);
+
+   /* encode unites_a_helitransporter */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_helitransporter");
+
+   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_helitransporter);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_debarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_debarquement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_debarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_embarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_embarquement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_embarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode avec_materiel */
+
+   if (pvalue->avec_materiel != FALSE) {
+      PU_PUSHNAME (ctxt_p, "avec_materiel");
+
+      PU_NEWFIELD (ctxt_p, "boolean");
+
+      stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->avec_materiel);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_SETBITCOUNT (ctxt_p);
+      PU_POPNAME (ctxt_p);
+   }
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Helitransporter: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Helitransporter::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Helitransporter (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Helitransporter* pvalue)
+{
+   int stat = ASN_OK;
+   ASN1BOOL optbit;
+   ASN1BOOL avec_materielPresent;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Helitransporter: start\n");
+
+   /* optional bits */
+
+   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
+
+   stat = pd_bit (ctxt_p, &optbit);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   else avec_materielPresent = optbit;
+
+   PU_SETBITCOUNT (ctxt_p);
+
+   /* decode unites_a_helitransporter */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_helitransporter");
+
+   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_helitransporter);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_debarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_debarquement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_debarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_embarquement */
+
+   PU_PUSHNAME (ctxt_p, "point_embarquement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_embarquement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode avec_materiel */
+
+   if (avec_materielPresent) {
+      PU_PUSHNAME (ctxt_p, "avec_materiel");
+
+      PU_NEWFIELD (ctxt_p, "boolean");
+
+      stat = pd_bit (ctxt_p, &pvalue->avec_materiel);
+      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+      PU_SETBITCOUNT (ctxt_p);
+
+      PU_POPNAME (ctxt_p);
+   }
+   else {
+      pvalue->avec_materiel = FALSE;
+   }
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Helitransporter: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Helitransporter::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Helitransporter (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_IMEX                                    */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_IMEX::ASN1C_Mission_Pion_ALAT_IMEX (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_IMEX& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_IMEX (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_IMEX* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_IMEX: start\n");
+
+   /* encode unites_a_appuyer */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
+
+   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_IMEX: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_IMEX::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_IMEX (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_IMEX (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_IMEX* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_IMEX: start\n");
+
+   /* decode unites_a_appuyer */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
+
+   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_IMEX: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_IMEX::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_IMEX (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Eclairer                                */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Eclairer::ASN1C_Mission_Pion_ALAT_Eclairer (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Eclairer& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Eclairer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Eclairer* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Eclairer: start\n");
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Eclairer: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Eclairer::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Eclairer (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Eclairer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Eclairer* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Eclairer: start\n");
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Eclairer: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Eclairer::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Eclairer (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Surveiller                              */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Surveiller::ASN1C_Mission_Pion_ALAT_Surveiller (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Surveiller& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Surveiller* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Surveiller: start\n");
+
+   /* encode zone */
+
+   PU_PUSHNAME (ctxt_p, "zone");
+
+   stat = asn1PE_Polygon (ctxt_p, &pvalue->zone);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Surveiller: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Surveiller::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Surveiller (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Surveiller* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Surveiller: start\n");
+
+   /* decode zone */
+
+   PU_PUSHNAME (ctxt_p, "zone");
+
+   stat = asn1PD_Polygon (ctxt_p, &pvalue->zone);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Surveiller: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Surveiller::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Surveiller (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_AppuyerDirectAuContact                  */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact: start\n");
+
+   /* encode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode unites_a_appuyer */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
+
+   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact: start\n");
+
+   /* decode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode unites_a_appuyer */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
+
+   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Couvrir                                 */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Couvrir::ASN1C_Mission_Pion_ALAT_Couvrir (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Couvrir& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Couvrir* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Couvrir: start\n");
+
+   /* encode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode unites_a_couvrir */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_couvrir");
+
+   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_couvrir);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Couvrir: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Couvrir::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Couvrir (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Couvrir* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Couvrir: start\n");
+
+   /* decode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode unites_a_couvrir */
+
+   PU_PUSHNAME (ctxt_p, "unites_a_couvrir");
+
+   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_couvrir);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Couvrir: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Couvrir::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Couvrir (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
+/*  Mission_Pion_ALAT_Attaquer                                */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_Mission_Pion_ALAT_Attaquer::ASN1C_Mission_Pion_ALAT_Attaquer (
+   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Attaquer& data) :
+   ASN1CType(msgBuf), msgData(data)
+{}
+
+EXTERN int asn1PE_Mission_Pion_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Attaquer* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Attaquer: start\n");
+
+   /* encode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+   /* encode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PE_Mission_Pion_ALAT_Attaquer: end\n");
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Attaquer::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_Mission_Pion_ALAT_Attaquer (mpContext->GetPtr(), &msgData);
+   return stat;
+}
+
+EXTERN int asn1PD_Mission_Pion_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Attaquer* pvalue)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Attaquer: start\n");
+
+   /* decode cibles_prioritaires */
+
+   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
+
+   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode point_regroupement */
+
+   PU_PUSHNAME (ctxt_p, "point_regroupement");
+
+   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode plots_ravitaillement */
+
+   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
+
+   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+
+   rtdiag ("asn1PD_Mission_Pion_ALAT_Attaquer: end\n");
+
+   return (stat);
+}
+
+int ASN1C_Mission_Pion_ALAT_Attaquer::Decode ()
+{
+   return asn1PD_Mission_Pion_ALAT_Attaquer (mpContext->GetPtr(), &msgData);
+}
+
+/**************************************************************/
+/*                                                            */
 /*  Enum_ALAT_PorteeAction                                    */
 /*                                                            */
 /**************************************************************/
@@ -136,2393 +2014,5 @@ EXTERN int asn1PD_Enum_ALAT_AmbianceMission (ASN1CTXT* ctxt_p, ASN1T_Enum_ALAT_A
 int ASN1C_Enum_ALAT_AmbianceMission::Decode ()
 {
    return asn1PD_Enum_ALAT_AmbianceMission (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_AllerSeRecompleter                      */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::ASN1C_Mission_Pion_ALAT_AllerSeRecompleter (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_AllerSeRecompleter: start\n");
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_AllerSeRecompleter: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_AllerSeRecompleter (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_AllerSeRecompleter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AllerSeRecompleter* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_AllerSeRecompleter: start\n");
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_AllerSeRecompleter: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_AllerSeRecompleter::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_AllerSeRecompleter (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_ReconnaitreDansLaProfondeur             */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: start\n");
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_dislocation */
-
-   PU_PUSHNAME (ctxt_p, "point_dislocation");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_dislocation);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode zone */
-
-   PU_PUSHNAME (ctxt_p, "zone");
-
-   stat = asn1PE_Localisation (ctxt_p, &pvalue->zone);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: start\n");
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_dislocation */
-
-   PU_PUSHNAME (ctxt_p, "point_dislocation");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_dislocation);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode zone */
-
-   PU_PUSHNAME (ctxt_p, "zone");
-
-   stat = asn1PD_Localisation (ctxt_p, &pvalue->zone);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_ReconnaitreContourEnnemi                */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi: start\n");
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_ReconnaitreContourEnnemi (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi: start\n");
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_ReconnaitreContourEnnemi::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_ReconnaitreContourEnnemi (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_DetruireNeutraliserDansZone             */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone: start\n");
-
-   /* encode zone */
-
-   PU_PUSHNAME (ctxt_p, "zone");
-
-   stat = asn1PE_Polygon (ctxt_p, &pvalue->zone);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_dislocation */
-
-   PU_PUSHNAME (ctxt_p, "point_dislocation");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_dislocation);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode neutraliser */
-
-   PU_PUSHNAME (ctxt_p, "neutraliser");
-
-   PU_NEWFIELD (ctxt_p, "boolean");
-
-   stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->neutraliser);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_DetruireNeutraliserDansZone (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone: start\n");
-
-   /* decode zone */
-
-   PU_PUSHNAME (ctxt_p, "zone");
-
-   stat = asn1PD_Polygon (ctxt_p, &pvalue->zone);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_dislocation */
-
-   PU_PUSHNAME (ctxt_p, "point_dislocation");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_dislocation);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode neutraliser */
-
-   PU_PUSHNAME (ctxt_p, "neutraliser");
-
-   PU_NEWFIELD (ctxt_p, "boolean");
-
-   stat = pd_bit (ctxt_p, &pvalue->neutraliser);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_DetruireNeutraliserDansZone::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_DetruireNeutraliserDansZone (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_DetruireAeromobile                      */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_DetruireAeromobile::ASN1C_Mission_Pion_ALAT_DetruireAeromobile (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_DetruireAeromobile& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_DetruireAeromobile (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireAeromobile* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireAeromobile: start\n");
-
-   /* encode unite_a_detruire */
-
-   PU_PUSHNAME (ctxt_p, "unite_a_detruire");
-
-   stat = asn1PE_ListKnowledgeAgent (ctxt_p, &pvalue->unite_a_detruire);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_DetruireAeromobile: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_DetruireAeromobile::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_DetruireAeromobile (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_DetruireAeromobile (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_DetruireAeromobile* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireAeromobile: start\n");
-
-   /* decode unite_a_detruire */
-
-   PU_PUSHNAME (ctxt_p, "unite_a_detruire");
-
-   stat = asn1PD_ListKnowledgeAgent (ctxt_p, &pvalue->unite_a_detruire);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_DetruireAeromobile: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_DetruireAeromobile::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_DetruireAeromobile (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Freiner                                 */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Freiner::ASN1C_Mission_Pion_ALAT_Freiner (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Freiner& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Freiner* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Freiner: start\n");
-
-   /* encode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Freiner: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Freiner::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Freiner (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Freiner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Freiner* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Freiner: start\n");
-
-   /* decode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Freiner: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Freiner::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Freiner (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Jalonner                                */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Jalonner::ASN1C_Mission_Pion_ALAT_Jalonner (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Jalonner& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Jalonner* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Jalonner: start\n");
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Jalonner: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Jalonner::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Jalonner (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Jalonner (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Jalonner* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Jalonner: start\n");
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Jalonner: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Jalonner::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Jalonner (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Escorter                                */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Escorter::ASN1C_Mission_Pion_ALAT_Escorter (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Escorter& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Escorter* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Escorter: start\n");
-
-   /* encode unites_a_escorter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_escorter");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_escorter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Escorter: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Escorter::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Escorter (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Escorter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Escorter* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Escorter: start\n");
-
-   /* decode unites_a_escorter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_escorter");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_escorter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Escorter: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Escorter::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Escorter (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Heliporter                              */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Heliporter::ASN1C_Mission_Pion_ALAT_Heliporter (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Heliporter& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Heliporter* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Heliporter: start\n");
-
-   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
-
-   stat = pe_bit (ctxt_p, (ASN1BOOL)(pvalue->avec_materiel != FALSE));
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* encode unites_a_heliporter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_heliporter");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_heliporter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_embarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_embarquement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_embarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode avec_materiel */
-
-   if (pvalue->avec_materiel != FALSE) {
-      PU_PUSHNAME (ctxt_p, "avec_materiel");
-
-      PU_NEWFIELD (ctxt_p, "boolean");
-
-      stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->avec_materiel);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_SETBITCOUNT (ctxt_p);
-      PU_POPNAME (ctxt_p);
-   }
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Heliporter: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Heliporter::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Heliporter (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Heliporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Heliporter* pvalue)
-{
-   int stat = ASN_OK;
-   ASN1BOOL optbit;
-   ASN1BOOL avec_materielPresent;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Heliporter: start\n");
-
-   /* optional bits */
-
-   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
-
-   stat = pd_bit (ctxt_p, &optbit);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else avec_materielPresent = optbit;
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* decode unites_a_heliporter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_heliporter");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_heliporter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_embarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_embarquement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_embarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode avec_materiel */
-
-   if (avec_materielPresent) {
-      PU_PUSHNAME (ctxt_p, "avec_materiel");
-
-      PU_NEWFIELD (ctxt_p, "boolean");
-
-      stat = pd_bit (ctxt_p, &pvalue->avec_materiel);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_SETBITCOUNT (ctxt_p);
-
-      PU_POPNAME (ctxt_p);
-   }
-   else {
-      pvalue->avec_materiel = FALSE;
-   }
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Heliporter: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Heliporter::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Heliporter (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaill  */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: start\n");
-
-   /* encode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode position_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "position_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->position_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: start\n");
-
-   /* decode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode position_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "position_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->position_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Helitransporter                         */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Helitransporter::ASN1C_Mission_Pion_ALAT_Helitransporter (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Helitransporter& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Helitransporter* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Helitransporter: start\n");
-
-   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
-
-   stat = pe_bit (ctxt_p, (ASN1BOOL)(pvalue->avec_materiel != FALSE));
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* encode unites_a_helitransporter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_helitransporter");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_helitransporter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_embarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_embarquement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_embarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode avec_materiel */
-
-   if (pvalue->avec_materiel != FALSE) {
-      PU_PUSHNAME (ctxt_p, "avec_materiel");
-
-      PU_NEWFIELD (ctxt_p, "boolean");
-
-      stat = pe_bit (ctxt_p, (ASN1BOOL)pvalue->avec_materiel);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_SETBITCOUNT (ctxt_p);
-      PU_POPNAME (ctxt_p);
-   }
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Helitransporter: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Helitransporter::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Helitransporter (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Helitransporter (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Helitransporter* pvalue)
-{
-   int stat = ASN_OK;
-   ASN1BOOL optbit;
-   ASN1BOOL avec_materielPresent;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Helitransporter: start\n");
-
-   /* optional bits */
-
-   PU_NEWFIELD (ctxt_p, "avec_materielPresent");
-
-   stat = pd_bit (ctxt_p, &optbit);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else avec_materielPresent = optbit;
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* decode unites_a_helitransporter */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_helitransporter");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_helitransporter);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_debarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_debarquement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_debarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_embarquement */
-
-   PU_PUSHNAME (ctxt_p, "point_embarquement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_embarquement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode avec_materiel */
-
-   if (avec_materielPresent) {
-      PU_PUSHNAME (ctxt_p, "avec_materiel");
-
-      PU_NEWFIELD (ctxt_p, "boolean");
-
-      stat = pd_bit (ctxt_p, &pvalue->avec_materiel);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_SETBITCOUNT (ctxt_p);
-
-      PU_POPNAME (ctxt_p);
-   }
-   else {
-      pvalue->avec_materiel = FALSE;
-   }
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Helitransporter: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Helitransporter::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Helitransporter (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_IMEX                                    */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_IMEX::ASN1C_Mission_Pion_ALAT_IMEX (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_IMEX& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_IMEX (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_IMEX* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_IMEX: start\n");
-
-   /* encode unites_a_appuyer */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_IMEX: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_IMEX::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_IMEX (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_IMEX (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_IMEX* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_IMEX: start\n");
-
-   /* decode unites_a_appuyer */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_IMEX: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_IMEX::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_IMEX (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Eclairer                                */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Eclairer::ASN1C_Mission_Pion_ALAT_Eclairer (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Eclairer& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Eclairer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Eclairer* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Eclairer: start\n");
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Eclairer: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Eclairer::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Eclairer (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Eclairer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Eclairer* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Eclairer: start\n");
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Eclairer: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Eclairer::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Eclairer (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Surveiller                              */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Surveiller::ASN1C_Mission_Pion_ALAT_Surveiller (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Surveiller& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Surveiller* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Surveiller: start\n");
-
-   /* encode zone */
-
-   PU_PUSHNAME (ctxt_p, "zone");
-
-   stat = asn1PE_Polygon (ctxt_p, &pvalue->zone);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Surveiller: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Surveiller::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Surveiller (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Surveiller (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Surveiller* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Surveiller: start\n");
-
-   /* decode zone */
-
-   PU_PUSHNAME (ctxt_p, "zone");
-
-   stat = asn1PD_Polygon (ctxt_p, &pvalue->zone);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Surveiller: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Surveiller::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Surveiller (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_AppuyerDirectAuContact                  */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact: start\n");
-
-   /* encode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode unites_a_appuyer */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_AppuyerDirectAuContact (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact: start\n");
-
-   /* decode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode unites_a_appuyer */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_appuyer");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_appuyer);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_AppuyerDirectAuContact::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_AppuyerDirectAuContact (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Couvrir                                 */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Couvrir::ASN1C_Mission_Pion_ALAT_Couvrir (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Couvrir& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Couvrir* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Couvrir: start\n");
-
-   /* encode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode unites_a_couvrir */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_couvrir");
-
-   stat = asn1PE_ListAgent (ctxt_p, &pvalue->unites_a_couvrir);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Couvrir: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Couvrir::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Couvrir (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Couvrir (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Couvrir* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Couvrir: start\n");
-
-   /* decode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode unites_a_couvrir */
-
-   PU_PUSHNAME (ctxt_p, "unites_a_couvrir");
-
-   stat = asn1PD_ListAgent (ctxt_p, &pvalue->unites_a_couvrir);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Couvrir: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Couvrir::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Couvrir (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  Mission_Pion_ALAT_Attaquer                                */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_Mission_Pion_ALAT_Attaquer::ASN1C_Mission_Pion_ALAT_Attaquer (
-   ASN1MessageBuffer& msgBuf, ASN1T_Mission_Pion_ALAT_Attaquer& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_Mission_Pion_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Attaquer* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Attaquer: start\n");
-
-   /* encode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PE_NatureAtlas (ctxt_p, pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PE_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PE_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PE_Enum_ALAT_PorteeAction (ctxt_p, pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-   /* encode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PE_Enum_ALAT_AmbianceMission (ctxt_p, pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_Mission_Pion_ALAT_Attaquer: end\n");
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Attaquer::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_Mission_Pion_ALAT_Attaquer (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_Mission_Pion_ALAT_Attaquer (ASN1CTXT* ctxt_p, ASN1T_Mission_Pion_ALAT_Attaquer* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Attaquer: start\n");
-
-   /* decode cibles_prioritaires */
-
-   PU_PUSHNAME (ctxt_p, "cibles_prioritaires");
-
-   stat = asn1PD_NatureAtlas (ctxt_p, &pvalue->cibles_prioritaires);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode point_regroupement */
-
-   PU_PUSHNAME (ctxt_p, "point_regroupement");
-
-   stat = asn1PD_Point (ctxt_p, &pvalue->point_regroupement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode plots_ravitaillement */
-
-   PU_PUSHNAME (ctxt_p, "plots_ravitaillement");
-
-   stat = asn1PD_ListKnowledgeObject (ctxt_p, &pvalue->plots_ravitaillement);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode portee_action */
-
-   PU_PUSHNAME (ctxt_p, "portee_action");
-
-   stat = asn1PD_Enum_ALAT_PorteeAction (ctxt_p, &pvalue->portee_action);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* decode ambiance_mission */
-
-   PU_PUSHNAME (ctxt_p, "ambiance_mission");
-
-   stat = asn1PD_Enum_ALAT_AmbianceMission (ctxt_p, &pvalue->ambiance_mission);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_Mission_Pion_ALAT_Attaquer: end\n");
-
-   return (stat);
-}
-
-int ASN1C_Mission_Pion_ALAT_Attaquer::Decode ()
-{
-   return asn1PD_Mission_Pion_ALAT_Attaquer (mpContext->GetPtr(), &msgData);
 }
 

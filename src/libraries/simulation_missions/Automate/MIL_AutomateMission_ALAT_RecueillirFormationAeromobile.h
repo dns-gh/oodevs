@@ -45,8 +45,6 @@ private:
     static int nDIACiblesPrioritairesIdx_;
     static int nDIAPointRegroupementIdx_;
     static int nDIAPlotsRavitaillementIdx_;
-    static int nDIAPorteeActionIdx_;
-    static int nDIAAmbianceMissionIdx_;
 
 };
 

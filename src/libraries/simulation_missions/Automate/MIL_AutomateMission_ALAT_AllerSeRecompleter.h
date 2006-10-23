@@ -42,8 +42,6 @@ public:
 
 private:
     static int nDIAPlotsRavitaillementIdx_;
-    static int nDIAPorteeActionIdx_;
-    static int nDIAAmbianceMissionIdx_;
 
 };
 

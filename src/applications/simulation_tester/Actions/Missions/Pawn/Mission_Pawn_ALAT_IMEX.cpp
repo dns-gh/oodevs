@@ -54,7 +54,6 @@ void Mission_Pawn_ALAT_IMEX::Serialize()
     ASN_Tools::CopyAgentList( unitesAAppuyer_, asnMission.unites_a_appuyer );
     ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
     ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
-    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
 
     delete &unitesAAppuyer_;
     delete &pointRegroupement_;

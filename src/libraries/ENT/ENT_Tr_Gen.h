@@ -50,6 +50,8 @@ public:
     static const std::string& ConvertFromUnitCapaciteMission( E_UnitCapaciteMission, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureLevel( E_NatureLevel, E_Conversion = eToSim );
     static const std::string& ConvertFromHumanRank( E_HumanRank, E_Conversion = eToSim );
+    static const std::string& ConvertFromDiplomatie( E_Diplomatie, E_Conversion = eToSim );
+    static const std::string& ConvertFromChangeDiplomatieErrorCode( E_ChangeDiplomatieErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatRapFor( E_EtatRapFor, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatCombatRencontre( E_EtatCombatRencontre, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatOperationnel( E_EtatOperationnel, E_Conversion = eToSim );
@@ -63,6 +65,8 @@ public:
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
     static const std::string& ConvertFromAutomateState( E_AutomateState, E_Conversion = eToSim );
     static const std::string& ConvertFromSetAutomateModeErrorCode( E_SetAutomateModeErrorCode, E_Conversion = eToSim );
+    static const std::string& ConvertFromChangeAutomateErrorCode( E_ChangeAutomateErrorCode, E_Conversion = eToSim );
+    static const std::string& ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeLiensLogistiquesErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFrom_ALAT_PorteeAction( E__ALAT_PorteeAction, E_Conversion = eToSim );
     static const std::string& ConvertFrom_ALAT_AmbianceMission( E__ALAT_AmbianceMission, E_Conversion = eToSim );
     static const std::string& ConvertFromModeDeploiement( E_ModeDeploiement, E_Conversion = eToSim );
@@ -88,11 +92,7 @@ public:
     static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeCR( E_TypeCR, E_Conversion = eToSim );
     static const std::string& ConvertFromFireEffectType( E_FireEffectType, E_Conversion = eToSim );
-    static const std::string& ConvertFromDiplomatie( E_Diplomatie, E_Conversion = eToSim );
-    static const std::string& ConvertFromChangeDiplomatieErrorCode( E_ChangeDiplomatieErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromChangeGroupeConnaissanceErrorCode( E_ChangeGroupeConnaissanceErrorCode, E_Conversion = eToSim );
-    static const std::string& ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeLiensLogistiquesErrorCode, E_Conversion = eToSim );
-    static const std::string& ConvertFromChangeAutomateErrorCode( E_ChangeAutomateErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceRegimeTravail( E_LogMaintenanceRegimeTravail, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceTraitementEtat( E_LogMaintenanceTraitementEtat, E_Conversion = eToSim );
     static const std::string& ConvertFromLogRavitaillementTraitementEtat( E_LogRavitaillementTraitementEtat, E_Conversion = eToSim );
@@ -121,6 +121,8 @@ public:
     static E_UnitCapaciteMission ConvertToUnitCapaciteMission( const std::string& );
     static E_NatureLevel ConvertToNatureLevel( const std::string& );
     static E_HumanRank ConvertToHumanRank( const std::string& );
+    static E_Diplomatie ConvertToDiplomatie( const std::string& );
+    static E_ChangeDiplomatieErrorCode ConvertToChangeDiplomatieErrorCode( const std::string& );
     static E_EtatRapFor ConvertToEtatRapFor( const std::string& );
     static E_EtatCombatRencontre ConvertToEtatCombatRencontre( const std::string& );
     static E_EtatOperationnel ConvertToEtatOperationnel( const std::string& );
@@ -134,6 +136,8 @@ public:
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
     static E_AutomateState ConvertToAutomateState( const std::string& );
     static E_SetAutomateModeErrorCode ConvertToSetAutomateModeErrorCode( const std::string& );
+    static E_ChangeAutomateErrorCode ConvertToChangeAutomateErrorCode( const std::string& );
+    static E_ChangeLiensLogistiquesErrorCode ConvertToChangeLiensLogistiquesErrorCode( const std::string& );
     static E__ALAT_PorteeAction ConvertTo_ALAT_PorteeAction( const std::string& );
     static E__ALAT_AmbianceMission ConvertTo_ALAT_AmbianceMission( const std::string& );
     static E_ModeDeploiement ConvertToModeDeploiement( const std::string& );
@@ -159,11 +163,7 @@ public:
     static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
     static E_TypeCR ConvertToTypeCR( const std::string& );
     static E_FireEffectType ConvertToFireEffectType( const std::string& );
-    static E_Diplomatie ConvertToDiplomatie( const std::string& );
-    static E_ChangeDiplomatieErrorCode ConvertToChangeDiplomatieErrorCode( const std::string& );
     static E_ChangeGroupeConnaissanceErrorCode ConvertToChangeGroupeConnaissanceErrorCode( const std::string& );
-    static E_ChangeLiensLogistiquesErrorCode ConvertToChangeLiensLogistiquesErrorCode( const std::string& );
-    static E_ChangeAutomateErrorCode ConvertToChangeAutomateErrorCode( const std::string& );
     static E_LogMaintenanceRegimeTravail ConvertToLogMaintenanceRegimeTravail( const std::string& );
     static E_LogMaintenanceTraitementEtat ConvertToLogMaintenanceTraitementEtat( const std::string& );
     static E_LogRavitaillementTraitementEtat ConvertToLogRavitaillementTraitementEtat( const std::string& );
@@ -193,6 +193,8 @@ private:
     typedef ENT_Tr::converter<E_UnitCapaciteMission> T_ConverterUnitCapaciteMission;
     typedef ENT_Tr::converter<E_NatureLevel> T_ConverterNatureLevel;
     typedef ENT_Tr::converter<E_HumanRank> T_ConverterHumanRank;
+    typedef ENT_Tr::converter<E_Diplomatie> T_ConverterDiplomatie;
+    typedef ENT_Tr::converter<E_ChangeDiplomatieErrorCode> T_ConverterChangeDiplomatieErrorCode;
     typedef ENT_Tr::converter<E_EtatRapFor> T_ConverterEtatRapFor;
     typedef ENT_Tr::converter<E_EtatCombatRencontre> T_ConverterEtatCombatRencontre;
     typedef ENT_Tr::converter<E_EtatOperationnel> T_ConverterEtatOperationnel;
@@ -206,6 +208,8 @@ private:
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
     typedef ENT_Tr::converter<E_AutomateState> T_ConverterAutomateState;
     typedef ENT_Tr::converter<E_SetAutomateModeErrorCode> T_ConverterSetAutomateModeErrorCode;
+    typedef ENT_Tr::converter<E_ChangeAutomateErrorCode> T_ConverterChangeAutomateErrorCode;
+    typedef ENT_Tr::converter<E_ChangeLiensLogistiquesErrorCode> T_ConverterChangeLiensLogistiquesErrorCode;
     typedef ENT_Tr::converter<E__ALAT_PorteeAction> T_Converter_ALAT_PorteeAction;
     typedef ENT_Tr::converter<E__ALAT_AmbianceMission> T_Converter_ALAT_AmbianceMission;
     typedef ENT_Tr::converter<E_ModeDeploiement> T_ConverterModeDeploiement;
@@ -231,11 +235,7 @@ private:
     typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
     typedef ENT_Tr::converter<E_TypeCR> T_ConverterTypeCR;
     typedef ENT_Tr::converter<E_FireEffectType> T_ConverterFireEffectType;
-    typedef ENT_Tr::converter<E_Diplomatie> T_ConverterDiplomatie;
-    typedef ENT_Tr::converter<E_ChangeDiplomatieErrorCode> T_ConverterChangeDiplomatieErrorCode;
     typedef ENT_Tr::converter<E_ChangeGroupeConnaissanceErrorCode> T_ConverterChangeGroupeConnaissanceErrorCode;
-    typedef ENT_Tr::converter<E_ChangeLiensLogistiquesErrorCode> T_ConverterChangeLiensLogistiquesErrorCode;
-    typedef ENT_Tr::converter<E_ChangeAutomateErrorCode> T_ConverterChangeAutomateErrorCode;
     typedef ENT_Tr::converter<E_LogMaintenanceRegimeTravail> T_ConverterLogMaintenanceRegimeTravail;
     typedef ENT_Tr::converter<E_LogMaintenanceTraitementEtat> T_ConverterLogMaintenanceTraitementEtat;
     typedef ENT_Tr::converter<E_LogRavitaillementTraitementEtat> T_ConverterLogRavitaillementTraitementEtat;
@@ -264,6 +264,8 @@ private:
     static T_ConverterUnitCapaciteMission UnitCapaciteMissionConverter_ [];
     static T_ConverterNatureLevel NatureLevelConverter_ [];
     static T_ConverterHumanRank HumanRankConverter_ [];
+    static T_ConverterDiplomatie DiplomatieConverter_ [];
+    static T_ConverterChangeDiplomatieErrorCode ChangeDiplomatieErrorCodeConverter_ [];
     static T_ConverterEtatRapFor EtatRapForConverter_ [];
     static T_ConverterEtatCombatRencontre EtatCombatRencontreConverter_ [];
     static T_ConverterEtatOperationnel EtatOperationnelConverter_ [];
@@ -277,6 +279,8 @@ private:
     static T_ConverterUnitExperience UnitExperienceConverter_ [];
     static T_ConverterAutomateState AutomateStateConverter_ [];
     static T_ConverterSetAutomateModeErrorCode SetAutomateModeErrorCodeConverter_ [];
+    static T_ConverterChangeAutomateErrorCode ChangeAutomateErrorCodeConverter_ [];
+    static T_ConverterChangeLiensLogistiquesErrorCode ChangeLiensLogistiquesErrorCodeConverter_ [];
     static T_Converter_ALAT_PorteeAction _ALAT_PorteeActionConverter_ [];
     static T_Converter_ALAT_AmbianceMission _ALAT_AmbianceMissionConverter_ [];
     static T_ConverterModeDeploiement ModeDeploiementConverter_ [];
@@ -302,11 +306,7 @@ private:
     static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
     static T_ConverterTypeCR TypeCRConverter_ [];
     static T_ConverterFireEffectType FireEffectTypeConverter_ [];
-    static T_ConverterDiplomatie DiplomatieConverter_ [];
-    static T_ConverterChangeDiplomatieErrorCode ChangeDiplomatieErrorCodeConverter_ [];
     static T_ConverterChangeGroupeConnaissanceErrorCode ChangeGroupeConnaissanceErrorCodeConverter_ [];
-    static T_ConverterChangeLiensLogistiquesErrorCode ChangeLiensLogistiquesErrorCodeConverter_ [];
-    static T_ConverterChangeAutomateErrorCode ChangeAutomateErrorCodeConverter_ [];
     static T_ConverterLogMaintenanceRegimeTravail LogMaintenanceRegimeTravailConverter_ [];
     static T_ConverterLogMaintenanceTraitementEtat LogMaintenanceTraitementEtatConverter_ [];
     static T_ConverterLogRavitaillementTraitementEtat LogRavitaillementTraitementEtatConverter_ [];

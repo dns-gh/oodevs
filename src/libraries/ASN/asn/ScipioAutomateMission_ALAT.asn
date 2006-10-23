@@ -15,9 +15,7 @@ Mission-Automate-ALAT-Heliporter ::= SEQUENCE
     point-debarquement              Point,
     point-embarquement              Point,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,    
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission,
+    plots-ravitaillement            ListKnowledgeObject,
     avec-materiel                   BOOLEAN DEFAULT FALSE
 }
 
@@ -25,9 +23,7 @@ Mission-Automate-ALAT-Jalonner ::= SEQUENCE
 {
     cibles-prioritaires             NatureAtlas,   
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-Helitransporter ::= SEQUENCE
@@ -37,8 +33,6 @@ Mission-Automate-ALAT-Helitransporter ::= SEQUENCE
     point-embarquement              Point,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission,
     avec-materiel                   BOOLEAN DEFAULT FALSE
 }
 
@@ -49,9 +43,7 @@ Mission-Automate-ALAT-Appuyer ::= SEQUENCE
     cibles-prioritaires             NatureAtlas,    
     plots-ravitaillement            ListKnowledgeObject,
     point-dislocation               Point,
-    zone                            Polygon,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    zone                            Polygon
 }
 
 Mission-Automate-ALAT-Couvrir ::= SEQUENCE
@@ -59,9 +51,7 @@ Mission-Automate-ALAT-Couvrir ::= SEQUENCE
     unites-a-appuyer                ListAgent,
     point-regroupement              Point,
     cibles-prioritaires             NatureAtlas,    
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-Surveiller ::= SEQUENCE
@@ -69,26 +59,20 @@ Mission-Automate-ALAT-Surveiller ::= SEQUENCE
     zone                            Polygon,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission,
     point-logistique                Point
 }
 
 Mission-Automate-ALAT-Reconnaitre ::= SEQUENCE
 {
     pointRegroupement               Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-Freiner ::= SEQUENCE
 {
     cibles-prioritaires             NatureAtlas,                                
     point-regroupement              Point,  
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-Escorter::= SEQUENCE
@@ -96,18 +80,14 @@ Mission-Automate-ALAT-Escorter::= SEQUENCE
     unites-a-escorter               ListAgent,
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-Attaquer ::= SEQUENCE
 {
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-RecueillirFormationAeromobile ::= SEQUENCE
@@ -116,18 +96,14 @@ Mission-Automate-ALAT-RecueillirFormationAeromobile ::= SEQUENCE
     zone                            Polygon,
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-AttaquerFormationAeromobile ::= SEQUENCE
 {
     unites-a-attaquer               ListKnowledgeAgent,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-DonnerCoupArret ::= SEQUENCE
@@ -135,9 +111,7 @@ Mission-Automate-ALAT-DonnerCoupArret ::= SEQUENCE
     zone                            Polygon,
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Automate-ALAT-DetruireNeutraliserDansProfondeur ::= SEQUENCE
@@ -147,8 +121,6 @@ Mission-Automate-ALAT-DetruireNeutraliserDansProfondeur ::= SEQUENCE
     point-regroupement              Point,    
     point-dislocation               Point,    
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission,
     neutraliser                     BOOLEAN
 }
 
@@ -159,16 +131,12 @@ Mission-Automate-ALAT-DetruireNeutraliserDansZone ::= SEQUENCE
     point-regroupement              Point,    
     point-dislocation               Point,    
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission,
     neutraliser                     BOOLEAN
 }
 
 Mission-Automate-ALAT-AllerSeRecompleter ::= SEQUENCE
 {
-    plots-ravitaillement ListKnowledgeObject,
-    portee-action        Enum_ALAT_PorteeAction,
-    ambiance-mission     Enum_ALAT_AmbianceMission
+    plots-ravitaillement ListKnowledgeObject
 }
 
 END -- ScipioAutomateMission_ALAT

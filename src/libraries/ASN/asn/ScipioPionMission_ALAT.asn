@@ -25,8 +25,6 @@ Mission-Pion-ALAT-ReconnaitreDansLaProfondeur ::= SEQUENCE
 {
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission,
     point-dislocation               Point,
     zone                            Localisation
 }
@@ -34,9 +32,7 @@ Mission-Pion-ALAT-ReconnaitreDansLaProfondeur ::= SEQUENCE
 Mission-Pion-ALAT-ReconnaitreContourEnnemi ::= SEQUENCE
 {
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission   
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-DetruireNeutraliserDansZone ::= SEQUENCE
@@ -46,8 +42,6 @@ Mission-Pion-ALAT-DetruireNeutraliserDansZone ::= SEQUENCE
     cibles-prioritaires             NatureAtlas,                                
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission,
     neutraliser                     BOOLEAN
 }
 
@@ -55,36 +49,28 @@ Mission-Pion-ALAT-DetruireAeromobile ::= SEQUENCE
 {
     unite-a-detruire                ListKnowledgeAgent,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Freiner ::= SEQUENCE
 {
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Attaquer ::= SEQUENCE
 {
     cibles-prioritaires             NatureAtlas,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Jalonner ::= SEQUENCE
 {
     point-regroupement              Point,
     cibles-prioritaires             NatureAtlas,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Escorter ::= SEQUENCE
@@ -92,9 +78,7 @@ Mission-Pion-ALAT-Escorter ::= SEQUENCE
     unites-a-escorter               ListAgent,
     point-regroupement              Point,
     cibles-prioritaires             NatureAtlas,                                
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Heliporter ::= SEQUENCE
@@ -104,7 +88,6 @@ Mission-Pion-ALAT-Heliporter ::= SEQUENCE
     point-embarquement              Point,
     point-regroupement              Point,
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
     avec-materiel                   BOOLEAN DEFAULT FALSE
 }
 
@@ -112,8 +95,7 @@ Mission-Pion-ALAT-HeliporterHelitransporterPlotRavitaillement ::= SEQUENCE
 {
     point-debarquement              Point,
     position-regroupement           Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Helitransporter ::= SEQUENCE
@@ -123,7 +105,6 @@ Mission-Pion-ALAT-Helitransporter ::= SEQUENCE
     point-embarquement              Point,
     point-regroupement              Point,  
     plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
     avec-materiel                   BOOLEAN DEFAULT FALSE
 }
 
@@ -131,25 +112,20 @@ Mission-Pion-ALAT-IMEX ::= SEQUENCE
 {
     unites-a-appuyer                ListAgent,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Eclairer ::= SEQUENCE
 {
     point-regroupement      Point,
-    plots-ravitaillement    ListKnowledgeObject,
-    portee-action           Enum_ALAT_PorteeAction,
-    ambiance-mission        Enum_ALAT_AmbianceMission
+    plots-ravitaillement    ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Surveiller ::= SEQUENCE
 {
     zone                            Polygon,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-AppuyerDirectAuContact ::= SEQUENCE
@@ -157,9 +133,7 @@ Mission-Pion-ALAT-AppuyerDirectAuContact ::= SEQUENCE
     cibles-prioritaires             NatureAtlas,
     unites-a-appuyer                ListAgent,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-Couvrir ::= SEQUENCE
@@ -167,16 +141,12 @@ Mission-Pion-ALAT-Couvrir ::= SEQUENCE
     cibles-prioritaires             NatureAtlas,
     unites-a-couvrir                ListAgent,
     point-regroupement              Point,
-    plots-ravitaillement            ListKnowledgeObject,
-    portee-action                   Enum_ALAT_PorteeAction,
-    ambiance-mission                Enum_ALAT_AmbianceMission
+    plots-ravitaillement            ListKnowledgeObject
 }
 
 Mission-Pion-ALAT-AllerSeRecompleter ::= SEQUENCE
 {
-    plots-ravitaillement ListKnowledgeObject,
-    portee-action        Enum_ALAT_PorteeAction,
-    ambiance-mission     Enum_ALAT_AmbianceMission
+    plots-ravitaillement ListKnowledgeObject
 }
 
 END -- ScipioPionMission_ALAT

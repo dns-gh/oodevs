@@ -120,7 +120,6 @@
 #include "Automat/Mission_Automat_LOG_SeDeployer.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerMouvement.cpp"
 #include "Automat/Mission_Automat_LOG_ReconnaitreItineraire.cpp"
-#include "Automat/Mission_Automat_LOG_TransporterUnites.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerMouvementDansZone.cpp"
 #include "Automat/Mission_Automat_LOG_MettreEnOeuvreZoneStationnement.cpp"
 #include "Automat/Mission_Automat_LOG_AppuyerFranchissementDansZone.cpp"
@@ -137,6 +136,7 @@
 #include "Automat/Mission_Automat_Franchir.cpp"
 #include "Automat/Mission_Automat_Stationner.cpp"
 #include "Automat/Mission_Automat_SeFaireTransporter.cpp"
+#include "Automat/Mission_Automat_Transporter.cpp"
 #include "Automat/Mission_Automat_SeRecompleter.cpp"
 #include "Automat/Mission_Automat_SeRendre.cpp"
 #include "Automat/Mission_Automat_FaireMouvementVersCampRefugies.cpp"
@@ -303,7 +303,6 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_LOG_SeDeployer >( "Automate LOG SeDeployer" );
     Register< Mission_Automat_LOG_AppuyerMouvement >( "Automate LOG AppuyerMouvement" );
     Register< Mission_Automat_LOG_ReconnaitreItineraire >( "Automate LOG ReconnaitreItineraire" );
-    Register< Mission_Automat_LOG_TransporterUnites >( "Automate LOG TransporterUnites" );
     Register< Mission_Automat_LOG_AppuyerMouvementDansZone >( "Automate LOG AppuyerMouvementDansZone" );
     Register< Mission_Automat_LOG_MettreEnOeuvreZoneStationnement >( "Automate LOG MettreEnOeuvreZoneStationnement" );
     Register< Mission_Automat_LOG_AppuyerFranchissementDansZone >( "Automate LOG AppuyerFranchissementDansZone" );
@@ -320,6 +319,7 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_Franchir >( "Automate Franchir" );
     Register< Mission_Automat_Stationner >( "Automate Stationner" );
     Register< Mission_Automat_SeFaireTransporter >( "Automate SeFaireTransporter" );
+    Register< Mission_Automat_Transporter >( "Automate Transporter" );
     Register< Mission_Automat_SeRecompleter >( "Automate SeRecompleter" );
     Register< Mission_Automat_SeRendre >( "Automate SeRendre" );
     Register< Mission_Automat_FaireMouvementVersCampRefugies >( "Automate FaireMouvementVersCampRefugies" );

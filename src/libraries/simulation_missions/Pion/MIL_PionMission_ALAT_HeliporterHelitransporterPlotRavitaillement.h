@@ -46,7 +46,6 @@ private:
     static int nDIAPointDebarquementIdx_;
     static int nDIAPositionRegroupementIdx_;
     static int nDIAPlotsRavitaillementIdx_;
-    static int nDIAPorteeActionIdx_;
 
 };
 

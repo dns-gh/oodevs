@@ -6,16 +6,12 @@
 typedef struct T_Mission_Pion_ALAT_AllerSeRecompleter : T_Mission_Pion
 {
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur : T_Mission_Pion
 {
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 T_Point pointDislocation_;
 T_Localisation zone_;
 };
@@ -24,8 +20,6 @@ typedef struct T_Mission_Pion_ALAT_ReconnaitreContourEnnemi : T_Mission_Pion
 {
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_DetruireNeutraliserDansZone : T_Mission_Pion
@@ -35,8 +29,6 @@ T_Point pointDislocation_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 bool neutraliser_;
 };
 
@@ -45,8 +37,6 @@ typedef struct T_Mission_Pion_ALAT_DetruireAeromobile : T_Mission_Pion
 T_ListeConnaissancesAgent uniteADetruire_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Freiner : T_Mission_Pion
@@ -54,8 +44,6 @@ typedef struct T_Mission_Pion_ALAT_Freiner : T_Mission_Pion
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Jalonner : T_Mission_Pion
@@ -63,8 +51,6 @@ typedef struct T_Mission_Pion_ALAT_Jalonner : T_Mission_Pion
 T_Point pointRegroupement_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Escorter : T_Mission_Pion
@@ -73,8 +59,6 @@ T_ListePions unitesAEscorter_;
 T_Point pointRegroupement_;
 E_NatureAtlasType ciblesPrioritaires_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Heliporter : T_Mission_Pion
@@ -84,7 +68,6 @@ T_Point pointDebarquement_;
 T_Point pointEmbarquement_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
 bool avecMateriel_;
 };
 
@@ -93,7 +76,6 @@ typedef struct T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement :
 T_Point pointDebarquement_;
 T_Point positionRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Helitransporter : T_Mission_Pion
@@ -103,7 +85,6 @@ T_Point pointDebarquement_;
 T_Point pointEmbarquement_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
 bool avecMateriel_;
 };
 
@@ -112,15 +93,12 @@ typedef struct T_Mission_Pion_ALAT_IMEX : T_Mission_Pion
 T_ListePions unitesAAppuyer_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Eclairer : T_Mission_Pion
 {
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Surveiller : T_Mission_Pion
@@ -128,8 +106,6 @@ typedef struct T_Mission_Pion_ALAT_Surveiller : T_Mission_Pion
 T_Localisation zone_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_AppuyerDirectAuContact : T_Mission_Pion
@@ -138,8 +114,6 @@ E_NatureAtlasType ciblesPrioritaires_;
 T_ListePions unitesAAppuyer_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Couvrir : T_Mission_Pion
@@ -148,8 +122,6 @@ E_NatureAtlasType ciblesPrioritaires_;
 T_ListePions unitesACouvrir_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ALAT_Attaquer : T_Mission_Pion
@@ -157,8 +129,6 @@ typedef struct T_Mission_Pion_ALAT_Attaquer : T_Mission_Pion
 E_NatureAtlasType ciblesPrioritaires_;
 T_Point pointRegroupement_;
 T_ListeConnaissancesObjet plotsRavitaillement_;
-id porteeAction_;
-id ambianceMission_;
 };
 
 typedef struct T_Mission_Pion_ASA_DefendreSite : T_Mission_Pion
@@ -896,13 +866,6 @@ typedef struct T_Mission_Pion_LOG_ReconnaitreItineraire : T_Mission_Pion
 T_ListePoints itineraireLog_;
 };
 
-typedef struct T_Mission_Pion_LOG_TransporterUnite : T_Mission_Pion
-{
-T_ListePions unitesATransporter_;
-T_Point pointRendezVous_;
-T_Point pointDestination_;
-};
-
 typedef struct T_Mission_Pion_LOG_ReconnaitreZoneContaminee : T_Mission_Pion
 {
 T_Localisation zone_;
@@ -1035,6 +998,14 @@ typedef struct T_Mission_Pion_Suivre : T_Mission_Pion
 T_Pion uniteASuivre_;
 };
 
+typedef struct T_Mission_Pion_Transporter : T_Mission_Pion
+{
+T_ListePions unitesATransporter_;
+T_Point pointDebarquement_;
+T_Point pointEmbarquement_;
+bool avecMateriel_;
+};
+
 typedef struct T_Mission_Pion_SeFaireDecontaminer : T_Mission_Pion
 {
 T_Point pointArrivee_;
@@ -1118,14 +1089,6 @@ typedef struct T_Mission_Pion_MILICE_DetruireEmbuscade : T_Mission_Pion
 T_Point positionEmbuscade_;
 T_Point positionRegroupement_;
 id natureObstacle_;
-};
-
-typedef struct T_Mission_Pion_JOINT_MARINE_Transporter : T_Mission_Pion
-{
-T_ListePions unitesATransporter_;
-T_Point pointDebarquement_;
-T_Point pointEmbarquement_;
-bool avecMateriel_;
 };
 
 typedef struct T_Mission_Pion_JOINT_AIR_EffectuerRaid : T_Mission_Pion

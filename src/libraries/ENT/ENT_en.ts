@@ -1162,10 +1162,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate LOG TransporterUnites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automate LOG AppuyerMouvementDansZone</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1242,10 +1238,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion LOG TransporterUnite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pion LOG ReconnaitreZoneContaminee</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1291,10 +1283,6 @@
     </message>
     <message>
         <source>Pion MILICE DetruireEmbuscade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion JOINT MARINE Transporter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1639,6 +1627,14 @@
     </message>
     <message>
         <source>Changer Parametres Recompletement ALAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate Transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion Transporter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

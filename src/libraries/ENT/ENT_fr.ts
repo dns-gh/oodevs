@@ -1443,7 +1443,7 @@
     </message>
     <message>
         <source>Pion JOINT MARINE Transporter</source>
-        <translation>Pion JOINT MARINE Transporter</translation>
+        <translation type="obsolete">Pion JOINT MARINE Transporter</translation>
     </message>
     <message>
         <source>Pion JOINT AIR EffectuerRaid</source>
@@ -1623,14 +1623,6 @@
     </message>
     <message>
         <source>Pion Generique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG TransporterUnites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TransporterUnite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1943,6 +1935,14 @@
     </message>
     <message>
         <source>Changer Parametres Recompletement ALAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate Transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion Transporter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

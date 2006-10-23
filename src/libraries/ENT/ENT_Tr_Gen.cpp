@@ -323,6 +323,22 @@ ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
     T_ConverterHumanRank( "", "", (E_HumanRank)-1 )
 };
 
+ENT_Tr::T_ConverterDiplomatie ENT_Tr::DiplomatieConverter_[] =
+{
+    T_ConverterDiplomatie( "inconnu", QT_TRANSLATE_NOOP( "ENT_Tr", "inconnu" ), eDiplomatie_Inconnu ),
+    T_ConverterDiplomatie( "ami", QT_TRANSLATE_NOOP( "ENT_Tr", "ami" ), eDiplomatie_Ami ),
+    T_ConverterDiplomatie( "ennemi", QT_TRANSLATE_NOOP( "ENT_Tr", "ennemi" ), eDiplomatie_Ennemi ),
+    T_ConverterDiplomatie( "neutre", QT_TRANSLATE_NOOP( "ENT_Tr", "neutre" ), eDiplomatie_Neutre ),
+    T_ConverterDiplomatie( "", "", (E_Diplomatie)-1 )
+};
+
+ENT_Tr::T_ConverterChangeDiplomatieErrorCode ENT_Tr::ChangeDiplomatieErrorCodeConverter_[] =
+{
+    T_ConverterChangeDiplomatieErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeDiplomatieErrorCode_NoError ),
+    T_ConverterChangeDiplomatieErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeDiplomatieErrorCode_ErrorInvalidCamp ),
+    T_ConverterChangeDiplomatieErrorCode( "", "", (E_ChangeDiplomatieErrorCode)-1 )
+};
+
 ENT_Tr::T_ConverterEtatRapFor ENT_Tr::EtatRapForConverter_[] =
 {
     T_ConverterEtatRapFor( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eEtatRapFor_None ),
@@ -439,6 +455,27 @@ ENT_Tr::T_ConverterSetAutomateModeErrorCode ENT_Tr::SetAutomateModeErrorCodeConv
     T_ConverterSetAutomateModeErrorCode( "error already debraye", QT_TRANSLATE_NOOP( "ENT_Tr", "error already debraye" ), eSetAutomateModeErrorCode_ErrorAlreadyDebraye ),
     T_ConverterSetAutomateModeErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eSetAutomateModeErrorCode_ErrorUnitSurrendered ),
     T_ConverterSetAutomateModeErrorCode( "", "", (E_SetAutomateModeErrorCode)-1 )
+};
+
+ENT_Tr::T_ConverterChangeAutomateErrorCode ENT_Tr::ChangeAutomateErrorCodeConverter_[] =
+{
+    T_ConverterChangeAutomateErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeAutomateErrorCode_NoError ),
+    T_ConverterChangeAutomateErrorCode( "error invalid pion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid pion" ), eChangeAutomateErrorCode_ErrorInvalidPion ),
+    T_ConverterChangeAutomateErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeAutomateErrorCode_ErrorInvalidAutomate ),
+    T_ConverterChangeAutomateErrorCode( "error camps incompatibles", QT_TRANSLATE_NOOP( "ENT_Tr", "error camps incompatibles" ), eChangeAutomateErrorCode_ErrorCampsIncompatibles ),
+    T_ConverterChangeAutomateErrorCode( "", "", (E_ChangeAutomateErrorCode)-1 )
+};
+
+ENT_Tr::T_ConverterChangeLiensLogistiquesErrorCode ENT_Tr::ChangeLiensLogistiquesErrorCodeConverter_[] =
+{
+    T_ConverterChangeLiensLogistiquesErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeLiensLogistiquesErrorCode_NoError ),
+    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomate ),
+    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate tc2", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate tc2" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateTc2 ),
+    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate maintenance", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate maintenance" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateMaintenance ),
+    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate sante", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate sante" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateSante ),
+    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate ravitaillement" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateRavitaillement ),
+    T_ConverterChangeLiensLogistiquesErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eChangeLiensLogistiquesErrorCode_ErrorUnitSurrendered ),
+    T_ConverterChangeLiensLogistiquesErrorCode( "", "", (E_ChangeLiensLogistiquesErrorCode)-1 )
 };
 
 ENT_Tr::T_Converter_ALAT_PorteeAction ENT_Tr::_ALAT_PorteeActionConverter_[] =
@@ -722,22 +759,6 @@ ENT_Tr::T_ConverterFireEffectType ENT_Tr::FireEffectTypeConverter_[] =
     T_ConverterFireEffectType( "", "", (E_FireEffectType)-1 )
 };
 
-ENT_Tr::T_ConverterDiplomatie ENT_Tr::DiplomatieConverter_[] =
-{
-    T_ConverterDiplomatie( "inconnu", QT_TRANSLATE_NOOP( "ENT_Tr", "inconnu" ), eDiplomatie_Inconnu ),
-    T_ConverterDiplomatie( "ami", QT_TRANSLATE_NOOP( "ENT_Tr", "ami" ), eDiplomatie_Ami ),
-    T_ConverterDiplomatie( "ennemi", QT_TRANSLATE_NOOP( "ENT_Tr", "ennemi" ), eDiplomatie_Ennemi ),
-    T_ConverterDiplomatie( "neutre", QT_TRANSLATE_NOOP( "ENT_Tr", "neutre" ), eDiplomatie_Neutre ),
-    T_ConverterDiplomatie( "", "", (E_Diplomatie)-1 )
-};
-
-ENT_Tr::T_ConverterChangeDiplomatieErrorCode ENT_Tr::ChangeDiplomatieErrorCodeConverter_[] =
-{
-    T_ConverterChangeDiplomatieErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeDiplomatieErrorCode_NoError ),
-    T_ConverterChangeDiplomatieErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeDiplomatieErrorCode_ErrorInvalidCamp ),
-    T_ConverterChangeDiplomatieErrorCode( "", "", (E_ChangeDiplomatieErrorCode)-1 )
-};
-
 ENT_Tr::T_ConverterChangeGroupeConnaissanceErrorCode ENT_Tr::ChangeGroupeConnaissanceErrorCodeConverter_[] =
 {
     T_ConverterChangeGroupeConnaissanceErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeGroupeConnaissanceErrorCode_NoError ),
@@ -745,27 +766,6 @@ ENT_Tr::T_ConverterChangeGroupeConnaissanceErrorCode ENT_Tr::ChangeGroupeConnais
     T_ConverterChangeGroupeConnaissanceErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeGroupeConnaissanceErrorCode_ErrorInvalidCamp ),
     T_ConverterChangeGroupeConnaissanceErrorCode( "error invalid groupe connaissance", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid groupe connaissance" ), eChangeGroupeConnaissanceErrorCode_ErrorInvalidGroupeConnaissance ),
     T_ConverterChangeGroupeConnaissanceErrorCode( "", "", (E_ChangeGroupeConnaissanceErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterChangeLiensLogistiquesErrorCode ENT_Tr::ChangeLiensLogistiquesErrorCodeConverter_[] =
-{
-    T_ConverterChangeLiensLogistiquesErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeLiensLogistiquesErrorCode_NoError ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomate ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate tc2", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate tc2" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateTc2 ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate maintenance", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate maintenance" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateMaintenance ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate sante", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate sante" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateSante ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error invalid automate ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate ravitaillement" ), eChangeLiensLogistiquesErrorCode_ErrorInvalidAutomateRavitaillement ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eChangeLiensLogistiquesErrorCode_ErrorUnitSurrendered ),
-    T_ConverterChangeLiensLogistiquesErrorCode( "", "", (E_ChangeLiensLogistiquesErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterChangeAutomateErrorCode ENT_Tr::ChangeAutomateErrorCodeConverter_[] =
-{
-    T_ConverterChangeAutomateErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeAutomateErrorCode_NoError ),
-    T_ConverterChangeAutomateErrorCode( "error invalid pion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid pion" ), eChangeAutomateErrorCode_ErrorInvalidPion ),
-    T_ConverterChangeAutomateErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeAutomateErrorCode_ErrorInvalidAutomate ),
-    T_ConverterChangeAutomateErrorCode( "error camps incompatibles", QT_TRANSLATE_NOOP( "ENT_Tr", "error camps incompatibles" ), eChangeAutomateErrorCode_ErrorCampsIncompatibles ),
-    T_ConverterChangeAutomateErrorCode( "", "", (E_ChangeAutomateErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterLogMaintenanceRegimeTravail ENT_Tr::LogMaintenanceRegimeTravailConverter_[] =
@@ -954,7 +954,6 @@ ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
     T_ConverterAutomataMission( "Automate LOG SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Automate LOG SeDeployer" ), eMission_Automate_LOG_SeDeployer ),
     T_ConverterAutomataMission( "Automate LOG AppuyerMouvement", QT_TRANSLATE_NOOP( "ENT", "Automate LOG AppuyerMouvement" ), eMission_Automate_LOG_AppuyerMouvement ),
     T_ConverterAutomataMission( "Automate LOG ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Automate LOG ReconnaitreItineraire" ), eMission_Automate_LOG_ReconnaitreItineraire ),
-    T_ConverterAutomataMission( "Automate LOG TransporterUnites", QT_TRANSLATE_NOOP( "ENT", "Automate LOG TransporterUnites" ), eMission_Automate_LOG_TransporterUnites ),
     T_ConverterAutomataMission( "Automate LOG AppuyerMouvementDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate LOG AppuyerMouvementDansZone" ), eMission_Automate_LOG_AppuyerMouvementDansZone ),
     T_ConverterAutomataMission( "Automate LOG MettreEnOeuvreZoneStationnement", QT_TRANSLATE_NOOP( "ENT", "Automate LOG MettreEnOeuvreZoneStationnement" ), eMission_Automate_LOG_MettreEnOeuvreZoneStationnement ),
     T_ConverterAutomataMission( "Automate LOG AppuyerFranchissementDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate LOG AppuyerFranchissementDansZone" ), eMission_Automate_LOG_AppuyerFranchissementDansZone ),
@@ -971,6 +970,7 @@ ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
     T_ConverterAutomataMission( "Automate Franchir", QT_TRANSLATE_NOOP( "ENT", "Automate Franchir" ), eMission_Automate_Franchir ),
     T_ConverterAutomataMission( "Automate Stationner", QT_TRANSLATE_NOOP( "ENT", "Automate Stationner" ), eMission_Automate_Stationner ),
     T_ConverterAutomataMission( "Automate SeFaireTransporter", QT_TRANSLATE_NOOP( "ENT", "Automate SeFaireTransporter" ), eMission_Automate_SeFaireTransporter ),
+    T_ConverterAutomataMission( "Automate Transporter", QT_TRANSLATE_NOOP( "ENT", "Automate Transporter" ), eMission_Automate_Transporter ),
     T_ConverterAutomataMission( "Automate SeRecompleter", QT_TRANSLATE_NOOP( "ENT", "Automate SeRecompleter" ), eMission_Automate_SeRecompleter ),
     T_ConverterAutomataMission( "Automate SeRendre", QT_TRANSLATE_NOOP( "ENT", "Automate SeRendre" ), eMission_Automate_SeRendre ),
     T_ConverterAutomataMission( "Automate FaireMouvementVersCampRefugies", QT_TRANSLATE_NOOP( "ENT", "Automate FaireMouvementVersCampRefugies" ), eMission_Automate_FaireMouvementVersCampRefugies ),
@@ -1150,7 +1150,6 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion LOG Reparer", QT_TRANSLATE_NOOP( "ENT", "Pion LOG Reparer" ), eMission_Pion_LOG_Reparer ),
     T_ConverterUnitMission( "Pion LOG AppuyerMouvement", QT_TRANSLATE_NOOP( "ENT", "Pion LOG AppuyerMouvement" ), eMission_Pion_LOG_AppuyerMouvement ),
     T_ConverterUnitMission( "Pion LOG ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion LOG ReconnaitreItineraire" ), eMission_Pion_LOG_ReconnaitreItineraire ),
-    T_ConverterUnitMission( "Pion LOG TransporterUnite", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TransporterUnite" ), eMission_Pion_LOG_TransporterUnite ),
     T_ConverterUnitMission( "Pion LOG ReconnaitreZoneContaminee", QT_TRANSLATE_NOOP( "ENT", "Pion LOG ReconnaitreZoneContaminee" ), eMission_Pion_LOG_ReconnaitreZoneContaminee ),
     T_ConverterUnitMission( "Pion LOG AppuyerMouvementDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion LOG AppuyerMouvementDansZone" ), eMission_Pion_LOG_AppuyerMouvementDansZone ),
     T_ConverterUnitMission( "Pion LOG MettreEnOeuvreZoneStationnement", QT_TRANSLATE_NOOP( "ENT", "Pion LOG MettreEnOeuvreZoneStationnement" ), eMission_Pion_LOG_MettreEnOeuvreZoneStationnement ),
@@ -1172,6 +1171,7 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion PlastronEnnemi", QT_TRANSLATE_NOOP( "ENT", "Pion PlastronEnnemi" ), eMission_Pion_PlastronEnnemi ),
     T_ConverterUnitMission( "Pion FaireMouvement", QT_TRANSLATE_NOOP( "ENT", "Pion FaireMouvement" ), eMission_Pion_FaireMouvement ),
     T_ConverterUnitMission( "Pion Suivre", QT_TRANSLATE_NOOP( "ENT", "Pion Suivre" ), eMission_Pion_Suivre ),
+    T_ConverterUnitMission( "Pion Transporter", QT_TRANSLATE_NOOP( "ENT", "Pion Transporter" ), eMission_Pion_Transporter ),
     T_ConverterUnitMission( "Pion SeFaireDecontaminer", QT_TRANSLATE_NOOP( "ENT", "Pion SeFaireDecontaminer" ), eMission_Pion_SeFaireDecontaminer ),
     T_ConverterUnitMission( "Pion Franchir", QT_TRANSLATE_NOOP( "ENT", "Pion Franchir" ), eMission_Pion_Franchir ),
     T_ConverterUnitMission( "Pion Decrocher", QT_TRANSLATE_NOOP( "ENT", "Pion Decrocher" ), eMission_Pion_Decrocher ),
@@ -1187,7 +1187,6 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion MILICE Provoquer", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE Provoquer" ), eMission_Pion_MILICE_Provoquer ),
     T_ConverterUnitMission( "Pion MILICE PrendreEtTenir", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE PrendreEtTenir" ), eMission_Pion_MILICE_PrendreEtTenir ),
     T_ConverterUnitMission( "Pion MILICE DetruireEmbuscade", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE DetruireEmbuscade" ), eMission_Pion_MILICE_DetruireEmbuscade ),
-    T_ConverterUnitMission( "Pion JOINT MARINE Transporter", QT_TRANSLATE_NOOP( "ENT", "Pion JOINT MARINE Transporter" ), eMission_Pion_JOINT_MARINE_Transporter ),
     T_ConverterUnitMission( "Pion JOINT AIR EffectuerRaid", QT_TRANSLATE_NOOP( "ENT", "Pion JOINT AIR EffectuerRaid" ), eMission_Pion_JOINT_AIR_EffectuerRaid ),
     T_ConverterUnitMission( "Pion NBC AnimerUnPlotDeDecontamination", QT_TRANSLATE_NOOP( "ENT", "Pion NBC AnimerUnPlotDeDecontamination" ), eMission_Pion_NBC_AnimerUnPlotDeDecontamination ),
     T_ConverterUnitMission( "Pion NBC ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion NBC ReconnaitreItineraire" ), eMission_Pion_NBC_ReconnaitreItineraire ),
@@ -1298,6 +1297,8 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitCapaciteMissionConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
     InitTr( HumanRankConverter_, "ENT_Tr" );
+    InitTr( DiplomatieConverter_, "ENT_Tr" );
+    InitTr( ChangeDiplomatieErrorCodeConverter_, "ENT_Tr" );
     InitTr( EtatRapForConverter_, "ENT_Tr" );
     InitTr( EtatCombatRencontreConverter_, "ENT_Tr" );
     InitTr( EtatOperationnelConverter_, "ENT_Tr" );
@@ -1311,6 +1312,8 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitExperienceConverter_, "ENT_Tr" );
     InitTr( AutomateStateConverter_, "ENT_Tr" );
     InitTr( SetAutomateModeErrorCodeConverter_, "ENT_Tr" );
+    InitTr( ChangeAutomateErrorCodeConverter_, "ENT_Tr" );
+    InitTr( ChangeLiensLogistiquesErrorCodeConverter_, "ENT_Tr" );
     InitTr( _ALAT_PorteeActionConverter_, "ENT_Tr" );
     InitTr( _ALAT_AmbianceMissionConverter_, "ENT_Tr" );
     InitTr( ModeDeploiementConverter_, "ENT_Tr" );
@@ -1336,11 +1339,7 @@ void ENT_Tr::InitTranslations()
     InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( TypeCRConverter_, "ENT_Tr" );
     InitTr( FireEffectTypeConverter_, "ENT_Tr" );
-    InitTr( DiplomatieConverter_, "ENT_Tr" );
-    InitTr( ChangeDiplomatieErrorCodeConverter_, "ENT_Tr" );
     InitTr( ChangeGroupeConnaissanceErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ChangeLiensLogistiquesErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ChangeAutomateErrorCodeConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceRegimeTravailConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceTraitementEtatConverter_, "ENT_Tr" );
     InitTr( LogRavitaillementTraitementEtatConverter_, "ENT_Tr" );
@@ -1483,6 +1482,24 @@ const std::string& ENT_Tr::ConvertFromHumanRank( E_HumanRank nValue, ENT_Tr_ABC:
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromDiplomatie
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromDiplomatie( E_Diplomatie nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( DiplomatieConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromChangeDiplomatieErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromChangeDiplomatieErrorCode( E_ChangeDiplomatieErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( ChangeDiplomatieErrorCodeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromEtatRapFor
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1597,6 +1614,24 @@ const std::string& ENT_Tr::ConvertFromAutomateState( E_AutomateState nValue, ENT
 const std::string& ENT_Tr::ConvertFromSetAutomateModeErrorCode( E_SetAutomateModeErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( SetAutomateModeErrorCodeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromChangeAutomateErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromChangeAutomateErrorCode( E_ChangeAutomateErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( ChangeAutomateErrorCodeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromChangeLiensLogistiquesErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeLiensLogistiquesErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( ChangeLiensLogistiquesErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1825,48 +1860,12 @@ const std::string& ENT_Tr::ConvertFromFireEffectType( E_FireEffectType nValue, E
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromDiplomatie
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromDiplomatie( E_Diplomatie nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( DiplomatieConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeDiplomatieErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeDiplomatieErrorCode( E_ChangeDiplomatieErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeDiplomatieErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromChangeGroupeConnaissanceErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromChangeGroupeConnaissanceErrorCode( E_ChangeGroupeConnaissanceErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( ChangeGroupeConnaissanceErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeLiensLogistiquesErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeLiensLogistiquesErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeLiensLogistiquesErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeAutomateErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeAutomateErrorCode( E_ChangeAutomateErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeAutomateErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -2100,6 +2099,24 @@ E_HumanRank ENT_Tr::ConvertToHumanRank( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToDiplomatie
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_Diplomatie ENT_Tr::ConvertToDiplomatie( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( DiplomatieConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToChangeDiplomatieErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_ChangeDiplomatieErrorCode ENT_Tr::ConvertToChangeDiplomatieErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( ChangeDiplomatieErrorCodeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToEtatRapFor
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2214,6 +2231,24 @@ E_AutomateState ENT_Tr::ConvertToAutomateState( const std::string& strName )
 E_SetAutomateModeErrorCode ENT_Tr::ConvertToSetAutomateModeErrorCode( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( SetAutomateModeErrorCodeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToChangeAutomateErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_ChangeAutomateErrorCode ENT_Tr::ConvertToChangeAutomateErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( ChangeAutomateErrorCodeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToChangeLiensLogistiquesErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_ChangeLiensLogistiquesErrorCode ENT_Tr::ConvertToChangeLiensLogistiquesErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( ChangeLiensLogistiquesErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -2442,48 +2477,12 @@ E_FireEffectType ENT_Tr::ConvertToFireEffectType( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToDiplomatie
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_Diplomatie ENT_Tr::ConvertToDiplomatie( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( DiplomatieConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeDiplomatieErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeDiplomatieErrorCode ENT_Tr::ConvertToChangeDiplomatieErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeDiplomatieErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToChangeGroupeConnaissanceErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
 E_ChangeGroupeConnaissanceErrorCode ENT_Tr::ConvertToChangeGroupeConnaissanceErrorCode( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( ChangeGroupeConnaissanceErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeLiensLogistiquesErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeLiensLogistiquesErrorCode ENT_Tr::ConvertToChangeLiensLogistiquesErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeLiensLogistiquesErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeAutomateErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeAutomateErrorCode ENT_Tr::ConvertToChangeAutomateErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeAutomateErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

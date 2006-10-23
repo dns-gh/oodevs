@@ -54,8 +54,6 @@ void Mission_Pawn_ALAT_DetruireAeromobile::Serialize()
     ASN_Tools::CopyAgentKnowledgeList( uniteADetruire_, asnMission.unite_a_detruire );
     ASN_Tools::CopyPoint( pointRegroupement_, asnMission.point_regroupement );
     ASN_Tools::CopyObjectKnowledgeList( plotsRavitaillement_, asnMission.plots_ravitaillement );
-    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 3 ), asnMission.portee_action );
-    ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 2 ), asnMission.ambiance_mission );
 
     delete &uniteADetruire_;
     delete &pointRegroupement_;
