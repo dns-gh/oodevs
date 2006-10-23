@@ -115,10 +115,12 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // -----------------------------------------------------------------------------
 Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 {
-    Entity_ABC* agent = Resolver< Agent_ABC >::Find( id );
-    if( ! agent )
-        agent = Resolver< Population_ABC >::Find( id );
-    return agent;
+    Entity_ABC* agent = Resolver< Automat_ABC >::Find( id );
+    if( agent )
+        return agent;
+    if( agent = Resolver< Agent_ABC >::Find( id ) )
+        return agent;
+    return Resolver< Population_ABC >::Find( id );
 }
 
 // -----------------------------------------------------------------------------
