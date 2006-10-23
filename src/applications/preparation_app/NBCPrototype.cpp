@@ -44,7 +44,7 @@ void NBCPrototype::Commit()
     if( !creation_ )
         return;
 
-    static_cast< NBCAttributes& >( creation_->Get< NBCAttributes >() ).SetAgent( *nbcAgents_->GetValue() );
+    static_cast< NBCAttributes& >( creation_->Get< NBCAttributes_ABC >() ).SetAgent( *nbcAgents_->GetValue() );
 }
 
 // -----------------------------------------------------------------------------
