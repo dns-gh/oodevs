@@ -59,7 +59,6 @@ public:
 
     //! @name Accessors
     //@{
-    T_EntityId                           GetObstacleId     () const;
     const Location&                      GetLocation       () const;
     ASN1T_EnumObjectType                 GetType           () const;
     ASN1T_EnumMissionGenSousTypeObstacle GetObstacleSubType() const;
@@ -83,7 +82,6 @@ private:
 private:
     //! @name Member data
     //@{
-    T_EntityId                           nId_;
     Location*                            pLocation_;
     ASN1T_EnumObjectType                 eType_;
     ASN1T_EnumMissionGenSousTypeObstacle eObstacleSubType_;

@@ -28,8 +28,7 @@ using namespace TEST;
 // Created: SBO 2005-08-26
 // -----------------------------------------------------------------------------
 GenObject::GenObject()
-    : nId_               ( 0 )
-    , pLocation_         ( 0 )
+    : pLocation_         ( 0 )
     , eType_             ( ( ASN1T_EnumObjectType )-1 )
     , eObstacleSubType_  ( ( ASN1T_EnumMissionGenSousTypeObstacle )-1 )
     , eUrgency_          ( ( ASN1T_EnumMissionGenUrgence )-1 )
@@ -56,7 +55,6 @@ GenObject& GenObject::GetTestParam_GenObject( const Testable_Entity& target )
 {
     GenObject& obj = *new GenObject();
 
-    obj.nId_              = target.GetTestParam_ID();
     obj.pLocation_        = &Location::GetTestParam_Location( target.GetPosition(), ( ASN1T_EnumTypeLocalisation )target.GetTestParam_Enumeration( 0, 5 ) );
     obj.eType_            = ( ASN1T_EnumObjectType )target.GetTestParam_Enumeration( 0, 38 );
     obj.eObstacleSubType_ = ( ASN1T_EnumMissionGenSousTypeObstacle )target.GetTestParam_Enumeration( 0, 1 );

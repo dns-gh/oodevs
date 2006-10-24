@@ -52,16 +52,6 @@ const Automat* Testable_Entity::GetAutomat() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Testable_Entity::GetTestParam_ID
-// Created: SBO 2005-08-10
-// -----------------------------------------------------------------------------
-T_EntityId Testable_Entity::GetTestParam_ID() const
-{
-    // for oid_obstacle_planifie
-    return ( uint )rand();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Testable_Entity::GetTestParam_Agent
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------

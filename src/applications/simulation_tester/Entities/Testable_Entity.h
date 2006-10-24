@@ -46,7 +46,6 @@ public:
 
     //! @name Test Parameters
     //@{
-    virtual T_EntityId         GetTestParam_ID                 () const;
     virtual uint               GetTestParam_Direction          () const;
     virtual bool               GetTestParam_Bool               () const;
     virtual int                GetTestParam_Numeric            ( int  nMin = 0, int  nMax = std::numeric_limits< int >::max() ) const;

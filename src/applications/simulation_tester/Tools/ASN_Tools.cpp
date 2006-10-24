@@ -159,7 +159,6 @@ void ASN_Tools::CopyObjectKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowle
 // -----------------------------------------------------------------------------
 void ASN_Tools::CopyGenObject( const GenObject& genObject, ASN1T_MissionGenObject& asn )
 {
-    CopyID      ( genObject.GetObstacleId(), asn.oid_obstacle_planifie );
     CopyLocation( genObject.GetLocation()  , asn.pos_obstacle );
     asn.type_obstacle = genObject.GetType();
     asn.urgence       = genObject.GetUrgency();
