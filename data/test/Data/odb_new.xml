@@ -87,10 +87,10 @@
   </sides>
   <diplomacies>
     <side id="1">
-      <relationship diplomacy="enemy" team="3"/>
+      <relationship diplomacy="enemy" side="3"/>
     </side>
     <side id="3">
-      <relationship diplomacy="enemy" team="1"/>
+      <relationship diplomacy="enemy" side="1"/>
     </side>
   </diplomacies>
 </orbat>
