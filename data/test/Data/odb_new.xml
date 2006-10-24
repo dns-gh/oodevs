@@ -23,6 +23,7 @@
         <knowledge-group id="23" type="Standard"/>
       </communication>
       <populations/> 
+      <objects/>
     </side> 
     <side id="3" name="bleu">
       <tactical>
@@ -81,6 +82,7 @@
       <populations> 
         <population id="654" type="test1" name="Parisiens" position="31TBN9374781012" attitude="agitee" humans="10000"/>
       </populations> 
+      <objects/>      
     </side>
   </sides>
   <diplomacies>
@@ -91,5 +93,4 @@
       <relationship diplomacy="enemy" team="1"/>
     </side>
   </diplomacies>
-  <objects/>
 </orbat>
