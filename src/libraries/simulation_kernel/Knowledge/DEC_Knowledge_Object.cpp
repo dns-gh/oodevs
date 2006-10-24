@@ -114,7 +114,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this ); 
     
     file >> nObjectTypeID;
-    pObjectType_ = MIL_RealObjectType::FindObjectType( nObjectTypeID );
+    pObjectType_ = MIL_RealObjectType::Find( nObjectTypeID );
     assert( pObjectType_ );
     
     file >> const_cast< MIL_Army*& >( pArmyKnowing_ )

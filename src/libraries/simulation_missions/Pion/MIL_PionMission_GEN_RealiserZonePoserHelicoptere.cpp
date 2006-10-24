@@ -21,7 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_RealiserZonePoserHelicoptere::nDIAZonePoserIdx_ = 0 ;
-int MIL_PionMission_GEN_RealiserZonePoserHelicoptere::nDIAOidObstaclePlanifieIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -33,7 +32,6 @@ void MIL_PionMission_GEN_RealiserZonePoserHelicoptere::InitializeDIA( const MIL_
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAZonePoserIdx_ = DEC_Tools::InitializeDIAField( "zonePoser_", diaType );
-    nDIAOidObstaclePlanifieIdx_ = DEC_Tools::InitializeDIAField( "oidObstaclePlanifie_", diaType );
 
 }
 
@@ -72,8 +70,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserZonePoserHelicoptere::Initi
     const ASN1T_Mission_Pion_GEN_RealiserZonePoserHelicoptere& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_zone_poser_helicoptere;
     if( !NET_ASN_Tools::CopyPoint( asnMission.zone_poser, GetVariable( nDIAZonePoserIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -88,7 +84,7 @@ bool MIL_PionMission_GEN_RealiserZonePoserHelicoptere::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
+    
     return true;    
 }
 
@@ -103,7 +99,6 @@ bool MIL_PionMission_GEN_RealiserZonePoserHelicoptere::Initialize( MIL_PionMissi
     MIL_PionMission_GEN_RealiserZonePoserHelicoptere& mission = static_cast< MIL_PionMission_GEN_RealiserZonePoserHelicoptere& >( missionTmp );
 
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAZonePoserIdx_ ), GetVariable( nDIAZonePoserIdx_ ) );
-    NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
 
     return true;
 }                                                                    
@@ -135,7 +130,6 @@ void MIL_PionMission_GEN_RealiserZonePoserHelicoptere::Serialize( ASN1T_MsgPionO
     asnMsg.mission.u.mission_pion_gen_realiser_zone_poser_helicoptere  = &asnMission;
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAZonePoserIdx_ ), asnMission.zone_poser );
-    NET_ASN_Tools::CopyID( GetVariable( nDIAOidObstaclePlanifieIdx_ ), asnMission.oid_obstacle_planifie );
 
 }
 

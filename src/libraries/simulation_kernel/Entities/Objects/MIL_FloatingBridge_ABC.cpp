@@ -22,8 +22,18 @@
 // Name: MIL_FloatingBridge_ABC constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_FloatingBridge_ABC::MIL_FloatingBridge_ABC( const MIL_RealObjectType& type )
-    : MIL_RealObject_ABC( type )
+MIL_FloatingBridge_ABC::MIL_FloatingBridge_ABC( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+    , pPathfindData_    ( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FloatingBridge_ABC constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_FloatingBridge_ABC::MIL_FloatingBridge_ABC()
+    : MIL_RealObject_ABC()
     , pPathfindData_    ( 0 )
 {
 }
@@ -46,9 +56,9 @@ MIL_FloatingBridge_ABC::~MIL_FloatingBridge_ABC()
 // Name: MIL_FloatingBridge_ABC::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_FloatingBridge_ABC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_FloatingBridge_ABC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
         return false;
 
 //    if( diaParameters.GetParameters().size() > nCurrentParamIdx )
@@ -63,9 +73,9 @@ bool MIL_FloatingBridge_ABC::Initialize( const MIL_Army& army, DIA_Parameters& d
 // Name: MIL_FloatingBridge_ABC::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_FloatingBridge_ABC::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_FloatingBridge_ABC::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
     LinkToPathFinder();
 }
 
@@ -73,9 +83,9 @@ void MIL_FloatingBridge_ABC::Initialize( uint nID, MIL_InputArchive& archive )
 // Name: MIL_FloatingBridge_ABC::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_FloatingBridge_ABC::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_FloatingBridge_ABC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
+    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
     LinkToPathFinder();
@@ -155,9 +165,9 @@ void MIL_FloatingBridge_ABC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 // Name: MIL_FloatingBridge_ABC::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
-bool MIL_FloatingBridge_ABC::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+bool MIL_FloatingBridge_ABC::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    if( MIL_RealObject_ABC::Initialize( strOption, strExtra, rCompletion, rMining, rBypass ) )
+    if( MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass ) )
     {
         LinkToPathFinder();
         return true;

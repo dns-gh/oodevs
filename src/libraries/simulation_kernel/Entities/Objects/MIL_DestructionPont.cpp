@@ -20,9 +20,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_DestructionPont, "MIL_DestructionPont" )
 // Name: MIL_DestructionPont constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_DestructionPont::MIL_DestructionPont()
-    : MIL_Obstacle( MIL_RealObjectType::destructionPont_ )
+MIL_DestructionPont::MIL_DestructionPont( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DestructionPont constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_DestructionPont::MIL_DestructionPont()
+    : MIL_Obstacle()
+{
+
 }
 
 //-----------------------------------------------------------------------------

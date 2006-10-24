@@ -22,11 +22,23 @@
 // Name: MIL_Object_ABC constructor
 // Created: NLD 2002-12-12
 //-----------------------------------------------------------------------------
+MIL_Object_ABC::MIL_Object_ABC( MIL_Army& army )
+    : pArmy_                ( &army )
+    , bMarkedForDestruction_( false )
+    , bReadyForDeletion_    ( false )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_Object_ABC::MIL_Object_ABC()
     : pArmy_                ( 0 )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
 {
+
 }
 
 //-----------------------------------------------------------------------------
@@ -47,10 +59,9 @@ MIL_Object_ABC::~MIL_Object_ABC()
 // Name: MIL_Object_ABC::Initialize
 // Created: NLD 2004-10-26
 // -----------------------------------------------------------------------------
-void MIL_Object_ABC::Initialize( const MIL_Army& army, const TER_Localisation& localisation )
+void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 {
     TER_Object_ABC::Initialize( localisation );    
-    pArmy_ = &army;
 
     // Notify the agent natively inside the object that they are inside it
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
@@ -60,7 +71,7 @@ void MIL_Object_ABC::Initialize( const MIL_Army& army, const TER_Localisation& l
 }
 
 // =============================================================================
-// CheckPoints
+// CHECKPOINTS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -70,7 +81,7 @@ void MIL_Object_ABC::Initialize( const MIL_Army& army, const TER_Localisation& l
 void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
     file >> boost::serialization::base_object< TER_Object_ABC >( *this );
-    file >> const_cast< MIL_Army*& >( pArmy_ )
+    file >> pArmy_
          >> bMarkedForDestruction_
          >> bReadyForDeletion_
          >> agentInsideSet_

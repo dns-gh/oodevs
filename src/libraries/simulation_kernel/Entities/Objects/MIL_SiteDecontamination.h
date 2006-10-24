@@ -27,6 +27,7 @@ class MIL_SiteDecontamination : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_SiteDecontamination );
 
 public:
+             MIL_SiteDecontamination( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_SiteDecontamination();
     virtual ~MIL_SiteDecontamination();
 
@@ -37,7 +38,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 
     //! @name Operations

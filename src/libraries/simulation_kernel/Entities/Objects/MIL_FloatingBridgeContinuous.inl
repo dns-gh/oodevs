@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_FloatingBridgeContinuous::Create()
+MIL_RealObject_ABC& MIL_FloatingBridgeContinuous::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_FloatingBridgeContinuous();
+    return *new MIL_FloatingBridgeContinuous( type, nID, army );
 }

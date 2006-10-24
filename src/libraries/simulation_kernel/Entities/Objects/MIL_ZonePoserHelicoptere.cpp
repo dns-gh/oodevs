@@ -21,8 +21,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZonePoserHelicoptere, "MIL_ZonePoserHelicoptere" )
 // Name: MIL_ZonePoserHelicoptere constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZonePoserHelicoptere::MIL_ZonePoserHelicoptere( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZonePoserHelicoptere constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZonePoserHelicoptere::MIL_ZonePoserHelicoptere()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zonePoserHelicoptere_ )
+    : MIL_RealObject_ABC()
 {
 }
 
@@ -39,6 +48,7 @@ MIL_ZonePoserHelicoptere::~MIL_ZonePoserHelicoptere()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZonePoserHelicoptere::serialize
 // Created: JVT 2005-04-14

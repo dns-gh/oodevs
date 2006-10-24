@@ -44,7 +44,6 @@ public:
 
 private:
     static int nDIASiteFranchissementIdx_;
-    static int nDIAOidObjetPlanifieIdx_;
     static int nDIAPointRegroupementIdx_;
     static int nDIATypePontageIdx_;
 

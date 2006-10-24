@@ -25,6 +25,7 @@ class MIL_DestructionRoute : public MIL_Obstacle
     MT_COPYNOTALLOWED( MIL_DestructionRoute );
 
 public:
+             MIL_DestructionRoute( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_DestructionRoute();
     virtual ~MIL_DestructionRoute();
 
@@ -35,7 +36,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 };
 

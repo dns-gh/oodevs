@@ -12,7 +12,7 @@
 #include "CampObjectAttribute.h"
 
 #include "Model.h"
-#include "Agent.h"
+#include "Automat.h"
 
 using namespace dispatcher;
 
@@ -26,9 +26,9 @@ CampObjectAttribute::CampObjectAttribute( const Model& model, const ASN1T_AttrOb
     , pTC2_              ( 0 )
 {
     if( asnMsg.t == T_AttrObjectSpecific_camp_prisonniers )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_prisonniers->tc2 );
+        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_prisonniers->tc2 );
     else if( asnMsg.t == T_AttrObjectSpecific_camp_refugies )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_refugies->tc2 );        
+        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_refugies->tc2 );        
 }
 
 // -----------------------------------------------------------------------------
@@ -47,9 +47,9 @@ CampObjectAttribute::~CampObjectAttribute()
 void CampObjectAttribute::Update( const ASN1T_AttrObjectSpecific& asnMsg )
 {
     if( asnMsg.t == T_AttrObjectSpecific_camp_prisonniers )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_prisonniers->tc2 );
+        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_prisonniers->tc2 );
     else if( asnMsg.t == T_AttrObjectSpecific_camp_refugies )
-        pTC2_ = &model_.GetAgents().Get( asnMsg.u.camp_refugies->tc2 );
+        pTC2_ = &model_.GetAutomats().Get( asnMsg.u.camp_refugies->tc2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ void CampObjectAttribute::AsnDelete( ASN1T_AttrObjectSpecific& asnMsg ) const
         case T_AttrObjectSpecific_camp_prisonniers: 
             delete asnMsg.u.camp_prisonniers;
             break;
-        case T_AttrObjectSpecific_camp_refugies   : 
+        case T_AttrObjectSpecific_camp_refugies: 
             delete asnMsg.u.camp_refugies;
             break;
         default:

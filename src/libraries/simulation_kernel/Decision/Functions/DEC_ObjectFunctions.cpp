@@ -59,7 +59,7 @@ void DEC_ObjectFunctions::GetRefugeeCampPosition( DIA_Call_ABC& call, MIL_Automa
 // -----------------------------------------------------------------------------
 void DEC_ObjectFunctions::CanObjectTypeBeBypassed( DIA_Call_ABC& call )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     if( pObjectType )
         call.GetResult().SetValue( pObjectType->CanBeBypassed() );
@@ -73,7 +73,7 @@ void DEC_ObjectFunctions::CanObjectTypeBeBypassed( DIA_Call_ABC& call )
 // -----------------------------------------------------------------------------
 void DEC_ObjectFunctions::CanObjectTypeBeMined( DIA_Call_ABC& call )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     if( pObjectType )
         call.GetResult().SetValue( pObjectType->CanBeMined() );
@@ -87,7 +87,7 @@ void DEC_ObjectFunctions::CanObjectTypeBeMined( DIA_Call_ABC& call )
 // -----------------------------------------------------------------------------
 void DEC_ObjectFunctions::CanObjectTypeBePrepared( DIA_Call_ABC& call )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     if( pObjectType )
         call.GetResult().SetValue( pObjectType->CanBePrepared() );

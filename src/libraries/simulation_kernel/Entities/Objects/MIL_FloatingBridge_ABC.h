@@ -26,19 +26,20 @@ class MIL_FloatingBridge_ABC : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_FloatingBridge_ABC );
 
 public:
-             MIL_FloatingBridge_ABC( const MIL_RealObjectType& type );
+             MIL_FloatingBridge_ABC( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
+             MIL_FloatingBridge_ABC();
     virtual ~MIL_FloatingBridge_ABC();
 
     //! @name Init
     //@{
-    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
-    virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
-    virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject );
+    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject );
     //@}
 
     //! @name HLA
     //@{
-    virtual bool Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
+    virtual bool Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     //@}
 
 protected:

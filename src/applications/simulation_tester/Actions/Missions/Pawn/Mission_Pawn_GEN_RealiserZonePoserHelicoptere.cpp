@@ -50,7 +50,6 @@ void Mission_Pawn_GEN_RealiserZonePoserHelicoptere::Serialize()
     const Position& zonePoser_ = pTarget_->GetTestParam_Point();
 
     ASN_Tools::CopyPoint( zonePoser_, asnMission.zone_poser );
-    ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
 
     delete &zonePoser_;
 

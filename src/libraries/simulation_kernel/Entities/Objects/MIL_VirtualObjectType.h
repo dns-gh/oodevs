@@ -40,7 +40,7 @@ public:
     static void Initialize( MIL_InputArchive& archive );
     static void Terminate ();
 
-    static const MIL_VirtualObjectType* FindObjectType( const std::string& strName );
+    static const MIL_VirtualObjectType* Find( const std::string& strName );
     //@}
 
     //! @name Accessors

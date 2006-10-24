@@ -14,9 +14,9 @@
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_CampRefugies::Create()
+MIL_RealObject_ABC& MIL_CampRefugies::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_CampRefugies();
+    return *new MIL_CampRefugies( type, nID, army );
 }
 
 // -----------------------------------------------------------------------------

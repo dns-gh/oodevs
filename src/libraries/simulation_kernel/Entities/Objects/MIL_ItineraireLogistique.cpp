@@ -26,13 +26,22 @@ BOOST_CLASS_EXPORT_GUID( MIL_ItineraireLogistique, "MIL_ItineraireLogistique" )
 // Name: MIL_ItineraireLogistique constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_ItineraireLogistique::MIL_ItineraireLogistique()
-    : MIL_RealObject_ABC( MIL_RealObjectType::itineraireLogistique_ )
+MIL_ItineraireLogistique::MIL_ItineraireLogistique( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
     , bEquipped_        ( false )
     , rWeightSupported_ ( 0. )
     , rWidth_           ( 0. )
     , rLength_          ( 0. )
     , rFlow_            ( 0. )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ItineraireLogistique constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_ItineraireLogistique::MIL_ItineraireLogistique()
+    : MIL_RealObject_ABC()
 {
 }
 
@@ -71,10 +80,15 @@ void MIL_ItineraireLogistique::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_ItineraireLogistique::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
-    archive.WriteField( "PoidsSupporte", rWeightSupported_ );
-    archive.WriteField( "Largeur"      , rWidth_           );
-    archive.WriteField( "Longueur"     , rLength_          );
-    archive.WriteField( "Debit"        , rFlow_            );
+    archive.Section( "specific-attributes" );
+
+    archive.WriteField( "max-weight", rWeightSupported_ );
+    archive.WriteField( "width"     , rWidth_           );
+    archive.WriteField( "length"    , rLength_          );
+    archive.WriteField( "flow"      , rFlow_            );
+    archive.WriteField( "equipped"  , bEquipped_        );
+
+    archive.EndSection(); // specific-attributes
 }
 
 // =============================================================================
@@ -102,9 +116,9 @@ bool MIL_ItineraireLogistique::TransformLocalisation()
 // Name: MIL_ItineraireLogistique::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_ItineraireLogistique::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ItineraireLogistique::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
+    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
     TransformLocalisation();
     return true;
 }
@@ -113,14 +127,17 @@ bool MIL_ItineraireLogistique::Initialize( const MIL_Army& army, DIA_Parameters&
 // Name: MIL_ItineraireLogistique::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_ItineraireLogistique::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_ItineraireLogistique::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );   
+    MIL_RealObject_ABC::Initialize( archive );   
 
-    archive.ReadField( "PoidsSupporte", rWeightSupported_, CheckValueGreater( 0. ) );
-    archive.ReadField( "Largeur"      , rWidth_          , CheckValueGreater( 0. ) );
-    archive.ReadField( "Longueur"     , rLength_         , CheckValueGreater( 0. ) );
-    archive.ReadField( "Debit"        , rFlow_           , CheckValueGreater( 0. ) );
+    archive.Section( "specific-attributes" );
+    archive.ReadField( "max-weight", rWeightSupported_, CheckValueGreater( 0. ) );
+    archive.ReadField( "width"     , rWidth_          , CheckValueGreater( 0. ) );
+    archive.ReadField( "length"    , rLength_         , CheckValueGreater( 0. ) );
+    archive.ReadField( "flow"      , rFlow_           , CheckValueGreater( 0. ) );
+    archive.ReadField( "equipped"  , bEquipped_        );
+    archive.EndSection(); // specific-attributes
 
     TransformLocalisation();
 }
@@ -129,9 +146,9 @@ void MIL_ItineraireLogistique::Initialize( uint nID, MIL_InputArchive& archive )
 // Name: MIL_ItineraireLogistique::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ItineraireLogistique::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_ItineraireLogistique::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
+    MIL_RealObject_ABC::Initialize( asnCreateObject );
     if( !TransformLocalisation() )
         return EnumObjectErrorCode::error_invalid_localisation;
 
@@ -206,9 +223,9 @@ void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&
 // Name: MIL_ItineraireLogistique::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
-bool MIL_ItineraireLogistique::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+bool MIL_ItineraireLogistique::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    MIL_RealObject_ABC::Initialize( strOption, strExtra, rCompletion, rMining, rBypass );
+    MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass );
     if( strOption == "equipped" )
         bEquipped_ = true;
     else

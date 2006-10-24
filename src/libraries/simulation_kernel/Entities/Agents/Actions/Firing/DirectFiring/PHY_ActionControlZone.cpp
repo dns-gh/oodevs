@@ -45,8 +45,9 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, DIA_Call_ABC&
     // Fire
     if( diaCall.GetParameter( 2 ).ToBool() )
     {
-        pZoneControlled_ = new MIL_ControlZone( pion.GetArmy(), *pLocalisation, rRadius );
-        MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( *pZoneControlled_ );
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectControlZone( pion.GetArmy(), *pLocalisation, rRadius );
+
+        pZoneControlled_ = &MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectControlZone( pion.GetArmy(), *pLocalisation, rRadius );
     }
 
     // Detection

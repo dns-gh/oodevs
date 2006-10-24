@@ -381,14 +381,12 @@ T_Localisation zone_;
 typedef struct T_Mission_Pion_GEN_RealiserFosseAC : T_Mission_Pion
 {
 T_Localisation posObstacle_;
-T_ID oidObstaclePlanifie_;
 id type_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserAbattisMine : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 id urgence_;
 id preliminaire_;
 };
@@ -396,41 +394,35 @@ id preliminaire_;
 typedef struct T_Mission_Pion_GEN_RealiserPointMine : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserBarricade : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 id urgence_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserEboulement : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 id preliminaire_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserBouchonMine : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 id urgence_;
 };
 
 typedef struct T_Mission_Pion_GEN_DetruireRoute : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 id preliminaire_;
 };
 
 typedef struct T_Mission_Pion_GEN_DetruirePont : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 id preliminaire_;
 };
 
@@ -472,7 +464,6 @@ T_ConnaissanceObjet obstacle_;
 typedef struct T_Mission_Pion_GEN_RealiserZoneMineeLineaire : T_Mission_Pion
 {
 T_Localisation posObstacle_;
-T_ID oidObstaclePlanifie_;
 float densite_;
 };
 
@@ -500,20 +491,17 @@ T_ConnaissanceObjet obstacle_;
 typedef struct T_Mission_Pion_GEN_RealiserZoneMineeParDispersion : T_Mission_Pion
 {
 T_Localisation posObstacle_;
-T_ID oidObstaclePlanifie_;
 float densite_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserPostesTir : T_Mission_Pion
 {
 T_Point posObjet_;
-T_ID oidObjetPlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserTravauxProtection : T_Mission_Pion
 {
 T_Point posObjet_;
-T_ID oidObjetPlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_RetablirItineraire : T_Mission_Pion
@@ -524,7 +512,6 @@ T_ListePoints itineraire_;
 typedef struct T_Mission_Pion_GEN_EquiperExploiter : T_Mission_Pion
 {
 T_ConnaissanceObjet siteFranchissement_;
-T_ID oidObjetPlanifie_;
 T_Point pointRegroupement_;
 id typePontage_;
 };
@@ -532,7 +519,6 @@ id typePontage_;
 typedef struct T_Mission_Pion_GEN_ExecuterVariantement : T_Mission_Pion
 {
 T_ConnaissanceObjet siteFranchissement_;
-T_ID oidObjetPlanifie_;
 T_Point pointRegroupement_;
 id typePontage_;
 };
@@ -560,19 +546,16 @@ T_Localisation zone_;
 typedef struct T_Mission_Pion_GEN_CreerPlateForme : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_CreerPiste : T_Mission_Pion
 {
 T_Localisation posObstacle_;
-T_ID oidObstaclePlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_CreerAirePoser : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_NeutraliserEnginsExplosifs : T_Mission_Pion
@@ -593,7 +576,6 @@ T_Localisation zone_;
 typedef struct T_Mission_Pion_GEN_RealiserAireLogistique : T_Mission_Pion
 {
 T_Point positionObstacle_;
-T_ID oidObstaclePlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_DepolluerZone : T_Mission_Pion
@@ -604,14 +586,12 @@ T_Localisation zone_;
 typedef struct T_Mission_Pion_GEN_AmenagerTerrainPoser : T_Mission_Pion
 {
 T_Point posObstacle_;
-T_ID oidObstaclePlanifie_;
 id typeObjet_;
 };
 
 typedef struct T_Mission_Pion_GEN_RealiserPlateFormeDeploiement : T_Mission_Pion
 {
 T_Point positionObstacle_;
-T_ID oidObstaclePlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_ReprendreMissionConstruction : T_Mission_Pion
@@ -622,7 +602,6 @@ T_ConnaissanceObjet travaux_;
 typedef struct T_Mission_Pion_GEN_RealiserZonePoserHelicoptere : T_Mission_Pion
 {
 T_Point zonePoser_;
-T_ID oidObstaclePlanifie_;
 };
 
 typedef struct T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU : T_Mission_Pion

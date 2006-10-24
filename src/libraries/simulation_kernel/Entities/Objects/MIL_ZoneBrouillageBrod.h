@@ -25,6 +25,7 @@ class MIL_ZoneBrouillageBrod : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_ZoneBrouillageBrod );
 
 public:
+             MIL_ZoneBrouillageBrod( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_ZoneBrouillageBrod();
     virtual ~MIL_ZoneBrouillageBrod();
 
@@ -35,7 +36,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 
 protected:

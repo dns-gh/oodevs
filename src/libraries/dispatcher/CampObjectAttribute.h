@@ -16,7 +16,7 @@
 namespace dispatcher
 {
     class Model;
-    class Agent;
+    class Automat;
 
 // =============================================================================
 /** @class  CampObjectAttribute
@@ -41,8 +41,8 @@ public:
     //@}
 
 private:
-    const Model& model_;
-    const Agent* pTC2_;
+    const Model&   model_;
+    const Automat* pTC2_;
 };
 
 }

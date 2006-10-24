@@ -168,7 +168,7 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
         std::string strType;
         archive.ReadAttribute( "type", strType );
 
-        const MIL_RealObjectType* pType = FindObjectType( strType );
+        const MIL_RealObjectType* pType = Find( strType );
         if( !pType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
 

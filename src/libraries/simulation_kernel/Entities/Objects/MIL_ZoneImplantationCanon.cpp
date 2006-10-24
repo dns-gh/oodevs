@@ -23,8 +23,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneImplantationCanon, "MIL_ZoneImplantationCanon" 
 // Name: MIL_ZoneImplantationCanon constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneImplantationCanon::MIL_ZoneImplantationCanon( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneImplantationCanon constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneImplantationCanon::MIL_ZoneImplantationCanon()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zoneImplantationCanon_ )
+    : MIL_RealObject_ABC()
 {
 }
 

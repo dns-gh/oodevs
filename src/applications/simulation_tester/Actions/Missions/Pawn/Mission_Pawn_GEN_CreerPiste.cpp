@@ -50,7 +50,6 @@ void Mission_Pawn_GEN_CreerPiste::Serialize()
     const Location& posObstacle_ = pTarget_->GetTestParam_Location();
 
     ASN_Tools::CopyLocation( posObstacle_, asnMission.pos_obstacle );
-    ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
 
     delete &posObstacle_;
 

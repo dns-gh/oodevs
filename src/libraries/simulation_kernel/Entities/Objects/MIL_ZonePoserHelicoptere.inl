@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_ZonePoserHelicoptere::Create()
+MIL_RealObject_ABC& MIL_ZonePoserHelicoptere::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_ZonePoserHelicoptere();
+    return *new MIL_ZonePoserHelicoptere( type, nID, army );
 }

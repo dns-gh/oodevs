@@ -21,7 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_RealiserBouchonMine::nDIAPosObstacleIdx_ = 0 ;
-int MIL_PionMission_GEN_RealiserBouchonMine::nDIAOidObstaclePlanifieIdx_ = 0 ;
 int MIL_PionMission_GEN_RealiserBouchonMine::nDIAUrgenceIdx_ = 0 ;
 
 
@@ -34,7 +33,6 @@ void MIL_PionMission_GEN_RealiserBouchonMine::InitializeDIA( const MIL_PionMissi
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPosObstacleIdx_ = DEC_Tools::InitializeDIAField( "posObstacle_", diaType );
-    nDIAOidObstaclePlanifieIdx_ = DEC_Tools::InitializeDIAField( "oidObstaclePlanifie_", diaType );
     nDIAUrgenceIdx_ = DEC_Tools::InitializeDIAField( "urgence_", diaType );
 
 }
@@ -74,8 +72,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserBouchonMine::Initialize( co
     const ASN1T_Mission_Pion_GEN_RealiserBouchonMine& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_bouchon_mine;
     if( !NET_ASN_Tools::CopyPoint( asnMission.pos_obstacle, GetVariable( nDIAPosObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.urgence, GetVariable( nDIAUrgenceIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
@@ -92,7 +88,7 @@ bool MIL_PionMission_GEN_RealiserBouchonMine::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
+        
     return true;    
 }
 
@@ -107,7 +103,6 @@ bool MIL_PionMission_GEN_RealiserBouchonMine::Initialize( MIL_PionMission_ABC& m
     MIL_PionMission_GEN_RealiserBouchonMine& mission = static_cast< MIL_PionMission_GEN_RealiserBouchonMine& >( missionTmp );
 
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObstacleIdx_ ), GetVariable( nDIAPosObstacleIdx_ ) );
-    NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIAUrgenceIdx_ ), GetVariable( nDIAUrgenceIdx_ ) );
 
     return true;
@@ -140,7 +135,6 @@ void MIL_PionMission_GEN_RealiserBouchonMine::Serialize( ASN1T_MsgPionOrder& asn
     asnMsg.mission.u.mission_pion_gen_realiser_bouchon_mine  = &asnMission;
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPosObstacleIdx_ ), asnMission.pos_obstacle );
-    NET_ASN_Tools::CopyID( GetVariable( nDIAOidObstaclePlanifieIdx_ ), asnMission.oid_obstacle_planifie );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIAUrgenceIdx_ ), asnMission.urgence );
 
 }

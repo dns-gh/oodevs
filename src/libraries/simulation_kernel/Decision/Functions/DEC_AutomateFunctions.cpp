@@ -302,7 +302,7 @@ void DEC_AutomateFunctions::CanPionConstructObject( DIA_Call_ABC& call, const MI
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
      
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 1 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
     assert( pObjectType );
 
     call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( *pObjectType ) );
@@ -321,7 +321,7 @@ void DEC_AutomateFunctions::CanPionBypassObject( DIA_Call_ABC& call, const MIL_A
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 1 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
     assert( pObjectType );
 
     call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( *pObjectType ) );
@@ -340,7 +340,7 @@ void DEC_AutomateFunctions::CanPionDestroyObject( DIA_Call_ABC& call, const MIL_
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 1 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
     assert( pObjectType );
      
     call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( *pObjectType ) );
@@ -359,7 +359,7 @@ void DEC_AutomateFunctions::CanPionMineObject( DIA_Call_ABC& call, const MIL_Aut
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 1 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
     assert( pObjectType );
      
     call.GetResult().SetValue( pObjectType && pPion->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( *pObjectType ) );
@@ -378,7 +378,7 @@ void DEC_AutomateFunctions::CanPionActivateObject( DIA_Call_ABC& call, const MIL
     assert( pPion );
     assert( IsPionInAutomate( callerAutomate, pPion->GetPion() ) );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 1 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 1 ).ToId() );
     assert( pObjectType );
 
     call.GetResult().SetValue( true );

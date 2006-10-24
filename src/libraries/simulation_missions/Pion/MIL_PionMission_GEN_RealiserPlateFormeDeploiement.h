@@ -44,7 +44,6 @@ public:
 
 private:
     static int nDIAPositionObstacleIdx_;
-    static int nDIAOidObstaclePlanifieIdx_;
 
 };
 

@@ -514,10 +514,6 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    archive.Section( "ODB" );
-
     assert( pEntityManager_ );
     pEntityManager_->WriteODB( archive );
-
-    archive.EndSection(); // ODB
 }

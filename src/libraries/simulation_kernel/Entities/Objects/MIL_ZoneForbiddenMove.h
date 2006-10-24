@@ -27,6 +27,7 @@ class MIL_ZoneForbiddenMove : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_ZoneForbiddenMove );
 
 public:
+             MIL_ZoneForbiddenMove( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_ZoneForbiddenMove();
     virtual ~MIL_ZoneForbiddenMove();
  
@@ -37,7 +38,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 
 private:

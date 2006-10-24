@@ -21,8 +21,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneMineeLineaire, "MIL_ZoneMineeLineaire" )
 // Name: MIL_ZoneMineeLineaire constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneMineeLineaire::MIL_ZoneMineeLineaire( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneMineeLineaire constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneMineeLineaire::MIL_ZoneMineeLineaire()
-    : MIL_Obstacle( MIL_RealObjectType::zoneMineeLineaire_ )
+    : MIL_Obstacle()
 {
 }
 
@@ -38,6 +47,7 @@ MIL_ZoneMineeLineaire::~MIL_ZoneMineeLineaire()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneMineeLineaire::serialize
 // Created: JVT 2005-04-14
@@ -56,9 +66,9 @@ void MIL_ZoneMineeLineaire::serialize( Archive& file, const uint )
 // Name: MIL_ZoneMineeLineaire::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool MIL_ZoneMineeLineaire::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneMineeLineaire::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
         return false;
 
     rSizeCoef_                          = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
@@ -70,9 +80,9 @@ bool MIL_ZoneMineeLineaire::Initialize( const MIL_Army& army, DIA_Parameters& di
 // Name: MIL_ZoneMineeLineaire::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-void MIL_ZoneMineeLineaire::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_ZoneMineeLineaire::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
     rSizeCoef_                       = MIL_Tools::ConvertSimToMeter(  GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_ = (uint)rSizeCoef_;                                                              
 }
@@ -81,9 +91,9 @@ void MIL_ZoneMineeLineaire::Initialize( uint nID, MIL_InputArchive& archive )
 // Name: MIL_ZoneMineeLineaire::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ZoneMineeLineaire::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asn )
+ASN1T_EnumObjectErrorCode MIL_ZoneMineeLineaire::Initialize( const ASN1T_MagicActionCreateObject& asn )
 {
-    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( nID, asn );
+    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asn );
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 

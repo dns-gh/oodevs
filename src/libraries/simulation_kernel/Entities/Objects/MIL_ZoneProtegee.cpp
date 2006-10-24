@@ -22,8 +22,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneProtegee, "MIL_ZoneProtegee" )
 // Name: MIL_ZoneProtegee constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneProtegee::MIL_ZoneProtegee( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneProtegee constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneProtegee::MIL_ZoneProtegee()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zoneProtegee_ )
+    : MIL_RealObject_ABC()
 {
 }
 
@@ -40,6 +49,7 @@ MIL_ZoneProtegee::~MIL_ZoneProtegee()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneProtegee::serialize
 // Created: JVT 2005-04-14

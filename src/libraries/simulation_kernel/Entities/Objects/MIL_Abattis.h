@@ -25,6 +25,7 @@ class MIL_Abattis : public MIL_Obstacle
     MT_COPYNOTALLOWED( MIL_Abattis );
 
 public:
+             MIL_Abattis( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_Abattis();
     virtual ~MIL_Abattis();
     
@@ -35,9 +36,9 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
 
-    virtual bool Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual bool Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     //@}
 };
 

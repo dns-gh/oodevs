@@ -269,7 +269,7 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         {
             DEC_DecontaminerZone( mission.forme_ );            
        
-            //currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, gNullID, mission.forme_, mission.param_, false );           
+            //currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, mission.forme_, mission.param_, false );           
             radar         = DEC_Perception_ActiverRadarSurLocalisation( eRadarType_Radar, mission.forme_ );
         }
         

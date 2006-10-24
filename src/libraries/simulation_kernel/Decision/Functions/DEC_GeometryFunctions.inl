@@ -235,7 +235,7 @@ void DEC_GeometryFunctions::ComputeObstaclePosition( DIA_Call_ABC& call, const T
 
     assert( pCenter );
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
 
     MT_Vector2D* pResultPos = new MT_Vector2D();

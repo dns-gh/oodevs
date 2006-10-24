@@ -20,8 +20,16 @@ BOOST_CLASS_EXPORT_GUID( MIL_FloatingBridgeContinuous, "MIL_FloatingBridgeContin
 // Name: MIL_FloatingBridgeContinuous constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_FloatingBridgeContinuous::MIL_FloatingBridgeContinuous( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_FloatingBridge_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FloatingBridgeContinuous constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_FloatingBridgeContinuous::MIL_FloatingBridgeContinuous()
-    : MIL_FloatingBridge_ABC( MIL_RealObjectType::pontFlottantContinu_ )
 {
 }
 

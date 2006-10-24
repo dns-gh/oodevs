@@ -164,8 +164,9 @@ void ClientsNetworker::OnReceiveMsgOutClient( DIN::DIN_Link& linkFrom, DIN::DIN_
         AsnMessageDecoder< ASN1T_MsgsOutClient, ASN1C_MsgsOutClient > asnDecoder( input );
         Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
     }
-    catch( std::runtime_error& /*exception*/ )
+    catch( std::runtime_error& exception )
     {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
     }
 }
 
@@ -185,8 +186,9 @@ void ClientsNetworker::Dispatch( const ASN1T_MsgsInClient& asnMsg )
         for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
             (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
     }
-    catch( std::runtime_error& /*exception*/ )
+    catch( std::runtime_error& exception )
     {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
     }
 }
 

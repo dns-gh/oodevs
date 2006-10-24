@@ -20,9 +20,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_Abattis, "MIL_Abattis" )
 // Name: MIL_Abattis constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_Abattis::MIL_Abattis()
-    : MIL_Obstacle( MIL_RealObjectType::abattis_ )
+MIL_Abattis::MIL_Abattis( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
 {    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Abattis constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_Abattis::MIL_Abattis()
+    : MIL_Obstacle()
+{
+
 }
 
 //-----------------------------------------------------------------------------
@@ -57,9 +67,9 @@ void MIL_Abattis::serialize( Archive& file, const uint )
 // Name: MIL_Abattis::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_Abattis::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_Abattis::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
         return false;
 
     rSizeCoef_  = diaParameters[ nCurrentParamIdx ].ToFloat();  // Lengths

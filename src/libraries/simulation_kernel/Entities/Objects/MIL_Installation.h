@@ -27,6 +27,7 @@ class MIL_Installation : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_Installation );
 
 public:
+             MIL_Installation( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_Installation();
     virtual ~MIL_Installation();
  
@@ -37,7 +38,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 };
 

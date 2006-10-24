@@ -72,14 +72,14 @@ signatures
     // Objets
     U /*T_Action*/                          A::DEC_StartReprendreTravauxObjet     ( I /*E_EtatActionObjet*/, U /*T_ConnaissanceObjet*/ );
     U /*T_Action*/                          A::DEC_StartOccuperObjet              ( U /*T_ConnaissanceObjet*/ );
-    U /*T_Action*/                          A::DEC_StartCreerObjet                ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
-    U /*T_Action*/                          A::DEC_StartPreparerObjet             ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
+    U /*T_Action*/                          A::DEC_StartCreerObjet                ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U/*localisation*/, * );
+    U /*T_Action*/                          A::DEC_StartPreparerObjet             ( I /*E_EtatActionObjet*/, U /*Object rep construit*/, I /*Objet type*/, U/*localisation*/, * );
     U /*T_Action*/                          A::DEC_StartDetruireObjet             ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
     U /*T_Action*/                          A::DEC_StartCreerContournementObjet   ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
     U /*T_Action*/                          A::DEC_StartValoriserObjet            ( I /*E_EtatActionObjet*/, U /*connaissance objet*/ );
     U /*T_Action*/                          A::DEC_StartAnimerObjet               ( U /*connaissance objet*/ );
     B                                       A::DEC_ActiverObjet                   ( U /*connaissance objet*/ );
-    V                                       A::DEC_CreerObjetSansDelais           ( I /*Objet type*/, U /*T_ID : ID MOS*/, U/*localisation*/, * );
+    V                                       A::DEC_CreerObjetSansDelais           ( I /*Objet type*/, U/*localisation*/, * );
     V                                       A::DEC_DetruireObjetSansDelais        ( U /*T_ConnaissanceObjet*/ ); 
                                             
     // Déplacement                          
@@ -308,6 +308,7 @@ signatures
     U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionSureteAvecObjectif        ( U /*T_ConnaissanceAgent*/, R /*distance min*/, U /*T_Point objectif*/, I /*E_ValiditeRequete&*/ );
     U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionObstacle                  ( I /*E_ObjectType*/, U /*vCircleCenter*/, R /*rayon*/ );    
     B                                       A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
+    B                                       A::DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisation                       ( U /*T_Localisation*/, R /*nbr part*/, I /*E_LocalisationFunctionsReturnCode*/ );
     S /*T_ListeLocalisations*/              A::DEC_Geometrie_DecoupeLocalisationSurface                ( U /*T_Localisation*/, R /*surface moyenne en m2*/, I /*E_LocalisationFunctionsReturnCode*/ );
     S /*T_LIsteLocalisations*/              A::DEC_Geometrie_DecoupeFuseauEnTroncons                   ( R /*profondeur des segments en m*/ );
@@ -356,4 +357,3 @@ signatures
     V                                       A::DEC_Trace             ( X );
 }
 
-T_ID gNullID = 0;

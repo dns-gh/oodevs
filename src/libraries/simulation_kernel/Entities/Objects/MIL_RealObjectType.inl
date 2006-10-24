@@ -31,11 +31,11 @@ const MIL_RealObjectType::T_ObjectTypeMap& MIL_RealObjectType::GetObjectTypes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::FindObjectType
+// Name: MIL_RealObjectType::Find
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObjectType* MIL_RealObjectType::FindObjectType( const std::string& strName )
+const MIL_RealObjectType* MIL_RealObjectType::Find( const std::string& strName )
 {
     for( CIT_ObjectTypeMap it = objectTypes_.begin(); it != objectTypes_.end(); ++it )
         if( sCaseInsensitiveEqual()( it->second->GetName(), strName ) )
@@ -44,11 +44,11 @@ const MIL_RealObjectType* MIL_RealObjectType::FindObjectType( const std::string&
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::FindObjectType
+// Name: MIL_RealObjectType::Find
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObjectType* MIL_RealObjectType::FindObjectType( ASN1T_EnumObjectType nAsnID )
+const MIL_RealObjectType* MIL_RealObjectType::Find( ASN1T_EnumObjectType nAsnID )
 {
     for( CIT_ObjectTypeMap it = objectTypes_.begin(); it != objectTypes_.end(); ++it )
         if( it->second->GetAsnID() == nAsnID )
@@ -57,13 +57,13 @@ const MIL_RealObjectType* MIL_RealObjectType::FindObjectType( ASN1T_EnumObjectTy
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::FindObjectType
+// Name: MIL_RealObjectType::Find
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObjectType* MIL_RealObjectType::FindObjectType( uint nDiaID )
+const MIL_RealObjectType* MIL_RealObjectType::Find( uint nID )
 {
-    CIT_ObjectTypeMap it = objectTypes_.find( nDiaID );
+    CIT_ObjectTypeMap it = objectTypes_.find( nID );
     if( it == objectTypes_.end() )
         return 0;
     return it->second;
@@ -245,9 +245,9 @@ uint MIL_RealObjectType::GetNbrDotationForMining() const
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_RealObjectType::InstanciateObject() const
+MIL_RealObject_ABC& MIL_RealObjectType::InstanciateObject( uint nID, MIL_Army& army ) const
 {
-    return objectInstanciator_();
+    return objectInstanciator_( *this, nID, army );
 }
 
 // -----------------------------------------------------------------------------

@@ -61,7 +61,6 @@ private:
     const std::string          strName_;
           Localisation         localisation_;
           Side&                side_;
-    const unsigned long        nPlannedID_; // $$$ Bullshit !
     const unsigned int         nTypeDotationForConstruction_; // XML reference - no resolved by dispatcher
     const unsigned int         nTypeDotationForMining_; // XML reference - no resolved by dispatcher
 

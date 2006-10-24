@@ -274,6 +274,7 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
+    /*
     archive.Section( "Equipements" );
 
     for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
@@ -294,7 +295,7 @@ void PHY_RolePion_Composantes::WriteODB( MT_XXmlOutputArchive& archive ) const
         archive.EndSection(); // Equipement
     }
 
-    archive.EndSection(); // Equipements
+    archive.EndSection(); // Equipements*/
 }
 
 

@@ -322,7 +322,6 @@ void MIL_EntityManager::ReadODB( MIL_InputArchive& archive )
 
     InitializeArmies     ( archive );
     InitializeDiplomacy  ( archive );
-    pObjectManager_->ReadODB( archive );    
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
@@ -496,40 +495,70 @@ MIL_Army* MIL_EntityManager::FindArmy( const std::string& strName ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::RegisterObject
-// Created: NLD 2004-10-27
+// Name: MIL_EntityManager::CreateObject
+// Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::RegisterObject( MIL_VirtualObject_ABC& object )
+MIL_RealObject_ABC& MIL_EntityManager::CreateObject( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
 {
     assert( pObjectManager_ );
-    pObjectManager_->RegisterObject( object );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::RegisterObject
-// Created: NLD 2004-11-02
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::RegisterObject( MIL_RealObject_ABC& object )
-{
-    assert( pObjectManager_ );
-    pObjectManager_->RegisterObject( object );
+    return pObjectManager_->CreateObject( type, nID, army, archive );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateObject
-// Created: NLD 2004-09-15
+// Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_EntityManager::CreateObject( const MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_RealObject_ABC* MIL_EntityManager::CreateObject( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
 {
     assert( pObjectManager_ );
     return pObjectManager_->CreateObject( army, diaParameters, nCurrentParamIdx );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::FindObject
-// Created: NLD 2005-03-04
+// Name: MIL_EntityManager::CreateObject
+// Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_EntityManager::FindRealObject( uint nID ) const
+MIL_RealObject_ABC* MIL_EntityManager::CreateObject( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+{
+    assert( pObjectManager_ );
+    return pObjectManager_->CreateObject( type, army, localisation, strOption, strExtra, rCompletion, rMining, rBypass );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateObjectNuageNBC
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_NuageNBC& MIL_EntityManager::CreateObjectNuageNBC( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType )
+{
+    assert( pObjectManager_ );
+    return pObjectManager_->CreateObjectNuageNBC( army, localisation, nbcAgentType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateObjectZoneeMineeParDispersion
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_ZoneMineeParDispersion& MIL_EntityManager::CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines )
+{
+    assert( pObjectManager_ );
+    return pObjectManager_->CreateObjectZoneeMineeParDispersion( army, localisation, nNbrMines );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateObjectControlZone
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_ControlZone& MIL_EntityManager::CreateObjectControlZone( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius )
+{
+    assert( pObjectManager_ );
+    return pObjectManager_->CreateObjectControlZone( army, localisation, rRadius );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindObject
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_RealObject_ABC* MIL_EntityManager::FindObject( uint nID ) const
 {
     assert( pObjectManager_ );
     return pObjectManager_->FindRealObject( nID );
@@ -743,10 +772,6 @@ void MIL_EntityManager::SendStateToNewClient() const
 
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
         itArmy->second->SendFullState();
-
-    //$$$ à déplacer
-    assert( pObjectManager_ );
-    pObjectManager_->SendStateToNewClient(); 
 
     // Knowledge
     for( CIT_ArmyMap itArmy = armies_.begin(); itArmy != armies_.end(); ++itArmy )
@@ -1113,7 +1138,9 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::WriteODB( MT_XXmlOutputArchive& archive ) const
-{
+{    
+    archive.Section( "orbat" );
+
     archive.Section( "sides" );
     for( CIT_ArmyMap it = armies_.begin(); it != armies_.end(); ++it )
         it->second->WriteODB( archive );
@@ -1124,6 +1151,5 @@ void MIL_EntityManager::WriteODB( MT_XXmlOutputArchive& archive ) const
         it->second->WriteDiplomacyODB( archive );
     archive.EndSection(); // diplomacies
 
-    assert( pObjectManager_ );
-    pObjectManager_->WriteODB( archive );
+    archive.EndSection(); // orbat
 }

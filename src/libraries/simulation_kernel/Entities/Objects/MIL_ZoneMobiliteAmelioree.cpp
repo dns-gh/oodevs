@@ -20,8 +20,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneMobiliteAmelioree, "MIL_ZoneMobiliteAmelioree" 
 // Name: MIL_ZoneMobiliteAmelioree constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneMobiliteAmelioree::MIL_ZoneMobiliteAmelioree( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneMobiliteAmelioree constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneMobiliteAmelioree::MIL_ZoneMobiliteAmelioree()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zoneMobiliteAmelioree_ )
+    : MIL_RealObject_ABC()
 {
 }
 

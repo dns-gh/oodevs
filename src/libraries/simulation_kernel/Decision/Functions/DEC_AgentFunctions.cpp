@@ -286,7 +286,7 @@ void DEC_AgentFunctions::GetDirection( DIA_Call_ABC& call, const MIL_AgentPion& 
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanConstructObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     if( pObjectType )
         call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( *pObjectType ) );
@@ -300,7 +300,7 @@ void DEC_AgentFunctions::CanConstructObject( DIA_Call_ABC& call, const MIL_Agent
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanBypassObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     if( pObjectType )
         call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( *pObjectType ) );
@@ -314,7 +314,7 @@ void DEC_AgentFunctions::CanBypassObject( DIA_Call_ABC& call, const MIL_AgentPio
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanDestroyObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     if( pObjectType )
         call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( *pObjectType ) );
@@ -328,7 +328,7 @@ void DEC_AgentFunctions::CanDestroyObject( DIA_Call_ABC& call, const MIL_AgentPi
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanMineObject( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
         if( pObjectType )
         call.GetResult().SetValue( callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( *pObjectType ) );
@@ -342,7 +342,7 @@ void DEC_AgentFunctions::CanMineObject( DIA_Call_ABC& call, const MIL_AgentPion&
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::CanActivateObject( DIA_Call_ABC& call, const MIL_AgentPion& /*callerAgent*/ )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( call.GetParameter( 0 ).ToId() );
+    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( call.GetParameter( 0 ).ToId() );
     assert( pObjectType );
     call.GetResult().SetValue( true );
 }

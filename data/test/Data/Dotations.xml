@@ -4,7 +4,6 @@
   <Dotation nom="munition">
     <Categories>
       <Categorie nom="Balle Classique 12,7">
-        <TrancheD/>
         <MosID>1</MosID>
         <Type>Mitraille</Type>
         <Conditionnement>
@@ -328,6 +327,7 @@
         </TirIndirect>
       </Categorie>
       <Categorie nom="Obus eclairant">
+        <TrancheD/>
         <MosID>6</MosID>
         <Type>Obus</Type>
         <Conditionnement>
@@ -349,6 +349,7 @@
         </TirIndirect>
       </Categorie>
       <Categorie nom="Obus mine">
+        <TrancheD/>
         <MosID>7</MosID>
         <Type>Obus</Type>
         <Conditionnement>

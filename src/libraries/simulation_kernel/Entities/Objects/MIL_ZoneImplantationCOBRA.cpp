@@ -23,8 +23,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneImplantationCOBRA, "MIL_ZoneImplantationCOBRA" 
 // Name: MIL_ZoneImplantationCOBRA constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneImplantationCOBRA::MIL_ZoneImplantationCOBRA( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneImplantationCOBRA constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneImplantationCOBRA::MIL_ZoneImplantationCOBRA()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zoneImplantationCOBRA_ )
+    : MIL_RealObject_ABC()
 {
 }
 

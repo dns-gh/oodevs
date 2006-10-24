@@ -47,8 +47,9 @@ MT_Random MIL_RealObject_ABC::random_;
 // Name: MIL_RealObject_ABC constructor
 // Created: NLD 2002-12-12
 //-----------------------------------------------------------------------------
-MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type )
-    : pType_                             ( &type )
+MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Object_ABC                     ( army )
+    , pType_                             ( &type )
     , rSizeCoef_                         ( 0. ) 
     , nFullNbrDotationForConstruction_   ( type.GetNbrDotationForConstruction() ) 
     , nFullNbrDotationForMining_         ( type.GetNbrDotationForMining      () )
@@ -56,9 +57,8 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type )
     , nCurrentNbrDotationForMining_      ( 0 )
     , xAttrToUpdate_                     ( eAttrUpdate_All )
     , xAttrToUpdateForHLA_               ( eAttrUpdate_All )
-    , nID_                               ( 0 )
-    , nMosPlannedID_                     ( (uint)-1 )
-    , strName_                           ()
+    , nID_                               ( nID )
+    , strName_                           ( type.GetName() )
     , rConstructionPercentage_           ( 0. )
     , rMiningPercentage_                 ( 0. )
     , rBypassPercentage_                 ( 0. )
@@ -72,6 +72,7 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type )
     , pView_                             ( 0 )
     , rExitingPopulationDensity_         ( type.GetExitingPopulationDensity() )
 {
+    GetArmy().RegisterObject( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -79,7 +80,8 @@ MIL_RealObject_ABC::MIL_RealObject_ABC( const MIL_RealObjectType& type )
 // Created: NLD 2002-12-12
 //-----------------------------------------------------------------------------
 MIL_RealObject_ABC::MIL_RealObject_ABC()
-    : pType_                             ( 0 )
+    : MIL_Object_ABC                     ()
+    , pType_                             ( 0 )
     , rSizeCoef_                         ( 0. ) 
     , nFullNbrDotationForConstruction_   ( 0 )
     , nFullNbrDotationForMining_         ( 0 )
@@ -88,7 +90,6 @@ MIL_RealObject_ABC::MIL_RealObject_ABC()
     , xAttrToUpdate_                     ( eAttrUpdate_All )
     , xAttrToUpdateForHLA_               ( eAttrUpdate_All )
     , nID_                               ( 0 )
-    , nMosPlannedID_                     ( (uint)-1 )
     , strName_                           ()
     , rConstructionPercentage_           ( 0. )
     , rMiningPercentage_                 ( 0. )
@@ -113,6 +114,11 @@ MIL_RealObject_ABC::~MIL_RealObject_ABC()
 {
     delete pView_;
 
+    if( pPathfindData_ )
+        TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
+
+    GetArmy().UnregisterObject( *this );
+
     if( nID_ == 0 )
         return;
 
@@ -121,9 +127,6 @@ MIL_RealObject_ABC::~MIL_RealObject_ABC()
     MIL_MOSIDManager& idManager = pType_->GetIDManager();
     if( idManager.IsMosIDValid( nID_ ) )
         idManager.ReleaseMosID( nID_ );
-
-    if( pPathfindData_ )
-        TER_PathFindManager::GetPathFindManager().RemoveDynamicData( *pPathfindData_ );
 }
 
 
@@ -137,8 +140,6 @@ MIL_RealObject_ABC::~MIL_RealObject_ABC()
 // -----------------------------------------------------------------------------
 void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
 {
-    assert( pType_ );
-
     file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
     file >> rSizeCoef_
          >> nFullNbrDotationForConstruction_
@@ -147,9 +148,14 @@ void MIL_RealObject_ABC::load( MIL_CheckPointInArchive& file, const uint )
          >> nCurrentNbrDotationForMining_
          >> xAttrToUpdate_
          >> xAttrToUpdateForHLA_
-         >> nID_
-         >> nMosPlannedID_
-         >> strName_
+         >> nID_;
+
+    uint nTypeID;
+    file >> nTypeID;
+    pType_ = MIL_RealObjectType::Find( nTypeID );
+    assert( pType_ );
+
+    file >> strName_
          >> rConstructionPercentage_
          >> rMiningPercentage_
          >> rBypassPercentage_
@@ -184,7 +190,7 @@ void MIL_RealObject_ABC::save( MIL_CheckPointOutArchive& file, const uint ) cons
          << xAttrToUpdate_
          << xAttrToUpdateForHLA_
          << nID_
-         << nMosPlannedID_
+         << pType_->GetID()
          << strName_
          << rConstructionPercentage_
          << rMiningPercentage_
@@ -210,19 +216,16 @@ void MIL_RealObject_ABC::WriteODB( MT_XXmlOutputArchive& archive ) const
     if( *pType_ == MIL_RealObjectType::nuageNBC_ )
         return;
 
-    archive.Section( "Objet" );
+    archive.Section( "object" );
 
     archive.WriteAttribute( "id"   , nID_ );
     archive.WriteAttribute( "type" , pType_  ->GetName() );
-    archive.WriteField    ( "Armee", GetArmy().GetName() );
 
-    archive.Section( "Forme" );
     GetLocalisation().Write( archive );
-    archive.EndSection(); // Forme
 
     WriteSpecificAttributes( archive );
 
-    archive.EndSection(); // Objet
+    archive.EndSection(); // object
 }
 
 
@@ -259,49 +262,43 @@ void MIL_RealObject_ABC::InitializeAvoidanceLocalisation()
 // Name: MIL_RealObject_ABC::InitializeCommon
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::InitializeCommon( const MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID )
+void MIL_RealObject_ABC::InitializeCommon( const TER_Localisation& localisation )
 {
-    assert( pType_ );
-
-    MIL_Object_ABC::Initialize( army, localisation );
-
-    nCurrentNbrDotationForConstruction_ = 0;
-    nCurrentNbrDotationForMining_       = 0;
-    nMosPlannedID_                      = nMosPlannedID;
-    nID_                                = nID;
-    strName_                            = strName;
-
-    if( strName_.empty() )
-        strName_ = pType_->GetName();
-
+    MIL_Object_ABC::Initialize( localisation );
     InitializeAvoidanceLocalisation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::Initialize
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::Initialize( MIL_InputArchive& archive )
+{
+    std::string strName;
+    archive.ReadField( "name", strName_, MIL_InputArchive::eNothing );
+    
+    TER_Localisation localisation;
+    localisation.Read( archive );
+
+    InitializeCommon( localisation );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObject_ABC::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
     assert( pType_ );
     
-    if ( !pType_->GetIDManager().IsMosIDValid( nID ) || !pType_->GetIDManager().LockMosID( nID ) )
-        return EnumObjectErrorCode::error_invalid_id;
-
-    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnCreateObject.oid_camp );
-    if( !pArmy )
-        return EnumObjectErrorCode::error_invalid_camp;
-
     TER_Localisation localisation; 
     if( !NET_ASN_Tools::ReadLocation( asnCreateObject.localisation, localisation ) )
         return EnumObjectErrorCode::error_invalid_localisation;
 
-    std::string strName;
     if( asnCreateObject.m.nomPresent ) 
-        strName = asnCreateObject.nom;
+        strName_ = asnCreateObject.nom;
 
-    InitializeCommon( *pArmy, localisation, nID, strName );
-
+    InitializeCommon( localisation );
     return EnumObjectErrorCode::no_error;
 }
 
@@ -309,62 +306,31 @@ ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( uint nID, const ASN1T_
 // Name: MIL_RealObject_ABC::Initialize
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool MIL_RealObject_ABC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_RealObject_ABC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    assert( DEC_Tools::CheckTypeID          ( diaParameters[ nCurrentParamIdx     ] ) );
-    assert( DEC_Tools::CheckTypeLocalisation( diaParameters[ nCurrentParamIdx + 1 ] ) );
+    assert( DEC_Tools::CheckTypeLocalisation( diaParameters[ nCurrentParamIdx ] ) );
 
-          uint              nMosPlannedID = (uint)diaParameters[ nCurrentParamIdx++ ].ToPtr();
-    const TER_Localisation* pLocalisation =       diaParameters[ nCurrentParamIdx++ ].ToUserPtr( pLocalisation );
+    const TER_Localisation* pLocalisation = diaParameters[ nCurrentParamIdx++ ].ToUserPtr( pLocalisation );
     assert( pLocalisation );
-
-    assert( pType_ );
-    InitializeCommon( army, *pLocalisation, pType_->GetIDManager().GetFreeSimID(), "", nMosPlannedID );
+    InitializeCommon( *pLocalisation );
     return true;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::Initialize
-// Created: NLD 2003-07-21
-//-----------------------------------------------------------------------------
-void MIL_RealObject_ABC::Initialize( uint nID, MIL_InputArchive& archive )
-{
-    assert( pType_ );
-    
-    if( pType_->GetIDManager().IsMosIDValid( nID_ ) )
-    {
-        if( !pType_->GetIDManager().LockMosID( nID_ ) )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already used", archive.GetContext() );
-    }
-
-    // Armee
-    uint nArmy;
-    archive.ReadField( "Armee", nArmy );
-    const MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( nArmy );
-    if( pArmy == 0 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown army", archive.GetContext() );
-
-    // Localisation
-    archive.Section( "Forme" );
-    TER_Localisation localisation;
-    localisation.Read( archive );
-    archive.EndSection(); // Forme
-
-    // Nom
-    std::string strName;
-    archive.ReadField( "nom", strName, MIL_InputArchive::eNothing );
-
-    InitializeCommon( *pArmy, localisation, nID, strName );
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_RealObject_ABC::Initialize
-// Created: NLD 2004-10-13
+// Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::Initialize( const MIL_Army& army, const TER_Localisation& localisation )
+bool MIL_RealObject_ABC::Initialize( const TER_Localisation& localisation, const std::string& /*strOption*/, const std::string& /*strExtra*/, double rCompletion, double rMining, double rBypass )
 {
-    assert( pType_ );
-    InitializeCommon( army, localisation, pType_->GetIDManager().GetFreeSimID(), "" );
+    InitializeCommon( localisation );
+    bPrepared_ = rCompletion > 100;
+    if( bPrepared_ )
+        rCompletion -= 100;
+    ChangeConstructionPercentage( rCompletion );
+    ChangeMiningPercentage      ( rMining );
+    rBypassPercentage_ = rBypass; //$$$ POURRI
+    NotifyAttributeUpdated( eAttrUpdate_BypassPercentage );
+    return true;
 }
 
 //=============================================================================
@@ -372,10 +338,10 @@ void MIL_RealObject_ABC::Initialize( const MIL_Army& army, const TER_Localisatio
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::SendMsgConstruction
+// Name: MIL_RealObject_ABC::SendCreation
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
-void MIL_RealObject_ABC::SendMsgConstruction()
+void MIL_RealObject_ABC::SendCreation()
 {
     if( pView_ && pView_->HideObject() )
         return;
@@ -403,14 +369,6 @@ void MIL_RealObject_ABC::SendMsgConstruction()
         asnMsg.GetAsnMsg().type_dotation_valorisation          = pType_->GetDotationCategoryForMining()->GetMosID();
     }
 
-    if( nMosPlannedID_ != (uint)-1 )
-    {
-        asnMsg.GetAsnMsg().m.oid_objet_planifiePresent = 1;
-        asnMsg.GetAsnMsg().oid_objet_planifie          = nMosPlannedID_;
-    }
-    else
-        asnMsg.GetAsnMsg().m.oid_objet_planifiePresent = 0;  
-
     asnMsg.GetAsnMsg().m.attributs_specifiquesPresent = 0;
     WriteSpecificAttributes( asnMsg );
     
@@ -421,16 +379,26 @@ void MIL_RealObject_ABC::SendMsgConstruction()
 
 
 //-----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::SendMsgDestruction
+// Name: MIL_RealObject_ABC::SendDestruction
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
-void MIL_RealObject_ABC::SendMsgDestruction()
+void MIL_RealObject_ABC::SendDestruction()
 {
     if( pView_ && pView_->HideObject() )
         return;
     NET_ASN_MsgObjectDestruction asnMsg;
     asnMsg.GetAsnMsg() = nID_;
     asnMsg.Send();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealObject_ABC::SendFullState
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+void MIL_RealObject_ABC::SendFullState()
+{
+    NotifyAttributeUpdated( eAttrUpdate_All );
+    SendMsgUpdate();
 }
 
 //-----------------------------------------------------------------------------
@@ -529,17 +497,6 @@ void MIL_RealObject_ABC::SendMsgUpdate()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::SendStateToNewClient
-// Created: NLD 2004-04-29
-// -----------------------------------------------------------------------------
-void MIL_RealObject_ABC::SendStateToNewClient()
-{
-    SendMsgConstruction();
-    NotifyAttributeUpdated( eAttrUpdate_All );
-    SendMsgUpdate();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_RealObject_ABC::OnReceiveMagicActionUpdate
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
@@ -589,22 +546,6 @@ void MIL_RealObject_ABC::SetHLAView( HLA_Object_ABC& view )
 {
     delete pView_;
     pView_ = &view;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_RealObject_ABC::Initialize
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-bool MIL_RealObject_ABC::Initialize( const std::string&, const std::string&, double rCompletion, double rMining, double rBypass )
-{
-    bPrepared_ = rCompletion > 100;
-    if( bPrepared_ )
-        rCompletion -= 100;
-    ChangeConstructionPercentage( rCompletion );
-    ChangeMiningPercentage      ( rMining );
-    rBypassPercentage_ = rBypass; //$$$ POURRI
-    NotifyAttributeUpdated( eAttrUpdate_BypassPercentage );
-    return true;
 }
 
 // -----------------------------------------------------------------------------

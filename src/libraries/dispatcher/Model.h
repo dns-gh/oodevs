@@ -63,6 +63,7 @@ public:
           ModelsContainer< KnowledgeGroup >& GetKnowledgeGroups();
           ModelsContainer< Formation      >& GetFormations     ();
           ModelsContainer< Automat        >& GetAutomats       ();
+    const ModelsContainer< Automat        >& GetAutomats       () const;
           ModelsContainer< Agent          >& GetAgents         ();
     const ModelsContainer< Agent          >& GetAgents         () const;
           ModelsContainer< Object         >& GetObjects        ();

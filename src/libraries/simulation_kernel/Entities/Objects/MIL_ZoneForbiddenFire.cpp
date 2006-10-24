@@ -22,8 +22,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneForbiddenFire, "MIL_ZoneForbiddenFire" )
 // Name: MIL_ZoneForbiddenFire constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneForbiddenFire::MIL_ZoneForbiddenFire( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneForbiddenFire constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneForbiddenFire::MIL_ZoneForbiddenFire()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zoneForbiddenFire_ )
+    : MIL_RealObject_ABC()
 {
 }
 

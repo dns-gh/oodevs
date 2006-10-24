@@ -33,8 +33,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_Rota, "MIL_Rota" )
 // Name: MIL_Rota constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_Rota::MIL_Rota( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+    , nDanger_          ( 0 )
+{
+    asnAttributes_.agents_nbc.n = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Rota constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_Rota::MIL_Rota()
-    : MIL_RealObject_ABC( MIL_RealObjectType::rota_ )
+    : MIL_RealObject_ABC()
     , nDanger_          ( 0 )
 {
     asnAttributes_.agents_nbc.n = 0;
@@ -94,15 +105,19 @@ void MIL_Rota::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_Rota::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
-    archive.WriteField( "Danger", nDanger_  );
-    archive.Section( "AgentsNBC" );
+    archive.Section( "specific-attributes" );
+
+    archive.WriteField( "danger", nDanger_ );
+    archive.Section( "nbc-agents" );
     for( CIT_NbcAgentSet it = nbcAgents_.begin(); it != nbcAgents_.end(); ++it )
     {
-        archive.Section( "AgentNBC" );
+        archive.Section( "nbc-agent" );
         archive.WriteAttribute( "type", (**it).GetName() );
-        archive.EndSection(); // AgentNBC
+        archive.EndSection(); // nbc-agent
     }
-    archive.EndSection(); // AgentsNBC
+    archive.EndSection(); // nbc-agents
+
+    archive.EndSection(); // specific-attributes
 }
 
 //=============================================================================
@@ -113,9 +128,9 @@ void MIL_Rota::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 // Name: MIL_Rota::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_Rota::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_Rota::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
+    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
     return false; // Creation des Rotas depuis les scripts interdite
 }
 
@@ -123,33 +138,36 @@ bool MIL_Rota::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, 
 // Name: MIL_Rota::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_Rota::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_Rota::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
 
-    archive.ReadField( "Danger", nDanger_, CheckValueBound( 0, 10 ) );
-
+    archive.Section( "specific-attributes" );
+    archive.ReadField( "danger", nDanger_, CheckValueBound( 0, 10 ) );
+    
     nbcAgents_.clear();
-    archive.BeginList( "AgentsNBC" );
+    archive.BeginList( "nbc-agents" );
     while( archive.NextListElement() )
     {
         std::string strNbcTmp;
-        archive.Section( "AgentNBC" );
+        archive.Section( "nbc-agent" );
         archive.ReadAttribute( "type", strNbcTmp );
         const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::FindNbcAgentType( strNbcTmp );
         if( !pNbcAgentType )
             throw MT_ScipioException( "MIL_Rota::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for rota object '%d'", strNbcTmp.c_str(), GetID() ), archive.GetContext() );
         nbcAgents_.insert( pNbcAgentType );
-        archive.EndSection(); // AgentNBC
+        archive.EndSection(); // nbc-agent
     }
-    archive.EndList(); // AgentsNBC
+    archive.EndList(); // nbc-agents
+
+    archive.EndSection(); // specific-attributes
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Rota::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_Rota::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_Rota::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
     if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_rota )
         return EnumObjectErrorCode::error_missing_specific_attributes;
@@ -165,7 +183,7 @@ ASN1T_EnumObjectErrorCode MIL_Rota::Initialize( uint nID, const ASN1T_MagicActio
         nbcAgents_.insert( pNbcAgentType );
     }
 
-    return MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
+    return MIL_RealObject_ABC::Initialize( asnCreateObject );
 }
    
 // =============================================================================
@@ -221,10 +239,10 @@ DEC_Knowledge_Object& MIL_Rota::CreateKnowledge( const MIL_Army& teamKnowing )
 // Name: MIL_Rota::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
-bool MIL_Rota::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+bool MIL_Rota::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    return MIL_RealObject_ABC::Initialize( strOption, strExtra, rCompletion, rMining, rBypass )
-        && ReadAgents( strOption );
+    return     MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass )
+            && ReadAgents( strOption );
 }
     
 // -----------------------------------------------------------------------------

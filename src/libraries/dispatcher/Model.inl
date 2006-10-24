@@ -51,6 +51,16 @@ ModelsContainer< Automat >& Model::GetAutomats()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelsContainer< Automat >& Model::GetAutomats
+// Created: NLD 2006-10-24
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< Automat >& Model::GetAutomats() const
+{
+    return automats_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelsContainer< Agent >& Model::GetAgents
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------

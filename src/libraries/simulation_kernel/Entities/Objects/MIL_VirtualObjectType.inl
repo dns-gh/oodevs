@@ -10,11 +10,11 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_VirtualObjectType::FindObjectType
+// Name: MIL_VirtualObjectType::Find
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 inline
-const MIL_VirtualObjectType* MIL_VirtualObjectType::FindObjectType( const std::string& strName )
+const MIL_VirtualObjectType* MIL_VirtualObjectType::Find( const std::string& strName )
 {
     for( CIT_ObjectTypeMap it = objectTypes_.begin(); it != objectTypes_.end(); ++it )
         if( sCaseInsensitiveEqual()( it->second->GetName(), strName ) )

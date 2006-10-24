@@ -21,8 +21,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneMineeParDispersion, "MIL_ZoneMineeParDispersion
 // Name: MIL_ZoneMineeParDispersion constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneMineeParDispersion::MIL_ZoneMineeParDispersion( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneMineeParDispersion constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneMineeParDispersion::MIL_ZoneMineeParDispersion()
-    : MIL_Obstacle( MIL_RealObjectType::zoneMineeParDispersion_ )
+    : MIL_Obstacle()
 {
 }
 
@@ -52,13 +61,14 @@ void MIL_ZoneMineeParDispersion::serialize( Archive& file, const uint )
 //=============================================================================
 // INIT
 //=============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneMineeParDispersion::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-bool MIL_ZoneMineeParDispersion::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneMineeParDispersion::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
         return false;
 
     rSizeCoef_                       = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() );       // Coef      : tps construction/destruction au m
@@ -70,9 +80,9 @@ bool MIL_ZoneMineeParDispersion::Initialize( const MIL_Army& army, DIA_Parameter
 // Name: MIL_ZoneMineeParDispersion::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-void MIL_ZoneMineeParDispersion::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_ZoneMineeParDispersion::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
     rSizeCoef_                          = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_    = (uint)rSizeCoef_;
 }
@@ -81,9 +91,9 @@ void MIL_ZoneMineeParDispersion::Initialize( uint nID, MIL_InputArchive& archive
 // Name: MIL_ZoneMineeParDispersion::Initialize
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ZoneMineeParDispersion::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asn )
+ASN1T_EnumObjectErrorCode MIL_ZoneMineeParDispersion::Initialize( const ASN1T_MagicActionCreateObject& asn )
 {
-    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( nID, asn );
+    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asn );
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
     rSizeCoef_                          = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
@@ -95,9 +105,9 @@ ASN1T_EnumObjectErrorCode MIL_ZoneMineeParDispersion::Initialize( uint nID, cons
 // Name: MIL_ZoneMineeParDispersion::Initialize
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void MIL_ZoneMineeParDispersion::Initialize( const MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines )
+void MIL_ZoneMineeParDispersion::Initialize( const TER_Localisation& localisation, uint nNbrMines )
 {
-    MIL_RealObject_ABC::Initialize( army, localisation );
+    MIL_RealObject_ABC::InitializeCommon( localisation );
     
     rSizeCoef_                       = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_ = nNbrMines;

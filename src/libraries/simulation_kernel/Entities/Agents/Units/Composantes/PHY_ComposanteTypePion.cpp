@@ -437,7 +437,7 @@ void PHY_ComposanteTypePion::InitializeObjects( MIL_InputArchive& archive )
         std::string strType;
         archive.ReadAttribute( "type", strType );
 
-        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( strType );
+        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
         if( !pObjectType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown object type '%s'", strType.c_str() ), archive.GetContext() );
 

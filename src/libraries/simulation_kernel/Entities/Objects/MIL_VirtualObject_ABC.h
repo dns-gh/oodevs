@@ -27,7 +27,7 @@ class MIL_VirtualObject_ABC : public MIL_Object_ABC
     MT_COPYNOTALLOWED( MIL_VirtualObject_ABC );
 
 public:
-             MIL_VirtualObject_ABC( const MIL_VirtualObjectType& type );
+             MIL_VirtualObject_ABC( MIL_Army& army, const MIL_VirtualObjectType& type );
     virtual ~MIL_VirtualObject_ABC();
 
     //! @name Accessors

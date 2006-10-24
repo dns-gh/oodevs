@@ -1288,7 +1288,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserFosseAC()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_fosse_ac;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_fosse_ac = &asnMission;
     CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_EnumTypeFosseAC >* pSelector_type = &CreateVarList( asnMission.type, "Type");
     pSelector_type->AddItem( "Simple", EnumTypeFosseAC::simple );
     pSelector_type->AddItem( "Compose", EnumTypeFosseAC::compose );
@@ -1304,7 +1303,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserAbattisMine()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_abattis_mine;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_abattis_mine = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence");
     pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
     pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
@@ -1323,7 +1321,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserPointMine()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_point_mine;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_point_mine = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1336,7 +1333,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserBarricade()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_barricade;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_barricade = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence");
     pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
     pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
@@ -1352,7 +1348,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserEboulement()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_eboulement;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_eboulement = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire");
     pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
     pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
@@ -1368,7 +1363,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserBouchonMine()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_bouchon_mine;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_bouchon_mine = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence");
     pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
     pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
@@ -1384,7 +1378,6 @@ void UnitMissionInterface::CreateMission_GEN_DetruireRoute()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_detruire_route;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_detruire_route = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire");
     pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
     pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
@@ -1400,7 +1393,6 @@ void UnitMissionInterface::CreateMission_GEN_DetruirePont()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_detruire_pont;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_detruire_pont = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire");
     pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
     pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
@@ -1500,7 +1492,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserZoneMineeLineaire()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_minee_lineaire;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_minee_lineaire = &asnMission;
     CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     CreateNumeric( asnMission.densite, "Densite");
 }
 
@@ -1563,7 +1554,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserZoneMineeParDispersion()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_minee_par_dispersion;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_minee_par_dispersion = &asnMission;
     CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     CreateNumeric( asnMission.densite, "Densite");
 }
 
@@ -1577,7 +1567,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserPostesTir()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_postes_tir;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_postes_tir = &asnMission;
     CreatePoint( asnMission.pos_objet, "Pos objet");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1590,7 +1579,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserTravauxProtection()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_protection;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection = &asnMission;
     CreatePoint( asnMission.pos_objet, "Pos objet");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1615,7 +1603,6 @@ void UnitMissionInterface::CreateMission_GEN_EquiperExploiter()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_equiper_exploiter;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_equiper_exploiter = &asnMission;
     CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
-    //NOTHING
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     ParamComboBox< ASN1T_EnumGenTypePontage >* pSelector_type_pontage = &CreateVarList( asnMission.type_pontage, "Type pontage");
     pSelector_type_pontage->AddItem( "Continu", EnumGenTypePontage::continu );
@@ -1632,7 +1619,6 @@ void UnitMissionInterface::CreateMission_GEN_ExecuterVariantement()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_executer_variantement;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_executer_variantement = &asnMission;
     CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
-    //NOTHING
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     ParamComboBox< ASN1T_EnumGenTypePontage >* pSelector_type_pontage = &CreateVarList( asnMission.type_pontage, "Type pontage");
     pSelector_type_pontage->AddItem( "Continu", EnumGenTypePontage::continu );
@@ -1697,7 +1683,6 @@ void UnitMissionInterface::CreateMission_GEN_CreerPlateForme()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_creer_plate_forme;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_plate_forme = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1710,7 +1695,6 @@ void UnitMissionInterface::CreateMission_GEN_CreerPiste()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_creer_piste;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_piste = &asnMission;
     CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1723,7 +1707,6 @@ void UnitMissionInterface::CreateMission_GEN_CreerAirePoser()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_creer_aire_poser;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_aire_poser = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1772,7 +1755,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserAireLogistique()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_aire_logistique;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_aire_logistique = &asnMission;
     CreatePoint( asnMission.position_obstacle, "Position obstacle");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1797,7 +1779,6 @@ void UnitMissionInterface::CreateMission_GEN_AmenagerTerrainPoser()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_amenager_terrain_poser;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_amenager_terrain_poser = &asnMission;
     CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    //NOTHING
     ParamComboBox< ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser_type_objet >* pSelector_type_objet = &CreateVarList( asnMission.type_objet, "Type objet");
     pSelector_type_objet->AddItem( "Aire poser", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::aire_poser );
     pSelector_type_objet->AddItem( "Terrain largage", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::terrain_largage );
@@ -1813,7 +1794,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserPlateFormeDeploiement()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_plate_forme_deploiement;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_plate_forme_deploiement = &asnMission;
     CreatePoint( asnMission.position_obstacle, "Position obstacle");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1838,7 +1818,6 @@ void UnitMissionInterface::CreateMission_GEN_RealiserZonePoserHelicoptere()
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_poser_helicoptere;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_poser_helicoptere = &asnMission;
     CreatePoint( asnMission.zone_poser, "Zone poser");
-    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

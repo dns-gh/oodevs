@@ -15,7 +15,7 @@
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_Abattis::Create()
+MIL_RealObject_ABC& MIL_Abattis::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_Abattis();
+    return *new MIL_Abattis( type, nID, army );
 }

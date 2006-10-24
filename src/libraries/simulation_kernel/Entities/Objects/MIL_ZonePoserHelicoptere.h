@@ -27,6 +27,7 @@ class MIL_ZonePoserHelicoptere : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_ZonePoserHelicoptere );
 
 public:
+             MIL_ZonePoserHelicoptere( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_ZonePoserHelicoptere();
     virtual ~MIL_ZonePoserHelicoptere();
  
@@ -37,7 +38,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 };
 

@@ -21,7 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_CreerPiste::nDIAPosObstacleIdx_ = 0 ;
-int MIL_PionMission_GEN_CreerPiste::nDIAOidObstaclePlanifieIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -33,7 +32,6 @@ void MIL_PionMission_GEN_CreerPiste::InitializeDIA( const MIL_PionMissionType& t
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPosObstacleIdx_ = DEC_Tools::InitializeDIAField( "posObstacle_", diaType );
-    nDIAOidObstaclePlanifieIdx_ = DEC_Tools::InitializeDIAField( "oidObstaclePlanifie_", diaType );
 
 }
 
@@ -72,8 +70,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_CreerPiste::Initialize( const ASN1T
     const ASN1T_Mission_Pion_GEN_CreerPiste& asnMission = *asnMsg.mission.u.mission_pion_gen_creer_piste;
     if( !NET_ASN_Tools::CopyLocation( asnMission.pos_obstacle, GetVariable( nDIAPosObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -88,7 +84,7 @@ bool MIL_PionMission_GEN_CreerPiste::Initialize( const MIL_AutomateMission_ABC& 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
+    
     return true;    
 }
 
@@ -103,7 +99,6 @@ bool MIL_PionMission_GEN_CreerPiste::Initialize( MIL_PionMission_ABC& missionTmp
     MIL_PionMission_GEN_CreerPiste& mission = static_cast< MIL_PionMission_GEN_CreerPiste& >( missionTmp );
 
     NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAPosObstacleIdx_ ), GetVariable( nDIAPosObstacleIdx_ ) );
-    NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
 
     return true;
 }                                                                    
@@ -135,7 +130,6 @@ void MIL_PionMission_GEN_CreerPiste::Serialize( ASN1T_MsgPionOrder& asnMsg )
     asnMsg.mission.u.mission_pion_gen_creer_piste  = &asnMission;
 
     NET_ASN_Tools::CopyLocation( GetVariable( nDIAPosObstacleIdx_ ), asnMission.pos_obstacle );
-    NET_ASN_Tools::CopyID( GetVariable( nDIAOidObstaclePlanifieIdx_ ), asnMission.oid_obstacle_planifie );
 
 }
 

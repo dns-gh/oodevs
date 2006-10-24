@@ -66,7 +66,7 @@ public:
           DEC_RolePion_Decision&             GetDecision    (); //$$$ Dérolifier DEC_RolePion_Decision
     const DEC_RolePion_Decision&             GetDecision    () const; //$$$ Dérolifier DEC_RolePion_Decision
     
-    virtual const MIL_Army&           GetArmy            () const;
+    virtual       MIL_Army&           GetArmy            () const;
                   MIL_KnowledgeGroup& GetKnowledgeGroup  () const;
     virtual const MIL_Automate&       GetAutomate        () const;
     virtual       MIL_Automate&       GetAutomate        ();

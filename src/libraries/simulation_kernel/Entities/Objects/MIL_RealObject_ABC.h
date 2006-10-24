@@ -51,16 +51,16 @@ public:
     //@}
 
 public:
-    explicit MIL_RealObject_ABC( const MIL_RealObjectType& type );
+    explicit MIL_RealObject_ABC( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_RealObject_ABC();
     virtual ~MIL_RealObject_ABC();
     
     //! @name Init
     //@{
-    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
-    virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
-    virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asn );
-    virtual void                      Initialize( const MIL_Army& army, const TER_Localisation& localisation );
+    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asn );
+    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx ); 
+    virtual bool                      Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass ); // HLA
     //@}
 
     //! @name CheckPoints
@@ -139,17 +139,16 @@ public:
 
     //! @name Network
     //@{
-    ASN1T_EnumObjectErrorCode OnReceiveMagicActionUpdate ( const ASN1T_MagicActionUpdateObject& asnMsg );
-    void                      SendStateToNewClient       ();
-    void                      SendMsgConstruction        ();
-    void                      SendMsgDestruction         ();
+    ASN1T_EnumObjectErrorCode OnReceiveMagicActionUpdate( const ASN1T_MagicActionUpdateObject& asnMsg );
+    void                      SendCreation              () /*$$$const*/; //$$$ BULLSHIT
+    void                      SendDestruction           () /*$$$const*/; //$$$ BULLSHIT
+    void                      SendFullState             () /*$$$const*/;
     //@}
 
     //! @name HLA
     //@{
     HLA_Object_ABC* GetHLAView() const;
     void            SetHLAView( HLA_Object_ABC& view );
-    virtual bool Initialize ( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     virtual void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
     virtual void Serialize  ( HLA_UpdateFunctor& functor ) const;
     //@}
@@ -194,8 +193,10 @@ protected:
   
     //! @name Tools
     //@{
-            void ApplyAttrition     ( MIL_Agent_ABC&             target );    
-    virtual void UpdateLocalisation ( const TER_Localisation& newLocalisation );
+            void ApplyAttrition    ( MIL_Agent_ABC&             target );    
+            void InitializeCommon  ( const TER_Localisation& localisation );
+    virtual void UpdateLocalisation( const TER_Localisation& newLocalisation );
+
     //@}
 
     //! @name Network
@@ -220,7 +221,6 @@ private:
     //! @name Tools
     //@{
     void InitializeAvoidanceLocalisation();
-    void InitializeCommon               ( const MIL_Army& army, const TER_Localisation& localisation, uint nID, const std::string& strName, uint nMosPlannedID = 0 );
 
     void ChangeConstructionPercentage   ( MT_Float rNewConstructionPercentage );
     void ChangeMiningPercentage         ( MT_Float rNewMiningPercentage       );
@@ -241,8 +241,7 @@ protected:
 
 private:
     const MIL_RealObjectType* pType_;
-    uint                      nID_;
-    uint                      nMosPlannedID_;
+    uint                      nID_;    
     std::string               strName_;
 
     // State

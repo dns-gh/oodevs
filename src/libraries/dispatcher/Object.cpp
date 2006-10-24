@@ -32,7 +32,6 @@ Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
     , strName_                     ( msg.nom  )
     , localisation_                ( msg.localisation )
     , side_                        ( model.GetSides().Get( msg.camp ) )
-    , nPlannedID_                  ( msg.m.oid_objet_planifiePresent         ? msg.oid_objet_planifie         : std::numeric_limits< unsigned int >::max() )
     , nTypeDotationForConstruction_( msg.m.type_dotation_constructionPresent ? msg.type_dotation_construction : std::numeric_limits< unsigned int >::max() )
     , nTypeDotationForMining_      ( msg.m.type_dotation_valorisationPresent ? msg.type_dotation_valorisation : std::numeric_limits< unsigned int >::max() )
     , nPercentageConstruction_     ( std::numeric_limits< unsigned int >::max() )
@@ -94,7 +93,7 @@ void Object::Update( const ASN1T_MsgObjectUpdate& msg )
         nPercentageConstruction_ = msg.pourcentage_construction;
     if( msg.m.pourcentage_valorisationPresent )
         nPercentageMining_ = msg.pourcentage_valorisation;
-    if( msg.m.pourcentage_constructionPresent )
+    if( msg.m.pourcentage_creation_contournementPresent )
         nPercentageBypassing_ = msg.pourcentage_creation_contournement;
 
     bPrepared_ = msg.en_preparation;
@@ -126,12 +125,6 @@ void Object::SendCreation( Publisher_ABC& publisher ) const
 
     localisation_.Send( asn().localisation );
 
-    if( nPlannedID_ != std::numeric_limits< unsigned int >::max() )
-    {
-        asn().m.oid_objet_planifiePresent = 1;
-        asn().oid_objet_planifie = nPlannedID_;
-    }
-
     if( nTypeDotationForConstruction_ != std::numeric_limits< unsigned int >::max() )
     {
         asn().m.type_dotation_constructionPresent = 1;
@@ -153,7 +146,8 @@ void Object::SendCreation( Publisher_ABC& publisher ) const
     asn.Send( publisher );
 
     Localisation::AsnDelete( asn().localisation );
-    pAttributes_->AsnDelete( asn().attributs_specifiques );
+    if( pAttributes_ )
+        pAttributes_->AsnDelete( asn().attributs_specifiques );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,8 +174,8 @@ void Object::SendFullUpdate( Publisher_ABC& publisher ) const
 
     if( nPercentageBypassing_ != std::numeric_limits< unsigned int >::max() )
     {
-        asn().m.pourcentage_constructionPresent = 1;
-        asn().pourcentage_construction          = nPercentageBypassing_;
+        asn().m.pourcentage_creation_contournementPresent = 1;
+        asn().pourcentage_creation_contournement          = nPercentageBypassing_;
     }
 
     asn().en_preparation = bPrepared_;

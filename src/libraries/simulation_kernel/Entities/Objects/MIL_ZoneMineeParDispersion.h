@@ -25,6 +25,7 @@ class MIL_ZoneMineeParDispersion : public MIL_Obstacle
     MT_COPYNOTALLOWED( MIL_ZoneMineeParDispersion );
 
 public:
+             MIL_ZoneMineeParDispersion( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_ZoneMineeParDispersion();
     virtual ~MIL_ZoneMineeParDispersion();
 
@@ -35,12 +36,12 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
 
-    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
-    virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
-    virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asn );
-    virtual void                      Initialize( const MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines );
+    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asn );
+    virtual void                      Initialize( const TER_Localisation& localisation, uint nNbrMines );
     //@}
 
 private:

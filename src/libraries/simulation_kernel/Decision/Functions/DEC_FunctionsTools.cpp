@@ -84,5 +84,5 @@ MIL_RealObject_ABC* DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( con
 {
     assert( DEC_Tools::CheckTypePopulationConnaissanceObjet( diaVar ) );
     uint nID = ( uint )diaVar.ToPtr();
-    return MIL_AgentServer::GetWorkspace().GetEntityManager().FindRealObject( nID );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( nID );
 }

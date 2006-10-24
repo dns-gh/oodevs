@@ -21,7 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_RealiserAireLogistique::nDIAPositionObstacleIdx_ = 0 ;
-int MIL_PionMission_GEN_RealiserAireLogistique::nDIAOidObstaclePlanifieIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -33,7 +32,6 @@ void MIL_PionMission_GEN_RealiserAireLogistique::InitializeDIA( const MIL_PionMi
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPositionObstacleIdx_ = DEC_Tools::InitializeDIAField( "positionObstacle_", diaType );
-    nDIAOidObstaclePlanifieIdx_ = DEC_Tools::InitializeDIAField( "oidObstaclePlanifie_", diaType );
 
 }
 
@@ -72,8 +70,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserAireLogistique::Initialize(
     const ASN1T_Mission_Pion_GEN_RealiserAireLogistique& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_aire_logistique;
     if( !NET_ASN_Tools::CopyPoint( asnMission.position_obstacle, GetVariable( nDIAPositionObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -88,7 +84,7 @@ bool MIL_PionMission_GEN_RealiserAireLogistique::Initialize( const MIL_AutomateM
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
+    
     return true;    
 }
 
@@ -103,7 +99,6 @@ bool MIL_PionMission_GEN_RealiserAireLogistique::Initialize( MIL_PionMission_ABC
     MIL_PionMission_GEN_RealiserAireLogistique& mission = static_cast< MIL_PionMission_GEN_RealiserAireLogistique& >( missionTmp );
 
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPositionObstacleIdx_ ), GetVariable( nDIAPositionObstacleIdx_ ) );
-    NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
 
     return true;
 }                                                                    
@@ -135,7 +130,6 @@ void MIL_PionMission_GEN_RealiserAireLogistique::Serialize( ASN1T_MsgPionOrder& 
     asnMsg.mission.u.mission_pion_gen_realiser_aire_logistique  = &asnMission;
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPositionObstacleIdx_ ), asnMission.position_obstacle );
-    NET_ASN_Tools::CopyID( GetVariable( nDIAOidObstaclePlanifieIdx_ ), asnMission.oid_obstacle_planifie );
 
 }
 

@@ -19,7 +19,6 @@ int DEC_Gen_Object::nDIATypeIdx_         = 0;
 int DEC_Gen_Object::nDIAPosIdx_          = 0;
 int DEC_Gen_Object::nDIAUrgenceIdx_      = 0;
 int DEC_Gen_Object::nDIAPreliminaireIdx_ = 0;
-int DEC_Gen_Object::nDIAMosIDIdx_        = 0;
 int DEC_Gen_Object::nDIAPrioriteIdx_     = 0;
 
 //-----------------------------------------------------------------------------
@@ -33,8 +32,7 @@ void DEC_Gen_Object::InitializeDIA()
     nDIATypeIdx_         = DEC_Tools::InitializeDIAField( "typeObject_"    , diaType );
     nDIAPosIdx_          = DEC_Tools::InitializeDIAField( "posObject_"     , diaType );
     nDIAUrgenceIdx_      = DEC_Tools::InitializeDIAField( "urgence_"       , diaType );
-    nDIAPreliminaireIdx_ = DEC_Tools::InitializeDIAField( "preliminaire_"  , diaType );
-    nDIAMosIDIdx_        = DEC_Tools::InitializeDIAField( "nObstacleMosID_", diaType );
+    nDIAPreliminaireIdx_ = DEC_Tools::InitializeDIAField( "preliminaire_"  , diaType );    
     nDIAPrioriteIdx_     = DEC_Tools::InitializeDIAField( "priorite_"      , diaType );
 }
 
@@ -65,12 +63,11 @@ DEC_Gen_Object::~DEC_Gen_Object()
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode DEC_Gen_Object::Initialize( const ASN1T_MissionGenObject& asn )
 {
-    GetVariable( nDIATypeIdx_         ).SetValue( (int)asn.type_obstacle                                              );
-    GetVariable( nDIAMosIDIdx_        ).SetValue( (void*)asn.oid_obstacle_planifie, &DEC_Tools::GetTypeID()          , 1 );
-    GetVariable( nDIAPosIdx_          ).SetValue( (void*)&localisation_           , &DEC_Tools::GetTypeLocalisation(), 1 );
-    GetVariable( nDIAPrioriteIdx_     ).SetValue( (int)asn.priorite                                                   );
-    GetVariable( nDIAUrgenceIdx_      ).SetValue( (int)asn.urgence                                                    );
-    GetVariable( nDIAPreliminaireIdx_ ).SetValue( (int)asn.preliminaire                                               );
+    GetVariable( nDIATypeIdx_         ).SetValue( (int)asn.type_obstacle );
+    GetVariable( nDIAPrioriteIdx_     ).SetValue( (int)asn.priorite      );
+    GetVariable( nDIAUrgenceIdx_      ).SetValue( (int)asn.urgence       );
+    GetVariable( nDIAPreliminaireIdx_ ).SetValue( (int)asn.preliminaire  );
+    GetVariable( nDIAPosIdx_          ).SetValue( (void*)&localisation_ , &DEC_Tools::GetTypeLocalisation(), 1 );
 
     if( !NET_ASN_Tools::ReadLocation( asn.pos_obstacle, localisation_ ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;

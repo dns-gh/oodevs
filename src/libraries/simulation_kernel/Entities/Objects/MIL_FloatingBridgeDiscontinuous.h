@@ -25,6 +25,7 @@ class MIL_FloatingBridgeDiscontinuous : public MIL_FloatingBridge_ABC
     MT_COPYNOTALLOWED( MIL_FloatingBridgeDiscontinuous );
 
 public:
+             MIL_FloatingBridgeDiscontinuous( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_FloatingBridgeDiscontinuous();
     virtual ~MIL_FloatingBridgeDiscontinuous();
 
@@ -38,7 +39,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 };
 

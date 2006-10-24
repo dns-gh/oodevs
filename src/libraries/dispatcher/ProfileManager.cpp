@@ -79,9 +79,9 @@ void ProfileManager::Reset()
                 >> xml::list( "profile", *this, & ProfileManager::ReadProfile )
             >> xml::end();
     }
-    catch( xml::exception& e )
+    catch( xml::exception& exception )
     {
-        MT_LOG_ERROR_MSG( "Error while loading profiles : " << e.what() );
+        MT_LOG_ERROR_MSG( "Error while loading profiles : " << exception.what() );
 //$$$$$
     }
 }

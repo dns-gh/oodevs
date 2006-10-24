@@ -21,9 +21,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_FosseAntiChar, "MIL_FosseAntiChar" )
 // Name: MIL_FosseAntiChar constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_FosseAntiChar::MIL_FosseAntiChar( )
-    : MIL_Obstacle( MIL_RealObjectType::fosseAntiChar_ )
+MIL_FosseAntiChar::MIL_FosseAntiChar( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FosseAntiChar constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_FosseAntiChar::MIL_FosseAntiChar()
+    : MIL_Obstacle()
+{
+
 }
 
 //-----------------------------------------------------------------------------
@@ -57,9 +67,9 @@ void MIL_FosseAntiChar::serialize( Archive& file, const uint )
 // Name: MIL_FosseAntiChar::Initialize
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-bool MIL_FosseAntiChar::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_FosseAntiChar::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
         return false;
 
     rSizeCoef_ = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ) * diaParameters[ nCurrentParamIdx ].ToFloat(); /// Metres * type (simple/composé)

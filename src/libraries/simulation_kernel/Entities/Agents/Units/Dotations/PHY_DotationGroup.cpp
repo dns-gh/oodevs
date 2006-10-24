@@ -140,15 +140,13 @@ void PHY_DotationGroup::ReadValues( MIL_InputArchive& archive, const PHY_Dotatio
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    archive.Section( "Categories" );
     for( CIT_DotationMap it = dotations_.begin(); it != dotations_.end(); ++it )
     {
-        archive.Section( "Categorie" );
-        archive.WriteAttribute( "nom", it->first->GetName() );
-        archive.Write( it->second->GetValue() );
-        archive.EndSection(); // Categorie
+        archive.Section( "dotation" );
+        archive.WriteAttribute( "name"    , it->first->GetName() );
+        archive.WriteAttribute( "quantity", it->second->GetValue() );
+        archive.EndSection(); // dotation
     }
-    archive.EndSection(); // Categories
 }
 
 // =============================================================================

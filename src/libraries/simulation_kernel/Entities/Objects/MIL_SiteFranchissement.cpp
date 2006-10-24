@@ -28,8 +28,21 @@ BOOST_CLASS_EXPORT_GUID( MIL_SiteFranchissement, "MIL_SiteFranchissement" )
 // Name: MIL_SiteFranchissement constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_SiteFranchissement::MIL_SiteFranchissement( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+    , rWidth_           ( 0 )
+    , rDepth_           ( 0 )
+    , rCurrentSpeed_    ( 0 )
+    , bBanksToFitOut_   ( true )   
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_SiteFranchissement constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_SiteFranchissement::MIL_SiteFranchissement()
-    : MIL_RealObject_ABC( MIL_RealObjectType::siteFranchissement_ )
+    : MIL_RealObject_ABC()
     , rWidth_           ( 0 )
     , rDepth_           ( 0 )
     , rCurrentSpeed_    ( 0 )
@@ -70,10 +83,12 @@ void MIL_SiteFranchissement::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_SiteFranchissement::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
-    archive.WriteField( "Largeur"        , rWidth_ );
-    archive.WriteField( "Profondeur"     , rDepth_ );
-    archive.WriteField( "VitesseCourant" , rCurrentSpeed_ );
-    archive.WriteField( "BergesAAmenager", bBanksToFitOut_ );   
+    archive.Section( "specific-attributes" );
+    archive.WriteField( "width"              , rWidth_ );
+    archive.WriteField( "depth"              , rDepth_ );
+    archive.WriteField( "speed"              , rCurrentSpeed_ );
+    archive.WriteField( "construction-needed", bBanksToFitOut_ );   
+    archive.EndSection(); // specific-attributes
 }
 
 //=============================================================================
@@ -84,33 +99,34 @@ void MIL_SiteFranchissement::WriteSpecificAttributes( MT_XXmlOutputArchive& arch
 // Name: MIL_SiteFranchissement::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_SiteFranchissement::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_SiteFranchissement::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    return MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
+    return MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_SiteFranchissement::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_SiteFranchissement::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_SiteFranchissement::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
 
-    archive.ReadField( "Largeur"        , rWidth_, CheckValueGreater( 0. ) );
-    archive.ReadField( "Profondeur"     , rDepth_, CheckValueGreater( 0. ) );
-    archive.ReadField( "VitesseCourant" , rCurrentSpeed_, CheckValueGreaterOrEqual( 0. ) );
-    archive.ReadField( "BergesAAmenager", bBanksToFitOut_ );   
+    archive.Section( "specific-attributes" );
+    archive.ReadField( "width"              , rWidth_, CheckValueGreater( 0. ) );
+    archive.ReadField( "depth"              , rDepth_, CheckValueGreater( 0. ) );
+    archive.ReadField( "speed"              , rCurrentSpeed_, CheckValueGreaterOrEqual( 0. ) );
+    archive.ReadField( "construction-needed", bBanksToFitOut_ );   
+    archive.EndSection(); // specific-attributes
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_SiteFranchissement::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_SiteFranchissement::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_SiteFranchissement::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
+    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
@@ -158,9 +174,9 @@ DEC_Knowledge_Object& MIL_SiteFranchissement::CreateKnowledge( const MIL_Army& t
 // Name: MIL_SiteFranchissement::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
-bool MIL_SiteFranchissement::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+bool MIL_SiteFranchissement::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
     rWidth_ = rDepth_ = rCurrentSpeed_ = 0; // $$$$ AGE 2004-12-01: 
-    return MIL_RealObject_ABC::Initialize( strOption, strExtra, rCompletion, rMining, rBypass );
+    return MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass );
 }
 

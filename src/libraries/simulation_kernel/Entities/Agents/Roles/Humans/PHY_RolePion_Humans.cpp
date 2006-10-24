@@ -147,7 +147,7 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    archive.Section( "Personnels" );
+/*    archive.Section( "Personnels" );
 
     T_HumanWoundData humanWoundData;
     for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); ++it )
@@ -177,7 +177,7 @@ void PHY_RolePion_Humans::WriteODB( MT_XXmlOutputArchive& archive ) const
         archive.EndSection(); // Personnel
     }
 
-    archive.EndSection(); // Personnels
+    archive.EndSection(); // Personnels*/
 }
 
 // =============================================================================

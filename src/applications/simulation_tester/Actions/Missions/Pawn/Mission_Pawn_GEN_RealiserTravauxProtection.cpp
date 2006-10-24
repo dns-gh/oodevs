@@ -50,7 +50,6 @@ void Mission_Pawn_GEN_RealiserTravauxProtection::Serialize()
     const Position& posObjet_ = pTarget_->GetTestParam_Point();
 
     ASN_Tools::CopyPoint( posObjet_, asnMission.pos_objet );
-    ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_objet_planifie );
 
     delete &posObjet_;
 

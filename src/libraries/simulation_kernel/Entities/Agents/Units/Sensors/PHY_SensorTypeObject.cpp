@@ -36,7 +36,7 @@ PHY_SensorTypeObject::PHY_SensorTypeObject( const PHY_SensorType& type, MIL_Inpu
         std::string strType;
         archive.ReadAttribute( "type", strType );
 
-        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( strType );
+        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( strType );
         if( !pObjectType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
 

@@ -156,17 +156,12 @@ void PHY_DotationStockContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
     {
         const PHY_DotationStock& dotationStock = *it->second;
 
-        archive.Section( "Dotation" );
-        archive.WriteAttribute( "nom", dotationStock.GetCategory().GetType().GetName() );
-        archive.Section( "Categories" );
-        archive.Section( "Categorie" );
-        archive.WriteAttribute( "nom", dotationStock.GetCategory().GetName() );
-        archive.Write( dotationStock.GetValue() );
-        archive.EndSection(); // Categories
-        archive.EndSection(); // Categorie
-        archive.EndSection(); // Dotation
+        archive.Section( "dotation" );
+        archive.WriteAttribute( "name"    , dotationStock.GetCategory().GetName() );
+        archive.WriteAttribute( "quantity", dotationStock.GetValue() );
+        archive.EndSection(); // dotation"
     }
-    archive.EndSection(); // Stocks
+    archive.EndSection(); // stocks
 }
 
 // =============================================================================

@@ -27,6 +27,7 @@ class MIL_ZoneNBC : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_ZoneNBC );
 
 public:
+             MIL_ZoneNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_ZoneNBC();
     virtual ~MIL_ZoneNBC();
 
@@ -40,11 +41,11 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
 
-    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
-    virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
-    virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject );
+    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject );
     //@}
 
     //! @name Accessors
@@ -59,7 +60,7 @@ public:
 
     //! @name HLA
     //@{
-    virtual bool Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
+    virtual bool Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     virtual void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}

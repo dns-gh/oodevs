@@ -25,7 +25,8 @@ class MIL_Obstacle : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_Obstacle );
 
 public:
-             MIL_Obstacle( const MIL_RealObjectType& type );
+             MIL_Obstacle( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
+             MIL_Obstacle();
     virtual ~MIL_Obstacle();
 
 protected:

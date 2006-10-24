@@ -137,26 +137,6 @@ void PHY_DotationGroupContainer::serialize( Archive& file, const uint )
 // INIT
 // =============================================================================
 
-/*
-            std::string strType;
-            uint        nQuantity;
-            archive.Section( "dotation" );
-            archive.ReadAttribute( "name"    , strType );
-            archive.ReadAttribute( "quantity", nQuantity, CheckValueGreaterOrEqual( 0 ) );
-
-            const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
-            if ( !pDotationCategory )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown dotation", archive.GetContext() );
-
-            if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
-                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Quota already defined", archive.GetContext() );
-
-            sDotationQuota quota;
-            quota.rQuota_          = nQuantity;
-            quota.rQuotaThreshold_ = nQuantity * 0.1; //$$ fichier de conf cpp ;)
-            stockQuotas_[ pDotationCategory ] = quota;
-            */
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::ReadValues
 // Created: NLD 2004-08-16
@@ -171,7 +151,7 @@ void PHY_DotationGroupContainer::ReadValues( MIL_InputArchive& archive )
         std::string strType;
 
         archive.Section( "dotation" );
-        archive.ReadAttribute( "name"    , strType );
+        archive.ReadAttribute( "name", strType );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
         if( !pDotationCategory )
@@ -193,17 +173,10 @@ void PHY_DotationGroupContainer::ReadValues( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::WriteODB( MT_XXmlOutputArchive& archive ) const
 {
-    archive.Section( "Dotations" );
+    archive.Section( "dotations" );
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
-    {
-        archive.Section( "Dotation" );
-        archive.WriteAttribute( "nom", it->first->GetName() );
-
         it->second->WriteODB( archive );
-
-        archive.EndSection(); // Dotation
-    }
-    archive.EndSection(); // Dotations
+    archive.EndSection(); // dotations
 }
 
 // =============================================================================

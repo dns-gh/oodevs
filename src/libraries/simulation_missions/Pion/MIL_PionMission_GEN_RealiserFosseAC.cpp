@@ -21,7 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_RealiserFosseAC::nDIAPosObstacleIdx_ = 0 ;
-int MIL_PionMission_GEN_RealiserFosseAC::nDIAOidObstaclePlanifieIdx_ = 0 ;
 int MIL_PionMission_GEN_RealiserFosseAC::nDIATypeIdx_ = 0 ;
 
 
@@ -34,7 +33,6 @@ void MIL_PionMission_GEN_RealiserFosseAC::InitializeDIA( const MIL_PionMissionTy
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPosObstacleIdx_ = DEC_Tools::InitializeDIAField( "posObstacle_", diaType );
-    nDIAOidObstaclePlanifieIdx_ = DEC_Tools::InitializeDIAField( "oidObstaclePlanifie_", diaType );
     nDIATypeIdx_ = DEC_Tools::InitializeDIAField( "type_", diaType );
 
 }
@@ -74,8 +72,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserFosseAC::Initialize( const 
     const ASN1T_Mission_Pion_GEN_RealiserFosseAC& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_fosse_ac;
     if( !NET_ASN_Tools::CopyLocation( asnMission.pos_obstacle, GetVariable( nDIAPosObstacleIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyID( asnMission.oid_obstacle_planifie, GetVariable( nDIAOidObstaclePlanifieIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.type, GetVariable( nDIATypeIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
@@ -92,7 +88,7 @@ bool MIL_PionMission_GEN_RealiserFosseAC::Initialize( const MIL_AutomateMission_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
+        
     return true;    
 }
 
@@ -107,7 +103,6 @@ bool MIL_PionMission_GEN_RealiserFosseAC::Initialize( MIL_PionMission_ABC& missi
     MIL_PionMission_GEN_RealiserFosseAC& mission = static_cast< MIL_PionMission_GEN_RealiserFosseAC& >( missionTmp );
 
     NET_ASN_Tools::CopyLocation( mission.GetVariable( nDIAPosObstacleIdx_ ), GetVariable( nDIAPosObstacleIdx_ ) );
-    NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObstaclePlanifieIdx_ ), GetVariable( nDIAOidObstaclePlanifieIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypeIdx_ ), GetVariable( nDIATypeIdx_ ) );
 
     return true;
@@ -140,7 +135,6 @@ void MIL_PionMission_GEN_RealiserFosseAC::Serialize( ASN1T_MsgPionOrder& asnMsg 
     asnMsg.mission.u.mission_pion_gen_realiser_fosse_ac  = &asnMission;
 
     NET_ASN_Tools::CopyLocation( GetVariable( nDIAPosObstacleIdx_ ), asnMission.pos_obstacle );
-    NET_ASN_Tools::CopyID( GetVariable( nDIAOidObstaclePlanifieIdx_ ), asnMission.oid_obstacle_planifie );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIATypeIdx_ ), asnMission.type );
 
 }

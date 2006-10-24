@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_ZoneImplantationCOBRA::Create()
+MIL_RealObject_ABC& MIL_ZoneImplantationCOBRA::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_ZoneImplantationCOBRA();
+    return *new MIL_ZoneImplantationCOBRA( type, nID, army );
 }

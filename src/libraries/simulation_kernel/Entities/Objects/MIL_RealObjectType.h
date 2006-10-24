@@ -99,9 +99,9 @@ public:
     static void Terminate        ();
 
     static const T_ObjectTypeMap&    GetObjectTypes();
-    static const MIL_RealObjectType* FindObjectType( const std::string& strName );
-    static const MIL_RealObjectType* FindObjectType( uint nDiaID );
-    static const MIL_RealObjectType* FindObjectType( ASN1T_EnumObjectType nAsnID );
+    static const MIL_RealObjectType* Find( const std::string& strName );
+    static const MIL_RealObjectType* Find( uint nID );
+    static const MIL_RealObjectType* Find( ASN1T_EnumObjectType nAsnID );
 
     static const MIL_RealObjectTypeFilter& GetHatedObjectTypes();
     //@}
@@ -140,7 +140,7 @@ public:
     //@{
     MT_Float            ApplySpeedPolicy     ( MT_Float rAgentSpeedWithinObject, MT_Float rAgentSpeedWithinEnvironment, MT_Float rAgentMaxSpeed ) const;
     int                 ComputePlacementScore( const MT_Vector2D& pos, const TerrainData& nPassability ) const;
-    MIL_RealObject_ABC& InstanciateObject    () const;
+    MIL_RealObject_ABC& InstanciateObject    ( uint nID, MIL_Army& army ) const;
     bool                operator==           ( const MIL_RealObjectType& rhs ) const;
     bool                operator!=           ( const MIL_RealObjectType& rhs ) const;
     //@}
@@ -198,7 +198,7 @@ protected:
         eSpeedPolicy_ObjectMaxSpeed
     };
 
-    typedef MIL_RealObject_ABC& (*T_ObjectInstanciator)();
+    typedef MIL_RealObject_ABC& (*T_ObjectInstanciator)( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 
 protected:

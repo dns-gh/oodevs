@@ -22,7 +22,6 @@ MissionGenObject ::= SEQUENCE
 {
     type-obstacle           EnumObjectType,
     pos-obstacle            Localisation,
-    oid-obstacle-planifie   OID,
     urgence                 EnumMissionGenUrgence          DEFAULT serie-complementaire,
     preliminaire            EnumMissionGenSousTypeObstacle DEFAULT preliminaire,
     priorite                EnumMissionGenPriorite

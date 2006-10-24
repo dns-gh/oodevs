@@ -22,8 +22,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_PosteTir, "MIL_PosteTir" )
 // Name: MIL_PosteTir constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_PosteTir::MIL_PosteTir( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PosteTir constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_PosteTir::MIL_PosteTir()
-    : MIL_RealObject_ABC( MIL_RealObjectType::posteTir_ )
+    : MIL_RealObject_ABC()
 {
 }
 

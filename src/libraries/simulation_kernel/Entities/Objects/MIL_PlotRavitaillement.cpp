@@ -20,8 +20,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_PlotRavitaillement, "MIL_PlotRavitaillement" )
 // Name: MIL_PlotRavitaillement constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_PlotRavitaillement::MIL_PlotRavitaillement( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlotRavitaillement constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_PlotRavitaillement::MIL_PlotRavitaillement()
-    : MIL_RealObject_ABC( MIL_RealObjectType::plotRavitaillement_ )
+    : MIL_RealObject_ABC()
 {
 }
 

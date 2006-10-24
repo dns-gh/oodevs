@@ -20,9 +20,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_DestructionRoute, "MIL_DestructionRoute" )
 // Name: MIL_DestructionRoute constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_DestructionRoute::MIL_DestructionRoute()
-    : MIL_Obstacle( MIL_RealObjectType::destructionRoute_ )
+MIL_DestructionRoute::MIL_DestructionRoute( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DestructionRoute constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_DestructionRoute::MIL_DestructionRoute()
+    : MIL_Obstacle()
+{
+
 }
 
 //-----------------------------------------------------------------------------

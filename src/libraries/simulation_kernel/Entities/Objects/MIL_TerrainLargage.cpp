@@ -20,8 +20,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_TerrainLargage, "MIL_TerrainLargage" )
 // Name: MIL_TerrainLargage constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_TerrainLargage::MIL_TerrainLargage( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZonePoserHelicoptere constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_TerrainLargage::MIL_TerrainLargage()
-    : MIL_RealObject_ABC( MIL_RealObjectType::terrainLargage_ )
+    : MIL_RealObject_ABC()
 {
 }
 

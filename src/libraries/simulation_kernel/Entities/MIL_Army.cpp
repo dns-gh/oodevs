@@ -21,6 +21,8 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_AutomateType.h"
+#include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MIL_Formation.h"
 #include "MIL_EntityManager.h"
@@ -67,11 +69,14 @@ MIL_Army::MIL_Army( uint nID, MIL_InputArchive& archive )
     , knowledgeGroups_     ()
     , diplomacies_         ()
     , formations_          ()
+    , populations_         ()
+    , objects_             ()
 {
     archive.ReadAttribute( "name", strName_ );
    
     InitializeCommunication( archive );
     InitializeTactical     ( archive );
+    InitializeObjects      ( archive );
     InitializeLogistic     ( archive );
     InitializePopulations  ( archive );    
 }
@@ -151,6 +156,7 @@ void MIL_Army::serialize( Archive& file, const uint )
          & diplomacies_
          & knowledgeGroups_
          & formations_
+         & objects_
          & populations_
          & pKnowledgeBlackBoard_;
 }
@@ -180,6 +186,11 @@ void MIL_Army::WriteODB( MT_XXmlOutputArchive& archive ) const
         (**it).WriteLogisticLinksODB( archive );
     archive.EndSection(); // logistic
 
+    archive.Section( "objects" );
+    for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
+        (**it).WriteODB( archive );    
+    archive.EndSection(); // objects
+
     archive.Section( "populations" );
     for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
         (**it).WriteODB( archive );
@@ -195,10 +206,11 @@ void MIL_Army::WriteODB( MT_XXmlOutputArchive& archive ) const
 void MIL_Army::WriteDiplomacyODB( MT_XXmlOutputArchive& archive ) const
 {
     archive.Section( "side" );    
+    archive.WriteAttribute( "id", nID_ );
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         archive.Section( "relationship" );
-        archive.WriteAttribute( "side"     , it->first->GetName() );
+        archive.WriteAttribute( "side"     , it->first->GetID() );
         archive.WriteAttribute( "diplomacy", diplomacyConverter_.RevertConvert( it->second ) );
         archive.EndSection(); // relationship
     }
@@ -222,7 +234,7 @@ void MIL_Army::InitializeDiplomacy( MIL_InputArchive& archive )
         uint        nTeam;
         std::string strDiplomacy;
 
-        archive.ReadAttribute( "team"     , nTeam );
+        archive.ReadAttribute( "side"     , nTeam );
         archive.ReadAttribute( "diplomacy", strDiplomacy );
 
         E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
@@ -286,12 +298,38 @@ void MIL_Army::InitializeTactical( MIL_InputArchive& archive )
         {
             uint nID;
             archive.ReadAttribute( "id", nID );
-
             MIL_AgentServer::GetWorkspace().GetEntityManager().CreateFormation( nID, *this, archive ); // Auto-registration
             archive.EndList(); // formation
         }
     }
     archive.EndList(); // tactical
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::InitializeObjects
+// Created: NLD 2006-10-20
+// -----------------------------------------------------------------------------
+void MIL_Army::InitializeObjects( MIL_InputArchive& archive )
+{
+    archive.BeginList( "objects" );
+    while( archive.NextListElement() )
+    {
+        if( archive.Section( "object" ) )
+        {
+            uint        nID;
+            std::string strType;
+            archive.ReadAttribute( "id"  , nID );
+            archive.ReadAttribute( "type", strType );
+
+            const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strType );
+            if( !pType )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
+
+            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( *pType, nID, *this, archive ); // Auto-registration
+            archive.EndSection(); // object
+        }
+    }
+    archive.EndList(); // objects
 }
 
 // -----------------------------------------------------------------------------
@@ -538,10 +576,13 @@ void MIL_Army::SendCreation() const
         it->second->SendCreation();
 
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
-        (**it).SendCreation();    
+        (**it).SendCreation();
+
+    for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
+        (**it).SendCreation();
 
     for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
-        (**it).SendCreation();    
+        (**it).SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -565,8 +606,11 @@ void MIL_Army::SendFullState() const
     for( CIT_FormationSet it = formations_.begin(); it != formations_.end(); ++it )
         (**it).SendFullState();
 
+    for( CIT_ObjectSet it = objects_.begin(); it != objects_.end(); ++it )
+        (**it).SendFullState();
+
     for( CIT_PopulationSet it = populations_.begin(); it != populations_.end(); ++it )
-        (**it).SendFullState();    
+        (**it).SendFullState();
 }
 
 // -----------------------------------------------------------------------------

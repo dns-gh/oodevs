@@ -20,9 +20,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_BouchonMines, "MIL_BouchonMines" )
 // Name: MIL_BouchonMines constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_BouchonMines::MIL_BouchonMines()
-    : MIL_Obstacle( MIL_RealObjectType::bouchonMines_ )
+MIL_BouchonMines::MIL_BouchonMines( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BouchonMines constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_BouchonMines::MIL_BouchonMines()
+    : MIL_Obstacle()
+{
+
 }
 
 //-----------------------------------------------------------------------------
@@ -58,9 +68,9 @@ void MIL_BouchonMines::serialize( Archive& file, const uint )
 // Name: MIL_BouchonMines::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_BouchonMines::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_BouchonMines::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
         return false;
 
     rSizeCoef_                       = diaParameters[ nCurrentParamIdx ].ToFloat();  // Nbr mines

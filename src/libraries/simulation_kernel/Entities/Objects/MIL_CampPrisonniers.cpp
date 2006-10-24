@@ -28,8 +28,18 @@ BOOST_CLASS_EXPORT_GUID( MIL_CampPrisonniers, "MIL_CampPrisonniers" )
 // Name: MIL_CampPrisonniers constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_CampPrisonniers::MIL_CampPrisonniers( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+    , pTC2_             ( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CampPrisonniers constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_CampPrisonniers::MIL_CampPrisonniers()
-    : MIL_RealObject_ABC( MIL_RealObjectType::campPrisonniers_ )
+    : MIL_RealObject_ABC()
     , pTC2_             ( 0 )
 {
 }
@@ -57,7 +67,6 @@ void MIL_CampPrisonniers::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< MIL_RealObject_ABC >( *this )
          & pTC2_;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +76,11 @@ void MIL_CampPrisonniers::serialize( Archive& file, const uint )
 void MIL_CampPrisonniers::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
     assert( pTC2_ );
-    archive.WriteField( "TC2", pTC2_->GetID() );
+    archive.Section( "specific-attributes" );
+    archive.Section( "tc2" );
+    archive.WriteAttribute( "id", pTC2_->GetID() );
+    archive.EndSection(); // tc2
+    archive.EndSection(); // specific-attributes
 }
 
 // =============================================================================
@@ -78,9 +91,9 @@ void MIL_CampPrisonniers::WriteSpecificAttributes( MT_XXmlOutputArchive& archive
 // Name: MIL_CampPrisonniers::Initialize
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-bool MIL_CampPrisonniers::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_CampPrisonniers::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    if( !MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
         return false;
 
     DEC_AutomateDecision* pDecTC2 = diaParameters[ nCurrentParamIdx ].ToUserObject( pDecTC2 );
@@ -98,26 +111,29 @@ bool MIL_CampPrisonniers::Initialize( const MIL_Army& army, DIA_Parameters& diaP
 // Name: MIL_CampPrisonniers::Initialize
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-void MIL_CampPrisonniers::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_CampPrisonniers::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
 
-    uint nTC2_;
-    archive.ReadField( "TC2", nTC2_ );
-
-    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2_ );
+    archive.Section( "specific-attributes" );
+    archive.Section( "tc2" );
+    uint nTC2;
+    archive.ReadAttribute( "id", nTC2 );
+    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2 );
     if( !pTC2Tmp )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is invalid", archive.GetContext() );
     if( !pTC2Tmp->GetType().IsLogistic() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automate TC2 specified is not a logistic automate", archive.GetContext() );
     pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2Tmp );
+    archive.EndSection(); // tc2
+    archive.EndSection(); // specific-attributes
 }
     
 // -----------------------------------------------------------------------------
 // Name: MIL_CampPrisonniers::Initialize
 // Created: NLD 2005-02-24
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_CampPrisonniers::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_CampPrisonniers::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
     if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_camp_prisonniers )
         return EnumObjectErrorCode::error_missing_specific_attributes;
@@ -127,7 +143,7 @@ ASN1T_EnumObjectErrorCode MIL_CampPrisonniers::Initialize( uint nID, const ASN1T
         return EnumObjectErrorCode::error_invalid_specific_attributes;
     pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2Tmp );
 
-    return MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
+    return MIL_RealObject_ABC::Initialize( asnCreateObject );
 }
 
 // =============================================================================

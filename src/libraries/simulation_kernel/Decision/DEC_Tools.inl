@@ -242,17 +242,6 @@ bool DEC_Tools::CheckTypePopulationConnaissanceObjet( const DIA_Variable_ABC& di
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeID
-// Created: NLD 2004-10-20
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Tools::CheckTypeID( const DIA_Variable_ABC& diaVariable )
-{
-    assert( pTypeID_ );
-    return diaVariable.GetType() == *pTypeID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeAction
 // Created: NLD 2004-10-20
 // -----------------------------------------------------------------------------
@@ -440,17 +429,6 @@ const DIA_TypeDef& DEC_Tools::GetTypeDirection()
 {
     assert( pTypeDirection_ );
     return *pTypeDirection_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::GetTypeID
-// Created: NLD 2004-10-21
-// -----------------------------------------------------------------------------
-inline
-const DIA_TypeDef& DEC_Tools::GetTypeID()
-{
-    assert( pTypeID_ );
-    return *pTypeID_;
 }
 
 // -----------------------------------------------------------------------------

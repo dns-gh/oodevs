@@ -40,7 +40,7 @@ public:
     //@}
 
 public:
-             MIL_ControlZone( const MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius  );
+             MIL_ControlZone( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius  );
     virtual ~MIL_ControlZone();
 
     //! @name Operations

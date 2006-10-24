@@ -51,8 +51,8 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_Army& GetArmy() const;
-          uint      GetID  () const;
+    MIL_Army& GetArmy() const;
+    uint      GetID  () const;
     //@}
 
     //! @name Network

@@ -34,8 +34,18 @@ BOOST_CLASS_EXPORT_GUID( MIL_NuageNBC, "MIL_NuageNBC" )
 // Name: MIL_NuageNBC constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_NuageNBC::MIL_NuageNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+    , pNbcAgentType_    ( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NuageNBC constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_NuageNBC::MIL_NuageNBC()
-    : MIL_RealObject_ABC( MIL_RealObjectType::nuageNBC_ )
+    : MIL_RealObject_ABC()
     , pNbcAgentType_    ( 0 )
 {
 }
@@ -94,9 +104,12 @@ void MIL_NuageNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
 void MIL_NuageNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
     assert( pNbcAgentType_ );
-    archive.Section( "AgentNBC" );
+
+    archive.Section( "specific-attributes" );
+    archive.Section( "nbc-agent" );
     archive.WriteAttribute( "type", pNbcAgentType_->GetName() );
-    archive.EndSection(); // AgentNBC
+    archive.EndSection(); // nbc-agent
+    archive.EndSection(); // specific-attributes
 }
 
 //=============================================================================
@@ -108,9 +121,9 @@ void MIL_NuageNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) cons
 // Created: JVT 02-10-22
 // Modified: JVT 2004-10-28
 //-----------------------------------------------------------------------------
-bool MIL_NuageNBC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_NuageNBC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
+    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
     return false;
 }
 
@@ -118,9 +131,9 @@ bool MIL_NuageNBC::Initialize( const MIL_Army& army, DIA_Parameters& diaParamete
 // Name: MIL_NuageNBC::Initialize
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void MIL_NuageNBC::Initialize( const MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent )
+void MIL_NuageNBC::Initialize( const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent )
 {
-    MIL_RealObject_ABC::Initialize( army, localisation );
+    MIL_RealObject_ABC::InitializeCommon( localisation );
 
     assert( localisation.WasACircle() );
     pNbcAgentType_        = &nbcAgent;
@@ -135,24 +148,24 @@ void MIL_NuageNBC::Initialize( const MIL_Army& army, const TER_Localisation& loc
 // Created: NLD 2003-07-21
 // Modified: JVT 2004-10-28
 //-----------------------------------------------------------------------------
-void MIL_NuageNBC::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_NuageNBC::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
 
     if( !GetLocalisation().WasACircle() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation of object type 'NuageNBC' MUST be a circle", archive.GetContext() );
 
-    std::string strNbcAgentType_;
-    archive.Section( "AgentNBC" );
-    archive.ReadAttribute( "type", strNbcAgentType_ );
-    archive.EndSection();
+    archive.Section( "specific-attributes" );
+    archive.Section( "nbc-agent" );
 
+    std::string strNbcAgentType_;
+    archive.ReadAttribute( "type", strNbcAgentType_ );
     pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strNbcAgentType_ );
     if( !pNbcAgentType_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
+        throw MT_ScipioException( "MIL_ZoneNBC::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
 
-    if( !GetLocalisation().WasACircle() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation type of object 'nuage NBC' should be a circle", archive.GetContext() );    
+    archive.EndSection(); // nbc-agent
+    archive.EndSection(); // specific-attributes
 
     vOrigin_              = GetLocalisation().GetCircleCenter();
     rCurrentCircleRadius_ = GetLocalisation().GetCircleRadius();
@@ -164,7 +177,7 @@ void MIL_NuageNBC::Initialize( uint nID, MIL_InputArchive& archive )
 // Created: NLD 2003-08-04
 // Modified: JVT 2004-10-28
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
     if( asnCreateObject.localisation.type != EnumTypeLocalisation::circle )
         return EnumObjectErrorCode::error_invalid_localisation;
@@ -176,7 +189,7 @@ ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( uint nID, const ASN1T_MagicA
     if( !pNbcAgentType_ )
         return EnumObjectErrorCode::error_invalid_specific_attributes;
 
-    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
+    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
@@ -324,9 +337,9 @@ void MIL_NuageNBC::UpdateState()
 // Name: MIL_NuageNBC::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
-bool MIL_NuageNBC::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+bool MIL_NuageNBC::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    MIL_RealObject_ABC::Initialize( strOption, strExtra, rCompletion, rMining, rBypass );
+    MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass );
     pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strOption );
     nDeathTimeStep_ = uint( -1 );
     return pNbcAgentType_ != 0;

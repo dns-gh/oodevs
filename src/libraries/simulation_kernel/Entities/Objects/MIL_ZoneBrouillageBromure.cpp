@@ -23,8 +23,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneBrouillageBromure, "MIL_ZoneBrouillageBromure" 
 // Name: MIL_ZoneBrouillageBromure constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneBrouillageBromure::MIL_ZoneBrouillageBromure( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneBrouillageBromure constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneBrouillageBromure::MIL_ZoneBrouillageBromure()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zoneBrouillageBromure_ )
+    : MIL_RealObject_ABC()
 {
 }
 
@@ -41,6 +50,7 @@ MIL_ZoneBrouillageBromure::~MIL_ZoneBrouillageBromure()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneBrouillageBromure::serialize
 // Created: JVT 2005-04-14
@@ -55,6 +65,7 @@ void MIL_ZoneBrouillageBromure::serialize( Archive& file, const uint )
 // =============================================================================
 // EVENTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneBrouillageBromure::ProcessAgentInside
 // Created: NLD 2004-11-04

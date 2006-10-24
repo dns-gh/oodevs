@@ -3,14 +3,11 @@
 <profiles>
     <profile name="test">
         <password>cock</password>
-        <rights>
-            <readonly>
-                <side id="1"/>
-            </readonly>
-            
+        <rights>       
+            <readonly/>    
             <readwrite>
-                <formation id="5"/>
-                <formation id="7"/>
+                <side id="1"/>
+                <side id="3"/>
             </readwrite>
             
             <supervision>true</supervision>

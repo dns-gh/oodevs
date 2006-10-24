@@ -15,9 +15,13 @@
 #include "MIL_RealObjectType.h"
 #include "MIL_RealObject_ABC.h"
 #include "MIL_VirtualObject_ABC.h"
+#include "MIL_NuageNBC.h"
+#include "MIL_ZoneMineeParDispersion.h"
+#include "MIL_ControlZone.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_Federate.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -69,40 +73,6 @@ void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const uint ) const
          // << virtualObjects_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::WriteODB
-// Created: NLD 2006-05-29
-// -----------------------------------------------------------------------------
-void MIL_ObjectManager::WriteODB( MT_XXmlOutputArchive& archive ) const
-{
-    archive.Section( "Objets" );
-    
-    for( CIT_RealObjectMap it = realObjects_.begin(); it != realObjects_.end(); ++it )
-        it->second->WriteODB( archive );
-
-    archive.EndSection();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::ReadODB
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void MIL_ObjectManager::ReadODB( MIL_InputArchive& archive )
-{
-    MT_LOG_INFO_MSG( "Initializing objects" );
-
-    if ( !archive.BeginList( "Objets", MIL_InputArchive::eNothing ) )
-        return;
-
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Objet" );
-        CreateObject( archive );
-        archive.EndSection(); // Objet
-    }
-    archive.EndList(); // Objets
-}
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================
@@ -132,7 +102,7 @@ void MIL_ObjectManager::UpdateStates()
         MIL_RealObject_ABC& object = *itRealObject->second;
         if( object.IsReadyForDeletion() )
         {
-            object.SendMsgDestruction();
+            object.SendDestruction();
             delete &object;
             itRealObject = realObjects_.erase( itRealObject );
         }
@@ -184,30 +154,35 @@ void MIL_ObjectManager::RegisterObject( MIL_RealObject_ABC& object )
         MIL_AgentServer::GetWorkspace().GetHLAFederate()->Register( object );
     bool bOut = realObjects_.insert( std::make_pair( object.GetID(), &object ) ).second;
     assert( bOut );
-    object.SendMsgConstruction();
+    object.SendCreation(); //$$$ a déplacer ...
     object.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( object ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
-// Created: NLD 2004-09-15
+// Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( const MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
+MIL_RealObject_ABC& MIL_ObjectManager::CreateObject( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive )
 {
-    uint nObjectTypeID = diaParameters[ nCurrentParamIdx++ ].ToId();
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( nObjectTypeID );
-    if( !pObjectType )
-        return 0;
+    nID = type.GetIDManager().ConvertSimIDToMosID( nID );
+    if( realObjects_.find( nID ) != realObjects_.end() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already exists", archive.GetContext() );
 
-    MIL_RealObject_ABC& object = pObjectType->InstanciateObject();
-    if( !object.Initialize( army, diaParameters, nCurrentParamIdx ) )
+    if( type.GetIDManager().IsMosIDValid( nID ) )
     {
-        object.MarkForDestruction(); //$$$ naze, mais nécessaire
-        delete &object;
-        return 0;
+        if( !type.GetIDManager().LockMosID( nID ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already used", archive.GetContext() );
     }
+
+    MIL_RealObject_ABC& object = type.InstanciateObject( nID, army );
+    object.Initialize( archive );
+
+    // Default state : full constructed, valorized if it can be, not prepared
+    object.Construct();
+    object.Mine     ();
+
     RegisterObject( object );
-    return &object;
+    return object;
 }
 
 // -----------------------------------------------------------------------------
@@ -216,15 +191,21 @@ MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( const MIL_Army& army, DIA_P
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( uint nID, const ASN1T_MagicActionCreateObject& asn )
 {
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( asn.type );
-    if( !pObjectType )
+    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( asn.type );
+    if( !pType )
         return EnumObjectErrorCode::error_invalid_object;
 
     if( realObjects_.find( nID ) != realObjects_.end() )
         return EnumObjectErrorCode::error_invalid_id;
+    if ( !pType->GetIDManager().IsMosIDValid( nID ) || !pType->GetIDManager().LockMosID( nID ) )
+        return EnumObjectErrorCode::error_invalid_id;
 
-    MIL_RealObject_ABC& object = pObjectType->InstanciateObject();
-    ASN1T_EnumObjectErrorCode nErrorCode = object.Initialize( nID, asn );
+    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asn.oid_camp );
+    if( !pArmy )
+        return EnumObjectErrorCode::error_invalid_camp;
+
+    MIL_RealObject_ABC& object = pType->InstanciateObject( nID, *pArmy );
+    ASN1T_EnumObjectErrorCode nErrorCode = object.Initialize( asn );
     if( nErrorCode != EnumObjectErrorCode::no_error )
     {
         object.MarkForDestruction(); //$$$ naze, mais nécessaire
@@ -244,45 +225,81 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( uint nID, const ASN1T
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::CreateObject( MIL_InputArchive& archive )
+MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx )
 {
-    std::string strType;
-    uint        nID;
-    
-    archive.ReadAttribute( "id", nID );
-    archive.ReadAttribute( "type", strType );
+    uint nObjectTypeID = diaParameters[ nCurrentParamIdx++ ].ToId();
+    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( nObjectTypeID );
+    if( !pType )
+        return 0;
 
-    const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( strType );
-    if( !pObjectType )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
-
-    nID = pObjectType->GetIDManager().ConvertSimIDToMosID( nID );
-    if( realObjects_.find( nID ) != realObjects_.end() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "ID already exists", archive.GetContext() );
-
-    MIL_RealObject_ABC& object = pObjectType->InstanciateObject();
-    object.Initialize( nID, archive );
-
-    // Default state : full constructed, valorized if it can be, not prepared
-    object.Construct();
-    object.Mine     ();
-
+    MIL_RealObject_ABC& object = pType->InstanciateObject( pType->GetIDManager().GetFreeSimID(), army );
+    if( !object.Initialize( diaParameters, nCurrentParamIdx ) )
+    {
+        object.MarkForDestruction(); //$$$ naze, mais nécessaire
+        delete &object;
+        return 0;
+    }
     RegisterObject( object );
+    return &object;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateObject
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_RealObject_ABC* MIL_ObjectManager::CreateObject( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+{
+    MIL_RealObject_ABC& object = type.InstanciateObject( type.GetIDManager().GetFreeSimID(), army );
+    if( !object.Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass ) )
+    {
+        object.MarkForDestruction(); //$$$ naze, mais nécessaire
+        delete &object;
+        return 0;
+    }
+    RegisterObject( object );
+    return &object;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateObjectNuageNBC
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_NuageNBC& MIL_ObjectManager::CreateObjectNuageNBC( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType )
+{
+    MIL_NuageNBC& object = *new MIL_NuageNBC( MIL_RealObjectType::nuageNBC_, MIL_RealObjectType::nuageNBC_.GetIDManager().GetFreeSimID(), army );
+    object.Initialize( localisation, nbcAgentType );
+    object.Construct();
+    RegisterObject( object );
+    return object;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateObjectZoneeMineeParDispersion
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_ZoneMineeParDispersion& MIL_ObjectManager::CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines )
+{
+    MIL_ZoneMineeParDispersion& object = *new MIL_ZoneMineeParDispersion( MIL_RealObjectType::zoneMineeParDispersion_, MIL_RealObjectType::nuageNBC_.GetIDManager().GetFreeSimID(), army );
+    object.Initialize( localisation, nNbrMines );
+    object.Construct();
+    RegisterObject( object );
+    return object;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::CreateObjectControlZone
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_ControlZone& MIL_ObjectManager::CreateObjectControlZone( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius )
+{
+    MIL_ControlZone& object = *new MIL_ControlZone( army, localisation, rRadius );
+    RegisterObject( object );
+    return object;
 }
 
 // =============================================================================
 // NETWORK
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::SendStateToNewClient
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-void MIL_ObjectManager::SendStateToNewClient()
-{
-    for( CIT_RealObjectMap it = realObjects_.begin(); it != realObjects_.end(); ++it )
-        it->second->SendStateToNewClient();
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction

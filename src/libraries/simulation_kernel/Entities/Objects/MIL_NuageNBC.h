@@ -27,6 +27,7 @@ class MIL_NuageNBC : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_NuageNBC );
 
 public:
+             MIL_NuageNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_NuageNBC();
     virtual ~MIL_NuageNBC();
 
@@ -40,12 +41,12 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
 
-            void                      Initialize( const MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent );
-    virtual bool                      Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
-    virtual void                      Initialize( uint nID, MIL_InputArchive& archive );
-    virtual ASN1T_EnumObjectErrorCode Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject );
+            void                      Initialize( const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent );
+    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject );
     //@}
 
     //! @name Update
@@ -65,7 +66,7 @@ public:
 
     //! @name HLA
     //@{
-    virtual bool Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
+    virtual bool Initialize ( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     virtual void Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer );
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}

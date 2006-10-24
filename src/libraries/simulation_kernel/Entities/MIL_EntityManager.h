@@ -25,9 +25,14 @@ class MIL_Formation;
 class MIL_VirtualObject_ABC;
 class MIL_AgentTypePion;
 class MIL_RealObject_ABC;
+class MIL_RealObjectType;
 class MIL_Population;
 class MIL_PopulationType;
 class MIL_AutomateType;
+class MIL_NbcAgentType;
+class MIL_ControlZone;
+class MIL_NuageNBC;
+class MIL_ZoneMineeParDispersion;
 class TER_Localisation;
 
 class HLA_Federate;
@@ -82,16 +87,24 @@ public:
     MIL_Automate&   CreateAutomate  ( const MIL_AutomateType&  type, uint nID, MIL_Formation& formation, MIL_InputArchive& archive );
     MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, uint nID, MIL_Automate&  automate , MIL_InputArchive& archive );
     MIL_AgentPion&  CreatePion      ( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
+
+    MIL_RealObject_ABC&         CreateObject                       ( const MIL_RealObjectType& type, uint nID, MIL_Army& army, MIL_InputArchive& archive ); 
+    MIL_RealObject_ABC*         CreateObject                       ( MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
+    MIL_RealObject_ABC*         CreateObject                       ( const MIL_RealObjectType& type, MIL_Army& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
+    MIL_NuageNBC&               CreateObjectNuageNBC               ( MIL_Army& army, const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );
+    MIL_ZoneMineeParDispersion& CreateObjectZoneeMineeParDispersion( MIL_Army& army, const TER_Localisation& localisation, uint nNbrMines );
+    MIL_ControlZone&            CreateObjectControlZone            ( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius );
     //@}
 
     //! @name Accessors
     //@{
-          MIL_Army*          FindArmy        ( const std::string& strName ) const;
-          MIL_Army*          FindArmy        ( uint nID ) const;
-          MIL_Automate*      FindAutomate    ( uint nID ) const;
-          MIL_Population*    FindPopulation  ( uint nID ) const;
-          MIL_AgentPion*     FindAgentPion   ( uint nID ) const;
-    const T_ArmyMap&         GetArmies       () const;
+          MIL_Army*           FindArmy      ( const std::string& strName ) const;
+          MIL_Army*           FindArmy      ( uint nID ) const;
+          MIL_Automate*       FindAutomate  ( uint nID ) const;
+          MIL_Population*     FindPopulation( uint nID ) const;
+          MIL_AgentPion*      FindAgentPion ( uint nID ) const;
+          MIL_RealObject_ABC* FindObject    ( uint nID ) const;
+    const T_ArmyMap&          GetArmies     () const;
     
           MIL_EffectManager& GetEffectManager() const;
     //@}
@@ -135,14 +148,6 @@ public:
     void OnReceiveMsgChangeAutomate       ( ASN1T_MsgChangeAutomate&                msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, MIL_MOSContextID nCtx );
     void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, MIL_MOSContextID nCtx );
-    //@}
-
-    //! @name Objects
-    //@{
-    MIL_RealObject_ABC* CreateObject  ( const MIL_Army& army, DIA_Parameters& diaParameters, uint nCurrentParamIdx );
-    void                RegisterObject( MIL_VirtualObject_ABC& object );
-    void                RegisterObject( MIL_RealObject_ABC&    object );
-    MIL_RealObject_ABC* FindRealObject( uint nID ) const;
     //@}
 
     //! @name Population channeling

@@ -2174,39 +2174,6 @@ bool NET_ASN_Tools::CopyNumeric( const DIA_Variable_ABC& diaFrom, DIA_Variable_A
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyID
-// Created: NLD 2004-04-22
-// -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyID ( const ASN1T_OID& asn, DIA_Variable_ABC& dia )
-{
-    dia.SetValue( (void*)asn, &DEC_Tools::GetTypeID() );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyID
-// Created: NLD 2004-04-22
-// -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyID ( const DIA_Variable_ABC& dia, ASN1T_OID& asn )
-{
-    assert( DEC_Tools::CheckTypeID( dia ) );
-    asn = (int)dia.ToPtr();
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyID
-// Created: NLD 2004-04-22
-// -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyID ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
-{
-    assert( DEC_Tools::CheckTypeID( diaFrom ) );
-    assert( DEC_Tools::CheckTypeID( diaTo ) );
-    diaTo.SetValue( diaFrom.ToPtr(), &DEC_Tools::GetTypeID() );
-    return true;
-}
-
-// -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyNatureAtlas
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------

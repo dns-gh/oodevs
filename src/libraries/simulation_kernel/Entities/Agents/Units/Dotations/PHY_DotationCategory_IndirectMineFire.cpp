@@ -74,8 +74,5 @@ void PHY_DotationCategory_IndirectMineFire::ApplyEffect( const MIL_AgentPion& fi
     points.push_back( vTargetPosition + vRotatedFireDirection );
     const TER_Localisation localisation( TER_Localisation::eEllipse, points );
 
-    MIL_ZoneMineeParDispersion& zoneMinee = *new MIL_ZoneMineeParDispersion();
-    zoneMinee.Initialize( firer.GetArmy(), localisation, nNbrMines );
-    zoneMinee.Construct();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( zoneMinee );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectZoneeMineeParDispersion( firer.GetArmy(), localisation, nNbrMines );
 }

@@ -20,8 +20,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_AirePoser, "MIL_AirePoser" )
 // Name: MIL_AirePoser constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_AirePoser::MIL_AirePoser( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AirePoser constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_AirePoser::MIL_AirePoser()
-    : MIL_RealObject_ABC( MIL_RealObjectType::airePoser_ )
+    : MIL_RealObject_ABC()
 {
 }
 
@@ -37,6 +46,7 @@ MIL_AirePoser::~MIL_AirePoser()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AirePoser::serialize
 // Created: JVT 2005-04-14

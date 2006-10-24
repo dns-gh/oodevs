@@ -50,7 +50,6 @@ void Mission_Pawn_GEN_RealiserZoneMineeLineaire::Serialize()
     const Location& posObstacle_ = pTarget_->GetTestParam_Polygon();
 
     ASN_Tools::CopyPolygon( posObstacle_, asnMission.pos_obstacle );
-    ASN_Tools::CopyID( pTarget_->GetTestParam_ID(), asnMission.oid_obstacle_planifie );
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric(), asnMission.densite );
 
     delete &posObstacle_;

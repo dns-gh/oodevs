@@ -31,7 +31,6 @@ const DIA_TypeDef* DEC_Tools::pTypeConnaissanceAgent_             = 0;
 const DIA_TypeDef* DEC_Tools::pTypeConnaissancePopulation_        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePopulationConnaissanceAgent_   = 0;
 const DIA_TypeDef* DEC_Tools::pTypePopulationConnaissanceObjet_   = 0;
-const DIA_TypeDef* DEC_Tools::pTypeID_                            = 0;
 const DIA_TypeDef* DEC_Tools::pTypeAction_                        = 0;
 const DIA_TypeDef* DEC_Tools::pTypePion_                          = 0;
 const DIA_TypeDef* DEC_Tools::pTypeAutomate_                      = 0;
@@ -65,7 +64,6 @@ void DEC_Tools::InitializeDIA()
     pTypeConnaissancePopulation_        = &GetDIAType( "T_ConnaissancePopulation"       );
     pTypePopulationConnaissanceAgent_   = &GetDIAType( "T_Population_ConnaissanceAgent" );
     pTypePopulationConnaissanceObjet_   = &GetDIAType( "T_Population_ConnaissanceObjet" );
-    pTypeID_                            = &GetDIAType( "T_ID"                           );
     pTypeAction_                        = &GetDIAType( "T_Action"                       );
     pTypePion_                          = &GetDIAType( "T_Pion"                         );
     pTypeAutomate_                      = &GetDIAType( "T_Automate"                     ); 
@@ -326,8 +324,6 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     else if( *pType == *pTypePopulationConnaissanceAgent_ )
         ; // NOTHING
     else if( *pType == *pTypePopulationConnaissanceObjet_ )
-        ; // NOTHING
-    else if( *pType == *pTypeID_ )    
         ; // NOTHING
     else if( *pType == *pTypePion_ )
         ; // NOTHING

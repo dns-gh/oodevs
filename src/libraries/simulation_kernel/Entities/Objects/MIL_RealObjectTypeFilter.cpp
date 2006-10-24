@@ -34,7 +34,7 @@ MIL_RealObjectTypeFilter::MIL_RealObjectTypeFilter( DIA_Parameters& diaParameter
     uint nNbrParams = diaParameters.GetParameters().size();
     for( uint i = nFirstDiaParam; i < nNbrParams; ++i )
     {
-        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::FindObjectType( diaParameters.GetParameter( i ).ToId() );
+        const MIL_RealObjectType* pObjectType = MIL_RealObjectType::Find( diaParameters.GetParameter( i ).ToId() );
         assert( pObjectType );
         Set( *pObjectType );
     }    

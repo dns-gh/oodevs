@@ -30,12 +30,13 @@ class MIL_Object_ABC : public TER_Object_ABC
     MT_COPYNOTALLOWED( MIL_Object_ABC ); 
    
 public:
+             MIL_Object_ABC( MIL_Army& army );
              MIL_Object_ABC();
     virtual ~MIL_Object_ABC();
     
     //! @name Init
     //@{
-    virtual void Initialize( const MIL_Army& army, const TER_Localisation& localisation );
+    virtual void Initialize( const TER_Localisation& localisation );
     //@}
 
     //! @name CheckPoints
@@ -69,6 +70,7 @@ public:
           bool      IsMarkedForDestruction() const;
           bool      IsReadyForDeletion    () const;
     const MIL_Army& GetArmy               () const;
+          MIL_Army& GetArmy               ();
 
     virtual bool IsReal() const = 0;
     //@}
@@ -97,9 +99,9 @@ protected:
     //@}
 
 private:
-    const MIL_Army* pArmy_;
-          bool      bMarkedForDestruction_;
-          bool      bReadyForDeletion_;
+    MIL_Army* pArmy_;
+    bool      bMarkedForDestruction_;
+    bool      bReadyForDeletion_;
 
     // Link with agents
     T_AgentSet agentInsideSet_;

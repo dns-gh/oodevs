@@ -20,9 +20,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_AireLogistique, "MIL_AireLogistique" )
 // Name: MIL_AireLogistique constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_AireLogistique::MIL_AireLogistique()
-    : MIL_RealObject_ABC( MIL_RealObjectType::aireLogistique_ )
+MIL_AireLogistique::MIL_AireLogistique( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AireLogistique constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_AireLogistique::MIL_AireLogistique()
+    : MIL_RealObject_ABC()
+{
+
 }
 
 //-----------------------------------------------------------------------------
@@ -37,6 +47,7 @@ MIL_AireLogistique::~MIL_AireLogistique()
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AireLogistique::serialize
 // Created: JVT 2005-04-14

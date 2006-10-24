@@ -14,7 +14,7 @@
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
 inline
-const MIL_Army& MIL_Formation::GetArmy() const
+MIL_Army& MIL_Formation::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;

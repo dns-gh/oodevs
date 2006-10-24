@@ -18,49 +18,41 @@ EnumTypeFosseAC ::= ENUMERATED
 Mission-Pion-GEN-RealiserFosseAC ::= SEQUENCE
 {
     pos-obstacle            Line,
-    oid-obstacle-planifie   OID,
     type                    EnumTypeFosseAC -- Juste un paramètre influencant les délais de construction/destruction - n'influe pas sur la géométrie de l'obstacle
 }
 Mission-Pion-GEN-RealiserAbattisMine ::= SEQUENCE
 {
     pos-obstacle            Point,
-    oid-obstacle-planifie   OID,
     urgence                 EnumMissionGenUrgence,
     preliminaire            EnumMissionGenSousTypeObstacle
 }
 Mission-Pion-GEN-RealiserPointMine ::= SEQUENCE
 {
-    pos-obstacle            Point,
-    oid-obstacle-planifie   OID
+    pos-obstacle            Point
 }
 Mission-Pion-GEN-RealiserBarricade ::= SEQUENCE
 {
     pos-obstacle            Point,
-    oid-obstacle-planifie   OID,
     urgence                 EnumMissionGenUrgence
 }
 Mission-Pion-GEN-RealiserEboulement ::= SEQUENCE
 {
     pos-obstacle            Point,
-    oid-obstacle-planifie   OID,
     preliminaire            EnumMissionGenSousTypeObstacle
 }
 Mission-Pion-GEN-RealiserBouchonMine ::= SEQUENCE
 {
     pos-obstacle            Point,
-    oid-obstacle-planifie   OID,
     urgence                 EnumMissionGenUrgence
 }
 Mission-Pion-GEN-DetruireRoute ::= SEQUENCE
 {
     pos-obstacle            Point,
-    oid-obstacle-planifie   OID,
     preliminaire            EnumMissionGenSousTypeObstacle
 }
 Mission-Pion-GEN-DetruirePont ::= SEQUENCE
 {
     pos-obstacle            Point,
-    oid-obstacle-planifie   OID,
     preliminaire            EnumMissionGenSousTypeObstacle
 }
 Mission-Pion-GEN-SecuriserItineraire ::= SEQUENCE
@@ -94,7 +86,6 @@ Mission-Pion-GEN-CreerContournement ::= SEQUENCE
 Mission-Pion-GEN-RealiserZoneMineeLineaire ::= SEQUENCE
 {    
     pos-obstacle            Polygon,  
-    oid-obstacle-planifie   OID,
     densite                 REAL(0..5)    -- Nombre de mines par mètre de front
 }
 Mission-Pion-GEN-OuvrirTrouee ::= SEQUENCE
@@ -118,18 +109,15 @@ Mission-Pion-GEN-FranchirFosseAC ::= SEQUENCE
 Mission-Pion-GEN-RealiserZoneMineeParDispersion ::= SEQUENCE
 {
     pos-obstacle            Polygon,
-    oid-obstacle-planifie   OID,
     densite                 REAL(0..5)    -- Nombre de mines par mètre de front
 }
 Mission-Pion-GEN-RealiserPostesTir ::= SEQUENCE
 {
-    pos-objet            Point,
-    oid-objet-planifie   OID
+    pos-objet            Point
 }
 Mission-Pion-GEN-RealiserTravauxProtection ::= SEQUENCE
 {
-    pos-objet            Point,
-    oid-objet-planifie   OID
+    pos-objet            Point
 }
 Mission-Pion-GEN-RetablirItineraire ::= SEQUENCE
 {
@@ -145,7 +133,6 @@ EnumGenTypePontage ::= ENUMERATED
 Mission-Pion-GEN-EquiperExploiter ::= SEQUENCE
 {                               
     site-franchissement  KnowledgeObject,
-    oid-objet-planifie   OID,
     point-regroupement   Point,
     type-pontage         EnumGenTypePontage
 }
@@ -153,7 +140,6 @@ Mission-Pion-GEN-EquiperExploiter ::= SEQUENCE
 Mission-Pion-GEN-ExecuterVariantement ::= SEQUENCE
 {                               
     site-franchissement  KnowledgeObject,
-    oid-objet-planifie   OID,
     point-regroupement   Point,
     type-pontage         EnumGenTypePontage
 }
@@ -183,20 +169,17 @@ Mission-Pion-GEN-ReconnaitreZone ::= SEQUENCE
 --
 Mission-Pion-GEN-CreerPlateForme ::= SEQUENCE
 {
-    pos-obstacle            Point,
-    oid-obstacle-planifie   OID
+    pos-obstacle            Point
 }
 
 Mission-Pion-GEN-CreerPiste ::= SEQUENCE
 {
-    pos-obstacle            Line,
-    oid-obstacle-planifie   OID
+    pos-obstacle            Line
 }
 
 Mission-Pion-GEN-CreerAirePoser ::= SEQUENCE
 {
-    pos-obstacle            Point,
-    oid-obstacle-planifie   OID
+    pos-obstacle            Point
 }
 
 Mission-Pion-GEN-NeutraliserEnginsExplosifs ::= SEQUENCE
@@ -216,8 +199,7 @@ Mission-Pion-GEN-AmeliorerMobilite ::= SEQUENCE
 
 Mission-Pion-GEN-RealiserAireLogistique ::= SEQUENCE
 {
-    position-obstacle       Point,
-    oid-obstacle-planifie   OID
+    position-obstacle       Point
 }
 
 Mission-Pion-GEN-DepolluerZone ::= SEQUENCE
@@ -228,7 +210,6 @@ Mission-Pion-GEN-DepolluerZone ::= SEQUENCE
 Mission-Pion-GEN-AmenagerTerrainPoser ::= SEQUENCE
 {
     pos-obstacle            Point,
-    oid-obstacle-planifie   OID,
     type-objet              ENUMERATED    
     {
         aire-poser,
@@ -239,8 +220,7 @@ Mission-Pion-GEN-AmenagerTerrainPoser ::= SEQUENCE
 
 Mission-Pion-GEN-RealiserPlateFormeDeploiement ::= SEQUENCE
 {
-    position-obstacle       Point,
-    oid-obstacle-planifie   OID
+    position-obstacle       Point
 }
 
 Mission-Pion-GEN-ReprendreMissionConstruction ::= SEQUENCE
@@ -250,8 +230,7 @@ Mission-Pion-GEN-ReprendreMissionConstruction ::= SEQUENCE
 
 Mission-Pion-GEN-RealiserZonePoserHelicoptere ::= SEQUENCE
 {
-    zone-poser              Point,
-    oid-obstacle-planifie   OID
+    zone-poser Point
 }
 
 Mission-Pion-GEN-AppuyerDebarquementTroupesGU ::= SEQUENCE

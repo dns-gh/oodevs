@@ -25,6 +25,7 @@ class MIL_ZoneImplantationMortier : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_ZoneImplantationMortier );
 
 public:
+             MIL_ZoneImplantationMortier( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_ZoneImplantationMortier();
     virtual ~MIL_ZoneImplantationMortier();
 
@@ -35,7 +36,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 
 protected:

@@ -25,6 +25,7 @@ class MIL_DestructionPont : public MIL_Obstacle
     MT_COPYNOTALLOWED( MIL_DestructionPont );
 
 public:
+             MIL_DestructionPont( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_DestructionPont();
     virtual ~MIL_DestructionPont();
 
@@ -35,7 +36,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 };
 

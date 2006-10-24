@@ -21,7 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_RealiserTravauxProtection::nDIAPosObjetIdx_ = 0 ;
-int MIL_PionMission_GEN_RealiserTravauxProtection::nDIAOidObjetPlanifieIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -33,7 +32,6 @@ void MIL_PionMission_GEN_RealiserTravauxProtection::InitializeDIA( const MIL_Pio
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIAPosObjetIdx_ = DEC_Tools::InitializeDIAField( "posObjet_", diaType );
-    nDIAOidObjetPlanifieIdx_ = DEC_Tools::InitializeDIAField( "oidObjetPlanifie_", diaType );
 
 }
 
@@ -72,8 +70,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_RealiserTravauxProtection::Initiali
     const ASN1T_Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *asnMsg.mission.u.mission_pion_gen_realiser_travaux_protection;
     if( !NET_ASN_Tools::CopyPoint( asnMission.pos_objet, GetVariable( nDIAPosObjetIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyID( asnMission.oid_objet_planifie, GetVariable( nDIAOidObjetPlanifieIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
 }
@@ -88,7 +84,7 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( const MIL_Automa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
+    
     return true;    
 }
 
@@ -103,7 +99,6 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( MIL_PionMission_
     MIL_PionMission_GEN_RealiserTravauxProtection& mission = static_cast< MIL_PionMission_GEN_RealiserTravauxProtection& >( missionTmp );
 
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPosObjetIdx_ ), GetVariable( nDIAPosObjetIdx_ ) );
-    NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObjetPlanifieIdx_ ), GetVariable( nDIAOidObjetPlanifieIdx_ ) );
 
     return true;
 }                                                                    
@@ -135,7 +130,6 @@ void MIL_PionMission_GEN_RealiserTravauxProtection::Serialize( ASN1T_MsgPionOrde
     asnMsg.mission.u.mission_pion_gen_realiser_travaux_protection  = &asnMission;
 
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPosObjetIdx_ ), asnMission.pos_objet );
-    NET_ASN_Tools::CopyID( GetVariable( nDIAOidObjetPlanifieIdx_ ), asnMission.oid_objet_planifie );
 
 }
 

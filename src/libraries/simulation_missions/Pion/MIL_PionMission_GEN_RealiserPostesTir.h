@@ -44,7 +44,6 @@ public:
 
 private:
     static int nDIAPosObjetIdx_;
-    static int nDIAOidObjetPlanifieIdx_;
 
 };
 

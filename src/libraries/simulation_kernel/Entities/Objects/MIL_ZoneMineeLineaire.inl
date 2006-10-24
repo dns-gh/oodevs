@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_ZoneMineeLineaire::Create()
+MIL_RealObject_ABC& MIL_ZoneMineeLineaire::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_ZoneMineeLineaire();
+    return *new MIL_ZoneMineeLineaire( type, nID, army );
 }

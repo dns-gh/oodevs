@@ -627,11 +627,11 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         if( DIA_ModuleBegins() )
         {
             //T_Localisation prout = DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 800 );
-            //currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, gNullID, mission.forme_, mission.param_, false );
+            //currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, mission.forme_, mission.param_, false );
             
             //currentAction =  DEC_StartControlerZone( mission.forme_, 12000, true );
             
-            DEC_CreerObjetSansDelais( mission.type_, gNullID, mission.forme_, mission.param_, false );
+            DEC_CreerObjetSansDelais( mission.type_, mission.forme_, mission.param_, false );
         }
         
         DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );

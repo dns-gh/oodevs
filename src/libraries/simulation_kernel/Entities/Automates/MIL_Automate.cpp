@@ -609,7 +609,7 @@ bool MIL_Automate::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 // Name: MIL_Automate::GetArmy
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-const MIL_Army& MIL_Automate::GetArmy() const
+MIL_Army& MIL_Automate::GetArmy() const
 {
     assert( pFormation_ );
     return pFormation_->GetArmy();

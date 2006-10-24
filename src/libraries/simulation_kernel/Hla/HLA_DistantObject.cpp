@@ -133,8 +133,6 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
     {
         DeserializeAttribute( attributeID, deserializer );
         pObject_ = InstanciateObject();
-        if( pObject_ )
-            MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( *pObject_ );
     }
 }
 
@@ -144,28 +142,19 @@ void HLA_DistantObject::Deserialize( const AttributeIdentifier& attributeID, con
 // -----------------------------------------------------------------------------
 MIL_RealObject_ABC* HLA_DistantObject::InstanciateObject()
 {
-    const MIL_RealObjectType* pType = MIL_RealObjectType::FindObjectType( strObjectType_ );
+    const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strObjectType_ );
     if( !pType )
         return 0;
-    const MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );
+    MIL_Army* pArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( strArmy_ );
     if( !pArmy )
         return 0;
     if( localisation_.GetType() == TER_Localisation::eNone )
         return 0;
 
-    //$$$ DEGUEULASSSE
-    MIL_RealObject_ABC& object = pType->InstanciateObject();
-    object.Initialize( *pArmy, localisation_ );
-    if( object.Initialize( strOption_, strExtra_, rConstructionPercentage_, rMiningPercentage_, rBypassPercentage_ ) )
-    {
-        object.SetHLAView( *this );
-        return &object;
-    }
-    else
-    {
-        delete &object;
-        return 0;
-    }
+    MIL_RealObject_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( *pType , *pArmy, localisation_, strOption_, strExtra_, rConstructionPercentage_, rMiningPercentage_, rBypassPercentage_ );
+    if( pObject )
+        pObject->SetHLAView( *this );
+    return pObject;
 }
 
 // -----------------------------------------------------------------------------

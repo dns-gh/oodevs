@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_FosseAntiChar::Create()
+MIL_RealObject_ABC& MIL_FosseAntiChar::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_FosseAntiChar();
+    return *new MIL_FosseAntiChar( type, nID, army );
 }

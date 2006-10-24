@@ -23,9 +23,19 @@ BOOST_CLASS_EXPORT_GUID( MIL_SiteDecontamination, "MIL_SiteDecontamination" )
 // Name: MIL_SiteDecontamination constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_SiteDecontamination::MIL_SiteDecontamination()
-    : MIL_RealObject_ABC ( MIL_RealObjectType::siteDecontamination_ )
+MIL_SiteDecontamination::MIL_SiteDecontamination( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC ( type, nID, army )
     , bHasDecontaminated_( false )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_SiteDecontamination constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_SiteDecontamination::MIL_SiteDecontamination()
+    : MIL_RealObject_ABC ()
+    , bHasDecontaminated_( false ) 
 {
 }
 

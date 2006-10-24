@@ -25,7 +25,7 @@ const MIL_NbcAgentType& MIL_NuageNBC::GetNbcAgentType() const
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
 inline
-MIL_RealObject_ABC& MIL_NuageNBC::Create()
+MIL_RealObject_ABC& MIL_NuageNBC::Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
 {
-    return *new MIL_NuageNBC();
+    return *new MIL_NuageNBC( type, nID, army );
 }

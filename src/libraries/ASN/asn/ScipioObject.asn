@@ -142,7 +142,6 @@ MsgObjectCreation ::= SEQUENCE
     localisation                Localisation,
     nom                         VisibleString,
     camp                        Camp,
-    oid-objet-planifie          OID                OPTIONAL,
     attributs-specifiques       AttrObjectSpecific OPTIONAL,
     type-dotation-construction  TypeDotation       OPTIONAL,
     type-dotation-valorisation  TypeDotation       OPTIONAL

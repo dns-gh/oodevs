@@ -94,7 +94,6 @@ typedef struct T_GenObjet : Thing
     T_Localisation               posObject_;
     E_MissionGenUrgenceType      urgence_;
     E_MissionGenSousTypeObstacle preliminaire_;
-    T_ID                         nObstacleMosID_;
     E_GenObjetPriorite           priorite_;
 };
 

@@ -33,8 +33,18 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneNBC, "MIL_ZoneNBC" )
 // Name: MIL_ZoneNBC constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_ZoneNBC::MIL_ZoneNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+    , pNbcAgentType_    ( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_CampRefugies constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_ZoneNBC::MIL_ZoneNBC()
-    : MIL_RealObject_ABC( MIL_RealObjectType::zoneNBC_ )
+    : MIL_RealObject_ABC()
     , pNbcAgentType_    ( 0 )
 {
 }
@@ -87,9 +97,12 @@ void MIL_ZoneNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
 void MIL_ZoneNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
     assert( pNbcAgentType_ );
-    archive.Section( "AgentNBC" );
+
+    archive.Section( "specific-attributes" );
+    archive.Section( "nbc-agent" );
     archive.WriteAttribute( "type", pNbcAgentType_->GetName() );
-    archive.EndSection();    
+    archive.EndSection(); // nbc-agent
+    archive.EndSection(); // specific-attributes
 }
 
 //=============================================================================
@@ -100,9 +113,9 @@ void MIL_ZoneNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 // Name: MIL_ZoneNBC::Initialize
 // Created: JVT 02-10-22
 //-----------------------------------------------------------------------------
-bool MIL_ZoneNBC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
+bool MIL_ZoneNBC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( army, diaParameters, nCurrentParamIdx );
+    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
     return false;
 }
 
@@ -110,33 +123,33 @@ bool MIL_ZoneNBC::Initialize( const MIL_Army& army, DIA_Parameters& diaParameter
 // Name: MIL_ZoneNBC::Initialize
 // Created: NLD 2003-07-21
 //-----------------------------------------------------------------------------
-void MIL_ZoneNBC::Initialize( uint nID, MIL_InputArchive& archive )
+void MIL_ZoneNBC::Initialize( MIL_InputArchive& archive )
 {
-    MIL_RealObject_ABC::Initialize( nID, archive );
+    MIL_RealObject_ABC::Initialize( archive );
 
     if( !GetLocalisation().WasACircle() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Localisation of object type 'ZoneNBC' MUST be a circle", archive.GetContext() );
 
+    archive.Section( "specific-attributes" );
+    archive.Section( "nbc-agent" );
+
     std::string strNbcAgentType_;
-    archive.Section( "AgentNBC" );
     archive.ReadAttribute( "type", strNbcAgentType_ );
-    archive.EndSection();
-    
     pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strNbcAgentType_ );
     if( !pNbcAgentType_ )
         throw MT_ScipioException( "MIL_ZoneNBC::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
 
-    MIL_NuageNBC& nuage = *new MIL_NuageNBC();
-    nuage.Initialize( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
-    nuage.Construct();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( nuage );
+    archive.EndSection(); // nbc-agent
+    archive.EndSection(); // specific-attributes
+
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectNuageNBC( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneNBC::Initialize
 // Created: NLD 2003-08-04
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( uint nID, const ASN1T_MagicActionCreateObject& asnCreateObject )
+ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
     if( asnCreateObject.localisation.type != EnumTypeLocalisation::circle )
         return EnumObjectErrorCode::error_invalid_localisation;
@@ -148,15 +161,11 @@ ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( uint nID, const ASN1T_MagicAc
     if( !pNbcAgentType_ )
         return EnumObjectErrorCode::error_invalid_specific_attributes;
 
-    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( nID, asnCreateObject );
+    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    MIL_NuageNBC& nuage = *new MIL_NuageNBC();
-    nuage.Initialize( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
-    nuage.Construct();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().RegisterObject( nuage );
-
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectNuageNBC( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
     return EnumObjectErrorCode::no_error;
 }
    
@@ -222,9 +231,9 @@ DEC_Knowledge_Object& MIL_ZoneNBC::CreateKnowledge( const MIL_Army& teamKnowing 
 // Name: MIL_ZoneNBC::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
-bool MIL_ZoneNBC::Initialize( const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
+bool MIL_ZoneNBC::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    MIL_RealObject_ABC::Initialize( strOption, strExtra, rCompletion, rMining, rBypass );
+    MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass );
     pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strOption );
     return pNbcAgentType_ != 0;
 }

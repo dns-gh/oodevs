@@ -20,8 +20,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_PlateForme, "MIL_PlateForme" )
 // Name: MIL_PlateForme constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_PlateForme::MIL_PlateForme( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlateForme constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_PlateForme::MIL_PlateForme()
-    : MIL_RealObject_ABC( MIL_RealObjectType::plateForme_ )
+    : MIL_RealObject_ABC()
 {
 }
 

@@ -23,8 +23,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_PosteControle, "MIL_PosteControle" )
 // Name: MIL_PosteControle constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_PosteControle::MIL_PosteControle( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PosteControle constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_PosteControle::MIL_PosteControle()
-    : MIL_RealObject_ABC( MIL_RealObjectType::posteControle_ )
+    : MIL_RealObject_ABC()
 {
 }
 

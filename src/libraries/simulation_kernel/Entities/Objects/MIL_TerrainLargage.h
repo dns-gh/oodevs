@@ -27,6 +27,7 @@ class MIL_TerrainLargage : public MIL_RealObject_ABC
     MT_COPYNOTALLOWED( MIL_TerrainLargage );
 
 public:
+             MIL_TerrainLargage( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_TerrainLargage();
     virtual ~MIL_TerrainLargage();
  
@@ -37,7 +38,7 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
 };
 

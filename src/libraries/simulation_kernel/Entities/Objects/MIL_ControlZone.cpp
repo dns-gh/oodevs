@@ -30,12 +30,12 @@ MT_Random MIL_ControlZone::randomGenerator_;
 // Name: MIL_ControlZone constructor
 // Created: NLD 2004-10-26
 // -----------------------------------------------------------------------------
-MIL_ControlZone::MIL_ControlZone( const MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius )
-    : MIL_VirtualObject_ABC( MIL_VirtualObjectType::controlZone_ )
+MIL_ControlZone::MIL_ControlZone( MIL_Army& army, const TER_Localisation& localisation, MT_Float rRadius )
+    : MIL_VirtualObject_ABC( army, MIL_VirtualObjectType::controlZone_ )
     , rCircleSquareRadius_ ( rRadius * rRadius )
     , bMustUseCircle_      ( localisation.GetArea() > rCircleSquareRadius_ * MT_PI )
 {
-    Initialize( army, localisation );
+    MIL_VirtualObject_ABC::Initialize( localisation );
 }
 
 // -----------------------------------------------------------------------------

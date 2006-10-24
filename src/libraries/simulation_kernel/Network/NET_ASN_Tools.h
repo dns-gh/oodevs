@@ -172,10 +172,6 @@ public:
     static bool CopyNumeric ( const DIA_Variable_ABC& dia, ASN1REAL& asn );    
     static bool CopyNumeric ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
 
-    static bool CopyID ( const ASN1T_OID& asn, DIA_Variable_ABC& dia );
-    static bool CopyID ( const DIA_Variable_ABC& dia, ASN1T_OID& asn );
-    static bool CopyID ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
-
     static bool CopyNatureAtlas ( const ASN1T_NatureAtlas& asn, DIA_Variable_ABC& dia );
     static bool CopyNatureAtlas ( const DIA_Variable_ABC& dia, ASN1T_NatureAtlas& asn );
     static bool CopyNatureAtlas ( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );

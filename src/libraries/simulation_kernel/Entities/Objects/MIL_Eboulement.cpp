@@ -20,8 +20,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_Eboulement, "MIL_Eboulement" )
 // Name: MIL_Eboulement constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_Eboulement::MIL_Eboulement( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_Obstacle( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Eboulement constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_Eboulement::MIL_Eboulement()
-    : MIL_Obstacle( MIL_RealObjectType::eboulement_ )
+    : MIL_Obstacle()
 {
 }
 

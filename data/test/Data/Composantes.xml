@@ -250,6 +250,7 @@
       </Dotation>
     </Contenance>
     <Armements>
+      <Armement lanceur="Lance-fussoir" munition="Obus mine"/>
       <Armement lanceur="Lance-fussoir" munition="Fusse a jupette 53mm"/>
       <Armement lanceur="Lance-fussoir" munition="Obus fumigene"/>
       <Armement lanceur="Canon 120" munition="Obus 120 mm"/>

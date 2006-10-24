@@ -114,7 +114,6 @@ void ParamObstacle::Commit()
 // -----------------------------------------------------------------------------
 void ParamObstacle::CommitTo( ASN1T_MissionGenObject& destination )
 {
-    destination.oid_obstacle_planifie = asnObject_.oid_obstacle_planifie;
     destination.preliminaire = asnObject_.preliminaire;
     destination.type_obstacle = asnObject_.type_obstacle;
     destination.urgence = asnObject_.urgence;

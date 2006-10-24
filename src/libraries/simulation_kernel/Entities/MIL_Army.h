@@ -24,6 +24,7 @@ class MIL_KnowledgeGroup;
 class MIL_EntityManager;
 class MIL_Formation;
 class MIL_Population;
+class MIL_RealObject_ABC;
 struct ASN1T_MsgChangeDiplomatie;
 
 // =============================================================================
@@ -56,6 +57,9 @@ public:
     
     typedef std::set< MIL_Population* >      T_PopulationSet;
     typedef T_PopulationSet::const_iterator  CIT_PopulationSet;
+
+    typedef std::set< MIL_RealObject_ABC* > T_ObjectSet;
+    typedef T_ObjectSet::const_iterator     CIT_ObjectSet;
     //@}
 
 public:
@@ -83,14 +87,17 @@ public:
 
     //! @name Knowledge
     //@{
-    void UpdateKnowledges  ();
-    void CleanKnowledges   ();
+    void UpdateKnowledges();
+    void CleanKnowledges ();
     //@}
 
     //! @name Hierarchy
     //@{
     void RegisterFormation  ( MIL_Formation& formation );
     void UnregisterFormation( MIL_Formation& formation );
+
+    void RegisterObject  ( MIL_RealObject_ABC& object );
+    void UnregisterObject( MIL_RealObject_ABC& object );
 
     void RegisterPopulation  ( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
@@ -137,6 +144,7 @@ private:
 
     void InitializeCommunication( MIL_InputArchive& archive );
     void InitializeTactical     ( MIL_InputArchive& archive );
+    void InitializeObjects      ( MIL_InputArchive& archive );
     void InitializePopulations  ( MIL_InputArchive& archive );
     void InitializeLogistic     ( MIL_InputArchive& archive );
     //@}
@@ -148,6 +156,7 @@ private:
     T_KnowledgeGroupMap knowledgeGroups_;
     T_FormationSet      formations_;
     T_PopulationSet     populations_;
+    T_ObjectSet         objects_;
 
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
 

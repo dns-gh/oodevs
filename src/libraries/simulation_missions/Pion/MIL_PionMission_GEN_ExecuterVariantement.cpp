@@ -21,7 +21,6 @@
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
 int MIL_PionMission_GEN_ExecuterVariantement::nDIASiteFranchissementIdx_ = 0 ;
-int MIL_PionMission_GEN_ExecuterVariantement::nDIAOidObjetPlanifieIdx_ = 0 ;
 int MIL_PionMission_GEN_ExecuterVariantement::nDIAPointRegroupementIdx_ = 0 ;
 int MIL_PionMission_GEN_ExecuterVariantement::nDIATypePontageIdx_ = 0 ;
 
@@ -35,7 +34,6 @@ void MIL_PionMission_GEN_ExecuterVariantement::InitializeDIA( const MIL_PionMiss
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
     nDIASiteFranchissementIdx_ = DEC_Tools::InitializeDIAField( "siteFranchissement_", diaType );
-    nDIAOidObjetPlanifieIdx_ = DEC_Tools::InitializeDIAField( "oidObjetPlanifie_", diaType );
     nDIAPointRegroupementIdx_ = DEC_Tools::InitializeDIAField( "pointRegroupement_", diaType );
     nDIATypePontageIdx_ = DEC_Tools::InitializeDIAField( "typePontage_", diaType );
 
@@ -76,8 +74,6 @@ ASN1T_EnumOrderErrorCode MIL_PionMission_GEN_ExecuterVariantement::Initialize( c
     const ASN1T_Mission_Pion_GEN_ExecuterVariantement& asnMission = *asnMsg.mission.u.mission_pion_gen_executer_variantement;
     if( !NET_ASN_Tools::CopyObjectKnowledge( asnMission.site_franchissement, GetVariable( nDIASiteFranchissementIdx_ ), pion_.GetKnowledgeGroup() ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
-    if( !NET_ASN_Tools::CopyID( asnMission.oid_objet_planifie, GetVariable( nDIAOidObjetPlanifieIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyPoint( asnMission.point_regroupement, GetVariable( nDIAPointRegroupementIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
     if( !NET_ASN_Tools::CopyEnumeration( asnMission.type_pontage, GetVariable( nDIATypePontageIdx_ ) ) )
@@ -96,7 +92,7 @@ bool MIL_PionMission_GEN_ExecuterVariantement::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                
+            
     return true;    
 }
 
@@ -111,7 +107,6 @@ bool MIL_PionMission_GEN_ExecuterVariantement::Initialize( MIL_PionMission_ABC& 
     MIL_PionMission_GEN_ExecuterVariantement& mission = static_cast< MIL_PionMission_GEN_ExecuterVariantement& >( missionTmp );
 
     NET_ASN_Tools::CopyObjectKnowledge( mission.GetVariable( nDIASiteFranchissementIdx_ ), GetVariable( nDIASiteFranchissementIdx_ ) );
-    NET_ASN_Tools::CopyID( mission.GetVariable( nDIAOidObjetPlanifieIdx_ ), GetVariable( nDIAOidObjetPlanifieIdx_ ) );
     NET_ASN_Tools::CopyPoint( mission.GetVariable( nDIAPointRegroupementIdx_ ), GetVariable( nDIAPointRegroupementIdx_ ) );
     NET_ASN_Tools::CopyEnumeration( mission.GetVariable( nDIATypePontageIdx_ ), GetVariable( nDIATypePontageIdx_ ) );
 
@@ -145,7 +140,6 @@ void MIL_PionMission_GEN_ExecuterVariantement::Serialize( ASN1T_MsgPionOrder& as
     asnMsg.mission.u.mission_pion_gen_executer_variantement  = &asnMission;
 
     NET_ASN_Tools::CopyObjectKnowledge( GetVariable( nDIASiteFranchissementIdx_ ), asnMission.site_franchissement, pion_.GetKnowledgeGroup() );
-    NET_ASN_Tools::CopyID( GetVariable( nDIAOidObjetPlanifieIdx_ ), asnMission.oid_objet_planifie );
     NET_ASN_Tools::CopyPoint( GetVariable( nDIAPointRegroupementIdx_ ), asnMission.point_regroupement );
     NET_ASN_Tools::CopyEnumeration( GetVariable( nDIATypePontageIdx_ ), asnMission.type_pontage );
 

@@ -489,7 +489,6 @@ void TER_Localisation::Reset( const TER_Localisation& localisation )
     boundingBox_ = localisation.boundingBox_;
 }
 
- 
 //-----------------------------------------------------------------------------
 // Name: TER_Localisation::Read
 // Created: NLD 2003-07-22
@@ -497,20 +496,18 @@ void TER_Localisation::Reset( const TER_Localisation& localisation )
 void TER_Localisation::Read( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive )
 {
     Reset();
-    archive.Section( "Localisation" );
+    archive.Section( "shape" );
 
     std::string strType;
     archive.ReadAttribute( "type", strType );
     nType_ = ConvertLocalisationType( strType );
 
-    
     // Points
-    archive.BeginList( "Points" );
-
+    archive.BeginList( "points" );
     while ( archive.NextListElement() )
     {
         std::string strPoint;
-        archive.Section( "Point" );
+        archive.Section( "point" );
         archive.Read( strPoint );
         archive.EndSection();
 
@@ -518,9 +515,9 @@ void TER_Localisation::Read( MT_InputArchive_Logger< MT_XXmlInputArchive >& arch
         TER_World::GetWorld().MosToSimMgrsCoord( strPoint, vPoint );
         pointVector_.push_back( vPoint );
     }   
-    archive.EndList(); // Points
+    archive.EndList(); // points
    
-    archive.EndSection(); // Localisation
+    archive.EndSection(); // shape
 
     if( !Initialize() )
         throw MT_ScipioException( "TER_Localisation::Read", __FILE__, __LINE__, "Invalid localisation", archive.GetContext() );
@@ -533,37 +530,37 @@ void TER_Localisation::Read( MT_InputArchive_Logger< MT_XXmlInputArchive >& arch
 //-----------------------------------------------------------------------------
 void TER_Localisation::Write( MT_OutputArchive_ABC& archive ) const
 {
-    archive.Section( "Localisation" );
+    archive.Section( "shape" );
 
     if( bWasCircle_ )
     {
         archive.WriteAttribute( "type", "cercle" );
-        archive.Section( "Points" );
+        archive.Section( "points" );
         std::string strPoint;
         TER_World::GetWorld().SimToMosMgrsCoord( vCircleCenter_, strPoint );
-        archive.WriteField( "Point", strPoint );
+        archive.WriteField( "point", strPoint );
 
         MT_Vector2D vDir( 0., 1. );
         TER_World::GetWorld().SimToMosMgrsCoord( vCircleCenter_ + vDir * rCircleRadius_, strPoint );
-        archive.WriteField( "Point", strPoint );
+        archive.WriteField( "point", strPoint );
 
-        archive.EndSection(); // Points
+        archive.EndSection(); // points
     }
     else
     {
         archive.WriteAttribute( "type", ConvertLocalisationType( nType_ ) );
 
-        archive.Section( "Points" );
+        archive.Section( "points" );
         std::string strPoint;
         for ( CIT_PointVector it = pointVector_.begin(); it != pointVector_.end(); ++it )
         {
             TER_World::GetWorld().SimToMosMgrsCoord( *it, strPoint );
-            archive.WriteField( "Point", strPoint );
+            archive.WriteField( "point", strPoint );
            
         }
-        archive.EndSection(); // Points        
+        archive.EndSection(); // points        
     }
-    archive.EndSection(); // Localisation
+    archive.EndSection(); // shape
 }
 
 

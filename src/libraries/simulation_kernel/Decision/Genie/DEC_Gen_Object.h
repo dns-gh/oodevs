@@ -44,7 +44,6 @@ private:
     static int nDIAPosIdx_;
     static int nDIAUrgenceIdx_;
     static int nDIAPreliminaireIdx_;
-    static int nDIAMosIDIdx_;
     static int nDIAPrioriteIdx_;
 };
 

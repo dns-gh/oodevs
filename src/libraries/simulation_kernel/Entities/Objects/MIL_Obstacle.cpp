@@ -20,9 +20,17 @@
 // Name: MIL_Obstacle constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-MIL_Obstacle::MIL_Obstacle( const MIL_RealObjectType& type )
-    : MIL_RealObject_ABC( type )
+MIL_Obstacle::MIL_Obstacle( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
 {    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Obstacle constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
+MIL_Obstacle::MIL_Obstacle()
+{
 }
 
 //-----------------------------------------------------------------------------

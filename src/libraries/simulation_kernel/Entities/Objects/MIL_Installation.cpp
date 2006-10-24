@@ -21,8 +21,17 @@ BOOST_CLASS_EXPORT_GUID( MIL_Installation, "MIL_Installation" )
 // Name: MIL_Installation constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
+MIL_Installation::MIL_Installation( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
+    : MIL_RealObject_ABC( type, nID, army )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Installation constructor
+// Created: NLD 2006-10-23
+// -----------------------------------------------------------------------------
 MIL_Installation::MIL_Installation()
-    : MIL_RealObject_ABC( MIL_RealObjectType::installation_ )
+    : MIL_RealObject_ABC()
 {
 }
 
@@ -33,7 +42,6 @@ MIL_Installation::MIL_Installation()
 //-----------------------------------------------------------------------------
 MIL_Installation::~MIL_Installation()
 {
-	
 }
 
 // =============================================================================

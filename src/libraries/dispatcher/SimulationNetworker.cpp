@@ -145,8 +145,9 @@ void SimulationNetworker::OnReceiveMsgOutSim( DIN::DIN_Link& linkFrom, DIN::DIN_
         AsnMessageDecoder< ASN1T_MsgsOutSim, ASN1C_MsgsOutSim > asnDecoder( input );
         pSimulation_->OnReceive( asnDecoder.GetAsnMsg() );
     }
-    catch( std::runtime_error& /*exception*/ )
+    catch( std::runtime_error& exception )
     {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
     }
 }
 
@@ -176,8 +177,9 @@ void SimulationNetworker::Dispatch( const ASN1T_MsgsInSim& asnMsg )
         AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( messageService_, asnMsg );
         pSimulation_->Send( asnMsg, asnEncoder.GetDinMsg() );
     }
-    catch( std::runtime_error& /*exception*/ )
+    catch( std::runtime_error& exception )
     {
+        MT_LOG_ERROR_MSG( "exception catched: " << exception.what() );
     }
 }
 

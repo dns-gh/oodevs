@@ -48,7 +48,6 @@ public:
     static bool CheckTypeListeLocalisations                 ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeCalculLignesAvantArriere           ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeLima                               ( const DIA_Variable_ABC& diaVariable );
-    static bool CheckTypeID                                 ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeAction                             ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePion                               ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypePion                               ( const DIA_TypedObject&  object      );
@@ -93,7 +92,6 @@ public:
     static const DIA_TypeDef& GetTypeLima                           ();
     static const DIA_TypeDef& GetTypePoint                          ();
     static const DIA_TypeDef& GetTypeDirection                      ();
-    static const DIA_TypeDef& GetTypeID                             ();
     static const DIA_TypeDef& GetTypeCalculLignesAvantArriere       ();
     static const DIA_TypeDef& GetTypePerceptionPoint                ();
     static const DIA_TypeDef& GetTypePerceptionLocalisation         ();
@@ -119,7 +117,6 @@ private:
     static const DIA_TypeDef* pTypeConnaissanceAgent_;
     static const DIA_TypeDef* pTypePopulationConnaissanceAgent_;
     static const DIA_TypeDef* pTypePopulationConnaissanceObjet_;
-    static const DIA_TypeDef* pTypeID_;
     static const DIA_TypeDef* pTypeAction_;
     static const DIA_TypeDef* pTypePion_;
     static const DIA_TypeDef* pTypeAutomate_;

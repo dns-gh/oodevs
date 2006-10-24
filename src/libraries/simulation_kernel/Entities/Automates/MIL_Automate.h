@@ -83,7 +83,7 @@ public:
     const std::string&                      GetName          () const;
           uint                              GetID            () const;
     const MIL_AutomateType&                 GetType          () const;
-    const MIL_Army&                         GetArmy          () const;
+          MIL_Army&                         GetArmy          () const;
           MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
           MIL_AutomateLOG*                  GetTC2           () const;
     const MIL_AutomateOrderManager&         GetOrderManager  () const;

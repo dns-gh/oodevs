@@ -104,6 +104,7 @@ signatures
     R                                A::DEC_Geometrie_CalculerDistanceLigneAvant               ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );       
     R                                A::DEC_Geometrie_CalculerDistanceLigneArriere             ( U /*T_CalculLignesAvantArriere*/, A /*T_Pion*/ );       
     B                                A::DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( U /*T_Localisation localisation*/, U /*T_Point result*/ );
+    B                                A::DEC_Geometrie_CalculerPointProcheLocalisationNonClippeeDansFuseau   ( U /*T_Localisation localisation*/, U /*T_Point result*/ );
     A                                A::DEC_Geometrie_PionDevant                               ( S /*T_ListePions*/, U /*T_Direction*/ );
     A                                A::DEC_Geometrie_PionDerriere                             ( S /*T_ListePions*/, U /*T_Direction*/ );
    
@@ -164,5 +165,5 @@ signatures
     V                                A::DEC_Trace( X );    
 }
 
-T_ID gNullID = 0;
+
 

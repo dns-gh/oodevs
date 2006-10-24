@@ -18,8 +18,8 @@
 // Name: MIL_VirtualObject_ABC constructor
 // Created: NLD 2004-10-26
 // -----------------------------------------------------------------------------
-MIL_VirtualObject_ABC::MIL_VirtualObject_ABC( const MIL_VirtualObjectType& type )
-    : MIL_Object_ABC()
+MIL_VirtualObject_ABC::MIL_VirtualObject_ABC( MIL_Army& army, const MIL_VirtualObjectType& type )
+    : MIL_Object_ABC( army )
     , type_         ( type )
 {
 

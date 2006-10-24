@@ -27,6 +27,7 @@ class MIL_BouchonMines : public MIL_Obstacle
     MT_COPYNOTALLOWED( MIL_BouchonMines );
 
 public:
+             MIL_BouchonMines( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
              MIL_BouchonMines();
     virtual ~MIL_BouchonMines();
  
@@ -37,9 +38,9 @@ public:
 
     //! @name Init
     //@{
-    static MIL_RealObject_ABC& Create();
+    static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
 
-    virtual bool Initialize( const MIL_Army& army, DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual bool Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     //@}
     
 private:
