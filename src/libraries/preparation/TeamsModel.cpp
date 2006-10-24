@@ -137,6 +137,8 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
     {
         xos << start( "side" );
         it->second->Serialize( xos );
+        xos << start( "populations" ) << end()
+            << start( "logistic" ) << end(); // $$$$ SBO 2006-10-24: temp
         xos << end();
     }
     xos << end();

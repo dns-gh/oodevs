@@ -39,6 +39,7 @@ PropertiesTable::PropertiesTable( QWidget* parent )
     setHScrollBarMode( QScrollView::AlwaysOff );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Minimum );
     setFrameStyle( MenuBarPanel );
+    setResizePolicy( QScrollView::AutoOne );
 }
     
 // -----------------------------------------------------------------------------
