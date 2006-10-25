@@ -28,6 +28,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreati
     , nID_                  ( asnMsg.oid_connaissance )
     , knowledgeGroup_       ( model.GetKnowledgeGroups().Get( asnMsg.oid_groupe_possesseur ) )
     , agent_                ( model.GetAgents().Get( asnMsg.oid_unite_reelle ) )
+    , nTypeAgent_           ( asnMsg.type_unite )
     , nRelevance_           ( 0 )
     , nPerceptionLevel_     ( EnumUnitIdentificationLevel::signale )
     , nMaxPerceptionLevel_  ( EnumUnitIdentificationLevel::signale )
@@ -37,13 +38,6 @@ AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreati
     , nDirection_           ( 0 )
     , nSpeed_               ( 0 )
     , pSide_                ( 0 )
-    , nNatureWeapon_        ( (ASN1T_EnumUnitNatureWeapon)-1 )
-    , nNatureLevel_         ( (ASN1T_EnumNatureLevel)-1 )
-    , nNatureSpecialization_( (ASN1T_EnumUnitNatureSpecialization)-1 )
-    , nNatureQualifier_     ( (ASN1T_EnumUnitNatureQualifier)-1 )
-    , nNatureCategory_      ( (ASN1T_EnumUnitNatureCategory)-1 )
-    , nNatureMobility_      ( (ASN1T_EnumUnitNatureMobility)-1 )
-    , nMissionCapability_   ( (ASN1T_EnumUnitCapaciteMission)-1 )
     , bPC_                  ( false )
     , automatePerceptions_  ( )
     , bSurrendered_         ( false )
@@ -60,14 +54,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreati
     optionals_.directionPresent                = 0;
     optionals_.speedPresent                    = 0;
     optionals_.campPresent                     = 0;
-    optionals_.nature_armePresent              = 0;
-    optionals_.nature_niveauPresent            = 0;
     optionals_.nature_pcPresent                = 0;
-    optionals_.nature_specialisationPresent    = 0;
-    optionals_.nature_qualificationPresent     = 0;
-    optionals_.nature_categoriePresent         = 0;
-    optionals_.nature_mobilitePresent          = 0;
-    optionals_.capacite_missionPresent         = 0;
     optionals_.perception_par_compagniePresent = 0;
     optionals_.renduPresent                    = 0;
     optionals_.prisonnierPresent               = 0;
@@ -115,14 +102,7 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
         pSide_ = &model_.GetSides().Get( asnMsg.camp );
     }
         
-    UPDATE_ASN_ATTRIBUTE( nature_arme              , nNatureWeapon_         );
-    UPDATE_ASN_ATTRIBUTE( nature_niveau            , nNatureLevel_          );
-    UPDATE_ASN_ATTRIBUTE( nature_pc                , bPC_                   ); 
-    UPDATE_ASN_ATTRIBUTE( nature_specialisation    , nNatureSpecialization_ );
-    UPDATE_ASN_ATTRIBUTE( nature_qualification     , nNatureQualifier_      );
-    UPDATE_ASN_ATTRIBUTE( nature_categorie         , nNatureCategory_       );
-    UPDATE_ASN_ATTRIBUTE( nature_mobilite          , nNatureMobility_       );
-    UPDATE_ASN_ATTRIBUTE( capacite_mission         , nMissionCapability_    );
+    UPDATE_ASN_ATTRIBUTE( nature_pc, bPC_ ); 
 
     if( asnMsg.m.perception_par_compagniePresent )
     {
@@ -149,6 +129,7 @@ void AgentKnowledge::SendCreation( Publisher_ABC& publisher )
     asn().oid_connaissance      = nID_;
     asn().oid_groupe_possesseur = knowledgeGroup_.GetID();
     asn().oid_unite_reelle      = agent_.GetID();
+    asn().type_unite            = nTypeAgent_;
 
     asn.Send( publisher );
 }
@@ -183,8 +164,8 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
         position_.Send( asn().position );
     }
 
-    SEND_ASN_ATTRIBUTE( direction                , nDirection_            );
-    SEND_ASN_ATTRIBUTE( speed                    , nSpeed_                );
+    SEND_ASN_ATTRIBUTE( direction, nDirection_ );
+    SEND_ASN_ATTRIBUTE( speed    , nSpeed_     );
     
     if( optionals_.campPresent )
     {
@@ -193,14 +174,7 @@ void AgentKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().camp = pSide_->GetID();
     }
         
-    SEND_ASN_ATTRIBUTE( nature_arme              , nNatureWeapon_         );
-    SEND_ASN_ATTRIBUTE( nature_niveau            , nNatureLevel_          );
-    SEND_ASN_ATTRIBUTE( nature_pc                , bPC_                   ); 
-    SEND_ASN_ATTRIBUTE( nature_specialisation    , nNatureSpecialization_ );
-    SEND_ASN_ATTRIBUTE( nature_qualification     , nNatureQualifier_      );
-    SEND_ASN_ATTRIBUTE( nature_categorie         , nNatureCategory_       );
-    SEND_ASN_ATTRIBUTE( nature_mobilite          , nNatureMobility_       );
-    SEND_ASN_ATTRIBUTE( capacite_mission         , nMissionCapability_    );
+    SEND_ASN_ATTRIBUTE( nature_pc, bPC_ ); 
 
     if( optionals_.perception_par_compagniePresent )
     {

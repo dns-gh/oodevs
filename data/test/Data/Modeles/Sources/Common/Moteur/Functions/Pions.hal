@@ -194,7 +194,6 @@ signatures
     U /*T_Point*/                           A::DEC_ConnaissanceAgent_Position                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     B                                       A::DEC_ConnaissanceAgent_EstEnVol                       ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     I /*E_NatureAtlasType*/                 A::DEC_ConnaissanceAgent_NatureAtlas                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
-    I /*E_NatureWeaponType*/                A::DEC_ConnaissanceAgent_NatureArme                     ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ );
     I /*E_NiveauPerception*/                A::DEC_ConnaissanceAgent_NiveauPerceptionMax            ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne le niveau de perception MAX d'une connaissance (le plus haut niveau ayant été associé à cette connaissance depuis sa création)
     R                                       A::DEC_ConnaissanceAgent_Dangerosite                    ( U /*T_ConnaissanceAgent*/ , I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2
     R                                       A::DEC_ConnaissanceAgent_DangerositeSurPion             ( U /*T_ConnaissanceAgent*/ , A /*T_Pion*/, I /*E_ValiditeRequete&*/ ); // Retourne la dangerosité, entre 1 et 2

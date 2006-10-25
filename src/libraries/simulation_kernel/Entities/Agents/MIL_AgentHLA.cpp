@@ -174,7 +174,7 @@ void MIL_AgentHLA::Deserialize( const AttributeIdentifier& attributeID, Deserial
     {
         std::string strType;
         deserializer >> strType;
-        pType_ = MIL_AgentTypePion::FindPionType( strType );
+        pType_ = MIL_AgentTypePion::Find( strType );
     }
     else if( attributeID == "status" )
     {

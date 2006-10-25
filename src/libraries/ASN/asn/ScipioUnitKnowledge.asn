@@ -10,7 +10,8 @@ MsgUnitKnowledgeCreation ::= SEQUENCE
 {
     oid-connaissance        KnowledgeAgent,   -- id de la connaissance
     oid-groupe-possesseur   KnowledgeGroup,   -- id du groupe de connaissance qui possède cette connaissance
-    oid-unite-reelle        Agent            -- id de l'unité réélle pointée par la connaissance
+    oid-unite-reelle        Agent,            -- id de l'unité réélle pointée par la connaissance
+    type-unite              TypePion
 }
 
 AutomatePerception ::= SEQUENCE
@@ -33,14 +34,7 @@ MsgUnitKnowledgeUpdate ::= SEQUENCE
     direction                   Direction                      OPTIONAL,
     speed                       Vitesse                        OPTIONAL,
     camp                        OID                            OPTIONAL,
-    nature-arme                 EnumUnitNatureWeapon           OPTIONAL,
-    nature-niveau               EnumNatureLevel                OPTIONAL,
     nature-pc                   BOOLEAN                        OPTIONAL,
-    nature-specialisation       EnumUnitNatureSpecialization   OPTIONAL,
-    nature-qualification        EnumUnitNatureQualifier        OPTIONAL,
-    nature-categorie            EnumUnitNatureCategory         OPTIONAL,
-    nature-mobilite             EnumUnitNatureMobility         OPTIONAL,
-    capacite-mission            EnumUnitCapaciteMission        OPTIONAL,
     perception-par-compagnie    SEQUENCE OF AutomatePerception OPTIONAL,
     rendu                       BOOLEAN                        OPTIONAL,
     prisonnier                  BOOLEAN                        OPTIONAL,

@@ -31,61 +31,6 @@ const PHY_NatureLevel& MIL_AgentType_ABC::GetNatureLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentType_ABC::GetNatureWeapon
-// Created: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-inline
-const PHY_NatureWeapon& MIL_AgentType_ABC::GetNatureWeapon() const
-{
-    assert( pNatureWeapon_ );
-    return *pNatureWeapon_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentType_ABC::GetNatureSpecialization
-// Created: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-inline
-const PHY_NatureSpecialization& MIL_AgentType_ABC::GetNatureSpecialization() const
-{
-    assert( pNatureSpecialization_ );
-    return *pNatureSpecialization_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentType_ABC::GetNatureQualifier
-// Created: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-inline
-const PHY_NatureQualifier& MIL_AgentType_ABC::GetNatureQualifier() const
-{
-    assert( pNatureQualifier_ );
-    return *pNatureQualifier_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentType_ABC::GetNatureCategory
-// Created: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-inline
-const PHY_NatureCategory& MIL_AgentType_ABC::GetNatureCategory() const
-{
-    assert( pNatureCategory_ );
-    return *pNatureCategory_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentType_ABC::GetNatureMobility
-// Created: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-inline
-const PHY_NatureMobility& MIL_AgentType_ABC::GetNatureMobility() const
-{
-    assert( pNatureMobility_ );
-    return *pNatureMobility_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentType_ABC::GetNatureAtlas
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
@@ -94,17 +39,6 @@ const PHY_NatureAtlas& MIL_AgentType_ABC::GetNatureAtlas() const
 {
     assert( pNatureAtlas_ );
     return *pNatureAtlas_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentType_ABC::GetNatureCapaciteMission
-// Created: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-inline
-const PHY_MissionCapacity& MIL_AgentType_ABC::GetNatureCapaciteMission() const
-{
-    assert( pCapaciteMission_ );
-    return *pCapaciteMission_;
 }
 
 // -----------------------------------------------------------------------------

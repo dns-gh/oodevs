@@ -20,8 +20,6 @@ class DEC_Knowledge_AgentPerceptionDataRecognition;
 class MIL_AgentType_ABC;
 class MIL_Army;
 class MIL_Agent_ABC;
-
-class PHY_NatureWeapon;
 class PHY_NatureAtlas;
 
 struct ASN1T_MsgUnitKnowledgeUpdate;
@@ -68,7 +66,6 @@ public:
           MT_Float                     GetMajorOperationalState() const;
     const T_KnowledgeComposanteVector& GetComposantes          () const;
     const MIL_Army*                    GetArmy                 () const;
-    const PHY_NatureWeapon&            GetNatureWeapon         () const;
     const PHY_NatureAtlas&             GetNatureAtlas          () const;
     const MIL_AgentType_ABC*           GetAgentType            () const;
           bool                         IsPC                    () const;

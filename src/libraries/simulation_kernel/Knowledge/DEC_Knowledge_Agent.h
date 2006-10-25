@@ -33,8 +33,6 @@ class PHY_PerceptionLevel;
 class PHY_Posture;
 class PHY_SensorTypeAgent;
 class DEC_Knowledge_AgentPerception;
-
-class PHY_NatureWeapon;
 class PHY_NatureAtlas;
 
 // =============================================================================
@@ -108,7 +106,6 @@ public:
           MT_Float                       GetOperationalState      () const;
           MT_Float                       GetMajorOperationalState () const;
           MIL_Agent_ABC&                 GetAgentKnown            () const;
-    const PHY_NatureWeapon&              GetNatureWeapon          () const;
     const PHY_NatureAtlas&               GetNatureAtlas           () const;
     const MIL_Army*                      GetArmy                  () const;
     const PHY_PerceptionLevel&           GetMaxPerceptionLevel    () const;

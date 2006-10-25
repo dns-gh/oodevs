@@ -15,7 +15,6 @@
 #include "DEC_Knowledge_AgentPerceptionDataRecognition.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Agents/Units/Categories/PHY_NatureWeapon.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
@@ -66,7 +65,7 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
          
     uint nID;
     file >> nID;
-    pAgentType_ = MIL_AgentTypePion::FindPionType( nID );
+    pAgentType_ = MIL_AgentTypePion::Find( nID );
     
     file >> bOperationalStateChanged_
          >> bAgentTypeUpdated_;
@@ -176,15 +175,11 @@ void DEC_Knowledge_AgentDataRecognition::SendChangedState( ASN1T_MsgUnitKnowledg
         assert( pArmy_ );
         assert( pAgentType_ );
 
-        asnMsg.m.campPresent             = 1;
-        asnMsg.m.nature_armePresent      = 1;
-        asnMsg.m.nature_niveauPresent    = 1;
-        asnMsg.m.nature_pcPresent        = 1;
+        asnMsg.m.campPresent      = 1;
+        asnMsg.m.nature_pcPresent = 1;
 
-        asnMsg.camp             = pArmy_->GetID();
-        asnMsg.nature_pc        = bIsPC_;
-        asnMsg.nature_arme      = pAgentType_->GetNatureWeapon().GetAsnID();
-        asnMsg.nature_niveau    = pAgentType_->GetNatureLevel ().GetAsnID();
+        asnMsg.camp      = pArmy_->GetID();
+        asnMsg.nature_pc = bIsPC_;
     }
 }
 
@@ -203,30 +198,16 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( ASN1T_MsgUnitKnowledgeUp
     assert( pArmy_ );
     assert( pAgentType_ );
 
-    asnMsg.m.campPresent             = 1;
-    asnMsg.m.nature_armePresent      = 1;
-    asnMsg.m.nature_niveauPresent    = 1;
-    asnMsg.m.nature_pcPresent        = 1;
+    asnMsg.m.campPresent      = 1;
+    asnMsg.m.nature_pcPresent = 1;
     
-    asnMsg.camp          = pArmy_->GetID();
-    asnMsg.nature_pc     = bIsPC_;
-    asnMsg.nature_arme   = pAgentType_->GetNatureWeapon().GetAsnID();
-    asnMsg.nature_niveau = pAgentType_->GetNatureLevel ().GetAsnID();
+    asnMsg.camp      = pArmy_->GetID();
+    asnMsg.nature_pc = bIsPC_;
 }
 
 // =============================================================================
 // ACCESSORS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_AgentDataRecognition::GetNatureWeapon
-// Created: NLD 2004-11-10
-// Modified: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-const PHY_NatureWeapon& DEC_Knowledge_AgentDataRecognition::GetNatureWeapon() const
-{
-    return pAgentType_ ? pAgentType_->GetNatureWeapon() : PHY_NatureWeapon::notDefined_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataRecognition::GetNatureAtlas

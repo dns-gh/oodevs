@@ -595,6 +595,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     asnMsg.GetAsnMsg().oid_connaissance      = nID_;
     asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     asnMsg.GetAsnMsg().oid_unite_reelle      = pAgentKnown_->GetID();    
+    asnMsg.GetAsnMsg().type_unite            = pAgentKnown_->GetType().GetID();
     asnMsg.Send();
 }
 

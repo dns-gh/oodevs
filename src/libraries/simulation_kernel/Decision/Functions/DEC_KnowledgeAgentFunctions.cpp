@@ -16,7 +16,6 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
-#include "Entities/Agents/Units/Categories/PHY_NatureWeapon.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -26,24 +25,6 @@
 // =============================================================================
 // FUNCTIONS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::GetNatureWeapon
-// Created: NLD 2004-03-31
-// -----------------------------------------------------------------------------
-void DEC_KnowledgeAgentFunctions::GetNatureWeapon( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
-{
-    DEC_Knowledge_Agent* pKnowledge = DEC_FunctionsTools::GetKnowledgeAgentFromDia( call.GetParameter( 0 ), callerAgent.GetKnowledgeGroup() );
-    if( !pKnowledge )
-    {
-        call.GetParameter( 1 ).SetValue( eQueryInvalid );
-        call.GetResult().SetValue( (int)0 );
-        return;
-    }
-
-    call.GetParameter( 1 ).SetValue( eQueryValid );
-    call.GetResult().SetValue( (int)pKnowledge->GetNatureWeapon().GetID() );
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetNatureAtlas

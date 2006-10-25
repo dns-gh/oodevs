@@ -138,7 +138,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
     file >> boost::serialization::base_object< PHY_Actor     >( *this );
 
     file >> nTypeID;
-    pType_ = MIL_AgentTypePion::FindPionType( nTypeID );
+    pType_ = MIL_AgentTypePion::Find( nTypeID );
     assert( pType_ );
     
     file >> const_cast< bool& >( bIsPC_ )

@@ -153,7 +153,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
     {
         uint nID;
         file >> nID;
-        reconByAgentTypes_.insert( MIL_AgentTypePion::FindPionType( nID ) );
+        reconByAgentTypes_.insert( MIL_AgentTypePion::Find( nID ) );
     }
 }
 

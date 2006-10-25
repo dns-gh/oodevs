@@ -14,13 +14,6 @@
 
 #include "DEC_Knowledge_AgentPerceptionDataIdentification.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
-
-#include "Entities/Agents/Units/Categories/PHY_NatureSpecialization.h"
-#include "Entities/Agents/Units/Categories/PHY_NatureQualifier.h"
-#include "Entities/Agents/Units/Categories/PHY_NatureMobility.h"
-#include "Entities/Agents/Units/Categories/PHY_NatureCategory.h"
-#include "Entities/Agents/Units/Categories/PHY_MissionCapacity.h"
-
 #include "Entities/Agents/MIL_AgentTypePion.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_AgentDataIdentification, "DEC_Knowledge_AgentDataIdentification" )
@@ -60,7 +53,7 @@ void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file,
    
     uint nID;
     file >> nID;
-    pAgentType_ = MIL_AgentTypePion::FindPionType( nID );
+    pAgentType_ = MIL_AgentTypePion::Find( nID );
     
     file >> bAgentTypeUpdated_;
 }
@@ -135,22 +128,11 @@ void DEC_Knowledge_AgentDataIdentification::Update( const DEC_Knowledge_AgentDat
 // Name: DEC_Knowledge_AgentDataIdentification::SendChangedState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataIdentification::SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
     if( bAgentTypeUpdated_ )
     {
-        asnMsg.m.nature_specialisationPresent = 1;
-        asnMsg.m.nature_qualificationPresent  = 1;
-        asnMsg.m.nature_categoriePresent      = 1;
-        asnMsg.m.nature_mobilitePresent       = 1;
-        asnMsg.m.capacite_missionPresent      = 1;
-
-        assert( pAgentType_ );
-        asnMsg.nature_specialisation = pAgentType_->GetNatureSpecialization ().GetAsnID();
-        asnMsg.nature_qualification  = pAgentType_->GetNatureQualifier      ().GetAsnID();
-        asnMsg.nature_categorie      = pAgentType_->GetNatureCategory       ().GetAsnID();
-        asnMsg.nature_mobilite       = pAgentType_->GetNatureMobility       ().GetAsnID();
-        asnMsg.capacite_mission      = pAgentType_->GetNatureCapaciteMission().GetAsnID();
+        // NOTHING for now ...
     }
 }
 
@@ -158,22 +140,10 @@ void DEC_Knowledge_AgentDataIdentification::SendChangedState( ASN1T_MsgUnitKnowl
 // Name: DEC_Knowledge_AgentDataIdentification::SendFullState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendFullState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataIdentification::SendFullState( ASN1T_MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
     if( nTimeLastUpdate_ == 0 )
         return;
-
-        asnMsg.m.nature_specialisationPresent = 1;
-        asnMsg.m.nature_qualificationPresent  = 1;
-        asnMsg.m.nature_categoriePresent      = 1;
-        asnMsg.m.nature_mobilitePresent       = 1;
-        asnMsg.m.capacite_missionPresent      = 1;
-
-        assert( pAgentType_ );
-        asnMsg.nature_specialisation = pAgentType_->GetNatureSpecialization ().GetAsnID();
-        asnMsg.nature_qualification  = pAgentType_->GetNatureQualifier      ().GetAsnID();
-        asnMsg.nature_categorie      = pAgentType_->GetNatureCategory       ().GetAsnID();
-        asnMsg.nature_mobilite       = pAgentType_->GetNatureMobility       ().GetAsnID();
-        asnMsg.capacite_mission      = pAgentType_->GetNatureCapaciteMission().GetAsnID();
+    // NOTHING for now ...
 }
 

@@ -202,17 +202,6 @@ const MIL_Army* DEC_Knowledge_Agent::GetArmy() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Agent::GetNatureWeapon
-// Created: NLD 2004-03-31
-// Modified: JVT 2004-12-09
-// -----------------------------------------------------------------------------
-inline
-const PHY_NatureWeapon& DEC_Knowledge_Agent::GetNatureWeapon() const
-{
-    return dataRecognition_.GetNatureWeapon();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetNatureAtlas
 // Created: NLD 2004-03-31
 // Modified: JVT 2004-12-09

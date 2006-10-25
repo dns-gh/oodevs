@@ -430,7 +430,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetPosition                               < MIL_AgentPion >, "DEC_ConnaissanceAgent_Position"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::IsFlying                                  < MIL_AgentPion >, "DEC_ConnaissanceAgent_EstEnVol"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetNatureAtlas                                             , "DEC_ConnaissanceAgent_NatureAtlas"                     );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetNatureWeapon                                            , "DEC_ConnaissanceAgent_NatureArme"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup    < MIL_AgentPion >, "DEC_ConnaissanceAgent_NiveauPerceptionMax"             );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetDangerosity                                             , "DEC_ConnaissanceAgent_Dangerosite"                     );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion                      < MIL_AgentPion >, "DEC_ConnaissanceAgent_DangerositeSurPion"              );    

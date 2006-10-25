@@ -15,13 +15,7 @@
 #include "MIL.h"
 
 class PHY_NatureLevel;
-class PHY_NatureWeapon;
-class PHY_NatureSpecialization;
-class PHY_NatureQualifier;
-class PHY_NatureCategory;
-class PHY_NatureMobility;
 class PHY_NatureAtlas;
-class PHY_MissionCapacity;
 
 // =============================================================================
 // @class  MIL_AgentType_ABC
@@ -37,20 +31,14 @@ public:
 
     //! @name Types
     //@{
-          uint                       GetID                   () const;
-    const std::string&               GetName                 () const;
-    const PHY_NatureLevel&           GetNatureLevel          () const;
-    const PHY_NatureWeapon&          GetNatureWeapon         () const;
-    const PHY_NatureSpecialization&  GetNatureSpecialization () const;
-    const PHY_NatureQualifier&       GetNatureQualifier      () const;
-    const PHY_NatureCategory&        GetNatureCategory       () const;
-    const PHY_NatureMobility&        GetNatureMobility       () const;
-    const PHY_NatureAtlas&           GetNatureAtlas          () const;
-    const PHY_MissionCapacity&       GetNatureCapaciteMission() const;
+          uint             GetID         () const;
+    const std::string&     GetName       () const;
+    const PHY_NatureLevel& GetNatureLevel() const;
+    const PHY_NatureAtlas& GetNatureAtlas() const;
 
-    virtual bool                     IsMilitia               () const;
-    virtual bool                     IsRefugee               () const;
-    virtual bool                     IsTerrorist             () const;
+    virtual bool           IsMilitia     () const;
+    virtual bool           IsRefugee     () const;
+    virtual bool           IsTerrorist   () const;
     //@}
 
 private:
@@ -60,17 +48,10 @@ private:
     //@}
 
 private:
-          uint                       nID_;
-    const std::string                strName_;
-    
-    const PHY_NatureLevel*           pNatureLevel_;
-    const PHY_NatureWeapon*          pNatureWeapon_;
-    const PHY_NatureSpecialization*  pNatureSpecialization_;
-    const PHY_NatureQualifier*       pNatureQualifier_;
-    const PHY_NatureCategory*        pNatureCategory_;
-    const PHY_NatureMobility*        pNatureMobility_;
-    const PHY_NatureAtlas*           pNatureAtlas_;
-    const PHY_MissionCapacity*       pCapaciteMission_;
+          uint             nID_;
+    const std::string      strName_;
+    const PHY_NatureLevel* pNatureLevel_;
+    const PHY_NatureAtlas* pNatureAtlas_;
 };
 
 #include "MIL_AgentType_ABC.inl"

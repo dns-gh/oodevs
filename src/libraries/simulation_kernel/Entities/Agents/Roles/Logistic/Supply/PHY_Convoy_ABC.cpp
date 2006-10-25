@@ -66,7 +66,7 @@ void PHY_Convoy_ABC::InitializeConvoyUnitType( MIL_InputArchive& archive )
     std::string strConvoyAgentType;
     archive.ReadAttribute( "nom", strConvoyAgentType );
 
-    pConvoyAgentType_ = MIL_AgentTypePion::FindPionType( strConvoyAgentType );
+    pConvoyAgentType_ = MIL_AgentTypePion::Find( strConvoyAgentType );
     if( !pConvoyAgentType_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown type for convoy", archive.GetContext() );
 

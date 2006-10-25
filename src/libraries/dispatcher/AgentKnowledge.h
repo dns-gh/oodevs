@@ -60,14 +60,7 @@ private:
       unsigned directionPresent : 1;
       unsigned speedPresent : 1;
       unsigned campPresent : 1;
-      unsigned nature_armePresent : 1;
-      unsigned nature_niveauPresent : 1;
       unsigned nature_pcPresent : 1;
-      unsigned nature_specialisationPresent : 1;
-      unsigned nature_qualificationPresent : 1;
-      unsigned nature_categoriePresent : 1;
-      unsigned nature_mobilitePresent : 1;
-      unsigned capacite_missionPresent : 1;
       unsigned perception_par_compagniePresent : 1;
       unsigned renduPresent : 1;
       unsigned prisonnierPresent : 1;
@@ -80,6 +73,7 @@ private:
     const unsigned int    nID_; 
     const KnowledgeGroup& knowledgeGroup_;
     const Agent&          agent_;        
+    const ASN1T_TypePion  nTypeAgent_;
 
     unsigned int                        nRelevance_;
     ASN1T_EnumUnitIdentificationLevel   nPerceptionLevel_;
@@ -90,13 +84,6 @@ private:
     unsigned int                        nDirection_;
     unsigned int                        nSpeed_;
     Side*                               pSide_;
-    ASN1T_EnumUnitNatureWeapon          nNatureWeapon_;
-    ASN1T_EnumNatureLevel               nNatureLevel_;
-    ASN1T_EnumUnitNatureSpecialization  nNatureSpecialization_;
-    ASN1T_EnumUnitNatureQualifier       nNatureQualifier_;
-    ASN1T_EnumUnitNatureCategory        nNatureCategory_;
-    ASN1T_EnumUnitNatureMobility        nNatureMobility_;
-    ASN1T_EnumUnitCapaciteMission       nMissionCapability_;
     bool                                bPC_; //$$$ A VIRER
     T_AutomatePerceptionVector          automatePerceptions_;
     bool                                bSurrendered_;

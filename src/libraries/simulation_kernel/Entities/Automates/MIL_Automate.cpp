@@ -281,7 +281,7 @@ void MIL_Automate::InitializeSubordinates( MIL_InputArchive& archive )
         if( bPC && pPionPC_ )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post already defined", archive.GetContext() );
 
-        const MIL_AgentTypePion* pType = MIL_AgentTypePion::FindPionType( strType );
+        const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strType );
         if( !pType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type", archive.GetContext() );
 

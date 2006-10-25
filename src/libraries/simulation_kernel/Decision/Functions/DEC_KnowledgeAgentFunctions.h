@@ -25,7 +25,6 @@ class DEC_KnowledgeAgentFunctions
 public:
     //! @name Functions
     //@{
-    static void GetNatureWeapon                       ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetNatureAtlas                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void GetDangerosity                        ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );
     static void IsPerceivedByAgent                    ( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent );

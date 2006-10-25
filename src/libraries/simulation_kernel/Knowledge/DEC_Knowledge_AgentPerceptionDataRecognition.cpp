@@ -62,7 +62,7 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
     
     uint nID;
     file >> nID;
-    pAgentType_ = MIL_AgentTypePion::FindPionType( nID );
+    pAgentType_ = MIL_AgentTypePion::Find( nID );
 }
 
 // -----------------------------------------------------------------------------

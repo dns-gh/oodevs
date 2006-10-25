@@ -154,7 +154,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
     uint nPionTypeID;
     file >> nPionTypeID;
           
-    const MIL_AgentTypePion* pType = MIL_AgentTypePion::FindPionType( nPionTypeID );
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nPionTypeID );
     assert( pType );    
 
     diaFunctionCaller_.DIA_FunctionCaller< MIL_AgentPion >::DIA_FunctionCaller( *pPion_, pType->GetFunctionTable() );

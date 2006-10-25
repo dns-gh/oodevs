@@ -39,9 +39,9 @@ public:
     static void Initialize( MIL_InputArchive& archive );
     static void Terminate ();
 
-    static const MIL_AgentTypePion* Create      ( const std::string& strName, MIL_InputArchive& archive );
-    static const MIL_AgentTypePion* FindPionType( const std::string& strName );
-    static const MIL_AgentTypePion* FindPionType( uint nID );
+    static const MIL_AgentTypePion* Create( const std::string& strName, MIL_InputArchive& archive );
+    static const MIL_AgentTypePion* Find  ( const std::string& strName );
+    static const MIL_AgentTypePion* Find  ( uint nID );
     //@}
 
     //! @name Instanciation

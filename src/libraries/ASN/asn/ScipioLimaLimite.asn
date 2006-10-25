@@ -9,7 +9,7 @@ ScipioLimaLimite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 -- Limit
 MsgLimitCreation ::= SEQUENCE 
 {
-    oid          OID,
+    oid          OID,      
     level        EnumNatureLevel DEFAULT ooo,
     geometrie    Line
 }

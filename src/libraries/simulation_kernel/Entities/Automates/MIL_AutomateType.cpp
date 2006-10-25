@@ -153,7 +153,7 @@ MIL_AutomateType::MIL_AutomateType( const std::string& strName, MIL_InputArchive
     archive.Section( "PionPC" );
     std::string strPCType;
     archive.ReadAttribute( "type", strPCType );    
-    pTypePC_ = MIL_AgentTypePion::FindPionType( strPCType );
+    pTypePC_ = MIL_AgentTypePion::Find( strPCType );
     if( !pTypePC_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown PC type", archive.GetContext() );
 
@@ -244,7 +244,7 @@ void MIL_AutomateType::InitializeComposition( MIL_InputArchive& archive )
         std::string strPionType;
         archive.ReadAttribute( "nom", strPionType );
 
-        const MIL_AgentTypePion* pType = MIL_AgentTypePion::FindPionType( strPionType );
+        const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strPionType );
         if( !pType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type", archive.GetContext() );
 

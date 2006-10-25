@@ -10,22 +10,22 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion::FindPionType
+// Name: MIL_AgentTypePion::Find
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
 inline
-const MIL_AgentTypePion* MIL_AgentTypePion::FindPionType( const std::string& strName )
+const MIL_AgentTypePion* MIL_AgentTypePion::Find( const std::string& strName )
 {
     CIT_PionTypeMap it = pionTypes_.find( strName );
     return it == pionTypes_.end() ? 0 : it->second;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion::FindPionType
+// Name: MIL_AgentTypePion::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 inline
-const MIL_AgentTypePion* MIL_AgentTypePion::FindPionType( uint nID )
+const MIL_AgentTypePion* MIL_AgentTypePion::Find( uint nID )
 {
     CIT_PionTypeMap it = std::find_if( pionTypes_.begin(), pionTypes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &MIL_AgentTypePion::GetID ), std::select2nd< T_PionTypeMap::value_type >() ) ) );
     return it == pionTypes_.end() ? 0 : it->second;

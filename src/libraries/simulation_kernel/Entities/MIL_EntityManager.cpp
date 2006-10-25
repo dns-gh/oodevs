@@ -16,13 +16,7 @@
 #include "Effects/MIL_EffectManager.h"
 #include "Objects/MIL_ObjectManager.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
-#include "Agents/Units/Categories/PHY_NatureWeapon.h"
-#include "Agents/Units/Categories/PHY_NatureSpecialization.h"
-#include "Agents/Units/Categories/PHY_NatureQualifier.h"
-#include "Agents/Units/Categories/PHY_NatureCategory.h"
-#include "Agents/Units/Categories/PHY_NatureMobility.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
-#include "Agents/Units/Categories/PHY_MissionCapacity.h"
 #include "Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Agents/Units/Categories/PHY_Volume.h"
 #include "Agents/Units/Categories/PHY_Protection.h"
@@ -94,14 +88,8 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     PHY_AmmoDotationClass        ::Initialize();
     MIL_RC                       ::Initialize();
     PHY_Morale                   ::Initialize();
-    PHY_NatureLevel              ::Initialize();
-    PHY_NatureWeapon             ::Initialize();
-    PHY_NatureSpecialization     ::Initialize();
-    PHY_NatureQualifier          ::Initialize();
-    PHY_NatureCategory           ::Initialize();
-    PHY_NatureMobility           ::Initialize();
+    PHY_NatureLevel              ::Initialize();    
     PHY_NatureAtlas              ::Initialize();
-    PHY_MissionCapacity          ::Initialize();
     PHY_RoePopulation            ::Initialize();
     PHY_MaintenanceLevel         ::Initialize();
     PHY_PerceptionLevel          ::Initialize();
@@ -287,13 +275,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_PerceptionLevel           ::Terminate();
     PHY_RadarClass                ::Terminate();
     PHY_NatureLevel               ::Terminate();
-    PHY_NatureWeapon              ::Terminate();
-    PHY_NatureSpecialization      ::Terminate();
-    PHY_NatureQualifier           ::Terminate();
-    PHY_NatureCategory            ::Terminate();
-    PHY_NatureMobility            ::Terminate();
     PHY_NatureAtlas               ::Terminate();
-    PHY_MissionCapacity           ::Terminate();
     PHY_RoePopulation             ::Terminate();
     PHY_MaintenanceWorkRate       ::Terminate();
     PHY_Convoy_ABC                ::Terminate();
