@@ -29,8 +29,9 @@ EnumChangeDiplomatieErrorCode ::= ENUMERATED
 
 MsgSideCreation ::= SEQUENCE
 {
-    oid Camp,
-    nom VisibleString
+    oid  Camp,
+    nom  VisibleString,
+    type EnumDiplomatie
 }
 
 MsgChangeDiplomatieAck ::= SEQUENCE

@@ -152,6 +152,7 @@ private:
 private:
     const uint          nID_;
           std::string   strName_;
+          E_Diplomacy   nType_;
     T_DiplomacyMap      diplomacies_;
     T_KnowledgeGroupMap knowledgeGroups_;
     T_FormationSet      formations_;

@@ -67,6 +67,9 @@ void asn1Print_MsgSideCreation (ASN1ConstCharPtr name, ASN1T_MsgSideCreation* pv
    sprintf (namebuf, "%s.nom", name);
    rtPrintCharStr (namebuf, pvalue->nom);
 
+   sprintf (namebuf, "%s.type", name);
+   asn1Print_EnumDiplomatie (namebuf, &pvalue->type);
+
 }
 
 void ASN1C_MsgSideCreation::Print (ASN1ConstCharPtr name)

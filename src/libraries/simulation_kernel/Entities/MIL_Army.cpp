@@ -65,6 +65,7 @@ void MIL_Army::Terminate()
 MIL_Army::MIL_Army( uint nID, MIL_InputArchive& archive )
     : nID_                 ( nID )
     , strName_             ()
+    , nType_               ( eUnknown )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
     , knowledgeGroups_     ()
     , diplomacies_         ()
@@ -73,7 +74,11 @@ MIL_Army::MIL_Army( uint nID, MIL_InputArchive& archive )
     , objects_             ()
 {
     archive.ReadAttribute( "name", strName_ );
-   
+
+    std::string strType;
+    archive.ReadAttribute( "type", strType );
+    nType_ = diplomacyConverter_.Convert( strType );
+    
     InitializeCommunication( archive );
     InitializeTactical     ( archive );
     InitializeObjects      ( archive );
@@ -567,9 +572,12 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army& army ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::SendCreation() const
 {
+    ASN1T_MsgSideCreation;
+
     NET_ASN_MsgSideCreation asn;
-    asn.GetAsnMsg().oid = nID_;
-    asn.GetAsnMsg().nom = strName_.c_str();
+    asn.GetAsnMsg().oid  = nID_;
+    asn.GetAsnMsg().nom  = strName_.c_str();
+    asn.GetAsnMsg().type = (ASN1T_EnumDiplomatie)( nType_ );
     asn.Send();
 
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )

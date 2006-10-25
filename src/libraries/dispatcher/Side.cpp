@@ -26,9 +26,10 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Side::Side( Model& model, const ASN1T_MsgSideCreation& msg )
-    : model_          ( model )
-    , nID_            ( msg.oid )
-    , strName_        ( msg.nom )
+    : model_          ( model    )
+    , nID_            ( msg.oid  )
+    , strName_        ( msg.nom  )
+    , nType_          ( msg.type )
     , knowledgeGroups_()
     , formations_     ()
     , diplomacies_    ()    
@@ -76,9 +77,9 @@ void Side::Update( const ASN1T_MsgChangeDiplomatieAck& asnMsg )
 void Side::SendCreation( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientSideCreation asn;
-
-    asn().oid = nID_;
-    asn().nom = strName_.c_str();
+    asn().oid  = nID_;
+    asn().nom  = strName_.c_str();
+    asn().type = nType_;
     asn.Send( publisher );
 
 	knowledgeGroups_.Apply( std::mem_fun_ref( &KnowledgeGroup::SendCreation ), publisher );

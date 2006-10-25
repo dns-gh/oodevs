@@ -73,6 +73,7 @@ private:
           Model&                               model_;
     const unsigned long                        nID_;
           std::string                          strName_;
+          ASN1T_EnumDiplomatie                 nType_;
           ModelRefsContainer< KnowledgeGroup > knowledgeGroups_;
           ModelRefsContainer< Formation      > formations_;
 		  ModelRefsContainer< Object		 > objects_;
