@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="astec" default="all">
+<project name="csword" default="all">
 
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
@@ -73,16 +73,16 @@
      applications
     ============================================================================
     -->
-    <target name="applications" description="build Astec executables"
+    <target name="applications" description="build CSword executables"
             depends="applications.simulation,applications.clients"/>
 
-    <target name="applications.simulation" description="build Astec Simulation executables"
+    <target name="applications.simulation" description="build CSword Simulation executables"
             depends="application.dispatcher_app,application.simulation_app,application.simulation_tester,application.AGR,application.ScriptCompiler" />
 
-    <target name="applications.clients" description="build Astec Client executables"
+    <target name="applications.clients" description="build CSword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app" />
 
-    <target name="application.dispatcher_app" description="build Astec Dispatcher executable" depends="library.dispatcher">
+    <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
                    libs="masalloc,paranoia,xeumeuleu,tools,xeumeuleu
                          MT_Tools_Scipio,ASN,asn1per
@@ -93,7 +93,7 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_app" description="build Astec Simulation executable" depends="library.simulation_missions,library.dispatcher">
+    <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.simulation_missions,library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
                    libs="HLA,libFedTime,masalloc,paranoia,tools,xeumeuleu
                          MT_Tools_Scipio,ASN,asn1per,
@@ -108,7 +108,7 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_tester" description="build Astec Simulation Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
+    <target name="application.simulation_tester" description="build CSword Simulation Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
         <build-app name="simulation_tester" subsystem="console" depends="mt,din,terrain"
                    libs="MT_Tools_SCIPIO,ASN,asn1per"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
@@ -117,13 +117,13 @@
         </build-app>
     </target>
 
-    <target name="application.adaptation_app" description="build Astec Adaptation executable" depends="library.ENT,library.clients_gui">
+    <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
         <build-app name="adaptation_app" depends="mt,qt,xeumeuleu" excludes="**/XmlResources.cpp" libs="ENT,clients_gui,clients_kernel" pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
 
-    <target name="application.gaming_app" description="build Astec Gaming executable" depends="library.gaming">
+    <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
         <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
                    libs="ASN,ENT,gaming,clients_gui,clients_kernel,asn1per,svgl">
             <includepath path="${include.dir}/ASN"/>
@@ -131,7 +131,7 @@
         </build-app>
     </target>
 
-    <target name="application.preparation_app" description="build Astec Gaming executable" depends="library.preparation">
+    <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
         <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
                    libs="ENT,preparation,clients_gui,clients_kernel,svgl">
             <syslibset libs="gdi32,psapi,dbghelp"/>
@@ -144,7 +144,7 @@
         </build-app>
     </target>
 
-    <target name="application.ScriptCompiler" description="build Astec ScriptCompiler executable" depends="library.MT_Tools_Scipio">
+    <target name="application.ScriptCompiler" description="build CSword ScriptCompiler executable" depends="library.MT_Tools_Scipio">
         <build-app name="ScriptCompiler" subsystem="console" depends="mt,dia3" libs="MT_Tools_Scipio"/>
     </target>
 
@@ -205,7 +205,7 @@
     -->
     <target name="package" description="package the distribution" depends="applications">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/astec.zip">
+        <zip destfile="${dist.dir}/csword.zip">
             <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
             <fileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe"/>
             <fileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>
