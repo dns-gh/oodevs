@@ -135,26 +135,8 @@ void ADN_Units_GUI::Build()
     // nature level type
     builder.AddEnumField<E_NatureLevel>( pNatureGroup, tr( "Level" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
 
-    // nature weapon type
-    builder.AddEnumField<E_UnitNatureWeapon>( pNatureGroup, tr( "Weapon" ), vInfosConnectors[eNatureWeapon], ENT_Tr::ConvertFromUnitNatureWeapon );
-
-    // nature specialization type
-    builder.AddEnumField<E_UnitNatureSpecialization>( pNatureGroup, tr( "Specialization" ), vInfosConnectors[eNatureSpec], ENT_Tr::ConvertFromUnitNatureSpecialization );
-
-    // nature qualifier type
-    builder.AddEnumField<E_UnitNatureQualifier>( pNatureGroup, tr( "Qualifier" ), vInfosConnectors[eNatureQualifer], ENT_Tr::ConvertFromUnitNatureQualifier );
-
-    // nature category type
-    builder.AddEnumField<E_UnitNatureCategory>( pNatureGroup, tr( "Category" ), vInfosConnectors[eNatureCategory], ENT_Tr::ConvertFromUnitNatureCategory );
-
-    // nature mobility type
-    builder.AddEnumField<E_UnitNatureMobility>( pNatureGroup, tr( "Mobility" ), vInfosConnectors[eNatureMobility], ENT_Tr::ConvertFromUnitNatureMobility );
-
     // nature atlas type
     builder.AddEnumField<E_NatureAtlasType>( pNatureGroup, tr( "Atlas" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
-
-    // Mission capacity
-    builder.AddEnumField<E_CapacityMission>( pNatureGroup, tr( "Mission capacity" ), vInfosConnectors[eMissionCapacity], ADN_Tr::ConvertFromCapacityMission );
 
     ADN_Nature_GUI* natureGui = new ADN_Nature_GUI( pNatureGroup );
     vInfosConnectors[eNatureNature] = &natureGui->GetConnector();

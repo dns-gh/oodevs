@@ -69,14 +69,8 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Units_GUI::eProbeWidth]->Connect( &pInfos->rProbeWidth_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eProbeLength]->Connect( &pInfos->rProbeLength_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNatureLevel]->Connect( &pInfos->eNatureLevel_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eNatureWeapon]->Connect( &pInfos->eNatureWeapon_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eNatureSpec]->Connect( &pInfos->eNatureSpec_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eNatureQualifer]->Connect( &pInfos->eNatureQualifier_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eNatureCategory]->Connect( &pInfos->eNatureCategory_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eNatureMobility]->Connect( &pInfos->eNatureMobility_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNatureAtlas]->Connect( &pInfos->eNatureAtlas_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNatureNature]->Connect( &pInfos->strNature_, bConnect );
-    vItemConnectors_[ADN_Units_GUI::eMissionCapacity]->Connect( &pInfos->eMissionCapacity_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNbOfficer]->Connect( &pInfos->nNbOfficer_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNbNCOfficer]->Connect( &pInfos->nNbNCOfficer_, bConnect );
     vItemConnectors_[ADN_Units_GUI::ePostures]->Connect( &pInfos->vPostures_, bConnect );

@@ -66,10 +66,10 @@ QString tools::ToString( E_PerceptionResult nResult )
 {
     static const QString perceptions[] = 
     {
-        tools::translate( "E_PerceptionResult", "Identification" ),
-        tools::translate( "E_PerceptionResult", "Reconnaissance" ),
-        tools::translate( "E_PerceptionResult", "Detection" ),
         tools::translate( "E_PerceptionResult", "Non vu" ),
+        tools::translate( "E_PerceptionResult", "Detection" ),
+        tools::translate( "E_PerceptionResult", "Reconnaissance" ),
+        tools::translate( "E_PerceptionResult", "Identification" ),
     };
     if( nResult >= 0 && nResult < 4 )
         return perceptions[ nResult ];

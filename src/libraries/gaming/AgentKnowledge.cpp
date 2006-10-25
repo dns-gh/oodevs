@@ -174,7 +174,10 @@ void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Recta
         const bool backupState = tools.Select( false );
         tools.DrawApp6Symbol( currentSymbol_, where );
         if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
-            tools.DrawApp6Symbol( levelSymbol_, where );
+        {
+            const bool bPc = bIsPC_.IsSet() ? bIsPC_ : false;
+            realAgent_.GetType().Draw( where, viewport, tools, bPc );
+        }
         tools.Select( backupState );
     }
 }

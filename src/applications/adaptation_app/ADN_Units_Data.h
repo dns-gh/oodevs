@@ -214,13 +214,7 @@ public:
         ADN_TypePtr_InVector_ABC<ADN_Models_Data::ModelInfos>       ptrModel_;
         ADN_Type_Int                                                nMosId_;
         ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>                eNatureLevel_;
-        ADN_Type_Enum<E_UnitNatureWeapon,eNbrUnitNatureWeapon>          eNatureWeapon_;
-        ADN_Type_Enum<E_UnitNatureSpecialization,eNbrUnitNatureSpecialization>    eNatureSpec_;
-        ADN_Type_Enum<E_UnitNatureQualifier,eNbrUnitNatureQualifier>    eNatureQualifier_;
-        ADN_Type_Enum<E_UnitNatureCategory,eNbrUnitNatureCategory>      eNatureCategory_;
-        ADN_Type_Enum<E_UnitNatureMobility,eNbrUnitNatureMobility>      eNatureMobility_;
         ADN_Type_Enum<E_NatureAtlasType,eNbrNatureAtlas>            eNatureAtlas_;
-        ADN_Type_Enum<E_CapacityMission,eNbrCapacityMission>        eMissionCapacity_;    
         ADN_Type_String                                             strNature_;
         ADN_Type_Int                                                nNbOfficer_;        // officer
         ADN_Type_Int                                                nNbNCOfficer_;      // non-commisioned officer

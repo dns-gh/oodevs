@@ -6113,23 +6113,23 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Weapon</source>
-        <translation>Arme</translation>
+        <translation type="obsolete">Arme</translation>
     </message>
     <message>
         <source>Specialization</source>
-        <translation>Spécialisation</translation>
+        <translation type="obsolete">Spécialisation</translation>
     </message>
     <message>
         <source>Qualifier</source>
-        <translation>Qualificatif</translation>
+        <translation type="obsolete">Qualificatif</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation>Catégorie</translation>
+        <translation type="obsolete">Catégorie</translation>
     </message>
     <message>
         <source>Mobility</source>
-        <translation>Mobilité</translation>
+        <translation type="obsolete">Mobilité</translation>
     </message>
     <message>
         <source>Atlas</source>
@@ -6137,7 +6137,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Mission capacity</source>
-        <translation>Capacité mission</translation>
+        <translation type="obsolete">Capacité mission</translation>
     </message>
     <message>
         <source>Command</source>

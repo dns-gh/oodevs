@@ -469,11 +469,6 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 , nMosId_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetNextId() )
 , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
 , eNatureLevel_((E_NatureLevel)0)
-, eNatureWeapon_((E_UnitNatureWeapon)0)
-, eNatureSpec_((E_UnitNatureSpecialization)0)
-, eNatureQualifier_((E_UnitNatureQualifier)0)
-, eNatureCategory_((E_UnitNatureCategory)0)
-, eNatureMobility_((E_UnitNatureMobility)0)
 , nNbOfficer_(0)
 , nNbNCOfficer_(0)
 , decontaminationDelay_( "0s" )
@@ -522,26 +517,6 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     ADN_Type_Enum<E_NatureLevel,eNbrNatureLevel>::SetConverter( &ENT_Tr::ConvertFromNatureLevel );
     eNatureLevel_.SetDataName( "la taille" );
     eNatureLevel_.SetParentNode( *this );
-
-    ADN_Type_Enum<E_UnitNatureWeapon,eNbrUnitNatureWeapon>::SetConverter( &ENT_Tr::ConvertFromUnitNatureWeapon );
-    eNatureWeapon_.SetDataName( "l'arme" );
-    eNatureWeapon_.SetParentNode( *this );
-
-    ADN_Type_Enum<E_UnitNatureSpecialization,eNbrUnitNatureSpecialization>::SetConverter( &ENT_Tr::ConvertFromUnitNatureSpecialization );
-    eNatureSpec_.SetDataName( "la spécialisation" );
-    eNatureSpec_.SetParentNode( *this );
-
-    ADN_Type_Enum<E_UnitNatureQualifier,eNbrUnitNatureQualifier>::SetConverter( &ENT_Tr::ConvertFromUnitNatureQualifier );
-    eNatureQualifier_.SetDataName( "le qualifieur" );
-    eNatureQualifier_.SetParentNode( *this );
-
-    ADN_Type_Enum<E_UnitNatureCategory,eNbrUnitNatureCategory>::SetConverter( &ENT_Tr::ConvertFromUnitNatureCategory );
-    eNatureCategory_.SetDataName( "la catégorie" );
-    eNatureCategory_.SetParentNode( *this );
-
-    ADN_Type_Enum<E_UnitNatureMobility,eNbrUnitNatureMobility>::SetConverter( &ENT_Tr::ConvertFromUnitNatureMobility );
-    eNatureMobility_.SetDataName( "la mobilité" );
-    eNatureMobility_.SetParentNode( *this );
 
     ADN_Type_Enum<E_NatureAtlasType,eNbrNatureAtlas>::SetConverter( &ADN_Tr::ConvertFromNatureAtlasType );
     eNatureAtlas_.SetDataName( "la nature ATLAS" );
@@ -600,13 +575,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->eTypeId_ = eTypeId_.GetData();
     pCopy->ptrModel_ = ptrModel_.GetData();
     pCopy->eNatureLevel_ = eNatureLevel_.GetData();
-    pCopy->eNatureWeapon_ = eNatureWeapon_.GetData();
-    pCopy->eNatureSpec_ = eNatureSpec_.GetData();
-    pCopy->eNatureQualifier_ = eNatureQualifier_.GetData();
-    pCopy->eNatureCategory_ = eNatureCategory_.GetData();
-    pCopy->eNatureMobility_ = eNatureMobility_.GetData();
     pCopy->eNatureAtlas_ = eNatureAtlas_.GetData();
-    pCopy->eMissionCapacity_ = eMissionCapacity_.GetData();
     pCopy->strNature_     = strNature_.GetData();
     pCopy->nNbOfficer_ = nNbOfficer_.GetData();
     pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
@@ -682,61 +651,6 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
 
     input.EndSection(); // Niveau
 
-    // Arme
-    input.Section( "Arme" );
-    input.ReadAttribute( "type", strTmp );
-
-    E_UnitNatureWeapon eNatureWeaponType = ENT_Tr::ConvertToUnitNatureWeapon( strTmp );
-    if( eNatureWeaponType == (E_UnitNatureWeapon)-1 )
-        input.ThrowError( MT_FormatString( "L'arme d'unité '%s' est invalide.", strTmp.c_str() ) );
-    eNatureWeapon_=eNatureWeaponType;
-
-    input.EndSection(); // Arme
-
-    // Spécialisation
-    input.Section( "Specialisation" );
-    input.ReadAttribute( "type", strTmp );
-
-    E_UnitNatureSpecialization eNatureSpecType = ENT_Tr::ConvertToUnitNatureSpecialization( strTmp );
-    if( eNatureSpecType == (E_UnitNatureSpecialization)-1 )
-        input.ThrowError( MT_FormatString( "La spécialisation d'unité '%s' est invalide", strTmp.c_str() ) );
-    eNatureSpec_=eNatureSpecType;
-
-    input.EndSection(); // Specialisation
-
-    // Qualificatif
-    input.Section( "Qualificatif" );
-    input.ReadAttribute( "type", strTmp );
-
-    E_UnitNatureQualifier eNatureQualifType = ENT_Tr::ConvertToUnitNatureQualifier( strTmp );
-    if( eNatureQualifType == (E_UnitNatureQualifier)-1 )
-        input.ThrowError( MT_FormatString( "La qualification d'unité '%s' est invalide", strTmp.c_str() ) );
-    eNatureQualifier_= eNatureQualifType;
-
-    input.EndSection(); // Qualificatif
-
-    // Catégorie
-    input.Section( "Categorie" );
-    input.ReadAttribute( "type", strTmp );
-
-    E_UnitNatureCategory eNatureCategoryType = ENT_Tr::ConvertToUnitNatureCategory( strTmp );
-    if( eNatureCategoryType == (E_UnitNatureCategory)-1 )
-        input.ThrowError( MT_FormatString( "La catégorie d'unité '%s' est invalide", strTmp.c_str() ) );
-    eNatureCategory_=eNatureCategoryType;
-
-    input.EndSection(); // Categorie
-
-    // Type mobilité
-    input.Section( "TypeMobilite" );
-    input.ReadAttribute( "type", strTmp );
-
-    E_UnitNatureMobility eNatureMobilityType = ENT_Tr::ConvertToUnitNatureMobility( strTmp );
-    if( eNatureMobilityType == (E_UnitNatureMobility)-1 )
-        input.ThrowError( MT_FormatString( "La mobilité d'unité '%s' est invalide", strTmp.c_str() ) );
-    eNatureMobility_=eNatureMobilityType;
-
-    input.EndSection(); // TypeMobilite
-
     input.Section( "QualificatifAtlas" );
     input.ReadAttribute( "type", strTmp );
 
@@ -745,17 +659,6 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
         input.ThrowError( MT_FormatString( "Le qualificatif ATLAS '%s' est invalide", strTmp.c_str() ) );
     eNatureAtlas_=eNatureAtlasType;
     input.EndSection(); // QualificatifAtlas
-
-    // Capacite mission
-    input.Section( "CapaciteMission" );
-    input.ReadAttribute( "type", eMissionCapacity_, ADN_Tr::ConvertToCapacityMission, ADN_XmlInput_Helper::eThrow );
-    input.EndSection(); // CapaciteMission
-
-    input.Section( "Nature" );
-    input.ReadAttribute( "type", strNature_ );
-    input.EndSection(); // Nature
-
-    input.EndSection(); // Nature
 
     input.BeginList( "Equipements" );
     while( input.NextListElement() )
@@ -869,40 +772,10 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteAttribute( "type", ENT_Tr::ConvertFromNatureLevel(eNatureLevel_.GetData()) );
     output.EndSection(); // Niveau
 
-    // Arme
-    output.Section( "Arme" );
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureWeapon(eNatureWeapon_.GetData()) );
-    output.EndSection(); // Arme
-
-    // Spécialisation
-    output.Section( "Specialisation" );
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureSpecialization(eNatureSpec_.GetData()) );
-    output.EndSection(); // Specialisation
-
-    // Qualificatif
-    output.Section( "Qualificatif" );
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureQualifier(eNatureQualifier_.GetData()) );
-    output.EndSection(); // Qualificatif
-
-    // Catégorie
-    output.Section( "Categorie" );
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureCategory(eNatureCategory_.GetData()) );
-    output.EndSection(); // Categorie
-
-    // Type mobilité
-    output.Section( "TypeMobilite" );
-    output.WriteAttribute( "type", ENT_Tr::ConvertFromUnitNatureMobility(eNatureMobility_.GetData()) );
-    output.EndSection(); // TypeMobilite
-
     // atlas
     output.Section( "QualificatifAtlas" );
     output.WriteAttribute( "type", ADN_Tr::ConvertFromNatureAtlasType( eNatureAtlas_.GetData() ) );
     output.EndSection(); // QualificatifAtlas
-
-    // Capacite mission
-    output.Section( "CapaciteMission" );
-    output.WriteAttribute( "type", ADN_Tr::ConvertFromCapacityMission( eMissionCapacity_.GetData() ) );
-    output.EndSection(); // CapaciteMission
 
     output.Section( "Nature" );
     output.WriteAttribute( "type", strNature_.GetData() );
