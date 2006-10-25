@@ -17,6 +17,8 @@ namespace svg
     class Node_ABC;
     class References;
     class TextRenderer;
+    class RenderingContext;
+    class Color;
 }
 
 namespace gui
@@ -77,9 +79,11 @@ private:
 
     T_Icons         icons_;
 
-    svg::TextRenderer* renderer_;
-    svg::References* references_;
-    T_Symbols        symbols_;
+    svg::Color*             current_;
+    svg::TextRenderer*      renderer_;
+    svg::References*        references_;
+    svg::RenderingContext*  renderingContext_;
+    T_Symbols               symbols_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "DrawerStyle.h"
 #include "svgl/svgl.h"
-#include "svgl/Color.h"
 #include "xeumeuleu/xml.h"
 #include "clients_kernel/GlTools_ABC.h"
 

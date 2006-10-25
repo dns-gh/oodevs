@@ -10,6 +10,11 @@
 #ifndef __DrawerShape_h_
 #define __DrawerShape_h_
 
+namespace svg
+{
+    class RenderingContext;
+}
+
 namespace gui
 {
     class DrawerStyle;
@@ -62,6 +67,7 @@ private:
     //! @name Member data
     //@{
     const DrawerStyle& style_;
+    svg::RenderingContext* context_;
     QColor color_;
     QColor complement_;
     T_PointVector points_;

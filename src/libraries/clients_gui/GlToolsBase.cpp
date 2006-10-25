@@ -13,8 +13,6 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TristateOption.h"
 #include "svgl/svgl.h"
-#include "svgl/TextRenderer.h"
-#include "svgl/Color.h"
 #include "GlFont.h"
 
 using namespace geometry;
@@ -29,8 +27,10 @@ using namespace svg;
 GlToolsBase::GlToolsBase( Controllers& controllers )
     : controllers_( controllers )
     , selected_( false ) 
+    , current_( new Color( "black" ) )
     , renderer_( new TextRenderer() )
     , references_( new References() )
+    , renderingContext_( new RenderingContext() )
 {
     // NOTHING
 }
@@ -48,6 +48,10 @@ GlToolsBase::~GlToolsBase()
         delete it->second.first;
         delete it->second.second;
     }
+    delete current_;
+    delete renderer_;
+    delete references_;
+    delete renderingContext_;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,16 +119,12 @@ void GlToolsBase::BindIcon( const char** xpm )
 
 namespace
 {
-    Color* CurrentColor()
+    void SetCurrentColor( Color& col )
     {
         // $$$$ AGE 2006-10-25: pas terrible
         float color[4];
         glGetFloatv( GL_CURRENT_COLOR, color );
-        std::stringstream str;
-        str << "rgb(" << int( color[0] * 255 ) << ","
-                      << int( color[1] * 255 ) << ","
-                      << int( color[2] * 255 ) << ")";
-        return new Color( str.str() );
+        col.Set( color[0], color[1], color[2] );
     }
 }
 
@@ -155,12 +155,11 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangl
     if( renderNode )
     {
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-        RenderingContext context( box, 640, 480 ); // $$$$ AGE 2006-09-11: 
-        Color* current = CurrentColor();
-        context.PushProperty( RenderingContext_ABC::color, *current );
-        renderNode->Draw( context, *references_ );
-        context.PopProperty( RenderingContext_ABC::color );
-        delete current;
+        SetCurrentColor( *current_ ); // $$$$ AGE 2006-10-25: 
+        renderingContext_->SetViewport( box, 640, 480 ); // $$$$ AGE 2006-09-11: 
+        renderingContext_->PushProperty( RenderingContext::color, *current_ );
+        renderNode->Draw( *renderingContext_, *references_ );
+        renderingContext_->PopProperty( RenderingContext::color );
     }
 }
 

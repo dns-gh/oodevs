@@ -11,7 +11,6 @@
 #include "DrawerShape.h"
 #include "DrawerStyle.h"
 #include "svgl/svgl.h"
-#include "svgl/color.h"
 
 using namespace gui;
 
@@ -21,6 +20,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawerShape::DrawerShape( const DrawerStyle& style, const QColor& color )
     : style_( style )
+    , context_( new svg::RenderingContext() )
     , color_( color )
     , complement_( color )
 {
@@ -39,7 +39,7 @@ DrawerShape::DrawerShape( const DrawerStyle& style, const QColor& color )
 // -----------------------------------------------------------------------------
 DrawerShape::~DrawerShape()
 {
-    // NOTHING
+    delete context_;
 }
 
 // -----------------------------------------------------------------------------
@@ -97,11 +97,11 @@ void DrawerShape::Draw( const geometry::Rectangle2f& viewport, const QColor& col
     glLineWidth( 1 );
 
     const geometry::BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-    svg::RenderingContext context( box, 320, 200 ); // $$$$ AGE 2006-09-04: 
+    context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04: 
     svg::Color svgColor( color.name().ascii() );
-    context.PushProperty( svg::RenderingContext_ABC::color, svgColor );
-
-    style_.Draw( points_, context );
+    context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
+    style_.Draw( points_, *context_ );
+    context_->PopProperty( svg::RenderingContext_ABC::color );
 
     if( overlined )
     {

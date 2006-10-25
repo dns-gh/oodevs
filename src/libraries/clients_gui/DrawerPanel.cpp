@@ -17,7 +17,6 @@
 #include "ColorButton.h"
 #include "svgl/TextRenderer.h"
 
-
 using namespace gui;
 
 // -----------------------------------------------------------------------------
