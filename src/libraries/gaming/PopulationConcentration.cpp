@@ -140,7 +140,7 @@ void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const ge
     {
         tools.DrawDisc( position_, radius_ );
         glPushAttrib( GL_CURRENT_BIT );
-        glColor4d( COLOR_BLACK );
+        glColor4f( COLOR_BLACK );
         tools.DrawDisc( position_, deadRadius_ );
         glPopAttrib();
     }

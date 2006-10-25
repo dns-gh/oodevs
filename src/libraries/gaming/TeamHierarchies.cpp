@@ -35,7 +35,7 @@ TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& hold
 // -----------------------------------------------------------------------------
 TeamHierarchies::~TeamHierarchies()
 {
-    // NOTHING
+    controller_.Delete( *(CommunicationHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,5 +45,5 @@ TeamHierarchies::~TeamHierarchies()
 void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message )
 {
     if( ! Find( message.oid ) )
-        factory_.CreateKnowledgeGroup( message.oid, holder_ );
+        (void)factory_.CreateKnowledgeGroup( message.oid, holder_ );
 }

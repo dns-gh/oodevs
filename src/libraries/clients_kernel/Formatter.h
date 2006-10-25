@@ -220,42 +220,6 @@ struct Formatter< E_NatureLevel >
 };
 
 template< >
-struct Formatter< E_UnitNatureWeapon >
-{
-    void operator()( const E_UnitNatureWeapon& e, Displayer_ABC& displayer ) const;
-};
-
-template< >
-struct Formatter< E_UnitNatureSpecialization >
-{
-    void operator()( const E_UnitNatureSpecialization& e, Displayer_ABC& displayer ) const;
-};
-
-template< >
-struct Formatter< E_UnitNatureQualifier >
-{
-    void operator()( const E_UnitNatureQualifier& e, Displayer_ABC& displayer ) const;
-};
-
-template< >
-struct Formatter< E_UnitNatureCategory >
-{
-    void operator()( const E_UnitNatureCategory& e, Displayer_ABC& displayer ) const;
-};
-
-template< >
-struct Formatter< E_UnitNatureMobility >
-{
-    void operator()( const E_UnitNatureMobility& e, Displayer_ABC& displayer ) const;
-};
-
-template< >
-struct Formatter< E_UnitCapaciteMission >
-{
-    void operator()( const E_UnitCapaciteMission& e, Displayer_ABC& displayer ) const;
-};
-
-template< >
 struct Formatter< E_UnitExperience >
 {
     void operator()( const E_UnitExperience& e, Displayer_ABC& displayer ) const;

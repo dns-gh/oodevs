@@ -105,7 +105,7 @@ void LogMaintenanceConsign::Draw( const Point2f& where, const Rectangle2f& viewp
     if( viewport.Intersect( Rectangle2f( from, to ) ).IsEmpty() )
         return;
 
-    glColor4d( COLOR_MAROON );
+    glColor4f( COLOR_MAROON );
     switch( nState_ )
     {
     case eLogMaintenanceTraitementEtat_RemorqueurDeplacementAller:

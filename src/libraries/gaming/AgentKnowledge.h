@@ -64,6 +64,9 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
+    void UpdateSymbol();
+    unsigned int ElementsToKeep( kernel::E_PerceptionResult perception ) const;
+    char TeamCharacter( kernel::E_PerceptionResult perception ) const;
     //@}
 
 public:
@@ -74,6 +77,11 @@ public:
 
     kernel::Agent_ABC&      realAgent_;
     const kernel::Team_ABC* team_;
+
+    std::string fullSymbol_;
+    std::string currentSymbol_;
+    std::string levelSymbol_;
+    std::string currentNature_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?
     kernel::OptionalValue< std::string >                strPosition_;
@@ -83,12 +91,6 @@ public:
     kernel::OptionalValue< kernel::E_PerceptionResult > nCurrentPerceptionLevel_;
     kernel::OptionalValue< kernel::E_PerceptionResult > nMaxPerceptionLevel_;
     kernel::OptionalValue< E_NatureLevel >              nLevel_;
-    kernel::OptionalValue< E_UnitNatureWeapon >         nWeapon_;
-    kernel::OptionalValue< E_UnitNatureSpecialization > nSpecialization_;
-    kernel::OptionalValue< E_UnitNatureQualifier >      nQualifier_;
-    kernel::OptionalValue< E_UnitNatureCategory >       nCategory_;
-    kernel::OptionalValue< E_UnitNatureMobility >       nMobility_;
-    kernel::OptionalValue< E_UnitCapaciteMission >      nCapacity_;
     kernel::OptionalValue< bool >                       bIsPC_;
     kernel::OptionalValue< bool >                       bSurrendered_;
     kernel::OptionalValue< bool >                       bPrisonner_;

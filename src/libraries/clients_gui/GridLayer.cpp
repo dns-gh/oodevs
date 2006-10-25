@@ -60,7 +60,7 @@ void GridLayer::Paint( const geometry::Rectangle2f& v )
         float gridSize = gridSize_;
         if( gridSize < 2 * tools_.Pixels() )
             gridSize = 2 * tools_.Pixels();
-        glColor4d( 1.0, 1.0, 1.0, 0.3 );
+        glColor4f( 1.0f, 1.0f, 1.0f, 0.3f );
         glLineWidth( 1.0 );
             for( float x = Displace( viewport.Left() ); x < viewport.Right(); x += gridSize )
                 tools_.DrawLine( geometry::Point2f( x, viewport.Top() ),

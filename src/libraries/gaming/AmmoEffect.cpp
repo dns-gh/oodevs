@@ -43,8 +43,8 @@ AmmoEffect::~AmmoEffect()
 void AmmoEffect::Draw( const GlTools_ABC& tools ) const
 {
     if( type_ == EnumFireEffectType::fumigene )
-        glColor4d( COLOR_SMOKE );
+        glColor4f( COLOR_SMOKE );
     else
-        glColor4d( COLOR_LIGHT );
+        glColor4f( COLOR_LIGHT );
     ellipse_.Draw( tools );
 }

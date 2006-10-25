@@ -330,22 +330,6 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawRectangle
-// Created: AGE 2006-09-11
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawRectangle( const geometry::Point2f& where, float factor /*= 1.f*/ ) const
-{
-    const float size = 600.f * factor;
-    glPushMatrix();
-        glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
-        UndoRotations();
-        const geometry::Point2f bottomLeft( - size*0.5f, 0 );
-        const geometry::Point2f topRight  (   size*0.5f, size*0.66f );
-        glRectfv( (const float*)&bottomLeft, (const float*)&topRight );
-    glPopMatrix();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawIcon
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------

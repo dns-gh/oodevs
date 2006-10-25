@@ -20,7 +20,6 @@ namespace kernel
     class DecisionalModel;
     class AgentType;
     class AutomatComposition;
-    class SymbolFactory;
     template< typename Container > class Iterator;
 
 // =============================================================================
@@ -36,8 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver
-                                            , const SymbolFactory& symbolFactory );
+                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver );
     virtual ~AutomatType();
     //@}
 
@@ -79,10 +77,10 @@ private:
     unsigned long id_;
     QString name_;
     std::string type_;
+    std::string symbol_;
 
     DecisionalModel* model_;
     AgentType* pcType_;
-    std::string symbol_;
     T_UnitConstitution units_;
     //@}
 };

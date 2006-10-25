@@ -46,7 +46,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
-    , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
+    , knowledgeGroups_( *new KnowledgeGroupsModel() )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, publisher ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
@@ -88,8 +88,8 @@ void Model::Purge()
 {
     agents_.Purge();
     objects_.Purge();
-    teams_.Purge();
     knowledgeGroups_.Purge();
+    teams_.Purge();
     logistics_.Purge();
     fires_.Purge();
     weather_.Purge();

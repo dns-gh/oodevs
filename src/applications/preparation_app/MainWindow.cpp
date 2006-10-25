@@ -72,6 +72,8 @@
 #include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
 
+//#include "clients_gui/NatureEditionWidget.h"
+
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
@@ -122,13 +124,17 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
     new TacticalListView( listsTabBox, controllers, *factory, *modelBuilder_, model_.formations_.levels_ );
     pAgentsTabWidget->addTab( listsTabBox, tr( "Tactique" ) );
-
+    
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
     new ::CommunicationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
     pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
 
     pListsTabWidget->addTab( pAgentsTabWidget, tr( "Agents" ) );
+
+//    NatureEditionWidget* nature = new NatureEditionWidget( pListsTabWidget, "symbols.xml" );
+//    nature->setText( "combat service support/transportation/spod spoe" );
+//    pListsTabWidget->addTab( nature, tr( "Test" ) );
 
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
@@ -360,6 +366,7 @@ void MainWindow::WriteSettings()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
     QString strDockConfig;
@@ -367,6 +374,7 @@ void MainWindow::WriteSettings()
     strDockConfigStream << *this;
     settings.writeEntry( "/Panels", strDockConfig );
     settings.WriteEntry( "/MainWindow", *this );
+    settings.endGroup();
 }
 
 // -----------------------------------------------------------------------------
@@ -377,6 +385,7 @@ void MainWindow::ReadSettings()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
     QString strDockConfig;
@@ -386,6 +395,7 @@ void MainWindow::ReadSettings()
 
     // Main window configuration
     settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
+    settings.endGroup();
 }
 
 // -----------------------------------------------------------------------------
@@ -396,8 +406,10 @@ void MainWindow::WriteOptions()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Preparation" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Save( settings );
+    settings.endGroup();
     settings.endGroup();
 }
 
@@ -409,8 +421,10 @@ void MainWindow::ReadOptions()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Preparation" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Load( settings );
+    settings.endGroup();
     settings.endGroup();
 }
 

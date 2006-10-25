@@ -26,6 +26,7 @@
 #include "StaticModel.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
+#include "KnowledgeGroupsModel.h"
 
 using namespace kernel;
 
@@ -91,5 +92,8 @@ KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( unsigned long id, Team_AB
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, team, *result ) );
     result->Polish();
+
+    // $$$$ AGE 2006-10-24: 
+    model_.knowledgeGroups_.Register( result->GetId(), *result );
     return result;
 }

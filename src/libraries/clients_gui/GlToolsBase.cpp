@@ -14,6 +14,7 @@
 #include "clients_kernel/TristateOption.h"
 #include "svgl/svgl.h"
 #include "svgl/TextRenderer.h"
+#include "svgl/Color.h"
 #include "GlFont.h"
 
 using namespace geometry;
@@ -112,28 +113,19 @@ void GlToolsBase::BindIcon( const char** xpm )
     glBindTexture( GL_TEXTURE_2D, texture );
 }
 
-#include <qpicture.h>
 namespace
 {
-    void ShowSymbol( const std::string& filename )
+    Color* CurrentColor()
     {
-        QDialog* dialog = new QDialog( 0, "dialog", false );
-        QVBoxLayout* layout = new QVBoxLayout( dialog );
-        dialog->setMinimumSize( 320, 200 );
-        
-        QLabel* name = new QLabel( dialog, "name" );
-        name->setText( filename.c_str() );
-        layout->add( name );
-        
-        QLabel* label = new QLabel( dialog, "label" );
-        QPicture picture;
-        picture.load( filename.c_str(), "svg" );
-        label->setPicture( picture );
-        layout->add( label );
-
-        dialog->show();
-
-    };
+        // $$$$ AGE 2006-10-25: pas terrible
+        float color[4];
+        glGetFloatv( GL_CURRENT_COLOR, color );
+        std::stringstream str;
+        str << "rgb(" << int( color[0] * 255 ) << ","
+                      << int( color[1] * 255 ) << ","
+                      << int( color[2] * 255 ) << ")";
+        return new Color( str.str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -142,20 +134,34 @@ namespace
 // -----------------------------------------------------------------------------
 void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport )
 {
+    // $$$$ AGE 2006-10-24: 
+    const bool create = symbols_.find( symbol ) == symbols_.end();
     T_LodSymbol& node = symbols_[ symbol ];
-    if( ! node.first )
+    if( create )
     {
         // $$$$ AGE 2006-09-11: error management !
         SVGFactory factory( *renderer_ );
-        // $$$$ AGE 2006-09-11: 
-        node.first  = factory.Compile( "symbols/" + symbol, *references_, 10  ); // $$$$ AGE 2006-09-11: 
-        node.second = factory.Compile( "symbols/" + symbol, *references_, 100 ); // $$$$ AGE 2006-09-11: 
-//        ShowSymbol( "symbols/" + symbol );
+        try
+        {
+            node.first  = factory.Compile( symbol + ".svg", *references_, 10  ); // $$$$ AGE 2006-09-11: 
+            node.second = factory.Compile( symbol + ".svg", *references_, 100 ); // $$$$ AGE 2006-09-11: 
+        }
+        catch( ... )
+        {
+            // $$$$ AGE 2006-10-23: 
+        };
     }
-    const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-    RenderingContext context( box, 640, 480 ); // $$$$ AGE 2006-09-11: 
     Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
-    renderNode->Draw( context, *references_ );
+    if( renderNode )
+    {
+        const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
+        RenderingContext context( box, 640, 480 ); // $$$$ AGE 2006-09-11: 
+        Color* current = CurrentColor();
+        context.PushProperty( RenderingContext_ABC::color, *current );
+        renderNode->Draw( context, *references_ );
+        context.PopProperty( RenderingContext_ABC::color );
+        delete current;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -166,5 +172,3 @@ GlToolsBase& GlToolsBase::Base() const
 {
     return const_cast< GlToolsBase& >( *this );
 }
-
-    

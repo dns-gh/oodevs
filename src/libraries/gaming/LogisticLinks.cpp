@@ -150,16 +150,16 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const geometry::Rectan
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
 
-    glColor4d( COLOR_YELLOW );
+    glColor4f( COLOR_YELLOW );
     DrawLink( where, GetTC2(), tools, 0.3f, displayLinks, displayMissing );
 
-    glColor4d( COLOR_PINK );
+    glColor4f( COLOR_PINK );
     DrawLink( where, GetMedical(), tools, 0.4f, displayLinks, displayMissing && type_.IsLogisticMedical() );
 
-    glColor4d( COLOR_MAROON );
+    glColor4f( COLOR_MAROON );
     DrawLink( where, GetMaintenance(), tools, 0.5f, displayLinks, displayMissing && type_.IsLogisticMaintenance() );
 
-    glColor4d( COLOR_ORANGE );
+    glColor4f( COLOR_ORANGE );
     DrawLink( where, GetSupply(), tools, 0.6f, displayLinks, displayMissing && type_.IsLogisticSupply() );
 
     glPopAttrib();

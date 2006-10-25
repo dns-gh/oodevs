@@ -35,6 +35,12 @@ private:
     TeamTacticalHierarchies( const TeamTacticalHierarchies& );            //!< Copy constructor
     TeamTacticalHierarchies& operator=( const TeamTacticalHierarchies& ); //!< Assignement operator
     //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controller& controller_;
+    //@}
 };
 
 #endif // __TeamTacticalHierarchies_h_

@@ -415,46 +415,25 @@ void GlWidget::Print( const std::string& message, const Point2f& where ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::SetShadowedColor
-// Created: AGE 2006-07-05
-// -----------------------------------------------------------------------------
-void GlWidget::SetShadowedColor()
-{
-    float shadowedColor[4];
-    glGetFloatv( GL_CURRENT_COLOR, shadowedColor );
-    for(unsigned i = 0;i < 3; ++i )
-        shadowedColor[i]*=0.2f;
-    shadowedColor[3] = 0.9f;
-    glColor4fv( shadowedColor );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::DrawRectangle
-// Created: AGE 2006-09-11
-// -----------------------------------------------------------------------------
-void GlWidget::DrawRectangle( const geometry::Point2f& where, float factor /*= 1.f*/ ) const
-{
-     // $$$$ AGE 2006-09-11: hard coded sizes
-    const geometry::Point2f bottomLeft( where.X() - factor * 300, where.Y() );
-    const geometry::Point2f topRight  ( where.X() + factor * 300, where.Y() + factor * 600*0.66f );
-    glRectfv( (const float*)&bottomLeft, (const float*)&topRight );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GLWidget::DrawApp6Symbolc
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
 void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
-    const float size   = 600.f * factor;
-    const float height = size * 0.660f; // $$$$ AGE 2006-09-11: 
-    const Point2f center = Point2f( where.X() - size * 0.5f, where.Y() + height );
-    const float ratio = size / 1000.f;
+    const float svgDeltaX = -20;
+    const float svgDeltaY = -80;
+    const float svgWidth = 360;
+    const float expectedWidth  = 600.f * factor;
+    const float expectedHeight = expectedWidth * 0.660f;
+    const Point2f center = Point2f( where.X() - expectedWidth * 0.5f, where.Y() + expectedHeight );
+
+    const float scaleRatio = expectedWidth / svgWidth;
 
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glPushMatrix();
         glTranslatef( center.X(), center.Y(), 0.0f );
-        glScalef( ratio, -ratio, 1 );
+        glScalef( scaleRatio, -scaleRatio, 1 );
+        glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
         Base().PrintApp6( symbol, viewport_ );
     glPopMatrix();
     glPopAttrib();

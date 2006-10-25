@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "SymbolRule.h"
 #include "SymbolCase.h"
-#include "SymbolRequest.h"
+#include "SymbolVisitor_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -22,13 +22,8 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 SymbolRule::SymbolRule( xml::xistream& xis )
 {
-    xis >> optional() >> attribute( "name", name_ )
-        >> optional() >> attribute( "default", default_ );
-    
-    if( !name_.empty() && !default_.empty() )
-        throw std::runtime_error( "Symbol rule cannot specify both 'name' and 'default'" );
-
-    xis >> optional() >> list( "case", *this, & SymbolRule::ReadCase );
+    xis >> attribute( "name", name_ );
+    xis >> list( "case", *this, & SymbolRule::ReadCase );
 }
     
 // -----------------------------------------------------------------------------
@@ -38,7 +33,7 @@ SymbolRule::SymbolRule( xml::xistream& xis )
 SymbolRule::~SymbolRule()
 {
     for( CIT_Cases it = cases_.begin(); it != cases_.end(); ++it )
-        delete *it;
+        delete it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -47,23 +42,38 @@ SymbolRule::~SymbolRule()
 // -----------------------------------------------------------------------------
 void SymbolRule::ReadCase( xml::xistream& xis )
 {
-    cases_.push_back( new SymbolCase( xis ) );
+    std::string name;
+    xis >> attribute( "name", name );
+    cases_[ name ] = new SymbolCase( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolRule::Evaluate
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-std::string SymbolRule::Evaluate( const SymbolRequest& request ) const
+void SymbolRule::Evaluate( const std::string& request, std::string& result ) const
 {
-    if( name_.empty() && cases_.empty() ) // empty rule: return default_
-        return default_;
+    const std::string::size_type pos = request.find_first_of( '/' );
 
-    for( CIT_Cases it = cases_.begin(); it != cases_.end(); ++it )
+    std::string head = request;
+    std::string tail;
+    if( pos != std::string::npos )
     {
-        const std::string value = (*it)->Evaluate( name_, request );
-        if( !value.empty() )
-            return value;
+       head = request.substr( 0, pos );
+       tail = request.substr( pos + 1, request.length() - pos  - 1 );
     }
-    return ""; // no match
+    CIT_Cases it = cases_.find( head );
+    if( it != cases_.end() )
+        it->second->Evaluate( tail, result );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolRule::Accept
+// Created: AGE 2006-10-24
+// -----------------------------------------------------------------------------
+void SymbolRule::Accept( SymbolVisitor_ABC& visitor ) const
+{
+    visitor.StartCategory( name_ );
+    for( CIT_Cases it = cases_.begin(); it != cases_.end(); ++it )
+        it->second->Accept( visitor );
 }

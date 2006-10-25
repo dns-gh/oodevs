@@ -35,16 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    std::string CreateSymbol       ( const AgentNature& nature ) const;
-    std::string CreateLevelSymbol  ( const AgentNature& nature ) const;
+    std::string CreateSymbol       ( const std::string& hierarchy ) const;
+    std::string CreateLevelSymbol  ( const std::string& level ) const;
     std::string CreateAutomatSymbol() const;
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< SymbolRule* >   T_Rules;
-    typedef T_Rules::const_iterator    CIT_Rules;
     //@}
 
 private:
@@ -56,16 +49,17 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadRule( xml::xistream& xis, T_Rules& rules ) const;
-    void ReadAutomatRule( xml::xistream& xis );
-    std::string CreateSymbolFromRules( const AgentNature& nature, const T_Rules& rules ) const;
+    SymbolRule* ReadRule( xml::xistream& xis, const std::string& ruleName, std::string& base ) const;
+    void        ReadRule( xml::xistream& xis, SymbolRule*& rule ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Rules symbolRules_;
-    T_Rules levelRules_;
+    std::string symbolBase_;
+    SymbolRule* symbolRule_;
+    std::string levelBase_;
+    SymbolRule* levelRule_;
     std::string automatSymbol_;
     //@}
 };

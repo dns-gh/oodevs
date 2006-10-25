@@ -8,7 +8,6 @@
 
 #include "clients_kernel_pch.h"
 #include "AutomatType.h"
-#include "SymbolFactory.h"
 #include "GlTools_ABC.h"
 #include "Iterator.h"
 #include "AutomatComposition.h"
@@ -23,8 +22,7 @@ using namespace xml;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QString >& agentResolver
-                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver
-                                            , const SymbolFactory& symbolFactory )
+                                            , const Resolver_ABC< DecisionalModel, QString >& modelResolver )
 {
     int id;
     std::string modelName, name;
@@ -45,7 +43,9 @@ AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QSt
         >> start( "PionPC" )
             >> attribute( "type", pcType );
     pcType_ = & agentResolver.Get( pcType.c_str() );
-    symbol_ = symbolFactory.CreateAutomatSymbol();
+
+    symbol_ = pcType_->GetSymbol();
+    std::replace( symbol_.begin(), symbol_.end(), '*', 'f' ); // $$$$ AGE 2006-10-24: 
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +117,8 @@ const DecisionalModel& AutomatType::GetDecisionalModel() const
 // -----------------------------------------------------------------------------
 void AutomatType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    pcType_->DrawAggregated( where, viewport, tools );
+    if( viewport.IsInside( where ) )
+        tools.DrawApp6Symbol( symbol_, where, 2 );
 }
 
 // -----------------------------------------------------------------------------

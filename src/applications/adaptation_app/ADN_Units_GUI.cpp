@@ -28,6 +28,7 @@
 #include "ENT/ENT_Tr.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_TimeField.h"
+#include "ADN_Nature_GUI.h"
 
 #include <qcombo.h>
 #include <qframe.h>
@@ -155,6 +156,8 @@ void ADN_Units_GUI::Build()
     // Mission capacity
     builder.AddEnumField<E_CapacityMission>( pNatureGroup, tr( "Mission capacity" ), vInfosConnectors[eMissionCapacity], ADN_Tr::ConvertFromCapacityMission );
 
+    ADN_Nature_GUI* natureGui = new ADN_Nature_GUI( pNatureGroup );
+    vInfosConnectors[eNatureNature] = &natureGui->GetConnector();
 
     // Commandement
     QGroupBox* pCommandGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup ); 

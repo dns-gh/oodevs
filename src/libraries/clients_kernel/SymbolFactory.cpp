@@ -9,7 +9,6 @@
 
 #include "clients_kernel_pch.h"
 #include "SymbolFactory.h"
-#include "SymbolRequest.h"
 #include "SymbolRule.h"
 #include "xeumeuleu/xml.h"
 
@@ -22,16 +21,11 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 SymbolFactory::SymbolFactory( xml::xistream& xis )
 {
-    xis >> start( "rulesets" )
-            >> start( "automats" )
-				>> list( "rule", *this, &SymbolFactory::ReadAutomatRule )
-            >> end()
-            >> start( "symbols" )
-                >> list( "rule", *this, &SymbolFactory::ReadRule, symbolRules_ )
-            >> end()
-            >> start( "levels" )
-                >> list( "rule", *this, &SymbolFactory::ReadRule, levelRules_ )
-            >> end();
+    xis >> start( "app6" );
+        symbolRule_    = ReadRule( xis, "symbols", symbolBase_ );
+        levelRule_     = ReadRule( xis, "levels", levelBase_ );
+                         ReadRule( xis, "automats", automatSymbol_ );
+    xis >> end();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,68 +34,60 @@ SymbolFactory::SymbolFactory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 SymbolFactory::~SymbolFactory()
 {
-    for( CIT_Rules it = symbolRules_.begin(); it != symbolRules_.end(); ++it )
-        delete *it;
-    for( CIT_Rules it = levelRules_.begin(); it != levelRules_.end(); ++it )
-        delete *it;
+    delete symbolRule_;
+    delete levelRule_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory::ReadRule
-// Created: SBO 2006-03-20
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-void SymbolFactory::ReadRule( xml::xistream& xis, T_Rules& rules ) const
+SymbolRule* SymbolFactory::ReadRule( xml::xistream& xis, const std::string& ruleName, std::string& base ) const
 {
-    rules.push_back( new SymbolRule( xis ) );
+    SymbolRule* result = 0;
+    xis >> start( ruleName )
+            >> attribute( "base", base )
+            >> list( "choice", *this, &SymbolFactory::ReadRule, result )
+        >> end();
+    return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolFactory::ReadAutomatRule
-// Created: SBO 2006-03-21
+// Name: SymbolFactory::ReadRule
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-void SymbolFactory::ReadAutomatRule( xml::xistream& xis )
+void SymbolFactory::ReadRule( xml::xistream& xis, SymbolRule*& rule ) const
 {
-    xis >> attribute( "default", automatSymbol_ );
+    if( rule )
+        throw std::runtime_error( __FUNCTION__ );
+    rule = new SymbolRule( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory::CreateSymbol
-// Created: SBO 2006-03-20
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-std::string SymbolFactory::CreateSymbol( const AgentNature& nature ) const
+std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 {
-    return CreateSymbolFromRules( nature, symbolRules_ );
+    std::string result( symbolBase_ );
+    symbolRule_->Evaluate( hierarchy, result );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory::CreateLevelSymbol
-// Created: SBO 2006-03-21
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-std::string SymbolFactory::CreateLevelSymbol( const AgentNature& nature ) const
+std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const
 {
-    return CreateSymbolFromRules( nature, levelRules_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SymbolFactory::CreateSymbolFromRules
-// Created: SBO 2006-03-21
-// -----------------------------------------------------------------------------
-std::string SymbolFactory::CreateSymbolFromRules( const AgentNature& nature, const T_Rules& rules ) const
-{
-    SymbolRequest request( nature );
-
-    for( CIT_Rules it = rules.begin(); it != rules.end(); ++it )
-    {
-        std::string value = (*it)->Evaluate( request );
-        if( !value.empty() )
-            return value;
-    }
-    throw std::runtime_error( "No symbol found to match agent nature" );
+    std::string result( levelBase_ );
+    levelRule_->Evaluate( level, result );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory::CreateAutomatSymbol
-// Created: SBO 2006-03-21
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
 std::string SymbolFactory::CreateAutomatSymbol() const
 {

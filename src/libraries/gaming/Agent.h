@@ -71,6 +71,7 @@ private:
     //! @name Member data
     //@{
     kernel::AgentType&   type_;
+    std::string symbol_;
     bool isPc_;
     //@}
 };

@@ -75,6 +75,7 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Units_GUI::eNatureCategory]->Connect( &pInfos->eNatureCategory_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNatureMobility]->Connect( &pInfos->eNatureMobility_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNatureAtlas]->Connect( &pInfos->eNatureAtlas_, bConnect );
+    vItemConnectors_[ADN_Units_GUI::eNatureNature]->Connect( &pInfos->strNature_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eMissionCapacity]->Connect( &pInfos->eMissionCapacity_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNbOfficer]->Connect( &pInfos->nNbOfficer_, bConnect );
     vItemConnectors_[ADN_Units_GUI::eNbNCOfficer]->Connect( &pInfos->nNbNCOfficer_, bConnect );

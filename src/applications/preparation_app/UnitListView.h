@@ -21,6 +21,7 @@ namespace kernel
     class ModelLoaded;
     class ModelUnLoaded;
     class Controllers;
+    class AgentNature;
 }
 
 namespace gui
@@ -67,7 +68,11 @@ private:
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void DisplayList();
+    void DisplayBy( const std::string& (kernel::AgentNature::*function)() const );
+    void DisplayByNature();
+    QListViewItem* CreateNaturePath( const std::string& path );
     virtual QDragObject* dragObject();
+    void Sort( QListViewItem* item );
     //@}
 
 private:

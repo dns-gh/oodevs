@@ -53,30 +53,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Arme:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sp&#xe9;cialisation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qualification:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cat&#xe9;gorie:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mobilit&#xe9;:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Capacit&#xe9; mission:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rendu:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -94,6 +70,10 @@
     </message>
     <message>
         <source>Pertinence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

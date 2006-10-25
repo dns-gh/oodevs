@@ -135,7 +135,7 @@ void Lima::Draw( const GlTools_ABC& tools ) const
         glLineWidth( 5.0 );
         TacticalLine_ABC::Draw( tools );
         glLineWidth( 3.0 );
-        glColor4d( 0.55, 0.3, 0.1, 1.0 );
+        glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
         TacticalLine_ABC::Draw( tools );
         glColor3f( 0.f, 0.f, 0.f );
         DrawName( tools );

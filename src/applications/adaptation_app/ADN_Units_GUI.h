@@ -51,6 +51,7 @@ public:
         eNatureCategory,
         eNatureMobility,
         eNatureAtlas,
+        eNatureNature,
         eMissionCapacity,
         eNbOfficer,
         eNbNCOfficer,

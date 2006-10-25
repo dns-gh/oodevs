@@ -33,6 +33,7 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, AgentType
     addColumn( tools::translate( "Preparation", "Count" ) );
     setRootIsDecorated( true );
     header()->hide();
+    setSorting( -1 );
 
     controllers_.Register( *this );
 }
@@ -91,28 +92,135 @@ void UnitListView::NotifyUpdated( const ModelUnLoaded& )
 // -----------------------------------------------------------------------------
 void UnitListView::DisplayList()
 {
-    if( sorting_.empty() )
+    if( sorting_ == "level" )
+        DisplayBy( &AgentNature::GetLevel );
+    else if( sorting_ == "atlas" )
+        DisplayBy( &AgentNature::GetAtlas );
+    else if( sorting_ == "nature" )
+        DisplayByNature();
+    else
     {
         Iterator< const AutomatType& > it( types_.Resolver< AutomatType >::CreateIterator() );
         DeleteTail( ListView< UnitListView >::Display( it, this ) );
     }
-    else
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::DisplayBy
+// Created: AGE 2006-10-23
+// -----------------------------------------------------------------------------
+void UnitListView::DisplayBy( const std::string& (kernel::AgentNature::*function)() const )
+{
+    Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
+    while( it.HasMoreElements() )
     {
-        Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
-        while( it.HasMoreElements() )
+        const AgentType& type = it.NextElement();
+        const std::string& strText = (type.GetNature().*function)();
+        const QString text = strText.c_str();
+        QListViewItem* parentItem = findItem( text, 0 );
+        if( !parentItem )
         {
-            const AgentType& type = it.NextElement();
-            const QString text = type.GetNature().Retrieve( sorting_ ).c_str();
-            QListViewItem* parentItem = findItem( text, 0 );
-            if( !parentItem )
-            {
-                parentItem = new QListViewItem( this );
-                parentItem->setText( 0, text );
-            }
-            ValuedListItem* item = new ValuedListItem( parentItem );
-            item->SetNamed( type );
-            item->setDragEnabled( true );
+            parentItem = new QListViewItem( this );
+            parentItem->setText( 0, text );
         }
+        ValuedListItem* item = new ValuedListItem( parentItem );
+        item->SetNamed( type );
+        item->setDragEnabled( true );
+    }
+}
+
+namespace
+{
+    QListViewItem* _FindSibling( const QString& text, QListViewItem* bro )
+    {
+        while( bro && bro->text( 0 ) != text )
+            bro = bro->nextSibling();
+        return bro;
+    }
+    template< typename P >
+    QListViewItem* _FindItem( const QString& text, P* parent )
+    {
+        return parent ? _FindSibling( text, parent->firstChild() ) : 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::CreateNaturePath
+// Created: AGE 2006-10-23
+// -----------------------------------------------------------------------------
+QListViewItem* UnitListView::CreateNaturePath( const std::string& path )
+{
+    const std::string::size_type pos = path.find_last_of( '/' );
+    QListViewItem* parent = 0;
+    QString text( path.c_str() );
+    if( pos != std::string::npos )
+    {
+        const std::string head = path.substr( 0, pos );
+        const std::string tail = path.substr( pos + 1, path.length() - pos - 1 );
+        parent = CreateNaturePath( head );
+        text = tail.c_str();
+    }
+    QListViewItem* result = 0;
+    if( parent )
+    {
+        result = _FindItem( text, parent );
+        if( ! result )
+            result = new QListViewItem( parent );
+    } else
+    {
+        result = _FindItem( text, this );
+        if( ! result )
+            result = new QListViewItem( this );
+    }
+    result->setText( 0, text );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::DisplayByNature
+// Created: AGE 2006-10-23
+// -----------------------------------------------------------------------------
+void UnitListView::DisplayByNature()
+{
+    Iterator< const AgentType& > it( types_.Resolver< AgentType >::CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const AgentType& type = it.NextElement();
+        const std::string& nature = type.GetNature().GetNature();
+        QListViewItem* parentItem = CreateNaturePath( nature );
+        ValuedListItem* item = new ValuedListItem( parentItem );
+        item->SetNamed( type );
+        item->setDragEnabled( true );
+    }
+    Sort( firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::Sort
+// Created: AGE 2006-10-23
+// -----------------------------------------------------------------------------
+void UnitListView::Sort( QListViewItem* item )
+{
+    QListViewItem* after = 0;
+    while( item )
+    {
+        Sort( item->firstChild() );
+        if( item->childCount() )
+        {
+            if( ! after )
+            {
+                QListViewItem* parent = item->parent();
+                if( parent )
+                {
+                    parent->removeItem( item );
+                    parent->insertItem( item );
+                }
+            }
+            else
+                item->moveItem( after );
+            after = item;
+        }
+        item = item->nextSibling();
     }
 }
 

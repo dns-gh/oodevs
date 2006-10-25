@@ -266,15 +266,6 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where 
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::DrawRectangle
-// Created: AGE 2006-09-11
-// -----------------------------------------------------------------------------
-void GlProxy::DrawRectangle( const geometry::Point2f& where, float factor /*= 1.f*/ ) const
-{
-    tools_->DrawRectangle( where, factor );
-}
-
-// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawApp6Symbol
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

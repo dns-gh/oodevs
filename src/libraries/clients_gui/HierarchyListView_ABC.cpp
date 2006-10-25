@@ -63,7 +63,6 @@ HierarchyListView_ABC::~HierarchyListView_ABC()
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyCreated( const kernel::Hierarchies& hierarchy )
 {   
-    // $$$$ AGE 2006-10-13: never happens...
     NotifyUpdated( hierarchy );
 }
 
@@ -83,7 +82,6 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Hierarchies& hierarchy 
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyDeleted( const kernel::Hierarchies& hierarchy )
 {
-    // $$$$ AGE 2006-10-13: never happens...
     const Entity_ABC& entity = hierarchy.GetEntity();
     delete FindItem( &entity, firstChild() );
 }

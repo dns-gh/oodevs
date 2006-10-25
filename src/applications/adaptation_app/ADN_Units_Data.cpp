@@ -547,6 +547,9 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     eNatureAtlas_.SetDataName( "la nature ATLAS" );
     eNatureAtlas_.SetParentNode( *this );
 
+    strNature_.SetDataName( "la nature, les arbres et les oiseaux" );
+    strNature_.SetParentNode( *this );
+
     // postures initialization
     for( int i = ePostureNeedTimeStart; i < eNbrUnitPosture; ++i )
         vPostures_.AddItem( new PostureInfos((E_UnitPosture)i) );
@@ -604,6 +607,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->eNatureMobility_ = eNatureMobility_.GetData();
     pCopy->eNatureAtlas_ = eNatureAtlas_.GetData();
     pCopy->eMissionCapacity_ = eMissionCapacity_.GetData();
+    pCopy->strNature_     = strNature_.GetData();
     pCopy->nNbOfficer_ = nNbOfficer_.GetData();
     pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
     pCopy->decontaminationDelay_ = decontaminationDelay_.GetData();
@@ -746,6 +750,10 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.Section( "CapaciteMission" );
     input.ReadAttribute( "type", eMissionCapacity_, ADN_Tr::ConvertToCapacityMission, ADN_XmlInput_Helper::eThrow );
     input.EndSection(); // CapaciteMission
+
+    input.Section( "Nature" );
+    input.ReadAttribute( "type", strNature_ );
+    input.EndSection(); // Nature
 
     input.EndSection(); // Nature
 
@@ -894,6 +902,10 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
     // Capacite mission
     output.Section( "CapaciteMission" );
     output.WriteAttribute( "type", ADN_Tr::ConvertFromCapacityMission( eMissionCapacity_.GetData() ) );
+    output.EndSection(); // CapaciteMission
+
+    output.Section( "Nature" );
+    output.WriteAttribute( "type", strNature_.GetData() );
     output.EndSection(); // CapaciteMission
 
     output.EndSection(); //Nature

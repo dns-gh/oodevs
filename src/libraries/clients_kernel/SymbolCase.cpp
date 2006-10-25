@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "SymbolCase.h"
 #include "SymbolRule.h"
-#include "SymbolRequest.h"
+#include "SymbolVisitor_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -21,9 +21,11 @@ using namespace xml;
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
 SymbolCase::SymbolCase( xml::xistream& xis )
+    : rule_( 0 )
 {
-    xis >> attribute( "value", value_ )
-        >> list( "rule", *this, &SymbolCase::ReadRule );
+    xis >> attribute( "symbol", value_ )
+        >> attribute( "name", name_ )
+        >> list( "choice", *this, &SymbolCase::ReadRule );
 }
     
 // -----------------------------------------------------------------------------
@@ -32,8 +34,7 @@ SymbolCase::SymbolCase( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 SymbolCase::~SymbolCase()
 {
-    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
-        delete *it;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,23 +43,27 @@ SymbolCase::~SymbolCase()
 // -----------------------------------------------------------------------------
 void SymbolCase::ReadRule( xml::xistream& xis )
 {
-    rules_.push_back( new SymbolRule( xis ) );
+    if( rule_ )
+        throw std::runtime_error( __FUNCTION__ );
+    rule_ = new SymbolRule( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolCase::Evaluate
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-std::string SymbolCase::Evaluate( const std::string& ruleName, const SymbolRequest& request ) const
+void SymbolCase::Evaluate( const std::string& request, std::string& result ) const
 {
-    if( !request.Matches( ruleName, value_ ) )
-        return "";
+    result += value_;
+    if( rule_ )
+        rule_->Evaluate( request, result );
+}
 
-    for( CIT_Rules it = rules_.begin(); it != rules_.end(); ++it )
-    {
-        const std::string value = (*it)->Evaluate( request );
-        if( !value.empty() )
-            return value;
-    }
-    return "";        
+// -----------------------------------------------------------------------------
+// Name: SymbolCase::Accept
+// Created: AGE 2006-10-24
+// -----------------------------------------------------------------------------
+void SymbolCase::Accept( SymbolVisitor_ABC& visitor ) const
+{
+    visitor.AddChoice( rule_, name_, value_ );
 }

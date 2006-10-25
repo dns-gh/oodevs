@@ -48,8 +48,6 @@ public:
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );
-
-    kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( const unsigned long& identifier ) const;
     //@}
 
 private:

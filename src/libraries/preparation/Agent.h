@@ -47,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Agent( const kernel::AgentType& type, kernel::Controller& controller, IdManager& idManager, bool commandPost = false );
-             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes );
+             Agent( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const kernel::AgentTypes& agentTypes ); // $$$$ AGE 2006-10-25: resolver, par agentTypes concret...
     virtual ~Agent();
     //@}
 
@@ -78,6 +78,7 @@ private:
     //! @name Member data
     //@{
     const kernel::AgentType* type_;
+    std::string symbol_;
     bool commandPost_;
     //@}
 };

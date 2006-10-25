@@ -93,30 +93,6 @@ void Formatter< E_NatureLevel >::operator()( const E_NatureLevel& e, Displayer_A
     displayer.AddToDisplay( ENT_Tr::ConvertFromNatureLevel( e ) );
 }
 
-void Formatter< E_UnitNatureWeapon >::operator()( const E_UnitNatureWeapon& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureWeapon( e ) );
-}
-
-void Formatter< E_UnitNatureSpecialization >::operator()( const E_UnitNatureSpecialization& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureSpecialization( e ) );
-}
-
-void Formatter< E_UnitNatureQualifier >::operator()( const E_UnitNatureQualifier& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureQualifier( e ) );
-}
-
-void Formatter< E_UnitNatureCategory >::operator()( const E_UnitNatureCategory& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureCategory( e ) );
-}
-
-void Formatter< E_UnitNatureMobility >::operator()( const E_UnitNatureMobility& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitNatureMobility( e ) );
-}
-
-void Formatter< E_UnitCapaciteMission >::operator()( const E_UnitCapaciteMission& e, Displayer_ABC& displayer ) const {
-    displayer.AddToDisplay( ENT_Tr::ConvertFromUnitCapaciteMission( e ) );
-}
-
 void Formatter< E_UnitExperience >::operator()( const E_UnitExperience& e, Displayer_ABC& displayer ) const {
     displayer.AddToDisplay( ENT_Tr::ConvertFromUnitExperience( e ) );
 }

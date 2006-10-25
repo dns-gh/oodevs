@@ -140,7 +140,7 @@ void LogSupplyConsign::Draw( const Point2f& where, const Rectangle2f& viewport, 
     if( viewport.Intersect( Rectangle2f( from, to ) ).IsEmpty() )
         return;
 
-    glColor4d( COLOR_ORANGE );
+    glColor4f( COLOR_ORANGE );
     switch( nState_ )
     {
     case eLogRavitaillementTraitementEtat_ConvoiDeplacementVersPointChargement:

@@ -221,6 +221,7 @@ public:
         ADN_Type_Enum<E_UnitNatureMobility,eNbrUnitNatureMobility>      eNatureMobility_;
         ADN_Type_Enum<E_NatureAtlasType,eNbrNatureAtlas>            eNatureAtlas_;
         ADN_Type_Enum<E_CapacityMission,eNbrCapacityMission>        eMissionCapacity_;    
+        ADN_Type_String                                             strNature_;
         ADN_Type_Int                                                nNbOfficer_;        // officer
         ADN_Type_Int                                                nNbNCOfficer_;      // non-commisioned officer
         ADN_Type_Time                                               decontaminationDelay_;

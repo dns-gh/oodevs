@@ -36,7 +36,9 @@ public:
 
     //! @name Operations
     //@{
-    const std::string& Retrieve( const std::string& symbolName ) const;
+    const std::string& GetLevel() const;
+    const std::string& GetNature() const;
+    const std::string& GetAtlas() const;
     //@}
 
 private:
@@ -46,22 +48,12 @@ private:
     AgentNature& operator=( const AgentNature& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void ReadNature( xml::xistream& xis, const std::string& name, const std::string& symbolName );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::string >  T_Natures;
-    typedef T_Natures::const_iterator           CIT_Natures;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    T_Natures natures_;
+    std::string level_;
+    std::string nature_;
+    std::string atlas_;
     //@}
 };
 

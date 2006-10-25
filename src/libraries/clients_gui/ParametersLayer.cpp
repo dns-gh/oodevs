@@ -59,7 +59,7 @@ void ParametersLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
     if( ! current_ )
         return;
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glColor4d( COLOR_UNDERCONST );
+        glColor4f( COLOR_UNDERCONST );
         glLineWidth( 3.f );
         current_->Draw( tools_ );
     glPopAttrib();

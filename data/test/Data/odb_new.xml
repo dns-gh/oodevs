@@ -2,92 +2,89 @@
 <orbat>
   <sides>
     <side id="1" name="rouge">
+      <objects/>
       <tactical>
-        <formation id="17" level="x" name="Niveau x">
+        <formation id="17" level="x" name="">
           <automat engaged="true" id="18" knowledge-group="23" name="$$$$Automate$$$$" type="BLD Sante">
             <unit command-post="true" id="19" name="PC BLD Sante" position="30TYT2238066816" type="PC BLD Sante"/>
           </automat>
           <automat engaged="true" id="20" knowledge-group="2" name="$$$$Automate$$$$" type="BLT Maintenance">
-            <unit command-post="true" id="21" name="PC BLT Maintenance" position="30TYT2224763907" type="PC BLT Maintenance"/>
+            <unit command-post="true" id="21" name="PC BLT Maintenance" position="30TYT2224763907" type="PC BLT Maintenance">
+            </unit>
+          </automat>
+          <automat engaged="true" id="36" knowledge-group="2" name="Automate 36" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="37" name="Section Combat GEN" position="31TBN8283276230" type="Section Combat GEN"/>
+            <unit command-post="false" id="38" name="Section Combat GEN" position="31TBN8331475712" type="Section Combat GEN"/>
+            <unit command-post="false" id="39" name="Section Combat GEN" position="31TBN8279475232" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="40" knowledge-group="2" name="Automate 40" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="41" name="Section Combat GEN" position="31TBN8194775166" type="Section Combat GEN"/>
+            <unit command-post="false" id="42" name="Section Combat GEN" position="31TBN8242874648" type="Section Combat GEN"/>
+            <unit command-post="false" id="43" name="Section Combat GEN" position="31TBN8190874168" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="44" knowledge-group="2" name="Automate 44" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="45" name="Section Combat GEN" position="31TBN8125174736" type="Section Combat GEN"/>
+            <unit command-post="false" id="46" name="Section Combat GEN" position="31TBN8173274217" type="Section Combat GEN"/>
+            <unit command-post="false" id="47" name="Section Combat GEN" position="31TBN8121273737" type="Section Combat GEN"/>
           </automat>
         </formation>
       </tactical>
-      <logistic>
-        <automat id="18">
-            <subordinate automat="18" link="tc2"/>
-            <subordinate automat="20" link="maintenance"/>
-        </automat>
-      </logistic>      
       <communication>
         <knowledge-group id="2" type="Standard"/>
         <knowledge-group id="23" type="Standard"/>
       </communication>
-      <populations/> 
-      <objects/>
-    </side> 
+      <populations/>
+      <logistic/>
+    </side>
     <side id="3" name="bleu">
+      <objects/>
       <tactical>
-        <formation id="5" level="xxx" name="Niveau xxx">
-          <formation id="6" level="iii" name="Niveau iii">
-            <formation id="7" level="oo" name="Niveau oo">
+        <formation id="5" level="xxx" name="">
+          <formation id="6" level="iii" name="">
+            <formation id="7" level="oo" name="">
               <automat engaged="true" id="9" knowledge-group="22" name="automate pas nommé" type="Compagnie GEN Lourde">
                 <unit command-post="true" id="10" name="Section Combat GEN" position="30TYT1896868099" type="Section Combat GEN"/>
                 <unit command-post="false" id="11" name="Section Combat GEN" position="30TYT1948867619" type="Section Combat GEN"/>
                 <unit command-post="false" id="12" name="Section Combat GEN" position="30TYT1900667101" type="Section Combat GEN"/>
               </automat>
+              <automat engaged="true" id="24" knowledge-group="4" name="Automate 24" type="Compagnie GEN Lourde">
+                <unit command-post="true" id="25" name="Section Combat GEN" position="31TBN8002376229" type="Section Combat GEN"/>
+                <unit command-post="false" id="26" name="Section Combat GEN" position="31TBN8050575711" type="Section Combat GEN"/>
+                <unit command-post="false" id="27" name="Section Combat GEN" position="31TBN7998575231" type="Section Combat GEN"/>
+              </automat>
+              <automat engaged="true" id="28" knowledge-group="4" name="Automate 28" type="Compagnie GEN Lourde">
+                <unit command-post="true" id="29" name="Section Combat GEN" position="31TBN8012974230" type="Section Combat GEN"/>
+                <unit command-post="false" id="30" name="Section Combat GEN" position="31TBN8061173711" type="Section Combat GEN"/>
+                <unit command-post="false" id="31" name="Section Combat GEN" position="31TBN8009173232" type="Section Combat GEN"/>
+              </automat>
             </formation>
-            <formation id="8" level="ooo" name="Niveau ooo">
+            <formation id="8" level="ooo" name="">
               <automat engaged="true" id="13" knowledge-group="4" name="rav" type="BLD Ravitaillement">
-                <unit command-post="true" id="14" name="PC BLD Ravitaillement" position="30TYT1983765228" type="PC BLD Ravitaillement">
-                    <stocks>
-                        <dotation name="gasoil" quantity="6"/>
-                        <dotation name="Balle Classique 12,7" quantity="1"/>
-                    </stocks>
-                </unit>
+                <unit command-post="true" id="14" name="PC BLD Ravitaillement" position="30TYT1983765228" type="PC BLD Ravitaillement"/>
               </automat>
               <automat engaged="true" id="15" knowledge-group="4" name="$$$$Automate$$$$" type="Automate Refugie">
                 <unit command-post="true" id="16" name="Pion Refugie" position="30TYT1869564961" type="Pion Refugie"/>
               </automat>
+              <automat engaged="true" id="32" knowledge-group="4" name="Automate 32" type="Compagnie GEN Lourde">
+                <unit command-post="true" id="33" name="Section Combat GEN" position="31TBN8191777254" type="Section Combat GEN"/>
+                <unit command-post="false" id="34" name="Section Combat GEN" position="31TBN8239976736" type="Section Combat GEN"/>
+                <unit command-post="false" id="35" name="Section Combat GEN" position="31TBN8187976256" type="Section Combat GEN"/>
+              </automat>
             </formation>
           </formation>
-          <automat engaged="true" id="1500" knowledge-group="4" name="$$$$Automate$$$$" type="BLD Ravitaillement">
-            <unit command-post="true" id="1600" name="Pion Refugie" position="30TYT1869564961" type="Pion Refugie">
-                <dotations>
-                    <dotation name="gasoil" quantity="6"/>
-                    <dotation name="Balle Classique 12,7" quantity="1"/>
-                </dotations>
-            </unit>
-          </automat>        
-      </formation>
+        </formation>
       </tactical>
-      <logistic>
-        <automat id="13">
-            <subordinate automat="13" link="tc2"/>
-            <subordinate automat="15" link="maintenance"/>
-        </automat>
-        <automat id="1500">
-            <subordinate automat="1500" link="supply">
-                <quotas>
-                    <dotation name="gasoil" quantity="6"/>
-                    <dotation name="Balle Classique 12,7" quantity="1"/>
-                </quotas>
-            </subordinate>
-        </automat>        
-      </logistic>
-                     
       <communication>
         <knowledge-group id="4" type="Standard"/>
         <knowledge-group id="22" type="Standard"/>
-      </communication>            
-      <populations> 
-        <population id="654" type="test1" name="Parisiens" position="31TBN9374781012" attitude="agitee" humans="10000"/>
-      </populations> 
-      <objects/>      
+      </communication>
+      <populations/>
+      <logistic/>
     </side>
   </sides>
   <diplomacies>
     <side id="1">
-      <relationship diplomacy="enemy" side="3"/>
+      <relationship diplomacy="neutral" side="3"/>
     </side>
     <side id="3">
       <relationship diplomacy="enemy" side="1"/>

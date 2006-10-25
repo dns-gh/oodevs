@@ -17,10 +17,13 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentNature.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "Tools.h"
+#include "Diplomacies.h"
 
 using namespace kernel;
 
@@ -37,6 +40,9 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_Msg
     , realAgent_   ( resolver_.Get( message.oid_unite_reelle ) )
     , team_        ( 0 )
 {
+    fullSymbol_  = realAgent_.GetType().GetSymbol();
+    levelSymbol_ = realAgent_.GetType().GetLevelSymbol();
+    UpdateSymbol();
     RegisterSelf( *this );
 }
 
@@ -77,32 +83,11 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
     if( message.m.campPresent )
         team_ = & teamResolver_.Get( message.camp );
 
-    if( message.m.nature_niveauPresent )
-        nLevel_ = (E_NatureLevel)message.nature_niveau;
-
-    if( message.m.nature_armePresent )
-        nWeapon_ = (E_UnitNatureWeapon)message.nature_arme;
-
-    if( message.m.nature_specialisationPresent )
-        nSpecialization_ = (E_UnitNatureSpecialization)message.nature_specialisation;
-
-    if( message.m.nature_qualificationPresent )
-        nQualifier_ = (E_UnitNatureQualifier)message.nature_qualification;
-
-    if( message.m.nature_categoriePresent )
-        nCategory_ = (E_UnitNatureCategory)message.nature_categorie;
-
-    if( message.m.nature_mobilitePresent )
-        nMobility_ = (E_UnitNatureMobility)message.nature_mobilite;
-
     if( message.m.nature_pcPresent )
         bIsPC_ = message.nature_pc;
 
     if( message.m.pertinencePresent )
         nRelevance_ = message.pertinence;
-
-    if( message.m.capacite_missionPresent )
-        nCapacity_ = E_UnitCapaciteMission( message.capacite_mission );
 
     if( message.m.prisonnierPresent )
         bPrisonner_ = message.prisonnier;
@@ -112,6 +97,8 @@ void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
 
     if( message.m.refugie_pris_en_comptePresent )
         bRefugies_ = message.refugie_pris_en_compte;
+
+    UpdateSymbol();
 
     Touch();
 }
@@ -163,22 +150,17 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "AgentKnowledge", "Position:" ), strPosition_ )
              .Display( tools::translate( "AgentKnowledge", "Direction:" ), nDirection_ * Units::degrees )
              .Display( tools::translate( "AgentKnowledge", "Vitesse:" ), nSpeed_ * Units::kilometersPerHour )
-             .Display( tools::translate( "AgentKnowledge", "Etat ops.:" ), nEtatOps_ )
+             .Display( tools::translate( "AgentKnowledge", "Etat ops.:" ), nEtatOps_ * Units::percentage )
              .Display( tools::translate( "AgentKnowledge", "Niveau de perception:" ), nCurrentPerceptionLevel_  )
              .Display( tools::translate( "AgentKnowledge", "Niveau max de perception:" ), nMaxPerceptionLevel_ )
              .Display( tools::translate( "AgentKnowledge", "Camp:" ), team_  )
              .Display( tools::translate( "AgentKnowledge", "Niveau:" ), nLevel_ )
-             .Display( tools::translate( "AgentKnowledge", "Arme:" ), nWeapon_ )
-             .Display( tools::translate( "AgentKnowledge", "Spécialisation:" ), nSpecialization_ )
-             .Display( tools::translate( "AgentKnowledge", "Qualification:" ), nQualifier_  )
-             .Display( tools::translate( "AgentKnowledge", "Catégorie:" ), nCategory_ )
-             .Display( tools::translate( "AgentKnowledge", "Mobilité:" ), nMobility_  )
-             .Display( tools::translate( "AgentKnowledge", "Capacité mission:" ), nCapacity_ )
+             .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
              .Display( tools::translate( "AgentKnowledge", "Rendu:" ), bSurrendered_ )
              .Display( tools::translate( "AgentKnowledge", "Fait prisonnier:" ), bPrisonner_ )
              .Display( tools::translate( "AgentKnowledge", "Réfugiés pris en compte:" ), bRefugies_ )
              .Display( tools::translate( "AgentKnowledge", "PC:" ), bIsPC_ )
-             .Display( tools::translate( "AgentKnowledge", "Pertinence:" ), nRelevance_ );
+             .Display( tools::translate( "AgentKnowledge", "Pertinence:" ), nRelevance_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,12 +169,78 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    if( nCurrentPerceptionLevel_.IsSet() && E_PerceptionResult( nCurrentPerceptionLevel_ ) > eDetection )
+    if( viewport.IsInside( where ) )
     {
         const bool backupState = tools.Select( false );
-        realAgent_.Entity_ABC::Draw( where, viewport, tools );
+        tools.DrawApp6Symbol( currentSymbol_, where );
+        if( nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
+            tools.DrawApp6Symbol( levelSymbol_, where );
         tools.Select( backupState );
     }
-    else
-        tools.DrawApp6Symbol( "roles/Unknown.svg", where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::ElementsToKeep
+// Created: AGE 2006-10-25
+// -----------------------------------------------------------------------------
+unsigned int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) const
+{
+    switch( perception )
+    {
+    default:
+    case eNotSeen:        
+    case eDetection:      return 0; // nothing
+    case eRecognition:    return 2; // side + category + weapon
+    case eIdentification: return 9; // all
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::TeamCharacter
+// Created: AGE 2006-10-25
+// -----------------------------------------------------------------------------
+char AgentKnowledge::TeamCharacter( E_PerceptionResult perception ) const
+{
+    ASN1T_EnumDiplomatie diplo = EnumDiplomatie::inconnu;
+    if( team_ && perception > eDetection )
+        if( const Diplomacies* diplomacy = team_->Retrieve< Diplomacies >() )
+            diplo = diplomacy->GetRelationship( group_ );
+    switch( diplo )
+    {
+    default:
+    case EnumDiplomatie::inconnu: return 'u';
+    case EnumDiplomatie::ami:     return 'f';
+    case EnumDiplomatie::ennemi:  return 'h';
+    case EnumDiplomatie::neutre:  return 'n';
+    }
+}
+
+namespace
+{
+    std::string Strip( const std::string& nature, unsigned int keep )
+    {
+        QStringList list = QStringList::split( '/',  nature.c_str() );
+        while( list.size() > keep )
+            list.pop_back();
+        QString result = list.join( "/" );
+        return result.isNull() ? "" : result.ascii();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::UpdateSymbol
+// Created: AGE 2006-10-24
+// -----------------------------------------------------------------------------
+void AgentKnowledge::UpdateSymbol()
+{
+    E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
+    const unsigned int toKeep = ElementsToKeep( perception); 
+    const char teamChar = TeamCharacter( perception );
+    
+    currentSymbol_ = fullSymbol_;
+    std::string::size_type pos = currentSymbol_.find_first_of( '*' );
+    currentSymbol_[ pos ] = teamChar;
+    currentSymbol_ = currentSymbol_.substr( 0, pos + toKeep + 1 );
+
+    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep ); // $$$$ AGE 2006-10-25: 
 }

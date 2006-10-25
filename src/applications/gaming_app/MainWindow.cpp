@@ -395,6 +395,7 @@ void MainWindow::WriteSettings()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Gaming" );
 
     // Pannel configuration
     QString strDockConfig;
@@ -402,6 +403,8 @@ void MainWindow::WriteSettings()
     strDockConfigStream << *this;
     settings.writeEntry( "/Panels", strDockConfig );
     settings.WriteEntry( "/MainWindow", *this );
+
+    settings.endGroup(); // gaming
 }
 
 // -----------------------------------------------------------------------------
@@ -412,6 +415,7 @@ void MainWindow::ReadSettings()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Gaming" );
 
     // Pannel configuration
     QString strDockConfig;
@@ -421,6 +425,8 @@ void MainWindow::ReadSettings()
 
     // Main window configuration
     settings.ReadEntry( "/MainWindow", *this, 800, 600, 100, 100, false );
+
+    settings.endGroup(); // gaming
 }
 
 // -----------------------------------------------------------------------------
@@ -431,8 +437,10 @@ void MainWindow::WriteOptions()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Gaming" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Save( settings );
+    settings.endGroup();
     settings.endGroup();
 }
 
@@ -444,8 +452,10 @@ void MainWindow::ReadOptions()
 {
     Settings settings;
     settings.setPath( "MASA", "Astec" );
+    settings.beginGroup( "/Gaming" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Load( settings );
+    settings.endGroup();
     settings.endGroup();
 }
 

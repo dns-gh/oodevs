@@ -7,28 +7,27 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "TeamTacticalHierarchies.h"
-#include "clients_kernel/Controller.h"
+#include "adaptation_app_pch.h"
+#include "ADN_Nature_GUI.h"
+#include "ADN_Connector_String.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: TeamTacticalHierarchies constructor
-// Created: AGE 2006-10-20
+// Name: ADN_Nature_GUI constructor
+// Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-TeamTacticalHierarchies::TeamTacticalHierarchies( Controller& controller, Entity_ABC& entity )
-    : EntityHierarchies< TacticalHierarchies >( controller, entity )
-    , controller_( controller )
+ADN_Nature_GUI::ADN_Nature_GUI( QWidget* parent )
+    : NatureEditionWidget( parent, "symbols.xml" )
 {
-    // NOTHING
+    pConnector_ = new ADN_Connector_String< ADN_Nature_GUI >( this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamTacticalHierarchies destructor
-// Created: AGE 2006-10-20
+// Name: ADN_Nature_GUI destructor
+// Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-TeamTacticalHierarchies::~TeamTacticalHierarchies()
+ADN_Nature_GUI::~ADN_Nature_GUI()
 {
-    controller_.Delete( *(TacticalHierarchies*)this );
+    delete pConnector_;
 }

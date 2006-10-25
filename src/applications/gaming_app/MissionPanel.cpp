@@ -293,7 +293,7 @@ void MissionPanel::Draw( const geometry::Rectangle2f& viewport )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 2.f );
-        glColor4d( COLOR_PARAM );
+        glColor4f( COLOR_PARAM );
         pMissionInterface_->Draw( tools_, viewport );
         glPopAttrib();
     }

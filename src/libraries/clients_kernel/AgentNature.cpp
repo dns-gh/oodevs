@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "AgentNature.h"
 #include "xeumeuleu/xml.h"
-#include <boost/algorithm/string.hpp>
 
 using namespace kernel;
 using namespace xml;
@@ -21,16 +20,17 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 AgentNature::AgentNature( xml::xistream& xis )
 {
-    xis >> start( "Nature" );
-    ReadNature( xis, "Niveau", "level" );
-    ReadNature( xis, "Arme", "weapon" );
-    ReadNature( xis, "Specialisation", "specialization" );
-    ReadNature( xis, "Qualificatif", "qualifier" );
-    ReadNature( xis, "Categorie", "category" );
-    ReadNature( xis, "TypeMobilite", "mobility" );
-    ReadNature( xis, "QualificatifAtlas", "atlas qualifier" );
-    ReadNature( xis, "CapaciteMission", "mission capacity" );
-    xis >> end();
+    xis >> start( "Nature" )
+            >> start( "Niveau" )
+                >> attribute( "type", level_ )
+            >> end()
+            >> start( "Nature" )
+                >> attribute( "type", nature_ )
+            >> end()
+            >> start( "QualificatifAtlas" )
+                >> attribute( "type", atlas_ )
+            >> end()
+        >> end();
 }
     
 // -----------------------------------------------------------------------------
@@ -43,28 +43,28 @@ AgentNature::~AgentNature()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentNature::ReadNature
-// Created: SBO 2006-03-20
+// Name: AgentNature::GetLevel
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-void AgentNature::ReadNature( xml::xistream& xis, const std::string& name, const std::string& symbolName )
+const std::string& AgentNature::GetLevel() const
 {
-    std::string type;
-    xis >> start( name )
-            >> attribute( "type", type )
-        >> end();
-    boost::replace_all( type, ",", "" );
-    boost::to_lower( type );
-    natures_[ symbolName ] = type;
+    return level_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentNature::Retrieve
-// Created: SBO 2006-03-20
+// Name: AgentNature::GetNature
+// Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-const std::string& AgentNature::Retrieve( const std::string& symbolName ) const
+const std::string& AgentNature::GetNature() const
 {
-    CIT_Natures it = natures_.find( symbolName );
-    if( it != natures_.end() )
-        return it->second;
-    throw std::runtime_error( "Trying to retrieve an unknown nature field: " + symbolName );
+    return nature_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentNature::GetAtlas
+// Created: AGE 2006-10-23
+// -----------------------------------------------------------------------------
+const std::string& AgentNature::GetAtlas() const
+{
+    return atlas_;
 }

@@ -11,6 +11,7 @@
 #include "Diplomacies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 
 using namespace kernel;
 
@@ -67,4 +68,19 @@ void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message )
 void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatie& message )
 {
     UpdateData( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Diplomacies::GetRelationship
+// Created: AGE 2006-10-24
+// -----------------------------------------------------------------------------
+ASN1T_EnumDiplomatie Diplomacies::GetRelationship( const kernel::Entity_ABC& rhs ) const
+{
+    const CommunicationHierarchies* h = rhs.Retrieve< CommunicationHierarchies >();
+    const kernel::Entity_ABC* team = h ? & h->GetTop() : 0;
+    const Diplomacies* o = team ? team->Retrieve< Diplomacies >() : 0;
+    CIT_Diplomacies it = diplomacies_.find( o );
+    if( it != diplomacies_.end() )
+        return it->second;
+    return EnumDiplomatie::inconnu;
 }

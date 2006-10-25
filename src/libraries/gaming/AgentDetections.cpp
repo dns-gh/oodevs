@@ -75,13 +75,13 @@ void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rect
         if( ! IsSameTeam( agent ) && it->second != eVisTypeInvisible )
         {
             if( it->second == eVisTypeRecognized )
-                glColor4d( COLOR_RECO );
+                glColor4f( COLOR_RECO );
             else if( it->second == eVisTypeIdentified )
-                glColor4d( COLOR_IDENTIFIED );
+                glColor4f( COLOR_IDENTIFIED );
             else if( it->second == E_UnitVisType( 4 ) )
-                glColor4d( COLOR_RECORDED );
+                glColor4f( COLOR_RECORDED );
             else
-                glColor4d( COLOR_DETECTED );
+                glColor4f( COLOR_DETECTED );
             tools.DrawLine( where, it->first->Get< Positions >().GetPosition() );
         }
     }

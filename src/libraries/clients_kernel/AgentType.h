@@ -11,7 +11,6 @@
 #define __AgentType_h_
 
 #include "Resolver_ABC.h"
-#include "Drawable_ABC.h"
 
 namespace xml { class xistream; };
 
@@ -21,6 +20,7 @@ namespace kernel
     class AgentNature;
     class DecisionalModel;
     class SymbolFactory;
+    class GlTools_ABC;
 
 // =============================================================================
 /** @class  AgentType
@@ -28,7 +28,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentType : public Drawable_ABC
+class AgentType
 {
 
 public:
@@ -45,9 +45,13 @@ public:
     unsigned long GetId() const;
     QString GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
-    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
-    void DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     const AgentNature& GetNature() const;
+
+    const std::string& GetSymbol() const;
+    const std::string& GetLevelSymbol() const;
+    const std::string& GetHQSymbol() const;
+
+    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool pc ) const;
     //@}
 
 private:
@@ -76,8 +80,9 @@ private:
     DecisionalModel* model_;
     AgentNature* nature_;
     T_Components equipments_;
-    std::string symbol_;
+    std::string symbol_; // $$$$ AGE 2006-10-24: devrait etre dans nature
     std::string levelSymbol_;
+    std::string hqSymbol_;
     //@}
 };
 

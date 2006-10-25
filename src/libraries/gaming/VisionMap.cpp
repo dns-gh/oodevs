@@ -39,7 +39,7 @@ VisionMap::~VisionMap()
 // -----------------------------------------------------------------------------
 void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    static const double colors[3][4] =
+    static const float colors[3][4] =
     {
         { COLOR_VISION_DETECTED  },
         { COLOR_VISION_RECO      },
@@ -58,7 +58,7 @@ void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& 
             {
                 const geometry::Point2f p = map_.Map( it->first.first, it->first.second );
                 assert( it->second >= 1 );
-                glColor4dv( colors[it->second-1] );
+                glColor4fv( colors[it->second-1] );
                 glVertex2fv( (float*)(&p) );
             }
         glEnd();

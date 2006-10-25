@@ -7,7 +7,6 @@
             <readonly/>    
             <readwrite>
                 <side id="1"/>
-                <side id="3"/>
             </readwrite>
             
             <supervision>true</supervision>

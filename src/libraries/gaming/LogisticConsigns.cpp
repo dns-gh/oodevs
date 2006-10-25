@@ -175,21 +175,21 @@ void LogisticConsigns::Draw( const geometry::Point2f& where, const geometry::Rec
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
     glLineWidth( 2.0 );
     glEnable( GL_LINE_STIPPLE );
-    glColor4d( COLOR_MAROON );
+    glColor4f( COLOR_MAROON );
     for( T_MaintenanceConsigns::const_iterator it = handledMaintenances_.begin(); it != handledMaintenances_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )
         for( T_MaintenanceConsigns::const_iterator it = requestedMaintenances_.begin(); it != requestedMaintenances_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
 
-    
+    glColor4f( COLOR_PINK );
     for( T_MedicalConsigns::const_iterator it = handledMedical_.begin(); it != handledMedical_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )
         for( T_MedicalConsigns::const_iterator it = requestedMedical_.begin(); it != requestedMedical_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
 
-    
+    glColor4f( COLOR_ORANGE );
     for( T_SupplyConsigns::const_iterator it = handledSupplies_.begin(); it != handledSupplies_.end(); ++it )
             (*it)->Draw( where, viewport, tools );
     if( ! handledOnly )

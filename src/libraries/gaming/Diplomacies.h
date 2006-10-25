@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Team_ABC;
+    class Entity_ABC;
     class Controller;
 }
 
@@ -41,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    ASN1T_EnumDiplomatie GetRelationship( const kernel::Entity_ABC& rhs ) const;
     //@}
 
 private:
@@ -53,6 +55,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< const Diplomacies*, ASN1T_EnumDiplomatie > T_Diplomacies;
+    typedef T_Diplomacies::const_iterator                      CIT_Diplomacies;
     //@}
 
     //! @name Helpers

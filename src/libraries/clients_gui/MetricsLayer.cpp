@@ -45,7 +45,7 @@ void MetricsLayer::Paint( const geometry::Rectangle2f& )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( 2 );
-        glColor4d( COLOR_BLACK );
+        glColor4f( COLOR_BLACK );
         tools_.DrawLine( start_, end_ );
         const geometry::Point2f middle( 0.5f*( start_.X() + end_.X() ), 0.5*(start_.Y() + end_.Y() ) );
         const QString message = tools::translate( "Règle GL", " %1m" ).arg( start_.Distance( end_ ), 0, 'f', 1 );

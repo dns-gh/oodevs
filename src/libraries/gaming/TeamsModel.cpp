@@ -91,25 +91,3 @@ Team_ABC* TeamsModel::FindTeam( const QString& team )
             return it->second;
     return 0;
 }
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::FindKnowledgeGroup
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* TeamsModel::FindKnowledgeGroup( const unsigned long& id ) const
-{
-    for( Resolver< Team_ABC >::CIT_Elements it = Resolver< Team_ABC >::elements_.begin(); it != Resolver< Team_ABC >::elements_.end(); ++it )
-    {
-        Team_ABC& team = *it->second;
-        const CommunicationHierarchies& hierarchies = team.Get< CommunicationHierarchies >();
-        Iterator< const Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
-        while( subIt.HasMoreElements() )
-        {
-            const Entity_ABC& kg = subIt.NextElement();
-            if( kg.GetId() == id )
-                // $$$$ AGE 2006-10-09: 
-                return const_cast< KnowledgeGroup_ABC* >( static_cast< const KnowledgeGroup_ABC* >( &kg ) );
-        };
-    }
-    return 0;
-}

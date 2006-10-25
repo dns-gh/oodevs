@@ -190,9 +190,9 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 void ColorStrategy::SelectColor( const kernel::TacticalLine_ABC& line )
 {
     if( & line == selectedLine_ )
-        glColor3f( 1.f, 0.5f, 0.05f );
+        ApplyColor( QColor( 255, 127, 13 ) );
     else
-        glColor3f( 1.f, 1.f, 1.f );
+        ApplyColor( QColor( 255, 255, 255 ) );
     tools_.Select( & line == selectedLine_ );
 }
 

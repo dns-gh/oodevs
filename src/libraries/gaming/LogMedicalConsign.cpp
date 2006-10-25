@@ -116,7 +116,7 @@ void LogMedicalConsign::Draw( const Point2f& where, const Rectangle2f& viewport,
     if( viewport.Intersect( Rectangle2f( from, to ) ).IsEmpty() )
         return;
 
-    glColor4d( COLOR_PINK );
+    glColor4f( COLOR_PINK );
     switch( nState_ )
     {
     case eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller:

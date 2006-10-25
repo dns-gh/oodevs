@@ -233,7 +233,7 @@ void AgentTypes::ReadAutomats( const std::string& automats )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadAutomatType( xml::xistream& xis )
 {
-    AutomatType* type = new AutomatType( xis, *this, *this, *symbolFactory_ );
+    AutomatType* type = new AutomatType( xis, *this, *this );
     Resolver< AutomatType >         ::Register( type->GetId(), *type );
     Resolver< AutomatType, QString >::Register( type->GetName(), *type );
 }

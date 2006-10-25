@@ -26,13 +26,8 @@ namespace
         // $$$$ SBO 2006-08-28: Iterator sur AgentNatures?
         combo->AddItem( tools::translate( "Preparation", "Vue hiérarchique" ), "" );
         combo->AddItem( tools::translate( "Preparation", "Niveau" ), "level" );
-        combo->AddItem( tools::translate( "Preparation", "Arme" ), "weapon" );
-        combo->AddItem( tools::translate( "Preparation", "Spécialisation" ), "specialization" );
-        combo->AddItem( tools::translate( "Preparation", "Qualificatif" ), "qualifier" );
-        combo->AddItem( tools::translate( "Preparation", "Catégorie" ), "category" );
-        combo->AddItem( tools::translate( "Preparation", "Type de mobilité" ), "mobility" );
-        combo->AddItem( tools::translate( "Preparation", "Qualificatif Atlas" ), "atlas qualifier" );
-        combo->AddItem( tools::translate( "Preparation", "Capacité mission" ), "mission capacity" );
+        combo->AddItem( tools::translate( "Preparation", "Nature" ), "nature" );
+        combo->AddItem( tools::translate( "Preparation", "Qualificatif Atlas" ), "atlas" );
         return combo;
     }
 }

@@ -14,8 +14,8 @@ namespace xml { class xistream; }
 
 namespace kernel
 {
-    class SymbolRequest;
     class SymbolRule;
+    class SymbolVisitor_ABC;
 
 // =============================================================================
 /** @class  SymbolCase
@@ -35,7 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    std::string Evaluate( const std::string& ruleName, const SymbolRequest& request ) const;
+    void Evaluate( const std::string& request, std::string& result ) const;
+    void Accept( SymbolVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -51,17 +52,11 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< SymbolRule* >   T_Rules;
-    typedef T_Rules::const_iterator    CIT_Rules;
-    //@}
-
-private:
     //! @name Member data
     //@{
+    std::string name_;
     std::string value_;
-    T_Rules     rules_;
+    SymbolRule* rule_;
     //@}
 };
 

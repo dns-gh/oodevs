@@ -37,9 +37,10 @@ AgentType::AgentType( xml::xistream& xis, const Resolver_ABC< ComponentType, QSt
     xis >> start( "Equipements" )
         >> list( "Equipement", *this, &AgentType::ReadEquipment, componentResolver )
         >> end();
+    symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
+    levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );
+    hqSymbol_    = symbolFactory.CreateAutomatSymbol();
     nature_ = nature.release();
-    symbol_      = symbolFactory.CreateSymbol( *nature_ );
-    levelSymbol_ = symbolFactory.CreateLevelSymbol( *nature_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,28 +100,43 @@ const AgentNature& AgentType::GetNature() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentType::Draw
-// Created: SBO 2006-03-21
+// Name: AgentType::GetSymbol
+// Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-void AgentType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+const std::string& AgentType::GetSymbol() const
 {
-    if( viewport.IsInside( where ) )
-    {
-        tools.DrawRectangle( where );
-        tools.DrawApp6Symbol( symbol_, where );
-        tools.DrawApp6Symbol( levelSymbol_, where );
-    }
+    return symbol_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetLevelSymbol
+// Created: AGE 2006-10-24
+// -----------------------------------------------------------------------------
+const std::string& AgentType::GetLevelSymbol() const
+{
+    return levelSymbol_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentType::DrawAggregated
-// Created: AGE 2006-04-11
+// Name: AgentType::GetHQSymbol
+// Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-void AgentType::DrawAggregated( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+const std::string& AgentType::GetHQSymbol() const
+{
+    return hqSymbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::Draw
+// Created: SBO 2006-03-21
+// -----------------------------------------------------------------------------
+void AgentType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool pc ) const
 {
     if( viewport.IsInside( where ) )
     {
-        tools.DrawRectangle( where, 2.f );
-        tools.DrawApp6Symbol( symbol_, where, 2.f );
+        tools.DrawApp6Symbol( levelSymbol_, where );
+        if( pc )
+            tools.DrawApp6Symbol( hqSymbol_, where );
     }
 }
+

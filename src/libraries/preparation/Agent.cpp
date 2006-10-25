@@ -13,6 +13,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
@@ -31,6 +32,8 @@ Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManage
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
+    symbol_ = type_->GetSymbol();
+    std::replace( symbol_.begin(), symbol_.end(), '*', 'f' );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +52,8 @@ Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const
     
     RegisterSelf( *this );
     CreateDictionary( controller );
+    symbol_ = type_->GetSymbol();
+    std::replace( symbol_.begin(), symbol_.end(), '*', 'f' );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +94,10 @@ QString Agent::ReadName( xml::xistream& xis )
 void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsInside( where ) )
-        type_->Draw( where, viewport, tools );
+    {
+        tools.DrawApp6Symbol( symbol_, where );
+        type_->Draw( where, viewport, tools, commandPost_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
