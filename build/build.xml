@@ -118,7 +118,7 @@
     </target>
 
     <target name="application.adaptation_app" description="build Astec Adaptation executable" depends="library.ENT,library.clients_gui">
-        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu" excludes="**/XmlResources.cpp" libs="ENT,clients_gui,kernel_gui" pch-excludes="qtundo.cpp">
+        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu" excludes="**/XmlResources.cpp" libs="ENT,clients_gui,clients_kernel" pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
