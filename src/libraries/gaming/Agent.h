@@ -65,13 +65,14 @@ private:
     //@{
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     void CreateDictionary( kernel::Controller& controller );
+    void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::AgentType&   type_;
-    std::string symbol_;
+    kernel::AgentType& type_;
+    mutable std::string symbol_;
     bool isPc_;
     //@}
 };

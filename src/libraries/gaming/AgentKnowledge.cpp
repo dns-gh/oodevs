@@ -204,18 +204,11 @@ unsigned int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) con
 // -----------------------------------------------------------------------------
 char AgentKnowledge::TeamCharacter( E_PerceptionResult perception ) const
 {
-    ASN1T_EnumDiplomatie diplo = EnumDiplomatie::inconnu;
+    char result = 'u';
     if( team_ && perception > eDetection )
         if( const Diplomacies* diplomacy = team_->Retrieve< Diplomacies >() )
-            diplo = diplomacy->GetRelationship( group_ );
-    switch( diplo )
-    {
-    default:
-    case EnumDiplomatie::inconnu: return 'u';
-    case EnumDiplomatie::ami:     return 'f';
-    case EnumDiplomatie::ennemi:  return 'h';
-    case EnumDiplomatie::neutre:  return 'n';
-    }
+            result = diplomacy->GetKharma();
+    return result;
 }
 
 namespace

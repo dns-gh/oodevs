@@ -252,7 +252,8 @@ void ValuedListItem::SetValue( const T& value )
         delete container_;
         container_ = new ValueContainer< T >( value );
     }
-    static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
+    else
+        static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
 }
 
 // -----------------------------------------------------------------------------

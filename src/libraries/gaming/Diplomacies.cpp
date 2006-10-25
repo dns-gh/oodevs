@@ -22,6 +22,7 @@ using namespace kernel;
 Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
+    , kharma_( 'u' )
 {
     // NOTHING
 }
@@ -32,7 +33,7 @@ Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >
 // -----------------------------------------------------------------------------
 Diplomacies::~Diplomacies()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +69,30 @@ void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message )
 void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomatie& message )
 {
     UpdateData( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Diplomacies::DoUpdate
+// Created: AGE 2006-10-25
+// -----------------------------------------------------------------------------
+void Diplomacies::DoUpdate( const ASN1T_MsgSideCreation& message )
+{
+    switch( message.type )
+    {
+    case EnumDiplomatie::inconnu : kharma_ = 'u'; break;
+    case EnumDiplomatie::ami :     kharma_ = 'f'; break;
+    case EnumDiplomatie::ennemi :  kharma_ = 'h'; break;
+    case EnumDiplomatie::neutre :  kharma_ = 'n'; break;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Diplomacies::GetKharma
+// Created: AGE 2006-10-25
+// -----------------------------------------------------------------------------
+char Diplomacies::GetKharma() const
+{
+    return kharma_;
 }
 
 // -----------------------------------------------------------------------------

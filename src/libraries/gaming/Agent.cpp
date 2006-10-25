@@ -12,6 +12,8 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "Diplomacies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -27,8 +29,6 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,  con
     , type_( resolver.Get( message.type_pion ) )
     , isPc_( message.pc )
 {
-    symbol_     = type_.GetSymbol();
-    std::replace( symbol_.begin(), symbol_.end(), '*', 'f' ); // $$$$ AGE 2006-10-24: hard coded friend
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -50,9 +50,25 @@ void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& v
 {
     if( viewport.IsInside( where ) )
     {
+        if( symbol_.empty() )
+            InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where );
         type_.Draw( where, viewport, tools, isPc_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::InitializeSymbol
+// Created: AGE 2006-10-25
+// -----------------------------------------------------------------------------
+void Agent::InitializeSymbol() const
+{
+    symbol_ = type_.GetSymbol();
+    
+    const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
+    const Diplomacies* diplo = team.Retrieve< Diplomacies >();
+    char karma = diplo ? diplo->GetKharma() : 'u';
+    std::replace( symbol_.begin(), symbol_.end(), '*', karma );
 }
 
 // -----------------------------------------------------------------------------

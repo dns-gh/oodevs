@@ -9,8 +9,7 @@
             <unit command-post="true" id="19" name="PC BLD Sante" position="30TYT2238066816" type="PC BLD Sante"/>
           </automat>
           <automat engaged="true" id="20" knowledge-group="2" name="$$$$Automate$$$$" type="BLT Maintenance">
-            <unit command-post="true" id="21" name="PC BLT Maintenance" position="30TYT2224763907" type="PC BLT Maintenance">
-            </unit>
+            <unit command-post="true" id="21" name="PC BLT Maintenance" position="30TYT2224763907" type="PC BLT Maintenance"/>
           </automat>
           <automat engaged="true" id="108" knowledge-group="2" name="Automate 108" type="Compagnie GEN Lourde">
             <unit command-post="true" id="109" name="Section Combat GEN" position="30TYT1920270317" type="Section Combat GEN"/>
@@ -301,13 +300,156 @@
       <populations/>
       <logistic/>
     </side>
+    <side id="224" name="vert" type="neutral">
+      <objects/>
+      <tactical>
+        <formation id="229" level="ooo" name="">
+          <automat engaged="true" id="278" knowledge-group="225" name="Automate 278" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="279" name="Section Combat GEN" position="30TYT2024565517" type="Section Combat GEN"/>
+            <unit command-post="false" id="280" name="Section Combat GEN" position="30TYT2076565038" type="Section Combat GEN"/>
+            <unit command-post="false" id="281" name="Section Combat GEN" position="30TYT2028364519" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="282" knowledge-group="225" name="Automate 282" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="283" name="Section Combat GEN" position="30TYT2280565305" type="Section Combat GEN"/>
+            <unit command-post="false" id="284" name="Section Combat GEN" position="30TYT2332564825" type="Section Combat GEN"/>
+            <unit command-post="false" id="285" name="Section Combat GEN" position="30TYT2284364307" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="286" knowledge-group="225" name="Automate 286" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="287" name="Section Combat GEN" position="30TYT1947161790" type="Section Combat GEN"/>
+            <unit command-post="false" id="288" name="Section Combat GEN" position="30TYT1999161310" type="Section Combat GEN"/>
+            <unit command-post="false" id="289" name="Section Combat GEN" position="30TYT1950960792" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="290" knowledge-group="225" name="Automate 290" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="291" name="Section Combat GEN" position="30TYT2320161220" type="Section Combat GEN"/>
+            <unit command-post="false" id="292" name="Section Combat GEN" position="30TYT2372160741" type="Section Combat GEN"/>
+            <unit command-post="false" id="293" name="Section Combat GEN" position="30TYT2324060222" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="294" knowledge-group="225" name="Automate 294" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="295" name="Section Combat GEN" position="30TYT2148161557" type="Section Combat GEN"/>
+            <unit command-post="false" id="296" name="Section Combat GEN" position="30TYT2200161077" type="Section Combat GEN"/>
+            <unit command-post="false" id="297" name="Section Combat GEN" position="30TYT2151960558" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="298" knowledge-group="225" name="Automate 298" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="299" name="Section Combat GEN" position="30TYT1839168356" type="Section Combat GEN"/>
+            <unit command-post="false" id="300" name="Section Combat GEN" position="30TYT1891167876" type="Section Combat GEN"/>
+            <unit command-post="false" id="301" name="Section Combat GEN" position="30TYT1842967358" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="302" knowledge-group="225" name="Automate 302" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="303" name="Section Combat GEN" position="30TYT2160970585" type="Section Combat GEN"/>
+            <unit command-post="false" id="304" name="Section Combat GEN" position="30TYT2212970105" type="Section Combat GEN"/>
+            <unit command-post="false" id="305" name="Section Combat GEN" position="30TYT2164869587" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="306" knowledge-group="225" name="Automate 306" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="307" name="Section Combat GEN" position="30TYT2505771158" type="Section Combat GEN"/>
+            <unit command-post="false" id="308" name="Section Combat GEN" position="30TYT2557770678" type="Section Combat GEN"/>
+            <unit command-post="false" id="309" name="Section Combat GEN" position="30TYT2509670160" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="310" knowledge-group="225" name="Automate 310" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="311" name="Section Combat GEN" position="30TYT1943469385" type="Section Combat GEN"/>
+            <unit command-post="false" id="312" name="Section Combat GEN" position="30TYT1995468905" type="Section Combat GEN"/>
+            <unit command-post="false" id="313" name="Section Combat GEN" position="30TYT1947368386" type="Section Combat GEN"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="225" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+    <side id="226" name="jaune" type="unknown">
+      <objects/>
+      <tactical>
+        <formation id="228" level="ooo" name="">
+          <automat engaged="true" id="230" knowledge-group="227" name="Automate 230" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="231" name="Section Combat GEN" position="30TYT1986968120" type="Section Combat GEN"/>
+            <unit command-post="false" id="232" name="Section Combat GEN" position="30TYT2038967640" type="Section Combat GEN"/>
+            <unit command-post="false" id="233" name="Section Combat GEN" position="30TYT1990767122" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="234" knowledge-group="227" name="Automate 234" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="235" name="Section Combat GEN" position="30TYT2150469025" type="Section Combat GEN"/>
+            <unit command-post="false" id="236" name="Section Combat GEN" position="30TYT2202468546" type="Section Combat GEN"/>
+            <unit command-post="false" id="237" name="Section Combat GEN" position="30TYT2154368027" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="238" knowledge-group="227" name="Automate 238" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="239" name="Section Combat GEN" position="30TYT2330769406" type="Section Combat GEN"/>
+            <unit command-post="false" id="240" name="Section Combat GEN" position="30TYT2382768926" type="Section Combat GEN"/>
+            <unit command-post="false" id="241" name="Section Combat GEN" position="30TYT2334668408" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="242" knowledge-group="227" name="Automate 242" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="243" name="Section Combat GEN" position="30TYT2502468210" type="Section Combat GEN"/>
+            <unit command-post="false" id="244" name="Section Combat GEN" position="30TYT2554467730" type="Section Combat GEN"/>
+            <unit command-post="false" id="245" name="Section Combat GEN" position="30TYT2506367211" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="246" knowledge-group="227" name="Automate 246" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="247" name="Section Combat GEN" position="30TYT2587266229" type="Section Combat GEN"/>
+            <unit command-post="false" id="248" name="Section Combat GEN" position="31TBN7457865712" type="Section Combat GEN"/>
+            <unit command-post="false" id="249" name="Section Combat GEN" position="30TYT2591165231" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="250" knowledge-group="227" name="Automate 250" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="251" name="Section Combat GEN" position="30TYT2587864179" type="Section Combat GEN"/>
+            <unit command-post="false" id="252" name="Section Combat GEN" position="31TBN7442663668" type="Section Combat GEN"/>
+            <unit command-post="false" id="253" name="Section Combat GEN" position="30TYT2591663181" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="254" knowledge-group="227" name="Automate 254" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="255" name="Section Combat GEN" position="30TYT2443063171" type="Section Combat GEN"/>
+            <unit command-post="false" id="256" name="Section Combat GEN" position="30TYT2495062692" type="Section Combat GEN"/>
+            <unit command-post="false" id="257" name="Section Combat GEN" position="30TYT2446862173" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="258" knowledge-group="227" name="Automate 258" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="259" name="Section Combat GEN" position="30TYT2330462853" type="Section Combat GEN"/>
+            <unit command-post="false" id="260" name="Section Combat GEN" position="30TYT2382362374" type="Section Combat GEN"/>
+            <unit command-post="false" id="261" name="Section Combat GEN" position="30TYT2334261855" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="262" knowledge-group="227" name="Automate 262" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="263" name="Section Combat GEN" position="30TYT2110162841" type="Section Combat GEN"/>
+            <unit command-post="false" id="264" name="Section Combat GEN" position="30TYT2162162362" type="Section Combat GEN"/>
+            <unit command-post="false" id="265" name="Section Combat GEN" position="30TYT2113961843" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="266" knowledge-group="227" name="Automate 266" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="267" name="Section Combat GEN" position="30TYT1982263634" type="Section Combat GEN"/>
+            <unit command-post="false" id="268" name="Section Combat GEN" position="30TYT2034263154" type="Section Combat GEN"/>
+            <unit command-post="false" id="269" name="Section Combat GEN" position="30TYT1986062636" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="270" knowledge-group="227" name="Automate 270" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="271" name="Section Combat GEN" position="30TYT1817564449" type="Section Combat GEN"/>
+            <unit command-post="false" id="272" name="Section Combat GEN" position="30TYT1869563969" type="Section Combat GEN"/>
+            <unit command-post="false" id="273" name="Section Combat GEN" position="30TYT1821363451" type="Section Combat GEN"/>
+          </automat>
+          <automat engaged="true" id="274" knowledge-group="227" name="Automate 274" type="Compagnie GEN Lourde">
+            <unit command-post="true" id="275" name="Section Combat GEN" position="30TYT1811066606" type="Section Combat GEN"/>
+            <unit command-post="false" id="276" name="Section Combat GEN" position="30TYT1863066126" type="Section Combat GEN"/>
+            <unit command-post="false" id="277" name="Section Combat GEN" position="30TYT1814865608" type="Section Combat GEN"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="227" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
   </sides>
   <diplomacies>
     <side id="1">
+      <relationship diplomacy="neutral" side="224"/>
       <relationship diplomacy="neutral" side="3"/>
+      <relationship diplomacy="neutral" side="226"/>
     </side>
     <side id="3">
+      <relationship diplomacy="neutral" side="224"/>
       <relationship diplomacy="enemy" side="1"/>
+      <relationship diplomacy="neutral" side="226"/>
+    </side>
+    <side id="224">
+      <relationship diplomacy="neutral" side="1"/>
+      <relationship diplomacy="neutral" side="3"/>
+      <relationship diplomacy="neutral" side="226"/>
+    </side>
+    <side id="226">
+      <relationship diplomacy="neutral" side="224"/>
+      <relationship diplomacy="neutral" side="1"/>
+      <relationship diplomacy="neutral" side="3"/>
     </side>
   </diplomacies>
 </orbat>

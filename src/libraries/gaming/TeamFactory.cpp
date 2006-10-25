@@ -61,6 +61,7 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgSideCreation& asnMsg )
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_ ) );
     result->Attach< CommunicationHierarchies >( *new TeamHierarchies        ( controllers_.controller_, *result, *this ) );
     result->Attach< TacticalHierarchies >     ( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
+    result->Update( asnMsg );
     result->Polish();
     return result;
 }

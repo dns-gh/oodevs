@@ -29,6 +29,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class Diplomacies : public kernel::Extension_ABC
+                  , public kernel::Updatable_ABC< ASN1T_MsgSideCreation >
                   , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomatieAck >
                   , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomatie >
 {
@@ -42,6 +43,7 @@ public:
 
     //! @name Operations
     //@{
+    char GetKharma() const;
     ASN1T_EnumDiplomatie GetRelationship( const kernel::Entity_ABC& rhs ) const;
     //@}
 
@@ -60,6 +62,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void DoUpdate( const ASN1T_MsgSideCreation& message );
     virtual void DoUpdate( const ASN1T_MsgChangeDiplomatieAck& message );
     virtual void DoUpdate( const ASN1T_MsgChangeDiplomatie& message );
     template< typename T >
@@ -72,6 +75,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
+    char kharma_;
     //@}
 };
 
