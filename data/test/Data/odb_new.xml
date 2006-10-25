@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <orbat>
   <sides>
-    <side id="1" name="rouge">
+    <side id="1" name="rouge" type="enemy">
       <objects/>
       <tactical>
         <formation id="17" level="x" name="">
@@ -166,7 +166,7 @@
       <populations/>
       <logistic/>
     </side>
-    <side id="3" name="bleu">
+    <side id="3" name="bleu" type="friend">
       <objects/>
       <tactical>
         <formation id="5" level="xxx" name="">
