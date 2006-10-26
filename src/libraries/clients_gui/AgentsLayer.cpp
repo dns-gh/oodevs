@@ -134,12 +134,3 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
     else
         entity.Select( controllers_.actions_ );
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::DisplayTooltip
-// Created: AGE 2006-06-29
-// -----------------------------------------------------------------------------
-void AgentsLayer::DisplayTooltip( const Agent_ABC& agent, Displayer_ABC& displayer )
-{
-    // NOTHING
-}

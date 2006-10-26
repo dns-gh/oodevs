@@ -23,7 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controller, 
                   const Resolver_ABC< AutomatType >& resolver )
-    : EntityImplementation< Automat_ABC >( controller, message.oid_automate, QString( "%1 [%2]" ).arg( message.nom ).arg( message.oid_automate ) )
+    : EntityImplementation< Automat_ABC >( controller, message.oid_automate, message.nom )
     , type_( resolver.Get( message.type_automate ) )
 {
     RegisterSelf( *this );

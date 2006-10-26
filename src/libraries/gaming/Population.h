@@ -19,6 +19,7 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
+#include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
 {
@@ -45,6 +46,7 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
                  , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationDestruction >
                  , public kernel::Drawable_ABC
+                 , public kernel::Displayable_ABC
                  , public kernel::Positions
 {
 public:
@@ -63,7 +65,7 @@ public:
 
     //! @name Operations
     //@{
-    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     unsigned int GetLivingHumans() const;
     unsigned int GetDeadHumans() const;

@@ -7,26 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentsLayer_h_
-#define __AgentsLayer_h_
-
-#include "clients_gui/AgentsLayer.h"
+#ifndef __ExtensionVisitor_ABC_h_
+#define __ExtensionVisitor_ABC_h_
 
 // =============================================================================
-/** @class  AgentsLayer
-    @brief  AgentsLayer
+/** @class  ExtensionVisitor_ABC
+    @brief  Extension visitor definition
 */
-// Created: SBO 2006-08-18
+// Created: AGE 2006-10-26
 // =============================================================================
-class AgentsLayer : public gui::AgentsLayer
+template< typename T >
+class ExtensionVisitor_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
-    virtual ~AgentsLayer();
+             ExtensionVisitor_ABC() {};
+    virtual ~ExtensionVisitor_ABC() {};
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Visit( const T& extension ) = 0;
     //@}
 };
 
-#endif // __AgentsLayer_h_
+#endif // __ExtensionVisitor_ABC_h_

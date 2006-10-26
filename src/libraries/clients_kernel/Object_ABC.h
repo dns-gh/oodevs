@@ -11,13 +11,13 @@
 #define __Object_ABC_h_
 
 #include "Entity_ABC.h"
+#include "Displayable_ABC.h"
 
 namespace kernel
 {
     class Team_ABC;
     class ObjectType;
     class ActionController;
-    class Displayer_ABC;
 
 // =============================================================================
 /** @class  Object_ABC
@@ -25,7 +25,7 @@ namespace kernel
 */
 // Created: SBO 2006-08-03
 // =============================================================================
-class Object_ABC : public Entity_ABC
+class Object_ABC : public Entity_ABC, public Displayable_ABC
 {
 
 public:

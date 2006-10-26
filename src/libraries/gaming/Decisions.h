@@ -15,6 +15,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
 {
@@ -35,6 +36,7 @@ namespace kernel
 class Decisions : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< ASN1T_MsgPionOrder >
                 , public kernel::Updatable_ABC< ASN1T_MsgPionOrderAck >
+                , public kernel::Displayable_ABC
                 , public kernel::Drawable_ABC
 {
 
@@ -49,7 +51,7 @@ public:
     //@{
     bool IsEmbraye() const;
 
-    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
     const kernel::Agent_ABC& GetAgent() const;
     virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
@@ -78,7 +80,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Agent_ABC& agent_;
-    unsigned long lastOrderId_;
+    long lastOrderId_;
     const kernel::Mission* current_;
     const kernel::Mission* next_;
     //@}

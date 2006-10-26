@@ -13,6 +13,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include "Diplomacies.h"
 #include "Tools.h"
 
@@ -25,7 +26,7 @@ const QString Agent::typeName_ = "agent";
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,  const Resolver_ABC< AgentType >& resolver )
-    : EntityImplementation< Agent_ABC >( controller, message.oid_pion, QString( "%1 [%2]" ).arg( message.nom ).arg( message.oid_pion ) )
+    : EntityImplementation< Agent_ABC >( controller, message.oid_pion, message.nom )
     , type_( resolver.Get( message.type_pion ) )
     , isPc_( message.pc )
 {
@@ -87,6 +88,15 @@ const AgentType& Agent::GetType() const
 QString Agent::GetTypeName() const
 {
     return typeName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DisplayInTooltip
+// Created: AGE 2006-10-26
+// -----------------------------------------------------------------------------
+void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    displayer.Display( "", (Agent_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

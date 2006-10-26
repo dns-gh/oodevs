@@ -102,25 +102,4 @@ void EntityLayer< ConcreteEntity >::ContextMenu( const kernel::Entity_ABC& entit
     controllers_.actions_.ContextMenu( static_cast< const ConcreteEntity& >( entity ), geoPoint, point );
 }
 
-// -----------------------------------------------------------------------------
-// Name: EntityLayer::DisplayTooltip
-// Created: AGE 2006-06-29
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-bool EntityLayer< ConcreteEntity >::DisplayTooltip( const kernel::Entity_ABC& entity, kernel::Displayer_ABC& displayer )
-{
-    DisplayTooltip( static_cast< const ConcreteEntity& >( entity ), displayer );
-    return EntityLayerBase::DisplayTooltip( entity, displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayer::DisplayTooltip
-// Created: AGE 2006-06-29
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-void EntityLayer< ConcreteEntity >::DisplayTooltip( const ConcreteEntity&, kernel::Displayer_ABC& )
-{
-    // NOTHING
-}
-
 }

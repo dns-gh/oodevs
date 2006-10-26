@@ -32,16 +32,3 @@ PopulationsLayer::~PopulationsLayer()
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: PopulationsLayer::DisplayTooltip
-// Created: SBO 2006-08-21
-// -----------------------------------------------------------------------------
-void PopulationsLayer::DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer )
-{
-    const Population* popu = dynamic_cast< const Population* >( &entity ); // $$$$ AGE 2006-08-07: 
-    if( popu )
-        popu->DisplayInTooltip( displayer );
-    if( const Reports* reports = entity.Retrieve< Reports >() )
-        reports->DisplayInTooltip( displayer );
-}

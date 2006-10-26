@@ -30,7 +30,7 @@ using namespace kernel;
 Decisions::Decisions( Controller& controller, const Agent_ABC& agent )
     : controller_( controller )
     , agent_( agent )
-    , lastOrderId_( unsigned( -1 ) )
+    , lastOrderId_( -1 )
     , current_( 0 )
 {
     // NOTHING

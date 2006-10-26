@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    template< typename T > class ExtensionVisitor_ABC;
 
 // =============================================================================
 /** @class  Hierarchies
@@ -33,22 +34,39 @@ public:
     virtual ~Hierarchies() {};
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual const Entity_ABC* GetSuperior() const = 0;
     virtual const Entity_ABC& GetEntity() const = 0;
     virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 
-
+    //@}
+    
+    //! @name Modifiers
+    //@{
     virtual void AddSubordinate   (       Entity_ABC& entity ) = 0;
     virtual void RemoveSubordinate( const Entity_ABC& entity ) = 0;
     virtual void UnregisterSubordinate( const Entity_ABC& entity ) = 0;
+    //@}
 
-    virtual bool IsSubordinateOf( const Entity_ABC& entity ) const = 0;
-    virtual const Entity_ABC& GetTop() const = 0;
-    virtual const Entity_ABC& GetUp( unsigned int nLevel = 1 ) const = 0;
+    //! @name Operations
+    //@{
+    bool IsSubordinateOf( const Entity_ABC& entity ) const;
+    const Entity_ABC& GetTop() const;
+    const Entity_ABC& GetUp( unsigned int nLevel = 1 ) const;
+
+    template< typename T >
+    void Accept( ExtensionVisitor_ABC< T >& visitor ) const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const = 0;
     //@}
 };
 
 }
+
+#include "Hierarchies.inl"
 
 #endif // __Hierarchies_h_

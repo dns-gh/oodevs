@@ -66,7 +66,6 @@ private:
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
     virtual void Select           ( const kernel::Entity_ABC&, bool );
-    virtual void DisplayTooltip   ( const kernel::Agent_ABC& entity, kernel::Displayer_ABC& displayer );
     void Toggle                   ( const kernel::Automat_ABC& automat, bool aggregate );
     //@}
 

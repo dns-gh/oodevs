@@ -30,7 +30,7 @@ AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publi
     , agent_( agent )
     , model_( agent.GetType().GetDecisionalModel() )
     , bEmbraye_( false )
-    , lastOrderId_( unsigned( -1 ) )
+    , lastOrderId_( -1 )
     , current_( 0 )
     , next_( 0 )
 {

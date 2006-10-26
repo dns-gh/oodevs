@@ -15,6 +15,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
 {
@@ -31,6 +32,7 @@ namespace kernel
 class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
             , public kernel::Extension_ABC
             , public kernel::Drawable_ABC
+            , public kernel::Displayable_ABC
 {
 
 public:
@@ -50,6 +52,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual const kernel::AgentType& GetType() const;
     virtual QString GetTypeName() const;
     //@}

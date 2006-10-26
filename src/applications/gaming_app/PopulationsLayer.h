@@ -27,12 +27,6 @@ public:
              PopulationsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~PopulationsLayer();
     //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void DisplayTooltip( const kernel::Population_ABC& entity, kernel::Displayer_ABC& displayer );
-    //@}
 };
 
 #endif // __PopulationsLayer_h_

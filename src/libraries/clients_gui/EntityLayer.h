@@ -148,8 +148,6 @@ protected:
     virtual void NotifySelected( const ConcreteEntity* );
     virtual void SelectColor( const kernel::Entity_ABC& );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
-    virtual bool DisplayTooltip( const kernel::Entity_ABC& entity, kernel::Displayer_ABC& displayer );
-    virtual void DisplayTooltip( const ConcreteEntity& entity, kernel::Displayer_ABC& displayer );
     //@}
 
 protected:

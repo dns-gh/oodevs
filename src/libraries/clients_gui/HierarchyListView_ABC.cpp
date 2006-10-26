@@ -110,7 +110,7 @@ ValuedListItem* HierarchyListView_ABC::FindOrCreate( const Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    const bool isVisible = ! profile_ || profile_->IsVisible( entity );
+    const bool isVisible = profile_ && profile_->IsVisible( entity );
     item->SetNamed( entity );
     item->setDropEnabled( true );
     item->setDragEnabled( true );

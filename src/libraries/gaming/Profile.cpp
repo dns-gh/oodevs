@@ -114,7 +114,8 @@ void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
 
         supervision_ = message.profile.superviseur;
 
-        controller_.Update( *(Profile_ABC*)this );
+        if( firstTicked_ )
+            controller_.Update( *(Profile_ABC*)this );
     };
     controller_.Update( *this );
 }

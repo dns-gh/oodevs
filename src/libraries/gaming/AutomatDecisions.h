@@ -14,6 +14,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
 {
@@ -37,6 +38,7 @@ class AutomatDecisions : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateAttributes >
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrder >
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrderAck >
+                       , public kernel::Displayable_ABC
 {
 
 public:
@@ -48,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
 
     const kernel::Automat_ABC& GetAgent() const; // $$$$ AGE 2006-10-06: 
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14: 
@@ -83,7 +85,7 @@ private:
     const kernel::DecisionalModel& model_;
     bool bEmbraye_;
 
-    unsigned long lastOrderId_;
+    long lastOrderId_;
     const kernel::Mission* current_;
     const kernel::Mission* next_;
     //@}

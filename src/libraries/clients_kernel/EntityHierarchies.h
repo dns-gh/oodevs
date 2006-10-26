@@ -35,28 +35,26 @@ public:
     virtual ~EntityHierarchies();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual const Entity_ABC* GetSuperior() const;
     virtual const Entity_ABC& GetEntity() const;
     virtual Iterator< const Entity_ABC& > CreateSubordinateIterator() const; 
+    //@}
 
+    //! @name Modifiers
+    //@{
     virtual void AddSubordinate       (       Entity_ABC& entity );
     virtual void RemoveSubordinate    ( const Entity_ABC& entity );
     virtual void UnregisterSubordinate( const Entity_ABC& entity );
-
-    bool IsSubordinateOf( const Entity_ABC& entity ) const;
-    virtual const Entity_ABC& GetTop() const;
-    virtual const Entity_ABC& GetUp( unsigned int nLevel = 1 ) const;
     //@}
 
 protected:
-    //! @name Modifiers
+    //! @name Helpers
     //@{
+    virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const;
     Interface* SuperiorHierarchy();
     void SetSuperior( Entity_ABC* superior );
-    Entity_ABC* GetSuperior();
-    Entity_ABC& GetEntity();
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}
 

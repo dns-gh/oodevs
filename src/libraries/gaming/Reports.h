@@ -16,6 +16,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 
 class Report_ABC;
 class Simulation;
@@ -41,6 +42,7 @@ class Reports : public kernel::Extension_ABC
               , public kernel::Updatable_ABC< ASN1T_MsgCR >
               , public kernel::Updatable_ABC< TraceMessage >
               , public kernel::Drawable_ABC
+              , public kernel::Displayable_ABC
 {
 
 public:
@@ -55,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     void Clear();

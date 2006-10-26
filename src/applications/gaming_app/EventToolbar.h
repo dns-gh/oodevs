@@ -13,12 +13,13 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
 
-#include <list>
+#include <deque>
 
 namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class Profile_ABC;
 }
 
 class Report_ABC;
@@ -32,6 +33,7 @@ class Report_ABC;
 class EventToolbar : public QToolBar
                    , public kernel::Observer_ABC
                    , public kernel::ElementObserver_ABC< Report_ABC >
+                   , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT;
 
@@ -59,13 +61,15 @@ private:
 
     //! @name Types
     //@{
-    typedef std::list< const kernel::Entity_ABC* > T_Agents;
-    typedef T_Agents::const_iterator    CIT_Agents;
+    typedef std::deque< const kernel::Entity_ABC* > T_Agents;
+    typedef T_Agents::const_iterator              CIT_Agents;
     //@}
 
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Report_ABC& report );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    void UpdateMessageButton();
     //@}
 
 private:
@@ -73,6 +77,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_Agents messageAgents_;
+
+    const kernel::Profile_ABC* profile_;
 
     QToolButton* gasButton_;
     QToolButton* conflictButton_;

@@ -15,6 +15,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
 
@@ -187,8 +188,9 @@ bool EntityLayerBase::DisplayTooltip( unsigned i, const geometry::Point2f& point
 // Name: EntityLayerBase::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::DisplayTooltip( const Entity_ABC&, Displayer_ABC& )
+bool EntityLayerBase::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& displayer )
 {
+    entity.Interface().Apply( Displayable_ABC::DisplayInTooltip, displayer );
     return true;
 }
 

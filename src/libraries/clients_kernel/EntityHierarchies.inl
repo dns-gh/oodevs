@@ -69,22 +69,6 @@ Iterator< const Entity_ABC& > EntityHierarchies< Interface >::CreateSubordinateI
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::IsSubordinateOf
-// Created: AGE 2006-09-19
-// -----------------------------------------------------------------------------
-template< typename Interface >
-bool EntityHierarchies< Interface >::IsSubordinateOf( const Entity_ABC& entity ) const
-{
-    const Entity_ABC* superior = GetSuperior();
-    if( superior == & entity )
-        return true;
-    if( superior == 0 )
-        return false;
-    const Interface* hierarchies = superior->Retrieve< Interface >();
-    return hierarchies && hierarchies->IsSubordinateOf( entity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityHierarchies::AddSubordinate
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
@@ -117,41 +101,6 @@ void EntityHierarchies< Interface >::UnregisterSubordinate( const Entity_ABC& en
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::GetTop
-// Created: AGE 2006-10-04
-// -----------------------------------------------------------------------------
-template< typename Interface >
-const Entity_ABC& EntityHierarchies< Interface >::GetTop() const
-{
-    const Entity_ABC* superior = GetSuperior();
-    if( superior )
-    {
-        const Interface* superiorHierarchies = superior->Retrieve< Interface >();
-        if( superiorHierarchies )
-            return superiorHierarchies->GetTop();
-        return *superior;
-    }
-    return GetEntity();
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityHierarchies::GetUp
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-template< typename Interface >
-const Entity_ABC& EntityHierarchies< Interface >::GetUp( unsigned int nLevel /*=1*/ ) const
-{
-    if( nLevel == 0 )
-        return GetEntity();
-    const Entity_ABC* superior = GetSuperior();
-    if( ! superior )
-        throw std::runtime_error( __FUNCTION__ );
-    if( nLevel == 1 )
-        return *superior;
-    return superior->Get< Interface >().GetUp( nLevel - 1 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityHierarchies::SetSuperior
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
@@ -166,13 +115,13 @@ void EntityHierarchies< Interface >::SetSuperior( Entity_ABC* superior )
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityHierarchies::GetSuperior
-// Created: AGE 2006-10-06
+// Name: EntityHierarchies::RetrieveHierarchies
+// Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
 template< typename Interface >
-Entity_ABC* EntityHierarchies< Interface >::GetSuperior()
+const Hierarchies* EntityHierarchies< Interface >::RetrieveHierarchies( const Entity_ABC& entity ) const
 {
-    return superior_;
+    return entity.Retrieve< Interface >();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,17 +131,8 @@ Entity_ABC* EntityHierarchies< Interface >::GetSuperior()
 template< typename Interface >
 Interface* EntityHierarchies< Interface >::SuperiorHierarchy()
 {
-    return superior_ ? superior_->Retrieve< Interface >() : 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityHierarchies::GetEntity
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-template< typename Interface >
-Entity_ABC& EntityHierarchies< Interface >::GetEntity()
-{
-    return entity_;
+    Entity_ABC* superior = const_cast< Entity_ABC* >( GetSuperior() );
+    return superior ? superior->Retrieve< Interface >() : 0;
 }
 
 // -----------------------------------------------------------------------------

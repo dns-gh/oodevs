@@ -157,9 +157,15 @@ void AgentKnowledgePanel::AfterSelection()
 {
     if( selectionCandidate_ )
     {
+        const Entity_ABC* owner = & selectionCandidate_->GetOwner();
+        const KnowledgeGroup_ABC* kg = static_cast< const KnowledgeGroup_ABC* >( owner );
+        Select( kg );
         ValuedListItem* item = FindItem( (const AgentKnowledge_ABC*)selectionCandidate_, pKnowledgeListView_->firstChild() );
         if( item )
+        {
             pKnowledgeListView_->setSelected( item, true );
+            pKnowledgeListView_->ensureItemVisible( item );
+        }
     }
     else
         KnowledgeGroupSelectionObserver::AfterSelection();
