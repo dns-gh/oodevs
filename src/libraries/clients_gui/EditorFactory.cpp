@@ -79,10 +79,10 @@ namespace
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( const QString& value )
+void EditorFactory::Call( QString* const& value )
 {
     QStringEditor* editor = new QStringEditor( parent_ );
-    editor->setText( value );
+    editor->setText( *value );
     result_ = editor;
 }
 
@@ -111,10 +111,10 @@ namespace
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( const double& value )
+void EditorFactory::Call( double* const& value )
 {
     NumberEditor< double >* editor = new NumberEditor< double >( parent_ );
-    editor->setValue( value );
+    editor->setValue( *value );
     result_ = editor;
 }
 
@@ -122,10 +122,10 @@ void EditorFactory::Call( const double& value )
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( const float& value )
+void EditorFactory::Call( float* const& value )
 {
     NumberEditor< float >* editor = new NumberEditor< float >( parent_ );
-    editor->setValue( value );
+    editor->setValue( *value );
     result_ = editor;
 }
 
@@ -133,10 +133,21 @@ void EditorFactory::Call( const float& value )
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( const int& value )
+void EditorFactory::Call( int* const& value )
 {
     NumberEditor< int >* editor = new NumberEditor< int >( parent_ );
-    editor->setValue( value );
+    editor->setValue( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: AGE 2006-10-26
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( unsigned int* const& value )
+{
+    NumberEditor< unsigned int >* editor = new NumberEditor< unsigned int >( parent_ );
+    editor->setValue( *value );
     result_ = editor;
 }
 
@@ -169,9 +180,9 @@ namespace
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( const bool& value )
+void EditorFactory::Call( bool* const& value )
 {
     BooleanEditor* editor = new BooleanEditor( parent_ );
-    editor->SetCurrentItem( value );
+    editor->SetCurrentItem( *value );
     result_ = editor;
 }

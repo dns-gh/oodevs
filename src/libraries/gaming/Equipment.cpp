@@ -23,6 +23,7 @@ Equipment::Equipment( const EquipmentType& type )
     , unavailable_( 0 )
     , repairable_( 0 )
     , inMaintenance_( 0 )
+    , prisonners_( 0 )
 {
     // NOTHING
 }
@@ -55,6 +56,7 @@ void Equipment::Update( const ASN1T_DotationEquipement& message )
     unavailable_   = message.nb_indisponibles;
     repairable_    = message.nb_reparables;
     inMaintenance_ = message.nb_dans_chaine_maintenance;
+    prisonners_    = message.nb_prisonniers;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,5 +65,5 @@ void Equipment::Update( const ASN1T_DotationEquipement& message )
 // -----------------------------------------------------------------------------
 unsigned Equipment::Total() const
 {
-    return available_ + unavailable_ + repairable_ + inMaintenance_;
+    return available_ + unavailable_ + repairable_ + inMaintenance_ + prisonners_;
 }

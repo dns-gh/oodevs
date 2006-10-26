@@ -50,8 +50,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void insertChild ( QObject* pObj );
-    virtual QLayout* layout();
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 

@@ -167,7 +167,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setCaption( tr( "Informations" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
-    Profile_ABC& profile = *new PreparationProfile( this );
+    Profile_ABC& profile = *new PreparationProfile( this, controllers );
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );

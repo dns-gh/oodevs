@@ -35,6 +35,7 @@ public:
 
     //! @name Operations
     //@{
+    void Clear();
     virtual void Hide();
     virtual QSize sizeHint() const;
     virtual QSize minimumSizeHint() const;

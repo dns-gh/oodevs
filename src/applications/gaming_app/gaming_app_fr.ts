@@ -293,6 +293,10 @@
         <source>Pr&#xea;teur</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Prisonniers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentStatePanel</name>

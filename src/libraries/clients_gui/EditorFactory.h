@@ -22,11 +22,12 @@ namespace gui
 // Created: SBO 2006-10-18
 // =============================================================================
 class EditorFactory : public kernel::EditorFactory_ABC
-                    , public kernel::Caller< QString >
-                    , public kernel::Caller< double >
-                    , public kernel::Caller< float >
-                    , public kernel::Caller< int >
-                    , public kernel::Caller< bool >
+                    , public kernel::Caller< QString* >
+                    , public kernel::Caller< double* >
+                    , public kernel::Caller< float* >
+                    , public kernel::Caller< int* >
+                    , public kernel::Caller< unsigned int* >
+                    , public kernel::Caller< bool* >
 {
 
 public:
@@ -45,11 +46,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Call( const QString& value );
-    virtual void Call( const double& value );
-    virtual void Call( const float& value );
-    virtual void Call( const int& value );
-    virtual void Call( const bool& value );
+    virtual void Call( QString* const& value );
+    virtual void Call( double* const& value );
+    virtual void Call( float* const& value );
+    virtual void Call( int* const& value );
+    virtual void Call( unsigned int* const& value );
+    virtual void Call( bool* const& value );
 
     virtual void BeginEditor( QWidget* parent );
     virtual QWidget* EndEditor();

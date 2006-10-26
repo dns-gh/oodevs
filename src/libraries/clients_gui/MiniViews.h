@@ -19,6 +19,7 @@ namespace kernel
     class Agent_ABC;
     class Population_ABC;
     class Controllers;
+    class Automat_ABC;
 }
 
 namespace gui
@@ -35,8 +36,7 @@ namespace gui
 // =============================================================================
 class MiniViews : public QDockWindow
                 , public kernel::Observer_ABC
-                , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
-                , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
+                , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 
@@ -63,8 +63,7 @@ private:
     //! @name Helpers
     //@{
     void BuildContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Population_ABC& popup, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
     //! @name Types

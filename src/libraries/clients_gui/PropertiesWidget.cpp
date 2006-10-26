@@ -27,7 +27,7 @@ PropertiesWidget::PropertiesWidget( QWidget* parent, const QString& name )
 {
     FillUp( name );
 
-    spacer_ = new QSpacerItem( 200, 5, QSizePolicy::Minimum, QSizePolicy::Ignored );
+    spacer_ = new QSpacerItem( 100, 5, QSizePolicy::Minimum, QSizePolicy::Ignored );
     layout_->addItem( spacer_, 3, 1 );
 }
 
@@ -84,7 +84,7 @@ void PropertiesWidget::FillUp( const QString& name )
     layout_->setColStretch( 0, 0 );
     layout_->setColSpacing( 0, 10 );
     layout_->setColStretch( 1, 1 );
-    layout_->setColSpacing( 1, 200 );
+    layout_->setColSpacing( 1, 100 );
 
     // First row
     layout_->setRowStretch( 0, 0 );
@@ -110,6 +110,20 @@ void PropertiesWidget::FillUp( const QString& name )
     connect( button_, SIGNAL( toggled( bool ) ), table_, SLOT( Show( bool ) ) );
     layout_->addWidget( table_, 2, 1 );
     table_->hide();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesWidget::Clear
+// Created: AGE 2006-10-26
+// -----------------------------------------------------------------------------
+void PropertiesWidget::Clear()
+{
+    categories_.clear();
+    for( CIT_SubWidgets it = subWidgets_.begin(); it != subWidgets_.end(); ++it )
+        delete *it;
+    subWidgets_.clear();
+    table_->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +152,7 @@ QSize PropertiesWidget::sizeHint() const
 // -----------------------------------------------------------------------------
 QSize PropertiesWidget::minimumSizeHint() const
 {
-    return QSize( 200, 15 );
+    return QSize( 100, 15 );
 }
 
 // -----------------------------------------------------------------------------

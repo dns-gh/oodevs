@@ -104,8 +104,14 @@ bool AutomatPositions::IsIn( const Rectangle2f& rectangle ) const
 // -----------------------------------------------------------------------------
 Rectangle2f AutomatPositions::GetBoundingBox() const
 {
-    const Point2f center = GetPosition();
-    return Rectangle2f( center.X() - 500, center.Y(), center.X() + 500, center.Y() + 800 );
+    Rectangle2f result;
+    Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    while( children.HasMoreElements() )
+    {
+        const Positions& childPositions = children.NextElement().Get< Positions >();
+        result.Incorporate( ((const AgentPositions&)( childPositions )).position_ );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

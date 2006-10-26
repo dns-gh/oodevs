@@ -11,6 +11,13 @@
 #define __PreparationProfile_h_
 
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+    class ModelLoaded;
+}
 
 // =============================================================================
 /** @class  PreparationProfile
@@ -19,12 +26,14 @@
 // Created: AGE 2006-10-16
 // =============================================================================
 class PreparationProfile : public kernel::Profile_ABC, public QObject
+                         , public kernel::Observer_ABC
+                         , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PreparationProfile( QObject* parent );
+             PreparationProfile( QObject* parent, kernel::Controllers& controllers );
     virtual ~PreparationProfile();
     //@}
 
@@ -33,6 +42,24 @@ public:
     virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    //@}
+
+    //! @name Copy / Assignment
+    //@{
+    PreparationProfile( const PreparationProfile& );
+    PreparationProfile& operator=( const PreparationProfile& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controllers& controllers_;
     //@}
 };
 

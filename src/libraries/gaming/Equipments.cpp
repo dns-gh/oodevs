@@ -54,6 +54,7 @@ void Equipments::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         if( ! equipment )
         {
             equipment = new Equipment( resolver_.Get( value.type_equipement ) );
+            equipment->Update( value );
             AddToDictionary( *equipment );
             Register( value.type_equipement, *equipment );
         }
@@ -74,4 +75,5 @@ void Equipments::AddToDictionary( const Equipment& equipment )
     dico_.Register( *this, baseName + tools::translate( "Composantes", "Indisponible" ), equipment.unavailable_ );
     dico_.Register( *this, baseName + tools::translate( "Composantes", "Réparables" ), equipment.repairable_ );
     dico_.Register( *this, baseName + tools::translate( "Composantes", "En maintenance" ), equipment.inMaintenance_ );
+    dico_.Register( *this, baseName + tools::translate( "Composantes", "Prisonniers" ), equipment.prisonners_ );
 }

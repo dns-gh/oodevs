@@ -43,7 +43,8 @@ AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel
                 .AddColumn( tr( "Disponible" ) )
                 .AddColumn( tr( "Indisponible" ) )
                 .AddColumn( tr( "Réparable" ) )
-                .AddColumn( tr( "En maintenance" ) );
+                .AddColumn( tr( "En maintenance" ) )
+                .AddColumn( tr( "Prisonniers" ) ) ;
 
     pResources_ = new T_ListView( this, *this, factory );
     pResources_->AddColumn( tr( "Resource" ) )
@@ -146,7 +147,8 @@ void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& di
              .Display( tr( "Disponible" ), equipment.available_ )
              .Display( tr( "Indisponible" ), equipment.unavailable_ )
              .Display( tr( "Réparable" ), equipment.repairable_ )
-             .Display( tr( "En maintenance" ), equipment.inMaintenance_ );
+             .Display( tr( "En maintenance" ), equipment.inMaintenance_ )
+             .Display( tr( "Prisonniers" ), equipment.prisonners_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,11 +11,12 @@
 #include "MiniViews.h"
 #include "moc_MiniViews.cpp"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "MiniView.h"
 #include "GlWidget.h"
 #include "SmartGridWidget.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Population_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -51,34 +52,19 @@ MiniViews::~MiniViews()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MiniViews::BuildContextMenu
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void MiniViews::BuildContextMenu( const Entity_ABC& agent, ContextMenu& menu )
-{
-    selected_ = &agent;
-    bool remove = miniViews_.find( &agent ) != miniViews_.end();
-    static const QString supprimer = tr( "Supprimer la minivue" );
-    static const QString ajouter   = tr( "Ajouter une minivue" );
-    menu.InsertItem( "Interface", remove ? supprimer : ajouter , this, SLOT( OnMiniView() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MiniViews::NotifyContextMenu
-// Created: AGE 2006-06-23
+// Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void MiniViews::NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu )
 {
-    BuildContextMenu( agent, menu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MiniViews::NotifyContextMenu
-// Created: SBO 2006-07-05
-// -----------------------------------------------------------------------------
-void MiniViews::NotifyContextMenu( const Population_ABC& popu, ContextMenu& menu )
-{
-    BuildContextMenu( popu, menu );
+    if( widget_ && agent.Retrieve< Positions >() )
+    {
+        selected_ = &agent;
+        bool remove = miniViews_.find( &agent ) != miniViews_.end();
+        static const QString supprimer = tr( "Supprimer la minivue" );
+        static const QString ajouter   = tr( "Ajouter une minivue" );
+        menu.InsertItem( "Interface", remove ? supprimer : ajouter , this, SLOT( OnMiniView() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

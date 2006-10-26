@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     template< typename T >
-    QWidget* CreateEditor( QWidget* parent, const T& value )
+    QWidget* CreateEditor( QWidget* parent, T* value )
     {
         BeginEditor( parent );
         VirtualTemplate< EditorFactory_ABC >::Call( value );
@@ -58,7 +58,7 @@ private:
     virtual QWidget* EndEditor() = 0;
 
     template< typename T >
-    void Call( const T& )
+    void Call( T* )
     {
         // NOTHING
     }

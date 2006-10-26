@@ -37,7 +37,7 @@ PropertiesTable::PropertiesTable( QWidget* parent )
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
     setHScrollBarMode( QScrollView::AlwaysOff );
-    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Minimum );
+    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed );
     setFrameStyle( MenuBarPanel );
     setResizePolicy( QScrollView::AutoOne );
 }
@@ -49,6 +49,26 @@ PropertiesTable::PropertiesTable( QWidget* parent )
 PropertiesTable::~PropertiesTable()
 {
     delete &itemDisplayer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTable::sizeHint
+// Created: AGE 2006-10-26
+// -----------------------------------------------------------------------------
+QSize PropertiesTable::sizeHint() const
+{
+    QSize original = QTable::sizeHint();
+    return QSize( original.width(), rowPos( numRows() - 1 ) + rowHeight( numRows() - 1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTable::Clear
+// Created: AGE 2006-10-26
+// -----------------------------------------------------------------------------
+void PropertiesTable::Clear()
+{
+    rows_.clear();
+    setNumRows( 0 );
 }
 
 // -----------------------------------------------------------------------------

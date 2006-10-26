@@ -24,6 +24,7 @@ namespace kernel
     class Controllers;
     class GlTools_ABC;
     class TacticalLine_ABC;
+    class Knowledge_ABC;
 }
 
 namespace gui
@@ -43,6 +44,7 @@ class ColorStrategy : public ColorStrategy_ABC
                     , public kernel::SelectionObserver_Base< kernel::Object_ABC >
                     , public kernel::SelectionObserver_Base< kernel::Population_ABC >
                     , public kernel::SelectionObserver_Base< kernel::TacticalLine_ABC >
+                    , public kernel::SelectionObserver_Base< kernel::Knowledge_ABC >
 {
 
 public:
@@ -79,6 +81,7 @@ private:
     virtual void Select( const kernel::Object_ABC& element );
     virtual void Select( const kernel::Population_ABC& element );
     virtual void Select( const kernel::TacticalLine_ABC& element );
+    virtual void Select( const kernel::Knowledge_ABC& element );
     virtual void AfterSelection();
 
     void InitializeSynonyms();
@@ -111,6 +114,7 @@ private:
     kernel::SafePointer< kernel::Agent_ABC >        selectedAgent_;
     kernel::SafePointer< kernel::Population_ABC >   selectedPopulation_;
     kernel::SafePointer< kernel::TacticalLine_ABC > selectedLine_;
+    kernel::SafePointer< kernel::Knowledge_ABC >    selectedKnowledge_;
 
     T_TeamColors teamColors_;
     T_Synonyms   synonyms_;

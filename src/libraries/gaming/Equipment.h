@@ -56,6 +56,7 @@ public:
     unsigned unavailable_;
     unsigned repairable_;
     unsigned inMaintenance_;
+    unsigned prisonners_;
     //@}
 };
 

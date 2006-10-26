@@ -59,26 +59,9 @@ void Properties::NotifySelected( const Entity_ABC* element )
     {
         PropertiesDictionary* dico = const_cast< Entity_ABC* >( element )->Retrieve< PropertiesDictionary >();
         if( dico )
+        {
+            table_->Clear(); // $$$$ AGE 2006-10-26: 
             dico->Display( *table_ );
+        }
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Properties::insertChild
-// Created: AGE 2005-09-21
-// -----------------------------------------------------------------------------
-void Properties::insertChild( QObject* pObj )
-{
-    pBox_->insertChild( pObj );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Properties::layout
-// Created: SBO 2005-09-23
-// -----------------------------------------------------------------------------
-QLayout* Properties::layout()
-{
-    if( !pBox_ )
-        return 0;
-    return pBox_->layout();
 }

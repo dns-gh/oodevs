@@ -50,25 +50,15 @@ private:
     //@}
 };
 
-template< typename T >
-struct dynamic_const_cast
-{
-    T* operator()( T* p ) const { return p; };
-};
-template< typename T >
-struct dynamic_const_cast< const T >
-{
-    T* operator()( const T* ) const { return 0; };
-};
-
-template< typename T, typename Owner >
+template< typename T, typename Owner, typename Setter >
 class Property : public Property_ABC
 {
 public:
-    Property( Controller& controller, const Owner& owner, T& value )
+    Property( Controller& controller, const Owner& owner, T& value, const Setter& setter )
         : controller_( controller )
         , owner_( owner )
-        , data_( &value ) {};
+        , data_( &value )
+        , setter_( setter ) {}
     virtual ~Property() {};
 
     virtual void Display( Displayer_ABC& displayer )
@@ -78,19 +68,16 @@ public:
 
     virtual QWidget* CreateEditor( QWidget* parent, EditorFactory_ABC& factory )
     {
-        return factory.CreateEditor( parent, *data_ );
+        return factory.CreateEditor( parent, data_ );
     }
 
     virtual void SetValueFromEditor( QWidget* editor )
     {
-        if( dynamic_const_cast< T >()( data_ ) )
+        ValueEditor< T >* ed = dynamic_cast< ValueEditor< T >* >( editor );
+        if( ed )
         {
-            ValueEditor< T >* ed = dynamic_cast< ValueEditor< T >* >( editor );
-            if( ed )
-            {
-                *dynamic_const_cast< T >()( data_ ) = ed->GetValue();
-                controller_.Update( owner_ );
-            }
+            setter_( data_, ed->GetValue() );
+            controller_.Update( owner_ );
         }
     }
 
@@ -98,6 +85,7 @@ private:
     Controller& controller_;
     const Owner& owner_;
     T* data_;
+    Setter setter_;
 };
 
 }

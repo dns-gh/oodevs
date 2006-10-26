@@ -11,7 +11,6 @@
 #include "MaintenanceStates.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "Equipment.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"

@@ -9,15 +9,18 @@
 
 #include "preparation_app_pch.h"
 #include "PreparationProfile.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 
 // -----------------------------------------------------------------------------
 // Name: PreparationProfile constructor
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-PreparationProfile::PreparationProfile( QObject* parent )
+PreparationProfile::PreparationProfile( QObject* parent, kernel::Controllers& controllers )
     : QObject( parent )
+    , controllers_( controllers )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -26,7 +29,16 @@ PreparationProfile::PreparationProfile( QObject* parent )
 // -----------------------------------------------------------------------------
 PreparationProfile::~PreparationProfile()
 {
-    // NOTHING
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreparationProfile::NotifyUpdated
+// Created: AGE 2006-10-26
+// -----------------------------------------------------------------------------
+void PreparationProfile::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    controllers_.controller_.Update( *(Profile_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

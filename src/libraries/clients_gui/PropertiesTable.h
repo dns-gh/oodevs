@@ -44,6 +44,7 @@ public:
 
     //! @name Operations
     //@{
+    void Clear();
     virtual void Hide();
     virtual void Call( kernel::Property_ABC* const& property );
     //@}
@@ -63,6 +64,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual QSize sizeHint() const;
     virtual void focusOutEvent( QFocusEvent* );
     virtual Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();

@@ -36,6 +36,7 @@ ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
     , selectedAgent_     ( controllers )
     , selectedPopulation_( controllers )
     , selectedLine_      ( controllers )
+    , selectedKnowledge_ ( controllers )
 {
     InitializeSynonyms();
     InitializeColors();
@@ -59,6 +60,7 @@ void ColorStrategy::BeforeSelection()
 {
     selectedObject_ = 0; selectedAgent_ = 0;
     selectedPopulation_ = 0; selectedLine_ = 0;
+    selectedKnowledge_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -95,6 +97,15 @@ void ColorStrategy::Select( const Population_ABC& element )
 void ColorStrategy::Select( const kernel::TacticalLine_ABC& element )
 {
     selectedLine_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::Select
+// Created: AGE 2006-10-26
+// -----------------------------------------------------------------------------
+void ColorStrategy::Select( const kernel::Knowledge_ABC& element )
+{
+    selectedKnowledge_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,6 +190,8 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
     QColor color( 255, 255, 255 );
     if( const Entity_ABC* entity = knowledge.GetEntity() )
         color = FindColor( *entity );
+    if( selectedKnowledge_ == &knowledge )
+        color = SelectedColor( color );
     color = KnowledgeColor( color );
     ApplyColor( color );
 }
