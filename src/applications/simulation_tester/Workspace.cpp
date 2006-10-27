@@ -68,10 +68,7 @@ Workspace::Workspace( TestSet_ABC& testSet, const Config& config )
     Mission_Automat_Type::Initialize();
     Mission_Population_Type::Initialize();
     LoadScipioConfigFile( config.GetConfigFile() );
-
-    std::string strTacticalLineFile;
-    MT_ExtractFilePath( config.GetConfigFile(), strTacticalLineFile  );
-    pTacticalLineManager_->LoadTacticalLines( strTacticalLineFile + "TacticalLines.xml" );
+    pTacticalLineManager_->LoadTacticalLines( config.GetTacticalLinesFile() );
 
     // network manager
     pNetworkManager_ = new NetworkManager( *this, config.GetServer(), config.GetPort() );

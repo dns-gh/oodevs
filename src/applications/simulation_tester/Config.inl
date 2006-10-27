@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-24 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 namespace TEST {
 
@@ -46,6 +37,16 @@ inline
 const std::string& Config::GetRandomSeedFile() const
 {
     return strRandomSeedFile_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetTacticalLinesFile
+// Created: SBO 2006-10-27
+// -----------------------------------------------------------------------------
+inline
+const std::string& Config::GetTacticalLinesFile() const
+{
+    return strTacticalLinesFile_;
 }
 
 // -----------------------------------------------------------------------------

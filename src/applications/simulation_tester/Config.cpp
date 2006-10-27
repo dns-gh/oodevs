@@ -6,22 +6,13 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-24 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_tester_pch.h"
 #include "Config.h"
 
 #include "MT/MT_IO/MT_DirectoryBrowser.h"
 #include "MT/MT_IO/MT_Dir.h"
-#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
+//#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
 using namespace TEST;
 
@@ -85,6 +76,7 @@ void Config::LoadConfigFile( const std::string& strConfigFile )
         archive.ReadField( "Server"    , strServer_     );
         archive.ReadField( "Port"      , nPort_         );
         archive.ReadField( "ConfigFile", strConfigFile_ );
+        archive.ReadField( "TacticalLinesFile", strTacticalLinesFile_ );
         archive.ReadField( "TimeFactor", nTimeFactor_   );
         archive.EndSection(); // Sim
 

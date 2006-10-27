@@ -4,7 +4,8 @@
     <Sim>
         <Server>127.0.0.1</Server>
         <Port>10000</Port>
-        <ConfigFile>C:\Documents and Settings\sde\Bureau\Ref patchee\scipio.xml</ConfigFile>
+        <ConfigFile>../../data/test/scipio.xml</ConfigFile>
+        <TacticalLinesFile>./TacticalLines.xml</TacticalLinesFile>
         <TimeFactor>40</TimeFactor>
     </Sim>
     <Actions>

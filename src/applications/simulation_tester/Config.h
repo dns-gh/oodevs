@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-24 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __Config_h_
 #define __Config_h_
@@ -26,10 +17,6 @@ namespace TEST {
 // =============================================================================
 /** @class  Config
     @brief  Config
-    @par    Using example
-    @code
-    Config;
-    @endcode
 */
 // Created: SBO 2005-08-24
 // =============================================================================
@@ -48,6 +35,7 @@ public:
     const std::string& GetServer            () const;
     const std::string& GetConfigFile        () const;
     const std::string& GetRandomSeedFile    () const;
+    const std::string& GetTacticalLinesFile () const;
     bool               MustRecover          () const;
     uint               GetRecoveryTick      () const;
     const std::string& GetRecoveryFile      () const;
@@ -93,6 +81,7 @@ private:
     std::string        strServer_;
     std::string        strConfigFile_;
     std::string        strRandomSeedFile_;
+    std::string        strTacticalLinesFile_;
     bool               bRecover_;
     uint               nRecoveryTick_;
     std::string        strRecoveryFile_;
