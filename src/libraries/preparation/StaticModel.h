@@ -21,6 +21,7 @@ namespace kernel
 
 class SurfaceFactory;
 class KnowledgeGroupTypes;
+class TeamKarmas;
 
 // =============================================================================
 /** @class  StaticModel
@@ -54,6 +55,7 @@ public:
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
     KnowledgeGroupTypes&             knowledgeGroupTypes_;
+    TeamKarmas&                      teamKarmas_;
     //@}
 
 private:

@@ -13,6 +13,7 @@
 #include "clients_gui/TableItemDisplayer.h"
 
 class KnowledgeGroupType;
+class TeamKarma;
 
 // =============================================================================
 /** @class  PropertiesTableDisplayer
@@ -22,6 +23,7 @@ class KnowledgeGroupType;
 // =============================================================================
 class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public kernel::Caller< KnowledgeGroupType >
+                               , public kernel::Caller< TeamKarma >
 {
 
 public:
@@ -34,6 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual void Call( const KnowledgeGroupType& value );
+    virtual void Call( const TeamKarma& value );
     //@}
 
 private:

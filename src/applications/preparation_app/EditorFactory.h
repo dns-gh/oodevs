@@ -25,6 +25,7 @@ namespace kernel
 class Model;
 class StaticModel;
 class KnowledgeGroupType;
+class TeamKarma;
 
 // =============================================================================
 /** @class  EditorFactory
@@ -40,6 +41,7 @@ class EditorFactory : public gui::EditorFactory
                     , public kernel::Caller< MedicalSuperior* >
                     , public kernel::Caller< SupplySuperior* >
                     , public kernel::Caller< KnowledgeGroupType** >
+                    , public kernel::Caller< TeamKarma** >
 {
 
 public:
@@ -56,6 +58,7 @@ public:
     virtual void Call( MedicalSuperior* const& value );
     virtual void Call( SupplySuperior* const& value );
     virtual void Call( KnowledgeGroupType** const& value );
+    virtual void Call( TeamKarma** const& value );
     //@}
 
 private:

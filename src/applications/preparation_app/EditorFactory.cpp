@@ -16,6 +16,8 @@
 #include "preparation/StaticModel.h"
 #include "preparation/KnowledgeGroupTypes.h"
 #include "preparation/KnowledgeGroupType.h"
+#include "preparation/TeamKarmas.h"
+#include "preparation/TeamKarma.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/ValueEditor.h"
 
@@ -135,6 +137,17 @@ namespace
 void EditorFactory::Call( KnowledgeGroupType** const& value )
 {
     SimpleResolverEditor< KnowledgeGroupType, KnowledgeGroupTypes >* editor = new SimpleResolverEditor< KnowledgeGroupType, KnowledgeGroupTypes >( parent_, staticModel_.knowledgeGroupTypes_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-10-27
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( TeamKarma** const& value )
+{
+    SimpleResolverEditor< TeamKarma, TeamKarmas >* editor = new SimpleResolverEditor< TeamKarma, TeamKarmas >( parent_, staticModel_.teamKarmas_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

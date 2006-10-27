@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "PropertiesTableDisplayer.h"
 #include "preparation/KnowledgeGroupType.h"
+#include "preparation/TeamKarma.h"
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesTableDisplayer constructor
@@ -34,6 +35,15 @@ PropertiesTableDisplayer::~PropertiesTableDisplayer()
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
 void PropertiesTableDisplayer::Call( const KnowledgeGroupType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: SBO 2006-10-27
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const TeamKarma& value )
 {
     AddToDisplay( value.GetName() );
 }

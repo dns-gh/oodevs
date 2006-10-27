@@ -61,7 +61,7 @@ TeamFactory::~TeamFactory()
 // -----------------------------------------------------------------------------
 Team_ABC* TeamFactory::CreateTeam()
 {
-    Team* result = new Team( controllers_.controller_, *this, *this, idManager_ );
+    Team* result = new Team( controllers_.controller_, *this, *this, idManager_, staticModel_.teamKarmas_ );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
@@ -75,7 +75,7 @@ Team_ABC* TeamFactory::CreateTeam()
 // -----------------------------------------------------------------------------
 kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 {
-    Team* result = new Team( xis, controllers_.controller_, *this, *this, idManager_ );
+    Team* result = new Team( xis, controllers_.controller_, *this, *this, idManager_, staticModel_.teamKarmas_ );
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );

@@ -13,8 +13,10 @@
 #include "ObjectFactory_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Object.h"
+#include "TeamKarmas.h"
+#include "TeamKarma.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
@@ -26,26 +28,32 @@ using namespace xml;
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas )
     : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
     , kgFactory_( kgFactory )
     , objectFactory_( objectFactory )
+    , karma_( &karmas.GetDefault() )
 {
-    RegisterSelf( *this );
     name_ = tools::translate( "Preparation", "Armée %1" ).arg( id_ );
+    RegisterSelf( *this );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas )
     : EntityImplementation< Team_ABC >( controller, ReadId( xis ), ReadName( xis ) )
     , kgFactory_( kgFactory )
     , objectFactory_( objectFactory )
 {
+    std::string karma;
+    xis >> attribute( "type", karma );
+    karma_ = &karmas.Get( karma.c_str() );
     RegisterSelf( *this );
     idManager.Lock( id_ );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +144,8 @@ void Team::Rename( const QString& name )
 void Team::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "name", name_.ascii() );
+        << attribute( "name", name_.ascii() )
+        << attribute( "type", karma_->GetValue() );
 
     xos << start( "objects" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -146,4 +155,17 @@ void Team::SerializeAttributes( xml::xostream& xos ) const
         xos << end();
     }
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::CreateDictionary
+// Created: SBO 2006-10-27
+// -----------------------------------------------------------------------------
+void Team::CreateDictionary( kernel::Controller& controller )
+{
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    Attach( dictionary );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), (const unsigned long)id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Karma" ), karma_ );
 }

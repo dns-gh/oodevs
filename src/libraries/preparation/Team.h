@@ -34,6 +34,8 @@ namespace xml
 class KnowledgeGroupFactory_ABC;
 class ObjectFactory_ABC;
 class IdManager;
+class TeamKarma;
+class TeamKarmas;
 
 // =============================================================================
 /** @class  Team
@@ -50,8 +52,8 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
-             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, ObjectFactory_ABC& objectFactory, IdManager& idManager );
+             Team( kernel::Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas  );
+             Team( xml::xistream& xis, kernel::Controller& controller, KnowledgeGroupFactory_ABC& factory, ObjectFactory_ABC& objectFactory, IdManager& idManager, TeamKarmas& karmas  );
     virtual ~Team();
     //@}
 
@@ -74,6 +76,8 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::Controller& controller );
+
     static unsigned long ReadId  ( xml::xistream& xis );
     static QString       ReadName( xml::xistream& xis );
     //@}
@@ -83,6 +87,7 @@ private:
     //@{
     KnowledgeGroupFactory_ABC& kgFactory_;
     ObjectFactory_ABC& objectFactory_;
+    TeamKarma* karma_;
     //@}
 };
 

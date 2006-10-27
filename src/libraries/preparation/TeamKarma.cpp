@@ -8,35 +8,42 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "KnowledgeGroupTypes.h"
-#include "KnowledgeGroupType.h"
-#include "clients_gui/Tools.h"
+#include "TeamKarma.h"
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupTypes constructor
+// Name: TeamKarma constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-KnowledgeGroupTypes::KnowledgeGroupTypes()
+TeamKarma::TeamKarma( const QString& name, const QString& value )
+    : name_( name )
+    , value_( value )
 {
-    default_ = new KnowledgeGroupType( tools::translate( "KnowledgeGroupTypes", "Standard" ), "Standard" );
-    Register( "Standard", *default_ );
-    Register( "Alat", *new KnowledgeGroupType( tools::translate( "KnowledgeGroupTypes", "Alat" ), "Alat" ) );
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupTypes destructor
+// Name: TeamKarma destructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-KnowledgeGroupTypes::~KnowledgeGroupTypes()
+TeamKarma::~TeamKarma()
 {
-    DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupTypes::GetDefault
+// Name: TeamKarma::GetName
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-KnowledgeGroupType& KnowledgeGroupTypes::GetDefault() const
+const QString& TeamKarma::GetName() const
 {
-    return *default_;
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamKarma::GetValue
+// Created: SBO 2006-10-27
+// -----------------------------------------------------------------------------
+const QString& TeamKarma::GetValue() const
+{
+    return value_;
 }

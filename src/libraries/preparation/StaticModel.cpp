@@ -17,6 +17,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "KnowledgeGroupTypes.h"
+#include "TeamKarmas.h"
 
 using namespace kernel;
 
@@ -31,6 +32,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , knowledgeGroupTypes_( *new KnowledgeGroupTypes() )
+    , teamKarmas_         ( *new TeamKarmas() )
 {
     // NOTHING
 }
@@ -41,6 +43,7 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &teamKarmas_;
     delete &knowledgeGroupTypes_;
     delete &objectTypes_;
     delete &types_;
