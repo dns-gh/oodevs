@@ -136,7 +136,7 @@ public:
     static T_ConverterStockCategory     stockCategoryConverter_[];
     static T_ConverterDeviceCategory    deviceCategoryConverter_[];
     static T_ConverterEquipmentState    equipmentStateConverter_[];
-    static T_ConverterTypeMunitionTirIndirect TypeMunitionTirIndirectConverter_ [];
+    static T_ConverterTypeMunitionTirIndirect munitionTirIndirectConverter_ [];
     //@}
 };
 
