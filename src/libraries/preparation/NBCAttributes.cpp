@@ -72,10 +72,10 @@ void NBCAttributes::SetAgent( const kernel::NBCAgent& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttributes::DoSerialize
+// Name: NBCAttributes::SerializeAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void NBCAttributes::DoSerialize( xml::xostream& xos ) const
+void NBCAttributes::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
             << start( "nbc-agent" )

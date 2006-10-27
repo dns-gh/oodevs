@@ -48,7 +48,7 @@ public:
     //@{
     void SetTC2( const kernel::Automat_ABC& tc2 );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:

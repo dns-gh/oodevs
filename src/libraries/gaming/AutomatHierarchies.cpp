@@ -59,8 +59,17 @@ void AutomatHierarchies::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& m
 // Name: AutomatHierarchies::UpdateSuperior
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::UpdateSuperior( kernel::Entity_ABC& superior )
+void AutomatHierarchies::UpdateSuperior( Entity_ABC& superior )
 {
     SetSuperior( &superior );
     controller_.Update( *(CommunicationHierarchies*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::AddSuperiorToDictionary
+// Created: SBO 2006-10-25
+// -----------------------------------------------------------------------------
+void AutomatHierarchies::AddSuperiorToDictionary( PropertiesDictionary& dico, Entity_ABC* const& superior ) const
+{
+    dico.Register( *(const CommunicationHierarchies*)this, tools::translate( "AutomatHierarchies", "Hierarchies/Superior" ), superior );
 }

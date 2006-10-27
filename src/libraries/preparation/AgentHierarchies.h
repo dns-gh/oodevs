@@ -11,7 +11,6 @@
 #define __AgentHierarchies_h_
 
 #include "TacticalHierarchies.h"
-#include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
 /** @class  AgentHierarchies
@@ -20,7 +19,6 @@
 // Created: AGE 2006-09-20
 // =============================================================================
 class AgentHierarchies : public TacticalHierarchies
-                       , public kernel::Serializable_ABC
 {
 
 public:
@@ -35,11 +33,6 @@ private:
     //@{
     AgentHierarchies( const AgentHierarchies& );            //!< Copy constructor
     AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 };
 

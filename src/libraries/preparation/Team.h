@@ -62,7 +62,7 @@ public:
     kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const kernel::Location_ABC& location );
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:

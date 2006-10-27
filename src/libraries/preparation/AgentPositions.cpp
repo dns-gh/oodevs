@@ -134,10 +134,10 @@ void AgentPositions::Aggregate( const bool& bDummy )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentPositions::Serialize
+// Name: AgentPositions::SerializeAttributes
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void AgentPositions::DoSerialize( xml::xostream& xos ) const
+void AgentPositions::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "position", converter_.ConvertToMgrs( position_ ) );
 }

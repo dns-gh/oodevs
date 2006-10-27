@@ -16,6 +16,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class EditorFactory_ABC;
 }
 
 namespace gui
@@ -59,6 +60,7 @@ private:
     QVBox* pBox_;
     kernel::Controllers& controllers_;
     gui::PropertiesWidget* table_;
+    kernel::EditorFactory_ABC& factory_;
     //@}
 };
 

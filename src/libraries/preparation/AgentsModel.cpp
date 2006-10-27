@@ -12,6 +12,10 @@
 #include "AgentFactory_ABC.h"
 #include "Agent.h"
 #include "Automat.h"
+#include "MaintenanceStates.h"
+#include "MedicalStates.h"
+#include "SupplyStates.h"
+#include "Tc2States.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
@@ -258,4 +262,39 @@ void AgentsModel::NotifyDeleted( const kernel::Automat_ABC& agent )
 void AgentsModel::NotifyDeleted( const kernel::Population_ABC& agent )
 {
     Resolver< Population_ABC >::Remove( agent.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::ReadLogistic
+// Created: SBO 2006-10-26
+// -----------------------------------------------------------------------------
+void AgentsModel::ReadLogistic( xml::xistream& xis )
+{
+    int id;
+    xis >> attribute( "id", id );
+    if( Automat_ABC* entity = Resolver< Automat_ABC >::Find( id ) )
+        xis >> list( "subordinate", *this, &AgentsModel::ReadLogisticLink, *entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::ReadLogisticLink
+// Created: SBO 2006-10-26
+// -----------------------------------------------------------------------------
+void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& automat )
+{
+    int id;
+    std::string linkType;
+    xis >> attribute( "id", id )
+        >> attribute( "link", linkType );
+    if( Entity_ABC* entity = Resolver< Automat_ABC >::Find( id ) )
+    {
+        if( linkType == entity->Get< Tc2States >().GetLinkType().ascii() )
+            entity->Get< Tc2States >().SetSuperior( &automat );
+        else if( linkType == entity->Get< MedicalStates >().GetLinkType().ascii() )
+            entity->Get< MedicalStates >().SetSuperior( &automat );
+        else if( linkType == entity->Get< MaintenanceStates >().GetLinkType().ascii() )
+            entity->Get< MaintenanceStates >().SetSuperior( &automat );
+        else if( linkType == entity->Get< SupplyStates >().GetLinkType().ascii() )
+            entity->Get< SupplyStates >().SetSuperior( &automat );
+    }
 }

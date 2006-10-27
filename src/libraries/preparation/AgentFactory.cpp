@@ -18,13 +18,18 @@
 #include "AgentsModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "AgentFactory.h"
-#include "AutomatDecisions.h"
 #include "AgentPositions.h"
 #include "AgentCommunications.h"
-#include "AutomatPositions.h"
 #include "AgentHierarchies.h"
+#include "AutomatDecisions.h"
+#include "AutomatPositions.h"
+#include "AutomatHierarchies.h"
 #include "AutomatCommunications.h"
 #include "Dotations.h"
+#include "MaintenanceStates.h"
+#include "MedicalStates.h"
+#include "SupplyStates.h"
+#include "Tc2States.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -86,10 +91,14 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     // $$$$ AGE 2006-10-10: AutomatHierarchies ?
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
 
     Entity_ABC* kg = FindKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
+    result->Attach( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
 
     AttachExtensions( *result );
     result->Polish();
@@ -142,8 +151,12 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
-    result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
+    result->Attach( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
 
     AttachExtensions( *result );
     result->Polish();

@@ -34,17 +34,17 @@ TeamCommunications::~TeamCommunications()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamCommunications::DoSerialize
+// Name: TeamCommunications::SerializeAttributes
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-void TeamCommunications::DoSerialize( xml::xostream& xos ) const
+void TeamCommunications::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "communication" );
     Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
         xos << start( "knowledge-group" );
-        it.NextElement().Serialize( xos );
+        it.NextElement().Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << end();
     }
     xos << end();

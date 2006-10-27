@@ -110,10 +110,10 @@ void LogisticRouteAttributes::SetEquipped( bool value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticRouteAttributes::DoSerialize
+// Name: LogisticRouteAttributes::SerializeAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void LogisticRouteAttributes::DoSerialize( xml::xostream& xos ) const
+void LogisticRouteAttributes::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
             << content( "flow", int( flow_ ) )

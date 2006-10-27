@@ -12,7 +12,6 @@
 #include "moc_PropertiesTable.cpp"
 #include "TableItemDisplayer.h"
 #include "PropertyTableItem.h"
-#include "EditorFactory.h"
 
 using namespace gui;
 using namespace kernel;
@@ -21,9 +20,9 @@ using namespace kernel;
 // Name: PropertiesTable constructor
 // Created: SBO 2006-10-17
 // -----------------------------------------------------------------------------
-PropertiesTable::PropertiesTable( QWidget* parent )
+PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& factory )
     : QTable( parent )
-    , factory_( *new EditorFactory() )
+    , factory_( factory )
     , itemDisplayer_( *new TableItemDisplayer() )
     , row_( 0 )
 {

@@ -171,10 +171,10 @@ void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::DoSerialize
+// Name: Object::SerializeAttributes
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------
-void Object::DoSerialize( xml::xostream& xos ) const
+void Object::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_.GetName().ascii() )

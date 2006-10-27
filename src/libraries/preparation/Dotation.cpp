@@ -51,7 +51,7 @@ Dotation::~Dotation()
 // Name: Dotation::Serialize
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-void Dotation::Serialize( xml::xostream& xos ) const
+void Dotation::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "name", type_->GetCategory() )
         << attribute( "quantity", int( quantity_ ) );

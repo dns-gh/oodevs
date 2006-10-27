@@ -22,12 +22,12 @@ using namespace gui;
 // Name: AgentStatePanel constructor
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers )
+AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, kernel::EditorFactory_ABC& editorFactory )
     : InfoPanel_ABC( parent, panel, tools::translate( "Preparation", "Agent State" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    properties_ = new PropertiesWidget( this, "Properties" );
+    properties_ = new PropertiesWidget( this, "Properties", editorFactory );
     controllers_.Register( *this );
 }
     
@@ -67,7 +67,10 @@ void AgentStatePanel::NotifySelected( const kernel::Agent_ABC* element )
             dico.Display( *properties_ );
         }
         else
+        {
+            properties_->Clear();
             Hide();
+        }
     }
 }
 

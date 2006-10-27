@@ -28,12 +28,3 @@ AgentCommunications::~AgentCommunications()
 {
     // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentCommunications::DoSerialize
-// Created: SBO 2006-10-09
-// -----------------------------------------------------------------------------
-void AgentCommunications::DoSerialize( xml::xostream& xos ) const
-{
-    // $$$$ SBO 2006-09-25: todo
-}

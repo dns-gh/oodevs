@@ -22,8 +22,9 @@ using namespace kernel;
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-18
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( QWidget* parent, const QString& name )
+PropertiesWidget::PropertiesWidget( QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory )
     : QWidget( parent )
+    , factory_( factory )
 {
     FillUp( name );
 
@@ -35,8 +36,9 @@ PropertiesWidget::PropertiesWidget( QWidget* parent, const QString& name )
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( PropertiesWidget* parent, const QString& name )
+PropertiesWidget::PropertiesWidget( PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory )
     : QWidget( parent )
+    , factory_( factory )
     , spacer_( 0 )
 {
     FillUp( name );
@@ -106,7 +108,7 @@ void PropertiesWidget::FillUp( const QString& name )
     layout_->setRowSpacing( 1, 1 );
 
     // table row
-    table_ = new PropertiesTable( this );
+    table_ = new PropertiesTable( this, factory_ );
     connect( button_, SIGNAL( toggled( bool ) ), table_, SLOT( Show( bool ) ) );
     layout_->addWidget( table_, 2, 1 );
     table_->hide();
@@ -204,7 +206,7 @@ kernel::Displayer_ABC& PropertiesWidget::SubItem( const QString& subItem, const 
 // -----------------------------------------------------------------------------
 PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
 {
-    PropertiesWidget* subWidget = new PropertiesWidget( this, subItem );
+    PropertiesWidget* subWidget = new PropertiesWidget( this, subItem, factory_ );
     connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
     subWidgets_.push_back( subWidget );
     categories_[ subItem ] = subWidgets_.size() - 1;

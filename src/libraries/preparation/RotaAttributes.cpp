@@ -91,10 +91,10 @@ void RotaAttributes::AddAgent( const kernel::NBCAgent& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RotaAttributes::DoSerialize
+// Name: RotaAttributes::SerializeAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
-void RotaAttributes::DoSerialize( xml::xostream& xos ) const
+void RotaAttributes::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
             << content( "danger", int( danger_ ) )

@@ -19,6 +19,7 @@ namespace kernel
 {
     class Object_ABC;
     class Controllers;
+    class EditorFactory_ABC;
 }
 
 namespace gui
@@ -41,7 +42,7 @@ class ObjectStatePanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectStatePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers );
+             ObjectStatePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, kernel::EditorFactory_ABC& editorFactory );
     virtual ~ObjectStatePanel();
     //@}
 

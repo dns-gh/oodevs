@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controllers;
+    class EditorFactory_ABC;
 }
 
 namespace gui
@@ -22,7 +23,7 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class StaticModel;
+class Model;
 
 // =============================================================================
 /** @class  InfoPanels
@@ -35,7 +36,7 @@ class InfoPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ItemFactory_ABC& factory );
+             InfoPanels( QWidget* parent, kernel::Controllers& controllers, Model& model, gui::ItemFactory_ABC& factory );
     virtual ~InfoPanels();
     //@}
 
@@ -44,6 +45,12 @@ private:
     //@{
     InfoPanels( const InfoPanels& );            //!< Copy constructor
     InfoPanels& operator=( const InfoPanels& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::EditorFactory_ABC& editorFactory_;
     //@}
 };
 

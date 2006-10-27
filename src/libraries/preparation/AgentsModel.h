@@ -77,6 +77,11 @@ public:
     void Purge();
     //@}
 
+    //! @name Delayed initialization
+    //@{
+    void ReadLogistic( xml::xistream& xis );
+    //@}
+
 private:
     //! @name Copy/Assignement
     //@{
@@ -89,6 +94,8 @@ private:
     virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
     virtual void NotifyDeleted( const kernel::Automat_ABC& agent );
     virtual void NotifyDeleted( const kernel::Population_ABC& agent );
+
+    void ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& automat );
     //@}
 
 private:

@@ -37,14 +37,26 @@ TeamHierarchies::~TeamHierarchies()
 // Name: TeamHierarchies::DoSerialize
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void TeamHierarchies::DoSerialize( xml::xostream& xos ) const
+void TeamHierarchies::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "tactical" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "formation" );
-        it->second->Serialize( xos );
+        it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << end();
     }
+    xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamHierarchies::SerializeLogistics
+// Created: SBO 2006-10-26
+// -----------------------------------------------------------------------------
+void TeamHierarchies::SerializeLogistics( xml::xostream& xos ) const
+{
+    xos << start( "logistic" );
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
     xos << end();
 }

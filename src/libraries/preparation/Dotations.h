@@ -59,7 +59,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     void ReadDotation( xml::xistream& xis );
     //@}
 

@@ -13,6 +13,7 @@
 #include "TeamFactory_ABC.h"
 #include "Model.h"
 #include "FormationModel.h"
+#include "AgentsModel.h"
 #include "Diplomacies.h"
 #include "Exceptions.h"
 #include "clients_gui/Tools.h"
@@ -136,9 +137,9 @@ void TeamsModel::Serialize( xml::xostream& xos ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "side" );
-        it->second->Serialize( xos );
-        xos << start( "populations" ) << end()
-            << start( "logistic" ) << end(); // $$$$ SBO 2006-10-24: temp
+        it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
+        xos << start( "populations" ) << end();
+        it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
         xos << end();
     }
     xos << end();
@@ -198,6 +199,9 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model )
         >> end();
     xis >> start( "tactical" )
             >> list( "formation", model.formations_, &FormationModel::Create, *team, model )
+        >> end();
+    xis >> start( "logistic" )
+            >> list( "automat", model.agents_, &AgentsModel::ReadLogistic )
         >> end();
     xis >> start( "objects" )
             >> list( "object", static_cast< Team& >( *team ), &Team::CreateObject )

@@ -54,7 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::AgentType& GetType() const;
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     void Rename( const QString& name );

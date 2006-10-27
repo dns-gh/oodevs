@@ -67,7 +67,6 @@ public:
             CheckUpdate( typeid( updateMessage ) );
     }
 
-    virtual void Serialize( xml::xostream& xos ) const;
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
 
     InterfaceContainer< Extension_ABC >& Interface() const;

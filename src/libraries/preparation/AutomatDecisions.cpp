@@ -89,10 +89,10 @@ void AutomatDecisions::Disengage()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatDecisions::DoSerialize
+// Name: AutomatDecisions::SerializeAttributes
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoSerialize( xml::xostream& xos ) const
+void AutomatDecisions::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "engaged", bEmbraye_ ? "true" : "false" );
 }

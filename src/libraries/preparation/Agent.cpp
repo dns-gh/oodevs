@@ -136,7 +136,7 @@ void Agent::CreateDictionary( kernel::Controller& controller )
 // Name: Agent::DoSerialize
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void Agent::DoSerialize( xml::xostream& xos ) const
+void Agent::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_->GetName().ascii() )

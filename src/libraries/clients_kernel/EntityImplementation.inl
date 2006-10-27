@@ -86,6 +86,7 @@ template< typename I >
 void EntityImplementation< I >::Destroy()
 {
     controller_.Delete( This() );
+    controller_.Delete( *(Entity_ABC*)this );
     DestroyExtensions();
 }
 

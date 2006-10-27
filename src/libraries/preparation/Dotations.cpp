@@ -65,7 +65,7 @@ void Dotations::ReadDotation( xml::xistream& xis )
 // Name: Dotations::DoSerialize
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-void Dotations::DoSerialize( xml::xostream& xos ) const
+void Dotations::SerializeAttributes( xml::xostream& xos ) const
 {
     if( elements_.empty() )
         return;
@@ -73,7 +73,7 @@ void Dotations::DoSerialize( xml::xostream& xos ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "dotation" );
-        it->second->Serialize( xos );
+        it->second->SerializeAttributes( xos );
         xos << end();
     }
     xos << end();

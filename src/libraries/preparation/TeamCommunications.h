@@ -33,7 +33,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 };
 

@@ -66,7 +66,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& );
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:

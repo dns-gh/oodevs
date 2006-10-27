@@ -9,12 +9,6 @@
 
 #include "preparation_pch.h"
 #include "AgentHierarchies.h"
-#include "AutomatDecisions.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_gui/Tools.h"
-#include "xeumeuleu/xml.h"
-
-using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchies constructor
@@ -33,18 +27,4 @@ AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Enti
 AgentHierarchies::~AgentHierarchies()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentHierarchies::DoSerialize
-// Created: SBO 2006-09-22
-// -----------------------------------------------------------------------------
-void AgentHierarchies::DoSerialize( xml::xostream& xos ) const
-{
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        xos << start( "unit" );
-        it->second->Serialize( xos );
-        xos << end();
-    }
 }

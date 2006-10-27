@@ -62,16 +62,7 @@ void Entity_ABC::AddExtension( Extension_ABC& ext )
     drawer_->Register( ext );
     Extendable< Extension_ABC >::AddExtension( ext );
 }
-
-// -----------------------------------------------------------------------------
-// Name: Entity_ABC::Serialize
-// Created: AGE 2006-10-12
-// -----------------------------------------------------------------------------
-void Entity_ABC::Serialize( xml::xostream& xos ) const
-{
-    Interface().Apply( & Serializable_ABC::DoSerialize, xos );
-}
-
+    
 // -----------------------------------------------------------------------------
 // Name: Entity_ABC::Draw
 // Created: AGE 2006-03-31

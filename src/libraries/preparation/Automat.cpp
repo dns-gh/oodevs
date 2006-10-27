@@ -121,12 +121,21 @@ void Automat::CreateDictionary( kernel::Controller& controller )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::DoSerialize
+// Name: Automat::SerializeAttributes
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void Automat::DoSerialize( xml::xostream& xos ) const
+void Automat::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )
         << attribute( "type", type_->GetName().ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::SerializeLogistics
+// Created: SBO 2006-10-26
+// -----------------------------------------------------------------------------
+void Automat::SerializeLogistics( xml::xostream& xos ) const
+{
+    xos << attribute( "id", long( id_ ) );
 }

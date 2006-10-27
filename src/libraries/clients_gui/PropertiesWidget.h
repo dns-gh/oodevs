@@ -12,6 +12,11 @@
 
 #include "clients_kernel/Displayer_ABC.h"
 
+namespace kernel
+{
+    class EditorFactory_ABC;
+}
+
 namespace gui
 {
     class PropertiesTable;
@@ -29,7 +34,7 @@ class PropertiesWidget : public QWidget, public kernel::Displayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesWidget( QWidget* parent, const QString& name );
+             PropertiesWidget( QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory );
     virtual ~PropertiesWidget();
     //@}
 
@@ -45,7 +50,7 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    PropertiesWidget( PropertiesWidget* parent, const QString& name );
+    PropertiesWidget( PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory );
     PropertiesWidget( const PropertiesWidget& );            //!< Copy constructor
     PropertiesWidget& operator=( const PropertiesWidget& ); //!< Assignement operator
     //@}
@@ -74,6 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::EditorFactory_ABC& factory_;
     QGridLayout* layout_;
     QToolButton* button_;
     T_SubCategories categories_;

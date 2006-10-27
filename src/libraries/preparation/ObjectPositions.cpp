@@ -152,10 +152,10 @@ geometry::Rectangle2f ObjectPositions::GetBoundingBox() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions::DoSerialize
+// Name: ObjectPositions::SerializeAttributes
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------
-void ObjectPositions::DoSerialize( xml::xostream& xos ) const
+void ObjectPositions::SerializeAttributes( xml::xostream& xos ) const
 {
     LocationSerializer serializer( converter_ );
     xos << start( "shape" );

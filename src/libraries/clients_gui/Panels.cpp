@@ -71,11 +71,11 @@ void Panels::AddPanel( InfoPanel_ABC* panel )
 // -----------------------------------------------------------------------------
 void Panels::Select( int index )
 {
-    if( !currentPanels_.empty() && index != -1 )
+    if( index != -1 && currentPanels_.size() > index  )
     {
-        stack_->raiseWidget( currentPanels_[index] );
+        stack_->raiseWidget( currentPanels_.at( index ) );
         combo_->setCurrentItem( index );
-        SaveSelection( currentPanels_[index] );
+        SaveSelection( stack_->visibleWidget() );
         CheckButtons();
     }
     else

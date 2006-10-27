@@ -9,24 +9,27 @@
 
 #include "preparation_app_pch.h"
 #include "InfoPanels.h"
-#include "preparation/StaticModel.h"
+#include "preparation/Model.h"
 #include "AgentStatePanel.h"
 #include "AgentResourcesPanel.h"
+#include "AutomatStatePanel.h"
 #include "ObjectStatePanel.h"
+#include "EditorFactory.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, const StaticModel& model, ItemFactory_ABC& factory )
+InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, Model& model, gui::ItemFactory_ABC& factory )
     : Panels( parent )
+    , editorFactory_( *new EditorFactory( controllers, model ) )
 {
-    AddPanel( new AgentStatePanel( this, *this, controllers ) );
+    AddPanel( new AgentStatePanel( this, *this, controllers, editorFactory_ ) );
     AddPanel( new AgentResourcesPanel( this, *this, controllers, factory ) );
-    AddPanel( new ObjectStatePanel( this, *this, controllers ) );
+    AddPanel( new AutomatStatePanel( this, *this, controllers, editorFactory_ ) );
+    AddPanel( new ObjectStatePanel( this, *this, controllers, editorFactory_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,5 +38,5 @@ InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, const StaticM
 // -----------------------------------------------------------------------------
 InfoPanels::~InfoPanels()
 {
-    // NOTHING
+    delete &editorFactory_;
 }

@@ -52,7 +52,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     static kernel::KnowledgeGroup_ABC* ReadKnowledgeGroup( xml::xistream& xis, const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groups );
     //@}
 };

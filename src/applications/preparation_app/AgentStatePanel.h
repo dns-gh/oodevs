@@ -19,6 +19,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Controllers;
+    class EditorFactory_ABC;
 }
 
 namespace gui
@@ -41,7 +42,7 @@ class AgentStatePanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentStatePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers );
+             AgentStatePanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, kernel::EditorFactory_ABC& editorFactory );
     virtual ~AgentStatePanel();
     //@}
 

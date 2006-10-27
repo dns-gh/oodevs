@@ -130,10 +130,10 @@ void Team::Rename( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::DoSerialize
+// Name: Team::SerializeAttributes
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void Team::DoSerialize( xml::xostream& xos ) const
+void Team::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() );
@@ -142,7 +142,7 @@ void Team::DoSerialize( xml::xostream& xos ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << start( "object" );
-        it->second->Serialize( xos );
+        it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << end();
     }
     xos << end();

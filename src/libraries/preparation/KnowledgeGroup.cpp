@@ -82,7 +82,7 @@ void KnowledgeGroup::Rename( const QString& name )
 // Name: KnowledgeGroup::DoSerialize
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::DoSerialize( xml::xostream& xos ) const
+void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "type", type_ );

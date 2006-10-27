@@ -13,6 +13,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_gui/EditorFactory.h"
 #include "gaming/Tools.h"
 
 using namespace kernel;
@@ -25,6 +26,7 @@ Properties::Properties( QWidget* parent, Controllers& controllers )
     : QScrollView( parent )
     , pBox_( new QVBox( viewport() ) )
     , controllers_( controllers )
+    , factory_( *new gui::EditorFactory() )
 {
     setHScrollBarMode( QScrollView::AlwaysOff );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
@@ -35,7 +37,7 @@ Properties::Properties( QWidget* parent, Controllers& controllers )
     pBox_->setMargin( 5 );
     pBox_->setSpacing( 5 );
 
-    table_ = new gui::PropertiesWidget( pBox_, tools::translate( "Properties", "Properties" ) );
+    table_ = new gui::PropertiesWidget( pBox_, tools::translate( "Properties", "Properties" ), factory_ );
 
     controllers_.Register( *this );
 }
@@ -47,6 +49,7 @@ Properties::Properties( QWidget* parent, Controllers& controllers )
 Properties::~Properties()
 {
     controllers_.Remove( *this );
+    delete &factory_;
 }
 
 // -----------------------------------------------------------------------------

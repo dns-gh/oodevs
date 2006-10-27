@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( xml::xostream& xos ) const;
+    void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 public:

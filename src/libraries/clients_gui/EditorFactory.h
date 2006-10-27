@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __EditorFactory_h_
-#define __EditorFactory_h_
+#ifndef __gui_EditorFactory_h_
+#define __gui_EditorFactory_h_
 
 #include "clients_kernel/EditorFactory_ABC.h"
 
@@ -57,7 +57,7 @@ private:
     virtual QWidget* EndEditor();
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     QWidget* parent_;
@@ -67,4 +67,4 @@ private:
 
 }
 
-#endif // __EditorFactory_h_
+#endif // __gui_EditorFactory_h_

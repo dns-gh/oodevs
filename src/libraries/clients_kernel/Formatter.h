@@ -116,6 +116,16 @@ template< typename T > class SafePointer;
 template< typename T >
 struct Formatter< SafePointer< T > > : public Formatter< const T* > {};
 
+template< typename T, typename U > class StrongType;
+template< typename T, typename U >
+struct Formatter< StrongType< T, U > > : public Formatter< const T* >
+{
+    void operator()( const StrongType< T, U >& element, Displayer_ABC& displayer ) const
+    {
+        displayer.AddToDisplay( (const T&)( element ) );
+    }
+};
+
 // =============================================================================
 /** @class  Formatter
     @brief  OptionalValue

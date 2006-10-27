@@ -48,7 +48,7 @@ public:
     bool IsEmbraye() const;
     void Engage();
     void Disengage();
-    virtual void DoSerialize( xml::xostream& xos ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:

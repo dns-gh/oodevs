@@ -55,7 +55,7 @@ protected:
     virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const;
     Interface* SuperiorHierarchy();
     void SetSuperior( Entity_ABC* superior );
-    void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    virtual void CreateDictionary( PropertiesDictionary& dico ) const;
     //@}
 
 private:
@@ -70,7 +70,7 @@ private:
     //@{
     Controller& controller_;
     Entity_ABC& entity_;
-    Entity_ABC* superior_;
+    const Entity_ABC* superior_;
     //@}
 };
 

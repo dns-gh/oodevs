@@ -110,10 +110,10 @@ void Formation::Rename( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::DoSerialize
+// Name: Formation::SerializeAttributes
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void Formation::DoSerialize( xml::xostream& xos ) const
+void Formation::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )

@@ -11,7 +11,6 @@
 #define __AgentCommunications_h_
 
 #include "EntityCommunications.h"
-#include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
 /** @class  AgentCommunications
@@ -20,7 +19,6 @@
 // Created: SBO 2006-10-09
 // =============================================================================
 class AgentCommunications : public EntityCommunications
-                          , public kernel::Serializable_ABC
 {
 
 public:
@@ -28,12 +26,6 @@ public:
     //@{
              AgentCommunications( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~AgentCommunications();
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void DoSerialize( xml::xostream& xos ) const;
     //@}
 };
 
