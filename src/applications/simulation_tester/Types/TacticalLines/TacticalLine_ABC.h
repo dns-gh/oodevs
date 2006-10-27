@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __TacticalLine_ABC_h_
 #define __TacticalLine_ABC_h_
@@ -27,10 +18,6 @@ namespace TEST {
 // =============================================================================
 /** @class  TacticalLine_ABC
     @brief  TacticalLine_ABC
-    @par    Using example
-    @code
-    TacticalLine_ABC;
-    @endcode
 */
 // Created: SBO 2005-08-09
 // =============================================================================
@@ -71,6 +58,12 @@ private:
     //@{
     TacticalLine_ABC( const TacticalLine_ABC& );            //!< Copy constructor
     TacticalLine_ABC& operator=( const TacticalLine_ABC& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void ReadPoints( XmlInputArchive& archive );
     //@}
 
 protected:

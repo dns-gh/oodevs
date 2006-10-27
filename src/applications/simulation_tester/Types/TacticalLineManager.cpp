@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_tester_pch.h"
 #include "TacticalLineManager.h"
@@ -34,7 +25,7 @@ using namespace TEST;
 // Name: TacticalLineManager constructor
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-TacticalLineManager::TacticalLineManager( const PositionManager& posMgr )
+TacticalLineManager::TacticalLineManager( const PositionManager& /*posMgr*/ )
     : lines_ ()
 {
     //CreateDefaultTacticalLines( posMgr );
@@ -60,18 +51,18 @@ void TacticalLineManager::LoadTacticalLines( const std::string& strConfigFile )
         MT_ChangeDir      ( strDir );
         archive.Open      ( strFile );
 
-        archive.BeginList( "Lines" );
+        archive.BeginList( "lines" );
         while( archive.NextListElement() )
-        {
-            if( archive.Section( "Limit", XmlInputArchive::eNothing ) )
+        { 
+            if( archive.BeginList( "limit", XmlInputArchive::eNothing ) )
             {
                 Register( *new TacticalLine_Limit( archive ) );
-                archive.EndSection(); // Limit
+                archive.EndList(); // Limit
             }
-            else if( archive.Section( "Lima", XmlInputArchive::eNothing ) )
+            else if( archive.BeginList( "lima", XmlInputArchive::eNothing ) )
             {
                 Register( *new TacticalLine_Lima( archive ) );
-                archive.EndSection(); // Lima
+                archive.EndList(); // Lima
             }
         }
         archive.EndList(); // Lines

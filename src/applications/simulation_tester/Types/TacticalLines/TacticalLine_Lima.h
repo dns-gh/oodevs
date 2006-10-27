@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __TacticalLine_Lima_h_
 #define __TacticalLine_Lima_h_
@@ -30,10 +21,6 @@ namespace TEST {
 // =============================================================================
 /** @class  TacticalLine_Lima
     @brief  TacticalLine_Lima
-    @par    Using example
-    @code
-    TacticalLine_Lima;
-    @endcode
 */
 // Created: SBO 2005-08-09
 // =============================================================================

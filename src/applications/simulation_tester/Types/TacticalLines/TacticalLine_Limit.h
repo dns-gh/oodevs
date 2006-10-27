@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __TacticalLine_Limit_h_
 #define __TacticalLine_Limit_h_
@@ -30,10 +21,6 @@ namespace TEST {
 // =============================================================================
 /** @class  TacticalLine_Limit
     @brief  TacticalLine_Limit
-    @par    Using example
-    @code
-    TacticalLine_Limit;
-    @endcode
 */
 // Created: SBO 2005-08-09
 // =============================================================================
@@ -73,7 +60,7 @@ private:
     //@}
 };
 
-} // end namespace TacticalLine
+} // end namespace TEST
 
 #include "TacticalLine_Limit.inl"
 

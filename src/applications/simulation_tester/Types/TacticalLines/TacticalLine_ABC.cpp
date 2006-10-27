@@ -6,19 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_tester_pch.h"
 #include "TacticalLine_ABC.h"
-
 
 using namespace TEST;
 
@@ -56,4 +46,23 @@ TacticalLine_ABC::~TacticalLine_ABC()
     for( CIT_PositionVector it = points_.begin(); it != points_.end(); ++it )
         delete *it;
     points_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::ReadPoints
+// Created: SBO 2006-10-27
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::ReadPoints( XmlInputArchive& archive )
+{
+    double rX, rY;
+    while( archive.NextListElement() )
+    {
+        archive.Section( "point" );
+        archive.ReadAttribute( "x", rX );
+        archive.ReadAttribute( "y", rY );
+        Position& pos = *new Position();
+        pos.SetSimCoordinates( rX, rY );
+        points_.push_back( &pos );
+        archive.EndSection();
+    }
 }

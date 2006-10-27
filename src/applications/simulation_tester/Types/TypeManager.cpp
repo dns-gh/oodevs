@@ -430,8 +430,8 @@ const AutomatType* TypeManager::FindAutomatType( const std::string& strName ) co
 const AutomatType* TypeManager::FindAutomatType( ASN1T_TypeAutomate asnId ) const
 {
     for( CIT_AutomatTypeMap it = automatTypes_.begin(); it != automatTypes_.end(); ++it )
-        if( ( *it ).second->GetId() == asnId )
-            return ( *it ).second;
+        if( int( it->second->GetId() ) == asnId )
+            return it->second;
     return 0;
 }
 
@@ -452,8 +452,8 @@ const PawnType* TypeManager::FindPawnType( const std::string& strName ) const
 const PawnType* TypeManager::FindPawnType( ASN1T_TypePion asnId ) const
 {
     for( CIT_PawnTypeMap it = pawnTypes_.begin(); it != pawnTypes_.end(); ++it )
-        if( ( *it ).second->GetId() == asnId )
-            return ( *it ).second;
+        if( int( it->second->GetId() )== asnId )
+            return it->second;
     return 0;
 }
 
@@ -474,8 +474,8 @@ const PopulationType* TypeManager::FindPopulationType( const std::string& strNam
 const PopulationType* TypeManager::FindPopulationType( ASN1T_TypePion asnId ) const
 {
     for( CIT_PopulationTypeMap it = populationTypes_.begin(); it != populationTypes_.end(); ++it )
-        if( ( *it ).second->GetId() == asnId )
-            return ( *it ).second;
+        if( int( it->second->GetId() ) == asnId )
+            return it->second;
     return 0;
 }
 

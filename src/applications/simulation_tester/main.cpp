@@ -6,15 +6,7 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-05-19 $
-// $Archive: /MVW_v10/Build/SDK/TIC_Sample/src/main.cpp $
-// $Author: Sbo $
-// $Modtime: 5/07/05 11:48 $
-// $Revision: 15 $
-// $Workfile: main.cpp $
-//
-// *****************************************************************************
+
 #include "simulation_tester_pch.h"
 #include "Types.h"
 
@@ -105,10 +97,10 @@ void Run()
 
     MT_LOG_INFO_MSG( "Starting tests on '" << config.GetServer() << ":" << config.GetPort() << 
                      "' with time factor '" << config.GetTimeFactor() << "'" );
-    Workspace ws( *pTestSet, config );
 
     try
     {
+        Workspace ws( *pTestSet, config );
         while( bRun )
         {
             ws.Update();

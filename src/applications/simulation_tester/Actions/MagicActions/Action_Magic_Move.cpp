@@ -54,7 +54,7 @@ void Action_Magic_Move::Serialize()
 // Name: Action_Magic_Move::Send
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Action_Magic_Move::Send( const Scheduler& scheduler )
+void Action_Magic_Move::Send( const Scheduler& /*scheduler*/ )
 {
     asnMsg_.Send( 56 );
 }

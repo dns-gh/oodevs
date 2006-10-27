@@ -6,22 +6,9 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-08-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_tester_pch.h"
 #include "TacticalLine_Limit.h"
-
-#include "MT/MT_IO/MT_DirectoryBrowser.h"
-#include "MT/MT_IO/MT_Dir.h"
-#include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
 using namespace TEST;
 
@@ -45,22 +32,10 @@ TacticalLine_Limit::TacticalLine_Limit( const T_PositionVector& points )
 TacticalLine_Limit::TacticalLine_Limit( XmlInputArchive& archive )
     : TacticalLine_ABC ()
 {
-    nId_ = idManager_.GetFreeIdentifier();
     bIsSyncWithSim_ = false;
-    archive.BeginList( "Points" );
-    while( archive.NextListElement() )
-    {
-        archive.Section( "Point" );
-        double rX;
-        double rY;
-        archive.ReadField( "X", rX );
-        archive.ReadField( "Y", rY );
-        Position& pos = *new Position();
-        pos.SetSimCoordinates( rX, rY );
-        points_.push_back( &pos );
-        archive.EndSection(); // Point
-    }
-    archive.EndList(); // Points
+    archive.ReadAttribute( "id", nId_ );
+    ReadPoints( archive );
+    idManager_.LockIdentifier( nId_ );
 }
 
 // -----------------------------------------------------------------------------
