@@ -10,6 +10,7 @@
 #ifndef __SupplyStates_h_
 #define __SupplyStates_h_
 
+#include "Types.h"
 #include "LogisticHierarchies.h"
 
 // =============================================================================

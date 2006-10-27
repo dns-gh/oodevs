@@ -10,6 +10,7 @@
 #ifndef __Tc2States_h_
 #define __Tc2States_h_
 
+#include "Types.h"
 #include "LogisticHierarchies.h"
 
 // =============================================================================

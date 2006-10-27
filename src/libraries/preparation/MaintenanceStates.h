@@ -10,6 +10,7 @@
 #ifndef __MaintenanceStates_h_
 #define __MaintenanceStates_h_
 
+#include "Types.h"
 #include "LogisticHierarchies.h"
 
 // =============================================================================

@@ -10,6 +10,7 @@
 #ifndef __MedicalStates_h_
 #define __MedicalStates_h_
 
+#include "Types.h"
 #include "LogisticHierarchies.h"
 
 // =============================================================================
