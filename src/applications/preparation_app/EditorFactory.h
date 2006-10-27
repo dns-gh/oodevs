@@ -23,6 +23,8 @@ namespace kernel
 }
 
 class Model;
+class StaticModel;
+class KnowledgeGroupType;
 
 // =============================================================================
 /** @class  EditorFactory
@@ -31,18 +33,19 @@ class Model;
 // Created: SBO 2006-10-25
 // =============================================================================
 class EditorFactory : public gui::EditorFactory
+                    , public kernel::Observer_ABC
+                    , public kernel::SelectionObserver< kernel::Entity_ABC >
                     , public kernel::Caller< TC2* >
                     , public kernel::Caller< MaintenanceSuperior* >
                     , public kernel::Caller< MedicalSuperior* >
                     , public kernel::Caller< SupplySuperior* >
-                    , public kernel::Observer_ABC
-                    , public kernel::SelectionObserver< kernel::Entity_ABC >
+                    , public kernel::Caller< KnowledgeGroupType** >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EditorFactory( kernel::Controllers& controllers, Model& model );
+             EditorFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
     virtual ~EditorFactory();
     //@}
 
@@ -52,6 +55,7 @@ public:
     virtual void Call( MaintenanceSuperior* const& value );
     virtual void Call( MedicalSuperior* const& value );
     virtual void Call( SupplySuperior* const& value );
+    virtual void Call( KnowledgeGroupType** const& value );
     //@}
 
 private:
@@ -73,6 +77,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
+    const StaticModel& staticModel_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };

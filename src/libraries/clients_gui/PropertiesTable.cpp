@@ -20,10 +20,10 @@ using namespace kernel;
 // Name: PropertiesTable constructor
 // Created: SBO 2006-10-17
 // -----------------------------------------------------------------------------
-PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& factory )
+PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
     : QTable( parent )
     , factory_( factory )
-    , itemDisplayer_( *new TableItemDisplayer() )
+    , itemDisplayer_( displayer )
     , row_( 0 )
 {
     setSelectionMode( QTable::SingleRow );
@@ -47,7 +47,7 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
 // -----------------------------------------------------------------------------
 PropertiesTable::~PropertiesTable()
 {
-    delete &itemDisplayer_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -22,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class PropertiesWidget;
+    class TableItemDisplayer;
 }
 
 // =============================================================================
@@ -61,6 +62,7 @@ private:
     kernel::Controllers& controllers_;
     gui::PropertiesWidget* table_;
     kernel::EditorFactory_ABC& factory_;
+    gui::TableItemDisplayer& tableItemDisplayer_;
     //@}
 };
 

@@ -24,6 +24,7 @@ namespace gui
 }
 
 class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  InfoPanels
@@ -36,7 +37,7 @@ class InfoPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, Model& model, gui::ItemFactory_ABC& factory );
+             InfoPanels( QWidget* parent, kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, gui::ItemFactory_ABC& factory );
     virtual ~InfoPanels();
     //@}
 

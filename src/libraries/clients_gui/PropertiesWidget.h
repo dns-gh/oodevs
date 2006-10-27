@@ -20,6 +20,7 @@ namespace kernel
 namespace gui
 {
     class PropertiesTable;
+    class TableItemDisplayer;
 
 // =============================================================================
 /** @class  PropertiesWidget
@@ -34,7 +35,7 @@ class PropertiesWidget : public QWidget, public kernel::Displayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesWidget( QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory );
+             PropertiesWidget( QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     virtual ~PropertiesWidget();
     //@}
 
@@ -50,7 +51,7 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    PropertiesWidget( PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory );
+    PropertiesWidget( PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     PropertiesWidget( const PropertiesWidget& );            //!< Copy constructor
     PropertiesWidget& operator=( const PropertiesWidget& ); //!< Assignement operator
     //@}
@@ -85,6 +86,7 @@ private:
     T_SubCategories categories_;
     T_SubWidgets subWidgets_;
     PropertiesTable* table_;
+    TableItemDisplayer& displayer_;
     QSpacerItem* spacer_;
     //@}
 };

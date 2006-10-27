@@ -8,79 +8,79 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "AgentStatePanel.h"
+#include "PropertiesPanel.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_gui/Tools.h"
-#include "clients_gui/PropertiesWidget.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/PropertiesWidget.h"
+#include "clients_gui/Tools.h"
+#include "PropertiesTableDisplayer.h"
 
 using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel constructor
-// Created: SBO 2006-10-11
+// Name: PropertiesPanel constructor
+// Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, kernel::EditorFactory_ABC& editorFactory )
-    : InfoPanel_ABC( parent, panel, tools::translate( "Preparation", "Agent State" ) )
+PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, kernel::EditorFactory_ABC& editorFactory )
+    : InfoPanel_ABC( parent, panel, tools::translate( "PropertiesPanel", "Properties" ) )
     , controllers_( controllers )
     , selected_( controllers )
+    , tableItemDisplayer_( *new PropertiesTableDisplayer() )
 {
-    properties_ = new PropertiesWidget( this, "Properties", editorFactory );
+    properties_ = new PropertiesWidget( this, "Properties", editorFactory, tableItemDisplayer_ );
     controllers_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel destructor
-// Created: SBO 2006-10-11
+// Name: PropertiesPanel destructor
+// Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-AgentStatePanel::~AgentStatePanel()
+PropertiesPanel::~PropertiesPanel()
 {
     controllers_.Remove( *this );
+    delete &tableItemDisplayer_;
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel::showEvent
-// Created: SBO 2006-10-11
+// Name: PropertiesPanel::showEvent
+// Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void AgentStatePanel::showEvent( QShowEvent* )
+void PropertiesPanel::showEvent( QShowEvent* )
 {
-    const Agent_ABC* selected = selected_;
+    const Entity_ABC* selected = selected_;
     selected_ = 0;
     NotifySelected( selected );
 }
-
+    
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel::NotifySelected
-// Created: SBO 2006-10-11
+// Name: PropertiesPanel::NotifySelected
+// Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifySelected( const kernel::Agent_ABC* element )
+void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 {
-    if( selected_ != element || ! element )
+    if( !element || selected_ != element )
     {
+        properties_->Clear();
         selected_ = element;
         if( selected_ )
-        {
-            Show();
-            PropertiesDictionary& dico = const_cast< kernel::Agent_ABC* >( element )->Get< PropertiesDictionary >();
-            dico.Display( *properties_ );
-        }
-        else
-        {
-            properties_->Clear();
-            Hide();
-        }
+            if( PropertiesDictionary* dico = const_cast< kernel::Entity_ABC* >( element )->Retrieve< PropertiesDictionary >() )
+            {
+                Show();
+                dico->Display( *properties_ );
+                return;
+            }
+        Hide();
     }
 }
-
-// $$$$ AGE 2006-02-16: Centraliser tout ca : 
+    
 // -----------------------------------------------------------------------------
-// Name: AgentStatePanel::NotifyDeleted
-// Created: AGE 2006-02-16
+// Name: PropertiesPanel::NotifyDeleted
+// Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void AgentStatePanel::NotifyDeleted( const Agent_ABC& agent )
+void PropertiesPanel::NotifyDeleted( const kernel::Entity_ABC& element )
 {
-    if( selected_ = & agent )
+    if( selected_ = &element )
         NotifySelected( 0 );
 }

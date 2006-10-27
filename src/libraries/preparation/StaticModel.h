@@ -20,6 +20,7 @@ namespace kernel
 }
 
 class SurfaceFactory;
+class KnowledgeGroupTypes;
 
 // =============================================================================
 /** @class  StaticModel
@@ -49,9 +50,10 @@ public:
     kernel::Controllers& controllers_;
 
     kernel::CoordinateConverter_ABC& coordinateConverter_;
-    kernel::DetectionMap&        detection_;
-    kernel::AgentTypes&          types_;
-    kernel::ObjectTypes&         objectTypes_;
+    kernel::DetectionMap&            detection_;
+    kernel::AgentTypes&              types_;
+    kernel::ObjectTypes&             objectTypes_;
+    KnowledgeGroupTypes&             knowledgeGroupTypes_;
     //@}
 
 private:

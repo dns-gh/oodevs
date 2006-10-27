@@ -19,6 +19,8 @@ namespace xml
     class xistream;
 }
 
+class KnowledgeGroupType;
+class KnowledgeGroupTypes;
 class IdManager;
 
 // =============================================================================
@@ -34,8 +36,8 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager );
-             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager );
+             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, KnowledgeGroupTypes& types );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, KnowledgeGroupTypes& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -54,13 +56,15 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::Controller& controller );
+    virtual QString GetName() const;
     static unsigned long ReadId  ( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QString type_;
+    KnowledgeGroupType* type_;
     //@}
 };
 

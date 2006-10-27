@@ -13,15 +13,21 @@
 #include "preparation/LogisticSuperior.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/StaticModel.h"
+#include "preparation/KnowledgeGroupTypes.h"
+#include "preparation/KnowledgeGroupType.h"
+#include "clients_gui/ValuedComboBox.h"
+#include "clients_kernel/ValueEditor.h"
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory constructor
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
-EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model )
+EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
     : gui::EditorFactory()
     , controllers_( controllers )
     , model_( model )
+    , staticModel_( staticModel )
     , selected_( controllers )
 {
     controllers_.Register( *this );
@@ -93,4 +99,42 @@ void EditorFactory::Call( SupplySuperior* const& value )
 void EditorFactory::NotifySelected( const kernel::Entity_ABC* element )
 {
     selected_ = element;
+}
+
+namespace
+{
+    template< typename Entity, typename Resolver >
+    class SimpleResolverEditor : public gui::ValuedComboBox< const Entity* >
+                               , public kernel::ValueEditor< Entity* >
+    {
+    public:
+        SimpleResolverEditor( QWidget* parent, const Resolver& resolver ) 
+            : gui::ValuedComboBox< const Entity* >( parent )
+        {
+            kernel::Iterator< const Entity& > it = resolver.CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const Entity& entity = it.NextElement();
+                AddItem( entity.GetName(), &entity );
+            }
+        }
+        virtual ~SimpleResolverEditor() {}
+
+        virtual Entity* GetValue()
+        {
+            return const_cast< Entity* >( gui::ValuedComboBox< const Entity* >::GetValue() );
+        }
+
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-10-27
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( KnowledgeGroupType** const& value )
+{
+    SimpleResolverEditor< KnowledgeGroupType, KnowledgeGroupTypes >* editor = new SimpleResolverEditor< KnowledgeGroupType, KnowledgeGroupTypes >( parent_, staticModel_.knowledgeGroupTypes_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
 }

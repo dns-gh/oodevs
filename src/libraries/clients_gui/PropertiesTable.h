@@ -38,7 +38,7 @@ class PropertiesTable : public QTable
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& factory );
+             PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     virtual ~PropertiesTable();
     //@}
 
