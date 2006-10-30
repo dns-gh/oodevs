@@ -39,6 +39,8 @@ PropertiesTable::PropertiesTable( QWidget* parent, kernel::EditorFactory_ABC& fa
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed );
     setFrameStyle( MenuBarPanel );
     setResizePolicy( QScrollView::AutoOne );
+
+    connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -86,6 +88,15 @@ void PropertiesTable::Hide()
 void PropertiesTable::Show( bool b )
 {
     setShown( b && numRows() > 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTable::OnValueChanged
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void PropertiesTable::OnValueChanged( int row, int col )
+{
+    setCellContentFromEditor( row, col );
 }
 
 // -----------------------------------------------------------------------------

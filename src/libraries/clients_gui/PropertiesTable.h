@@ -53,6 +53,7 @@ public slots:
     //! @name Slots
     //@{
     void Show( bool );
+    void OnValueChanged( int row, int col );
     //@}
 
 private:
