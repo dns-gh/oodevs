@@ -65,6 +65,7 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::ObjectType& GetType() const;
+    virtual QString GetName() const;
     //@}
     
 private:

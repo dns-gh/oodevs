@@ -11,6 +11,7 @@
 #include "NBCAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,17 +22,17 @@ using namespace xml;
 // Name: NBCAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-NBCAttributes::NBCAttributes()
+NBCAttributes::NBCAttributes( kernel::PropertiesDictionary& dico )
     : nbc_( 0 )
 {
-    // NOTHING
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
+NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico )
 {
     std::string type;
     xis >> start( "specific-attributes" )
@@ -40,6 +41,7 @@ NBCAttributes::NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< ke
             >> end()
         >> end();
     nbc_ = nbcAgents.Find( type.c_str() );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,4 +84,13 @@ void NBCAttributes::SerializeAttributes( xml::xostream& xos ) const
                 << attribute( "type", nbc_->GetName() )
             << end()
         << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCAttributes::CreateDictionary
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void NBCAttributes::CreateDictionary( kernel::PropertiesDictionary& dico )
+{
+    dico.Register( *this, tools::translate( "NBCAttributes", "Info/NBC attributes/NBC Agent" ), nbc_ );
 }

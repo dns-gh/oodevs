@@ -11,6 +11,7 @@
 #define __EditorFactory_ABC_h_
 
 #include "VirtualTemplate.h"
+#include "Units.h"
 
 class QWidget;
 
@@ -61,6 +62,13 @@ private:
     void Call( T* )
     {
         // NOTHING
+    }
+
+    template< typename T >
+    void Call( kernel::UnitedValue< T >* value )
+    {
+        VirtualTemplate< EditorFactory_ABC >::Call( &value->unit_ );
+        VirtualTemplate< EditorFactory_ABC >::Call( &value->value_ );
     }
     //@}
 };

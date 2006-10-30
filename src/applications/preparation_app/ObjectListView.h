@@ -12,6 +12,7 @@
 
 #include "clients_gui/ObjectListView.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 // =============================================================================
 /** @class  ObjectListView
@@ -46,8 +47,15 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& );
     virtual void keyPressEvent( QKeyEvent* key );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 

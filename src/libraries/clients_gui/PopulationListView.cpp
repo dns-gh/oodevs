@@ -92,11 +92,8 @@ void PopulationListView::NotifyDeleted( const Population_ABC& popu )
 // -----------------------------------------------------------------------------
 void PopulationListView::OnSelectionChange( QListViewItem* i )
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
+    if( ValuedListItem* item = (ValuedListItem*)( i ) )
         item->Select( controllers_.actions_ );
-    }
 }
 
 // -----------------------------------------------------------------------------

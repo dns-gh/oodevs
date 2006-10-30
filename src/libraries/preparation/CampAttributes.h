@@ -11,14 +11,17 @@
 #define __CampAttributes_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/SafePointer.h"
+#include "clients_kernel/StrongType.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "Types.h"
 
 namespace kernel
 {
     class Automat_ABC;
+    class Controllers;
     class Displayer_ABC;
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -39,8 +42,8 @@ class CampAttributes : public kernel::CampAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CampAttributes( kernel::Controllers& controllers );
-    CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats );
+             CampAttributes( kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
+             CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico );
     virtual ~CampAttributes();
     //@}
 
@@ -58,10 +61,15 @@ private:
     CampAttributes& operator=( const CampAttributes& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    kernel::SafePointer< kernel::Automat_ABC > tc2_;
+    TC2 tc2_;
     //@}
 };
 

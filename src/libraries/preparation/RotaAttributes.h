@@ -19,6 +19,7 @@ namespace kernel
 {
     class Displayer_ABC;
     class NBCAgent;
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -39,8 +40,8 @@ class RotaAttributes : public kernel::RotaAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RotaAttributes();
-             RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents );
+    explicit RotaAttributes( kernel::PropertiesDictionary& dico );
+             RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico );
     virtual ~RotaAttributes();
     //@}
 
@@ -66,6 +67,7 @@ private:
     //! @name Helpers
     //@{
     void ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents );
+    void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
     //! @name Types
@@ -76,7 +78,7 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::OptionalValue< unsigned int > danger_;
+    unsigned int danger_;
     T_Nbcs agents_;
     //@}
 };

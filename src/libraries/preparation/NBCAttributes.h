@@ -18,6 +18,7 @@ namespace kernel
 {
     class Displayer_ABC;
     class NBCAgent;
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -38,8 +39,8 @@ class NBCAttributes : public kernel::NBCAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCAttributes();
-             NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents );
+    explicit NBCAttributes( kernel::PropertiesDictionary& dico );
+             NBCAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico );
     virtual ~NBCAttributes();
     //@}
 
@@ -59,6 +60,11 @@ private:
     //@{
     NBCAttributes( const NBCAttributes& );            //!< Copy constructor
     NBCAttributes& operator=( const NBCAttributes& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
 public:

@@ -11,6 +11,7 @@
 #include "RotaAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,16 +22,18 @@ using namespace xml;
 // Name: RotaAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-RotaAttributes::RotaAttributes()
+RotaAttributes::RotaAttributes( kernel::PropertiesDictionary& dico )
+    : danger_( 0 )
 {
-    // NOTHING
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RotaAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-RotaAttributes::RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents )
+RotaAttributes::RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::NBCAgent, QString >& nbcAgents, kernel::PropertiesDictionary& dico )
+    : danger_( 0 )
 {
     xis >> start( "specific-attributes" )
             >> content( "danger", (int&)danger_ )
@@ -38,6 +41,7 @@ RotaAttributes::RotaAttributes( xml::xistream& xis, const kernel::Resolver_ABC< 
                 >> list( "nbc-agent", *this, &RotaAttributes::ReadNbcAgent, nbcAgents )
             >> end()
         >> end();
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,4 +111,14 @@ void RotaAttributes::SerializeAttributes( xml::xostream& xos ) const
     }
     xos << end()
         << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: RotaAttributes::CreateDictionary
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void RotaAttributes::CreateDictionary( kernel::PropertiesDictionary& dico )
+{
+    dico.Register( *this, tools::translate( "RotaAttributes", "Info/ROTA attributes/Danger" ), danger_ );
+    dico.Register( *this, tools::translate( "RotaAttributes", "Info/ROTA attributes/Agents" ), agents_ );
 }

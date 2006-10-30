@@ -28,6 +28,7 @@ class EditorFactory : public kernel::EditorFactory_ABC
                     , public kernel::Caller< int* >
                     , public kernel::Caller< unsigned int* >
                     , public kernel::Caller< bool* >
+                    , public kernel::Caller< kernel::Unit* >
 {
 
 public:
@@ -52,6 +53,7 @@ private:
     virtual void Call( int* const& value );
     virtual void Call( unsigned int* const& value );
     virtual void Call( bool* const& value );
+    virtual void Call( kernel::Unit* const& value );
 
     virtual void BeginEditor( QWidget* parent );
     virtual QWidget* EndEditor();
@@ -62,6 +64,8 @@ protected:
     //@{
     QWidget* parent_;
     QWidget* result_;
+
+    kernel::Unit* unit_;
     //@}
 };
 

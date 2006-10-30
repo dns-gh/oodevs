@@ -114,6 +114,7 @@ kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xi
 kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const kernel::Location_ABC& location )
 {
     Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( controllers_.controller_, *result, &team ) );
     
@@ -121,20 +122,20 @@ kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, k
     {
     case eObjectType_CampPrisonniers:
     case eObjectType_CampRefugies:
-        result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_ ) );
+        result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_, dico ) );
         break;
     case eObjectType_ItineraireLogistique:
-        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes() );
+        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( dico ) );
         break;
     case eObjectType_NuageNbc:
     case eObjectType_ZoneNbc:
-        result->Attach< NBCAttributes_ABC >( *new NBCAttributes() );
+        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( dico ) );
         break;
     case eObjectType_Rota:
-        result->Attach< RotaAttributes_ABC >( *new RotaAttributes() );
+        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( dico ) );
         break;
     case eObjectType_SiteFranchissement:
-        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes() );
+        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( dico ) );
         break;
     default:
         break;
@@ -150,26 +151,27 @@ kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, k
 kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_ABC& team )
 {
     Object* result = new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, staticModel_.objectTypes_, idManager_ );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( controllers_.controller_, *result, &team ) );
     switch( result->GetType().id_ )
     {
     case eObjectType_CampPrisonniers:
     case eObjectType_CampRefugies:
-        result->Attach< CampAttributes_ABC >( *new CampAttributes( xis, controllers_, model_.agents_ ) );
+        result->Attach< CampAttributes_ABC >( *new CampAttributes( xis, controllers_, model_.agents_, dico ) );
         break;
     case eObjectType_ItineraireLogistique:
-        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( xis ) );
+        result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( xis, dico ) );
         break;
     case eObjectType_NuageNbc:
     case eObjectType_ZoneNbc:
-        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( xis, staticModel_.objectTypes_ ) );
+        result->Attach< NBCAttributes_ABC >( *new NBCAttributes( xis, staticModel_.objectTypes_, dico ) );
         break;
     case eObjectType_Rota:
-        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( xis, staticModel_.objectTypes_ ) );
+        result->Attach< RotaAttributes_ABC >( *new RotaAttributes( xis, staticModel_.objectTypes_, dico ) );
         break;
     case eObjectType_SiteFranchissement:
-        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( xis ) );
+        result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( xis, dico ) );
         break;
     default:
         break;

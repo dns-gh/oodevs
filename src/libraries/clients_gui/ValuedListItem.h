@@ -15,6 +15,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/SafePointer.h"
 
+#include "clients_kernel/Object_ABC.h"
 
 namespace kernel
 {
@@ -218,6 +219,24 @@ private:
     const kernel::Entity_ABC* value_;
 };
 
+template< >
+class ValueContainer< const kernel::Object_ABC* > : public ValueContainer< const kernel::Entity_ABC* >
+{
+public:
+    ValueContainer( kernel::Object_ABC const* const& value ) : ValueContainer< const kernel::Entity_ABC* >( value ), value_( value ) {};
+    virtual int rtti() const {
+        return ListItemRtti< const kernel::Object_ABC* >::rtti;
+    }
+    kernel::Object_ABC const* const& GetValue() const {
+        return value_;
+    };
+    void SetValue( kernel::Object_ABC const* const& value ) {
+        value_ = value;
+        ValueContainer< const kernel::Entity_ABC* >::SetValue( value );
+    }
+private:
+    const kernel::Object_ABC* value_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: ValuedListItem::IsA

@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "ObjectListView.h"
 #include "moc_ObjectListView.cpp"
-#include "clients_kernel/Object_ABC.h"
 #include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -19,6 +18,7 @@
 // -----------------------------------------------------------------------------
 ObjectListView::ObjectListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
     : gui::ObjectListView( pParent, controllers, factory )
+    , selected_( controllers )
 {
     // NOTHING
 }
@@ -49,7 +49,7 @@ void ObjectListView::NotifyContextMenu( const kernel::Object_ABC&, kernel::Conte
 void ObjectListView::keyPressEvent( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
-        delete (const kernel::Object_ABC*)selected_;
+        delete (const kernel::Entity_ABC*)selected_;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,5 +59,15 @@ void ObjectListView::keyPressEvent( QKeyEvent* key )
 void ObjectListView::OnDelete()
 {
     if( selected_ )
-        delete (const kernel::Object_ABC*)selected_;
+        delete (const kernel::Entity_ABC*)selected_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::NotifySelected
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void ObjectListView::NotifySelected( const kernel::Entity_ABC* element )
+{
+    selected_ = element;
+    gui::ObjectListView::NotifySelected( element );
 }

@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "CrossingSiteAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Units.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,23 +21,32 @@ using namespace xml;
 // Name: CrossingSiteAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CrossingSiteAttributes::CrossingSiteAttributes()
+CrossingSiteAttributes::CrossingSiteAttributes( kernel::PropertiesDictionary& dico )
+    : width_( 0, Units::meters )
+    , depth_( 0, Units::meters )
+    , speed_( 0, Units::metersPerSecond )
+    , needsConstruction_( false )
 {
-    // NOTHING
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-CrossingSiteAttributes::CrossingSiteAttributes( xml::xistream& xis )
+CrossingSiteAttributes::CrossingSiteAttributes( xml::xistream& xis, kernel::PropertiesDictionary& dico )
+    : width_( 0, Units::meters )
+    , depth_( 0, Units::meters )
+    , speed_( 0, Units::metersPerSecond )
+    , needsConstruction_( false )
 {
     xis >> start( "specific-attributes" )
-            >> content( "width", (int&)width_ )
-            >> content( "depth", (int&)depth_ )
-            >> content( "speed", (int&)speed_ )
-            >> content( "construction-needed", (bool&)needsConstruction_ )
+            >> content( "width", (int&)(width_.value_) )
+            >> content( "depth", (int&)(depth_.value_) )
+            >> content( "speed", (int&)(speed_.value_) )
+            >> content( "construction-needed", needsConstruction_ )
         >> end();
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,9 +65,9 @@ CrossingSiteAttributes::~CrossingSiteAttributes()
 void CrossingSiteAttributes::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Site de franchissement" ) )
-                .Display( tools::translate( "Object", "Largeur:" ), width_ * Units::meters )
-                .Display( tools::translate( "Object", "Profondeur:" ), depth_ * Units::meters )
-                .Display( tools::translate( "Object", "Vitesse du courant:" ), speed_ * Units::metersPerSecond )
+                .Display( tools::translate( "Object", "Largeur:" ), width_ )
+                .Display( tools::translate( "Object", "Profondeur:" ), depth_ )
+                .Display( tools::translate( "Object", "Vitesse du courant:" ), speed_ )
                 .Display( tools::translate( "Object", "Berges à aménager:" ), needsConstruction_ );
 }
 
@@ -68,7 +77,7 @@ void CrossingSiteAttributes::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void CrossingSiteAttributes::SetWidth( unsigned int value )
 {
-    width_ = value;
+    width_.value_ = value;
 }
     
 // -----------------------------------------------------------------------------
@@ -77,7 +86,7 @@ void CrossingSiteAttributes::SetWidth( unsigned int value )
 // -----------------------------------------------------------------------------
 void CrossingSiteAttributes::SetDepth( unsigned int value )
 {
-    depth_ = value;
+    depth_.value_ = value;
 }
     
 // -----------------------------------------------------------------------------
@@ -86,7 +95,7 @@ void CrossingSiteAttributes::SetDepth( unsigned int value )
 // -----------------------------------------------------------------------------
 void CrossingSiteAttributes::SetFlowSpeed( unsigned int value )
 {
-    speed_ = value;
+    speed_.value_ = value;
 }
     
 // -----------------------------------------------------------------------------
@@ -105,9 +114,21 @@ void CrossingSiteAttributes::SetConstruction( bool need )
 void CrossingSiteAttributes::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
-            << content( "width", int( width_ ) )
-            << content( "depth", int( depth_ ) )
-            << content( "speed", int( speed_ ) )
+            << content( "width", int( width_.value_ ) )
+            << content( "depth", int( depth_.value_ ) )
+            << content( "speed", int( speed_.value_ ) )
             << content( "construction-needed", needsConstruction_ )
         << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttributes::CreateDictionary
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void CrossingSiteAttributes::CreateDictionary( kernel::PropertiesDictionary& dico )
+{
+    dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Width" ), width_ );
+    dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Depth" ), depth_ );
+    dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Speed" ), speed_ );
+    dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Construction needed" ), needsConstruction_ );
 }

@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "EditorFactory.h"
 #include "clients_kernel/ValueEditor.h"
+#include "clients_kernel/Units.h"
 #include "ValuedComboBox.h"
 #include "Tools.h"
 
@@ -44,6 +45,7 @@ void EditorFactory::BeginEditor( QWidget* parent )
 {
     parent_ = parent;
     result_ = 0;
+    unit_   = 0;
 }
     
 // -----------------------------------------------------------------------------
@@ -96,7 +98,10 @@ namespace
                        , public ValueEditor< T >
     {
     public:
-                 NumberEditor( QWidget* parent ) : QSpinBox( parent ) {}
+                 NumberEditor( QWidget* parent, const T& value ) : QSpinBox( parent )
+                 {
+                     setValue( value );
+                 }
         virtual ~NumberEditor() {}
 
         virtual T GetValue()
@@ -105,6 +110,34 @@ namespace
         }
 
     };
+
+    template< typename T >
+    class UnitEditor : public QSpinBox
+                     , public ValueEditor< UnitedValue< T > >
+    {
+    public:
+                 UnitEditor( QWidget* parent, const UnitedValue< T >& value ) : QSpinBox( parent ), unit_( value.unit_ )
+                 {
+                     setValue( value.value_ );
+                     setSuffix( value.unit_ );
+                 }
+        virtual ~UnitEditor() {}
+
+        virtual UnitedValue< T > GetValue()
+        {
+            return UnitedValue< T >( value(), unit_ );
+        }
+    private:
+        Unit unit_;
+    };
+
+    template< typename T >
+    QWidget* CreateNumberEditor( QWidget* parent, const T& value, const Unit* unit )
+    {
+        if( unit )
+            return new UnitEditor< T >( parent, UnitedValue< T >( value, *unit ) );
+        return new NumberEditor< T >( parent, value );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -113,9 +146,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( double* const& value )
 {
-    NumberEditor< double >* editor = new NumberEditor< double >( parent_ );
-    editor->setValue( *value );
-    result_ = editor;
+    result_ = CreateNumberEditor( parent_, *value, unit_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,9 +155,7 @@ void EditorFactory::Call( double* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( float* const& value )
 {
-    NumberEditor< float >* editor = new NumberEditor< float >( parent_ );
-    editor->setValue( *value );
-    result_ = editor;
+    result_ = CreateNumberEditor( parent_, *value, unit_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,9 +164,7 @@ void EditorFactory::Call( float* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( int* const& value )
 {
-    NumberEditor< int >* editor = new NumberEditor< int >( parent_ );
-    editor->setValue( *value );
-    result_ = editor;
+    result_ = CreateNumberEditor( parent_, *value, unit_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,9 +173,16 @@ void EditorFactory::Call( int* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( unsigned int* const& value )
 {
-    NumberEditor< unsigned int >* editor = new NumberEditor< unsigned int >( parent_ );
-    editor->setValue( *value );
-    result_ = editor;
+    result_ = CreateNumberEditor( parent_, *value, unit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::Unit* const& value )
+{
+    unit_ = value;
 }
 
 // =============================================================================

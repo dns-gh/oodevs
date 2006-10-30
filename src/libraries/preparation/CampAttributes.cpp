@@ -11,6 +11,7 @@
 #include "CampAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,18 +22,18 @@ using namespace xml;
 // Name: CampAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( Controllers& controllers )
-    : tc2_( controllers )
+CampAttributes::CampAttributes( Controllers& controllers, kernel::PropertiesDictionary& dico )
+    : tc2_( 0 )
 {
-    // NOTHING
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CampAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const Resolver_ABC< Automat_ABC >& automats )
-    : tc2_( controllers )
+CampAttributes::CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const Resolver_ABC< Automat_ABC >& automats, kernel::PropertiesDictionary& dico )
+    : tc2_( 0 )
 {
     int id;
     xis >> start( "specific-attributes" )
@@ -41,6 +42,7 @@ CampAttributes::CampAttributes( xml::xistream& xis, kernel::Controllers& control
             >> end()
         >> end();
     tc2_ = automats.Find( id );
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +81,16 @@ void CampAttributes::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
             << start( "tc2" )
-                << attribute( "id", long( tc2_->GetId() ) )
+            << attribute( "id", long( ((const kernel::Automat_ABC*)tc2_)->GetId() ) )
             << end()
         << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CampAttributes::CreateDictionary
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void CampAttributes::CreateDictionary( kernel::PropertiesDictionary& dico )
+{
+    dico.Register( *this, tools::translate( "CampAttributes", "Info/Camp attributes/Superior" ), tc2_ );
 }

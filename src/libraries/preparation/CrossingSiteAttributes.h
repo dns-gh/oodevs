@@ -11,12 +11,13 @@
 #define __CrossingSiteAttributes_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/OptionalValue.h"
+#include "clients_kernel/Units.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
     class Displayer_ABC;
+    class PropertiesDictionary;
 }
 
 namespace xml
@@ -37,8 +38,8 @@ class CrossingSiteAttributes : public kernel::CrossingSiteAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossingSiteAttributes();
-    explicit CrossingSiteAttributes( xml::xistream& xis );
+    explicit CrossingSiteAttributes( kernel::PropertiesDictionary& dico );
+             CrossingSiteAttributes( xml::xistream& xis, kernel::PropertiesDictionary& dico );
     virtual ~CrossingSiteAttributes();
     //@}
 
@@ -63,13 +64,18 @@ private:
     CrossingSiteAttributes& operator=( const CrossingSiteAttributes& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    //@}
+
 public:
     //! @name Member data
     //@{
-    kernel::OptionalValue< unsigned int > width_;
-    kernel::OptionalValue< unsigned int > depth_;
-    kernel::OptionalValue< unsigned int > speed_;
-    kernel::OptionalValue< bool         > needsConstruction_;
+    kernel::UnitedValue< unsigned int > width_;
+    kernel::UnitedValue< unsigned int > depth_;
+    kernel::UnitedValue< unsigned int > speed_;
+    bool needsConstruction_;
     //@}
 };
 

@@ -27,16 +27,13 @@ using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
-/** @param  pParent 
-*/
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
 ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : QListView   ( pParent )
+    : ListView< ObjectListView >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_    ( factory )
     , currentTeam_( 0 )
-    , selected_   ( controllers )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Objets" ) );
@@ -45,9 +42,9 @@ ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, Item
     header()->hide();
 
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
-    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
     connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
     connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
+    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
 
     controllers_.Register( *this );
 }
@@ -67,11 +64,8 @@ ObjectListView::~ObjectListView()
 // -----------------------------------------------------------------------------
 void ObjectListView::OnSelectionChange( QListViewItem* i )
 {
-    if( i )
-    {
-        ValuedListItem* item = (ValuedListItem*)( i );
+    if( ValuedListItem* item = (ValuedListItem*)( i ) )
         item->Select( controllers_.actions_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -88,10 +82,20 @@ void ObjectListView::OnRequestCenter()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectListView::NotifyCreated
-// Created: AGE 2006-02-16
+// Name: ObjectListView::OnContextMenuRequested
+// Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyCreated( const Object_ABC& object )
+void ObjectListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
+{
+    if( ValuedListItem* item = (ValuedListItem*)( i ) )
+        item->ContextMenu( controllers_.actions_, pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::NotifyCreated
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
 {
     // $$$$ AGE 2006-10-16: 
     const Team_ABC& team = static_cast< const Team_ABC& >( object.Get< TacticalHierarchies >().GetUp() );
@@ -110,7 +114,18 @@ void ObjectListView::NotifyCreated( const Object_ABC& object )
         typeItem->SetNamed( type );
     }
 
-    factory_.CreateItem( typeItem )->SetNamed( object );
+    factory_.CreateItem( typeItem )->SetNamed( (const Entity_ABC&)object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::NotifyUpdated
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void ObjectListView::NotifyUpdated( const kernel::Entity_ABC& entity )
+{
+    gui::ValuedListItem* item = gui::FindItem( (const kernel::Entity_ABC*)&entity, firstChild() );
+    if( item )
+        item->SetNamed( entity );
 }
 
 namespace
@@ -123,14 +138,14 @@ namespace
             DeleteHierarchy( parent );
     };  
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: ObjectListView::NotifyDeleted
-// Created: AGE 2006-02-16
+// Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyDeleted( const Object_ABC& object )
+void ObjectListView::NotifyDeleted( const kernel::Object_ABC& object )
 {
-    DeleteHierarchy( FindItem( &object, firstChild() ) );
+    DeleteHierarchy( FindItem( (const kernel::Entity_ABC*)&object, firstChild() ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -143,14 +158,32 @@ QSize ObjectListView::sizeHint() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectListView::Select
+// Name: ObjectListView::NotifySelected
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectListView::Select( const kernel::Object_ABC& object )
+void ObjectListView::NotifySelected( const kernel::Entity_ABC* element )
 {
-    selected_ = &object;
-    setSelected( FindItem( selected_, firstChild() ), true );
-    ensureItemVisible( selectedItem() );
+    ValuedListItem* item = 0;
+    if( element && ( item = FindItem( element, firstChild() ) ) )
+    {
+        if( item != selectedItem() )
+        {
+            selectAll( false );
+            setSelected( item, true );
+        }
+        ensureItemVisible( selectedItem() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::NotifyActivated
+// Created: AGE 2006-07-04
+// -----------------------------------------------------------------------------
+void ObjectListView::NotifyActivated( const Entity_ABC& element )
+{
+    ValuedListItem* item = FindItem( &element, firstChild() );    
+    if( item )
+        ensureItemVisible( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,14 +200,4 @@ void ObjectListView::OptionChanged( const std::string& name, const OptionVariant
         item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
         item = (ValuedListItem*)( item->nextSibling() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectListView::OnContextMenuRequested
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-void ObjectListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int )
-{
-    if( ValuedListItem* item = (ValuedListItem*)( i ) )
-        item->ContextMenu( controllers_.actions_, pos );
 }

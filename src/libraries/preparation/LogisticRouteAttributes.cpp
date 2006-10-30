@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "LogisticRouteAttributes.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/Units.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
@@ -21,24 +21,35 @@ using namespace xml;
 // Name: LogisticRouteAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-LogisticRouteAttributes::LogisticRouteAttributes()
+LogisticRouteAttributes::LogisticRouteAttributes( kernel::PropertiesDictionary& dico )
+    : flow_( 0, Units::vehiclesPerHour )
+    , width_( 0, Units::meters )
+    , length_( 0, Units::meters )
+    , maxWeight_( 0, Units::tons )
+    , equipped_( false )
 {
-    // NOTHING
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticRouteAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-LogisticRouteAttributes::LogisticRouteAttributes( xml::xistream& xis )
+LogisticRouteAttributes::LogisticRouteAttributes( xml::xistream& xis, kernel::PropertiesDictionary& dico )
+    : flow_( 0, Units::vehiclesPerHour )
+    , width_( 0, Units::meters )
+    , length_( 0, Units::meters )
+    , maxWeight_( 0, Units::tons )
+    , equipped_( false )
 {
     xis >> start( "specific-attributes" )
-            >> content( "flow", (int&)flow_ )
-            >> content( "width", (int&)width_ )
-            >> content( "length", (int&)length_ )
-            >> content( "max-weight", (int&)maxWeight_ )
-            >> content( "equipped", (bool&)equipped_ )
+            >> content( "flow", (int&)(flow_.value_) )
+            >> content( "width", (int&)(width_.value_) )
+            >> content( "length", (int&)(length_.value_) )
+            >> content( "max-weight", (int&)(maxWeight_.value_) )
+            >> content( "equipped", equipped_ )
         >> end();
+    CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +69,10 @@ void LogisticRouteAttributes::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Itinéraire logistique" ) )
                 .Display( tools::translate( "Object", "Equipé:" ), equipped_ )
-                .Display( tools::translate( "Object", "Débit:" ), flow_ * Units::vehiclesPerHour )
-                .Display( tools::translate( "Object", "Largeur:" ), width_ * Units::meters )
-                .Display( tools::translate( "Object", "Longueur:" ), length_ * Units::meters )
-                .Display( tools::translate( "Object", "Poids supporté:" ), maxWeight_ * Units::tons );
+                .Display( tools::translate( "Object", "Débit:" ), flow_ )
+                .Display( tools::translate( "Object", "Largeur:" ), width_ )
+                .Display( tools::translate( "Object", "Longueur:" ), length_ )
+                .Display( tools::translate( "Object", "Poids supporté:" ), maxWeight_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +81,7 @@ void LogisticRouteAttributes::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void LogisticRouteAttributes::SetFlow( unsigned int value )
 {
-    flow_ = value;
+    flow_.value_ = value;
 }
     
 // -----------------------------------------------------------------------------
@@ -79,7 +90,7 @@ void LogisticRouteAttributes::SetFlow( unsigned int value )
 // -----------------------------------------------------------------------------
 void LogisticRouteAttributes::SetWidth( unsigned int value )
 {
-    width_ = value;
+    width_.value_ = value;
 }
     
 // -----------------------------------------------------------------------------
@@ -88,7 +99,7 @@ void LogisticRouteAttributes::SetWidth( unsigned int value )
 // -----------------------------------------------------------------------------
 void LogisticRouteAttributes::SetLength( unsigned int value )
 {
-    length_ = value;
+    length_.value_ = value;
 }
     
 // -----------------------------------------------------------------------------
@@ -97,7 +108,7 @@ void LogisticRouteAttributes::SetLength( unsigned int value )
 // -----------------------------------------------------------------------------
 void LogisticRouteAttributes::SetMaxWeight( unsigned int value )
 {
-    maxWeight_ = value;
+    maxWeight_.value_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,10 +127,23 @@ void LogisticRouteAttributes::SetEquipped( bool value )
 void LogisticRouteAttributes::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "specific-attributes" )
-            << content( "flow", int( flow_ ) )
-            << content( "width", int( width_ ) )
-            << content( "length", int( length_ ) )
-            << content( "max-weight", int( maxWeight_ ) )
+            << content( "flow", int( flow_.value_ ) )
+            << content( "width", int( width_.value_ ) )
+            << content( "length", int( length_.value_ ) )
+            << content( "max-weight", int( maxWeight_.value_ ) )
             << content( "equipped", equipped_ )
         << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticRouteAttributes::CreateDictionary
+// Created: SBO 2006-10-30
+// -----------------------------------------------------------------------------
+void LogisticRouteAttributes::CreateDictionary( kernel::PropertiesDictionary& dico )
+{
+    dico.Register( *this, tools::translate( "LogisticRouteAttributes", "Info/Logistic route attributes/Flow" ), flow_ );
+    dico.Register( *this, tools::translate( "LogisticRouteAttributes", "Info/Logistic route attributes/Width" ), width_ );
+    dico.Register( *this, tools::translate( "LogisticRouteAttributes", "Info/Logistic route attributes/Length" ), length_ );
+    dico.Register( *this, tools::translate( "LogisticRouteAttributes", "Info/Logistic route attributes/Maximum weight" ), maxWeight_ );
+    dico.Register( *this, tools::translate( "LogisticRouteAttributes", "Info/Logistic route attributes/Equipped" ), equipped_ );
 }

@@ -10,6 +10,7 @@
 #ifndef __gui_ObjectListView_h_
 #define __gui_ObjectListView_h_
 
+#include "ListView.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
@@ -32,10 +33,12 @@ namespace gui
 */
 // Created: APE 2004-08-05
 // =============================================================================
-class ObjectListView : public QListView
+class ObjectListView : public ListView< ObjectListView >
                      , public kernel::Observer_ABC
                      , public kernel::ElementObserver_ABC< kernel::Object_ABC >
-                     , public kernel::SelectionObserver_Base< kernel::Object_ABC >
+                     , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                     , public kernel::SelectionObserver< kernel::Entity_ABC >
+                     , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
                      , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
@@ -59,6 +62,12 @@ private slots:
     void OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int );
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -70,7 +79,9 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
-    virtual void Select( const kernel::Object_ABC& object );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& object );
+
+    virtual void NotifyActivated( const kernel::Entity_ABC& element );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
@@ -79,13 +90,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    const kernel::Team_ABC* currentTeam_;
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    kernel::SafePointer< kernel::Object_ABC > selected_;
+    const kernel::Team_ABC* currentTeam_; // $$$$ SBO 2006-10-30: profile?
     //@}
 };
 
