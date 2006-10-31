@@ -45,7 +45,10 @@ PropertyTableItem::~PropertyTableItem()
 // -----------------------------------------------------------------------------
 QWidget* PropertyTableItem::createEditor() const
 {
-    return property_.CreateEditor( table(), factory_ );
+    QWidget* editor = property_.CreateEditor( table(), factory_ );
+    table()->setRowHeight( row(), std::max( table()->rowHeight( row() ), editor->height() ) );
+    // $$$$ SBO 2006-10-31: parent table/widget is not resized accordingly
+    return editor;
 }
     
 // -----------------------------------------------------------------------------
@@ -57,6 +60,7 @@ void PropertyTableItem::setContentFromEditor( QWidget* w )
     property_.SetValueFromEditor( w );
     displayer_.SetItem( this );
     property_.Display( displayer_ );
+    table()->adjustRow( row() );
 }
 
 // -----------------------------------------------------------------------------

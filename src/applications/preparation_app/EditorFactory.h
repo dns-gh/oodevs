@@ -20,6 +20,7 @@ namespace kernel
     class Controllers;
     class Automat_ABC;
     class Entity_ABC;
+    class NBCAgent;
 }
 
 class Model;
@@ -42,6 +43,8 @@ class EditorFactory : public gui::EditorFactory
                     , public kernel::Caller< SupplySuperior* >
                     , public kernel::Caller< KnowledgeGroupType** >
                     , public kernel::Caller< TeamKarma** >
+                    , public kernel::Caller< kernel::NBCAgent** >
+                    , public kernel::Caller< std::vector< kernel::NBCAgent* >* >
 {
 
 public:
@@ -59,6 +62,8 @@ public:
     virtual void Call( SupplySuperior* const& value );
     virtual void Call( KnowledgeGroupType** const& value );
     virtual void Call( TeamKarma** const& value );
+    virtual void Call( kernel::NBCAgent** const& value );
+    virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     //@}
 
 private:

@@ -72,7 +72,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const kernel::NBCAgent* > T_Nbcs;
+    typedef std::vector< kernel::NBCAgent* > T_Nbcs;
     //@}
 
 public:

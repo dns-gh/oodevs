@@ -70,7 +70,7 @@ void NBCAttributes::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void NBCAttributes::SetAgent( const kernel::NBCAgent& agent )
 {
-    nbc_ = &agent;
+    nbc_ = const_cast< kernel::NBCAgent* >( &agent );
 }
 
 // -----------------------------------------------------------------------------

@@ -91,7 +91,7 @@ void RotaAttributes::SetDanger( unsigned int level )
 void RotaAttributes::AddAgent( const kernel::NBCAgent& agent )
 {
     if( std::find( agents_.begin(), agents_.end(), &agent ) == agents_.end() )
-        agents_.push_back( &agent );
+        agents_.push_back( const_cast< kernel::NBCAgent* >( &agent ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -20,6 +20,8 @@
 #include "preparation/TeamKarma.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/ValueEditor.h"
+#include "clients_kernel/NBCAgent.h"
+#include "clients_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory constructor
@@ -148,6 +150,77 @@ void EditorFactory::Call( KnowledgeGroupType** const& value )
 void EditorFactory::Call( TeamKarma** const& value )
 {
     SimpleResolverEditor< TeamKarma, TeamKarmas >* editor = new SimpleResolverEditor< TeamKarma, TeamKarmas >( parent_, staticModel_.teamKarmas_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-10-31
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( kernel::NBCAgent** const& value )
+{
+    typedef kernel::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
+    SimpleResolverEditor< kernel::NBCAgent, T_Resolver >* editor = new SimpleResolverEditor< kernel::NBCAgent, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ));
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+namespace
+{
+    template< typename Entity, typename Resolver >
+    class MultipleResolverEditor : public QListBox
+                                 , public kernel::ValueEditor< std::vector< Entity* > >
+    {
+    public:
+        MultipleResolverEditor( QWidget* parent, const Resolver& resolver )
+            : QListBox( parent )
+        {
+            kernel::Iterator< const Entity& > it = resolver.CreateIterator();
+            while( it.HasMoreElements() )
+            {
+                const Entity& entity = it.NextElement();
+                AddItem( entity.GetName(), &entity );
+            }
+            setSelectionMode( QListBox::Multi );
+            setMinimumHeight( 3 * itemHeight() );
+        }
+        virtual ~MultipleResolverEditor() {}
+
+        void AddItem( const QString& name, Entity const* const& entity )
+        {
+            insertItem( name );
+            entities_.push_back( entity );
+        }
+
+        void SetCurrentItem( const std::vector< Entity* >& entity )
+        {
+            for( unsigned int i = 0; i < count(); ++i )
+                setSelected( i, std::find( entity.begin(), entity.end(), entities_[i] ) != entity.end() ) ;
+        }
+
+        virtual std::vector< Entity* > GetValue()
+        {
+            std::vector< Entity* > result;
+            for( unsigned int i = 0; i < count(); ++i )
+                if( isSelected( i ) )
+                    result.push_back( const_cast< Entity* >( entities_[i] ) );
+            return result;
+        }
+
+    private:
+        std::vector< const Entity* > entities_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-10-31
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
+{
+    typedef kernel::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
+    MultipleResolverEditor< kernel::NBCAgent, T_Resolver >* editor = new MultipleResolverEditor< kernel::NBCAgent, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ));
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

@@ -70,7 +70,7 @@ private:
 public:
     //! @name Member data
     //@{
-    const kernel::NBCAgent* nbc_;
+    kernel::NBCAgent* nbc_;
     //@}
 };
 
