@@ -64,12 +64,20 @@ void Diplomacies::SetDiplomacy( const Team_ABC& team, const Diplomacy& diplomacy
 void Diplomacies::Serialize( xml::xostream& xos ) const
 {
     xos << attribute( "id", int( team_.GetId() ) );
-    for( CIT_Diplomacies it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
+    Iterator< const Team_ABC& > it = resolver_.CreateIterator();
+    while( it.HasMoreElements() )
     {
+        const Team_ABC& team = it.NextElement();
+        if( &team != &team_ )
+            continue;
         xos << start( "relationship" )
-                << attribute( "side", int( it->first->team_.GetId() ) )
-                << attribute( "diplomacy", it->second.GetValue() )
-            << end();
+                << attribute( "side", int( team.GetId() ) );
+        CIT_Diplomacies it = diplomacies_.find( &team.Get< Diplomacies >() );
+        if( it != diplomacies_.end() )
+            xos << attribute( "diplomacy", it->second.GetValue() );
+        else
+            xos << attribute( "diplomacy", Diplomacy::Neutral().GetValue() );
+        xos << end();
     }
 }
 
