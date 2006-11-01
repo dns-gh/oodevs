@@ -178,7 +178,14 @@
       tests
     ============================================================================
     -->
-    <target name="test" description="run all tests" depends="test-test-scripts,test-main-scripts"/>
+    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts" description="run all tests"/>
+
+    <target name="generate-license" description="generate license file in run directory">
+        <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>
+        <exec executable="${bin.dir}/paranoia_light.exe" failonerror="true" inputstring="${hostid}" output="${run.dir}/scipio.license"> <!-- FIXME license name is still scipio -->
+            <arg value="scipio"/>
+        </exec>
+    </target>
 
     <target name="test-main-scripts" description="run all tests">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
