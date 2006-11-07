@@ -23,6 +23,7 @@ namespace kernel
 }
 
 class Report_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  EventToolbar
@@ -34,6 +35,7 @@ class EventToolbar : public QToolBar
                    , public kernel::Observer_ABC
                    , public kernel::ElementObserver_ABC< Report_ABC >
                    , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
+                   , public kernel::ElementObserver_ABC< Simulation >
 {
     Q_OBJECT;
 
@@ -69,6 +71,7 @@ private:
     //@{
     virtual void NotifyCreated( const Report_ABC& report );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    virtual void NotifyUpdated( const Simulation& simulation );
     void UpdateMessageButton();
     //@}
 

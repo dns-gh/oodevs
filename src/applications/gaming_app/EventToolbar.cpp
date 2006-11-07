@@ -16,6 +16,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/Report_ABC.h"
 #include "gaming/statusicons.h"
+#include "gaming/Simulation.h"
 #include "clients_gui/resources.h"
 
 using namespace kernel;
@@ -111,6 +112,16 @@ void EventToolbar::NotifyUpdated( const Profile_ABC& profile )
             filtered.push_back( *it );
     std::swap( filtered, messageAgents_ );
     UpdateMessageButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: EventToolbar::NotifyUpdated
+// Created: SBO 2006-11-07
+// -----------------------------------------------------------------------------
+void EventToolbar::NotifyUpdated( const Simulation& simulation )
+{
+    if( !simulation.IsConnected() )
+        messageAgents_.clear();
 }
 
 // -----------------------------------------------------------------------------
