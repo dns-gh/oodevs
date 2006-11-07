@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Limit.h"
-#include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
@@ -21,55 +20,41 @@ using namespace xml;
 
 IDManager Limit::idManager_( 138 );
 
-//-----------------------------------------------------------------------------
-// Name: Limit constructor
-// Created: NLD 2002-08-08
-//-----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager_.GetFreeIdentifier(), converter, publisher )
-    , controller_( controller )
-    , nLevel_( eNatureLevel_None )
-{
-    controller_.Create( *this );
-    TacticalLine_ABC::UpdateToSim();
-}
-
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager_.GetFreeIdentifier(), pointList, converter, publisher )
+Limit::Limit( Controller& controller, Publisher_ABC& publisher )
+    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager_.GetFreeIdentifier(), publisher )
     , controller_( controller )
     , nLevel_( eNatureLevel_None )
 {
-    controller_.Create( *this );
-    TacticalLine_ABC::UpdateToSim();
+    controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
 
 //-----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), asnMsg.oid, asnMsg.geometrie, converter, publisher )
+Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg )
+    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), asnMsg.oid, publisher )
     , controller_( controller )
     , nLevel_( (E_NatureLevel) asnMsg.level )
 {
     idManager_.LockIdentifier( GetId() );
-    controller_.Create( *this );
+    controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( xis, converter, publisher )
+Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis )
+    : TacticalLine_ABC( xis, publisher )
     , controller_( controller )
 {
     idManager_.LockIdentifier( GetId() );
-    controller_.Create( *this );
+    controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
 
 //-----------------------------------------------------------------------------
@@ -78,7 +63,7 @@ Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xis
 //-----------------------------------------------------------------------------
 Limit::~Limit()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(kernel::TacticalLine_ABC*)this );
     idManager_.ReleaseIdentifier( GetId() );
 }
 
@@ -116,33 +101,6 @@ void Limit::UpdateToSim( E_State state )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Limit::Draw
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Limit::Draw( const GlTools_ABC& tools ) const
-{
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        if( nLevel_ == eNatureLevel_ooo )
-        {
-            glLineWidth( 4.f );
-            TacticalLine_ABC::Draw( tools );
-            glColor3f( 0.5f, 0.5f, 0.5f );
-            glLineWidth( 2.f );
-        }
-        else
-        {
-            glLineWidth( 5.f );
-            TacticalLine_ABC::Draw( tools );
-            glColor3f( 0.1f, 0.1f, 0.1f );
-            glLineWidth( 3.f );
-        }
-        TacticalLine_ABC::Draw( tools );
-        glColor3f( 0.f, 0.f, 0.f );
-        DrawName( tools );
-    glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Limit::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
@@ -176,7 +134,16 @@ void Limit::Activate( ActionController& actions ) const
 void Limit::Serialize( xml::xostream& xos ) const
 {
     xos << start( "limit" );
-        SerializeGeometry( xos );
+    TacticalLine_ABC::Serialize( xos );
+    Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
     xos << end();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Limit::IsLimit
+// Created: SBO 2006-11-07
+// -----------------------------------------------------------------------------
+bool Limit::IsLimit() const
+{
+    return true;
+}

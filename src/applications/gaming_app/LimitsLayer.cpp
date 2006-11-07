@@ -20,6 +20,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Serializable_ABC.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ParametersLayer.h"
 #include "xeumeuleu/xml.h"
@@ -32,15 +33,17 @@ using namespace xml;
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model )
-    : controllers_( controllers )
+LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+    : gui::EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile )
+    , controllers_( controllers )
     , tools_      ( tools )
     , strategy_   ( strategy )
     , parameters_ ( parameters )
     , model_      ( model )
-    , selected_   ( 0 )
     , type_       ( -1 )
+    , selected_   ( 0 )
 {
+    controllers_.Remove( *this );
     controllers_.Register( *this );
 }
 
@@ -54,205 +57,16 @@ LimitsLayer::~LimitsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimitsLayer::Paint
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::Paint( const geometry::Rectangle2f& viewport )
-{
-    if( drawLines_.IsSet( false ) )
-    {
-        for( CIT_Lines it = lines_.begin(); it != lines_.end(); ++it )
-        {
-            strategy_.SelectColor( **it );
-            (*it)->Draw( tools_ );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Save
-// Created: AGE 2006-09-06
-// -----------------------------------------------------------------------------
-void LimitsLayer::Save( const std::string& filename ) const
-{
-    xofstream xos( filename );
-    xos << start( "lines" );
-    for( CIT_Lines it = lines_.begin(); it != lines_.end(); ++it )
-        (*it)->Serialize( xos );
-    xos << end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Load
-// Created: AGE 2006-09-06
-// -----------------------------------------------------------------------------
-void LimitsLayer::Load( const std::string& filename )
-{
-    xifstream xis( filename );
-    xis >> start( "lines" )
-            >> list( *this, &LimitsLayer::ReadLine );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::ReadLine
-// Created: AGE 2006-09-06
-// -----------------------------------------------------------------------------
-void LimitsLayer::ReadLine( const std::string& name, xml::xistream& xis )
-{
-    T_PointVector points;
-    // $$$$ AGE 2006-09-06: id et name pas utilisés...
-    xis >> list( "points", *this, &LimitsLayer::ReadPoint, points );
-    if( name == "limit" )
-        model_.CreateLimit( points );
-    else
-    {
-        int type;
-        xis >> attribute( "type", type );
-        model_.CreateLima( E_FuncLimaType( type ), points );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::ReadPoint
-// Created: AGE 2006-09-06
-// -----------------------------------------------------------------------------
-void LimitsLayer::ReadPoint( xml::xistream& xis, T_PointVector& points )
-{
-    float x, y;
-    xis >> attribute( "x", x )
-        >> attribute( "y", y );
-    points.push_back( geometry::Point2f( x, y ) );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::NotifyCreated
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::NotifyCreated( const Lima& lima )
-{
-    Add( lima );   
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::NotifyDeleted
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::NotifyDeleted( const Lima& lima )
-{
-    Remove( lima );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::NotifyCreated
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::NotifyCreated( const Limit& limit )
-{
-    Add( limit );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::NotifyDeleted
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::NotifyDeleted( const Limit& limit )
-{
-    Remove( limit );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Add
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::Add( const ::TacticalLine_ABC& line )
-{
-    lines_.push_back( &line );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Remove
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::Remove( const ::TacticalLine_ABC& line )
-{
-    IT_Lines it = std::find( lines_.begin(), lines_.end(), &line );
-    if( it != lines_.end() )
-    {
-        if( lines_[ selected_ ] == *it )
-            selected_ = it - lines_.begin();
-        std::swap( *it, lines_.back() );
-        lines_.pop_back();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::HandleMousePress
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-bool LimitsLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
-{
-    if( ! mouse || mouse->state() == Qt::NoButton || lines_.empty() )
-        return false;
-    const int button = mouse->button();
-    
-    if( selected_ >= lines_.size() 
-     || ! IsInSelection( *lines_[ selected_ ], point ) 
-     || ( button == Qt::LeftButton && ++selected_ > lines_.size() ) )
-        selected_ = 0;
-
-    for( ; selected_ < lines_.size(); ++selected_ )
-    {
-        const ::TacticalLine_ABC& line = *lines_[ selected_ ];
-        if( IsInSelection( line, point ) )
-        {
-            if( button == Qt::LeftButton )
-                Select( line );
-            else if( button == Qt::RightButton )
-                ContextMenu( line, mouse->globalPos() );
-            return true;
-        }
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Select
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::Select( const ::TacticalLine_ABC& line )
-{
-    line.Select( controllers_.actions_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::ContextMenu
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::ContextMenu( const ::TacticalLine_ABC& line, const QPoint& point )
-{
-    line.ContextMenu( controllers_.actions_, point );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::IsInSelection
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-bool LimitsLayer::IsInSelection( const ::TacticalLine_ABC& line, const geometry::Point2f& point ) const
-{
-    return line.IsAt( point, 10.f * tools_.Pixels() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LimitsLayer::HandleKeyPress
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
 bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
 {
     const int key = k->key();
-    if( ( key == Qt::Key_BackSpace || key == Qt::Key_Delete ) && selected_ < lines_.size() )
+    if( ( key == Qt::Key_BackSpace || key == Qt::Key_Delete ) && selected_ )
     {
-        const_cast< ::TacticalLine_ABC* >( lines_[ selected_ ] )->Delete(); // $$$$ AGE 2006-03-24: 
+        kernel::TacticalLine_ABC* line = const_cast< kernel::TacticalLine_ABC* >( selected_ );
+        static_cast< ::TacticalLine_ABC* >( line )->Delete(); // $$$$ AGE 2006-03-24:  // $$$$ SBO 2006-11-07: 
         return true;
     }
     return false;
@@ -274,6 +88,16 @@ void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, ::ContextMenu& me
         limaMenu->setItemParameter( nId, n );
     }
     menu.InsertItem( "Parametre", tr( "Créer lima" ), limaMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::NotifySelected
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::NotifySelected( const kernel::TacticalLine_ABC* element )
+{
+    selected_ = element;
+    gui::EntityLayer< kernel::TacticalLine_ABC >::NotifySelected( element );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,6 +140,15 @@ void LimitsLayer::Handle( Location_ABC& location )
 {
     if( location.IsValid() )
         location.Accept( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::ShouldDisplay
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& )
+{
+    return drawLines_.IsSet( false );
 }
 
 // -----------------------------------------------------------------------------

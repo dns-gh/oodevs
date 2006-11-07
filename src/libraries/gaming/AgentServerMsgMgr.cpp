@@ -943,14 +943,12 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "LimitCreationAck" ) )
-    {
-        ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
-        if( limit )
-            limit->Update( message );
-        else
-            Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu.
-    }
+    CheckAcknowledge( message, "LimitCreationAck" );
+    ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
+    if( limit )
+        limit->Update( message );
+    else
+        Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu.
 }
 
 //-----------------------------------------------------------------------------

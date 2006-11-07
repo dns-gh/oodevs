@@ -15,7 +15,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "xeumeuleu/xml.h"
-#include <qobject.h>
 
 using namespace kernel;
 using namespace xml;
@@ -26,54 +25,40 @@ IDManager Lima::idManager_( 137 );
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, Publisher_ABC& publisher, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::ToString( eLimaFuncLCA ), idManager_.GetFreeIdentifier(), converter, publisher )
-    , controller_     ( controller )
-    , nFuncType_      ( eLimaFuncLCA )
-{
-    controller_.Create( *this );
-    TacticalLine_ABC::UpdateToSim();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima constructor
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::ToString( nFuncType ), idManager_.GetFreeIdentifier(), pointList, converter, publisher )
+Lima::Lima( Controller& controller, Publisher_ABC& publisher, E_FuncLimaType nFuncType )
+    : TacticalLine_ABC( tools::ToString( nFuncType ), idManager_.GetFreeIdentifier(), publisher )
     , controller_     ( controller )
     , nFuncType_      ( nFuncType )
 {
-    controller_.Create( *this );
-    TacticalLine_ABC::UpdateToSim();
+    controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( tools::ToString( (E_FuncLimaType)asnMsg.fonction ), asnMsg.oid, asnMsg.geometrie, converter, publisher )
+Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg )
+    : TacticalLine_ABC( tools::ToString( (E_FuncLimaType)asnMsg.fonction ), asnMsg.oid, publisher )
     , controller_     ( controller )
     , nFuncType_      ( (E_FuncLimaType)asnMsg.fonction )
 {
     idManager_.LockIdentifier( GetId() );
-    controller_.Create( *this );
+    controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
-    : TacticalLine_ABC( xis, converter, publisher )
+Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis )
+    : TacticalLine_ABC( xis, publisher )
     , controller_( controller )
 {
     int type = 0;
     xis >> xml::attribute( "type", type );
     nFuncType_ = E_FuncLimaType( type );
     idManager_.LockIdentifier( GetId() );
-    controller_.Create( *this );
+    controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
  
 // -----------------------------------------------------------------------------
@@ -82,7 +67,7 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistr
 // -----------------------------------------------------------------------------
 Lima::~Lima()
 {
-    controller_.Delete( *this );
+    controller_.Delete( *(kernel::TacticalLine_ABC*)this );
     idManager_.ReleaseIdentifier( GetId() );
 }
 
@@ -126,23 +111,6 @@ void Lima::UpdateToSim( E_State state )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Lima::Draw
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void Lima::Draw( const GlTools_ABC& tools ) const
-{
-    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glLineWidth( 5.0 );
-        TacticalLine_ABC::Draw( tools );
-        glLineWidth( 3.0 );
-        glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
-        TacticalLine_ABC::Draw( tools );
-        glColor3f( 0.f, 0.f, 0.f );
-        DrawName( tools );
-    glPopAttrib();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Lima::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
@@ -171,12 +139,22 @@ void Lima::Activate( ActionController& actions ) const
 
 // -----------------------------------------------------------------------------
 // Name: Lima::Serialize
-// Created: AGE 2006-09-06
+// Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
 void Lima::Serialize( xml::xostream& xos ) const
 {
     xos << start( "lima" )
             << attribute( "type", int( nFuncType_ ) );
-        SerializeGeometry( xos );
+    TacticalLine_ABC::Serialize( xos );
+    Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::IsLimit
+// Created: SBO 2006-11-07
+// -----------------------------------------------------------------------------
+bool Lima::IsLimit() const
+{
+    return false;
 }

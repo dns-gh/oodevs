@@ -51,7 +51,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( MAKE_ICON( open ), tr( "Ouvrir fichier d'ordres..." ), &recorderToolBar, SLOT( Play() ) );
     menu->insertItem( MAKE_ICON( save ), tr( "Enregistrer fichier d'ordre..." ), &recorderToolBar, SLOT( Stop() ) );
     menu->insertSeparator();
-    menu->insertItem( tr( "&Quitter" ), qApp, SLOT( quit() ), CTRL + Key_Q );
+    menu->insertItem( tr( "&Quitter" ), pParent, SLOT( close() ), CTRL + Key_Q );
     itemId = insertItem( tr( "&Fichier" ), menu );
     setAccel( ALT + Key_F, itemId );
 

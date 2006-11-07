@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "TacticalLine_ABC.h"
 #include "ASN_Messages.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "TacticalLinePositions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
@@ -20,64 +20,30 @@ using namespace xml;
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
-    : converter_    ( converter )
-    , publisher_    ( publisher )
+TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, Publisher_ABC& publisher )
+    : publisher_    ( publisher )
     , id_           ( id )
     , nState_       ( eStateCreated )
     , nNetworkState_( eNetworkStateNotRegistered )
     , bCreatedBy    ( true )
 {
+    RegisterSelf( *this );
     strName_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC constructor
-// Created: APE 2004-04-14
-// -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const T_PointVector& points, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
-    : converter_    ( converter )
-    , publisher_    ( publisher )
-    , id_           ( id )
-    , nState_       ( eStateCreated )
-    , nNetworkState_( eNetworkStateNotRegistered )
-    , bCreatedBy    ( true )
-    , pointList_    ( points )   
-{
-    strName_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC constructor
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, const ASN1T_Line& line, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
-    : converter_    ( converter )
-    , publisher_    ( publisher )
-    , id_           ( id )
-    , nState_       ( eStateOk )
-    , nNetworkState_( eNetworkStateRegistered )
-    , bCreatedBy    ( false )
-{
-    strName_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
-    for( uint i = 0; i != line.vecteur_point.n ; ++i )
-        pointList_.push_back( converter.ConvertToXY( line.vecteur_point.elem[i] ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher )
-    : converter_( converter )
-    , publisher_( publisher )
+TacticalLine_ABC::TacticalLine_ABC( xml::xistream& xis, Publisher_ABC& publisher )
+    : publisher_( publisher )
 {
+    RegisterSelf( *this );
     std::string name;
     int id;
     xis >> attribute( "name", name )
         >> attribute( "id", id );
     strName_ = name.c_str(); id_ = id;
-    xis >> list( "point", *this, &TacticalLine_ABC::ReadPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +53,15 @@ TacticalLine_ABC::TacticalLine_ABC( xml::xistream& xis, const kernel::Coordinate
 TacticalLine_ABC::~TacticalLine_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::DoUpdate
+// Created: SBO 2006-11-06
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::Polish()
+{
+    UpdateToSim();
 }
 
 // -----------------------------------------------------------------------------
@@ -178,44 +153,8 @@ QString TacticalLine_ABC::GetName() const
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line )
 {
-    line.type               = EnumTypeLocalisation::line;
-    line.vecteur_point.n    = pointList_.size();
-    line.vecteur_point.elem = new ASN1T_CoordUTM[ pointList_.size() ];
-
-    unsigned int i = 0;
-    for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-    {
-        const std::string strMGRS = converter_.ConvertToMgrs( *itPoint );
-        line.vecteur_point.elem[i] = strMGRS.c_str();
-        ++i;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::SerializeGeometry
-// Created: AGE 2006-09-06
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::SerializeGeometry( xml::xostream& xos ) const
-{
-    xos << attribute( "name", std::string( strName_.ascii() ) )
-        << attribute( "id", int( id_ ) );
-    for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-        xos << start( "point" )
-                << attribute( "x", itPoint->X() )
-                << attribute( "y", itPoint->Y() )
-            << end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::ReadPoint
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::ReadPoint( xml::xistream& xis )
-{
-    float x, y;
-    xis >> attribute( "x", x )
-        >> attribute( "y", y );
-    pointList_.push_back( geometry::Point2f( x, y ) );
+    // $$$$ SBO 2006-11-06: visitor or something
+    static_cast< TacticalLinePositions& >( Get< kernel::Positions >() ).WriteGeometry( line );
 }
 
 // -----------------------------------------------------------------------------
@@ -229,42 +168,23 @@ void TacticalLine_ABC::UpdateToSim()
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::Draw
-// Created: AGE 2006-03-24
+// Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Draw( const kernel::GlTools_ABC& tools ) const
+void TacticalLine_ABC::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawLines( pointList_ );
+//    if( ! pointList_.empty() ) // $$$$ SBO 2006-11-07: Get< kernel::Positions >().IsSet()
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        glColor3f( 0.f, 0.f, 0.f );
+        tools.Print( strName_.ascii(), Get< kernel::Positions >().GetPosition() );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::DrawName
-// Created: AGE 2006-03-24
+// Name: TacticalLine_ABC::Serialize
+// Created: AGE 2006-09-06
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::DrawName( const kernel::GlTools_ABC& tools ) const
+void TacticalLine_ABC::Serialize( xml::xostream& xos ) const
 {
-    if( ! pointList_.empty() )
-        tools.Print( strName_.ascii(), pointList_.front() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::IsAt
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-bool TacticalLine_ABC::IsAt( const geometry::Point2f& point, float precision /*= 100.f*/ ) const
-{
-    precision*=precision;
-    if( pointList_.empty() )
-        return false;
-    if( pointList_.size() == 1 )
-        return pointList_.front().SquareDistance( point ) <= precision;
-
-    CIT_PointVector previous = pointList_.begin();
-    for( CIT_PointVector current = previous + 1; current != pointList_.end(); ++current )
-    {
-        const geometry::Segment2f segment( *previous, *current );
-        if( segment.SquareDistance( point ) < precision )
-            return true;
-        previous = current;
-    }
-    return false;
+    xos << attribute( "name", std::string( strName_.ascii() ) )
+        << attribute( "id", int( id_ ) );
 }

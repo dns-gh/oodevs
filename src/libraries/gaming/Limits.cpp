@@ -67,8 +67,8 @@ void Limits::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& 
        && tools.ShouldDisplay( "TacticalLines" ) )
     {
        if( right_ )
-           right_->Draw( tools );
+           ((kernel::Drawable_ABC*)right_)->Draw( where, viewport, tools );
        if( left_ )
-           left_->Draw( tools );
+           ((kernel::Drawable_ABC*)left_)->Draw( where, viewport, tools );
     }
 }

@@ -67,6 +67,13 @@ protected:
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual void Draw( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& viewport );
 
+    template< typename Functor >
+    void Apply( Functor& functor ) const
+    {
+        for( CIT_Entities it = entities_.begin(); it != entities_.end(); ++it )
+            functor( **it );
+    }
+
     virtual void AddEntity( const kernel::Entity_ABC& );
     virtual bool RemoveEntity( const kernel::Entity_ABC& );
     virtual void ActivateEntity( const kernel::Entity_ABC& );
@@ -94,6 +101,7 @@ private:
     //@{
     typedef std::vector< const kernel::Entity_ABC* >  T_Entities;
     typedef T_Entities::iterator                     IT_Entities;
+    typedef T_Entities::const_iterator              CIT_Entities;
     //@}
         
 private:

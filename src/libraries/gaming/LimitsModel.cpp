@@ -12,8 +12,9 @@
 #include "TacticalLine_ABC.h"
 #include "Limit.h"
 #include "Lima.h"
-#include "clients_kernel/Controllers.h"
 #include "Publisher_ABC.h"
+#include "TacticalLinePositions.h"
+#include "clients_kernel/Controllers.h"
 #include "xeumeuleu/xml.h"
 
 // -----------------------------------------------------------------------------
@@ -65,7 +66,8 @@ void LimitsModel::UseSimTacticalLines()
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const ASN1T_MsgLimitCreation& asnMsg )
 {
-    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, asnMsg, converter_ );
+    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, asnMsg );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.geometrie, converter_, *line ) );
     Register( asnMsg.oid, *line );
 }
 
@@ -75,7 +77,8 @@ void LimitsModel::Create( const ASN1T_MsgLimitCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void LimitsModel::Create( const ASN1T_MsgLimaCreation& asnMsg )
 {
-    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, asnMsg, converter_ );
+    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, asnMsg );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.geometrie, converter_, *line ) );
     Register( asnMsg.oid, *line );
 }
 
@@ -85,8 +88,10 @@ void LimitsModel::Create( const ASN1T_MsgLimaCreation& asnMsg )
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLimit( const T_PointVector& points )
 {
-    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, points, converter_ );
+    TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_ );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, *line ) );
     Register( line->GetId(), *line );
+    line->Polish();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,8 +100,10 @@ void LimitsModel::CreateLimit( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLima( E_FuncLimaType type, const T_PointVector& points )
 {
-    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, points, type, converter_ );
+    TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, type );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, *line ) );
     Register( line->GetId(), *line );
+    line->Polish();
 }
 
 // -----------------------------------------------------------------------------
@@ -141,11 +148,14 @@ void LimitsModel::ReadLine( const std::string& name, xml::xistream& xis )
 {
     TacticalLine_ABC* line = 0;
     if( name == "lima" )
-        line = new Lima( controllers_.controller_, publisher_, xis, converter_ );
+        line = new Lima( controllers_.controller_, publisher_, xis );
     else if( name == "limit" )
-        line = new Limit( controllers_.controller_, publisher_, xis, converter_ );
+        line = new Limit( controllers_.controller_, publisher_, xis );
     if( line )
+    {
+        line->Attach< kernel::Positions >( *new TacticalLinePositions( xis, converter_, *line ) );
         Register( line->GetId(), *line );
+    }
 }
 
 // -----------------------------------------------------------------------------

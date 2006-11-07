@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class Controller;
 }
 
@@ -31,21 +30,20 @@ class Limit : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter);
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter );
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+             Limit( kernel::Controller& controller, Publisher_ABC& publisher );
+             Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg );
+             Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis );
     virtual ~Limit();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     virtual void Select( kernel::ActionController& actions ) const;
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual bool IsLimit() const;
     //@}
 
 private:

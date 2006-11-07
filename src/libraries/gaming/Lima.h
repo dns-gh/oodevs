@@ -31,21 +31,21 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const T_PointVector& pointList, E_FuncLimaType nFuncType, const kernel::CoordinateConverter_ABC& converter );
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
+//             Lima( kernel::Controller& controller, Publisher_ABC& publisher );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, E_FuncLimaType nFuncType );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis );
     virtual ~Lima();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     virtual void Select( kernel::ActionController& actions ) const;
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual bool IsLimit() const;
     //@}
 
 private:

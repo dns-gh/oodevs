@@ -18,6 +18,8 @@
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/TacticalLine_ABC.h"
+#include "clients_gui/EntityLayer.h"
 
 namespace kernel
 {
@@ -26,17 +28,14 @@ namespace kernel
     class Location_ABC;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace gui
 {
     class ColorStrategy_ABC;
     class ParametersLayer;
+    class View_ABC;
 }
 
+class Profile;
 class Lima;
 class Limit;
 class LimitsModel;
@@ -45,16 +44,11 @@ class TacticalLine_ABC;
 // =============================================================================
 /** @class  LimitsLayer
     @brief  LimitsLayer
-    // $$$$ AGE 2006-08-22: utiliser EntityLayer
-    // $$$$ AGE 2006-09-06: Bouger dans gaming_app
 */
 // Created: AGE 2006-03-24
 // =============================================================================
 class LimitsLayer : public QObject
-                  , public gui::Layer_ABC
-                  , public kernel::Observer_ABC
-                  , public kernel::ElementObserver_ABC< Lima >
-                  , public kernel::ElementObserver_ABC< Limit >
+                  , public gui::EntityLayer< kernel::TacticalLine_ABC >
                   , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                   , public kernel::OptionsObserver_ABC
                   , private gui::ShapeHandler_ABC
@@ -66,20 +60,8 @@ class LimitsLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, LimitsModel& model );
+             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, LimitsModel& model, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Paint( const geometry::Rectangle2f& viewport );
-    //@}
-
-public slots:
-    //! @name 
-    //@{
-    void Load( const std::string& filename );
-    void Save( const std::string& filename ) const;
     //@}
 
 private slots:
@@ -98,25 +80,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const Lima& );
-    virtual void NotifyDeleted( const Lima& );
-
-    virtual void NotifyCreated( const Limit& );
-    virtual void NotifyDeleted( const Limit& );
-
-    void Add( const TacticalLine_ABC& line );
-    void Remove( const TacticalLine_ABC& line );
-
     virtual bool HandleKeyPress  ( QKeyEvent* key );
-    virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );
-
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu );
-
-    virtual bool IsInSelection( const TacticalLine_ABC& line, const geometry::Point2f& point ) const;
-    void Select( const TacticalLine_ABC& line );
-    void ContextMenu( const TacticalLine_ABC& line, const QPoint& point );
+    virtual void NotifySelected( const kernel::TacticalLine_ABC* element );
 
     virtual void Handle( kernel::Location_ABC& location );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
@@ -124,16 +93,6 @@ private:
     virtual void VisitPolygon( const T_PointVector& ) {};
     virtual void VisitCircle ( const geometry::Point2f& , float ) {};
     virtual void VisitPoint  ( const geometry::Point2f& ) {};
-
-    void ReadLine( const std::string& name, xml::xistream& xis );
-    void ReadPoint( xml::xistream& xis, T_PointVector& points );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< const TacticalLine_ABC* > T_Lines;
-    typedef T_Lines::iterator                     IT_Lines;
-    typedef T_Lines::const_iterator              CIT_Lines;
     //@}
 
 private:
@@ -146,9 +105,8 @@ private:
     LimitsModel& model_;
 
     kernel::TristateOption drawLines_;
-    T_Lines lines_;
-    unsigned selected_;
     int type_;
+    const kernel::TacticalLine_ABC* selected_;
     //@}
 };
 
