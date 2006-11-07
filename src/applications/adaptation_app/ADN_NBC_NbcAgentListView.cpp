@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_NBC_NbcAgentListView.cpp $
-// $Author: Ape $
-// $Modtime: 8/04/05 15:04 $
-// $Revision: 12 $
-// $Workfile: ADN_NBC_NbcAgentListView.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_NbcAgentListView.h"
@@ -74,14 +65,11 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_NBC_GUI::eNbrGuiElements );
 
     vItemConnectors_[ADN_NBC_GUI::eName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eNbrOk]->Connect( &pInfos->rNbAlivedHumans_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eNbrHurt1]->Connect( &pInfos->rNbHurtedHumans1_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eNbrHurt2]->Connect( &pInfos->rNbHurtedHumans2_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eNbrHurt3]->Connect( &pInfos->rNbHurtedHumans3_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eNbrHurt4]->Connect( &pInfos->rNbHurtedHumansE_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eNbrDead]->Connect( &pInfos->rNbDeadHumans_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eLifetime]->Connect( &pInfos->lifeTime_, bConnect );
-    vItemConnectors_[ADN_NBC_GUI::eSpreadAngle]->Connect( &pInfos->rSpreadAngle_, bConnect );
+    vItemConnectors_[ADN_NBC_GUI::eLiquidGroup]->Connect( &pInfos->liquidInfos_, bConnect );
+    vItemConnectors_[ADN_NBC_GUI::eGazGroup]->Connect( &pInfos->gazInfos_.intoxInfos_, bConnect );
+    vItemConnectors_[ADN_NBC_GUI::eGazLifetime]->Connect( &pInfos->gazInfos_.lifeTime_, bConnect );
+    vItemConnectors_[ADN_NBC_GUI::eGazSpreadAngle]->Connect( &pInfos->gazInfos_.rSpreadAngle_, bConnect );
+    vItemConnectors_[ADN_NBC_GUI::eGazGroupPresent]->Connect( &pInfos->bGazPresent_, bConnect );
 }
 
 

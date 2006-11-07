@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_NBC_GUI.h $
-// $Author: Ape $
-// $Modtime: 25/03/05 16:38 $
-// $Revision: 6 $
-// $Workfile: ADN_NBC_GUI.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_NBC_GUI_h_
 #define __ADN_NBC_GUI_h_
@@ -41,14 +32,11 @@ public:
     enum E_GuiElements
     {
         eName,
-        eNbrOk,
-        eNbrHurt1,
-        eNbrHurt2,
-        eNbrHurt3,
-        eNbrHurt4,
-        eNbrDead,
-        eLifetime,
-        eSpreadAngle,
+        eLiquidGroup,
+        eGazGroupPresent,
+        eGazGroup,
+        eGazLifetime,
+        eGazSpreadAngle,
         eNbrGuiElements
     };
 

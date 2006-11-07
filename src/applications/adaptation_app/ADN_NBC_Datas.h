@@ -39,6 +39,58 @@ class ADN_NBC_Datas : public ADN_Data_ABC
 
 public:
 //*****************************************************************************
+    class NbcIntoxInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( NbcIntoxInfos )
+
+    public:
+        NbcIntoxInfos( const std::string& nodeName );
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void CopyFrom( NbcIntoxInfos& infos );
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        std::string     nodeName_;
+        ADN_Type_Bool   bIntoxPresent_;
+        ADN_Type_Double rNbAlivedHumans_;
+        ADN_Type_Double rNbHurtedHumans1_;
+        ADN_Type_Double rNbHurtedHumans2_;
+        ADN_Type_Double rNbHurtedHumans3_;
+        ADN_Type_Double rNbHurtedHumansE_;
+        ADN_Type_Double rNbDeadHumans_;
+        ADN_Type_Bool   bContaminationPresent_;
+    };
+
+    class NbcGazInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( NbcGazInfos )
+
+    public:
+        NbcGazInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void CopyFrom( NbcGazInfos& infos );
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        NbcIntoxInfos   intoxInfos_;
+        ADN_Type_Time   lifeTime_;
+        ADN_Type_Double rSpreadAngle_;
+    };
+
     class NbcAgentInfos
        : public ADN_Ref_ABC
        , public ADN_DataTreeNode_ABC
@@ -58,17 +110,10 @@ public:
 
     public:
         ADN_Type_String strName_;
-        int nMosId_;
-
-        ADN_Type_Double rNbAlivedHumans_;
-        ADN_Type_Double rNbHurtedHumans1_;
-        ADN_Type_Double rNbHurtedHumans2_;
-        ADN_Type_Double rNbHurtedHumans3_;
-        ADN_Type_Double rNbHurtedHumansE_;
-        ADN_Type_Double rNbDeadHumans_;
-        
-        ADN_Type_Time   lifeTime_;
-        ADN_Type_Double rSpreadAngle_;
+        int             nMosId_;
+        NbcIntoxInfos   liquidInfos_;
+        ADN_Type_Bool   bGazPresent_;
+        NbcGazInfos     gazInfos_;
     };
 
     typedef ADN_Type_Vector_ABC< NbcAgentInfos > T_NbcAgentInfos_Vector;

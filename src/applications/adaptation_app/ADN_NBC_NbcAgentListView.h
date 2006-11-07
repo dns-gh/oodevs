@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_NBC_NbcAgentListView.h $
-// $Author: Ape $
-// $Modtime: 1/03/05 10:45 $
-// $Revision: 3 $
-// $Workfile: ADN_NBC_NbcAgentListView.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_NBC_NbcAgentListView_h_
 #define __ADN_NBC_NbcAgentListView_h_

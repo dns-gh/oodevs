@@ -3708,7 +3708,7 @@ du tireur</translation>
     </message>
     <message>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
         <source>Lifetime</source>
@@ -3732,11 +3732,54 @@ du tireur</translation>
     </message>
     <message>
         <source>Human attritions</source>
-        <translation>Attritions humaines</translation>
+        <translation type="obsolete">Attritions humaines</translation>
+    </message>
+    <message>
+        <source>Unhurt</source>
+        <translation type="obsolete">Indemne</translation>
+    </message>
+    <message>
+        <source>U1</source>
+        <translation type="obsolete">U1</translation>
+    </message>
+    <message>
+        <source>U2</source>
+        <translation type="obsolete">U2</translation>
+    </message>
+    <message>
+        <source>U3</source>
+        <translation type="obsolete">U3</translation>
+    </message>
+    <message>
+        <source>UE</source>
+        <translation type="obsolete">UE</translation>
+    </message>
+    <message>
+        <source>Killed</source>
+        <translation type="obsolete">Tués</translation>
+    </message>
+    <message>
+        <source>Liquid</source>
+        <translation>Liquide</translation>
+    </message>
+    <message>
+        <source>Gaz</source>
+        <translation>Gaz</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_NBC_Intox_GUI</name>
+    <message>
+        <source>Intoxication</source>
+        <translation>Intoxication</translation>
     </message>
     <message>
         <source>Unhurt</source>
         <translation>Indemne</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
     </message>
     <message>
         <source>U1</source>
@@ -3757,6 +3800,10 @@ du tireur</translation>
     <message>
         <source>Killed</source>
         <translation>Tués</translation>
+    </message>
+    <message>
+        <source>Contamination</source>
+        <translation>Contamination</translation>
     </message>
 </context>
 <context>
@@ -5987,6 +6034,30 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Detruit</source>
         <translation>Détruit</translation>
     </message>
+    <message>
+        <source>explosif</source>
+        <translation type="unfinished">explosif</translation>
+    </message>
+    <message>
+        <source>grenade</source>
+        <translation type="unfinished">grenade</translation>
+    </message>
+    <message>
+        <source>aced</source>
+        <translation type="unfinished">aced</translation>
+    </message>
+    <message>
+        <source>fumigene</source>
+        <translation type="unfinished">fumigène</translation>
+    </message>
+    <message>
+        <source>eclairant</source>
+        <translation type="unfinished">éclairant</translation>
+    </message>
+    <message>
+        <source>mine</source>
+        <translation type="unfinished">mine</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Composantes_GUI</name>
@@ -6593,27 +6664,27 @@ Erreur: %3</translation>
     <name>ENT_Tr</name>
     <message>
         <source>explosif</source>
-        <translation>explosif</translation>
+        <translation type="obsolete">explosif</translation>
     </message>
     <message>
         <source>grenade</source>
-        <translation>grenade</translation>
+        <translation type="obsolete">grenade</translation>
     </message>
     <message>
         <source>aced</source>
-        <translation>aced</translation>
+        <translation type="obsolete">aced</translation>
     </message>
     <message>
         <source>fumigene</source>
-        <translation>fumigène</translation>
+        <translation type="obsolete">fumigène</translation>
     </message>
     <message>
         <source>eclairant</source>
-        <translation>éclairant</translation>
+        <translation type="obsolete">éclairant</translation>
     </message>
     <message>
         <source>mine</source>
-        <translation>mine</translation>
+        <translation type="obsolete">mine</translation>
     </message>
 </context>
 <context>

@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-05-06 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_NBC_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 18/04/05 11:38 $
-// $Revision: 12 $
-// $Workfile: ADN_NBC_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_NBC_GUI.h"
@@ -24,10 +15,11 @@
 #include "ADN_NBC_Datas.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_NBC_NbcAgentListView.h"
+#include "ADN_NBC_Intox_GUI.h"
 #include "ADN_GuiBuilder.h"
-
 #include "ADN_Validator.h"
 #include "ADN_TimeField.h"
+#include "ADN_GroupBox.h"
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -82,17 +74,23 @@ void ADN_NBC_GUI::Build()
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Lifetime" ), vInfosConnectors[eLifetime] );
-    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Spread angle" ), vInfosConnectors[eSpreadAngle], tr( "°" ) );
-    builder.SetValidator( new ADN_DoubleValidator( 0.01, 360, 2, this ) );
 
-    QGroupBox* pAttritionsGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Human attritions" ), pGroup );
-    builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "Unhurt" ), vInfosConnectors[eNbrOk], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "U1" ), vInfosConnectors[eNbrHurt1], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "U2" ), vInfosConnectors[eNbrHurt2], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "U3" ), vInfosConnectors[eNbrHurt3], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "UE" ), vInfosConnectors[eNbrHurt4], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pAttritionsGroup, tr( "Killed" ), vInfosConnectors[eNbrDead], tr( "%" ), ePercentage );
+    QHBox* hBox = new QHBox( pGroup );
+    hBox->setSpacing( 5 );
+
+    QGroupBox* liquidGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Liquid" ), hBox );
+    ADN_NBC_Intox_GUI* liquid = new ADN_NBC_Intox_GUI( liquidGroup );
+    vInfosConnectors[eLiquidGroup] = &liquid->GetConnector();
+
+    ADN_GroupBox* gazGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Gaz" ), hBox );
+    vInfosConnectors[eGazGroupPresent] = &gazGroup->GetConnector();
+
+    ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup );
+    vInfosConnectors[eGazGroup] = &gaz->GetConnector();
+    pHolder = builder.AddFieldHolder( gazGroup );
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Lifetime" ), vInfosConnectors[eGazLifetime] );
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
+    builder.SetValidator( new ADN_DoubleValidator( 0.01, 360, 2, this ) );
 
     pNBCAgentListView->SetItemConnectors( vInfosConnectors );
 
