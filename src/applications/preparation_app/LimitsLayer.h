@@ -37,7 +37,7 @@ namespace gui
 
 class Lima;
 class Limit;
-class LimitsModel;
+class ModelBuilder;
 class TacticalLine_ABC;
 
 // =============================================================================
@@ -59,7 +59,7 @@ class LimitsLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, LimitsModel& model, gui::View_ABC& view, const kernel::Profile_ABC& profile );
+             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
 
@@ -101,7 +101,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     gui::ColorStrategy_ABC& strategy_;
     gui::ParametersLayer& parameters_;
-    LimitsModel& model_;
+    ModelBuilder& modelBuilder_;
 
     kernel::TristateOption drawLines_;
     int type_;

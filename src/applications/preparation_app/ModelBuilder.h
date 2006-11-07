@@ -13,6 +13,7 @@
 #include <qobject.h>
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "preparation/Types.h"
 
 namespace kernel
 {
@@ -23,6 +24,7 @@ namespace kernel
     class Formation_ABC;
     class Agent_ABC;
     class Automat_ABC;
+    class Entity_ABC;
 }
 
 class Model;
@@ -54,6 +56,8 @@ public:
     //! @name Operations
     //@{
     void ClearSelection();
+    void CreateLimit( const T_PointVector& points );
+    void CreateLima ( const T_PointVector& points, E_FuncLimaType type );
     //@}
 
 public slots:
@@ -82,6 +86,8 @@ private:
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
+
+    const kernel::Entity_ABC* FindTacticalLineSuperior() const;
     //@}
 
 private:

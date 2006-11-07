@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "preparation_app_pch.h"
 #include "LimitsLayer.h"
 #include "moc_LimitsLayer.cpp"
 
-#include "gaming/Lima.h"
-#include "gaming/Limit.h"
-#include "gaming/LimitsModel.h"
-#include "gaming/Tools.h"
+#include "ModelBuilder.h"
+#include "preparation/Lima.h"
+#include "preparation/Limit.h"
+#include "preparation/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Location_ABC.h"
@@ -33,15 +33,15 @@ using namespace xml;
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile )
     : gui::EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile )
-    , controllers_( controllers )
-    , tools_      ( tools )
-    , strategy_   ( strategy )
-    , parameters_ ( parameters )
-    , model_      ( model )
-    , type_       ( -1 )
-    , selected_   ( 0 )
+    , controllers_ ( controllers )
+    , tools_       ( tools )
+    , strategy_    ( strategy )
+    , parameters_  ( parameters )
+    , modelBuilder_( modelBuilder )
+    , type_        ( -1 )
+    , selected_    ( 0 )
 {
     controllers_.Remove( *this );
     controllers_.Register( *this );
@@ -65,8 +65,7 @@ bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
     const int key = k->key();
     if( ( key == Qt::Key_BackSpace || key == Qt::Key_Delete ) && selected_ )
     {
-        kernel::TacticalLine_ABC* line = const_cast< kernel::TacticalLine_ABC* >( selected_ );
-        static_cast< ::TacticalLine_ABC* >( line )->Delete(); // $$$$ AGE 2006-03-24:  // $$$$ SBO 2006-11-07: 
+        delete selected_; // $$$$ SBO 2006-11-07: 
         return true;
     }
     return false;
@@ -127,9 +126,9 @@ void LimitsLayer::OnCreateLima( int i )
 void LimitsLayer::VisitLines( const T_PointVector& points )
 {
     if( type_ == -1 )
-        model_.CreateLimit( points );
+        modelBuilder_.CreateLimit( points );
     else
-        model_.CreateLima( E_FuncLimaType( type_ ), points );
+        modelBuilder_.CreateLima( points, E_FuncLimaType( type_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +147,7 @@ void LimitsLayer::Handle( Location_ABC& location )
 // -----------------------------------------------------------------------------
 bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& )
 {
-    return drawLines_.IsSet( false );
+    return true;//drawLines_.IsSet( false ); // $$$$ SBO 2006-11-07: 
 }
 
 // -----------------------------------------------------------------------------

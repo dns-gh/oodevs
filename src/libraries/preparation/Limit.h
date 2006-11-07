@@ -1,0 +1,59 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __Limit_h_
+#define __Limit_h_
+
+#include "TacticalLine_ABC.h"
+
+namespace kernel
+{
+    class Controller;
+}
+
+// =============================================================================
+/** @class  Limit
+    @brief  Represents a limit.
+*/
+// Created: APE 2004-03-12
+// =============================================================================
+class Limit : public TacticalLine_ABC
+{
+
+public:
+    //! @name Constructor/Destructor
+    //@{
+             Limit( kernel::Controller& controller, IdManager& idManager );
+             Limit( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager );
+    virtual ~Limit();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Select( kernel::ActionController& actions ) const;
+    virtual void ContextMenu( kernel::ActionController& actions, const QPoint& point ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
+
+    virtual bool IsLimit() const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Limit( const Limit& );
+    Limit& operator=( const Limit& );
+    //@}
+
+private:
+    kernel::Controller& controller_;
+    E_NatureLevel  nLevel_;
+    //@}
+};
+
+#endif // __Limit_h_

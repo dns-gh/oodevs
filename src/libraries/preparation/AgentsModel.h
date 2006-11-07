@@ -33,6 +33,7 @@ namespace xml
 }
 
 class AgentFactory_ABC;
+class LimitsModel;
 
 // =============================================================================
 /** @class  AgentsModel
@@ -59,7 +60,7 @@ public:
     //! @name Operations
     //@{
     void CreateAutomat( kernel::Formation_ABC& parent, const kernel::AutomatType& type, const geometry::Point2f& position );
-    void CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent );
+    void CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent, LimitsModel& limits );
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
 

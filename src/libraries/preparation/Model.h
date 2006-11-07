@@ -32,6 +32,7 @@ class AgentFactory_ABC;
 class FormationModel;
 class FormationFactory_ABC;
 class IdManager;
+class LimitsModel;
 
 // =============================================================================
 /** @class  Model
@@ -73,6 +74,7 @@ public:
     KnowledgeGroupsModel& knowledgeGroups_;
     AgentsModel& agents_;
     FormationModel& formations_;
+    LimitsModel& limits_;
     //@}
 
 private:

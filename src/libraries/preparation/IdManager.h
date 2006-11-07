@@ -43,7 +43,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned long currentId_;
+    unsigned long max_;
     //@}
 };
 

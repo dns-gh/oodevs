@@ -12,6 +12,7 @@
 #include "FormationFactory_ABC.h"
 #include "AgentsModel.h"
 #include "Model.h"
+#include "LimitsModel.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
@@ -64,8 +65,10 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
 {
     Formation_ABC* formation = factory_.Create( xis, parent, levels_ );
     Register( formation->GetId(), *formation );
-    xis >> list( "formation", *this        , &FormationModel::Create, *(Entity_ABC*)formation, model );
-    xis >> list( "automat"  , model.agents_, &AgentsModel::CreateAutomat, *formation );
+    xis >> list( "formation", *this        , &FormationModel::Create    , *(Entity_ABC*)formation, model )
+        >> list( "automat"  , model.agents_, &AgentsModel::CreateAutomat, *formation, model.limits_ )
+        >> list( "lima"     , model.limits_, &LimitsModel::CreateLima   , *(Entity_ABC*)formation )
+        >> list( "limit"    , model.limits_, &LimitsModel::CreateLimit  , *(Entity_ABC*)formation );
 }
 
 // -----------------------------------------------------------------------------

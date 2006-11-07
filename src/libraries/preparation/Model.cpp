@@ -18,6 +18,7 @@
 #include "FormationFactory.h"
 #include "FormationModel.h"
 #include "IdManager.h"
+#include "LimitsModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PathTools.h"
@@ -40,6 +41,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
+    , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
 {
     // NOTHING
 }
@@ -50,6 +52,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &limits_;
     delete &formations_;
     delete &formationFactory_;
     delete &agents_;
@@ -66,6 +69,8 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    limits_.Purge();
+    formations_.Purge();
     agents_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();

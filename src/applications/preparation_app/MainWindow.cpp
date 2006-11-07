@@ -28,6 +28,7 @@
 #include "AgentsLayer.h"
 #include "ModelBuilder.h"
 #include "Dialogs.h"
+#include "LimitsLayer.h"
 #include "PreparationProfile.h"
 #include "preparation/Exceptions.h"
 
@@ -66,7 +67,6 @@
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/MissionLayer.h"
-//#include "clients_gui/LimitsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/IconLayout.h"
@@ -212,7 +212,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
-//    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.limits_ );
+    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
 //    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
@@ -224,7 +224,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( terrain );
     glProxy_->Register( grid );
 //    glProxy_->Register( meteo );
-//    glProxy_->Register( limits );
+    glProxy_->Register( limits );
     glProxy_->Register( objectsLayer );
     glProxy_->Register( populations );
     glProxy_->Register( agents );
@@ -237,7 +237,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     eventStrategy->Register( agents );
     eventStrategy->Register( populations );
     eventStrategy->Register( objectsLayer );
-//    eventStrategy->Register( limits );
+    eventStrategy->Register( limits );
     eventStrategy->Register( metrics );
     eventStrategy->SetDefault( defaultLayer );
 }

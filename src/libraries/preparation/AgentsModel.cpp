@@ -16,6 +16,7 @@
 #include "MedicalStates.h"
 #include "SupplyStates.h"
 #include "Tc2States.h"
+#include "LimitsModel.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
@@ -132,11 +133,13 @@ void AgentsModel::CreateAutomat( kernel::Formation_ABC& parent, const kernel::Au
 // Name: AgentsModel::CreateAutomat
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent )
+void AgentsModel::CreateAutomat( xml::xistream& xis, kernel::Formation_ABC& parent, LimitsModel& limits )
 {
     Automat_ABC* agent = agentFactory_.Create( xis, parent );
     Resolver< Automat_ABC >::Register( agent->GetId(), *agent );
-    xis >> list( "unit", *this, &AgentsModel::CreateAgent, *agent );
+    xis >> list( "unit" , *this , &AgentsModel::CreateAgent, *agent )
+        >> list( "lima" , limits, &LimitsModel::CreateLima , *(Entity_ABC*)agent )
+        >> list( "limit", limits, &LimitsModel::CreateLimit, *(Entity_ABC*)agent );
 }
     
 // -----------------------------------------------------------------------------

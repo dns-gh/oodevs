@@ -8,51 +8,49 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "IdManager.h"
+#include "TacticalLines.h"
+#include "TacticalLine_ABC.h"
+#include "xeumeuleu/xml.h"
+
+using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: IdManager constructor
-// Created: SBO 2006-09-26
+// Name: TacticalLines constructor
+// Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-IdManager::IdManager()
-    : max_( 1 )
+TacticalLines::TacticalLines()
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
-// Name: IdManager destructor
-// Created: SBO 2006-09-26
+// Name: TacticalLines destructor
+// Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-IdManager::~IdManager()
+TacticalLines::~TacticalLines()
 {
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: IdManager::GetNextId
-// Created: SBO 2006-09-26
-// -----------------------------------------------------------------------------
-unsigned long IdManager::GetNextId()
-{
-    return max_++;
+    DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
-// Name: IdManager::Reset
-// Created: SBO 2006-09-26
+// Name: TacticalLines::AddLine
+// Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-void IdManager::Reset()
+void TacticalLines::AddLine( TacticalLine_ABC& line )
 {
-    max_ = 1;
+    Register( line.GetId(), line );
 }
 
 // -----------------------------------------------------------------------------
-// Name: IdManager::Lock
-// Created: SBO 2006-10-05
+// Name: TacticalLines::SerializeAttributes
+// Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-void IdManager::Lock( unsigned long id )
+void TacticalLines::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( id >= max_ )
-        max_ = id + 1;
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        xos << start( it->second->IsLimit() ? "limit" : "lima" );
+        it->second->Apply( &Serializable_ABC::SerializeAttributes, xos );
+        xos << end();
+    }
 }
