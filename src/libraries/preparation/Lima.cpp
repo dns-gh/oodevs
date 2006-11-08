@@ -37,9 +37,9 @@ Lima::Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idMan
     : TacticalLine_ABC( xis, idManager )
     , controller_( controller )
 {
-    int type = 0;
+    std::string type;
     xis >> xml::attribute( "type", type );
-    nFuncType_ = E_FuncLimaType( type );
+    nFuncType_ = tools::FromString( type.c_str() );
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
  
@@ -87,7 +87,7 @@ void Lima::Activate( ActionController& actions ) const
 void Lima::SerializeAttributes( xml::xostream& xos ) const
 {
     TacticalLine_ABC::SerializeAttributes( xos );
-    xos << attribute( "type", int( nFuncType_ ) );
+    xos << attribute( "type", tools::ToString( nFuncType_ ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 namespace tools
 {
     QString ToString( E_FuncLimaType nType );
+    E_FuncLimaType FromString( const QString& type );
 };
 
 #endif // __Gaming_Tools_h_

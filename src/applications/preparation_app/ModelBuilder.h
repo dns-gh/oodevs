@@ -24,7 +24,6 @@ namespace kernel
     class Formation_ABC;
     class Agent_ABC;
     class Automat_ABC;
-    class Entity_ABC;
 }
 
 class Model;
@@ -86,8 +85,6 @@ private:
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
-
-    const kernel::Entity_ABC* FindTacticalLineSuperior() const;
     //@}
 
 private:

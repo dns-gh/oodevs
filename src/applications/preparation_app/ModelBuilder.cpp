@@ -86,34 +86,14 @@ void ModelBuilder::OnCreateCommunication()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ModelBuilder::FindTacticalLineSuperior
-// Created: SBO 2006-11-07
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* ModelBuilder::FindTacticalLineSuperior() const
-{
-    const Entity_ABC* element = 0;
-    if( selectedFormation_ )
-        element = selectedFormation_;
-    else if( selectedAgent_ )
-        element = selectedAgent_;
-    else if( selectedAutomat_ )
-        element = selectedAutomat_;
-     // $$$$ SBO 2006-11-07: Do not allow creation of limit in 1st level formations
-    if( element )
-        if( const kernel::Entity_ABC* superior = element->Get< kernel::TacticalHierarchies >().GetSuperior() )
-            if( superior->Get< kernel::TacticalHierarchies >().GetSuperior() )
-                return element->Get< kernel::TacticalHierarchies >().GetSuperior();
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ModelBuilder::CreateLimit
 // Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
 void ModelBuilder::CreateLimit( const T_PointVector& points )
 {
-    if( const kernel::Entity_ABC* superior = FindTacticalLineSuperior() )
-        model_.limits_.CreateLimit( points, *const_cast< kernel::Entity_ABC* >( superior ) );
+    const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
+    if( element )
+        model_.limits_.CreateLimit( points, *const_cast< kernel::Entity_ABC* >( element ) );
 //    else
 //        throw std::exception( tools::translate( "ModelBuilder", "Cannot create a limit at the selected tactical level." ) );
 }
@@ -124,8 +104,9 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void ModelBuilder::CreateLima( const T_PointVector& points, E_FuncLimaType type )
 {
-    if( const kernel::Entity_ABC* superior = FindTacticalLineSuperior() )
-        model_.limits_.CreateLima( type, points, *const_cast< kernel::Entity_ABC* >( superior ) );
+    const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
+    if( element )
+        model_.limits_.CreateLima( type, points, *const_cast< kernel::Entity_ABC* >( element ) );
 //    else
 //        throw std::exception( tools::translate( "ModelBuilder", "Cannot create a lima at the selected tactical level." ) );
 }
