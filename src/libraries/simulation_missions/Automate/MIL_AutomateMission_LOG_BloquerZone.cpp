@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_BloquerZone::Initialize( const 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_BloquerZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

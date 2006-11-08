@@ -366,13 +366,6 @@ ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
     T_ConverterObjectType( "", "", (E_ObjectType)-1 )
 };
 
-ENT_Tr::T_ConverterMissionGenUrgence ENT_Tr::MissionGenUrgenceConverter_[] =
-{
-    T_ConverterMissionGenUrgence( "serie minimum", QT_TRANSLATE_NOOP( "ENT_Tr", "serie minimum" ), eMissionGenUrgence_SerieMinimum ),
-    T_ConverterMissionGenUrgence( "serie complementaire", QT_TRANSLATE_NOOP( "ENT_Tr", "serie complementaire" ), eMissionGenUrgence_SerieComplementaire ),
-    T_ConverterMissionGenUrgence( "", "", (E_MissionGenUrgence)-1 )
-};
-
 ENT_Tr::T_ConverterMissionGenSousTypeObstacle ENT_Tr::MissionGenSousTypeObstacleConverter_[] =
 {
     T_ConverterMissionGenSousTypeObstacle( "preliminaire", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminaire" ), eMissionGenSousTypeObstacle_Preliminaire ),
@@ -392,26 +385,11 @@ ENT_Tr::T_ConverterObjectErrorCode ENT_Tr::ObjectErrorCodeConverter_[] =
     T_ConverterObjectErrorCode( "", "", (E_ObjectErrorCode)-1 )
 };
 
-ENT_Tr::T_ConverterMissionGenPriorite ENT_Tr::MissionGenPrioriteConverter_[] =
-{
-    T_ConverterMissionGenPriorite( "prioritaire", QT_TRANSLATE_NOOP( "ENT_Tr", "prioritaire" ), eMissionGenPriorite_Prioritaire ),
-    T_ConverterMissionGenPriorite( "normal", QT_TRANSLATE_NOOP( "ENT_Tr", "normal" ), eMissionGenPriorite_Normal ),
-    T_ConverterMissionGenPriorite( "peu prioritaire", QT_TRANSLATE_NOOP( "ENT_Tr", "peu prioritaire" ), eMissionGenPriorite_PeuPrioritaire ),
-    T_ConverterMissionGenPriorite( "", "", (E_MissionGenPriorite)-1 )
-};
-
 ENT_Tr::T_ConverterModeDeploiementSectionMistral ENT_Tr::ModeDeploiementSectionMistralConverter_[] =
 {
     T_ConverterModeDeploiementSectionMistral( "omnidirectionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "omnidirectionnel" ), eModeDeploiementSectionMistral_Omnidirectionnel ),
     T_ConverterModeDeploiementSectionMistral( "directionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "directionnel" ), eModeDeploiementSectionMistral_Directionnel ),
     T_ConverterModeDeploiementSectionMistral( "", "", (E_ModeDeploiementSectionMistral)-1 )
-};
-
-ENT_Tr::T_ConverterTypeFosseAC ENT_Tr::TypeFosseACConverter_[] =
-{
-    T_ConverterTypeFosseAC( "simple", QT_TRANSLATE_NOOP( "ENT_Tr", "simple" ), eTypeFosseAC_Simple ),
-    T_ConverterTypeFosseAC( "compose", QT_TRANSLATE_NOOP( "ENT_Tr", "compose" ), eTypeFosseAC_Compose ),
-    T_ConverterTypeFosseAC( "", "", (E_TypeFosseAC)-1 )
 };
 
 ENT_Tr::T_ConverterGenTypePontage ENT_Tr::GenTypePontageConverter_[] =
@@ -698,20 +676,13 @@ ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
     T_ConverterAutomataMission( "Automate ABC ProtegerPC", QT_TRANSLATE_NOOP( "ENT", "Automate ABC ProtegerPC" ), eMission_Automate_ABC_ProtegerPC ),
     T_ConverterAutomataMission( "Automate ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Automate ABC AppuyerSurPosition" ), eMission_Automate_ABC_AppuyerSurPosition ),
     T_ConverterAutomataMission( "Automate GEN SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Automate GEN SeDeployer" ), eMission_Automate_GEN_SeDeployer ),
-    T_ConverterAutomataMission( "Automate GEN FaireFranchir", QT_TRANSLATE_NOOP( "ENT", "Automate GEN FaireFranchir" ), eMission_Automate_GEN_FaireFranchir ),
-    T_ConverterAutomataMission( "Automate GEN RealiserSystemeObstacles", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserSystemeObstacles" ), eMission_Automate_GEN_RealiserSystemeObstacles ),
-    T_ConverterAutomataMission( "Automate GEN FranchirDeViveForce", QT_TRANSLATE_NOOP( "ENT", "Automate GEN FranchirDeViveForce" ), eMission_Automate_GEN_FranchirDeViveForce ),
+    T_ConverterAutomataMission( "Automate GEN ReconnaitreZone", QT_TRANSLATE_NOOP( "ENT", "Automate GEN ReconnaitreZone" ), eMission_Automate_GEN_ReconnaitreZone ),
+    T_ConverterAutomataMission( "Automate GEN RealiserTravaux", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserTravaux" ), eMission_Automate_GEN_RealiserTravaux ),
+    T_ConverterAutomataMission( "Automate GEN OuvrirItineraires", QT_TRANSLATE_NOOP( "ENT", "Automate GEN OuvrirItineraires" ), eMission_Automate_GEN_OuvrirItineraires ),
     T_ConverterAutomataMission( "Automate GEN RetablirItineraires", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RetablirItineraires" ), eMission_Automate_GEN_RetablirItineraires ),
-    T_ConverterAutomataMission( "Automate GEN AmenagerAireStationnement", QT_TRANSLATE_NOOP( "ENT", "Automate GEN AmenagerAireStationnement" ), eMission_Automate_GEN_AmenagerAireStationnement ),
-    T_ConverterAutomataMission( "Automate GEN AmenagerTerrainPoserSommaire", QT_TRANSLATE_NOOP( "ENT", "Automate GEN AmenagerTerrainPoserSommaire" ), eMission_Automate_GEN_AmenagerTerrainPoserSommaire ),
-    T_ConverterAutomataMission( "Automate GEN RealiserZonePoser", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserZonePoser" ), eMission_Automate_GEN_RealiserZonePoser ),
-    T_ConverterAutomataMission( "Automate GEN ReconnaitreZoneDeploiement", QT_TRANSLATE_NOOP( "ENT", "Automate GEN ReconnaitreZoneDeploiement" ), eMission_Automate_GEN_ReconnaitreZoneDeploiement ),
-    T_ConverterAutomataMission( "Automate GEN RealiserCampPrisonniers", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserCampPrisonniers" ), eMission_Automate_GEN_RealiserCampPrisonniers ),
-    T_ConverterAutomataMission( "Automate GEN RealiserCampRefugies", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserCampRefugies" ), eMission_Automate_GEN_RealiserCampRefugies ),
-    T_ConverterAutomataMission( "Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial" ), eMission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial ),
-    T_ConverterAutomataMission( "Automate GEN RealiserTravauxSommairesAuProfitPopulation", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserTravauxSommairesAuProfitPopulation" ), eMission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation ),
-    T_ConverterAutomataMission( "Automate GEN AppuyerDebarquementTroupes", QT_TRANSLATE_NOOP( "ENT", "Automate GEN AppuyerDebarquementTroupes" ), eMission_Automate_GEN_AppuyerDebarquementTroupes ),
-    T_ConverterAutomataMission( "Automate GEN OuvrirAxesProgression", QT_TRANSLATE_NOOP( "ENT", "Automate GEN OuvrirAxesProgression" ), eMission_Automate_GEN_OuvrirAxesProgression ),
+    T_ConverterAutomataMission( "Automate GEN FaireFranchir", QT_TRANSLATE_NOOP( "ENT", "Automate GEN FaireFranchir" ), eMission_Automate_GEN_FaireFranchir ),
+    T_ConverterAutomataMission( "Automate GEN FranchirDeViveForce", QT_TRANSLATE_NOOP( "ENT", "Automate GEN FranchirDeViveForce" ), eMission_Automate_GEN_FranchirDeViveForce ),
+    T_ConverterAutomataMission( "Automate GEN DegagerObstaclesDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate GEN DegagerObstaclesDansZone" ), eMission_Automate_GEN_DegagerObstaclesDansZone ),
     T_ConverterAutomataMission( "Automate INF AttaquerSouplesse", QT_TRANSLATE_NOOP( "ENT", "Automate INF AttaquerSouplesse" ), eMission_Automate_INF_AttaquerSouplesse ),
     T_ConverterAutomataMission( "Automate INF Appuyer", QT_TRANSLATE_NOOP( "ENT", "Automate INF Appuyer" ), eMission_Automate_INF_Appuyer ),
     T_ConverterAutomataMission( "Automate INF Controler", QT_TRANSLATE_NOOP( "ENT", "Automate INF Controler" ), eMission_Automate_INF_Controler ),
@@ -855,51 +826,24 @@ ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
     T_ConverterUnitMission( "Pion ABC OrganiserAccueilColonneRefugies", QT_TRANSLATE_NOOP( "ENT", "Pion ABC OrganiserAccueilColonneRefugies" ), eMission_Pion_ABC_OrganiserAccueilColonneRefugies ),
     T_ConverterUnitMission( "Pion ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ABC AppuyerSurPosition" ), eMission_Pion_ABC_AppuyerSurPosition ),
     T_ConverterUnitMission( "Pion ABC RASIT RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion ABC RASIT RenseignerSur" ), eMission_Pion_ABC_RASIT_RenseignerSur ),
-    T_ConverterUnitMission( "Pion GEN RealiserFosseAC", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserFosseAC" ), eMission_Pion_GEN_RealiserFosseAC ),
-    T_ConverterUnitMission( "Pion GEN RealiserAbattisMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserAbattisMine" ), eMission_Pion_GEN_RealiserAbattisMine ),
-    T_ConverterUnitMission( "Pion GEN RealiserPointMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserPointMine" ), eMission_Pion_GEN_RealiserPointMine ),
-    T_ConverterUnitMission( "Pion GEN RealiserBarricade", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserBarricade" ), eMission_Pion_GEN_RealiserBarricade ),
-    T_ConverterUnitMission( "Pion GEN RealiserEboulement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserEboulement" ), eMission_Pion_GEN_RealiserEboulement ),
-    T_ConverterUnitMission( "Pion GEN RealiserBouchonMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserBouchonMine" ), eMission_Pion_GEN_RealiserBouchonMine ),
-    T_ConverterUnitMission( "Pion GEN DetruireRoute", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DetruireRoute" ), eMission_Pion_GEN_DetruireRoute ),
-    T_ConverterUnitMission( "Pion GEN DetruirePont", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DetruirePont" ), eMission_Pion_GEN_DetruirePont ),
-    T_ConverterUnitMission( "Pion GEN SecuriserItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN SecuriserItineraire" ), eMission_Pion_GEN_SecuriserItineraire ),
-    T_ConverterUnitMission( "Pion GEN DegagerAbattisMine", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DegagerAbattisMine" ), eMission_Pion_GEN_DegagerAbattisMine ),
-    T_ConverterUnitMission( "Pion GEN DegagerEboulement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DegagerEboulement" ), eMission_Pion_GEN_DegagerEboulement ),
-    T_ConverterUnitMission( "Pion GEN DegagerRues", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DegagerRues" ), eMission_Pion_GEN_DegagerRues ),
-    T_ConverterUnitMission( "Pion GEN ComblerEntonnoir", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ComblerEntonnoir" ), eMission_Pion_GEN_ComblerEntonnoir ),
-    T_ConverterUnitMission( "Pion GEN ComblerFosseAC", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ComblerFosseAC" ), eMission_Pion_GEN_ComblerFosseAC ),
-    T_ConverterUnitMission( "Pion GEN CreerContournement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN CreerContournement" ), eMission_Pion_GEN_CreerContournement ),
-    T_ConverterUnitMission( "Pion GEN RealiserZoneMineeLineaire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserZoneMineeLineaire" ), eMission_Pion_GEN_RealiserZoneMineeLineaire ),
-    T_ConverterUnitMission( "Pion GEN OuvrirTrouee", QT_TRANSLATE_NOOP( "ENT", "Pion GEN OuvrirTrouee" ), eMission_Pion_GEN_OuvrirTrouee ),
-    T_ConverterUnitMission( "Pion GEN Renforcer", QT_TRANSLATE_NOOP( "ENT", "Pion GEN Renforcer" ), eMission_Pion_GEN_Renforcer ),
-    T_ConverterUnitMission( "Pion GEN FranchirEntonnoir", QT_TRANSLATE_NOOP( "ENT", "Pion GEN FranchirEntonnoir" ), eMission_Pion_GEN_FranchirEntonnoir ),
-    T_ConverterUnitMission( "Pion GEN FranchirFosseAC", QT_TRANSLATE_NOOP( "ENT", "Pion GEN FranchirFosseAC" ), eMission_Pion_GEN_FranchirFosseAC ),
-    T_ConverterUnitMission( "Pion GEN RealiserZoneMineeParDispersion", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserZoneMineeParDispersion" ), eMission_Pion_GEN_RealiserZoneMineeParDispersion ),
-    T_ConverterUnitMission( "Pion GEN RealiserPostesTir", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserPostesTir" ), eMission_Pion_GEN_RealiserPostesTir ),
-    T_ConverterUnitMission( "Pion GEN RealiserTravauxProtection", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserTravauxProtection" ), eMission_Pion_GEN_RealiserTravauxProtection ),
+    T_ConverterUnitMission( "Pion GEN OuvrirItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN OuvrirItineraire" ), eMission_Pion_GEN_OuvrirItineraire ),
     T_ConverterUnitMission( "Pion GEN RetablirItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RetablirItineraire" ), eMission_Pion_GEN_RetablirItineraire ),
-    T_ConverterUnitMission( "Pion GEN EquiperExploiter", QT_TRANSLATE_NOOP( "ENT", "Pion GEN EquiperExploiter" ), eMission_Pion_GEN_EquiperExploiter ),
-    T_ConverterUnitMission( "Pion GEN ExecuterVariantement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ExecuterVariantement" ), eMission_Pion_GEN_ExecuterVariantement ),
-    T_ConverterUnitMission( "Pion GEN ReconnaitreSiteFranchissement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReconnaitreSiteFranchissement" ), eMission_Pion_GEN_ReconnaitreSiteFranchissement ),
     T_ConverterUnitMission( "Pion GEN ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReconnaitreItineraire" ), eMission_Pion_GEN_ReconnaitreItineraire ),
-    T_ConverterUnitMission( "Pion GEN DeminerSiteFranchissement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DeminerSiteFranchissement" ), eMission_Pion_GEN_DeminerSiteFranchissement ),
     T_ConverterUnitMission( "Pion GEN ReconnaitreZone", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReconnaitreZone" ), eMission_Pion_GEN_ReconnaitreZone ),
-    T_ConverterUnitMission( "Pion GEN CreerPlateForme", QT_TRANSLATE_NOOP( "ENT", "Pion GEN CreerPlateForme" ), eMission_Pion_GEN_CreerPlateForme ),
-    T_ConverterUnitMission( "Pion GEN CreerPiste", QT_TRANSLATE_NOOP( "ENT", "Pion GEN CreerPiste" ), eMission_Pion_GEN_CreerPiste ),
-    T_ConverterUnitMission( "Pion GEN CreerAirePoser", QT_TRANSLATE_NOOP( "ENT", "Pion GEN CreerAirePoser" ), eMission_Pion_GEN_CreerAirePoser ),
-    T_ConverterUnitMission( "Pion GEN NeutraliserEnginsExplosifs", QT_TRANSLATE_NOOP( "ENT", "Pion GEN NeutraliserEnginsExplosifs" ), eMission_Pion_GEN_NeutraliserEnginsExplosifs ),
-    T_ConverterUnitMission( "Pion GEN ActiverObstacle", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ActiverObstacle" ), eMission_Pion_GEN_ActiverObstacle ),
-    T_ConverterUnitMission( "Pion GEN AmeliorerMobilite", QT_TRANSLATE_NOOP( "ENT", "Pion GEN AmeliorerMobilite" ), eMission_Pion_GEN_AmeliorerMobilite ),
-    T_ConverterUnitMission( "Pion GEN RealiserAireLogistique", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserAireLogistique" ), eMission_Pion_GEN_RealiserAireLogistique ),
+    T_ConverterUnitMission( "Pion GEN ReconnaitreSiteFranchissement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReconnaitreSiteFranchissement" ), eMission_Pion_GEN_ReconnaitreSiteFranchissement ),
+    T_ConverterUnitMission( "Pion GEN EquiperExploiterSiteFranchissement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN EquiperExploiterSiteFranchissement" ), eMission_Pion_GEN_EquiperExploiterSiteFranchissement ),
+    T_ConverterUnitMission( "Pion GEN ExecuterVariantement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ExecuterVariantement" ), eMission_Pion_GEN_ExecuterVariantement ),
+    T_ConverterUnitMission( "Pion GEN DegagerObstacles", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DegagerObstacles" ), eMission_Pion_GEN_DegagerObstacles ),
+    T_ConverterUnitMission( "Pion GEN ContournerObstacles", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ContournerObstacles" ), eMission_Pion_GEN_ContournerObstacles ),
     T_ConverterUnitMission( "Pion GEN DepolluerZone", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DepolluerZone" ), eMission_Pion_GEN_DepolluerZone ),
-    T_ConverterUnitMission( "Pion GEN AmenagerTerrainPoser", QT_TRANSLATE_NOOP( "ENT", "Pion GEN AmenagerTerrainPoser" ), eMission_Pion_GEN_AmenagerTerrainPoser ),
-    T_ConverterUnitMission( "Pion GEN RealiserPlateFormeDeploiement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserPlateFormeDeploiement" ), eMission_Pion_GEN_RealiserPlateFormeDeploiement ),
-    T_ConverterUnitMission( "Pion GEN ReprendreMissionConstruction", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReprendreMissionConstruction" ), eMission_Pion_GEN_ReprendreMissionConstruction ),
-    T_ConverterUnitMission( "Pion GEN RealiserZonePoserHelicoptere", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserZonePoserHelicoptere" ), eMission_Pion_GEN_RealiserZonePoserHelicoptere ),
-    T_ConverterUnitMission( "Pion GEN AppuyerDebarquementTroupesGU", QT_TRANSLATE_NOOP( "ENT", "Pion GEN AppuyerDebarquementTroupesGU" ), eMission_Pion_GEN_AppuyerDebarquementTroupesGU ),
-    T_ConverterUnitMission( "Pion GEN RealiserCampPrisonniers", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserCampPrisonniers" ), eMission_Pion_GEN_RealiserCampPrisonniers ),
-    T_ConverterUnitMission( "Pion GEN RealiserCampRefugies", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserCampRefugies" ), eMission_Pion_GEN_RealiserCampRefugies ),
+    T_ConverterUnitMission( "Pion GEN Renforcer", QT_TRANSLATE_NOOP( "ENT", "Pion GEN Renforcer" ), eMission_Pion_GEN_Renforcer ),
+    T_ConverterUnitMission( "Pion GEN RealiserTravauxProtection", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserTravauxProtection" ), eMission_Pion_GEN_RealiserTravauxProtection ),
+    T_ConverterUnitMission( "Pion GEN RealiserTravauxContreMobilite", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserTravauxContreMobilite" ), eMission_Pion_GEN_RealiserTravauxContreMobilite ),
+    T_ConverterUnitMission( "Pion GEN RealiserTravauxAppuiDeploiement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserTravauxAppuiDeploiement" ), eMission_Pion_GEN_RealiserTravauxAppuiDeploiement ),
+    T_ConverterUnitMission( "Pion GEN RealiserCamps", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserCamps" ), eMission_Pion_GEN_RealiserCamps ),
+    T_ConverterUnitMission( "Pion GEN ReprendreTravaux", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReprendreTravaux" ), eMission_Pion_GEN_ReprendreTravaux ),
+    T_ConverterUnitMission( "Pion GEN AmeliorerMobilite", QT_TRANSLATE_NOOP( "ENT", "Pion GEN AmeliorerMobilite" ), eMission_Pion_GEN_AmeliorerMobilite ),
+    T_ConverterUnitMission( "Pion GEN ActiverObstacle", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ActiverObstacle" ), eMission_Pion_GEN_ActiverObstacle ),
     T_ConverterUnitMission( "Pion INF ReconnaitreAxe", QT_TRANSLATE_NOOP( "ENT", "Pion INF ReconnaitreAxe" ), eMission_Pion_INF_ReconnaitreAxe ),
     T_ConverterUnitMission( "Pion INF Couvrir", QT_TRANSLATE_NOOP( "ENT", "Pion INF Couvrir" ), eMission_Pion_INF_Couvrir ),
     T_ConverterUnitMission( "Pion INF Reduire", QT_TRANSLATE_NOOP( "ENT", "Pion INF Reduire" ), eMission_Pion_INF_Reduire ),
@@ -1105,12 +1049,9 @@ void ENT_Tr::InitTranslations()
     InitTr( OrderErrorCodeConverter_, "ENT_Tr" );
     InitTr( OrderStateConverter_, "ENT_Tr" );
     InitTr( ObjectTypeConverter_, "ENT_Tr" );
-    InitTr( MissionGenUrgenceConverter_, "ENT_Tr" );
     InitTr( MissionGenSousTypeObstacleConverter_, "ENT_Tr" );
     InitTr( ObjectErrorCodeConverter_, "ENT_Tr" );
-    InitTr( MissionGenPrioriteConverter_, "ENT_Tr" );
     InitTr( ModeDeploiementSectionMistralConverter_, "ENT_Tr" );
-    InitTr( TypeFosseACConverter_, "ENT_Tr" );
     InitTr( GenTypePontageConverter_, "ENT_Tr" );
     InitTr( MissionInfNatureObjectifConverter_, "ENT_Tr" );
     InitTr( LogSanteTraitementEtatConverter_, "ENT_Tr" );
@@ -1420,15 +1361,6 @@ const std::string& ENT_Tr::ConvertFromObjectType( E_ObjectType nValue, ENT_Tr_AB
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMissionGenUrgence
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMissionGenUrgence( E_MissionGenUrgence nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( MissionGenUrgenceConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromMissionGenSousTypeObstacle
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1447,30 +1379,12 @@ const std::string& ENT_Tr::ConvertFromObjectErrorCode( E_ObjectErrorCode nValue,
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMissionGenPriorite
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMissionGenPriorite( E_MissionGenPriorite nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( MissionGenPrioriteConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromModeDeploiementSectionMistral
 // Created: AGR
 //-----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromModeDeploiementSectionMistral( E_ModeDeploiementSectionMistral nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( ModeDeploiementSectionMistralConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTypeFosseAC
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTypeFosseAC( E_TypeFosseAC nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( TypeFosseACConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1983,15 +1897,6 @@ E_ObjectType ENT_Tr::ConvertToObjectType( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMissionGenUrgence
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_MissionGenUrgence ENT_Tr::ConvertToMissionGenUrgence( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( MissionGenUrgenceConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToMissionGenSousTypeObstacle
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2010,30 +1915,12 @@ E_ObjectErrorCode ENT_Tr::ConvertToObjectErrorCode( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMissionGenPriorite
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_MissionGenPriorite ENT_Tr::ConvertToMissionGenPriorite( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( MissionGenPrioriteConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToModeDeploiementSectionMistral
 // Created: AGR
 //-----------------------------------------------------------------------------
 E_ModeDeploiementSectionMistral ENT_Tr::ConvertToModeDeploiementSectionMistral( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( ModeDeploiementSectionMistralConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTypeFosseAC
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_TypeFosseAC ENT_Tr::ConvertToTypeFosseAC( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( TypeFosseACConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

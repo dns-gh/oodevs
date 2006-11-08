@@ -84,7 +84,6 @@ bool MIL_PionMission_RENS_ROEM_MettreEnOeuvre::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_RENS_ROEM_MettreEnOeuvre::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROEM_MettreEnOeuvre::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

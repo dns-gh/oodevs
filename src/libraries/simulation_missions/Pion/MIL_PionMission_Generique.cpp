@@ -108,7 +108,6 @@ bool MIL_PionMission_Generique::Initialize( const MIL_AutomateMission_ABC& paren
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                            
     return true;    
 }
 
@@ -139,7 +138,6 @@ bool MIL_PionMission_Generique::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Generique::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

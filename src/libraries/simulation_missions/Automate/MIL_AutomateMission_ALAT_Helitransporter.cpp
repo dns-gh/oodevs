@@ -100,7 +100,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Helitransporter::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Helitransporter::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

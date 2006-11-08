@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_DonnerCoupArret::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_DonnerCoupArret::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

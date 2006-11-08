@@ -26,7 +26,6 @@ class PHY_Weapon;
 class PHY_SensorType;
 class PHY_Sensor;
 class PHY_RadarType;
-class PHY_Radar;
 class PHY_ComposantePion;
 class PHY_ComposanteTypeObjectData;
 class PHY_ConsumptionType;
@@ -240,7 +239,7 @@ private:
     void InitializeConsumptions           ( MIL_InputArchive& archive );
     void InitializeLogistic               ( MIL_InputArchive& archive );
     void InitializeLogisticMaintenance    ( MIL_InputArchive& archive );
-    void InitializeLogisticMedical        ( MIL_InputArchive& archive );
+    void InitializeLogisticMedical        ( MIL_InputArchive& archive ); 
     void InitializeLogisticSupply         ( MIL_InputArchive& archive );
     void InitializeBreakdownTypes         ( MIL_InputArchive& archive );
     void InitializeRandomBreakdownTypes   ( MIL_InputArchive& archive );

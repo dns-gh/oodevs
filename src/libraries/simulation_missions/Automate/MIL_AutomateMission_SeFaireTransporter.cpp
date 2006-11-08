@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeFaireTransporter::Initialize( con
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_SeFaireTransporter::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

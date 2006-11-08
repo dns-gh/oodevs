@@ -73,20 +73,13 @@
 #include "Automat/Mission_Automat_ABC_ProtegerPC.cpp"
 #include "Automat/Mission_Automat_ABC_AppuyerSurPosition.cpp"
 #include "Automat/Mission_Automat_GEN_SeDeployer.cpp"
-#include "Automat/Mission_Automat_GEN_FaireFranchir.cpp"
-#include "Automat/Mission_Automat_GEN_RealiserSystemeObstacles.cpp"
-#include "Automat/Mission_Automat_GEN_FranchirDeViveForce.cpp"
+#include "Automat/Mission_Automat_GEN_ReconnaitreZone.cpp"
+#include "Automat/Mission_Automat_GEN_RealiserTravaux.cpp"
+#include "Automat/Mission_Automat_GEN_OuvrirItineraires.cpp"
 #include "Automat/Mission_Automat_GEN_RetablirItineraires.cpp"
-#include "Automat/Mission_Automat_GEN_AmenagerAireStationnement.cpp"
-#include "Automat/Mission_Automat_GEN_AmenagerTerrainPoserSommaire.cpp"
-#include "Automat/Mission_Automat_GEN_RealiserZonePoser.cpp"
-#include "Automat/Mission_Automat_GEN_ReconnaitreZoneDeploiement.cpp"
-#include "Automat/Mission_Automat_GEN_RealiserCampPrisonniers.cpp"
-#include "Automat/Mission_Automat_GEN_RealiserCampRefugies.cpp"
-#include "Automat/Mission_Automat_GEN_RealiserPlatesformesSommairesDeDeploiementInitial.cpp"
-#include "Automat/Mission_Automat_GEN_RealiserTravauxSommairesAuProfitPopulation.cpp"
-#include "Automat/Mission_Automat_GEN_AppuyerDebarquementTroupes.cpp"
-#include "Automat/Mission_Automat_GEN_OuvrirAxesProgression.cpp"
+#include "Automat/Mission_Automat_GEN_FaireFranchir.cpp"
+#include "Automat/Mission_Automat_GEN_FranchirDeViveForce.cpp"
+#include "Automat/Mission_Automat_GEN_DegagerObstaclesDansZone.cpp"
 #include "Automat/Mission_Automat_INF_AttaquerSouplesse.cpp"
 #include "Automat/Mission_Automat_INF_Appuyer.cpp"
 #include "Automat/Mission_Automat_INF_Controler.cpp"
@@ -256,20 +249,13 @@ void Mission_Automat_Type::Initialize()
     Register< Mission_Automat_ABC_ProtegerPC >( "Automate ABC ProtegerPC" );
     Register< Mission_Automat_ABC_AppuyerSurPosition >( "Automate ABC AppuyerSurPosition" );
     Register< Mission_Automat_GEN_SeDeployer >( "Automate GEN SeDeployer" );
-    Register< Mission_Automat_GEN_FaireFranchir >( "Automate GEN FaireFranchir" );
-    Register< Mission_Automat_GEN_RealiserSystemeObstacles >( "Automate GEN RealiserSystemeObstacles" );
-    Register< Mission_Automat_GEN_FranchirDeViveForce >( "Automate GEN FranchirDeViveForce" );
+    Register< Mission_Automat_GEN_ReconnaitreZone >( "Automate GEN ReconnaitreZone" );
+    Register< Mission_Automat_GEN_RealiserTravaux >( "Automate GEN RealiserTravaux" );
+    Register< Mission_Automat_GEN_OuvrirItineraires >( "Automate GEN OuvrirItineraires" );
     Register< Mission_Automat_GEN_RetablirItineraires >( "Automate GEN RetablirItineraires" );
-    Register< Mission_Automat_GEN_AmenagerAireStationnement >( "Automate GEN AmenagerAireStationnement" );
-    Register< Mission_Automat_GEN_AmenagerTerrainPoserSommaire >( "Automate GEN AmenagerTerrainPoserSommaire" );
-    Register< Mission_Automat_GEN_RealiserZonePoser >( "Automate GEN RealiserZonePoser" );
-    Register< Mission_Automat_GEN_ReconnaitreZoneDeploiement >( "Automate GEN ReconnaitreZoneDeploiement" );
-    Register< Mission_Automat_GEN_RealiserCampPrisonniers >( "Automate GEN RealiserCampPrisonniers" );
-    Register< Mission_Automat_GEN_RealiserCampRefugies >( "Automate GEN RealiserCampRefugies" );
-    Register< Mission_Automat_GEN_RealiserPlatesformesSommairesDeDeploiementInitial >( "Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial" );
-    Register< Mission_Automat_GEN_RealiserTravauxSommairesAuProfitPopulation >( "Automate GEN RealiserTravauxSommairesAuProfitPopulation" );
-    Register< Mission_Automat_GEN_AppuyerDebarquementTroupes >( "Automate GEN AppuyerDebarquementTroupes" );
-    Register< Mission_Automat_GEN_OuvrirAxesProgression >( "Automate GEN OuvrirAxesProgression" );
+    Register< Mission_Automat_GEN_FaireFranchir >( "Automate GEN FaireFranchir" );
+    Register< Mission_Automat_GEN_FranchirDeViveForce >( "Automate GEN FranchirDeViveForce" );
+    Register< Mission_Automat_GEN_DegagerObstaclesDansZone >( "Automate GEN DegagerObstaclesDansZone" );
     Register< Mission_Automat_INF_AttaquerSouplesse >( "Automate INF AttaquerSouplesse" );
     Register< Mission_Automat_INF_Appuyer >( "Automate INF Appuyer" );
     Register< Mission_Automat_INF_Controler >( "Automate INF Controler" );

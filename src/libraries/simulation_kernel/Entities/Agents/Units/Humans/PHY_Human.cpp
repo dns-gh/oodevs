@@ -18,7 +18,7 @@
 #include "Entities/Agents/Roles/Logistic/Medical/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_NbcAgentType.h"
+#include "Entities/Objects/MIL_NbcAgent.h"
 #include "Entities/RC/MIL_RC.h"
 #include "MIL_AgentServer.h"
 
@@ -243,13 +243,22 @@ bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Human::ApplyWound
-// Created: NLD 2004-12-21
+// Name: PHY_Human::ApplyPoisonous
+// Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-bool PHY_Human::ApplyWound( const MIL_NbcAgentType& nbcAgentType )
+bool PHY_Human::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
+{
+    return ApplyWound( nbcAgent.GetRandomWound() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyContamination
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+void PHY_Human::ApplyContamination( const MIL_NbcAgent& /*nbcAgent*/ )
 {
     if( !IsUsable() )
-        return false;
+        return;
 
     if( !bContamined_ )
     {
@@ -257,12 +266,6 @@ bool PHY_Human::ApplyWound( const MIL_NbcAgentType& nbcAgentType )
         bContamined_ = true;
         NotifyHumanChanged( oldHumanState );
     }
-
-    assert( pWound_ );
-    const PHY_HumanWound& newWound = nbcAgentType.GetRandomWound();
-    if( newWound > *pWound_ )
-        return SetWound( newWound );
-    return false;
 }
 
 // -----------------------------------------------------------------------------

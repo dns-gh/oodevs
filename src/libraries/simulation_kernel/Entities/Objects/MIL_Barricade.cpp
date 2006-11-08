@@ -58,47 +58,4 @@ void MIL_Barricade::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< MIL_RealObject_ABC >( *this );
 }
 
-//=============================================================================
-// INIT
-//=============================================================================
 
-//-----------------------------------------------------------------------------
-// Name: MIL_Barricade::Initialize
-// Created: JVT 02-10-22
-//-----------------------------------------------------------------------------
-bool MIL_Barricade::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
-{
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
-        return false;
-
-    rSizeCoef_                       = diaParameters[ nCurrentParamIdx ].ToFloat();
-    nFullNbrDotationForConstruction_ = (uint)( rSizeCoef_ / 5. );  // Barbelés
-    return true;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MIL_Barricade::Initialize
-// Created: NLD 2003-07-21
-//-----------------------------------------------------------------------------
-void MIL_Barricade::Initialize( MIL_InputArchive& archive )
-{
-    MIL_RealObject_ABC::Initialize( archive );
-    nFullNbrDotationForConstruction_ = (uint)( rSizeCoef_ / 5. );  // Barbelés
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Barricade::Initialize
-// Created: NLD 2003-08-04
-// -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_Barricade::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
-{
-    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
-    if( nErrorCode != EnumObjectErrorCode::no_error )
-        return nErrorCode;
-
-    nFullNbrDotationForConstruction_    = (uint)( rSizeCoef_ / 5. );  // Barbelés
-    return EnumObjectErrorCode::no_error;
-}
-
- 

@@ -12,49 +12,44 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Gen_Object.h"
 
+#include "Entities/Objects/MIL_RealObjectType.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Decision/DEC_Tools.h"
-
-int DEC_Gen_Object::nDIATypeIdx_         = 0;
-int DEC_Gen_Object::nDIAPosIdx_          = 0;
-int DEC_Gen_Object::nDIAUrgenceIdx_      = 0;
-int DEC_Gen_Object::nDIAPreliminaireIdx_ = 0;
-int DEC_Gen_Object::nDIAPrioriteIdx_     = 0;
-
-//-----------------------------------------------------------------------------
-// Name: DEC_Gen_Object::InitializeDIA
-// Created: AGN 03-08-27
-//-----------------------------------------------------------------------------
-//static
-void DEC_Gen_Object::InitializeDIA()
-{
-    const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( "T_GenObjet" );
-    nDIATypeIdx_         = DEC_Tools::InitializeDIAField( "typeObject_"    , diaType );
-    nDIAPosIdx_          = DEC_Tools::InitializeDIAField( "posObject_"     , diaType );
-    nDIAUrgenceIdx_      = DEC_Tools::InitializeDIAField( "urgence_"       , diaType );
-    nDIAPreliminaireIdx_ = DEC_Tools::InitializeDIAField( "preliminaire_"  , diaType );    
-    nDIAPrioriteIdx_     = DEC_Tools::InitializeDIAField( "priorite_"      , diaType );
-}
-
+#include "MIL_AgentServer.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Gen_Object constructor
 // Created: AGN 03-08-27
 //-----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object()
-: DIA_Thing( DIA_Thing::ThingType(), *DIA_TypeManager::Instance().GetType( "T_GenObjet" ) )
+    : pType_        ( 0 )
+    , localisation_ ()
+    , nPreliminaire_( 0 )
+    , rDensity_     ( 0. )
+    , pTC2_         ( 0 )   
 {
-    
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object constructor
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
+    : pType_        ( rhs.pType_ )
+    , localisation_ ( rhs.localisation_ )
+    , nPreliminaire_( rhs.nPreliminaire_ )
+    , rDensity_     ( rhs.rDensity_ )
+    , pTC2_         ( rhs.pTC2_ )   
+{
+
+}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Gen_Object destructor
 // Created: AGN 03-08-27
 //-----------------------------------------------------------------------------
 DEC_Gen_Object::~DEC_Gen_Object()
-{
-    
+{    
 }
 
 //-----------------------------------------------------------------------------
@@ -63,14 +58,21 @@ DEC_Gen_Object::~DEC_Gen_Object()
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode DEC_Gen_Object::Initialize( const ASN1T_MissionGenObject& asn )
 {
-    GetVariable( nDIATypeIdx_         ).SetValue( (int)asn.type_obstacle );
-    GetVariable( nDIAPrioriteIdx_     ).SetValue( (int)asn.priorite      );
-    GetVariable( nDIAUrgenceIdx_      ).SetValue( (int)asn.urgence       );
-    GetVariable( nDIAPreliminaireIdx_ ).SetValue( (int)asn.preliminaire  );
-    GetVariable( nDIAPosIdx_          ).SetValue( (void*)&localisation_ , &DEC_Tools::GetTypeLocalisation(), 1 );
-
-    if( !NET_ASN_Tools::ReadLocation( asn.pos_obstacle, localisation_ ) )
+    pType_ = MIL_RealObjectType::Find( asn.type );
+    if( !pType_ )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
+
+    if( !NET_ASN_Tools::ReadLocation( asn.position, localisation_ ) )
+        return EnumOrderErrorCode::error_invalid_mission_parameters;
+
+    nPreliminaire_ = asn.preliminaire;
+    rDensity_      = asn.densite;
+
+    if( asn.tc2 != 0 )
+    {
+        pTC2_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asn.tc2 );
+        if( !pTC2_ )
+            return EnumOrderErrorCode::error_invalid_mission_parameters;
+    }
     return EnumOrderErrorCode::no_error;
 }
-

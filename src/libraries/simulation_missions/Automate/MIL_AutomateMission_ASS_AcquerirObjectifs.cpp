@@ -88,7 +88,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASS_AcquerirObjectifs::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASS_AcquerirObjectifs::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

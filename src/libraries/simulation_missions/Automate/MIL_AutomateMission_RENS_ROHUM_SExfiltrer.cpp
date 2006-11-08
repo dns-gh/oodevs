@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROHUM_SExfiltrer::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROHUM_SExfiltrer::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

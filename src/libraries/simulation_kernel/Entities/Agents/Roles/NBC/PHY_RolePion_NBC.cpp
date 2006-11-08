@@ -14,6 +14,7 @@
 #include "PHY_RolePion_NBC.h"
 
 #include "Network/NET_ASN_Messages.h"
+#include "Entities/Objects/MIL_NbcAgent.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
@@ -27,11 +28,12 @@ BOOST_CLASS_EXPORT_GUID( PHY_RolePion_NBC, "PHY_RolePion_NBC" )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MT_RoleContainer& role, MIL_AgentPion& pion )
-    : PHY_RoleInterface_NBC  ( role )
-    , pPion_                 ( &pion )
-    , bNbcProtectionSuitWorn_( false )
-    , rContaminationState_   ( 0. )
-    , bHasChanged_           ( true )
+    : PHY_RoleInterface_NBC       ( role )
+    , pPion_                      ( &pion )
+    , bNbcProtectionSuitWorn_     ( false )
+    , nbcAgentTypesContaminating_ ()
+    , rContaminationState_        ( 0. )
+    , bHasChanged_                ( true )
 {
 }
  
@@ -83,7 +85,7 @@ namespace boost
             {
                 uint nID;
                 file >> nID;
-                set.insert( MIL_NbcAgentType::FindNbcAgentType( nID ) );
+                set.insert( MIL_NbcAgentType::Find( nID ) );
             }
         }
     }
@@ -108,22 +110,34 @@ void PHY_RolePion_NBC::serialize( Archive& file, const uint )
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::Poison
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::Poison( const MIL_NbcAgent& nbcAgent )
+{
+    if( bNbcProtectionSuitWorn_ )
+        return;
+
+    GetRole< PHY_RolePion_Composantes >().ApplyPoisonous( nbcAgent );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::Contaminate
 // Created: NLD 2004-04-30
 // -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::Contaminate( const MIL_NbcAgentType& nbcAgentType )
+void PHY_RolePion_NBC::Contaminate( const MIL_NbcAgent& nbcAgent )
 {
-    GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( nbcAgentType );
+    GetRole< PHY_RoleAction_Transport >().NotifyComposanteContaminated( nbcAgent );
+    GetRole< PHY_RolePion_Composantes >().ApplyContamination          ( nbcAgent );
 
-    if( !nbcAgentTypesContaminating_.insert( &nbcAgentType ).second )
-        return;
+    if( nbcAgentTypesContaminating_.insert( &nbcAgent.GetType() ).second )
+        bHasChanged_ = true;
 
-    rContaminationState_ = 1.;
-    bHasChanged_         = true;
-    if( bNbcProtectionSuitWorn_ )
-        return;
-   
-    GetRole< PHY_RolePion_Composantes >().ApplyContamination( nbcAgentType );
+    if( rContaminationState_ != 1. )
+    {
+        rContaminationState_ = 1.;
+        bHasChanged_         = true;
+    }    
 }
 
 // -----------------------------------------------------------------------------
@@ -132,12 +146,15 @@ void PHY_RolePion_NBC::Contaminate( const MIL_NbcAgentType& nbcAgentType )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Decontaminate()
 {
-    if( nbcAgentTypesContaminating_.empty() )
+    if( rContaminationState_ == 0. )
+    {
+        assert( nbcAgentTypesContaminating_.empty() );
         return;
+    }
 
     rContaminationState_ = 0.;
     bHasChanged_         = true;
-    nbcAgentTypesContaminating_.clear();    
+    nbcAgentTypesContaminating_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,8 +163,11 @@ void PHY_RolePion_NBC::Decontaminate()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
 {
-    if( nbcAgentTypesContaminating_.empty() )
+    if( rContaminationState_ == 0. )
+    {
+        assert( nbcAgentTypesContaminating_.empty() );
         return;
+    }
 
     assert( pPion_ );
     MT_Float rNewContaminationState = rContaminationState_ - ( pPion_->GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
@@ -161,7 +181,7 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
     {
         nbcAgentTypesContaminating_.clear();
         bHasChanged_ = true;
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------

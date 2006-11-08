@@ -84,7 +84,6 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( const MIL_AutomateMissio
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( MIL_PionMission_ABC& mis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_MILICE_PrendreEtTenir::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

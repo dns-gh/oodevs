@@ -13,6 +13,7 @@
 
 #include "MIL_NuageNBC.h"
 
+#include "MIL_NbcAgent.h"
 #include "MIL_NbcAgentType.h"
 #include "MIL_RealObjectType.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
@@ -36,7 +37,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_NuageNBC, "MIL_NuageNBC" )
 //-----------------------------------------------------------------------------
 MIL_NuageNBC::MIL_NuageNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
     : MIL_RealObject_ABC( type, nID, army )
-    , pNbcAgentType_    ( 0 )
+    , pNbcAgent_        ( 0 )
 {
 }
 
@@ -46,7 +47,7 @@ MIL_NuageNBC::MIL_NuageNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& 
 // -----------------------------------------------------------------------------
 MIL_NuageNBC::MIL_NuageNBC()
     : MIL_RealObject_ABC()
-    , pNbcAgentType_    ( 0 )
+    , pNbcAgent_        ( 0 )
 {
 }
 
@@ -57,7 +58,8 @@ MIL_NuageNBC::MIL_NuageNBC()
 //-----------------------------------------------------------------------------
 MIL_NuageNBC::~MIL_NuageNBC()
 {
-
+	if( pNbcAgent_ )
+        delete pNbcAgent_;
 }
 
 // =============================================================================
@@ -65,36 +67,18 @@ MIL_NuageNBC::~MIL_NuageNBC()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NuageNBC::load
-// Created: JVT 2005-03-23
+// Name: template< typename Archive > void MIL_NuageNBC::serialize
+// Created: NLD 2006-10-30
 // -----------------------------------------------------------------------------
-void MIL_NuageNBC::load( MIL_CheckPointInArchive& file , const uint )
+template< typename Archive > 
+void MIL_NuageNBC::serialize( Archive& file, const uint )
 {
-    file >> boost::serialization::base_object< MIL_RealObject_ABC >( *this );
-    
-    uint nTypeID;
-    file >> nTypeID;
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( nTypeID );
-    assert( pNbcAgentType_ );
-    
-    file >> nDeathTimeStep_
-         >> vOrigin_
-         >> rCurrentCircleRadius_
-         >> rCurrentPropagationLenght_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NuageNBC::save
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void MIL_NuageNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
-{
-    file << boost::serialization::base_object< MIL_RealObject_ABC >( *this );
-    file << pNbcAgentType_->GetID()
-         << nDeathTimeStep_
-         << vOrigin_
-         << rCurrentCircleRadius_
-         << rCurrentPropagationLenght_;
+    file & boost::serialization::base_object< MIL_RealObject_ABC >( *this );
+    file & pNbcAgent_
+         & nDeathTimeStep_
+         & vOrigin_
+         & rCurrentCircleRadius_
+         & rCurrentPropagationLenght_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,11 +87,11 @@ void MIL_NuageNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_NuageNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
-    assert( pNbcAgentType_ );
+    assert( pNbcAgent_ );
 
     archive.Section( "specific-attributes" );
     archive.Section( "nbc-agent" );
-    archive.WriteAttribute( "type", pNbcAgentType_->GetName() );
+    archive.WriteAttribute( "type", pNbcAgent_->GetType().GetName() );
     archive.EndSection(); // nbc-agent
     archive.EndSection(); // specific-attributes
 }
@@ -131,16 +115,15 @@ bool MIL_NuageNBC::Initialize( DIA_Parameters& diaParameters, uint& nCurrentPara
 // Name: MIL_NuageNBC::Initialize
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-void MIL_NuageNBC::Initialize( const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent )
+void MIL_NuageNBC::Initialize( const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType )
 {
     MIL_RealObject_ABC::InitializeCommon( localisation );
 
     assert( localisation.WasACircle() );
-    pNbcAgentType_        = &nbcAgent;
-
+    pNbcAgent_            = new MIL_NbcAgent( nbcAgentType, MIL_NbcAgent::eGas );
     vOrigin_              = GetLocalisation().GetCircleCenter();
     rCurrentCircleRadius_ = GetLocalisation().GetCircleRadius();
-    nDeathTimeStep_       = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pNbcAgentType_->GetLifeTime();    
+    nDeathTimeStep_       = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pNbcAgent_->GetLifeTime();
 }
 
 //-----------------------------------------------------------------------------
@@ -160,16 +143,17 @@ void MIL_NuageNBC::Initialize( MIL_InputArchive& archive )
 
     std::string strNbcAgentType_;
     archive.ReadAttribute( "type", strNbcAgentType_ );
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strNbcAgentType_ );
-    if( !pNbcAgentType_ )
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcAgentType_ );
+    if( !pNbcAgentType )
         throw MT_ScipioException( "MIL_ZoneNBC::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
+    pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
 
     archive.EndSection(); // nbc-agent
     archive.EndSection(); // specific-attributes
 
     vOrigin_              = GetLocalisation().GetCircleCenter();
     rCurrentCircleRadius_ = GetLocalisation().GetCircleRadius();
-    nDeathTimeStep_       = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pNbcAgentType_->GetLifeTime();
+    nDeathTimeStep_       = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pNbcAgent_->GetLifeTime();
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +169,10 @@ ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( const ASN1T_MagicActionCreat
     if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_nuage_nbc )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( asnCreateObject.attributs_specifiques.u.nuage_nbc->agent_nbc );
-    if( !pNbcAgentType_ )
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.attributs_specifiques.u.nuage_nbc->agent_nbc );
+    if( !pNbcAgentType )
         return EnumObjectErrorCode::error_invalid_specific_attributes;
+    pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
 
     ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
     if( nErrorCode != EnumObjectErrorCode::no_error )
@@ -195,7 +180,7 @@ ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( const ASN1T_MagicActionCreat
 
     vOrigin_              = GetLocalisation().GetCircleCenter();
     rCurrentCircleRadius_ = GetLocalisation().GetCircleRadius();
-    nDeathTimeStep_       = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pNbcAgentType_->GetLifeTime();   
+    nDeathTimeStep_       = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pNbcAgent_->GetLifeTime();   
     return EnumObjectErrorCode::no_error;
 }
 
@@ -209,10 +194,13 @@ ASN1T_EnumObjectErrorCode MIL_NuageNBC::Initialize( const ASN1T_MagicActionCreat
 // -----------------------------------------------------------------------------
 void MIL_NuageNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
+    assert( pNbcAgent_ );
     MIL_RealObject_ABC::ProcessAgentInside( agent );
-
     if( CanInteractWith( agent ) )
-        agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
+    {
+        if( pNbcAgent_->IsContaminating() )
+            agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgent_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -221,10 +209,15 @@ void MIL_NuageNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_NuageNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
+    assert( pNbcAgent_ );
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
-
     if( CanInteractWith( agent ) )
-        agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
+    {
+        if( pNbcAgent_->IsContaminating() )
+            agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgent_ );
+        if( pNbcAgent_->IsPoisonous() )
+            agent.GetRole< PHY_RoleInterface_NBC >().Poison( *pNbcAgent_ );
+    }
 }
 
 // =============================================================================
@@ -237,8 +230,8 @@ void MIL_NuageNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_NuageNBC::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 {
-    assert( pNbcAgentType_ );
-    asnAttributes_.agent_nbc  = pNbcAgentType_->GetID();
+    assert( pNbcAgent_ );
+    asnAttributes_.agent_nbc  = pNbcAgent_->GetType().GetID();
 
     asnMsg.GetAsnMsg().m.attributs_specifiquesPresent    = 1;
     asnMsg.GetAsnMsg().attributs_specifiques.t           = T_AttrObjectSpecific_nuage_nbc;
@@ -259,6 +252,19 @@ DEC_Knowledge_Object& MIL_NuageNBC::CreateKnowledge( const MIL_Army& teamKnowing
     return *new DEC_Knowledge_ObjectNuageNBC( teamKnowing, *this );
 }
 
+// =============================================================================
+// TOOLS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NuageNBC::GetNbcAgentType
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+const MIL_NbcAgentType& MIL_NuageNBC::GetNbcAgentType() const
+{
+    assert( pNbcAgent_ );
+    return pNbcAgent_->GetType();
+}
 
 // =============================================================================
 // UPDATE
@@ -270,11 +276,11 @@ DEC_Knowledge_Object& MIL_NuageNBC::CreateKnowledge( const MIL_Army& teamKnowing
 // -----------------------------------------------------------------------------
 bool MIL_NuageNBC::UpdateShape( TER_Localisation& newLocalisation )
 {
-    assert( pNbcAgentType_ );
+    assert( pNbcAgent_ );
 
     const PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin_ );
 
-    if ( wind.rWindSpeed_ <= pNbcAgentType_->GetMinPropagationSpeed() )
+    if ( wind.rWindSpeed_ <= MIL_NbcAgentType::GetMinPropagationSpeed() )
     {
         if ( wind.rWindSpeed_ <= 0. )
             return false;
@@ -306,8 +312,8 @@ bool MIL_NuageNBC::UpdateShape( TER_Localisation& newLocalisation )
             points.push_back( MT_Vector2D( vOrigin_.rX_ + rCurrentCircleRadius_ * cos( rInitialAngle - rAngle ), vOrigin_.rY_ + rCurrentCircleRadius_ * sin( rInitialAngle - rAngle ) ) );
 
         // + cône
-        points.push_back( points.back()  + rCurrentPropagationLenght_ * wind.vWindDirection_.Rotated( -0.5 * pNbcAgentType_->GetPropagationAngle() ) );
-        points.push_back( points.front() + rCurrentPropagationLenght_ * wind.vWindDirection_.Rotated(  0.5 * pNbcAgentType_->GetPropagationAngle() ) );
+        points.push_back( points.back()  + rCurrentPropagationLenght_ * wind.vWindDirection_.Rotated( -0.5 * pNbcAgent_->GetPropagationAngle() ) );
+        points.push_back( points.front() + rCurrentPropagationLenght_ * wind.vWindDirection_.Rotated(  0.5 * pNbcAgent_->GetPropagationAngle() ) );
 
         newLocalisation.Reset( TER_Localisation::ePolygon, points );
     }    
@@ -339,10 +345,13 @@ void MIL_NuageNBC::UpdateState()
 // -----------------------------------------------------------------------------
 bool MIL_NuageNBC::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
-    MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass );
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strOption );
     nDeathTimeStep_ = uint( -1 );
-    return pNbcAgentType_ != 0;
+    MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass );
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strOption );
+    if( !pNbcAgentType )
+        return false;
+    pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -355,9 +364,9 @@ void MIL_NuageNBC::Deserialize( const AttributeIdentifier& attributeID, Deserial
     {
         std::string strNBC;
         deserializer >> strNBC;
-        const MIL_NbcAgentType* pNbcAgent = MIL_NbcAgentType::FindNbcAgentType( strNBC );
-        if( pNbcAgent )
-            pNbcAgentType_ = pNbcAgent;
+        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNBC );
+        if( pNbcAgentType )
+            pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eGas );
     }
     else
         MIL_RealObject_ABC::Deserialize( attributeID, deserializer );
@@ -369,6 +378,7 @@ void MIL_NuageNBC::Deserialize( const AttributeIdentifier& attributeID, Deserial
 // -----------------------------------------------------------------------------
 void MIL_NuageNBC::Serialize( HLA_UpdateFunctor& functor ) const
 {
+    assert( pNbcAgent_ );
     MIL_RealObject_ABC::Serialize( functor );
-    functor.Serialize( "option", false, pNbcAgentType_->GetName() );
+    functor.Serialize( "option", false, pNbcAgent_->GetType().GetName() );
 }

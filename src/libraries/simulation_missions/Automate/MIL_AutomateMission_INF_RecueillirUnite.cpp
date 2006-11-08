@@ -88,7 +88,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RecueillirUnite::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_RecueillirUnite::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

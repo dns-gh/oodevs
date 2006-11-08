@@ -16,7 +16,7 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-class MIL_NbcAgentType;
+class MIL_NbcAgent;
 
 // =============================================================================
 // @class  PHY_RoleInterface_NBC
@@ -42,7 +42,8 @@ public:
     //! @name Operations
     //@{
     virtual bool IsContaminated() const = 0;
-    virtual void Contaminate   ( const MIL_NbcAgentType& nbcAgentType ) = 0;
+    virtual void Poison        ( const MIL_NbcAgent& nbcAgent ) = 0;
+    virtual void Contaminate   ( const MIL_NbcAgent& nbcAgent ) = 0;
     virtual void Decontaminate () = 0;
     virtual void Decontaminate ( MT_Float rRatioAgentsWorking ) = 0;
     //@}

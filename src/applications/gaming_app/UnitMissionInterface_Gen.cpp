@@ -78,51 +78,24 @@ UnitMissionInterface::~UnitMissionInterface()
         case T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies; break;
         case T_Mission_Pion_mission_pion_abc_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_appuyer_sur_position; break;
         case T_Mission_Pion_mission_pion_abc_rasit_renseigner_sur : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_abc_rasit_renseigner_sur; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_fosse_ac : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_fosse_ac; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_abattis_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_abattis_mine; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_point_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_point_mine; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_barricade : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_barricade; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_eboulement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_eboulement; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_bouchon_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_bouchon_mine; break;
-        case T_Mission_Pion_mission_pion_gen_detruire_route : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_detruire_route; break;
-        case T_Mission_Pion_mission_pion_gen_detruire_pont : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_detruire_pont; break;
-        case T_Mission_Pion_mission_pion_gen_securiser_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_securiser_itineraire; break;
-        case T_Mission_Pion_mission_pion_gen_degager_abattis_mine : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_abattis_mine; break;
-        case T_Mission_Pion_mission_pion_gen_degager_eboulement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_eboulement; break;
-        case T_Mission_Pion_mission_pion_gen_degager_rues : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_rues; break;
-        case T_Mission_Pion_mission_pion_gen_combler_entonnoir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_combler_entonnoir; break;
-        case T_Mission_Pion_mission_pion_gen_combler_fosse_ac : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_combler_fosse_ac; break;
-        case T_Mission_Pion_mission_pion_gen_creer_contournement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_contournement; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_zone_minee_lineaire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_minee_lineaire; break;
-        case T_Mission_Pion_mission_pion_gen_ouvrir_trouee : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ouvrir_trouee; break;
-        case T_Mission_Pion_mission_pion_gen_renforcer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_renforcer; break;
-        case T_Mission_Pion_mission_pion_gen_franchir_entonnoir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_franchir_entonnoir; break;
-        case T_Mission_Pion_mission_pion_gen_franchir_fosse_ac : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_franchir_fosse_ac; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_zone_minee_par_dispersion : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_minee_par_dispersion; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_postes_tir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_postes_tir; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_travaux_protection : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection; break;
+        case T_Mission_Pion_mission_pion_gen_ouvrir_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ouvrir_itineraire; break;
         case T_Mission_Pion_mission_pion_gen_retablir_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_retablir_itineraire; break;
-        case T_Mission_Pion_mission_pion_gen_equiper_exploiter : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_equiper_exploiter; break;
-        case T_Mission_Pion_mission_pion_gen_executer_variantement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_executer_variantement; break;
-        case T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_site_franchissement; break;
         case T_Mission_Pion_mission_pion_gen_reconnaitre_itineraire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_itineraire; break;
-        case T_Mission_Pion_mission_pion_gen_deminer_site_franchissement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_deminer_site_franchissement; break;
         case T_Mission_Pion_mission_pion_gen_reconnaitre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_zone; break;
-        case T_Mission_Pion_mission_pion_gen_creer_plate_forme : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_plate_forme; break;
-        case T_Mission_Pion_mission_pion_gen_creer_piste : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_piste; break;
-        case T_Mission_Pion_mission_pion_gen_creer_aire_poser : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_aire_poser; break;
-        case T_Mission_Pion_mission_pion_gen_neutraliser_engins_explosifs : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_neutraliser_engins_explosifs; break;
-        case T_Mission_Pion_mission_pion_gen_activer_obstacle : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_activer_obstacle; break;
-        case T_Mission_Pion_mission_pion_gen_ameliorer_mobilite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ameliorer_mobilite; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_aire_logistique : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_aire_logistique; break;
+        case T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_site_franchissement; break;
+        case T_Mission_Pion_mission_pion_gen_equiper_exploiter_site_franchissement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_equiper_exploiter_site_franchissement; break;
+        case T_Mission_Pion_mission_pion_gen_executer_variantement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_executer_variantement; break;
+        case T_Mission_Pion_mission_pion_gen_degager_obstacles : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_obstacles; break;
+        case T_Mission_Pion_mission_pion_gen_contourner_obstacles : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_contourner_obstacles; break;
         case T_Mission_Pion_mission_pion_gen_depolluer_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_depolluer_zone; break;
-        case T_Mission_Pion_mission_pion_gen_amenager_terrain_poser : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_amenager_terrain_poser; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_plate_forme_deploiement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_plate_forme_deploiement; break;
-        case T_Mission_Pion_mission_pion_gen_reprendre_mission_construction : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reprendre_mission_construction; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_zone_poser_helicoptere : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_poser_helicoptere; break;
-        case T_Mission_Pion_mission_pion_gen_appuyer_debarquement_troupes_gu : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_appuyer_debarquement_troupes_gu; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_camp_prisonniers : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_camp_prisonniers; break;
-        case T_Mission_Pion_mission_pion_gen_realiser_camp_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_camp_refugies; break;
+        case T_Mission_Pion_mission_pion_gen_renforcer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_renforcer; break;
+        case T_Mission_Pion_mission_pion_gen_realiser_travaux_protection : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection; break;
+        case T_Mission_Pion_mission_pion_gen_realiser_travaux_contre_mobilite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_contre_mobilite; break;
+        case T_Mission_Pion_mission_pion_gen_realiser_travaux_appui_deploiement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_appui_deploiement; break;
+        case T_Mission_Pion_mission_pion_gen_realiser_camps : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_camps; break;
+        case T_Mission_Pion_mission_pion_gen_reprendre_travaux : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reprendre_travaux; break;
+        case T_Mission_Pion_mission_pion_gen_ameliorer_mobilite : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ameliorer_mobilite; break;
+        case T_Mission_Pion_mission_pion_gen_activer_obstacle : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_activer_obstacle; break;
         case T_Mission_Pion_mission_pion_inf_reconnaitre_axe : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_reconnaitre_axe; break;
         case T_Mission_Pion_mission_pion_inf_couvrir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_couvrir; break;
         case T_Mission_Pion_mission_pion_inf_reduire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_inf_reduire; break;
@@ -302,51 +275,24 @@ void UnitMissionInterface::CreateInterface()
         case eMission_Pion_ABC_OrganiserAccueilColonneRefugies : CreateMission_ABC_OrganiserAccueilColonneRefugies(); break;
         case eMission_Pion_ABC_AppuyerSurPosition : CreateMission_ABC_AppuyerSurPosition(); break;
         case eMission_Pion_ABC_RASIT_RenseignerSur : CreateMission_ABC_RASIT_RenseignerSur(); break;
-        case eMission_Pion_GEN_RealiserFosseAC : CreateMission_GEN_RealiserFosseAC(); break;
-        case eMission_Pion_GEN_RealiserAbattisMine : CreateMission_GEN_RealiserAbattisMine(); break;
-        case eMission_Pion_GEN_RealiserPointMine : CreateMission_GEN_RealiserPointMine(); break;
-        case eMission_Pion_GEN_RealiserBarricade : CreateMission_GEN_RealiserBarricade(); break;
-        case eMission_Pion_GEN_RealiserEboulement : CreateMission_GEN_RealiserEboulement(); break;
-        case eMission_Pion_GEN_RealiserBouchonMine : CreateMission_GEN_RealiserBouchonMine(); break;
-        case eMission_Pion_GEN_DetruireRoute : CreateMission_GEN_DetruireRoute(); break;
-        case eMission_Pion_GEN_DetruirePont : CreateMission_GEN_DetruirePont(); break;
-        case eMission_Pion_GEN_SecuriserItineraire : CreateMission_GEN_SecuriserItineraire(); break;
-        case eMission_Pion_GEN_DegagerAbattisMine : CreateMission_GEN_DegagerAbattisMine(); break;
-        case eMission_Pion_GEN_DegagerEboulement : CreateMission_GEN_DegagerEboulement(); break;
-        case eMission_Pion_GEN_DegagerRues : CreateMission_GEN_DegagerRues(); break;
-        case eMission_Pion_GEN_ComblerEntonnoir : CreateMission_GEN_ComblerEntonnoir(); break;
-        case eMission_Pion_GEN_ComblerFosseAC : CreateMission_GEN_ComblerFosseAC(); break;
-        case eMission_Pion_GEN_CreerContournement : CreateMission_GEN_CreerContournement(); break;
-        case eMission_Pion_GEN_RealiserZoneMineeLineaire : CreateMission_GEN_RealiserZoneMineeLineaire(); break;
-        case eMission_Pion_GEN_OuvrirTrouee : CreateMission_GEN_OuvrirTrouee(); break;
-        case eMission_Pion_GEN_Renforcer : CreateMission_GEN_Renforcer(); break;
-        case eMission_Pion_GEN_FranchirEntonnoir : CreateMission_GEN_FranchirEntonnoir(); break;
-        case eMission_Pion_GEN_FranchirFosseAC : CreateMission_GEN_FranchirFosseAC(); break;
-        case eMission_Pion_GEN_RealiserZoneMineeParDispersion : CreateMission_GEN_RealiserZoneMineeParDispersion(); break;
-        case eMission_Pion_GEN_RealiserPostesTir : CreateMission_GEN_RealiserPostesTir(); break;
-        case eMission_Pion_GEN_RealiserTravauxProtection : CreateMission_GEN_RealiserTravauxProtection(); break;
+        case eMission_Pion_GEN_OuvrirItineraire : CreateMission_GEN_OuvrirItineraire(); break;
         case eMission_Pion_GEN_RetablirItineraire : CreateMission_GEN_RetablirItineraire(); break;
-        case eMission_Pion_GEN_EquiperExploiter : CreateMission_GEN_EquiperExploiter(); break;
-        case eMission_Pion_GEN_ExecuterVariantement : CreateMission_GEN_ExecuterVariantement(); break;
-        case eMission_Pion_GEN_ReconnaitreSiteFranchissement : CreateMission_GEN_ReconnaitreSiteFranchissement(); break;
         case eMission_Pion_GEN_ReconnaitreItineraire : CreateMission_GEN_ReconnaitreItineraire(); break;
-        case eMission_Pion_GEN_DeminerSiteFranchissement : CreateMission_GEN_DeminerSiteFranchissement(); break;
         case eMission_Pion_GEN_ReconnaitreZone : CreateMission_GEN_ReconnaitreZone(); break;
-        case eMission_Pion_GEN_CreerPlateForme : CreateMission_GEN_CreerPlateForme(); break;
-        case eMission_Pion_GEN_CreerPiste : CreateMission_GEN_CreerPiste(); break;
-        case eMission_Pion_GEN_CreerAirePoser : CreateMission_GEN_CreerAirePoser(); break;
-        case eMission_Pion_GEN_NeutraliserEnginsExplosifs : CreateMission_GEN_NeutraliserEnginsExplosifs(); break;
-        case eMission_Pion_GEN_ActiverObstacle : CreateMission_GEN_ActiverObstacle(); break;
-        case eMission_Pion_GEN_AmeliorerMobilite : CreateMission_GEN_AmeliorerMobilite(); break;
-        case eMission_Pion_GEN_RealiserAireLogistique : CreateMission_GEN_RealiserAireLogistique(); break;
+        case eMission_Pion_GEN_ReconnaitreSiteFranchissement : CreateMission_GEN_ReconnaitreSiteFranchissement(); break;
+        case eMission_Pion_GEN_EquiperExploiterSiteFranchissement : CreateMission_GEN_EquiperExploiterSiteFranchissement(); break;
+        case eMission_Pion_GEN_ExecuterVariantement : CreateMission_GEN_ExecuterVariantement(); break;
+        case eMission_Pion_GEN_DegagerObstacles : CreateMission_GEN_DegagerObstacles(); break;
+        case eMission_Pion_GEN_ContournerObstacles : CreateMission_GEN_ContournerObstacles(); break;
         case eMission_Pion_GEN_DepolluerZone : CreateMission_GEN_DepolluerZone(); break;
-        case eMission_Pion_GEN_AmenagerTerrainPoser : CreateMission_GEN_AmenagerTerrainPoser(); break;
-        case eMission_Pion_GEN_RealiserPlateFormeDeploiement : CreateMission_GEN_RealiserPlateFormeDeploiement(); break;
-        case eMission_Pion_GEN_ReprendreMissionConstruction : CreateMission_GEN_ReprendreMissionConstruction(); break;
-        case eMission_Pion_GEN_RealiserZonePoserHelicoptere : CreateMission_GEN_RealiserZonePoserHelicoptere(); break;
-        case eMission_Pion_GEN_AppuyerDebarquementTroupesGU : CreateMission_GEN_AppuyerDebarquementTroupesGU(); break;
-        case eMission_Pion_GEN_RealiserCampPrisonniers : CreateMission_GEN_RealiserCampPrisonniers(); break;
-        case eMission_Pion_GEN_RealiserCampRefugies : CreateMission_GEN_RealiserCampRefugies(); break;
+        case eMission_Pion_GEN_Renforcer : CreateMission_GEN_Renforcer(); break;
+        case eMission_Pion_GEN_RealiserTravauxProtection : CreateMission_GEN_RealiserTravauxProtection(); break;
+        case eMission_Pion_GEN_RealiserTravauxContreMobilite : CreateMission_GEN_RealiserTravauxContreMobilite(); break;
+        case eMission_Pion_GEN_RealiserTravauxAppuiDeploiement : CreateMission_GEN_RealiserTravauxAppuiDeploiement(); break;
+        case eMission_Pion_GEN_RealiserCamps : CreateMission_GEN_RealiserCamps(); break;
+        case eMission_Pion_GEN_ReprendreTravaux : CreateMission_GEN_ReprendreTravaux(); break;
+        case eMission_Pion_GEN_AmeliorerMobilite : CreateMission_GEN_AmeliorerMobilite(); break;
+        case eMission_Pion_GEN_ActiverObstacle : CreateMission_GEN_ActiverObstacle(); break;
         case eMission_Pion_INF_ReconnaitreAxe : CreateMission_INF_ReconnaitreAxe(); break;
         case eMission_Pion_INF_Couvrir : CreateMission_INF_Couvrir(); break;
         case eMission_Pion_INF_Reduire : CreateMission_INF_Reduire(); break;
@@ -1279,306 +1225,15 @@ void UnitMissionInterface::CreateMission_ABC_RASIT_RenseignerSur()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserFosseAC
+// Name: UnitMissionInterface::CreateMission_GEN_OuvrirItineraire
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserFosseAC()
+void UnitMissionInterface::CreateMission_GEN_OuvrirItineraire()
 {
-    ASN1T_Mission_Pion_GEN_RealiserFosseAC& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserFosseAC();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_fosse_ac;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_fosse_ac = &asnMission;
-    CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_EnumTypeFosseAC >* pSelector_type = &CreateVarList( asnMission.type, "Type");
-    pSelector_type->AddItem( "Simple", EnumTypeFosseAC::simple );
-    pSelector_type->AddItem( "Compose", EnumTypeFosseAC::compose );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserAbattisMine
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserAbattisMine()
-{
-    ASN1T_Mission_Pion_GEN_RealiserAbattisMine& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserAbattisMine();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_abattis_mine;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_abattis_mine = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence");
-    pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
-    pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
-    ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire");
-    pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserPointMine
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserPointMine()
-{
-    ASN1T_Mission_Pion_GEN_RealiserPointMine& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserPointMine();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_point_mine;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_point_mine = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserBarricade
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserBarricade()
-{
-    ASN1T_Mission_Pion_GEN_RealiserBarricade& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserBarricade();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_barricade;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_barricade = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence");
-    pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
-    pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserEboulement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserEboulement()
-{
-    ASN1T_Mission_Pion_GEN_RealiserEboulement& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserEboulement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_eboulement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_eboulement = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire");
-    pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserBouchonMine
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserBouchonMine()
-{
-    ASN1T_Mission_Pion_GEN_RealiserBouchonMine& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserBouchonMine();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_bouchon_mine;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_bouchon_mine = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_EnumMissionGenUrgence >* pSelector_urgence = &CreateVarList( asnMission.urgence, "Urgence");
-    pSelector_urgence->AddItem( "Serie minimum", EnumMissionGenUrgence::serie_minimum );
-    pSelector_urgence->AddItem( "Serie complementaire", EnumMissionGenUrgence::serie_complementaire );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_DetruireRoute
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_DetruireRoute()
-{
-    ASN1T_Mission_Pion_GEN_DetruireRoute& asnMission = *new ASN1T_Mission_Pion_GEN_DetruireRoute();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_detruire_route;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_detruire_route = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire");
-    pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_DetruirePont
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_DetruirePont()
-{
-    ASN1T_Mission_Pion_GEN_DetruirePont& asnMission = *new ASN1T_Mission_Pion_GEN_DetruirePont();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_detruire_pont;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_detruire_pont = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_EnumMissionGenSousTypeObstacle >* pSelector_preliminaire = &CreateVarList( asnMission.preliminaire, "Preliminaire");
-    pSelector_preliminaire->AddItem( "Preliminaire", EnumMissionGenSousTypeObstacle::preliminaire );
-    pSelector_preliminaire->AddItem( "De manoeuvre", EnumMissionGenSousTypeObstacle::de_manoeuvre );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_SecuriserItineraire
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_SecuriserItineraire()
-{
-    ASN1T_Mission_Pion_GEN_SecuriserItineraire& asnMission = *new ASN1T_Mission_Pion_GEN_SecuriserItineraire();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_securiser_itineraire;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_securiser_itineraire = &asnMission;
+    ASN1T_Mission_Pion_GEN_OuvrirItineraire& asnMission = *new ASN1T_Mission_Pion_GEN_OuvrirItineraire();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_ouvrir_itineraire;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ouvrir_itineraire = &asnMission;
     CreatePath( asnMission.itineraire, "Itineraire");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_DegagerAbattisMine
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_DegagerAbattisMine()
-{
-    ASN1T_Mission_Pion_GEN_DegagerAbattisMine& asnMission = *new ASN1T_Mission_Pion_GEN_DegagerAbattisMine();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_degager_abattis_mine;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_abattis_mine = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_DegagerEboulement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_DegagerEboulement()
-{
-    ASN1T_Mission_Pion_GEN_DegagerEboulement& asnMission = *new ASN1T_Mission_Pion_GEN_DegagerEboulement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_degager_eboulement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_eboulement = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_DegagerRues
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_DegagerRues()
-{
-    ASN1T_Mission_Pion_GEN_DegagerRues& asnMission = *new ASN1T_Mission_Pion_GEN_DegagerRues();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_degager_rues;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_rues = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_ComblerEntonnoir
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_ComblerEntonnoir()
-{
-    ASN1T_Mission_Pion_GEN_ComblerEntonnoir& asnMission = *new ASN1T_Mission_Pion_GEN_ComblerEntonnoir();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_combler_entonnoir;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_combler_entonnoir = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_ComblerFosseAC
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_ComblerFosseAC()
-{
-    ASN1T_Mission_Pion_GEN_ComblerFosseAC& asnMission = *new ASN1T_Mission_Pion_GEN_ComblerFosseAC();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_combler_fosse_ac;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_combler_fosse_ac = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_CreerContournement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_CreerContournement()
-{
-    ASN1T_Mission_Pion_GEN_CreerContournement& asnMission = *new ASN1T_Mission_Pion_GEN_CreerContournement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_creer_contournement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_contournement = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserZoneMineeLineaire
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserZoneMineeLineaire()
-{
-    ASN1T_Mission_Pion_GEN_RealiserZoneMineeLineaire& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserZoneMineeLineaire();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_minee_lineaire;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_minee_lineaire = &asnMission;
-    CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-    CreateNumeric( asnMission.densite, "Densite");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_OuvrirTrouee
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_OuvrirTrouee()
-{
-    ASN1T_Mission_Pion_GEN_OuvrirTrouee& asnMission = *new ASN1T_Mission_Pion_GEN_OuvrirTrouee();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_ouvrir_trouee;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ouvrir_trouee = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_Renforcer
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_Renforcer()
-{
-    ASN1T_Mission_Pion_GEN_Renforcer& asnMission = *new ASN1T_Mission_Pion_GEN_Renforcer();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_renforcer;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_renforcer = &asnMission;
-    CreatePoint( asnMission.lieu_renforcement, "Lieu renforcement");
-    CreateAgent( asnMission.unite, "Unite");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_FranchirEntonnoir
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_FranchirEntonnoir()
-{
-    ASN1T_Mission_Pion_GEN_FranchirEntonnoir& asnMission = *new ASN1T_Mission_Pion_GEN_FranchirEntonnoir();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_franchir_entonnoir;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_franchir_entonnoir = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_FranchirFosseAC
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_FranchirFosseAC()
-{
-    ASN1T_Mission_Pion_GEN_FranchirFosseAC& asnMission = *new ASN1T_Mission_Pion_GEN_FranchirFosseAC();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_franchir_fosse_ac;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_franchir_fosse_ac = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserZoneMineeParDispersion
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserZoneMineeParDispersion()
-{
-    ASN1T_Mission_Pion_GEN_RealiserZoneMineeParDispersion& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserZoneMineeParDispersion();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_minee_par_dispersion;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_minee_par_dispersion = &asnMission;
-    CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-    CreateNumeric( asnMission.densite, "Densite");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserPostesTir
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserPostesTir()
-{
-    ASN1T_Mission_Pion_GEN_RealiserPostesTir& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserPostesTir();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_postes_tir;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_postes_tir = &asnMission;
-    CreatePoint( asnMission.pos_objet, "Pos objet");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserTravauxProtection
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserTravauxProtection()
-{
-    ASN1T_Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserTravauxProtection();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_protection;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection = &asnMission;
-    CreatePoint( asnMission.pos_objet, "Pos objet");
 }
 
 // -----------------------------------------------------------------------------
@@ -1594,14 +1249,50 @@ void UnitMissionInterface::CreateMission_GEN_RetablirItineraire()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_EquiperExploiter
+// Name: UnitMissionInterface::CreateMission_GEN_ReconnaitreItineraire
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_EquiperExploiter()
+void UnitMissionInterface::CreateMission_GEN_ReconnaitreItineraire()
 {
-    ASN1T_Mission_Pion_GEN_EquiperExploiter& asnMission = *new ASN1T_Mission_Pion_GEN_EquiperExploiter();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_equiper_exploiter;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_equiper_exploiter = &asnMission;
+    ASN1T_Mission_Pion_GEN_ReconnaitreItineraire& asnMission = *new ASN1T_Mission_Pion_GEN_ReconnaitreItineraire();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_itineraire;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_itineraire = &asnMission;
+    CreatePath( asnMission.itineraire, "Itineraire");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_GEN_ReconnaitreZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_GEN_ReconnaitreZone()
+{
+    ASN1T_Mission_Pion_GEN_ReconnaitreZone& asnMission = *new ASN1T_Mission_Pion_GEN_ReconnaitreZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_GEN_ReconnaitreSiteFranchissement
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_GEN_ReconnaitreSiteFranchissement()
+{
+    ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement& asnMission = *new ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_site_franchissement = &asnMission;
+    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_GEN_EquiperExploiterSiteFranchissement
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_GEN_EquiperExploiterSiteFranchissement()
+{
+    ASN1T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement& asnMission = *new ASN1T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_equiper_exploiter_site_franchissement;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_equiper_exploiter_site_franchissement = &asnMission;
     CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
     CreatePoint( asnMission.point_regroupement, "Point regroupement");
     ParamComboBox< ASN1T_EnumGenTypePontage >* pSelector_type_pontage = &CreateVarList( asnMission.type_pontage, "Type pontage");
@@ -1626,135 +1317,27 @@ void UnitMissionInterface::CreateMission_GEN_ExecuterVariantement()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_ReconnaitreSiteFranchissement
+// Name: UnitMissionInterface::CreateMission_GEN_DegagerObstacles
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_ReconnaitreSiteFranchissement()
+void UnitMissionInterface::CreateMission_GEN_DegagerObstacles()
 {
-    ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement& asnMission = *new ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_site_franchissement = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
+    ASN1T_Mission_Pion_GEN_DegagerObstacles& asnMission = *new ASN1T_Mission_Pion_GEN_DegagerObstacles();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_degager_obstacles;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_degager_obstacles = &asnMission;
+    CreateObjectKnowledgeList( asnMission.obstacles, "Obstacles");
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_ReconnaitreItineraire
+// Name: UnitMissionInterface::CreateMission_GEN_ContournerObstacles
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_ReconnaitreItineraire()
+void UnitMissionInterface::CreateMission_GEN_ContournerObstacles()
 {
-    ASN1T_Mission_Pion_GEN_ReconnaitreItineraire& asnMission = *new ASN1T_Mission_Pion_GEN_ReconnaitreItineraire();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_itineraire;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_itineraire = &asnMission;
-    CreatePath( asnMission.itineraire, "Itineraire");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_DeminerSiteFranchissement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_DeminerSiteFranchissement()
-{
-    ASN1T_Mission_Pion_GEN_DeminerSiteFranchissement& asnMission = *new ASN1T_Mission_Pion_GEN_DeminerSiteFranchissement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_deminer_site_franchissement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_deminer_site_franchissement = &asnMission;
-    CreateObjectKnowledge( asnMission.site_franchissement, "Site franchissement");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_ReconnaitreZone
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_ReconnaitreZone()
-{
-    ASN1T_Mission_Pion_GEN_ReconnaitreZone& asnMission = *new ASN1T_Mission_Pion_GEN_ReconnaitreZone();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_zone;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_zone = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_CreerPlateForme
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_CreerPlateForme()
-{
-    ASN1T_Mission_Pion_GEN_CreerPlateForme& asnMission = *new ASN1T_Mission_Pion_GEN_CreerPlateForme();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_creer_plate_forme;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_plate_forme = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_CreerPiste
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_CreerPiste()
-{
-    ASN1T_Mission_Pion_GEN_CreerPiste& asnMission = *new ASN1T_Mission_Pion_GEN_CreerPiste();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_creer_piste;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_piste = &asnMission;
-    CreateLocation( asnMission.pos_obstacle, "Pos obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_CreerAirePoser
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_CreerAirePoser()
-{
-    ASN1T_Mission_Pion_GEN_CreerAirePoser& asnMission = *new ASN1T_Mission_Pion_GEN_CreerAirePoser();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_creer_aire_poser;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_creer_aire_poser = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_NeutraliserEnginsExplosifs
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_NeutraliserEnginsExplosifs()
-{
-    ASN1T_Mission_Pion_GEN_NeutraliserEnginsExplosifs& asnMission = *new ASN1T_Mission_Pion_GEN_NeutraliserEnginsExplosifs();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_neutraliser_engins_explosifs;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_neutraliser_engins_explosifs = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_ActiverObstacle
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_ActiverObstacle()
-{
-    ASN1T_Mission_Pion_GEN_ActiverObstacle& asnMission = *new ASN1T_Mission_Pion_GEN_ActiverObstacle();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_activer_obstacle;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_activer_obstacle = &asnMission;
-    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_AmeliorerMobilite
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_AmeliorerMobilite()
-{
-    ASN1T_Mission_Pion_GEN_AmeliorerMobilite& asnMission = *new ASN1T_Mission_Pion_GEN_AmeliorerMobilite();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_ameliorer_mobilite;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ameliorer_mobilite = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserAireLogistique
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserAireLogistique()
-{
-    ASN1T_Mission_Pion_GEN_RealiserAireLogistique& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserAireLogistique();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_aire_logistique;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_aire_logistique = &asnMission;
-    CreatePoint( asnMission.position_obstacle, "Position obstacle");
+    ASN1T_Mission_Pion_GEN_ContournerObstacles& asnMission = *new ASN1T_Mission_Pion_GEN_ContournerObstacles();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_contourner_obstacles;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_contourner_obstacles = &asnMission;
+    CreateObjectKnowledgeList( asnMission.obstacles, "Obstacles");
 }
 
 // -----------------------------------------------------------------------------
@@ -1770,92 +1353,100 @@ void UnitMissionInterface::CreateMission_GEN_DepolluerZone()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_AmenagerTerrainPoser
+// Name: UnitMissionInterface::CreateMission_GEN_Renforcer
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_AmenagerTerrainPoser()
+void UnitMissionInterface::CreateMission_GEN_Renforcer()
 {
-    ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser& asnMission = *new ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_amenager_terrain_poser;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_amenager_terrain_poser = &asnMission;
-    CreatePoint( asnMission.pos_obstacle, "Pos obstacle");
-    ParamComboBox< ASN1T_Mission_Pion_GEN_AmenagerTerrainPoser_type_objet >* pSelector_type_objet = &CreateVarList( asnMission.type_objet, "Type objet");
-    pSelector_type_objet->AddItem( "Aire poser", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::aire_poser );
-    pSelector_type_objet->AddItem( "Terrain largage", Mission_Pion_GEN_AmenagerTerrainPoser_type_objet::terrain_largage );
+    ASN1T_Mission_Pion_GEN_Renforcer& asnMission = *new ASN1T_Mission_Pion_GEN_Renforcer();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_renforcer;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_renforcer = &asnMission;
+    CreatePoint( asnMission.lieu_renforcement, "Lieu renforcement");
+    CreateAgent( asnMission.unite, "Unite");
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserPlateFormeDeploiement
+// Name: UnitMissionInterface::CreateMission_GEN_RealiserTravauxProtection
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserPlateFormeDeploiement()
+void UnitMissionInterface::CreateMission_GEN_RealiserTravauxProtection()
 {
-    ASN1T_Mission_Pion_GEN_RealiserPlateFormeDeploiement& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserPlateFormeDeploiement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_plate_forme_deploiement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_plate_forme_deploiement = &asnMission;
-    CreatePoint( asnMission.position_obstacle, "Position obstacle");
+    ASN1T_Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserTravauxProtection();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_protection;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection = &asnMission;
+    CreateGenObjectList( asnMission.travaux, "Travaux");
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_ReprendreMissionConstruction
+// Name: UnitMissionInterface::CreateMission_GEN_RealiserTravauxContreMobilite
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_ReprendreMissionConstruction()
+void UnitMissionInterface::CreateMission_GEN_RealiserTravauxContreMobilite()
 {
-    ASN1T_Mission_Pion_GEN_ReprendreMissionConstruction& asnMission = *new ASN1T_Mission_Pion_GEN_ReprendreMissionConstruction();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reprendre_mission_construction;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reprendre_mission_construction = &asnMission;
+    ASN1T_Mission_Pion_GEN_RealiserTravauxContreMobilite& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserTravauxContreMobilite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_contre_mobilite;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_contre_mobilite = &asnMission;
+    CreateGenObjectList( asnMission.travaux, "Travaux");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_GEN_RealiserTravauxAppuiDeploiement
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_GEN_RealiserTravauxAppuiDeploiement()
+{
+    ASN1T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_appui_deploiement;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_appui_deploiement = &asnMission;
+    CreateGenObjectList( asnMission.travaux, "Travaux");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_GEN_RealiserCamps
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_GEN_RealiserCamps()
+{
+    ASN1T_Mission_Pion_GEN_RealiserCamps& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserCamps();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_camps;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_camps = &asnMission;
+    CreateGenObjectList( asnMission.travaux, "Travaux");
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMissionInterface::CreateMission_GEN_ReprendreTravaux
+// Created: AGR
+// -----------------------------------------------------------------------------
+void UnitMissionInterface::CreateMission_GEN_ReprendreTravaux()
+{
+    ASN1T_Mission_Pion_GEN_ReprendreTravaux& asnMission = *new ASN1T_Mission_Pion_GEN_ReprendreTravaux();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reprendre_travaux;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_reprendre_travaux = &asnMission;
     CreateObjectKnowledge( asnMission.travaux, "Travaux");
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserZonePoserHelicoptere
+// Name: UnitMissionInterface::CreateMission_GEN_AmeliorerMobilite
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserZonePoserHelicoptere()
+void UnitMissionInterface::CreateMission_GEN_AmeliorerMobilite()
 {
-    ASN1T_Mission_Pion_GEN_RealiserZonePoserHelicoptere& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserZonePoserHelicoptere();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_zone_poser_helicoptere;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_zone_poser_helicoptere = &asnMission;
-    CreatePoint( asnMission.zone_poser, "Zone poser");
+    ASN1T_Mission_Pion_GEN_AmeliorerMobilite& asnMission = *new ASN1T_Mission_Pion_GEN_AmeliorerMobilite();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_ameliorer_mobilite;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_ameliorer_mobilite = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_AppuyerDebarquementTroupesGU
+// Name: UnitMissionInterface::CreateMission_GEN_ActiverObstacle
 // Created: AGR
 // -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_AppuyerDebarquementTroupesGU()
+void UnitMissionInterface::CreateMission_GEN_ActiverObstacle()
 {
-    ASN1T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU& asnMission = *new ASN1T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_appuyer_debarquement_troupes_gu;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_appuyer_debarquement_troupes_gu = &asnMission;
-    CreateLocation( asnMission.zone_appui, "Zone appui");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserCampPrisonniers
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserCampPrisonniers()
-{
-    ASN1T_Mission_Pion_GEN_RealiserCampPrisonniers& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserCampPrisonniers();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_camp_prisonniers;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_camp_prisonniers = &asnMission;
-    CreateLocation( asnMission.camp, "Camp");
-    CreateAutomate( asnMission.tc2, "Tc2");
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMissionInterface::CreateMission_GEN_RealiserCampRefugies
-// Created: AGR
-// -----------------------------------------------------------------------------
-void UnitMissionInterface::CreateMission_GEN_RealiserCampRefugies()
-{
-    ASN1T_Mission_Pion_GEN_RealiserCampRefugies& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserCampRefugies();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_camp_refugies;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_realiser_camp_refugies = &asnMission;
-    CreateLocation( asnMission.camp, "Camp");
-    CreateAutomate( asnMission.tc2, "Tc2");
+    ASN1T_Mission_Pion_GEN_ActiverObstacle& asnMission = *new ASN1T_Mission_Pion_GEN_ActiverObstacle();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_activer_obstacle;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_pion_gen_activer_obstacle = &asnMission;
+    CreateObjectKnowledge( asnMission.obstacle, "Obstacle");
 }
 
 // -----------------------------------------------------------------------------

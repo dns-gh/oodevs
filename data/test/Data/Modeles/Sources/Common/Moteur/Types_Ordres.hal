@@ -69,36 +69,11 @@ typedef struct T_Mission_Population : Thing
 // =============================================================================
 // PARAMETRES DE MISSIONS SPECIFIQUES
 // =============================================================================
-typedef enum E_MissionGenUrgenceType
-{
-    eUrgenceType_SerieMinimum,
-    eUrgenceType_SerieComplementaire
-};
-
 typedef enum E_MissionGenSousTypeObstacle
 {
     eSousType_Preliminaire,
     eSousType_DeManoeuvre
 };
-
-typedef enum E_GenObjetPriorite
-{   
-    prioritaire,
-    normal,
-    peuPrioritaire
-};
-
-typedef struct T_GenObjet : Thing
-{
-    E_TypeObject                 typeObject_;
-    T_Localisation               posObject_;
-    E_MissionGenUrgenceType      urgence_;
-    E_MissionGenSousTypeObstacle preliminaire_;
-    E_GenObjetPriorite           priorite_;
-};
-
-typedef list< T_GenObjet > T_ListeGenObjets;
- 
 
 include "Common/Moteur/Types_Missions_Population.hal";
 include "Common/Moteur/Types_Missions_Automate.hal";

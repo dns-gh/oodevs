@@ -82,21 +82,14 @@ IMPORTS Mission-Automate-ABC-Appuyer,
         Mission-Automate-ABC-ProtegerPC,
         Mission-Automate-ABC-AppuyerSurPosition FROM ScipioAutomateMission_ABC
         
-IMPORTS Mission-Automate-GEN-FaireFranchir,
-        Mission-Automate-GEN-RealiserSystemeObstacles,
-        Mission-Automate-GEN-FranchirDeViveForce,
-        Mission-Automate-GEN-RetablirItineraires,
-        Mission-Automate-GEN-AmenagerAireStationnement,
-        Mission-Automate-GEN-AmenagerTerrainPoserSommaire,
-        Mission-Automate-GEN-RealiserZonePoser,
-        Mission-Automate-GEN-ReconnaitreZoneDeploiement,
-        Mission-Automate-GEN-RealiserCampPrisonniers,
-        Mission-Automate-GEN-RealiserCampRefugies,
-        Mission-Automate-GEN-SeDeployer,
-        Mission-Automate-GEN-RealiserPlatesformesSommairesDeDeploiementInitial,
-        Mission-Automate-GEN-RealiserTravauxSommairesAuProfitPopulation,
-        Mission-Automate-GEN-AppuyerDebarquementTroupes,
-        Mission-Automate-GEN-OuvrirAxesProgression FROM ScipioAutomateMission_GEN
+IMPORTS Mission-Automate-GEN-SeDeployer 
+        Mission-Automate-GEN-ReconnaitreZone 
+        Mission-Automate-GEN-RealiserTravaux 
+        Mission-Automate-GEN-OuvrirItineraires 
+        Mission-Automate-GEN-RetablirItineraires 
+        Mission-Automate-GEN-FaireFranchir 
+        Mission-Automate-GEN-FranchirDeViveForce, 
+        Mission-Automate-GEN-DegagerObstaclesDansZone FROM ScipioAutomateMission_GEN
         
 IMPORTS Mission-Automate-INF-AttaquerSouplesse,
         Mission-Automate-INF-Appuyer,
@@ -243,20 +236,13 @@ Mission-Automate ::= CHOICE
     mission-automate-abc-proteger-pc                                                Mission-Automate-ABC-ProtegerPC,    
     mission-automate-abc-appuyer-sur-position                                       Mission-Automate-ABC-AppuyerSurPosition,
     mission-automate-gen-se-deployer                                                Mission-Automate-GEN-SeDeployer,
-    mission-automate-gen-faire-franchir                                             Mission-Automate-GEN-FaireFranchir,
-    mission-automate-gen-realiser-systeme-obstacles                                 Mission-Automate-GEN-RealiserSystemeObstacles,
-    mission-automate-gen-franchir-de-vive-force                                     Mission-Automate-GEN-FranchirDeViveForce,
+    mission-automate-gen-reconnaitre-zone                                           Mission-Automate-GEN-ReconnaitreZone,
+    mission-automate-gen-realiser-travaux                                           Mission-Automate-GEN-RealiserTravaux,
+    mission-automate-gen-ouvrir-itineraires                                         Mission-Automate-GEN-OuvrirItineraires,
     mission-automate-gen-retablir-itineraires                                       Mission-Automate-GEN-RetablirItineraires,
-    mission-automate-gen-amenager-aire-stationnement                                Mission-Automate-GEN-AmenagerAireStationnement,
-    mission-automate-gen-amenager-terrain-poser-sommaire                            Mission-Automate-GEN-AmenagerTerrainPoserSommaire,
-    mission-automate-gen-realiser-zone-poser                                        Mission-Automate-GEN-RealiserZonePoser,
-    mission-automate-gen-reconnaitre-zone-deploiement                               Mission-Automate-GEN-ReconnaitreZoneDeploiement,
-    mission-automate-gen-realiser-camp-prisonniers                                  Mission-Automate-GEN-RealiserCampPrisonniers,
-    mission-automate-gen-realiser-camp-refugies                                     Mission-Automate-GEN-RealiserCampRefugies,
-    mission-automate-gen-realiser-plates-formes-sommaires-de-deploiement-initial    Mission-Automate-GEN-RealiserPlatesformesSommairesDeDeploiementInitial,
-    mission-automate-gen-realiser-travaux-sommaires-au-profit-population            Mission-Automate-GEN-RealiserTravauxSommairesAuProfitPopulation,    
-    mission-automate-gen-appuyer-debarquement-troupes                               Mission-Automate-GEN-AppuyerDebarquementTroupes,
-    mission-automate-gen-ouvrir-axes-progression                                    Mission-Automate-GEN-OuvrirAxesProgression,            
+    mission-automate-gen-faire-franchir                                             Mission-Automate-GEN-FaireFranchir,
+    mission-automate-gen-franchir-de-vive-force                                     Mission-Automate-GEN-FranchirDeViveForce,
+    mission-automate-gen-degager-obstacles-dans-zone                                Mission-Automate-GEN-DegagerObstaclesDansZone,
     mission-automate-inf-attaquer-souplesse                                         Mission-Automate-INF-AttaquerSouplesse,
     mission-automate-inf-appuyer                                                    Mission-Automate-INF-Appuyer,
     mission-automate-inf-controler                                                  Mission-Automate-INF-Controler,

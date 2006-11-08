@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASY_CommettreExactionsSurPopulation
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASY_CommettreExactionsSurPopulationDansZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

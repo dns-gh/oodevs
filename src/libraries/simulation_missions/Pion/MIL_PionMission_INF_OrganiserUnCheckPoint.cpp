@@ -84,7 +84,6 @@ bool MIL_PionMission_INF_OrganiserUnCheckPoint::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_INF_OrganiserUnCheckPoint::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_OrganiserUnCheckPoint::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

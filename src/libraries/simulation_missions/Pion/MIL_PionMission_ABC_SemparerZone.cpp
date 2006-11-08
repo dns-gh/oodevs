@@ -84,7 +84,6 @@ bool MIL_PionMission_ABC_SemparerZone::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_ABC_SemparerZone::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_SemparerZone::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

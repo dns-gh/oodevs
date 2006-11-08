@@ -84,7 +84,6 @@ bool MIL_PionMission_InterdireFranchissementPopulations::Initialize( const MIL_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_InterdireFranchissementPopulations::Initialize( MIL_PionMis
 //-----------------------------------------------------------------------------
 void MIL_PionMission_InterdireFranchissementPopulations::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

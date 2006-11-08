@@ -95,7 +95,6 @@ bool MIL_PopulationMission_Manifester::Initialize( MIL_PopulationMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PopulationMission_Manifester::Terminate()
 {
-    
     MIL_PopulationMission_ABC::Terminate();    
 }
 

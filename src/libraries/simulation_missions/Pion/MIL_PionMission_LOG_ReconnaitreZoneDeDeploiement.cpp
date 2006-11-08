@@ -84,7 +84,6 @@ bool MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

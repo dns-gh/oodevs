@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_BarrerDirection::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_BarrerDirection::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

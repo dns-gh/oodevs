@@ -96,7 +96,6 @@ bool MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Initialize( const 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                
     return true;    
 }
 
@@ -124,7 +123,6 @@ bool MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Initialize( MIL_Pi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

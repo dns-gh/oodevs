@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Semparer::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Semparer::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

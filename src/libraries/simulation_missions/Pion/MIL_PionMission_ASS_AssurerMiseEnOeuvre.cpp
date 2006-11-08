@@ -88,7 +88,6 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( MIL_PionMission_ABC& m
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_AssurerMiseEnOeuvre::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -84,7 +84,6 @@ bool MIL_PionMission_TRANS_EtablirGererLiaison::Initialize( const MIL_AutomateMi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_TRANS_EtablirGererLiaison::Initialize( MIL_PionMission_ABC&
 //-----------------------------------------------------------------------------
 void MIL_PionMission_TRANS_EtablirGererLiaison::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

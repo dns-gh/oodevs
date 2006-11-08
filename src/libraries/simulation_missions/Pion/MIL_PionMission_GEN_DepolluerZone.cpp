@@ -84,7 +84,6 @@ bool MIL_PionMission_GEN_DepolluerZone::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_GEN_DepolluerZone::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_DepolluerZone::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

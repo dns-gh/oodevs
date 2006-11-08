@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeRendre::Initialize( const ASN1T_M
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_SeRendre::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

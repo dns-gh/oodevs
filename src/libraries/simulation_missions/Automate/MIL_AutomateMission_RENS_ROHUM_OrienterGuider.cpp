@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROHUM_OrienterGuider::Initiali
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROHUM_OrienterGuider::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

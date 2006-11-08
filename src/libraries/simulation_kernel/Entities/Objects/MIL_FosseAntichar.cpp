@@ -59,21 +59,3 @@ void MIL_FosseAntiChar::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< MIL_RealObject_ABC >( *this );
 }
 
-//=============================================================================
-// INIT
-//=============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FosseAntiChar::Initialize
-// Created: NLD 2004-09-15
-// -----------------------------------------------------------------------------
-bool MIL_FosseAntiChar::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
-{
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
-        return false;
-
-    rSizeCoef_ = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ) * diaParameters[ nCurrentParamIdx ].ToFloat(); /// Metres * type (simple/composé)
-    return true;
-}
-
-

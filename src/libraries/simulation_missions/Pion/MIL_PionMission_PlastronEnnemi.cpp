@@ -92,7 +92,6 @@ bool MIL_PionMission_PlastronEnnemi::Initialize( const MIL_AutomateMission_ABC& 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_PlastronEnnemi::Initialize( MIL_PionMission_ABC& missionTmp
 //-----------------------------------------------------------------------------
 void MIL_PionMission_PlastronEnnemi::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

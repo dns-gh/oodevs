@@ -88,7 +88,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Freiner::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Freiner::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

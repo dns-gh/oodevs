@@ -84,7 +84,6 @@ bool MIL_PionMission_FiltrerPopulations::Initialize( const MIL_AutomateMission_A
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_FiltrerPopulations::Initialize( MIL_PionMission_ABC& missio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_FiltrerPopulations::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

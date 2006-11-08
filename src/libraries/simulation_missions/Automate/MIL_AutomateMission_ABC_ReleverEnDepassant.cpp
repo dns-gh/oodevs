@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ReleverEnDepassant::Initialize(
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_ReleverEnDepassant::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

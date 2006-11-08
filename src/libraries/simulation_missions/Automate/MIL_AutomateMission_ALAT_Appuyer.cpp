@@ -100,7 +100,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Appuyer::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Appuyer::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

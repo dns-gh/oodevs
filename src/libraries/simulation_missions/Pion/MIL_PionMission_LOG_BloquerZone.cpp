@@ -84,7 +84,6 @@ bool MIL_PionMission_LOG_BloquerZone::Initialize( const MIL_AutomateMission_ABC&
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_LOG_BloquerZone::Initialize( MIL_PionMission_ABC& missionTm
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_BloquerZone::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -19,7 +19,7 @@
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 class PHY_ComposantePion;
-class MIL_NbcAgentType;
+class MIL_NbcAgent;
 
 // =============================================================================
 // @class  PHY_RoleAction_Transport
@@ -100,7 +100,7 @@ public:
     //! @name Notifications
     //@{
     void NotifyComposanteChanged     ( const PHY_ComposantePion& composante );
-    void NotifyComposanteContaminated( const MIL_NbcAgentType& nbcAgentType );
+    void NotifyComposanteContaminated( const MIL_NbcAgent&       nbcAgent );
     //@}
 
     //! @name Network

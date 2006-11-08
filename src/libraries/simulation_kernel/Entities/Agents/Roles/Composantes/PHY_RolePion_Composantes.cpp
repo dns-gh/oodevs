@@ -920,13 +920,27 @@ void PHY_RolePion_Composantes::DamageTransported( MT_Float rWeightToDamage, cons
 // Name: PHY_RolePion_Composantes::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyContamination( const MIL_NbcAgentType& nbcAgentType )
+void PHY_RolePion_Composantes::ApplyContamination( const MIL_NbcAgent& nbcAgent )
 {
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.GetState().IsUsable() )
-            composante.ApplyContamination( nbcAgentType );
+            composante.ApplyContamination( nbcAgent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyPoisonous
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
+{
+    for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ApplyPoisonous( nbcAgent );
     }
 }
 

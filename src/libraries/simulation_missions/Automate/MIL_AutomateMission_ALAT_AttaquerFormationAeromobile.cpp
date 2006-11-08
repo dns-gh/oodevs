@@ -88,7 +88,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_AttaquerFormationAeromobile::I
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_AttaquerFormationAeromobile::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

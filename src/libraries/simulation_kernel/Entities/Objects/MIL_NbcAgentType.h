@@ -32,18 +32,25 @@ public:
     static void Initialize( MIL_InputArchive& archive );
     static void Terminate();
 
-    static const MIL_NbcAgentType* FindNbcAgentType( const std::string& strName );
-    static const MIL_NbcAgentType* FindNbcAgentType( uint nID );
+    static const MIL_NbcAgentType* Find( const std::string& strName );
+    static const MIL_NbcAgentType* Find( uint nID );
     //@}
 
     //! @name Accessors
     //@{
-    uint                   GetID              () const;
-    const std::string&     GetName            () const;
-    MT_Float               GetWoundFactor     ( const PHY_HumanWound& wound ) const;
-    const PHY_HumanWound&  GetRandomWound     () const;
-    uint                   GetLifeTime        () const;
-    MT_Float               GetPropagationAngle() const;
+    uint                   GetID                   () const;
+    const std::string&     GetName                 () const;
+    
+    bool                   IsLiquidContaminating   () const;
+    bool                   IsLiquidPoisonous       () const;
+    const PHY_HumanWound&  GetLiquidRandomWound    () const; 
+    
+    bool                   IsGasContaminating      () const;
+    bool                   IsGasPoisonous          () const;
+    const PHY_HumanWound&  GetGasRandomWound       () const; 
+    uint                   GetGasLifeTime          () const;
+    MT_Float               GetGasPropagationAngle  () const;
+    bool                   CanBeVaporized          () const;
     //@}
 
     //! @name Accessors
@@ -59,20 +66,34 @@ private:
     typedef std::map< std::string, const MIL_NbcAgentType*, sCaseInsensitiveLess > T_NbcAgentTypeMap;
     typedef T_NbcAgentTypeMap::const_iterator                                      CIT_NbcAgentTypeMap;
 
-    typedef std::vector< MT_Float >               T_HumanCasualtyVector;
-    typedef T_HumanCasualtyVector::const_iterator CIT_HumanCasualtyVector;
+    typedef std::vector< MT_Float >                T_HumanPoisonousVector;
+    typedef T_HumanPoisonousVector::const_iterator CIT_HumanPoisonousVector;
     //@}
 
 private:
      MIL_NbcAgentType( const std::string& strName, MIL_InputArchive& archive );
     ~MIL_NbcAgentType();
 
+    //! @name Tools
+    //@{
+    bool                  ReadPoisonousData( MIL_InputArchive& archive, T_HumanPoisonousVector& data );
+    const PHY_HumanWound& GetRandomWound   ( const T_HumanPoisonousVector& data ) const;
+    //@}
+
 private:
     const std::string           strName_;
           uint                  nID_;
-          uint                  nLifeTime_;
-          MT_Float              rPropagationAngle_;
-          T_HumanCasualtyVector humanCasualties_;
+        
+          T_HumanPoisonousVector liquidPoisonous_;
+          bool                   bLiquidPoisonous_;
+          bool                   bLiquidContaminating_;
+
+          bool                   bCanBeVaporized_;
+          T_HumanPoisonousVector gasPoisonous_;
+          bool                   bGasPoisonous_;
+          bool                   bGasContaminating_;
+          uint                   nGasLifeTime_;
+          MT_Float               rGasPropagationAngle_;
 
 private:
     static T_NbcAgentTypeMap nbcAgentTypes_;

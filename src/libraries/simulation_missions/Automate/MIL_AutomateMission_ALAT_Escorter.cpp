@@ -92,7 +92,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Escorter::Initialize( const AS
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Escorter::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

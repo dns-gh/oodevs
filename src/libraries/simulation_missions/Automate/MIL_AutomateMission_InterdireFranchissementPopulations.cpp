@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_InterdireFranchissementPopulations:
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_InterdireFranchissementPopulations::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

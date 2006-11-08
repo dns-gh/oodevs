@@ -398,14 +398,6 @@ enum E_ObjectType
 };
 
 
-enum E_MissionGenUrgence
-{
-    eMissionGenUrgence_SerieMinimum,
-    eMissionGenUrgence_SerieComplementaire,
-    eNbrMissionGenUrgence
-};
-
-
 enum E_MissionGenSousTypeObstacle
 {
     eMissionGenSousTypeObstacle_Preliminaire,
@@ -427,28 +419,11 @@ enum E_ObjectErrorCode
 };
 
 
-enum E_MissionGenPriorite
-{
-    eMissionGenPriorite_Prioritaire,
-    eMissionGenPriorite_Normal,
-    eMissionGenPriorite_PeuPrioritaire,
-    eNbrMissionGenPriorite
-};
-
-
 enum E_ModeDeploiementSectionMistral
 {
     eModeDeploiementSectionMistral_Omnidirectionnel,
     eModeDeploiementSectionMistral_Directionnel,
     eNbrModeDeploiementSectionMistral
-};
-
-
-enum E_TypeFosseAC
-{
-    eTypeFosseAC_Simple,
-    eTypeFosseAC_Compose,
-    eNbrTypeFosseAC
 };
 
 
@@ -757,20 +732,13 @@ enum E_AutomataMission
     eMission_Automate_ABC_ProtegerPC,
     eMission_Automate_ABC_AppuyerSurPosition,
     eMission_Automate_GEN_SeDeployer,
-    eMission_Automate_GEN_FaireFranchir,
-    eMission_Automate_GEN_RealiserSystemeObstacles,
-    eMission_Automate_GEN_FranchirDeViveForce,
+    eMission_Automate_GEN_ReconnaitreZone,
+    eMission_Automate_GEN_RealiserTravaux,
+    eMission_Automate_GEN_OuvrirItineraires,
     eMission_Automate_GEN_RetablirItineraires,
-    eMission_Automate_GEN_AmenagerAireStationnement,
-    eMission_Automate_GEN_AmenagerTerrainPoserSommaire,
-    eMission_Automate_GEN_RealiserZonePoser,
-    eMission_Automate_GEN_ReconnaitreZoneDeploiement,
-    eMission_Automate_GEN_RealiserCampPrisonniers,
-    eMission_Automate_GEN_RealiserCampRefugies,
-    eMission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial,
-    eMission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation,
-    eMission_Automate_GEN_AppuyerDebarquementTroupes,
-    eMission_Automate_GEN_OuvrirAxesProgression,
+    eMission_Automate_GEN_FaireFranchir,
+    eMission_Automate_GEN_FranchirDeViveForce,
+    eMission_Automate_GEN_DegagerObstaclesDansZone,
     eMission_Automate_INF_AttaquerSouplesse,
     eMission_Automate_INF_Appuyer,
     eMission_Automate_INF_Controler,
@@ -914,51 +882,24 @@ enum E_UnitMission
     eMission_Pion_ABC_OrganiserAccueilColonneRefugies,
     eMission_Pion_ABC_AppuyerSurPosition,
     eMission_Pion_ABC_RASIT_RenseignerSur,
-    eMission_Pion_GEN_RealiserFosseAC,
-    eMission_Pion_GEN_RealiserAbattisMine,
-    eMission_Pion_GEN_RealiserPointMine,
-    eMission_Pion_GEN_RealiserBarricade,
-    eMission_Pion_GEN_RealiserEboulement,
-    eMission_Pion_GEN_RealiserBouchonMine,
-    eMission_Pion_GEN_DetruireRoute,
-    eMission_Pion_GEN_DetruirePont,
-    eMission_Pion_GEN_SecuriserItineraire,
-    eMission_Pion_GEN_DegagerAbattisMine,
-    eMission_Pion_GEN_DegagerEboulement,
-    eMission_Pion_GEN_DegagerRues,
-    eMission_Pion_GEN_ComblerEntonnoir,
-    eMission_Pion_GEN_ComblerFosseAC,
-    eMission_Pion_GEN_CreerContournement,
-    eMission_Pion_GEN_RealiserZoneMineeLineaire,
-    eMission_Pion_GEN_OuvrirTrouee,
-    eMission_Pion_GEN_Renforcer,
-    eMission_Pion_GEN_FranchirEntonnoir,
-    eMission_Pion_GEN_FranchirFosseAC,
-    eMission_Pion_GEN_RealiserZoneMineeParDispersion,
-    eMission_Pion_GEN_RealiserPostesTir,
-    eMission_Pion_GEN_RealiserTravauxProtection,
+    eMission_Pion_GEN_OuvrirItineraire,
     eMission_Pion_GEN_RetablirItineraire,
-    eMission_Pion_GEN_EquiperExploiter,
-    eMission_Pion_GEN_ExecuterVariantement,
-    eMission_Pion_GEN_ReconnaitreSiteFranchissement,
     eMission_Pion_GEN_ReconnaitreItineraire,
-    eMission_Pion_GEN_DeminerSiteFranchissement,
     eMission_Pion_GEN_ReconnaitreZone,
-    eMission_Pion_GEN_CreerPlateForme,
-    eMission_Pion_GEN_CreerPiste,
-    eMission_Pion_GEN_CreerAirePoser,
-    eMission_Pion_GEN_NeutraliserEnginsExplosifs,
-    eMission_Pion_GEN_ActiverObstacle,
-    eMission_Pion_GEN_AmeliorerMobilite,
-    eMission_Pion_GEN_RealiserAireLogistique,
+    eMission_Pion_GEN_ReconnaitreSiteFranchissement,
+    eMission_Pion_GEN_EquiperExploiterSiteFranchissement,
+    eMission_Pion_GEN_ExecuterVariantement,
+    eMission_Pion_GEN_DegagerObstacles,
+    eMission_Pion_GEN_ContournerObstacles,
     eMission_Pion_GEN_DepolluerZone,
-    eMission_Pion_GEN_AmenagerTerrainPoser,
-    eMission_Pion_GEN_RealiserPlateFormeDeploiement,
-    eMission_Pion_GEN_ReprendreMissionConstruction,
-    eMission_Pion_GEN_RealiserZonePoserHelicoptere,
-    eMission_Pion_GEN_AppuyerDebarquementTroupesGU,
-    eMission_Pion_GEN_RealiserCampPrisonniers,
-    eMission_Pion_GEN_RealiserCampRefugies,
+    eMission_Pion_GEN_Renforcer,
+    eMission_Pion_GEN_RealiserTravauxProtection,
+    eMission_Pion_GEN_RealiserTravauxContreMobilite,
+    eMission_Pion_GEN_RealiserTravauxAppuiDeploiement,
+    eMission_Pion_GEN_RealiserCamps,
+    eMission_Pion_GEN_ReprendreTravaux,
+    eMission_Pion_GEN_AmeliorerMobilite,
+    eMission_Pion_GEN_ActiverObstacle,
     eMission_Pion_INF_ReconnaitreAxe,
     eMission_Pion_INF_Couvrir,
     eMission_Pion_INF_Reduire,

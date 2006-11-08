@@ -18,7 +18,7 @@
 #include "simulation_kernel/Network/NET_ASN_Tools.h"
 #include "simulation_kernel/Decision/DEC_Tools.h"
 
-int MIL_AutomateMission_GEN_SeDeployer::nDIAZoneDeploiementIdx_ = 0 ;
+int MIL_AutomateMission_GEN_SeDeployer::nDIAZoneIdx_ = 0 ;
 
 
 //-----------------------------------------------------------------------------
@@ -53,7 +53,7 @@ MIL_AutomateMission_GEN_SeDeployer::~MIL_AutomateMission_GEN_SeDeployer()
 void MIL_AutomateMission_GEN_SeDeployer::InitializeDIA( const MIL_AutomateMissionType& type )
 {
     const DIA_TypeDef& diaType = DEC_Tools::GetDIAType( type.GetDIATypeName() );
-    nDIAZoneDeploiementIdx_ = DEC_Tools::InitializeDIAField( "zoneDeploiement_", diaType );
+    nDIAZoneIdx_ = DEC_Tools::InitializeDIAField( "zone_", diaType );
 
 }
 
@@ -68,7 +68,7 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_SeDeployer::Initialize( const A
         return nCode;        
 
     const ASN1T_Mission_Automate_GEN_SeDeployer& asnMission = *asnMsg.mission.u.mission_automate_gen_se_deployer;
-    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone_deploiement, GetVariable( nDIAZoneDeploiementIdx_ ) ) )
+    if( !NET_ASN_Tools::CopyPolygon( asnMission.zone, GetVariable( nDIAZoneIdx_ ) ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
     return EnumOrderErrorCode::no_error;
@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_SeDeployer::Initialize( const A
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_SeDeployer::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 
@@ -100,7 +99,7 @@ void MIL_AutomateMission_GEN_SeDeployer::Serialize( ASN1T_MsgAutomateOrder& asnM
     asnMsg.mission.t                           = T_Mission_Automate_mission_automate_gen_se_deployer;
     asnMsg.mission.u.mission_automate_gen_se_deployer  = &asnMission;
 
-    NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneDeploiementIdx_ ), asnMission.zone_deploiement );
+    NET_ASN_Tools::CopyPolygon( GetVariable( nDIAZoneIdx_ ), asnMission.zone );
 
 }
 
@@ -113,7 +112,7 @@ void MIL_AutomateMission_GEN_SeDeployer::CleanAfterSerialization( ASN1T_MsgAutom
     assert( asnMsg.mission.t == T_Mission_Automate_mission_automate_gen_se_deployer );
     ASN1T_Mission_Automate_GEN_SeDeployer& asnMission = *asnMsg.mission.u.mission_automate_gen_se_deployer;
 
-    NET_ASN_Tools::Delete( asnMission.zone_deploiement );
+    NET_ASN_Tools::Delete( asnMission.zone );
 
     delete &asnMission;
 

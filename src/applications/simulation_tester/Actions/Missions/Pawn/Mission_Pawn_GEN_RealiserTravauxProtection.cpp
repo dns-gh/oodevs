@@ -47,11 +47,11 @@ void Mission_Pawn_GEN_RealiserTravauxProtection::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_protection;
     asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection = &asnMission;
 
-    const Position& posObjet_ = pTarget_->GetTestParam_Point();
+    const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
-    ASN_Tools::CopyPoint( posObjet_, asnMission.pos_objet );
+    ASN_Tools::CopyGenObjectList( travaux_, asnMission.travaux );
 
-    delete &posObjet_;
+    delete &travaux_;
 
 }
 
@@ -64,7 +64,7 @@ void Mission_Pawn_GEN_RealiserTravauxProtection::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_realiser_travaux_protection );
     ASN1T_Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection;
 
-    ASN_Tools::Delete( asnMission.pos_objet );
+    ASN_Tools::Delete( asnMission.travaux );
 
     delete &asnMission;
     Mission_Pawn_ABC::Clean();

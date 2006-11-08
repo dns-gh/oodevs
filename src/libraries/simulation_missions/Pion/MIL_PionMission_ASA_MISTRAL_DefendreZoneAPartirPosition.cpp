@@ -92,7 +92,6 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( const 
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( MIL_Pi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

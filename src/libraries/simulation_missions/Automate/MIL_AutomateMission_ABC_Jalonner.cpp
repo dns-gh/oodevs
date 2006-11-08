@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Jalonner::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Jalonner::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ReleverSurPlace::Initialize( const 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ReleverSurPlace::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

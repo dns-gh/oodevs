@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_NBC_ReconnaitreUneZone::Initialize(
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_NBC_ReconnaitreUneZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

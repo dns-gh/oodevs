@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROEM_Appuyer::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROEM_Appuyer::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

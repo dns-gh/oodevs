@@ -16,6 +16,7 @@
 
 #include "MIL_RealObject_ABC.h"
 
+class MIL_NbcAgent;
 class MIL_NbcAgentType;
 
 //=============================================================================
@@ -33,17 +34,14 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name Init
     //@{
     static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
 
-            void                      Initialize( const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgent );
+            void                      Initialize( const TER_Localisation& localisation, const MIL_NbcAgentType& nbcAgentType );
     virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     virtual void                      Initialize( MIL_InputArchive& archive );
     virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject );
@@ -90,7 +88,7 @@ private:
     //@}
 
 private:
-    const MIL_NbcAgentType* pNbcAgentType_;
+    MIL_NbcAgent* pNbcAgent_;
 
     // Specific attributes
     ASN1T_AttrObjectNuageNBC asnAttributes_;

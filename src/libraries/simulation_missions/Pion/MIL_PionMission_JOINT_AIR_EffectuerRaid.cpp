@@ -88,7 +88,6 @@ bool MIL_PionMission_JOINT_AIR_EffectuerRaid::Initialize( const MIL_AutomateMiss
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_JOINT_AIR_EffectuerRaid::Initialize( MIL_PionMission_ABC& m
 //-----------------------------------------------------------------------------
 void MIL_PionMission_JOINT_AIR_EffectuerRaid::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

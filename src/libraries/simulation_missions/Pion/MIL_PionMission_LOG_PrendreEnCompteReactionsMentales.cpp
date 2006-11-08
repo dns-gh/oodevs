@@ -84,7 +84,6 @@ bool MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Initialize( const MIL
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Initialize( MIL_PionM
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

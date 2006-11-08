@@ -223,15 +223,6 @@ std::string AGR_Member::DIAParametersInitialisationCode() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_Member::MemberInitialisationCode
-// Created: AGE 2004-09-13
-// -----------------------------------------------------------------------------
-std::string AGR_Member::MemberInitialisationCode() const
-{
-    return pType_->MemberInitialisationCode( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_Member::MissionInitialisationCode
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
@@ -256,15 +247,6 @@ std::string AGR_Member::Mos2InitialisationCode() const
 std::string AGR_Member::Mos2OptionalParamCode() const
 {
     return pType_->Mos2OptionalParamCode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Member::ResetCode
-// Created: AGE 2004-09-13
-// -----------------------------------------------------------------------------
-std::string AGR_Member::ResetCode() const
-{
-    return pType_->ResetCode( *this );
 }
 
 // -----------------------------------------------------------------------------

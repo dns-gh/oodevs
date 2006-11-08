@@ -96,7 +96,6 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                
     return true;    
 }
 
@@ -124,7 +123,6 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

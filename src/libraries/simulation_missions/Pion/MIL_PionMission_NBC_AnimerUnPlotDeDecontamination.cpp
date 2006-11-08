@@ -84,7 +84,6 @@ bool MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Initialize( const MIL_Au
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Initialize( MIL_PionMiss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

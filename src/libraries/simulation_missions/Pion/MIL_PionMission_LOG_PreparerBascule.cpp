@@ -88,7 +88,6 @@ bool MIL_PionMission_LOG_PreparerBascule::Initialize( const MIL_AutomateMission_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_LOG_PreparerBascule::Initialize( MIL_PionMission_ABC& missi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_PreparerBascule::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -14,8 +14,6 @@
 
 #include "MIL.h"
 
-class PHY_Radar;
-
 // =============================================================================
 // @class  PHY_RadarClass
 // Created: JVT 2004-08-03

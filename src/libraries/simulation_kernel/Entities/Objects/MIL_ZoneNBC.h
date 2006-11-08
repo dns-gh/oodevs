@@ -16,6 +16,7 @@
 
 #include "MIL_RealObject_ABC.h"
 
+class MIL_NbcAgent;
 class MIL_NbcAgentType;
 
 //=============================================================================
@@ -33,10 +34,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
     //! @name Init
@@ -86,6 +84,7 @@ private:
     //! @name Tools
     //@{
     bool IsAgentInsideDecontaminatedZone( const MIL_Agent_ABC& agent ) const;
+    void CreateCloud                    ();
     //@}
 
 private:
@@ -96,7 +95,7 @@ private:
     //@}
 
 private:
-    const MIL_NbcAgentType* pNbcAgentType_;
+    MIL_NbcAgent*           pNbcAgent_;
 
     // Specific attributes
     ASN1T_AttrObjectZoneNBC asnAttributes_;

@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Controler::Initialize( const AS
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_Controler::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

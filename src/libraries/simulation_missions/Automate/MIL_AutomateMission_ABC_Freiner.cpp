@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Freiner::Initialize( const ASN1
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Freiner::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -84,7 +84,6 @@ bool MIL_PionMission_INF_PrendrePreciserContact::Initialize( const MIL_AutomateM
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_INF_PrendrePreciserContact::Initialize( MIL_PionMission_ABC
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_PrendrePreciserContact::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -18,33 +18,39 @@
 
 #include "Network/NET_ASN_Types.h"
 
+class DEC_AutomateDecision;
+class MIL_RealObjectType;
+
 //*****************************************************************************
 // Created: AGN 03-08-27
 //*****************************************************************************
-class DEC_Gen_Object : public DIA_Thing
+class DEC_Gen_Object
 {
-    MT_COPYNOTALLOWED( DEC_Gen_Object )
-
 public:
              DEC_Gen_Object();
+             DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
+
+    //! @name Accessors
+    //@{
+    const MIL_RealObjectType& GetType        () const;
+    const TER_Localisation&   GetLocalisation() const;
+          uint                GetPreliminaire() const;
+          MT_Float            GetDensity     () const;
+    const MIL_Automate*       GetTC2         () const;
+    //@}
 
     //! @name Init
     //@{
-    static void InitializeDIA();
-
     ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MissionGenObject& asn );
     //@}
 
 private:
-    TER_Localisation localisation_;
-
-private:
-    static int nDIATypeIdx_;
-    static int nDIAPosIdx_;
-    static int nDIAUrgenceIdx_;
-    static int nDIAPreliminaireIdx_;
-    static int nDIAPrioriteIdx_;
+    const MIL_RealObjectType* pType_;
+          TER_Localisation    localisation_;
+          uint                nPreliminaire_;
+          MT_Float            rDensity_;
+    const MIL_Automate*       pTC2_;
 };
 
 #include "DEC_Gen_Object.inl"

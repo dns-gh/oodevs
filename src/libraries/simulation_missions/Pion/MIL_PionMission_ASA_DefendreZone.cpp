@@ -84,7 +84,6 @@ bool MIL_PionMission_ASA_DefendreZone::Initialize( const MIL_AutomateMission_ABC
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_ASA_DefendreZone::Initialize( MIL_PionMission_ABC& missionT
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_DefendreZone::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

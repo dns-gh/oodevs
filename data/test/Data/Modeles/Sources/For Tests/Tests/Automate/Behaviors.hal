@@ -228,24 +228,15 @@ behavior MIS_Automate_MRT_GEN_RetablirItineraires( T_Mission_Automate_GEN_Retabl
 behavior MIS_Automate_CDT_GEN_RetablirItineraires( T_Mission_Automate_GEN_RetablirItineraires mission, id n )
 {
     // NOTHING: to test PathList mission parameters
-}
+} 
 
-behavior MIS_Automate_MRT_GEN_AmenagerTerrainPoserSommaire( T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire mission, id n )
-{
-    // NOTHING: to test Obstacle mission parameters
-}
 
-behavior MIS_Automate_CDT_GEN_AmenagerTerrainPoserSommaire( T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire mission, id n )
-{
-    // NOTHING: to test Obstacle mission parameters
-}
-
-behavior MIS_Automate_MRT_GEN_RealiserSystemeObstacles( T_Mission_Automate_GEN_RealiserSystemeObstacles mission, id nDummy )
+behavior MIS_Automate_MRT_GEN_RealiserTravaux( T_Mission_Automate_GEN_RealiserTravaux mission, id nDummy )
 {
     // NOTHING: to test ObstacleList mission parameters
 }
 
-behavior MIS_Automate_CDT_GEN_RealiserSystemeObstacles( T_Mission_Automate_GEN_RealiserSystemeObstacles mission, id nDummy )
+behavior MIS_Automate_CDT_GEN_RealiserTravaux( T_Mission_Automate_GEN_RealiserTravaux mission, id nDummy )
 {
     // NOTHING: to test ObstacleList mission parameters
 }

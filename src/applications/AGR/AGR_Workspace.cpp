@@ -56,8 +56,8 @@ AGR_Workspace::AGR_Workspace()
     typeList_.push_back( new AGR_Type_ABC( "ScipioBase:Direction", "Direction", "T_Direction", "T_Direction", false ) );
     typeList_.push_back( new AGR_Type_ABC( "xsd:double", "Numeric", "float", "double", false ) );
     typeList_.push_back( new AGR_GDHType() );
-    typeList_.push_back( new AGR_Type_ABC( "ListMissionGenObject", "GenObjectList", "T_ListeGenObjets", "T_GenObjectVector", true, true ) );
-    typeList_.push_back( new AGR_Type_ABC( "ScipioAutomateMission_Genie:MissionGenObject", "GenObject", "T_GenObjet", "GenObject", true, true ) );
+    typeList_.push_back( new AGR_Type_ABC( "ListMissionGenObject", "GenObjectList", "T_ListeGenObjets", "T_GenObjectVector", true ) );
+    typeList_.push_back( new AGR_Type_ABC( "ScipioAutomateMission_Genie:MissionGenObject", "GenObject", "T_GenObjet", "GenObject", true ) );
     typeList_.push_back( new AGR_IntegerType() );
     typeList_.push_back( new AGR_IntegerType( "Pourcentage" ) );
     typeList_.push_back( new AGR_IntegerType( "PourcentageLibre" ) );

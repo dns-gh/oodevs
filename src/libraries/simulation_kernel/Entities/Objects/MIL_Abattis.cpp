@@ -58,22 +58,3 @@ void MIL_Abattis::serialize( Archive& file, const uint )
     file & boost::serialization::base_object< MIL_RealObject_ABC >( *this );
 }
 
-
-//=============================================================================
-// INIT
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: MIL_Abattis::Initialize
-// Created: JVT 02-10-22
-//-----------------------------------------------------------------------------
-bool MIL_Abattis::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
-{
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
-        return false;
-
-    rSizeCoef_  = diaParameters[ nCurrentParamIdx ].ToFloat();  // Lengths
-    return true;
-}
-
-

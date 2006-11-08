@@ -85,49 +85,55 @@ void MIL_NbcAgentType::Terminate()
 // Created: NLD 2004-04-30
 // -----------------------------------------------------------------------------
 MIL_NbcAgentType::MIL_NbcAgentType( const std::string& strName, MIL_InputArchive& archive )
-    : strName_                      ( strName )
-    , nID_                          ( 0 )
-    , humanCasualties_              ( PHY_HumanWound::GetHumanWounds().size(), 0. )
-    , nLifeTime_                    ( 0 )
-    , rPropagationAngle_            ( 0. )
+    : strName_             ( strName )
+    , nID_                 ( 0 )
+    , liquidPoisonous_     ( PHY_HumanWound::GetHumanWounds().size(), 0. )
+    , bLiquidContaminating_( false )
+    , bLiquidPoisonous_    ( false )
+    , bCanBeVaporized_     ( false )
+    , gasPoisonous_        ( PHY_HumanWound::GetHumanWounds().size(), 0. )
+    , bGasContaminating_   ( false )
+    , bGasPoisonous_       ( false )
+    , nGasLifeTime_        ( 0 )
+    , rGasPropagationAngle_( 0. )
 {
     archive.ReadField( "MosID", nID_ );
 
-    // Attritions
-    archive.Section( "Attritions" );
-
-    float rTotalValue = 0.;
-    const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();
-    for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
+    archive.Section( "Liquide" );
+    if( ReadPoisonousData( archive, liquidPoisonous_ ) )
+        bLiquidPoisonous_ = true;
+    if( archive.Section( "Contamination", MIL_InputArchive::eNothing ) )
     {
-        const PHY_HumanWound& humanWound = *itWound->second;
-
-        assert( humanCasualties_.size() > humanWound.GetID() );
-        std::stringstream strTagName;
-        strTagName << "Humains_" << humanWound.GetName();
-
-        float rValue;
-        archive.ReadField( strTagName.str(), rValue, CheckValueBound( 0., 1. ) );
-        humanCasualties_[ humanWound.GetID() ] = rValue;
-        rTotalValue += rValue;
+        bLiquidContaminating_ = true;
+        archive.EndSection(); // Contamination
     }
-    if ( rTotalValue != 1. )
-        throw MT_ScipioException( "MIL_NbcAgentType::MIL_NbcAgentType", __FILE__, __LINE__, MT_FormatString( "Sum of Attrition percentage is out of bound (%.2f) for NBC Agent type '%s'", rTotalValue, strName_.c_str() ), archive.GetContext() );
-    archive.EndSection(); // Attritions
-    
-    archive.ReadTimeField( "DureeDeVie", nLifeTime_, CheckValueGreater( 0 ) );
-    nLifeTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nLifeTime_ );
-    
-    archive.Section( "AngleDePropagation" );
-    archive.Read( rPropagationAngle_, CheckValueGreater( 0. ) );
-        
-    std::string strUnit;
-    archive.ReadAttribute( "unite", strUnit );
-    if ( sCaseInsensitiveEqual()( strUnit, "degre" ) )
-        rPropagationAngle_ *= ( MT_PI / 180. );
-    else if ( !sCaseInsensitiveEqual()( strUnit, "radian" ) )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown angle unit", archive.GetContext() );
-    archive.EndSection(); // AngleDePropagation 
+    archive.EndSection(); // Liquide
+
+    if( archive.Section( "Gaz", MIL_InputArchive::eNothing ) )
+    {
+        bCanBeVaporized_ = true;
+        if( ReadPoisonousData( archive, gasPoisonous_ ) )
+            bGasPoisonous_ = true;
+        if( archive.Section( "Contamination", MIL_InputArchive::eNothing ) )
+        {
+            bLiquidContaminating_ = true;
+            archive.EndSection(); // Contamination
+        }
+        archive.ReadTimeField( "DureeDeVie", nGasLifeTime_, CheckValueGreater( 0 ) );
+        nGasLifeTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
+
+        archive.Section( "AngleDePropagation" );
+        archive.Read( rGasPropagationAngle_, CheckValueGreater( 0. ) );
+        std::string strUnit;
+        archive.ReadAttribute( "unite", strUnit );
+        if ( sCaseInsensitiveEqual()( strUnit, "degre" ) )
+            rGasPropagationAngle_ *= ( MT_PI / 180. );
+        else if ( !sCaseInsensitiveEqual()( strUnit, "radian" ) )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown angle unit", archive.GetContext() );
+        archive.EndSection(); // AngleDePropagation 
+
+        archive.EndSection(); // Gaz
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -140,20 +146,40 @@ MIL_NbcAgentType::~MIL_NbcAgentType()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NbcAgentType::GetWoundFactor
-// Created: NLD 2004-10-13
+// Name: MIL_NbcAgentType::ReadPoisonousData
+// Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-MT_Float MIL_NbcAgentType::GetWoundFactor( const PHY_HumanWound& wound ) const
+bool MIL_NbcAgentType::ReadPoisonousData( MIL_InputArchive& archive, T_HumanPoisonousVector& data )
 {
-    assert( humanCasualties_.size() > wound.GetID() );
-    return humanCasualties_[ wound.GetID() ];
+    if( !archive.Section( "Intoxication", MIL_InputArchive::eNothing ) )
+        return false;
+
+    float rTotalValue = 0.;
+    const PHY_HumanWound::T_HumanWoundMap& humanWounds = PHY_HumanWound::GetHumanWounds();
+    for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
+    {
+        const PHY_HumanWound& humanWound = *itWound->second;
+
+        assert( data.size() > humanWound.GetID() );
+        std::stringstream strTagName;
+        strTagName << "Humains_" << humanWound.GetName();
+
+        float rValue;
+        archive.ReadField( strTagName.str(), rValue, CheckValueBound( 0., 1. ) );
+        data[ humanWound.GetID() ] = rValue;
+        rTotalValue += rValue;
+    }
+    if ( rTotalValue != 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Sum of poisonous percentage is out of bound (%.2f) for NBC Agent type '%s'", rTotalValue, strName_.c_str() ), archive.GetContext() );
+    archive.EndSection(); // Intoxication
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanWound::GetRandomWound
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound() const
+const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound( const T_HumanPoisonousVector& data ) const
 {
     const MT_Float rRand = randomGenerator_.rand_ii( 0., 1. );
 
@@ -162,7 +188,7 @@ const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound() const
     for( PHY_HumanWound::CIT_HumanWoundMap itWound = humanWounds.begin(); itWound != humanWounds.end(); ++itWound )
     {
         const PHY_HumanWound& wound = *itWound->second;
-        rSumCoefs += GetWoundFactor( wound );
+        rSumCoefs += data[ wound.GetID() ];
         if( rSumCoefs >= rRand )
             return wound;
     }

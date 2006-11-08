@@ -92,6 +92,16 @@ bool DEC_Knowledge_Object::IsBypassed() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsConstructed
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Knowledge_Object::IsConstructed() const
+{
+    return nConstructionPercentage_ >= 100;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::IsPrepared
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------

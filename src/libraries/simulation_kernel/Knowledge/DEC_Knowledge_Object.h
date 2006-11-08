@@ -81,6 +81,7 @@ public:
     //@{
           bool                IsRecon                 () const;
           bool                IsBypassed              () const;
+          bool                IsConstructed           () const;
           bool                IsPrepared              () const;
           uint                GetID                   () const;
           MIL_RealObject_ABC* GetObjectKnown          () const;

@@ -92,7 +92,6 @@ bool MIL_PionMission_ASS_EO_AcquerirObjectifs::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_ASS_EO_AcquerirObjectifs::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_EO_AcquerirObjectifs::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

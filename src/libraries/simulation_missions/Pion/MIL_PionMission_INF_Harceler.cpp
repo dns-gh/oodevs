@@ -92,7 +92,6 @@ bool MIL_PionMission_INF_Harceler::Initialize( const MIL_AutomateMission_ABC& pa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_INF_Harceler::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_Harceler::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

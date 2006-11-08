@@ -10,11 +10,11 @@
 // *****************************************************************************
 
 //-----------------------------------------------------------------------------
-// Name: MIL_NbcAgentType::FindNbcAgentType
+// Name: MIL_NbcAgentType::Find
 // Created: JVT 03-01-06
 //-----------------------------------------------------------------------------
 inline
-const MIL_NbcAgentType* MIL_NbcAgentType::FindNbcAgentType( const std::string& strName )
+const MIL_NbcAgentType* MIL_NbcAgentType::Find( const std::string& strName )
 {
     CIT_NbcAgentTypeMap it = nbcAgentTypes_.find( strName );
     if( it == nbcAgentTypes_.end() )
@@ -23,11 +23,11 @@ const MIL_NbcAgentType* MIL_NbcAgentType::FindNbcAgentType( const std::string& s
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NbcAgentType::FindNbcAgentType
+// Name: MIL_NbcAgentType::Find
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 inline
-const MIL_NbcAgentType* MIL_NbcAgentType::FindNbcAgentType( uint nID )
+const MIL_NbcAgentType* MIL_NbcAgentType::Find( uint nID )
 {
     for( CIT_NbcAgentTypeMap itNbcAgent = nbcAgentTypes_.begin(); itNbcAgent != nbcAgentTypes_.end(); ++itNbcAgent )
     {
@@ -36,6 +36,16 @@ const MIL_NbcAgentType* MIL_NbcAgentType::FindNbcAgentType( uint nID )
             return &nbcAgentType;
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::CanBeVaporized
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+inline
+bool MIL_NbcAgentType::CanBeVaporized() const
+{
+    return bCanBeVaporized_;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,25 +69,84 @@ uint MIL_NbcAgentType::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NbcAgentType::GetLifeTime
-// Created: JVT 2004-10-28
+// Name: MIL_NbcAgentType::GetLiquidRandomWound
+// Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
 inline
-uint MIL_NbcAgentType::GetLifeTime() const
+const PHY_HumanWound& MIL_NbcAgentType::GetLiquidRandomWound() const
 {
-    return nLifeTime_;
+    return GetRandomWound( liquidPoisonous_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NbcAgentType::GetPropagationAngle
+// Name: MIL_NbcAgentType::GetGasRandomWound
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+inline
+const PHY_HumanWound& MIL_NbcAgentType::GetGasRandomWound() const
+{
+    return GetRandomWound( gasPoisonous_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsGasContaminating
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+inline
+bool MIL_NbcAgentType::IsGasContaminating() const
+{
+    return bGasContaminating_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsLiquidContaminating
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+inline
+bool MIL_NbcAgentType::IsLiquidContaminating() const
+{
+    return bLiquidContaminating_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsGasPoisonous
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+inline
+bool MIL_NbcAgentType::IsGasPoisonous() const
+{
+    return bGasPoisonous_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::IsLiquidPoisonous
+// Created: NLD 2006-10-30
+// -----------------------------------------------------------------------------
+inline
+bool MIL_NbcAgentType::IsLiquidPoisonous() const
+{
+    return bLiquidPoisonous_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetGasLifeTime
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_NbcAgentType::GetPropagationAngle() const
+uint MIL_NbcAgentType::GetGasLifeTime() const
 {
-    return rPropagationAngle_;
+    return nGasLifeTime_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::GetGasPropagationAngle
+// Created: JVT 2004-10-28
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_NbcAgentType::GetGasPropagationAngle() const
+{
+    return rGasPropagationAngle_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_NbcAgentType::GetCoefMaxSpeedModificator

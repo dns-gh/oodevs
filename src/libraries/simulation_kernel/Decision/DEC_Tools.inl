@@ -187,6 +187,17 @@ bool DEC_Tools::CheckTypeLima( const DIA_Variable_ABC& diaVariable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeGenObjet
+// Created: NLD 2004-10-20
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeGenObjet( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeGenObjet_ );
+    return diaVariable.GetType() == *pTypeGenObjet_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeConnaissanceObjet
 // Created: NLD 2004-10-20
 // -----------------------------------------------------------------------------
@@ -304,17 +315,6 @@ bool DEC_Tools::CheckTypeAutomate( const DIA_TypedObject& object )
 {
     assert( pTypeAutomate_ );
     return object.GetType().IsKindOf( *pTypeAutomate_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Tools::CheckTypeGenObjet
-// Created: NLD 2004-10-20
-// -----------------------------------------------------------------------------
-inline
-bool DEC_Tools::CheckTypeGenObjet( const DIA_Variable_ABC& diaVariable )
-{
-    assert( pTypeGenObjet_ );
-    return diaVariable.GetType().IsKindOf( *pTypeGenObjet_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -572,4 +572,15 @@ const DIA_TypeDef& DEC_Tools::GetTypeDotation()
 {
     assert( pTypeDotation_ );
     return *pTypeDotation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypeGenObjet
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypeGenObjet()
+{
+    assert( pTypeGenObjet_ );
+    return *pTypeGenObjet_;
 }

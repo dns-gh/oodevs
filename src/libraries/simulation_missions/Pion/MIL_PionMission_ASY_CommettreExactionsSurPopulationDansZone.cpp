@@ -84,7 +84,6 @@ bool MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone::Initialize( co
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone::Initialize( MI
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -104,7 +104,6 @@ bool MIL_PionMission_Test_MoveTo::Initialize( const MIL_AutomateMission_ABC& par
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                        
     return true;    
 }
 
@@ -134,7 +133,6 @@ bool MIL_PionMission_Test_MoveTo::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_MoveTo::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

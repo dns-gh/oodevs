@@ -100,7 +100,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfond
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_DetruireNeutraliserDansProfondeur::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

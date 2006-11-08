@@ -16,8 +16,6 @@
 
 #include "MT_Tools/MT_Role_ABC.h"
 
-class MIL_NbcAgentType;
-
 // =============================================================================
 // @class  PHY_RoleInterface_Population
 // Created: JVT 2004-08-03

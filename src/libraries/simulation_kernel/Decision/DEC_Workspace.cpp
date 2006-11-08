@@ -22,7 +22,6 @@
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Special.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
-#include "Decision/Genie/DEC_Gen_Object.h"
 #include "Decision/Functions/DEC_GeometryFunctions.h"
 #include "Decision/Functions/DEC_DIAFunctions.h"
 #include "Decision/Functions/DEC_LogisticFunctions.h"
@@ -167,6 +166,13 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeBypassed, "DEC_TypeObjet_PeutEtreContourne" );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBeMined   , "DEC_TypeObjet_PeutEtreValorise"  );
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBePrepared, "DEC_TypeObjet_PeutEtrePrepare"   );
+
+    // Gen objects
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectType        , "DEC_GenObject_Type"         );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectLocalisation, "DEC_GenObject_Localisation" );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectDensity     , "DEC_GenObject_Densite"      );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectPreliminaire, "DEC_GenObject_Preliminaire" );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectTC2         , "DEC_GenObject_TC2"          );
 
     // Debug
     pFuncTable->RegisterFunction( DEC_DIAFunctions::PointToString    , "DEC_PointToString"      );
@@ -333,7 +339,6 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     DEC_Rep_PathPoint_Front  ::InitializeDIA();
     DEC_Rep_PathPoint_Special::InitializeDIA();
     DEC_Rep_PathPoint_Lima   ::InitializeDIA();       
-    DEC_Gen_Object           ::InitializeDIA(); 
     MIL_PionMissionType      ::InitializeDIA();
     MIL_AutomateMissionType  ::InitializeDIA();
     MIL_OrderConduiteType    ::InitializeDIA();   

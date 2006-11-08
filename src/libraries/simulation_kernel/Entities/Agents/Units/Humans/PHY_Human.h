@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "PHY_HumanWound.h"
 
-class MIL_NbcAgentType;
+class MIL_NbcAgent;
 class MIL_AutomateLOG;
 class PHY_HumanRank;
 class PHY_HumansComposante;
@@ -61,7 +61,8 @@ public:
     bool SetRank              ( const PHY_HumanRank&  newRank  ); // Force rank change
     bool SetWound             ( const PHY_HumanWound& newWound ); // Don't test 'usability' or aggravation => force wound change
     bool ApplyWound           ( const PHY_HumanWound& newWound ); // Test 'usability'
-    bool ApplyWound           ( const MIL_NbcAgentType& nbcAgentType ); // NBC effects
+    bool ApplyPoisonous       ( const MIL_NbcAgent& nbcAgent ); // NBC effects
+    void ApplyContamination   ( const MIL_NbcAgent& nbcAgent ); // NBC effects
     void ApplyMentalDisease   ();
     void CancelLogisticRequest();
     //@}

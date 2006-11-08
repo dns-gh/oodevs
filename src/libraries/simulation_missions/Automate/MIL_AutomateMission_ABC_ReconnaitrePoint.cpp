@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ReconnaitrePoint::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_ReconnaitrePoint::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

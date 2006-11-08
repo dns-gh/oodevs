@@ -88,7 +88,6 @@ bool MIL_PionMission_ABC_Couvrir::Initialize( const MIL_AutomateMission_ABC& par
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_ABC_Couvrir::Initialize( MIL_PionMission_ABC& missionTmp )
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_Couvrir::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

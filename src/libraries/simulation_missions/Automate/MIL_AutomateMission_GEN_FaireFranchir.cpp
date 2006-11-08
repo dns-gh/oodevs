@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_FaireFranchir::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_FaireFranchir::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

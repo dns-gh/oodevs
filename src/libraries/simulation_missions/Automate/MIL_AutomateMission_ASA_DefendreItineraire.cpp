@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreItineraire::Initialize(
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreItineraire::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

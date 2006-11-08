@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SecuriserZoneContrePopulations::Ini
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_SecuriserZoneContrePopulations::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

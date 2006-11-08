@@ -84,7 +84,6 @@ bool MIL_PionMission_LOG_ReconnaitreZoneContaminee::Initialize( const MIL_Automa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_LOG_ReconnaitreZoneContaminee::Initialize( MIL_PionMission_
 //-----------------------------------------------------------------------------
 void MIL_PionMission_LOG_ReconnaitreZoneContaminee::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

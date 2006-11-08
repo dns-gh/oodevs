@@ -95,7 +95,6 @@ bool MIL_PopulationMission_CommettreExactions::Initialize( MIL_PopulationMission
 //-----------------------------------------------------------------------------
 void MIL_PopulationMission_CommettreExactions::Terminate()
 {
-    
     MIL_PopulationMission_ABC::Terminate();    
 }
 

@@ -88,7 +88,6 @@ bool MIL_PionMission_ALAT_Eclairer::Initialize( const MIL_AutomateMission_ABC& p
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_ALAT_Eclairer::Initialize( MIL_PionMission_ABC& missionTmp 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Eclairer::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

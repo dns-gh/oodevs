@@ -85,7 +85,7 @@ namespace boost
             {
                 uint nID;
                 file >> nID;
-                set.insert( MIL_NbcAgentType::FindNbcAgentType( nID ) );
+                set.insert( MIL_NbcAgentType::Find( nID ) );
             }
         }
     }

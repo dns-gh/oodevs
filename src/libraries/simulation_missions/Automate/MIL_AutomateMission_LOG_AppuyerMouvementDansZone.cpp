@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Initi
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_LOG_AppuyerMouvementDansZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

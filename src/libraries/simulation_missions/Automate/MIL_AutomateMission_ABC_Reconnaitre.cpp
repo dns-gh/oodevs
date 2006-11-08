@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Reconnaitre::Initialize( const 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Reconnaitre::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -92,7 +92,6 @@ bool MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Initialize( const MIL_Automate
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Initialize( MIL_PionMission_AB
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

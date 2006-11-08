@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_PrendrePreciserMaintenirContact
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_PrendrePreciserMaintenirContact::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

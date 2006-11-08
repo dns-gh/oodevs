@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_NBC_DecontaminerUneZone::Initialize
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_NBC_DecontaminerUneZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

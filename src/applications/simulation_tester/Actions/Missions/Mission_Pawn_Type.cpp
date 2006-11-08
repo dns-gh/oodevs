@@ -72,51 +72,24 @@
 #include "Pawn/Mission_Pawn_ABC_OrganiserAccueilColonneRefugies.cpp"
 #include "Pawn/Mission_Pawn_ABC_AppuyerSurPosition.cpp"
 #include "Pawn/Mission_Pawn_ABC_RASIT_RenseignerSur.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserFosseAC.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserAbattisMine.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserPointMine.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserBarricade.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserEboulement.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserBouchonMine.cpp"
-#include "Pawn/Mission_Pawn_GEN_DetruireRoute.cpp"
-#include "Pawn/Mission_Pawn_GEN_DetruirePont.cpp"
-#include "Pawn/Mission_Pawn_GEN_SecuriserItineraire.cpp"
-#include "Pawn/Mission_Pawn_GEN_DegagerAbattisMine.cpp"
-#include "Pawn/Mission_Pawn_GEN_DegagerEboulement.cpp"
-#include "Pawn/Mission_Pawn_GEN_DegagerRues.cpp"
-#include "Pawn/Mission_Pawn_GEN_ComblerEntonnoir.cpp"
-#include "Pawn/Mission_Pawn_GEN_ComblerFosseAC.cpp"
-#include "Pawn/Mission_Pawn_GEN_CreerContournement.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserZoneMineeLineaire.cpp"
-#include "Pawn/Mission_Pawn_GEN_OuvrirTrouee.cpp"
-#include "Pawn/Mission_Pawn_GEN_Renforcer.cpp"
-#include "Pawn/Mission_Pawn_GEN_FranchirEntonnoir.cpp"
-#include "Pawn/Mission_Pawn_GEN_FranchirFosseAC.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserZoneMineeParDispersion.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserPostesTir.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserTravauxProtection.cpp"
+#include "Pawn/Mission_Pawn_GEN_OuvrirItineraire.cpp"
 #include "Pawn/Mission_Pawn_GEN_RetablirItineraire.cpp"
-#include "Pawn/Mission_Pawn_GEN_EquiperExploiter.cpp"
-#include "Pawn/Mission_Pawn_GEN_ExecuterVariantement.cpp"
-#include "Pawn/Mission_Pawn_GEN_ReconnaitreSiteFranchissement.cpp"
 #include "Pawn/Mission_Pawn_GEN_ReconnaitreItineraire.cpp"
-#include "Pawn/Mission_Pawn_GEN_DeminerSiteFranchissement.cpp"
 #include "Pawn/Mission_Pawn_GEN_ReconnaitreZone.cpp"
-#include "Pawn/Mission_Pawn_GEN_CreerPlateForme.cpp"
-#include "Pawn/Mission_Pawn_GEN_CreerPiste.cpp"
-#include "Pawn/Mission_Pawn_GEN_CreerAirePoser.cpp"
-#include "Pawn/Mission_Pawn_GEN_NeutraliserEnginsExplosifs.cpp"
-#include "Pawn/Mission_Pawn_GEN_ActiverObstacle.cpp"
-#include "Pawn/Mission_Pawn_GEN_AmeliorerMobilite.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserAireLogistique.cpp"
+#include "Pawn/Mission_Pawn_GEN_ReconnaitreSiteFranchissement.cpp"
+#include "Pawn/Mission_Pawn_GEN_EquiperExploiterSiteFranchissement.cpp"
+#include "Pawn/Mission_Pawn_GEN_ExecuterVariantement.cpp"
+#include "Pawn/Mission_Pawn_GEN_DegagerObstacles.cpp"
+#include "Pawn/Mission_Pawn_GEN_ContournerObstacles.cpp"
 #include "Pawn/Mission_Pawn_GEN_DepolluerZone.cpp"
-#include "Pawn/Mission_Pawn_GEN_AmenagerTerrainPoser.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserPlateFormeDeploiement.cpp"
-#include "Pawn/Mission_Pawn_GEN_ReprendreMissionConstruction.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserZonePoserHelicoptere.cpp"
-#include "Pawn/Mission_Pawn_GEN_AppuyerDebarquementTroupesGU.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserCampPrisonniers.cpp"
-#include "Pawn/Mission_Pawn_GEN_RealiserCampRefugies.cpp"
+#include "Pawn/Mission_Pawn_GEN_Renforcer.cpp"
+#include "Pawn/Mission_Pawn_GEN_RealiserTravauxProtection.cpp"
+#include "Pawn/Mission_Pawn_GEN_RealiserTravauxContreMobilite.cpp"
+#include "Pawn/Mission_Pawn_GEN_RealiserTravauxAppuiDeploiement.cpp"
+#include "Pawn/Mission_Pawn_GEN_RealiserCamps.cpp"
+#include "Pawn/Mission_Pawn_GEN_ReprendreTravaux.cpp"
+#include "Pawn/Mission_Pawn_GEN_AmeliorerMobilite.cpp"
+#include "Pawn/Mission_Pawn_GEN_ActiverObstacle.cpp"
 #include "Pawn/Mission_Pawn_INF_ReconnaitreAxe.cpp"
 #include "Pawn/Mission_Pawn_INF_Couvrir.cpp"
 #include "Pawn/Mission_Pawn_INF_Reduire.cpp"
@@ -313,51 +286,24 @@ void Mission_Pawn_Type::Initialize()
     Register< Mission_Pawn_ABC_OrganiserAccueilColonneRefugies >( "Pion ABC OrganiserAccueilColonneRefugies" );
     Register< Mission_Pawn_ABC_AppuyerSurPosition >( "Pion ABC AppuyerSurPosition" );
     Register< Mission_Pawn_ABC_RASIT_RenseignerSur >( "Pion ABC RASIT RenseignerSur" );
-    Register< Mission_Pawn_GEN_RealiserFosseAC >( "Pion GEN RealiserFosseAC" );
-    Register< Mission_Pawn_GEN_RealiserAbattisMine >( "Pion GEN RealiserAbattisMine" );
-    Register< Mission_Pawn_GEN_RealiserPointMine >( "Pion GEN RealiserPointMine" );
-    Register< Mission_Pawn_GEN_RealiserBarricade >( "Pion GEN RealiserBarricade" );
-    Register< Mission_Pawn_GEN_RealiserEboulement >( "Pion GEN RealiserEboulement" );
-    Register< Mission_Pawn_GEN_RealiserBouchonMine >( "Pion GEN RealiserBouchonMine" );
-    Register< Mission_Pawn_GEN_DetruireRoute >( "Pion GEN DetruireRoute" );
-    Register< Mission_Pawn_GEN_DetruirePont >( "Pion GEN DetruirePont" );
-    Register< Mission_Pawn_GEN_SecuriserItineraire >( "Pion GEN SecuriserItineraire" );
-    Register< Mission_Pawn_GEN_DegagerAbattisMine >( "Pion GEN DegagerAbattisMine" );
-    Register< Mission_Pawn_GEN_DegagerEboulement >( "Pion GEN DegagerEboulement" );
-    Register< Mission_Pawn_GEN_DegagerRues >( "Pion GEN DegagerRues" );
-    Register< Mission_Pawn_GEN_ComblerEntonnoir >( "Pion GEN ComblerEntonnoir" );
-    Register< Mission_Pawn_GEN_ComblerFosseAC >( "Pion GEN ComblerFosseAC" );
-    Register< Mission_Pawn_GEN_CreerContournement >( "Pion GEN CreerContournement" );
-    Register< Mission_Pawn_GEN_RealiserZoneMineeLineaire >( "Pion GEN RealiserZoneMineeLineaire" );
-    Register< Mission_Pawn_GEN_OuvrirTrouee >( "Pion GEN OuvrirTrouee" );
-    Register< Mission_Pawn_GEN_Renforcer >( "Pion GEN Renforcer" );
-    Register< Mission_Pawn_GEN_FranchirEntonnoir >( "Pion GEN FranchirEntonnoir" );
-    Register< Mission_Pawn_GEN_FranchirFosseAC >( "Pion GEN FranchirFosseAC" );
-    Register< Mission_Pawn_GEN_RealiserZoneMineeParDispersion >( "Pion GEN RealiserZoneMineeParDispersion" );
-    Register< Mission_Pawn_GEN_RealiserPostesTir >( "Pion GEN RealiserPostesTir" );
-    Register< Mission_Pawn_GEN_RealiserTravauxProtection >( "Pion GEN RealiserTravauxProtection" );
+    Register< Mission_Pawn_GEN_OuvrirItineraire >( "Pion GEN OuvrirItineraire" );
     Register< Mission_Pawn_GEN_RetablirItineraire >( "Pion GEN RetablirItineraire" );
-    Register< Mission_Pawn_GEN_EquiperExploiter >( "Pion GEN EquiperExploiter" );
-    Register< Mission_Pawn_GEN_ExecuterVariantement >( "Pion GEN ExecuterVariantement" );
-    Register< Mission_Pawn_GEN_ReconnaitreSiteFranchissement >( "Pion GEN ReconnaitreSiteFranchissement" );
     Register< Mission_Pawn_GEN_ReconnaitreItineraire >( "Pion GEN ReconnaitreItineraire" );
-    Register< Mission_Pawn_GEN_DeminerSiteFranchissement >( "Pion GEN DeminerSiteFranchissement" );
     Register< Mission_Pawn_GEN_ReconnaitreZone >( "Pion GEN ReconnaitreZone" );
-    Register< Mission_Pawn_GEN_CreerPlateForme >( "Pion GEN CreerPlateForme" );
-    Register< Mission_Pawn_GEN_CreerPiste >( "Pion GEN CreerPiste" );
-    Register< Mission_Pawn_GEN_CreerAirePoser >( "Pion GEN CreerAirePoser" );
-    Register< Mission_Pawn_GEN_NeutraliserEnginsExplosifs >( "Pion GEN NeutraliserEnginsExplosifs" );
-    Register< Mission_Pawn_GEN_ActiverObstacle >( "Pion GEN ActiverObstacle" );
-    Register< Mission_Pawn_GEN_AmeliorerMobilite >( "Pion GEN AmeliorerMobilite" );
-    Register< Mission_Pawn_GEN_RealiserAireLogistique >( "Pion GEN RealiserAireLogistique" );
+    Register< Mission_Pawn_GEN_ReconnaitreSiteFranchissement >( "Pion GEN ReconnaitreSiteFranchissement" );
+    Register< Mission_Pawn_GEN_EquiperExploiterSiteFranchissement >( "Pion GEN EquiperExploiterSiteFranchissement" );
+    Register< Mission_Pawn_GEN_ExecuterVariantement >( "Pion GEN ExecuterVariantement" );
+    Register< Mission_Pawn_GEN_DegagerObstacles >( "Pion GEN DegagerObstacles" );
+    Register< Mission_Pawn_GEN_ContournerObstacles >( "Pion GEN ContournerObstacles" );
     Register< Mission_Pawn_GEN_DepolluerZone >( "Pion GEN DepolluerZone" );
-    Register< Mission_Pawn_GEN_AmenagerTerrainPoser >( "Pion GEN AmenagerTerrainPoser" );
-    Register< Mission_Pawn_GEN_RealiserPlateFormeDeploiement >( "Pion GEN RealiserPlateFormeDeploiement" );
-    Register< Mission_Pawn_GEN_ReprendreMissionConstruction >( "Pion GEN ReprendreMissionConstruction" );
-    Register< Mission_Pawn_GEN_RealiserZonePoserHelicoptere >( "Pion GEN RealiserZonePoserHelicoptere" );
-    Register< Mission_Pawn_GEN_AppuyerDebarquementTroupesGU >( "Pion GEN AppuyerDebarquementTroupesGU" );
-    Register< Mission_Pawn_GEN_RealiserCampPrisonniers >( "Pion GEN RealiserCampPrisonniers" );
-    Register< Mission_Pawn_GEN_RealiserCampRefugies >( "Pion GEN RealiserCampRefugies" );
+    Register< Mission_Pawn_GEN_Renforcer >( "Pion GEN Renforcer" );
+    Register< Mission_Pawn_GEN_RealiserTravauxProtection >( "Pion GEN RealiserTravauxProtection" );
+    Register< Mission_Pawn_GEN_RealiserTravauxContreMobilite >( "Pion GEN RealiserTravauxContreMobilite" );
+    Register< Mission_Pawn_GEN_RealiserTravauxAppuiDeploiement >( "Pion GEN RealiserTravauxAppuiDeploiement" );
+    Register< Mission_Pawn_GEN_RealiserCamps >( "Pion GEN RealiserCamps" );
+    Register< Mission_Pawn_GEN_ReprendreTravaux >( "Pion GEN ReprendreTravaux" );
+    Register< Mission_Pawn_GEN_AmeliorerMobilite >( "Pion GEN AmeliorerMobilite" );
+    Register< Mission_Pawn_GEN_ActiverObstacle >( "Pion GEN ActiverObstacle" );
     Register< Mission_Pawn_INF_ReconnaitreAxe >( "Pion INF ReconnaitreAxe" );
     Register< Mission_Pawn_INF_Couvrir >( "Pion INF Couvrir" );
     Register< Mission_Pawn_INF_Reduire >( "Pion INF Reduire" );

@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_FaireMouvementVersCampRefugies::Ini
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_FaireMouvementVersCampRefugies::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

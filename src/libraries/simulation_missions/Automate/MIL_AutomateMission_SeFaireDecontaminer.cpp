@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_SeFaireDecontaminer::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_SeFaireDecontaminer::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

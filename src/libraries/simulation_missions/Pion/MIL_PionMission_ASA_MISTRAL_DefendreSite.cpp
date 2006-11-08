@@ -88,7 +88,6 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreSite::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreSite::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_MISTRAL_DefendreSite::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

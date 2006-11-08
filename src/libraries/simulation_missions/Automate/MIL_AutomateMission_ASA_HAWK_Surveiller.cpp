@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_HAWK_Surveiller::Initialize( co
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_HAWK_Surveiller::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

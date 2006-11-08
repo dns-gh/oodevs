@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Test_MoveTo::Initialize( const ASN1
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Test_MoveTo::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

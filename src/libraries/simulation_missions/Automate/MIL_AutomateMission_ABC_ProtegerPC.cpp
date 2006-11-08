@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ProtegerPC::Initialize( const A
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_ProtegerPC::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

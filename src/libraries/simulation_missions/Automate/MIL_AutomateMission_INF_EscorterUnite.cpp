@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_EscorterUnite::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_EscorterUnite::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

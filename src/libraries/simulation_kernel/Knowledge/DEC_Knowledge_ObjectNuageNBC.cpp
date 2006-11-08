@@ -67,7 +67,7 @@ void DEC_Knowledge_ObjectNuageNBC::load( MIL_CheckPointInArchive& file, const ui
          >> nTypeID
          >> bSpecificAttributesValid_;
 
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( nTypeID );
+    pNbcAgentType_ = MIL_NbcAgentType::Find( nTypeID );
 }
 
 // -----------------------------------------------------------------------------

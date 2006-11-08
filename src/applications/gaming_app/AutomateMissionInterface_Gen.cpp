@@ -78,20 +78,13 @@ AutomateMissionInterface::~AutomateMissionInterface()
         case T_Mission_Automate_mission_automate_abc_proteger_pc : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_proteger_pc; break;
         case T_Mission_Automate_mission_automate_abc_appuyer_sur_position : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_abc_appuyer_sur_position; break;
         case T_Mission_Automate_mission_automate_gen_se_deployer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_se_deployer; break;
-        case T_Mission_Automate_mission_automate_gen_faire_franchir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_faire_franchir; break;
-        case T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_systeme_obstacles; break;
-        case T_Mission_Automate_mission_automate_gen_franchir_de_vive_force : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_franchir_de_vive_force; break;
+        case T_Mission_Automate_mission_automate_gen_reconnaitre_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_reconnaitre_zone; break;
+        case T_Mission_Automate_mission_automate_gen_realiser_travaux : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux; break;
+        case T_Mission_Automate_mission_automate_gen_ouvrir_itineraires : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_ouvrir_itineraires; break;
         case T_Mission_Automate_mission_automate_gen_retablir_itineraires : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_retablir_itineraires; break;
-        case T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_amenager_aire_stationnement; break;
-        case T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_amenager_terrain_poser_sommaire; break;
-        case T_Mission_Automate_mission_automate_gen_realiser_zone_poser : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_zone_poser; break;
-        case T_Mission_Automate_mission_automate_gen_reconnaitre_zone_deploiement : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_reconnaitre_zone_deploiement; break;
-        case T_Mission_Automate_mission_automate_gen_realiser_camp_prisonniers : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_camp_prisonniers; break;
-        case T_Mission_Automate_mission_automate_gen_realiser_camp_refugies : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_camp_refugies; break;
-        case T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial; break;
-        case T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population; break;
-        case T_Mission_Automate_mission_automate_gen_appuyer_debarquement_troupes : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_appuyer_debarquement_troupes; break;
-        case T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_ouvrir_axes_progression; break;
+        case T_Mission_Automate_mission_automate_gen_faire_franchir : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_faire_franchir; break;
+        case T_Mission_Automate_mission_automate_gen_franchir_de_vive_force : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_franchir_de_vive_force; break;
+        case T_Mission_Automate_mission_automate_gen_degager_obstacles_dans_zone : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_degager_obstacles_dans_zone; break;
         case T_Mission_Automate_mission_automate_inf_attaquer_souplesse : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_attaquer_souplesse; break;
         case T_Mission_Automate_mission_automate_inf_appuyer : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_appuyer; break;
         case T_Mission_Automate_mission_automate_inf_controler : delete pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_inf_controler; break;
@@ -244,20 +237,13 @@ void AutomateMissionInterface::CreateInterface()
         case eMission_Automate_ABC_ProtegerPC : CreateMission_ABC_ProtegerPC(); break;
         case eMission_Automate_ABC_AppuyerSurPosition : CreateMission_ABC_AppuyerSurPosition(); break;
         case eMission_Automate_GEN_SeDeployer : CreateMission_GEN_SeDeployer(); break;
-        case eMission_Automate_GEN_FaireFranchir : CreateMission_GEN_FaireFranchir(); break;
-        case eMission_Automate_GEN_RealiserSystemeObstacles : CreateMission_GEN_RealiserSystemeObstacles(); break;
-        case eMission_Automate_GEN_FranchirDeViveForce : CreateMission_GEN_FranchirDeViveForce(); break;
+        case eMission_Automate_GEN_ReconnaitreZone : CreateMission_GEN_ReconnaitreZone(); break;
+        case eMission_Automate_GEN_RealiserTravaux : CreateMission_GEN_RealiserTravaux(); break;
+        case eMission_Automate_GEN_OuvrirItineraires : CreateMission_GEN_OuvrirItineraires(); break;
         case eMission_Automate_GEN_RetablirItineraires : CreateMission_GEN_RetablirItineraires(); break;
-        case eMission_Automate_GEN_AmenagerAireStationnement : CreateMission_GEN_AmenagerAireStationnement(); break;
-        case eMission_Automate_GEN_AmenagerTerrainPoserSommaire : CreateMission_GEN_AmenagerTerrainPoserSommaire(); break;
-        case eMission_Automate_GEN_RealiserZonePoser : CreateMission_GEN_RealiserZonePoser(); break;
-        case eMission_Automate_GEN_ReconnaitreZoneDeploiement : CreateMission_GEN_ReconnaitreZoneDeploiement(); break;
-        case eMission_Automate_GEN_RealiserCampPrisonniers : CreateMission_GEN_RealiserCampPrisonniers(); break;
-        case eMission_Automate_GEN_RealiserCampRefugies : CreateMission_GEN_RealiserCampRefugies(); break;
-        case eMission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial : CreateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial(); break;
-        case eMission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation : CreateMission_GEN_RealiserTravauxSommairesAuProfitPopulation(); break;
-        case eMission_Automate_GEN_AppuyerDebarquementTroupes : CreateMission_GEN_AppuyerDebarquementTroupes(); break;
-        case eMission_Automate_GEN_OuvrirAxesProgression : CreateMission_GEN_OuvrirAxesProgression(); break;
+        case eMission_Automate_GEN_FaireFranchir : CreateMission_GEN_FaireFranchir(); break;
+        case eMission_Automate_GEN_FranchirDeViveForce : CreateMission_GEN_FranchirDeViveForce(); break;
+        case eMission_Automate_GEN_DegagerObstaclesDansZone : CreateMission_GEN_DegagerObstaclesDansZone(); break;
         case eMission_Automate_INF_AttaquerSouplesse : CreateMission_INF_AttaquerSouplesse(); break;
         case eMission_Automate_INF_Appuyer : CreateMission_INF_Appuyer(); break;
         case eMission_Automate_INF_Controler : CreateMission_INF_Controler(); break;
@@ -1168,7 +1154,55 @@ void AutomateMissionInterface::CreateMission_GEN_SeDeployer()
     ASN1T_Mission_Automate_GEN_SeDeployer& asnMission = *new ASN1T_Mission_Automate_GEN_SeDeployer();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_se_deployer;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_se_deployer = &asnMission;
-    CreateLocation( asnMission.zone_deploiement, "Zone deploiement");
+    CreateLocation( asnMission.zone, "Zone");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_GEN_ReconnaitreZone
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_GEN_ReconnaitreZone()
+{
+    ASN1T_Mission_Automate_GEN_ReconnaitreZone& asnMission = *new ASN1T_Mission_Automate_GEN_ReconnaitreZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_reconnaitre_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_reconnaitre_zone = &asnMission;
+    CreateLocation( asnMission.zone, "Zone");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_GEN_RealiserTravaux
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_GEN_RealiserTravaux()
+{
+    ASN1T_Mission_Automate_GEN_RealiserTravaux& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserTravaux();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_travaux;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux = &asnMission;
+    CreateGenObjectList( asnMission.travaux, "Travaux");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_GEN_OuvrirItineraires
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_GEN_OuvrirItineraires()
+{
+    ASN1T_Mission_Automate_GEN_OuvrirItineraires& asnMission = *new ASN1T_Mission_Automate_GEN_OuvrirItineraires();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_ouvrir_itineraires;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_ouvrir_itineraires = &asnMission;
+    CreatePathList( asnMission.itineraires, "Itineraires");
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomateMissionInterface::CreateMission_GEN_RetablirItineraires
+// Created: AGR
+// -----------------------------------------------------------------------------
+void AutomateMissionInterface::CreateMission_GEN_RetablirItineraires()
+{
+    ASN1T_Mission_Automate_GEN_RetablirItineraires& asnMission = *new ASN1T_Mission_Automate_GEN_RetablirItineraires();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_retablir_itineraires;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_retablir_itineraires = &asnMission;
+    CreatePathList( asnMission.itineraires, "Itineraires");
 }
 
 // -----------------------------------------------------------------------------
@@ -1185,18 +1219,6 @@ void AutomateMissionInterface::CreateMission_GEN_FaireFranchir()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_RealiserSystemeObstacles
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_RealiserSystemeObstacles()
-{
-    ASN1T_Mission_Automate_GEN_RealiserSystemeObstacles& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserSystemeObstacles();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_systeme_obstacles = &asnMission;
-    CreateGenObjectList( asnMission.obstacles, "Obstacles");
-}
-
-// -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface::CreateMission_GEN_FranchirDeViveForce
 // Created: AGR
 // -----------------------------------------------------------------------------
@@ -1205,141 +1227,19 @@ void AutomateMissionInterface::CreateMission_GEN_FranchirDeViveForce()
     ASN1T_Mission_Automate_GEN_FranchirDeViveForce& asnMission = *new ASN1T_Mission_Automate_GEN_FranchirDeViveForce();
     pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_franchir_de_vive_force;
     pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_franchir_de_vive_force = &asnMission;
-    CreateObjectKnowledgeList( asnMission.obstacles_a_franchir, "Obstacles a franchir");
+    CreateObjectKnowledgeList( asnMission.obstacles, "Obstacles");
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_RetablirItineraires
+// Name: AutomateMissionInterface::CreateMission_GEN_DegagerObstaclesDansZone
 // Created: AGR
 // -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_RetablirItineraires()
+void AutomateMissionInterface::CreateMission_GEN_DegagerObstaclesDansZone()
 {
-    ASN1T_Mission_Automate_GEN_RetablirItineraires& asnMission = *new ASN1T_Mission_Automate_GEN_RetablirItineraires();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_retablir_itineraires;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_retablir_itineraires = &asnMission;
-    CreatePathList( asnMission.itineraires, "Itineraires");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_AmenagerAireStationnement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_AmenagerAireStationnement()
-{
-    ASN1T_Mission_Automate_GEN_AmenagerAireStationnement& asnMission = *new ASN1T_Mission_Automate_GEN_AmenagerAireStationnement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_amenager_aire_stationnement = &asnMission;
-    CreateGenObjectList( asnMission.travaux, "Travaux");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_AmenagerTerrainPoserSommaire
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_AmenagerTerrainPoserSommaire()
-{
-    ASN1T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire& asnMission = *new ASN1T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_amenager_terrain_poser_sommaire = &asnMission;
-    CreateGenObject( asnMission.terrain, "Terrain");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_RealiserZonePoser
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_RealiserZonePoser()
-{
-    ASN1T_Mission_Automate_GEN_RealiserZonePoser& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserZonePoser();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_zone_poser;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_zone_poser = &asnMission;
-    CreateGenObject( asnMission.zone, "Zone");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_ReconnaitreZoneDeploiement
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_ReconnaitreZoneDeploiement()
-{
-    ASN1T_Mission_Automate_GEN_ReconnaitreZoneDeploiement& asnMission = *new ASN1T_Mission_Automate_GEN_ReconnaitreZoneDeploiement();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_reconnaitre_zone_deploiement;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_reconnaitre_zone_deploiement = &asnMission;
-    CreateLocation( asnMission.zone, "Zone");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_RealiserCampPrisonniers
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_RealiserCampPrisonniers()
-{
-    ASN1T_Mission_Automate_GEN_RealiserCampPrisonniers& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserCampPrisonniers();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_camp_prisonniers;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_camp_prisonniers = &asnMission;
-    CreateLocation( asnMission.camp, "Camp");
-    CreateAutomate( asnMission.tc2, "Tc2");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_RealiserCampRefugies
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_RealiserCampRefugies()
-{
-    ASN1T_Mission_Automate_GEN_RealiserCampRefugies& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserCampRefugies();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_camp_refugies;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_camp_refugies = &asnMission;
-    CreateLocation( asnMission.camp, "Camp");
-    CreateAutomate( asnMission.tc2, "Tc2");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial()
-{
-    ASN1T_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial = &asnMission;
-    CreateGenObjectList( asnMission.plates_formes, "Plates formes");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_RealiserTravauxSommairesAuProfitPopulation
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_RealiserTravauxSommairesAuProfitPopulation()
-{
-    ASN1T_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux_sommaires_au_profit_population = &asnMission;
-    CreateGenObjectList( asnMission.travaux, "Travaux");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_AppuyerDebarquementTroupes
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_AppuyerDebarquementTroupes()
-{
-    ASN1T_Mission_Automate_GEN_AppuyerDebarquementTroupes& asnMission = *new ASN1T_Mission_Automate_GEN_AppuyerDebarquementTroupes();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_appuyer_debarquement_troupes;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_appuyer_debarquement_troupes = &asnMission;
-    CreateGenObjectList( asnMission.zones_debarquement, "Zones debarquement");
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateMission_GEN_OuvrirAxesProgression
-// Created: AGR
-// -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateMission_GEN_OuvrirAxesProgression()
-{
-    ASN1T_Mission_Automate_GEN_OuvrirAxesProgression& asnMission = *new ASN1T_Mission_Automate_GEN_OuvrirAxesProgression();
-    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression;
-    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_ouvrir_axes_progression = &asnMission;
-    CreatePathList( asnMission.axes, "Axes");
+    ASN1T_Mission_Automate_GEN_DegagerObstaclesDansZone& asnMission = *new ASN1T_Mission_Automate_GEN_DegagerObstaclesDansZone();
+    pASNMsgOrder_->GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_degager_obstacles_dans_zone;
+    pASNMsgOrder_->GetAsnMsg().mission.u.mission_automate_gen_degager_obstacles_dans_zone = &asnMission;
+    CreateObjectKnowledgeList( asnMission.obstacles, "Obstacles");
 }
 
 // -----------------------------------------------------------------------------

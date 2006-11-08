@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_NBC_ReconnaitreUnAxe::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_NBC_ReconnaitreUnAxe::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

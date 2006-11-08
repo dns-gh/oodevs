@@ -41,7 +41,7 @@ public:
     //@}
 
 private:
-    static int nDIAObstaclesAFranchirIdx_;
+    static int nDIAObstaclesIdx_;
 
 };
 

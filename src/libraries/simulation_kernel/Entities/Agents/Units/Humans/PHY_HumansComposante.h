@@ -22,7 +22,7 @@ class PHY_FireDamages_Agent;
 class PHY_Human;
 class PHY_RolePion_Composantes;
 class PHY_MedicalHumanState;
-class MIL_NbcAgentType;
+class MIL_NbcAgent;
 class MIL_AutomateLOG;
 
 // =============================================================================
@@ -45,13 +45,14 @@ public:
     
     //! @name Operations
     //@{
-    bool ChangeHumanRank  ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
+    bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
-    void ApplyWounds  ( const MIL_NbcAgentType& nbcAgentType );
-    void ApplyWounds  ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
-    uint WoundHumans  ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
-    uint HealHumans   ( const PHY_HumanRank& rank, uint nNbrToChange );
-    void HealAllHumans();    
+    void ApplyContamination( const MIL_NbcAgent& nbcAgent );
+    void ApplyPoisonous    ( const MIL_NbcAgent& nbcAgent );
+    void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
+    uint WoundHumans       ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
+    uint HealHumans        ( const PHY_HumanRank& rank, uint nNbrToChange );
+    void HealAllHumans     ();    
 
     MT_Float GetOperationalState() const;
     bool     IsViable           () const;

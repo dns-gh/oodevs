@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_CanaliserPopulations::Initialize( c
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_CanaliserPopulations::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

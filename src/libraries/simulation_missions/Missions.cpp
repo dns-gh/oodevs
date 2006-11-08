@@ -80,20 +80,13 @@
 #include "Automate\MIL_AutomateMission_ABC_ProtegerPC.cpp"
 #include "Automate\MIL_AutomateMission_ABC_AppuyerSurPosition.cpp"
 #include "Automate\MIL_AutomateMission_GEN_SeDeployer.cpp"
-#include "Automate\MIL_AutomateMission_GEN_FaireFranchir.cpp"
-#include "Automate\MIL_AutomateMission_GEN_RealiserSystemeObstacles.cpp"
-#include "Automate\MIL_AutomateMission_GEN_FranchirDeViveForce.cpp"
+#include "Automate\MIL_AutomateMission_GEN_ReconnaitreZone.cpp"
+#include "Automate\MIL_AutomateMission_GEN_RealiserTravaux.cpp"
+#include "Automate\MIL_AutomateMission_GEN_OuvrirItineraires.cpp"
 #include "Automate\MIL_AutomateMission_GEN_RetablirItineraires.cpp"
-#include "Automate\MIL_AutomateMission_GEN_AmenagerAireStationnement.cpp"
-#include "Automate\MIL_AutomateMission_GEN_AmenagerTerrainPoserSommaire.cpp"
-#include "Automate\MIL_AutomateMission_GEN_RealiserZonePoser.cpp"
-#include "Automate\MIL_AutomateMission_GEN_ReconnaitreZoneDeploiement.cpp"
-#include "Automate\MIL_AutomateMission_GEN_RealiserCampPrisonniers.cpp"
-#include "Automate\MIL_AutomateMission_GEN_RealiserCampRefugies.cpp"
-#include "Automate\MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial.cpp"
-#include "Automate\MIL_AutomateMission_GEN_RealiserTravauxSommairesAuProfitPopulation.cpp"
-#include "Automate\MIL_AutomateMission_GEN_AppuyerDebarquementTroupes.cpp"
-#include "Automate\MIL_AutomateMission_GEN_OuvrirAxesProgression.cpp"
+#include "Automate\MIL_AutomateMission_GEN_FaireFranchir.cpp"
+#include "Automate\MIL_AutomateMission_GEN_FranchirDeViveForce.cpp"
+#include "Automate\MIL_AutomateMission_GEN_DegagerObstaclesDansZone.cpp"
 #include "Automate\MIL_AutomateMission_INF_AttaquerSouplesse.cpp"
 #include "Automate\MIL_AutomateMission_INF_Appuyer.cpp"
 #include "Automate\MIL_AutomateMission_INF_Controler.cpp"
@@ -230,51 +223,24 @@
 #include "Pion\MIL_PionMission_ABC_OrganiserAccueilColonneRefugies.cpp"
 #include "Pion\MIL_PionMission_ABC_AppuyerSurPosition.cpp"
 #include "Pion\MIL_PionMission_ABC_RASIT_RenseignerSur.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserFosseAC.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserAbattisMine.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserPointMine.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserBarricade.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserEboulement.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserBouchonMine.cpp"
-#include "Pion\MIL_PionMission_GEN_DetruireRoute.cpp"
-#include "Pion\MIL_PionMission_GEN_DetruirePont.cpp"
-#include "Pion\MIL_PionMission_GEN_SecuriserItineraire.cpp"
-#include "Pion\MIL_PionMission_GEN_DegagerAbattisMine.cpp"
-#include "Pion\MIL_PionMission_GEN_DegagerEboulement.cpp"
-#include "Pion\MIL_PionMission_GEN_DegagerRues.cpp"
-#include "Pion\MIL_PionMission_GEN_ComblerEntonnoir.cpp"
-#include "Pion\MIL_PionMission_GEN_ComblerFosseAC.cpp"
-#include "Pion\MIL_PionMission_GEN_CreerContournement.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserZoneMineeLineaire.cpp"
-#include "Pion\MIL_PionMission_GEN_OuvrirTrouee.cpp"
-#include "Pion\MIL_PionMission_GEN_Renforcer.cpp"
-#include "Pion\MIL_PionMission_GEN_FranchirEntonnoir.cpp"
-#include "Pion\MIL_PionMission_GEN_FranchirFosseAC.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserZoneMineeParDispersion.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserPostesTir.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserTravauxProtection.cpp"
+#include "Pion\MIL_PionMission_GEN_OuvrirItineraire.cpp"
 #include "Pion\MIL_PionMission_GEN_RetablirItineraire.cpp"
-#include "Pion\MIL_PionMission_GEN_EquiperExploiter.cpp"
-#include "Pion\MIL_PionMission_GEN_ExecuterVariantement.cpp"
-#include "Pion\MIL_PionMission_GEN_ReconnaitreSiteFranchissement.cpp"
 #include "Pion\MIL_PionMission_GEN_ReconnaitreItineraire.cpp"
-#include "Pion\MIL_PionMission_GEN_DeminerSiteFranchissement.cpp"
 #include "Pion\MIL_PionMission_GEN_ReconnaitreZone.cpp"
-#include "Pion\MIL_PionMission_GEN_CreerPlateForme.cpp"
-#include "Pion\MIL_PionMission_GEN_CreerPiste.cpp"
-#include "Pion\MIL_PionMission_GEN_CreerAirePoser.cpp"
-#include "Pion\MIL_PionMission_GEN_NeutraliserEnginsExplosifs.cpp"
-#include "Pion\MIL_PionMission_GEN_ActiverObstacle.cpp"
-#include "Pion\MIL_PionMission_GEN_AmeliorerMobilite.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserAireLogistique.cpp"
+#include "Pion\MIL_PionMission_GEN_ReconnaitreSiteFranchissement.cpp"
+#include "Pion\MIL_PionMission_GEN_EquiperExploiterSiteFranchissement.cpp"
+#include "Pion\MIL_PionMission_GEN_ExecuterVariantement.cpp"
+#include "Pion\MIL_PionMission_GEN_DegagerObstacles.cpp"
+#include "Pion\MIL_PionMission_GEN_ContournerObstacles.cpp"
 #include "Pion\MIL_PionMission_GEN_DepolluerZone.cpp"
-#include "Pion\MIL_PionMission_GEN_AmenagerTerrainPoser.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserPlateFormeDeploiement.cpp"
-#include "Pion\MIL_PionMission_GEN_ReprendreMissionConstruction.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserZonePoserHelicoptere.cpp"
-#include "Pion\MIL_PionMission_GEN_AppuyerDebarquementTroupesGU.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserCampPrisonniers.cpp"
-#include "Pion\MIL_PionMission_GEN_RealiserCampRefugies.cpp"
+#include "Pion\MIL_PionMission_GEN_Renforcer.cpp"
+#include "Pion\MIL_PionMission_GEN_RealiserTravauxProtection.cpp"
+#include "Pion\MIL_PionMission_GEN_RealiserTravauxContreMobilite.cpp"
+#include "Pion\MIL_PionMission_GEN_RealiserTravauxAppuiDeploiement.cpp"
+#include "Pion\MIL_PionMission_GEN_RealiserCamps.cpp"
+#include "Pion\MIL_PionMission_GEN_ReprendreTravaux.cpp"
+#include "Pion\MIL_PionMission_GEN_AmeliorerMobilite.cpp"
+#include "Pion\MIL_PionMission_GEN_ActiverObstacle.cpp"
 #include "Pion\MIL_PionMission_INF_ReconnaitreAxe.cpp"
 #include "Pion\MIL_PionMission_INF_Couvrir.cpp"
 #include "Pion\MIL_PionMission_INF_Reduire.cpp"
@@ -523,20 +489,13 @@ void missions::RegisterAutomateMissions()
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_ProtegerPC>( "Automate ABC ProtegerPC", eMission_Automate_ABC_ProtegerPC, T_Mission_Automate_mission_automate_abc_proteger_pc, "T_Mission_Automate_ABC_ProtegerPC", "MIS_Automate_MRT_ABC_ProtegerPC", "MIS_Automate_CDT_ABC_ProtegerPC");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_ABC_AppuyerSurPosition>( "Automate ABC AppuyerSurPosition", eMission_Automate_ABC_AppuyerSurPosition, T_Mission_Automate_mission_automate_abc_appuyer_sur_position, "T_Mission_Automate_ABC_AppuyerSurPosition", "MIS_Automate_MRT_ABC_AppuyerSurPosition", "MIS_Automate_CDT_ABC_AppuyerSurPosition");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_SeDeployer>( "Automate GEN SeDeployer", eMission_Automate_GEN_SeDeployer, T_Mission_Automate_mission_automate_gen_se_deployer, "T_Mission_Automate_GEN_SeDeployer", "MIS_Automate_MRT_GEN_SeDeployer", "MIS_Automate_CDT_GEN_SeDeployer");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_FaireFranchir>( "Automate GEN FaireFranchir", eMission_Automate_GEN_FaireFranchir, T_Mission_Automate_mission_automate_gen_faire_franchir, "T_Mission_Automate_GEN_FaireFranchir", "MIS_Automate_MRT_GEN_FaireFranchir", "MIS_Automate_CDT_GEN_FaireFranchir");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserSystemeObstacles>( "Automate GEN RealiserSystemeObstacles", eMission_Automate_GEN_RealiserSystemeObstacles, T_Mission_Automate_mission_automate_gen_realiser_systeme_obstacles, "T_Mission_Automate_GEN_RealiserSystemeObstacles", "MIS_Automate_MRT_GEN_RealiserSystemeObstacles", "MIS_Automate_CDT_GEN_RealiserSystemeObstacles");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_FranchirDeViveForce>( "Automate GEN FranchirDeViveForce", eMission_Automate_GEN_FranchirDeViveForce, T_Mission_Automate_mission_automate_gen_franchir_de_vive_force, "T_Mission_Automate_GEN_FranchirDeViveForce", "MIS_Automate_MRT_GEN_FranchirDeViveForce", "MIS_Automate_CDT_GEN_FranchirDeViveForce");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_ReconnaitreZone>( "Automate GEN ReconnaitreZone", eMission_Automate_GEN_ReconnaitreZone, T_Mission_Automate_mission_automate_gen_reconnaitre_zone, "T_Mission_Automate_GEN_ReconnaitreZone", "MIS_Automate_MRT_GEN_ReconnaitreZone", "MIS_Automate_CDT_GEN_ReconnaitreZone");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserTravaux>( "Automate GEN RealiserTravaux", eMission_Automate_GEN_RealiserTravaux, T_Mission_Automate_mission_automate_gen_realiser_travaux, "T_Mission_Automate_GEN_RealiserTravaux", "MIS_Automate_MRT_GEN_RealiserTravaux", "MIS_Automate_CDT_GEN_RealiserTravaux");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_OuvrirItineraires>( "Automate GEN OuvrirItineraires", eMission_Automate_GEN_OuvrirItineraires, T_Mission_Automate_mission_automate_gen_ouvrir_itineraires, "T_Mission_Automate_GEN_OuvrirItineraires", "MIS_Automate_MRT_GEN_OuvrirItineraires", "MIS_Automate_CDT_GEN_OuvrirItineraires");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RetablirItineraires>( "Automate GEN RetablirItineraires", eMission_Automate_GEN_RetablirItineraires, T_Mission_Automate_mission_automate_gen_retablir_itineraires, "T_Mission_Automate_GEN_RetablirItineraires", "MIS_Automate_MRT_GEN_RetablirItineraires", "MIS_Automate_CDT_GEN_RetablirItineraires");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_AmenagerAireStationnement>( "Automate GEN AmenagerAireStationnement", eMission_Automate_GEN_AmenagerAireStationnement, T_Mission_Automate_mission_automate_gen_amenager_aire_stationnement, "T_Mission_Automate_GEN_AmenagerAireStationnement", "MIS_Automate_MRT_GEN_AmenagerAireStationnement", "MIS_Automate_CDT_GEN_AmenagerAireStationnement");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_AmenagerTerrainPoserSommaire>( "Automate GEN AmenagerTerrainPoserSommaire", eMission_Automate_GEN_AmenagerTerrainPoserSommaire, T_Mission_Automate_mission_automate_gen_amenager_terrain_poser_sommaire, "T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire", "MIS_Automate_MRT_GEN_AmenagerTerrainPoserSommaire", "MIS_Automate_CDT_GEN_AmenagerTerrainPoserSommaire");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserZonePoser>( "Automate GEN RealiserZonePoser", eMission_Automate_GEN_RealiserZonePoser, T_Mission_Automate_mission_automate_gen_realiser_zone_poser, "T_Mission_Automate_GEN_RealiserZonePoser", "MIS_Automate_MRT_GEN_RealiserZonePoser", "MIS_Automate_CDT_GEN_RealiserZonePoser");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_ReconnaitreZoneDeploiement>( "Automate GEN ReconnaitreZoneDeploiement", eMission_Automate_GEN_ReconnaitreZoneDeploiement, T_Mission_Automate_mission_automate_gen_reconnaitre_zone_deploiement, "T_Mission_Automate_GEN_ReconnaitreZoneDeploiement", "MIS_Automate_MRT_GEN_ReconnaitreZoneDeploiement", "MIS_Automate_CDT_GEN_ReconnaitreZoneDeploiement");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserCampPrisonniers>( "Automate GEN RealiserCampPrisonniers", eMission_Automate_GEN_RealiserCampPrisonniers, T_Mission_Automate_mission_automate_gen_realiser_camp_prisonniers, "T_Mission_Automate_GEN_RealiserCampPrisonniers", "MIS_Automate_MRT_GEN_RealiserCampPrisonniers", "MIS_Automate_CDT_GEN_RealiserCampPrisonniers");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserCampRefugies>( "Automate GEN RealiserCampRefugies", eMission_Automate_GEN_RealiserCampRefugies, T_Mission_Automate_mission_automate_gen_realiser_camp_refugies, "T_Mission_Automate_GEN_RealiserCampRefugies", "MIS_Automate_MRT_GEN_RealiserCampRefugies", "MIS_Automate_CDT_GEN_RealiserCampRefugies");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserPlatesformesSommairesDeDeploiementInitial>( "Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial", eMission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial, T_Mission_Automate_mission_automate_gen_realiser_plates_formes_sommaires_de_deploiement_initial, "T_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial", "MIS_Automate_MRT_GEN_RealiserPlatesformesSommairesDeDeploiementInitial", "MIS_Automate_CDT_GEN_RealiserPlatesformesSommairesDeDeploiementInitial");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_RealiserTravauxSommairesAuProfitPopulation>( "Automate GEN RealiserTravauxSommairesAuProfitPopulation", eMission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation, T_Mission_Automate_mission_automate_gen_realiser_travaux_sommaires_au_profit_population, "T_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation", "MIS_Automate_MRT_GEN_RealiserTravauxSommairesAuProfitPopulation", "MIS_Automate_CDT_GEN_RealiserTravauxSommairesAuProfitPopulation");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_AppuyerDebarquementTroupes>( "Automate GEN AppuyerDebarquementTroupes", eMission_Automate_GEN_AppuyerDebarquementTroupes, T_Mission_Automate_mission_automate_gen_appuyer_debarquement_troupes, "T_Mission_Automate_GEN_AppuyerDebarquementTroupes", "MIS_Automate_MRT_GEN_AppuyerDebarquementTroupes", "MIS_Automate_CDT_GEN_AppuyerDebarquementTroupes");
-    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_OuvrirAxesProgression>( "Automate GEN OuvrirAxesProgression", eMission_Automate_GEN_OuvrirAxesProgression, T_Mission_Automate_mission_automate_gen_ouvrir_axes_progression, "T_Mission_Automate_GEN_OuvrirAxesProgression", "MIS_Automate_MRT_GEN_OuvrirAxesProgression", "MIS_Automate_CDT_GEN_OuvrirAxesProgression");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_FaireFranchir>( "Automate GEN FaireFranchir", eMission_Automate_GEN_FaireFranchir, T_Mission_Automate_mission_automate_gen_faire_franchir, "T_Mission_Automate_GEN_FaireFranchir", "MIS_Automate_MRT_GEN_FaireFranchir", "MIS_Automate_CDT_GEN_FaireFranchir");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_FranchirDeViveForce>( "Automate GEN FranchirDeViveForce", eMission_Automate_GEN_FranchirDeViveForce, T_Mission_Automate_mission_automate_gen_franchir_de_vive_force, "T_Mission_Automate_GEN_FranchirDeViveForce", "MIS_Automate_MRT_GEN_FranchirDeViveForce", "MIS_Automate_CDT_GEN_FranchirDeViveForce");
+    MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_GEN_DegagerObstaclesDansZone>( "Automate GEN DegagerObstaclesDansZone", eMission_Automate_GEN_DegagerObstaclesDansZone, T_Mission_Automate_mission_automate_gen_degager_obstacles_dans_zone, "T_Mission_Automate_GEN_DegagerObstaclesDansZone", "MIS_Automate_MRT_GEN_DegagerObstaclesDansZone", "MIS_Automate_CDT_GEN_DegagerObstaclesDansZone");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_AttaquerSouplesse>( "Automate INF AttaquerSouplesse", eMission_Automate_INF_AttaquerSouplesse, T_Mission_Automate_mission_automate_inf_attaquer_souplesse, "T_Mission_Automate_INF_AttaquerSouplesse", "MIS_Automate_MRT_INF_AttaquerSouplesse", "MIS_Automate_CDT_INF_AttaquerSouplesse");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_Appuyer>( "Automate INF Appuyer", eMission_Automate_INF_Appuyer, T_Mission_Automate_mission_automate_inf_appuyer, "T_Mission_Automate_INF_Appuyer", "MIS_Automate_MRT_INF_Appuyer", "MIS_Automate_CDT_INF_Appuyer");
     MIL_AutomateMissionType::RegisterMission< MIL_AutomateMission_INF_Controler>( "Automate INF Controler", eMission_Automate_INF_Controler, T_Mission_Automate_mission_automate_inf_controler, "T_Mission_Automate_INF_Controler", "MIS_Automate_MRT_INF_Controler", "MIS_Automate_CDT_INF_Controler");
@@ -682,51 +641,24 @@ void missions::RegisterPionMissions()
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_OrganiserAccueilColonneRefugies>( "Pion ABC OrganiserAccueilColonneRefugies", eMission_Pion_ABC_OrganiserAccueilColonneRefugies, T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies, "T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies", "MIS_Pion_ABC_OrganiserAccueilColonneRefugies");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_AppuyerSurPosition>( "Pion ABC AppuyerSurPosition", eMission_Pion_ABC_AppuyerSurPosition, T_Mission_Pion_mission_pion_abc_appuyer_sur_position, "T_Mission_Pion_ABC_AppuyerSurPosition", "MIS_Pion_ABC_AppuyerSurPosition");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_ABC_RASIT_RenseignerSur>( "Pion ABC RASIT RenseignerSur", eMission_Pion_ABC_RASIT_RenseignerSur, T_Mission_Pion_mission_pion_abc_rasit_renseigner_sur, "T_Mission_Pion_ABC_RASIT_RenseignerSur", "MIS_Pion_ABC_RASIT_RenseignerSur");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserFosseAC>( "Pion GEN RealiserFosseAC", eMission_Pion_GEN_RealiserFosseAC, T_Mission_Pion_mission_pion_gen_realiser_fosse_ac, "T_Mission_Pion_GEN_RealiserFosseAC", "MIS_Pion_GEN_RealiserFosseAC");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserAbattisMine>( "Pion GEN RealiserAbattisMine", eMission_Pion_GEN_RealiserAbattisMine, T_Mission_Pion_mission_pion_gen_realiser_abattis_mine, "T_Mission_Pion_GEN_RealiserAbattisMine", "MIS_Pion_GEN_RealiserAbattisMine");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserPointMine>( "Pion GEN RealiserPointMine", eMission_Pion_GEN_RealiserPointMine, T_Mission_Pion_mission_pion_gen_realiser_point_mine, "T_Mission_Pion_GEN_RealiserPointMine", "MIS_Pion_GEN_RealiserPointMine");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserBarricade>( "Pion GEN RealiserBarricade", eMission_Pion_GEN_RealiserBarricade, T_Mission_Pion_mission_pion_gen_realiser_barricade, "T_Mission_Pion_GEN_RealiserBarricade", "MIS_Pion_GEN_RealiserBarricade");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserEboulement>( "Pion GEN RealiserEboulement", eMission_Pion_GEN_RealiserEboulement, T_Mission_Pion_mission_pion_gen_realiser_eboulement, "T_Mission_Pion_GEN_RealiserEboulement", "MIS_Pion_GEN_RealiserEboulement");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserBouchonMine>( "Pion GEN RealiserBouchonMine", eMission_Pion_GEN_RealiserBouchonMine, T_Mission_Pion_mission_pion_gen_realiser_bouchon_mine, "T_Mission_Pion_GEN_RealiserBouchonMine", "MIS_Pion_GEN_RealiserBouchonMine");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DetruireRoute>( "Pion GEN DetruireRoute", eMission_Pion_GEN_DetruireRoute, T_Mission_Pion_mission_pion_gen_detruire_route, "T_Mission_Pion_GEN_DetruireRoute", "MIS_Pion_GEN_DetruireRoute");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DetruirePont>( "Pion GEN DetruirePont", eMission_Pion_GEN_DetruirePont, T_Mission_Pion_mission_pion_gen_detruire_pont, "T_Mission_Pion_GEN_DetruirePont", "MIS_Pion_GEN_DetruirePont");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_SecuriserItineraire>( "Pion GEN SecuriserItineraire", eMission_Pion_GEN_SecuriserItineraire, T_Mission_Pion_mission_pion_gen_securiser_itineraire, "T_Mission_Pion_GEN_SecuriserItineraire", "MIS_Pion_GEN_SecuriserItineraire");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DegagerAbattisMine>( "Pion GEN DegagerAbattisMine", eMission_Pion_GEN_DegagerAbattisMine, T_Mission_Pion_mission_pion_gen_degager_abattis_mine, "T_Mission_Pion_GEN_DegagerAbattisMine", "MIS_Pion_GEN_DegagerAbattisMine");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DegagerEboulement>( "Pion GEN DegagerEboulement", eMission_Pion_GEN_DegagerEboulement, T_Mission_Pion_mission_pion_gen_degager_eboulement, "T_Mission_Pion_GEN_DegagerEboulement", "MIS_Pion_GEN_DegagerEboulement");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DegagerRues>( "Pion GEN DegagerRues", eMission_Pion_GEN_DegagerRues, T_Mission_Pion_mission_pion_gen_degager_rues, "T_Mission_Pion_GEN_DegagerRues", "MIS_Pion_GEN_DegagerRues");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ComblerEntonnoir>( "Pion GEN ComblerEntonnoir", eMission_Pion_GEN_ComblerEntonnoir, T_Mission_Pion_mission_pion_gen_combler_entonnoir, "T_Mission_Pion_GEN_ComblerEntonnoir", "MIS_Pion_GEN_ComblerEntonnoir");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ComblerFosseAC>( "Pion GEN ComblerFosseAC", eMission_Pion_GEN_ComblerFosseAC, T_Mission_Pion_mission_pion_gen_combler_fosse_ac, "T_Mission_Pion_GEN_ComblerFosseAC", "MIS_Pion_GEN_ComblerFosseAC");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_CreerContournement>( "Pion GEN CreerContournement", eMission_Pion_GEN_CreerContournement, T_Mission_Pion_mission_pion_gen_creer_contournement, "T_Mission_Pion_GEN_CreerContournement", "MIS_Pion_GEN_CreerContournement");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserZoneMineeLineaire>( "Pion GEN RealiserZoneMineeLineaire", eMission_Pion_GEN_RealiserZoneMineeLineaire, T_Mission_Pion_mission_pion_gen_realiser_zone_minee_lineaire, "T_Mission_Pion_GEN_RealiserZoneMineeLineaire", "MIS_Pion_GEN_RealiserZoneMineeLineaire");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_OuvrirTrouee>( "Pion GEN OuvrirTrouee", eMission_Pion_GEN_OuvrirTrouee, T_Mission_Pion_mission_pion_gen_ouvrir_trouee, "T_Mission_Pion_GEN_OuvrirTrouee", "MIS_Pion_GEN_OuvrirTrouee");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_Renforcer>( "Pion GEN Renforcer", eMission_Pion_GEN_Renforcer, T_Mission_Pion_mission_pion_gen_renforcer, "T_Mission_Pion_GEN_Renforcer", "MIS_Pion_GEN_Renforcer");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_FranchirEntonnoir>( "Pion GEN FranchirEntonnoir", eMission_Pion_GEN_FranchirEntonnoir, T_Mission_Pion_mission_pion_gen_franchir_entonnoir, "T_Mission_Pion_GEN_FranchirEntonnoir", "MIS_Pion_GEN_FranchirEntonnoir");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_FranchirFosseAC>( "Pion GEN FranchirFosseAC", eMission_Pion_GEN_FranchirFosseAC, T_Mission_Pion_mission_pion_gen_franchir_fosse_ac, "T_Mission_Pion_GEN_FranchirFosseAC", "MIS_Pion_GEN_FranchirFosseAC");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserZoneMineeParDispersion>( "Pion GEN RealiserZoneMineeParDispersion", eMission_Pion_GEN_RealiserZoneMineeParDispersion, T_Mission_Pion_mission_pion_gen_realiser_zone_minee_par_dispersion, "T_Mission_Pion_GEN_RealiserZoneMineeParDispersion", "MIS_Pion_GEN_RealiserZoneMineeParDispersion");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserPostesTir>( "Pion GEN RealiserPostesTir", eMission_Pion_GEN_RealiserPostesTir, T_Mission_Pion_mission_pion_gen_realiser_postes_tir, "T_Mission_Pion_GEN_RealiserPostesTir", "MIS_Pion_GEN_RealiserPostesTir");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserTravauxProtection>( "Pion GEN RealiserTravauxProtection", eMission_Pion_GEN_RealiserTravauxProtection, T_Mission_Pion_mission_pion_gen_realiser_travaux_protection, "T_Mission_Pion_GEN_RealiserTravauxProtection", "MIS_Pion_GEN_RealiserTravauxProtection");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_OuvrirItineraire>( "Pion GEN OuvrirItineraire", eMission_Pion_GEN_OuvrirItineraire, T_Mission_Pion_mission_pion_gen_ouvrir_itineraire, "T_Mission_Pion_GEN_OuvrirItineraire", "MIS_Pion_GEN_OuvrirItineraire");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RetablirItineraire>( "Pion GEN RetablirItineraire", eMission_Pion_GEN_RetablirItineraire, T_Mission_Pion_mission_pion_gen_retablir_itineraire, "T_Mission_Pion_GEN_RetablirItineraire", "MIS_Pion_GEN_RetablirItineraire");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_EquiperExploiter>( "Pion GEN EquiperExploiter", eMission_Pion_GEN_EquiperExploiter, T_Mission_Pion_mission_pion_gen_equiper_exploiter, "T_Mission_Pion_GEN_EquiperExploiter", "MIS_Pion_GEN_EquiperExploiter");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ExecuterVariantement>( "Pion GEN ExecuterVariantement", eMission_Pion_GEN_ExecuterVariantement, T_Mission_Pion_mission_pion_gen_executer_variantement, "T_Mission_Pion_GEN_ExecuterVariantement", "MIS_Pion_GEN_ExecuterVariantement");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ReconnaitreSiteFranchissement>( "Pion GEN ReconnaitreSiteFranchissement", eMission_Pion_GEN_ReconnaitreSiteFranchissement, T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement, "T_Mission_Pion_GEN_ReconnaitreSiteFranchissement", "MIS_Pion_GEN_ReconnaitreSiteFranchissement");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ReconnaitreItineraire>( "Pion GEN ReconnaitreItineraire", eMission_Pion_GEN_ReconnaitreItineraire, T_Mission_Pion_mission_pion_gen_reconnaitre_itineraire, "T_Mission_Pion_GEN_ReconnaitreItineraire", "MIS_Pion_GEN_ReconnaitreItineraire");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DeminerSiteFranchissement>( "Pion GEN DeminerSiteFranchissement", eMission_Pion_GEN_DeminerSiteFranchissement, T_Mission_Pion_mission_pion_gen_deminer_site_franchissement, "T_Mission_Pion_GEN_DeminerSiteFranchissement", "MIS_Pion_GEN_DeminerSiteFranchissement");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ReconnaitreZone>( "Pion GEN ReconnaitreZone", eMission_Pion_GEN_ReconnaitreZone, T_Mission_Pion_mission_pion_gen_reconnaitre_zone, "T_Mission_Pion_GEN_ReconnaitreZone", "MIS_Pion_GEN_ReconnaitreZone");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_CreerPlateForme>( "Pion GEN CreerPlateForme", eMission_Pion_GEN_CreerPlateForme, T_Mission_Pion_mission_pion_gen_creer_plate_forme, "T_Mission_Pion_GEN_CreerPlateForme", "MIS_Pion_GEN_CreerPlateForme");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_CreerPiste>( "Pion GEN CreerPiste", eMission_Pion_GEN_CreerPiste, T_Mission_Pion_mission_pion_gen_creer_piste, "T_Mission_Pion_GEN_CreerPiste", "MIS_Pion_GEN_CreerPiste");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_CreerAirePoser>( "Pion GEN CreerAirePoser", eMission_Pion_GEN_CreerAirePoser, T_Mission_Pion_mission_pion_gen_creer_aire_poser, "T_Mission_Pion_GEN_CreerAirePoser", "MIS_Pion_GEN_CreerAirePoser");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_NeutraliserEnginsExplosifs>( "Pion GEN NeutraliserEnginsExplosifs", eMission_Pion_GEN_NeutraliserEnginsExplosifs, T_Mission_Pion_mission_pion_gen_neutraliser_engins_explosifs, "T_Mission_Pion_GEN_NeutraliserEnginsExplosifs", "MIS_Pion_GEN_NeutraliserEnginsExplosifs");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ActiverObstacle>( "Pion GEN ActiverObstacle", eMission_Pion_GEN_ActiverObstacle, T_Mission_Pion_mission_pion_gen_activer_obstacle, "T_Mission_Pion_GEN_ActiverObstacle", "MIS_Pion_GEN_ActiverObstacle");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_AmeliorerMobilite>( "Pion GEN AmeliorerMobilite", eMission_Pion_GEN_AmeliorerMobilite, T_Mission_Pion_mission_pion_gen_ameliorer_mobilite, "T_Mission_Pion_GEN_AmeliorerMobilite", "MIS_Pion_GEN_AmeliorerMobilite");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserAireLogistique>( "Pion GEN RealiserAireLogistique", eMission_Pion_GEN_RealiserAireLogistique, T_Mission_Pion_mission_pion_gen_realiser_aire_logistique, "T_Mission_Pion_GEN_RealiserAireLogistique", "MIS_Pion_GEN_RealiserAireLogistique");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ReconnaitreSiteFranchissement>( "Pion GEN ReconnaitreSiteFranchissement", eMission_Pion_GEN_ReconnaitreSiteFranchissement, T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement, "T_Mission_Pion_GEN_ReconnaitreSiteFranchissement", "MIS_Pion_GEN_ReconnaitreSiteFranchissement");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_EquiperExploiterSiteFranchissement>( "Pion GEN EquiperExploiterSiteFranchissement", eMission_Pion_GEN_EquiperExploiterSiteFranchissement, T_Mission_Pion_mission_pion_gen_equiper_exploiter_site_franchissement, "T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement", "MIS_Pion_GEN_EquiperExploiterSiteFranchissement");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ExecuterVariantement>( "Pion GEN ExecuterVariantement", eMission_Pion_GEN_ExecuterVariantement, T_Mission_Pion_mission_pion_gen_executer_variantement, "T_Mission_Pion_GEN_ExecuterVariantement", "MIS_Pion_GEN_ExecuterVariantement");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DegagerObstacles>( "Pion GEN DegagerObstacles", eMission_Pion_GEN_DegagerObstacles, T_Mission_Pion_mission_pion_gen_degager_obstacles, "T_Mission_Pion_GEN_DegagerObstacles", "MIS_Pion_GEN_DegagerObstacles");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ContournerObstacles>( "Pion GEN ContournerObstacles", eMission_Pion_GEN_ContournerObstacles, T_Mission_Pion_mission_pion_gen_contourner_obstacles, "T_Mission_Pion_GEN_ContournerObstacles", "MIS_Pion_GEN_ContournerObstacles");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_DepolluerZone>( "Pion GEN DepolluerZone", eMission_Pion_GEN_DepolluerZone, T_Mission_Pion_mission_pion_gen_depolluer_zone, "T_Mission_Pion_GEN_DepolluerZone", "MIS_Pion_GEN_DepolluerZone");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_AmenagerTerrainPoser>( "Pion GEN AmenagerTerrainPoser", eMission_Pion_GEN_AmenagerTerrainPoser, T_Mission_Pion_mission_pion_gen_amenager_terrain_poser, "T_Mission_Pion_GEN_AmenagerTerrainPoser", "MIS_Pion_GEN_AmenagerTerrainPoser");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserPlateFormeDeploiement>( "Pion GEN RealiserPlateFormeDeploiement", eMission_Pion_GEN_RealiserPlateFormeDeploiement, T_Mission_Pion_mission_pion_gen_realiser_plate_forme_deploiement, "T_Mission_Pion_GEN_RealiserPlateFormeDeploiement", "MIS_Pion_GEN_RealiserPlateFormeDeploiement");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ReprendreMissionConstruction>( "Pion GEN ReprendreMissionConstruction", eMission_Pion_GEN_ReprendreMissionConstruction, T_Mission_Pion_mission_pion_gen_reprendre_mission_construction, "T_Mission_Pion_GEN_ReprendreMissionConstruction", "MIS_Pion_GEN_ReprendreMissionConstruction");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserZonePoserHelicoptere>( "Pion GEN RealiserZonePoserHelicoptere", eMission_Pion_GEN_RealiserZonePoserHelicoptere, T_Mission_Pion_mission_pion_gen_realiser_zone_poser_helicoptere, "T_Mission_Pion_GEN_RealiserZonePoserHelicoptere", "MIS_Pion_GEN_RealiserZonePoserHelicoptere");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_AppuyerDebarquementTroupesGU>( "Pion GEN AppuyerDebarquementTroupesGU", eMission_Pion_GEN_AppuyerDebarquementTroupesGU, T_Mission_Pion_mission_pion_gen_appuyer_debarquement_troupes_gu, "T_Mission_Pion_GEN_AppuyerDebarquementTroupesGU", "MIS_Pion_GEN_AppuyerDebarquementTroupesGU");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserCampPrisonniers>( "Pion GEN RealiserCampPrisonniers", eMission_Pion_GEN_RealiserCampPrisonniers, T_Mission_Pion_mission_pion_gen_realiser_camp_prisonniers, "T_Mission_Pion_GEN_RealiserCampPrisonniers", "MIS_Pion_GEN_RealiserCampPrisonniers");
-    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserCampRefugies>( "Pion GEN RealiserCampRefugies", eMission_Pion_GEN_RealiserCampRefugies, T_Mission_Pion_mission_pion_gen_realiser_camp_refugies, "T_Mission_Pion_GEN_RealiserCampRefugies", "MIS_Pion_GEN_RealiserCampRefugies");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_Renforcer>( "Pion GEN Renforcer", eMission_Pion_GEN_Renforcer, T_Mission_Pion_mission_pion_gen_renforcer, "T_Mission_Pion_GEN_Renforcer", "MIS_Pion_GEN_Renforcer");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserTravauxProtection>( "Pion GEN RealiserTravauxProtection", eMission_Pion_GEN_RealiserTravauxProtection, T_Mission_Pion_mission_pion_gen_realiser_travaux_protection, "T_Mission_Pion_GEN_RealiserTravauxProtection", "MIS_Pion_GEN_RealiserTravauxProtection");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserTravauxContreMobilite>( "Pion GEN RealiserTravauxContreMobilite", eMission_Pion_GEN_RealiserTravauxContreMobilite, T_Mission_Pion_mission_pion_gen_realiser_travaux_contre_mobilite, "T_Mission_Pion_GEN_RealiserTravauxContreMobilite", "MIS_Pion_GEN_RealiserTravauxContreMobilite");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserTravauxAppuiDeploiement>( "Pion GEN RealiserTravauxAppuiDeploiement", eMission_Pion_GEN_RealiserTravauxAppuiDeploiement, T_Mission_Pion_mission_pion_gen_realiser_travaux_appui_deploiement, "T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement", "MIS_Pion_GEN_RealiserTravauxAppuiDeploiement");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_RealiserCamps>( "Pion GEN RealiserCamps", eMission_Pion_GEN_RealiserCamps, T_Mission_Pion_mission_pion_gen_realiser_camps, "T_Mission_Pion_GEN_RealiserCamps", "MIS_Pion_GEN_RealiserCamps");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ReprendreTravaux>( "Pion GEN ReprendreTravaux", eMission_Pion_GEN_ReprendreTravaux, T_Mission_Pion_mission_pion_gen_reprendre_travaux, "T_Mission_Pion_GEN_ReprendreTravaux", "MIS_Pion_GEN_ReprendreTravaux");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_AmeliorerMobilite>( "Pion GEN AmeliorerMobilite", eMission_Pion_GEN_AmeliorerMobilite, T_Mission_Pion_mission_pion_gen_ameliorer_mobilite, "T_Mission_Pion_GEN_AmeliorerMobilite", "MIS_Pion_GEN_AmeliorerMobilite");
+    MIL_PionMissionType::RegisterMission< MIL_PionMission_GEN_ActiverObstacle>( "Pion GEN ActiverObstacle", eMission_Pion_GEN_ActiverObstacle, T_Mission_Pion_mission_pion_gen_activer_obstacle, "T_Mission_Pion_GEN_ActiverObstacle", "MIS_Pion_GEN_ActiverObstacle");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_ReconnaitreAxe>( "Pion INF ReconnaitreAxe", eMission_Pion_INF_ReconnaitreAxe, T_Mission_Pion_mission_pion_inf_reconnaitre_axe, "T_Mission_Pion_INF_ReconnaitreAxe", "MIS_Pion_INF_ReconnaitreAxe");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_Couvrir>( "Pion INF Couvrir", eMission_Pion_INF_Couvrir, T_Mission_Pion_mission_pion_inf_couvrir, "T_Mission_Pion_INF_Couvrir", "MIS_Pion_INF_Couvrir");
     MIL_PionMissionType::RegisterMission< MIL_PionMission_INF_Reduire>( "Pion INF Reduire", eMission_Pion_INF_Reduire, T_Mission_Pion_mission_pion_inf_reduire, "T_Mission_Pion_INF_Reduire", "MIS_Pion_INF_Reduire");

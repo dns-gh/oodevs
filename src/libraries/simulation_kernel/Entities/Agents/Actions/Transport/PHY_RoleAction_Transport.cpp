@@ -362,7 +362,7 @@ void PHY_RoleAction_Transport::NotifyComposanteChanged( const PHY_ComposantePion
 // Name: PHY_RoleAction_Transport::NotifyComposanteContaminated
 // Created: NLD 2004-11-24
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_NbcAgentType& nbcAgentType )
+void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_NbcAgent& nbcAgent )
 {
     MT_Float rWeightDamaged = rWeightTransported_;
     for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end() && rWeightDamaged > 0; ++it )
@@ -370,7 +370,7 @@ void PHY_RoleAction_Transport::NotifyComposanteContaminated( const MIL_NbcAgentT
         if( it->second.rTransportedWeight_ )
         {
             rWeightDamaged -= it->second.rTransportedWeight_;
-            (*it->first).GetRole< PHY_RolePion_NBC >().Contaminate( nbcAgentType );
+            (*it->first).GetRole< PHY_RolePion_NBC >().Contaminate( nbcAgent );
         }
     }
 }

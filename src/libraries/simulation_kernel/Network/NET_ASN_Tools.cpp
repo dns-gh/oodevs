@@ -24,6 +24,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
+#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
 
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -45,9 +46,23 @@
 #define MIL_NBR_DAYS_BETWEEN_1901_AND_1970  (uint)25202
 #define MIL_NBR_SEC_BETWEEN_1901_AND_1970  ( MIL_NBR_DAYS_BETWEEN_1901_AND_1970 * 86400 )
 
+
+typedef std::vector< DEC_Gen_Object* >    T_GenObjectVector;
+typedef T_GenObjectVector::iterator       IT_GenObjectVector;
+typedef T_GenObjectVector::const_iterator CIT_GenObjectVector;
+
 //=============================================================================
 // PARAMETERS TOOLS
 //=============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::ReadGenObject
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::ReadGenObject( const ASN1T_MissionGenObject& asn, DEC_Gen_Object& object )
+{
+    return object.Initialize( asn ) == EnumOrderErrorCode::no_error;
+}
 
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadDirection
@@ -80,7 +95,6 @@ bool NET_ASN_Tools::ReadLocation( const ASN1T_Localisation& asnLocalisation, TER
         NET_ASN_Tools::ReadPoint( asnLocalisation.vecteur_point.elem[i], vPos );
         pointVector.push_back( vPos );
     }
-
     return localisation.Reset( (TER_Localisation::E_TypeLocalisation)asnLocalisation.type, pointVector );
 }
 
@@ -398,6 +412,19 @@ uint NET_ASN_Tools::ReadGDH( const ASN1T_GDH& asnGDH )
 //=============================================================================
 // ENCODING TOOLS
 //=============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::WriteGenObject
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::WriteGenObject( const DEC_Gen_Object& object, ASN1T_MissionGenObject& asn )
+{
+    asn.type         = object.GetType().GetAsnID();
+    asn.preliminaire = (ASN1T_EnumMissionGenSousTypeObstacle)object.GetPreliminaire();
+    asn.tc2          = object.GetTC2() ? object.GetTC2()->GetID() : 0;
+    asn.densite      = object.GetDensity();
+    NET_ASN_Tools::WriteLocation( object.GetLocalisation(), asn.position );
+}
 
 //-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::WriteDirection
@@ -796,6 +823,29 @@ void NET_ASN_Tools::WriteGDH( ASN1T_GDH& asnGDH )
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::Delete
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
+{
+    if( asn.n > 0 )
+    {
+        for( uint i = 0; i < asn.n; ++i )
+            Delete( asn.elem[i] );
+        delete [] asn.elem;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
+{
+    NET_ASN_Tools::Delete( asn.position );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::Delete
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_SantePriorites& asn )
@@ -812,15 +862,6 @@ void NET_ASN_Tools::Delete( ASN1T_MaintenancePriorites& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::Delete
-// Created: NLD 2005-10-03
-// -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
-{
-    NET_ASN_Tools::Delete( asn.pos_obstacle );
 }
 
 // -----------------------------------------------------------------------------
@@ -924,16 +965,6 @@ void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeAgent& asn )
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
 void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
-{
-    if( asn.n > 0 )
-        delete [] asn.elem;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::Delete
-// Created: NLD 2005-08-17
-// -----------------------------------------------------------------------------
-void NET_ASN_Tools::Delete( ASN1T_ListMissionGenObject& asn )
 {
     if( asn.n > 0 )
         delete [] asn.elem;
@@ -1435,12 +1466,12 @@ bool NET_ASN_Tools::CopyMedicalPriorities( const DIA_Variable_ABC& diaFrom, DIA_
 bool NET_ASN_Tools::CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variable_ABC& dia )
 {
     DEC_Gen_Object* pGenObject = new DEC_Gen_Object();
-    if( pGenObject->Initialize( asn ) != EnumOrderErrorCode::no_error )
+    if( !ReadGenObject( asn, *pGenObject ) )
     {
         delete pGenObject;
         pGenObject = 0;
     }
-    dia.SetValue( *pGenObject );
+    dia.SetValue( pGenObject, &DEC_Tools::GetTypeGenObjet() );
     return pGenObject != 0;
 }
 
@@ -1448,24 +1479,33 @@ bool NET_ASN_Tools::CopyGenObject( const ASN1T_MissionGenObject& asn, DIA_Variab
 // Name: NET_ASN_Tools::CopyGenObject
 // Created: AGE 2004-09-21
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& /*dia*/, ASN1T_MissionGenObject& /*asn*/ )
-{
-    assert( false ); //$$$ TODO
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ResetGenObject
-// Created: AGE 2004-09-21
-// -----------------------------------------------------------------------------
-void NET_ASN_Tools::ResetGenObject( DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& dia, ASN1T_MissionGenObject& asn )
 {
     assert( DEC_Tools::CheckTypeGenObjet( dia ) );
-    DEC_Gen_Object* pGenObject = dia.ToUserObject( pGenObject );
-    delete pGenObject;
-    dia.SetValue( *(DEC_Gen_Object*)0 );
+    const DEC_Gen_Object* pTmp = dia.ToUserPtr( pTmp );
+    if( !pTmp )
+    {
+        assert( false );
+        return false;
+    }
+    WriteGenObject( *pTmp, asn );
+    return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyGenObject
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void NET_ASN_Tools::CopyGenObject( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    assert( DEC_Tools::CheckTypeGenObjet( diaFrom ) );
+    assert( DEC_Tools::CheckTypeGenObjet( diaTo ) );
+
+    const DEC_Gen_Object* pSrc = diaFrom.ToUserPtr( pSrc );
+    assert( pSrc );
+    DEC_Gen_Object* pDest = new DEC_Gen_Object( *pSrc );
+    diaTo.SetValue( pDest, &DEC_Tools::GetTypeGenObjet() );
+}
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyListGenObjects
@@ -1473,22 +1513,23 @@ void NET_ASN_Tools::ResetGenObject( DIA_Variable_ABC& dia )
 // -----------------------------------------------------------------------------
 bool NET_ASN_Tools::CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia )
 {
-    T_ObjectVector genObjects;
-    genObjects.reserve( asn.n );
+    T_GenObjectVector objects;
+    objects.reserve( asn.n );
     for( uint i = 0; i < asn.n; ++i )
     {
         DEC_Gen_Object* pGenObject = new DEC_Gen_Object();
-        if( pGenObject->Initialize( asn.elem[i] ) != EnumOrderErrorCode::no_error )
+        if( !ReadGenObject( asn.elem[i], *pGenObject ) )
         {
-            MT_DELETEOWNED( genObjects );
-            genObjects.clear();
-            dia.SetValue( genObjects );
+            delete pGenObject;
+            for( IT_GenObjectVector it = objects.begin(); it != objects.end(); ++it )
+                delete *it;
             return false;
         }
-        genObjects.push_back( pGenObject );
+        objects.push_back( pGenObject );
     }
 
-    dia.SetValue( genObjects );
+    DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( dia );
+    diaObjectList.SetValueUserType( objects, DEC_Tools::GetTypeGenObjet() );
     return true;
 }
 
@@ -1496,23 +1537,46 @@ bool NET_ASN_Tools::CopyGenObjectList( const ASN1T_ListMissionGenObject& asn, DI
 // Name: NET_ASN_Tools::CopyListGenObjects
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& /*dia*/, ASN1T_ListMissionGenObject& /*asn*/ )
+bool NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& dia, ASN1T_ListMissionGenObject& asn )
 {
-    assert( false );
-    return false;    
+    assert( DEC_Tools::CheckTypeListeGenObjets( dia ) );
+
+    const DIA_Variable_ObjectList& diaObjectList = static_cast< const DIA_Variable_ObjectList& >( dia );
+
+    T_GenObjectVector objects = diaObjectList.ToUserTypeList( objects );
+
+    asn.n = objects.size();
+    if( !objects.empty() )
+    {
+        asn.elem = new ASN1T_MissionGenObject[ objects.size() ];
+        for( CIT_GenObjectVector it = objects.begin(); it != objects.end(); ++it )
+            WriteGenObject( **it, asn.elem[ it - objects.begin() ] );        
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ResetListGenObjects
-// Created: NLD 2004-04-22
+// Name: NET_ASN_Tools::CopyGenObjectList
+// Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::ResetGenObjectList( DIA_Variable_ABC& dia )
-{
-    T_ObjectVector genObjects = dia.ToSelection();
-    for( CIT_ObjectVector itObj = genObjects.begin(); itObj != genObjects.end(); ++itObj )
-        delete *itObj;
-    genObjects.clear();
-    dia.SetValue( genObjects );
+void NET_ASN_Tools::CopyGenObjectList( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{                       
+    assert( DEC_Tools::CheckTypeListeGenObjets( diaFrom ) );
+    assert( DEC_Tools::CheckTypeListeGenObjets( diaTo ) );
+
+    const DIA_Variable_ObjectList& diaListFrom = static_cast< const DIA_Variable_ObjectList& >( diaFrom );
+          DIA_Variable_ObjectList& diaListTo   = static_cast<       DIA_Variable_ObjectList& >( diaTo );
+
+    T_GenObjectVector objectsFrom = diaListFrom.ToUserTypeList( objectsFrom );
+    T_GenObjectVector objectsTo;
+
+    objectsTo.reserve( objectsFrom.size() );
+    for( CIT_GenObjectVector it = objectsFrom.begin(); it != objectsFrom.end(); ++it )
+    {
+        DEC_Gen_Object* pNewObject = new DEC_Gen_Object( **it );
+        objectsTo.push_back( pNewObject );
+    }
+    diaListTo.SetValueUserType( objectsTo, DEC_Tools::GetTypeGenObjet() );
 }
 
 // =============================================================================

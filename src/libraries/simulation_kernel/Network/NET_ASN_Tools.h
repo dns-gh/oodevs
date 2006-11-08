@@ -18,6 +18,7 @@
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 class TER_Localisation;
+class DEC_Gen_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
@@ -105,10 +106,11 @@ public:
     //@{
     static bool CopyGenObjectList ( const ASN1T_ListMissionGenObject& asn, DIA_Variable_ABC& dia );
     static bool CopyGenObjectList ( const DIA_Variable_ABC& dia, ASN1T_ListMissionGenObject& asn );
-    static void ResetGenObjectList( DIA_Variable_ABC& dia );
+    static void CopyGenObjectList( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
+
     static bool CopyGenObject ( const ASN1T_MissionGenObject& asn, DIA_Variable_ABC& dia );
     static bool CopyGenObject ( const DIA_Variable_ABC& dia, ASN1T_MissionGenObject& asn );
-    static void ResetGenObject( DIA_Variable_ABC& dia );
+    static void CopyGenObject( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo );
     //@}
 
     //! @name Mission parameters tools : Localisation/Geometry DIA - SIM - ASN
@@ -194,6 +196,8 @@ public:
 
     // @name Misc tools
     //@{
+    static void Delete( ASN1T_MissionGenObject&     asn );
+    static void Delete( ASN1T_ListMissionGenObject& asn );
     static void Delete( ASN1T_ListAgent&            asn );
     static void Delete( ASN1T_ListAutomate&         asn );
     static void Delete( ASN1T_Polygon&              asn );
@@ -203,30 +207,30 @@ public:
     static void Delete( ASN1T_ListLocalisation&     asn );
     static void Delete( ASN1T_ListKnowledgeAgent&   asn );
     static void Delete( ASN1T_ListKnowledgeObject&  asn );
-    static void Delete( ASN1T_ListMissionGenObject& asn );
-    static void Delete( ASN1T_MissionGenObject&     asn );
     static void Delete( ASN1T_SantePriorites&       asn );
     static void Delete( ASN1T_MaintenancePriorites& asn );
     //@}
 
     //! @name Decoding tools
     //@{
-    static bool ReadPoint     ( const ASN1T_Point&        asn, MT_Vector2D& vPoint );
-    static void ReadPoint     ( const ASN1T_CoordUTM& asn   , MT_Vector2D&      vPoint );
-    static bool ReadLocation  ( const ASN1T_Localisation& asn, TER_Localisation& localisation );
-    static void ReadDirection ( const ASN1T_Direction&    asn, MT_Vector2D& vDir );
+    static bool ReadPoint     ( const ASN1T_Point&            asn, MT_Vector2D& vPoint );
+    static void ReadPoint     ( const ASN1T_CoordUTM&         asn, MT_Vector2D& vPoint );
+    static bool ReadLocation  ( const ASN1T_Localisation&     asn, TER_Localisation& localisation );
+    static void ReadDirection ( const ASN1T_Direction&        asn, MT_Vector2D& vDir );
+    static bool ReadGenObject ( const ASN1T_MissionGenObject& asn, DEC_Gen_Object& object );
     //@}
 
     //! @name Encoding tools
     //@{
-    static void WriteDirection( const MT_Vector2D&      vDir        , ASN1T_Direction&    asn );
-    static void WriteLocation ( const TER_Localisation& localisation, ASN1T_Localisation& asn );
-    static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_Point&        asn );
-    static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_CoordUTM&     asn );
-    static void WritePointList( const T_PointList& points, ASN1T_ListPoint& asn );
-    static void WriteEllipse  ( const MT_Ellipse&       ellipse     , ASN1T_Localisation& asn );
-    static void WritePath     ( const T_PointList&      points      , ASN1T_Itineraire&   asn );
-    static void WritePath     ( const T_PointVector&    points      , ASN1T_Itineraire&   asn );
+    static void WriteDirection( const MT_Vector2D&      vDir        , ASN1T_Direction&        asn );
+    static void WriteLocation ( const TER_Localisation& localisation, ASN1T_Localisation&     asn );
+    static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_Point&            asn );
+    static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_CoordUTM&         asn );
+    static void WritePointList( const T_PointList& points           , ASN1T_ListPoint&        asn );
+    static void WriteEllipse  ( const MT_Ellipse&       ellipse     , ASN1T_Localisation&     asn );
+    static void WritePath     ( const T_PointList&      points      , ASN1T_Itineraire&       asn );
+    static void WritePath     ( const T_PointVector&    points      , ASN1T_Itineraire&       asn );
+    static void WriteGenObject( const DEC_Gen_Object&   object      , ASN1T_MissionGenObject& asn );
     //@}
 
 private:

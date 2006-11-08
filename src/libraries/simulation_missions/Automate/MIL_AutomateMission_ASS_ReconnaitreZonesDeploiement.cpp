@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::In
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASS_ReconnaitreZonesDeploiement::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -7,108 +7,52 @@
 ScipioAutomateMission_GEN DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 IMPORTS ListAgent, Agent, Direction, OID, CoordUTM, Point, ListPoint, EnumUnitIdentificationLevel, Segment, GDH, Localisation FROM ScipioBase
-IMPORTS EnumMissionGenUrgence, EnumMissionGenSousTypeObstacle FROM ScipioObject;
-
--- Sous types
-
-EnumMissionGenPriorite ::= ENUMERATED
-{
-    prioritaire,
-    normal,
-    peu-prioritaire
-}
+IMPORTS EnumMissionGenSousTypeObstacle FROM ScipioObject;
 
 MissionGenObject ::= SEQUENCE
 {
-    type-obstacle           EnumObjectType,
-    pos-obstacle            Localisation,
-    urgence                 EnumMissionGenUrgence          DEFAULT serie-complementaire,
-    preliminaire            EnumMissionGenSousTypeObstacle DEFAULT preliminaire,
-    priorite                EnumMissionGenPriorite
+    type           EnumObjectType,
+    position       Localisation,
+    preliminaire   EnumMissionGenSousTypeObstacle DEFAULT preliminaire,
+    densite        REAL(0..5) DEFAULT 0,
+    tc2            Automate   DEFAULT 0
 }
-
 ListMissionGenObject ::= SEQUENCE OF MissionGenObject;
 
+----
 
-------------------------------------------
--- Mission GEN
-------------------------------------------
 Mission-Automate-GEN-SeDeployer ::= SEQUENCE
 {
-    zone-deploiement Polygon 
+    zone Polygon 
 }
-
+Mission-Automate-GEN-ReconnaitreZone ::= SEQUENCE
+{
+    zone Polygon
+}
+Mission-Automate-GEN-RealiserTravaux ::= SEQUENCE
+{
+    travaux ListMissionGenObject
+}
+Mission-Automate-GEN-OuvrirItineraires ::= SEQUENCE
+{
+    itineraires ListItineraire
+}
+Mission-Automate-GEN-RetablirItineraires ::= SEQUENCE
+{
+    itineraires ListItineraire
+}
 Mission-Automate-GEN-FaireFranchir ::= SEQUENCE
 {
     sites-de-franchissement ListKnowledgeObject,
     zone-regroupement       Localisation
 }
-
-Mission-Automate-GEN-RealiserSystemeObstacles ::= SEQUENCE
-{
-    obstacles ListMissionGenObject
-}
-
 Mission-Automate-GEN-FranchirDeViveForce ::= SEQUENCE
 {
-    obstacles-a-franchir ListKnowledgeObject
+    obstacles ListKnowledgeObject
 }
-
-Mission-Automate-GEN-RetablirItineraires ::= SEQUENCE
+Mission-Automate-GEN-DegagerObstaclesDansZone ::= SEQUENCE
 {
-    itineraires ListItineraire
-}
-
-Mission-Automate-GEN-AmenagerAireStationnement ::= SEQUENCE
-{
-    travaux   ListMissionGenObject
-}
-
-Mission-Automate-GEN-AmenagerTerrainPoserSommaire ::= SEQUENCE
-{
-    terrain MissionGenObject
-}
-
-Mission-Automate-GEN-RealiserZonePoser ::= SEQUENCE
-{
-    zone MissionGenObject
-}
-
-Mission-Automate-GEN-ReconnaitreZoneDeploiement ::= SEQUENCE
-{
-    zone Polygon
-}
-
-Mission-Automate-GEN-RealiserCampPrisonniers ::= SEQUENCE
-{
-    camp    Polygon,
-    tc2     Automate
-}
-
-Mission-Automate-GEN-RealiserCampRefugies ::= SEQUENCE
-{
-    camp    Polygon,
-    tc2     Automate
-}
-
-Mission-Automate-GEN-RealiserPlatesformesSommairesDeDeploiementInitial ::= SEQUENCE
-{
-    plates-formes ListMissionGenObject
-}
-
-Mission-Automate-GEN-RealiserTravauxSommairesAuProfitPopulation ::= SEQUENCE
-{
-    travaux ListMissionGenObject
-}
-
-Mission-Automate-GEN-AppuyerDebarquementTroupes ::= SEQUENCE
-{
-    zones-debarquement ListMissionGenObject
-}
-
-Mission-Automate-GEN-OuvrirAxesProgression ::= SEQUENCE
-{
-    axes ListItineraire
+    obstacles ListKnowledgeObject
 }
 
 END -- ScipioAutomateMission_GEN

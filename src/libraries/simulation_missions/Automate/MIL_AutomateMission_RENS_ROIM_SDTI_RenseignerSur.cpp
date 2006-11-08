@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_SDTI_RenseignerSur::Initi
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROIM_SDTI_RenseignerSur::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

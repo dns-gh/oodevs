@@ -88,7 +88,6 @@ bool MIL_PionMission_INF_AppuyerSurPosition::Initialize( const MIL_AutomateMissi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_INF_AppuyerSurPosition::Initialize( MIL_PionMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_AppuyerSurPosition::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

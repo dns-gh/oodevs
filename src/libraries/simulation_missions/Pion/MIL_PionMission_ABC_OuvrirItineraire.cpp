@@ -84,7 +84,6 @@ bool MIL_PionMission_ABC_OuvrirItineraire::Initialize( const MIL_AutomateMission
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_ABC_OuvrirItineraire::Initialize( MIL_PionMission_ABC& miss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ABC_OuvrirItineraire::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

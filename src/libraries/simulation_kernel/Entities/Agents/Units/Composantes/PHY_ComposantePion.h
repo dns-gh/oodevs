@@ -27,7 +27,6 @@ class MIL_AutomateLOG;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class PHY_Sensor;
-class PHY_Radar;
 class PHY_Weapon;
 class PHY_DotationGroupContainer;
 class MIL_RealObject_ABC;
@@ -134,7 +133,8 @@ public:
     void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
     void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
     void     ApplyExplosion                 ( const MIL_RealObjectType& objectType                                                      , PHY_FireDamages_Agent& fireDamages );
-    void     ApplyContamination             ( const MIL_NbcAgentType& nbcAgentType );
+    void     ApplyContamination             ( const MIL_NbcAgent& nbcAgent );
+    void     ApplyPoisonous                 ( const MIL_NbcAgent& nbcAgent );
     uint     GetNeutralizationTime          () const;
     void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
     MT_Float GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, MT_Float rDistBtwFirerAndTarget ) const;
@@ -218,9 +218,6 @@ private:
 
     typedef std::vector< PHY_Sensor* >     T_SensorVector;
     typedef T_SensorVector::const_iterator CIT_SensorVector;
-
-    typedef std::vector< PHY_Radar* >     T_RadarVector;
-    typedef T_RadarVector::const_iterator CIT_RadarVector;
     //@}
 
 private:

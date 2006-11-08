@@ -64,7 +64,7 @@ void DEC_Knowledge_ObjectZoneNBC::load( MIL_CheckPointInArchive& file, const uin
     file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this )
          >> nID
          >> bSpecificAttributesValid_;
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( nID );
+    pNbcAgentType_ = MIL_NbcAgentType::Find( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,8 +95,8 @@ void DEC_Knowledge_ObjectZoneNBC::UpdateSpecificAttributes()
     {
         bSpecificAttributesValid_ = true;
 
-        const MIL_ZoneNBC& ZoneNBC = static_cast< const MIL_ZoneNBC& >( *GetObjectKnown() );
-        pNbcAgentType_ = &ZoneNBC.GetNbcAgentType();
+        const MIL_ZoneNBC& zoneNBC = static_cast< const MIL_ZoneNBC& >( *GetObjectKnown() );
+        pNbcAgentType_ = &zoneNBC.GetNbcAgentType();
         NotifyAttributeUpdated( eAttr_Specific );
     }
 }

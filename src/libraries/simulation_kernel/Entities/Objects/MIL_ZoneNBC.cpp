@@ -14,6 +14,7 @@
 #include "MIL_ZoneNBC.h"
 
 #include "MIL_NbcAgentType.h"
+#include "MIL_NbcAgent.h"
 #include "MIL_NuageNBC.h"
 #include "MIL_RealObjectType.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
@@ -35,7 +36,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_ZoneNBC, "MIL_ZoneNBC" )
 //-----------------------------------------------------------------------------
 MIL_ZoneNBC::MIL_ZoneNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& army )
     : MIL_RealObject_ABC( type, nID, army )
-    , pNbcAgentType_    ( 0 )
+    , pNbcAgent_        ( 0 )
 {
 }
 
@@ -45,7 +46,7 @@ MIL_ZoneNBC::MIL_ZoneNBC( const MIL_RealObjectType& type, uint nID, MIL_Army& ar
 // -----------------------------------------------------------------------------
 MIL_ZoneNBC::MIL_ZoneNBC()
     : MIL_RealObject_ABC()
-    , pNbcAgentType_    ( 0 )
+    , pNbcAgent_        ( 0 )
 {
 }
 
@@ -56,7 +57,8 @@ MIL_ZoneNBC::MIL_ZoneNBC()
 //-----------------------------------------------------------------------------
 MIL_ZoneNBC::~MIL_ZoneNBC()
 {
-	
+	if( pNbcAgent_ )
+        delete pNbcAgent_;
 }
 
 // =============================================================================
@@ -64,30 +66,15 @@ MIL_ZoneNBC::~MIL_ZoneNBC()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ZoneNBC::load
-// Created: JVT 2005-03-23
+// Name: template< typename Archive > void MIL_ZoneNBC::serialize
+// Created: NLD 2006-10-27
 // -----------------------------------------------------------------------------
-void MIL_ZoneNBC::load( MIL_CheckPointInArchive& file , const uint )
+template< typename Archive > 
+void MIL_ZoneNBC::serialize( Archive& file, const uint )
 {
-    file >> boost::serialization::base_object< MIL_RealObject_ABC >( *this );
-    
-    uint nID;
-    file >> nID;
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( nID );
-    assert( pNbcAgentType_ );
-
-    file >> decontaminatedZones_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ZoneNBC::save
-// Created: JVT 2005-03-23
-// -----------------------------------------------------------------------------
-void MIL_ZoneNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
-{
-    file << boost::serialization::base_object< MIL_RealObject_ABC >( *this );
-    file << pNbcAgentType_->GetID()
-         << decontaminatedZones_;
+    file & boost::serialization::base_object< MIL_RealObject_ABC >( *this );
+    file & pNbcAgent_;
+    file & decontaminatedZones_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,11 +83,10 @@ void MIL_ZoneNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
 // -----------------------------------------------------------------------------
 void MIL_ZoneNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
-    assert( pNbcAgentType_ );
-
+    assert( pNbcAgent_ );
     archive.Section( "specific-attributes" );
     archive.Section( "nbc-agent" );
-    archive.WriteAttribute( "type", pNbcAgentType_->GetName() );
+    archive.WriteAttribute( "type", pNbcAgent_->GetType().GetName() );
     archive.EndSection(); // nbc-agent
     archive.EndSection(); // specific-attributes
 }
@@ -108,6 +94,18 @@ void MIL_ZoneNBC::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 //=============================================================================
 // INIT
 //=============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneNBC::CreateCloud
+// Created: NLD 2006-11-07
+// -----------------------------------------------------------------------------
+void MIL_ZoneNBC::CreateCloud()
+{   
+    assert( pNbcAgent_ );
+    if( !pNbcAgent_->CanBeVaporized() )
+        return;
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectNuageNBC( GetArmy(), GetLocalisation(), pNbcAgent_->GetType() );
+}
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ZoneNBC::Initialize
@@ -135,14 +133,16 @@ void MIL_ZoneNBC::Initialize( MIL_InputArchive& archive )
 
     std::string strNbcAgentType_;
     archive.ReadAttribute( "type", strNbcAgentType_ );
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strNbcAgentType_ );
-    if( !pNbcAgentType_ )
-        throw MT_ScipioException( "MIL_ZoneNBC::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
+
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcAgentType_ );
+    if( !pNbcAgentType )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for NBC object '%d'", strNbcAgentType_.c_str(), GetID() ), archive.GetContext() );
 
     archive.EndSection(); // nbc-agent
     archive.EndSection(); // specific-attributes
 
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectNuageNBC( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
+    pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eLiquid );
+    CreateCloud();
 }
 
 // -----------------------------------------------------------------------------
@@ -157,15 +157,16 @@ ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( const ASN1T_MagicActionCreate
     if( !asnCreateObject.m.attributs_specifiquesPresent || asnCreateObject.attributs_specifiques.t != T_AttrObjectSpecific_zone_nbc )
         return EnumObjectErrorCode::error_missing_specific_attributes;
 
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( asnCreateObject.attributs_specifiques.u.zone_nbc->agent_nbc );
-    if( !pNbcAgentType_ )
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.attributs_specifiques.u.zone_nbc->agent_nbc );
+    if( !pNbcAgentType )
         return EnumObjectErrorCode::error_invalid_specific_attributes;
+    pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eLiquid );
 
     ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
     if( nErrorCode != EnumObjectErrorCode::no_error )
         return nErrorCode;
 
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObjectNuageNBC( GetArmy(), GetLocalisation(), *pNbcAgentType_ );
+    CreateCloud();
     return EnumObjectErrorCode::no_error;
 }
    
@@ -179,9 +180,13 @@ ASN1T_EnumObjectErrorCode MIL_ZoneNBC::Initialize( const ASN1T_MagicActionCreate
 // -----------------------------------------------------------------------------
 void MIL_ZoneNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
+    assert( pNbcAgent_ );
     MIL_RealObject_ABC::ProcessAgentInside( agent );
     if( CanInteractWith( agent ) && !IsAgentInsideDecontaminatedZone( agent ) )
-        agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
+    {
+        if( pNbcAgent_->IsContaminating() )
+            agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgent_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -190,9 +195,15 @@ void MIL_ZoneNBC::ProcessAgentInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ZoneNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 {
+    assert( pNbcAgent_ );
     MIL_RealObject_ABC::ProcessAgentEntering( agent );
     if( CanInteractWith( agent ) && !IsAgentInsideDecontaminatedZone( agent ) )
-        agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgentType_ );
+    {
+        if( pNbcAgent_->IsContaminating() )
+            agent.GetRole< PHY_RoleInterface_NBC >().Contaminate( *pNbcAgent_ );
+        if( pNbcAgent_->IsPoisonous() )
+            agent.GetRole< PHY_RoleInterface_NBC >().Poison( *pNbcAgent_ );
+    }
 }
 
 // =============================================================================
@@ -205,8 +216,8 @@ void MIL_ZoneNBC::ProcessAgentEntering( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ZoneNBC::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
 {
-    assert( pNbcAgentType_ );
-    asnAttributes_.agent_nbc  = pNbcAgentType_->GetID();
+    assert( pNbcAgent_ );
+    asnAttributes_.agent_nbc  = pNbcAgent_->GetType().GetID();
 
     asnMsg.GetAsnMsg().m.attributs_specifiquesPresent   = 1;
     asnMsg.GetAsnMsg().attributs_specifiques.t          = T_AttrObjectSpecific_zone_nbc;
@@ -226,6 +237,19 @@ DEC_Knowledge_Object& MIL_ZoneNBC::CreateKnowledge( const MIL_Army& teamKnowing 
     return *new DEC_Knowledge_ObjectZoneNBC( teamKnowing, *this );
 }
 
+// =============================================================================
+// TOOLS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneNBC::GetNbcAgentType
+// Created: NLD 2004-05-04
+// -----------------------------------------------------------------------------
+const MIL_NbcAgentType& MIL_ZoneNBC::GetNbcAgentType() const
+{
+    assert( pNbcAgent_ );
+    return pNbcAgent_->GetType();
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ZoneNBC::Initialize
@@ -234,8 +258,9 @@ DEC_Knowledge_Object& MIL_ZoneNBC::CreateKnowledge( const MIL_Army& teamKnowing 
 bool MIL_ZoneNBC::Initialize( const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass )
 {
     MIL_RealObject_ABC::Initialize( localisation, strOption, strExtra, rCompletion, rMining, rBypass );
-    pNbcAgentType_ = MIL_NbcAgentType::FindNbcAgentType( strOption );
-    return pNbcAgentType_ != 0;
+    const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strOption );
+    pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eLiquid );    
+    return pNbcAgent_ != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -248,9 +273,9 @@ void MIL_ZoneNBC::Deserialize( const AttributeIdentifier& attributeID, Deseriali
     {
         std::string strNBC;
         deserializer >> strNBC;
-        const MIL_NbcAgentType* pNbcAgent = MIL_NbcAgentType::FindNbcAgentType( strNBC );
-        if( pNbcAgent )
-            pNbcAgentType_ = pNbcAgent;
+        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNBC );
+        if( pNbcAgentType )
+            pNbcAgent_ = new MIL_NbcAgent( *pNbcAgentType, MIL_NbcAgent::eLiquid );
     }
     else
         MIL_RealObject_ABC::Deserialize( attributeID, deserializer );
@@ -262,8 +287,9 @@ void MIL_ZoneNBC::Deserialize( const AttributeIdentifier& attributeID, Deseriali
 // -----------------------------------------------------------------------------
 void MIL_ZoneNBC::Serialize( HLA_UpdateFunctor& functor ) const
 {
+    assert( pNbcAgent_ );
     MIL_RealObject_ABC::Serialize( functor );
-    functor.Serialize( "option", false, pNbcAgentType_->GetName() );
+    functor.Serialize( "option", false, pNbcAgent_->GetType().GetName() );
 }
 
 // =============================================================================

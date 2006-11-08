@@ -88,7 +88,6 @@ bool MIL_PionMission_GEN_Renforcer::Initialize( const MIL_AutomateMission_ABC& p
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_GEN_Renforcer::Initialize( MIL_PionMission_ABC& missionTmp 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_Renforcer::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

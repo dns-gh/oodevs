@@ -84,7 +84,6 @@ bool MIL_PionMission_GEN_ActiverObstacle::Initialize( const MIL_AutomateMission_
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_GEN_ActiverObstacle::Initialize( MIL_PionMission_ABC& missi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ActiverObstacle::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -41,7 +41,7 @@ public:
     //@}
 
 private:
-    static int nDIAZoneDeploiementIdx_;
+    static int nDIAZoneIdx_;
 
 };
 

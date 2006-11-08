@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_FlancGarder::Initialize( const 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_FlancGarder::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

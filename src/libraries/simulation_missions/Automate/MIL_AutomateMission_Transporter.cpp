@@ -92,7 +92,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Transporter::Initialize( const ASN1
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Transporter::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

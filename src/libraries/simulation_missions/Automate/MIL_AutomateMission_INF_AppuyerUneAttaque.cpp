@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AppuyerUneAttaque::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AppuyerUneAttaque::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

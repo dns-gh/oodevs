@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Stationner::Initialize( const ASN1T
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Stationner::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -100,7 +100,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone::I
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_DetruireNeutraliserDansZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -104,7 +104,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_Generique::Initialize( const ASN1T_
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_Generique::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -84,7 +84,6 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( const MIL_AutomateMissi
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( MIL_PionMission_ABC& mi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_RetablirItineraire::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -457,6 +457,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsKnowledgeValid                 < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstValide"                         );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsPrepared                       < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstPrepare"                        );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsBypassed                       < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstContourne"                      );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::IsConstructed                    < MIL_AgentPion >, "DEC_ConnaissanceObjet_EstConstruit"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetLocalisation                  < MIL_AgentPion >, "DEC_ConnaissanceObjet_Localisation"                      );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetType                          < MIL_AgentPion >, "DEC_ConnaissanceObjet_Type"                              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeObjectFunctions::GetSiteFranchissementWidth       < MIL_AgentPion >, "DEC_ConnaissanceObjet_LargeurSiteFranchissement"         );

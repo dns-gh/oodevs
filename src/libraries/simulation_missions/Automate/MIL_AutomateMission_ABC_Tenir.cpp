@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Tenir::Initialize( const ASN1T_
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Tenir::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

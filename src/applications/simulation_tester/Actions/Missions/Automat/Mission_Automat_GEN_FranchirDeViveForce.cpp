@@ -47,11 +47,11 @@ void Mission_Automat_GEN_FranchirDeViveForce::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_franchir_de_vive_force;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_franchir_de_vive_force = &asnMission;
 
-    const T_IdVector& obstaclesAFranchir_ = pTarget_->GetTestParam_ObjectKnowledgeList();
+    const T_IdVector& obstacles_ = pTarget_->GetTestParam_ObjectKnowledgeList();
 
-    ASN_Tools::CopyObjectKnowledgeList( obstaclesAFranchir_, asnMission.obstacles_a_franchir );
+    ASN_Tools::CopyObjectKnowledgeList( obstacles_, asnMission.obstacles );
 
-    delete &obstaclesAFranchir_;
+    delete &obstacles_;
 
 }
 
@@ -64,7 +64,7 @@ void Mission_Automat_GEN_FranchirDeViveForce::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_franchir_de_vive_force );
     ASN1T_Mission_Automate_GEN_FranchirDeViveForce& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_franchir_de_vive_force;
 
-    ASN_Tools::Delete( asnMission.obstacles_a_franchir );
+    ASN_Tools::Delete( asnMission.obstacles );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

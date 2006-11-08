@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_EffectuerRaid::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_EffectuerRaid::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

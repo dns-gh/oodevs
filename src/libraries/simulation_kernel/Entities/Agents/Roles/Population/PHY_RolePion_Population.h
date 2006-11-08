@@ -16,7 +16,6 @@
 
 #include "PHY_RoleInterface_Population.h"
 
-class MIL_NbcAgentType;
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 

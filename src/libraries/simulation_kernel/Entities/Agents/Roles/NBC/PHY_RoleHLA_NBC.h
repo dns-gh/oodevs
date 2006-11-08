@@ -40,7 +40,8 @@ public:
     //! @name Operations
     //@{
     virtual bool IsContaminated() const;
-    virtual void Contaminate   ( const MIL_NbcAgentType& nbcAgentType );
+    virtual void Poison        ( const MIL_NbcAgent& nbcAgent );
+    virtual void Contaminate   ( const MIL_NbcAgent& nbcAgent );
     virtual void Decontaminate ();
     virtual void Decontaminate ( MT_Float rRatioAgentsWorking );
     //@}

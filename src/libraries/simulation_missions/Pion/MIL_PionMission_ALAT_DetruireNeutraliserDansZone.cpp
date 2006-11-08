@@ -104,7 +104,6 @@ bool MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Initialize( const MIL_Aut
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                        
     return true;    
 }
 
@@ -134,7 +133,6 @@ bool MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Initialize( MIL_PionMissi
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

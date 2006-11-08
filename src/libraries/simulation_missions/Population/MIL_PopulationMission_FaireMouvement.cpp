@@ -95,7 +95,6 @@ bool MIL_PopulationMission_FaireMouvement::Initialize( MIL_PopulationMission_ABC
 //-----------------------------------------------------------------------------
 void MIL_PopulationMission_FaireMouvement::Terminate()
 {
-    
     MIL_PopulationMission_ABC::Terminate();    
 }
 

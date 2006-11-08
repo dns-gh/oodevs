@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AppuyerSurPosition::Initialize(
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AppuyerSurPosition::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

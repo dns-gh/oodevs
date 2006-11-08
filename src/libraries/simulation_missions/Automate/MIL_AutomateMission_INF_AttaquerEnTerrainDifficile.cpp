@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Ini
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_AttaquerEnTerrainDifficile::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

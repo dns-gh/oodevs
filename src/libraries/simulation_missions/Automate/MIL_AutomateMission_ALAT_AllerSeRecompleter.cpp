@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_AllerSeRecompleter::Initialize
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_AllerSeRecompleter::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

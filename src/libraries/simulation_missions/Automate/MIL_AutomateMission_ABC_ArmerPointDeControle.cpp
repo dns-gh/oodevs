@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ArmerPointDeControle::Initializ
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_ArmerPointDeControle::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

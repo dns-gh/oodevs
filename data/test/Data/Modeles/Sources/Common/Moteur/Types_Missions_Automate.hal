@@ -370,7 +370,27 @@ T_Automate compagnie_;
 
 typedef struct T_Mission_Automate_GEN_SeDeployer : T_Mission_Automate
 {
-T_Localisation zoneDeploiement_;
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Automate_GEN_ReconnaitreZone : T_Mission_Automate
+{
+T_Localisation zone_;
+};
+
+typedef struct T_Mission_Automate_GEN_RealiserTravaux : T_Mission_Automate
+{
+T_ListeGenObjets travaux_;
+};
+
+typedef struct T_Mission_Automate_GEN_OuvrirItineraires : T_Mission_Automate
+{
+T_ListeListesPoints itineraires_;
+};
+
+typedef struct T_Mission_Automate_GEN_RetablirItineraires : T_Mission_Automate
+{
+T_ListeListesPoints itineraires_;
 };
 
 typedef struct T_Mission_Automate_GEN_FaireFranchir : T_Mission_Automate
@@ -379,71 +399,14 @@ T_ListeConnaissancesObjet sitesDeFranchissement_;
 T_Localisation zoneRegroupement_;
 };
 
-typedef struct T_Mission_Automate_GEN_RealiserSystemeObstacles : T_Mission_Automate
-{
-T_ListeGenObjets obstacles_;
-};
-
 typedef struct T_Mission_Automate_GEN_FranchirDeViveForce : T_Mission_Automate
 {
-T_ListeConnaissancesObjet obstaclesAFranchir_;
+T_ListeConnaissancesObjet obstacles_;
 };
 
-typedef struct T_Mission_Automate_GEN_RetablirItineraires : T_Mission_Automate
+typedef struct T_Mission_Automate_GEN_DegagerObstaclesDansZone : T_Mission_Automate
 {
-T_ListeListesPoints itineraires_;
-};
-
-typedef struct T_Mission_Automate_GEN_AmenagerAireStationnement : T_Mission_Automate
-{
-T_ListeGenObjets travaux_;
-};
-
-typedef struct T_Mission_Automate_GEN_AmenagerTerrainPoserSommaire : T_Mission_Automate
-{
-T_GenObjet terrain_;
-};
-
-typedef struct T_Mission_Automate_GEN_RealiserZonePoser : T_Mission_Automate
-{
-T_GenObjet zone_;
-};
-
-typedef struct T_Mission_Automate_GEN_ReconnaitreZoneDeploiement : T_Mission_Automate
-{
-T_Localisation zone_;
-};
-
-typedef struct T_Mission_Automate_GEN_RealiserCampPrisonniers : T_Mission_Automate
-{
-T_Localisation camp_;
-T_Automate tc2_;
-};
-
-typedef struct T_Mission_Automate_GEN_RealiserCampRefugies : T_Mission_Automate
-{
-T_Localisation camp_;
-T_Automate tc2_;
-};
-
-typedef struct T_Mission_Automate_GEN_RealiserPlatesformesSommairesDeDeploiementInitial : T_Mission_Automate
-{
-T_ListeGenObjets platesFormes_;
-};
-
-typedef struct T_Mission_Automate_GEN_RealiserTravauxSommairesAuProfitPopulation : T_Mission_Automate
-{
-T_ListeGenObjets travaux_;
-};
-
-typedef struct T_Mission_Automate_GEN_AppuyerDebarquementTroupes : T_Mission_Automate
-{
-T_ListeGenObjets zonesDebarquement_;
-};
-
-typedef struct T_Mission_Automate_GEN_OuvrirAxesProgression : T_Mission_Automate
-{
-T_ListeListesPoints axes_;
+T_ListeConnaissancesObjet obstacles_;
 };
 
 typedef struct T_Mission_Automate_INF_AttaquerSouplesse : T_Mission_Automate

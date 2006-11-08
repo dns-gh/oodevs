@@ -56,6 +56,7 @@ public:
     static bool CheckTypeAutomate                           ( const DIA_TypedObject&  object      );
     static bool CheckTypeListeAutomates                     ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeGenObjet                           ( const DIA_Variable_ABC& diaVariable );
+    static bool CheckTypeListeGenObjets                     ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeMissionPion                        ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeConnaissanceAgent                  ( const DIA_Variable_ABC& diaVariable );
     static bool CheckTypeListeConnaissancesAgent            ( const DIA_Variable_ABC& diaVariable );
@@ -102,6 +103,7 @@ public:
     static const DIA_TypeDef& GetTypeMaintenancePriorites           ();
     static const DIA_TypeDef& GetTypeSantePriorites                 ();    
     static const DIA_TypeDef& GetTypeDotation                       ();
+    static const DIA_TypeDef& GetTypeGenObjet                       ();
     //@}
 
 private:

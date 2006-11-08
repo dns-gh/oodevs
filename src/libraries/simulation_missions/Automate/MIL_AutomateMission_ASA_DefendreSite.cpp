@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreSite::Initialize( const
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_DefendreSite::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

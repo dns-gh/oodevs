@@ -92,7 +92,6 @@ bool MIL_PionMission_GEN_ExecuterVariantement::Initialize( const MIL_AutomateMis
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_GEN_ExecuterVariantement::Initialize( MIL_PionMission_ABC& 
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ExecuterVariantement::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

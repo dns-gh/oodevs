@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_Surveiller::Initialize( const A
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_Surveiller::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -61,24 +61,6 @@ void MIL_BouchonMines::serialize( Archive& file, const uint )
 }
 
 //=============================================================================
-// INIT
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: MIL_BouchonMines::Initialize
-// Created: JVT 02-10-22
-//-----------------------------------------------------------------------------
-bool MIL_BouchonMines::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
-{
-    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
-        return false;
-
-    rSizeCoef_                       = diaParameters[ nCurrentParamIdx ].ToFloat();  // Nbr mines
-    nFullNbrDotationForConstruction_ = (uint)rSizeCoef_;
-    return true;
-}
-
-//=============================================================================
 // EVENTS
 //=============================================================================
 

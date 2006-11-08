@@ -88,7 +88,6 @@ $InitMemberFromMission$
 //-----------------------------------------------------------------------------
 void MIL_PopulationMission_$MissionName$::Terminate()
 {
-$ResetMembers$
     MIL_PopulationMission_ABC::Terminate();    
 }
 

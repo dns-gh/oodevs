@@ -20,7 +20,7 @@
 
 class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
-class MIL_NbcAgentType;
+class MIL_NbcAgent;
 class MIL_AutomateLOG;
 class PHY_HumanRank;
 class PHY_HumanWound;
@@ -163,7 +163,8 @@ public:
     virtual void     ApplyDirectFire                 ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void     ApplyIndirectFire               ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
     virtual void     ApplyExplosion                  ( const MIL_RealObjectType& objectType, PHY_FireResults_ABC& result );
-            void     ApplyContamination              ( const MIL_NbcAgentType& nbcAgentType );
+            void     ApplyContamination              ( const MIL_NbcAgent& nbcAgent );
+            void     ApplyPoisonous                  ( const MIL_NbcAgent& nbcAgent );
             MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
             MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;

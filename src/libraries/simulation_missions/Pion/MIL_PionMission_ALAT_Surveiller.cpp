@@ -92,7 +92,6 @@ bool MIL_PionMission_ALAT_Surveiller::Initialize( const MIL_AutomateMission_ABC&
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_ALAT_Surveiller::Initialize( MIL_PionMission_ABC& missionTm
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_Surveiller::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

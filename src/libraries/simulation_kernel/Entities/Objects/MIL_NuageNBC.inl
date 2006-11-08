@@ -10,17 +10,6 @@
 //*****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_NuageNBC::GetNbcAgentType
-// Created: NLD 2004-05-04
-// -----------------------------------------------------------------------------
-inline
-const MIL_NbcAgentType& MIL_NuageNBC::GetNbcAgentType() const
-{
-    assert( pNbcAgentType_ );
-    return *pNbcAgentType_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_BouchonMines::Create
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
@@ -29,3 +18,4 @@ MIL_RealObject_ABC& MIL_NuageNBC::Create( const MIL_RealObjectType& type, uint n
 {
     return *new MIL_NuageNBC( type, nID, army );
 }
+

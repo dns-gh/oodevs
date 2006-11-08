@@ -96,7 +96,6 @@ bool MIL_PionMission_ALAT_AppuyerDirectAuContact::Initialize( const MIL_Automate
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                
     return true;    
 }
 
@@ -124,7 +123,6 @@ bool MIL_PionMission_ALAT_AppuyerDirectAuContact::Initialize( MIL_PionMission_AB
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ALAT_AppuyerDirectAuContact::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

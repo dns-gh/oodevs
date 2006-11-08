@@ -47,11 +47,11 @@ void Mission_Automat_GEN_SeDeployer::Serialize()
     asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_se_deployer;
     asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_se_deployer = &asnMission;
 
-    const Location& zoneDeploiement_ = pTarget_->GetTestParam_Polygon();
+    const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
-    ASN_Tools::CopyPolygon( zoneDeploiement_, asnMission.zone_deploiement );
+    ASN_Tools::CopyPolygon( zone_, asnMission.zone );
 
-    delete &zoneDeploiement_;
+    delete &zone_;
 
 }
 
@@ -64,7 +64,7 @@ void Mission_Automat_GEN_SeDeployer::Clean()
     assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_se_deployer );
     ASN1T_Mission_Automate_GEN_SeDeployer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_se_deployer;
 
-    ASN_Tools::Delete( asnMission.zone_deploiement );
+    ASN_Tools::Delete( asnMission.zone );
 
     delete &asnMission;
     Mission_Automat_ABC::Clean();

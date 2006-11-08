@@ -88,7 +88,6 @@ bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( const MIL_Automa
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Initialize( MIL_PionMission_
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

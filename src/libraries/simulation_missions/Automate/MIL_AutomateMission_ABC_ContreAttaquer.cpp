@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ContreAttaquer::Initialize( con
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_ContreAttaquer::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

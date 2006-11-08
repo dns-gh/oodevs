@@ -199,13 +199,23 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::ApplyWounds
+// Name: PHY_HumansComposante::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_HumansComposante::ApplyWounds( const MIL_NbcAgentType& nbcAgentType )
+void PHY_HumansComposante::ApplyContamination( const MIL_NbcAgent& nbcAgent )
 {
     for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).ApplyWound( nbcAgentType );
+        (**it).ApplyContamination( nbcAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ApplyPoisonous
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
+{
+    for( CIT_HumanVector it = humans_.begin(); it != humans_.end(); ++it )
+        (**it).ApplyPoisonous( nbcAgent );
 }
 
 // =============================================================================

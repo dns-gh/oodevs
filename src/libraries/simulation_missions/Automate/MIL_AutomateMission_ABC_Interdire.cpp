@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Interdire::Initialize( const AS
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_Interdire::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

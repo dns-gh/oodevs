@@ -210,8 +210,7 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
 
     std::string strStaticMemberInit;
     std::string strStaticMemberScriptInit;
-    std::string strAsnMemberInit;
-    std::string strMemberInit;
+    std::string strAsnMemberInit;    
     std::string strMissionMemberInit;
     std::string strMemberReset;
     std::string strMemberSerialization;
@@ -237,25 +236,19 @@ void AGR_Mission::GenerateMilClassCpp( const AGR_Workspace& workspace, const std
         assert( *it );
         const AGR_Member& member = **it;
 
-        strMemberReset = member.ResetCode();
         strStaticMemberInit += "int MIL_" + strUnitName + "Mission_" + strMissionBaseName + "::" + member.DIAIndexName() + " = 0 ;\n";
         strStaticMemberScriptInit += member.DIAInitialisationCode();
         strAsnMemberInit += member.ASNInitialisationCode();
         strMemberSerialization      += member.SerializationCode();
         strMemberCleanSerialization += member.SerializationCleaningCode();
         if( eMissionType_ != eMissionAutomate )
-        {
-            strMemberInit        += member.MemberInitialisationCode();
             strMissionMemberInit += member.MissionInitialisationCode();
-        }
     }
 
     workspace.ReplaceInString( strBaseContent, "$StaticMemberInit$", strStaticMemberInit );
     workspace.ReplaceInString( strBaseContent, "$StaticMemberScriptInit$", strStaticMemberScriptInit );
     workspace.ReplaceInString( strBaseContent, "$InitMembersFromAsn$", strAsnMemberInit );
-    workspace.ReplaceInString( strBaseContent, "$InitMembers$", strMemberInit );
     workspace.ReplaceInString( strBaseContent, "$InitMemberFromMission$", strMissionMemberInit );
-    workspace.ReplaceInString( strBaseContent, "$ResetMembers$", strMemberReset );
     workspace.ReplaceInString( strBaseContent, "$SerializeMembers$", strMemberSerialization );
     workspace.ReplaceInString( strBaseContent, "$CleanSerializedMembers$", strMemberCleanSerialization );
     workspace.ReplaceInString( strBaseContent, "$TIME$", MT_GetCurrentDate() + " - " + MT_GetCurrentTime() );

@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_NBC_ReconnaitreDesSitesROTA::Initia
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_NBC_ReconnaitreDesSitesROTA::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

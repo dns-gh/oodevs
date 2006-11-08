@@ -128,7 +128,6 @@ bool MIL_PionMission_Test_FindPosition::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-                                                
     return true;    
 }
 
@@ -164,7 +163,6 @@ bool MIL_PionMission_Test_FindPosition::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_Test_FindPosition::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

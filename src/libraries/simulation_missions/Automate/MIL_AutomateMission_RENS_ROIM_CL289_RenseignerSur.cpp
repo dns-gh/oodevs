@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Init
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_RENS_ROIM_CL289_RenseignerSur::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

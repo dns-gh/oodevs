@@ -88,7 +88,6 @@ bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( const MIL_AutomateMission_AB
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_RENS_ROEM_Appuyer::Initialize( MIL_PionMission_ABC& mission
 //-----------------------------------------------------------------------------
 void MIL_PionMission_RENS_ROEM_Appuyer::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

@@ -74,7 +74,6 @@ $InitMembersFromAsn$
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_$MissionName$::Terminate()
 {
-$ResetMembers$
     MIL_AutomateMission_ABC::Terminate();
 }
 

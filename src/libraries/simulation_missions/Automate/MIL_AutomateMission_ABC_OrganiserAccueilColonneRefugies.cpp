@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_OrganiserAccueilColonneRefugies::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

@@ -6,13 +6,6 @@
 
 ScipioObject DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-
-EnumMissionGenUrgence ::= ENUMERATED
-{
-    serie-minimum        (0),
-    serie-complementaire (1)
-}
-
 EnumMissionGenSousTypeObstacle ::= ENUMERATED
 {
     preliminaire(0),

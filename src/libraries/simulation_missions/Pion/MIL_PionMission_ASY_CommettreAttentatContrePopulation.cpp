@@ -92,7 +92,6 @@ bool MIL_PionMission_ASY_CommettreAttentatContrePopulation::Initialize( const MI
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-            
     return true;    
 }
 
@@ -119,7 +118,6 @@ bool MIL_PionMission_ASY_CommettreAttentatContrePopulation::Initialize( MIL_Pion
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASY_CommettreAttentatContrePopulation::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

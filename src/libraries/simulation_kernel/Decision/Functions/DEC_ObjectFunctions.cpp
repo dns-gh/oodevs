@@ -14,10 +14,13 @@
 
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Objects/MIL_CampPrisonniers.h"
 #include "Entities/Objects/MIL_CampRefugies.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/Genie/DEC_Gen_Object.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_ObjectFunctions::GetPrisonerCampPosition
@@ -93,4 +96,63 @@ void DEC_ObjectFunctions::CanObjectTypeBePrepared( DIA_Call_ABC& call )
         call.GetResult().SetValue( pObjectType->CanBePrepared() );
     else
         call.GetResult().SetValue( false );
+}
+
+// =============================================================================
+// GEN OBJECT
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectType
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::GetGenObjectType( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
+    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
+    call.GetResult().SetValue( (int)pTmp->GetType().GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectLocalisation
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::GetGenObjectLocalisation( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
+    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
+    call.GetResult().SetValue( (void*)&pTmp->GetLocalisation(), &DEC_Tools::GetTypeLocalisation(), 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectDensity
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::GetGenObjectDensity( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
+    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
+    call.GetResult().SetValue( (float)pTmp->GetDensity() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectPreliminaire
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::GetGenObjectPreliminaire( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
+    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
+    call.GetResult().SetValue( (int)pTmp->GetPreliminaire() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectTC2
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::GetGenObjectTC2( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
+    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
+    call.GetResult().SetValue( pTmp->GetTC2() ? pTmp->GetTC2()->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
 }

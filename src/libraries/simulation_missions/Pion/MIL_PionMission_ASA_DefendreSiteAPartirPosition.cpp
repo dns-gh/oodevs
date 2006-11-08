@@ -88,7 +88,6 @@ bool MIL_PionMission_ASA_DefendreSiteAPartirPosition::Initialize( const MIL_Auto
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_ASA_DefendreSiteAPartirPosition::Initialize( MIL_PionMissio
 //-----------------------------------------------------------------------------
 void MIL_PionMission_ASA_DefendreSiteAPartirPosition::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

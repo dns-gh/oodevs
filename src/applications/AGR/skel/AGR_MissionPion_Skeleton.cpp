@@ -78,7 +78,6 @@ bool MIL_PionMission_$MissionName$::Initialize( const MIL_AutomateMission_ABC& p
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-$InitMembers$
     return true;    
 }
 
@@ -102,7 +101,6 @@ $InitMemberFromMission$
 //-----------------------------------------------------------------------------
 void MIL_PionMission_$MissionName$::Terminate()
 {
-$ResetMembers$
     MIL_PionMission_ABC::Terminate();    
 }
 

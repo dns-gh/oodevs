@@ -75,7 +75,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_PrendrePreciserContact::Initial
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC_PrendrePreciserContact::Terminate()
 {
-
     MIL_AutomateMission_ABC::Terminate();
 }
 

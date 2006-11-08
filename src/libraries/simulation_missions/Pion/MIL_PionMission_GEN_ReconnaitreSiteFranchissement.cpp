@@ -84,7 +84,6 @@ bool MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Initialize( const MIL_Au
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-    
     return true;    
 }
 
@@ -109,7 +108,6 @@ bool MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Initialize( MIL_PionMiss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

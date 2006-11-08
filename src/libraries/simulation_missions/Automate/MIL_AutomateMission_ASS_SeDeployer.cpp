@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASS_SeDeployer::Initialize( const A
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASS_SeDeployer::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

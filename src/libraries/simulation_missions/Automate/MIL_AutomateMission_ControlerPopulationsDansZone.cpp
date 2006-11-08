@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ControlerPopulationsDansZone::Initi
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ControlerPopulationsDansZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

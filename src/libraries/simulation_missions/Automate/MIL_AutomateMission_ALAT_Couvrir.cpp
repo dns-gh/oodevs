@@ -92,7 +92,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Couvrir::Initialize( const ASN
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_Couvrir::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

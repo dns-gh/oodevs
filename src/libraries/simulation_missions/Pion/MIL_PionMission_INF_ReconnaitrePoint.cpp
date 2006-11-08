@@ -88,7 +88,6 @@ bool MIL_PionMission_INF_ReconnaitrePoint::Initialize( const MIL_AutomateMission
     if( ! MIL_PionMission_ABC::Initialize( parentMission ) )
         return false;
 
-        
     return true;    
 }
 
@@ -114,7 +113,6 @@ bool MIL_PionMission_INF_ReconnaitrePoint::Initialize( MIL_PionMission_ABC& miss
 //-----------------------------------------------------------------------------
 void MIL_PionMission_INF_ReconnaitrePoint::Terminate()
 {
-    
     MIL_PionMission_ABC::Terminate();    
 }
 

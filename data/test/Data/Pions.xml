@@ -6,13 +6,7 @@
     <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="xxxx"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="ASA"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>

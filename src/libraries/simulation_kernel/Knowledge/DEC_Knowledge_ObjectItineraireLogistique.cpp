@@ -15,7 +15,6 @@
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/MIL_ItineraireLogistique.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_ObjectItineraireLogistique, "DEC_Knowledge_ObjectItineraireLogistique" )

@@ -418,7 +418,6 @@ void PHY_ComposantePion::ApplyDirectFire( const PHY_DotationCategory& dotationCa
 void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-
     assert( dotationCategory.GetIndirectFireData() );
     if( dotationCategory.GetIndirectFireData()->HasHit( pRole_->GetPion() ) )
         ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireDamages );
@@ -428,10 +427,20 @@ void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotation
 // Name: PHY_ComposantePion::ApplyContamination
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyContamination( const MIL_NbcAgentType& nbcAgentType )
+void PHY_ComposantePion::ApplyContamination( const MIL_NbcAgent& nbcAgent )
 {
     assert( pHumans_ );
-    pHumans_->ApplyWounds( nbcAgentType );
+    pHumans_->ApplyContamination( nbcAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyPoisonous
+// Created: NLD 2004-10-13
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyPoisonous( const MIL_NbcAgent& nbcAgent )
+{
+    assert( pHumans_ );
+    pHumans_->ApplyPoisonous( nbcAgent );
 }
 
 // -----------------------------------------------------------------------------

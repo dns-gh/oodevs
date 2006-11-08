@@ -37,8 +37,6 @@ public:
     //! @name Init
     //@{
     static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
-
-    virtual bool Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
     //@}
 };
 

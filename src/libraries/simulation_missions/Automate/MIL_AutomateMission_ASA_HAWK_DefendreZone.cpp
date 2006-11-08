@@ -84,7 +84,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_HAWK_DefendreZone::Initialize( 
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ASA_HAWK_DefendreZone::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

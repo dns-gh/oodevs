@@ -29,7 +29,7 @@
 // Name: AGR_Type_ABC constructor
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
-AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning, bool bRequiresReset )
+AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& strFunctionSuffix, const std::string& strDIAType, const std::string& strTesterType, bool bRequiresCleaning )
     : strAsnType_         ( strAsnType )
     , strFunctionSuffix_  ( strFunctionSuffix )
     , strDIAType_         ( strDIAType )
@@ -37,7 +37,6 @@ AGR_Type_ABC::AGR_Type_ABC( const std::string& strAsnType, const std::string& st
     , strHumanName_       ( strDIAType )
     //, bExplicitMember_    ( !strCPPType_.empty() )
     , bRequiresCleaning_  ( bRequiresCleaning )
-    , bRequiresReset_     ( bRequiresReset )
 {
     if( strHumanName_.substr( 0, 2 ) == "T_" )
         strHumanName_.erase( 0, 2 );
@@ -120,15 +119,6 @@ std::string AGR_Type_ABC::DIAParametersInitialisationCode( const AGR_Member& mem
 }
 
 // -----------------------------------------------------------------------------
-// Name: AGR_Type_ABC::MemberInitialisationCode
-// Created: AGE 2004-09-13
-// -----------------------------------------------------------------------------
-std::string AGR_Type_ABC::MemberInitialisationCode( const AGR_Member& member ) const
-{
-    return ResetCode( member );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AGR_Type_ABC::MissionInitialisationCode
 // Created: AGE 2004-09-13
 // -----------------------------------------------------------------------------
@@ -179,21 +169,6 @@ std::string AGR_Type_ABC::Mos2OptionalParamCode( const AGR_Member& member ) cons
                         + "    ASN1T_" + member.OwnerClass().Name() + "* pAsnMission_;\n"
                         + "};\n\n";
     return strTmp;                            
-}
-
-// -----------------------------------------------------------------------------
-// Name: AGR_Type_ABC::ResetCode
-// Created: AGE 2004-09-13
-// -----------------------------------------------------------------------------
-std::string AGR_Type_ABC::ResetCode( const AGR_Member& member ) const
-{
-    std::string strResult( "    " );
-
-    if( bRequiresReset_ )
-    strResult += "NET_ASN_Tools::Reset" + strFunctionSuffix_
-                  + "( " /*+ ( bExplicitMember_ ? member.CPPName() + ", " : "" )*/
-            + "GetVariable( " + member.DIAIndexName() + " ) );\n";
-    return strResult;
 }
 
 // -----------------------------------------------------------------------------

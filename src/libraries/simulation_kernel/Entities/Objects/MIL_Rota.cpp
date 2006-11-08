@@ -81,7 +81,7 @@ void MIL_Rota::load( MIL_CheckPointInArchive& file , const uint )
     {
         uint nID;
         file >> nID;
-        nbcAgents_.insert( MIL_NbcAgentType::FindNbcAgentType( nID ) );
+        nbcAgents_.insert( MIL_NbcAgentType::Find( nID ) );
     }
 }
 
@@ -152,7 +152,7 @@ void MIL_Rota::Initialize( MIL_InputArchive& archive )
         std::string strNbcTmp;
         archive.Section( "nbc-agent" );
         archive.ReadAttribute( "type", strNbcTmp );
-        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::FindNbcAgentType( strNbcTmp );
+        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( strNbcTmp );
         if( !pNbcAgentType )
             throw MT_ScipioException( "MIL_Rota::Initialize", __FILE__, __LINE__, MT_FormatString( "Unknown 'AgentNBC' '%s' for rota object '%d'", strNbcTmp.c_str(), GetID() ), archive.GetContext() );
         nbcAgents_.insert( pNbcAgentType );
@@ -177,7 +177,7 @@ ASN1T_EnumObjectErrorCode MIL_Rota::Initialize( const ASN1T_MagicActionCreateObj
     nbcAgents_.clear();
     for( uint i = 0; i < asnCreateObject.attributs_specifiques.u.rota->agents_nbc.n; ++i )
     {
-        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::FindNbcAgentType( asnCreateObject.attributs_specifiques.u.rota->agents_nbc.elem[i] );
+        const MIL_NbcAgentType* pNbcAgentType = MIL_NbcAgentType::Find( asnCreateObject.attributs_specifiques.u.rota->agents_nbc.elem[i] );
         if( !pNbcAgentType )
             return EnumObjectErrorCode::error_invalid_specific_attributes;
         nbcAgents_.insert( pNbcAgentType );
@@ -281,7 +281,7 @@ bool MIL_Rota::ReadAgents( const std::string& strAgents )
     std::string strAgent;
     while( std::getline( stream, strAgent ) )
     {
-        const MIL_NbcAgentType* pNbcAgent = MIL_NbcAgentType::FindNbcAgentType( strAgent );
+        const MIL_NbcAgentType* pNbcAgent = MIL_NbcAgentType::Find( strAgent );
         if( pNbcAgent )
             nbcAgents_.insert( pNbcAgent );
         else

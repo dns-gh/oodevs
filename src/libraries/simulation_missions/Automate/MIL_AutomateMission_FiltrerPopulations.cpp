@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_FiltrerPopulations::Initialize( con
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_FiltrerPopulations::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

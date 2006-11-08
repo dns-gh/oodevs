@@ -49,10 +49,19 @@ bool PHY_RoleHLA_NBC::IsContaminated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_NBC::Poison
+// Created: NLD 2006-10-27
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_NBC::Poison( const MIL_NbcAgent& /*nbcAgent*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_NBC::Contaminate
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_NBC::Contaminate( const MIL_NbcAgentType& /*nbcAgentType*/ )
+void PHY_RoleHLA_NBC::Contaminate( const MIL_NbcAgent& /*nbcAgent*/ )
 {
      // NOTHING
 }

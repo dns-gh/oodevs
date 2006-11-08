@@ -210,51 +210,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automate GEN RealiserSystemeObstacles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Automate GEN FranchirDeViveForce</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Automate GEN RetablirItineraires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN AmenagerAireStationnement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN AmenagerTerrainPoserSommaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN RealiserZonePoser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN ReconnaitreZoneDeploiement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN RealiserCampRefugies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN RealiserTravauxSommairesAuProfitPopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN AppuyerDebarquementTroupes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN OuvrirAxesProgression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -630,91 +590,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion GEN RealiserFosseAC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserAbattisMine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserPointMine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserBarricade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserEboulement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserBouchonMine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN DetruireRoute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN DetruirePont</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN SecuriserItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN DegagerAbattisMine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN DegagerEboulement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN DegagerRues</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ComblerEntonnoir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ComblerFosseAC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN CreerContournement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserZoneMineeLineaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN OuvrirTrouee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pion GEN Renforcer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN FranchirEntonnoir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN FranchirFosseAC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserZoneMineeParDispersion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserPostesTir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -734,27 +610,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion GEN DeminerSiteFranchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pion GEN ReconnaitreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN CreerPlateForme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN CreerPiste</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN CreerAirePoser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN NeutraliserEnginsExplosifs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -766,27 +622,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion GEN RealiserAireLogistique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pion GEN DepolluerZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN AmenagerTerrainPoser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserPlateFormeDeploiement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ReprendreMissionConstruction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserZonePoserHelicoptere</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1114,15 +950,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion GEN EquiperExploiter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pion GEN ExecuterVariantement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN AppuyerDebarquementTroupesGU</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1151,10 +979,6 @@
     </message>
     <message>
         <source>Automate ASA HAWK Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN RealiserCampPrisonniers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1219,14 +1043,6 @@
     </message>
     <message>
         <source>Pion ASS AssurerMiseEnOeuvreSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserCampPrisonniers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserCampRefugies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1637,6 +1453,54 @@
         <source>Pion Transporter</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automate GEN ReconnaitreZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate GEN RealiserTravaux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate GEN OuvrirItineraires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate GEN DegagerObstaclesDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN OuvrirItineraire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN EquiperExploiterSiteFranchissement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN DegagerObstacles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN ContournerObstacles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN RealiserTravauxContreMobilite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN RealiserTravauxAppuiDeploiement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN RealiserCamps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN ReprendreTravaux</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ENT_Tr</name>
@@ -1782,10 +1646,6 @@
     </message>
     <message>
         <source>reparation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>compose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2145,14 +2005,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>serie minimum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>serie complementaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>preliminaire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2185,15 +2037,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>prioritaire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>peu prioritaire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2202,10 +2046,6 @@
     </message>
     <message>
         <source>directionnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

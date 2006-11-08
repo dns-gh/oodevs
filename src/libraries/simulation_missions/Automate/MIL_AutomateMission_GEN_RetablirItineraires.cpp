@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_GEN_RetablirItineraires::Initialize
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_GEN_RetablirItineraires::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

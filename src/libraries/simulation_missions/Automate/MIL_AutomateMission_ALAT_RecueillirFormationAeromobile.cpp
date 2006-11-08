@@ -92,7 +92,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_RecueillirFormationAeromobile:
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_ALAT_RecueillirFormationAeromobile::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

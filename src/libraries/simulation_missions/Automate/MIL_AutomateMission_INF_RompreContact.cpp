@@ -80,7 +80,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_RompreContact::Initialize( cons
 //-----------------------------------------------------------------------------
 void MIL_AutomateMission_INF_RompreContact::Terminate()
 {
-    
     MIL_AutomateMission_ABC::Terminate();
 }
 

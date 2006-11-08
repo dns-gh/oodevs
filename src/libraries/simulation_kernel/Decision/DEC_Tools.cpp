@@ -13,6 +13,7 @@
 #include "DEC_Tools.h"
 #include "Functions/DEC_FrontAndBackLinesComputer.h"
 #include "Decision/Path/Agent/DEC_Agent_Path.h"
+#include "Decision/Genie/DEC_Gen_Object.h"
 
 #include "DIA/DIA_Instance.h"
 #include "DIA/DIA_Tool_Script_Engine.h"
@@ -213,6 +214,24 @@ bool DEC_Tools::CheckTypeListeLocalisations( const DIA_Variable_ABC& diaVariable
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeListeGenObjets
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+bool DEC_Tools::CheckTypeListeGenObjets( const DIA_Variable_ABC& diaVariable )
+{
+    if( diaVariable.Type() != eSelection )
+        return false;
+
+    const DIA_Variable_ObjectList& diaUserList = static_cast< const DIA_Variable_ObjectList& >( diaVariable );
+    for( CIT_ObjectVariableVector it = diaUserList.GetContainer().begin(); it != diaUserList.GetContainer().end(); ++it )
+    {
+        if( !CheckTypeGenObjet( **it ) )
+            return false;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeListePions
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
@@ -330,7 +349,7 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     else if( *pType == *pTypeAutomate_ )
         ; // NOTHING
     else if( *pType == *pTypeGenObjet_ )
-        assert( false );
+        delete static_cast< DEC_Gen_Object* >( pPtr );
     else if( *pType == *pTypeMissionPion_ )
         assert( false );
     else if( *pType == *pTypePerceptionPoint_ )
