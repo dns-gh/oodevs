@@ -159,11 +159,10 @@ void ASN_Tools::CopyObjectKnowledgeList( const T_IdVector& ids, ASN1T_ListKnowle
 // -----------------------------------------------------------------------------
 void ASN_Tools::CopyGenObject( const GenObject& genObject, ASN1T_MissionGenObject& asn )
 {
-    CopyLocation( genObject.GetLocation()  , asn.pos_obstacle );
-    asn.type_obstacle = genObject.GetType();
-    asn.urgence       = genObject.GetUrgency();
+    CopyLocation( genObject.GetLocation()  , asn.position );
+    asn.type = genObject.GetType();
     asn.preliminaire  = genObject.GetObstacleSubType();
-    asn.priorite      = genObject.GetPriority();
+    asn.densite = genObject.GetDensity();
 }
 
 // -----------------------------------------------------------------------------
@@ -533,7 +532,7 @@ void ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
 // -----------------------------------------------------------------------------
 void ASN_Tools::Delete( ASN1T_MissionGenObject& asn )
 {
-    Delete( asn.pos_obstacle );
+    Delete( asn.position );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,8 +31,6 @@ GenObject::GenObject()
     : pLocation_         ( 0 )
     , eType_             ( ( ASN1T_EnumObjectType )-1 )
     , eObstacleSubType_  ( ( ASN1T_EnumMissionGenSousTypeObstacle )-1 )
-    , eUrgency_          ( ( ASN1T_EnumMissionGenUrgence )-1 )
-    , ePriority_         ( ( ASN1T_EnumMissionGenPriorite )-1 )
 {
 
 }
@@ -58,9 +56,7 @@ GenObject& GenObject::GetTestParam_GenObject( const Testable_Entity& target )
     obj.pLocation_        = &Location::GetTestParam_Location( target.GetPosition(), ( ASN1T_EnumTypeLocalisation )target.GetTestParam_Enumeration( 0, 5 ) );
     obj.eType_            = ( ASN1T_EnumObjectType )target.GetTestParam_Enumeration( 0, 38 );
     obj.eObstacleSubType_ = ( ASN1T_EnumMissionGenSousTypeObstacle )target.GetTestParam_Enumeration( 0, 1 );
-    obj.eUrgency_         = ( ASN1T_EnumMissionGenUrgence )target.GetTestParam_Enumeration( 0, 1 );
-    obj.ePriority_        = ( ASN1T_EnumMissionGenPriorite )target.GetTestParam_Enumeration( 0, 2 );
-
+    obj.nDensity_         = target.GetTestParam_Numeric( 0, 5 );
     return obj;
 }
 

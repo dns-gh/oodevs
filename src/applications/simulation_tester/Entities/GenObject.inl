@@ -52,23 +52,13 @@ ASN1T_EnumMissionGenSousTypeObstacle GenObject::GetObstacleSubType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GenObject::GetUrgency
-// Created: SBO 2005-08-26
+// Name: GenObject::GetDensity
+// Created: NLD 2006-10-28
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumMissionGenUrgence GenObject::GetUrgency() const
+uint GenObject::GetDensity() const
 {
-    return eUrgency_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GenObject::GetPriority
-// Created: SBO 2005-08-26
-// -----------------------------------------------------------------------------
-inline
-ASN1T_EnumMissionGenPriorite GenObject::GetPriority() const
-{
-    return ePriority_;
+    return nDensity_;
 }
 
 } // end namespace TEST

@@ -62,8 +62,7 @@ public:
     const Location&                      GetLocation       () const;
     ASN1T_EnumObjectType                 GetType           () const;
     ASN1T_EnumMissionGenSousTypeObstacle GetObstacleSubType() const;
-    ASN1T_EnumMissionGenUrgence          GetUrgency        () const;
-    ASN1T_EnumMissionGenPriorite         GetPriority       () const;
+    uint                                 GetDensity        () const;
     //@}
 
     //! @name Test Parameters
@@ -85,8 +84,7 @@ private:
     Location*                            pLocation_;
     ASN1T_EnumObjectType                 eType_;
     ASN1T_EnumMissionGenSousTypeObstacle eObstacleSubType_;
-    ASN1T_EnumMissionGenUrgence          eUrgency_;
-    ASN1T_EnumMissionGenPriorite         ePriority_;
+    uint                                 nDensity_;
     //@}
 };
 
