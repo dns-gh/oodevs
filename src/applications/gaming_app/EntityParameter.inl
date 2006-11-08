@@ -70,6 +70,22 @@ void EntityParameter< ConcreteEntity >::Commit()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityParameter::CommitTo
+// Created: SBO 2006-11-08
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn )
+{
+    if( ! selected_ )
+    {
+        if( IsOptional() )
+            return;
+        throw std::runtime_error( "Entity not set!" );
+    }
+    asn = selected_->GetId();
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityParameter::MenuItemValidated
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------

@@ -91,6 +91,15 @@ void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, ::ContextMenu& me
 }
 
 // -----------------------------------------------------------------------------
+// Name: LimitsLayer::ContextMenu
+// Created: SBO 2006-11-08
+// -----------------------------------------------------------------------------
+void LimitsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f&, const QPoint& where )
+{
+    entity.ContextMenu( controllers_.actions_, where );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LimitsLayer::NotifySelected
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------

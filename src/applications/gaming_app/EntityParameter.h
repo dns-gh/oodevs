@@ -85,6 +85,7 @@ public:
     //@{
     virtual bool CheckValidity();
     virtual void Commit();
+    void CommitTo( ASN1T_OID& asn );
     //@}
 
 private:

@@ -79,6 +79,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool HandleKeyPress  ( QKeyEvent* key );
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu );
     virtual void NotifySelected( const kernel::TacticalLine_ABC* element );

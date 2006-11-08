@@ -1360,15 +1360,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Urgence:</source>
+        <source>Densit&#xe9;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Priorit&#xe9;:</source>
+        <source>TC2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Localisation:</source>
+        <source>Localisation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

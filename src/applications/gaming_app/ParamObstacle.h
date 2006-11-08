@@ -13,12 +13,14 @@
 #include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "EntityParameter.h"
 
 namespace kernel
 {
     class ObjectType;
     class ObjectTypes;
     class CoordinateConverter_ABC;
+    class Automat_ABC;
 }
 
 namespace gui
@@ -27,6 +29,8 @@ namespace gui
 }
 
 class ParamLocation;
+class ParamNumericField;
+class ParamAgent;
 
 // =============================================================================
 /** @class  ParamObstacle
@@ -37,6 +41,7 @@ class ParamLocation;
 class ParamObstacle : public QGroupBox
                     , public Param_ABC
 {
+    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -54,6 +59,12 @@ public:
     virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
+private slots:
+    //! @name Slots
+    //@{
+    void OnTypeChanged();
+    //@}
+
 private:
     //! @name Copy
     //@{
@@ -68,9 +79,9 @@ private:
     ParamLocation* location_;
 
     gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;
-    QComboBox* urgencyCombo_; // $$$$ SBO 2006-06-28: ValuedComboBox< EmergencyType > ?
     QComboBox* preliminaryCombo_;
-    QComboBox* priorityCombo_;
+    ParamNumericField* density_;
+    EntityParameter< kernel::Automat_ABC >* tc2_;
     //@}
 };
 

@@ -13,6 +13,11 @@
 #include "gaming/ASN_Types.h"
 #include "Param_ABC.h"
 
+namespace gui
+{
+    class RichLabel;
+}
+
 // =============================================================================
 /** @class  ParamNumericField
     @brief  ParamNumericField
@@ -25,14 +30,17 @@ class ParamNumericField : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamNumericField( QWidget* parent, ASN1INT& asn, const QString& label );
-             ParamNumericField( QWidget* parent, ASN1REAL& asn, const QString& label );
+             ParamNumericField( QWidget* parent, ASN1INT& asn, const QString& label, int min = 0, int max = 9999 );
+             ParamNumericField( QWidget* parent, ASN1REAL& asn, const QString& label, float min = 0., float max = 9999., int precision = 2 );
     virtual ~ParamNumericField();
     //@}
 
     //! @name Operations
     //@{
+    virtual bool CheckValidity();
     virtual void Commit();
+    void CommitTo( ASN1INT& asn );
+    void CommitTo( ASN1REAL& asn );
     //@}
 
 private:
@@ -47,7 +55,7 @@ private:
     //@{
     ASN1INT*  int_;
     ASN1REAL* real_;
-    QLabel* pLabel_;
+    gui::RichLabel* pLabel_;
     QLineEdit* pEdit_;
     //@}
 };
