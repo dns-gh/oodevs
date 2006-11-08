@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<orbat>
+  <sides>
+    <side id="1" name="rouge" type="enemy">
+      <objects>
+        <object id="25" name="bouchon mines [25]" type="bouchon mines">
+          <shape type="polygone">
+            <points>
+              <point>31TBN8027073993</point>
+              <point>31TBN8228666484</point>
+              <point>31TBN8760366278</point>
+              <point>31TBN8807478468</point>
+            </points>
+          </shape>
+        </object>
+        <object id="27" name="site franchissement [27]" type="site franchissement">
+          <shape type="polygone">
+            <points>
+              <point>31TBN7553240912</point>
+              <point>31TBN7804036923</point>
+              <point>31TBN8176236779</point>
+              <point>31TBN9228542744</point>
+            </points>
+          </shape>
+          <specific-attributes>
+            <width>10</width>
+            <depth>20</depth>
+            <speed>2</speed>
+            <construction-needed>true</construction-needed>
+          </specific-attributes>
+        </object>
+        <object id="28" name="rota [28]" type="rota">
+          <shape type="polygone">
+            <points>
+              <point>30TYT1236360261</point>
+              <point>30TYT1305256218</point>
+              <point>30TYT1659656355</point>
+              <point>30TYT1639161655</point>
+            </points>
+          </shape>
+          <specific-attributes>
+            <danger>1</danger>
+            <nbc-agents>
+              <nbc-agent type="Gaz sarin"/>
+              <nbc-agent type="HCN"/>
+              <nbc-agent type="Virus ebola"/>
+            </nbc-agents>
+          </specific-attributes>
+        </object>
+        <object id="31" name="camp prisonniers [31]" type="camp prisonniers">
+          <shape type="polygone">
+            <points>
+              <point>30TYT2436261349</point>
+              <point>30TYT2501060011</point>
+              <point>31TBN7422760006</point>
+              <point>31TBN7438363145</point>
+            </points>
+          </shape>
+          <specific-attributes>
+            <tc2 id="29"/>
+          </specific-attributes>
+        </object>
+        <object id="32" name="camp refugies [32]" type="camp refugies">
+          <shape type="cercle">
+            <points>
+              <point>31TBN8113161766</point>
+              <point>31TBN8122064061</point>
+            </points>
+          </shape>
+          <specific-attributes>
+            <tc2 id="29"/>
+          </specific-attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="17" level="x" name="">
+          <automat engaged="true" id="18" knowledge-group="23" name="$$$$Automate$$$$" type="BLD Sante">
+            <unit command-post="true" id="19" name="PC BLD Sante [19]" position="30TYT2238066816" type="PC BLD Sante"/>
+          </automat>
+          <automat engaged="true" id="20" knowledge-group="2" name="$$$$Automate$$$$" type="BLT Maintenance">
+            <unit command-post="true" id="21" name="PC BLT Maintenance [21]" position="30TYT2224763907" type="PC BLT Maintenance">
+            </unit>
+            <unit id="2100" name="Asslicker" position="30TYT2224763907" type="Section Combat GEN">
+            
+              <!--<dotations>
+                <dotation name="Truc pour reparer la mobilite 1" quantity="42"/>
+                <dotation name="Truc pour reparer la mobilite 2" quantity="51"/>
+                <dotation name="Truc pour reparer la mobilite 3" quantity="69"/>
+                <dotation name="Truc pour reparer l'electronique 1" quantity="666"/>
+              </dotations>-->
+            </unit>
+          </automat>
+          <automat engaged="true" id="29" knowledge-group="2" name="Automate 29" type="TC2">
+            <unit command-post="true" id="30" name="PC TC2" position="31TBN7766671872" type="PC TC2"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" type="Standard"/>
+        <knowledge-group id="23" type="Standard"/>
+      </communication>
+      <logistic/>
+      <populations/>
+    </side>
+    <side id="3" name="bleu" type="friend">
+      <objects/>
+      <logistic/>
+      <populations/>
+      <tactical>
+        <formation id="5" level="xxx" name="">
+          <formation id="6" level="iii" name="">
+            <formation id="7" level="oo" name="">
+              <automat engaged="true" id="9" knowledge-group="22" name="automate pas nommé" type="Compagnie GEN Lourde">
+                <unit command-post="true" id="10" name="Section Combat GEN [10]" position="30TYT1896868099" type="Section Combat GEN"/>
+                <unit command-post="false" id="11" name="Section Combat GEN [11]" position="30TYT1948867619" type="Section Combat GEN"/>
+                <unit command-post="false" id="12" name="Section Combat GEN [12]" position="30TYT1900667101" type="Section Combat GEN"/>
+              </automat>
+            </formation>
+            <formation id="8" level="ooo" name="">
+              <automat engaged="true" id="15" knowledge-group="4" name="$$$$Automate$$$$" type="Automate Refugie">
+                <unit command-post="true" id="16" name="Pion Refugie [16]" position="30TYT1869564961" type="Pion Refugie"/>
+              </automat>
+            </formation>
+            <automat engaged="true" id="13" knowledge-group="4" name="rav" type="BLD Ravitaillement">
+              <unit command-post="true" id="14" name="PC BLD Ravitaillement [14] [14] [14]" position="30TYT1983765228" type="PC BLD Ravitaillement"/>
+            </automat>
+          </formation>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="4" type="Standard"/>
+        <knowledge-group id="22" type="Standard"/>
+      </communication>
+    </side>
+  </sides>
+  <diplomacies>
+    <side id="1">
+      <relationship diplomacy="neutral" side="3"/>
+    </side>
+    <side id="3">
+      <relationship diplomacy="enemy" side="1"/>
+    </side>
+  </diplomacies>
+</orbat>
