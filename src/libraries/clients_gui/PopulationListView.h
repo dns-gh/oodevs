@@ -7,17 +7,19 @@
 //
 // *****************************************************************************
 
-#ifndef __PopulationListView_h_
-#define __PopulationListView_h_
+#ifndef __gui_PopulationListView_h_
+#define __gui_PopulationListView_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
+#include "ListView.h"
 
 namespace kernel
 {
     class Controllers;
     class Population_ABC;
     class Profile_ABC;
+    class Entity_ABC;
 }
 
 namespace gui
@@ -30,11 +32,12 @@ namespace gui
 */
 // Created: HME 2005-10-03
 // =============================================================================
-class PopulationListView : public QListView
+class PopulationListView : public ListView< PopulationListView >
                          , public kernel::Observer_ABC
                          , public kernel::ElementObserver_ABC< kernel::Population_ABC >
                          , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
-                         , public kernel::SelectionObserver< kernel::Population_ABC >
+                         , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                         , public kernel::SelectionObserver< kernel::Entity_ABC >
 {
     Q_OBJECT;
 
@@ -53,6 +56,12 @@ private slots:
     void OnRequestCenter();
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    //@}
+
 private:
     //! @name Copy / Assignment
     //@{
@@ -64,8 +73,8 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Population_ABC& popu );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& element );
     virtual void NotifyDeleted( const kernel::Population_ABC& popu );
-    virtual void NotifySelected( const kernel::Population_ABC* popu );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     //@}
 
@@ -80,4 +89,4 @@ private:
 
 }
 
-#endif // __PopulationListView_h_
+#endif // __gui_PopulationListView_h_

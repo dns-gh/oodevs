@@ -16,6 +16,7 @@
 #include "clients_kernel/SafePointer.h"
 
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 
 namespace kernel
 {
@@ -236,6 +237,25 @@ public:
     }
 private:
     const kernel::Object_ABC* value_;
+};
+
+template< >
+class ValueContainer< const kernel::Population_ABC* > : public ValueContainer< const kernel::Entity_ABC* >
+{
+public:
+    ValueContainer( kernel::Population_ABC const* const& value ) : ValueContainer< const kernel::Entity_ABC* >( value ), value_( value ) {};
+    virtual int rtti() const {
+        return ListItemRtti< const kernel::Population_ABC* >::rtti;
+    }
+    kernel::Population_ABC const* const& GetValue() const {
+        return value_;
+    };
+    void SetValue( kernel::Population_ABC const* const& value ) {
+        value_ = value;
+        ValueContainer< const kernel::Entity_ABC* >::SetValue( value );
+    }
+private:
+    const kernel::Population_ABC* value_;
 };
 
 // -----------------------------------------------------------------------------

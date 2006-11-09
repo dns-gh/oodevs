@@ -201,5 +201,5 @@ void Object::CreateDictionary( kernel::Controller& controller )
     const Object& constSelf = *this;
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
     dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Name" ), name_ );
-//    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), type_ );
+    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), constSelf.type_ );
 }

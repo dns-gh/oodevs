@@ -22,6 +22,7 @@ namespace kernel
     class Population_ABC;
     class PopulationFlow_ABC;
     class PopulationConcentration_ABC;
+    class PopulationType;
     class NBCAgent;
     class Entity_ABC;
     class Automat_ABC;
@@ -221,23 +222,28 @@ struct ListItemRtti< const kernel::AutomatType* > {
 };
 
 template< >
-struct ListItemRtti< const Model* > {
+struct ListItemRtti< const kernel::PopulationType* > {
     enum { rtti = 1032 };
 };
 
 template< >
-struct ListItemRtti< const kernel::Entity_ABC* > {
+struct ListItemRtti< const Model* > {
     enum { rtti = 1033 };
 };
 
 template< >
-struct ListItemRtti< const kernel::AutomatComposition* > {
+struct ListItemRtti< const kernel::Entity_ABC* > {
     enum { rtti = 1034 };
 };
 
 template< >
-struct ListItemRtti< const kernel::Automat_ABC* > {
+struct ListItemRtti< const kernel::AutomatComposition* > {
     enum { rtti = 1035 };
+};
+
+template< >
+struct ListItemRtti< const kernel::Automat_ABC* > {
+    enum { rtti = 1036 };
 };
 
 }

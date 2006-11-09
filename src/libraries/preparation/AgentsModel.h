@@ -72,6 +72,7 @@ public:
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
     void CreatePopulation( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position );
+    void CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 

@@ -98,7 +98,7 @@ namespace
                        , public ValueEditor< T >
     {
     public:
-                 NumberEditor( QWidget* parent, const T& value ) : QSpinBox( parent )
+                 NumberEditor( QWidget* parent, const T& value ) : QSpinBox( 0, std::numeric_limits< T >::max(), 1, parent )
                  {
                      setValue( value );
                  }
@@ -116,7 +116,7 @@ namespace
                      , public ValueEditor< UnitedValue< T > >
     {
     public:
-                 UnitEditor( QWidget* parent, const UnitedValue< T >& value ) : QSpinBox( parent ), unit_( value.unit_ )
+                 UnitEditor( QWidget* parent, const UnitedValue< T >& value ) : QSpinBox( 0, std::numeric_limits< T >::max(), 1, parent ), unit_( value.unit_ )
                  {
                      setValue( value.value_ );
                      setSuffix( value.unit_ );

@@ -27,7 +27,7 @@ using namespace gui;
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
 PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : QListView   ( pParent )
+    : ListView< PopulationListView >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
     , profile_( 0 )
@@ -62,27 +62,44 @@ PopulationListView::~PopulationListView()
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyCreated( const Population_ABC& popu )
 {
-    const Team_ABC& team = popu.GetTeam();
+    const Entity_ABC& team = (const Entity_ABC&)popu.GetTeam();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {
         teamItem = factory_.CreateItem( this );
         teamItem->SetNamed( team );
     }
-    factory_.CreateItem( teamItem )->SetNamed( popu );
+    factory_.CreateItem( teamItem )->SetNamed( (const Entity_ABC&)popu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::NotifyUpdated
+// Created: SBO 2006-11-09
+// -----------------------------------------------------------------------------
+void PopulationListView::NotifyUpdated( const Entity_ABC& element )
+{
+    if( ValuedListItem* item = FindItem( &element, firstChild() ) )
+        item->SetNamed( element );
+}
+
+namespace
+{
+    void DeleteHierarchy( QListViewItem* item )
+    {
+        QListViewItem* parent = item ? item->parent() : 0;
+        delete item;
+        if( parent && ! parent->childCount() )
+            DeleteHierarchy( parent );
+    };  
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView::NotifyDeleted
-// Created: AGE 2006-02-16
+// Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void PopulationListView::NotifyDeleted( const Population_ABC& popu )
+void PopulationListView::NotifyDeleted( const Population_ABC& element )
 {
-    QListViewItem* item = FindItem( &popu, firstChild() );
-    QListViewItem* teamItem = item ? item->parent() : 0;
-    delete item;
-    if( teamItem && ! teamItem->childCount() )
-        delete teamItem;
+    DeleteHierarchy( FindItem( (const Entity_ABC*)&element, firstChild() ) );
 }
 
 // $$$$ AGE 2006-03-22: somehow factor these things
@@ -126,15 +143,18 @@ void PopulationListView::OnContextMenuRequested( QListViewItem* i, const QPoint&
 // Name: PopulationListView::NotifySelected
 // Created: AGE 2006-03-21
 // -----------------------------------------------------------------------------
-void PopulationListView::NotifySelected( const Population_ABC* popu )
+void PopulationListView::NotifySelected( const Entity_ABC* element )
 {
-    if( popu )
+    ValuedListItem* item = 0;
+    if( element && ( item = FindItem( element, firstChild() ) ) )
     {
-        setSelected( FindItem( popu, firstChild() ), true );
+        if( item != selectedItem() )
+        {
+            selectAll( false );
+            setSelected( item, true );
+        }
         ensureItemVisible( selectedItem() );
     }
-    else
-        selectAll( false );
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ class UnitListView : public gui::ListView< UnitListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitListView( QWidget* parent, kernel::Controllers& controllers, kernel::AgentTypes& list, gui::ItemFactory_ABC& factory );
+             UnitListView( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, gui::ItemFactory_ABC& factory );
     virtual ~UnitListView();
     //@}
 

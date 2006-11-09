@@ -22,6 +22,9 @@
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/BreakdownType.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/PopulationType.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Mission.h"
 #include "Tools.h"
@@ -171,6 +174,33 @@ void BaseDisplayer::Call( const BreakdownType& value )
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const ObjectType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: SBO 2006-11-09
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::AgentType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: SBO 2006-11-09
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::AutomatType& value )
+{
+    AddToDisplay( value.GetName() );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: SBO 2006-11-09
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::PopulationType& value )
 {
     AddToDisplay( value.GetName() );
 }

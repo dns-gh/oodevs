@@ -14,7 +14,6 @@
 #include "clients_kernel/AgentTypes.h"
 #include "Agent.h"
 #include "Automat.h"
-
 #include "AgentsModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "AgentFactory.h"
@@ -31,6 +30,10 @@
 #include "SupplyStates.h"
 #include "Tc2States.h"
 #include "TacticalLines.h"
+#include "Population.h"
+#include "PopulationPositions.h"
+#include "PopulationHierarchies.h"
+#include "Populations.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -76,7 +79,6 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_ ) );
 
-    AttachExtensions( *result );
     result->Polish();
     return result;
 }
@@ -85,7 +87,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 // Name: AgentFactory::Create
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& position )
+kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatType& type, const geometry::Point2f& )
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
@@ -101,7 +103,22 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
     result->Attach( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 
-    AttachExtensions( *result );
+    result->Polish();
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: SBO 2006-11-08
+// -----------------------------------------------------------------------------
+kernel::Population_ABC* AgentFactory::Create( kernel::Team_ABC& parent, const kernel::PopulationType& type, const geometry::Point2f& position )
+{
+    Population* result = new Population( type, controllers_.controller_, idManager_ );
+    result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( controllers_.controller_, *result, &parent ) );
+
+    if( Populations* popus = parent.Retrieve< Populations >() )
+        popus->AddPopulation( *result );
     result->Polish();
     return result;
 }
@@ -137,7 +154,6 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new Dotations( xis, controllers_.controller_, static_.objectTypes_ ) );
 
-    AttachExtensions( *result );
     result->Polish();
     return result;
 }
@@ -160,27 +176,22 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     result->Attach( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 
-    AttachExtensions( *result );
     result->Polish();
     return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory::Create
-// Created: AGE 2006-02-13
+// Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-Population_ABC* AgentFactory::Create( Team_ABC& parent, const PopulationType& type, const geometry::Point2f& position )
+kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_ABC& parent )
 {
-     // $$$$ AGE 2006-10-04: 
-    return 0;
+    Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
+    result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( controllers_.controller_, *result, &parent ) );
+
+    if( Populations* popus = parent.Retrieve< Populations >() )
+        popus->AddPopulation( *result );
+    result->Polish();
+    return result;
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentFactory::AttachExtensions
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void AgentFactory::AttachExtensions( Entity_ABC& agent )
-{
-
-}
-

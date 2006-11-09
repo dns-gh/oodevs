@@ -56,6 +56,7 @@ AgentsModel::~AgentsModel()
 void AgentsModel::Purge()
 {
     Resolver< Agent_ABC >::DeleteAll();
+    Resolver< Automat_ABC >::DeleteAll();
     Resolver< Population_ABC >::DeleteAll();
 }
 
@@ -221,7 +222,17 @@ void AgentsModel::CreatePopulation( Team_ABC& parent, const PopulationType& type
     Population_ABC* popu = agentFactory_.Create( parent, type, position );
     Resolver< Population_ABC >::Register( popu->GetId(), *popu );
 }
-//
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CreatePopulation
+// Created: SBO 2006-11-09
+// -----------------------------------------------------------------------------
+void AgentsModel::CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent )
+{
+    Population_ABC* popu = agentFactory_.Create( xis, parent );
+    Resolver< Population_ABC >::Register( popu->GetId(), *popu );
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::GetPopulation
 // Created: AGE 2006-02-13

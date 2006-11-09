@@ -24,11 +24,14 @@ namespace kernel
     class NBCAgent;
     class ComponentType;
     class BreakdownType;
-    class ObjectType;
     class Mission;
     class CoordinateConverter_ABC;
     class PopulationConcentration_ABC;
     class Entity_ABC;
+    class AgentType;
+    class AutomatType;
+    class PopulationType;
+    class ObjectType;
 }
 
 namespace gui
@@ -42,6 +45,7 @@ namespace gui
 // =============================================================================
 class BaseDisplayer : public kernel::Displayer_ABC
                     , public kernel::Caller< bool >
+                    , public kernel::Caller< QTime >
                     , public kernel::Caller< kernel::Population_ABC>
                     , public kernel::Caller< kernel::PopulationConcentration_ABC >
                     , public kernel::Caller< kernel::Agent_ABC >
@@ -54,9 +58,11 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public kernel::Caller< kernel::NBCAgent >
                     , public kernel::Caller< kernel::ComponentType >
                     , public kernel::Caller< kernel::BreakdownType >
-                    , public kernel::Caller< kernel::ObjectType >
-                    , public kernel::Caller< QTime >
                     , public kernel::Caller< kernel::Mission >
+                    , public kernel::Caller< kernel::AgentType >
+                    , public kernel::Caller< kernel::AutomatType >
+                    , public kernel::Caller< kernel::PopulationType >
+                    , public kernel::Caller< kernel::ObjectType >
 {
 
 public:
@@ -76,6 +82,7 @@ private:
     //! @name Helpers
     //@{
     virtual void Call( const bool& value );
+    virtual void Call( const QTime& value );
     virtual void Call( const kernel::Agent_ABC& value );
     virtual void Call( const kernel::Automat_ABC& value );
     virtual void Call( const kernel::Population_ABC& value );
@@ -88,9 +95,11 @@ private:
     virtual void Call( const kernel::NBCAgent& value );
     virtual void Call( const kernel::ComponentType& value );
     virtual void Call( const kernel::BreakdownType& value );
-    virtual void Call( const kernel::ObjectType& value );
-    virtual void Call( const QTime& value );
     virtual void Call( const kernel::Mission& value );
+    virtual void Call( const kernel::AgentType& value );
+    virtual void Call( const kernel::AutomatType& value );
+    virtual void Call( const kernel::PopulationType& value );
+    virtual void Call( const kernel::ObjectType& value );
     //@}
 };
 

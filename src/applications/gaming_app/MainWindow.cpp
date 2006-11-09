@@ -313,7 +313,7 @@ void MainWindow::Open()
     std::string current;
     while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
     {
-        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Open scipio.xml" );
+        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", this, 0, "Open scipio.xml" );
         if( filename.isEmpty() )
             return;
         current = filename;

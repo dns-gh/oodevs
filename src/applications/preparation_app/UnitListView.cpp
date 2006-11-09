@@ -23,7 +23,7 @@ using namespace gui;
 // Name: UnitListView constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-UnitListView::UnitListView( QWidget* parent, Controllers& controllers, AgentTypes& list, ItemFactory_ABC& factory )
+UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const AgentTypes& list, ItemFactory_ABC& factory )
     : ListView< UnitListView >( parent, *this, factory )
     , controllers_( controllers )
     , types_( list )

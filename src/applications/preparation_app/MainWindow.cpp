@@ -25,11 +25,13 @@
 #include "TacticalListView.h"
 #include "CommunicationListView.h"
 #include "ObjectListView.h"
+#include "PopulationListView.h"
 #include "AgentsLayer.h"
 #include "ModelBuilder.h"
 #include "Dialogs.h"
 #include "LimitsLayer.h"
-#include "PreparationProfile.h"
+#include "PopulationsLayer.h"
+#include "preparationProfile.h"
 #include "preparation/Exceptions.h"
 
 #include "clients_kernel/ActionController.h"
@@ -42,7 +44,6 @@
 #include "clients_kernel/FormationLevels.h"
 
 #include "preparation/Model.h"
-//#include "gaming/Population.h"
 #include "preparation/StaticModel.h"
 #include "preparation/FormationModel.h"
 
@@ -54,13 +55,11 @@
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
 #include "clients_gui/StatusBar.h"
-#include "clients_gui/PopulationList.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/GlPlaceHolder.h"
 #include "clients_gui/RichItemFactory.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ColorStrategy.h"
-#include "clients_gui/PopulationsLayer.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/TerrainLayer.h"
@@ -140,7 +139,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
     new ::ObjectListView( listsTabBox, controllers, *factory );
     pListsTabWidget->addTab( listsTabBox, tr( "Objets" ) );
-    pListsTabWidget->addTab( new PopulationList( controllers, *factory ), tr( "Populations" ) );
+    listsTabBox = new QVBox( pListsTabWidget );
+    new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
+    new ::PopulationListView( listsTabBox, controllers, *factory );
+    pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
@@ -214,7 +216,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    Layer_ABC& populations          = *new PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
 //    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     
@@ -251,7 +253,7 @@ void MainWindow::New()
     std::string current;
     while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
     {
-        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", 0, 0, "Choose scipio.xml" );
+        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", this, 0, "Choose scipio.xml" );
         if( filename.isEmpty() )
             return;
         current = filename;

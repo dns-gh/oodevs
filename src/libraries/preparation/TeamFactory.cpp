@@ -26,6 +26,7 @@
 #include "CrossingSiteAttributes.h"
 #include "CampAttributes.h"
 #include "ObjectHierarchies.h"
+#include "Populations.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/ObjectType.h"
@@ -65,6 +66,7 @@ Team_ABC* TeamFactory::CreateTeam()
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
+    result->Attach( *new Populations() );
     result->Polish();
     return result;
 }
@@ -79,6 +81,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach( *new Diplomacies( controllers_.controller_, model_.teams_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< kernel::CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
+    result->Attach( *new Populations() );
     result->Polish();
     return result;
 }

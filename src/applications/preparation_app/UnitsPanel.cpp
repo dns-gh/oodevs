@@ -24,10 +24,10 @@ namespace
     {
         ValuedComboBox< std::string >* combo = new ValuedComboBox< std::string >( parent );
         // $$$$ SBO 2006-08-28: Iterator sur AgentNatures?
-        combo->AddItem( tools::translate( "Preparation", "Vue hiérarchique" ), "" );
-        combo->AddItem( tools::translate( "Preparation", "Niveau" ), "level" );
-        combo->AddItem( tools::translate( "Preparation", "Nature" ), "nature" );
-        combo->AddItem( tools::translate( "Preparation", "Qualificatif Atlas" ), "atlas" );
+        combo->AddItem( tools::translate( "UnitsPanel", "Vue hiérarchique" ), "" );
+        combo->AddItem( tools::translate( "UnitsPanel", "Niveau" ), "level" );
+        combo->AddItem( tools::translate( "UnitsPanel", "Nature" ), "nature" );
+        combo->AddItem( tools::translate( "UnitsPanel", "Qualificatif Atlas" ), "atlas" );
         return combo;
     }
 }
@@ -36,7 +36,7 @@ namespace
 // Name: UnitsPanel constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, AgentTypes& types, ItemFactory_ABC& factory )
+UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, tr( "Unités" ) )
     , controllers_( controllers )
 {
@@ -46,7 +46,7 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
     QPushButton* closeAll = new QPushButton( "-", box );
     closeAll->setMaximumSize( 20, 20 );;
 
-    new QLabel( tools::translate( "Preparation", "Affichage:" ), box );
+    new QLabel( tools::translate( "UnitsPanel", "Affichage:" ), box );
     combo_ = BuildNatureFieldsCombo( box );
     list_ = new UnitListView( this, controllers_, types, factory );
 

@@ -7,18 +7,18 @@
 //
 // *****************************************************************************
 
-#ifndef __UnitsPanel_h_
-#define __UnitsPanel_h_
+#ifndef __PopulationsPanel_h_
+#define __PopulationsPanel_h_
 
 #include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
-#include "clients_gui/ValuedComboBox.h"
 
 namespace kernel
 {
     class Controllers;
     class ModelLoaded;
-    class AgentTypes;
+    class PopulationType;
 }
 
 namespace gui
@@ -27,40 +27,35 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class UnitListView;
+class PopulationTypesListView;
 
 // =============================================================================
-/** @class  UnitsPanel
-    @brief  UnitsPanel
+/** @class  PopulationsPanel
+    @brief  PopulationsPanel
 */
-// Created: SBO 2006-08-28
+// Created: SBO 2006-11-09
 // =============================================================================
-class UnitsPanel : public gui::InfoPanel_ABC
-                 , public kernel::Observer_ABC
-                 , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+class PopulationsPanel : public gui::InfoPanel_ABC
+                       , public kernel::Observer_ABC
+                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, gui::ItemFactory_ABC& factory );
-    virtual ~UnitsPanel();
+             PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory );
+    virtual ~PopulationsPanel();
     //@}
 
-private slots:
-    //! @name Slots
+    //! @name Operations
     //@{
-    void Sort();
-    void OpenList();
-    void CloseList();
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    UnitsPanel( const UnitsPanel& );            //!< Copy constructor
-    UnitsPanel& operator=( const UnitsPanel& ); //!< Assignement operator
+    PopulationsPanel( const PopulationsPanel& );            //!< Copy constructor
+    PopulationsPanel& operator=( const PopulationsPanel& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -69,12 +64,11 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ValuedComboBox< std::string >* combo_;
-    UnitListView* list_;
+    PopulationTypesListView* list_;
     //@}
 };
 
-#endif // __UnitsPanel_h_
+#endif // __PopulationsPanel_h_

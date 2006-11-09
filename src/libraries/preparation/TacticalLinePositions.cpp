@@ -54,10 +54,9 @@ TacticalLinePositions::~TacticalLinePositions()
 // -----------------------------------------------------------------------------
 void TacticalLinePositions::ReadPoint( xml::xistream& xis )
 {
-    float x, y;
-    xis >> attribute( "x", x )
-        >> attribute( "y", y );
-    pointList_.push_back( geometry::Point2f( x, y ) );
+    std::string mgrs;
+    xis >> mgrs;
+    pointList_.push_back( converter_.ConvertToXY( mgrs ) );
     boundingBox_.Incorporate( pointList_.back() );
 }
 
@@ -153,8 +152,5 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const geometry::Rect
 void TacticalLinePositions::SerializeAttributes( xml::xostream& xos ) const
 {
     for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
-        xos << start( "point" )
-                << attribute( "x", itPoint->X() )
-                << attribute( "y", itPoint->Y() )
-            << end();
+        xos << start( "point" ) << converter_.ConvertToMgrs( *itPoint ) << end();
 }
