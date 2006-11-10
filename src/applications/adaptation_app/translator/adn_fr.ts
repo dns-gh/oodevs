@@ -1534,7 +1534,7 @@
     </message>
     <message>
         <source>Automate GEN RealiserSystemeObstacles</source>
-        <translation>Automate GEN RealiserSystemeObstacles</translation>
+        <translation type="obsolete">Automate GEN RealiserSystemeObstacles</translation>
     </message>
     <message>
         <source>Automate GEN FranchirDeViveForce</source>
@@ -1546,43 +1546,43 @@
     </message>
     <message>
         <source>Automate GEN AmenagerAireStationnement</source>
-        <translation>Automate GEN AmenagerAireStationnement</translation>
+        <translation type="obsolete">Automate GEN AmenagerAireStationnement</translation>
     </message>
     <message>
         <source>Automate GEN AmenagerTerrainPoserSommaire</source>
-        <translation>Automate GEN AmenagerTerrainPoserSommaire</translation>
+        <translation type="obsolete">Automate GEN AmenagerTerrainPoserSommaire</translation>
     </message>
     <message>
         <source>Automate GEN RealiserZonePoser</source>
-        <translation>Automate GEN RealiserZonePoser</translation>
+        <translation type="obsolete">Automate GEN RealiserZonePoser</translation>
     </message>
     <message>
         <source>Automate GEN ReconnaitreZoneDeploiement</source>
-        <translation>Automate GEN ReconnaitreZoneDeploiement</translation>
+        <translation type="obsolete">Automate GEN ReconnaitreZoneDeploiement</translation>
     </message>
     <message>
         <source>Automate GEN RealiserCampPrisonniers</source>
-        <translation>Automate GEN RealiserCampPrisonniers</translation>
+        <translation type="obsolete">Automate GEN RealiserCampPrisonniers</translation>
     </message>
     <message>
         <source>Automate GEN RealiserCampRefugies</source>
-        <translation>Automate GEN RealiserCampRefugies</translation>
+        <translation type="obsolete">Automate GEN RealiserCampRefugies</translation>
     </message>
     <message>
         <source>Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial</source>
-        <translation>Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial</translation>
+        <translation type="obsolete">Automate GEN RealiserPlatesformesSommairesDeDeploiementInitial</translation>
     </message>
     <message>
         <source>Automate GEN RealiserTravauxSommairesAuProfitPopulation</source>
-        <translation>Automate GEN RealiserTravauxSommairesAuProfitPopulation</translation>
+        <translation type="obsolete">Automate GEN RealiserTravauxSommairesAuProfitPopulation</translation>
     </message>
     <message>
         <source>Automate GEN AppuyerDebarquementTroupes</source>
-        <translation>Automate GEN AppuyerDebarquementTroupes</translation>
+        <translation type="obsolete">Automate GEN AppuyerDebarquementTroupes</translation>
     </message>
     <message>
         <source>Automate GEN OuvrirAxesProgression</source>
-        <translation>Automate GEN OuvrirAxesProgression</translation>
+        <translation type="obsolete">Automate GEN OuvrirAxesProgression</translation>
     </message>
     <message>
         <source>Automate INF AttaquerSouplesse</source>
@@ -2014,71 +2014,71 @@
     </message>
     <message>
         <source>Pion GEN RealiserFosseAC</source>
-        <translation>Pion GEN RealiserFosseAC</translation>
+        <translation type="obsolete">Pion GEN RealiserFosseAC</translation>
     </message>
     <message>
         <source>Pion GEN RealiserAbattisMine</source>
-        <translation>Pion GEN RealiserAbattisMine</translation>
+        <translation type="obsolete">Pion GEN RealiserAbattisMine</translation>
     </message>
     <message>
         <source>Pion GEN RealiserPointMine</source>
-        <translation>Pion GEN RealiserPointMine</translation>
+        <translation type="obsolete">Pion GEN RealiserPointMine</translation>
     </message>
     <message>
         <source>Pion GEN RealiserBarricade</source>
-        <translation>Pion GEN RealiserBarricade</translation>
+        <translation type="obsolete">Pion GEN RealiserBarricade</translation>
     </message>
     <message>
         <source>Pion GEN RealiserEboulement</source>
-        <translation>Pion GEN RealiserEboulement</translation>
+        <translation type="obsolete">Pion GEN RealiserEboulement</translation>
     </message>
     <message>
         <source>Pion GEN RealiserBouchonMine</source>
-        <translation>Pion GEN RealiserBouchonMine</translation>
+        <translation type="obsolete">Pion GEN RealiserBouchonMine</translation>
     </message>
     <message>
         <source>Pion GEN DetruireRoute</source>
-        <translation>Pion GEN DetruireRoute</translation>
+        <translation type="obsolete">Pion GEN DetruireRoute</translation>
     </message>
     <message>
         <source>Pion GEN DetruirePont</source>
-        <translation>Pion GEN DetruirePont</translation>
+        <translation type="obsolete">Pion GEN DetruirePont</translation>
     </message>
     <message>
         <source>Pion GEN SecuriserItineraire</source>
-        <translation>Pion GEN SecuriserItineraire</translation>
+        <translation type="obsolete">Pion GEN SecuriserItineraire</translation>
     </message>
     <message>
         <source>Pion GEN DegagerAbattisMine</source>
-        <translation>Pion GEN DegagerAbattisMine</translation>
+        <translation type="obsolete">Pion GEN DegagerAbattisMine</translation>
     </message>
     <message>
         <source>Pion GEN DegagerEboulement</source>
-        <translation>Pion GEN DegagerEboulement</translation>
+        <translation type="obsolete">Pion GEN DegagerEboulement</translation>
     </message>
     <message>
         <source>Pion GEN DegagerRues</source>
-        <translation>Pion GEN DegagerRues</translation>
+        <translation type="obsolete">Pion GEN DegagerRues</translation>
     </message>
     <message>
         <source>Pion GEN ComblerEntonnoir</source>
-        <translation>Pion GEN ComblerEntonnoir</translation>
+        <translation type="obsolete">Pion GEN ComblerEntonnoir</translation>
     </message>
     <message>
         <source>Pion GEN ComblerFosseAC</source>
-        <translation>Pion GEN ComblerFosseAC</translation>
+        <translation type="obsolete">Pion GEN ComblerFosseAC</translation>
     </message>
     <message>
         <source>Pion GEN CreerContournement</source>
-        <translation>Pion GEN CreerContournement</translation>
+        <translation type="obsolete">Pion GEN CreerContournement</translation>
     </message>
     <message>
         <source>Pion GEN RealiserZoneMineeLineaire</source>
-        <translation>Pion GEN RealiserZoneMineeLineaire</translation>
+        <translation type="obsolete">Pion GEN RealiserZoneMineeLineaire</translation>
     </message>
     <message>
         <source>Pion GEN OuvrirTrouee</source>
-        <translation>Pion GEN OuvrirTrouee</translation>
+        <translation type="obsolete">Pion GEN OuvrirTrouee</translation>
     </message>
     <message>
         <source>Pion GEN Renforcer</source>
@@ -2086,19 +2086,19 @@
     </message>
     <message>
         <source>Pion GEN FranchirEntonnoir</source>
-        <translation>Pion GEN FranchirEntonnoir</translation>
+        <translation type="obsolete">Pion GEN FranchirEntonnoir</translation>
     </message>
     <message>
         <source>Pion GEN FranchirFosseAC</source>
-        <translation>Pion GEN FranchirFosseAC</translation>
+        <translation type="obsolete">Pion GEN FranchirFosseAC</translation>
     </message>
     <message>
         <source>Pion GEN RealiserZoneMineeParDispersion</source>
-        <translation>Pion GEN RealiserZoneMineeParDispersion</translation>
+        <translation type="obsolete">Pion GEN RealiserZoneMineeParDispersion</translation>
     </message>
     <message>
         <source>Pion GEN RealiserPostesTir</source>
-        <translation>Pion GEN RealiserPostesTir</translation>
+        <translation type="obsolete">Pion GEN RealiserPostesTir</translation>
     </message>
     <message>
         <source>Pion GEN RealiserTravauxProtection</source>
@@ -2110,7 +2110,7 @@
     </message>
     <message>
         <source>Pion GEN EquiperExploiter</source>
-        <translation>Pion GEN EquiperExploiter</translation>
+        <translation type="obsolete">Pion GEN EquiperExploiter</translation>
     </message>
     <message>
         <source>Pion GEN ExecuterVariantement</source>
@@ -2126,7 +2126,7 @@
     </message>
     <message>
         <source>Pion GEN DeminerSiteFranchissement</source>
-        <translation>Pion GEN DeminerSiteFranchissement</translation>
+        <translation type="obsolete">Pion GEN DeminerSiteFranchissement</translation>
     </message>
     <message>
         <source>Pion GEN ReconnaitreZone</source>
@@ -2134,19 +2134,19 @@
     </message>
     <message>
         <source>Pion GEN CreerPlateForme</source>
-        <translation>Pion GEN CreerPlateForme</translation>
+        <translation type="obsolete">Pion GEN CreerPlateForme</translation>
     </message>
     <message>
         <source>Pion GEN CreerPiste</source>
-        <translation>Pion GEN CreerPiste</translation>
+        <translation type="obsolete">Pion GEN CreerPiste</translation>
     </message>
     <message>
         <source>Pion GEN CreerAirePoser</source>
-        <translation>Pion GEN CreerAirePoser</translation>
+        <translation type="obsolete">Pion GEN CreerAirePoser</translation>
     </message>
     <message>
         <source>Pion GEN NeutraliserEnginsExplosifs</source>
-        <translation>Pion GEN NeutraliserEnginsExplosifs</translation>
+        <translation type="obsolete">Pion GEN NeutraliserEnginsExplosifs</translation>
     </message>
     <message>
         <source>Pion GEN ActiverObstacle</source>
@@ -2158,7 +2158,7 @@
     </message>
     <message>
         <source>Pion GEN RealiserAireLogistique</source>
-        <translation>Pion GEN RealiserAireLogistique</translation>
+        <translation type="obsolete">Pion GEN RealiserAireLogistique</translation>
     </message>
     <message>
         <source>Pion GEN DepolluerZone</source>
@@ -2166,31 +2166,31 @@
     </message>
     <message>
         <source>Pion GEN AmenagerTerrainPoser</source>
-        <translation>Pion GEN AmenagerTerrainPoser</translation>
+        <translation type="obsolete">Pion GEN AmenagerTerrainPoser</translation>
     </message>
     <message>
         <source>Pion GEN RealiserPlateFormeDeploiement</source>
-        <translation>Pion GEN RealiserPlateFormeDeploiement</translation>
+        <translation type="obsolete">Pion GEN RealiserPlateFormeDeploiement</translation>
     </message>
     <message>
         <source>Pion GEN ReprendreMissionConstruction</source>
-        <translation>Pion GEN ReprendreMissionConstruction</translation>
+        <translation type="obsolete">Pion GEN ReprendreMissionConstruction</translation>
     </message>
     <message>
         <source>Pion GEN RealiserZonePoserHelicoptere</source>
-        <translation>Pion GEN RealiserZonePoserHelicoptere</translation>
+        <translation type="obsolete">Pion GEN RealiserZonePoserHelicoptere</translation>
     </message>
     <message>
         <source>Pion GEN AppuyerDebarquementTroupesGU</source>
-        <translation>Pion GEN AppuyerDebarquementTroupesGU</translation>
+        <translation type="obsolete">Pion GEN AppuyerDebarquementTroupesGU</translation>
     </message>
     <message>
         <source>Pion GEN RealiserCampPrisonniers</source>
-        <translation>Pion GEN RealiserCampPrisonniers</translation>
+        <translation type="obsolete">Pion GEN RealiserCampPrisonniers</translation>
     </message>
     <message>
         <source>Pion GEN RealiserCampRefugies</source>
-        <translation>Pion GEN RealiserCampRefugies</translation>
+        <translation type="obsolete">Pion GEN RealiserCampRefugies</translation>
     </message>
     <message>
         <source>Pion INF ReconnaitreAxe</source>
@@ -2790,6 +2790,54 @@
     </message>
     <message>
         <source>Pion Transporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate GEN ReconnaitreZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate GEN RealiserTravaux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate GEN OuvrirItineraires</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate GEN DegagerObstaclesDansZone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN OuvrirItineraire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN EquiperExploiterSiteFranchissement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN DegagerObstacles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN ContournerObstacles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN RealiserTravauxContreMobilite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN RealiserTravauxAppuiDeploiement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN RealiserCamps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pion GEN ReprendreTravaux</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6036,27 +6084,35 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>explosif</source>
-        <translation type="unfinished">explosif</translation>
+        <translation>explosif</translation>
     </message>
     <message>
         <source>grenade</source>
-        <translation type="unfinished">grenade</translation>
+        <translation>grenade</translation>
     </message>
     <message>
         <source>aced</source>
-        <translation type="unfinished">aced</translation>
+        <translation>aced</translation>
     </message>
     <message>
         <source>fumigene</source>
-        <translation type="unfinished">fumigène</translation>
+        <translation>fumigène</translation>
     </message>
     <message>
         <source>eclairant</source>
-        <translation type="unfinished">éclairant</translation>
+        <translation>éclairant</translation>
     </message>
     <message>
         <source>mine</source>
-        <translation type="unfinished">mine</translation>
+        <translation>mine</translation>
+    </message>
+    <message>
+        <source>montagne</source>
+        <translation>montagne</translation>
+    </message>
+    <message>
+        <source>bord de montagne</source>
+        <translation>bord de montagne</translation>
     </message>
 </context>
 <context>

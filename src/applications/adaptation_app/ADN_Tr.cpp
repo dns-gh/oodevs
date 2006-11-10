@@ -65,7 +65,10 @@ ADN_Tr::T_ConverterLocation ADN_Tr::locationConverter_[] =
     T_ConverterLocation( "falaise",            QT_TRANSLATE_NOOP( "ADN_Tr", "falaise" ),            eLocation_Cliff              ),
     T_ConverterLocation( "voie ferree",        QT_TRANSLATE_NOOP( "ADN_Tr", "voie ferree" ),        eLocation_Railroad           ),
     T_ConverterLocation( "carrefour",          QT_TRANSLATE_NOOP( "ADN_Tr", "carrefour" ),          eLocation_Crossroad          ),
-    T_ConverterLocation( "",                   QT_TRANSLATE_NOOP( "ADN_Tr", "" ),                   (E_Location)-1               )
+
+    T_ConverterLocation( "montagne",           QT_TRANSLATE_NOOP( "ADN_Tr", "montagne" )  ,         eLocation_Mountain           ),
+    T_ConverterLocation( "bord de montagne",   QT_TRANSLATE_NOOP( "ADN_Tr", "bord de montagne" ),   eLocation_MountainBorder     ),
+    T_ConverterLocation( "",                   QT_TRANSLATE_NOOP( "ADN_Tr", "" ),                  (E_Location)-1                )
 };
 
 

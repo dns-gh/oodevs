@@ -52,6 +52,9 @@ enum E_Location
     eLocation_Cliff,
     eLocation_Railroad,
     eLocation_Crossroad,
+
+    eLocation_Mountain,
+    eLocation_MountainBorder,
     eNbrLocation
 };
 
