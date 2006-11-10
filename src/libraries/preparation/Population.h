@@ -14,7 +14,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "EnumType.h"
+#include "EnumTypes.h"
 
 namespace kernel
 {
