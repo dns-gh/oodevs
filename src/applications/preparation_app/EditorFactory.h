@@ -14,6 +14,7 @@
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "preparation/Types.h"
+#include "preparation/EnumTypes.h"
 
 namespace kernel
 {
@@ -45,6 +46,7 @@ class EditorFactory : public gui::EditorFactory
                     , public kernel::Caller< TeamKarma** >
                     , public kernel::Caller< kernel::NBCAgent** >
                     , public kernel::Caller< std::vector< kernel::NBCAgent* >* >
+                    , public kernel::Caller< Enum_PopulationAttitude* >
 {
 
 public:
@@ -64,6 +66,7 @@ public:
     virtual void Call( TeamKarma** const& value );
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
+    virtual void Call( Enum_PopulationAttitude* const& value );
     //@}
 
 private:

@@ -47,3 +47,12 @@ void PropertiesTableDisplayer::Call( const TeamKarma& value )
 {
     AddToDisplay( value.GetName() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const Enum_PopulationAttitude& value )
+{
+    AddToDisplay( value.ToString() );
+}

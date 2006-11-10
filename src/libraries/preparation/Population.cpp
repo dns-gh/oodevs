@@ -52,7 +52,7 @@ Population::Population( xml::xistream& xis, kernel::Controller& controller, IdMa
     : kernel::EntityImplementation< kernel::Population_ABC >( controller, ReadAttribute< int >( xis, "id" ), ReadAttribute< std::string >( xis, "name" ).c_str() )
     , type_( types.Get( ReadAttribute< std::string >( xis, "type" ).c_str() ) )
     , livingHumans_( ReadAttribute< int >( xis, "humans" ) )
-    , attitude_( ENT_Tr::ConvertToPopulationAttitude( ReadAttribute< std::string >( xis, "attitude" ) ) )
+    , attitude_( ReadAttribute< std::string >( xis, "attitude" ).c_str() )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -119,7 +119,7 @@ void Population::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Name" ), name_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Type" ), constSelf.type_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Humans" ), (int&)livingHumans_ );
-    // $$$$ SBO 2006-11-09: Attitude
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Attitude" ), attitude_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,5 +132,5 @@ void Population::SerializeAttributes( xml::xostream& xos ) const
         << attribute( "name", name_.ascii() )
         << attribute( "type", type_.GetName().ascii() )
         << attribute( "humans", long( livingHumans_ ) )
-        << attribute( "attitude", ENT_Tr::ConvertFromPopulationAttitude( attitude_ ) );
+        << attribute( "attitude", attitude_.ToString() );
 }

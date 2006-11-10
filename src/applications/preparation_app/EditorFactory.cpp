@@ -224,3 +224,42 @@ void EditorFactory::Call( std::vector< kernel::NBCAgent* >* const& value )
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
+
+namespace
+{
+    template< typename Enum >
+    class EnumEditor : public QComboBox
+                     , public kernel::ValueEditor< Enum >
+    {
+    public:
+        explicit EnumEditor( QWidget* parent ) 
+            : QComboBox( parent )
+        {
+            for( int i = 0; i < int( Enum::max() ); ++i )
+                insertItem( Enum( i ).ToString() );
+        }
+        virtual ~EnumEditor() {}
+
+        void SetCurrentItem( Enum& value )
+        {
+            setCurrentItem( int( value.GetValue() ) );
+        }
+
+        virtual Enum GetValue()
+        {
+            return Enum( currentItem() );
+        }
+
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( Enum_PopulationAttitude* const& value )
+{
+    EnumEditor< Enum_PopulationAttitude >* editor= new EnumEditor< Enum_PopulationAttitude >( parent_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}

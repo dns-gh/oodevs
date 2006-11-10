@@ -11,6 +11,7 @@
 #define __PropertiesTableDisplayer_h_
 
 #include "clients_gui/TableItemDisplayer.h"
+#include "preparation/EnumTypes.h"
 
 class KnowledgeGroupType;
 class TeamKarma;
@@ -24,6 +25,7 @@ class TeamKarma;
 class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public kernel::Caller< KnowledgeGroupType >
                                , public kernel::Caller< TeamKarma >
+                               , public kernel::Caller< Enum_PopulationAttitude >
 {
 
 public:
@@ -37,6 +39,7 @@ public:
     //@{
     virtual void Call( const KnowledgeGroupType& value );
     virtual void Call( const TeamKarma& value );
+    virtual void Call( const Enum_PopulationAttitude& value );
     //@}
 
 private:

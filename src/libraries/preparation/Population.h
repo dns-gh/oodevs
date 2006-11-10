@@ -14,7 +14,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "ENT/ENT_Tr.h"
+#include "EnumType.h"
 
 namespace kernel
 {
@@ -76,7 +76,7 @@ private:
     //@{
     const kernel::PopulationType& type_;
     unsigned long                 livingHumans_;
-    E_PopulationAttitude          attitude_;
+    Enum_PopulationAttitude       attitude_;
     //@}
 };
 
