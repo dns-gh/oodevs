@@ -144,8 +144,6 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
         return;
     }
 
-    rDz_ /= sqrt( rDx * rDx + rDy * rDy );
-
     bSwap_ = fabs( rDy ) > fabs( rDx );
     bNegX_ = ( bSwap_ ? rDy : rDx ) < 0;
     bNegY_ = ( bSwap_ ? rDx : rDy ) < 0;
@@ -158,6 +156,14 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     vOutPoint_.rY_ /= rCellSize;
 
     ToAlgorithmSpace( rDx, rDy );
+
+    assert( rDx >= rDy );
+    assert( rDx > 0. );
+    assert( rDy >= 0. );
+
+    rDl_ = rCellSize * ::sqrt( rDx * rDx  + rDy * rDy + rDz_ * rDz_ ) / rDx;
+    rDz_ /= ::sqrt( rDx * rDx + rDy * rDy );
+
     ToAlgorithmSpace( vOutPoint_.rX_, vOutPoint_.rY_ );
 
 	rAlreadyUsedDX_ = ( vOutPoint_.rX_ -= ( nCellColOffset_ = (int)floor( vOutPoint_.rX_ ) ) );
@@ -170,15 +176,8 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
     rA1_ = rDy != 0. ? rDx / rDy : 0.;
     rB0_ = vOutPoint_.rY_ - rA0_ * vOutPoint_.rX_;
     rB1_ = vOutPoint_.rX_ - rA1_ * vOutPoint_.rY_;
-    rDl_ = rCellSize * sqrt( 1. + rA0_ * rA0_ );
-    rDl_ *= fabs( rDz_ );
-
+    
 	rRemainingLength_ = rDl_ * rDx / rCellSize;
-
-    // Vérification de la validité de la transformation
-    assert( rDx > 0. );
-    assert( rDy >= 0. );
-    assert( rA0_ <= 1. );
 
     // Calcul des coefficients d'environnement initiaux
     // rDx est utilisé ici pour stocker le rGroundCoeff initial
