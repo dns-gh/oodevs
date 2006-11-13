@@ -49,6 +49,7 @@ void Fires::CreateFire( const T& message )
     {
         Fire_ABC* fire = factory_.CreateFire( message );
         Register( message.oid_tir, *fire );
+        controller_.Update( *this );
     }
 }
     
@@ -64,6 +65,7 @@ void Fires::DestroyFire( const T& message )
     {
         Remove( message.oid_tir );
         delete fire;
+        controller_.Update( *this );
     }
 }
 

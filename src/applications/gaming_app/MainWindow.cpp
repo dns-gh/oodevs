@@ -39,6 +39,7 @@
 #include "LoginDialog.h"
 #include "Properties.h"
 #include "TacticalList.h"
+#include "XPSPlayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -247,6 +248,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pMissionPanel_->hide();
 
     new TacticalLinesSaver( this, model_.limits_ );
+
+    new XPSPlayer( this, controllers_ );
 }
 
 // -----------------------------------------------------------------------------
