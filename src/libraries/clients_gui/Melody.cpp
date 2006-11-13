@@ -38,11 +38,12 @@ namespace
     {
         Melody result;
         result.StartSequence();
-            result.SetLights( 1, 1, 1, 7 );
+            result.SetLights( XPSLights::ruby, XPSLights::ruby, XPSLights::ruby, 7 );
             result.Pause( 20 );
-            result.SetLights( 3, 3, 3, 1 );
+            result.SetLights( XPSLights::citrine, XPSLights::citrine, XPSLights::citrine, 7 );
             result.Pause( 20 );
         result.Repeat( 10 );
+        result.SetLights( XPSLights::emerald, XPSLights::emerald, XPSLights::emerald, 4 );
         return result;
     };
 
@@ -51,7 +52,7 @@ namespace
         Melody result;
         result.SetBrightness( 7 );
         result.Pause( 20 );
-        result.SetBrightness( 3 );
+        result.SetBrightness( 4 );
         result.Pause( 20 );
         return result;
     };
