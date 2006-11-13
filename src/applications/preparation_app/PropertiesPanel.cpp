@@ -29,7 +29,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, k
     , selected_( controllers )
     , tableItemDisplayer_( *new PropertiesTableDisplayer() )
 {
-    properties_ = new PropertiesWidget( this, "Properties", editorFactory, tableItemDisplayer_ );
+    properties_ = new PropertiesWidget( controllers_.controller_, this, "Properties", editorFactory, tableItemDisplayer_ );
     controllers_.Register( *this );
 }
     
@@ -74,7 +74,7 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
         Hide();
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesPanel::NotifyDeleted
 // Created: SBO 2006-10-27

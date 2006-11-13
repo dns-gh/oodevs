@@ -18,6 +18,8 @@ namespace kernel
 {
     class Controller;
     class DotationType;
+    class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 namespace xml
@@ -26,6 +28,7 @@ namespace xml
 }
 
 class Dotation;
+class DotationsItem;
 
 // =============================================================================
 /** @class  Dotations
@@ -41,8 +44,8 @@ class Dotations : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Dotations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
-             Dotations( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
+             Dotations( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
+             Dotations( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Dotations();
     //@}
 
@@ -59,15 +62,16 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void ReadDotation( xml::xistream& xis );
+    void ReadDotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver_;
+    DotationsItem* item_;
     //@}
 };
 

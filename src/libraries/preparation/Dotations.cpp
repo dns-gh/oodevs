@@ -10,8 +10,11 @@
 #include "preparation_pch.h"
 #include "Dotations.h"
 #include "Dotation.h"
+#include "DotationsItem.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -21,24 +24,25 @@ using namespace xml;
 // Name: Dotations constructor
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-Dotations::Dotations( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver )
+Dotations::Dotations( Controller& controller, Entity_ABC& entity, PropertiesDictionary& dico )
     : controller_( controller )
-    , resolver_( resolver )
+    , item_( new DotationsItem( controller_, entity, dico, *(Resolver< Dotation >*)this ) )
 {
-    // NOTHING
+    CreateDictionary( entity, dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Dotations constructor
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-Dotations::Dotations( xml::xistream& xis, kernel::Controller& controller, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver )
+Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
-    , resolver_( resolver )
+    , item_( new DotationsItem( controller_, entity, dico, *(Resolver< Dotation >*)this ) )
 {
     xis >> optional() >> start( "dotations" )
-            >> list( "dotation", *this, &Dotations::ReadDotation )
+            >> list( "dotation", *this, &Dotations::ReadDotation, resolver )
         >> end();
+    CreateDictionary( entity, dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,16 +51,17 @@ Dotations::Dotations( xml::xistream& xis, kernel::Controller& controller, const 
 // -----------------------------------------------------------------------------
 Dotations::~Dotations()
 {
-    // NOTHING
+    delete item_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Dotations::ReadDotation
 // Created: SBO 2006-10-11
 // -----------------------------------------------------------------------------
-void Dotations::ReadDotation( xml::xistream& xis )
+void Dotations::ReadDotation( xml::xistream& xis, const Resolver_ABC< DotationType, QString >& resolver )
 {
-    Dotation* dotation = new Dotation( xis, resolver_ );
+    Dotation* dotation = new Dotation( xis, resolver );
+    item_->AddDotation( *dotation );
     Register( dotation->type_->GetId(), *dotation );
     controller_.Update( *this );
 }
@@ -77,4 +82,13 @@ void Dotations::SerializeAttributes( xml::xostream& xos ) const
         xos << end();
     }
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dotations::CreateDictionary
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
+void Dotations::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
+{
+    dico.Register( entity, tools::translate( "Dotations", "Dotations/Dotations" ), item_ );
 }

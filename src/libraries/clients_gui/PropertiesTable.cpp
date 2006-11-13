@@ -58,8 +58,10 @@ PropertiesTable::~PropertiesTable()
 // -----------------------------------------------------------------------------
 QSize PropertiesTable::sizeHint() const
 {
-    QSize original = QTable::sizeHint();
-    return QSize( original.width(), rowPos( numRows() - 1 ) + rowHeight( numRows() - 1 ) );
+    QSize original = QTable::sizeHint(); // $$$$ SBO 2006-11-13: kind of weird bug here, grows after table is cleared
+    if( numRows() > 0 )
+        return QSize( original.width(), rowPos( numRows() - 1 ) + rowHeight( numRows() - 1 ) );
+    return QSize( original.width(), 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +137,7 @@ void PropertiesTable::StartDisplay()
 // -----------------------------------------------------------------------------
 void PropertiesTable::DisplayFormatted( const QString& )
 {
-    NotToBeCalled( __FUNCTION__ );
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------

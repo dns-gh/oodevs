@@ -11,6 +11,10 @@
 #include "PropertiesWidget.h"
 #include "moc_PropertiesWidget.cpp"
 #include "PropertiesTable.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 
 #include <qpainter.h>
 
@@ -22,8 +26,9 @@ using namespace kernel;
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-18
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
+PropertiesWidget::PropertiesWidget( Controller& controller, QWidget* parent, const QString& name, EditorFactory_ABC& factory, TableItemDisplayer& displayer )
     : QWidget( parent )
+    , controller_( controller )
     , factory_( factory )
     , displayer_( displayer )
 {
@@ -31,19 +36,22 @@ PropertiesWidget::PropertiesWidget( QWidget* parent, const QString& name, kernel
 
     spacer_ = new QSpacerItem( 100, 5, QSizePolicy::Minimum, QSizePolicy::Ignored );
     layout_->addItem( spacer_, 3, 1 );
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
+PropertiesWidget::PropertiesWidget( Controller& controller, PropertiesWidget* parent, const QString& name, EditorFactory_ABC& factory, TableItemDisplayer& displayer )
     : QWidget( parent )
+    , controller_( controller )
     , factory_( factory )
     , displayer_( displayer )
     , spacer_( 0 )
 {
     FillUp( name );
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +60,7 @@ PropertiesWidget::PropertiesWidget( PropertiesWidget* parent, const QString& nam
 // -----------------------------------------------------------------------------
 PropertiesWidget::~PropertiesWidget()
 {
-    // NOTHING
+    controller_.Remove( *this );
 }
 
 namespace 
@@ -208,7 +216,7 @@ kernel::Displayer_ABC& PropertiesWidget::SubItem( const QString& subItem, const 
 // -----------------------------------------------------------------------------
 PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
 {
-    PropertiesWidget* subWidget = new PropertiesWidget( this, subItem, factory_, displayer_ );
+    PropertiesWidget* subWidget = new PropertiesWidget( controller_, this, subItem, factory_, displayer_ );
     connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
     subWidgets_.push_back( subWidget );
     categories_[ subItem ] = subWidgets_.size() - 1;
@@ -250,4 +258,28 @@ void PropertiesWidget::DisplayFormatted( const QString& )
 void PropertiesWidget::EndDisplay()
 {
     NotToBeCalled( __FUNCTION__ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesWidget::NotifyUpdated
+// Created: SBO 2006-11-13
+// -----------------------------------------------------------------------------
+void PropertiesWidget::NotifyUpdated( const kernel::DictionaryUpdated& message )
+{
+    QStringList path = QStringList::split( '/', message.GetEntry() );
+    CIT_SubCategories it = categories_.find( path.back() );
+    if( it != categories_.end() )
+        message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesWidget::NotifyDeleted
+// Created: SBO 2006-11-13
+// -----------------------------------------------------------------------------
+void PropertiesWidget::NotifyDeleted( const kernel::DictionaryUpdated& message )
+{
+    QStringList path = QStringList::split( '/', message.GetEntry() );
+    CIT_SubCategories it = categories_.find( path.back() );
+    if( it != categories_.end() )
+        subWidgets_[it->second]->Clear();
 }

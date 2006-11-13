@@ -54,7 +54,6 @@ public:
         Register( owner, name, value, setter< T >() );
     }
 
-
     template< typename O, typename T > struct caller;
     template< typename T, typename Owner, typename ConcreteOwner  >
     void Register( const Owner& owner, const QString& name, T& value, ConcreteOwner& c, void (ConcreteOwner::*set)( const T& ) )
@@ -62,8 +61,11 @@ public:
         Register( owner, name, value, caller< ConcreteOwner, T >( c, set ) );
     }
 
+    void Remove( const QString& name );
+
     void Display( Displayer_ABC& displayer );
     void Display( const QString& name, Displayer_ABC& displayer );
+    void DisplaySubPath( const QString& path, Displayer_ABC& displayer );
     //@}
 
 private:

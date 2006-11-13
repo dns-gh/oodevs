@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "EditorFactory.h"
 #include "LogisticSuperiorEditor.h"
+#include "DotationsEditor.h"
 #include "preparation/LogisticSuperior.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
@@ -262,4 +263,15 @@ void EditorFactory::Call( Enum_PopulationAttitude* const& value )
     EnumEditor< Enum_PopulationAttitude >* editor= new EnumEditor< Enum_PopulationAttitude >( parent_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( DotationsItem** const& value )
+{
+    DotationsEditor* editor = new DotationsEditor( parent_, staticModel_.objectTypes_, *value );
+    editor->SetCurrentItem( *value );
+    result_ = 0;
 }

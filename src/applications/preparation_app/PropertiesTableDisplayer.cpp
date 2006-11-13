@@ -11,6 +11,9 @@
 #include "PropertiesTableDisplayer.h"
 #include "preparation/KnowledgeGroupType.h"
 #include "preparation/TeamKarma.h"
+#include "preparation/DotationsItem.h"
+#include "preparation/Dotation.h"
+#include "clients_kernel/DotationType.h"
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesTableDisplayer constructor
@@ -55,4 +58,20 @@ void PropertiesTableDisplayer::Call( const TeamKarma& value )
 void PropertiesTableDisplayer::Call( const Enum_PopulationAttitude& value )
 {
     AddToDisplay( value.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const DotationsItem& value )
+{
+    kernel::Iterator< const Dotation& > it = value.CreateIterator();
+    QString result;
+    while( it.HasMoreElements() )
+    {
+        const Dotation& dotation = it.NextElement();
+        result.append( dotation.type_->GetCategory() ).append( " " );
+    }
+    AddToDisplay( result );
 }

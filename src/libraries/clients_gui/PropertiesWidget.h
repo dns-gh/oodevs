@@ -11,10 +11,13 @@
 #define __PropertiesWidget_h_
 
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/ElementObserver_ABC.h"
 
 namespace kernel
 {
+    class Controller;
     class EditorFactory_ABC;
+    class DictionaryUpdated;
 }
 
 namespace gui
@@ -28,14 +31,17 @@ namespace gui
 */
 // Created: AGE 2006-10-18
 // =============================================================================
-class PropertiesWidget : public QWidget, public kernel::Displayer_ABC
+class PropertiesWidget : public QWidget
+                       , public kernel::Displayer_ABC
+                       , public kernel::Observer_ABC
+                       , public kernel::ElementObserver_ABC< kernel::DictionaryUpdated >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PropertiesWidget( QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
+             PropertiesWidget( kernel::Controller& controller, QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     virtual ~PropertiesWidget();
     //@}
 
@@ -51,7 +57,7 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    PropertiesWidget( PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
+    PropertiesWidget( kernel::Controller& controller, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer );
     PropertiesWidget( const PropertiesWidget& );            //!< Copy constructor
     PropertiesWidget& operator=( const PropertiesWidget& ); //!< Assignement operator
     //@}
@@ -75,11 +81,15 @@ private:
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );
     virtual void EndDisplay();
+
+    virtual void NotifyUpdated( const kernel::DictionaryUpdated& message );
+    virtual void NotifyDeleted( const kernel::DictionaryUpdated& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     kernel::EditorFactory_ABC& factory_;
     QGridLayout* layout_;
     QToolButton* button_;

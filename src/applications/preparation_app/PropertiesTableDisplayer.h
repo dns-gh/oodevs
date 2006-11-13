@@ -15,6 +15,7 @@
 
 class KnowledgeGroupType;
 class TeamKarma;
+class DotationsItem;
 
 // =============================================================================
 /** @class  PropertiesTableDisplayer
@@ -26,6 +27,7 @@ class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public kernel::Caller< KnowledgeGroupType >
                                , public kernel::Caller< TeamKarma >
                                , public kernel::Caller< Enum_PopulationAttitude >
+                               , public kernel::Caller< DotationsItem >
 {
 
 public:
@@ -40,6 +42,7 @@ public:
     virtual void Call( const KnowledgeGroupType& value );
     virtual void Call( const TeamKarma& value );
     virtual void Call( const Enum_PopulationAttitude& value );
+    virtual void Call( const DotationsItem& value );
     //@}
 
 private:

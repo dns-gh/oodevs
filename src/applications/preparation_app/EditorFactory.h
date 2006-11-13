@@ -13,6 +13,7 @@
 #include "clients_gui/EditorFactory.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "clients_kernel/Resolver.h"
 #include "preparation/Types.h"
 #include "preparation/EnumTypes.h"
 
@@ -28,6 +29,7 @@ class Model;
 class StaticModel;
 class KnowledgeGroupType;
 class TeamKarma;
+class DotationsItem;
 
 // =============================================================================
 /** @class  EditorFactory
@@ -47,6 +49,7 @@ class EditorFactory : public gui::EditorFactory
                     , public kernel::Caller< kernel::NBCAgent** >
                     , public kernel::Caller< std::vector< kernel::NBCAgent* >* >
                     , public kernel::Caller< Enum_PopulationAttitude* >
+                    , public kernel::Caller< DotationsItem** >
 {
 
 public:
@@ -67,6 +70,7 @@ public:
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );
+    virtual void Call( DotationsItem** const& value );
     //@}
 
 private:

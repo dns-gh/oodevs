@@ -34,6 +34,17 @@ PropertiesDictionary::~PropertiesDictionary()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PropertiesDictionary::Remove
+// Created: SBO 2006-11-10
+// -----------------------------------------------------------------------------
+void PropertiesDictionary::Remove( const QString& name )
+{
+    IT_Properties it = properties_.find( name );
+    if( it != properties_.end() )
+        properties_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PropertiesDictionary::FindKey
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
@@ -67,4 +78,18 @@ void PropertiesDictionary::Display( const QString& name, Displayer_ABC& displaye
     CIT_Properties it = properties_.find( name );
     if( it != properties_.end() )
         it->second->Display( displayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesDictionary::DisplaySubPath
+// Created: SBO 2006-11-13
+// -----------------------------------------------------------------------------
+void PropertiesDictionary::DisplaySubPath( const QString& path, Displayer_ABC& displayer )
+{
+    QString search = path.endsWith( "/" ) ? path : path + "/";
+    for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
+    {
+        if( it->first.find( search, 0, false ) != -1 )
+            displayer.Display( it->first, it->second );
+    }
 }

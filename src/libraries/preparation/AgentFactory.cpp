@@ -74,10 +74,11 @@ AgentFactory::~AgentFactory()
 Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, const geometry::Point2f& position, bool commandPost )
 {
     Agent* result = new Agent( type, controllers_.controller_, idManager_, commandPost );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_ ) );
+    result->Attach( *new Dotations( controllers_.controller_, *result, dico ) );
 
     result->Polish();
     return result;
@@ -152,7 +153,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    result->Attach( *new Dotations( xis, controllers_.controller_, static_.objectTypes_ ) );
+    result->Attach( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
 
     result->Polish();
     return result;

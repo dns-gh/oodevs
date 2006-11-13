@@ -49,8 +49,7 @@ QWidget* PropertyTableItem::createEditor() const
     if( editor )
     {
         table()->setRowHeight( row(), std::max( table()->rowHeight( row() ), editor->height() ) );
-        table()->hide(); // $$$$ SBO 2006-10-31: allow parent table/widget to be resized accordingly
-        table()->show(); // $$$$ SBO 2006-10-31: there might be a better way to do so... (or not)
+        table()->updateGeometry();
     }
     return editor;
 }
@@ -65,8 +64,7 @@ void PropertyTableItem::setContentFromEditor( QWidget* w )
     displayer_.SetItem( this );
     property_.Display( displayer_ );
     table()->adjustRow( row() );
-    table()->hide(); // $$$$ SBO 2006-10-31: allow parent table/widget to be resized accordingly
-    table()->show(); // $$$$ SBO 2006-10-31: there might be a better way to do so... (or not)
+    table()->updateGeometry();
 }
 
 // -----------------------------------------------------------------------------
