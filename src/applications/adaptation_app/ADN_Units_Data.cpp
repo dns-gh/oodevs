@@ -659,6 +659,12 @@ void ADN_Units_Data::UnitInfos::ReadArchive( ADN_XmlInput_Helper& input )
         input.ThrowError( MT_FormatString( "Le qualificatif ATLAS '%s' est invalide", strTmp.c_str() ) );
     eNatureAtlas_=eNatureAtlasType;
     input.EndSection(); // QualificatifAtlas
+
+    input.Section( "Nature" );
+    input.ReadAttribute( "type", strTmp );
+    strNature_ = strTmp;
+    input.EndSection(); // Nature
+        
     input.EndSection(); // Nature
 
     input.BeginList( "Equipements" );

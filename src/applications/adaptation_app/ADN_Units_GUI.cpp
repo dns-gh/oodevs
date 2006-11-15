@@ -128,15 +128,16 @@ void ADN_Units_GUI::Build()
 
 
     // Nature
-    QGroupBox* pNatureGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Nature" ), pGroup ); 
-    pNatureGroup->setInsideMargin(20);
-    pNatureGroup->setInsideSpacing(10);
+    QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Vertical, tr( "Nature" ), pGroup ); 
+//    pNatureGroup->setInsideMargin(20);
+//    pNatureGroup->setInsideSpacing(10);
+    QGroupBox* subLayout = new QGroupBox( 3, Qt::Horizontal, pNatureGroup );
+    subLayout->setFrameStyle( QFrame::MenuBarPanel | QFrame::Plain );
 
-    // nature level type
-    builder.AddEnumField<E_NatureLevel>( pNatureGroup, tr( "Level" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
+    builder.AddEnumField<E_NatureLevel>( subLayout, tr( "Level" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
 
     // nature atlas type
-    builder.AddEnumField<E_NatureAtlasType>( pNatureGroup, tr( "Atlas" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
+    builder.AddEnumField<E_NatureAtlasType>( subLayout, tr( "Atlas" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
 
     ADN_Nature_GUI* natureGui = new ADN_Nature_GUI( pNatureGroup );
     vInfosConnectors[eNatureNature] = &natureGui->GetConnector();

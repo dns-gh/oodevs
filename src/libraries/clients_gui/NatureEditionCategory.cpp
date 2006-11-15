@@ -26,11 +26,12 @@ NatureEditionCategory::NatureEditionCategory( QWidget* parent, const kernel::Sym
     , next_( 0 )
 {
     label_ = new QLabel( this );
-    label_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Preferred );
+    label_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Preferred );
     box_ = new QComboBox( this );
-    box_->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::Preferred );
+    box_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Preferred );
     setStretchFactor( label_, 1 );
     setStretchFactor( box_, 1 );
+    setStretchFactor( new QWidget(this), 1 );
     rule_->Accept( *this );
 
     connect( box_, SIGNAL( activated( int ) ), this, SLOT( OnComboChange() ) );
