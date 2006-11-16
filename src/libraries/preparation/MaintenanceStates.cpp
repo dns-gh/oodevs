@@ -18,9 +18,9 @@ using namespace kernel;
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 MaintenanceStates::MaintenanceStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
-    : LogisticHierarchies< MaintenanceSuperior >( controller, entity, resolver )
+    : LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >( controller, entity, resolver )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dico, entity );
 }
     
 // -----------------------------------------------------------------------------
@@ -36,8 +36,9 @@ MaintenanceStates::~MaintenanceStates()
 // Name: MaintenanceStates::CreateDictionary
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico )
+void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
+    LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >::CreateDictionary( dico, owner, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Quotas" ) );
     dico.Register( *(const kernel::TacticalHierarchies*)this, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Superior" ), tc2_, *this, &MaintenanceStates::SetSuperior );
 }
 
@@ -56,5 +57,5 @@ QString MaintenanceStates::GetLinkType() const
 // -----------------------------------------------------------------------------
 void MaintenanceStates::SetSuperior( const MaintenanceSuperior& automat )
 {
-    LogisticHierarchies< MaintenanceSuperior >::SetSuperior< MaintenanceStates >( automat );
+    LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >::SetSuperior( automat );
 }

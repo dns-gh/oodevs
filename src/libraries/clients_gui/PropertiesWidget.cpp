@@ -266,10 +266,7 @@ void PropertiesWidget::EndDisplay()
 // -----------------------------------------------------------------------------
 void PropertiesWidget::NotifyUpdated( const kernel::DictionaryUpdated& message )
 {
-    QStringList path = QStringList::split( '/', message.GetEntry() );
-    CIT_SubCategories it = categories_.find( path.back() );
-    if( it != categories_.end() )
-        message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), *this );
+    UpdatePath( message, message.GetEntry(), *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,8 +275,42 @@ void PropertiesWidget::NotifyUpdated( const kernel::DictionaryUpdated& message )
 // -----------------------------------------------------------------------------
 void PropertiesWidget::NotifyDeleted( const kernel::DictionaryUpdated& message )
 {
-    QStringList path = QStringList::split( '/', message.GetEntry() );
-    CIT_SubCategories it = categories_.find( path.back() );
+    ClearPath( message.GetEntry() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesWidget::UpdatePath
+// Created: SBO 2006-11-15
+// -----------------------------------------------------------------------------
+void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, const QString& name, PropertiesWidget& parent )
+{
+    QStringList path = QStringList::split( '/', name );
+    CIT_SubCategories it = categories_.find( path.front() );
     if( it != categories_.end() )
-        subWidgets_[it->second]->Clear();
+    {
+        std::string tmp = name.ascii();
+        path.pop_front();
+        if( !path.empty() )
+            subWidgets_[it->second]->UpdatePath( message, path.join( "/" ), parent );
+        else
+            message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), parent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesWidget::ClearPath
+// Created: SBO 2006-11-15
+// -----------------------------------------------------------------------------
+void PropertiesWidget::ClearPath( const QString& name )
+{
+    QStringList path = QStringList::split( '/', name );
+    CIT_SubCategories it = categories_.find( path.front() );
+    if( it != categories_.end() )
+    {
+        path.pop_front();
+        if( !path.empty() )
+            subWidgets_[it->second]->ClearPath( path.join( "/" ) );
+        else
+            subWidgets_[it->second]->Clear();
+    }
 }

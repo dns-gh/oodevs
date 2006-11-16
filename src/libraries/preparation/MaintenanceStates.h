@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-24
 // =============================================================================
-class MaintenanceStates : public LogisticHierarchies< MaintenanceSuperior >
+class MaintenanceStates : public LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >
 {
 
 public:
@@ -44,7 +44,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void CreateDictionary( kernel::PropertiesDictionary& dico );
+    virtual void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
     //@}
 };
 

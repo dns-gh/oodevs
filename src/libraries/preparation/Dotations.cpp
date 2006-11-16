@@ -26,7 +26,6 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 Dotations::Dotations( Controller& controller, Entity_ABC& entity, PropertiesDictionary& dico )
     : controller_( controller )
-    , item_( new DotationsItem( controller_, entity, dico, *(Resolver< Dotation >*)this ) )
 {
     CreateDictionary( entity, dico );
 }
@@ -37,12 +36,11 @@ Dotations::Dotations( Controller& controller, Entity_ABC& entity, PropertiesDict
 // -----------------------------------------------------------------------------
 Dotations::Dotations( xml::xistream& xis, Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
-    , item_( new DotationsItem( controller_, entity, dico, *(Resolver< Dotation >*)this ) )
 {
+    CreateDictionary( entity, dico );
     xis >> optional() >> start( "dotations" )
             >> list( "dotation", *this, &Dotations::ReadDotation, resolver )
         >> end();
-    CreateDictionary( entity, dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,5 +88,6 @@ void Dotations::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void Dotations::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
 {
+    item_ = new DotationsItem( controller_, entity, dico, tools::translate( "Dotations", "Dotations" ), *(Resolver< Dotation >*)this );
     dico.Register( entity, tools::translate( "Dotations", "Dotations/Dotations" ), item_ );
 }

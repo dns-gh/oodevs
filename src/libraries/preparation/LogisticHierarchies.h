@@ -20,14 +20,17 @@ namespace kernel
     class Controller;
     class Entity_ABC;
     class DotationType;
+    class PropertiesDictionary;
 }
 
 namespace xml
 {
     class xostream;
+    class xistream;
 }
 
 class Dotation;
+class DotationsItem;
 
 // =============================================================================
 /** @class  LogisticHierarchies
@@ -35,7 +38,7 @@ class Dotation;
 */
 // Created: SBO 2006-10-24
 // =============================================================================
-template< typename Superior >
+template< typename Superior, typename ConcreteHierarchy >
 class LogisticHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
                           , public kernel::Resolver< Dotation >
                           , public kernel::Serializable_ABC
@@ -51,6 +54,7 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
+    void Load( xml::xistream& xis, const Superior& superior );
     //@}
 
 private:
@@ -64,13 +68,14 @@ private:
     //@{
     virtual QString GetLinkType() const = 0;
     virtual void SerializeLogistics( xml::xostream& xos ) const;
+    void ReadDotation( xml::xistream& xis );
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    template< typename ConcreteHierarchy >
     void SetSuperior( const Superior& automat );
+    void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner, const QString& name );
     //@}
 
 private:
@@ -83,6 +88,7 @@ private:
 protected:
     //! @name Member data
     //@{
+    DotationsItem* item_;
     Superior tc2_;
     //@}
 };

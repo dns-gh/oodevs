@@ -58,9 +58,11 @@ PropertiesTable::~PropertiesTable()
 // -----------------------------------------------------------------------------
 QSize PropertiesTable::sizeHint() const
 {
-    QSize original = QTable::sizeHint(); // $$$$ SBO 2006-11-13: kind of weird bug here, grows after table is cleared
+    QSize original = QTable::sizeHint();
     if( numRows() > 0 )
-        return QSize( original.width(), rowPos( numRows() - 1 ) + rowHeight( numRows() - 1 ) );
+        // $$$$ SBO 2006-11-16: ahahah: not -4, not -6, -5!
+        // $$$$ SBO 2006-11-16: hack to get rid of this weird bug where table grows when elements are inserted after a showEvent()
+        return QSize( original.width() - 5, rowPos( numRows() - 1 ) + rowHeight( numRows() - 1 ) );
     return QSize( original.width(), 0 );
 }
 

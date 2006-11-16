@@ -16,9 +16,9 @@
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 MedicalStates::MedicalStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico )
-    : LogisticHierarchies< MedicalSuperior >( controller, entity, resolver )
+    : LogisticHierarchies< MedicalSuperior, MedicalStates >( controller, entity, resolver )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dico, entity );
 }
     
 // -----------------------------------------------------------------------------
@@ -34,8 +34,9 @@ MedicalStates::~MedicalStates()
 // Name: MedicalStates::CreateDictionary
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico )
+void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
+    LogisticHierarchies< MedicalSuperior, MedicalStates >::CreateDictionary( dico, owner, tools::translate( "MedicalStates", "Logistic/Medical/Quotas" ) );
     dico.Register( *(const kernel::TacticalHierarchies*)this, tools::translate( "MedicalStates", "Logistic/Medical/Superior" ), tc2_, *this, &MedicalStates::SetSuperior );
 }
 
@@ -54,5 +55,5 @@ QString MedicalStates::GetLinkType() const
 // -----------------------------------------------------------------------------
 void MedicalStates::SetSuperior( const MedicalSuperior& automat )
 {
-    LogisticHierarchies< MedicalSuperior >::SetSuperior< MedicalStates >( automat );
+    LogisticHierarchies< MedicalSuperior, MedicalStates >::SetSuperior( automat );
 }

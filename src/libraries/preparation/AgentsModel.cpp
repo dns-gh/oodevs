@@ -303,12 +303,12 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
     if( Entity_ABC* entity = Resolver< Automat_ABC >::Find( id ) )
     {
         if( linkType == entity->Get< Tc2States >().GetLinkType().ascii() )
-            entity->Get< Tc2States >().SetSuperior( &automat );
+            entity->Get< Tc2States >().Load( xis, &automat );
         else if( linkType == entity->Get< MedicalStates >().GetLinkType().ascii() )
-            entity->Get< MedicalStates >().SetSuperior( &automat );
+            entity->Get< MedicalStates >().Load( xis, &automat );
         else if( linkType == entity->Get< MaintenanceStates >().GetLinkType().ascii() )
-            entity->Get< MaintenanceStates >().SetSuperior( &automat );
+            entity->Get< MaintenanceStates >().Load( xis, &automat );
         else if( linkType == entity->Get< SupplyStates >().GetLinkType().ascii() )
-            entity->Get< SupplyStates >().SetSuperior( &automat );
+            entity->Get< SupplyStates >().Load( xis, &automat );
     }
 }

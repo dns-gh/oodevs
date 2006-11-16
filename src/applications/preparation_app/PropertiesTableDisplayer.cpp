@@ -14,6 +14,7 @@
 #include "preparation/DotationsItem.h"
 #include "preparation/Dotation.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesTableDisplayer constructor
@@ -66,12 +67,13 @@ void PropertiesTableDisplayer::Call( const Enum_PopulationAttitude& value )
 // -----------------------------------------------------------------------------
 void PropertiesTableDisplayer::Call( const DotationsItem& value )
 {
-    kernel::Iterator< const Dotation& > it = value.CreateIterator();
-    QString result;
-    while( it.HasMoreElements() )
-    {
-        const Dotation& dotation = it.NextElement();
-        result.append( dotation.type_->GetCategory() ).append( " " );
-    }
-    AddToDisplay( result );
+    AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit Property Group...>" ) );
+//    kernel::Iterator< const Dotation& > it = value.CreateIterator();
+//    QString result;
+//    while( it.HasMoreElements() )
+//    {
+//        const Dotation& dotation = it.NextElement();
+//        result.append( dotation.type_->GetCategory() ).append( " " );
+//    }
+//    AddToDisplay( result );
 }

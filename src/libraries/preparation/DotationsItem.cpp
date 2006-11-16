@@ -15,7 +15,6 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_gui/Tools.h"
 
 using namespace kernel;
 
@@ -23,10 +22,11 @@ using namespace kernel;
 // Name: DotationsItem constructor
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
-DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, kernel::Resolver< Dotation >& dotations )
+DotationsItem::DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, kernel::Resolver< Dotation >& dotations )
     : controller_( controller )
     , owner_( owner )
     , dico_( dico )
+    , propertyName_( propertyName )
     , dotations_( dotations )
 {
     // NOTHING
@@ -47,8 +47,7 @@ DotationsItem::~DotationsItem()
 // -----------------------------------------------------------------------------
 void DotationsItem::AddDotation( const Dotation& dotation )
 {
-    dico_.Register( owner_, tools::translate( "DotationsItem", "Dotations/" ) + dotation.type_->GetCategory(), (int&)dotation.quantity_ );
-    controller_.Update( kernel::DictionaryUpdated( owner_, "Dotations" ) );
+    dico_.Register( owner_, propertyName_ + "/" + dotation.type_->GetCategory(), (int&)dotation.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +72,19 @@ void DotationsItem::Clear()
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
-        dico_.Remove( tools::translate( "DotationsItem", "Dotations/" ) + dotation.type_->GetCategory() );
+        dico_.Remove( propertyName_ + "/" + dotation.type_->GetCategory() );
     }
     dotations_.DeleteAll();
-    controller_.Delete( kernel::DictionaryUpdated( owner_, "Dotations" ) );
+    controller_.Delete( kernel::DictionaryUpdated( owner_, propertyName_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationsItem::Update
+// Created: SBO 2006-11-15
+// -----------------------------------------------------------------------------
+void DotationsItem::Update()
+{
+    controller_.Update( kernel::DictionaryUpdated( owner_, propertyName_ ) );
 }
 
 // -----------------------------------------------------------------------------

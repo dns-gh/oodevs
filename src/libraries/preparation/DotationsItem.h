@@ -34,7 +34,7 @@ class DotationsItem
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, kernel::Resolver< Dotation >& dotations );
+             DotationsItem( kernel::Controller& controller, kernel::Entity_ABC& owner, kernel::PropertiesDictionary& dico, const QString& propertyName, kernel::Resolver< Dotation >& dotations );
     virtual ~DotationsItem();
     //@}
 
@@ -44,6 +44,7 @@ public:
     void AddDotation( const kernel::DotationType& dotation, unsigned long quantity );
     void AddDotation( const Dotation& dotation );
     void Clear();
+    void Update();
     //@}
 
 private:
@@ -59,6 +60,7 @@ private:
     kernel::Controller& controller_;
     kernel::Entity_ABC& owner_;
     kernel::PropertiesDictionary& dico_;
+    QString propertyName_;
     kernel::Resolver< Dotation >& dotations_;
     //@}
 };

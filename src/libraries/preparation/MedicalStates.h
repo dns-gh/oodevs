@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-24
 // =============================================================================
-class MedicalStates : public LogisticHierarchies< MedicalSuperior >
+class MedicalStates : public LogisticHierarchies< MedicalSuperior, MedicalStates >
 {
 
 public:
@@ -44,7 +44,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
     //@}
 };
 

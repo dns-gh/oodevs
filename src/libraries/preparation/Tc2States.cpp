@@ -16,9 +16,9 @@
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
 Tc2States::Tc2States( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico )
-    : LogisticHierarchies< TC2 >( controller, entity, resolver )
+    : LogisticHierarchies< TC2, Tc2States >( controller, entity, resolver )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dico, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,8 +34,9 @@ Tc2States::~Tc2States()
 // Name: Tc2States::CreateDictionary
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
-void Tc2States::CreateDictionary( kernel::PropertiesDictionary& dico )
+void Tc2States::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
+    LogisticHierarchies< TC2, Tc2States >::CreateDictionary( dico, owner, tools::translate( "TC2States", "Logistic/TC2/Quotas" ) );
     dico.Register( *(const kernel::TacticalHierarchies*)this, tools::translate( "Tc2States", "Logistic/TC2/Superior" ), tc2_, *this, &Tc2States::SetSuperior );
 }
 
@@ -54,5 +55,5 @@ QString Tc2States::GetLinkType() const
 // -----------------------------------------------------------------------------
 void Tc2States::SetSuperior( const TC2& automat )
 {
-    LogisticHierarchies< TC2 >::SetSuperior< Tc2States >( automat );
+    LogisticHierarchies< TC2, Tc2States >::SetSuperior( automat );
 }

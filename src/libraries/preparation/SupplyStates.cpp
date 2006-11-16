@@ -18,9 +18,9 @@ using namespace kernel;
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
-    : LogisticHierarchies< SupplySuperior >( controller, entity, resolver )
+    : LogisticHierarchies< SupplySuperior, SupplyStates >( controller, entity, resolver )
 {
-    CreateDictionary( dico );
+    CreateDictionary( dico, entity );
 }
     
 // -----------------------------------------------------------------------------
@@ -36,8 +36,9 @@ SupplyStates::~SupplyStates()
 // Name: SupplyStates::CreateDictionary
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
-void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico )
+void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
+    LogisticHierarchies< SupplySuperior, SupplyStates >::CreateDictionary( dico, owner, tools::translate( "SupplyStates", "Logistic/Supply/Quotas" ) );
     dico.Register( *(const kernel::TacticalHierarchies*)this, tools::translate( "SupplyStates", "Logistic/Supply/Superior" ), tc2_, *this, &SupplyStates::SetSuperior );
 }
 
@@ -52,9 +53,9 @@ QString SupplyStates::GetLinkType() const
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStates::SetSuperior
-// Created: SBO 2006-10-26
+// Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
 void SupplyStates::SetSuperior( const SupplySuperior& automat )
 {
-    LogisticHierarchies< SupplySuperior >::SetSuperior< SupplyStates >( automat );
+    LogisticHierarchies< SupplySuperior, SupplyStates >::SetSuperior( automat );
 }

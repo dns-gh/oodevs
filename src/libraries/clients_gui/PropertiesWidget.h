@@ -77,6 +77,9 @@ private:
     kernel::Displayer_ABC& SubItem( const QString& name, const QString& path );
     PropertiesWidget* CreateWidget( const QString& subItem );
 
+    void UpdatePath( const kernel::DictionaryUpdated& message, const QString& name, PropertiesWidget& parent );
+    void ClearPath( const QString& name );
+
     virtual kernel::Displayer_ABC& SubItem( const QString& name );
     virtual void StartDisplay();
     virtual void DisplayFormatted( const QString& formatted );

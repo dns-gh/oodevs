@@ -29,11 +29,12 @@ DotationsEditor::DotationsEditor( QWidget* parent, const Resolver_ABC< DotationT
     , dotationTypes_( dotationTypes )
     , value_ ( value )
 {
-    setCaption( tools::translate( "DotationsEditor", "Dotations" ) );
+    setCaption( tools::translate( "DotationsEditor", "Dotations editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
 
     QVBox* vBox = new QVBox( this );
     table_ = new QTable( 0, 2, vBox );
+    table_->setColumnWidth( 0, 250 );
     table_->horizontalHeader()->setLabel( 0, tools::translate( "DotationsEditor", "Type" ) );
     table_->horizontalHeader()->setLabel( 1, tools::translate( "DotationsEditor", "Quantity" ) );
     table_->setMargin( 5 );
@@ -72,6 +73,7 @@ void DotationsEditor::OnAccept()
     value_->Clear();
     for( int i = 0; i < table_->numRows() - 1; ++i )
         value_->AddDotation( dotationTypes_.Get( table_->text( i, 0 ) ), table_->text( i, 1 ).toUInt() );
+    value_->Update();
     hide();
 }
     
@@ -115,7 +117,7 @@ DotationsItem* DotationsEditor::GetValue()
 // -----------------------------------------------------------------------------
 QSize DotationsEditor::sizeHint() const
 {
-    return QSize( 300, 300 );
+    return QSize( 400, 300 );
 }
 
 // -----------------------------------------------------------------------------

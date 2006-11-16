@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-26
 // =============================================================================
-class Tc2States : public LogisticHierarchies< TC2 >
+class Tc2States : public LogisticHierarchies< TC2, Tc2States >
 {
 
 public:
@@ -44,7 +44,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateDictionary( kernel::PropertiesDictionary& dico );
+    void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner );
     //@}
 };
 
