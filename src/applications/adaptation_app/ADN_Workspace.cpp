@@ -65,7 +65,7 @@
 #include "ADN_DialogLog.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_MainWindow.h"
-
+#include "ADN_Xml_Exception.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 #include "qtundo.h"
@@ -348,12 +348,11 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
     }
     catch( ADN_Exception_ABC& exception )
     {
-        QApplication::restoreOverrideCursor();	// restore original cursor
-        QMessageBox::critical( 0, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
+//        QApplication::restoreOverrideCursor();	// restore original cursor
+//        QMessageBox::critical( 0, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
         ADN_Project_Data::GetWorkDirInfos().SetWorkingDirectory(szOldWorkDir);
-
         pProgressIndicator_->Reset();
-        return false;
+        throw;
     }
     catch ( MT_ScipioException& exception)
     {
@@ -365,11 +364,11 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
                << "Line : "        << exception.GetLine()        << std::endl
                << "Message : "     << exception.GetMsg()         << std::endl
                << "Description : " << exception.GetDescription() << std::endl;          
-        QMessageBox::critical( 0, "Scipio - Adaptation Tool - Saving error", strMsg.str().c_str() );
         ADN_Project_Data::GetWorkDirInfos().SetWorkingDirectory(szOldWorkDir);
-
         pProgressIndicator_->Reset();
-        return false;
+        throw ADN_Xml_Exception( "Scipio - Adaptation Tool - Saving error", strMsg.str().c_str() );
+//        QMessageBox::critical( 0, "Scipio - Adaptation Tool - Saving error", strMsg.str().c_str() );
+//        return false;
     }
     
     /////////////////////////////////////

@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_App.cpp $
-// $Author: Ape $
-// $Modtime: 14/04/05 15:56 $
-// $Revision: 10 $
-// $Workfile: ADN_App.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_App.h"
@@ -15,12 +13,13 @@
 #include "ADN_MainWindow.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include "ADN_Exception_ABC.h"
 
 #include <qtextcodec.h>
 #include <qtranslator.h>
+#include <qmessagebox.h>
 
 ADN_App* ADN_App::pApplication_ = 0;
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_App constructor
@@ -59,7 +58,7 @@ ADN_App::~ADN_App()
 // Name: ADN_App::Initialize
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-void ADN_App::Initialize( uint nArgc, char** ppArgv )
+bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile )
 {
     // Set the translator files.
     QTranslator* pADNTranslator = new QTranslator( this );
@@ -83,7 +82,28 @@ void ADN_App::Initialize( uint nArgc, char** ppArgv )
     // Make sure that once the last window is closed, the application quits.
     connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
 
-    if( nArgc > 1 )
-        pMainWindow_->OpenProject( ppArgv[1] );
+    try
+    {
+        if( !inputFile.empty() )
+            pMainWindow_->OpenProject( inputFile );
+        if( !outputFile.empty() )
+        {
+            pMainWindow_->SaveProjectAs( outputFile );
+            return false;
+        }
+    }
+    catch( ADN_Exception_ABC& e )
+    {
+        if( outputFile.empty() )
+            QMessageBox::critical( pMainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+        else
+        {
+            std::stringstream ss;
+            ss << e.GetExceptionTitle().c_str() << std::endl << e.GetExceptionMessage().c_str() << std::endl;
+            MT_LOG_ERROR_MSG( ss.str().c_str() );
+        }
+        return false;
+    }
+    return true;
 }
 

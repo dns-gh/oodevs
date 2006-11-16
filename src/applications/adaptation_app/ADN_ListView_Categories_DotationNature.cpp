@@ -11,7 +11,6 @@
 #include "ADN_ListView_Categories_DotationNature.h"
 
 #include <qpopupmenu.h>
-#include <qmessagebox.h>
 
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_Categories_Data.h"

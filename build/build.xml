@@ -5,6 +5,61 @@
 
     <!--
     ============================================================================
+      tools
+    ============================================================================
+    -->
+    <macrodef name="echo-files">
+        <attribute name="files"/>
+        <sequential>
+            <for list="@{files}" param="file" delimiter=";">
+                <sequential>
+                    <echo>@{file}</echo>
+                </sequential>
+            </for>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="compare-dirs">
+        <attribute name="dir1"/>
+        <attribute name="dir2"/>
+        <attribute name="excludes" default=""/>
+        <attribute name="includes" default=""/>
+        <attribute name="property"/>
+        <sequential>
+            <fileset id="@{dir1}.id" dir="@{dir1}" excludes="@{excludes}" includes="@{includes}">
+                <different targetdir="@{dir2}" ignorefiletimes="true"/> <!-- ne prend pas en compte les fichiers 'en trop' dans dir2 -->
+            </fileset>
+            <pathconvert property="@{property}.@{dir1}" refid="@{dir1}.id" setonempty="false"/>
+            <fileset id="@{dir2}.id" dir="@{dir2}" excludes="@{excludes}" includes="@{includes}">
+                <different targetdir="@{dir1}" ignorefiletimes="true"/>
+            </fileset>
+            <pathconvert property="@{property}.@{dir2}" refid="@{dir2}.id" setonempty="false"/>
+            <if>
+                <and>
+                    <isset property="@{property}.@{dir1}"/>
+                    <isset property="@{property}.@{dir2}"/>
+                </and>
+                <then>
+                    <property name="@{property}" value="${@{property}.@{dir1}};${@{property}.@{dir2}}"/>
+                </then>
+            </if>
+            <if>
+                <isset property="@{property}.@{dir1}"/>
+                <then>
+                    <property name="@{property}" value="${@{property}.@{dir1}}"/>
+                </then>
+            </if>
+            <if>
+                <isset property="@{property}.@{dir2}"/>
+                <then>
+                    <property name="@{property}" value="${@{property}.@{dir2}}"/>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
+
+    <!--
+    ============================================================================
       libraries
     ============================================================================
     -->
@@ -118,7 +173,7 @@
     </target>
 
     <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
-        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu" excludes="**/XmlResources.cpp" libs="ENT,clients_gui,clients_kernel" pch-excludes="qtundo.cpp">
+        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu,boost" excludes="**/XmlResources.cpp" libs="ENT,clients_gui,clients_kernel" pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
@@ -178,7 +233,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts" description="run all tests"/>
+    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts,test-adaptation" description="run all tests"/>
 
     <target name="generate-license" description="generate license file in run directory">
         <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>
@@ -203,6 +258,28 @@
             <arg value="-test"/>
             <arg value="-forceodbcomposition"/>
         </exec>
+    </target>
+
+    <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
+        <property name="adaptation_test.dir1" value="${data.dir}/main"/>
+        <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
+        <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+            <arg value="-i"/>
+            <arg value="${adaptation_test.dir1}/scipio.xml"/>
+            <arg value="-o"/>
+            <arg value="${adaptation_test.dir2}/scipio.xml"/>
+        </exec>
+        <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}" 
+                      excludes="**/Terrain/*.*,**/ODB/*.*,**/Meteo.xml,**/ODB.xml,**/PathfindRules.xml,**/Profiles.xml,**/ScipioLauncher.xml" 
+                      includes="**/*.xml" property="adaptation_test.is-different"/>
+        <if>
+            <isset property="adaptation_test.is-different"/>
+            <then>
+                <echo>the following files differ :</echo>
+                <echo-files files="${adaptation_test.is-different}"/>
+                <fail message="saved data differs from loaded data."/>
+            </then>
+        </if>
     </target>
 
     <!--

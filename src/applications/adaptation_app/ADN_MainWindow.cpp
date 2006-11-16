@@ -223,7 +223,14 @@ void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
     pProjectMenu_->setItemEnabled( rIdSaveAs_, bEnabled );
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::SaveProject
+// Created: SBO 2006-11-16
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::SaveProjectAs( const std::string& filename )
+{
+    workspace_.SaveAs( ADN_Tools::Replace( filename, '\\', '/' ) ); 
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::SaveProject
@@ -325,17 +332,25 @@ void ADN_MainWindow::OpenProject()
 {
   //  QString qfilename = "scipio.xml";
 
-    QString qfilename=QFileDialog::getOpenFileName ( QString::null,tr("Scipio File (scipio.xml)") , this, "", tr("Open Scipio project"));
-    if (qfilename==QString::null)
+    QString qfilename = QFileDialog::getOpenFileName( QString::null,tr("Scipio File (scipio.xml)") , this, "", tr("Open Scipio project"));
+    if( qfilename == QString::null )
         return;
-    this->OpenProject( qfilename );
+    try
+    {
+        OpenProject( qfilename.ascii() );
+    }
+    catch( ADN_Exception_ABC& exception )
+    {
+        QApplication::restoreOverrideCursor();	// restore original cursor
+        QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::OpenProject
 // Created: APE 2005-04-14
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::OpenProject( const char* szFilename )
+void ADN_MainWindow::OpenProject( const std::string& szFilename )
 {
 //    if( ! SelectOpenMode() )
 //    return;
@@ -351,7 +366,7 @@ void ADN_MainWindow::OpenProject( const char* szFilename )
     try
     {
         //workspace_.Load(ADN_Tools::Replace(szFilename,'\\','/'));  // $$$$ SBO 2005-11-18: Does not work on network
-        if( szFilename[ 0 ] == '/' && szFilename[ 1 ] == '/' )
+        if( QString( szFilename.c_str() ).startsWith( "//" ) )
             workspace_.Load( ADN_Tools::Replace( szFilename, '/', '\\' ) );
         else
             workspace_.Load( szFilename );
@@ -359,14 +374,13 @@ void ADN_MainWindow::OpenProject( const char* szFilename )
     catch( ADN_Exception_ABC& exception )
     {
         QApplication::restoreOverrideCursor();	// restore original cursor
-        QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
         workspace_.ResetProgressIndicator();
-        return;
+        throw;
     }
 
     QApplication::restoreOverrideCursor();	// restore original cursor
 
-    QString strCaption = tr( "Scipio Adaptation Tool - " ) + szFilename;
+    QString strCaption = tr( "Scipio Adaptation Tool - " ) + szFilename.c_str();
     setCaption( strCaption );
 
     SetMenuEnabled(true);

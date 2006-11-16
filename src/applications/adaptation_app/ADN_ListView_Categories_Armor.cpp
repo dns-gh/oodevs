@@ -13,7 +13,6 @@
 #include "ADN_ListView_Categories_Armor.h"
 
 #include <qpopupmenu.h>
-#include <qmessagebox.h>
 
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"

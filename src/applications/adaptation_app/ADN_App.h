@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_App.h $
-// $Author: Ape $
-// $Modtime: 14/04/05 15:56 $
-// $Revision: 5 $
-// $Workfile: ADN_App.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_App_h_
 #define __ADN_App_h_
@@ -31,7 +29,7 @@ public:
      ADN_App( int argc, char** argv );
     ~ADN_App();
 
-    void Initialize( uint nArgc, char** ppArgv );
+    bool Initialize( const std::string& inputFile, const std::string& outputFile );
 
 public:
     ADN_MainWindow* GetMainWindow();

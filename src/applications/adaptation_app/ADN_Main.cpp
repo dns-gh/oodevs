@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Main.cpp $
-// $Author: Ape $
-// $Modtime: 14/04/05 15:56 $
-// $Revision: 4 $
-// $Workfile: ADN_Main.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_App.h"
@@ -16,6 +14,13 @@
 #include <commctrl.h>
 #include <qtranslator.h>
 #include <qtextcodec.h>
+
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
+#include <boost/program_options.hpp>
+#pragma warning( pop )
+
+namespace po = boost::program_options;
 
 extern const char* szADN_Version;
 
@@ -73,7 +78,7 @@ void SetConsolePos( const int nPosX, const int nPosY )
 }
 
 
-void main( uint nArgc, char** ppArgv )
+int main( uint nArgc, char** ppArgv )
 {
     // Console
     SetConsoleTitle( szADN_Version );    
@@ -83,21 +88,38 @@ void main( uint nArgc, char** ppArgv )
 
     ADN_App app( nArgc, ppArgv );
 
+    // Command line options
+    std::string inputFile, outputFile;
+    po::options_description desc( "Allowed options" );
+    desc.add_options()
+        ( "input,i" , po::value< std::string >( &inputFile  )->default_value( "" ), "specify root input file (scipio.xml)" )
+        ( "output,o", po::value< std::string >( &outputFile )->default_value( "" ), "specify output file (scipio.xml) (open/save-mode: input must be specified)" )
+    ;
+    po::variables_map vm;
+    po::store( po::parse_command_line( nArgc, ppArgv, desc ), vm );
+    po::notify( vm );
+
     try
     {
-        app.Initialize( nArgc, ppArgv );
-        app.exec();
+        if( app.Initialize( inputFile, outputFile ) )
+            app.exec();
     }
     catch( MT_Exception& exception )
     {
         std::stringstream strMsg;
-        strMsg << "Context : "     << exception.GetContext()     << std::endl
-               << "Message : "     << exception.GetInfo()        << std::endl;
+        strMsg << "Context : " << exception.GetContext() << std::endl
+               << "Message : " << exception.GetInfo()    << std::endl;
         
-        MessageBox( 0, strMsg.str().c_str(), "Scipio Adaptation Tool - MT_Exception", MB_ICONERROR | MB_OK );
+        if( !outputFile.empty() )
+            MessageBox( 0, strMsg.str().c_str(), "Scipio Adaptation Tool - MT_Exception", MB_ICONERROR | MB_OK );
+        else
+            MT_LOG_ERROR_MSG( strMsg.str().c_str() );
+        app.quit();
+        MT_LOG_UNREGISTER_LOGGER( consoleLogger );
+        return EXIT_FAILURE;
     }
     
     app.quit();
-
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
+    return EXIT_SUCCESS;
 }
