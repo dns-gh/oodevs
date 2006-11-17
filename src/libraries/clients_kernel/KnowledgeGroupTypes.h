@@ -10,9 +10,11 @@
 #ifndef __KnowledgeGroupTypes_h_
 #define __KnowledgeGroupTypes_h_
 
-#include "clients_kernel/Resolver.h"
+#include "Resolver.h"
 
-class KnowledgeGroupType;
+namespace kernel
+{
+    class KnowledgeGroupType;
 
 // =============================================================================
 /** @class  KnowledgeGroupTypes

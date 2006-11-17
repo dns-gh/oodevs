@@ -7,18 +7,21 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
+#include "clients_kernel_pch.h"
 #include "KnowledgeGroupType.h"
+#include "xeumeuleu/xml.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupType constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-KnowledgeGroupType::KnowledgeGroupType( const QString& name, const QString& value )
-    : name_( name )
-    , value_( value )
+KnowledgeGroupType::KnowledgeGroupType( xml::xistream& xis )
 {
-    // NOTHING
+    std::string name;
+    xis >> xml::attribute( "nom", name );
+    name_ = name.c_str();
 }
     
 // -----------------------------------------------------------------------------
@@ -37,13 +40,4 @@ KnowledgeGroupType::~KnowledgeGroupType()
 const QString& KnowledgeGroupType::GetName() const
 {
     return name_;
-}
-    
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupType::GetValue
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-const QString& KnowledgeGroupType::GetValue() const
-{
-    return value_;
 }

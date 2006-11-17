@@ -10,8 +10,7 @@
 #include "preparation_pch.h"
 #include "KnowledgeGroup.h"
 #include "IdManager.h"
-#include "KnowledgeGroupTypes.h"
-#include "KnowledgeGroupType.h"
+#include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ActionController.h"
@@ -27,9 +26,9 @@ using namespace xml;
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, KnowledgeGroupTypes& types )
+KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, QString >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
-    , type_( &types.GetDefault() )
+    , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
 {
     name_ = tools::translate( "KnowledgeGroup", "Knowledge group" );
     RegisterSelf( *this );
@@ -40,7 +39,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Kn
 // Name: KnowledgeGroup constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, KnowledgeGroupTypes& types )
+KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, Resolver_ABC< KnowledgeGroupType, QString >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, ReadId( xis ), "" )
 {
     std::string type, name;
@@ -113,6 +112,6 @@ void KnowledgeGroup::Rename( const QString& name )
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
-        << attribute( "type", type_->GetValue() )
+        << attribute( "type", type_->GetName() )
         << attribute( "name", name_ );
 }

@@ -13,7 +13,6 @@
 #include "clients_gui/TableItemDisplayer.h"
 #include "preparation/EnumTypes.h"
 
-class KnowledgeGroupType;
 class TeamKarma;
 class DotationsItem;
 
@@ -24,7 +23,6 @@ class DotationsItem;
 // Created: SBO 2006-10-27
 // =============================================================================
 class PropertiesTableDisplayer : public gui::TableItemDisplayer
-                               , public kernel::Caller< KnowledgeGroupType >
                                , public kernel::Caller< TeamKarma >
                                , public kernel::Caller< Enum_PopulationAttitude >
                                , public kernel::Caller< DotationsItem >
@@ -39,7 +37,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Call( const KnowledgeGroupType& value );
     virtual void Call( const TeamKarma& value );
     virtual void Call( const Enum_PopulationAttitude& value );
     virtual void Call( const DotationsItem& value );

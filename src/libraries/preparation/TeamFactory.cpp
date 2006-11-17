@@ -31,6 +31,7 @@
 #include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/AgentTypes.h"
 
 using namespace kernel;
 
@@ -92,7 +93,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( kernel::Team_ABC& team )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( controllers_.controller_, idManager_, staticModel_.knowledgeGroupTypes_ );
+    KnowledgeGroup* result = new KnowledgeGroup( controllers_.controller_, idManager_, (Resolver_ABC< KnowledgeGroupType, QString >&)staticModel_.types_ );
     result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
     return result;
@@ -104,7 +105,7 @@ kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( kernel::Team_ABC&
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( xml::xistream& xis, kernel::Team_ABC& team )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.knowledgeGroupTypes_ );
+    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, (Resolver_ABC< KnowledgeGroupType, QString >&)staticModel_.types_ );
     result->Attach< kernel::CommunicationHierarchies >( *new EntityCommunications( controllers_.controller_, *result, &team ) );
     result->Polish();
     return result;

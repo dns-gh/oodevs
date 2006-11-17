@@ -27,6 +27,7 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Mission.h"
+#include "clients_kernel/KnowledgeGroupType.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -220,6 +221,15 @@ void BaseDisplayer::Call( const QTime& value )
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Call( const Mission& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::KnowledgeGroupType& value )
 {
     AddToDisplay( value.GetName() );
 }

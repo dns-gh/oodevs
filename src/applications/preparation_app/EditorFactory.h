@@ -23,11 +23,11 @@ namespace kernel
     class Automat_ABC;
     class Entity_ABC;
     class NBCAgent;
+    class KnowledgeGroupType;
 }
 
 class Model;
 class StaticModel;
-class KnowledgeGroupType;
 class TeamKarma;
 class DotationsItem;
 
@@ -44,7 +44,7 @@ class EditorFactory : public gui::EditorFactory
                     , public kernel::Caller< MaintenanceSuperior* >
                     , public kernel::Caller< MedicalSuperior* >
                     , public kernel::Caller< SupplySuperior* >
-                    , public kernel::Caller< KnowledgeGroupType** >
+                    , public kernel::Caller< kernel::KnowledgeGroupType** >
                     , public kernel::Caller< TeamKarma** >
                     , public kernel::Caller< kernel::NBCAgent** >
                     , public kernel::Caller< std::vector< kernel::NBCAgent* >* >
@@ -65,7 +65,7 @@ public:
     virtual void Call( MaintenanceSuperior* const& value );
     virtual void Call( MedicalSuperior* const& value );
     virtual void Call( SupplySuperior* const& value );
-    virtual void Call( KnowledgeGroupType** const& value );
+    virtual void Call( kernel::KnowledgeGroupType** const& value );
     virtual void Call( TeamKarma** const& value );
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );

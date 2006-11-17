@@ -18,6 +18,7 @@
 namespace kernel
 {
     class GlTools_ABC;
+    class Controller;
 }
 
 namespace xml
@@ -43,8 +44,8 @@ class TacticalLine_ABC : public kernel::TacticalLine_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( const QString& baseName, IdManager& idManager );
-             TacticalLine_ABC( xml::xistream& xis, IdManager& idManager );
+             TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, IdManager& idManager );
+             TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager );
     virtual ~TacticalLine_ABC();
     //@}
 
@@ -55,14 +56,6 @@ public:
     virtual bool          IsLimit() const = 0;
     //@}
 
-protected:
-    //! @name Helpers
-    //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-    void ReadPoint( xml::xistream& xis );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -70,11 +63,18 @@ private:
     TacticalLine_ABC& operator=( const TacticalLine_ABC& );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void CreateDictionary( kernel::Controller& controller );
+    //@}
+
 private:
     //! @name Member data
     //@{
     unsigned long  id_;
-    QString        strName_;
+    QString        name_;
     //@}
 };
 

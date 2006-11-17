@@ -9,7 +9,6 @@
 
 #include "preparation_app_pch.h"
 #include "PropertiesTableDisplayer.h"
-#include "preparation/KnowledgeGroupType.h"
 #include "preparation/TeamKarma.h"
 #include "preparation/DotationsItem.h"
 #include "preparation/Dotation.h"
@@ -32,15 +31,6 @@ PropertiesTableDisplayer::PropertiesTableDisplayer()
 PropertiesTableDisplayer::~PropertiesTableDisplayer()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertiesTableDisplayer::Call
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const KnowledgeGroupType& value )
-{
-    AddToDisplay( value.GetName() );
 }
 
 // -----------------------------------------------------------------------------

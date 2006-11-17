@@ -12,6 +12,8 @@
 #include "TacticalLinePositions.h"
 #include "IdManager.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -20,24 +22,26 @@ using namespace xml;
 // Name: TacticalLine_ABC constructor
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, IdManager& idManager )
+TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, IdManager& idManager )
     : id_( idManager.GetNextId() )
 {
     RegisterSelf( *this );
-    strName_ = ( baseName + " %1" ).arg( id_ );
+    name_ = ( baseName + " %1" ).arg( id_ );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( xml::xistream& xis, IdManager& idManager )
+TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager )
     : id_( idManager.GetNextId() )
 {
     RegisterSelf( *this );
     std::string name;
     xis >> attribute( "name", name );
-    strName_ = name.c_str();
+    name_ = name.c_str();
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +68,7 @@ unsigned long TacticalLine_ABC::GetId() const
 // -----------------------------------------------------------------------------
 QString TacticalLine_ABC::GetName() const
 {
-    return strName_;
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +80,7 @@ void TacticalLine_ABC::Draw( const geometry::Point2f& where, const geometry::Rec
 //    if( ! pointList_.empty() ) // $$$$ SBO 2006-11-07: Get< kernel::Positions >().IsSet()
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor3f( 0.f, 0.f, 0.f );
-        tools.Print( strName_.ascii(), Get< kernel::Positions >().GetPosition() );
+        tools.Print( name_.ascii(), Get< kernel::Positions >().GetPosition() );
     glPopAttrib();
 }
 
@@ -86,5 +90,17 @@ void TacticalLine_ABC::Draw( const geometry::Point2f& where, const geometry::Rec
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "name", std::string( strName_.ascii() ) );
+    xos << attribute( "name", std::string( name_.ascii() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::CreateDictionary
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::CreateDictionary( kernel::Controller& controller )
+{
+    kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
+    Attach( dictionary );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "TacticalLine_ABC", "Info/Identifier" ), (const unsigned long)id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "TacticalLine_ABC", "Info/Name" ), name_ );
 }

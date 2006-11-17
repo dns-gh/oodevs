@@ -13,14 +13,18 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Resolver_ABC.h"
 
 namespace xml
 {
     class xistream;
 }
 
-class KnowledgeGroupType;
-class KnowledgeGroupTypes;
+namespace kernel
+{
+    class KnowledgeGroupType;
+}
+
 class IdManager;
 
 // =============================================================================
@@ -36,8 +40,8 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, KnowledgeGroupTypes& types );
-             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, KnowledgeGroupTypes& types );
+             KnowledgeGroup( kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, QString >& types );
+             KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, kernel::Resolver_ABC< kernel::KnowledgeGroupType, QString >& types );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -58,13 +62,13 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     virtual QString GetName() const;
-    static unsigned long ReadId  ( xml::xistream& xis );
+    static unsigned long ReadId( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    KnowledgeGroupType* type_;
+    kernel::KnowledgeGroupType* type_;
     //@}
 };
 

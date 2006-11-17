@@ -65,6 +65,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateDictionary( kernel::Controller& controller );
     virtual void DoUpdate( const kernel::InstanciationComplete& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}

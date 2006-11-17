@@ -22,7 +22,7 @@ using namespace xml;
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 Limit::Limit( Controller& controller, IdManager& idManager )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager )
+    : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), idManager )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -33,7 +33,7 @@ Limit::Limit( Controller& controller, IdManager& idManager )
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 Limit::Limit( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager )
-    : TacticalLine_ABC( xis, idManager )
+    : TacticalLine_ABC( controller, xis, idManager )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -55,7 +55,7 @@ Limit::~Limit()
 // -----------------------------------------------------------------------------
 void Limit::Select( ActionController& actions ) const
 {
-    actions.Select( *this, *(kernel::TacticalLine_ABC*)this );
+    actions.Select( *this, *(kernel::TacticalLine_ABC*)this, *(kernel::Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

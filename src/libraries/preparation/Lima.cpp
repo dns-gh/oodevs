@@ -22,7 +22,7 @@ using namespace xml;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, IdManager& idManager )
-    : TacticalLine_ABC( tools::translate( "Lima", "Lima" ), idManager )
+    : TacticalLine_ABC( controller, tools::translate( "Lima", "Lima" ), idManager )
     , controller_     ( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -33,7 +33,7 @@ Lima::Lima( Controller& controller, IdManager& idManager )
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 Lima::Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager )
-    : TacticalLine_ABC( xis, idManager )
+    : TacticalLine_ABC( controller, xis, idManager )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -55,7 +55,7 @@ Lima::~Lima()
 // -----------------------------------------------------------------------------
 void Lima::Select( ActionController& actions ) const
 {
-    actions.Select( *this, *(kernel::TacticalLine_ABC*)this );
+    actions.Select( *this, *(kernel::TacticalLine_ABC*)this, *(kernel::Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

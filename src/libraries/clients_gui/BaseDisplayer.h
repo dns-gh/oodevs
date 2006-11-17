@@ -32,6 +32,7 @@ namespace kernel
     class AutomatType;
     class PopulationType;
     class ObjectType;
+    class KnowledgeGroupType;
 }
 
 namespace gui
@@ -63,6 +64,7 @@ class BaseDisplayer : public kernel::Displayer_ABC
                     , public kernel::Caller< kernel::AutomatType >
                     , public kernel::Caller< kernel::PopulationType >
                     , public kernel::Caller< kernel::ObjectType >
+                    , public kernel::Caller< kernel::KnowledgeGroupType >
 {
 
 public:
@@ -100,6 +102,7 @@ private:
     virtual void Call( const kernel::AutomatType& value );
     virtual void Call( const kernel::PopulationType& value );
     virtual void Call( const kernel::ObjectType& value );
+    virtual void Call( const kernel::KnowledgeGroupType& value );
     //@}
 };
 

@@ -18,6 +18,7 @@
 #include "DotationType.h"
 #include "MissionFactory.h"
 #include "SymbolFactory.h"
+#include "KnowledgeGroupType.h"
 #include "xeumeuleu/xml.h"
 #include "PathTools.h"
 
@@ -48,13 +49,14 @@ void AgentTypes::Load( const std::string& scipioXml )
     xis >> start( "Scipio" )    
             >> start( "Donnees" );
 
-    std::string components, decisional, agents, automats, sensors, populations;
+    std::string components, decisional, agents, automats, sensors, populations, groups;
     xis >> content( "Capteurs", sensors )
         >> content( "Composantes", components )
         >> content( "Decisionnel", decisional )
         >> content( "Pions", agents )
         >> content( "Automates", automats )
-        >> content( "Populations", populations );
+        >> content( "Populations", populations )
+        >> content( "GroupesConnaissance", groups );
 
     ReadComponents( path_tools::BuildChildPath( scipioXml, components ) );
     ReadDecisional( path_tools::BuildChildPath( scipioXml, decisional ) );
@@ -62,6 +64,7 @@ void AgentTypes::Load( const std::string& scipioXml )
     ReadAgents( path_tools::BuildChildPath( scipioXml, agents ) );
     ReadAutomats( path_tools::BuildChildPath( scipioXml, automats ) );
     ReadPopulations( path_tools::BuildChildPath( scipioXml, populations ) );
+    ReadKnowledgeGroups( path_tools::BuildChildPath( scipioXml, groups ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +73,7 @@ void AgentTypes::Load( const std::string& scipioXml )
 // -----------------------------------------------------------------------------
 void AgentTypes::Purge()
 {
+    Resolver< KnowledgeGroupType, QString >::DeleteAll();
     Resolver< PopulationType >::DeleteAll();
     Resolver< PopulationType, QString >::Clear();
     Resolver< AgentType >::DeleteAll();
@@ -260,3 +264,23 @@ void AgentTypes::ReadPopulationType( xml::xistream& xis )
     Resolver< PopulationType, QString >::Register( type->GetName(), *type );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReadKnowledgeGroups
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void AgentTypes::ReadKnowledgeGroups( const std::string& groups )
+{
+    xifstream xis( groups );
+    xis >> start( "GroupesConnaissance" )
+            >> list( "GroupeConnaissance", *this, &AgentTypes::ReadKnowledgeGroupType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::ReadKnowledgeGroupType
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void AgentTypes::ReadKnowledgeGroupType( xml::xistream& xis )
+{
+    KnowledgeGroupType* type = new KnowledgeGroupType( xis );
+    Resolver< KnowledgeGroupType, QString >::Register( type->GetName(), *type );
+}

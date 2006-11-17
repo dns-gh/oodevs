@@ -16,6 +16,8 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -32,6 +34,7 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
     , level_( &level )
 {
     RegisterSelf( *this );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +53,7 @@ Formation::Formation( xml::xistream& xis, Controller& controller, const Formatio
     name_  = name.c_str();
     idManager.Lock( id_ );
     RegisterSelf( *this );
+    CreateDictionary( controller );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,4 +122,16 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )
         << attribute( "level", level_->GetName().ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::CreateDictionary
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void Formation::CreateDictionary( kernel::Controller& controller )
+{
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    Attach( dictionary );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
 }

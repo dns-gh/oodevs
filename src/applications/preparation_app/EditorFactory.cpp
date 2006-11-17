@@ -15,14 +15,14 @@
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/StaticModel.h"
-#include "preparation/KnowledgeGroupTypes.h"
-#include "preparation/KnowledgeGroupType.h"
 #include "preparation/TeamKarmas.h"
 #include "preparation/TeamKarma.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/KnowledgeGroupType.h"
+#include "clients_kernel/AgentTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory constructor
@@ -137,9 +137,10 @@ namespace
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( KnowledgeGroupType** const& value )
+void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 {
-    SimpleResolverEditor< KnowledgeGroupType, KnowledgeGroupTypes >* editor = new SimpleResolverEditor< KnowledgeGroupType, KnowledgeGroupTypes >( parent_, staticModel_.knowledgeGroupTypes_ );
+    typedef kernel::Resolver_ABC< kernel::KnowledgeGroupType, QString > T_Resolver;
+    SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >* editor = new SimpleResolverEditor< kernel::KnowledgeGroupType, T_Resolver >( parent_, (T_Resolver&)( staticModel_.types_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
@@ -162,7 +163,7 @@ void EditorFactory::Call( TeamKarma** const& value )
 void EditorFactory::Call( kernel::NBCAgent** const& value )
 {
     typedef kernel::Resolver_ABC< kernel::NBCAgent, unsigned long > T_Resolver;
-    SimpleResolverEditor< kernel::NBCAgent, T_Resolver >* editor = new SimpleResolverEditor< kernel::NBCAgent, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ));
+    SimpleResolverEditor< kernel::NBCAgent, T_Resolver >* editor = new SimpleResolverEditor< kernel::NBCAgent, T_Resolver >( parent_, (T_Resolver&)( staticModel_.objectTypes_ ) );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

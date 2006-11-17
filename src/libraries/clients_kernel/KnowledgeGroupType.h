@@ -15,6 +15,9 @@ namespace xml
     class xistream;
 }
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  KnowledgeGroupType
     @brief  KnowledgeGroupType
@@ -27,14 +30,13 @@ class KnowledgeGroupType
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupType( const QString& name, const QString& value );
+    explicit KnowledgeGroupType( xml::xistream& xis );
     virtual ~KnowledgeGroupType();
     //@}
 
     //! @name Operations
     //@{
     const QString& GetName() const;
-    const QString& GetValue() const;
     //@}
 
 private:
@@ -48,8 +50,9 @@ private:
     //! @name Member data
     //@{
     QString name_;
-    QString value_;
     //@}
 };
+
+}
 
 #endif // __KnowledgeGroupType_h_

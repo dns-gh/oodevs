@@ -25,6 +25,7 @@ namespace kernel
     class MissionFactory;
     class Mission;
     class SymbolFactory;
+    class KnowledgeGroupType;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -42,6 +43,7 @@ class AgentTypes : public Resolver< AgentType >
                  , public Resolver< ComponentType, QString >
                  , public Resolver< SensorType, QString >
                  , public Resolver< DecisionalModel, QString >
+                 , public Resolver< KnowledgeGroupType, QString >
 {
 
 public:
@@ -78,10 +80,12 @@ private:
     void ReadAutomats( const std::string& automats );
     void ReadModels( const std::string& models );
     void ReadPopulations( const std::string& populations );
+    void ReadKnowledgeGroups( const std::string& groups );
 
     void ReadAgentType( xml::xistream& xis );
     void ReadAutomatType( xml::xistream& xis );
     void ReadPopulationType( xml::xistream& xis );
+    void ReadKnowledgeGroupType( xml::xistream& xis );
     void ReadComponent( xml::xistream& xis );
     void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );
     void ReadSensor( xml::xistream& xis );

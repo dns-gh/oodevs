@@ -20,7 +20,6 @@ namespace kernel
 }
 
 class SurfaceFactory;
-class KnowledgeGroupTypes;
 class TeamKarmas;
 
 // =============================================================================
@@ -54,7 +53,6 @@ public:
     kernel::DetectionMap&            detection_;
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
-    KnowledgeGroupTypes&             knowledgeGroupTypes_;
     TeamKarmas&                      teamKarmas_;
     //@}
 
