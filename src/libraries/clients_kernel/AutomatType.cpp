@@ -122,6 +122,15 @@ void AutomatType::Draw( const geometry::Point2f& where, const geometry::Rectangl
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatType::HasLogistics
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+bool AutomatType::HasLogistics() const
+{
+    return IsTC2() || IsLogisticMaintenance() || IsLogisticMedical() || IsLogisticSupply();
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatType::IsTC2
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------

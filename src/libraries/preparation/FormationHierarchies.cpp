@@ -10,7 +10,9 @@
 #include "preparation_pch.h"
 #include "FormationHierarchies.h"
 #include "AutomatDecisions.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -57,8 +59,12 @@ void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         if( it->second->Retrieve< AutomatDecisions >() )
         {
-            xos << start( "automat" );
-            it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
-            xos << end();
+            const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( it->second );
+            if( automat && automat->GetType().HasLogistics() )
+            {
+                xos << start( "automat" );
+                it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
+                xos << end();
+            }
         }
 }

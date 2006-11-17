@@ -48,6 +48,7 @@ public:
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     Iterator< const AutomatComposition& > CreateIterator() const;
     
+    bool HasLogistics() const;
     bool IsTC2() const;
     bool IsLogisticSupply() const;
     bool IsLogisticMaintenance() const;
