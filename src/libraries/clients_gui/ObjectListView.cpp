@@ -17,10 +17,10 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Profile_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -33,7 +33,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, Item
     : ListView< ObjectListView >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_    ( factory )
-    , currentTeam_( 0 )
+    , profile_( 0 )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Objets" ) );
@@ -97,6 +97,7 @@ void ObjectListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
 {
+   
     // $$$$ AGE 2006-10-16: 
     const Team_ABC& team = static_cast< const Team_ABC& >( object.Get< TacticalHierarchies >().GetUp() );
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
@@ -114,7 +115,9 @@ void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
         typeItem->SetNamed( type );
     }
 
-    factory_.CreateItem( typeItem )->SetNamed( (const Entity_ABC&)object );
+    ValuedListItem* item = factory_.CreateItem( typeItem );
+    item->SetNamed( (const Entity_ABC&)object );
+    item->setVisible( profile_ && profile_->IsVisible( object ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,17 +190,22 @@ void ObjectListView::NotifyActivated( const Entity_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectListView::OptionChanged
-// Created: AGE 2006-03-27
+// Name: ObjectListView::NotifyUpdated
+// Created: AGE 2006-11-17
 // -----------------------------------------------------------------------------
-void ObjectListView::OptionChanged( const std::string& name, const OptionVariant& value )
+void ObjectListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    if( name == "CurrentTeam" )
-        currentTeam_ = value.To< const Team_ABC* >();
+    profile_ = &profile;
+
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {
-        item->setVisible( ! currentTeam_ || item->Holds( currentTeam_ ) );
-        item = (ValuedListItem*)( item->nextSibling() );
+        QListViewItem* next = item->nextSibling();
+        if( item->IsA< const Entity_ABC* >() )
+        {
+            const Entity_ABC& entity = *item->GetValue< const Entity_ABC* >();
+            item->setVisible( profile_->IsVisible( entity ) );
+        }
+        item = (ValuedListItem*)( next );
     }
 }

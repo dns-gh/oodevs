@@ -191,12 +191,12 @@ void AgentServerMsgMgr::DoUpdate()
         {
             (*it)->Apply( *this );
             delete *it;
+            *it = 0;
         }
         pendingInputs_.erase( pendingInputs_.begin(), it );
     }
     catch( ... )
     {
-        pendingInputs_.erase( pendingInputs_.begin(), it );
         for( CIT_Inputs it = pendingInputs_.begin(); it != pendingInputs_.end(); ++it )
             delete *it;
         pendingInputs_.clear();

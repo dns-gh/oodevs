@@ -405,14 +405,31 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ )
     glPopAttrib();
 }
 
+namespace
+{
+    int GenerateList()
+    {
+        int result = glGenLists( 256 );
+        HDC glHdc = qt_display_dc();
+        SelectObject( glHdc, QFont().handle() );
+        wglUseFontBitmaps( glHdc, 0, 256, result );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GlWidget::Print
 // Created: AGE 2006-03-20
 // -----------------------------------------------------------------------------
 void GlWidget::Print( const std::string& message, const Point2f& where ) const
 {
-    QGLWidget* that = const_cast< GlWidget* >( this );
-    that->renderText( where.X(), where.Y(), 0, message.c_str() );
+    glRasterPos2fv( (const float*)&where );
+
+    if( ! listBase_ )
+        const_cast< GlWidget* >( this )->listBase_ = GenerateList();
+    glListBase( listBase_ );
+
+    glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
 }
 
 // -----------------------------------------------------------------------------

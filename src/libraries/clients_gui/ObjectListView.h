@@ -21,6 +21,7 @@ namespace kernel
     class Object_ABC;
     class Controllers;
     class Team_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -39,7 +40,7 @@ class ObjectListView : public ListView< ObjectListView >
                      , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                      , public kernel::SelectionObserver< kernel::Entity_ABC >
                      , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
-                     , public kernel::OptionsObserver_ABC
+                     , public kernel::ElementObserver_ABC< kernel::Profile_ABC >
 {
     Q_OBJECT;
 public:
@@ -80,9 +81,9 @@ private:
     virtual void NotifyCreated( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
     virtual void NotifyUpdated( const kernel::Entity_ABC& object );
+    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
 
     virtual void NotifyActivated( const kernel::Entity_ABC& element );
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
@@ -90,7 +91,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    const kernel::Team_ABC* currentTeam_; // $$$$ SBO 2006-10-30: profile?
+    const kernel::Profile_ABC* profile_;
     //@}
 };
 

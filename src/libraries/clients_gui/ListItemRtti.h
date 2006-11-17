@@ -10,6 +10,8 @@
 #ifndef __ListItemRtti_h_
 #define __ListItemRtti_h_
 
+#include "boost/preprocessor/inc.hpp"
+
 namespace kernel
 {
     class Team_ABC;
@@ -29,7 +31,6 @@ namespace kernel
     class AutomatComposition;
 }
 
-class Model; // $$$$ SBO 2006-08-30: 
 class Dotation;
 class Equipment;
 class AgentKnowledge_ABC;
@@ -66,185 +67,56 @@ struct ListItemRtti
     // NOTHING
 };
 
-template< >
-struct ListItemRtti< const kernel::Team_ABC* > {
-    enum { rtti = 1001 };
-};
+namespace detail {
+    template< unsigned Value >
+    struct EnsureUnique;
+}
 
-template< >
-struct ListItemRtti< const kernel::KnowledgeGroup_ABC* > {
-    enum { rtti = 1002 };
-};
+#define DECLARE_RTTI( Type, Value )     \
+template< >                             \
+struct ListItemRtti< Type* > {          \
+    enum { rtti = 1000 + Value };       \
+};                                      \
+namespace detail {                      \
+    template< >                         \
+    struct EnsureUnique< Value > {};    \
+}
 
-template< >
-struct ListItemRtti< const kernel::Agent_ABC* > {
-    enum { rtti = 1003 };
-};
-
-template< >
-struct ListItemRtti< const kernel::ObjectType* > {
-    enum { rtti = 1004 };
-};
-
-template< >
-struct ListItemRtti< const kernel::Object_ABC* > {
-    enum { rtti = 1005 };
-};
-
-template< >
-struct ListItemRtti< const kernel::Population_ABC* > {
-    enum { rtti = 1006 };
-};
-
-template< >
-struct ListItemRtti< const kernel::PopulationFlow_ABC* > {
-    enum { rtti = 1007 };
-};
-
-template< >
-struct ListItemRtti< const Dotation* > {
-    enum { rtti = 1008 };
-};
-
-template< >
-struct ListItemRtti< const Equipment* > {
-    enum { rtti = 1009 };
-};
-
-template< >
-struct ListItemRtti< const AgentKnowledge_ABC* > {
-    enum { rtti = 1010 };
-};
-
-template< >
-struct ListItemRtti< const PopulationKnowledge_ABC* > {
-    enum { rtti = 1011 };
-};
-
-template< >
-struct ListItemRtti< const ObjectKnowledge_ABC* > {
-    enum { rtti = 1012 };
-};
-
-template< >
-struct ListItemRtti< const PopulationPartKnowledge_ABC* > {
-    enum { rtti = 1013 };
-};
-
-template< >
-struct ListItemRtti< const DotationRequest* > {
-    enum { rtti = 1014 };
-};
-
-template< >
-struct ListItemRtti< const LogSupplyConsign* > {
-    enum { rtti = 1015 };
-};
-
-template< >
-struct ListItemRtti< const LogMaintenanceConsign* > {
-    enum { rtti = 1016 };
-};
-
-template< >
-struct ListItemRtti< const LogMedicalConsign* > {
-    enum { rtti = 1017 };
-};
-
-template< >
-struct ListItemRtti< const Report_ABC* > {
-    enum { rtti = 1018 };
-};
-
-template< >
-struct ListItemRtti< const PopulationFireResult* > {
-    enum { rtti = 1019 };
-};
-
-template< >
-struct ListItemRtti< const AgentFireResult* > {
-    enum { rtti = 1020 };
-};
-
-template< >
-struct ListItemRtti< const Lima* > {
-    enum { rtti = 1021 };
-};
-
-template< >
-struct ListItemRtti< const PopulationConcentration* > {
-    enum { rtti = 1022 };
-};
-
-template< >
-struct ListItemRtti< const PopulationFlow* > {
-    enum { rtti = 1023 };
-};
-
-template< >
-struct ListItemRtti< const PopulationConcentrationKnowledge* > {
-    enum { rtti = 1024 };
-};
-
-template< >
-struct ListItemRtti< const PopulationFlowKnowledge* > {
-    enum { rtti = 1025 };
-};
-
-template< >
-struct ListItemRtti< const kernel::NBCAgent* > {
-    enum { rtti = 1026 };
-};
-
-template< >
-struct ListItemRtti< ParamObstacle* > {
-    enum { rtti = 1027 };
-};
-
-template< >
-struct ListItemRtti< ParamPath* > {
-    enum { rtti = 1028 };
-};
-
-template< >
-struct ListItemRtti< const kernel::PopulationConcentration_ABC* > {
-    enum { rtti = 1029 };
-};
-
-template< >
-struct ListItemRtti< const kernel::AgentType* > {
-    enum { rtti = 1030 };
-};
-
-template< >
-struct ListItemRtti< const kernel::AutomatType* > {
-    enum { rtti = 1031 };
-};
-
-template< >
-struct ListItemRtti< const kernel::PopulationType* > {
-    enum { rtti = 1032 };
-};
-
-template< >
-struct ListItemRtti< const Model* > {
-    enum { rtti = 1033 };
-};
-
-template< >
-struct ListItemRtti< const kernel::Entity_ABC* > {
-    enum { rtti = 1034 };
-};
-
-template< >
-struct ListItemRtti< const kernel::AutomatComposition* > {
-    enum { rtti = 1035 };
-};
-
-template< >
-struct ListItemRtti< const kernel::Automat_ABC* > {
-    enum { rtti = 1036 };
-};
+DECLARE_RTTI( const kernel::Team_ABC                     , 1  )
+DECLARE_RTTI( const kernel::KnowledgeGroup_ABC           , 2  )
+DECLARE_RTTI( const kernel::Agent_ABC                    , 3  )
+DECLARE_RTTI( const kernel::ObjectType                   , 4  )
+DECLARE_RTTI( const kernel::Object_ABC                   , 5  )
+DECLARE_RTTI( const kernel::Population_ABC               , 6  )
+DECLARE_RTTI( const kernel::PopulationFlow_ABC           , 7  )
+DECLARE_RTTI( const Dotation                             , 8  )
+DECLARE_RTTI( const Equipment                            , 9  )
+DECLARE_RTTI( const AgentKnowledge_ABC                   , 10 )
+DECLARE_RTTI( const PopulationKnowledge_ABC              , 11 )
+DECLARE_RTTI( const ObjectKnowledge_ABC                  , 12 )
+DECLARE_RTTI( const PopulationPartKnowledge_ABC          , 13 )
+DECLARE_RTTI( const DotationRequest                      , 14 )
+DECLARE_RTTI( const LogSupplyConsign                     , 15 )
+DECLARE_RTTI( const LogMaintenanceConsign                , 16 )
+DECLARE_RTTI( const LogMedicalConsign                    , 17 )
+DECLARE_RTTI( const Report_ABC                           , 18 )
+DECLARE_RTTI( const PopulationFireResult                 , 19 )
+DECLARE_RTTI( const AgentFireResult                      , 20 )
+DECLARE_RTTI( const Lima                                 , 21 )
+DECLARE_RTTI( const PopulationConcentration              , 22 )
+DECLARE_RTTI( const PopulationFlow                       , 23 )
+DECLARE_RTTI( const PopulationConcentrationKnowledge     , 24 )
+DECLARE_RTTI( const PopulationFlowKnowledge              , 25 )
+DECLARE_RTTI( const kernel::NBCAgent                     , 26 )
+DECLARE_RTTI(       ParamObstacle                        , 27 )
+DECLARE_RTTI(       ParamPath                            , 28 )
+DECLARE_RTTI( const kernel::PopulationConcentration_ABC  , 29 )
+DECLARE_RTTI( const kernel::AgentType                    , 30 )
+DECLARE_RTTI( const kernel::AutomatType                  , 31 )
+DECLARE_RTTI( const kernel::PopulationType               , 32 )
+DECLARE_RTTI( const kernel::Entity_ABC                   , 33 )
+DECLARE_RTTI( const kernel::AutomatComposition           , 34 )
+DECLARE_RTTI( const kernel::Automat_ABC                  , 35 )
 
 }
 

@@ -30,6 +30,7 @@ namespace
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 Workers::Workers()
+    : pool_()
 {
     const unsigned threads = pool_.GetCpuNumber();
     for( unsigned i = 0; i < threads; ++i )

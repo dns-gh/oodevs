@@ -11,6 +11,7 @@
 #define __Properties_h_
 
 #include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -52,6 +53,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void showEvent( QShowEvent* );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     //@}
 
@@ -63,6 +65,7 @@ private:
     gui::PropertiesWidget* table_;
     kernel::EditorFactory_ABC& factory_;
     gui::TableItemDisplayer& tableItemDisplayer_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 

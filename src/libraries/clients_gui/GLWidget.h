@@ -112,10 +112,10 @@ private:
     geometry::Rectangle2f viewport_;
     unsigned int frame_;
 
-    GlFont* font_;
-
     T_Views views_;
     IconLayout& iconLayout_;
+    
+    int listBase_;
     //@}
 };
 

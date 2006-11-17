@@ -16,7 +16,6 @@ namespace gui
 // =============================================================================
 /** @class  SmartGridWidget
     @brief  SmartGridWidget
-    // $$$$ AGE 2006-11-10: degager
 */
 // Created: AGE 2006-06-23
 // =============================================================================
@@ -28,10 +27,6 @@ public:
     //@{
              SmartGridWidget( QWidget* parent, int strips, Orientation o );
     virtual ~SmartGridWidget();
-    //@}
-
-    //! @name Operations
-    //@{
     //@}
 
 private:

@@ -29,6 +29,7 @@ Properties::Properties( QWidget* parent, Controllers& controllers )
     , controllers_( controllers )
     , factory_( *new gui::EditorFactory() )
     , tableItemDisplayer_( *new gui::TableItemDisplayer() )
+    , selected_( controllers )
 {
     setHScrollBarMode( QScrollView::AlwaysOff );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
@@ -56,18 +57,33 @@ Properties::~Properties()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Properties::showEvent
+// Created: AGE 2006-11-17
+// -----------------------------------------------------------------------------
+void Properties::showEvent( QShowEvent* )
+{
+    const Entity_ABC* element = selected_;
+    selected_ = 0;
+    NotifySelected( element );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Properties::NotifySelected
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
 void Properties::NotifySelected( const Entity_ABC* element )
 {
-    if( element )
+    if( isVisible() && selected_ != element )
     {
-        PropertiesDictionary* dico = const_cast< Entity_ABC* >( element )->Retrieve< PropertiesDictionary >();
-        if( dico )
+        selected_ = element;
+        if( selected_ )
         {
-            table_->Clear(); // $$$$ AGE 2006-10-26: 
-            dico->Display( *table_ );
+            PropertiesDictionary* dico = const_cast< Entity_ABC* >( element )->Retrieve< PropertiesDictionary >();
+            if( dico )
+            {
+                table_->Clear(); // $$$$ AGE 2006-10-26: 
+                dico->Display( *table_ );
+            }
         }
     }
 }
