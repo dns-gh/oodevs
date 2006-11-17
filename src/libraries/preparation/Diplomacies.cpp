@@ -68,7 +68,7 @@ void Diplomacies::Serialize( xml::xostream& xos ) const
     while( it.HasMoreElements() )
     {
         const Team_ABC& team = it.NextElement();
-        if( &team != &team_ )
+        if( &team == &team_ )
             continue;
         xos << start( "relationship" )
                 << attribute( "side", int( team.GetId() ) );
