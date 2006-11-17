@@ -67,6 +67,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
     virtual void Select           ( const kernel::Entity_ABC&, bool );
     void Toggle                   ( const kernel::Automat_ABC& automat, bool aggregate );
+    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     //@}
 
     //! @name Types

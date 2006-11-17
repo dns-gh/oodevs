@@ -38,7 +38,6 @@ public:
     //! @name Operations
     //@{
     virtual void Display( Displayer_ABC& displayer ) const = 0;
-    virtual void DisplayInTooltip( Displayer_ABC& displayer ) const = 0;
     //@}
 
     //! @name Accessors

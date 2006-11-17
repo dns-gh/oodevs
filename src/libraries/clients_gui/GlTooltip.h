@@ -12,6 +12,10 @@
 
 #include "NoLinkDisplayer.h"
 
+namespace kernel {
+    class GlTools_ABC;
+}
+
 namespace gui
 {
 
@@ -31,7 +35,7 @@ class GlTooltip : public NoLinkDisplayer
 public:
     //! @name Constructors/Destructor
     //@{
-             GlTooltip();
+    explicit GlTooltip( const kernel::GlTools_ABC& tools );
     virtual ~GlTooltip();
     //@}
 
@@ -75,6 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::GlTools_ABC& tools_;
     QString currentItem_;
     QColor color_;
     QString message_;

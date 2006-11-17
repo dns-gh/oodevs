@@ -283,15 +283,17 @@ void Gl3dWidget::DrawLife( const geometry::Point2f& center, float h, float facto
     // $$$$ AGE 2006-09-11: 
     const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
     const float deltaHeight = factor * 600.f * 0.062f;
+    const float xdelta = h * halfWidth;
     glPushMatrix();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glTranslatef( center.X(), center.Y(), ElevationAt( center ) + 100.f );
         UndoRotations();
+        glTranslatef( 0, 0, 1 );
         glLineWidth( 3 );
         glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11: 
         glBegin( GL_LINES );
-            glVertex2f(   - halfWidth, deltaHeight );
-            glVertex2f( h * halfWidth, deltaHeight );
+            glVertex2f( - xdelta, deltaHeight );
+            glVertex2f(   xdelta, deltaHeight );
         glEnd();
     glPopAttrib();
     glPopMatrix();
@@ -313,16 +315,20 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where ) const
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, float factor /*= 1.f*/ ) const
 {
-    const float size = 600.f * factor;
-    const float ratio = size / 1000;
-    const float height = size * 0.660f; // $$$$ AGE 2006-09-11: 
+    const float svgDeltaX = -20;
+    const float svgDeltaY = -80;
+    const float svgWidth = 360;
+    const float expectedWidth  = 600.f * factor;
+    const float expectedHeight = expectedWidth * 0.660f;
+    const float scaleRatio = expectedWidth / svgWidth;
 
     glPushMatrix();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
         UndoRotations();
-        glTranslatef( - size * 0.5f, height, 0 );
-        glScalef( ratio, -ratio, ratio );
+        glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
+        glScalef( scaleRatio, -scaleRatio, scaleRatio );
+        glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
         const geometry::Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11: 
         Base().PrintApp6( symbol, bbox );
     glPopAttrib();
@@ -336,6 +342,22 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 void Gl3dWidget::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
 {
     // $$$$ AGE 2006-05-16: 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawImage
+// Created: AGE 2006-11-17
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawImage( const QImage& image, const geometry::Point2f& where ) const
+{
+    if( image.bits() )
+    {
+        glDisable( GL_DEPTH_TEST );
+        glRasterPos3f( where.X(), where.Y(), ElevationAt( where ) + 100.f );
+        glBitmap(0, 0, 0, 0, 0, - image.height(), 0 );
+        glDrawPixels( image.width(), image.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+        glEnable( GL_DEPTH_TEST );
+    }
 }
 
 // -----------------------------------------------------------------------------

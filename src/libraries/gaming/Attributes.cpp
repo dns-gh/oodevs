@@ -198,10 +198,10 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", nOpState_ );
-    displayer.Display( tools::translate( "Attributs", "Rapport de force" ), nFightRateState_ );
+    displayer.Display( tools::translate( "Attributs", "Rapport de force:" ), nFightRateState_ );
     displayer.Display( "", nCloseCombatState_ );
     displayer.Display( "", nCurrentPosture_ );
-    displayer.Display( tools::translate( "Attributs", "ROE" ), nRulesOfEngagementState_ );
+    displayer.Display( tools::translate( "Attributs", "RoE:" ), nRulesOfEngagementState_ );
 }
 
 // -----------------------------------------------------------------------------

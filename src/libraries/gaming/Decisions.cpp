@@ -133,7 +133,7 @@ void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2
 // -----------------------------------------------------------------------------
 void Decisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Decisions", "Mission" ), current_ );
+    displayer.Display( tools::translate( "Decisions", "Mission:" ), current_ );
 }
 
 // -----------------------------------------------------------------------------

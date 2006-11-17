@@ -12,6 +12,8 @@
 
 #include "GLToolColors.h"
 
+class QImage;
+
 namespace kernel
 {
     class Controllers;
@@ -61,6 +63,7 @@ public:
     virtual void Print          ( const std::string& message, const geometry::Point2f& where ) const = 0;
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f ) const = 0;
     virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const = 0;
+    virtual void DrawImage      ( const QImage& image, const geometry::Point2f& where ) const = 0;
     //@}
 
 private:

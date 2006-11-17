@@ -284,3 +284,12 @@ void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float 
 //    CheckTools();
     tools_->DrawIcon( xpm, where, size );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::DrawImage
+// Created: AGE 2006-11-17
+// -----------------------------------------------------------------------------
+void GlProxy::DrawImage( const QImage& image, const geometry::Point2f& where ) const
+{
+    tools_->DrawImage( image, where );
+}

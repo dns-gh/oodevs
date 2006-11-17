@@ -333,6 +333,6 @@ QString Population::GetTypeName() const
 void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", (Population_ABC*)this )
-             .Display( tools::translate( "Population", "Vivants" ), GetLivingHumans() )
-             .Display( tools::translate( "Population", "Domination" ), nDomination_ );
+             .Display( tools::translate( "Population", "Vivants:" ), GetLivingHumans() )
+             .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
 }

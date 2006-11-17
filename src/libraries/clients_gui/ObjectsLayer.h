@@ -33,12 +33,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual void DisplayTooltip( const kernel::Object_ABC& entity, kernel::Displayer_ABC& displayer );
-    //@}
-
-private:
     //! @name Copy/Assignement
     //@{
     ObjectsLayer( const ObjectsLayer& );            //!< Copy constructor

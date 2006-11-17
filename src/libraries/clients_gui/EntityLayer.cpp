@@ -32,7 +32,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , view_       ( view )
     , profile_    ( profile )
     , tooltiped_  ( std::numeric_limits< unsigned >::max() ) 
-    , tooltip_    ( new GlTooltip() )
+    , tooltip_    ( new GlTooltip( tools_ ) )
     , selected_   ( 0 )
 {
     // NOTHING
@@ -200,7 +200,7 @@ bool EntityLayerBase::DisplayTooltip( const Entity_ABC& entity, Displayer_ABC& d
 // -----------------------------------------------------------------------------
 bool EntityLayerBase::IsInSelection( const Entity_ABC& entity, const geometry::Point2f& point ) const
 {
-    return entity.Get< Positions >().IsAt( point, 10.f * tools_.Pixels() );
+    return entity.Get< Positions >().IsAt( point, 1.f * tools_.Pixels() );
 }
 
 // -----------------------------------------------------------------------------

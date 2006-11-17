@@ -164,6 +164,19 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledge::DisplayInTooltip
+// Created: AGE 2006-11-17
+// -----------------------------------------------------------------------------
+void AgentKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "AgentKnowledge", "Niveau de perception:" ), nCurrentPerceptionLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Camp:" ), team_  )
+             .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
+             .Display( tools::translate( "AgentKnowledge", "Niveau:" ), nLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Pertinence:" ), nRelevance_ * Units::percentage );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::Draw
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
@@ -192,9 +205,9 @@ unsigned int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) con
     {
     default:
     case eNotSeen:        
-    case eDetection:      return 0; // nothing
-    case eRecognition:    return 2; // side + category + weapon
-    case eIdentification: return 9; // all
+    case eDetection:      return 3; // nothing                  sugpu
+    case eRecognition:    return 5; // side + category + weapon shgpuca
+    case eIdentification: return 9; // all                      shgpucaaaw
     }
 }
 
@@ -238,5 +251,5 @@ void AgentKnowledge::UpdateSymbol()
     currentSymbol_[ pos ] = teamChar;
     currentSymbol_ = currentSymbol_.substr( 0, pos + toKeep + 1 );
 
-    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep ); // $$$$ AGE 2006-10-25: 
+    currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25: 
 }

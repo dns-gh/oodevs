@@ -469,6 +469,20 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= 
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawImage
+// Created: AGE 2006-11-17
+// -----------------------------------------------------------------------------
+void GlWidget::DrawImage( const QImage& image, const geometry::Point2f& where ) const
+{
+    if( image.bits() )
+    {
+        glRasterPos3f( where.X(), where.Y(), 300 );
+        glBitmap(0, 0, 0, 0, 0, - image.height(), 0 );
+        glDrawPixels( image.width(), image.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::CenterOn
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

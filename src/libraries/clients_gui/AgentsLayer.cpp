@@ -134,3 +134,13 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
     else
         entity.Select( controllers_.actions_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::ContextMenu
+// Created: AGE 2006-11-17
+// -----------------------------------------------------------------------------
+void AgentsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
+{
+    const kernel::Agent_ABC& agent = static_cast< const kernel::Agent_ABC& >( entity );
+    controllers_.actions_.ContextMenu( agent, entity, point, where );
+}

@@ -15,6 +15,7 @@
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "AgentKnowledge_ABC.h"
 
@@ -35,6 +36,7 @@ class AgentKnowledge : public kernel::EntityImplementation< AgentKnowledge_ABC >
                      , public kernel::Extension_ABC
                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
                      , public kernel::Drawable_ABC
+                     , public kernel::Displayable_ABC
 {
 
 public:
@@ -47,7 +49,8 @@ public:
 
     //! @name operations
     //@{
-    void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display         ( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

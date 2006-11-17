@@ -90,6 +90,16 @@ public:
         ShowMenu( where );
     }
 
+    template< typename T1, typename T2, typename T3 >
+    void ContextMenu( const T1& firstElement, const T2& secondElement, const T3& thirdElement, const QPoint& where )
+    {
+        menu_.Clear();
+        Apply( & ContextMenuObserver_ABC< T1 >::NotifyContextMenu, firstElement, menu_ );
+        Apply( & ContextMenuObserver_ABC< T2 >::NotifyContextMenu, secondElement, menu_ );
+        Apply( & ContextMenuObserver_ABC< T3 >::NotifyContextMenu, thirdElement, menu_ );
+        ShowMenu( where );
+    }
+
     template< typename T >
     void Activate( const T& element )
     {

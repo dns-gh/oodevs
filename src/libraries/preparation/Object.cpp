@@ -165,9 +165,9 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", *(Object_ABC*)this )
-             .Display( tools::translate( "Object", "Niveau de construction" ), rConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Valorisation" ),           rValorizationPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Contournement" ),          rBypassConstructionPercentage_ * Units::percentage );
+             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Valorisation:" ),           rValorizationPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Contournement:" ),          rBypassConstructionPercentage_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------

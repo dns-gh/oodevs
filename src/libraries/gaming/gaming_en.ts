@@ -247,14 +247,6 @@
         <source>R&#xe9;fugi&#xe9;s pris en compte:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Rapport de force</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROE</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CR</name>
@@ -297,11 +289,11 @@
 <context>
     <name>Decisions</name>
     <message>
-        <source>Mission automate</source>
+        <source>Mission automate:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission</source>
+        <source>Mission:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -737,18 +729,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Niveau de construction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Valorisation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contournement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>D&#xe9;tails</source>
         <translation type="unfinished"></translation>
     </message>
@@ -779,14 +759,6 @@
 </context>
 <context>
     <name>Population</name>
-    <message>
-        <source>Vivants</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Domination</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Concentration</source>
         <translation type="unfinished"></translation>
@@ -865,6 +837,14 @@
     </message>
     <message>
         <source>Camp:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vivants:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Domination:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
