@@ -66,9 +66,9 @@ void LimitsModel::CreateLimit( const T_PointVector& points, kernel::Entity_ABC& 
 // Name: LimitsModel::CreateLima
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsModel::CreateLima( E_FuncLimaType type, const T_PointVector& points, kernel::Entity_ABC& superior )
+void LimitsModel::CreateLima( const T_PointVector& points, kernel::Entity_ABC& superior )
 {
-    TacticalLine_ABC* line = new Lima( controllers_.controller_, type, idManager_ );
+    TacticalLine_ABC* line = new Lima( controllers_.controller_, idManager_ );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, *line ) );
     line->Attach( *new TacticalLineHierarchies( controllers_.controller_, *line, &superior ) );
     if( TacticalLines* lines = superior.Retrieve< TacticalLines >() )

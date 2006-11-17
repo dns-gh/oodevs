@@ -32,15 +32,12 @@ TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, IdManager& idManage
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC( xml::xistream& xis, IdManager& idManager )
+    : id_( idManager.GetNextId() )
 {
     RegisterSelf( *this );
     std::string name;
-    int id;
-    xis >> attribute( "name", name )
-        >> attribute( "id", id );
+    xis >> attribute( "name", name );
     strName_ = name.c_str();
-    id_ = id;
-    idManager.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,6 +86,5 @@ void TacticalLine_ABC::Draw( const geometry::Point2f& where, const geometry::Rec
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << attribute( "name", std::string( strName_.ascii() ) )
-        << attribute( "id", int( id_ ) );
+    xos << attribute( "name", std::string( strName_.ascii() ) );
 }

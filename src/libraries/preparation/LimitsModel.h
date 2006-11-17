@@ -10,7 +10,6 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
-#include "Types.h"
 #include "clients_kernel/Resolver.h"
 
 namespace kernel
@@ -47,12 +46,12 @@ public:
     //! @name Operations
     //@{
     void CreateLimit( const T_PointVector& points, kernel::Entity_ABC& superior );
-    void CreateLima( E_FuncLimaType type, const T_PointVector& points, kernel::Entity_ABC& superior );
+    void CreateLima ( const T_PointVector& points, kernel::Entity_ABC& superior );
     void CreateLimit( xml::xistream& xis, kernel::Entity_ABC& superior );
     void CreateLima ( xml::xistream& xis, kernel::Entity_ABC& superior );
 
     void DeleteLimit( unsigned long id );
-    void DeleteLima( unsigned long id );
+    void DeleteLima ( unsigned long id );
     void Purge();
     //@}
 

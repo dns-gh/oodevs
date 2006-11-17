@@ -13,7 +13,6 @@
 #include <qobject.h>
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
-#include "preparation/Types.h"
 
 namespace kernel
 {
@@ -56,7 +55,7 @@ public:
     //@{
     void ClearSelection();
     void CreateLimit( const T_PointVector& points );
-    void CreateLima ( const T_PointVector& points, E_FuncLimaType type );
+    void CreateLima ( const T_PointVector& points );
     //@}
 
 public slots:

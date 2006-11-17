@@ -102,11 +102,11 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
 // Name: ModelBuilder::CreateLima
 // Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
-void ModelBuilder::CreateLima( const T_PointVector& points, E_FuncLimaType type )
+void ModelBuilder::CreateLima( const T_PointVector& points )
 {
     const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
     if( element )
-        model_.limits_.CreateLima( type, points, *const_cast< kernel::Entity_ABC* >( element ) );
+        model_.limits_.CreateLima( points, *const_cast< kernel::Entity_ABC* >( element ) );
 //    else
 //        throw std::exception( tools::translate( "ModelBuilder", "Cannot create a lima at the selected tactical level." ) );
 }

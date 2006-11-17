@@ -9,9 +9,9 @@
 
 #include "preparation_pch.h"
 #include "Lima.h"
-#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -21,10 +21,9 @@ using namespace xml;
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, E_FuncLimaType nFuncType, IdManager& idManager )
-    : TacticalLine_ABC( tools::ToString( nFuncType ), idManager )
+Lima::Lima( Controller& controller, IdManager& idManager )
+    : TacticalLine_ABC( tools::translate( "Lima", "Lima" ), idManager )
     , controller_     ( controller )
-    , nFuncType_      ( nFuncType )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
@@ -37,9 +36,6 @@ Lima::Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idMan
     : TacticalLine_ABC( xis, idManager )
     , controller_( controller )
 {
-    std::string type;
-    xis >> xml::attribute( "type", type );
-    nFuncType_ = tools::FromString( type.c_str() );
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
  
@@ -78,16 +74,6 @@ void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
 void Lima::Activate( ActionController& actions ) const
 {
     actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima::SerializeAttributes
-// Created: SBO 2006-11-07
-// -----------------------------------------------------------------------------
-void Lima::SerializeAttributes( xml::xostream& xos ) const
-{
-    TacticalLine_ABC::SerializeAttributes( xos );
-    xos << attribute( "type", tools::ToString( nFuncType_ ) );
 }
 
 // -----------------------------------------------------------------------------

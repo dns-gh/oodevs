@@ -24,7 +24,6 @@ using namespace xml;
 Limit::Limit( Controller& controller, IdManager& idManager )
     : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager )
     , controller_( controller )
-    , nLevel_( eNatureLevel_None )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }

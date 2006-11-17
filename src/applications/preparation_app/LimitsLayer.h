@@ -67,7 +67,7 @@ private slots:
     //! @name Slots
     //@{
     void OnCreateLimit();
-    void OnCreateLima( int );
+    void OnCreateLima ();
     //@}
 
 private:
@@ -104,7 +104,7 @@ private:
     ModelBuilder& modelBuilder_;
 
     kernel::TristateOption drawLines_;
-    int type_;
+    bool isLimit_;
     const kernel::TacticalLine_ABC* selected_;
     //@}
 };

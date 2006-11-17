@@ -11,7 +11,6 @@
 #define __Lima_h_
 
 #include "TacticalLine_ABC.h"
-#include "Types.h"
 
 namespace kernel
 {
@@ -30,7 +29,7 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Lima( kernel::Controller& controller, E_FuncLimaType nFuncType, IdManager& idManager );
+             Lima( kernel::Controller& controller, IdManager& idManager );
              Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager );
     virtual ~Lima();
     //@}
@@ -51,14 +50,8 @@ private:
     Lima& operator=( const Lima& );
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
-    //@}
-
 private:
     kernel::Controller& controller_;
-    E_FuncLimaType   nFuncType_;
     //@}
 };
 

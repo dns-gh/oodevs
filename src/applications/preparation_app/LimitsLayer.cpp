@@ -14,7 +14,6 @@
 #include "ModelBuilder.h"
 #include "preparation/Lima.h"
 #include "preparation/Limit.h"
-#include "preparation/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Location_ABC.h"
@@ -23,6 +22,7 @@
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ParametersLayer.h"
+#include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -40,7 +40,7 @@ LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, Co
     , strategy_    ( strategy )
     , parameters_  ( parameters )
     , modelBuilder_( modelBuilder )
-    , type_        ( -1 )
+    , isLimit_     ( true )
     , selected_    ( 0 )
 {
     controllers_.Remove( *this );
@@ -77,16 +77,8 @@ bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
 // -----------------------------------------------------------------------------
 void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, ::ContextMenu& menu )
 {
-    // $$$$ AGE 2006-08-22: Eventuellement, changer Parametre en une 5° categorie.
-    menu.InsertItem( "Parametre", tr( "Créer limite" ), this, SLOT( OnCreateLimit() ) );
-
-    QPopupMenu* limaMenu = new QPopupMenu( menu );
-    for( int n = 0; n < eLimaFuncNbr; ++n )
-    {
-        int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( OnCreateLima( int ) ) ); 
-        limaMenu->setItemParameter( nId, n );
-    }
-    menu.InsertItem( "Parametre", tr( "Créer lima" ), limaMenu );
+    menu.InsertItem( "Parametre", tools::translate( "LimitsLayer", "Create limit" ), this, SLOT( OnCreateLimit() ) );
+    menu.InsertItem( "Parametre", tools::translate( "LimitsLayer", "Create lima"  ), this, SLOT( OnCreateLima() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +97,7 @@ void LimitsLayer::NotifySelected( const kernel::TacticalLine_ABC* element )
 // -----------------------------------------------------------------------------
 void LimitsLayer::OnCreateLimit()
 {
-    type_ = -1;
+    isLimit_ = true;
     parameters_.StartLine( *this );
 }
 
@@ -113,9 +105,9 @@ void LimitsLayer::OnCreateLimit()
 // Name: LimitsLayer::OnCreateLima
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsLayer::OnCreateLima( int i )
+void LimitsLayer::OnCreateLima()
 {
-    type_ = i;
+    isLimit_ = false;
     parameters_.StartLine( *this );
 }
 
@@ -125,10 +117,10 @@ void LimitsLayer::OnCreateLima( int i )
 // -----------------------------------------------------------------------------
 void LimitsLayer::VisitLines( const T_PointVector& points )
 {
-    if( type_ == -1 )
+    if( isLimit_ )
         modelBuilder_.CreateLimit( points );
     else
-        modelBuilder_.CreateLima( points, E_FuncLimaType( type_ ) );
+        modelBuilder_.CreateLima( points );
 }
 
 // -----------------------------------------------------------------------------

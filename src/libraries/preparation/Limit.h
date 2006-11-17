@@ -52,7 +52,6 @@ private:
 
 private:
     kernel::Controller& controller_;
-    E_NatureLevel  nLevel_;
     //@}
 };
 
