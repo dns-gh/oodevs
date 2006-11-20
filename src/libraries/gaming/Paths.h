@@ -68,6 +68,7 @@ private:
     T_PointVector plannedPath_;
     geometry::Rectangle2f previousBox_;
     T_PointVector previousPath_;
+    bool pendingMagicMove_;
     //@}
 };
 

@@ -21,6 +21,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Paths::Paths( const CoordinateConverter_ABC& converter )
     : converter_( converter ) 
+    , pendingMagicMove_( false )
 {
     // NOTHING
 }
@@ -40,12 +41,18 @@ Paths::~Paths()
 // -----------------------------------------------------------------------------
 void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
-    static const float threshold = 30.f * 30.f;
+    static const float threshold      = 30.f * 30.f;
+    static const float magicThreshold = 1000.f * 1000.f;
     if( message.m.positionPresent )
     {
         const Point2f position = converter_.ConvertToXY( message.position );
         if( previousPath_.empty() || previousPath_.back().SquareDistance( position ) > threshold )
         {
+            if( pendingMagicMove_ && previousPath_.back().SquareDistance( position ) > magicThreshold )
+            {
+                previousPath_.clear();
+                pendingMagicMove_ = false;
+            }
             previousPath_.push_back( position );
             previousBox_.Incorporate( position );
         }
@@ -73,11 +80,9 @@ void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
 // Name: Paths::DoUpdate
 // Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
-void Paths::DoUpdate( const ASN1T_MsgUnitMagicAction& message )
+void Paths::DoUpdate( const ASN1T_MsgUnitMagicAction& /*message*/ )
 {
-    // $$$$ AGE 2006-11-20: will trigger even if not successful
-    if( message.action.t == T_MsgUnitMagicAction_action_move_to )
-        previousPath_.clear();
+    pendingMagicMove_ = true;
 }
 
 // -----------------------------------------------------------------------------
