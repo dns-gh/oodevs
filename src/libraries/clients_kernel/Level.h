@@ -27,7 +27,7 @@ class Level : public HierarchyLevel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Level( const QString& name, const HierarchyLevel_ABC* previous );
+             Level( const QString& name, const HierarchyLevel_ABC* next );
     virtual ~Level();
     //@}
 
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetNext( const HierarchyLevel_ABC& next );
+    void SetPrevious( const HierarchyLevel_ABC& previous );
     virtual bool operator<( const HierarchyLevel_ABC& rhs ) const;
     //@}
 

@@ -67,6 +67,7 @@ public:
     void Enable( DIN::DIN_Link& session );
     void DoUpdate();
     void Flush();
+    void Disconnect();
 
     virtual void Send( ASN1T_MsgsOutClient& message );
     virtual void SendMagicDestruction( const kernel::Entity_ABC& agent );

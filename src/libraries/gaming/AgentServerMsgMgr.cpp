@@ -108,7 +108,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     pMessageService_->RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
     pMessageService_->RegisterReceivedMessage( eMsgPopulationCollision                   , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationCollision );
-    pMessageService_->RegisterReceivedMessage( eMsgInClient           , *this, & AgentServerMsgMgr::OnReceiveMsgInClient            );
+    pMessageService_->RegisterReceivedMessage( eMsgInClient                              , *this, & AgentServerMsgMgr::OnReceiveMsgInClient            );
 //eMsgEnvironmentType // $$$$ AGE 2006-05-03:
     pMessageService_->SetCbkOnError( & AgentServerMsgMgr::OnError );
 
@@ -211,8 +211,28 @@ void AgentServerMsgMgr::DoUpdate()
 void AgentServerMsgMgr::Flush()
 {
     boost::mutex::scoped_lock locker( inputMutex_ );
-    std::copy( workingInputs_.begin(), workingInputs_.end(), std::back_inserter( buffer_ ) );
+    if( session_ )
+        std::copy( workingInputs_.begin(), workingInputs_.end(), std::back_inserter( buffer_ ) );
+    else
+        for( CIT_Inputs it = workingInputs_.begin(); it != workingInputs_.end(); ++it )
+            delete *it;
     workingInputs_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::Disconnect
+// Created: AGE 2006-11-20
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::Disconnect()
+{
+    boost::mutex::scoped_lock locker( inputMutex_ );
+    for( CIT_Inputs it = buffer_.begin(); it != buffer_.end(); ++it )
+        delete *it;
+    buffer_.clear();
+    for( CIT_Inputs it = pendingInputs_.begin(); it != pendingInputs_.end(); ++it )
+        delete *it;
+    pendingInputs_.clear();
+    session_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -1733,6 +1753,9 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
 //-----------------------------------------------------------------------------
 bool AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& /*info*/ )
 {
+    for( CIT_Inputs it = workingInputs_.begin(); it != workingInputs_.end(); ++it )
+        delete *it;
+    workingInputs_.clear();
     return false;
 }
 

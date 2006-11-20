@@ -39,7 +39,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetNext( const HierarchyLevel_ABC& next ) = 0;
     virtual bool operator<( const HierarchyLevel_ABC& rhs ) const = 0;
     //@}
 };

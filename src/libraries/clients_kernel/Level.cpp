@@ -16,14 +16,14 @@ using namespace kernel;
 // Name: Level constructor
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-Level::Level( const QString& name, const HierarchyLevel_ABC* previous )
+Level::Level( const QString& name, const HierarchyLevel_ABC* next )
     : name_( name )
     , id_( 1 )
-    , previous_( previous )
-    , next_( 0 )
+    , previous_( 0 )
+    , next_( next )
 {
-    if( previous )
-        id_ = previous->GetId() + 1;
+    if( next_ )
+        id_ = next_->GetId() + 1;
 }
     
 // -----------------------------------------------------------------------------
@@ -39,9 +39,9 @@ Level::~Level()
 // Name: Level::SetNext
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-void Level::SetNext( const HierarchyLevel_ABC& next )
+void Level::SetPrevious( const HierarchyLevel_ABC& previous )
 {
-    next_ = &next;
+    previous_ = &previous;
 }
 
 // -----------------------------------------------------------------------------

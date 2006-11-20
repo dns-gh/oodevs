@@ -29,7 +29,7 @@ Formation::Formation( const ASN1T_MsgFormationCreation& message, Controller& con
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    // NOTHING
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------

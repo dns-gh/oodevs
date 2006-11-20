@@ -147,11 +147,13 @@ void Network::Update()
             else if( it->lost_ )
             {
                 MT_LOG_WARNING_MSG( tools::translate( "Reseau", "Connexion à " ) << it->address_ << tools::translate( "Reseau", " perdue (raison :" ) << it->error_ << ")" );   
+                manager_->Disconnect();
                 simu_.Disconnect();
             }
             else
             {
                 MT_LOG_WARNING_MSG( tools::translate( "Reseau", "Non connecté à " ) << it->address_ << tools::translate( "Reseau", " (raison :" ) << it->error_ << ")" );   
+                manager_->Disconnect();
                 simu_.Disconnect();
             }
         }

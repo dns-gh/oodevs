@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class Level;
     class HierarchyLevel_ABC;
 
 // =============================================================================
@@ -49,13 +50,13 @@ private:
     //! @name Helpers
     //@{
     void Initialize();
-    HierarchyLevel_ABC* AddLevel( HierarchyLevel_ABC& root, const QString& name );
+    Level* AddLevel( Level& root, const QString& name );
     //@}
 
 private:
     //! @name Member data
     //@{
-    HierarchyLevel_ABC* root_;
+    Level* root_;
     //@}
 };
 

@@ -36,10 +36,10 @@ FormationLevels::~FormationLevels()
 // Name: FormationLevels::AddLevel
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-HierarchyLevel_ABC* FormationLevels::AddLevel( HierarchyLevel_ABC& root, const QString& name )
+Level* FormationLevels::AddLevel( Level& root, const QString& name )
 {
-    HierarchyLevel_ABC* newLevel = new Level( name, &root );
-    root.SetNext( *newLevel );
+    Level* newLevel = new Level( name, &root );
+    root.SetPrevious( *newLevel );
     Register( newLevel->GetId(), newLevel->GetName(), *newLevel );
     return newLevel;
 }
@@ -50,18 +50,19 @@ HierarchyLevel_ABC* FormationLevels::AddLevel( HierarchyLevel_ABC& root, const Q
 // -----------------------------------------------------------------------------
 void FormationLevels::Initialize()
 {
-    HierarchyLevel_ABC* root = new Level( "xxxx", 0 );
-    Register( root->GetId(), root->GetName(), *root );
-    root_ = root;
-    root = AddLevel( *root, "xxx" );
-    root = AddLevel( *root, "xx" );
-    root = AddLevel( *root, "x" );
-    root = AddLevel( *root, "iii" );
-    root = AddLevel( *root, "ii" );
-    root = AddLevel( *root, "i" );
-    root = AddLevel( *root, "ooo" );
-    root = AddLevel( *root, "oo" );
-    root = AddLevel( *root, "o" );
+    root_ = new Level( "o", 0 );
+    Register( root_->GetId(), root_->GetName(), *root_ );
+
+    root_ = AddLevel( *root_, "oo" );
+    root_ = AddLevel( *root_, "ooo" );
+    root_ = AddLevel( *root_, "i" );
+    root_ = AddLevel( *root_, "ii" );
+    root_ = AddLevel( *root_, "iii" );
+    root_ = AddLevel( *root_, "x" );
+    root_ = AddLevel( *root_, "xx" );
+    root_ = AddLevel( *root_, "xxx" );
+    root_ = AddLevel( *root_, "xxxx" );
+    root_ = AddLevel( *root_, "xxxxx" );
 }
 
 // -----------------------------------------------------------------------------

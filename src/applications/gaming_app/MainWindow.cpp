@@ -137,8 +137,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
     pListsTabWidget->addTab( new TacticalList  ( controllers, *factory ),            tr( "ODB" ) );
+    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );

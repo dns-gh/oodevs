@@ -197,15 +197,14 @@ void ObjectListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
     profile_ = &profile;
 
-    ValuedListItem* item = (ValuedListItem*)( firstChild() );
-    while( item )
+    QListViewItemIterator it( this );
+    while( ValuedListItem* item = (ValuedListItem*)( *it ) )
     {
-        QListViewItem* next = item->nextSibling();
         if( item->IsA< const Entity_ABC* >() )
         {
             const Entity_ABC& entity = *item->GetValue< const Entity_ABC* >();
             item->setVisible( profile_->IsVisible( entity ) );
         }
-        item = (ValuedListItem*)( next );
+        ++it;
     }
 }

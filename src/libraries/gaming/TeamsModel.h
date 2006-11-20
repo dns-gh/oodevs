@@ -18,6 +18,7 @@ namespace kernel
     class Team_ABC;
     class KnowledgeGroup_ABC;
     class Formation_ABC;
+    class HierarchyLevel_ABC;
 }
 
 class TeamFactory_ABC;
@@ -55,6 +56,13 @@ private:
     //@{
     TeamsModel( const TeamsModel& );            //!< Copy constructor
     TeamsModel& operator=( const TeamsModel& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void DeleteFormations();
+    void DeleteFormations( const kernel::HierarchyLevel_ABC& level );
+    const kernel::HierarchyLevel_ABC* FindLastLevel();
     //@}
 
 private:

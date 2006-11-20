@@ -86,12 +86,12 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    logistics_.Purge();
+    fires_.Purge();
     agents_.Purge();
     objects_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
-    logistics_.Purge();
-    fires_.Purge();
     weather_.Purge();
 }
     
