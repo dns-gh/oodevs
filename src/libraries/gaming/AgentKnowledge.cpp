@@ -39,9 +39,9 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_Msg
     , group_       ( group )
     , realAgent_   ( resolver_.Get( message.oid_unite_reelle ) )
     , team_        ( 0 )
+    , nLevel_      ( eNatureLevel_None )
 {
     fullSymbol_  = realAgent_.GetType().GetSymbol();
-    levelSymbol_ = realAgent_.GetType().GetLevelSymbol();
     UpdateSymbol();
     RegisterSelf( *this );
 }
@@ -252,4 +252,8 @@ void AgentKnowledge::UpdateSymbol()
     currentSymbol_ = currentSymbol_.substr( 0, pos + toKeep + 1 );
 
     currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25: 
+
+    if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
+        nLevel_ = ENT_Tr::ConvertToNatureLevel( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20: 
+
 }

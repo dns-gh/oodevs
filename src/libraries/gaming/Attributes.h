@@ -90,6 +90,7 @@ private:
     E_UnitPosture nOldPosture_;
     E_UnitPosture nCurrentPosture_;
     uint		  nPostureCompletionPourcentage_;
+    uint          nInstallationState_;
 
     E_DisponibiliteAuTir    nIndirectFireAvailability_;
 

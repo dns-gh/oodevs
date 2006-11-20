@@ -274,6 +274,7 @@ void MagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
         utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
         message.GetAsnMsg().action.u.move_to = &utm;
         message.Send( publisher_, 56 );
+        const_cast< kernel::Entity_ABC* >( &*selectedEntity_ )->Update( message.GetAsnMsg() );
     }
 }
 

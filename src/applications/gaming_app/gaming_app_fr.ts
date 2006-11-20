@@ -480,6 +480,10 @@
         <source>R&#xe9;fugi&#xe9;s pris en compte:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Etat d&apos;installation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentSupplyPanel</name>

@@ -83,7 +83,6 @@ public:
 
     std::string fullSymbol_;
     std::string currentSymbol_;
-    std::string levelSymbol_;
     std::string currentNature_;
     
     // $$$$ AGE 2006-02-22: Use Attributes ?

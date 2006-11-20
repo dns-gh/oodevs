@@ -25,6 +25,8 @@ MaintenanceStates::MaintenanceStates( Controller& controller, const Resolver_ABC
     : controller_( controller )
     , resolver_( resolver )
     , agentResolver_( agentResolver )
+    , bChainEnabled_( false )
+    , nWorkRate_( 0 )
 {
     CreateDictionary( dico );
 }

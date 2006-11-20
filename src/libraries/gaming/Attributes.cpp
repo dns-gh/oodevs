@@ -29,6 +29,7 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     : controller_( controller )
     , converter_ ( converter )
     , aggregated_( false ) 
+    , nInstallationState_( 0 )
 {
     CreateDictionary( dictionary );
 }
@@ -90,6 +91,9 @@ void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 
     if( message.m.posture_pourcentagePresent )
         nPostureCompletionPourcentage_ = message.posture_pourcentage;
+
+    if( message.m.etat_installationPresent )
+        nInstallationState_ = message.etat_installation;
 
     if( message.m.mortPresent ) 
         bDead_ = message.mort;
@@ -172,6 +176,9 @@ void Attributes::Display( Displayer_ABC& displayer ) const
                     .Add( " (" )
                     .Add( nPostureCompletionPourcentage_ * Units::percentage )
                     .Add( ")" ).End();
+    displayer.Group( tools::translate( "Attributs", "Postures" ) )
+                .Display( tools::translate( "Attributs", "Etat d'installation:" ), nInstallationState_ * Units::percentage );
+                
 
     displayer.Group( tools::translate( "Attributs", "Communications" ) )
                 .Display( tools::translate( "Attributs", "Brouillé:" ), bCommJammed_ )

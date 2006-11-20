@@ -29,6 +29,7 @@ namespace kernel
 class Paths : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< ASN1T_MsgUnitPathFind >
             , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+            , public kernel::Updatable_ABC< ASN1T_MsgUnitMagicAction >
             , public kernel::Drawable_ABC
 {
 
@@ -55,6 +56,7 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgUnitPathFind& message );
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const ASN1T_MsgUnitMagicAction& message );
     void UpdatePathfind();
     //@}
 

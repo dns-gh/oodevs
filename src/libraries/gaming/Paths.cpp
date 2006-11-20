@@ -70,6 +70,17 @@ void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Paths::DoUpdate
+// Created: AGE 2006-11-20
+// -----------------------------------------------------------------------------
+void Paths::DoUpdate( const ASN1T_MsgUnitMagicAction& message )
+{
+    // $$$$ AGE 2006-11-20: will trigger even if not successful
+    if( message.action.t == T_MsgUnitMagicAction_action_move_to )
+        previousPath_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Paths::UpdatePathfind
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------

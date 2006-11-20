@@ -49,7 +49,8 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
                 .AddLabel( tr( "Contamination:" ) );
     display_->AddGroup( tr( "Postures" ) )
                 .AddLabel( tr( "Ancienne posture:" ) )
-                .AddLabel( tr( "Nouvelle posture:" ) );
+                .AddLabel( tr( "Nouvelle posture:" ) )
+                .AddLabel( tr( "Etat d'installation:" ) );
     display_->AddGroup( tr( "Communications" ) )
                 .AddLabel( tr( "Brouillé:" ) )
                 .AddLabel( tr( "Silence radio:" ) );

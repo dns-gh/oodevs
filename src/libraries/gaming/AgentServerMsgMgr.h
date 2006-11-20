@@ -115,7 +115,7 @@ private:
     void _OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Input& input );
     void _OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgPopulationCollision                   ( DIN::DIN_Input& input );
-    void _OnReceiveMsgInClient                                ( DIN::DIN_Input& input );    
+    void _OnReceiveMsgInClient                              ( DIN::DIN_Input& input );    
 
     // Control
     void OnReceiveMsgCtrlPauseAck             ( const ASN1T_MsgCtrlPauseAck&  asnMsg );
