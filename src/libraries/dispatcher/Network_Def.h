@@ -98,12 +98,12 @@ private:                                                                  \
                                                                           \
 };
 
-GENERATE_ASN_MSG_SENDER         ( Client, LimitCreationAck                              , limit_creation_ack                                ); 
-GENERATE_ASN_MSG_SENDER         ( Client, LimitDestructionAck                           , limit_destruction_ack                             );
-GENERATE_ASN_MSG_SENDER         ( Client, LimitUpdateAck                                , limit_update_ack                                  );
-GENERATE_ASN_MSG_SENDER         ( Client, LimaCreationAck                               , lima_creation_ack                                 );
-GENERATE_ASN_MSG_SENDER         ( Client, LimaDestructionAck                            , lima_destruction_ack                              );
-GENERATE_ASN_MSG_SENDER         ( Client, LimaUpdateAck                                 , lima_update_ack                                   );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimitCreationRequestAck                       , limit_creation_request_ack                        ); 
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimitDestructionRequestAck                    , limit_destruction_request_ack                     );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimitUpdateRequestAck                         , limit_update_request_ack                          );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimaCreationRequestAck                        , lima_creation_request_ack                         );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimaDestructionRequestAck                     , lima_destruction_request_ack                      );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimaUpdateRequestAck                          , lima_update_request_ack                           );
 GENERATE_ASN_MSG_SENDER         ( Client, PionOrderAck                                  , pion_order_ack                                    );
 GENERATE_ASN_MSG_SENDER         ( Client, OrderConduiteAck                              , order_conduite_ack                                );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrderAck                              , automate_order_ack                                );
@@ -160,7 +160,9 @@ GENERATE_ASN_MSG_SENDER         ( Client, Explosion                             
 GENERATE_ASN_MSG_SENDER         ( Client, StartFireEffect                               , start_fire_effect                                 );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, StopFireEffect                                , stop_fire_effect                                  );
 GENERATE_ASN_MSG_SENDER         ( Client, CR                                            , cr                                                );
-GENERATE_ASN_MSG_SENDER         ( Client, OrderManagement                               , order_management                                  );
+GENERATE_ASN_MSG_SENDER         ( Client, PionOrderManagement                           , pion_order_management                             );
+GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrderManagement                       , automate_order_management                         );
+GENERATE_ASN_MSG_SENDER         ( Client, PopulationOrderManagement                     , population_order_management                       );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateMRT                                   , automate_mrt                                      );
 GENERATE_ASN_MSG_SENDER         ( Client, PionOrder                                     , pion_order                                        );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrder                                 , automate_order                                    );
@@ -215,12 +217,12 @@ GENERATE_ASN_MSG_SENDER         ( Sim, CtrlMeteoGlobale              , ctrl_mete
 GENERATE_ASN_MSG_SENDER         ( Sim, CtrlMeteoLocale               , ctrl_meteo_locale                );
 GENERATE_ASN_MSG_SENDER         ( Sim, CtrlCheckPointSaveNow         , ctrl_checkpoint_save_now         );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Sim, CtrlCheckPointSetFrequency    , ctrl_checkpoint_set_frequency    );
-GENERATE_ASN_MSG_SENDER         ( Sim, LimitCreation                 , limit_creation                   );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( Sim, LimitDestruction              , limit_destruction                );
-GENERATE_ASN_MSG_SENDER         ( Sim, LimitUpdate                   , limit_update                     );
-GENERATE_ASN_MSG_SENDER         ( Sim, LimaCreation                  , lima_creation                    );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( Sim, LimaDestruction               , lima_destruction                 );
-GENERATE_ASN_MSG_SENDER         ( Sim, LimaUpdate                    , lima_update                      );
+GENERATE_ASN_MSG_SENDER         ( Sim, LimitCreationRequest          , limit_creation_request           );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Sim, LimitDestructionRequest       , limit_destruction_request        );
+GENERATE_ASN_MSG_SENDER         ( Sim, LimitUpdateRequest            , limit_update_request             );
+GENERATE_ASN_MSG_SENDER         ( Sim, LimaCreationRequest           , lima_creation_request            );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Sim, LimaDestructionRequest        , lima_destruction_request         );
+GENERATE_ASN_MSG_SENDER         ( Sim, LimaUpdateRequest             , lima_update_request              );
 GENERATE_ASN_MSG_SENDER         ( Sim, PionOrder                     , pion_order                       );
 GENERATE_ASN_MSG_SENDER         ( Sim, OrderConduite                 , order_conduite                   );
 GENERATE_ASN_MSG_SENDER         ( Sim, AutomateOrder                 , automate_order                   );

@@ -78,15 +78,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ASA_DefendreZone::Initialize( const
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_ASA_DefendreZone::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

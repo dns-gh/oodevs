@@ -27,6 +27,7 @@ class MIL_AutomateLOG;
 class MIL_CampPrisonniers;
 class MIL_CampRefugies;
 class MIL_AgentTypePion;
+class MIL_LimaFunction;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_AutomateDecision;
@@ -34,6 +35,7 @@ class PHY_SupplyDotationState;
 class PHY_DotationCategory;
 class NET_ASN_MsgAutomateCreation;
 class DEC_KnowledgeBlackBoard_Automate;
+
 
 // =============================================================================
 // @class  MIL_Automate
@@ -91,11 +93,13 @@ public:
           MIL_AgentPion&                    GetPionPC        () const;
     const T_PionVector&                     GetPions         () const; // Including pion PC
           DEC_AutomateDecision&             GetDecision      () const;
-    const MIL_Fuseau&                       GetFuseau        () const;
-    const MT_Vector2D&                      GetDirDanger     () const;
-    const T_LimaFlagedPtrMap&               GetLimas         () const;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
           bool                              IsEmbraye        () const;
+
+    const MIL_Fuseau&                       GetFuseau        () const;
+    const MT_Vector2D&                      GetDirDanger     () const;
+          MIL_LimaOrder*                    FindLima         ( const MIL_LimaFunction& function ) const;
+          MIL_LimaOrder*                    FindLima         ( uint nID ) const;
     //@}
         
     //! @name Operations

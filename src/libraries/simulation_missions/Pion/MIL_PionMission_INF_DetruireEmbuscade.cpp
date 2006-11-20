@@ -117,15 +117,6 @@ bool MIL_PionMission_INF_DetruireEmbuscade::Initialize( MIL_PionMission_ABC& mis
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_DetruireEmbuscade::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_DetruireEmbuscade::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_Jalonner::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_Jalonner::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_Jalonner::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

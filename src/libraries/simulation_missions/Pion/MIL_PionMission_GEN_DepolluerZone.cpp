@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_DepolluerZone::Initialize( MIL_PionMission_ABC& mission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_DepolluerZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_DepolluerZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

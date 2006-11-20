@@ -127,15 +127,6 @@ bool MIL_PionMission_Test_MoveTo::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_MoveTo::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_MoveTo::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

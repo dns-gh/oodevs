@@ -149,16 +149,18 @@ NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementEtat                        , lo
 NET_GENERATE_SEND_ASN_MSG_PTR( LogRavitaillementQuotas                      , log_ravitaillement_quotas                         )
 
 // Context infos
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitCreationAck                  , limit_creation_ack                    )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitDestructionAck               , limit_destruction_ack                 ) 
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitUpdateAck                    , limit_update_ack                      ) 
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaCreationAck                   , lima_creation_ack                     ) 
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaDestructionAck                , lima_destruction_ack                  )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaUpdateAck                     , lima_update_ack                       )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitCreation                     , limit_creation                        )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitDestruction                  , limit_destruction                     )
-NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaCreation                      , lima_creation                         )
-NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaDestruction                   , lima_destruction                      )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitCreationRequestAck   , limit_creation_request_ack    )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitDestructionRequestAck, limit_destruction_request_ack ) 
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitUpdateRequestAck     , limit_update_request_ack      ) 
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaCreationRequestAck    , lima_creation_request_ack     ) 
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaDestructionRequestAck , lima_destruction_request_ack  )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaUpdateRequestAck      , lima_update_request_ack       )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitCreation             , limit_creation                )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimitUpdate               , limit_update                  )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimitDestruction          , limit_destruction             )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaCreation              , lima_creation                 )
+NET_GENERATE_SEND_ASN_MSG_PTR  ( LimaUpdate                , lima_update                   )
+NET_GENERATE_SEND_ASN_MSG_NOPTR( LimaDestruction           , lima_destruction              )
 
 // Fire
 NET_GENERATE_SEND_ASN_MSG_PTR  ( StartPionFire      , start_pion_fire       )
@@ -175,7 +177,9 @@ NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeUpdate     , unit_knowledge_update 
 NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeDestruction, unit_knowledge_destruction )
 
 // Orders
-NET_GENERATE_SEND_ASN_MSG_PTR( OrderManagement, order_management )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionOrderManagement      , pion_order_management       )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrderManagement  , automate_order_management   )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrderManagement, population_order_management )
 
 // Orders conduite
 NET_GENERATE_SEND_ASN_MSG_PTR( OrderConduiteAck           , order_conduite_ack            )

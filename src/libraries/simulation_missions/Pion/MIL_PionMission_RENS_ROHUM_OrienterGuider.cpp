@@ -102,15 +102,6 @@ bool MIL_PionMission_RENS_ROHUM_OrienterGuider::Initialize( MIL_PionMission_ABC&
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_RENS_ROHUM_OrienterGuider::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_RENS_ROHUM_OrienterGuider::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

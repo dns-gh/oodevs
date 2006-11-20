@@ -61,7 +61,7 @@ public:
     void SendMsgPopulationFlowInterVisibility         ( DIN::DIN_BufferedMessage& msg );
     void SendMsgPopulationCollision                   ( DIN::DIN_BufferedMessage& msg );
     void SendMsgDebugDrawPoints                       ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg ); 
+    void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg );
     
     // ASN
     void SendMsgOutSim( ASN1T_MsgsOutSim& asnMsg );

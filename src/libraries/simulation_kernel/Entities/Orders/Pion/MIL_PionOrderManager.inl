@@ -20,16 +20,6 @@ void MIL_PionOrderManager::OnReceiveRCMissionFinished()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PionOrderManager::GetMission
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-inline
-const MIL_PionMission_ABC* MIL_PionOrderManager::GetMission() const
-{
-    return pMission_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::IsNewMissionStarted
 // Created: NLD 2005-09-19
 // -----------------------------------------------------------------------------

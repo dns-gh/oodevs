@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_ControlerZone::Initialize( MIL_PionMission_ABC& mission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_ControlerZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_ControlerZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

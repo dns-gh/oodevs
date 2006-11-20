@@ -20,16 +20,6 @@ void MIL_PopulationOrderManager::OnReceiveRCMissionFinished()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationOrderManager::GetMission
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-inline
-const MIL_PopulationMission_ABC* MIL_PopulationOrderManager::GetMission() const
-{
-    return pMission_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager::IsNewMissionStarted
 // Created: NLD 2005-09-19
 // -----------------------------------------------------------------------------

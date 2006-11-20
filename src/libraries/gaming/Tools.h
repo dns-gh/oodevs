@@ -18,6 +18,7 @@ namespace tools
 {
     QString ToString( E_FuncLimaType nType );
     QString ToString( ASN1T_EnumTypeLocalisation nType );
+    E_FuncLimaType FromString( const QString& type );
 };
 
 #endif // __Gaming_Tools_h_

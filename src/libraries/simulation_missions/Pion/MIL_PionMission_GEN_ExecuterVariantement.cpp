@@ -112,15 +112,6 @@ bool MIL_PionMission_GEN_ExecuterVariantement::Initialize( MIL_PionMission_ABC& 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_ExecuterVariantement::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_ExecuterVariantement::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -102,15 +102,6 @@ bool MIL_PionMission_ALAT_AllerSeRecompleter::Initialize( MIL_PionMission_ABC& m
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_AllerSeRecompleter::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_AllerSeRecompleter::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

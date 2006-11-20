@@ -102,15 +102,6 @@ bool MIL_PionMission_Test_CreateBypass::Initialize( MIL_PionMission_ABC& mission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_CreateBypass::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_CreateBypass::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -24,7 +24,7 @@
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-void DEC_Agent_PathfinderRule::InitializeFuseauData( const MT_Vector2D& from, const MT_Vector2D& to)
+void DEC_Agent_PathfinderRule::InitializeFuseauData( const MT_Vector2D& from, const MT_Vector2D& to )
 {
     assert( pFuseau_ == 0 );
     if( path_.GetFuseau().IsNull() )

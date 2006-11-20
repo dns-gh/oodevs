@@ -4,6 +4,9 @@ max_activations     =   10;
 
 behavior BEH_Defaut( id nDummy )
 {
+ 
+            //T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( DEC_Automate_PionPC(), T_Mission_Pion_Test_MoveTo );
+            
     DEC_Debug( "Rapfor global: " + FloatToString( DEC_RapportDeForceGlobal() ) );
 
     /*T_ListePions selFusse = DEC_Geometrie_PionEstCoordonne( DEC_Automate_PionPC(), DEC_Automate_PionsSansPC(), 2000 );
@@ -65,6 +68,7 @@ behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, i
             {
                 missionPion.typeItineraire_ = eTypeItiLogistique;
                 DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
+                DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.visionDirection_ );
                 DEC_Copie_ListePoints( mission.itineraire_, missionPion.itineraire_ );
             }
         }       

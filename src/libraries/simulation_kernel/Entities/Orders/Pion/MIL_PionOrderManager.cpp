@@ -74,17 +74,15 @@ void MIL_PionOrderManager::Update( bool bIsDead )
 
         StopAllOrders();
         pMission_ = pMissionTmp;
-        
-        if( !pion_.IsPC() )//$$ HACK THALES
-        {
-            NET_ASN_MsgPionOrder asnMsg;
-            pMission_->Serialize( asnMsg.GetAsnMsg() );
-            asnMsg.Send();
-            pMission_->CleanAfterSerialization( asnMsg.GetAsnMsg() );
-        }
+
+        // $$$ 
+        NET_ASN_MsgPionOrder asnMsg;
+        pMission_->Serialize( asnMsg.GetAsnMsg() );
+        asnMsg.Send();
+        pMission_->CleanAfterSerialization( asnMsg.GetAsnMsg() );
 
         pMission_->Start();
-        SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
+        SendMsgOrderManagement( EnumOrderState::started );
         bNewMissionStarted_ = true;
     } 
 
@@ -95,7 +93,6 @@ void MIL_PionOrderManager::Update( bool bIsDead )
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::CancelAllOrders
 // Created: NLD 2003-01-10
@@ -105,16 +102,13 @@ void MIL_PionOrderManager::CancelAllOrders()
     if( pMission_ )
     {
         pMission_->Stop();
-        SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::cancelled );
-
-        pMission_->Terminate();
+        SendMsgOrderManagement( EnumOrderState::cancelled );
         delete pMission_;
         pMission_ = 0;
     }
 
     if( pReplacementMission_ )
     {
-        pReplacementMission_->Terminate();
         delete pReplacementMission_;
         pReplacementMission_ = 0;
     }
@@ -129,16 +123,14 @@ void MIL_PionOrderManager::StopAllOrders()
     if( pMission_ )
     {
         pMission_->Stop();
-        SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::stopped );
+        SendMsgOrderManagement( EnumOrderState::stopped );
 
-        pMission_->Terminate();
         delete pMission_;
         pMission_ = 0;
     }
 
     if( pReplacementMission_ )
     {
-        pReplacementMission_->Terminate();
         delete pReplacementMission_;
         pReplacementMission_ = 0;
     }
@@ -157,7 +149,6 @@ void MIL_PionOrderManager::OnReceivePionOrder( MIL_PionMission_ABC& pionMission 
     // Ordre de l'automate, ou ordre donné directement par la SIM (Cf. Convois)
     if( pReplacementMission_ )
     {
-        pReplacementMission_->Terminate();
         delete pReplacementMission_;
         pReplacementMission_ = 0;
     }
@@ -201,17 +192,24 @@ void MIL_PionOrderManager::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& asnM
         delete &mission;
         return;
     }
-    mission.Prepare();
 
     // The mission is valid : cancel all the previous orders
     CancelAllOrders();
 
     SendMsgPionOrderAck( asnMsg, EnumOrderErrorCode::no_error, nContext );
 
+    //$$$ POURRI
+    {
+        NET_ASN_MsgPionOrder asnOrder;
+        mission.Serialize( asnOrder.GetAsnMsg() );
+        asnOrder.Send();
+        mission.CleanAfterSerialization( asnOrder.GetAsnMsg() );
+    }
+
     // Start the new mission
     pMission_ = &mission;
     pMission_->Start();
-    SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
+    SendMsgOrderManagement( EnumOrderState::started );
     bNewMissionStarted_ = true;
 }
 
@@ -252,7 +250,6 @@ bool MIL_PionOrderManager::RelievePion( const MIL_AgentPion& pion )
     pReplacementMission_ = &copyMissionType.InstanciateMission( pion_ );
     if( !pReplacementMission_->Initialize( *pCopyMission ) )
     {
-        pReplacementMission_->Terminate();
         delete pReplacementMission_;
         pReplacementMission_ = 0;
         return false;
@@ -272,7 +269,6 @@ void MIL_PionOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrderCondui
 {
     NET_ASN_MsgOrderConduiteAck asnReplyMsg;
     asnReplyMsg.GetAsnMsg().unit_id  = asnMsg.unit_id;
-    asnReplyMsg.GetAsnMsg().order_id = asnMsg.order_id;
 
     if( pion_.GetRole< PHY_RolePion_Surrender >().IsSurrendered() )
     {
@@ -360,14 +356,14 @@ bool MIL_PionOrderManager::LaunchOrderConduite( MIL_OrderConduite_ABC& orderCond
 //=============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PionOrderManager::GetCurrentOrderID
-// Created: NLD 2003-12-17
+// Name: MIL_PionOrderManager::GetMissionName
+// Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-uint MIL_PionOrderManager::GetCurrentOrderID() const
+std::string MIL_PionOrderManager::GetMissionName() const
 {
     if( pMission_ )
-        return pMission_->GetOrderID();
-    return (uint)-1;
+        return pMission_->GetName();
+    return "None";
 }
 
 //-----------------------------------------------------------------------------
@@ -402,34 +398,34 @@ const MIL_Fuseau& MIL_PionOrderManager::GetFuseau() const
 // Name: MIL_PionOrderManager::GetLimas
 // Created: NLD 2002-10-09
 //-----------------------------------------------------------------------------
-const T_LimaFlagedPtrMap& MIL_PionOrderManager::GetLimas() const
+const T_LimaVector& MIL_PionOrderManager::GetLimas() const
 {
     if( pMission_ )
         return pMission_->GetLimas();
-    static const T_LimaFlagedPtrMap emptyLimaVector;
+    static const T_LimaVector emptyLimaVector;
     return emptyLimaVector;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PionOrderManager::SetMissionLimaFlag
-// Created: NLD 2004-10-14
+// Name: MIL_PionOrderManager::FindLima
+// Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
-bool MIL_PionOrderManager::SetMissionLimaFlag( const MIL_Lima& lima, bool bValue )
+MIL_LimaOrder* MIL_PionOrderManager::FindLima( const MIL_LimaFunction& function ) const
 {
     if( !pMission_ )
-        return false;
-    return pMission_->SetLimaFlag( lima, bValue );
+        return 0;
+    return pMission_->FindLima( function );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PionOrderManager::GetMissionLimaFlag
-// Created: NLD 2004-10-14
+// Name: MIL_PionOrderManager::FindLima
+// Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
-bool MIL_PionOrderManager::GetMissionLimaFlag( const MIL_Lima& lima ) const
+MIL_LimaOrder* MIL_PionOrderManager::FindLima( uint nID ) const
 {
     if( !pMission_ )
-        return false;
-    return pMission_->GetLimaFlag( lima );
+        return 0;
+    return pMission_->FindLima( nID );
 }
 
 //-----------------------------------------------------------------------------
@@ -439,7 +435,6 @@ bool MIL_PionOrderManager::GetMissionLimaFlag( const MIL_Lima& lima ) const
 void MIL_PionOrderManager::SendMsgPionOrderAck( const ASN1T_MsgPionOrder& asnMsgPionOrder, ASN1T_EnumOrderErrorCode  nErrorCode, MIL_MOSContextID nContext )
 {
     NET_ASN_MsgPionOrderAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().order_id             = asnMsgPionOrder.order_id;
     asnReplyMsg.GetAsnMsg().oid_unite_executante = asnMsgPionOrder.oid_unite_executante;
     asnReplyMsg.GetAsnMsg().error_code           = nErrorCode;
     asnReplyMsg.Send( nContext );    
@@ -449,12 +444,14 @@ void MIL_PionOrderManager::SendMsgPionOrderAck( const ASN1T_MsgPionOrder& asnMsg
 // Name: MIL_PionOrderManager::SendMsgOrderManagement
 // Created: NLD 2003-09-17
 // -----------------------------------------------------------------------------
-void MIL_PionOrderManager::SendMsgOrderManagement( uint nOrderID, ASN1T_EnumOrderState nOrderState )
+void MIL_PionOrderManager::SendMsgOrderManagement( ASN1T_EnumOrderState nOrderState )
 {
-    // MOS message
-    NET_ASN_MsgOrderManagement asnMsg;
-    asnMsg.GetAsnMsg().order_id = nOrderID;
-    asnMsg.GetAsnMsg().etat     = nOrderState;
+    if( !pMission_ )
+        return;
+
+    NET_ASN_MsgPionOrderManagement asnMsg;
+    asnMsg.GetAsnMsg().oid_unite_executante = pion_.GetID();
+    asnMsg.GetAsnMsg().etat                 = nOrderState;
     asnMsg.Send();
 }
 

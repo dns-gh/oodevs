@@ -112,15 +112,6 @@ bool MIL_PionMission_ASS_EOP_AcquerirObjectifs::Initialize( MIL_PionMission_ABC&
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASS_EOP_AcquerirObjectifs::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASS_EOP_AcquerirObjectifs::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

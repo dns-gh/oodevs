@@ -20,16 +20,6 @@ void MIL_AutomateOrderManager::OnReceiveRCMissionFinished()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateOrderManager::GetMission
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-inline
-const MIL_AutomateMission_ABC* MIL_AutomateOrderManager::GetMission() const
-{
-    return pMission_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::IsNewMissionStarted
 // Created: NLD 2005-09-19
 // -----------------------------------------------------------------------------

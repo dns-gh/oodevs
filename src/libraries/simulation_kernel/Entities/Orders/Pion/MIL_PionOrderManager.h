@@ -15,12 +15,12 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "Entities/Orders/MIL_Order_Def.h"
 
 class MIL_AgentPion;
 class MIL_PionMission_ABC;
 class MIL_OrderConduite_ABC;
 class MIL_Fuseau;
+class MIL_LimaFunction;
 
 //=============================================================================
 // Created: NLD 2003-01-10
@@ -50,13 +50,6 @@ public:
     void OnReceiveOrderConduite   ( DIA_Parameters& diaParams );
     //@}
 
-    //! @name Limas
-    //@{
-    const T_LimaFlagedPtrMap& GetLimas          () const;
-          bool                SetMissionLimaFlag( const MIL_Lima& lima, bool bValue );
-          bool                GetMissionLimaFlag( const MIL_Lima& lima ) const;
-    //@}
-
     // @name Misc 
     //@{
     void StopAllOrders  ();
@@ -67,17 +60,19 @@ public:
 
     // @name Accessors 
     //@{
-    const MT_Vector2D&         GetDirDanger             () const;
-    const MIL_Fuseau&          GetFuseau                () const;
-          uint                 GetCurrentOrderID        () const;
-    const MIL_PionMission_ABC* GetMission               () const;
-          bool                 IsNewMissionStarted      () const;
+          MIL_LimaOrder* FindLima           ( const MIL_LimaFunction& function ) const;
+          MIL_LimaOrder* FindLima           ( uint nID ) const;
+    const T_LimaVector&  GetLimas           () const;
+    const MT_Vector2D&   GetDirDanger       () const;
+    const MIL_Fuseau&    GetFuseau          () const;
+          std::string    GetMissionName     () const;
+          bool           IsNewMissionStarted() const;
     //@}
 
 private:
     // @name Tools
     //@{
-    static void SendMsgOrderManagement( uint nOrderID, ASN1T_EnumOrderState nOrderState );
+           void SendMsgOrderManagement( ASN1T_EnumOrderState nOrderState );
     static void SendMsgPionOrderAck   ( const ASN1T_MsgPionOrder& asnMsgPionOrder, ASN1T_EnumOrderErrorCode nErrorCode, MIL_MOSContextID nContext );
            bool LaunchOrderConduite   ( MIL_OrderConduite_ABC& orderConduite );
     //@}

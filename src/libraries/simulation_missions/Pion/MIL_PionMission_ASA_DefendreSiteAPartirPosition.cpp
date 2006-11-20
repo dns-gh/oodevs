@@ -107,15 +107,6 @@ bool MIL_PionMission_ASA_DefendreSiteAPartirPosition::Initialize( MIL_PionMissio
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASA_DefendreSiteAPartirPosition::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASA_DefendreSiteAPartirPosition::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

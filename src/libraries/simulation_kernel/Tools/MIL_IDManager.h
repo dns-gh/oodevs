@@ -66,7 +66,6 @@ public:
     static MIL_MOSIDManager fireResultsPopulation_;
     static MIL_MOSIDManager limas_;
     static MIL_MOSIDManager limits_;
-    static MIL_MOSIDManager orders_;
     static MIL_MOSIDManager knowledgesAgent_;
     static MIL_MOSIDManager effectsWeather_;
     static MIL_MOSIDManager maintenanceComposanteStates_;

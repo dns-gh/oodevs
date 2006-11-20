@@ -107,15 +107,6 @@ bool MIL_PionMission_ALAT_ReconnaitreContourEnnemi::Initialize( MIL_PionMission_
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_ReconnaitreContourEnnemi::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_ReconnaitreContourEnnemi::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

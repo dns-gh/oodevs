@@ -213,8 +213,11 @@ public:
 
     //! @name Decoding tools
     //@{
+    static bool ReadLine      ( const ASN1T_Line&             asn, TER_Localisation& localisation );
+    static bool ReadLine      ( const ASN1T_Line&             asn, T_PointVector& pointVector );
     static bool ReadPoint     ( const ASN1T_Point&            asn, MT_Vector2D& vPoint );
     static void ReadPoint     ( const ASN1T_CoordUTM&         asn, MT_Vector2D& vPoint );
+    static bool ReadPointList ( const ASN1T_ListPoint&        asn, T_PointVector& pointVector );
     static bool ReadLocation  ( const ASN1T_Localisation&     asn, TER_Localisation& localisation );
     static void ReadDirection ( const ASN1T_Direction&        asn, MT_Vector2D& vDir );
     static bool ReadGenObject ( const ASN1T_MissionGenObject& asn, DEC_Gen_Object& object );
@@ -222,6 +225,8 @@ public:
 
     //! @name Encoding tools
     //@{
+    static bool WriteLine     ( const T_PointVector&    points      , ASN1T_Line&             asn );
+    static void WriteLine     ( const TER_Localisation& localisation, ASN1T_Line&             asn );
     static void WriteDirection( const MT_Vector2D&      vDir        , ASN1T_Direction&        asn );
     static void WriteLocation ( const TER_Localisation& localisation, ASN1T_Localisation&     asn );
     static void WritePoint    ( const MT_Vector2D&      vPoint      , ASN1T_Point&            asn );
@@ -244,14 +249,12 @@ private:
 private:
     // @name Decoding tools
     //@{
-    static bool                  ReadLine      ( const ASN1T_Line&         asn, TER_Localisation& localisation );
-    static bool                  ReadPath      ( const ASN1T_Itineraire&   asn, T_PointVector& pointVector );
-    static bool                  ReadPolygon   ( const ASN1T_Polygon&      asn, TER_Localisation& localisation );
+    static bool                         ReadPath               ( const ASN1T_Itineraire&   asn, T_PointVector& pointVector );
+    static bool                         ReadPolygon            ( const ASN1T_Polygon&      asn, TER_Localisation& localisation );
 
-    static bool                  ReadLocationList  ( const ASN1T_ListLocalisation& asn, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin = 0 );
-    static bool                  ReadPolygonList   ( const ASN1T_ListPolygon&      asn, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin = 0 );
-    static bool                  ReadPointList     ( const ASN1T_ListPoint&        asn, T_PointVector& pointVector );
-    static bool                  ReadPathList      ( const ASN1T_ListItineraire&   asn, T_ItinerairePtrVector& itineraireVector );
+    static bool                         ReadLocationList       ( const ASN1T_ListLocalisation& asn, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin = 0 );
+    static bool                         ReadPolygonList        ( const ASN1T_ListPolygon&      asn, T_LocalisationPtrVector& localisationVector, uint nNbrEltMin = 0 );
+    static bool                         ReadPathList           ( const ASN1T_ListItineraire&   asn, T_ItinerairePtrVector& itineraireVector );
 
     static DEC_RolePion_Decision*       ReadAgent              ( const ASN1T_Agent&               asn );
     static bool                         ReadAgentList          ( const ASN1T_ListAgent&           asn, T_ObjectVector& unitList );
@@ -268,22 +271,20 @@ private:
     
     // @name Encoding tools
     //@{
-    static void WriteLine                       ( const TER_Localisation& localisation, ASN1T_Line&         asn );
-    static void WritePolygon                    ( const TER_Localisation& localisation, ASN1T_Polygon&      asn );
+    static void WritePolygon            ( const TER_Localisation& localisation, ASN1T_Polygon&      asn );
+    static void WriteLocationList       ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListLocalisation& asn );
+    static void WritePolygonList        ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListPolygon&      asn );
+    static void WritePathList           ( const T_ItinerairePtrVector& itineraireVector, ASN1T_ListItineraire&   asn );
+    static void WritePointList          ( const T_PointVector& pointVector, ASN1T_ListPoint& asn );
 
-    static void WriteLocationList               ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListLocalisation& asn );
-    static void WritePolygonList                ( const T_LocalisationPtrVector& localisationVector, ASN1T_ListPolygon&      asn );
-    static void WritePathList                   ( const T_ItinerairePtrVector& itineraireVector, ASN1T_ListItineraire&   asn );
-    static void WritePointList                  ( const T_PointVector& pointVector, ASN1T_ListPoint& asn );
-
-    static void WriteAgent                      ( const DEC_RolePion_Decision&        pion      , ASN1T_Agent&     asn );
-    static void WriteAutomate                   ( const DEC_AutomateDecision&         automate  , ASN1T_Agent&     asn );
-    static void WriteAgentList                  ( const T_ObjectVector&               unitList  , ASN1T_ListAgent& asn );   
-    static void WriteAutomateList               ( const T_ObjectVector&               unitList  , ASN1T_ListAutomate& asn );   
-    static void WriteAgentKnowledge             ( const DEC_Knowledge_Agent&          knowledge , ASN1T_KnowledgeAgent&      asnKnowledge );
-    static void WriteObjectKnowledge            ( const DEC_Knowledge_Object&         knowledge , ASN1T_KnowledgeObject&     asnKnowledge );
-    static void WriteAgentKnowledgeList         ( const T_KnowledgeAgentDiaIDVector&  knowledges, ASN1T_ListKnowledgeAgent&  asnListKnowledge, const MIL_KnowledgeGroup& knowledge );
-    static void WriteObjectKnowledgeList        ( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const MIL_KnowledgeGroup& knowledge );
+    static void WriteAgent              ( const DEC_RolePion_Decision&        pion      , ASN1T_Agent&     asn );
+    static void WriteAutomate           ( const DEC_AutomateDecision&         automate  , ASN1T_Agent&     asn );
+    static void WriteAgentList          ( const T_ObjectVector&               unitList  , ASN1T_ListAgent& asn );   
+    static void WriteAutomateList       ( const T_ObjectVector&               unitList  , ASN1T_ListAutomate& asn );   
+    static void WriteAgentKnowledge     ( const DEC_Knowledge_Agent&          knowledge , ASN1T_KnowledgeAgent&      asnKnowledge );
+    static void WriteObjectKnowledge    ( const DEC_Knowledge_Object&         knowledge , ASN1T_KnowledgeObject&     asnKnowledge );
+    static void WriteAgentKnowledgeList ( const T_KnowledgeAgentDiaIDVector&  knowledges, ASN1T_ListKnowledgeAgent&  asnListKnowledge, const MIL_KnowledgeGroup& knowledge );
+    static void WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const MIL_KnowledgeGroup& knowledge );
 
     static void WriteGDH                ( ASN1T_GDH& asnGDH );
     static void WriteGDH                ( uint nRealTimeSec, ASN1T_GDH& asnGDH );

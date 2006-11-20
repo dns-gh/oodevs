@@ -112,15 +112,6 @@ bool MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Initializ
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_HeliporterHelitransporterPlotRavitaillement::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

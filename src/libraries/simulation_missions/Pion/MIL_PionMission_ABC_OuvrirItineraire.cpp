@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_OuvrirItineraire::Initialize( MIL_PionMission_ABC& miss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_OuvrirItineraire::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_OuvrirItineraire::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

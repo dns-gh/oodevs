@@ -86,15 +86,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ALAT_Surveiller::Initialize( const 
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_ALAT_Surveiller::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

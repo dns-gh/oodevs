@@ -58,7 +58,6 @@ public:
     bool          operator ==( const MT_Vector2D& v ) const;
     bool          operator !=( const MT_Vector2D& v ) const;
     MT_Vector2D   operator - ( void ) const                   { return MT_Vector2D( -rX_, -rY_ ); }
-    bool          operator < ( const MT_Vector2D& v ) const   { return ( rX_ != v.rX_ || rY_ != v.rY_ ); }// Attention < sert par defaut aux map et donc pas de distance pour l'operationr <
     //@}    
 
     MT_Float        rX_;

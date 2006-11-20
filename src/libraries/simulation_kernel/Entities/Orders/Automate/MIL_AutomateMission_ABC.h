@@ -16,9 +16,7 @@
 
 #include "MIL_AutomateMRT.h"
 #include "Network/NET_ASN_Types.h"
-#include "Entities/Orders/MIL_Fuseau.h"
-#include "Entities/Orders/Lima/MIL_Lima.h"
-#include "Entities/Orders/MIL_Order_Def.h"
+#include "Entities/Orders/MIL_OrderContext.h"
 
 class MIL_Automate;
 class MIL_AutomateMissionType;
@@ -27,6 +25,7 @@ class MIL_AutomateMissionType;
 // Created: NLD 2003-04-09
 //=============================================================================
 class MIL_AutomateMission_ABC : public DIA_Thing
+                              , public MIL_OrderContext
 {
     MT_COPYNOTALLOWED( MIL_AutomateMission_ABC )
 
@@ -38,7 +37,6 @@ public:
     //@{
     virtual void                     Initialize();
     virtual ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgAutomateOrder& asnMsg );
-    virtual void                     Terminate ();
     //@}
 
     //! @name DIA
@@ -49,7 +47,6 @@ public:
 
     //! @name Control
     //@{
-    void Prepare      ();
     void StartConduite();
     void StopConduite ();
     void StartMRT     ();
@@ -59,18 +56,8 @@ public:
     //! @name Accessors
     //@{
           MIL_AutomateMRT&         GetMRT      ();
-          uint                     GetOrderID  () const;
     const MIL_AutomateMissionType& GetType     () const;
           MIL_Automate&            GetAutomate () const;  
-    const MT_Vector2D&             GetDirDanger() const;
-    const MIL_Fuseau&              GetFuseau   () const;
-    const T_LimaFlagedPtrMap&      GetLimas    () const;
-    //@}
-
-    //! @name Limas flags
-    //@{
-    bool GetLimaFlag( const MIL_Lima& lima ) const;
-    bool SetLimaFlag( const MIL_Lima& lima, bool bFlag );
     //@}
 
     // @name Network
@@ -79,28 +66,12 @@ public:
     virtual void CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg ); // Delete all the ASN members allocated for the serialization
     //@}
 
-private:
-    //! @name Init tools
-    //@{
-    const MIL_Lima*          GetLima          ( MIL_Lima::E_LimaFunctions nLimaFuncType ) const;
-    ASN1T_EnumOrderErrorCode InitializeLimits ( const ASN1T_MsgAutomateOrder& asnMsg );
-    ASN1T_EnumOrderErrorCode InitializeLimas  ( const ASN1T_MsgAutomateOrder& asnMsg );
-    ASN1T_EnumOrderErrorCode InitializeMission( const ASN1T_MsgAutomateOrder& asnMsg );
-    //@}
-
 protected:
     MIL_Automate& automate_;
 
 private:
     const MIL_AutomateMissionType& type_;
           MIL_AutomateMRT          mrt_;
-          uint                     nOrderID_;
-
-    // Mission parameters
-    T_LimaFlagedPtrMap limaMap_;   
-    const MIL_Limit*   pLeftLimit_;
-    const MIL_Limit*   pRightLimit_;
-    MIL_Fuseau         fuseau_;
 
     bool bDIAMRTBehaviorActivated_;
     bool bDIAConduiteBehaviorActivated_;

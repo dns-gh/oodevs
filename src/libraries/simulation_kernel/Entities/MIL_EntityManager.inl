@@ -10,6 +10,19 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindFormation
+// Created: NLD 2006-11-13
+// -----------------------------------------------------------------------------
+inline
+MIL_Formation* MIL_EntityManager::FindFormation( uint nID ) const
+{
+    CIT_FormationMap it = formations_.find( nID );
+    if( it == formations_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::FindArmy
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------

@@ -141,25 +141,14 @@ NET_AgentServer& MIL_AgentServer::GetAgentServer() const
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetLimaManager
+// Name: MIL_AgentServer::GetTacticalLineManager
 // Created: NLD 2002-08-08
 //-----------------------------------------------------------------------------
 inline
-MIL_LimaManager& MIL_AgentServer::GetLimaManager() const
+MIL_TacticalLineManager& MIL_AgentServer::GetTacticalLineManager() const
 {
-    assert( pLimaManager_ );
-    return *pLimaManager_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetLimitManager
-// Created: NLD 2002-08-08
-//-----------------------------------------------------------------------------
-inline
-MIL_LimitManager& MIL_AgentServer::GetLimitManager() const
-{
-    assert( pLimitManager_ );
-    return *pLimitManager_;
+    assert( pTacticalLineManager_ );
+    return *pTacticalLineManager_;
 }
 
 //-----------------------------------------------------------------------------

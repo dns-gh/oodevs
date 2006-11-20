@@ -6,7 +6,8 @@
 
 ScipioOrder DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS OID, Point, CoordUTM, GDH FROM ScipioBase;
+IMPORTS OID, Point, CoordUTM, GDH FROM ScipioBase
+IMPORTS LimasOrder FROM ScipioLimaLimite;
 
 EnumOrderErrorCode ::= ENUMERATED
 {
@@ -21,7 +22,8 @@ EnumOrderErrorCode ::= ENUMERATED
     error-invalid-order-mission             (8),
     error-invalid-order-initial             (9),
     error-invalid-order-conduite-parameters (10),
-    error-unit-surrendered                  (11)
+    error-unit-surrendered                  (11),
+    error-invalid-lima-function             (12)
 }
 
 EnumOrderState ::= ENUMERATED
@@ -31,10 +33,38 @@ EnumOrderState ::= ENUMERATED
     stopped   (2)
 }
 
-MsgOrderManagement ::= SEQUENCE
+OrderContext ::= SEQUENCE
 {
-    order-id OID,
-    etat     EnumOrderState
+    limite-gauche           Line OPTIONAL,
+    limite-droite           Line OPTIONAL,   
+    limas                   LimasOrder,
+    direction-dangereuse    Direction
 }
+
+
+-- TEST MISSIONS GENERIQUES
+
+MissionParameter ::= SEQUENCE
+{
+    null-value BOOLEAN DEFAULT FALSE,
+    value      CHOICE
+    {
+        Agent,
+        ListAgent,
+        Automate,
+        ListAutomate,
+        BOOLEAN,
+        Direction,
+        KnowledgeAgent,
+        ListKnowledgeAgent,
+        KnowledgeObject,
+        ListKnowledgeObject,
+        KnowledgePopulation
+    }
+}
+
+MissionParameters ::= SEQUENCE OF MissionParameter
+
+
 
 END -- ScipioOrder

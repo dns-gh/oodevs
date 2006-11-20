@@ -162,17 +162,6 @@ void MIL_CampPrisonniers::ProcessAgentInside( MIL_Agent_ABC& agent )
 }
     
 // -----------------------------------------------------------------------------
-// Name: MIL_CampPrisonniers::ProcessAgentEntering
-// Created: NLD 2005-03-07
-// -----------------------------------------------------------------------------
-void MIL_CampPrisonniers::ProcessAgentEntering( MIL_Agent_ABC& agent )
-{
-    MIL_RealObject_ABC::ProcessAgentEntering( agent );
-    if( pTC2_ && CanInteractWith( agent ) )
-        agent.GetRole< PHY_RoleInterface_Surrender >().NotifyInsidePrisonerCamp( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_CampPrisonniers::ProcessAgentExiting
 // Created: NLD 2005-03-07
 // -----------------------------------------------------------------------------

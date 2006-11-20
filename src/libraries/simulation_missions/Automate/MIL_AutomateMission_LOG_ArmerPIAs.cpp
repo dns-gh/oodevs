@@ -69,15 +69,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_ArmerPIAs::Initialize( const AS
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_LOG_ArmerPIAs::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

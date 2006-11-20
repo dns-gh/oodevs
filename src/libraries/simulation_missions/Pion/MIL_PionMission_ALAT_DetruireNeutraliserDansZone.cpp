@@ -127,15 +127,6 @@ bool MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Initialize( MIL_PionMissi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_DetruireNeutraliserDansZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

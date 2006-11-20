@@ -69,15 +69,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_ContreAttaquer::Initialize( con
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC_ContreAttaquer::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

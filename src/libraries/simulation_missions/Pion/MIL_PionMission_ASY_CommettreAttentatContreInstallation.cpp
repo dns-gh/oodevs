@@ -112,15 +112,6 @@ bool MIL_PionMission_ASY_CommettreAttentatContreInstallation::Initialize( MIL_Pi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASY_CommettreAttentatContreInstallation::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASY_CommettreAttentatContreInstallation::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

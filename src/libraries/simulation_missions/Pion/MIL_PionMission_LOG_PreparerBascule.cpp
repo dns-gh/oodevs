@@ -107,15 +107,6 @@ bool MIL_PionMission_LOG_PreparerBascule::Initialize( MIL_PionMission_ABC& missi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_PreparerBascule::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_PreparerBascule::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

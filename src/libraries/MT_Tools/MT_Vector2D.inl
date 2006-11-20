@@ -204,10 +204,9 @@ MT_Vector2D operator- ( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 inline
 bool operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 )
 { 
-	return ( v1.rX_ != v2.rX_ || v1.rY_ != v2.rY_ );
-    // $$$$ JVT : Ca me paraît bizzare comme test : cf la binary_function que j'ai implémentée pour le même operateur dans le .h
+    return (v1.rX_ < v2.rX_ ||
+		  !(v2.rX_ < v1.rX_) && v1.rY_ < v2.rY_);
 }
-
 
 //-----------------------------------------------------------------------------
 //  Name  :  operator *

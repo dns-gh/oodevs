@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_ReconnaitrePoint::Initialize( MIL_PionMission_ABC& miss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_ReconnaitrePoint::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_ReconnaitrePoint::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

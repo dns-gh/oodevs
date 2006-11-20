@@ -21,16 +21,6 @@ DEC_KnowledgeBlackBoard_Automate& MIL_Automate::GetKnowledge() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetLimas
-// Created: NLD 2004-09-06
-// -----------------------------------------------------------------------------
-inline
-const T_LimaFlagedPtrMap& MIL_Automate::GetLimas() const
-{
-    return orderManager_.GetLimas();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetTC2
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
@@ -252,4 +242,22 @@ void MIL_Automate::OnReceiveMsgOrderConduite( ASN1T_MsgOrderConduite&   msg, MIL
     orderManager_.OnReceiveMsgOrderConduite( msg, nCtx );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::FindLima
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_Automate::FindLima( const MIL_LimaFunction& function ) const
+{
+    return orderManager_.FindLima( function );
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::FindLima
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_Automate::FindLima( uint nID ) const
+{
+    return orderManager_.FindLima( nID );
+}

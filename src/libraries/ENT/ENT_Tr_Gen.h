@@ -64,6 +64,8 @@ public:
     static const std::string& ConvertFrom_ALAT_PorteeAction( E__ALAT_PorteeAction, E_Conversion = eToSim );
     static const std::string& ConvertFrom_ALAT_AmbianceMission( E__ALAT_AmbianceMission, E_Conversion = eToSim );
     static const std::string& ConvertFromModeDeploiement( E_ModeDeploiement, E_Conversion = eToSim );
+    static const std::string& ConvertFromTypeLima( E_TypeLima, E_Conversion = eToSim );
+    static const std::string& ConvertFromInfoContextErrorCode( E_InfoContextErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromOrderErrorCode( E_OrderErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromOrderState( E_OrderState, E_Conversion = eToSim );
     static const std::string& ConvertFromObjectType( E_ObjectType, E_Conversion = eToSim );
@@ -77,8 +79,6 @@ public:
     static const std::string& ConvertFromCtrlErrorCode( E_CtrlErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromEtatSim( E_EtatSim, E_Conversion = eToSim );
     static const std::string& ConvertFromPrecipitationType( E_PrecipitationType, E_Conversion = eToSim );
-    static const std::string& ConvertFromTypeLima( E_TypeLima, E_Conversion = eToSim );
-    static const std::string& ConvertFromInfoContextErrorCode( E_InfoContextErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttrErrorCode( E_PopulationAttrErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeCR( E_TypeCR, E_Conversion = eToSim );
@@ -126,6 +126,8 @@ public:
     static E__ALAT_PorteeAction ConvertTo_ALAT_PorteeAction( const std::string& );
     static E__ALAT_AmbianceMission ConvertTo_ALAT_AmbianceMission( const std::string& );
     static E_ModeDeploiement ConvertToModeDeploiement( const std::string& );
+    static E_TypeLima ConvertToTypeLima( const std::string& );
+    static E_InfoContextErrorCode ConvertToInfoContextErrorCode( const std::string& );
     static E_OrderErrorCode ConvertToOrderErrorCode( const std::string& );
     static E_OrderState ConvertToOrderState( const std::string& );
     static E_ObjectType ConvertToObjectType( const std::string& );
@@ -139,8 +141,6 @@ public:
     static E_CtrlErrorCode ConvertToCtrlErrorCode( const std::string& );
     static E_EtatSim ConvertToEtatSim( const std::string& );
     static E_PrecipitationType ConvertToPrecipitationType( const std::string& );
-    static E_TypeLima ConvertToTypeLima( const std::string& );
-    static E_InfoContextErrorCode ConvertToInfoContextErrorCode( const std::string& );
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
     static E_PopulationAttrErrorCode ConvertToPopulationAttrErrorCode( const std::string& );
     static E_TypeCR ConvertToTypeCR( const std::string& );
@@ -189,6 +189,8 @@ private:
     typedef ENT_Tr::converter<E__ALAT_PorteeAction> T_Converter_ALAT_PorteeAction;
     typedef ENT_Tr::converter<E__ALAT_AmbianceMission> T_Converter_ALAT_AmbianceMission;
     typedef ENT_Tr::converter<E_ModeDeploiement> T_ConverterModeDeploiement;
+    typedef ENT_Tr::converter<E_TypeLima> T_ConverterTypeLima;
+    typedef ENT_Tr::converter<E_InfoContextErrorCode> T_ConverterInfoContextErrorCode;
     typedef ENT_Tr::converter<E_OrderErrorCode> T_ConverterOrderErrorCode;
     typedef ENT_Tr::converter<E_OrderState> T_ConverterOrderState;
     typedef ENT_Tr::converter<E_ObjectType> T_ConverterObjectType;
@@ -202,8 +204,6 @@ private:
     typedef ENT_Tr::converter<E_CtrlErrorCode> T_ConverterCtrlErrorCode;
     typedef ENT_Tr::converter<E_EtatSim> T_ConverterEtatSim;
     typedef ENT_Tr::converter<E_PrecipitationType> T_ConverterPrecipitationType;
-    typedef ENT_Tr::converter<E_TypeLima> T_ConverterTypeLima;
-    typedef ENT_Tr::converter<E_InfoContextErrorCode> T_ConverterInfoContextErrorCode;
     typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
     typedef ENT_Tr::converter<E_PopulationAttrErrorCode> T_ConverterPopulationAttrErrorCode;
     typedef ENT_Tr::converter<E_TypeCR> T_ConverterTypeCR;
@@ -251,6 +251,8 @@ private:
     static T_Converter_ALAT_PorteeAction _ALAT_PorteeActionConverter_ [];
     static T_Converter_ALAT_AmbianceMission _ALAT_AmbianceMissionConverter_ [];
     static T_ConverterModeDeploiement ModeDeploiementConverter_ [];
+    static T_ConverterTypeLima TypeLimaConverter_ [];
+    static T_ConverterInfoContextErrorCode InfoContextErrorCodeConverter_ [];
     static T_ConverterOrderErrorCode OrderErrorCodeConverter_ [];
     static T_ConverterOrderState OrderStateConverter_ [];
     static T_ConverterObjectType ObjectTypeConverter_ [];
@@ -264,8 +266,6 @@ private:
     static T_ConverterCtrlErrorCode CtrlErrorCodeConverter_ [];
     static T_ConverterEtatSim EtatSimConverter_ [];
     static T_ConverterPrecipitationType PrecipitationTypeConverter_ [];
-    static T_ConverterTypeLima TypeLimaConverter_ [];
-    static T_ConverterInfoContextErrorCode InfoContextErrorCodeConverter_ [];
     static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
     static T_ConverterPopulationAttrErrorCode PopulationAttrErrorCodeConverter_ [];
     static T_ConverterTypeCR TypeCRConverter_ [];

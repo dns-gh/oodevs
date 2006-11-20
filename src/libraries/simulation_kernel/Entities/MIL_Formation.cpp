@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Network/NET_ASN_Messages.h"
@@ -95,7 +96,6 @@ void MIL_Formation::InitializeSubordinates( MIL_InputArchive& archive )
             archive.ReadAttribute( "id", nID );
 
             MIL_AgentServer::GetWorkspace().GetEntityManager().CreateFormation( nID, *pArmy_, archive, this ); // Auto-registration
-
             archive.EndList(); // formation
         }
         else if( strElement == "automat" )
@@ -113,8 +113,19 @@ void MIL_Formation::InitializeSubordinates( MIL_InputArchive& archive )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown automat type", archive.GetContext() );
 
             MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomate( *pAutomateType, nID, *this, archive ); // Auto-registration
-
             archive.EndList(); // automat
+        }
+        else if( strElement == "limit" )
+        {
+            archive.BeginList( "limit" );
+            MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimit( *this, archive );
+            archive.EndList(); // limit
+        }
+        else if( strElement == "lima" )
+        {
+            archive.BeginList( "lima" );
+            MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLima( *this, archive );
+            archive.EndList(); // lima
         }
     }
 }

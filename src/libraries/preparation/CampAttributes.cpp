@@ -22,7 +22,7 @@ using namespace xml;
 // Name: CampAttributes constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( Controllers& controllers, kernel::PropertiesDictionary& dico )
+CampAttributes::CampAttributes( kernel::PropertiesDictionary& dico )
     : tc2_( 0 )
 {
     CreateDictionary( dico );
@@ -32,7 +32,7 @@ CampAttributes::CampAttributes( Controllers& controllers, kernel::PropertiesDict
 // Name: CampAttributes constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-CampAttributes::CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const Resolver_ABC< Automat_ABC >& automats, kernel::PropertiesDictionary& dico )
+CampAttributes::CampAttributes( xml::xistream& xis, const Resolver_ABC< Automat_ABC >& automats, kernel::PropertiesDictionary& dico )
     : tc2_( 0 )
 {
     int id;

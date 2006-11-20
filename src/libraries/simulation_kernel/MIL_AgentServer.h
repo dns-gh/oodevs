@@ -12,8 +12,7 @@
 #include "MT/MT_Time/MT_Timer_ABC.h"
 #include "MT/MT_Time/MT_TimerManager.h"
 
-class MIL_LimaManager;
-class MIL_LimitManager;
+class MIL_TacticalLineManager;
 class MIL_Agent_ABC;
 class MIL_CheckPointManager;
 class MIL_EntityManager;
@@ -74,20 +73,19 @@ public:
 
     //! @name Accessors
     //@{ 
-    MIL_EntityManager&     GetEntityManager    () const;
-	DEC_Workspace&	       GetWorkspaceDIA     () const;
-	NET_AgentServer&       GetAgentServer      () const;
-    MIL_LimaManager&       GetLimaManager      () const;
-    MIL_LimitManager&      GetLimitManager     () const;
-    DEC_PathFind_Manager&  GetPathFindManager  () const;
-    PHY_MeteoDataManager&  GetMeteoDataManager () const;
-    MIL_ProfilerMgr&       GetProfilerManager  () const;
-    MIL_CheckPointManager& GetCheckPointManager() const;
-    MT_TimerManager&       GetTimerManager     ();
-    HLA_Federate*          GetHLAFederate      () const;               
-    uint                   GetExerciceID       () const;
-    E_SimState             GetSimState         () const;
-    MIL_Config&            GetConfig           ();
+    MIL_EntityManager&       GetEntityManager      () const;
+	DEC_Workspace&	         GetWorkspaceDIA       () const;
+	NET_AgentServer&         GetAgentServer        () const;
+    MIL_TacticalLineManager& GetTacticalLineManager() const;
+    DEC_PathFind_Manager&    GetPathFindManager    () const;
+    PHY_MeteoDataManager&    GetMeteoDataManager   () const;
+    MIL_ProfilerMgr&         GetProfilerManager    () const;
+    MIL_CheckPointManager&   GetCheckPointManager  () const;
+    MT_TimerManager&         GetTimerManager       ();
+    HLA_Federate*            GetHLAFederate        () const;               
+    uint                     GetExerciceID         () const;
+    E_SimState               GetSimState           () const;
+    MIL_Config&              GetConfig             ();
     //@}
 
     //! @name Workspace management
@@ -152,8 +150,7 @@ private:
     PHY_MeteoDataManager*        pMeteoDataManager_;
 
     MT_TimerManager              timerManager_;
-    MIL_LimaManager*             pLimaManager_;
-    MIL_LimitManager*            pLimitManager_;
+    MIL_TacticalLineManager*     pTacticalLineManager_;
     DEC_PathFind_Manager*        pPathFindManager_;
     MIL_ProfilerMgr*             pProfilerMgr_;
     MIL_CheckPointManager*       pCheckPointManager_;

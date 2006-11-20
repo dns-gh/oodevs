@@ -12,12 +12,12 @@
 
 #include "clients_gui/Layer_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_kernel/TristateOption.h"
-#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_gui/EntityLayer.h"
 
@@ -26,6 +26,8 @@ namespace kernel
     class Controllers;
     class GlTools_ABC;
     class Location_ABC;
+    class Automat_ABC;
+    class Formation_ABC;
 }
 
 namespace gui
@@ -35,9 +37,7 @@ namespace gui
     class View_ABC;
 }
 
-class Lima;
-class Limit;
-class LimitsModel;
+class TacticalLineFactory;
 class TacticalLine_ABC;
 
 // =============================================================================
@@ -52,14 +52,13 @@ class LimitsLayer : public QObject
                   , public kernel::OptionsObserver_ABC
                   , private gui::ShapeHandler_ABC
                   , private kernel::LocationVisitor_ABC
-                  
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, LimitsModel& model, gui::View_ABC& view, const kernel::Profile_ABC& profile );
+             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
 
@@ -67,7 +66,7 @@ private slots:
     //! @name Slots
     //@{
     void OnCreateLimit();
-    void OnCreateLima( int );
+    void OnCreateLima();
     //@}
 
 private:
@@ -84,11 +83,10 @@ private:
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu );
     virtual void NotifySelected( const kernel::TacticalLine_ABC* element );
 
-    virtual void Handle( kernel::Location_ABC& location );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
+    virtual void Handle( kernel::Location_ABC& location );
     virtual void VisitLines  ( const T_PointVector& points );
     virtual void VisitPolygon( const T_PointVector& ) {};
     virtual void VisitCircle ( const geometry::Point2f& , float ) {};
@@ -102,10 +100,10 @@ private:
     const kernel::GlTools_ABC& tools_;
     gui::ColorStrategy_ABC& strategy_;
     gui::ParametersLayer& parameters_;
-    LimitsModel& model_;
+    TacticalLineFactory& factory_;
 
     kernel::TristateOption drawLines_;
-    int type_;
+    bool isLimit_;
     const kernel::TacticalLine_ABC* selected_;
     //@}
 };

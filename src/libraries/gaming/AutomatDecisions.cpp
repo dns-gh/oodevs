@@ -30,9 +30,7 @@ AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publi
     , agent_( agent )
     , model_( agent.GetType().GetDecisionalModel() )
     , bEmbraye_( false )
-    , lastOrderId_( -1 )
     , current_( 0 )
-    , next_( 0 )
 {
     // NOTHING
 }
@@ -63,23 +61,9 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateAttributes& message )
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
-    lastOrderId_ = message.order_id;
     const Resolver_ABC< Mission >& resolver = model_;
     current_ = & resolver.Get( message.mission.t );
     controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatDecisions::DoUpdate
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrderAck& message )
-{
-    if( message.error_code && message.order_id == lastOrderId_ )
-    {
-        current_ = 0;
-        controller_.Update( *this );
-    }
 }
 
 // -----------------------------------------------------------------------------

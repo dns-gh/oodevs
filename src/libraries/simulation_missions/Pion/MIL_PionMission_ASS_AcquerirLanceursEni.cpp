@@ -112,15 +112,6 @@ bool MIL_PionMission_ASS_AcquerirLanceursEni::Initialize( MIL_PionMission_ABC& m
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASS_AcquerirLanceursEni::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASS_AcquerirLanceursEni::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

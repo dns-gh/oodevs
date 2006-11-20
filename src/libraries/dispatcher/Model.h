@@ -31,6 +31,8 @@ class Population;
 class PopulationKnowledge;
 class SimulationModel;
 class Publisher_ABC;
+class Limit;
+class Lima;
 
 // =============================================================================
 /** @class  Model
@@ -62,6 +64,7 @@ public:
           ModelsContainer< Side           >& GetSides          ();
           ModelsContainer< KnowledgeGroup >& GetKnowledgeGroups();
           ModelsContainer< Formation      >& GetFormations     ();
+    const ModelsContainer< Formation      >& GetFormations     () const;
           ModelsContainer< Automat        >& GetAutomats       ();
     const ModelsContainer< Automat        >& GetAutomats       () const;
           ModelsContainer< Agent          >& GetAgents         ();
@@ -94,6 +97,8 @@ private:
     ModelsContainer< LogConsignMedical      > logConsignsMedical_;
     ModelsContainer< Population             > populations_;
     ModelsContainer< PopulationKnowledge    > populationKnowledges_;
+    ModelsContainer< Limit                  > limits_;
+    ModelsContainer< Lima                   > limas_;
 };
 
 }

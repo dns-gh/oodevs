@@ -106,13 +106,13 @@ GENERATE_SEND_ASN_MSG_NOPTR( CtrlCheckPointSetFrequency, ctrl_checkpoint_set_fre
 GENERATE_SEND_ASN_MSG_PTR( CtrlMeteoGlobale, ctrl_meteo_globale )
 GENERATE_SEND_ASN_MSG_PTR( CtrlMeteoLocale, ctrl_meteo_locale )
 
-GENERATE_SEND_ASN_MSG_PTR( LimitCreation, limit_creation )
-GENERATE_SEND_ASN_MSG_NOPTR( LimitDestruction, limit_destruction )
-GENERATE_SEND_ASN_MSG_PTR( LimitUpdate, limit_update )
+GENERATE_SEND_ASN_MSG_PTR( LimitCreationRequest, limit_creation_request )
+GENERATE_SEND_ASN_MSG_NOPTR( LimitDestructionRequest, limit_destruction_request )
+GENERATE_SEND_ASN_MSG_PTR( LimitUpdateRequest, limit_update_request )
 
-GENERATE_SEND_ASN_MSG_PTR( LimaCreation, lima_creation )
-GENERATE_SEND_ASN_MSG_NOPTR( LimaDestruction, lima_destruction )
-GENERATE_SEND_ASN_MSG_PTR( LimaUpdate, lima_update )
+GENERATE_SEND_ASN_MSG_PTR( LimaCreationRequest, lima_creation_request )
+GENERATE_SEND_ASN_MSG_NOPTR( LimaDestructionRequest, lima_destruction_request )
+GENERATE_SEND_ASN_MSG_PTR( LimaUpdateRequest, lima_update_request )
 
 GENERATE_SEND_ASN_MSG_PTR( ObjectMagicAction, object_magic_action )
 GENERATE_SEND_ASN_MSG_PTR( UnitMagicAction, unit_magic_action )

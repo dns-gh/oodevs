@@ -24,6 +24,8 @@
 #include "LogConsignMedical.h"
 #include "Population.h"
 #include "PopulationKnowledge.h"
+#include "Limit.h"
+#include "Lima.h"
 
 #include "SimulationModel.h"
 
@@ -50,7 +52,8 @@ Model::Model( Dispatcher& dispatcher )
     , logConsignsMedical_    ()
     , populations_           ()
     , populationKnowledges_  ()
-
+    , limits_                ()
+    , limas_                 ()
 {
     pSimulationModel_ = new SimulationModel();
 }
@@ -76,6 +79,8 @@ void Model::Reset()
 {
     pSimulationModel_->Reset();
 
+    limits_                 .Clear();
+    limas_                  .Clear();
     agentKnowledges_        .Clear();
     objectKnowledges_       .Clear();
     populationKnowledges_   .Clear();
@@ -99,12 +104,12 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 {
     switch( asnMsg.msg.t )
     {
-//        case T_MsgsOutSim_msg_msg_limit_creation_ack 1
-//        case T_MsgsOutSim_msg_msg_limit_destruction_ack 2
-//        case T_MsgsOutSim_msg_msg_limit_update_ack 3
-//        case T_MsgsOutSim_msg_msg_lima_creation_ack 4
-//        case T_MsgsOutSim_msg_msg_lima_destruction_ack 5
-//        case T_MsgsOutSim_msg_msg_lima_update_ack 6
+//        case T_MsgsOutSim_msg_msg_limit_creation_ack:
+//        case T_MsgsOutSim_msg_msg_limit_destruction_ack:
+//        case T_MsgsOutSim_msg_msg_limit_update_ack:
+//        case T_MsgsOutSim_msg_msg_lima_creation_ack:
+//        case T_MsgsOutSim_msg_msg_lima_destruction_ack:
+//        case T_MsgsOutSim_msg_msg_lima_update_ack:
 //        case T_MsgsOutSim_msg_msg_pion_order_ack 7
 //        case T_MsgsOutSim_msg_msg_order_conduite_ack 8
 //        case T_MsgsOutSim_msg_msg_automate_order_ack 9
@@ -126,10 +131,10 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_ctrl_info:                            pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_info ); break;
         case T_MsgsOutSim_msg_msg_ctrl_begin_tick:                      pSimulationModel_->Update( asnMsg.msg.u.msg_ctrl_begin_tick ); break;
         case T_MsgsOutSim_msg_msg_ctrl_end_tick:                        pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_end_tick ); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_stop_ack:                        break;
-//        case T_MsgsOutSim_msg_msg_ctrl_pause_ack:                       OnReceiveMsgCtrlPauseAck              ( message.u.msg_ctrl_pause_ack                       ); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_resume_ack:                      OnReceiveMsgCtrlResumeAck             ( message.u.msg_ctrl_resume_ack                      ); break;
-//        case T_MsgsOutSim_msg_msg_ctrl_change_time_factor_ack:          OnReceiveMsgCtrlChangeTimeFactorAck   ( *message.u.msg_ctrl_change_time_factor_ack         ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_stop_ack:                        pSimulationModel_->Update_Stop( asnMsg.msg.u.msg_ctrl_stop_ack ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_pause_ack:                       pSimulationModel_->Update_Pause( asnMsg.msg.u.msg_ctrl_pause_ack ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_resume_ack:                      pSimulationModel_->Update_Resume( asnMsg.msg.u.msg_ctrl_resume_ack ); break;
+        case T_MsgsOutSim_msg_msg_ctrl_change_time_factor_ack:          pSimulationModel_->Update( *asnMsg.msg.u.msg_ctrl_change_time_factor_ack ); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_meteo_globale_ack:               OnReceiveMsgCtrlMeteoGlobalAck        (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_meteo_locale_ack:                OnReceiveMsgCtrlMeteoLocalAck         (); break;
 //        case T_MsgsOutSim_msg_msg_ctrl_checkpoint_save_begin:           OnReceiveMsgCheckPointSaveBegin       (); break;
@@ -141,10 +146,12 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
         case T_MsgsOutSim_msg_msg_ctrl_send_current_state_begin:        /*NOTHING*/ break;
         case T_MsgsOutSim_msg_msg_ctrl_send_current_state_end:          /*NOTHING*/ break;
 
-//        case T_MsgsOutSim_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.u.msg_limit_creation                      ); break;
-//        case T_MsgsOutSim_msg_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.u.msg_limit_destruction                    ); break;
-//        case T_MsgsOutSim_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.u.msg_lima_creation                       ); break;
-//        case T_MsgsOutSim_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.u.msg_lima_destruction                     ); break;
+        case T_MsgsOutSim_msg_msg_limit_creation:                       limits_.Create ( *this, asnMsg.msg.u.msg_limit_creation->oid, *asnMsg.msg.u.msg_limit_creation ); break;
+        case T_MsgsOutSim_msg_msg_limit_update:                         limits_.Get    ( asnMsg.msg.u.msg_limit_update->oid ).Update( *asnMsg.msg.u.msg_limit_update ); break;
+        case T_MsgsOutSim_msg_msg_limit_destruction:                    limits_.Destroy( asnMsg.msg.u.msg_limit_destruction ); break;
+        case T_MsgsOutSim_msg_msg_lima_creation:                        limas_ .Create ( *this, asnMsg.msg.u.msg_lima_creation->oid, *asnMsg.msg.u.msg_lima_creation ); break;
+        case T_MsgsOutSim_msg_msg_lima_update:                          limas_ .Get    ( asnMsg.msg.u.msg_lima_update->oid ).Update( *asnMsg.msg.u.msg_lima_update ); break;
+        case T_MsgsOutSim_msg_msg_lima_destruction:                     limas_ .Destroy( asnMsg.msg.u.msg_lima_destruction ); break;
 
         case T_MsgsOutSim_msg_msg_unit_knowledge_creation:              agentKnowledges_.Create( *this, asnMsg.msg.u.msg_unit_knowledge_creation->oid_connaissance, *asnMsg.msg.u.msg_unit_knowledge_creation ); break;
         case T_MsgsOutSim_msg_msg_unit_knowledge_update:                agentKnowledges_.Get( asnMsg.msg.u.msg_unit_knowledge_update->oid_connaissance ).Update( *asnMsg.msg.u.msg_unit_knowledge_update ); break;
@@ -171,7 +178,10 @@ void Model::Update( const ASN1T_MsgsOutSim& asnMsg )
 //        case T_MsgsOutSim_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.u.msg_start_fire_effect ); break;
 //        case T_MsgsOutSim_msg_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.u.msg_stop_fire_effect ); break;
 
-//        case T_MsgsOutSim_msg_msg_order_management:                     OnReceiveMsgOrderManagement           ( *message.u.msg_order_management                    ); break;
+//        case T_MsgsOutSim_msg_msg_pion_order_management:                     OnReceiveMsgOrderManagement           ( *message.u.msg_order_management                    ); break;
+//        case T_MsgsOutSim_msg_msg_automate_order_management:                 OnReceiveMsgOrderManagement           ( *message.u.msg_order_management                    ); break;
+//        case T_MsgsOutSim_msg_msg_population_order_management:               OnReceiveMsgOrderManagement           ( *message.u.msg_order_management                    ); break;
+
 //        case T_MsgsOutSim_msg_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *message.u.msg_automate_mrt                        ); break;
 //        case T_MsgsOutSim_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.u.msg_pion_order ); break;
 
@@ -261,13 +271,8 @@ void Model::Send( Publisher_ABC& publisher ) const
 
     pSimulationModel_->Send( publisher );
 
-    /*
-    workspace.GetLimaManager  ().SendStateToNewClient();
-    workspace.GetLimitManager ().SendStateToNewClient();
-    */
-
-    sides_          .Apply( /*std::bind2nd( */std::mem_fun_ref( &Side::SendCreation ), publisher /*)*/ ); //$$$$ booouh std::bind2nd sucks
-    sides_          .Apply( std::mem_fun_ref( &Side      ::SendFullUpdate ), publisher );
+    sides_.Apply( /*std::bind2nd( */std::mem_fun_ref( &Side::SendCreation ), publisher /*)*/ ); //$$$$ booouh std::bind2nd sucks
+    sides_.Apply( std::mem_fun_ref( &Side      ::SendFullUpdate ), publisher );
 
     // Logistic
     logConsignsMaintenance_.Apply( std::mem_fun_ref( &LogConsignMaintenance::SendCreation   ), publisher );
@@ -286,6 +291,10 @@ void Model::Send( Publisher_ABC& publisher ) const
 
     populationKnowledges_.Apply( std::mem_fun_ref( &PopulationKnowledge::SendCreation   ), publisher );
     populationKnowledges_.Apply( std::mem_fun_ref( &PopulationKnowledge::SendFullUpdate ), publisher );
+
+    // Tactical lines
+    limits_.Apply( std::mem_fun_ref( &Limit::SendCreation ), publisher );
+    limas_ .Apply( std::mem_fun_ref( &Lima ::SendCreation ), publisher );
     
     AsnMsgInClientCtrlSendCurrentStateEnd().Send( publisher );
 }

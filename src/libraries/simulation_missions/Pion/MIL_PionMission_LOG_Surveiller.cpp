@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_Surveiller::Initialize( MIL_PionMission_ABC& missionTmp
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_Surveiller::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_Surveiller::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

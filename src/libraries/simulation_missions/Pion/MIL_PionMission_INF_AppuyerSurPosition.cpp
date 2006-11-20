@@ -107,15 +107,6 @@ bool MIL_PionMission_INF_AppuyerSurPosition::Initialize( MIL_PionMission_ABC& mi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_AppuyerSurPosition::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_AppuyerSurPosition::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -55,19 +55,3 @@ void MIL_PlotRavitaillement::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< MIL_RealObject_ABC >( *this );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PlotRavitaillement::ProcessAgentEntering
-// Created: NLD 2004-09-16
-// -----------------------------------------------------------------------------
-void MIL_PlotRavitaillement::ProcessAgentEntering( MIL_Agent_ABC& agent )
-{
-    MIL_RealObject_ABC::ProcessAgentEntering( agent );
-    //assert( false );
-    /*if( GetConstructionPercentage() < 1. )
-        return;
-
-    if ( agent.GetType().GetType() == eAgentTypeAutomate3D || agent.GetType().GetType() == eAgentTypePion3D )
-        agent.GetUnit().DoMagicDotationResupplyFromTC2();
-        */
-}

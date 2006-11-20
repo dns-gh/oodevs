@@ -102,15 +102,6 @@ bool MIL_PionMission_ASA_DefendreSite::Initialize( MIL_PionMission_ABC& missionT
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASA_DefendreSite::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASA_DefendreSite::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

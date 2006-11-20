@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_Soutenir::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_Soutenir::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_Soutenir::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

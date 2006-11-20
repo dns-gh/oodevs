@@ -102,15 +102,6 @@ bool MIL_PionMission_INF_OrganiserUnCheckPoint::Initialize( MIL_PionMission_ABC&
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_OrganiserUnCheckPoint::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_OrganiserUnCheckPoint::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -107,15 +107,6 @@ bool MIL_PionMission_Test_Reinforce::Initialize( MIL_PionMission_ABC& missionTmp
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_Reinforce::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_Reinforce::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

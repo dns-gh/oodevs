@@ -102,15 +102,6 @@ bool MIL_PionMission_RENS_RADINT_MettreEnOeuvre::Initialize( MIL_PionMission_ABC
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_RENS_RADINT_MettreEnOeuvre::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_RENS_RADINT_MettreEnOeuvre::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

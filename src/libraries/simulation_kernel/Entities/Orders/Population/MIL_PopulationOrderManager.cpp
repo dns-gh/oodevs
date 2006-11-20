@@ -78,8 +78,7 @@ void MIL_PopulationOrderManager::CancelAllOrders()
     if( pMission_ )
     {
         pMission_->Stop();
-        SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::cancelled );
-        pMission_->Terminate();
+        SendMsgOrderManagement( EnumOrderState::cancelled );
         delete pMission_;
         pMission_ = 0;
     }
@@ -94,8 +93,7 @@ void MIL_PopulationOrderManager::StopAllOrders()
     if( pMission_ )
     {
         pMission_->Stop();
-        SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::cancelled );
-        pMission_->Terminate();
+        SendMsgOrderManagement( EnumOrderState::cancelled );
         delete pMission_;
         pMission_ = 0;
     }
@@ -124,7 +122,6 @@ void MIL_PopulationOrderManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPop
     ASN1T_EnumOrderErrorCode nCode = mission.Initialize( asnMsg );
     if( nCode != EnumOrderErrorCode::no_error )
     {
-        mission.Terminate();
         delete &mission;
         SendMsgPopulationOrderAck( asnMsg, nCode, nContext );
         return;
@@ -139,7 +136,7 @@ void MIL_PopulationOrderManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPop
     assert( !pMission_ );
     pMission_ = &mission;
     pMission_->Start();
-    SendMsgOrderManagement( pMission_->GetOrderID(), EnumOrderState::started );
+    SendMsgOrderManagement( EnumOrderState::started );
     bNewMissionStarted_ = true;
 }
 
@@ -155,7 +152,6 @@ void MIL_PopulationOrderManager::OnReceiveMsgOrderConduite( const ASN1T_MsgOrder
 {
     NET_ASN_MsgOrderConduiteAck asnReplyMsg;
     asnReplyMsg.GetAsnMsg().unit_id  = asnMsg.unit_id;
-    asnReplyMsg.GetAsnMsg().order_id = asnMsg.order_id;
 
     // Create the order conduite
     const MIL_OrderConduiteType* pOrderConduiteType = MIL_OrderConduiteType::Find( asnMsg.order_conduite );
@@ -216,7 +212,6 @@ bool MIL_PopulationOrderManager::LaunchOrderConduite( MIL_OrderConduite_ABC& ord
 void MIL_PopulationOrderManager::SendMsgPopulationOrderAck( const ASN1T_MsgPopulationOrder& asnMsgPopulationOrder, ASN1T_EnumOrderErrorCode  nErrorCode, MIL_MOSContextID nContext )
 {
     NET_ASN_MsgPopulationOrderAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().order_id             = asnMsgPopulationOrder.order_id;
     asnReplyMsg.GetAsnMsg().oid_unite_executante = asnMsgPopulationOrder.oid_unite_executante;
     asnReplyMsg.GetAsnMsg().error_code           = nErrorCode;
     asnReplyMsg.Send( nContext );    
@@ -226,23 +221,25 @@ void MIL_PopulationOrderManager::SendMsgPopulationOrderAck( const ASN1T_MsgPopul
 // Name: MIL_PopulationOrderManager::SendMsgOrderManagement
 // Created: NLD 2003-09-17
 // -----------------------------------------------------------------------------
-void MIL_PopulationOrderManager::SendMsgOrderManagement( uint nOrderID, ASN1T_EnumOrderState nOrderState )
+void MIL_PopulationOrderManager::SendMsgOrderManagement( ASN1T_EnumOrderState nOrderState )
 {
     // MOS message
-    NET_ASN_MsgOrderManagement asnMsg;
-    asnMsg.GetAsnMsg().order_id = nOrderID;
-    asnMsg.GetAsnMsg().etat     = nOrderState;
+    if( !pMission_ )
+        return;
+
+    NET_ASN_MsgPopulationOrderManagement asnMsg;
+    asnMsg.GetAsnMsg().oid_unite_executante = population_.GetID();
+    asnMsg.GetAsnMsg().etat                 = nOrderState;
     asnMsg.Send();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationOrderManager::GetCurrentOrderID
-// Created: NLD 2003-12-17
+// Name: MIL_PopulationOrderManager::GetMissionName
+// Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-uint MIL_PopulationOrderManager::GetCurrentOrderID() const
+std::string MIL_PopulationOrderManager::GetMissionName() const
 {
     if( pMission_ )
-        return pMission_->GetOrderID();
-    return (uint)-1;
+        return pMission_->GetName();
+    return "None";
 }
-

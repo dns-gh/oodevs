@@ -9,12 +9,6 @@
 //
 // *****************************************************************************
 
-typedef struct T_OrdreConduiteDemande : Thing
-{
-    E_TypeOrdreConduite nType_;
-};
-typedef list<T_OrdreConduiteDemande> T_ListeOrdresConduite;
-
 typedef struct Rep_Ordre : Representation
 {
 	string szHint_;

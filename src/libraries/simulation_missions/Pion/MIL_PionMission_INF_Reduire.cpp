@@ -102,15 +102,6 @@ bool MIL_PionMission_INF_Reduire::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_Reduire::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_Reduire::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

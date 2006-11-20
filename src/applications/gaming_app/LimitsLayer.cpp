@@ -11,16 +11,16 @@
 #include "LimitsLayer.h"
 #include "moc_LimitsLayer.cpp"
 
-#include "gaming/Lima.h"
-#include "gaming/Limit.h"
-#include "gaming/LimitsModel.h"
-#include "gaming/Tools.h"
+#include "gaming/TacticalLine_ABC.h"
+#include "gaming/TacticalLineFactory.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ParametersLayer.h"
 #include "xeumeuleu/xml.h"
@@ -33,15 +33,15 @@ using namespace xml;
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, LimitsModel& model, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile )
     : gui::EntityLayer< kernel::TacticalLine_ABC >( controllers, tools, strategy, view, profile )
-    , controllers_( controllers )
-    , tools_      ( tools )
-    , strategy_   ( strategy )
-    , parameters_ ( parameters )
-    , model_      ( model )
-    , type_       ( -1 )
-    , selected_   ( 0 )
+    , controllers_     ( controllers )
+    , tools_           ( tools )
+    , strategy_        ( strategy )
+    , parameters_      ( parameters )
+    , factory_         ( factory )
+    , isLimit_         ( true )
+    , selected_        ( 0 )
 {
     controllers_.Remove( *this );
     controllers_.Register( *this );
@@ -78,16 +78,10 @@ bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
 // -----------------------------------------------------------------------------
 void LimitsLayer::NotifyContextMenu( const geometry::Point2f&, ::ContextMenu& menu )
 {
-    // $$$$ AGE 2006-08-22: Eventuellement, changer Parametre en une 5° categorie.
+    if( !factory_.IsReady() )
+        return;
     menu.InsertItem( "Parametre", tr( "Créer limite" ), this, SLOT( OnCreateLimit() ) );
-
-    QPopupMenu* limaMenu = new QPopupMenu( menu );
-    for( int n = 0; n < eLimaFuncNbr; ++n )
-    {
-        int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( OnCreateLima( int ) ) ); 
-        limaMenu->setItemParameter( nId, n );
-    }
-    menu.InsertItem( "Parametre", tr( "Créer lima" ), limaMenu );
+    menu.InsertItem( "Parametre", tr( "Créer lima" )  , this, SLOT( OnCreateLima () ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +109,7 @@ void LimitsLayer::NotifySelected( const kernel::TacticalLine_ABC* element )
 // -----------------------------------------------------------------------------
 void LimitsLayer::OnCreateLimit()
 {
-    type_ = -1;
+    isLimit_ = true;
     parameters_.StartLine( *this );
 }
 
@@ -123,41 +117,19 @@ void LimitsLayer::OnCreateLimit()
 // Name: LimitsLayer::OnCreateLima
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void LimitsLayer::OnCreateLima( int i )
+void LimitsLayer::OnCreateLima()
 {
-    type_ = i;
+    isLimit_ = false;
     parameters_.StartLine( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::VisitLines
-// Created: AGE 2006-08-09
-// -----------------------------------------------------------------------------
-void LimitsLayer::VisitLines( const T_PointVector& points )
-{
-    if( type_ == -1 )
-        model_.CreateLimit( points );
-    else
-        model_.CreateLima( E_FuncLimaType( type_ ), points );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimitsLayer::Handle
-// Created: AGE 2006-03-24
-// -----------------------------------------------------------------------------
-void LimitsLayer::Handle( Location_ABC& location )
-{
-    if( location.IsValid() )
-        location.Accept( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LimitsLayer::ShouldDisplay
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& )
+bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    return drawLines_.IsSet( false );
+    return drawLines_.IsSet( true ) && gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,4 +140,26 @@ void LimitsLayer::OptionChanged( const std::string& name, const OptionVariant& v
 {
     if( name == "TacticalLines" )
         drawLines_ = value.To< TristateOption >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Handle
+// Created: SBO 2006-11-20
+// -----------------------------------------------------------------------------
+void LimitsLayer::Handle( kernel::Location_ABC& location )
+{
+    if( location.IsValid() )
+        location.Accept( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::VisitLines
+// Created: SBO 2006-11-20
+// -----------------------------------------------------------------------------
+void LimitsLayer::VisitLines( const T_PointVector& points )
+{
+    if( isLimit_ )
+        factory_.CreateLimit( points );
+    else
+        factory_.CreateLima( points );
 }

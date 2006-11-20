@@ -107,15 +107,6 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Initialize( MIL_PionMis
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASS_AssurerMiseEnOeuvreSurPosition::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

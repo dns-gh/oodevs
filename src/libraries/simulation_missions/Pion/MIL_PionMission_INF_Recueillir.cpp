@@ -107,15 +107,6 @@ bool MIL_PionMission_INF_Recueillir::Initialize( MIL_PionMission_ABC& missionTmp
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_Recueillir::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_Recueillir::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_AmeliorerMobilite::Initialize( MIL_PionMission_ABC& mis
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_AmeliorerMobilite::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_AmeliorerMobilite::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

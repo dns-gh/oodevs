@@ -328,11 +328,7 @@ EnumAutomateOrderFormation ::= ENUMERATED
 MsgAutomateOrder ::= SEQUENCE
 {
     oid-unite-executante    Agent,
-    order-id				OID,
-    oid-limite-gauche       OID,
-    oid-limite-droite       OID,
-    oid-limas			    ListOID,
-    direction-dangereuse	Direction,
+    order-context           OrderContext,
     formation               EnumAutomateOrderFormation DEFAULT deux-echelons,
     mission                 Mission-Automate
 }
@@ -340,8 +336,13 @@ MsgAutomateOrder ::= SEQUENCE
 MsgAutomateOrderAck ::= SEQUENCE
 {
     oid-unite-executante    Agent,
-    order-id		    OID,
     error-code		    EnumOrderErrorCode
+}
+
+MsgAutomateOrderManagement ::= SEQUENCE
+{
+    oid-unite-executante    Automate,
+    etat                    EnumOrderState
 }
 
 MsgAutomateMRT ::= SEQUENCE

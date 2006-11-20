@@ -26,6 +26,7 @@
 #include "FireFactory.h"
 #include "WeatherModel.h"
 #include "StaticModel.h"
+#include "TacticalLineFactory.h"
 
 using namespace kernel;
 
@@ -40,18 +41,19 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, publisher, simulation, workers, rcResolver ) )
+    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
     , logisticFactory_( *new LogisticConsignFactory( controllers, *this, staticModel ) )
     , fireFactory_( *new FireFactory( *this ) )
-    , objectFactory_( *new ObjectFactory( controllers, *this, staticModel ) )
+    , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
+    , fireResultsFactory_( *new FireResultFactory( *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel() )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
-    , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, publisher ) )
+    , limits_( *new LimitsModel( tacticalLineFactory_  ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
-    , fireResultsFactory_( *new FireResultFactory( *this ) )
 {
     // NOTHING
 }
@@ -62,7 +64,6 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    delete &fireResultsFactory_;
     delete &weather_;
     delete &fires_;
     delete &limits_;
@@ -71,6 +72,8 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &fireResultsFactory_;
+    delete &tacticalLineFactory_;
     delete &fireFactory_;
     delete &logisticFactory_;
     delete &objectFactory_;

@@ -82,7 +82,7 @@ void MIL_PosteTir::ProcessAgentExiting( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_PosteTir::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
-    MIL_RealObject_ABC::ProcessAgentEntering( agent );
+    MIL_RealObject_ABC::ProcessAgentInside( agent );
 
     if( !CanInteractWith( agent ) || GetConstructionPercentage() < 1. )
         return;

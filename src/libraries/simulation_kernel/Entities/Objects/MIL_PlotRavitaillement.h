@@ -38,12 +38,6 @@ public:
     //@{
     static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
     //@}
-
-private:
-    //! @name Events
-    //@{
-    virtual void ProcessAgentEntering( MIL_Agent_ABC& agent );
-    //@}
 };
 
 #include "MIL_PlotRavitaillement.inl"

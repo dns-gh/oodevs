@@ -9,8 +9,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Decision/DEC_Workspace.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
-#include "Entities/Orders/Lima/MIL_LimaManager.h"
-#include "Entities/Orders/Limit/MIL_LimitManager.h"
+#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -55,8 +54,7 @@ MIL_AgentServer::MIL_AgentServer( const MIL_Config& config )
     , pWorkspaceDIA_           ( 0 )
     , pMeteoDataManager_       ( 0 )
     , timerManager_            ()
-    , pLimaManager_            ( new MIL_LimaManager() )
-    , pLimitManager_           ( new MIL_LimitManager() )
+    , pTacticalLineManager_    ( new MIL_TacticalLineManager() )
     , pPathFindManager_        ( 0 )
     , pProfilerMgr_            ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
     , pCheckPointManager_      ( 0 )
@@ -116,8 +114,7 @@ MIL_AgentServer::~MIL_AgentServer()
     // $$$$ AGE 2005-02-21:
 //    MT_LOG_INFO_MSG( "Cleaning up simulation data" );
 //    delete pEntityManager_;
-//    delete pLimaManager_;
-//    delete pLimitManager_;
+//    delete pTacticalLineManager_;
 //    delete pMeteoDataManager_;
 //    MT_LOG_INFO_MSG( "Terminating DirectIA" );
 //    delete pWorkspaceDIA_;
@@ -464,8 +461,7 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << pWorkspaceDIA_        // uniquement données statiques
 //         << pMeteoDataManager_    // données statiques + météo locales gérées par MOS
 //         << timerManager_         // pas de données ( MIL_AgentServer::Initialize )
-//         << pLimaManager_         // données gérées par MOS
-//         << pLimitManager_        // données gérées par MOS
+         << pTacticalLineManager_ 
 //         << pPathFindManager_     // pas stockés
 //         << pProfilerMgr_         // pas de données
          << pCheckPointManager_
@@ -492,8 +488,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 //         >> pWorkspaceDIA_
 //         >> pMeteoDataManager_
 //         >> timerManager_
-//         >> pLimaManager_
-//         >> pLimitManager_
+         >> pTacticalLineManager_
 //         >> pPathFindManager_
 //         >> pProfilerMgr_
          >> pCheckPointManager_

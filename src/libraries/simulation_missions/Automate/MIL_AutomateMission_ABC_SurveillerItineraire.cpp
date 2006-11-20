@@ -74,15 +74,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_SurveillerItineraire::Initializ
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC_SurveillerItineraire::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

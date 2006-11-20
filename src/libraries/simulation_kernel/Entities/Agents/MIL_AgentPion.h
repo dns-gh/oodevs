@@ -22,6 +22,7 @@
 class MIL_AgentPion;
 class MIL_Automate;
 class MIL_Fuseau;
+class MIL_LimaFunction;
 class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_KS_AgentQuerier;
 class DEC_RolePion_Decision;
@@ -77,9 +78,11 @@ public:
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
 
-    const MT_Vector2D&        GetDirDanger() const;
-    const MIL_Fuseau&         GetFuseau   () const;
-    const T_LimaFlagedPtrMap& GetLimas    () const;
+    const MT_Vector2D&   GetDirDanger() const;
+    const MIL_Fuseau&    GetFuseau   () const;
+    const T_LimaVector&  GetLimas    () const;
+          MIL_LimaOrder* FindLima    ( const MIL_LimaFunction& function ) const;
+          MIL_LimaOrder* FindLima    ( uint nID ) const;
 
     bool CanFly      () const;
     bool IsAutonomous() const; // Drones

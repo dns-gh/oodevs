@@ -368,9 +368,7 @@ void PHY_RoleAction_Moving::SendCurrentPath() const
     NET_ASN_MsgUnitPathFind asnMsg;
     
     assert( pPion_ );
-    asnMsg.GetAsnMsg().oid_pion = pPion_->GetID();
-    asnMsg.GetAsnMsg().order_id = pPion_->GetOrderManager().GetCurrentOrderID();
-    
+    asnMsg.GetAsnMsg().oid_pion = pPion_->GetID();   
     if( !SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
         return;
 

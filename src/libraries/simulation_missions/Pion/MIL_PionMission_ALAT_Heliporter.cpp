@@ -127,15 +127,6 @@ bool MIL_PionMission_ALAT_Heliporter::Initialize( MIL_PionMission_ABC& missionTm
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_Heliporter::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_Heliporter::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

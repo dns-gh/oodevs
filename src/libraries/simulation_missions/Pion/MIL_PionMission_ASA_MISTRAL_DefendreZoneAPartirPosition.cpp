@@ -112,15 +112,6 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Initialize( MIL_Pi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASA_MISTRAL_DefendreZoneAPartirPosition::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

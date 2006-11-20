@@ -20,11 +20,11 @@
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Special.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
+#include "Entities/Orders/MIL_LimaOrder.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Orders/Lima/MIL_Lima.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -443,28 +443,12 @@ void DEC_Agent_Path::InsertPointAvants()
 }
 
 //-----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::InsertLimas
-// Created: JVT 02-12-04
-//-----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertLimas()
-{
-    const T_LimaFlagedPtrMap& limaMap = queryMaker_.GetLimas();
-    if( limaMap.empty() )
-        return;
-
-    for( CIT_LimaFlagedPtrMap itLima = limaMap.begin(); itLima != limaMap.end(); ++itLima )
-        InsertLima( *itLima->first );
-}
-
-
-//-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::InsertLima
 // Created: JVT 02-12-05
 //-----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertLima( const MIL_Lima& lima )
+void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
 {
     DEC_PathPoint* pLastPoint = 0;
-
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         DEC_PathPoint* pCurrentPoint = *itPoint;
@@ -474,15 +458,29 @@ void DEC_Agent_Path::InsertLima( const MIL_Lima& lima )
         {
             MT_Line segment( pLastPoint->GetPos(), pCurrentPoint->GetPos() );
             MT_Vector2D posIntersect;
-            if ( lima.Intersect2D( segment, posIntersect ) )
-            {
-                DEC_Rep_PathPoint* pPoint = new DEC_Rep_PathPoint_Lima( posIntersect, TerrainData(), lima );
-                IT_PathPointList itTmp = resultList_.insert( itPoint, pPoint );
-                InsertPointAvant( *pPoint, itTmp );
+            if( lima.Intersect2D( segment, posIntersect ) )
+            {   
+                for( MIL_LimaOrder::CIT_LimaFunctions itFunction = lima.GetFunctions().begin(); itFunction != lima.GetFunctions().end(); ++itFunction )
+                {
+                    DEC_Rep_PathPoint* pPoint = new DEC_Rep_PathPoint_Lima( posIntersect, TerrainData(), lima.GetID(), **itFunction );
+                    IT_PathPointList itTmp = resultList_.insert( itPoint, pPoint );
+                    InsertPointAvant( *pPoint, itTmp );
+                }
             }
         }
         pLastPoint = pCurrentPoint;
     }
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::InsertLimas
+// Created: JVT 02-12-04
+//-----------------------------------------------------------------------------
+void DEC_Agent_Path::InsertLimas()
+{
+    const T_LimaVector& limas = queryMaker_.GetLimas();
+    for( CIT_LimaVector it = limas.begin(); it != limas.end(); ++it )
+        InsertLima( *it );
 }
 
 //-----------------------------------------------------------------------------

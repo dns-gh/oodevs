@@ -102,15 +102,6 @@ bool MIL_PionMission_FiltrerPopulations::Initialize( MIL_PionMission_ABC& missio
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_FiltrerPopulations::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_FiltrerPopulations::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

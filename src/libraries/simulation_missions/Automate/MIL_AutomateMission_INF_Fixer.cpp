@@ -74,15 +74,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_INF_Fixer::Initialize( const ASN1T_
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_INF_Fixer::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

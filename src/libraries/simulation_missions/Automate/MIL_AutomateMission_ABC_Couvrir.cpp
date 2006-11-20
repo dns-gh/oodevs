@@ -78,15 +78,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Couvrir::Initialize( const ASN1
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC_Couvrir::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

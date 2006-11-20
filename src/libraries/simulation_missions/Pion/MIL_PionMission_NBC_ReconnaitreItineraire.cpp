@@ -102,15 +102,6 @@ bool MIL_PionMission_NBC_ReconnaitreItineraire::Initialize( MIL_PionMission_ABC&
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_NBC_ReconnaitreItineraire::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_NBC_ReconnaitreItineraire::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

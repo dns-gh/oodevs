@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "ParamLimits.h"
+#include "LimitParameter.h"
 #include "gaming/Limit.h"
 
 using namespace kernel;
@@ -17,11 +18,11 @@ using namespace kernel;
 // Name: ParamLimits constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-ParamLimits::ParamLimits( QWidget* pParent, ASN1T_OID& id1, ASN1T_OID& id2, const QString& label1, const QString& label2, const QString& menu1, const QString& menu2 )
-    : limit1_( new EntityParameter< Limit >( pParent, id1, label1, menu1 ) )
-    , limit2_( new EntityParameter< Limit >( pParent, id2, label2, menu2 ) )
+ParamLimits::ParamLimits( QWidget* pParent, ASN1T_Line& limit1, ASN1T_Line& limit2, const QString& label1, const QString& label2, const QString& menu1, const QString& menu2 )
+    : limit1_( new LimitParameter( pParent, limit1, label1, menu1 ) )
+    , limit2_( new LimitParameter( pParent, limit2, label2, menu2 ) )
 {
-    id1 = id2 = ( unsigned long )( -1 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,11 +70,11 @@ void ParamLimits::RegisterIn( ActionController& controller )
 // Name: ParamLimits::SetOptional
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamLimits::SetOptional( bool bDenis )
+void ParamLimits::SetOptional( OptionalParamFunctor_ABC* functor )
 {
-    Param_ABC::SetOptional( bDenis );
-    limit1_->SetOptional( bDenis );
-    limit2_->SetOptional( bDenis );
+    Param_ABC::SetOptional( functor );
+    limit1_->SetOptional( functor );
+    limit2_->SetOptional( functor );
 }
 
 // -----------------------------------------------------------------------------

@@ -57,10 +57,7 @@ void FragmentaryOrderInterface::OnOk()
         return;
 
     Commit();
-
-    pASNMsgOrder_->GetAsnMsg().order_id = 43;
     pASNMsgOrder_->Send( publisher_, 36999 );
-    
     parentWidget()->hide();
 }
 

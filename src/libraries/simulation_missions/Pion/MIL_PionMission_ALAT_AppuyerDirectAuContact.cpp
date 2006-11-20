@@ -117,15 +117,6 @@ bool MIL_PionMission_ALAT_AppuyerDirectAuContact::Initialize( MIL_PionMission_AB
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_AppuyerDirectAuContact::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_AppuyerDirectAuContact::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

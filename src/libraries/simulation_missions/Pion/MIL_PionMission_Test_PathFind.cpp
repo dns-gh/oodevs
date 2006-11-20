@@ -102,15 +102,6 @@ bool MIL_PionMission_Test_PathFind::Initialize( MIL_PionMission_ABC& missionTmp 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_PathFind::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_PathFind::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

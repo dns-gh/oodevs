@@ -297,6 +297,31 @@ ENT_Tr::T_ConverterModeDeploiement ENT_Tr::ModeDeploiementConverter_[] =
     T_ConverterModeDeploiement( "", "", (E_ModeDeploiement)-1 )
 };
 
+ENT_Tr::T_ConverterTypeLima ENT_Tr::TypeLimaConverter_[] =
+{
+    T_ConverterTypeLima( "ligne debouche", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debouche" ), eTypeLima_LigneDebouche ),
+    T_ConverterTypeLima( "ligne changement attitude", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne changement attitude" ), eTypeLima_LigneChangementAttitude ),
+    T_ConverterTypeLima( "ligne coordination", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coordination" ), eTypeLima_LigneCoordination ),
+    T_ConverterTypeLima( "ligne interdire", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne interdire" ), eTypeLima_LigneInterdire ),
+    T_ConverterTypeLima( "ligne objectif", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne objectif" ), eTypeLima_LigneObjectif ),
+    T_ConverterTypeLima( "ligne coup arret", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coup arret" ), eTypeLima_LigneCoupArret ),
+    T_ConverterTypeLima( "ligne recueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne recueil" ), eTypeLima_LigneRecueil ),
+    T_ConverterTypeLima( "ligne debut mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debut mission" ), eTypeLima_LigneDebutMission ),
+    T_ConverterTypeLima( "ligne fin mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne fin mission" ), eTypeLima_LigneFinMission ),
+    T_ConverterTypeLima( "ligne identification accueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne identification accueil" ), eTypeLima_LigneIdentificationAccueil ),
+    T_ConverterTypeLima( "", "", (E_TypeLima)-1 )
+};
+
+ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[] =
+{
+    T_ConverterInfoContextErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eInfoContextErrorCode_NoError ),
+    T_ConverterInfoContextErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eInfoContextErrorCode_ErrorInvalidId ),
+    T_ConverterInfoContextErrorCode( "error invalid geometry", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid geometry" ), eInfoContextErrorCode_ErrorInvalidGeometry ),
+    T_ConverterInfoContextErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eInfoContextErrorCode_ErrorInvalidLimaFunction ),
+    T_ConverterInfoContextErrorCode( "error invalid diffusion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid diffusion" ), eInfoContextErrorCode_ErrorInvalidDiffusion ),
+    T_ConverterInfoContextErrorCode( "", "", (E_InfoContextErrorCode)-1 )
+};
+
 ENT_Tr::T_ConverterOrderErrorCode ENT_Tr::OrderErrorCodeConverter_[] =
 {
     T_ConverterOrderErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eOrderErrorCode_NoError ),
@@ -311,6 +336,7 @@ ENT_Tr::T_ConverterOrderErrorCode ENT_Tr::OrderErrorCodeConverter_[] =
     T_ConverterOrderErrorCode( "error invalid order initial", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order initial" ), eOrderErrorCode_ErrorInvalidOrderInitial ),
     T_ConverterOrderErrorCode( "error invalid order conduite parameters", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order conduite parameters" ), eOrderErrorCode_ErrorInvalidOrderConduiteParameters ),
     T_ConverterOrderErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eOrderErrorCode_ErrorUnitSurrendered ),
+    T_ConverterOrderErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eOrderErrorCode_ErrorInvalidLimaFunction ),
     T_ConverterOrderErrorCode( "", "", (E_OrderErrorCode)-1 )
 };
 
@@ -468,31 +494,6 @@ ENT_Tr::T_ConverterPrecipitationType ENT_Tr::PrecipitationTypeConverter_[] =
     T_ConverterPrecipitationType( "pluie", QT_TRANSLATE_NOOP( "ENT_Tr", "pluie" ), ePrecipitationType_Pluie ),
     T_ConverterPrecipitationType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "neige" ), ePrecipitationType_Neige ),
     T_ConverterPrecipitationType( "", "", (E_PrecipitationType)-1 )
-};
-
-ENT_Tr::T_ConverterTypeLima ENT_Tr::TypeLimaConverter_[] =
-{
-    T_ConverterTypeLima( "ligne debouche", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debouche" ), eTypeLima_LigneDebouche ),
-    T_ConverterTypeLima( "ligne changement attitude", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne changement attitude" ), eTypeLima_LigneChangementAttitude ),
-    T_ConverterTypeLima( "ligne coordination", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coordination" ), eTypeLima_LigneCoordination ),
-    T_ConverterTypeLima( "ligne interdire", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne interdire" ), eTypeLima_LigneInterdire ),
-    T_ConverterTypeLima( "ligne objectif", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne objectif" ), eTypeLima_LigneObjectif ),
-    T_ConverterTypeLima( "ligne coup arret", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coup arret" ), eTypeLima_LigneCoupArret ),
-    T_ConverterTypeLima( "ligne recueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne recueil" ), eTypeLima_LigneRecueil ),
-    T_ConverterTypeLima( "ligne debut mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debut mission" ), eTypeLima_LigneDebutMission ),
-    T_ConverterTypeLima( "ligne fin mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne fin mission" ), eTypeLima_LigneFinMission ),
-    T_ConverterTypeLima( "ligne identification accueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne identification accueil" ), eTypeLima_LigneIdentificationAccueil ),
-    T_ConverterTypeLima( "", "", (E_TypeLima)-1 )
-};
-
-ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[] =
-{
-    T_ConverterInfoContextErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eInfoContextErrorCode_NoError ),
-    T_ConverterInfoContextErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eInfoContextErrorCode_ErrorInvalidId ),
-    T_ConverterInfoContextErrorCode( "error invalid geometry", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid geometry" ), eInfoContextErrorCode_ErrorInvalidGeometry ),
-    T_ConverterInfoContextErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eInfoContextErrorCode_ErrorInvalidLimaFunction ),
-    T_ConverterInfoContextErrorCode( "error invalid limit or lima used", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid limit or lima used" ), eInfoContextErrorCode_ErrorInvalidLimitOrLimaUsed ),
-    T_ConverterInfoContextErrorCode( "", "", (E_InfoContextErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
@@ -1046,6 +1047,8 @@ void ENT_Tr::InitTranslations()
     InitTr( _ALAT_PorteeActionConverter_, "ENT_Tr" );
     InitTr( _ALAT_AmbianceMissionConverter_, "ENT_Tr" );
     InitTr( ModeDeploiementConverter_, "ENT_Tr" );
+    InitTr( TypeLimaConverter_, "ENT_Tr" );
+    InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
     InitTr( OrderErrorCodeConverter_, "ENT_Tr" );
     InitTr( OrderStateConverter_, "ENT_Tr" );
     InitTr( ObjectTypeConverter_, "ENT_Tr" );
@@ -1059,8 +1062,6 @@ void ENT_Tr::InitTranslations()
     InitTr( CtrlErrorCodeConverter_, "ENT_Tr" );
     InitTr( EtatSimConverter_, "ENT_Tr" );
     InitTr( PrecipitationTypeConverter_, "ENT_Tr" );
-    InitTr( TypeLimaConverter_, "ENT_Tr" );
-    InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( TypeCRConverter_, "ENT_Tr" );
@@ -1334,6 +1335,24 @@ const std::string& ENT_Tr::ConvertFromModeDeploiement( E_ModeDeploiement nValue,
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromTypeLima
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromTypeLima( E_TypeLima nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( TypeLimaConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromInfoContextErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromInfoContextErrorCode( E_InfoContextErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( InfoContextErrorCodeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromOrderErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1448,24 +1467,6 @@ const std::string& ENT_Tr::ConvertFromEtatSim( E_EtatSim nValue, ENT_Tr_ABC::E_C
 const std::string& ENT_Tr::ConvertFromPrecipitationType( E_PrecipitationType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( PrecipitationTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTypeLima
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTypeLima( E_TypeLima nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( TypeLimaConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromInfoContextErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromInfoContextErrorCode( E_InfoContextErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( InfoContextErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1870,6 +1871,24 @@ E_ModeDeploiement ENT_Tr::ConvertToModeDeploiement( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToTypeLima
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_TypeLima ENT_Tr::ConvertToTypeLima( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( TypeLimaConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToInfoContextErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_InfoContextErrorCode ENT_Tr::ConvertToInfoContextErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( InfoContextErrorCodeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToOrderErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1984,24 +2003,6 @@ E_EtatSim ENT_Tr::ConvertToEtatSim( const std::string& strName )
 E_PrecipitationType ENT_Tr::ConvertToPrecipitationType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( PrecipitationTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTypeLima
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_TypeLima ENT_Tr::ConvertToTypeLima( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( TypeLimaConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToInfoContextErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_InfoContextErrorCode ENT_Tr::ConvertToInfoContextErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( InfoContextErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

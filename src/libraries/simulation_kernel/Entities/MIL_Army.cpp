@@ -365,7 +365,7 @@ void MIL_Army::InitializeLogistic( MIL_InputArchive& archive )
             
             uint        nSubordinateID;
             std::string strLink;
-            archive.ReadAttribute( "automat", nSubordinateID );
+            archive.ReadAttribute( "id", nSubordinateID );
 
             MIL_Automate* pSubordinate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nSubordinateID );
             if( !pSubordinate )

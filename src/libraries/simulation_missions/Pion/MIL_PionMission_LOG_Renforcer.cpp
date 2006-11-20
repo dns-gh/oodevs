@@ -107,15 +107,6 @@ bool MIL_PionMission_LOG_Renforcer::Initialize( MIL_PionMission_ABC& missionTmp 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_Renforcer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_Renforcer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

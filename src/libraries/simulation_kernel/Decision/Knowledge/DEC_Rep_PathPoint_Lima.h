@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "DEC_Rep_PathPoint.h"
 
-class MIL_Lima;
+class MIL_LimaFunction;
 
 //*****************************************************************************
 // Created: JDY 03-05-05
@@ -25,7 +25,7 @@ class DEC_Rep_PathPoint_Lima : public DEC_Rep_PathPoint
     MT_COPYNOTALLOWED( DEC_Rep_PathPoint_Lima )
 
 public:
-    DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, const MIL_Lima& lima );
+    DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, uint nLimaID, const MIL_LimaFunction& function );
     virtual ~DEC_Rep_PathPoint_Lima();
 
     //! @name Init
@@ -38,9 +38,6 @@ public:
     virtual void Dump() const;
     //@}
   
-private:
-    const MIL_Lima& lima_;
-
 private:
     static int nDIAIdxLima_;
     static int nDIAIdxTypeLima_;

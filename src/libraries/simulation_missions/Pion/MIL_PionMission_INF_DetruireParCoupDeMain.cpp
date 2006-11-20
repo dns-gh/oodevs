@@ -117,15 +117,6 @@ bool MIL_PionMission_INF_DetruireParCoupDeMain::Initialize( MIL_PionMission_ABC&
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_DetruireParCoupDeMain::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_DetruireParCoupDeMain::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

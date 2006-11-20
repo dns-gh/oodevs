@@ -102,15 +102,6 @@ bool MIL_PionMission_INF_SurveillerSecteur::Initialize( MIL_PionMission_ABC& mis
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_SurveillerSecteur::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_SurveillerSecteur::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

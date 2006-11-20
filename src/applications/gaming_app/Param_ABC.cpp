@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ActionController.h"
+#include "OptionalParamFunctor_ABC.h"
 
 using namespace kernel;
 
@@ -18,7 +19,7 @@ using namespace kernel;
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 Param_ABC::Param_ABC()
-    : bIsOptional_( false )
+    : pOptional_( 0 )
     , controller_( 0 )
 {
     // NOTHING
@@ -57,9 +58,9 @@ void Param_ABC::RegisterIn( ActionController& controller )
 // Name: Param_ABC::SetOptional
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void Param_ABC::SetOptional( bool optional )
+void Param_ABC::SetOptional( OptionalParamFunctor_ABC* optional )
 {
-    bIsOptional_ = optional;
+    pOptional_ = optional;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,5 +87,15 @@ bool Param_ABC::CheckValidity()
 // -----------------------------------------------------------------------------
 bool Param_ABC::IsOptional() const
 {
-    return bIsOptional_;
+    return pOptional_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetOptionalPresent
+// Created: SBO 2006-11-20
+// -----------------------------------------------------------------------------
+void Param_ABC::SetOptionalPresent()
+{
+    if( pOptional_ )
+        pOptional_->SetOptionalPresent();
 }

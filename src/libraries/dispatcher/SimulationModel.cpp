@@ -67,6 +67,46 @@ void SimulationModel::Update( const ASN1T_MsgCtrlInfo& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimulationModel::Update_Stop
+// Created: NLD 2006-09-26
+// -----------------------------------------------------------------------------
+void SimulationModel::Update_Stop( const ASN1T_MsgCtrlStopAck& msg )
+{
+    if( msg == EnumCtrlErrorCode::no_error )
+        nSimState_ = EnumEtatSim::stopped;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationModel::Update_Pause
+// Created: NLD 2006-09-26
+// -----------------------------------------------------------------------------
+void SimulationModel::Update_Pause( const ASN1T_MsgCtrlPauseAck& msg )
+{
+    if( msg == EnumCtrlErrorCode::no_error )
+        nSimState_ = EnumEtatSim::paused;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationModel::Update_Resume
+// Created: NLD 2006-09-26
+// -----------------------------------------------------------------------------
+void SimulationModel::Update_Resume( const ASN1T_MsgCtrlResumeAck& msg )
+{
+    if( msg == EnumCtrlErrorCode::no_error )
+        nSimState_ = EnumEtatSim::running;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationModel::Update
+// Created: NLD 2006-09-26
+// -----------------------------------------------------------------------------
+void SimulationModel::Update( const ASN1T_MsgCtrlChangeTimeFactorAck& msg )
+{
+    if( msg.error_code == EnumCtrlErrorCode::no_error )
+        nTimeFactor_ = msg.time_factor;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------

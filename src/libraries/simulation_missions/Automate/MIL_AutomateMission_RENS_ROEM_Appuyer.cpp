@@ -78,15 +78,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_RENS_ROEM_Appuyer::Initialize( cons
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_RENS_ROEM_Appuyer::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -15,7 +15,6 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "Entities/Orders/MIL_Order_Def.h"
 
 class MIL_PopulationMission_ABC;
 class MIL_Population;
@@ -39,9 +38,8 @@ public:
 
     //! @name Accessors
     //@{
-          uint                       GetCurrentOrderID  () const;
-    const MIL_PopulationMission_ABC* GetMission         () const;
-          bool                       IsNewMissionStarted() const;
+    std::string GetMissionName     () const;
+    bool        IsNewMissionStarted() const;
     //@}
 
     //! @name Events
@@ -64,7 +62,7 @@ public:
 private:
     //! @name Tools
     //@{
-    static void SendMsgOrderManagement   ( uint nOrderID, ASN1T_EnumOrderState nOrderState );
+           void SendMsgOrderManagement   ( ASN1T_EnumOrderState nOrderState );
     static void SendMsgPopulationOrderAck( const ASN1T_MsgPopulationOrder& asnMsgPopulationOrder, ASN1T_EnumOrderErrorCode nErrorCode, MIL_MOSContextID nContext );
            bool LaunchOrderConduite      ( MIL_OrderConduite_ABC& orderConduite );
     //@}

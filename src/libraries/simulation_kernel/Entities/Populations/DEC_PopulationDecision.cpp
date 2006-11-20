@@ -198,9 +198,7 @@ namespace
 {
     void LogCrash( MIL_Population* pPopulation_ )
     {
-        MT_LOG_ERROR_MSG( "Population " << pPopulation_->GetID() << " ('" << pPopulation_->GetName() << "') : Mission '"
-            << ( pPopulation_->GetOrderManager().GetMission() ? pPopulation_->GetOrderManager().GetMission()->GetName() : "Default" )
-            << "' impossible" );
+        MT_LOG_ERROR_MSG( "Population " << pPopulation_->GetID() << " ('" << pPopulation_->GetName() << "') : Mission '" << pPopulation_->GetOrderManager().GetMissionName() << "' impossible" );
     }
 }
 

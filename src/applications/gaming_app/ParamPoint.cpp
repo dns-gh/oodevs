@@ -51,7 +51,7 @@ ParamPoint::~ParamPoint()
 // -----------------------------------------------------------------------------
 bool ParamPoint::CheckValidity()
 {
-    if( pPosLabel_->text() == "---" )
+    if( !IsOptional() && pPosLabel_->text() == "---" )
     {
         pLabel_->Warn( 3000 );
         return false;
@@ -75,6 +75,9 @@ void ParamPoint::Draw( const geometry::Point2f& /*point*/, const geometry::Recta
 // -----------------------------------------------------------------------------
 void ParamPoint::Commit()
 {
+    if( pPosLabel_->text() == "---" )
+        return;
+    SetOptionalPresent();
     asn_.type                  = EnumTypeLocalisation::point;
     asn_.vecteur_point.n       = 1;
     asn_.vecteur_point.elem    = &asnPoint_;

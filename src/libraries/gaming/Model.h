@@ -36,6 +36,7 @@ class WeatherModel;
 class Publisher_ABC;
 class StaticModel;
 class RcEntityResolver_ABC;
+class TacticalLineFactory;
 
 // =============================================================================
 /** @class  Model
@@ -72,6 +73,8 @@ public:
     ObjectFactory_ABC&          objectFactory_;
     LogisticConsignFactory_ABC& logisticFactory_;
     FireFactory&                fireFactory_;
+    TacticalLineFactory&        tacticalLineFactory_;
+    FireResultFactory&          fireResultsFactory_;
 
     AgentsModel&    agents_;
     ObjectsModel&   objects_;
@@ -81,8 +84,6 @@ public:
     LimitsModel&    limits_;
     FiresModel&     fires_;
     WeatherModel&   weather_;
-
-    FireResultFactory& fireResultsFactory_;
     //@}
 
 private:

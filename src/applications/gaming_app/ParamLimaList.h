@@ -10,23 +10,72 @@
 #ifndef __ParamLimaList_h_
 #define __ParamLimaList_h_
 
-#include "EntityListParameter.h"
+#include "Param_ABC.h"
+#include "gaming/ASN_Types.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+
 class Lima;
 
 // =============================================================================
 /** @class  ParamLimaList
-    @brief  ParamLimaList
+    @brief  Lima Parameter
 */
-// Created: AGE 2006-03-15
+// Created: SBO 2006-11-14
 // =============================================================================
-class ParamLimaList : public EntityListParameter< Lima >
+class ParamLimaList : public QListView
+                    , public Param_ABC
+                    , public kernel::ElementObserver_ABC< Lima >
+                    , public kernel::ContextMenuObserver_ABC< Lima >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLimaList( QWidget* pParent, ASN1T_ListOID& asn, const QString& label, const QString& menu );
+             ParamLimaList( QWidget* pParent, ASN1T_LimasOrder& limas, const QString& label, const QString& menu );
     virtual ~ParamLimaList();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool CheckValidity();
+    virtual void Commit();
+    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    virtual void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
+    void OnDeleteSelectedItem();
+    void OnClearList();
+    void TurnHeaderBlack();
+    void MenuItemValidated( int function );
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    ParamLimaList( const ParamLimaList& );            //!< Copy constructor
+    ParamLimaList& operator=( const ParamLimaList& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void Clean();
+    virtual void NotifyContextMenu( const Lima& entity, kernel::ContextMenu& menu );
+    virtual void NotifyUpdated( const Lima& ) {};
+    virtual void NotifyDeleted( const Lima& entity );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ASN1T_LimasOrder& result_;
+    std::string menu_;
+    QPopupMenu* pPopupMenu_;
+    const Lima* potential_;
     //@}
 };
 

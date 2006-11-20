@@ -74,15 +74,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_LOG_MettreEnOeuvreZoneStationnement::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

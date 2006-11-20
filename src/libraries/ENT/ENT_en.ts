@@ -2261,10 +2261,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid limit or lima used</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>calme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2614,6 +2610,10 @@
     </message>
     <message>
         <source>reparer materiels sur place</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid diffusion</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

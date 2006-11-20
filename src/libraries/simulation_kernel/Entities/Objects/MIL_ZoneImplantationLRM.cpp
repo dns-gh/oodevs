@@ -52,7 +52,7 @@ MIL_ZoneImplantationLRM::~MIL_ZoneImplantationLRM()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ZoneImplantationLRM::ProcessAgentEntering
+// Name: MIL_ZoneImplantationLRM::ProcessAgentInside
 // Created: JVT 2005-05-11
 // -----------------------------------------------------------------------------
 void MIL_ZoneImplantationLRM::ProcessAgentInside( MIL_Agent_ABC& agent )

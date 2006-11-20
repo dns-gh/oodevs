@@ -107,15 +107,6 @@ bool MIL_PionMission_Franchir::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Franchir::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Franchir::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

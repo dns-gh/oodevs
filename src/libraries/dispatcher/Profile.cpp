@@ -168,12 +168,12 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
         case T_MsgsOutClient_msg_msg_ctrl_profile_creation              : return bSupervision_; //$$$ Administration
         case T_MsgsOutClient_msg_msg_ctrl_profile_update                : return bSupervision_; //$$$ Administration
         case T_MsgsOutClient_msg_msg_ctrl_profile_destruction           : return bSupervision_; //$$$ Administration
-        case T_MsgsOutClient_msg_msg_limit_creation                     : return true;
-        case T_MsgsOutClient_msg_msg_limit_destruction                  : return true;
-        case T_MsgsOutClient_msg_msg_limit_update                       : return true;
-        case T_MsgsOutClient_msg_msg_lima_creation                      : return true;
-        case T_MsgsOutClient_msg_msg_lima_destruction                   : return true;
-        case T_MsgsOutClient_msg_msg_lima_update                        : return true;
+        case T_MsgsOutClient_msg_msg_limit_creation_request             : return true;
+        case T_MsgsOutClient_msg_msg_limit_destruction_request          : return true;
+        case T_MsgsOutClient_msg_msg_limit_update_request               : return true;
+        case T_MsgsOutClient_msg_msg_lima_creation_request              : return true;
+        case T_MsgsOutClient_msg_msg_lima_destruction_request           : return true;
+        case T_MsgsOutClient_msg_msg_lima_update_request                : return true;
         case T_MsgsOutClient_msg_msg_pion_order                         : return true;
         case T_MsgsOutClient_msg_msg_order_conduite                     : return true;
         case T_MsgsOutClient_msg_msg_automate_order                     : return true;

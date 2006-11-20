@@ -17,18 +17,19 @@ namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
+    class Entity_ABC;
 }
 
 namespace xml {
     class xistream;
 }
 
-class Publisher_ABC;
-class TacticalLine_ABC;
-
 namespace DIN {
     class DIN_Input;
 }
+
+class TacticalLine_ABC;
+class TacticalLineFactory;
 
 // =============================================================================
 /** @class  LimitsModel
@@ -42,24 +43,18 @@ class LimitsModel : public kernel::Resolver< TacticalLine_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsModel( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, Publisher_ABC& publisher );
+    explicit LimitsModel( TacticalLineFactory& factory );
     virtual ~LimitsModel();
     //@}
 
     //! @name Operations
     //@{
-    void Create( const ASN1T_MsgLimitCreation& asnMsg );
-    void Create( const ASN1T_MsgLimaCreation& asnMsg );
-    void CreateLimit( const T_PointVector& points );
-    void CreateLima( E_FuncLimaType type, const T_PointVector& points );
+    virtual void Create( const ASN1T_MsgLimitCreation& asnMsg );
+    virtual void Create( const ASN1T_MsgLimaCreation& asnMsg );
 
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );
 
-    void UpdateToSim();
-    void UseSimTacticalLines();
-
-    void Load( const std::string& tacticalLines );
     void Save( const std::string& tacticalLines ) const;
     //@}
 
@@ -70,17 +65,10 @@ private:
     LimitsModel& operator=( const LimitsModel& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void ReadLine( const std::string& name, xml::xistream& xis );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::CoordinateConverter_ABC& converter_;
-    Publisher_ABC& publisher_;
+    TacticalLineFactory& factory_;
     //@}
 };
 

@@ -112,15 +112,6 @@ bool MIL_PionMission_ALAT_Attaquer::Initialize( MIL_PionMission_ABC& missionTmp 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_Attaquer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_Attaquer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

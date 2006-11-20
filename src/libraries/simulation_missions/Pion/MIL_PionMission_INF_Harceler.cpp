@@ -112,15 +112,6 @@ bool MIL_PionMission_INF_Harceler::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_Harceler::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_Harceler::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

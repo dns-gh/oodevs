@@ -102,15 +102,6 @@ bool MIL_PionMission_INF_ContreAttaquer::Initialize( MIL_PionMission_ABC& missio
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_ContreAttaquer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_ContreAttaquer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

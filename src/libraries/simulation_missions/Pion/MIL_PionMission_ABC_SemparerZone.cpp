@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_SemparerZone::Initialize( MIL_PionMission_ABC& missionT
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_SemparerZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_SemparerZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

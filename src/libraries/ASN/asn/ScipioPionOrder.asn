@@ -395,19 +395,20 @@ Mission-Pion ::= CHOICE
 MsgPionOrder ::= SEQUENCE
 {
     oid-unite-executante    Agent,
-    order-id                OID,
-    oid-limite-gauche       OID OPTIONAL,
-    oid-limite-droite       OID OPTIONAL,
-    oid-limas 		        ListOID,
-    direction-dangereuse    Direction,
+    order-context           OrderContext,
     mission                 Mission-Pion
 }
 
 MsgPionOrderAck ::= SEQUENCE
 {
     oid-unite-executante    Agent,
-    order-id				OID,
     error-code				EnumOrderErrorCode
+}
+
+MsgPionOrderManagement ::= SEQUENCE
+{
+    oid-unite-executante    Agent,
+    etat                    EnumOrderState
 }
 
 END -- ScipioOrder

@@ -102,15 +102,6 @@ bool MIL_PionMission_Test_ChangePosture::Initialize( MIL_PionMission_ABC& missio
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_ChangePosture::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_ChangePosture::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

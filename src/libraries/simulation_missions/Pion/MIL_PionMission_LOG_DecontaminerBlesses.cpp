@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_DecontaminerBlesses::Initialize( MIL_PionMission_ABC& m
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_DecontaminerBlesses::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_DecontaminerBlesses::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

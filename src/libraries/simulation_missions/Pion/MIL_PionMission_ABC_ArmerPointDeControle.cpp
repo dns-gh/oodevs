@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_ArmerPointDeControle::Initialize( MIL_PionMission_ABC& 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_ArmerPointDeControle::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_ArmerPointDeControle::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -359,9 +359,7 @@ namespace
 {
     void LogCrash( MIL_AgentPion& pion )
     {
-        MT_LOG_ERROR_MSG( "Pion " << pion.GetID() << "('" << pion.GetName() << "') : Mission '" 
-         << ( pion.GetOrderManager().GetMission() ? pion.GetOrderManager().GetMission()->GetName() : "Default" )
-         << "' impossible" );
+        MT_LOG_ERROR_MSG( "Pion " << pion.GetID() << "('" << pion.GetName() << "') : Mission '" << pion.GetOrderManager().GetMissionName() << "' impossible" );
     }
 }
 

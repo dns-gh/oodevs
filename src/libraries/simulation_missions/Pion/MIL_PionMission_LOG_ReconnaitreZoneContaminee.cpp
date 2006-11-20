@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_ReconnaitreZoneContaminee::Initialize( MIL_PionMission_
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_ReconnaitreZoneContaminee::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_ReconnaitreZoneContaminee::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

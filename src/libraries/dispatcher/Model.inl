@@ -41,6 +41,16 @@ ModelsContainer< Formation >& Model::GetFormations()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelsContainer< Formation >& Model::GetFormations
+// Created: SBO 2006-11-15
+// -----------------------------------------------------------------------------
+inline
+const ModelsContainer< Formation >& Model::GetFormations() const
+{
+    return formations_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelsContainer< Automat > Model::GetAutomats
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------

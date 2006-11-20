@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Rep_PathPoint_Lima.h"
-#include "Entities/Orders/Lima/MIL_Lima.h"
+#include "Entities/Orders/MIL_LimaFunction.h"
 #include "Decision/DEC_Tools.h"
 
 int DEC_Rep_PathPoint_Lima::nDIAIdxLima_     = 0;
@@ -32,12 +32,11 @@ void DEC_Rep_PathPoint_Lima::InitializeDIA()
 // Name: DEC_Rep_PathPoint_Lima constructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, const MIL_Lima& lima )
+DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, uint nLimaID, const MIL_LimaFunction& function )
     : DEC_Rep_PathPoint( vPos, DEC_Rep_PathPoint::eTypePointLima, nTypeTerrain, "Rep_PointLima" )
-    , lima_            ( lima )
 {
-    SetValue( nDIAIdxTypeLima_, (int)lima_.GetLimaFunction() );
-    GetVariable( nDIAIdxLima_ ).SetValue( (void*)&lima_, &DEC_Tools::GetTypeLima(), 1 );
+    SetValue( nDIAIdxTypeLima_, (int)function.GetID() );
+    GetVariable( nDIAIdxLima_ ).SetValue( (void*)nLimaID, &DEC_Tools::GetTypeLima() );
 }
 
 //-----------------------------------------------------------------------------

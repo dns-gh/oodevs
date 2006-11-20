@@ -102,15 +102,6 @@ bool MIL_PionMission_INF_EscorterUnite::Initialize( MIL_PionMission_ABC& mission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_EscorterUnite::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_EscorterUnite::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

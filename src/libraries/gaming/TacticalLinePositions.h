@@ -13,16 +13,12 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "ASN_Types.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
-}
-
-namespace xml
-{
-    class xistream;
 }
 
 class TacticalLine_ABC;
@@ -36,6 +32,8 @@ class TacticalLine_ABC;
 class TacticalLinePositions : public kernel::Positions
                             , public kernel::Serializable_ABC
                             , public kernel::Drawable_ABC
+                            , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
+                            , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
 {
 
 public:
@@ -43,7 +41,6 @@ public:
     //@{
              TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
              TacticalLinePositions( const ASN1T_Line& asnMsg, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
-             TacticalLinePositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
     virtual ~TacticalLinePositions();
     //@}
 
@@ -70,7 +67,9 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadPoint( xml::xistream& xis );
+    virtual void DoUpdate( const ASN1T_MsgLimaUpdate&  message );
+    virtual void DoUpdate( const ASN1T_MsgLimitUpdate& message );
+    void Update( const ASN1T_TacticalLine& message );
     //@}
 
 private:

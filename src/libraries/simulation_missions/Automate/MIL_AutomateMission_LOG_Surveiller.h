@@ -31,7 +31,6 @@ public:
     static void InitializeDIA( const MIL_AutomateMissionType& type );
 
     virtual ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgAutomateOrder& asnMsg );
-    virtual void                     Terminate ();
     //@}
 
     //! @name Network 

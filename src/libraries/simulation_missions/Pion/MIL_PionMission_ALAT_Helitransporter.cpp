@@ -127,15 +127,6 @@ bool MIL_PionMission_ALAT_Helitransporter::Initialize( MIL_PionMission_ABC& miss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_Helitransporter::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_Helitransporter::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

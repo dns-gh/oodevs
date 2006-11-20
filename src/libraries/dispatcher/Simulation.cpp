@@ -88,12 +88,12 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
     ASN1T_MsgsInClient asnOutMsg;
     switch( asnInMsg.msg.t )
     {
-        DISPATCH_ASN_MSG( limit_creation_ack                                );
-        DISPATCH_ASN_MSG( limit_destruction_ack                             );
-        DISPATCH_ASN_MSG( limit_update_ack                                  );
-        DISPATCH_ASN_MSG( lima_creation_ack                                 );
-        DISPATCH_ASN_MSG( lima_destruction_ack                              );
-        DISPATCH_ASN_MSG( lima_update_ack                                   );
+        DISPATCH_ASN_MSG( limit_creation_request_ack                        );
+        DISPATCH_ASN_MSG( limit_destruction_request_ack                     );
+        DISPATCH_ASN_MSG( limit_update_request_ack                          );
+        DISPATCH_ASN_MSG( lima_creation_request_ack                         );
+        DISPATCH_ASN_MSG( lima_destruction_request_ack                      );
+        DISPATCH_ASN_MSG( lima_update_request_ack                           );
         DISPATCH_ASN_MSG( pion_order_ack                                    );
         DISPATCH_ASN_MSG( order_conduite_ack                                );
         DISPATCH_ASN_MSG( automate_order_ack                                );
@@ -167,7 +167,9 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( start_fire_effect                                 );
         DISPATCH_ASN_MSG( stop_fire_effect                                  );
         DISPATCH_ASN_MSG( cr                                                );
-        DISPATCH_ASN_MSG( order_management                                  );
+        DISPATCH_ASN_MSG( pion_order_management                             );
+        DISPATCH_ASN_MSG( automate_order_management                         );
+        DISPATCH_ASN_MSG( population_order_management                       );
         DISPATCH_ASN_MSG( automate_mrt                                      );
         DISPATCH_ASN_MSG( pion_order                                        );
         DISPATCH_ASN_MSG( automate_order                                    );

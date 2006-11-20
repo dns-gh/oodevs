@@ -112,15 +112,6 @@ bool MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Initialize( MIL_PionMission_AB
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASS_RATAC_AcquerirObjectifs::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

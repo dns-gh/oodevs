@@ -102,15 +102,6 @@ bool MIL_PionMission_INF_ReconnaitreAxe::Initialize( MIL_PionMission_ABC& missio
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_ReconnaitreAxe::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_ReconnaitreAxe::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -39,14 +39,7 @@ App::App( int argc, char** argv )
 
     ParseCmdArgs( argc, argv );
 
-    try
-    {
-        pDispatcher_ = new Dispatcher( strConfFile_ );
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_ERROR_MSG( "Initialization error : " << e.what() );
-    }
+    pDispatcher_ = new Dispatcher( strConfFile_ );
 }
 
 // -----------------------------------------------------------------------------

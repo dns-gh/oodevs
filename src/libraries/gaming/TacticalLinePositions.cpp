@@ -36,22 +36,12 @@ TacticalLinePositions::TacticalLinePositions( const ASN1T_Line& asnMsg, const ke
     : converter_( converter )
     , owner_    ( owner )
 {
-    for( uint i = 0; i != asnMsg.vecteur_point.n ; ++i )
+    pointList_.reserve( asnMsg.vecteur_point.n );
+    for( uint i = 0; i != asnMsg.vecteur_point.n; ++i )
     {
         pointList_.push_back( converter.ConvertToXY( asnMsg.vecteur_point.elem[i] ) );
         boundingBox_.Incorporate( pointList_.back() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions constructor
-// Created: SBO 2006-11-06
-// -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
-    : converter_( converter )
-    , owner_    ( owner )
-{
-    xis >> list( "point", *this, &TacticalLinePositions::ReadPoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,19 +51,6 @@ TacticalLinePositions::TacticalLinePositions( xml::xistream& xis, const kernel::
 TacticalLinePositions::~TacticalLinePositions()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinePositions::ReadPoint
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void TacticalLinePositions::ReadPoint( xml::xistream& xis )
-{
-    float x, y;
-    xis >> attribute( "x", x )
-        >> attribute( "y", y );
-    pointList_.push_back( geometry::Point2f( x, y ) );
-    boundingBox_.Incorporate( pointList_.back() );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,13 +125,6 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const geometry::Rect
         glLineWidth( 3.f );
         if( owner_.IsLimit() )
             glColor3f( 0.1f, 0.1f, 0.1f );
-//            if( nLevel_ == eNatureLevel_ooo )
-//            {
-//                glLineWidth( 4.f );
-//                tools.DrawLines( pointList_ );
-//                glColor3f( 0.5f, 0.5f, 0.5f );
-//                glLineWidth( 2.f );
-//            }
         else
             glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
         tools.DrawLines( pointList_ );
@@ -191,4 +161,34 @@ void TacticalLinePositions::WriteGeometry( ASN1T_Line& line ) const
         line.vecteur_point.elem[i] = strMGRS.c_str();
         ++i;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::DoUpdate
+// Created: SBO 2006-11-14
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::DoUpdate( const ASN1T_MsgLimaUpdate& message )
+{
+    Update( message.tactical_line );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::DoUpdate
+// Created: SBO 2006-11-14
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::DoUpdate( const ASN1T_MsgLimitUpdate& message )
+{
+    Update( message.tactical_line );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::Update
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::Update( const ASN1T_TacticalLine& message )
+{
+    pointList_.clear();
+    pointList_.reserve( message.geometrie.vecteur_point.n );
+    for( unsigned int i = 0; i < message.geometrie.vecteur_point.n; ++i )
+        pointList_.push_back( converter_.ConvertToXY( message.geometrie.vecteur_point.elem[i] ) );
 }

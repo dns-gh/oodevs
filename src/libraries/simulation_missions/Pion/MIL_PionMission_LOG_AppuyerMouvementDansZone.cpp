@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_AppuyerMouvementDansZone::Initialize( MIL_PionMission_A
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_AppuyerMouvementDansZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_AppuyerMouvementDansZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

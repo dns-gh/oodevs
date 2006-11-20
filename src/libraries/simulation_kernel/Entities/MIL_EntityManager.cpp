@@ -61,6 +61,7 @@
 #include "Populations/MIL_PopulationAttitude.h"
 #include "Populations/MIL_Population.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
+#include "Orders/MIL_LimaFunction.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_IDManager.h"
 #include "RC/MIL_RC.h"
@@ -96,6 +97,7 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     PHY_RadarClass               ::Initialize();
     MIL_PopulationAttitude       ::Initialize();
     PHY_DotationLogisticType     ::Initialize();
+    MIL_LimaFunction             ::Initialize();
 
     InitializeType< PHY_MaintenanceWorkRate        >( archive, "Maintenance"         );
     InitializeType< PHY_MaintenanceResourcesAlarms >( archive, "Maintenance"         );
@@ -285,6 +287,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_SupplyResourcesAlarms     ::Terminate();
     PHY_MaintenanceResourcesAlarms::Terminate();
     PHY_MedicalResourcesAlarms    ::Terminate();
+    MIL_LimaFunction              ::Terminate();
         
     delete &effectManager_;
     delete pObjectManager_;
@@ -810,7 +813,6 @@ void MIL_EntityManager::OnReceiveMsgPionOrder( ASN1T_MsgPionOrder& asnMsg, MIL_M
     {
         NET_ASN_MsgPionOrderAck asnReplyMsg;
         asnReplyMsg.GetAsnMsg().oid_unite_executante = asnMsg.oid_unite_executante;
-        asnReplyMsg.GetAsnMsg().order_id             = asnMsg.order_id;
         asnReplyMsg.GetAsnMsg().error_code           = EnumOrderErrorCode::error_invalid_unit;
         asnReplyMsg.Send( nCtx );
         return;
@@ -829,7 +831,6 @@ void MIL_EntityManager::OnReceiveMsgAutomateOrder( ASN1T_MsgAutomateOrder& asnMs
     {
         NET_ASN_MsgAutomateOrderAck asnReplyMsg;
         asnReplyMsg.GetAsnMsg().oid_unite_executante = asnMsg.oid_unite_executante;
-        asnReplyMsg.GetAsnMsg().order_id             = asnMsg.order_id;
         asnReplyMsg.GetAsnMsg().error_code           = EnumOrderErrorCode::error_invalid_unit;
         asnReplyMsg.Send( nCtx );
         return;
@@ -848,7 +849,6 @@ void MIL_EntityManager::OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& a
     {
         NET_ASN_MsgPopulationOrderAck asnReplyMsg;
         asnReplyMsg.GetAsnMsg().oid_unite_executante = asnMsg.oid_unite_executante;
-        asnReplyMsg.GetAsnMsg().order_id             = asnMsg.order_id;
         asnReplyMsg.GetAsnMsg().error_code           = EnumOrderErrorCode::error_invalid_unit;
         asnReplyMsg.Send( nCtx );
         return;
@@ -891,7 +891,6 @@ void MIL_EntityManager::OnReceiveMsgOrderConduite( ASN1T_MsgOrderConduite& asnMs
             {
                 NET_ASN_MsgOrderConduiteAck asnReplyMsg;
                 asnReplyMsg.GetAsnMsg().unit_id     = asnMsg.unit_id;
-                asnReplyMsg.GetAsnMsg().order_id    = asnMsg.order_id;
                 asnReplyMsg.GetAsnMsg().error_code  = EnumOrderErrorCode::error_invalid_unit;
                 asnReplyMsg.Send( nCtx );
                 return;

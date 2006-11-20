@@ -365,11 +365,9 @@ void DEC_GeometryFunctions::ComputePointBeforeLima( DIA_Call_ABC& call, const T&
 {
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
 
-    DIA_Parameters& diaParams = call.GetParameters();
-
-    MIL_Lima*         pLima           = diaParams[0].ToUserPtr( pLima );
-    MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( diaParams[1].ToFloat() );
-    DIA_Variable_ABC& diaReturnCode   = diaParams[2];
+    MIL_LimaOrder*    pLima           = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
+    DIA_Variable_ABC& diaReturnCode   = call.GetParameter( 2 );
 
     if( !pLima )
     {

@@ -102,15 +102,6 @@ bool MIL_PionMission_Test_DestroyObject::Initialize( MIL_PionMission_ABC& missio
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_DestroyObject::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_DestroyObject::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

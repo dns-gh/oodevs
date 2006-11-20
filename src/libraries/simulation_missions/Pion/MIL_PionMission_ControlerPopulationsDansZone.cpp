@@ -102,15 +102,6 @@ bool MIL_PionMission_ControlerPopulationsDansZone::Initialize( MIL_PionMission_A
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ControlerPopulationsDansZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ControlerPopulationsDansZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

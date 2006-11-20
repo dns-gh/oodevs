@@ -30,7 +30,6 @@ AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC&
     , nMissionId_( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgAutomateOrder();
-    pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent_);
     pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetId();
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromAutomataMission( E_AutomataMission( nMissionId_ ) ).c_str(), this );
@@ -43,6 +42,16 @@ AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC&
     CreateInterface();
 }
 
+namespace
+{
+    struct OrderBlahBlah : public OptionalParamFunctor_ABC
+    {
+        OrderBlahBlah( ASN1T_MsgAutomateOrder& ) {};
+        virtual void SetOptionalPresent() {
+            // NOTHING
+        }
+    };
+};
 
 // -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface::CreateDefaultParameters
@@ -51,14 +60,13 @@ AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC&
 void AutomateMissionInterface::CreateDefaultParameters()
 {
     ASN1T_MsgAutomateOrder& order = pASNMsgOrder_->GetAsnMsg();
-    CreateLimits( order.oid_limite_gauche, order.oid_limite_droite, "Fixer limite 1", "Fixer limite 2" );
-    CreateLimaList( order.oid_limas, "Ajouter aux limas" );
-    ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>& buttonGroup
-        = CreateRadioButtonGroup( order.formation, "Formation" );
+    CreateLimits( order.order_context.limite_gauche, order.order_context.limite_droite, "Fixer limite 1", "Fixer limite 2" );
+    CreateLimaList( order.order_context.limas, "Ajouter aux limas", BuildOptionalParamFunctor< OrderBlahBlah, ASN1T_MsgAutomateOrder >( order ) );
+    ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>& buttonGroup = CreateRadioButtonGroup( order.formation, "Formation" );
     buttonGroup.AddButton( "Un échelon", EnumAutomateOrderFormation::un_echelon );
     buttonGroup.AddButton( "Deux échelons", EnumAutomateOrderFormation::deux_echelons, true );
 
-    CreateDirection( order.direction_dangereuse, "Direction dangeureuse" );
+    CreateDirection( order.order_context.direction_dangereuse, "Direction dangeureuse" );
 }
 
 
@@ -72,9 +80,10 @@ void AutomateMissionInterface::OnOk()
         return;
 
     Commit();
+    ASN1T_MsgAutomateOrder& order = pASNMsgOrder_->GetAsnMsg();
+    order.order_context.m.limite_gauchePresent = 1;
+    order.order_context.m.limite_droitePresent = 1;
     pASNMsgOrder_->Send( publisher_, 45 );
-
-    agent_.Update( pASNMsgOrder_->GetAsnMsg() );
     parentWidget()->hide();
 }
 

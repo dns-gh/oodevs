@@ -30,7 +30,6 @@ using namespace kernel;
 Decisions::Decisions( Controller& controller, const Agent_ABC& agent )
     : controller_( controller )
     , agent_( agent )
-    , lastOrderId_( -1 )
     , current_( 0 )
 {
     // NOTHING
@@ -60,23 +59,9 @@ bool Decisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
-    lastOrderId_ = message.order_id;
     const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = & resolver.Get( message.mission.t );
     controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Decisions::DoUpdate
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-void Decisions::DoUpdate( const ASN1T_MsgPionOrderAck& message )
-{
-    if( message.error_code && message.order_id == lastOrderId_ )
-    {
-        current_ = 0;
-        controller_.Update( *this );
-    }
 }
 
 // -----------------------------------------------------------------------------

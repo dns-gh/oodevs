@@ -102,15 +102,6 @@ bool MIL_PionMission_MILICE_PrendreEtTenir::Initialize( MIL_PionMission_ABC& mis
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_MILICE_PrendreEtTenir::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_MILICE_PrendreEtTenir::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

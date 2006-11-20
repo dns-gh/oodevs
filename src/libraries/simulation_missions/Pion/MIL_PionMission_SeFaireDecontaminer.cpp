@@ -107,15 +107,6 @@ bool MIL_PionMission_SeFaireDecontaminer::Initialize( MIL_PionMission_ABC& missi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_SeFaireDecontaminer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_SeFaireDecontaminer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

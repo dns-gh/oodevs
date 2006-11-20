@@ -52,7 +52,7 @@ MIL_ZoneImplantationCOBRA::~MIL_ZoneImplantationCOBRA()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ZoneImplantationCOBRA::ProcessAgentEntering
+// Name: MIL_ZoneImplantationCOBRA::ProcessAgentInside
 // Created: JVT 2005-05-11
 // -----------------------------------------------------------------------------
 void MIL_ZoneImplantationCOBRA::ProcessAgentInside( MIL_Agent_ABC& agent )

@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Initialize( MIL_PionMiss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_ReconnaitreSiteFranchissement::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

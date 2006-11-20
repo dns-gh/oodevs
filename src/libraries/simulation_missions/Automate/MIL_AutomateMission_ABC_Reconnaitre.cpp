@@ -69,15 +69,6 @@ ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC_Reconnaitre::Initialize( const 
     return EnumOrderErrorCode::no_error;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC_Reconnaitre::Terminate()
-{
-    MIL_AutomateMission_ABC::Terminate();
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

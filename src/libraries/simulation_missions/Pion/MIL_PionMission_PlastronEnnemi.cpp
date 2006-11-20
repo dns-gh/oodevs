@@ -112,15 +112,6 @@ bool MIL_PionMission_PlastronEnnemi::Initialize( MIL_PionMission_ABC& missionTmp
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_PlastronEnnemi::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_PlastronEnnemi::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

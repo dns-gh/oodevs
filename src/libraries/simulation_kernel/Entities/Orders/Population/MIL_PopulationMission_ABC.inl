@@ -19,17 +19,6 @@ MIL_Population& MIL_PopulationMission_ABC::GetPopulation() const
     return population_;
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_ABC::GetOrderID
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-uint MIL_PopulationMission_ABC::GetOrderID() const
-{
-    return nOrderID_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission_ABC::GetType
 // Created: NLD 2004-09-07

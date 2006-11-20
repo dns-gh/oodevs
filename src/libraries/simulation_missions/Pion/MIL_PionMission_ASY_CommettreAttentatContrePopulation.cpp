@@ -112,15 +112,6 @@ bool MIL_PionMission_ASY_CommettreAttentatContrePopulation::Initialize( MIL_Pion
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASY_CommettreAttentatContrePopulation::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASY_CommettreAttentatContrePopulation::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

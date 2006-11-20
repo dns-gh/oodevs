@@ -112,15 +112,6 @@ bool MIL_PionMission_Test_CreateObject::Initialize( MIL_PionMission_ABC& mission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_CreateObject::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_CreateObject::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

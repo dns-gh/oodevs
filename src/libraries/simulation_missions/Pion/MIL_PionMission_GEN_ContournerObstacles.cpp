@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_ContournerObstacles::Initialize( MIL_PionMission_ABC& m
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_ContournerObstacles::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_ContournerObstacles::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

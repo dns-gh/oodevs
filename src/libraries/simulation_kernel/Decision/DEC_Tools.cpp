@@ -333,7 +333,7 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     else if( *pType == *pTypeAction_ )
         ; // NOTHING
     else if( *pType == *pTypeLima_ )
-        assert( false );
+        ; // NOTHING
     else if( *pType == *pTypeConnaissanceObjet_ )
         ; // NOTHING
     else if( *pType == *pTypeConnaissanceAgent_ )

@@ -19,6 +19,8 @@ namespace kernel
     class GlTools_ABC;
 }
 
+class OptionalParamFunctor_ABC;
+
 // =============================================================================
 // Created: APE 2004-03-18
 // =============================================================================
@@ -36,7 +38,7 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
-    virtual void SetOptional( bool );
+    virtual void SetOptional( OptionalParamFunctor_ABC* optional );
 
     virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
@@ -45,6 +47,7 @@ public:
 
     //! @name Accessors
     //@{
+    void SetOptionalPresent();
     bool IsOptional() const;
     //@}
 
@@ -56,7 +59,7 @@ private:
     //@}
 
 private:
-    bool bIsOptional_;
+    OptionalParamFunctor_ABC* pOptional_;
     kernel::ActionController* controller_;
 };
 

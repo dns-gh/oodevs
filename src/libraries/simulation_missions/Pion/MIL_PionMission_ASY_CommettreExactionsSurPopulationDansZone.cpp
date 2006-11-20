@@ -102,15 +102,6 @@ bool MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone::Initialize( MI
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASY_CommettreExactionsSurPopulationDansZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

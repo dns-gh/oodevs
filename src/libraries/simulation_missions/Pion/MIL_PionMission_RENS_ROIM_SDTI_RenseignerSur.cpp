@@ -102,15 +102,6 @@ bool MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Initialize( MIL_PionMission_A
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_RENS_ROIM_SDTI_RenseignerSur::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -1,4 +1,3 @@
-//*****************************************************************************
 //
 // $Created: NLD 2003-01-14 $
 // $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Orders/MIL_Fuseau.h $
@@ -16,9 +15,8 @@
 #include "simulation_terrain/TER_Polygon.h"
 
 class TER_Localisation;
-class MIL_Limit;
-class MIL_Lima;
-class TER_DynamicData;
+class TER_LimitData;
+class MIL_LimaOrder;
 
 //=============================================================================
 // Created: NLD 2003-01-14
@@ -30,19 +28,16 @@ public:
     //@{
     typedef std::list< MIL_Fuseau* >  T_FuseauPtrList;
     typedef T_FuseauPtrList::iterator IT_FuseauPtrList;
-
-    typedef std::vector< const MIL_Limit* >       T_LimitConstPtrVector;
-    typedef T_LimitConstPtrVector::const_iterator CIT_LimitConstPtrVector;
     //@}
     
 public:
      MIL_Fuseau();
-     MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const MIL_Limit& leftLimit, const MIL_Limit& rightLimit, const MIL_Lima* pBeginMissionLima, const MIL_Lima* pEndMissionLima );
+     MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
     ~MIL_Fuseau();
 
     //! @name Init */
     //@{
-    void Reset( const MT_Vector2D& vOrientationRefPos, const MIL_Limit& leftLimit, const MIL_Limit& rightLimit, const MIL_Lima* pBeginMissionLima, const MIL_Lima* pEndMissionLima );
+    void Reset( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima );
     void Reset();
     //@}
 
@@ -54,32 +49,35 @@ public:
 
     bool ComputeFurthestExtremityPoint( MT_Vector2D& vResult ) const;
     bool ComputeClosestExtremityPoint ( MT_Vector2D& vResult ) const;
-    bool ComputePointBeforeLima       ( const MIL_Lima& lima, MT_Float rDistBefore, MT_Vector2D&   vResult ) const;
-    bool ComputePointsBeforeLima      ( const MIL_Lima& lima, MT_Float rDistBefore, uint nNbPoints, T_PointVector& results ) const;
+    bool ComputePointBeforeLima       ( const MIL_LimaOrder& lima, MT_Float rDistBefore, MT_Vector2D&   vResult ) const;
+    bool ComputePointsBeforeLima      ( const MIL_LimaOrder& lima, MT_Float rDistBefore, uint nNbPoints, T_PointVector& results ) const;
     void ComputeNearestEntryPoint     ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
     void ComputeEntryPoint            ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
-
-    MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn ) const;
-    MT_Float Distance( const MT_Vector2D& p, bool bLimitsOnly = false ) const;
     //@}
 
-    //! @name Accessors */
+    //! @name Pathfind
     //@{
-    const MIL_Limit* GetLeftLimit      () const;
-    const MIL_Limit* GetRightLimit     () const;
+    MT_Float Distance( const MT_Vector2D& p, bool bLimitsOnly = false ) const;
+    MT_Float GetCost ( const MT_Vector2D&, const MT_Vector2D& to, MT_Float rMaxDistanceOut, MT_Float rCostPerMeterOut, MT_Float rComfortDistanceIn, MT_Float rCostPerMeterIn ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
+    const TER_LimitData* GetLeftLimit () const;
+    const TER_LimitData* GetRightLimit() const;
+
     bool             IsNull            () const;
     const MT_Line&   GetGlobalDirection() const;
     //@}
    
-    //! @name Tools */
+    //! @name Tools
     //@{
     bool SplitIntoSubFuseaux( uint nNbrSubFuseau, T_FuseauPtrList& container ) const;
-    TER_DynamicData* CreateDynamicData() const;
     //@}
 
-    //! @name Operators */
+    //! @name Operators
     //@{
-    MIL_Fuseau& operator=( const MIL_Fuseau& );
+    MIL_Fuseau& operator= ( const MIL_Fuseau& );
     bool        operator==( const MIL_Fuseau& rhs ) const;
     bool        operator!=( const MIL_Fuseau& rhs ) const;
     //@}
@@ -87,8 +85,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< T_PointVector >  T_PointVectorVector;
-    typedef T_PointVectorVector::iterator IT_PointVectorVector;
+    typedef std::vector< T_PointVector >        T_PointVectorVector;
+    typedef T_PointVectorVector::iterator       IT_PointVectorVector;
+    typedef T_PointVectorVector::const_iterator CIT_PointVectorVector;
     //@}
 
 private:
@@ -97,33 +96,27 @@ private:
     //! @name Init
     //@{
     void InitializePolygon        ();
-    void TruncateAndReorientLimits();
-    void SplitLimit               ( const T_PointVector& limit, T_PointVectorVector& parts );
+    void TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima );
+    void SplitLimit               ( const MIL_LimaOrder* pBeginMissionLima, const MIL_LimaOrder* pEndMissionLima, const T_PointVector& limit, T_PointVectorVector& parts ) const;
     bool IsPointInsidePolygon     ( T_PointVector& leftPoints, T_PointVector& rightPoints, const MT_Vector2D& vPoint );
+    void InitializeMiddleLimit    ();
     //@}
 
     //! @name Tools
     //@{
-    bool Split( uint nNbrSubFuseau, T_LimitConstPtrVector& limitVector ) const;
+    bool Split( uint nNbrSubFuseau, T_PointVectorVector& limitVector ) const;
     //@}
 
 private:
-    const MIL_Limit* pLeftLimit_;
-    const MIL_Limit* pRightLimit_;
-    const MIL_Lima*  pBeginMissionLima_;
-    const MIL_Lima*  pEndMissionLima_;
-
-    T_PointVector leftPointVector_;
-    T_PointVector rightPointVector_;
-
-    MT_Float    rLeftLimitLength_;
-    MT_Float    rRightLimitLength_;
+    const TER_LimitData* pLeftLimit_;
+    const TER_LimitData* pRightLimit_;
+    const TER_LimitData* pMiddleLimit_;
 
     // Fuseau global direction
     MT_Vector2D vOrientationRefPos_;
-    MT_Line     globalDirectionLine_;
     MT_Vector2D vStartGlobalDirection_;
     MT_Vector2D vEndGlobalDirection_;
+    MT_Line     globalDirectionLine_;
 
 private:
     static uint nNbrMeterPerSample_;

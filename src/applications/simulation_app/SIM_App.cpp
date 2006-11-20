@@ -45,12 +45,6 @@ SIM_App::SIM_App( int nArgc, char* pArgv[] )
 
     ParseCmdArgs( nArgc, pArgv, startupConfig_ );
 
-    if( startupConfig_.IsDispatcherEmbedded() )
-    {
-        MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
-        pDispatcher_ = new SIM_Dispatcher( startupConfig_.GetConfigFileName() );
-    }
-
     try
     {
         pNetworkLogger_ = new SIM_NetworkLogger( 20000 + startupConfig_.GetExerciceID() ); //$$$ 20000 en dur
@@ -106,6 +100,12 @@ void SIM_App::Initialize()
 #if !defined( _DEBUG ) 
     SetConsoleCtrlHandler( (PHANDLER_ROUTINE)ConsoleEventHandler, TRUE );
 #endif
+
+    if( startupConfig_.IsDispatcherEmbedded() )
+    {
+        MT_LOG_INFO_MSG( "Starting embedded dispatcher" );
+        pDispatcher_ = new SIM_Dispatcher( startupConfig_.GetConfigFileName() );
+    }
 
     MT_Profiler::Initialize();
     MT_MakeDir( "CheckPoints" );

@@ -26,7 +26,6 @@ MIL_MOSIDManager                 MIL_IDManager::fireResultsPion_;
 MIL_MOSIDManager                 MIL_IDManager::fireResultsPopulation_;
 MIL_MOSIDManager                 MIL_IDManager::limas_;
 MIL_MOSIDManager                 MIL_IDManager::limits_;
-MIL_MOSIDManager                 MIL_IDManager::orders_;
 MIL_MOSIDManager                 MIL_IDManager::knowledgesAgent_;
 MIL_MOSIDManager                 MIL_IDManager::effectsWeather_;
 MIL_MOSIDManager                 MIL_IDManager::maintenanceComposanteStates_;
@@ -73,7 +72,6 @@ void MIL_IDManager::Initialize( MIL_InputArchive& archive )
         else if( sCaseInsensitiveEqual()( strName, "TirPopulation"                          ) )  fireResultsPopulation_             .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Lima"                                   ) )  limas_                             .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "Limite"                                 ) )  limits_                            .SetClassID( nClassID );
-        else if( sCaseInsensitiveEqual()( strName, "Ordre"                                  ) )  orders_                            .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "GhostAgent"                             ) )  knowledgesAgent_                   .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "EffetsTirs"                             ) )  effectsWeather_                    .SetClassID( nClassID );
         else if( sCaseInsensitiveEqual()( strName, "TraitementLogMaintenance"               ) )  maintenanceComposanteStates_       .SetClassID( nClassID );

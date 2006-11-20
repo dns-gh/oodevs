@@ -85,8 +85,12 @@ bool DEC_PathSection_ABC::ShouldEndComputation( float /*rCostToCurrentNode*/, fl
         return true;
 
     if( (uint)time( 0 ) >= nComputationEndTime_ )
+    {
+        MT_LOG_ERROR_MSG( "Pathfind computation aborted - timeout" );
         return true;
+    }
 
     return false;
 }
+
 

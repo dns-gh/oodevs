@@ -107,15 +107,6 @@ bool MIL_PionMission_ASS_AssurerMiseEnOeuvre::Initialize( MIL_PionMission_ABC& m
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASS_AssurerMiseEnOeuvre::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASS_AssurerMiseEnOeuvre::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

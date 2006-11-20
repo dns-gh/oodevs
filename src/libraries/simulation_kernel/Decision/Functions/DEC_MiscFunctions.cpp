@@ -17,9 +17,7 @@
 #include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-#include "Entities/Orders/Lima/MIL_Lima.h"
 #include "Decision/DEC_Tools.h"
-
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------

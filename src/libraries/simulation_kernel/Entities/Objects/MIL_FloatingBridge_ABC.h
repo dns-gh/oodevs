@@ -50,12 +50,6 @@ protected:
     //@}
 
 private:
-    //! @name Events
-    //@{
-    virtual void ProcessAgentEntering( MIL_Agent_ABC& agent );
-    //@}
-
-private:
     // Path finder enhancement
     TER_DynamicData* pPathfindData_;
 };

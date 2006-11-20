@@ -34,6 +34,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
 #include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
 #include "Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
+#include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/RC/MIL_RC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
@@ -215,7 +216,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
         Embraye();
         MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType().InstanciateMission( *this );
         mission.Initialize();
-        mission.Prepare   ();
         orderManager_.OnReceiveAutomateOrder( mission );
     }
 
@@ -223,7 +223,6 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
     {
         MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetSurrenderingMissionType().InstanciateMission( *this );
         mission.Initialize();
-        mission.Prepare   ();
         orderManager_.OnReceiveAutomateOrder( mission );
     }
 }
@@ -268,28 +267,45 @@ void MIL_Automate::InitializeSubordinates( MIL_InputArchive& archive )
 {
     while( archive.NextListElement() )
     {
-        archive.Section( "unit" );
+        std::string strElement = archive.GetCurrentElementName();
 
-        uint        nID;
-        std::string strType;
-        bool        bPC = false;
+        if( strElement == "unit" )
+        {
+            archive.Section( "unit" );
 
-        archive.ReadAttribute( "id"          , nID     );
-        archive.ReadAttribute( "type"        , strType );
-        archive.ReadAttribute( "command-post", bPC, MIL_InputArchive::eNothing );
+            uint        nID;
+            std::string strType;
+            bool        bPC = false;
 
-        if( bPC && pPionPC_ )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post already defined", archive.GetContext() );
+            archive.ReadAttribute( "id"          , nID     );
+            archive.ReadAttribute( "type"        , strType );
+            archive.ReadAttribute( "command-post", bPC, MIL_InputArchive::eNothing );
 
-        const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strType );
-        if( !pType )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type", archive.GetContext() );
+            if( bPC && pPionPC_ )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post already defined", archive.GetContext() );
 
-        MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, nID, *this, archive ); // Auto-registration
-        if( bPC )
-            pPionPC_ = &pion;
+            const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( strType );
+            if( !pType )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown pawn type", archive.GetContext() );
 
-        archive.EndSection(); // unit
+            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, nID, *this, archive ); // Auto-registration
+            if( bPC )
+                pPionPC_ = &pion;
+
+            archive.EndSection(); // unit
+        }
+        else if( strElement == "limit" )
+        {
+            archive.BeginList( "limit" );
+            MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimit( *this, archive );
+            archive.EndList(); // limit
+        }
+        else if( strElement == "lima" )
+        {
+            archive.BeginList( "lima" );
+            MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLima( *this, archive );
+            archive.EndList(); // lima
+        }
     }
 }
 
@@ -636,7 +652,6 @@ bool MIL_Automate::OrientateRefugee( const MIL_CampRefugies& camp )
 
     MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType().InstanciateMission( *this );
     mission.Initialize();
-    mission.Prepare   ();
     orderManager_.OnReceiveAutomateOrder( mission );
     return true;
 }
@@ -733,7 +748,6 @@ bool MIL_Automate::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner, const 
 
     MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetSurrenderingMissionType().InstanciateMission( *this );
     mission.Initialize();
-    mission.Prepare   ();
     orderManager_.OnReceiveAutomateOrder( mission );
     return true;
 }

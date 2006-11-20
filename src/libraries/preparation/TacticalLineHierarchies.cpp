@@ -21,7 +21,7 @@ TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: TacticalLineHierarchies destructor
 // Created: SBO 2006-10-19

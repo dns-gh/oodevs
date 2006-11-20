@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_ReleverUnite::Initialize( MIL_PionMission_ABC& missionT
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_ReleverUnite::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_ReleverUnite::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -102,15 +102,6 @@ bool MIL_PionMission_TRANS_EtablirGererLiaison::Initialize( MIL_PionMission_ABC&
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_TRANS_EtablirGererLiaison::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_TRANS_EtablirGererLiaison::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

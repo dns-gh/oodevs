@@ -102,15 +102,6 @@ bool MIL_PionMission_ABC_OrganiserAccueilColonneRefugies::Initialize( MIL_PionMi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_OrganiserAccueilColonneRefugies::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_OrganiserAccueilColonneRefugies::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

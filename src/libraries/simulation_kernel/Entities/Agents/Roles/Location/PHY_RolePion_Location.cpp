@@ -225,16 +225,20 @@ void PHY_RolePion_Location::Fly( MT_Float rHeight )
     if( rHeight == rHeight_ )
         return;
 
-/*    TER_Object_ABC::T_ObjectVector objectsColliding;
+    // For decontamination zone ... refaire
+    /*TER_Object_ABC::T_ObjectVector objectsColliding;
     TER_Object_ABC::CIT_ObjectVector itObject;
-    TER_World::GetWorld().GetObjectManager().GetListsAt( vPosition_, objectsColliding );
+    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition_, objectsColliding );
     for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
         NotifyMovingOutsideObject( static_cast< MIL_Object_ABC& >( **itObject ) );
-*/
+    */
+
     SetHeight( rHeight );
 
-  /*  for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
-        NotifyMovingInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) ); */
+  /*
+    for( itObject = objectsColliding.begin(); itObject != objectsColliding.end(); ++itObject )
+        NotifyMovingInsideObject( static_cast< MIL_Object_ABC& >( **itObject ) ); 
+    */
 }
 
 // -----------------------------------------------------------------------------

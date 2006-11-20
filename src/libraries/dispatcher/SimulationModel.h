@@ -33,9 +33,13 @@ public:
 
     //! @name Operations
     //@{
-    void Update        ( const ASN1T_MsgCtrlInfo&      msg );
-    void Update        ( const ASN1T_MsgCtrlBeginTick& msg );
-    void Update        ( const ASN1T_MsgCtrlEndTick&   msg );
+    void Update        ( const ASN1T_MsgCtrlInfo&				 msg );
+    void Update        ( const ASN1T_MsgCtrlBeginTick&			 msg );
+    void Update        ( const ASN1T_MsgCtrlEndTick&			 msg );
+	void Update_Stop   ( const ASN1T_MsgCtrlStopAck&			 msg ); //$$$
+	void Update_Pause  ( const ASN1T_MsgCtrlPauseAck&			 msg ); //$$$
+	void Update_Resume ( const ASN1T_MsgCtrlResumeAck&			 msg ); //$$$
+	void Update		   ( const ASN1T_MsgCtrlChangeTimeFactorAck& msg );
 //    void Update        ( const ASN1T_MsgCtrlCheckPointSetFrequencyAck& msg );
     void Update_MsgInit( DIN::DIN_Input& msg ); 
     void Send          ( Publisher_ABC& publisher ) const;

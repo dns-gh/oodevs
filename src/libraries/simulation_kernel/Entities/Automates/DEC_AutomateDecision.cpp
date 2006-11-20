@@ -227,9 +227,7 @@ namespace
 {
     void LogCrash( MIL_Automate* pAutomate_ )
     {
-        MT_LOG_ERROR_MSG( "Automate " << pAutomate_->GetID() << " ('" << pAutomate_->GetName() << "') : Mission '" << 
-            ( pAutomate_->GetOrderManager().GetMission() ? pAutomate_->GetOrderManager().GetMission()->GetName() : "Default" )
-            << "' impossible" );
+        MT_LOG_ERROR_MSG( "Automate " << pAutomate_->GetID() << " ('" << pAutomate_->GetName() << "') : Mission '" << pAutomate_->GetOrderManager().GetMissionName() << "' impossible" );
     }
 }
 

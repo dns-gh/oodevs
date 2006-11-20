@@ -102,15 +102,6 @@ bool MIL_PionMission_ASY_SInfiltrer::Initialize( MIL_PionMission_ABC& missionTmp
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASY_SInfiltrer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASY_SInfiltrer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

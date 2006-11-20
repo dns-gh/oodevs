@@ -32,7 +32,6 @@ public:
     //@{
              Limit( kernel::Controller& controller, Publisher_ABC& publisher );
              Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg );
-             Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis );
     virtual ~Limit();
     //@}
 
@@ -43,7 +42,8 @@ public:
     virtual void Activate( kernel::ActionController& controller ) const;
 
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual bool IsLimit() const;
+    void CopyTo( ASN1T_Line& destination ) const;
+    virtual bool IsLimit() const; // $$$$ SBO 2006-11-14: only for display...
     //@}
 
 private:
@@ -55,8 +55,6 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T >
-    void FillAndSend();
     virtual void UpdateToSim( E_State state );
     //@}
 
@@ -67,7 +65,6 @@ public:
 
 private:
     kernel::Controller& controller_;
-    E_NatureLevel  nLevel_;
     //@}
 };
 

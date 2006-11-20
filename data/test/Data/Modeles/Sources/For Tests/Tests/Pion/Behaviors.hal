@@ -533,7 +533,10 @@ behavior MIS_Pion_Test_MoveTo( T_Mission_Pion_Test_MoveTo mission, id nDummy )
         
             T_Lima lima = DEC_GetLima( eTypeLima_LC );
             if( lima != 0 )
+            {
                 DEC_Automate_SetMissionLimaFlag( lima, true );
+                DEC_SetMissionLimaFlag( lima, true );
+            }
                 
             DEC_InterdireEvacuationAutomatiqueBlesses( myself );
             DEC_Agent_ActiverInvulnerabilitePopulation();
@@ -1278,6 +1281,7 @@ behavior MIS_Pion_CanaliserPopulations( T_Mission_Pion_CanaliserPopulations miss
         DEC_Debug( "MIS_Canaliser : on spontaneous end" );
     }
 }
+
 
 
 

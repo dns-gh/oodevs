@@ -151,17 +151,6 @@ void MIL_FloatingBridge_ABC::UnlinkFromPathFinder()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FloatingBridge_ABC::ProcessAgentEntering
-// Created: NLD 2004-06-24
-// -----------------------------------------------------------------------------
-void MIL_FloatingBridge_ABC::ProcessAgentEntering( MIL_Agent_ABC& agent )
-{
-    MIL_RealObject_ABC::ProcessAgentEntering( agent );
-    // assert( false );
-    //$$$ TODO MIL_AgentServer::GetWorkspace().GetRCManager().DispatchRC( agent, eRC_EnCoursDeFranchissement );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_FloatingBridge_ABC::Initialize
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------

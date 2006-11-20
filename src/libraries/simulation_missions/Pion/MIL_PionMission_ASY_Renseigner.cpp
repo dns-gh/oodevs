@@ -102,15 +102,6 @@ bool MIL_PionMission_ASY_Renseigner::Initialize( MIL_PionMission_ABC& missionTmp
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASY_Renseigner::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASY_Renseigner::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

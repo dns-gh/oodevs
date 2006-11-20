@@ -102,15 +102,6 @@ bool MIL_PionMission_InterdireFranchissementPopulations::Initialize( MIL_PionMis
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_InterdireFranchissementPopulations::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_InterdireFranchissementPopulations::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

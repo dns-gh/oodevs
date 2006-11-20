@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_DegagerObstacles::Initialize( MIL_PionMission_ABC& miss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_DegagerObstacles::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_DegagerObstacles::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

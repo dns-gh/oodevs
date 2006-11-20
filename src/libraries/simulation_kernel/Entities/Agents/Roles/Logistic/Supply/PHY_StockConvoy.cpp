@@ -133,7 +133,6 @@ void PHY_StockConvoy::ActivateConvoyMission()
 
     MIL_PionMission_ABC& mission = pConvoyMissionType_->InstanciateMission( *pPionConvoy_ );
     mission.Initialize(); // $$$$$ Initialize peut renvoyer false $$$$$$ <= checker que pions convois ont la mission à l'init et que la mission ne prend aucun paramètre
-    mission.Prepare   ();
     pPionConvoy_->GetOrderManager().OnReceivePionOrder( mission );
     bMissionActivated_ = true;
 }

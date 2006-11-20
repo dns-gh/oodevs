@@ -884,13 +884,11 @@ void DEC_GeometryFunctions::ComputePosDeploiementASADoubleRideau( DIA_Call_ABC& 
 void DEC_GeometryFunctions::ComputePointsBeforeLima( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
     assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
-
-    DIA_Parameters& diaParams = call.GetParameters();
-
-    MIL_Lima*         pLima           = diaParams[0].ToUserPtr( pLima );
-    MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( diaParams[1].ToFloat() );
-    MT_Float          rNbPoints       = diaParams[2].ToFloat();
-    DIA_Variable_ABC& diaReturnCode   = diaParams[3];
+    
+    MIL_LimaOrder*    pLima           = callerAutomate.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    MT_Float          rDistBeforeLima = MIL_Tools::ConvertMeterToSim( call.GetParameter( 1 ).ToFloat() );
+    MT_Float          rNbPoints       = call.GetParameter( 2 ).ToFloat();
+    DIA_Variable_ABC& diaReturnCode   = call.GetParameter( 3 );
 
     if( !pLima )
     {

@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Initialize( MIL_PionM
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_PrendreEnCompteReactionsMentales::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

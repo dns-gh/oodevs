@@ -67,5 +67,4 @@ void Loan::Send( ASN1T_EquipementPrete& asnMsg ) const
     asnMsg.type_equipement     = nEquipmentType_;
     asnMsg.oid_pion_emprunteur = pAgent_->GetID();
     asnMsg.nombre              = nQuantity_;
-
 }

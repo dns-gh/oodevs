@@ -107,15 +107,6 @@ bool MIL_PionMission_ABC_FlancGarder::Initialize( MIL_PionMission_ABC& missionTm
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ABC_FlancGarder::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ABC_FlancGarder::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

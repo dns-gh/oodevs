@@ -33,7 +33,6 @@ public:
     /*final*/ ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgPionOrder& asnMsg );
     /*final*/ bool                     Initialize( const MIL_AutomateMission_ABC& parentMission );
     /*final*/ bool                     Initialize( MIL_PionMission_ABC& mission );
-    /*final*/ void                     Terminate();
     //@}
 
     //! @name Network 

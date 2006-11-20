@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2003-04-11 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Orders/Automate/MIL_AutomateMRT.cpp $
-// $Author: Nld $
-// $Modtime: 1/04/05 16:18 $
-// $Revision: 2 $
-// $Workfile: MIL_AutomateMRT.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 
@@ -36,9 +34,20 @@ MIL_AutomateMRT::MIL_AutomateMRT()
 //-----------------------------------------------------------------------------
 MIL_AutomateMRT::~MIL_AutomateMRT()
 {
-    assert( missionPionMap_.empty() );
-    assert( fuseauPionMap_.empty() );
-    assert( !pAutomateMission_ );
+    if( !bActivated_ ) 
+    {
+        for( IT_MissionPionMap itMissionPion = missionPionMap_.begin(); itMissionPion != missionPionMap_.end(); ++itMissionPion )
+        {
+            MIL_PionMission_ABC& mission = *itMissionPion->second;
+            delete &mission;
+        }
+
+        for( IT_FuseauPionMap itFuseauPion = fuseauPionMap_.begin(); itFuseauPion != fuseauPionMap_.end(); ++itFuseauPion )
+            delete itFuseauPion->second;
+    }
+    missionPionMap_.clear();
+    fuseauPionMap_ .clear();
+    pAutomateMission_ = 0;
 }
 
 //=============================================================================
@@ -56,30 +65,6 @@ void MIL_AutomateMRT::Initialize( MIL_AutomateMission_ABC& automateMission )
     assert( !pAutomateMission_ );
 
     pAutomateMission_ = &automateMission;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMRT::Terminate
-// Created: NLD 2003-04-23
-//-----------------------------------------------------------------------------
-void MIL_AutomateMRT::Terminate()
-{
-    if( !bActivated_ ) 
-    {
-        for( IT_MissionPionMap itMissionPion = missionPionMap_.begin(); itMissionPion != missionPionMap_.end(); ++itMissionPion )
-        {
-            MIL_PionMission_ABC& mission = *itMissionPion->second;
-            mission.Terminate();
-            delete &mission;
-        }
-
-        for( IT_FuseauPionMap itFuseauPion = fuseauPionMap_.begin(); itFuseauPion != fuseauPionMap_.end(); ++itFuseauPion )
-            delete itFuseauPion->second;
-    }
-    missionPionMap_.clear();
-    fuseauPionMap_.clear();
-    pAutomateMission_ = false;
 }
 
 //=============================================================================
@@ -108,11 +93,7 @@ void MIL_AutomateMRT::SetMissionForPion( MIL_AgentPion& pion, MIL_PionMission_AB
 {
     MIL_PionMission_ABC*& pMission = missionPionMap_[ &pion ];
     if( pMission )
-    {
-        pMission->Terminate();
         delete pMission;
-    }
-
     pMission = &mission;
 }
 
@@ -141,8 +122,6 @@ void MIL_AutomateMRT::Validate()
 {  
     assert( pAutomateMission_ );
     
-    uint nNbrMissionsWithoutPC = 0; //$$ HACK THALES
-
     // Affectation des fuseaux/limas à chaque mission pion
     for( CIT_MissionPionMap itMissionPion = missionPionMap_.begin(); itMissionPion != missionPionMap_.end(); ++itMissionPion )
     {
@@ -150,28 +129,23 @@ void MIL_AutomateMRT::Validate()
         MIL_PionMission_ABC& mission = *itMissionPion->second;
 
         mission.SetFuseau( GetFuseauForPion( pion ) ); //$$$ NAZE
-        if( !pion.IsPC() )
-            ++ nNbrMissionsWithoutPC;
     }
 
     // Envoi MRT à MOS    
     NET_ASN_MsgAutomateMRT asnMsg;
     asnMsg.GetAsnMsg().automate_id   = pAutomateMission_->GetAutomate().GetID();
-    asnMsg.GetAsnMsg().missions.n    = nNbrMissionsWithoutPC;
+    asnMsg.GetAsnMsg().missions.n    = missionPionMap_.size();
 
-    if( nNbrMissionsWithoutPC == 0 )
+    if( missionPionMap_.empty() )
     {
         asnMsg.Send();
         return;
     }
 
-    ASN1T_MsgPionOrder* pASNPionOrders = new ASN1T_MsgPionOrder[ nNbrMissionsWithoutPC ];
+    ASN1T_MsgPionOrder* pASNPionOrders = new ASN1T_MsgPionOrder[ missionPionMap_.size() ];
     uint i = 0;
     for( CIT_MissionPionMap itMissionPion = missionPionMap_.begin(); itMissionPion != missionPionMap_.end(); ++itMissionPion )
-    {
-        if( !itMissionPion->first->IsPC() )
-            itMissionPion->second->Serialize( pASNPionOrders[i++] );
-    }
+        itMissionPion->second->Serialize( pASNPionOrders[i++] );
     asnMsg.GetAsnMsg().missions.elem = pASNPionOrders;
     
     asnMsg.Send();
@@ -179,10 +153,7 @@ void MIL_AutomateMRT::Validate()
     // Nettoyage
     i = 0;
     for( itMissionPion = missionPionMap_.begin(); itMissionPion != missionPionMap_.end(); ++itMissionPion )
-    {
-        if( !itMissionPion->first->IsPC() )
             itMissionPion->second->CleanAfterSerialization( pASNPionOrders[i++] );
-    }
 
     if( asnMsg.GetAsnMsg().missions.n > 0 )
         delete [] asnMsg.GetAsnMsg().missions.elem;
@@ -206,7 +177,7 @@ void MIL_AutomateMRT::Activate()
     // Activation des missions pion
     for( IT_MissionPionMap itMissionPion = missionPionMap_.begin(); itMissionPion != missionPionMap_.end(); ++itMissionPion )
     {
-        MIL_AgentPion&      pion    = *itMissionPion->first;
+        MIL_AgentPion&       pion    = *itMissionPion->first;
         MIL_PionMission_ABC& mission = *itMissionPion->second;
         pion.GetOrderManager().OnReceivePionOrder( mission );
     }

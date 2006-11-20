@@ -94,8 +94,8 @@ protected:
     void CreateBool               ( ASN1BOOL& asn                  , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0, QWidget* pParent = 0 );
     void CreateNumeric            ( ASN1INT&  asn                  , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
     void CreateNumeric            ( ASN1REAL& asn                  , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateLimaList           ( ASN1T_ListOID& asn             , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
-    void CreateLimits             ( ASN1T_OID& id1, ASN1T_OID& id2 , const QString& name1, const QString& name2, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateLimaList           ( ASN1T_LimasOrder& asn          , const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );
+    void CreateLimits             ( ASN1T_Line& left, ASN1T_Line& right, const QString& name1, const QString& name2, OptionalParamFunctor_ABC* pOptional = 0 );
     void CreateDotationDType      ( ASN1T_TypeDotationTrancheD& asn, const QString& name, OptionalParamFunctor_ABC* pOptional = 0 );
 
     void CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional = 0 );

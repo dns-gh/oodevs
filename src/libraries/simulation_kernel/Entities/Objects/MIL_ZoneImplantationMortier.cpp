@@ -51,7 +51,7 @@ MIL_ZoneImplantationMortier::~MIL_ZoneImplantationMortier()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ZoneImplantationMortier::ProcessAgentEntering
+// Name: MIL_ZoneImplantationMortier::ProcessAgentInside
 // Created: JVT 2005-05-11
 // -----------------------------------------------------------------------------
 void MIL_ZoneImplantationMortier::ProcessAgentInside( MIL_Agent_ABC& agent )

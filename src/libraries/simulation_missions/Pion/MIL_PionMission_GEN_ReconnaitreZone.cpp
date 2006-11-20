@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_ReconnaitreZone::Initialize( MIL_PionMission_ABC& missi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_ReconnaitreZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_ReconnaitreZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

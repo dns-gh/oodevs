@@ -102,15 +102,6 @@ bool MIL_PionMission_CanaliserPopulations::Initialize( MIL_PionMission_ABC& miss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_CanaliserPopulations::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_CanaliserPopulations::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

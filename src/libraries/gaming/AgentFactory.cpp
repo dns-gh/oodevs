@@ -31,7 +31,7 @@
 #include "HumanFactors.h"
 #include "Borrowings.h"
 #include "Lendings.h"
-#include "Limits.h"
+#include "MissionParameters.h"
 #include "LogisticLinks.h"
 #include "Paths.h"
 #include "Reinforcements.h"
@@ -182,7 +182,7 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     agent.Attach< HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
     agent.Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     agent.Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
-    agent.Attach( *new Limits( model_.limits_ ) );
+    agent.Attach( *new MissionParameters( static_.coordinateConverter_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, rcResolver_, static_.objectTypes_, static_.objectTypes_ ) );

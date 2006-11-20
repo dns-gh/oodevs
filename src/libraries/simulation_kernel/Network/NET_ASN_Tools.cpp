@@ -126,6 +126,25 @@ bool NET_ASN_Tools::ReadPoint( const ASN1T_Point& asnLocalisation, MT_Vector2D& 
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::ReadLine
+// Created: NLD 2006-11-13
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::ReadLine( const ASN1T_Line& asn, T_PointVector& points )
+{
+    if( asn.type != EnumTypeLocalisation::line || asn.vecteur_point.n < 2 )
+        return false;
+
+    points.clear();   
+    points.reserve( asn.vecteur_point.n );
+    for( uint i = 0; i < asn.vecteur_point.n; ++i )
+    {
+        MT_Vector2D vPosTmp;
+        MIL_Tools::ConvertCoordMosToSim( asn.vecteur_point.elem[i], vPosTmp );
+        points.push_back( vPosTmp );
+    }
+    return true;
+}
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadLine
@@ -238,7 +257,6 @@ bool NET_ASN_Tools::ReadPointList( const ASN1T_ListPoint& asn, T_PointVector& po
         ReadPoint( asn.elem[i], vPos );
         pointVector.push_back( vPos );
     }
-
     return true;
 }
 
@@ -500,6 +518,27 @@ void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, ASN1T_Point& asnLocalis
 void NET_ASN_Tools::WriteLine( const TER_Localisation& localisation, ASN1T_Line& asn )
 {
     WriteLocation( localisation, asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name NET_ASN_Tools::WriteLine
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::WriteLine( const T_PointVector& points, ASN1T_Line& asn )
+{
+    asn.type = EnumTypeLocalisation::line;
+    if( points.size() < 2 )
+    {
+        asn.vecteur_point.n = 0;
+        return false;
+    }
+
+    asn.vecteur_point.n = points.size();
+    asn.vecteur_point.elem = new ASN1T_CoordUTM[ points.size() ];
+    uint i = 0;
+    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        WritePoint( *it, asn.vecteur_point.elem[i++] );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -2109,6 +2148,7 @@ bool NET_ASN_Tools::CopyDirection( const DIA_Variable_ABC& dia, ASN1T_Direction&
     if( !pValue )
     {
         assert( false );
+        asn = 0;
         return false;
     }
     NET_ASN_Tools::WriteDirection( *pValue, asn );

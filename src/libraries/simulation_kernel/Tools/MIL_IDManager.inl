@@ -72,7 +72,6 @@ void MIL_IDManager::serialize( Archive& file )
     fireResultsPopulation_              .serialize( file );
     limas_                              .serialize( file );
     limits_                             .serialize( file );
-    orders_                             .serialize( file );
     knowledgesAgent_                    .serialize( file );
     effectsWeather_                     .serialize( file );
     maintenanceComposanteStates_        .serialize( file );

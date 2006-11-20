@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Initialize( MIL_PionMissi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_ReconnaitreZoneDeDeploiement::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

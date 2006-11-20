@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_TrierBlesses::Initialize( MIL_PionMission_ABC& missionT
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_TrierBlesses::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_TrierBlesses::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -122,15 +122,6 @@ bool MIL_PionMission_Test_Fire::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_Fire::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_Fire::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

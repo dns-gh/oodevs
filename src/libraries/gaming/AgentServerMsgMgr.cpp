@@ -88,7 +88,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     , simulation_      ( simu )
     , profile_         ( profile )
     , session_         ( 0 )
-    , bReceivingState_ ( true )
     , mutex_           ( mutex )
     , msgRecorder_     ( 0 )
     , needsVisionCones_( false )
@@ -884,8 +883,7 @@ void AgentServerMsgMgr::OnReveiveMsgFormationCreation( const ASN1T_MsgFormationC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin()
 {
-    bReceivingState_ = true;
-    bUseMosLimits_ = true;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -894,9 +892,7 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateBegin()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlSendCurrentStateEnd()
 {
-    bReceivingState_ = false;
-    if( bUseMosLimits_ )
-        GetModel().limits_.UpdateToSim();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -961,28 +957,18 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitCreationAck( const ASN1T_MsgLimitCreationAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgLimitCreationRequestAck( const ASN1T_MsgLimitCreationRequestAck& message, unsigned long )
 {
     CheckAcknowledge( message, "LimitCreationAck" );
-    ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
-    if( limit )
-        limit->Update( message );
-    else
-        Limit::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: dégueu.
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgLimitUpdateRequestAck( const ASN1T_MsgLimitUpdateRequestAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "LimitUpdateAck" ) )
-    {
-        ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
-        if( limit )
-            limit->Update( message );
-    }
+    CheckAcknowledge( message, "LimitUpdateAck" );
 }
 
 
@@ -990,50 +976,36 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateAck( const ASN1T_MsgLimitUpdateAc
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgLimitDestructionRequestAck( const ASN1T_MsgLimitDestructionRequestAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( message, "LimitDestructionAck" ) )
-        GetModel().limits_.DeleteLimit( message.oid );
+    CheckAcknowledge( message, "LimitDestructionAck" );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaCreationAck( const ASN1T_MsgLimaCreationAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgLimaCreationRequestAck( const ASN1T_MsgLimaCreationRequestAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "LimaCreationAck" ) )
-    {
-        ::TacticalLine_ABC* lima = GetModel().limits_.Find( message.oid );
-        if( lima )
-            lima->Update( message );
-        else
-            Lima::idManager_.LockIdentifier( message.oid ); // $$$$ AGE 2006-02-15: pareil qu'au dessus
-    }
+    CheckAcknowledge( message, "LimaCreationAck" );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaUpdateAck( const ASN1T_MsgLimaUpdateAck& message, unsigned long )
+void AgentServerMsgMgr::OnReceiveMsgLimaUpdateRequestAck( const ASN1T_MsgLimaUpdateRequestAck& message, unsigned long )
 {
-    if( CheckAcknowledge( message, "LimaUpdateAck" ) )
-    {
-        ::TacticalLine_ABC* limit = GetModel().limits_.Find( message.oid );
-        if( limit )
-            limit->Update( message );
-    }
+    CheckAcknowledge( message, "LimaUpdateAck" );
 }
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestructionAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgLimaDestructionRequestAck( const ASN1T_MsgLimaDestructionRequestAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( message, "LimaDestructionAck" ) )
-        GetModel().limits_.DeleteLima( message.oid );
+    CheckAcknowledge( message, "LimaDestructionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1042,15 +1014,17 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestructionAck( const ASN1T_MsgLimaDestr
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitCreation( const ASN1T_MsgLimitCreation& message )
 {
-    // If we are receiving those lines while initializing from the sim, use those lines instead of our lines.
-    if( bReceivingState_  && bUseMosLimits_ )
-    {
-        bUseMosLimits_ = false;
-        GetModel().limits_.UseSimTacticalLines();
-    }
     GetModel().limits_.Create( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgLimitUpdate
+// Created: SBO 2006-11-14
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgLimitUpdate( const ASN1T_MsgLimitUpdate& asnMsg )
+{
+    GetModel().limits_.Get( asnMsg.oid ).Update( asnMsg );
+}
 
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgLimitDestruction
@@ -1068,13 +1042,16 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestruction( const ASN1T_MsgLimitDestru
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaCreation( const ASN1T_MsgLimaCreation& message )
 {
-    // If we are receiving those lines while initializing from the sim, use those lines instead of our lines.
-    if( bReceivingState_  && bUseMosLimits_ )
-    {
-        bUseMosLimits_ = false;
-        GetModel().limits_.UseSimTacticalLines();
-    }
     GetModel().limits_.Create( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgLimaUpdate
+// Created: SBO 2006-11-14
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgLimaUpdate( const ASN1T_MsgLimaUpdate& asnMsg )
+{
+    GetModel().limits_.Get( asnMsg.oid ).Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1090,6 +1067,15 @@ void AgentServerMsgMgr::OnReceiveMsgLimaDestruction( const ASN1T_MsgLimaDestruct
 // ORDRES
 //=============================================================================
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrder
+// Created: SBO 2006-11-20
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomateOrder( const ASN1T_MsgAutomateOrder& asnMsg )
+{
+    GetModel().agents_.GetAutomat( asnMsg.oid_unite_executante ).Update( asnMsg );
+}
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck
 // Created: NLD 2002-08-07
@@ -1101,6 +1087,28 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
 }
 
 //-----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomateMRT
+// Created: NLD 2003-05-13
+//-----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& message )
+{
+    for( uint i = 0; i < message.missions.n; ++i )
+    {
+        ASN1T_MsgPionOrder& asnPionOrder = message.missions.elem[i];
+        GetModel().agents_.FindAllAgent( asnPionOrder.oid_unite_executante )->Update( asnPionOrder );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrderManagement
+// Created: SBO 2006-11-20
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgAutomateOrderManagement( const ASN1T_MsgAutomateOrderManagement& asnMsg )
+{
+    GetModel().agents_.GetAutomat( asnMsg.oid_unite_executante ).Update( asnMsg );
+}
+
+//-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPionOrderAck
 // Created: NLD 2002-08-07
 //-----------------------------------------------------------------------------
@@ -1108,6 +1116,24 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrderAck( const ASN1T_MsgPionOrderAck& m
 {
     if( CheckAcknowledge( message, "PionOrderAck" ) )
         GetModel().agents_.GetAgent( message.oid_unite_executante ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPionOrder
+// Created: NLD 2003-10-01
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message )
+{
+    GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPionOrderManagement
+// Created: SBO 2006-11-20
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPionOrderManagement( const ASN1T_MsgPionOrderManagement& asnMsg )
+{
+    GetModel().agents_.GetAgent( asnMsg.oid_unite_executante ).Update( asnMsg );
 }
 
 //-----------------------------------------------------------------------------
@@ -1126,38 +1152,6 @@ void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderCondui
 void AgentServerMsgMgr::OnReceiveMsgCR( const ASN1T_MsgCR& message )
 {
     GetModel().agents_.FindAllAgent( message.unit_id )->Update( message );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgOrderManagement
-// Created: NLD 2003-03-28
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgOrderManagement( const ASN1T_MsgOrderManagement& message )
-{
-    // $$$$ AGE 2006-07-06: ? 
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateMRT
-// Created: NLD 2003-05-13
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& message )
-{
-    for( uint i = 0; i < message.missions.n; ++i )
-    {
-        ASN1T_MsgPionOrder& asnPionOrder = message.missions.elem[i];
-        GetModel().agents_.FindAllAgent( asnPionOrder.oid_unite_executante )->Update( asnPionOrder );
-    }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPionOrder
-// Created: NLD 2003-10-01
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPionOrder( const ASN1T_MsgPionOrder& message )
-{
-    GetModel().agents_.FindAllAgent( message.oid_unite_executante )->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1572,6 +1566,15 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement
+// Created: SBO 2006-11-20
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement( const ASN1T_MsgPopulationOrderManagement& asnMsg )
+{
+    GetModel().agents_.GetPopulation( asnMsg.oid_unite_executante ).Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReveiveMsgAuthLoginAck
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
@@ -1621,12 +1624,12 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
 
     switch( message.msg.t )
     {
-        case T_MsgsInClient_msg_msg_limit_creation_ack:                     OnReceiveMsgLimitCreationAck                ( *message.msg.u.msg_limit_creation_ack                  , message.context ); break;
-        case T_MsgsInClient_msg_msg_limit_update_ack:                       OnReceiveMsgLimitUpdateAck                  ( *message.msg.u.msg_limit_update_ack                    , message.context ); break;
-        case T_MsgsInClient_msg_msg_limit_destruction_ack:                  OnReceiveMsgLimitDestructionAck             ( *message.msg.u.msg_limit_destruction_ack               , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_creation_ack:                      OnReceiveMsgLimaCreationAck                 ( *message.msg.u.msg_lima_creation_ack                   , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_update_ack:                        OnReceiveMsgLimaUpdateAck                   ( *message.msg.u.msg_lima_update_ack                     , message.context ); break;
-        case T_MsgsInClient_msg_msg_lima_destruction_ack:                   OnReceiveMsgLimaDestructionAck              ( *message.msg.u.msg_lima_destruction_ack                , message.context ); break;
+        case T_MsgsInClient_msg_msg_limit_creation_request_ack:             OnReceiveMsgLimitCreationRequestAck         ( message.msg.u.msg_limit_creation_request_ack          , message.context ); break;
+        case T_MsgsInClient_msg_msg_limit_update_request_ack:               OnReceiveMsgLimitUpdateRequestAck           ( message.msg.u.msg_limit_update_request_ack            , message.context ); break;
+        case T_MsgsInClient_msg_msg_limit_destruction_request_ack:          OnReceiveMsgLimitDestructionRequestAck      ( message.msg.u.msg_limit_destruction_request_ack       , message.context ); break;
+        case T_MsgsInClient_msg_msg_lima_creation_request_ack:              OnReceiveMsgLimaCreationRequestAck          ( message.msg.u.msg_lima_creation_request_ack           , message.context ); break;
+        case T_MsgsInClient_msg_msg_lima_update_request_ack:                OnReceiveMsgLimaUpdateRequestAck            ( message.msg.u.msg_lima_update_request_ack             , message.context ); break;
+        case T_MsgsInClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck       ( message.msg.u.msg_lima_destruction_request_ack        , message.context ); break;
         case T_MsgsInClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                ( *message.msg.u.msg_automate_order_ack                  , message.context ); break;
         case T_MsgsInClient_msg_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                    ( *message.msg.u.msg_pion_order_ack                      , message.context ); break;
         case T_MsgsInClient_msg_msg_order_conduite_ack:                     OnReceiveMsgOrderConduiteAck                ( *message.msg.u.msg_order_conduite_ack                  , message.context ); break;
@@ -1666,8 +1669,10 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_ctrl_profile_destruction:             /*//$$$$ TODO*/; break;
 
         case T_MsgsInClient_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.msg.u.msg_limit_creation                      ); break;
+        case T_MsgsInClient_msg_msg_limit_update:                         OnReceiveMsgLimitUpdate               ( *message.msg.u.msg_limit_update                        ); break;
         case T_MsgsInClient_msg_msg_limit_destruction:                    OnReceiveMsgLimitDestruction          ( message.msg.u.msg_limit_destruction                    ); break;
         case T_MsgsInClient_msg_msg_lima_creation:                        OnReceiveMsgLimaCreation              ( *message.msg.u.msg_lima_creation                       ); break;
+        case T_MsgsInClient_msg_msg_lima_update:                          OnReceiveMsgLimaUpdate                ( *message.msg.u.msg_lima_update                         ); break;
         case T_MsgsInClient_msg_msg_lima_destruction:                     OnReceiveMsgLimaDestruction           ( message.msg.u.msg_lima_destruction                     ); break;
 
         case T_MsgsInClient_msg_msg_knowledge_group_creation:             OnReveiveMsgKnowledgeGroupCreation    ( *message.msg.u.msg_knowledge_group_creation            ); break;
@@ -1692,7 +1697,9 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_start_fire_effect:                    OnReceiveMsgStartFireEffect           ( *message.msg.u.msg_start_fire_effect ); break;
         case T_MsgsInClient_msg_msg_stop_fire_effect:                     OnReceiveMsgStopFireEffect            ( message.msg.u.msg_stop_fire_effect ); break;
 
-        case T_MsgsInClient_msg_msg_order_management:                     OnReceiveMsgOrderManagement           ( *message.msg.u.msg_order_management                    ); break;
+        case T_MsgsInClient_msg_msg_pion_order_management:                OnReceiveMsgPionOrderManagement       ( *message.msg.u.msg_pion_order_management               ); break;
+        case T_MsgsInClient_msg_msg_automate_order_management:            OnReceiveMsgAutomateOrderManagement   ( *message.msg.u.msg_automate_order_management           ); break;
+        case T_MsgsInClient_msg_msg_population_order_management:          OnReceiveMsgPopulationOrderManagement ( *message.msg.u.msg_population_order_management         ); break;
         case T_MsgsInClient_msg_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *message.msg.u.msg_automate_mrt                        ); break;
         case T_MsgsInClient_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.msg.u.msg_pion_order ); break;
 

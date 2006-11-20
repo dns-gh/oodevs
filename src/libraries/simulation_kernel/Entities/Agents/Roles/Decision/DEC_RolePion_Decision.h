@@ -123,7 +123,7 @@ private:
     const PHY_RoePopulation*       pRoePopulation_; //$$$ à déplacer dans Role_Population ?
 
     // Network
-    bool                     bStateHasChanged_;
+    bool bStateHasChanged_;
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Pion

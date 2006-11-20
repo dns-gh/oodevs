@@ -15,11 +15,8 @@
 #include "MIL.h"
 
 #include "Network/NET_ASN_Types.h"
-#include "Entities/Orders/MIL_Fuseau.h"
-#include "Entities/Orders/Lima/MIL_Lima.h"
-#include "Entities/Orders/MIL_Order_Def.h"
+#include "Entities/Orders/MIL_OrderContext.h"
 
-class MIL_PionOrderManager;
 class MIL_AgentPion;
 class MIL_AutomateMission_ABC;
 class MIL_PionMissionType;
@@ -29,6 +26,7 @@ class MIL_PionMissionType;
 // Last modified: JVT 02-12-05
 //=============================================================================
 class MIL_PionMission_ABC : public DIA_Thing
+                          , public MIL_OrderContext
 {
     MT_COPYNOTALLOWED( MIL_PionMission_ABC );
 
@@ -41,8 +39,7 @@ public:
     virtual ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgPionOrder& asnMsg );
     virtual bool                     Initialize( const MIL_AutomateMission_ABC& parentMission );
     virtual bool                     Initialize( MIL_PionMission_ABC& mission );
-    virtual bool                     Initialize();
-    virtual void                     Terminate ();
+    virtual void                     Initialize();
     //@}
 
     // @name DIA
@@ -53,9 +50,8 @@ public:
 
     // @name Control
     //@{
-    void Prepare();
-    void Start  ();
-    void Stop   ();
+    void Start();
+    void Stop ();
     //@}
 
     // @name Network
@@ -66,49 +62,17 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_PionMissionType& GetType     () const;
-          uint                 GetOrderID  () const;
-          MIL_AgentPion&       GetPion     () const;
-    const MT_Vector2D&         GetDirDanger() const;
-    const MIL_Fuseau&          GetFuseau   () const;
-    const T_LimaFlagedPtrMap&  GetLimas    () const;
+    const MIL_PionMissionType& GetType() const;
+          MIL_AgentPion&       GetPion() const;
     //@}
-
-    //! @name Tools  (used by MIL_AutomateMRT) $$$ A changer
-    //@{
-    void SetFuseau( const MIL_Fuseau& fuseau );
-    //@}
-
-    //! @name Limas flags
-    //@{
-    bool GetLimaFlag( const MIL_Lima& lima ) const;
-    bool SetLimaFlag( const MIL_Lima& lima, bool bFlag );
-    //@}
-
-private:
-    // @name Init tools
-    //@{
-    const MIL_Lima*          GetLima           ( MIL_Lima::E_LimaFunctions nLimaFuncType ) const;
-    ASN1T_EnumOrderErrorCode InitializeLimits  ( const ASN1T_MsgPionOrder& asnMsg );
-    ASN1T_EnumOrderErrorCode InitializeLimas   ( const ASN1T_MsgPionOrder& asnMsg );
-    ASN1T_EnumOrderErrorCode InitializeMission ( const ASN1T_MsgPionOrder& asnMsg );
-    void                     SetDirDanger      ( const MT_Vector2D& dirDanger );
-    //@}   
 
 protected:
     MIL_AgentPion& pion_;
 
 private:
     const MIL_PionMissionType& type_;
-    bool                       bDIABehaviorActivated_;
-    uint                       nOrderID_;
-
-    // Mission parameters
-    T_LimaFlagedPtrMap limaMap_;   
-    const MIL_Limit*   pLeftLimit_;
-    const MIL_Limit*   pRightLimit_;
-    MIL_Fuseau         fuseau_;
-
+          bool                 bDIABehaviorActivated_;
+    
 private:
     static int nDIAMissionType_;
     static int nDIADirectionDangerIdx_;

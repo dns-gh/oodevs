@@ -265,7 +265,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
-    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.limits_, *glProxy_, profile );
+    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
     Layer_ABC& objectsLayer         = *new ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );

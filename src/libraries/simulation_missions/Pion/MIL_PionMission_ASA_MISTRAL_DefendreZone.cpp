@@ -107,15 +107,6 @@ bool MIL_PionMission_ASA_MISTRAL_DefendreZone::Initialize( MIL_PionMission_ABC& 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASA_MISTRAL_DefendreZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASA_MISTRAL_DefendreZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

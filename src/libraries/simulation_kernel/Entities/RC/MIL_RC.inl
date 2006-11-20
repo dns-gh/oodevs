@@ -20,7 +20,6 @@ void MIL_RC::FillRcMessage( ASN1T_MsgCR& asnMsg, T& sender, E_RcType nType ) con
 {
     assert( nAsnID_ != -1 );
     asnMsg.unit_id  = sender.GetID();
-    asnMsg.order_id = sender.GetOrderManager().GetCurrentOrderID();
     asnMsg.cr.t     = nAsnID_;
     asnMsg.type_cr  = (ASN1T_EnumTypeCR)nType;
 }

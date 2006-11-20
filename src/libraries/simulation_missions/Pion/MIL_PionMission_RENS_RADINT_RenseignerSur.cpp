@@ -102,15 +102,6 @@ bool MIL_PionMission_RENS_RADINT_RenseignerSur::Initialize( MIL_PionMission_ABC&
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_RENS_RADINT_RenseignerSur::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_RENS_RADINT_RenseignerSur::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

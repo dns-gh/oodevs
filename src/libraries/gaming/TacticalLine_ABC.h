@@ -23,7 +23,6 @@ namespace kernel
 
 namespace xml
 {
-    class xistream;
     class xostream;
 }
 
@@ -38,38 +37,31 @@ class Publisher_ABC;
 class TacticalLine_ABC : public kernel::TacticalLine_ABC
                        , public kernel::Extension_ABC
                        , public kernel::Drawable_ABC
+                       , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
+                       , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              TacticalLine_ABC( const QString& baseName, unsigned long id, Publisher_ABC& publisher );
-             TacticalLine_ABC( xml::xistream& xis, Publisher_ABC& publisher );
     virtual ~TacticalLine_ABC();
     //@}
 
     //! @name Operations
     //@{
     void Delete();
-    void Polish(); // $$$$ SBO 2006-11-06: EntityImplementation?
+    void Create();
 
-    void Update( const ASN1T_MsgLimitCreationAck& asnMsg );
-    void Update( const ASN1T_MsgLimitUpdateAck& asnMsg );
-    void Update( const ASN1T_MsgLimaCreationAck& asnMsg );
-    void Update( const ASN1T_MsgLimaUpdateAck& asnMsg);
-
-    void UpdateToSim();
     virtual void Serialize( xml::xostream& xos ) const;
+    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId() const;
+    virtual unsigned long GetId  () const;
     virtual QString       GetName() const;
-
-    bool IsUpdatingToSim() const;
-    bool IsCreatedByMos() const;
-    virtual bool IsLimit() const = 0;
+    virtual bool          IsLimit() const = 0;
     //@}
 
 protected:
@@ -82,30 +74,21 @@ protected:
         eStateModified      = 0x02,
         eStateDeleted       = 0x04
     };
-
-    enum E_NetworkState
-    {   
-        eNetworkStateNotRegistered     = 0,
-        eNetworkStateRegistering       = 1,
-        eNetworkStateRegistered        = 2
-    };
     //@}
 
     //! @name Helpers
     //@{
-    void WriteGeometry( ASN1T_Line& line );
+    void WriteGeometry( ASN1T_Line& line ) const;
+    void WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion ) const;
     virtual void UpdateToSim( E_State state ) = 0;
     template< typename Message >
     void Send( Message& message )
     {
         message.Send( publisher_, (unsigned long)this );
-        nNetworkState_ = eNetworkStateRegistering;
     }
 
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
-    template< typename Ack >
-    void ValidateAcknowledge( const Ack& ack );
-    void ReadPoint( xml::xistream& xis );
+    virtual void DoUpdate( const ASN1T_MsgLimaUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgLimitUpdate& message );
     //@}
 
 private:
@@ -119,12 +102,8 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
-
     unsigned long  id_;
-    QString        strName_;
-    E_State        nState_;
-    E_NetworkState nNetworkState_;
-    bool           bCreatedBy; 
+    QString        name_;
     //@}
 };
 

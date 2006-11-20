@@ -102,15 +102,6 @@ bool MIL_PionMission_MILICE_Provoquer::Initialize( MIL_PionMission_ABC& missionT
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_MILICE_Provoquer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_MILICE_Provoquer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -519,7 +519,7 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_KnowledgeFunctions::GetPopulations                         < MIL_AgentPion >, "DEC_Connaissances_Populations"                              );
 
     // Ordres de conduite
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions ::RelievePion, "DEC_ReleverUnite"       );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AgentFunctions ::RelievePion, "DEC_ReleverUnite" );
 
     // Limas / Mission
     
@@ -605,7 +605,6 @@ void MIL_AgentTypePion::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::ChangeDotationsValueUsingTC2                      , "DEC_ChangeValeurDotations"   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_LogisticFunctions::GetDotationValue                                  , "DEC_ValeurDotation"          ); 
 
-    
     // Transport / Héliportage
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_AddPion                       , "DEC_Transport_AjouterPion"              );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_ActionFunctions::Transport_AddPions                      , "DEC_Transport_AjouterPions"             );

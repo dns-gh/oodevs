@@ -32,7 +32,6 @@ UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& agent, 
     , nMissionId_( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPionOrder();
-    pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&agent);
     pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent.GetId();
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromUnitMission( E_UnitMission( nMissionId_ ) ).c_str(), this );
@@ -63,9 +62,9 @@ namespace
 void UnitMissionInterface::CreateDefaultParameters()
 {
     ASN1T_MsgPionOrder& order = pASNMsgOrder_->GetAsnMsg();
-    CreateLimits( order.oid_limite_gauche, order.oid_limite_droite, "Fixer limite 1", "Fixer limite 2", BuildOptionalParamFunctor< OrderBlahBlah, ASN1T_MsgPionOrder >( order ) );
-    CreateLimaList( order.oid_limas, "Ajouter aux limas" );
-    CreateDirection( order.direction_dangereuse, "Direction dangeureuse" );
+    CreateLimits( order.order_context.limite_gauche, order.order_context.limite_droite, "Fixer limite 1", "Fixer limite 2", BuildOptionalParamFunctor< OrderBlahBlah, ASN1T_MsgPionOrder >( order ) );
+    CreateLimaList( order.order_context.limas, "Ajouter aux limas", BuildOptionalParamFunctor< OrderBlahBlah, ASN1T_MsgPionOrder >( order ) );
+    CreateDirection( order.order_context.direction_dangereuse, "Direction dangeureuse" );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,11 +78,10 @@ void UnitMissionInterface::OnOk()
 
     Commit();
     ASN1T_MsgPionOrder& order = pASNMsgOrder_->GetAsnMsg();
-    order.m.oid_limite_gauchePresent = (order.oid_limite_gauche != (unsigned long)(-1)) ? 1 : 0;
-    order.m.oid_limite_droitePresent = (order.oid_limite_droite != (unsigned long)(-1)) ? 1 : 0;
+    // $$$$ SBO 2006-11-14: Use BuildOptionalParameter instead ?
+    order.order_context.m.limite_gauchePresent = (order.order_context.limite_gauche.vecteur_point.n > 1) ? 1 : 0;
+    order.order_context.m.limite_droitePresent = (order.order_context.limite_droite.vecteur_point.n > 1) ? 1 : 0;
     pASNMsgOrder_->Send( publisher_, 45 );
-
-    agent_.Update( order );
     parentWidget()->hide();
 }
 

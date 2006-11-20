@@ -2669,10 +2669,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid limit or lima used</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>message</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3106,6 +3102,10 @@
     </message>
     <message>
         <source>hospitalisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error invalid diffusion</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

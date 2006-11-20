@@ -37,7 +37,6 @@ class Publisher_ABC;
 class AutomatDecisions : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateAttributes >
                        , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrder >
-                       , public kernel::Updatable_ABC< ASN1T_MsgAutomateOrderAck >
                        , public kernel::Displayable_ABC
 {
 
@@ -73,7 +72,6 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgAutomateAttributes& message );
     virtual void DoUpdate( const ASN1T_MsgAutomateOrder& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomateOrderAck& message );
     //@}
 
 private:
@@ -84,10 +82,7 @@ private:
     const kernel::Automat_ABC& agent_;
     const kernel::DecisionalModel& model_;
     bool bEmbraye_;
-
-    long lastOrderId_;
     const kernel::Mission* current_;
-    const kernel::Mission* next_;
     //@}
 };
 

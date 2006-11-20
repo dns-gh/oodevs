@@ -292,7 +292,6 @@ MsgUnitMagicActionAck ::= SEQUENCE
 MsgUnitPathFind ::= SEQUENCE
 {
     oid-pion    OID,
-    order-id    OID,
     itineraire  Itineraire
 }
 

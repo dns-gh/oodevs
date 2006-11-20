@@ -63,18 +63,7 @@ MIL_PopulationMission_ABC::~MIL_PopulationMission_ABC()
 //-----------------------------------------------------------------------------
 ASN1T_EnumOrderErrorCode MIL_PopulationMission_ABC::Initialize( const ASN1T_MsgPopulationOrder& asnMsg )
 {
-    nOrderID_ = asnMsg.order_id;
     return EnumOrderErrorCode::no_error;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_PopulationMission_ABC::Terminate
-// Created: NLD 2003-04-09
-//-----------------------------------------------------------------------------
-void MIL_PopulationMission_ABC::Terminate()
-{
-    nOrderID_  = (uint)-1;
-    assert( !bDIABehaviorActivated_ );
 }
 
 //=============================================================================

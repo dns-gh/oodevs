@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_RealiserTravauxProtection::Initialize( MIL_PionMission_
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_RealiserTravauxProtection::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_RealiserTravauxProtection::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

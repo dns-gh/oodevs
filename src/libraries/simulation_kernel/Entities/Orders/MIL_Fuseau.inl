@@ -15,18 +15,17 @@
 // Created: NLD 2003-04-23
 //-----------------------------------------------------------------------------
 inline
-const MIL_Limit* MIL_Fuseau::GetLeftLimit() const
+const TER_LimitData* MIL_Fuseau::GetLeftLimit() const
 {
     return pLeftLimit_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::GetRightLimit
 // Created: NLD 2003-04-23
 //-----------------------------------------------------------------------------
 inline
-const MIL_Limit* MIL_Fuseau::GetRightLimit() const
+const TER_LimitData* MIL_Fuseau::GetRightLimit() const
 {
     return pRightLimit_;
 }
@@ -51,7 +50,6 @@ bool MIL_Fuseau::IsNull() const
     return !pLeftLimit_ || !pRightLimit_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::IsInside
 // Created: NLD 2003-07-27
@@ -61,7 +59,6 @@ bool MIL_Fuseau::IsInside( const MT_Vector2D& vPos  ) const
 {
     return TER_Polygon::IsInside( vPos, 0.1 ); //$$$
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_Fuseau::IntersectWithBorder
@@ -83,3 +80,24 @@ bool MIL_Fuseau::IntersectWithBorder( const MT_Line& line,T_PointSet& res ) cons
     return TER_Polygon::IntersectWithBorder( line, res, 0.1 ); //$$$$
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::operator==
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Fuseau::operator==( const MIL_Fuseau& rhs ) const
+{
+    return (   pLeftLimit_ == rhs.pLeftLimit_
+            && pRightLimit_ == rhs.pRightLimit_
+            && pMiddleLimit_ == rhs.pMiddleLimit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::operator!=
+// Created: NLD 2005-07-08
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Fuseau::operator!=( const MIL_Fuseau& rhs ) const
+{
+    return !this->operator==( rhs );
+}

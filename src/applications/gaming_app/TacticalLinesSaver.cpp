@@ -75,9 +75,9 @@ void TacticalLinesSaver::LoadLimits()
 {
     try
     {
-        const std::string filename( "TacticalLines.xml" );
-        if( bfs::exists( bfs::path( filename, bfs::native ) ) )
-            model_.Load( filename );
+//        const std::string filename( "TacticalLines.xml" );
+//        if( bfs::exists( bfs::path( filename, bfs::native ) ) )
+//            model_.Load( filename );
     }
     catch( ... )
     {

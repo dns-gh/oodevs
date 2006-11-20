@@ -35,7 +35,6 @@ namespace kernel
 // =============================================================================
 class Decisions : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< ASN1T_MsgPionOrder >
-                , public kernel::Updatable_ABC< ASN1T_MsgPionOrderAck >
                 , public kernel::Displayable_ABC
                 , public kernel::Drawable_ABC
 {
@@ -70,7 +69,6 @@ private:
     //@{
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DoUpdate( const ASN1T_MsgPionOrder& message );
-    virtual void DoUpdate( const ASN1T_MsgPionOrderAck& message );
 
     const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}
@@ -80,9 +78,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Agent_ABC& agent_;
-    long lastOrderId_;
     const kernel::Mission* current_;
-    const kernel::Mission* next_;
     //@}
 };
 

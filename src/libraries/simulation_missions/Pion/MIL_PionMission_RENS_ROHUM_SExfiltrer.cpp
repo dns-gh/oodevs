@@ -102,15 +102,6 @@ bool MIL_PionMission_RENS_ROHUM_SExfiltrer::Initialize( MIL_PionMission_ABC& mis
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_RENS_ROHUM_SExfiltrer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_RENS_ROHUM_SExfiltrer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

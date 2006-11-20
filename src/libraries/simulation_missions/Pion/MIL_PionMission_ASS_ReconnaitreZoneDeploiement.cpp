@@ -102,15 +102,6 @@ bool MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Initialize( MIL_PionMission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASS_ReconnaitreZoneDeploiement::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

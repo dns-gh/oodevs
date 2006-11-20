@@ -157,15 +157,6 @@ bool MIL_PionMission_Test_FindPosition::Initialize( MIL_PionMission_ABC& mission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Test_FindPosition::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Test_FindPosition::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

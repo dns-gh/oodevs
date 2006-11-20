@@ -65,7 +65,6 @@ private:
     //! @name Events
     //@{
     virtual void ProcessAgentInside  ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentEntering( MIL_Agent_ABC& agent );
     virtual void ProcessAgentExiting ( MIL_Agent_ABC& agent );
     //@}
 

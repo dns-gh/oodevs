@@ -33,7 +33,6 @@ public:
     //! @name Init
     //@{
     virtual ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgPopulationOrder& asnMsg );
-    virtual void                     Terminate ();
     //@}
 
     //! @name DIA
@@ -50,7 +49,6 @@ public:
 
     //! @name Accessors
     //@{
-          uint                       GetOrderID   () const;
     const MIL_PopulationMissionType& GetType      () const;
           MIL_Population&            GetPopulation() const;  
     //@}
@@ -60,7 +58,6 @@ protected:
 
 private:
     const MIL_PopulationMissionType& type_;
-          uint                       nOrderID_;
 
     bool bDIABehaviorActivated_;
 

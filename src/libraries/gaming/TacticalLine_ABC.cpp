@@ -9,8 +9,8 @@
 
 #include "gaming_pch.h"
 #include "TacticalLine_ABC.h"
-#include "ASN_Messages.h"
 #include "TacticalLinePositions.h"
+#include "TacticalLineHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "xeumeuleu/xml.h"
 
@@ -23,27 +23,9 @@ using namespace xml;
 TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, Publisher_ABC& publisher )
     : publisher_    ( publisher )
     , id_           ( id )
-    , nState_       ( eStateCreated )
-    , nNetworkState_( eNetworkStateNotRegistered )
-    , bCreatedBy    ( true )
 {
     RegisterSelf( *this );
-    strName_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC constructor
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( xml::xistream& xis, Publisher_ABC& publisher )
-    : publisher_( publisher )
-{
-    RegisterSelf( *this );
-    std::string name;
-    int id;
-    xis >> attribute( "name", name )
-        >> attribute( "id", id );
-    strName_ = name.c_str(); id_ = id;
+    name_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,12 +38,12 @@ TacticalLine_ABC::~TacticalLine_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::DoUpdate
-// Created: SBO 2006-11-06
+// Name: TacticalLine_ABC::Create
+// Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Polish()
+void TacticalLine_ABC::Create()
 {
-    UpdateToSim();
+    UpdateToSim( eStateCreated );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,63 +52,7 @@ void TacticalLine_ABC::Polish()
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Delete()
 {
-    if( nNetworkState_ == eNetworkStateRegistered )
-    {
-        nState_ = eStateDeleted;
-        UpdateToSim();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::ValidateAcknowledge
-// Created: AGE 2006-07-05
-// -----------------------------------------------------------------------------
-template< typename Ack >
-void TacticalLine_ABC::ValidateAcknowledge( const Ack& ack )
-{
-    if( ack.error_code == EnumInfoContextErrorCode::no_error )
-    {
-        nState_ = eStateOk;
-        nNetworkState_ = eNetworkStateRegistered;
-    }
-    else
-        ; // $$$$ AGE 2006-07-05: else what ? log ?
-}   
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Update
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimitCreationAck& ack )
-{
-    ValidateAcknowledge( ack );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Update
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimitUpdateAck& ack )
-{
-    ValidateAcknowledge( ack );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Update
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimaCreationAck& ack )
-{
-    ValidateAcknowledge( ack );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::Update
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_MsgLimaUpdateAck& ack )
-{
-    ValidateAcknowledge( ack );
+    UpdateToSim( eStateDeleted );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,26 +70,27 @@ unsigned long TacticalLine_ABC::GetId() const
 // -----------------------------------------------------------------------------
 QString TacticalLine_ABC::GetName() const
 {
-    return strName_;
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::WriteGeometry
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line )
+void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line ) const
 {
     // $$$$ SBO 2006-11-06: visitor or something
-    static_cast< TacticalLinePositions& >( Get< kernel::Positions >() ).WriteGeometry( line );
+    static_cast< const TacticalLinePositions& >( Get< kernel::Positions >() ).WriteGeometry( line );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::UpdateToSim
-// Created: AGE 2006-03-15
+// Name: TacticalLine_ABC::WriteDiffusion
+// Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::UpdateToSim()
+void TacticalLine_ABC::WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion ) const
 {
-    UpdateToSim( nState_ );
+    // $$$$ SBO 2006-11-06: visitor or something
+    static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +102,7 @@ void TacticalLine_ABC::Draw( const geometry::Point2f& where, const geometry::Rec
 //    if( ! pointList_.empty() ) // $$$$ SBO 2006-11-07: Get< kernel::Positions >().IsSet()
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glColor3f( 0.f, 0.f, 0.f );
-        tools.Print( strName_.ascii(), Get< kernel::Positions >().GetPosition() );
+        tools.Print( name_.ascii(), Get< kernel::Positions >().GetPosition() );
     glPopAttrib();
 }
 
@@ -185,6 +112,24 @@ void TacticalLine_ABC::Draw( const geometry::Point2f& where, const geometry::Rec
 // -----------------------------------------------------------------------------
 void TacticalLine_ABC::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "name", std::string( strName_.ascii() ) )
+    xos << attribute( "name", std::string( name_.ascii() ) )
         << attribute( "id", int( id_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::DoUpdate
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::DoUpdate( const ASN1T_MsgLimaUpdate& message )
+{
+    name_ = message.tactical_line.nom;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TacticalLine_ABC::DoUpdate
+// Created: SBO 2006-11-17
+// -----------------------------------------------------------------------------
+void TacticalLine_ABC::DoUpdate( const ASN1T_MsgLimitUpdate& message )
+{
+    name_ = message.tactical_line.nom;
 }

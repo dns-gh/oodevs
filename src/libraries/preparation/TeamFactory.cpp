@@ -126,7 +126,7 @@ kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, k
     {
     case eObjectType_CampPrisonniers:
     case eObjectType_CampRefugies:
-        result->Attach< CampAttributes_ABC >( *new CampAttributes( controllers_, dico ) );
+        result->Attach< CampAttributes_ABC >( *new CampAttributes( dico ) );
         break;
     case eObjectType_ItineraireLogistique:
         result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( dico ) );
@@ -162,7 +162,7 @@ kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_
     {
     case eObjectType_CampPrisonniers:
     case eObjectType_CampRefugies:
-        result->Attach< CampAttributes_ABC >( *new CampAttributes( xis, controllers_, model_.agents_, dico ) );
+        result->Attach< CampAttributes_ABC >( *new CampAttributes( xis, model_.agents_, dico ) );
         break;
     case eObjectType_ItineraireLogistique:
         result->Attach< LogisticRouteAttributes_ABC >( *new LogisticRouteAttributes( xis, dico ) );

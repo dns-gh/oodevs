@@ -9,26 +9,15 @@
 //
 // *****************************************************************************
 
-#include "Entities/Orders/Lima/MIL_Lima.h"
+#include "Entities/Orders/MIL_LimaOrder.h"
+#include "Entities/Orders/MIL_LimaFunction.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Decision/DEC_Tools.h"
 
 // =============================================================================
 // LIMAS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_ABC::SetMissionLimaFlag
-// Created: NLD 2003-12-23
-// -----------------------------------------------------------------------------
-template< typename T >
-void DEC_OrdersFunctions::SetMissionLimaFlag( DIA_Call_ABC& call, T& caller )
-{
-    const MIL_Lima* pLima = call.GetParameter( 0 ).ToUserPtr( pLima );
-    assert( pLima );
-    const bool bOut = caller.GetOrderManager().SetMissionLimaFlag( *pLima, call.GetParameter( 1 ).ToBool() );
-    call.GetResult().SetValue( bOut );
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::AutomateSetMissionLimaFlag
@@ -37,10 +26,33 @@ void DEC_OrdersFunctions::SetMissionLimaFlag( DIA_Call_ABC& call, T& caller )
 inline
 void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DIA_Call_ABC& call, MIL_AgentPion& caller )
 {
-    const MIL_Lima* pLima = call.GetParameter( 0 ).ToUserPtr( pLima );
-    assert( pLima );
-    const bool bOut = caller.GetAutomate().GetOrderManager().SetMissionLimaFlag( *pLima, call.GetParameter( 1 ).ToBool() );
-    call.GetResult().SetValue( bOut );
+    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
+    MIL_LimaOrder* pLima = caller.GetAutomate().FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    if( !pLima )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+    pLima->Flag( call.GetParameter( 1 ).ToBool() );
+    call.GetResult().SetValue( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_ABC::SetMissionLimaFlag
+// Created: NLD 2003-12-23
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_OrdersFunctions::SetMissionLimaFlag( DIA_Call_ABC& call, T& caller )
+{
+    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
+    MIL_LimaOrder* pLima = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    if( !pLima )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+    pLima->Flag( call.GetParameter( 1 ).ToBool() );
+    call.GetResult().SetValue( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,10 +62,14 @@ void DEC_OrdersFunctions::AutomateSetMissionLimaFlag( DIA_Call_ABC& call, MIL_Ag
 template< typename T >
 void DEC_OrdersFunctions::GetMissionLimaFlag( DIA_Call_ABC& call, const T& caller )
 {
-    const MIL_Lima* pLima = call.GetParameter( 0 ).ToUserPtr( pLima );
-    assert( pLima );
-    const bool bOut = caller.GetOrderManager().GetMissionLimaFlag( *pLima );
-    call.GetResult().SetValue( bOut );
+    assert( DEC_Tools::CheckTypeLima( call.GetParameter( 0 ) ) );
+    MIL_LimaOrder* pLima = caller.FindLima( (uint)call.GetParameter( 0 ).ToPtr() );
+    if( !pLima )
+    {
+        call.GetResult().SetValue( false );
+        return;
+    }
+    call.GetResult().SetValue( pLima->IsFlagged() );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,17 +79,19 @@ void DEC_OrdersFunctions::GetMissionLimaFlag( DIA_Call_ABC& call, const T& calle
 template< typename T >
 void DEC_OrdersFunctions::GetLima( DIA_Call_ABC& call, const T& caller )
 {
-    MIL_Lima::E_LimaFunctions nLimaType = (MIL_Lima::E_LimaFunctions)call.GetParameter( 0 ).ToId();
-    const T_LimaFlagedPtrMap& limas = caller.GetLimas();
-    for( CIT_LimaFlagedPtrMap itLima = limas.begin(); itLima != limas.end(); ++itLima )
+    const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( call.GetParameter( 0 ).ToId() );
+    if( !pFunction )
     {
-        if( itLima->first->GetLimaFunction() == nLimaType )
-        {
-            call.GetResult().SetValue( (void*)itLima->first, &DEC_Tools::GetTypeLima(), 1 );
-            return;
-        }
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
+        return;
     }
-    call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
+    MIL_LimaOrder* pLima = caller.FindLima( *pFunction );
+    if( !pLima )
+    {
+        call.GetResult().SetValue( (void*)0, &DEC_Tools::GetTypeLima() );
+        return;
+    }
+    call.GetResult().SetValue( (void*)pLima->GetID(), &DEC_Tools::GetTypeLima() );
 }
 
 // -----------------------------------------------------------------------------

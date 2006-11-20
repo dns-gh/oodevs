@@ -117,15 +117,6 @@ bool MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Initialize( MIL_Pi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ASY_CommettreAttentatContreForcesArmees::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

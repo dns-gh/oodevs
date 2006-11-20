@@ -32,7 +32,6 @@ public:
     static void InitializeDIA( const MIL_PopulationMissionType& type );
     /*final*/ ASN1T_EnumOrderErrorCode Initialize( const ASN1T_MsgPopulationOrder& asnMsg );
     /*final*/ //bool                     Initialize( MIL_PopulationMission_ABC& mission );
-    /*final*/ void                     Terminate();
     //@}
 
     //! @name Network 

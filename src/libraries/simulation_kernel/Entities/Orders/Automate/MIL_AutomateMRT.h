@@ -30,17 +30,12 @@ public:
      MIL_AutomateMRT();
     ~MIL_AutomateMRT();
 
-    //-------------------------------------------------------------------------
-    /** @name Init */
-    //-------------------------------------------------------------------------
+    //! @name Init
     //@{
     void Initialize( MIL_AutomateMission_ABC& automateMission );
-    void Terminate ();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Preparation */
-    //-------------------------------------------------------------------------
+    //! @name Preparation
     //@{
     void              SetMissionForPion( MIL_AgentPion& pion, MIL_PionMission_ABC& mission );
     void              SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
@@ -49,18 +44,14 @@ public:
     void Validate();
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Activation */
-    //-------------------------------------------------------------------------
+    //! @name Activation
     //@{
     void Activate   ();
     bool IsActivated() const;
     //@}
 
 private:
-    //-------------------------------------------------------------------------
-    /** @name Types */
-    //-------------------------------------------------------------------------
+    //! @name Types
     //@{
     typedef std::map< MIL_AgentPion*, MIL_PionMission_ABC* >  T_MissionPionMap;
     typedef T_MissionPionMap::iterator                         IT_MissionPionMap;

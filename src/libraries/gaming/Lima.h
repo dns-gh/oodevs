@@ -12,7 +12,6 @@
 
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/IDManager.h"
-#include "Types.h"
 
 namespace kernel
 {
@@ -31,10 +30,8 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-//             Lima( kernel::Controller& controller, Publisher_ABC& publisher );
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, E_FuncLimaType nFuncType );
+             Lima( kernel::Controller& controller, Publisher_ABC& publisher );
              Lima( kernel::Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg );
-             Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis );
     virtual ~Lima();
     //@}
 
@@ -45,6 +42,7 @@ public:
     virtual void Activate( kernel::ActionController& controller ) const;
 
     virtual void Serialize( xml::xostream& xos ) const;
+    void CopyTo( ASN1T_Line& destination ) const;
     virtual bool IsLimit() const;
     //@}
 
@@ -57,8 +55,6 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T >
-    void FillAndSend();
     virtual void UpdateToSim( E_State state );
     //@}
 
@@ -69,7 +65,6 @@ public:
 
 private:
     kernel::Controller& controller_;
-    E_FuncLimaType   nFuncType_;
     //@}
 };
 

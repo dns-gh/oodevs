@@ -112,9 +112,29 @@ const MIL_Fuseau& MIL_AgentPion::GetFuseau() const
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
 inline
-const T_LimaFlagedPtrMap& MIL_AgentPion::GetLimas() const
+const T_LimaVector& MIL_AgentPion::GetLimas() const
 {
     return orderManager_.GetLimas();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::FindLima
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_AgentPion::FindLima( const MIL_LimaFunction& function ) const
+{
+    return orderManager_.FindLima( function );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::FindLima
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_AgentPion::FindLima( uint nID ) const
+{
+    return orderManager_.FindLima( nID );
 }
 
 // -----------------------------------------------------------------------------

@@ -107,15 +107,6 @@ bool MIL_PionMission_INF_ControlerSecteur::Initialize( MIL_PionMission_ABC& miss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_INF_ControlerSecteur::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_INF_ControlerSecteur::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

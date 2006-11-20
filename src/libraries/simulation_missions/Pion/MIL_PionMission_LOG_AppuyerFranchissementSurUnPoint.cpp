@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Initialize( MIL_PionMi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_AppuyerFranchissementSurUnPoint::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_RealiserTravauxContreMobilite::Initialize( MIL_PionMiss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_RealiserTravauxContreMobilite::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_RealiserTravauxContreMobilite::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

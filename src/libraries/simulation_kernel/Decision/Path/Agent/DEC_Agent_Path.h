@@ -25,7 +25,7 @@
 
 class DEC_Rep_PathPoint;
 class DEC_PathType;
-class MIL_Lima;
+class MIL_LimaOrder;
 class MIL_AgentPion;
 class DEC_Agent_PathClass;
 
@@ -101,8 +101,7 @@ private:
     void InsertPointAvant        ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant );    
     bool InsertPoint             ( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint );
     void InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant );
-
-    void InsertLima       ( const MIL_Lima& );
+    void InsertLima              ( const MIL_LimaOrder& lima );
 
     IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
     //@}

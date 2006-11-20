@@ -1,11 +1,10 @@
 //*****************************************************************************
 //
-// $Created: NLD 2002-08-22 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Orders/Lima/MIL_LimaFunctionBasic.inl $
+// $Created: NLD 2003-01-14 $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Orders/MIL_Fuseau.inl $
 // $Author: Nld $
-// $Modtime: 20/02/03 13:05 $
+// $Modtime: 21/05/04 11:53 $
 // $Revision: 1 $
-// $Workfile: MIL_LimaFunctionBasic.inl $
+// $Workfile: MIL_Fuseau.inl $
 //
 //*****************************************************************************
-

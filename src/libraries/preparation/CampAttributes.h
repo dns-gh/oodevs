@@ -19,7 +19,6 @@
 namespace kernel
 {
     class Automat_ABC;
-    class Controllers;
     class Displayer_ABC;
     class PropertiesDictionary;
 }
@@ -42,8 +41,8 @@ class CampAttributes : public kernel::CampAttributes_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CampAttributes( kernel::Controllers& controllers, kernel::PropertiesDictionary& dico );
-             CampAttributes( xml::xistream& xis, kernel::Controllers& controllers, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico );
+    explicit CampAttributes( kernel::PropertiesDictionary& dico );
+             CampAttributes( xml::xistream& xis, const kernel::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico );
     virtual ~CampAttributes();
     //@}
 

@@ -102,15 +102,6 @@ bool MIL_PionMission_SecuriserZoneContrePopulations::Initialize( MIL_PionMission
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_SecuriserZoneContrePopulations::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_SecuriserZoneContrePopulations::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

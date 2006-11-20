@@ -11,6 +11,7 @@
 #include "Lima.h"
 #include "ASN_Messages.h"
 #include "Tools.h"
+#include "TacticalLinePositions.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "xeumeuleu/xml.h"
@@ -24,10 +25,9 @@ IDManager Lima::idManager_( 137 );
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( Controller& controller, Publisher_ABC& publisher, E_FuncLimaType nFuncType )
-    : TacticalLine_ABC( tools::ToString( nFuncType ), idManager_.GetFreeIdentifier(), publisher )
+Lima::Lima( Controller& controller, Publisher_ABC& publisher )
+    : TacticalLine_ABC( "Lima", idManager_.GetFreeIdentifier(), publisher )
     , controller_     ( controller )
-    , nFuncType_      ( nFuncType )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
@@ -37,25 +37,9 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher, E_FuncLimaType nFu
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimaCreation& asnMsg )
-    : TacticalLine_ABC( tools::ToString( (E_FuncLimaType)asnMsg.fonction ), asnMsg.oid, publisher )
+    : TacticalLine_ABC( asnMsg.tactical_line.nom, asnMsg.oid, publisher )
     , controller_     ( controller )
-    , nFuncType_      ( (E_FuncLimaType)asnMsg.fonction )
 {
-    idManager_.LockIdentifier( GetId() );
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Lima constructor
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis )
-    : TacticalLine_ABC( xis, publisher )
-    , controller_( controller )
-{
-    int type = 0;
-    xis >> xml::attribute( "type", type );
-    nFuncType_ = E_FuncLimaType( type );
     idManager_.LockIdentifier( GetId() );
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
@@ -70,21 +54,6 @@ Lima::~Lima()
     idManager_.ReleaseIdentifier( GetId() );
 }
 
-//-----------------------------------------------------------------------------
-// Name: Lima::FillAndSend
-// Created: FBD 03-01-03
-//-----------------------------------------------------------------------------
-template< typename T >
-void Lima::FillAndSend()
-{
-    T message;
-    message.GetAsnMsg().oid      = GetId();
-    message.GetAsnMsg().fonction = (ASN1T_EnumTypeLima)nFuncType_;
-    WriteGeometry( message.GetAsnMsg().geometrie );
-    Send( message );
-    delete[] message.GetAsnMsg().geometrie.vecteur_point.elem;
-};
-
 // -----------------------------------------------------------------------------
 // Name: Lima::UpdateToSim
 // Created: AGE 2006-03-15
@@ -93,18 +62,31 @@ void Lima::UpdateToSim( E_State state )
 {
     switch( state )
     {
-        case eStateCreated:
-            FillAndSend< ASN_MsgLimaCreation >();
-            break;
-        case eStateModified:
-            FillAndSend< ASN_MsgLimaUpdate >();
-            break;
-        case eStateDeleted:
+    case eStateCreated:
         {
-            ASN_MsgLimaDestruction asnMsg;
-            asnMsg.GetAsnMsg() = GetId();
-            Send( asnMsg );
+            ASN_MsgLimaCreationRequest message;
+            message.GetAsnMsg().nom = GetName();
+            WriteGeometry ( message.GetAsnMsg().geometrie );
+            WriteDiffusion( message.GetAsnMsg().diffusion );
+            Send( message );
+            delete[] message.GetAsnMsg().geometrie.vecteur_point.elem;
         }
+        break;
+    case eStateModified:
+        {
+            ASN_MsgLimaUpdateRequest message;
+            message.GetAsnMsg().oid = GetId();
+            message.GetAsnMsg().tactical_line.nom = GetName();
+            WriteGeometry ( message.GetAsnMsg().tactical_line.geometrie );
+            WriteDiffusion( message.GetAsnMsg().tactical_line.diffusion );
+            Send( message );
+            delete[] message.GetAsnMsg().tactical_line.geometrie.vecteur_point.elem;
+        }
+        break;
+    case eStateDeleted:
+        ASN_MsgLimaDestructionRequest asnMsg;
+        asnMsg.GetAsnMsg() = GetId();
+        Send( asnMsg );
         break;
     }
 }
@@ -124,6 +106,7 @@ void Lima::Select( ActionController& actions ) const
 // -----------------------------------------------------------------------------
 void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
 {
+    actions.Select( *this, *(kernel::TacticalLine_ABC*)this );
     actions.ContextMenu( *this, *(kernel::TacticalLine_ABC*)this, point );
 }
 
@@ -142,11 +125,19 @@ void Lima::Activate( ActionController& actions ) const
 // -----------------------------------------------------------------------------
 void Lima::Serialize( xml::xostream& xos ) const
 {
-    xos << start( "lima" )
-            << attribute( "type", int( nFuncType_ ) );
+    xos << start( "lima" );
     TacticalLine_ABC::Serialize( xos );
     Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
     xos << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Lima::CopyTo
+// Created: SBO 2006-11-14
+// -----------------------------------------------------------------------------
+void Lima::CopyTo( ASN1T_Line& destination ) const
+{
+    WriteGeometry( destination ); // $$$$ SBO 2006-11-14: visitor/Serializer
 }
 
 // -----------------------------------------------------------------------------

@@ -107,15 +107,6 @@ bool MIL_PionMission_ALAT_Eclairer::Initialize( MIL_PionMission_ABC& missionTmp 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_Eclairer::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_Eclairer::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

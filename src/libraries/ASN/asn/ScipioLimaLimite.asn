@@ -6,72 +6,14 @@
 
 ScipioLimaLimite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
--- Limit
-MsgLimitCreation ::= SEQUENCE 
-{
-    oid          OID,      
-    level        EnumNatureLevel DEFAULT ooo,
-    geometrie    Line
-}
-
-MsgLimitDestruction    ::= OID
-MsgLimitUpdate         ::= MsgLimitCreation
-
-MsgLimitCreationAck    ::= SEQUENCE
-{
-    oid             OID,
-    error-code      EnumInfoContextErrorCode
-}
-
-MsgLimitDestructionAck ::= SEQUENCE
-{
-    oid             OID,
-    error-code      EnumInfoContextErrorCode
-}
-
-MsgLimitUpdateAck ::= SEQUENCE
-{
-    oid             OID,
-    error-code      EnumInfoContextErrorCode
-}
-
--- Lima
-MsgLimaCreation ::= SEQUENCE 
-{
-    oid             OID,
-    fonction        EnumTypeLima,
-    geometrie       Line
-}
-
-MsgLimaDestruction    ::= OID
-MsgLimaUpdate         ::= MsgLimaCreation
-
-MsgLimaCreationAck    ::= SEQUENCE
-{
-    oid             OID,
-    error-code      EnumInfoContextErrorCode
-}
-
-MsgLimaDestructionAck ::= SEQUENCE
-{
-    oid             OID,
-    error-code      EnumInfoContextErrorCode
-}
-
-MsgLimaUpdateAck ::= SEQUENCE
-{
-    oid             OID,
-    error-code      EnumInfoContextErrorCode
-}
-
--- Enum 
+-- Enums
 EnumInfoContextErrorCode ::= ENUMERATED
 {
    no-error                        (0),
    error-invalid-id                (1),
    error-invalid-geometry          (2),
-   error_invalid-lima-function     (3),
-   error_invalid-limit-or-lima-used(4)
+   error-invalid-lima-function     (3),
+   error-invalid-diffusion         (4)
 }
 
 EnumTypeLima ::= ENUMERATED
@@ -87,5 +29,73 @@ EnumTypeLima ::= ENUMERATED
     ligne-fin-mission           (8),
     ligne-identification-accueil(9) 
 }
+
+-- Common types definitions
+TacticalLinesDiffusion ::= CHOICE
+{
+    automate  Automate,
+    formation Formation
+}
+LimaOrder ::= SEQUENCE
+{
+    lima      Line,
+    fonctions SEQUENCE OF EnumTypeLima    
+}
+LimasOrder ::= SEQUENCE OF LimaOrder
+
+TacticalLine ::= SEQUENCE
+{
+    nom         VisibleString,
+    geometrie   Line,
+    diffusion   TacticalLinesDiffusion
+}
+
+-- Limites
+MsgLimitCreationRequestAck  ::= EnumInfoContextErrorCode
+MsgLimitCreationRequest     ::= TacticalLine
+MsgLimitCreation            ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+
+MsgLimitUpdateRequestAck ::= EnumInfoContextErrorCode
+MsgLimitUpdateRequest    ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimitUpdate          ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+
+MsgLimitDestructionRequestAck ::= EnumInfoContextErrorCode
+MsgLimitDestructionRequest    ::= OID
+MsgLimitDestruction           ::= OID
+
+-- Limas
+MsgLimaCreationRequestAck  ::= EnumInfoContextErrorCode
+MsgLimaCreationRequest     ::= TacticalLine
+MsgLimaCreation            ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimaUpdateRequestAck ::= EnumInfoContextErrorCode
+MsgLimaUpdateRequest    ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimaUpdate          ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimaDestructionRequestAck ::= EnumInfoContextErrorCode
+MsgLimaDestructionRequest    ::= OID
+MsgLimaDestruction           ::= OID
 
 END -- ScipioLimaLimite

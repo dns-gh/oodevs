@@ -25,8 +25,16 @@ int Run( int argc, char** argv )
     MT_ConsoleLogger        consoleLogger;
     MT_LOG_REGISTER_LOGGER( consoleLogger );
 
-    App app( argc, argv );
-    int nResult = app.Execute();
+    int nResult = 0;
+    try
+    {
+        App app( argc, argv );
+        nResult = app.Execute();
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return nResult;

@@ -28,7 +28,6 @@ PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_
     , nMissionId_( nMissionId )
 {
     pASNMsgOrder_ = new ASN_MsgPopulationOrder();
-    pASNMsgOrder_->GetAsnMsg().order_id = (uint)(&population);
     pASNMsgOrder_->GetAsnMsg().oid_unite_executante = population.GetId();
 
     QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromPopulationMission( E_PopulationMission( nMissionId_ ) ).c_str(), this );

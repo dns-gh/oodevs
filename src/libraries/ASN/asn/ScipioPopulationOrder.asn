@@ -24,15 +24,19 @@ Mission-Population ::= CHOICE
 MsgPopulationOrder ::= SEQUENCE
 {
     oid-unite-executante Population,
-    order-id			 OID,
     mission              Mission-Population
 }
 
 MsgPopulationOrderAck ::= SEQUENCE
 {
     oid-unite-executante Population,
-    order-id		     OID,
     error-code		     EnumOrderErrorCode
+}
+
+MsgPopulationOrderManagement ::= SEQUENCE
+{
+    oid-unite-executante    Population,
+    etat                    EnumOrderState
 }
 
 END -- ScipioPopulationOrder

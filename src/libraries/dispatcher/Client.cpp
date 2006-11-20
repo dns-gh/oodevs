@@ -137,19 +137,23 @@ void Client::OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& msg )
 }
 
 // 
-#define DISPATCH_ASN_MSG( NAME )                                 \
-    {                                                            \
-        asnOutMsg.context          = asnInMsg.context;           \
-        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME; \
-        asnOutMsg.msg.u.msg_##NAME = asnInMsg.msg.u.msg_##NAME;  \
-        dispatcher_.DispatchToSimulation( asnOutMsg) ;           \
+#define DISPATCH_ASN_MSG( NAME )                                        \
+    case T_MsgsOutClient_msg_msg_##NAME:                                \
+    {                                                                   \
+        asnOutMsg.context          = asnInMsg.context;                  \
+        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME;        \
+        asnOutMsg.msg.u.msg_##NAME = asnInMsg.msg.u.msg_##NAME;         \
+        dispatcher_.DispatchToSimulation( asnOutMsg );                  \
+        break;                                                          \
     } 
 
-#define DISPATCH_EMPTY_ASN_MSG( NAME )                  \
-    {                                                   \
-        asnOutMsg.context = asnInMsg.context;           \
-        asnOutMsg.msg.t   = T_MsgsInSim_msg_msg_##NAME; \
-        dispatcher_.DispatchToSimulation( asnOutMsg) ;  \
+#define DISPATCH_EMPTY_ASN_MSG( NAME )                                  \
+    case T_MsgsOutClient_msg_msg_##NAME:                                \
+    {                                                                   \
+        asnOutMsg.context          = asnInMsg.context;                  \
+        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME;        \
+        dispatcher_.DispatchToSimulation( asnOutMsg );                  \
+        break;                                                          \
     } 
 
 // -----------------------------------------------------------------------------
@@ -167,38 +171,39 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
     ASN1T_MsgsInSim asnOutMsg;
     switch( asnInMsg.msg.t )
     {
-        case T_MsgsOutClient_msg_msg_auth_login                         : OnReceiveMsgAuthLogin( *asnInMsg.msg.u.msg_auth_login ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_profile_creation              : /*TODO$$$*/ break;
-        case T_MsgsOutClient_msg_msg_ctrl_profile_update                : /*TODO$$$*/ break;
-        case T_MsgsOutClient_msg_msg_ctrl_profile_destruction           : /*TODO$$$*/ break;
-        case T_MsgsOutClient_msg_msg_ctrl_stop                          : DISPATCH_EMPTY_ASN_MSG( ctrl_stop ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_pause                         : DISPATCH_EMPTY_ASN_MSG( ctrl_pause ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_resume                        : DISPATCH_EMPTY_ASN_MSG( ctrl_resume ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_change_time_factor            : DISPATCH_ASN_MSG      ( ctrl_change_time_factor ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_meteo_globale                 : DISPATCH_ASN_MSG      ( ctrl_meteo_globale ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_meteo_locale                  : DISPATCH_ASN_MSG      ( ctrl_meteo_locale ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_checkpoint_save_now           : DISPATCH_ASN_MSG      ( ctrl_checkpoint_save_now ); break;
-        case T_MsgsOutClient_msg_msg_ctrl_checkpoint_set_frequency      : DISPATCH_ASN_MSG      ( ctrl_checkpoint_set_frequency ); break;
-        case T_MsgsOutClient_msg_msg_limit_creation                     : DISPATCH_ASN_MSG      ( limit_creation ); break;
-        case T_MsgsOutClient_msg_msg_limit_destruction                  : DISPATCH_ASN_MSG      ( limit_destruction ); break;
-        case T_MsgsOutClient_msg_msg_limit_update                       : DISPATCH_ASN_MSG      ( limit_update ); break;
-        case T_MsgsOutClient_msg_msg_lima_creation                      : DISPATCH_ASN_MSG      ( lima_creation ); break;
-        case T_MsgsOutClient_msg_msg_lima_destruction                   : DISPATCH_ASN_MSG      ( lima_destruction ); break;
-        case T_MsgsOutClient_msg_msg_lima_update                        : DISPATCH_ASN_MSG      ( lima_update ); break;
-        case T_MsgsOutClient_msg_msg_pion_order                         : DISPATCH_ASN_MSG      ( pion_order ); break;
-        case T_MsgsOutClient_msg_msg_order_conduite                     : DISPATCH_ASN_MSG      ( order_conduite ); break;
-        case T_MsgsOutClient_msg_msg_automate_order                     : DISPATCH_ASN_MSG      ( automate_order); break;
-        case T_MsgsOutClient_msg_msg_population_order                   : DISPATCH_ASN_MSG      ( population_order ); break;
-        case T_MsgsOutClient_msg_msg_set_automate_mode                  : DISPATCH_ASN_MSG      ( set_automate_mode ); break;
-        case T_MsgsOutClient_msg_msg_unit_magic_action                  : DISPATCH_ASN_MSG      ( unit_magic_action ); break;
-        case T_MsgsOutClient_msg_msg_object_magic_action                : DISPATCH_ASN_MSG      ( object_magic_action ); break;
-        case T_MsgsOutClient_msg_msg_population_magic_action            : DISPATCH_ASN_MSG      ( population_magic_action ); break;
-        case T_MsgsOutClient_msg_msg_change_diplomatie                  : DISPATCH_ASN_MSG      ( change_diplomatie ); break;
-        case T_MsgsOutClient_msg_msg_change_groupe_connaissance         : DISPATCH_ASN_MSG      ( change_groupe_connaissance ); break;
-        case T_MsgsOutClient_msg_msg_change_liens_logistiques           : DISPATCH_ASN_MSG      ( change_liens_logistiques ); break;
-        case T_MsgsOutClient_msg_msg_change_automate                    : DISPATCH_ASN_MSG      ( change_automate ); break;
-        case T_MsgsOutClient_msg_msg_log_ravitaillement_pousser_flux    : DISPATCH_ASN_MSG      ( log_ravitaillement_pousser_flux ); break;
-        case T_MsgsOutClient_msg_msg_log_ravitaillement_change_quotas   : DISPATCH_ASN_MSG      ( log_ravitaillement_change_quotas ); break;
+        case T_MsgsOutClient_msg_msg_auth_login               : OnReceiveMsgAuthLogin( *asnInMsg.msg.u.msg_auth_login ); break;
+        case T_MsgsOutClient_msg_msg_ctrl_profile_creation    : /*TODO$$$*/ break;
+        case T_MsgsOutClient_msg_msg_ctrl_profile_update      : /*TODO$$$*/ break;
+        case T_MsgsOutClient_msg_msg_ctrl_profile_destruction : /*TODO$$$*/ break;
+
+        DISPATCH_EMPTY_ASN_MSG( ctrl_stop );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_pause );
+        DISPATCH_EMPTY_ASN_MSG( ctrl_resume );
+        DISPATCH_ASN_MSG      ( ctrl_change_time_factor );
+        DISPATCH_ASN_MSG      ( ctrl_meteo_globale );
+        DISPATCH_ASN_MSG      ( ctrl_meteo_locale );
+        DISPATCH_ASN_MSG      ( ctrl_checkpoint_save_now );
+        DISPATCH_ASN_MSG      ( ctrl_checkpoint_set_frequency );
+        DISPATCH_ASN_MSG      ( limit_creation_request );
+        DISPATCH_ASN_MSG      ( limit_destruction_request );
+        DISPATCH_ASN_MSG      ( limit_update_request );
+        DISPATCH_ASN_MSG      ( lima_creation_request );
+        DISPATCH_ASN_MSG      ( lima_destruction_request );
+        DISPATCH_ASN_MSG      ( lima_update_request );
+        DISPATCH_ASN_MSG      ( pion_order );
+        DISPATCH_ASN_MSG      ( order_conduite );
+        DISPATCH_ASN_MSG      ( automate_order);
+        DISPATCH_ASN_MSG      ( population_order );
+        DISPATCH_ASN_MSG      ( set_automate_mode );
+        DISPATCH_ASN_MSG      ( unit_magic_action );
+        DISPATCH_ASN_MSG      ( object_magic_action );
+        DISPATCH_ASN_MSG      ( population_magic_action );
+        DISPATCH_ASN_MSG      ( change_diplomatie );
+        DISPATCH_ASN_MSG      ( change_groupe_connaissance );
+        DISPATCH_ASN_MSG      ( change_liens_logistiques );
+        DISPATCH_ASN_MSG      ( change_automate );
+        DISPATCH_ASN_MSG      ( log_ravitaillement_pousser_flux );
+        DISPATCH_ASN_MSG      ( log_ravitaillement_change_quotas );
         default:
             assert( false );
     }

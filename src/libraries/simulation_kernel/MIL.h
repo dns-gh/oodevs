@@ -34,8 +34,14 @@ typedef std::map< const PHY_DotationCategory*, MT_Float /*rNbrToConvoy*/ > T_Mer
 typedef T_MerchandiseToConvoyMap::iterator                                 IT_MerchandiseToConvoyMap;
 typedef T_MerchandiseToConvoyMap::const_iterator                           CIT_MerchandiseToConvoyMap;
 
-/// $$$ NLD - Degueu à déplacer
+// Useful types
+class MIL_LimaOrder;
 
+typedef std::vector< MIL_LimaOrder  > T_LimaVector;
+typedef T_LimaVector::iterator        IT_LimaVector;
+typedef T_LimaVector::const_iterator  CIT_LimaVector;
+
+/// $$$ NLD - Degueu à déplacer
 
 typedef uint32 MIL_MOSContextID;
 

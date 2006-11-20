@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_RealiserTravauxAppuiDeploiement::Initialize( MIL_PionMi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_RealiserTravauxAppuiDeploiement::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_RealiserTravauxAppuiDeploiement::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

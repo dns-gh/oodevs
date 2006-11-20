@@ -102,15 +102,6 @@ bool MIL_PionMission_SeFaireTransporter::Initialize( MIL_PionMission_ABC& missio
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_SeFaireTransporter::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_SeFaireTransporter::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

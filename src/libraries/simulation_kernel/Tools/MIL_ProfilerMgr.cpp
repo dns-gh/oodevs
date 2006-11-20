@@ -12,12 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ProfilerMgr.h"
 
-#include "Entities/Orders/Pion/MIL_PionMission_ABC.h"
-#include "Entities/Orders/Pion/MIL_PionMissionType.h"
-#include "Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
-#include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
-#include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
-#include "Entities/Orders/Population/MIL_PopulationMissionType.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MIL_AgentServer.h"
 
@@ -77,12 +71,7 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_AgentPion& pion, MT_Float
 {
     if( !bEnabled_ )
         return;
-
-    const MIL_PionMission_ABC* pMission = pion.GetOrderManager().GetMission();
-    if( pMission )
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " P " << pion.GetID() << " \"" << pMission->GetType().GetName() << "\" " << rTime << std::endl;
-    else
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " P " << pion.GetID() << " \"None\" " << rTime << std::endl;
+    decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " P " << pion.GetID() << " \"" << pion.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
     decisionUpdateFile_.flush();
 }
     
@@ -94,12 +83,7 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Automate& automate, MT_Fl
 {
     if( !bEnabled_ )
         return;
-
-    const MIL_AutomateMission_ABC* pMission = automate.GetOrderManager().GetMission();
-    if( pMission )
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << automate.GetID() << " \"" << pMission->GetType().GetName() << "\" " << rTime << std::endl;
-    else
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << automate.GetID() << " \"None\" " << rTime << std::endl;
+    decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " A " << automate.GetID() << " \"" << automate.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
     decisionUpdateFile_.flush();
 }
 
@@ -112,11 +96,6 @@ void MIL_ProfilerMgr::NotifyDecisionUpdated( const MIL_Population& population, M
 {
     if( !bEnabled_ )
         return;
-
-    const MIL_PopulationMission_ABC* pMission = population.GetOrderManager().GetMission();
-    if( pMission )
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"" << pMission->GetType().GetName() << "\" " << rTime << std::endl;
-    else
-        decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"None\" " << rTime << std::endl;
+    decisionUpdateFile_ << MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() << " Pop " << population.GetID() << " \"" << population.GetOrderManager().GetMissionName() << "\" " << rTime << std::endl;
     decisionUpdateFile_.flush();
 }

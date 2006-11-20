@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_BloquerZone::Initialize( MIL_PionMission_ABC& missionTm
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_BloquerZone::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_BloquerZone::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

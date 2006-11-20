@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Limit.h"
 #include "ASN_Messages.h"
+#include "TacticalLinePositions.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "Tools.h"
@@ -27,7 +28,6 @@ IDManager Limit::idManager_( 138 );
 Limit::Limit( Controller& controller, Publisher_ABC& publisher )
     : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager_.GetFreeIdentifier(), publisher )
     , controller_( controller )
-    , nLevel_( eNatureLevel_None )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
@@ -37,20 +37,7 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher )
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLimitCreation& asnMsg )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), asnMsg.oid, publisher )
-    , controller_( controller )
-    , nLevel_( (E_NatureLevel) asnMsg.level )
-{
-    idManager_.LockIdentifier( GetId() );
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Limit constructor
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, xml::xistream& xis )
-    : TacticalLine_ABC( xis, publisher )
+    : TacticalLine_ABC( asnMsg.tactical_line.nom, asnMsg.oid, publisher )
     , controller_( controller )
 {
     idManager_.LockIdentifier( GetId() );
@@ -68,35 +55,39 @@ Limit::~Limit()
 }
 
 //-----------------------------------------------------------------------------
-// Name: Limit::FillAndSend
-// Created: FBD 03-01-03
-//-----------------------------------------------------------------------------
-template< typename T >
-void Limit::FillAndSend()
-{
-    T message;
-    message.GetAsnMsg().oid   = GetId();
-    message.GetAsnMsg().level = (ASN1T_EnumNatureLevel) nLevel_;
-    WriteGeometry( message.GetAsnMsg().geometrie );
-    Send( message );
-    delete[] message.GetAsnMsg().geometrie.vecteur_point.elem;
-};
-
-//-----------------------------------------------------------------------------
 // Name: Limit::UpdateToSim
 // Created: FBD 03-01-03
 //-----------------------------------------------------------------------------
 void Limit::UpdateToSim( E_State state )
 {
-    if( state == eStateCreated )
-        FillAndSend< ASN_MsgLimitCreation >();
-    else if( state == eStateModified )
-        FillAndSend< ASN_MsgLimitUpdate >();
-    else if( state == eStateDeleted )
+    switch( state )
     {
-        ASN_MsgLimitDestruction asnMsg;
+    case eStateCreated:
+        {
+            ASN_MsgLimitCreationRequest message;
+            message.GetAsnMsg().nom = GetName();
+            WriteGeometry ( message.GetAsnMsg().geometrie );
+            WriteDiffusion( message.GetAsnMsg().diffusion );
+            Send( message );
+            delete[] message.GetAsnMsg().geometrie.vecteur_point.elem;
+        }
+        break;
+    case eStateModified:
+        {
+            ASN_MsgLimitUpdateRequest message;
+            message.GetAsnMsg().oid = GetId();
+            message.GetAsnMsg().tactical_line.nom = GetName();
+            WriteGeometry ( message.GetAsnMsg().tactical_line.geometrie );
+            WriteDiffusion( message.GetAsnMsg().tactical_line.diffusion );
+            Send( message );
+            delete[] message.GetAsnMsg().tactical_line.geometrie.vecteur_point.elem;
+        }
+        break;
+    case eStateDeleted:
+        ASN_MsgLimitDestructionRequest asnMsg;
         asnMsg.GetAsnMsg() = GetId();
         Send( asnMsg );
+        break;
     }
 }
 
@@ -115,6 +106,7 @@ void Limit::Select( ActionController& actions ) const
 // -----------------------------------------------------------------------------
 void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
 {
+    actions.Select( *this, *(kernel::TacticalLine_ABC*)this );
     actions.ContextMenu( *this, *(kernel::TacticalLine_ABC*)this, point );
 }
 
@@ -146,4 +138,13 @@ void Limit::Serialize( xml::xostream& xos ) const
 bool Limit::IsLimit() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Limit::CopyTo
+// Created: SBO 2006-11-14
+// -----------------------------------------------------------------------------
+void Limit::CopyTo( ASN1T_Line& destination ) const
+{
+    WriteGeometry ( destination );
 }

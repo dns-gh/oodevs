@@ -172,15 +172,17 @@ private:
     void OnReceiveMsgLogRavitaillementPousserFluxAck       ( const ASN1T_MsgLogRavitaillementPousserFluxAck& asnMsg, unsigned long nCtx );
 
     // Limas / Limits
-    void OnReceiveMsgLimitCreationAck   ( const ASN1T_MsgLimitCreationAck&    asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimitUpdateAck     ( const ASN1T_MsgLimitUpdateAck&      asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimitDestructionAck( const ASN1T_MsgLimitDestructionAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimaCreationAck    ( const ASN1T_MsgLimaCreationAck&    asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimaUpdateAck      ( const ASN1T_MsgLimaUpdateAck&      asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLimaDestructionAck ( const ASN1T_MsgLimaDestructionAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimitCreationRequestAck   ( const ASN1T_MsgLimitCreationRequestAck&    asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimitUpdateRequestAck     ( const ASN1T_MsgLimitUpdateRequestAck&      asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimitDestructionRequestAck( const ASN1T_MsgLimitDestructionRequestAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimaCreationRequestAck    ( const ASN1T_MsgLimaCreationRequestAck&    asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimaUpdateRequestAck      ( const ASN1T_MsgLimaUpdateRequestAck&      asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLimaDestructionRequestAck ( const ASN1T_MsgLimaDestructionRequestAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgLimitCreation      ( const ASN1T_MsgLimitCreation& asnMsg );
+    void OnReceiveMsgLimitUpdate        ( const ASN1T_MsgLimitUpdate& asnMsg );
     void OnReceiveMsgLimitDestruction   ( const ASN1T_MsgLimitDestruction& asnMsg );
     void OnReceiveMsgLimaCreation       ( const ASN1T_MsgLimaCreation& asnMsg );
+    void OnReceiveMsgLimaUpdate         ( const ASN1T_MsgLimaUpdate& asnMsg );
     void OnReceiveMsgLimaDestruction    ( const ASN1T_MsgLimaDestruction& asnMsg );
 
     // Object
@@ -211,12 +213,14 @@ private:
     void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          asnMsg );
 
     // Orders
-    void OnReceiveMsgAutomateOrderAck    ( const ASN1T_MsgAutomateOrderAck& asnMsg    , unsigned long nCtx ); 
-    void OnReceiveMsgPionOrderAck        ( const ASN1T_MsgPionOrderAck& asnMsg        , unsigned long nCtx ); 
-    void OnReceiveMsgOrderConduiteAck    ( const ASN1T_MsgOrderConduiteAck& asnMsg, unsigned long nCtx ); 
-    void OnReceiveMsgOrderManagement     ( const ASN1T_MsgOrderManagement& asnMsg );
-    void OnReceiveMsgAutomateMRT         ( const ASN1T_MsgAutomateMRT& asnMsg );
-    void OnReceiveMsgPionOrder           ( const ASN1T_MsgPionOrder& asnMsg ); 
+    void OnReceiveMsgAutomateOrder          ( const ASN1T_MsgAutomateOrder& asnMsg ); 
+    void OnReceiveMsgAutomateOrderAck       ( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned long nCtx ); 
+    void OnReceiveMsgAutomateMRT            ( const ASN1T_MsgAutomateMRT& asnMsg );
+    void OnReceiveMsgAutomateOrderManagement( const ASN1T_MsgAutomateOrderManagement& asnMsg );
+    void OnReceiveMsgPionOrder              ( const ASN1T_MsgPionOrder& asnMsg ); 
+    void OnReceiveMsgPionOrderAck           ( const ASN1T_MsgPionOrderAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgPionOrderManagement    ( const ASN1T_MsgPionOrderManagement& asnMsg );
+    void OnReceiveMsgOrderConduiteAck       ( const ASN1T_MsgOrderConduiteAck& asnMsg, unsigned long nCtx ); 
 
     // Automate mode
     void OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, unsigned long nCtx );
@@ -250,6 +254,7 @@ private:
 	void OnMsgPopulationFluxDestruction			( const ASN1T_MsgPopulationFluxDestruction& asnMsg ); 
 	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
     void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgPopulationOrderManagement  ( const ASN1T_MsgPopulationOrderManagement& asnMsg );
     //@}
 
     //! @name Helpers
@@ -279,11 +284,11 @@ private:
     
 private:
     kernel::Controllers& controllers_;
-    Model*       model_;
-    Simulation& simulation_;
-    Profile&    profile_;
-    boost::mutex& mutex_;
-    MsgRecorder* msgRecorder_;
+    Model*               model_;
+    Simulation&          simulation_;
+    Profile&             profile_;
+    boost::mutex&        mutex_;
+    MsgRecorder*         msgRecorder_;
 
     DIN::DIN_Link* session_;
     DIN::DIN_MessageServiceUserCbk<AgentServerMsgMgr>*  pMessageService_;
@@ -291,9 +296,6 @@ private:
     // ASN
     ASN1OCTET           aASNEncodeBuffer_[100000];
     ASN1OCTET           aASNDecodeBuffer_[100000];
-
-    bool bReceivingState_;
-    bool bUseMosLimits_;
 
     boost::mutex inputMutex_;
     T_Inputs workingInputs_; // network thread only

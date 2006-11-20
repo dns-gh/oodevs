@@ -159,7 +159,6 @@ OrderConduite-Automate-TransfererRenforts ::= SEQUENCE
 MsgOrderConduite ::= SEQUENCE
 {
     unit-id         OID,
-    order-id        OID,
     order-conduite  CHOICE
     {
         order-conduite-mettre-tenue-nbc                                 OrderConduite-MettreTenueNBC,
@@ -213,9 +212,8 @@ MsgOrderConduite ::= SEQUENCE
 
 MsgOrderConduiteAck ::= SEQUENCE
 {
-    unit-id         OID,
-    order-id        OID,
-    error-code      EnumOrderErrorCode
+    unit-id    OID,
+    error-code EnumOrderErrorCode
 }
 
 END -- ScipioOrderConduite

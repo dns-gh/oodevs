@@ -117,15 +117,6 @@ bool MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Initialize( MIL_PionMissi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_ALAT_ReconnaitreDansLaProfondeur::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

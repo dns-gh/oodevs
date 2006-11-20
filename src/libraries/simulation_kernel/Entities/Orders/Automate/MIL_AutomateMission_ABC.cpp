@@ -15,17 +15,12 @@
 
 #include "MIL_AutomateMissionType.h"
 
-#include "Entities/Orders/Limit/MIL_LimitManager.h"
-#include "Entities/Orders/Lima/MIL_LimaManager.h"
 #include "Entities/Orders/Pion/MIL_PionMission_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Decision/DEC_Tools.h"
-#include "Tools/MIL_IDManager.h"
-#include "MIL_AgentServer.h"
 
 int MIL_AutomateMission_ABC::nDIAMissionType_        = 0;
 int MIL_AutomateMission_ABC::nDIADirectionDangerIdx_ = 0;
@@ -51,20 +46,20 @@ void MIL_AutomateMission_ABC::InitializeDIA()
 MIL_AutomateMission_ABC::MIL_AutomateMission_ABC( MIL_Automate& automate, const MIL_AutomateMissionType& type )
     : DIA_Thing                     ( DIA_Thing::ThingType(), *DIA_TypeManager::Instance().GetType( type.GetDIATypeName() ) )
     , automate_                     ( automate )
-    , type_                         ( type     )
+    , type_                         ( type )
+    , mrt_                          ()
     , bDIAMRTBehaviorActivated_     ( false )
     , bDIAConduiteBehaviorActivated_( false )
 {
     GetVariable( nDIAMissionType_ ).SetValue( (int)type.GetID() );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC destructor
 // Created: NLD 2003-04-09
 //-----------------------------------------------------------------------------
 MIL_AutomateMission_ABC::~MIL_AutomateMission_ABC()
-{
+{    
 }
 
 //=============================================================================
@@ -77,105 +72,35 @@ MIL_AutomateMission_ABC::~MIL_AutomateMission_ABC()
 // -----------------------------------------------------------------------------
 void MIL_AutomateMission_ABC::Initialize()
 {
-    nOrderID_ = MIL_IDManager::orders_.GetFreeSimID(); 
-    mrt_.Initialize( *this );
+    assert( !bDIAConduiteBehaviorActivated_ );
+    assert( !bDIAMRTBehaviorActivated_      );
 
-    pLeftLimit_ = pRightLimit_ = 0;
-    limaMap_.clear();
-
-    GetVariable( nDIADirectionDangerIdx_  ).SetValue( new MT_Vector2D( 0., 1. ), &DEC_Tools::GetTypeDirection() );
+    MIL_OrderContext::Initialize();
+    GetVariable( nDIADirectionDangerIdx_  ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
     GetVariable( nDIAFormationIdx_        ).SetValue( 0 );
+
+    mrt_.Initialize( *this );
 }
    
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::Initialize
 // Created: NLD 2003-04-09
 //-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::Initialize( const ASN1T_MsgAutomateOrder& asnMsg )
+ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::Initialize( const ASN1T_MsgAutomateOrder& asn )
 {
-    nOrderID_ = asnMsg.order_id;
+    assert( !bDIAConduiteBehaviorActivated_ );
+    assert( !bDIAMRTBehaviorActivated_      );
+
+    ASN1T_EnumOrderErrorCode nCode = MIL_OrderContext::Initialize( asn.order_context, automate_.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition() /*For fuseau orientation, when LDM and LFM aren't specified*/ );
+    if( nCode != EnumOrderErrorCode::no_error )
+        return nCode;
+
+    GetVariable( nDIADirectionDangerIdx_  ).SetValue( new MT_Vector2D( GetDirDanger() ), &DEC_Tools::GetTypeDirection() );
+    GetVariable( nDIAFormationIdx_        ).SetValue( asn.formation );
+
     mrt_.Initialize( *this );
 
-    ASN1T_EnumOrderErrorCode nCode = InitializeLimits( asnMsg );
-    if( nCode != EnumOrderErrorCode::no_error )
-        return nCode;
-
-    nCode = InitializeLimas( asnMsg );
-    if( nCode != EnumOrderErrorCode::no_error )
-        return nCode;
-
-    nCode = InitializeMission( asnMsg );
-    return nCode;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::InitializeLimits
-// Created: NLD 2003-04-10
-//-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::InitializeLimits( const ASN1T_MsgAutomateOrder& asnMsg )
-{
-    pLeftLimit_ = MIL_AgentServer::GetWorkspace().GetLimitManager().FindLimit( asnMsg.oid_limite_gauche );
-    if( !pLeftLimit_ )
-        return EnumOrderErrorCode::error_invalid_limit;
-
-    pRightLimit_ = MIL_AgentServer::GetWorkspace().GetLimitManager().FindLimit( asnMsg.oid_limite_droite );
-    if( !pRightLimit_ )
-        return EnumOrderErrorCode::error_invalid_limit;
-
-    if( pLeftLimit_ == pRightLimit_ )
-        return EnumOrderErrorCode::error_invalid_limit;
     return EnumOrderErrorCode::no_error;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::InitializeLimas
-// Created: NLD 2002-08-22
-//-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::InitializeLimas( const ASN1T_MsgAutomateOrder& asnMsg )
-{
-    limaMap_.clear();
-    for( uint nTmp = 0; nTmp < asnMsg.oid_limas.n; ++ nTmp )
-    {
-        const MIL_Lima* pLima =  MIL_AgentServer::GetWorkspace().GetLimaManager().FindLima( asnMsg.oid_limas.elem[nTmp] );
-        if( !pLima )
-            return EnumOrderErrorCode::error_invalid_lima;
-        limaMap_.insert( std::make_pair( pLima, false ) ); //$$$ DEPLACER DANS MIL_Mission_ABC
-    }
-    return EnumOrderErrorCode::no_error;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::InitializeMission
-// Created: NLD 2003-04-10
-//-----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_AutomateMission_ABC::InitializeMission( const ASN1T_MsgAutomateOrder& asnMsg )
-{
-    if( !NET_ASN_Tools::CopyDirection( asnMsg.direction_dangereuse, GetVariable( nDIADirectionDangerIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-
-    if( !NET_ASN_Tools::CopyEnumeration(  asnMsg.formation, GetVariable( nDIAFormationIdx_ ) ) )
-        return EnumOrderErrorCode::error_invalid_mission_parameters;
-    
-    return EnumOrderErrorCode::no_error;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Terminate
-// Created: NLD 2003-04-09
-//-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC::Terminate()
-{
-    nOrderID_  = (uint)-1;
-    limaMap_.clear();
-
-    fuseau_.Reset();
-
-    mrt_.Terminate();
-
-    assert( !bDIAConduiteBehaviorActivated_ );
-    assert( !bDIAMRTBehaviorActivated_ );
 }
 
 //=============================================================================
@@ -230,28 +155,6 @@ void MIL_AutomateMission_ABC::StopConduite()
     bDIAConduiteBehaviorActivated_ = false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AutomateMission_ABC::Prepare
-// Created: NLD 2004-05-19
-// -----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC::Prepare()
-{
-    if( !pLeftLimit_ || !pRightLimit_ )
-    {
-        fuseau_.Reset();
-        return;
-    }
-
-    assert( pLeftLimit_ != pRightLimit_ );
-
-    const MIL_Lima*    pBeginMissionLima  = GetLima( MIL_Lima::eLimaFuncLDM );
-    const MIL_Lima*    pEndMissionLima    = GetLima( MIL_Lima::eLimaFuncLFM );
-    const MT_Vector2D& vOrientationRefPos = automate_.GetPionPC().GetRole< PHY_RolePion_Location >().GetPosition(); // For fuseau orientation, when LDM and LFM aren't specified
-    //$$$$$ POURRI
-    
-    fuseau_.Reset( vOrientationRefPos, *pLeftLimit_, *pRightLimit_, pBeginMissionLima, pEndMissionLima );
-}
-
 // =============================================================================
 // MISC
 // =============================================================================
@@ -274,36 +177,19 @@ const char* MIL_AutomateMission_ABC::GetName() const
 // Name: MIL_AutomateMission_ABC::Serialize
 // Created: NLD 2003-05-12
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC::Serialize( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_ABC::Serialize( ASN1T_MsgAutomateOrder& asn )
 {
-    asnMsg.oid_unite_executante = automate_.GetID();
-    asnMsg.order_id             = nOrderID_;
+    MIL_OrderContext::Serialize( asn.order_context );
 
-    // Limites
-    asnMsg.oid_limite_gauche = fuseau_.GetLeftLimit () ? fuseau_.GetLeftLimit ()->GetID() : 0;
-    asnMsg.oid_limite_droite = fuseau_.GetRightLimit() ? fuseau_.GetRightLimit()->GetID() : 0;
-
-    // Limas
-    asnMsg.oid_limas.n    = limaMap_.size();
-    if( !limaMap_.empty() )
-    {
-        asnMsg.oid_limas.elem = new ASN1T_OID[ limaMap_.size() ]; //$$$$ RAM
-        uint i = 0;
-        for( CIT_LimaFlagedPtrMap itLima = limaMap_.begin(); itLima != limaMap_.end(); ++itLima )
-            asnMsg.oid_limas.elem[i++] = itLima->first->GetID();
-    }
-
-    // Direction dangereuse
-    NET_ASN_Tools::CopyDirection( GetVariable( nDIADirectionDangerIdx_ ), asnMsg.direction_dangereuse );
+    asn.oid_unite_executante = automate_.GetID();
+    asn.formation            = EnumAutomateOrderFormation::deux_echelons; //$$$
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMission_ABC::CleanAfterSerialization
 // Created: NLD 2003-05-13
 //-----------------------------------------------------------------------------
-void MIL_AutomateMission_ABC::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asnMsg )
+void MIL_AutomateMission_ABC::CleanAfterSerialization( ASN1T_MsgAutomateOrder& asn )
 {
-    if( asnMsg.oid_limas.n > 0 )
-        delete[] asnMsg.oid_limas.elem;
+    MIL_OrderContext::CleanAfterSerialization( asn.order_context );
 }

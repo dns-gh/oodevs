@@ -102,15 +102,6 @@ bool MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::Initialize( MIL_PionMi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_LOG_MettreEnOeuvreZoneStationnement::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

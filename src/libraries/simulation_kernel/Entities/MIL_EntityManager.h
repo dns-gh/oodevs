@@ -100,6 +100,7 @@ public:
     //@{
           MIL_Army*           FindArmy      ( const std::string& strName ) const;
           MIL_Army*           FindArmy      ( uint nID ) const;
+          MIL_Formation*      FindFormation ( uint nID ) const;
           MIL_Automate*       FindAutomate  ( uint nID ) const;
           MIL_Population*     FindPopulation( uint nID ) const;
           MIL_AgentPion*      FindAgentPion ( uint nID ) const;

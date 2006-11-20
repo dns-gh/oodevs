@@ -102,15 +102,6 @@ bool MIL_PionMission_RenseignerSurPopulations::Initialize( MIL_PionMission_ABC& 
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_RenseignerSurPopulations::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_RenseignerSurPopulations::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

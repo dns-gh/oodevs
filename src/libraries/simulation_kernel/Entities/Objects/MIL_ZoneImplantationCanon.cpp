@@ -50,7 +50,7 @@ MIL_ZoneImplantationCanon::~MIL_ZoneImplantationCanon()
 // NOTIFICATIONS
 // =============================================================================
 // -----------------------------------------------------------------------------
-// Name: MIL_ZoneImplantationCanon::ProcessAgentEntering
+// Name: MIL_ZoneImplantationCanon::ProcessAgentInside
 // Created: JVT 2005-05-11
 // -----------------------------------------------------------------------------
 void MIL_ZoneImplantationCanon::ProcessAgentInside( MIL_Agent_ABC& agent )

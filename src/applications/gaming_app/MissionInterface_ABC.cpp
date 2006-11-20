@@ -382,20 +382,20 @@ void MissionInterface_ABC::CreatePopulationKnowledge( ASN1T_KnowledgePopulation&
 
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateLimaList
-// Created: AGE 2006-03-31
+// Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateLimaList( ASN1T_ListOID& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
+void MissionInterface_ABC::CreateLimaList( ASN1T_LimasOrder& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional /*= 0*/ )
 {
     AddParameter( *new ParamLimaList( this, asn, "Limas", strName ), pOptional );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MissionInterface_ABC::CreateLimits
-// Created: AGE 2006-03-31
+// Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateLimits( ASN1T_OID& id1, ASN1T_OID& id2 , const QString& name1, const QString& name2, OptionalParamFunctor_ABC* pOptional )
+void MissionInterface_ABC::CreateLimits( ASN1T_Line& left, ASN1T_Line& right, const QString& name1, const QString& name2, OptionalParamFunctor_ABC* pOptional /*= 0*/ )
 {
-    AddParameter( *new ParamLimits( this, id1, id2, "Limite 1", "Limite 2", name1, name2 ), pOptional );
+    AddParameter( *new ParamLimits( this, left, right, "Limite 1", "Limite 2", name1, name2 ), pOptional );
 }
 
 // -----------------------------------------------------------------------------

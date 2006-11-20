@@ -102,15 +102,6 @@ bool MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Initialize( MIL_PionMiss
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_NBC_AnimerUnPlotDeDecontamination::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

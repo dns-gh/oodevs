@@ -132,15 +132,6 @@ bool MIL_PionMission_Generique::Initialize( MIL_PionMission_ABC& missionTmp )
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_Generique::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_Generique::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

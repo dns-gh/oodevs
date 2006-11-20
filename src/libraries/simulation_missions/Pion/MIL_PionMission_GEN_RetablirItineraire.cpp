@@ -102,15 +102,6 @@ bool MIL_PionMission_GEN_RetablirItineraire::Initialize( MIL_PionMission_ABC& mi
     return true;
 }                                                                    
 
-//-----------------------------------------------------------------------------
-// Name: MIL_PionMission_GEN_RetablirItineraire::Terminate
-// Created: 
-//-----------------------------------------------------------------------------
-void MIL_PionMission_GEN_RetablirItineraire::Terminate()
-{
-    MIL_PionMission_ABC::Terminate();    
-}
-
 //=============================================================================
 // NETWORK
 //=============================================================================

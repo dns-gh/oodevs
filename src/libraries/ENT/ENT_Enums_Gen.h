@@ -326,6 +326,33 @@ enum E_ModeDeploiement
 };
 
 
+enum E_TypeLima
+{
+    eTypeLima_LigneDebouche,
+    eTypeLima_LigneChangementAttitude,
+    eTypeLima_LigneCoordination,
+    eTypeLima_LigneInterdire,
+    eTypeLima_LigneObjectif,
+    eTypeLima_LigneCoupArret,
+    eTypeLima_LigneRecueil,
+    eTypeLima_LigneDebutMission,
+    eTypeLima_LigneFinMission,
+    eTypeLima_LigneIdentificationAccueil,
+    eNbrTypeLima
+};
+
+
+enum E_InfoContextErrorCode
+{
+    eInfoContextErrorCode_NoError,
+    eInfoContextErrorCode_ErrorInvalidId,
+    eInfoContextErrorCode_ErrorInvalidGeometry,
+    eInfoContextErrorCode_ErrorInvalidLimaFunction,
+    eInfoContextErrorCode_ErrorInvalidDiffusion,
+    eNbrInfoContextErrorCode
+};
+
+
 enum E_OrderErrorCode
 {
     eOrderErrorCode_NoError,
@@ -340,6 +367,7 @@ enum E_OrderErrorCode
     eOrderErrorCode_ErrorInvalidOrderInitial,
     eOrderErrorCode_ErrorInvalidOrderConduiteParameters,
     eOrderErrorCode_ErrorUnitSurrendered,
+    eOrderErrorCode_ErrorInvalidLimaFunction,
     eNbrOrderErrorCode
 };
 
@@ -509,33 +537,6 @@ enum E_PrecipitationType
     ePrecipitationType_Pluie,
     ePrecipitationType_Neige,
     eNbrPrecipitationType
-};
-
-
-enum E_TypeLima
-{
-    eTypeLima_LigneDebouche,
-    eTypeLima_LigneChangementAttitude,
-    eTypeLima_LigneCoordination,
-    eTypeLima_LigneInterdire,
-    eTypeLima_LigneObjectif,
-    eTypeLima_LigneCoupArret,
-    eTypeLima_LigneRecueil,
-    eTypeLima_LigneDebutMission,
-    eTypeLima_LigneFinMission,
-    eTypeLima_LigneIdentificationAccueil,
-    eNbrTypeLima
-};
-
-
-enum E_InfoContextErrorCode
-{
-    eInfoContextErrorCode_NoError,
-    eInfoContextErrorCode_ErrorInvalidId,
-    eInfoContextErrorCode_ErrorInvalidGeometry,
-    eInfoContextErrorCode_ErrorInvalidLimaFunction,
-    eInfoContextErrorCode_ErrorInvalidLimitOrLimaUsed,
-    eNbrInfoContextErrorCode
 };
 
 
