@@ -116,7 +116,8 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
     else
     {
         subSelected_ = 0;
-        pKnowledgeListView_->setSelected( 0, false );
+        pKnowledgeListView_->setSelected( pKnowledgeListView_->firstChild(), true );
+        OnSelectionChanged( pKnowledgeListView_->firstChild() );
     }
 }
 

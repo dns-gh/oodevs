@@ -102,7 +102,7 @@ private:
     gui::DisplayBuilder* display_;
     gui::ListDisplayer< AgentKnowledgePanel >* pPerceptionListView_;
 
-    kernel::SafePointer< AgentKnowledges > selected_;
+    kernel::SafePointer< AgentKnowledges >     selected_;
     kernel::SafePointer< AgentKnowledge_ABC >  subSelected_;
     kernel::SafePointer< AgentKnowledge_ABC >  selectionCandidate_;
     //@}

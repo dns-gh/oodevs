@@ -649,26 +649,6 @@
 </context>
 <context>
     <name>ControllerToolbar</name>
-    <message>
-        <source>Outils controlleur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lancer Scipio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lancer Scipio debug</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DisconnectDialog</name>

@@ -11,7 +11,6 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 
-#include "ControllerToolbar.h"
 #include "Dialogs.h"
 #include "EventToolbar.h"
 #include "InfoPanels.h"
@@ -216,7 +215,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
     new SIMControlToolbar( this, controllers, network, publisher );
     new MapToolbar( this, controllers );
-    new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers, *agentsLayer );
     new EventToolbar( this, controllers, profile );
