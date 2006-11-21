@@ -54,8 +54,14 @@ public:
     //@
     void Load( const QString& filename );
     void Purge();
-    void Save( const QString& filename = "" ) const;
-    const QString& GetName() const;
+    void Save( const QString& filename = "" );
+    QString GetName() const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void UpdateName( const std::string& orbat );
     //@}
 
 private:
@@ -66,7 +72,8 @@ private:
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;
     FormationFactory_ABC& formationFactory_;
-    mutable QString orbatFile_;
+    std::string orbatFile_;
+    QString name_;
     //@}
 
 public:
