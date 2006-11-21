@@ -46,6 +46,7 @@ public:
     virtual void HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void HandleMouseMove       ( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual void HandleMouseWheel      ( QWheelEvent* mouse,     const geometry::Point2f& point );
     virtual void HandleDropEvent       ( QDropEvent*  event,     const geometry::Point2f& point );
     virtual void HandleEnterDragEvent  ( QDragEnterEvent* event, const geometry::Point2f& point );
     //@}

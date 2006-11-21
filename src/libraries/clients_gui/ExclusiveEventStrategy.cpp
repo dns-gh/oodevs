@@ -118,6 +118,18 @@ void ExclusiveEventStrategy::HandleMouseMove( QMouseEvent* mouse, const geometry
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExclusiveEventStrategy::HandleMouseWheel
+// Created: AGE 2006-11-21
+// -----------------------------------------------------------------------------
+void ExclusiveEventStrategy::HandleMouseWheel( QWheelEvent* mouse, const geometry::Point2f& point )
+{
+    if( layer_ )
+        layer_->HandleMouseWheel( mouse, point );
+    else
+        forward_.HandleMouseWheel( mouse, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExclusiveEventStrategy::HandleDropEvent
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------

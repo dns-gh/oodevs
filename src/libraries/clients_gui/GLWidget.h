@@ -11,6 +11,7 @@
 #define __GlWidget_h_
 
 #include "graphics/MapWidget.h"
+#include "boost/utility/base_from_member.hpp"
 
 #include "clients_kernel/WorldParameters.h"
 #include "SetGlOptions.h"
@@ -37,6 +38,7 @@ namespace gui
 // =============================================================================
 class GlWidget : private kernel::WorldParameters
                , private SetGlOptions
+               , private boost::base_from_member< std::auto_ptr< MapLayer_ABC > >
                , public MapWidget
                , public GlToolsBase
                , public View_ABC

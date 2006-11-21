@@ -11,6 +11,7 @@
 #include "GlWidget.h"
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
+#include "graphics/DragMovementLayer.h"
 #include "MiniView.h"
 #include "clients_gui/IconLayout.h"
 #include "DrawerStyle.h"
@@ -45,7 +46,8 @@ namespace
 GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout, EventStrategy_ABC& strategy )
     : WorldParameters( scipioXml )
     , SetGlOptions()
-    , MapWidget( context_, pParent, strategy, width_, height_ )
+    , boost::base_from_member< std::auto_ptr< MapLayer_ABC > >( new DragMovementLayer( *this ) )
+    , MapWidget( context_, pParent, strategy, *member, width_, height_ )
     , GlToolsBase( controllers )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )

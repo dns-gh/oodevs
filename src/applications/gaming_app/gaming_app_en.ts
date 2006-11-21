@@ -648,9 +648,6 @@
     </message>
 </context>
 <context>
-    <name>ControllerToolbar</name>
-</context>
-<context>
     <name>DisconnectDialog</name>
     <message>
         <source>D&#xe9;connexion</source>
