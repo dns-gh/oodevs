@@ -302,13 +302,13 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
         >> attribute( "link", linkType );
     if( Entity_ABC* entity = Resolver< Automat_ABC >::Find( id ) )
     {
-        if( linkType == entity->Get< Tc2States >().GetLinkType().ascii() )
-            entity->Get< Tc2States >().Load( xis, &automat );
-        else if( linkType == entity->Get< MedicalStates >().GetLinkType().ascii() )
-            entity->Get< MedicalStates >().Load( xis, &automat );
-        else if( linkType == entity->Get< MaintenanceStates >().GetLinkType().ascii() )
-            entity->Get< MaintenanceStates >().Load( xis, &automat );
-        else if( linkType == entity->Get< SupplyStates >().GetLinkType().ascii() )
-            entity->Get< SupplyStates >().Load( xis, &automat );
+        if( linkType == entity->Get< TC2Hierarchies >().GetLinkType().ascii() )
+            entity->Get< TC2Hierarchies >().Load( xis, &automat );
+        else if( linkType == entity->Get< MedicalHierarchies >().GetLinkType().ascii() )
+            entity->Get< MedicalHierarchies >().Load( xis, &automat );
+        else if( linkType == entity->Get< MaintenanceHierarchies >().GetLinkType().ascii() )
+            entity->Get< MaintenanceHierarchies >().Load( xis, &automat );
+        else if( linkType == entity->Get< SupplyHierarchies >().GetLinkType().ascii() )
+            entity->Get< SupplyHierarchies >().Load( xis, &automat );
     }
 }

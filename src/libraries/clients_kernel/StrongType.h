@@ -36,6 +36,7 @@ public:
     //@{
     operator const T&() const;
     operator T&();
+    T operator->() const;
     //@}
 
     //! @name Operators

@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-24
 // =============================================================================
-class SupplyStates : public LogisticHierarchies< SupplySuperior, SupplyStates >
+class SupplyStates : public LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >
 {
 
 public:
@@ -31,7 +31,6 @@ public:
 
     //! @name Operations
     //@
-    virtual QString GetLinkType() const;
     void SetSuperior( const SupplySuperior& automat );
     //@}
 

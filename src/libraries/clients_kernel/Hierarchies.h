@@ -47,6 +47,7 @@ public:
     virtual void AddSubordinate       (       Entity_ABC& entity ) = 0;
     virtual void RemoveSubordinate    ( const Entity_ABC& entity ) = 0;
     virtual void UnregisterSubordinate( const Entity_ABC& entity ) = 0;
+    virtual void UnregisterParent     () = 0;
     //@}
 
     //! @name Operations

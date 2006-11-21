@@ -58,13 +58,6 @@ private:
     TeamsModel& operator=( const TeamsModel& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void DeleteFormations();
-    void DeleteFormations( const kernel::HierarchyLevel_ABC& level );
-    const kernel::HierarchyLevel_ABC* FindLastLevel();
-    //@}
-
 private:
     //! @name Member data
     //@{

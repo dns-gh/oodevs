@@ -39,67 +39,12 @@ TeamsModel::~TeamsModel()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamsModel::FindLastLevel
-// Created: AGE 2006-11-20
-// -----------------------------------------------------------------------------
-const HierarchyLevel_ABC* TeamsModel::FindLastLevel()
-{
-    Iterator< const Formation_ABC& > it = Resolver< Formation_ABC >::CreateIterator();
-    if( it.HasMoreElements() )
-    {
-        const HierarchyLevel_ABC* level = & it.NextElement().GetLevel();
-        while( level )
-        {
-            const HierarchyLevel_ABC* next = level->GetNext();
-            if( ! next )
-                return level;
-            level = next;
-        }
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::DeleteFormations
-// Created: AGE 2006-11-20
-// -----------------------------------------------------------------------------
-void TeamsModel::DeleteFormations()
-{
-    const HierarchyLevel_ABC* lastLevel = FindLastLevel();
-    while( lastLevel )
-    {
-        DeleteFormations( *lastLevel );
-        lastLevel = lastLevel->GetPrevious();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: TeamsModel::DeleteFormations
-// Created: AGE 2006-11-20
-// -----------------------------------------------------------------------------
-void TeamsModel::DeleteFormations( const kernel::HierarchyLevel_ABC& level )
-{
-    std::vector< const Formation_ABC* > toDelete;
-    Iterator< const Formation_ABC& > it = Resolver< Formation_ABC >::CreateIterator();
-    while( it.HasMoreElements() )
-    {
-        const Formation_ABC& formation = it.NextElement();
-        if( formation.GetLevel().GetId() == level.GetId() )
-            toDelete.push_back( &formation );
-    }
-    for( std::vector< const Formation_ABC* >::iterator it = toDelete.begin(); it != toDelete.end(); ++it )
-        Resolver< Formation_ABC >::Remove( (*it)->GetId() );
-    for( std::vector< const Formation_ABC* >::iterator it = toDelete.begin(); it != toDelete.end(); ++it )
-        delete *it;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TeamsModel::Purge
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
-    DeleteFormations();
+    Resolver< Formation_ABC >::DeleteAll();
     Resolver< Team_ABC >::DeleteAll();
 }
 

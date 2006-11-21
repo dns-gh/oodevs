@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-26
 // =============================================================================
-class Tc2States : public LogisticHierarchies< TC2, Tc2States >
+class Tc2States : public LogisticHierarchies< TC2, kernel::TC2Hierarchies >
 {
 
 public:
@@ -32,7 +32,6 @@ public:
     //! @name Operations
     //@{
     void SetSuperior( const TC2& automat );
-    virtual QString GetLinkType() const;
     //@}
 
 private:

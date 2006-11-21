@@ -18,7 +18,7 @@ using namespace kernel;
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 MaintenanceStates::MaintenanceStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
-    : LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >( controller, entity, resolver )
+    : ::LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >( controller, entity, resolver )
 {
     CreateDictionary( dico, entity );
 }
@@ -38,17 +38,8 @@ MaintenanceStates::~MaintenanceStates()
 // -----------------------------------------------------------------------------
 void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
-    LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >::CreateDictionary( dico, owner, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Quotas" ) );
-    dico.Register( *(const kernel::TacticalHierarchies*)this, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Superior" ), tc2_, *this, &MaintenanceStates::SetSuperior );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MaintenanceStates::GetLinkType
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-QString MaintenanceStates::GetLinkType() const
-{
-    return "maintenance";
+    ::LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >::CreateDictionary( dico, owner, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Quotas" ) );
+    dico.Register( *(const kernel::MaintenanceHierarchies*)this, tools::translate( "MaintenanceStates", "Logistic/Maintenance/Superior" ), tc2_, *this, &MaintenanceStates::SetSuperior );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,5 +48,5 @@ QString MaintenanceStates::GetLinkType() const
 // -----------------------------------------------------------------------------
 void MaintenanceStates::SetSuperior( const MaintenanceSuperior& automat )
 {
-    LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >::SetSuperior( automat );
+    ::LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >::SetSuperior( automat );
 }

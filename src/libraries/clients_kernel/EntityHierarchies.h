@@ -51,6 +51,7 @@ public:
     virtual void AddSubordinate       (       Entity_ABC& entity );
     virtual void RemoveSubordinate    ( const Entity_ABC& entity );
     virtual void UnregisterSubordinate( const Entity_ABC& entity );
+    virtual void UnregisterParent     ();
     //@}
 
 protected:
@@ -60,6 +61,7 @@ protected:
     Interface* SuperiorHierarchy();
     void ChangeSuperior( Entity_ABC* superior );
     void SetSuperior( Entity_ABC* superior );
+    virtual void SetSuperiorInternal( Entity_ABC* superior );
     virtual void CreateDictionary( PropertiesDictionary& dico ) const;
     //@}
 

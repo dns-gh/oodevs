@@ -98,10 +98,10 @@ kernel::Automat_ABC* AgentFactory::Create( Formation_ABC& parent, const AutomatT
 
     Entity_ABC* kg = FindKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
-    result->Attach( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
-    result->Attach( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
-    result->Attach( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
-    result->Attach( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach< MedicalHierarchies >    ( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach< SupplyHierarchies >     ( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 
     result->Polish();
@@ -171,10 +171,10 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Formation
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
-    result->Attach( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
-    result->Attach( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
-    result->Attach( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
-    result->Attach( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach< MaintenanceHierarchies >( *new MaintenanceStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach< MedicalHierarchies >    ( *new MedicalStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
+    result->Attach< SupplyHierarchies >     ( *new SupplyStates( controllers_.controller_, *result, static_.objectTypes_ , dico ) );
     result->Attach( *new TacticalLines() );
 
     result->Polish();

@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-24
 // =============================================================================
-class MedicalStates : public LogisticHierarchies< MedicalSuperior, MedicalStates >
+class MedicalStates : public LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >
 {
 
 public:
@@ -32,7 +32,6 @@ public:
     //! @name Operations
     //@{
     void SetSuperior( const MedicalSuperior& automat );
-    virtual QString GetLinkType() const;
     //@}
 
 private:

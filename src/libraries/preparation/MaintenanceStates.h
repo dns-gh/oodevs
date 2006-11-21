@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-24
 // =============================================================================
-class MaintenanceStates : public LogisticHierarchies< MaintenanceSuperior, MaintenanceStates >
+class MaintenanceStates : public LogisticHierarchies< MaintenanceSuperior, kernel::MaintenanceHierarchies >
 {
 
 public:
@@ -32,7 +32,6 @@ public:
     //! @name Operations
     //@{
     void SetSuperior( const MaintenanceSuperior& automat );
-    virtual QString GetLinkType() const;
     //@}
 
 private:

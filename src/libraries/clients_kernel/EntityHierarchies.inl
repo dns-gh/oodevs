@@ -39,6 +39,13 @@ EntityHierarchies< Interface >::~EntityHierarchies()
 {
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->UnregisterSubordinate( entity_ );
+    Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        Interface* child = const_cast< Entity_ABC& >( it.NextElement() ).Retrieve< Interface >();
+        if( child )
+            child->UnregisterParent();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -114,6 +121,16 @@ void EntityHierarchies< Interface >::UnregisterSubordinate( const Entity_ABC& en
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityHierarchies::UnregisterParent
+// Created: AGE 2006-11-21
+// -----------------------------------------------------------------------------
+template< typename Interface >
+void EntityHierarchies< Interface >::UnregisterParent()
+{
+    SetSuperiorInternal( 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityHierarchies::ChangeSuperior
 // Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
@@ -122,7 +139,7 @@ void EntityHierarchies< Interface >::ChangeSuperior( Entity_ABC* superior )
 {
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->RemoveSubordinate( entity_ );
-    superior_ = superior;
+    SetSuperiorInternal( superior );
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->AddSubordinate( entity_ );
     controller_.Update( *(Interface*)this );
@@ -137,10 +154,20 @@ void EntityHierarchies< Interface >::SetSuperior( Entity_ABC* superior )
 {
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->UnregisterSubordinate( entity_ );
-    superior_ = superior;
+    SetSuperiorInternal( superior );
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
         superiorHierarchy->RegisterSubordinate( entity_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityHierarchies::SetSuperiorInternal
+// Created: AGE 2006-11-21
+// -----------------------------------------------------------------------------
+template< typename Interface >
+void EntityHierarchies< Interface >::SetSuperiorInternal( Entity_ABC* superior )
+{
+    superior_ = superior;
+}   
 
 // -----------------------------------------------------------------------------
 // Name: EntityHierarchies::RetrieveHierarchies

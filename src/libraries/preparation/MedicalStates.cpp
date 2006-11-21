@@ -16,7 +16,7 @@
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 MedicalStates::MedicalStates( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico )
-    : LogisticHierarchies< MedicalSuperior, MedicalStates >( controller, entity, resolver )
+    : ::LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >( controller, entity, resolver )
 {
     CreateDictionary( dico, entity );
 }
@@ -36,17 +36,8 @@ MedicalStates::~MedicalStates()
 // -----------------------------------------------------------------------------
 void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
-    LogisticHierarchies< MedicalSuperior, MedicalStates >::CreateDictionary( dico, owner, tools::translate( "MedicalStates", "Logistic/Medical/Quotas" ) );
-    dico.Register( *(const kernel::TacticalHierarchies*)this, tools::translate( "MedicalStates", "Logistic/Medical/Superior" ), tc2_, *this, &MedicalStates::SetSuperior );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalStates::GetLinkType
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-QString MedicalStates::GetLinkType() const
-{
-    return "medical";
+    ::LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >::CreateDictionary( dico, owner, tools::translate( "MedicalStates", "Logistic/Medical/Quotas" ) );
+    dico.Register( *(const kernel::MedicalHierarchies*)this, tools::translate( "MedicalStates", "Logistic/Medical/Superior" ), tc2_, *this, &MedicalStates::SetSuperior );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,5 +46,5 @@ QString MedicalStates::GetLinkType() const
 // -----------------------------------------------------------------------------
 void MedicalStates::SetSuperior( const MedicalSuperior& automat )
 {
-    LogisticHierarchies< MedicalSuperior, MedicalStates >::SetSuperior( automat );
+    ::LogisticHierarchies< MedicalSuperior, kernel::MedicalHierarchies >::SetSuperior( automat );
 }

@@ -18,7 +18,7 @@ using namespace kernel;
 // Created: SBO 2006-10-24
 // -----------------------------------------------------------------------------
 SupplyStates::SupplyStates( Controller& controller, Entity_ABC& entity, const Resolver_ABC< DotationType, QString >& resolver, PropertiesDictionary& dico )
-    : LogisticHierarchies< SupplySuperior, SupplyStates >( controller, entity, resolver )
+    : ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >( controller, entity, resolver )
 {
     CreateDictionary( dico, entity );
 }
@@ -38,18 +38,10 @@ SupplyStates::~SupplyStates()
 // -----------------------------------------------------------------------------
 void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner )
 {
-    LogisticHierarchies< SupplySuperior, SupplyStates >::CreateDictionary( dico, owner, tools::translate( "SupplyStates", "Logistic/Supply/Quotas" ) );
-    dico.Register( *(const kernel::TacticalHierarchies*)this, tools::translate( "SupplyStates", "Logistic/Supply/Superior" ), tc2_, *this, &SupplyStates::SetSuperior );
+    ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >::CreateDictionary( dico, owner, tools::translate( "SupplyStates", "Logistic/Supply/Quotas" ) );
+    dico.Register( *(const kernel::SupplyHierarchies*)this, tools::translate( "SupplyStates", "Logistic/Supply/Superior" ), tc2_, *this, &SupplyStates::SetSuperior );
 }
 
-// -----------------------------------------------------------------------------
-// Name: SupplyStates::GetLinkType
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-QString SupplyStates::GetLinkType() const
-{
-    return "supply";
-}
 
 // -----------------------------------------------------------------------------
 // Name: SupplyStates::SetSuperior
@@ -57,5 +49,5 @@ QString SupplyStates::GetLinkType() const
 // -----------------------------------------------------------------------------
 void SupplyStates::SetSuperior( const SupplySuperior& automat )
 {
-    LogisticHierarchies< SupplySuperior, SupplyStates >::SetSuperior( automat );
+    ::LogisticHierarchies< SupplySuperior, kernel::SupplyHierarchies >::SetSuperior( automat );
 }
