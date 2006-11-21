@@ -70,6 +70,7 @@
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
+#include "clients_gui/Tools.h"
 
 //#include "clients_gui/NatureEditionWidget.h"
 
@@ -99,9 +100,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , glProxy_     ( 0 )
     , widget2d_    ( 0 )
     , iconLayout_  ( 0 )
+    , needsSaving_ ( false )
 {
     setIcon( MAKE_PIXMAP( astec ) );
-    setCaption( APP_NAME );
+    SetWindowTitle( false );
 
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
     new Dialogs( this, controllers, model_, staticModel );
@@ -190,7 +192,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     CreateLayers( *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
 
     pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
-//    controllers_.Register( *this );
+    controllers_.Register( *this );
 
     displayTimer_ = new QTimer( this );
 
@@ -259,6 +261,7 @@ void MainWindow::New()
             std::replace( current.begin(), current.end(), '/', '\\' );
     }
     Load( current );
+    SetWindowTitle( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,7 +274,12 @@ void MainWindow::Open()
     try
     {
         if( !scipioXml_.empty() )
-            model_.Load( scipioXml_ ); // $$$$ SBO 2006-10-05: should be a different file
+        {
+            loading_ = true;
+            model_.Load( scipioXml_.c_str() ); // $$$$ SBO 2006-10-05: should be a different file
+            loading_ = false;
+            SetWindowTitle( false );
+        }
     }
     catch( InvalidModelException& e )
     {
@@ -296,6 +304,7 @@ void MainWindow::Load( const std::string& scipioXml )
     setCentralWidget( widget2d_ );
     model_.Purge();
     staticModel_.Load( scipioXml );
+    SetWindowTitle( false );
 
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
@@ -310,6 +319,7 @@ void MainWindow::Load( const std::string& scipioXml )
 void MainWindow::Close()
 {
     model_.Purge();
+    SetWindowTitle( false );
     staticModel_.Purge();
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
@@ -322,17 +332,34 @@ void MainWindow::Close()
 // Name: MainWindow::Save
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void MainWindow::Save()
+bool MainWindow::Save()
+{
+    if( model_.GetName().isEmpty() )
+        return SaveAs();
+    else
+    {
+        model_.Save();
+        SetWindowTitle( false );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::SaveAs
+// Created: SBO 2006-11-21
+// -----------------------------------------------------------------------------
+bool MainWindow::SaveAs()
 {
     std::string current;
     const QString filename = QFileDialog::getSaveFileName( "../data/", "Ordre de bataille (*.xml)", 0, 0, "Sauvegarde ODB" );
     if( filename.isEmpty() )
-        return;
+        return false;
     current = filename;
     if( current.substr( 0, 2 ) == "//" )
         std::replace( current.begin(), current.end(), '/', '\\' );
-    xml::xofstream xos( current, xml::encoding( "ISO-8859-1" ) );
-    model_.Serialize( xos );
+    model_.Save( current.c_str() );
+    SetWindowTitle( false );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -341,7 +368,7 @@ void MainWindow::Save()
 // -----------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-//    controllers_.Remove( *this );
+    controllers_.Remove( *this );
 //    delete pOptions_;
     delete glProxy_;
     delete modelBuilder_;
@@ -353,6 +380,18 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
+    if( needsSaving_ )
+    {
+        int result = QMessageBox::question( this, APP_NAME, tools::translate( "MainWindow", "Save modifications?" )
+                                                          , QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        if( ( result == QMessageBox::Yes && !Save() ) || result == QMessageBox::Cancel )
+        {
+            pEvent->ignore();
+            return;
+        }
+
+    }
+
     WriteSettings();
     WriteOptions();
     QMainWindow::closeEvent( pEvent );
@@ -446,4 +485,47 @@ void MainWindow::BuildIconLayout()
 //    iconLayout_->AddIcon( xpm_nbc            , -200, 25 );
 //    iconLayout_->AddIcon( xpm_construction   ,  200, 150 );
 //    iconLayout_->AddIcon( xpm_observe        ,  200, 150 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyCreated
+// Created: SBO 2006-11-21
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyCreated()
+{
+    if( !loading_ )
+        SetWindowTitle( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyUpdated
+// Created: SBO 2006-11-21
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyUpdated()
+{
+    if( !loading_ )
+        SetWindowTitle( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::NotifyDeleted
+// Created: SBO 2006-11-21
+// -----------------------------------------------------------------------------
+void MainWindow::NotifyDeleted()
+{
+    if( !loading_ )
+        SetWindowTitle( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::SetWindowTitle
+// Created: SBO 2006-11-21
+// -----------------------------------------------------------------------------
+void MainWindow::SetWindowTitle( bool needsSaving )
+{
+    needsSaving_ = needsSaving;
+    QString filename = model_.GetName().isEmpty() ? tools::translate( "MainWindow", "New ORBAT" ) : model_.GetName();
+    if( needsSaving )
+        filename += "*";
+    setCaption( QString( APP_NAME " - [%1]" ).arg( filename ) );
 }

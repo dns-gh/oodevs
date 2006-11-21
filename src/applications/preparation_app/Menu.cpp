@@ -48,6 +48,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog 
     menu->insertItem( tr( "Close" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
     menu->insertItem( MAKE_ICON( save ), tr( "&Save" ), parent(), SLOT( Save() ), CTRL + Key_S );
+    menu->insertItem( MAKE_ICON( saveas ), tr( "&Save as..." ), parent(), SLOT( SaveAs() ) );
     menu->insertSeparator();
     menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
     insertItem( tr( "&File" ), menu, ALT + Key_F );

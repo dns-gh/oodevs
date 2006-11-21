@@ -52,9 +52,10 @@ public:
 
     //! @name Operations
     //@
-    void Load( const std::string& filename );
+    void Load( const QString& filename );
     void Purge();
-    void Serialize( xml::xostream& xos ) const;
+    void Save( const QString& filename = "" ) const;
+    const QString& GetName() const;
     //@}
 
 private:
@@ -65,6 +66,7 @@ private:
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;
     FormationFactory_ABC& formationFactory_;
+    mutable QString orbatFile_;
     //@}
 
 public:

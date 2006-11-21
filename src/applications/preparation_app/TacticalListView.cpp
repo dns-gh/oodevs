@@ -59,6 +59,8 @@ void TacticalListView::Display( const Entity_ABC& agent, gui::ValuedListItem* it
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 0, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
+    else
+        item->setPixmap( 0, QPixmap() );
     gui::HierarchyListView< kernel::TacticalHierarchies >::Display( agent, item );
 }
 

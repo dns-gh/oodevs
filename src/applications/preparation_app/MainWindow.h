@@ -11,6 +11,7 @@
 #define __MainWindow_h_
 
 #include <qmainwindow.h>
+#include "clients_kernel/ControllerObserver_ABC.h"
 
 namespace kernel
 {
@@ -52,6 +53,8 @@ class ObjectCreationPanel;
 // Created: APE 2004-03-01
 // =============================================================================
 class MainWindow : public QMainWindow
+                 , public kernel::Observer_ABC
+                 , public kernel::ControllerObserver_ABC
 {
     Q_OBJECT;
 
@@ -74,10 +77,17 @@ public slots:
     void New();
     void Open();
     void Close();
-    void Save();
+    bool Save();
+    bool SaveAs();
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    MainWindow( const MainWindow& );
+    MainWindow& operator=( const MainWindow& );
+    //@}
+
     //! @name Helpers
     //@{
     void BuildIconLayout();
@@ -85,15 +95,13 @@ private:
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();
-
     void WriteOptions();
     void ReadOptions();
-    //@}
 
-    //! @name Copy/Assignment
-    //@{
-    MainWindow( const MainWindow& );
-    MainWindow& operator=( const MainWindow& );
+    virtual void NotifyCreated();
+    virtual void NotifyUpdated();
+    virtual void NotifyDeleted();
+    void SetWindowTitle( bool needsSaving );
     //@}
 
 private:
@@ -105,19 +113,20 @@ private:
     ModelBuilder* modelBuilder_;
     std::string scipioXml_;
 
-    gui::GlProxy*       glProxy_;
-    gui::ColorStrategy* strategy_;
-    EventStrategy_ABC* eventStrategy_;
-    gui::GlWidget*   widget2d_;
-    gui::GlPlaceHolder* glPlaceHolder_;
-    gui::IconLayout* iconLayout_;
+    gui::GlProxy*         glProxy_;
+    gui::ColorStrategy*   strategy_;
+    EventStrategy_ABC*    eventStrategy_;
+    gui::GlWidget*        widget2d_;
+    gui::GlPlaceHolder*   glPlaceHolder_;
+    gui::IconLayout*      iconLayout_;
 
-    QTimer* displayTimer_;
+    QTimer*               displayTimer_;
 
     gui::OptionsPanel*    pOptionsPanel_;
     gui::StatusBar*       pStatus_;
     gui::ParametersLayer* parameters_;
-    AgentsLayer*     agents_;
+    bool                  loading_;
+    bool                  needsSaving_;
     //@}
 };
 
