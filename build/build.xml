@@ -164,12 +164,13 @@
     </target>
 
     <target name="application.simulation_tester" description="build CSword Simulation Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
+        <!-- TMP
         <build-app name="simulation_tester" subsystem="console" depends="mt,din,terrain"
                    libs="MT_Tools_SCIPIO,ASN,asn1per"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
             <includepath path="${applications.dir}/simulation_tester"/>
             <includepath path="${include.dir}/ASN"/>
-        </build-app>
+        </build-app>-->
     </target>
 
     <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
