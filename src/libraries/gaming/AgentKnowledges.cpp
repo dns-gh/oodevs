@@ -20,7 +20,8 @@ using namespace kernel;
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup_ABC& group, AgentKnowledgeFactory_ABC& factory )
-    : controller_( controller )
+    : Creatable< AgentKnowledges >( controller, this )
+    , controller_( controller )
     , group_( group )
     , factory_( factory )
 {
@@ -33,17 +34,7 @@ AgentKnowledges::AgentKnowledges( Controller& controller, const KnowledgeGroup_A
 // -----------------------------------------------------------------------------
 AgentKnowledges::~AgentKnowledges()
 {
-    controller_.Delete( *this );
     Resolver< AgentKnowledge_ABC >::DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledges::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void AgentKnowledges::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +55,7 @@ void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeCreation& message )
 // Name: AgentKnowledges::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate&      message )
+void AgentKnowledges::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
 {
     Get( message.oid_connaissance ).Update( message );
     controller_.Update( *this );

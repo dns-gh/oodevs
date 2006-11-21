@@ -25,10 +25,10 @@ using namespace kernel;
 // Name: EventToolbar constructor
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
-EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers )
+EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, const kernel::Profile_ABC& profile )
     : QToolBar( pParent, "event toolbar" )
     , controllers_( controllers )
-    , profile_( 0 )
+    , profile_( profile )
 {
     setLabel( tr( "Messagerie" ) );
     gasButton_ = new QToolButton( MAKE_ICON( gas ), tr( "Pannes d'essence" ), "", this, SLOT( GasClicked() ), this );
@@ -88,7 +88,7 @@ void EventToolbar::MessageClicked()
 void EventToolbar::NotifyCreated( const Report_ABC& report )
 {
     const Entity_ABC& agent = report.GetAgent();
-    if( ! profile_ || profile_->IsVisible( agent ) )
+    if( profile_.IsVisible( agent ) )
     {
         const CIT_Agents it = std::find( messageAgents_.begin(), messageAgents_.end(), &agent );
         if( it == messageAgents_.end() )
@@ -105,7 +105,8 @@ void EventToolbar::NotifyCreated( const Report_ABC& report )
 // -----------------------------------------------------------------------------
 void EventToolbar::NotifyUpdated( const Profile_ABC& profile )
 {
-    profile_ = &profile;
+    if( &profile_ != &profile )
+        return;
     T_Agents filtered;
     for( CIT_Agents it = messageAgents_.begin(); it != messageAgents_.end(); ++it )
         if( profile.IsVisible( **it ) )

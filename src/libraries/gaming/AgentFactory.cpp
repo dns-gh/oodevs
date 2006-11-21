@@ -14,7 +14,6 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/AgentTypes.h"

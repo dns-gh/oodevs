@@ -19,7 +19,6 @@
 namespace kernel
 {
     class Controller;
-    class InstanciationComplete;
     class ObjectType;
     class Location_ABC;
     class Object_ABC;

@@ -51,7 +51,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~HierarchyListView_ABC();
 
     QSize sizeHint() const;
@@ -101,7 +101,7 @@ private:
 
     bool Drop( ValuedListItem& item, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
-    bool HasVisibleChild( QListViewItem* item ) const;
+    static void SetVisible( QListViewItem* item, bool visible );
     //@}
 
 private:
@@ -109,7 +109,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    const kernel::Profile_ABC* profile_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

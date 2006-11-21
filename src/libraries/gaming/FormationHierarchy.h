@@ -11,13 +11,9 @@
 #define __FormationHierarchy_h_
 
 #include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/DelayedEntityHierarchies.h"
+#include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "ASN_Types.h"
-
-namespace kernel {
-    class InstanciationComplete;
-}
 
 // =============================================================================
 /** @class  FormationHierarchy
@@ -26,7 +22,7 @@ namespace kernel {
 */
 // Created: AGE 2006-10-19
 // =============================================================================
-class FormationHierarchy : public kernel::DelayedEntityHierarchies< kernel::TacticalHierarchies >
+class FormationHierarchy : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
 {
 
 public:

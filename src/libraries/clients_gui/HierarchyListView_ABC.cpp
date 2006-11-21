@@ -30,11 +30,11 @@ const char* HierarchyListView_ABC::agentMimeType_ = "agent"; // $$$$ AGE 2006-09
 // Name: HierarchyListView_ABC constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile  )
     : ListView< HierarchyListView_ABC >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
-    , profile_( 0 )
+    , profile_( profile )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Unités" ) );
@@ -110,31 +110,28 @@ ValuedListItem* HierarchyListView_ABC::FindOrCreate( const Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    const bool isVisible = profile_ && profile_->IsVisible( entity );
+    const bool isVisible = profile_.IsVisible( entity );
     item->SetNamed( entity );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
     
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
-    item->setVisible( isVisible || HasVisibleChild( item ) );
-    // $$$$ AGE 2006-10-20: to display knowledge groups 
+    SetVisible( item, isVisible );
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::HasVisibleChild
-// Created: AGE 2006-10-20
+// Name: HierarchyListView_ABC::SetVisible
+// Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
-bool HierarchyListView_ABC::HasVisibleChild( QListViewItem* item ) const
+void HierarchyListView_ABC::SetVisible( QListViewItem* item, bool visible )
 {
-    QListViewItem* child = item ? item->firstChild() : 0;
-    while( child )
+    if( item )
     {
-        if( child->isVisible() || HasVisibleChild( child ) )
-            return true;
-        child = child->nextSibling();
+        item->setVisible( visible );
+        if( visible )
+            SetVisible( item->parent(), visible );
     }
-    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -277,8 +274,9 @@ void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    profile_ = &profile;
-    
+    if( & profile_ != &profile )
+        return;
+
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {

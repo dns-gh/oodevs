@@ -18,7 +18,7 @@ using namespace kernel;
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
 ObjectHierarchies::ObjectHierarchies( Controller& controller, Entity_ABC& entity, const Resolver_ABC< Team_ABC >& teamResolver )
-    : EntityHierarchies< TacticalHierarchies >( controller, entity )
+    : EntityHierarchies< TacticalHierarchies >( controller, entity, 0 )
     , teamResolver_( teamResolver )
 {
     // NOTHING
@@ -49,4 +49,13 @@ const kernel::Entity_ABC* ObjectHierarchies::GetSuperior() const
 void ObjectHierarchies::DoUpdate( const ASN1T_MsgObjectCreation& message )
 {
     superior_ = &teamResolver_.Get( message.camp );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectHierarchies::DoUpdate
+// Created: AGE 2006-11-21
+// -----------------------------------------------------------------------------
+void ObjectHierarchies::DoUpdate( const InstanciationComplete& )
+{
+    // NOTHING
 }

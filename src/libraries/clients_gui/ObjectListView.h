@@ -46,7 +46,7 @@ class ObjectListView : public ListView< ObjectListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+    ObjectListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~ObjectListView();
     //@}
 
@@ -91,7 +91,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    const kernel::Profile_ABC* profile_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

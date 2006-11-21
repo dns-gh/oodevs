@@ -17,7 +17,7 @@ using namespace kernel;
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 FormationHierarchy::FormationHierarchy( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
-    : DelayedEntityHierarchies< TacticalHierarchies >( controller, entity, superior )
+    : EntityHierarchies< TacticalHierarchies >( controller, entity, superior )
 {
     // NOTHING
 }

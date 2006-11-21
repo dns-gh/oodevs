@@ -20,7 +20,7 @@ TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller
                                                 , const ASN1T_TacticalLinesDiffusion& asnMsg
                                                 , const kernel::Resolver_ABC< kernel::Automat_ABC >& automats
                                                 , const kernel::Resolver_ABC< kernel::Formation_ABC >& formations )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder )
+    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, 0 )
     , automats_  ( automats )
     , formations_( formations )
 {
@@ -34,7 +34,7 @@ TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller
 TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
                                                 , const kernel::Resolver_ABC< kernel::Automat_ABC >& automats
                                                 , const kernel::Resolver_ABC< kernel::Formation_ABC >& formations )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder )
+    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, 0 )
     , automats_  ( automats )
     , formations_( formations )
 {

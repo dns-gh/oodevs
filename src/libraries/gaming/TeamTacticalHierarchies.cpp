@@ -18,7 +18,7 @@ using namespace kernel;
 // Created: AGE 2006-10-20
 // -----------------------------------------------------------------------------
 TeamTacticalHierarchies::TeamTacticalHierarchies( Controller& controller, Entity_ABC& entity )
-    : EntityHierarchies< TacticalHierarchies >( controller, entity )
+    : EntityHierarchies< TacticalHierarchies >( controller, entity, 0 )
     , controller_( controller )
 {
     // NOTHING

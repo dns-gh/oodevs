@@ -11,13 +11,14 @@
 #include "ObjectListView.h"
 #include "moc_ObjectListView.cpp"
 #include "clients_gui/Tools.h"
+#include "PreparationProfile.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
 ObjectListView::ObjectListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : gui::ObjectListView( pParent, controllers, factory )
+    : gui::ObjectListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , selected_( controllers )
 {
     // NOTHING

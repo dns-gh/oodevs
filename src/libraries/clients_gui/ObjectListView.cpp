@@ -29,11 +29,11 @@ using namespace gui;
 // Name: ObjectListView constructor
 // Created: APE 2004-08-05
 // -----------------------------------------------------------------------------
-ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
     : ListView< ObjectListView >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_    ( factory )
-    , profile_( 0 )
+    , profile_( profile )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Objets" ) );
@@ -117,7 +117,7 @@ void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
 
     ValuedListItem* item = factory_.CreateItem( typeItem );
     item->SetNamed( (const Entity_ABC&)object );
-    item->setVisible( profile_ && profile_->IsVisible( object ) );
+    item->setVisible( profile_.IsVisible( object ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +195,8 @@ void ObjectListView::NotifyActivated( const Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    profile_ = &profile;
+    if( & profile_ != &profile )
+        return;
 
     QListViewItemIterator it( this );
     while( ValuedListItem* item = (ValuedListItem*)( *it ) )
@@ -203,7 +204,7 @@ void ObjectListView::NotifyUpdated( const kernel::Profile_ABC& profile )
         if( item->IsA< const Entity_ABC* >() )
         {
             const Entity_ABC& entity = *item->GetValue< const Entity_ABC* >();
-            item->setVisible( profile_->IsVisible( entity ) );
+            item->setVisible( profile_.IsVisible( entity ) );
         }
         ++it;
     }

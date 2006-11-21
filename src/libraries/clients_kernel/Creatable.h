@@ -7,47 +7,56 @@
 //
 // *****************************************************************************
 
-#ifndef __TacticalListView_h_
-#define __TacticalListView_h_
+#ifndef __Creatable_h_
+#define __Creatable_h_
 
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_gui/HierarchyListView.h"
+#include "Updatable_ABC.h"
+
+namespace kernel
+{
+    class InstanciationComplete;
+    class Controller;
 
 // =============================================================================
-/** @class  TacticalListView
-    @brief  TacticalListView
+/** @class  Creatable
+    @brief  Creatable
 */
-// Created: AGE 2006-10-20
+// Created: AGE 2006-11-20
 // =============================================================================
-class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
+template< typename Iface >
+class Creatable : public Updatable_ABC< InstanciationComplete >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
-    virtual ~TacticalListView();
+             Creatable( Controller& controller, Iface* _this );
+    virtual ~Creatable();
     //@}
 
+protected:
     //! @name Operations
     //@{
+    virtual void DoUpdate( const InstanciationComplete& );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    TacticalListView( const TacticalListView& );            //!< Copy constructor
-    TacticalListView& operator=( const TacticalListView& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
+    Creatable( const Creatable& );            //!< Copy constructor
+    Creatable& operator=( const Creatable& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
+    Iface* this_;
     //@}
 };
 
-#endif // __TacticalListView_h_
+}
+
+#include "Creatable.inl"
+
+#endif // __Creatable_h_

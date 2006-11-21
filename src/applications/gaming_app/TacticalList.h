@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -32,7 +33,7 @@ class TacticalList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalList( kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             TacticalList( kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile  );
     virtual ~TacticalList();
     //@}
 

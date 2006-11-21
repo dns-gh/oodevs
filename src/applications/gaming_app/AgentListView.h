@@ -34,7 +34,7 @@ class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierar
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory );
+             AgentListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~AgentListView();
     //@}
 

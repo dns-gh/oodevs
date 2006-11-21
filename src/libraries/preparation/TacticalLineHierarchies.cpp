@@ -16,7 +16,7 @@
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder )
+    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, superior_ )
     , superior_( superior )
 {
     // NOTHING
@@ -31,13 +31,4 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
     if( superior_ )
         if( TacticalLines* lines = superior_->Retrieve< TacticalLines >() )
             lines->Remove( GetEntity().GetId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLineHierarchies::GetSuperior
-// Created: SBO 2006-10-20
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* TacticalLineHierarchies::GetSuperior() const
-{
-    return superior_;
 }

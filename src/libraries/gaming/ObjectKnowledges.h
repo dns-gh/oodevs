@@ -14,12 +14,12 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"
+#include "clients_kernel/Creatable.h"
 
 namespace kernel
 {
     class Controller;
     class Team_ABC;
-    class InstanciationComplete;
 }
 
 class ObjectKnowledge_ABC;
@@ -35,8 +35,8 @@ class ObjectKnowledges : public kernel::Extension_ABC
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
-                       , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                        , public kernel::Resolver< ObjectKnowledge_ABC >
+                       , public kernel::Creatable< ObjectKnowledges >
 {
 
 public:
@@ -62,7 +62,6 @@ private:
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeCreation&    message );
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate&      message );
     virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeDestruction& message );
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:

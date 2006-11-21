@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:

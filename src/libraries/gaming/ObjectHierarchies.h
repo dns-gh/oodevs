@@ -40,8 +40,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const;
+    virtual const kernel::Entity_ABC* GetSuperior() const; // $$$$ AGE 2006-11-20: to prevent team hierarchy 
     virtual void DoUpdate( const ASN1T_MsgObjectCreation& );
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:

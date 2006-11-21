@@ -20,12 +20,14 @@ namespace kernel
 // Created: AGE 2006-09-19
 // -----------------------------------------------------------------------------
 template< typename Interface >
-EntityHierarchies< Interface >::EntityHierarchies( Controller& controller, Entity_ABC& entity )
-    : controller_( controller )
+EntityHierarchies< Interface >::EntityHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
+    : Creatable< Interface >( controller, this )
+    , controller_( controller )
     , entity_    ( entity )
-    , superior_  ( 0 )
+    , superior_  ( superior )
 {
-    // NOTHING
+    if( Interface* superiorHierarchy = SuperiorHierarchy() )
+        superiorHierarchy->RegisterSubordinate( entity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,13 +72,23 @@ Iterator< const Entity_ABC& > EntityHierarchies< Interface >::CreateSubordinateI
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityHierarchies::RegisterSubordinate
+// Created: AGE 2006-11-20
+// -----------------------------------------------------------------------------
+template< typename Interface >
+void EntityHierarchies< Interface >::RegisterSubordinate( Entity_ABC& entity )
+{
+    Register( entity.GetId(), entity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityHierarchies::AddSubordinate
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 template< typename Interface >
 void EntityHierarchies< Interface >::AddSubordinate( Entity_ABC& entity )
 {
-    Register( entity.GetId(), entity );
+    RegisterSubordinate( entity );
     controller_.Update( *(Interface*)this );
 }
 
@@ -102,6 +114,21 @@ void EntityHierarchies< Interface >::UnregisterSubordinate( const Entity_ABC& en
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityHierarchies::ChangeSuperior
+// Created: AGE 2006-11-20
+// -----------------------------------------------------------------------------
+template< typename Interface >
+void EntityHierarchies< Interface >::ChangeSuperior( Entity_ABC* superior )
+{
+    if( Interface* superiorHierarchy = SuperiorHierarchy() )
+        superiorHierarchy->RemoveSubordinate( entity_ );
+    superior_ = superior;
+    if( Interface* superiorHierarchy = SuperiorHierarchy() )
+        superiorHierarchy->AddSubordinate( entity_ );
+    controller_.Update( *(Interface*)this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityHierarchies::SetSuperior
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
@@ -109,10 +136,10 @@ template< typename Interface >
 void EntityHierarchies< Interface >::SetSuperior( Entity_ABC* superior )
 {
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
-            superiorHierarchy->RemoveSubordinate( entity_ );
+        superiorHierarchy->UnregisterSubordinate( entity_ );
     superior_ = superior;
     if( Interface* superiorHierarchy = SuperiorHierarchy() )
-            superiorHierarchy->AddSubordinate( entity_ );
+        superiorHierarchy->RegisterSubordinate( entity_ );
 }
 
 // -----------------------------------------------------------------------------

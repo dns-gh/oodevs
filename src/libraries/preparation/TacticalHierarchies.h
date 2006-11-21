@@ -10,7 +10,7 @@
 #ifndef __TacticalHierarchies_h_
 #define __TacticalHierarchies_h_
 
-#include "clients_kernel/DelayedEntityHierarchies.h"
+#include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 
@@ -18,7 +18,6 @@ namespace kernel
 {
     class Controller;
     class Entity_ABC;
-    class InstanciationComplete;
 }
 
 // =============================================================================
@@ -27,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-09-19
 // =============================================================================
-class TacticalHierarchies : public kernel::DelayedEntityHierarchies< kernel::TacticalHierarchies >
+class TacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
 {
 
 public:
@@ -47,17 +46,6 @@ private:
     //@{
     TacticalHierarchies( const TacticalHierarchies& );            //!< Copy constructor
     TacticalHierarchies& operator=( const TacticalHierarchies& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Controller& controller_;
     //@}
 };
 

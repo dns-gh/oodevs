@@ -11,7 +11,6 @@
 #include "KnowledgeGroupHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 
@@ -20,9 +19,7 @@ using namespace kernel;
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Team_ABC& team, KnowledgeGroup_ABC& holder )
-    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
-    , controller_( controller )
-    , team_( team )
+    : EntityHierarchies< CommunicationHierarchies >( controller, holder, &team )
 {
     // NOTHING   
 }
@@ -34,14 +31,4 @@ KnowledgeGroupHierarchies::KnowledgeGroupHierarchies( Controller& controller, Te
 KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupHierarchies::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void KnowledgeGroupHierarchies::DoUpdate( const kernel::InstanciationComplete& )
-{
-    SetSuperior( &team_ );
-    controller_.Update( *(CommunicationHierarchies*)this );
 }

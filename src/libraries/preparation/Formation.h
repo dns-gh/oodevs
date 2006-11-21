@@ -10,6 +10,7 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -17,7 +18,6 @@
 namespace kernel
 {
     class Controller;
-    class InstanciationComplete;
     class FormationLevels;
 }
 
@@ -34,9 +34,8 @@ class IdManager;
 */
 // Created: SBO 2006-09-19
 // =============================================================================
-class Formation : public kernel::Formation_ABC
+class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
                 , public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< kernel::InstanciationComplete >
                 , public kernel::Serializable_ABC
 {
 
@@ -51,7 +50,6 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-    virtual unsigned long GetId() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     void Rename( const QString& name );
     //@}
@@ -66,16 +64,12 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    unsigned long id_;
-    QString name_;
     const kernel::HierarchyLevel_ABC* level_;
     //@}
 };

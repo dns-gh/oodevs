@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
@@ -31,7 +32,7 @@ class PopulationList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationList( kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             PopulationList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~PopulationList();
     //@}
 

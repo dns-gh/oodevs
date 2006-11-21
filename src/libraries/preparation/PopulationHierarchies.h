@@ -29,11 +29,6 @@ public:
     virtual ~PopulationHierarchies();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const;
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{

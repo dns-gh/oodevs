@@ -18,8 +18,8 @@ using namespace gui;
 // Name: TacticalListView constructor
 // Created: AGE 2006-10-20
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
-    : HierarchyListView< TacticalHierarchies >( pParent, controllers, factory )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile  )
+    : HierarchyListView< TacticalHierarchies >( pParent, controllers, factory, profile )
 {
     // NOTHING
 }

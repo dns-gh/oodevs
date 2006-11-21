@@ -44,7 +44,7 @@ class PopulationListView : public ListView< PopulationListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory );
+             PopulationListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~PopulationListView();
     //@}
 
@@ -83,7 +83,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
-    const kernel::Profile_ABC* profile_;
+    const kernel::Profile_ABC& profile_;
     //@}
 };
 

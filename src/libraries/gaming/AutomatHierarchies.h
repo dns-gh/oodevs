@@ -52,8 +52,6 @@ private:
     //@{
     virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
     virtual void DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message );
-
-    void UpdateSuperior( kernel::Entity_ABC& superior );
     virtual void AddSuperiorToDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC* const& superior ) const;
     //@}
 

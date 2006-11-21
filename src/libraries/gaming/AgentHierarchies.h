@@ -72,9 +72,9 @@ private:
 // -----------------------------------------------------------------------------
 template< typename I >
 AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
-    : kernel::EntityHierarchies< I  >( controller, holder )
-    , controller_   ( controller )
-    , automatResolver_( automatResolver ) 
+    : kernel::EntityHierarchies< I  >( controller, holder, 0 )
+    , controller_                    ( controller )
+    , automatResolver_               ( automatResolver ) 
 {
     // NOTHING
 }
@@ -96,7 +96,7 @@ AgentHierarchies< I >::~AgentHierarchies()
 template< typename I >
 void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgPionCreation& message )
 {
-    UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
+    SetSuperior( & automatResolver_.Get( message.oid_automate ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,8 +127,7 @@ void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgChangeAutomate& message )
 template< typename I >
 void AgentHierarchies< I >::UpdateSuperior( kernel::Entity_ABC& superior )
 {
-    SetSuperior( &superior );
-    controller_.Update( *(I*)this );
+    ChangeSuperior( &superior );
 }
 
 #endif // __AgentHierarchies_h_

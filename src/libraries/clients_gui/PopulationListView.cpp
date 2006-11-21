@@ -26,11 +26,11 @@ using namespace gui;
 // Name: PopulationListView constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory )
+PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile  )
     : ListView< PopulationListView >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_( factory )
-    , profile_( 0 )
+    , profile_( profile )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Populations" ) );
@@ -163,7 +163,10 @@ void PopulationListView::NotifySelected( const Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    profile_ = &profile;
+    if( &profile_ != &profile )
+        return;
+
+    // $$$$ AGE 2006-11-21: update !
     // $$$$ AGE 2006-10-13: Should be a HierarchyListView...
 }
 

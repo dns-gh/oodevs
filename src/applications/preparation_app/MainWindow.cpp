@@ -169,11 +169,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setCaption( tr( "Informations" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
-    Profile_ABC& profile = *new PreparationProfile( this, controllers );
-
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, profile );
+    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
     // object creation window
     ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_ );
@@ -189,7 +187,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setCentralWidget( glPlaceHolder_ );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences(), profile );
+    CreateLayers( *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
 
     pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
 //    controllers_.Register( *this );

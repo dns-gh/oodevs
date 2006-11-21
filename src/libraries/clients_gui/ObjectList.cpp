@@ -20,10 +20,10 @@ using namespace gui;
 // Name: ObjectList constructor
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
-ObjectList::ObjectList( Controllers& controllers, ItemFactory_ABC& factory )
+ObjectList::ObjectList( Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile )
 {
     new EntitySearchBox< Object_ABC >( this, controllers );
-    new ObjectListView( this, controllers, factory );
+    new ObjectListView( this, controllers, factory, profile );
 }
 
 // -----------------------------------------------------------------------------

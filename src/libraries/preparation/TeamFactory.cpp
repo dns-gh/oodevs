@@ -28,7 +28,6 @@
 #include "ObjectHierarchies.h"
 #include "Populations.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/InstanciationComplete.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/AgentTypes.h"

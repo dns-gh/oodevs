@@ -42,7 +42,7 @@ class EventToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers );
+             EventToolbar( QMainWindow* pParent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile );
     virtual ~EventToolbar();
     //@}
 
@@ -81,7 +81,7 @@ private:
     kernel::Controllers& controllers_;
     T_Agents messageAgents_;
 
-    const kernel::Profile_ABC* profile_;
+    const kernel::Profile_ABC& profile_;
 
     QToolButton* gasButton_;
     QToolButton* conflictButton_;

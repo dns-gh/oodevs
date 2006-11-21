@@ -21,7 +21,7 @@ using namespace kernel;
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 TeamHierarchies::TeamHierarchies( Controller& controller, kernel::Team_ABC& holder, KnowledgeGroupFactory_ABC& factory )
-    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
+    : EntityHierarchies< CommunicationHierarchies >( controller, holder, 0 )
     , controller_( controller )
     , holder_( holder )
     , factory_( factory )

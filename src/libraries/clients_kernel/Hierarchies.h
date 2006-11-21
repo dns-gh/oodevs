@@ -43,13 +43,15 @@ public:
     
     //! @name Modifiers
     //@{
-    virtual void AddSubordinate   (       Entity_ABC& entity ) = 0;
-    virtual void RemoveSubordinate( const Entity_ABC& entity ) = 0;
+    virtual void RegisterSubordinate  (       Entity_ABC& entity ) = 0;
+    virtual void AddSubordinate       (       Entity_ABC& entity ) = 0;
+    virtual void RemoveSubordinate    ( const Entity_ABC& entity ) = 0;
     virtual void UnregisterSubordinate( const Entity_ABC& entity ) = 0;
     //@}
 
     //! @name Operations
     //@{
+    bool IsSubordinateOf( unsigned long id ) const;
     bool IsSubordinateOf( const Entity_ABC& entity ) const;
     const Entity_ABC& GetTop() const;
     const Entity_ABC& GetUp( unsigned int nLevel = 1 ) const;

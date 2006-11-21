@@ -28,9 +28,7 @@ using namespace xml;
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
 Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, IdManager& idManager )
-    : controller_( controller )
-    , id_( idManager.GetNextId() )
-    , name_( "" )
+    : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
     , level_( &level )
 {
     RegisterSelf( *this );
@@ -42,8 +40,7 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
-    : controller_( controller )
-    , name_( "" )
+    : EntityImplementation< Formation_ABC >( controller, 0, "" )
 {
     std::string level, name;
     xis >> attribute( "id", (int&)id_ )
@@ -62,17 +59,7 @@ Formation::Formation( xml::xistream& xis, Controller& controller, const Formatio
 // -----------------------------------------------------------------------------
 Formation::~Formation()
 {
-    DestroyExtensions();
-    controller_.Delete( *(Formation_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::DoUpdate
-// Created: SBO 2006-09-21
-// -----------------------------------------------------------------------------
-void Formation::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *(Formation_ABC*)this );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -82,15 +69,6 @@ void Formation::DoUpdate( const kernel::InstanciationComplete& )
 QString Formation::GetName() const
 {
     return level_->GetName() + ( name_.isEmpty() ? "" : " - " + name_ );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: Formation::GetId
-// Created: SBO 2006-09-19
-// -----------------------------------------------------------------------------
-unsigned long Formation::GetId() const
-{
-    return id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -109,8 +87,7 @@ const HierarchyLevel_ABC& Formation::GetLevel() const
 void Formation::Rename( const QString& name )
 {
     name_ = name;
-    controller_.Update( *(Formation_ABC*)this );
-    controller_.Update( *(Entity_ABC*)this );
+    Touch();
 }
 
 // -----------------------------------------------------------------------------

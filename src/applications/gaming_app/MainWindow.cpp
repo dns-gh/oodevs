@@ -137,10 +137,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory ),            tr( "ODB" ) );
-    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory ), tr( "Agents" ) );
-    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory ),            tr( "Objets" ) );
-    pListsTabWidget->addTab( new PopulationList( controllers, *factory ),            tr( "Populations" ) );
+    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile ),            tr( "ODB" ) );
+    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),            tr( "Objets" ) );
+    pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),            tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
@@ -219,7 +219,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new ControllerToolbar( this, controllers );
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers, *agentsLayer );
-    new EventToolbar( this, controllers );
+    new EventToolbar( this, controllers, profile );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
 
 

@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "TacticalListView.h"
 #include "ModelBuilder.h"
+#include "PreparationProfile.h"
 #include "preparation/Team.h"
 #include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
@@ -31,7 +32,7 @@ using namespace kernel;
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, const FormationLevels& levels )
-    : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory )
+    : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , factory_( factory )
     , modelBuilder_( modelBuilder )
     , levels_( levels )

@@ -19,7 +19,7 @@
 // -----------------------------------------------------------------------------
 template< typename Superior, typename ConcreteHierarchy >
 LogisticHierarchies< Superior, ConcreteHierarchy >::LogisticHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, entity )
+    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, entity, 0 )
     , controller_( controller )
     , resolver_( resolver )
     , tc2_( 0 )

@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 AutomatHierarchies::AutomatHierarchies( Controller& controller, Entity_ABC& holder, const Resolver_ABC< KnowledgeGroup_ABC >& groupResolver, PropertiesDictionary& dictionary )
-    : EntityHierarchies< CommunicationHierarchies >( controller, holder )
+    : EntityHierarchies< CommunicationHierarchies >( controller, holder, 0 )
     , controller_   ( controller )
     , groupResolver_( groupResolver ) 
 {
@@ -42,7 +42,7 @@ AutomatHierarchies::~AutomatHierarchies()
 // -----------------------------------------------------------------------------
 void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 {
-    UpdateSuperior( groupResolver_.Get( message.oid_groupe_connaissance) );
+    SetSuperior( &groupResolver_.Get( message.oid_groupe_connaissance) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,17 +52,7 @@ void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
 void AutomatHierarchies::DoUpdate( const ASN1T_MsgChangeGroupeConnaissanceAck& message )
 {
     if( ! message.error_code )
-        UpdateSuperior( groupResolver_.Get( message.oid_groupe_connaissance) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatHierarchies::UpdateSuperior
-// Created: AGE 2006-10-06
-// -----------------------------------------------------------------------------
-void AutomatHierarchies::UpdateSuperior( Entity_ABC& superior )
-{
-    SetSuperior( &superior );
-    controller_.Update( *(CommunicationHierarchies*)this );
+        ChangeSuperior( & groupResolver_.Get( message.oid_groupe_connaissance) );
 }
 
 // -----------------------------------------------------------------------------

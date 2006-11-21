@@ -22,8 +22,8 @@ using namespace kernel;
 // Name: AgentListView constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory )
-    : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
+    : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile )
     , publisher_( publisher )
 {
     // NOTHING

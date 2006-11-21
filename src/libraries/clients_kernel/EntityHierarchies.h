@@ -12,6 +12,8 @@
 
 #include "Hierarchies.h"
 #include "Resolver.h"
+#include "Updatable_ABC.h"
+#include "Creatable.h"
 
 namespace kernel
 {
@@ -26,12 +28,13 @@ namespace kernel
 // =============================================================================
 template< typename Interface >
 class EntityHierarchies : public Interface, public Resolver< Entity_ABC >
+                        , public Creatable< Interface >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityHierarchies( Controller& controller, Entity_ABC& entity );
+             EntityHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior );
     virtual ~EntityHierarchies();
     //@}
 
@@ -44,6 +47,7 @@ public:
 
     //! @name Modifiers
     //@{
+    virtual void RegisterSubordinate  (       Entity_ABC& entity );
     virtual void AddSubordinate       (       Entity_ABC& entity );
     virtual void RemoveSubordinate    ( const Entity_ABC& entity );
     virtual void UnregisterSubordinate( const Entity_ABC& entity );
@@ -54,6 +58,7 @@ protected:
     //@{
     virtual const Hierarchies* RetrieveHierarchies( const Entity_ABC& entity ) const;
     Interface* SuperiorHierarchy();
+    void ChangeSuperior( Entity_ABC* superior );
     void SetSuperior( Entity_ABC* superior );
     virtual void CreateDictionary( PropertiesDictionary& dico ) const;
     //@}

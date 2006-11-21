@@ -20,7 +20,8 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 ObjectKnowledges::ObjectKnowledges( const Team_ABC& team, Controller& controller, ObjectKnowledgeFactory& factory )
-    : team_( team )
+    : Creatable< ObjectKnowledges >( controller, this )
+    , team_( team )
     , controller_( controller )
     , factory_( factory )
 {
@@ -35,15 +36,6 @@ ObjectKnowledges::~ObjectKnowledges()
 {
     controller_.Delete( *this );
     DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledges::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------

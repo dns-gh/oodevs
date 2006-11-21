@@ -14,7 +14,6 @@
 #include "TacticalLines.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/InstanciationComplete.h"
 
 using namespace kernel;
 
@@ -44,10 +43,10 @@ FormationFactory::~FormationFactory()
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, const kernel::HierarchyLevel_ABC& level )
 {
-    Formation_ABC* formation = new Formation( controllers_.controller_, level, idManager_ );
+    Formation* formation = new Formation( controllers_.controller_, level, idManager_ );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Attach( *new TacticalLines() );
-    formation->Update( InstanciationComplete() );
+    formation->Polish();
     return formation;
 }
 
@@ -57,10 +56,10 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
 // -----------------------------------------------------------------------------
 kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Entity_ABC& parent, const FormationLevels& levels )
 {
-    Formation_ABC* formation = new Formation( xis, controllers_.controller_, levels, idManager_ );
+    Formation* formation = new Formation( xis, controllers_.controller_, levels, idManager_ );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Attach( *new TacticalLines() );
-    formation->Update( InstanciationComplete() );
+    formation->Polish();
     return formation;
 }
 

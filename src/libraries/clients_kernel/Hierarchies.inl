@@ -29,6 +29,24 @@ bool Hierarchies::IsSubordinateOf( const Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Hierarchies::IsSubordinateOf
+// Created: AGE 2006-11-21
+// -----------------------------------------------------------------------------
+inline
+bool Hierarchies::IsSubordinateOf( unsigned long id ) const
+{
+    const Entity_ABC* superior = GetSuperior();
+    if( superior )
+    {
+        if( superior->GetId() == id )
+            return true;
+        const Hierarchies* hierarchies = RetrieveHierarchies( *superior );
+        return hierarchies && hierarchies->IsSubordinateOf( id );
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Hierarchies::GetTop
 // Created: AGE 2006-10-26
 // -----------------------------------------------------------------------------

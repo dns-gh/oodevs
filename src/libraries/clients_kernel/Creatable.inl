@@ -7,36 +7,40 @@
 //
 // *****************************************************************************
 
-#include "preparation_pch.h"
-#include "TacticalHierarchies.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Controller.h"
+#include "Controller.h"
 
+namespace kernel
+{
 // -----------------------------------------------------------------------------
-// Name: TacticalHierarchies constructor
-// Created: AGE 2006-09-19
+// Name: Creatable constructor
+// Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
-TacticalHierarchies::TacticalHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, superior )
+template< typename Iface >
+Creatable< Iface >::Creatable( Controller& controller, typename Iface* _this )
+     : controller_( controller )
+     , this_( _this )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalHierarchies destructor
-// Created: AGE 2006-09-19
+// Name: Creatable destructor
+// Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
-TacticalHierarchies::~TacticalHierarchies()
+template< typename Iface >
+Creatable< Iface >::~Creatable()
 {
-    DeleteAll();
+    controller_.Delete( *this_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalHierarchies::ChangeSuperior
-// Created: SBO 2006-09-28
+// Name: Creatable::DoUpdate
+// Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
-void TacticalHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+template< typename Iface >
+void Creatable< Iface >::DoUpdate( const InstanciationComplete& )
 {
-    kernel::EntityHierarchies< kernel::TacticalHierarchies >::ChangeSuperior( &superior );
+    controller_.Create( *this_ );
 }
 
+}

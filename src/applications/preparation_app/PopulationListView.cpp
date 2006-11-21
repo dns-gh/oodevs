@@ -11,13 +11,14 @@
 #include "PopulationListView.h"
 #include "moc_PopulationListView.cpp"
 #include "clients_gui/Tools.h"
+#include "PreparationProfile.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView constructor
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
 PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : gui::PopulationListView( pParent, controllers, factory )
+    : gui::PopulationListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , selected_( controllers )
 {
     // NOTHING

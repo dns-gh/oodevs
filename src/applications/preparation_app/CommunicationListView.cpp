@@ -14,6 +14,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "preparation/AutomatCommunications.h"
+#include "PreparationProfile.h"
 
 using namespace kernel;
 
@@ -22,7 +23,7 @@ using namespace kernel;
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
 CommunicationListView::CommunicationListView( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
-    : gui::HierarchyListView< kernel::CommunicationHierarchies >( parent, controllers, factory )
+    : gui::HierarchyListView< kernel::CommunicationHierarchies >( parent, controllers, factory, PreparationProfile::GetProfile() )
     , factory_( factory )
     , modelBuilder_( modelBuilder )
 {

@@ -20,10 +20,10 @@ using namespace gui;
 // Name: PopulationList constructor
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
-PopulationList::PopulationList( Controllers& controllers, ItemFactory_ABC& factory )
+PopulationList::PopulationList( Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
 {
     new EntitySearchBox< Population_ABC >( this, controllers );
-    new PopulationListView( this, controllers, factory );
+    new PopulationListView( this, controllers, factory, profile );
 }
 
 // -----------------------------------------------------------------------------

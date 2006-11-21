@@ -20,7 +20,8 @@ using namespace kernel;
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 PopulationKnowledges::PopulationKnowledges( Controller& controller, const KnowledgeGroup_ABC& owner, PopulationKnowledgeFactory_ABC& factory )
-    : owner_( owner )
+    : Creatable< PopulationKnowledges >( controller, this )
+    , owner_( owner )
     , controller_( controller )
     , factory_( factory )
 {
@@ -33,17 +34,7 @@ PopulationKnowledges::PopulationKnowledges( Controller& controller, const Knowle
 // -----------------------------------------------------------------------------
 PopulationKnowledges::~PopulationKnowledges()
 {
-    controller_.Delete( *this );
     DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledges::DoUpdate
-// Created: AGE 2006-09-20
-// -----------------------------------------------------------------------------
-void PopulationKnowledges::DoUpdate( const kernel::InstanciationComplete& )
-{
-    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
