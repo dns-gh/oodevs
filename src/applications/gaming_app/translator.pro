@@ -1,5 +1,4 @@
 SOURCES         = MainWindow.cpp \
-                  ControllerToolbar.cpp \
                   EventToolbar.cpp \
                   LogisticToolbar.cpp \
                   MapToolbar.cpp \
