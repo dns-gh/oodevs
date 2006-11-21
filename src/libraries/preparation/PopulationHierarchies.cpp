@@ -16,7 +16,7 @@
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
 PopulationHierarchies::PopulationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, superior_ )
+    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, superior )
     , superior_( superior )
 {
     // NOTHING
