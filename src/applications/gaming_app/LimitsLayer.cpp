@@ -21,6 +21,9 @@
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ParametersLayer.h"
 #include "xeumeuleu/xml.h"
@@ -62,8 +65,11 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::HandleKeyPress( QKeyEvent* k )
 {
+    if( !selected_ )
+        return false;
     const int key = k->key();
-    if( ( key == Qt::Key_BackSpace || key == Qt::Key_Delete ) && selected_ )
+    const kernel::Entity_ABC* superior = selected_->Get< kernel::TacticalHierarchies >().GetSuperior();
+    if( ( key == Qt::Key_BackSpace || key == Qt::Key_Delete ) && superior && profile_.CanBeOrdered( *superior ) )
     {
         kernel::TacticalLine_ABC* line = const_cast< kernel::TacticalLine_ABC* >( selected_ );
         static_cast< ::TacticalLine_ABC* >( line )->Delete(); // $$$$ AGE 2006-03-24:  // $$$$ SBO 2006-11-07: 
@@ -129,7 +135,11 @@ void LimitsLayer::OnCreateLima()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    return drawLines_.IsSet( true ) && gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( entity );
+    if( !drawLines_.IsSet( true ) )
+        return false;
+    if( const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior() )
+        return gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( *superior );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
