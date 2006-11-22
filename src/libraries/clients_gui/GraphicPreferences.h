@@ -25,9 +25,9 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicPreferences : public GraphicSetup_ABC
+class GraphicPreferences : public QObject, public GraphicSetup_ABC
 {
-
+    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -47,9 +47,10 @@ public:
     void Revert();
     //@}
 
-    //! @name Accessors
+private slots:
+    //! @name Slots
     //@{
-//    const GraphicPreference_ABC& GetPreference( const TerrainData& terrain ) const;
+    void OnAlpha( int );
     //@}
 
 private:
@@ -81,6 +82,7 @@ private:
     //@{
     T_TerrainPreferences terrainPrefs_;
     T_Displays displays_;
+    float alpha_;
     //@}
 };
 

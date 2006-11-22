@@ -9,6 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
+#include "moc_GraphicPreferences.cpp"
+
 #include "TerrainPreference.h"
 #include "graphics/GraphicData.h"
 
@@ -22,6 +24,7 @@ using namespace gui;
 // Created: SBO 2006-04-04
 // -----------------------------------------------------------------------------
 GraphicPreferences::GraphicPreferences()
+    : alpha_( 1 )
 {
     InitializeTerrainPreferences();
 }
@@ -68,8 +71,23 @@ void GraphicPreferences::Display( QWidget* parent ) const
 {
     QVBox* pPanel = new QVBox( parent );
     pPanel->setMargin( 5 );
+
+    QGroupBox* alphaBox = new QGroupBox( 1, Qt::Vertical, tr( "Transparency" ), pPanel );
+    QSlider* slider = new QSlider( 0, 100, 1, 100, Qt::Horizontal, alphaBox );
+    connect( slider, SIGNAL( valueChanged( int ) ), this, SLOT( OnAlpha( int ) ) );
+    
+    QGroupBox* colorBox = new QGroupBox( displays_.size(), Qt::Vertical, tr( "Colors" ), pPanel );
     for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
-        (*it)->Display( pPanel );
+        (*it)->Display( colorBox );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GraphicPreferences::OnAlpha
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void GraphicPreferences::OnAlpha( int value )
+{
+    alpha_ = value * 0.01f;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +154,7 @@ void GraphicPreferences::SetupLineGraphics( const Data_ABC* pData )
     if( preference )
     {
         preference->SetLineWidth();
-        preference->SetColor( 1 );
+        preference->SetColor( alpha_ );
     }
 }
 
@@ -152,7 +170,7 @@ void GraphicPreferences::SetupBorderGraphics( const Data_ABC* pData )
     if( preference )
     {
         preference->SetLineWidth();
-        preference->SetColor( 1 );
+        preference->SetColor( alpha_ );
     }
 }
 
@@ -166,5 +184,5 @@ void GraphicPreferences::SetupAreaGraphics( const Data_ABC* pData )
     const TerrainData& data = *d;
     const TerrainPreference* preference = terrainPrefs_[ data ];
     if( preference )
-        preference->SetColor( 0.5 );
+        preference->SetColor( alpha_ * 0.5f );
 }
