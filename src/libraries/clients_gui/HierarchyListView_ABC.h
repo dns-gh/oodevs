@@ -14,6 +14,7 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/ActivationObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -84,8 +85,8 @@ protected:
     virtual void NotifyCreated( const kernel::Hierarchies& hierarchies );
     virtual void NotifyUpdated( const kernel::Hierarchies& hierarchies );
     virtual void NotifyDeleted( const kernel::Hierarchies& hierarchies );
-
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
+    virtual void focusInEvent ( QFocusEvent * );
     //@}
 
 private:
@@ -110,6 +111,7 @@ private:
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
     const kernel::Profile_ABC& profile_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 

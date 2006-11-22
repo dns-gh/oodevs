@@ -35,6 +35,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     , controllers_( controllers )
     , factory_( factory )
     , profile_( profile )
+    , selected_( controllers_ )
 {
     setMinimumSize( 1, 1 );
     addColumn( tr( "Unités" ) );
@@ -182,6 +183,7 @@ void HierarchyListView_ABC::NotifySelected( const Entity_ABC* element )
     ValuedListItem* item = 0;
     if( element && ( item = FindItem( element, firstChild() ) ) )
     {
+        selected_ = element;
         if( item != selectedItem() )
         {
             selectAll( false );
@@ -287,5 +289,20 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
             Display( entity, item );
         }
         item = (ValuedListItem*)( next );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::focusInEvent
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::focusInEvent( QFocusEvent* event )
+{
+    ListView< HierarchyListView_ABC >::focusInEvent( event );
+    if( selected_ )
+    {
+        ValuedListItem* item = FindItem( &*selected_, firstChild() );
+        if( item )
+            item->Select( controllers_.actions_ );
     }
 }
