@@ -43,7 +43,7 @@ protected:
     //@{
     virtual void RegisterSubordinate  (       kernel::Entity_ABC& entity );
     virtual void UnregisterSubordinate( const kernel::Entity_ABC& entity );
-    void MergeSymbol( const kernel::Entity_ABC& entity );
+    virtual void MergeSymbol( const kernel::Entity_ABC& entity );
     //@}
 
 private:

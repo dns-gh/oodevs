@@ -33,6 +33,8 @@ public:
     //! @name Operations
     //@{
     void ChangeSuperior( kernel::Entity_ABC& superior );
+    virtual std::string GetLevel() const;
+    virtual void UpdateSymbol();
     //@}
 
 private:
@@ -46,12 +48,18 @@ private:
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void DoUpdate( const kernel::InstanciationComplete& );
+    virtual void MergeSymbol( const kernel::Entity_ABC& entity );
+    static std::string Max( const std::string& lhs, const std::string& rhs );
+    static std::string Increase( const std::string& value );
+    static char Level( const std::string& value );
+    static unsigned Count( const std::string& value );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Entity_ABC* superior_;
+    std::string level_;
     //@}
 };
 

@@ -39,6 +39,12 @@ public:
     virtual ~AutomatTacticalHierarchies();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual std::string GetLevel() const;
+    virtual void UpdateSymbol();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -49,6 +55,11 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const ASN1T_MsgAutomateCreation& message );
+    virtual void MergeSymbol( const kernel::Entity_ABC& entity );
+    static std::string Max( const std::string& lhs, const std::string& rhs );
+    static std::string Increase( const std::string& value );
+    static char Level( const std::string& value );
+    static unsigned Count( const std::string& value );
     //@}
 
 private:
@@ -56,6 +67,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Formation_ABC >& resolver_;
+    std::string level_;
     //@}
 };
 

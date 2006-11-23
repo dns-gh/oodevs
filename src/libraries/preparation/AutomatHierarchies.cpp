@@ -67,3 +67,97 @@ void AutomatHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
     SetSuperior( superior_ );
     MergingTacticalHierarchies::DoUpdate( ic );
 }
+
+// $$$$ AGE 2006-11-23: Tout ce bazar est dégueu, a tous les points de vue
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::UpdateSymbol
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+void AutomatHierarchies::UpdateSymbol()
+{
+    level_.clear();
+    MergingTacticalHierarchies::UpdateSymbol();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::MergeSymbol
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+void AutomatHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
+{
+    const std::string childLevel = entity.Get< TacticalHierarchies >().GetLevel();
+    if( level_.empty() )
+        level_ = Increase( childLevel );
+    else
+        level_ = Max( level_, Increase( childLevel ) );
+    MergingTacticalHierarchies::MergeSymbol( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::Max
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+std::string AutomatHierarchies::Max( const std::string& lhs, const std::string& rhs )
+{
+    const char ll = Level( lhs );
+    const char rl = Level( rhs );
+    if( ll == 'o' && rl != 'o' )
+        return rhs;
+    if( ll == 'i' && rl == 'x' )
+        return rhs;
+    if( rl == 'o' && ll != 'o' )
+        return lhs;
+    if( rl == 'i' && ll == 'x' )
+        return lhs;
+    const unsigned lc = Count( lhs );
+    const unsigned rc = Count( rhs );
+    if( lc < rc )
+        return rhs;
+    return lhs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::Increase
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+std::string AutomatHierarchies::Increase( const std::string& value )
+{
+    const unsigned count = Count( value );
+    const char level = Level( value );
+    if( count < 3 || level == 'x' )
+        return value + level;
+    const char newChar = level == 'o' ? 'i' : 'x';
+    return value.substr( 0, value.length() - count ) + newChar;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::Level
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+char AutomatHierarchies::Level( const std::string& value )
+{
+    return *value.rbegin();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::Count
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+unsigned AutomatHierarchies::Count( const std::string& value )
+{
+    char level = Level( value );
+    unsigned count = 0;
+    while( value[ value.size() - count - 1 ] == level )
+        ++count;
+    return count;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::GetLevel
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+std::string AutomatHierarchies::GetLevel() const
+{
+    return level_;
+}
