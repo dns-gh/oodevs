@@ -34,7 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual QPixmap GetSymbol( const std::string& name );
+    virtual QPixmap GetSymbol( const std::string& symbol );
+    virtual QPixmap GetSymbol( const std::string& symbol, const std::string& level );
     //@}
 
 private:
@@ -46,15 +47,15 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const std::string, QPixmap >   T_Icons;
-    typedef std::vector< std::string >               T_PendingIcons;
-    typedef T_PendingIcons::const_iterator         CIT_PendingIcons;
+    typedef std::pair< std::string, std::string > T_Key;
+    typedef std::map< T_Key, QPixmap >            T_Icons;
+    typedef std::set< T_Key >                     T_PendingIcons;
+    typedef T_PendingIcons::const_iterator      CIT_PendingIcons;
     //@}
 
     //! @name Helpers
     //@{
-    void CreatePendingIcons();
-    virtual void AddIcon( const std::string& name, const QPixmap& icon );
+    virtual void AddIcon( const std::string& symbol, const std::string& level, const QPixmap& icon );
     //@}
 
 private:

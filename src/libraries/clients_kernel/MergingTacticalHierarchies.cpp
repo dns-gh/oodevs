@@ -18,6 +18,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 MergingTacticalHierarchies::MergingTacticalHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
      : EntityHierarchies< TacticalHierarchies >( controller, entity, superior )
+     , controller_( controller )
 {
     // NOTHING
 }
@@ -46,10 +47,13 @@ std::string MergingTacticalHierarchies::GetSymbol() const
 // -----------------------------------------------------------------------------
 void MergingTacticalHierarchies::UpdateSymbol()
 {
+    const std::string oldSymbol = symbol_;
     symbol_.clear();
     Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
     while( it.HasMoreElements() )
         MergeSymbol( it.NextElement() );
+    if( symbol_ != oldSymbol )
+        controller_.Update( *(Symbol_ABC*)this );
     if( TacticalHierarchies* superior = SuperiorHierarchy() )
         superior->UpdateSymbol();
 }

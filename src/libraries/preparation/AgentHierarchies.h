@@ -34,6 +34,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual std::string GetLevel() const;
     virtual std::string GetSymbol() const;
     //@}
 
@@ -52,6 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string level_;
     std::string symbol_;
     kernel::Entity_ABC* superior_;
     //@}

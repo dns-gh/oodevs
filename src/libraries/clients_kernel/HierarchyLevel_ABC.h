@@ -33,6 +33,8 @@ public:
     //@{
     virtual unsigned int GetId() const = 0;
     virtual QString GetName() const = 0;
+    virtual std::string GetSymbol() const = 0;
+
     virtual const HierarchyLevel_ABC* GetPrevious() const = 0;
     virtual const HierarchyLevel_ABC* GetNext() const = 0;
     //@}

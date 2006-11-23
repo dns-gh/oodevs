@@ -13,6 +13,10 @@
 #include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
+namespace kernel {
+    class Formation_ABC;
+}
+
 // =============================================================================
 /** @class  FormationHierarchies
     @brief  FormationHierarchies
@@ -26,12 +30,13 @@ class FormationHierarchies : public kernel::MergingTacticalHierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+             FormationHierarchies( kernel::Controller& controller, kernel::Formation_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~FormationHierarchies();
     //@}
 
     //! @name Operations
     //@{
+    virtual std::string GetLevel() const;
     void ChangeSuperior( kernel::Entity_ABC& superior );
     //@}
 
@@ -46,6 +51,7 @@ private:
     //! @name Member data
     //@{
     kernel::Entity_ABC* superior_;
+    std::string level_;
     //@}
 };
 

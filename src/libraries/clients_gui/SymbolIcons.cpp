@@ -39,32 +39,35 @@ SymbolIcons::~SymbolIcons()
 // -----------------------------------------------------------------------------
 QPixmap SymbolIcons::GetSymbol( const std::string& name )
 {
-    const QPixmap& result = icons_[ name ];
-    if( result.isNull() )
-    {
-        pending_.push_back( name );
-        CreatePendingIcons();
-    }
-    return result;
+    return GetSymbol( name, "" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SymbolIcons::CreatePendingIcons
-// Created: AGE 2006-11-22
+// Name: SymbolIcons::GetSymbol
+// Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void SymbolIcons::CreatePendingIcons()
+QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level )
 {
-    const QColor white( "white" );
-    for( CIT_PendingIcons it = pending_.begin(); it != pending_.end(); ++it )
-        widget_->CreateIcon( *it, white, *this );
-    pending_.clear();
+    std::string symbolName( s );
+    std::replace( symbolName.begin(), symbolName.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
+
+    const T_Key key( level, symbolName );
+    const QPixmap& result = icons_[ key ];
+    if( result.isNull() )
+    {
+        if( pending_.insert( key ).second )
+            widget_->CreateIcon( key.second, key.first, white, *this );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolIcons::AddIcon
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void SymbolIcons::AddIcon( const std::string& name, const QPixmap& icon )
+void SymbolIcons::AddIcon( const std::string& symbol, const std::string& level, const QPixmap& icon )
 {
-    icons_[ name ] = icon;
+    const T_Key key( level, symbol );
+    icons_[ key ] = icon;
+    pending_.erase( key );
 }

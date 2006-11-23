@@ -18,6 +18,7 @@
 // -----------------------------------------------------------------------------
 AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, kernel::Entity_ABC* superior )
     : TacticalHierarchies( controller, holder, 0 )
+    , level_ ( holder.GetType().GetLevelSymbol() )
     , symbol_( holder.GetType().GetSymbol() )
     , superior_( superior )
 {
@@ -31,6 +32,15 @@ AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Agen
 AgentHierarchies::~AgentHierarchies()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::GetLevel
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+std::string AgentHierarchies::GetLevel() const
+{
+    return level_;
 }
 
 // -----------------------------------------------------------------------------

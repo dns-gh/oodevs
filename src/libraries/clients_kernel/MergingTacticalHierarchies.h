@@ -56,6 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Controller& controller_;
     std::string symbol_;
     //@}
 };

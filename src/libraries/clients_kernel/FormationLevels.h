@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class SymbolFactory;
     class Level;
     class HierarchyLevel_ABC;
 
@@ -49,8 +50,8 @@ private:
 
     //! @name Helpers
     //@{
-    void Initialize();
-    Level* AddLevel( Level& root, const QString& name );
+    void Initialize( SymbolFactory& factory );
+    Level* AddLevel( SymbolFactory& factory, Level& root, const QString& name );
     //@}
 
 private:

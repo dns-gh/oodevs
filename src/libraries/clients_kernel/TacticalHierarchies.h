@@ -16,13 +16,33 @@ namespace kernel
 {
 
 // =============================================================================
-/** @class  TacticalHierarchies
-    @brief  Tactical hierarchies
-            agent -> formations -> team
+/** @class  Symbol_ABC
+    @brief  Symbol definition
 */
 // Created: AGE 2006-10-04
 // =============================================================================
-class TacticalHierarchies : public Hierarchies
+class Symbol_ABC
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Symbol_ABC() {};
+    virtual ~Symbol_ABC() {};
+    //@}
+
+    virtual const Entity_ABC& GetEntity() const = 0;
+    virtual std::string GetSymbol() const = 0;
+    virtual std::string GetLevel() const = 0;
+    virtual void UpdateSymbol() = 0;
+};
+
+// =============================================================================
+/** @class  TacticalHierarchies
+    @brief  Tactical hierarchies
+*/
+// Created: AGE 2006-10-04
+// =============================================================================
+class TacticalHierarchies : public Hierarchies, public Symbol_ABC
 {
 
 public:
@@ -34,8 +54,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string GetSymbol() const { return ""; };
-    virtual void UpdateSymbol() {};
+    virtual std::string GetSymbol() const;
+    virtual std::string GetLevel() const;
+    virtual void UpdateSymbol();
     //@}
 };
 

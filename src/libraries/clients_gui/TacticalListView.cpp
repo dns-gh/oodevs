@@ -19,7 +19,7 @@ using namespace gui;
 // Name: TacticalListView constructor
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, const Profile_ABC& profile, gui::SymbolIcons& icons )
     : HierarchyListView< TacticalHierarchies >( pParent, controllers, factory, profile )
     , icons_( icons )
 {
@@ -42,18 +42,39 @@ TacticalListView::~TacticalListView()
 // Name: TacticalListView::Display
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
+void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item )
 {
     HierarchyListView< TacticalHierarchies >::Display( entity, item );
-    std::string symbolName = entity.Get< TacticalHierarchies >().GetSymbol();
-    std::replace( symbolName.begin(), symbolName.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
+    DisplayIcon( entity.Get< TacticalHierarchies >(), item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::DisplayIcon
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+void TacticalListView::DisplayIcon( const TacticalHierarchies& hierarchies, gui::ValuedListItem* item )
+{
+    std::string symbolName = hierarchies.GetSymbol();
+    std::string levelName  = hierarchies.GetLevel();
 
     QPixmap pixmap;
-    if( ! symbolName.empty() )
+    if( ! symbolName.empty() || ! levelName.empty() )
     {
-        pixmap = icons_.GetSymbol( symbolName );
+        pixmap = icons_.GetSymbol( symbolName, levelName );
         if( pixmap.isNull() )
             timer_->start( 500, true );
     }
     item->setPixmap( 0, pixmap );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyUpdated
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyUpdated( const Symbol_ABC& symbol )
+{
+    const Entity_ABC& entity = symbol.GetEntity();
+    ValuedListItem* item = FindItem( &entity, firstChild() );
+    if( item )
+        DisplayIcon( entity.Get< TacticalHierarchies >(), item );
 }

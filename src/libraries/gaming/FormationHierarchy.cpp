@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "FormationHierarchy.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/HierarchyLevel_ABC.h"
 
 using namespace kernel;
 
@@ -18,7 +19,9 @@ using namespace kernel;
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& entity, Entity_ABC* superior )
-    : MergingTacticalHierarchies( controller, entity, superior )
+    : MergingTacticalHierarchies( controller, entity, 0 )
+    , superior_( superior )
+    , level_( entity.GetLevel().GetSymbol() )
 {
     // NOTHING
 }
@@ -30,4 +33,23 @@ FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& e
 FormationHierarchy::~FormationHierarchy()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchy::GetLevel
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+std::string FormationHierarchy::GetLevel() const
+{
+    return level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchy::DoUpdate
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+void FormationHierarchy::DoUpdate( const kernel::InstanciationComplete& ic )
+{
+    SetSuperior( superior_ );
+    MergingTacticalHierarchies::DoUpdate( ic );
 }

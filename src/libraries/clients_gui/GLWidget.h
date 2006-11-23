@@ -57,7 +57,8 @@ public:
     void AddMiniView   ( MiniView* view );
     void RemoveMiniView( MiniView* view );
 
-    void CreateIcon( const std::string& filename, const QColor& color, IconHandler_ABC& handler );
+    void CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler );
+    void CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler );
     //@}
 
     //! @name Operations
@@ -99,7 +100,10 @@ private:
     {
         T_IconTask( const std::string& name, const QColor& color, IconHandler_ABC& handler )
             : name( name ), color( color ), handler( &handler ) {};
+        T_IconTask( const std::string& name, const std::string& name2, const QColor& color, IconHandler_ABC& handler )
+            : name( name ), name2( name2 ), color( color ), handler( &handler ) {};
         std::string name;
+        std::string name2;
         QColor color;
         IconHandler_ABC* handler;
     };

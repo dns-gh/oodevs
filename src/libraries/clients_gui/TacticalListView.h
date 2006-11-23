@@ -24,6 +24,7 @@ namespace gui
 // Created: AGE 2006-11-22
 // =============================================================================
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
+                       , public kernel::ElementObserver_ABC< kernel::Symbol_ABC >
 {
 
 public:
@@ -36,6 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
+    virtual void NotifyUpdated( const kernel::Symbol_ABC& symbol );
     //@}
 
 private:
@@ -43,6 +45,11 @@ private:
     //@{
     TacticalListView( const TacticalListView& );            //!< Copy constructor
     TacticalListView& operator=( const TacticalListView& ); //!< Assignement operator
+    //@}
+
+    //! @name Helper
+    //@{
+    void DisplayIcon( const kernel::TacticalHierarchies& hierarchies, gui::ValuedListItem* item );
     //@}
 
 private:

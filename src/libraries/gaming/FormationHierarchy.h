@@ -34,11 +34,24 @@ public:
     virtual ~FormationHierarchy();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual std::string GetLevel() const;
+    virtual void DoUpdate( const kernel::InstanciationComplete& ic );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     FormationHierarchy( const FormationHierarchy& );            //!< Copy constructor
     FormationHierarchy& operator=( const FormationHierarchy& ); //!< Assignement operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Entity_ABC* superior_;
+    std::string level_;
     //@}
 };
 

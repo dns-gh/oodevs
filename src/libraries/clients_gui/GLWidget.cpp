@@ -192,9 +192,18 @@ void GlWidget::RemoveMiniView( MiniView* view )
 // Name: GlWidget::CreateIcon
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void GlWidget::CreateIcon( const std::string& filename, const QColor& color, IconHandler_ABC& handler )
+void GlWidget::CreateIcon( const std::string& symbol, const QColor& color, IconHandler_ABC& handler )
 {
-    tasks_.push_back( T_IconTask( filename, color, handler ) );
+    tasks_.push_back( T_IconTask( symbol, color, handler ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::CreateIcon
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+void GlWidget::CreateIcon( const std::string& symbol, const std::string& level, const QColor& color, IconHandler_ABC& handler )
+{
+    tasks_.push_back( T_IconTask( symbol, level, color, handler ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,14 +253,17 @@ void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& 
     glRectf( viewport.Left() - 50, viewport.Bottom() - 50, viewport.Right() + 50, viewport.Top() + 50 );
     glColor3f( task.color.red()/ 255.f, task.color.green()/255.f, task.color.blue()/255.f );
     windowWidth_ = windowHeight_ = viewport.Width() * 1.5f; // => trait svg de 2 px
-    DrawApp6Symbol( task.name, Point2f( 300, 100 ) );
+    const Point2f center( 300, 100 );
+    DrawApp6Symbol( task.name, center );
+    if( ! task.name2.empty() )
+        DrawApp6Symbol( task.name2, center );
     windowWidth_ = windowHeight_ = iconSide_;
 
     glFlush();
     glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     glFlush();
 
-    task.handler->AddIcon( task.name, QPixmap( image.mirror().smoothScale( 32, 32 ) ) );
+    task.handler->AddIcon( task.name, task.name2, QPixmap( image.mirror().smoothScale( 32, 32 ) ) );
 }
 
 // -----------------------------------------------------------------------------
