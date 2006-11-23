@@ -10,7 +10,7 @@
 #ifndef __FormationHierarchies_h_
 #define __FormationHierarchies_h_
 
-#include "TacticalHierarchies.h"
+#include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-09-21
 // =============================================================================
-class FormationHierarchies : public TacticalHierarchies
+class FormationHierarchies : public kernel::MergingTacticalHierarchies
                            , public kernel::Serializable_ABC
 {
 
@@ -30,11 +30,22 @@ public:
     virtual ~FormationHierarchies();
     //@}
 
+    //! @name Operations
+    //@{
+    void ChangeSuperior( kernel::Entity_ABC& superior );
+    //@}
+
 private:
     //! @name Operations
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void SerializeLogistics ( xml::xostream& xos ) const;
+    virtual void DoUpdate( const kernel::InstanciationComplete& ic );
+    //@}
+
+    //! @name Member data
+    //@{
+    kernel::Entity_ABC* superior_;
     //@}
 };
 

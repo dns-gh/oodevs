@@ -19,7 +19,7 @@ using namespace kernel;
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, Entity_ABC& holder, const Resolver_ABC< Formation_ABC >& resolver, PropertiesDictionary& dictionary )
-    : EntityHierarchies< TacticalHierarchies >( controller, holder, 0 )
+    : MergingTacticalHierarchies( controller, holder, 0 )
     , controller_( controller )
     , resolver_( resolver )
 {

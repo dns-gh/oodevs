@@ -13,12 +13,15 @@
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "ASN_Types.h"
 
 namespace kernel
 {
     class Controller;
     class Automat_ABC;
+    class AgentType;
 }
 
 // =============================================================================
@@ -37,9 +40,14 @@ class AgentHierarchies : public kernel::EntityHierarchies< I  >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder,
+             AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder,
                                const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver );
     virtual ~AgentHierarchies();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual std::string GetSymbol() const;
     //@}
 
 private:
@@ -62,6 +70,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const kernel::AgentType& type_;
     const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver_; 
     //@}
 };
@@ -71,9 +80,10 @@ private:
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
+AgentHierarchies< I >::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, const kernel::Resolver_ABC< kernel::Automat_ABC >& automatResolver )
     : kernel::EntityHierarchies< I  >( controller, holder, 0 )
     , controller_                    ( controller )
+    , type_                          ( holder.GetType() )
     , automatResolver_               ( automatResolver ) 
 {
     // NOTHING
@@ -128,6 +138,16 @@ template< typename I >
 void AgentHierarchies< I >::UpdateSuperior( kernel::Entity_ABC& superior )
 {
     ChangeSuperior( &superior );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::GetSymbol
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+template< typename I >
+std::string AgentHierarchies< I >::GetSymbol() const
+{
+    return type_.GetSymbol();
 }
 
 #endif // __AgentHierarchies_h_

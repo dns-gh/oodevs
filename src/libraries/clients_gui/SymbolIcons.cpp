@@ -7,65 +7,64 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
-#include "Controllers.h"
-#include "Options.h"
-#include "Controller.h"
-#include "ActionController.h"
+#include "clients_gui_pch.h"
+#include "SymbolIcons.h"
+#include "GlWidget.h"
 
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: Controllers constructor
-// Created: AGE 2006-03-22
+// Name: SymbolIcons constructor
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-Controllers::Controllers()
-    : options_( *new Options() )
-    , controller_( *new Controller() )
-    , actions_( *new ActionController() )
+SymbolIcons::SymbolIcons( QObject* parent, GlWidget*& widget )
+    : QObject( parent )
+    , widget_( widget )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controllers destructor
-// Created: AGE 2006-03-22
+// Name: SymbolIcons destructor
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-Controllers::~Controllers()
+SymbolIcons::~SymbolIcons()
 {
-    delete &actions_;
-    delete &controller_;
-    delete &options_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controllers::Register
-// Created: AGE 2006-03-22
+// Name: SymbolIcons::GetSymbol
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void Controllers::Register( Observer_ABC& observer )
+QPixmap SymbolIcons::GetSymbol( const std::string& name )
 {
-    options_.Register( observer );
-    controller_.Register( observer );
-    actions_.Register( observer );
+    const QPixmap& result = icons_[ name ];
+    if( result.isNull() )
+    {
+        pending_.push_back( name );
+        CreatePendingIcons();
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controllers::Remove
-// Created: AGE 2006-03-22
+// Name: SymbolIcons::CreatePendingIcons
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void Controllers::Remove( Observer_ABC& observer )
+void SymbolIcons::CreatePendingIcons()
 {
-    options_.Remove( observer );
-    controller_.Remove( observer );
-    actions_.Remove( observer );
+    const QColor white( "white" );
+    for( CIT_PendingIcons it = pending_.begin(); it != pending_.end(); ++it )
+        widget_->CreateIcon( *it, white, *this );
+    pending_.clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controllers::Update
-// Created: AGE 2006-11-23
+// Name: SymbolIcons::AddIcon
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void Controllers::Update( Observer_ABC& observer )
+void SymbolIcons::AddIcon( const std::string& name, const QPixmap& icon )
 {
-    Remove( observer );
-    Register( observer );
+    icons_[ name ] = icon;
 }

@@ -60,6 +60,8 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::KnowledgeGroup_ABC >& groupResolver_; 
+    QString level_;
+    QString symbol_;
     //@}
 };
 

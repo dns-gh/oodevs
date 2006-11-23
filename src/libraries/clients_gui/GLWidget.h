@@ -29,6 +29,7 @@ namespace gui
 {    
     class MiniView;
     class IconLayout;
+    class IconHandler_ABC;
 
 // =============================================================================
 /** @class  GlWidget
@@ -55,6 +56,8 @@ public:
     //@{
     void AddMiniView   ( MiniView* view );
     void RemoveMiniView( MiniView* view );
+
+    void CreateIcon( const std::string& filename, const QColor& color, IconHandler_ABC& handler );
     //@}
 
     //! @name Operations
@@ -86,6 +89,24 @@ private:
     GlWidget& operator=( const GlWidget& ); //!< Assignement operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< MiniView* >   T_Views;
+    typedef T_Views::iterator         IT_Views;
+    typedef T_Views::const_iterator  CIT_Views;
+
+    struct T_IconTask 
+    {
+        T_IconTask( const std::string& name, const QColor& color, IconHandler_ABC& handler )
+            : name( name ), color( color ), handler( &handler ) {};
+        std::string name;
+        QColor color;
+        IconHandler_ABC* handler;
+    };
+    typedef std::vector< T_IconTask >                    T_IconTasks;
+    typedef T_IconTasks::const_iterator                CIT_IconTasks;
+    //@}
+
     //! @name Helpers
     //@{
     virtual void paintGL();
@@ -95,18 +116,16 @@ private:
 
     void RenderMiniViews();
     void RenderMiniView( MiniView& view );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< MiniView* >   T_Views;
-    typedef T_Views::iterator         IT_Views;
-    typedef T_Views::const_iterator  CIT_Views;
+    void RenderIcons();
+    void RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& viewport );
     //@}
 
 private:
     //! @name Member data
     //@{
+    static const unsigned miniViewSide_ = 128;
+    static const unsigned iconSide_     = 128;
+    
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
@@ -116,6 +135,8 @@ private:
 
     T_Views views_;
     IconLayout& iconLayout_;
+
+    T_IconTasks tasks_;
     
     int listBase_;
     //@}

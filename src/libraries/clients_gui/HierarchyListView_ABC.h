@@ -70,12 +70,13 @@ private:
     HierarchyListView_ABC& operator=( const HierarchyListView_ABC& );
     //@}
 
-private slots:
+protected slots:
     //! @name Slots
     //@{
     void OnSelectionChange( QListViewItem* item );
     void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     void OnRequestCenter();
+    void Update();
     //@}
 
 protected:

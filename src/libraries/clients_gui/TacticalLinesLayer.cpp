@@ -32,8 +32,7 @@ TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, const 
     , isLimit_     ( true )
     , selected_    ( controllers_ )
 {
-    controllers_.Remove( *this );
-    controllers_.Register( *this );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

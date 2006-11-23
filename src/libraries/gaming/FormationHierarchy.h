@@ -10,10 +10,12 @@
 #ifndef __FormationHierarchy_h_
 #define __FormationHierarchy_h_
 
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "ASN_Types.h"
+
+namespace kernel {
+    class Formation_ABC;
+}
 
 // =============================================================================
 /** @class  FormationHierarchy
@@ -22,13 +24,13 @@
 */
 // Created: AGE 2006-10-19
 // =============================================================================
-class FormationHierarchy : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class FormationHierarchy : public kernel::MergingTacticalHierarchies
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationHierarchy( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::Entity_ABC* superior );
+             FormationHierarchy( kernel::Controller& controller, kernel::Formation_ABC& entity, kernel::Entity_ABC* superior );
     virtual ~FormationHierarchy();
     //@}
 

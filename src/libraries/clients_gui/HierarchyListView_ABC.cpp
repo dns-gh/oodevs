@@ -276,9 +276,16 @@ void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    if( & profile_ != &profile )
-        return;
+    if( & profile_ == &profile )
+        Update();
+}
 
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::Update
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::Update()
+{
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {

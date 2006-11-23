@@ -7,20 +7,23 @@
 //
 // *****************************************************************************
 
-#ifndef __TacticalListView_h_
-#define __TacticalListView_h_
+#ifndef __gui_TacticalListView_h_
+#define __gui_TacticalListView_h_
 
-#include "clients_gui/TacticalListView.h"
-class AutomatDecisions;
+#include "clients_kernel/TacticalHierarchies.h"
+#include "HierarchyListView.h"
+
+namespace gui
+{
+    class SymbolIcons;
 
 // =============================================================================
 /** @class  TacticalListView
     @brief  TacticalListView
 */
-// Created: AGE 2006-11-23
+// Created: AGE 2006-11-22
 // =============================================================================
-class TacticalListView : public gui::TacticalListView
-                       , public kernel::ElementObserver_ABC< AutomatDecisions >
+class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
 {
 
 public:
@@ -32,8 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item );
-    virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
 
 private:
@@ -42,6 +44,15 @@ private:
     TacticalListView( const TacticalListView& );            //!< Copy constructor
     TacticalListView& operator=( const TacticalListView& ); //!< Assignement operator
     //@}
+
+private:
+    //! @name Member data
+    //@{
+    gui::SymbolIcons& icons_;
+    QTimer* timer_;
+    //@}
 };
 
-#endif // __TacticalListView_h_
+}
+
+#endif // __gui_TacticalListView_h_

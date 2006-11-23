@@ -10,8 +10,7 @@
 #ifndef __AutomatTacticalHierarchies_h_
 #define __AutomatTacticalHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/MergingTacticalHierarchies.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "ASN_Types.h"
 
@@ -27,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-10-19
 // =============================================================================
-class AutomatTacticalHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class AutomatTacticalHierarchies : public kernel::MergingTacticalHierarchies
                                  , public kernel::Updatable_ABC< ASN1T_MsgAutomateCreation >
 {
 

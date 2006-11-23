@@ -688,7 +688,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Messages</source>
+        <source>0</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

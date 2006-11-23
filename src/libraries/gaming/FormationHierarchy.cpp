@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "FormationHierarchy.h"
+#include "clients_kernel/Formation_ABC.h"
 
 using namespace kernel;
 
@@ -16,8 +17,8 @@ using namespace kernel;
 // Name: FormationHierarchy constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-FormationHierarchy::FormationHierarchy( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
-    : EntityHierarchies< TacticalHierarchies >( controller, entity, superior )
+FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& entity, Entity_ABC* superior )
+    : MergingTacticalHierarchies( controller, entity, superior )
 {
     // NOTHING
 }

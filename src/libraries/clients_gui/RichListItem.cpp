@@ -268,8 +268,10 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
     const QPixmap& pm = columns_[nColumn].pixMap;
     QRect rect( 0, 0, nWidth, height() );
 
-    pRichText->draw( pPainter, pm.width(), 0, rect, colorGroup, &brush );
-    pPainter->drawPixmap( QPoint( 0, height()/2 - pm.height()/2 ), pm );
+    const int hoffset = pm.isNull() ? 0 : ( pm.width() + margin_ );
+    const int voffset = ( height() - pRichText->height() ) / 2;
+    pRichText->draw( pPainter, hoffset, voffset, rect, colorGroup, &brush );
+    pPainter->drawPixmap( QPoint( 0, ( height() - pm.height() )/2 ), pm );
 }
 
 
@@ -279,7 +281,7 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
 // -----------------------------------------------------------------------------
 int RichListItem::width( const QFontMetrics& /*fm*/, const QListView* /*lv*/, int nColumn ) const
 {
-    return Width( nColumn);
+    return Width( nColumn );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,7 +292,10 @@ int RichListItem::Width( int nColumn ) const
 {
     if( nColumn >= (int)columns_.size() )
         return 0;
-    return columns_[nColumn].rich->widthUsed() + columns_[nColumn].pixMap.width();
+    const QPixmap& pm = columns_[nColumn].pixMap;
+    const int textWidth = columns_[nColumn].rich->widthUsed();
+    const int pixWidth  = pm.isNull() ? 0 : ( pm.width() + margin_ );
+    return textWidth + pixWidth;
 }
 
 // -----------------------------------------------------------------------------

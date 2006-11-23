@@ -12,6 +12,10 @@
 
 #include "TacticalHierarchies.h"
 
+namespace kernel {
+    class Agent_ABC;
+}
+
 // =============================================================================
 /** @class  AgentHierarchies
     @brief  AgentHierarchies
@@ -24,8 +28,13 @@ class AgentHierarchies : public TacticalHierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+             AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~AgentHierarchies();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual std::string GetSymbol() const;
     //@}
 
 private:
@@ -33,6 +42,18 @@ private:
     //@{
     AgentHierarchies( const AgentHierarchies& );            //!< Copy constructor
     AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const kernel::InstanciationComplete& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string symbol_;
+    kernel::Entity_ABC* superior_;
     //@}
 };
 

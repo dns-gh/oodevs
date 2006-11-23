@@ -22,7 +22,8 @@ using namespace xml;
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
 FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : TacticalHierarchies( controller, holder, superior )
+    : kernel::MergingTacticalHierarchies( controller, holder, 0 )
+    , superior_( superior )
 {
     // NOTHING
 }
@@ -34,6 +35,15 @@ FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kern
 FormationHierarchies::~FormationHierarchies()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchies::ChangeSuperior
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void FormationHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+{
+    kernel::MergingTacticalHierarchies::ChangeSuperior( &superior );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,4 +77,14 @@ void FormationHierarchies::SerializeLogistics( xml::xostream& xos ) const
                 xos << end();
             }
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchies::DoUpdate
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void FormationHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
+{
+    SetSuperior( superior_ );
+    kernel::MergingTacticalHierarchies::DoUpdate( ic );
 }

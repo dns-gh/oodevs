@@ -86,6 +86,7 @@
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/DrawerToolbar.h"
+#include "clients_gui/SymbolIcons.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -136,7 +137,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile ),            tr( "ODB" ) );
+    SymbolIcons* icons = new SymbolIcons( this, widget2d_ );
+
+    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile, *icons ),    tr( "ODB" ) );
     pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile ), tr( "Agents" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),            tr( "Objets" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),            tr( "Populations" ) );
@@ -156,6 +159,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pSpyWnd->setCaption( tr( "Espion" ) );
     setDockEnabled( pSpyWnd, Qt::DockTop, false );
 
+    // Mini views
     MiniViews* miniviews = new MiniViews( this, controllers_, widget2d_ ); // $$$$ AGE 2006-08-21: widget2d en *& dégueu. Instancier l'un quand l'autre
     miniviews->hide();
 
@@ -375,6 +379,8 @@ void MainWindow::Close()
 MainWindow::~MainWindow()
 {
     controllers_.Remove( *this );
+    delete widget2d_; widget2d_ = 0;
+    delete widget3d_; widget3d_ = 0;
 }
 
 // -----------------------------------------------------------------------------

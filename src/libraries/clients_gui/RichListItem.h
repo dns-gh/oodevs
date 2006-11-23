@@ -88,6 +88,7 @@ private:
 private:
     //! @name Member data
     //@{
+    static const unsigned margin_ = 5;
     T_RichTexts columns_;
     
     QColor backgroundColor_;

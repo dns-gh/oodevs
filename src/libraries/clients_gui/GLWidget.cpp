@@ -13,8 +13,9 @@
 #include "graphics/Scale.h"
 #include "graphics/DragMovementLayer.h"
 #include "MiniView.h"
-#include "clients_gui/IconLayout.h"
+#include "IconLayout.h"
 #include "DrawerStyle.h"
+#include "IconHandler_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace geometry;
@@ -55,6 +56,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::strin
     , viewport_( 0, 0, width_, height_ )
     , frame_( 0 )
     , iconLayout_( iconLayout )
+    , listBase_( 0 )
 {
     setAcceptDrops( true );
     Register( *new SpyLayer( viewport_, frame_ ) );
@@ -103,6 +105,8 @@ void GlWidget::resizeGL( int w, int h )
 void GlWidget::paintGL()
 {
     RenderMiniViews();
+    RenderIcons();
+
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 
@@ -147,14 +151,14 @@ void GlWidget::RenderMiniView( MiniView& view )
     {
         Center( viewport_.Center() );
         Zoom( viewport_.Height() );
-        MapWidget::resizeGL( 128, 128 );
-        windowHeight_ = 128;
-        windowWidth_ = 128;
+        MapWidget::resizeGL( miniViewSide_, miniViewSide_ );
+        windowHeight_ = miniViewSide_;
+        windowWidth_ = miniViewSide_;
 
-        QImage image( 128, 128, 32 );
+        QImage image( miniViewSide_, miniViewSide_, 32 );
         MapWidget::paintGL();
         glFlush();
-        glReadPixels( 0, 0, 128, 128, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+        glReadPixels( 0, 0, miniViewSide_, miniViewSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
         glFlush();
 
         view.SetImage( image.mirror() );
@@ -185,12 +189,78 @@ void GlWidget::RemoveMiniView( MiniView* view )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::CreateIcon
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void GlWidget::CreateIcon( const std::string& filename, const QColor& color, IconHandler_ABC& handler )
+{
+    tasks_.push_back( T_IconTask( filename, color, handler ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::RenderIcons
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void GlWidget::RenderIcons()
+{
+    if( tasks_.empty() )
+        return;
+
+    const geometry::Rectangle2f viewport = viewport_;
+    const int windowHeight = windowHeight_;
+    const int windowWidth = windowWidth_;
+    const geometry::Rectangle2f iconViewport( 0, 0, 600, 600 );
+    const Point2f oldCenter = Center( iconViewport.Center() );
+    const float oldZoom = Zoom( iconViewport.Width() + 10 );
+
+    viewport_ = iconViewport;
+    windowHeight_ = iconSide_;
+    windowWidth_ = iconSide_;
+
+    glEnable( GL_LINE_SMOOTH );
+    for( CIT_IconTasks it = tasks_.begin(); it != tasks_.end(); ++it )
+        RenderIcon( *it, iconViewport );
+    tasks_.clear();
+    glDisable( GL_LINE_SMOOTH );
+
+    Center( oldCenter );
+    Zoom( oldZoom );
+    viewport_ = viewport;
+    windowHeight_ = windowHeight;
+    windowWidth_ = windowWidth;
+    MapWidget::resizeGL( windowWidth_, windowHeight_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlWidget::RenderIcon
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& viewport )
+{
+    MapWidget::resizeGL( iconSide_, iconSide_ );
+
+    QImage image( iconSide_, iconSide_, 32 );
+    glColor3f( 1, 1, 1 );
+    glRectf( viewport.Left() - 50, viewport.Bottom() - 50, viewport.Right() + 50, viewport.Top() + 50 );
+    glColor3f( task.color.red()/ 255.f, task.color.green()/255.f, task.color.blue()/255.f );
+    windowWidth_ = windowHeight_ = viewport.Width() * 1.5f; // => trait svg de 2 px
+    DrawApp6Symbol( task.name, Point2f( 300, 100 ) );
+    windowWidth_ = windowHeight_ = iconSide_;
+
+    glFlush();
+    glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+    glFlush();
+
+    task.handler->AddIcon( task.name, QPixmap( image.mirror().smoothScale( 32, 32 ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::GenerateCircle
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
 unsigned int GlWidget::GenerateCircle()
 {
-    static const float twoPi = 2.f * std::acos( -1.f );
+    const float twoPi = 2.f * std::acos( -1.f );
     unsigned int id = glGenLists(1);
     glNewList( id, GL_COMPILE);
         for( float angle = 0; angle < twoPi; angle += twoPi / 40.f + 1e-7 )
@@ -454,7 +524,7 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where, 
         glTranslatef( center.X(), center.Y(), 0.0f );
         glScalef( scaleRatio, -scaleRatio, 1 );
         glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        Base().PrintApp6( symbol, viewport_ );
+        Base().PrintApp6( symbol, viewport_, windowWidth_, windowHeight_ );
     glPopMatrix();
     glPopAttrib();
 }

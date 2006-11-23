@@ -7,38 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __kernel_TacticalHierarchies_h_
-#define __kernel_TacticalHierarchies_h_
+#ifndef __IconHandler_ABC_h_
+#define __IconHandler_ABC_h_
 
-#include "Hierarchies.h"
-
-namespace kernel
+namespace gui
 {
 
 // =============================================================================
-/** @class  TacticalHierarchies
-    @brief  Tactical hierarchies
-            agent -> formations -> team
+/** @class  IconHandler_ABC
+    @brief  Icon handler definition
 */
-// Created: AGE 2006-10-04
+// Created: AGE 2006-11-22
 // =============================================================================
-class TacticalHierarchies : public Hierarchies
+class IconHandler_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalHierarchies() {};
-    virtual ~TacticalHierarchies() {};
+             IconHandler_ABC() {};
+    virtual ~IconHandler_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetSymbol() const { return ""; };
-    virtual void UpdateSymbol() {};
+    virtual void AddIcon( const std::string& name, const QPixmap& icon ) = 0;
     //@}
 };
 
 }
 
-#endif // __kernel_TacticalHierarchies_h_
+#endif // __IconHandler_ABC_h_

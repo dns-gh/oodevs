@@ -33,7 +33,7 @@ EventToolbar::EventToolbar( QMainWindow* pParent, Controllers& controllers, cons
     setLabel( tr( "Messagerie" ) );
     gasButton_ = new QToolButton( MAKE_ICON( gas ), tr( "Pannes d'essence" ), "", this, SLOT( GasClicked() ), this );
     conflictButton_ = new QToolButton( MAKE_ICON( ammo ), tr( "Conflits" ), "", this, SLOT( ConflictClicked() ), this );
-    messageButton_ = new QToolButton( MAKE_ICON( msg ), tr( "Messages" ), "", this, SLOT( MessageClicked() ), this );
+    messageButton_ = new QToolButton( MAKE_ICON( msg ), tr( "0" ), "", this, SLOT( MessageClicked() ), this );
     messageButton_->setUsesTextLabel( true );
     messageButton_->setTextPosition( QToolButton::BesideIcon );
     controllers_.Register( *this );

@@ -71,6 +71,7 @@
 #include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/Tools.h"
+#include "clients_gui/SymbolIcons.h"
 
 //#include "clients_gui/NatureEditionWidget.h"
 
@@ -119,11 +120,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
+
+    gui::SymbolIcons* icons = new gui::SymbolIcons( this, widget2d_ );
     
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-    new TacticalListView( listsTabBox, controllers, *factory, *modelBuilder_, model_.formations_.levels_ );
+    new ::TacticalListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_, model_.formations_.levels_ );
     pAgentsTabWidget->addTab( listsTabBox, tr( "Tactique" ) );
     
     listsTabBox = new QVBox( pListsTabWidget );

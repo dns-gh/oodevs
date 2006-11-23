@@ -132,7 +132,7 @@ namespace
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
-void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport )
+void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/  )
 {
     // $$$$ AGE 2006-10-24: 
     const bool create = symbols_.find( symbol ) == symbols_.end();
@@ -156,7 +156,7 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangl
     {
         const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
         SetCurrentColor( *current_ ); // $$$$ AGE 2006-10-25: 
-        renderingContext_->SetViewport( box, 640, 480 ); // $$$$ AGE 2006-09-11: 
+        renderingContext_->SetViewport( box, vWidth, vHeight );
         renderingContext_->PushProperty( RenderingContext::color, *current_ );
         renderNode->Draw( *renderingContext_, *references_ );
         renderingContext_->PopProperty( RenderingContext::color );

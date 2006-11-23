@@ -20,7 +20,8 @@ using namespace xml;
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
 AutomatHierarchies::AutomatHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : TacticalHierarchies( controller, holder, superior )
+    : kernel::MergingTacticalHierarchies( controller, holder, 0 )
+    , superior_( superior )
 {
     // NOTHING
 }
@@ -35,6 +36,15 @@ AutomatHierarchies::~AutomatHierarchies()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::ChangeSuperior
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void AutomatHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+{
+    MergingTacticalHierarchies::ChangeSuperior( &superior );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatHierarchies::SerializeAttributes
 // Created: SBO 2006-10-26
 // -----------------------------------------------------------------------------
@@ -46,4 +56,14 @@ void AutomatHierarchies::SerializeAttributes( xml::xostream& xos ) const
         it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
         xos << end();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::DoUpdate
+// Created: AGE 2006-11-22
+// -----------------------------------------------------------------------------
+void AutomatHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
+{
+    SetSuperior( superior_ );
+    MergingTacticalHierarchies::DoUpdate( ic );
 }

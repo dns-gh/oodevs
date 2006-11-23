@@ -7,25 +7,31 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "TacticalListView.h"
-#include "gaming/AutomatDecisions.h"
-#include "clients_kernel/Automat_ABC.h"
+#include "SymbolIcons.h"
+#include "clients_kernel/Entity_ABC.h"
+
+using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView constructor
-// Created: AGE 2006-11-23
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons )
-    : gui::TacticalListView( pParent, controllers, factory, profile, icons )
+    : HierarchyListView< TacticalHierarchies >( pParent, controllers, factory, profile )
+    , icons_( icons )
 {
-    addColumn( "Embraye" );
+    timer_ = new QTimer( this );
+    connect( timer_, SIGNAL( timeout() ), this, SLOT( Update() ) );
+
     controllers.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView destructor
-// Created: AGE 2006-11-23
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
 TacticalListView::~TacticalListView()
 {
@@ -34,26 +40,20 @@ TacticalListView::~TacticalListView()
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::Display
-// Created: AGE 2006-11-23
+// Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item )
+void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
-    const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
-    if( decisions )
-        item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
-    else
-        item->setPixmap( 1, QPixmap() );
-    gui::TacticalListView::Display( agent, item );
-}
+    HierarchyListView< TacticalHierarchies >::Display( entity, item );
+    std::string symbolName = entity.Get< TacticalHierarchies >().GetSymbol();
+    std::replace( symbolName.begin(), symbolName.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
 
-// -----------------------------------------------------------------------------
-// Name: TacticalListView::NotifyUpdated
-// Created: AGE 2006-11-23
-// -----------------------------------------------------------------------------
-void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
-{
-    const kernel::Entity_ABC* agent = & decisions.GetAgent();
-    gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
-    if( item )
-        item->setPixmap( 1, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
+    QPixmap pixmap;
+    if( ! symbolName.empty() )
+    {
+        pixmap = icons_.GetSymbol( symbolName );
+        if( pixmap.isNull() )
+            timer_->start( 500, true );
+    }
+    item->setPixmap( 0, pixmap );
 }

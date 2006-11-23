@@ -10,7 +10,7 @@
 #ifndef __TacticalListView_h_
 #define __TacticalListView_h_
 
-#include "clients_gui/HierarchyListView.h"
+#include "clients_gui/TacticalListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ class ModelBuilder;
 */
 // Created: SBO 2006-08-29
 // =============================================================================
-class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
+class TacticalListView : public gui::TacticalListView
                        , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                        , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< AutomatDecisions >
@@ -43,7 +43,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder, const kernel::FormationLevels& levels );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, ModelBuilder& modelBuilder, const kernel::FormationLevels& levels );
     virtual ~TacticalListView();
     //@}
 
