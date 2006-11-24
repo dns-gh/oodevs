@@ -51,7 +51,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog 
     menu->insertItem( MAKE_ICON( saveas ), tr( "&Save as..." ), parent(), SLOT( SaveAs() ) );
     menu->insertSeparator();
     menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
-    insertItem( tr( "&File" ), menu, ALT + Key_F );
+    insertItem( tr( "&File" ), menu );
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
@@ -82,7 +82,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog 
     menu->insertSeparator();
 
     menu->insertItem( tr( "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
-    insertItem( tr( "&Display" ), menu, ALT + Key_D );
+    insertItem( tr( "&Display" ), menu );
 
 //    menu = new QPopupMenu( this );
 //    menu->insertItem( tr( "A propos" ), new AboutDialog( this, factory ), SLOT( exec() ) );

@@ -118,12 +118,12 @@ void LogSupplyConsign::Update( const ASN1T_MsgLogRavitaillementTraitementUpdate&
 // -----------------------------------------------------------------------------
 void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Logistique", "Consigne :" ), nID_ )
-             .Display( tools::translate( "Logistique", "Pion demandeur :" ), pion_ )
-             .Display( tools::translate( "Logistique", "Pion traitant :" ), pAutomateLogHandling_ )
-             .Display( tools::translate( "Logistique", "Pion fournissant les moyens :" ), pAutomateLogProvidingConvoyResources_ )
-             .Display( tools::translate( "Logistique", "Pion convoyant :" ), pPionLogConvoying_ )
-             .Display( tools::translate( "Logistique", "Etat :" ), nState_ );
+    displayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
+             .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+             .Display( tools::translate( "Logistic", "Handler:" ), pAutomateLogHandling_ )
+             .Display( tools::translate( "Logistic", "Supplier:" ), pAutomateLogProvidingConvoyResources_ )
+             .Display( tools::translate( "Logistic", "Convoyer:" ), pPionLogConvoying_ )
+             .Display( tools::translate( "Logistic", "State:" ), nState_ );
 }
 
 // -----------------------------------------------------------------------------

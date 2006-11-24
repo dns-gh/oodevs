@@ -22,7 +22,7 @@ using namespace gui;
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
 ReportPanel::ReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC     ( parent, panel, tr( "Rapports" ) )
+    : InfoPanel_ABC     ( parent, panel, tr( "Reports" ) )
     , controllers_      ( controllers )
     , selected_         ( controllers )
 {

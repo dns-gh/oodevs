@@ -70,7 +70,6 @@
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
-#include "clients_gui/Tools.h"
 #include "clients_gui/SymbolIcons.h"
 
 //#include "clients_gui/NatureEditionWidget.h"
@@ -127,14 +126,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
     new ::TacticalListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_, model_.formations_.levels_ );
-    pAgentsTabWidget->addTab( listsTabBox, tr( "Tactique" ) );
+    pAgentsTabWidget->addTab( listsTabBox, tr( "Tactical" ) );
     
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
     new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
     pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
 
-    pListsTabWidget->addTab( pAgentsTabWidget, tr( "Agents" ) );
+    pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
 
 //    NatureEditionWidget* nature = new NatureEditionWidget( pListsTabWidget, "symbols.xml" );
 //    nature->setText( "combat service support/transportation/spod spoe" );
@@ -143,7 +142,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
     new ::ObjectListView( listsTabBox, controllers, *factory );
-    pListsTabWidget->addTab( listsTabBox, tr( "Objets" ) );
+    pListsTabWidget->addTab( listsTabBox, tr( "Objects" ) );
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
     new ::PopulationListView( listsTabBox, controllers, *factory );
@@ -151,7 +150,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
-    pListDockWnd_->setCaption( tr( "Unités" ) );
+    pListDockWnd_->setCaption( tr( "Units" ) );
     setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
     // Creation panel
@@ -171,7 +170,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
-    pInfoDockWnd_->setCaption( tr( "Informations" ) );
+    pInfoDockWnd_->setCaption( tr( "Information" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
     // A few layers
@@ -385,16 +384,13 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 {
     if( needsSaving_ )
     {
-        int result = QMessageBox::question( this, APP_NAME, tools::translate( "MainWindow", "Save modifications?" )
-                                                          , QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        int result = QMessageBox::question( this, APP_NAME, tr( "Save modifications?" ), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
         if( ( result == QMessageBox::Yes && !Save() ) || result == QMessageBox::Cancel )
         {
             pEvent->ignore();
             return;
         }
-
     }
-
     WriteSettings();
     WriteOptions();
     QMainWindow::closeEvent( pEvent );
@@ -527,7 +523,7 @@ void MainWindow::NotifyDeleted()
 void MainWindow::SetWindowTitle( bool needsSaving )
 {
     needsSaving_ = needsSaving;
-    QString filename = model_.GetName().isEmpty() ? tools::translate( "MainWindow", "New ORBAT" ) : model_.GetName();
+    QString filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
     if( needsSaving )
         filename += "*";
     setCaption( QString( APP_NAME " - [%1]" ).arg( filename ) );

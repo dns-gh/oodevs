@@ -83,12 +83,12 @@ void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceTraitementEquip
 // -----------------------------------------------------------------------------
 void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Logistique", "Consigne :" ), nID_ )
-             .Display( tools::translate( "Logistique", "Pion demandeur :" ), pion_ )
-             .Display( tools::translate( "Logistique", "Pion traitant :" ), pPionLogHandling_ )
-             .Display( tools::translate( "Logistique", "Type d'équipement :" ), diagnosed_ ? equipmentType_ : 0 )
-             .Display( tools::translate( "Logistique", "Type de panne :" ), diagnosed_ ? breakdownType_ : 0 )
-             .Display( tools::translate( "Logistique", "Etat :" ), nState_ );
+    displayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
+             .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+             .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
+             .Display( tools::translate( "Logistic", "Equipment:" ), diagnosed_ ? equipmentType_ : 0 )
+             .Display( tools::translate( "Logistic", "Breakdown:" ), diagnosed_ ? breakdownType_ : 0 )
+             .Display( tools::translate( "Logistic", "State:" ), nState_ );
 }
 
 // -----------------------------------------------------------------------------

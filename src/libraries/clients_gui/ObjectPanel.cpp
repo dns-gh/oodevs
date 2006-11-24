@@ -27,7 +27,7 @@ using namespace gui;
 // Created: APE 2004-06-11
 // -----------------------------------------------------------------------------
 ObjectPanel::ObjectPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Etat objet" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Object state" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {

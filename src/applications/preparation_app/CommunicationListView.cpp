@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "CommunicationListView.h"
 #include "ModelBuilder.h"
-#include "clients_gui/Tools.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "preparation/AutomatCommunications.h"
@@ -77,7 +76,7 @@ void CommunicationListView::NotifyContextMenu( const Team_ABC&, ContextMenu& men
 {
     if( !isVisible() )
         return;
-    menu.InsertItem( "Commande", tools::translate( "Preparation", "Créer un groupe de connaissance" ), &modelBuilder_, SLOT( OnCreateCommunication() ) );
+    menu.InsertItem( "Commande", tr( "Create knowledge group" ), &modelBuilder_, SLOT( OnCreateCommunication() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -43,7 +43,7 @@ using namespace gui;
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const Resolver_ABC< ObjectType >& resolver, ParametersLayer& layer )
-    : QGroupBox( 2, Qt::Horizontal, tr( "Informations" ), parent )
+    : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
     , controllers_( controllers )
     , resolver_( resolver )
     , location_( 0 )
@@ -54,22 +54,22 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     , nbcAttributes_( 0 )
     , rotaAttributes_( 0 )
 {
-    new QLabel( tr( "Nom:" ), this );
+    new QLabel( tr( "Name:" ), this );
     name_ = new QLineEdit( this );
 
-    new QLabel( tr( "Camp:" ), this );
+    new QLabel( tr( "Side:" ), this );
     teams_ = new ValuedComboBox< const Team_ABC* >( this );
 
     new QLabel( tr( "Type:" ), this );
     objectTypes_ = new ValuedComboBox< const ObjectType* >( this );
 
-    position_ = new RichLabel( tr( "Position:" ), this );
+    position_ = new RichLabel( tr( "Location:" ), this );
     locationLabel_ = new QLabel( tr( "---" ), this );
     locationLabel_->setMinimumWidth( 100 );
     locationLabel_->setAlignment( Qt::AlignCenter );
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    locationCreator_ = new LocationCreator( position_, tr( "Nouvel objet" ), layer, *this );
+    locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 

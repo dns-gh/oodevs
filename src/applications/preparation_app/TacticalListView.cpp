@@ -20,10 +20,8 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_gui/Tools.h"
 
 using namespace gui;
-
 #include "moc_TacticalListView.cpp"
 
 using namespace kernel;
@@ -123,7 +121,7 @@ void TacticalListView::OnContextMenuRequested( QListViewItem* item, const QPoint
         return;
     modelBuilder_.ClearSelection();
     QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( tools::translate( "Preparation", "Créer un camp" ), &modelBuilder_, SLOT( OnCreate() ) );
+    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
     menu->exec( pos, index );
 }
 
@@ -135,11 +133,11 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 {
     if( !isVisible() )
         return;
-    QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
+    QPopupMenu* subMenu = menu.SubMenu( "Commande", tr( "Create formation" ) );
     const HierarchyLevel_ABC* level = levels_.GetRoot();
     while( level && ( level = level->GetNext() ) )
         subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
-    menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), &modelBuilder_, SLOT( OnDelete() ) );
+    menu.InsertItem( "Commande", tr( "Delete" ), &modelBuilder_, SLOT( OnDelete() ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -153,11 +151,11 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
     const HierarchyLevel_ABC* level = &formation.GetLevel();
     if( level && level->GetNext() )
     {
-        QPopupMenu* subMenu = menu.SubMenu( "Commande", tools::translate( "Preparation", "Créer une formation" ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Commande", tr( "Create formation" ) );
         while( level && ( level = level->GetNext() ) )
             subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
     }
-    menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), &modelBuilder_, SLOT( OnDelete() ) );
+    menu.InsertItem( "Commande", tr( "Delete" ), &modelBuilder_, SLOT( OnDelete() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,11 +167,11 @@ void TacticalListView::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& m
     if( agent.Retrieve< AutomatDecisions >() )
     {
         if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
-            menu.InsertItem( "Commande", tr( "Embrayer" ), this, SLOT( Engage() ) );
+            menu.InsertItem( "Commande", tr( "Engage" ), this, SLOT( Engage() ) );
         else
-            menu.InsertItem( "Commande", tr( "Debrayer" ), this, SLOT( Disengage() ) );
+            menu.InsertItem( "Commande", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
-    menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), &modelBuilder_, SLOT( OnDelete() ) );
+    menu.InsertItem( "Commande", tr( "Delete" ), &modelBuilder_, SLOT( OnDelete() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -21,7 +21,7 @@ LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Publisher_AB
     , profile_( profile )
     , publisher_( publisher )
 {
-    setCaption( tr("Paramètres du profile") );
+    setCaption( tr("Profile parameters") );
 
     QGridLayout* pMainLayout = new QGridLayout( this, 3, 2 );
     pMainLayout->setMargin( 10 );
@@ -30,21 +30,21 @@ LoginDialog::LoginDialog( QWidget* pParent, const Profile& profile, Publisher_AB
     uint nCurRow = 0;
     
     // Login
-    pMainLayout->addWidget( new QLabel( tr("Utilisateur"), this ), nCurRow, 0 );
+    pMainLayout->addWidget( new QLabel( tr("User login"), this ), nCurRow, 0 );
     login_ = new QLineEdit( this );
     pMainLayout->addWidget( login_, nCurRow, 1 );
 
     // Password
     ++ nCurRow;
-    pMainLayout->addWidget( new QLabel( tr("Mot de passe"), this ), nCurRow, 0 );
+    pMainLayout->addWidget( new QLabel( tr("Password"), this ), nCurRow, 0 );
     password_ = new QLineEdit( this );
     password_->setEchoMode( QLineEdit::Password );
     pMainLayout->addWidget( password_ , nCurRow, 1 );
 
     // Buttons
     ++ nCurRow;
-    QPushButton* pOKButton     = new QPushButton( tr( "OK" )    , this );
-    QPushButton* pCancelButton = new QPushButton( tr( "Annuler" ), this );
+    QPushButton* pOKButton     = new QPushButton( tr( "Ok" )    , this );
+    QPushButton* pCancelButton = new QPushButton( tr( "Cancel" ), this );
     pMainLayout->addWidget( pOKButton, nCurRow, 0     );
     pMainLayout->addWidget( pCancelButton, nCurRow, 1 );
     pOKButton->setDefault( TRUE );

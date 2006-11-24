@@ -94,9 +94,9 @@ void AgentsLayer::NotifyContextMenu( const Automat_ABC& agent, ::ContextMenu& me
 {
     selected_ = &agent;
     if( aggregated_.find( &agent ) == aggregated_.end() )
-        menu.InsertItem( "Interface", tr( "Aggreger" ), this, SLOT( Aggregate() ) );
+        menu.InsertItem( "Interface", tr( "Aggregate" ), this, SLOT( Aggregate() ) );
     else
-        menu.InsertItem( "Interface", tr( "Désaggreger" ), this, SLOT( Disaggregate() ) );
+        menu.InsertItem( "Interface", tr( "Disaggregate" ), this, SLOT( Disaggregate() ) );
 }
 
 // -----------------------------------------------------------------------------

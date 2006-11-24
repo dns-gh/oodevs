@@ -33,7 +33,7 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     , profile_( profile )
     , selected_( controllers )
 {
-    setCaption( tr( "Changement des liens logisitiques" ) );
+    setCaption( tr( "Logistic links edition" ) );
     QVBoxLayout* layout = new QVBoxLayout( this );
     QGrid* grid = new QGrid( 3, Qt::Horizontal, this );
     layout->addWidget( grid );
@@ -52,34 +52,34 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     color = new QLabel( grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 128, 0, 0 ) );
-    label = new QLabel( tr( "Superieur maintenance" ), grid );
+    label = new QLabel( tr( "Maintenance superior" ), grid );
     maintenanceCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
 
     color = new QLabel( "", grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 255, 164, 200 ) );
-    label = new QLabel( tr( "Superieur santé" ), grid );
+    label = new QLabel( tr( "Medical superior" ), grid );
     medicalCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
 
     color = new QLabel( "  ", grid );
     color->setPixmap( QPixmap( 10, 10 ) );
     color->pixmap()->fill( QColor( 255, 150, 10 ) );
-    label = new QLabel( tr( "Superieur ravitaillement" ), grid );
+    label = new QLabel( tr( "Supply superior" ), grid );
     supplyCombo_ = new ValuedComboBox< const Automat_ABC* >( grid );
    
     QHBox* box = new QHBox( this );
     layout->addWidget( box );
-    QPushButton* okButton = new QPushButton( tr( "OK" ), box );
-    QPushButton* cancelButton = new QPushButton( tr( "Annuler" ), box );
+    QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
+    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), box );
     okButton->setDefault( true );
 
     connect( okButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
 
-    tc2Combo_->AddItem( tr( "Aucun" ), 0 );
-    maintenanceCombo_->AddItem( tr( "Aucun" ), 0 );
-    medicalCombo_->AddItem( tr( "Aucun" ), 0 );
-    supplyCombo_->AddItem( tr( "Aucun" ), 0 );
+    tc2Combo_->AddItem( tr( "None" ), 0 );
+    maintenanceCombo_->AddItem( tr( "None" ), 0 );
+    medicalCombo_->AddItem( tr( "None" ), 0 );
+    supplyCombo_->AddItem( tr( "None" ), 0 );
 
     controllers_.Register( *this );
     hide();
@@ -208,6 +208,6 @@ void ChangeLogisticLinksDialog::NotifyContextMenu( const Automat_ABC& agent, Con
     if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks_ABC >() )
     {
         selected_ = &agent;
-        menu.InsertItem( "Commande", tr( "Changer les liens logistiques" ), this, SLOT( Show() ) );
+        menu.InsertItem( "Commande", tr( "Change logistic links" ), this, SLOT( Show() ) );
     }
 }

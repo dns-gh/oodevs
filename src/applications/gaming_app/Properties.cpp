@@ -40,7 +40,7 @@ Properties::Properties( QWidget* parent, Controllers& controllers )
     pBox_->setMargin( 5 );
     pBox_->setSpacing( 5 );
 
-    table_ = new gui::PropertiesWidget( controllers_.controller_, pBox_, tools::translate( "Properties", "Properties" ), factory_, tableItemDisplayer_ );
+    table_ = new gui::PropertiesWidget( controllers_.controller_, pBox_, tr( "Properties" ), factory_, tableItemDisplayer_ );
 
     controllers_.Register( *this );
 }

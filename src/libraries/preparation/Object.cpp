@@ -140,20 +140,20 @@ QString Object::GetName() const
 // -----------------------------------------------------------------------------
 void Object::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Informations" ) )
-             .Display( tools::translate( "Object", "Id:" ), id_ )
-             .Display( tools::translate( "Object", "Nom:" ), name_ )
+    displayer.Group( tools::translate( "Object", "Information" ) )
+             .Display( tools::translate( "Object", "Identifier:" ), id_ )
+             .Display( tools::translate( "Object", "Name:" ), name_ )
              .Display( tools::translate( "Object", "Type:" ), type_ )
-             .Display( tools::translate( "Object", "Position:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
+             .Display( tools::translate( "Object", "Location:" ), converter_.ConvertToMgrs( Get< Positions >().GetPosition() ) ) // $$$$ AGE 2006-03-22: 
              .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Valorisation:" ), rValorizationPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Contournement:" ), rBypassConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "En préparation:" ), bPrepared_ )
-             .Item( tools::translate( "Object", "Dotation construction:" ) )
+             .Display( tools::translate( "Object", "Development:" ), rValorizationPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Bypass:" ), rBypassConstructionPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Setting up:" ), bPrepared_ )
+             .Item( tools::translate( "Object", "Construction dotation:" ) )
                 .Start( nDotationConstruction_ )
                 .Add( " " ).Add( construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
-    displayer.Group( tools::translate( "Object", "Informations" ) )
-             .Item( tools::translate( "Object", "Dotation valorisation:" ) )
+    displayer.Group( tools::translate( "Object", "Information" ) )
+             .Item( tools::translate( "Object", "Development dotation:" ) )
                 .Start( nDotationValorization_ )
                 .Add( " " ).Add( valorization_ ).End();
 }
@@ -165,9 +165,9 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( "", *(Object_ABC*)this )
-             .Display( tools::translate( "Object", "Construction:" ), rConstructionPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Valorisation:" ),           rValorizationPercentage_ * Units::percentage )
-             .Display( tools::translate( "Object", "Contournement:" ),          rBypassConstructionPercentage_ * Units::percentage );
+             .Display( tools::translate( "Object", "Construction:" ),  rConstructionPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Development:" ),   rValorizationPercentage_ * Units::percentage )
+             .Display( tools::translate( "Object", "Bypass:" ),        rBypassConstructionPercentage_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------

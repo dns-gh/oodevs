@@ -2,89 +2,93 @@
 <context>
     <name>Agent</name>
     <message>
-        <source>Info/Identifiant</source>
+        <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Nom</source>
+        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AgentKnowledge</name>
     <message>
-        <source>Id:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent associ&#xe9;:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Position:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vitesse:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Etat ops.:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Niveau de perception:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Niveau max de perception:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Niveau:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rendu:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fait prisonnier:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>R&#xe9;fugi&#xe9;s pris en compte:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PC:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pertinence:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nature:</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>Attributs</name>
     <message>
-        <source>Info/Etat op&#xe9;rationnel</source>
+        <source>Identifier:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Vitesse</source>
+        <source>Associated agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operational state:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perception level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max perception level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrender:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prisoner:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refugees picked up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command post:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Percepetion level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Attributes</name>
+    <message>
+        <source>Info/Operational state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -92,43 +96,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Postures/Posture courante</source>
+        <source>Stances/Current stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Communications/Brouill&#xe9;</source>
+        <source>Communications/Jammed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Communications/Silence radio</source>
+        <source>Communications/Radio silence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat d&#xe9;cisionnel/Etat op&#xe9;rationnel</source>
+        <source>Decisional state/Operational state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat d&#xe9;cisionnel/RoE</source>
+        <source>Decisional state/Rules of engagement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat d&#xe9;cisionnel/Contact combat</source>
+        <source>Decisional state/Intention</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat d&#xe9;cisionnel/Rapport de force</source>
+        <source>Decisional state/Force ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat martial/Fait prisonnier</source>
+        <source>Military state/Prisoner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat martial/Rendu</source>
+        <source>Military state/Surrender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat martial/R&#xe9;fugi&#xe9;s pris en compte</source>
+        <source>Military state/Refugees picked up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -136,19 +140,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat op&#xe9;rationnel:</source>
+        <source>Operational state:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mort:</source>
+        <source>Dead:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Neutralis&#xe9;:</source>
+        <source>Neutralized:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vitesse:</source>
+        <source>Speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -156,43 +160,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Altitude:</source>
+        <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Troupes:</source>
+        <source>Troops:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Embarqu&#xe9;</source>
+        <source>on-board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>D&#xe9;barqu&#xe9;</source>
+        <source>off-board</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Transporteurs d&apos;hommes:</source>
+        <source>Human transportation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disponibles</source>
+        <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Indisponibles</source>
+        <source>Unavailable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Postures</source>
+        <source>Stances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ancienne posture:</source>
+        <source>Previous stance:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nouvelle posture:</source>
+        <source>New stance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setup state:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -200,115 +208,91 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Brouill&#xe9;:</source>
+        <source>Jammed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Silence radio:</source>
+        <source>Radio silence:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat d&#xe9;cisionnel</source>
+        <source>Decisional state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>RoE:</source>
+        <source>Rules of engagement:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>RoE Population:</source>
+        <source>Population RoE:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rapport de force:</source>
+        <source>Force ratio:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disponibilit&#xe9; au tir indirect:</source>
+        <source>Indirect fire availability:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contact combat:</source>
+        <source>Intention:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat martial</source>
+        <source>Military state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fait prisonnier:</source>
+        <source>Prisoner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rendu:</source>
+        <source>Surrender:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>R&#xe9;fugi&#xe9;s pris en compte:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Etat d&apos;installation:</source>
+        <source>Refugees picked up:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>CR</name>
+    <name>Automat</name>
     <message>
-        <source>Re&#xe7;u</source>
+        <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Compte-rendu</source>
+        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Composantes</name>
+    <name>AutomatHierarchies</name>
     <message>
-        <source>Composantes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disponible</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indisponible</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>R&#xe9;parables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>En maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prisonniers</source>
+        <source>Hierarchies/Superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Decisions</name>
     <message>
-        <source>Mission automate:</source>
+        <source>Mission:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mission:</source>
+        <source>Automat mission:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Dotations</name>
     <message>
-        <source>Dotations/Plus de carburant</source>
+        <source>Dotations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dotations</source>
+        <source>Dotations/Out of gas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -356,21 +340,48 @@
     </message>
 </context>
 <context>
-    <name>Facteurs Humains</name>
+    <name>Equipments</name>
     <message>
-        <source>Facteurs Humains/Experience</source>
+        <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Facteurs Humains/Fatigue</source>
+        <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Facteurs Humains/Moral</source>
+        <source>Unavailable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Facteurs humains</source>
+        <source>Fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prisoner</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Human factors</name>
+    <message>
+        <source>Human factors/Experience</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Human factors/Tiredness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Human factors/Moral</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Human factors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -382,7 +393,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fatigue:</source>
+        <source>Tiredness:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -396,19 +407,7 @@
 <context>
     <name>Localisation</name>
     <message>
-        <source>Cercle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ligne</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polygone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -416,30 +415,74 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Secteur</source>
+        <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sector</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Logistique</name>
+    <name>Logistic</name>
     <message>
-        <source>Liens logistiques/TC2</source>
+        <source>Instruction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Liens logistiques/Superieur maintenance</source>
+        <source>Consumer:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Liens logistiques/Superieur m&#xe9;dical</source>
+        <source>Handler:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Liens logistiques/Superieur ravitaillement</source>
+        <source>State:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Liens logistiques</source>
+        <source>Mentally injured:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not diagnosed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convoyer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic links/TC2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic links/Maintenance superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic links/Medical superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic links/Supply superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -447,99 +490,70 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sup&#xe9;rieur maintenance:</source>
+        <source>Maintenance superior:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sup&#xe9;rieur sant&#xe9;:</source>
+        <source>Medical superior:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sup&#xe9;rieur ravitaillement:</source>
+        <source>Supply superior:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Consigne :</source>
+        <source>Equipment:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion demandeur :</source>
+        <source>Breakdown:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion traitant :</source>
+        <source>Injury:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Type d&apos;&#xe9;quipement :</source>
+        <source>Supplier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MaintenanceStates</name>
+    <message>
+        <source>Maintenance system/System enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Type de panne :</source>
+        <source>Maintenance system/Priorities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat :</source>
+        <source>Maintenance system/Tactical priorities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reac. mental :</source>
+        <source>Maintenance system/Working scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contamin&#xe9; NBC :</source>
+        <source>Maintenance system state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blessure :</source>
+        <source>System status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Non diagnostiqu&#xe9;e</source>
+        <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion fournissant les moyens :</source>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pion convoyant :</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chaine maintenance/Chaine activ&#xe9;e</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chaine maintenance/Priorit&#xe9;s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chaine maintenance/Priorit&#xe9;s tactiques</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chaine maintenance/R&#xe9;gime de travail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Etat chaine maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Etat chaine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Activ&#xe9;e</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>D&#xe9;sactiv&#xe9;e</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>R&#xe9;gime de travail</source>
+        <source>Working scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -547,82 +561,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Priorit&#xe9;s</source>
+        <source>Priorities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Priorit&#xe9;s tactiques</source>
+        <source>Tactical priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MedicalStates</name>
+    <message>
+        <source>Medical system/System enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chaine m&#xe9;dicale/Chaine activ&#xe9;e</source>
+        <source>Medical system/Priorities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chaine m&#xe9;dicale/Priorit&#xe9;s</source>
+        <source>Medical system/Tactical priorities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chaine m&#xe9;dicale/Priorit&#xe9;s tactiques</source>
+        <source>Medical system state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat chaine sant&#xe9;</source>
+        <source>System status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chaine ravitaillement/Chaine activ&#xe9;e</source>
+        <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Etat chaine rav.</source>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>NBC</name>
     <message>
-        <source>NBC/Tenue NBC mise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC/Agents contaminants</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC/Niveau de contamination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tenue NBC:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non mise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agents contaminants:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contamination:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nuage/Zone NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent NBC:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -630,74 +619,81 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Danger:</source>
+        <source>NBC/NBC suit on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agents NBC:</source>
+        <source>NBC/Contaminating agents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC/Contamination level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC suit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminating agents:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contamination level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC cloud/zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Network</name>
+    <message>
+        <source>Connected to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> lost (cause :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not connected to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (cause :</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Object</name>
     <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Site de franchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Largeur:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profondeur:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vitesse du courant:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Berges &#xe0; am&#xe9;nager:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Itin&#xe9;raire logistique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equip&#xe9;:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>D&#xe9;bit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Longueur:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Poids support&#xe9;:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Informations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Id:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -705,59 +701,115 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Position:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Construction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Valorisation:</source>
+        <source>Crossing site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contournement:</source>
+        <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>En pr&#xe9;paration:</source>
+        <source>Depth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dotation construction:</source>
+        <source>Stream speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dotation valorisation:</source>
+        <source>Build river banks:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>D&#xe9;tails</source>
+        <source>Logistic route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Objet associ&#xe9;:</source>
+        <source>Equipped:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Valeur:</source>
+        <source>Flow:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Per&#xe7;u:</source>
+        <source>Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pertinence:</source>
+        <source>Maximum weight:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Objets connus</source>
+        <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown Object</source>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Development:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setting up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Development dotation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated object:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perceived:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction dotation:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -768,51 +820,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Id:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Concentration associ&#xe9;e:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Position:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Humains vivants:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Humains morts:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attitude:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Percue:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pertinence:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Populations connues</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Concentration - </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flux associ&#xe9;e:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -820,96 +828,151 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vitesse:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Portions connues:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Flow - </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>D&#xe9;tails</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population associ&#xe9;e:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vivants:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Domination:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Alive:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated concentration:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alive people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mood:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perceived:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated flow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known chunks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated population:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>Renforts</name>
+    <name>Reinforcements</name>
     <message>
-        <source>Renforts/Renforce</source>
+        <source>Reinforcements/Reinforcing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Renforts/Est renforc&#xe9; par</source>
+        <source>Reinforcements/Reinforced by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Renforts</source>
+        <source>Reinforcements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Renforce:</source>
+        <source>Reinforcing:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Est renforc&#xe9; par:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Reseau</name>
-    <message>
-        <source>Connect&#xe9; &#xe0; </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connexion &#xe0; </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> perdue (raison :</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non connect&#xe9; &#xe0; </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> (raison :</source>
+        <source>Reinforced by:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Transport</name>
+    <name>Report</name>
     <message>
-        <source>Transport/Transporteur</source>
+        <source>Received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Transport/Pions Transport&#xe9;s</source>
+        <source>Report</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStates</name>
+    <message>
+        <source>Supply system/System enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pions Transport&#xe9;s</source>
+        <source>Supply system state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Transports</name>
+    <message>
+        <source>Transports/Tow trucks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transports/Towed units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Towed units</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

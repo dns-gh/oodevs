@@ -22,7 +22,7 @@ using namespace gui;
 AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory )
     : QDialog( parent, 0, FALSE, WStyle_Splash )
 {
-    setCaption( tr( "A Propos" ) );
+    setCaption( tr( "About" ) );
     QPixmap pixmap( qembed_findData( "astec.jpg" ) );
     sizeHint_.setWidth ( pixmap.width() );
     sizeHint_.setHeight( pixmap.height() + 50 );
@@ -41,7 +41,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory )
     label->setAlignment( Qt::SingleLine );
     label->setBackgroundPixmap( pixmap );
     label->setBackgroundOrigin( QWidget::AncestorOrigin );
-    QPushButton* button = new QPushButton( tr( "Fermer" ), hbox );
+    QPushButton* button = new QPushButton( tr( "Close" ), hbox );
     connect( button, SIGNAL( clicked() ), this, SLOT( accept() ) );
 }
     

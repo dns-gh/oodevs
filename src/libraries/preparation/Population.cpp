@@ -119,7 +119,7 @@ void Population::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Name" ), name_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Type" ), constSelf.type_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Humans" ), (int&)livingHumans_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Attitude" ), attitude_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Population", "Info/Mood" ), attitude_ );
 }
 
 // -----------------------------------------------------------------------------

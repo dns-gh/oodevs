@@ -36,7 +36,7 @@ TacticalLinesSaver::TacticalLinesSaver( QObject* parent, LimitsModel& model )
 TacticalLinesSaver::~TacticalLinesSaver()
 {
     bool saveFile = QMessageBox::question( 0, tr( "TacticalLines.xml" ), 
-                                               tr( "Les limites/limas ont été modifiées:\n voulez-vous sauvegarder TacticalLines.xml ?" ),
+                                               tr( "There are unsaved changes on tactical-lines:\n save modifications to TacticalLines.xml ?" ),
                                                QMessageBox::Yes,
                                                QMessageBox::No ) == QMessageBox::Yes;
     bool retry = true;
@@ -57,9 +57,9 @@ bool TacticalLinesSaver::SaveLimits()
     catch( std::exception& e )
     {
         int retry = QMessageBox::warning( 0, 
-                    tr("Erreur d'écriture fichier"),
-                    tr("Le fichier de description des limites et limas TacticalLines.xml n'a pas pu etre sauvegardé.\n"
-                    "Vérifiez qu'il ne soit pas portegé en écriture.\nMessage : ") + e.what(),
+                    tr("Error saving file"),
+                    tr("Tactical-lines description file (TacticalLines.xml) cannot be written.\n"
+                    "Please check for write protection then retry.\nMessage : ") + e.what(),
                     QMessageBox::Retry,
                     QMessageBox::Abort );
         return retry == QMessageBox::Retry;

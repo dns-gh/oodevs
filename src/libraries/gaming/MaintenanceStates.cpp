@@ -46,10 +46,10 @@ MaintenanceStates::~MaintenanceStates()
 // -----------------------------------------------------------------------------
 void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Chaine activée" ), bChainEnabled_ );
-    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Priorités" ), priorities_ );
-    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Priorités tactiques" ), tacticalPriorities_ );
-    dico.Register( *this, tools::translate( "Logistique", "Chaine maintenance/Régime de travail" ), nWorkRate_ );
+    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/System enabled" ), bChainEnabled_ );
+    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/Priorities" ), priorities_ );
+    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/Tactical priorities" ), tacticalPriorities_ );
+    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/Working scheme" ), nWorkRate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,10 +97,10 @@ void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceEtat& message )
 // -----------------------------------------------------------------------------
 void MaintenanceStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Logistique", "Etat chaine maintenance" ) )
-                .Display( tools::translate( "Logistique", "Etat chaine" ), bChainEnabled_ ?
-                        tools::translate( "Logistique", "Activée" ) : tools::translate( "Logistique", "Désactivée" ) )
-                .Display( tools::translate( "Logistique", "Régime de travail" ), tools::translate( "Logistique", "R%1" ).arg( nWorkRate_ ) ) // $$$$ AGE 2006-04-03: 
-                .Display( tools::translate( "Logistique", "Priorités" ), priorities_ )
-                .Display( tools::translate( "Logistique", "Priorités tactiques" ), tacticalPriorities_ );
+    displayer.Group( tools::translate( "MaintenanceStates", "Maintenance system state" ) )
+                .Display( tools::translate( "MaintenanceStates", "System status" ), bChainEnabled_ ?
+                        tools::translate( "MaintenanceStates", "Enabled" ) : tools::translate( "MaintenanceStates", "Disabled" ) )
+                .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%1" ).arg( nWorkRate_ ) ) // $$$$ AGE 2006-04-03: 
+                .Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ )
+                .Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );
 }

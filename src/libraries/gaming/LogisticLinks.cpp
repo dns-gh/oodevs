@@ -51,10 +51,10 @@ LogisticLinks::~LogisticLinks()
 // -----------------------------------------------------------------------------
 void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/TC2" ), tc2_ );
-    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/Superieur maintenance" ), maintenanceSuperior_ );
-    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/Superieur médical" ), medicalSuperior_ );
-    dico.Register( *this, tools::translate( "Logistique", "Liens logistiques/Superieur ravitaillement" ), supplySuperior_ );
+    dico.Register( *this, tools::translate( "Logistic", "Logistic links/TC2" ), tc2_ );
+    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Maintenance superior" ), maintenanceSuperior_ );
+    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Medical superior" ), medicalSuperior_ );
+    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Supply superior" ), supplySuperior_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,11 +117,11 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message 
 // -----------------------------------------------------------------------------
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Logistique", "Liens logistiques" ) )
-                .Display( tools::translate( "Logistique", "TC2:" ),                      GetTC2() )
-                .Display( tools::translate( "Logistique", "Supérieur maintenance:" ),    GetMaintenance() )
-                .Display( tools::translate( "Logistique", "Supérieur santé:" ),          GetMedical() )
-                .Display( tools::translate( "Logistique", "Supérieur ravitaillement:" ), GetSupply() );
+    displayer.Group( tools::translate( "Logistic", "Logistic links" ) )
+                .Display( tools::translate( "Logistic", "TC2:" ),                  GetTC2() )
+                .Display( tools::translate( "Logistic", "Maintenance superior:" ), GetMaintenance() )
+                .Display( tools::translate( "Logistic", "Medical superior:" ),     GetMedical() )
+                .Display( tools::translate( "Logistic", "Supply superior:" ),      GetSupply() );
 }
 
 // -----------------------------------------------------------------------------

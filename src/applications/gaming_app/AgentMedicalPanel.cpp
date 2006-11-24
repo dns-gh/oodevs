@@ -26,38 +26,38 @@ using namespace gui;
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 AgentMedicalPanel::AgentMedicalPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : LogisticPanel< AgentMedicalPanel, LogMedicalConsign >( parent, panel, controllers, factory, tr( "Chaine santé" ) )
+    : LogisticPanel< AgentMedicalPanel, LogMedicalConsign >( parent, panel, controllers, factory, tr( "Medical system" ) )
     , controllers_( controllers )
 {
-    AddConsignColumn( tr( "Blessure :" ) );
-    AddConsignColumn( tr( "Reac. mental :" ) );
-    AddConsignColumn( tr( "Contaminé NBC :" ) );
-    AddConsignColumn( tr( "Etat :" ) );
+    AddConsignColumn( tr( "Injury:" ) );
+    AddConsignColumn( tr( "Mentally injured:" ) );
+    AddConsignColumn( tr( "NBC contaminated:" ) );
+    AddConsignColumn( tr( "State:" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Etat chaine santé" ) )
-                .AddLabel( tr( "Etat chaine")  )
-                .AddLabel( tr( "Priorités" ) )
-                .AddLabel( tr( "Priorités tactiques" ) );
+    display_->AddGroup( tr( "Medical system state" ) )
+                .AddLabel( tr( "System status" ) )
+                .AddLabel( tr( "Priorities" ) )
+                .AddLabel( tr( "Tactical priorities" ) );
 
     dispoReleveAmbulances_ = new ListDisplayer< AgentMedicalPanel >( this, *this, factory );
-    dispoReleveAmbulances_->AddColumn( tr( "Ambulances relève" ) )
+    dispoReleveAmbulances_->AddColumn( tr( "Relief ambulances" ) )
                            .AddColumn( tr( "Total" ) )
-                           .AddColumn( tr( "Disponible" ) )
-                           .AddColumn( tr( "Au travail" ) )
-                           .AddColumn( tr( "Au repos" ) );
+                           .AddColumn( tr( "Available" ) )
+                           .AddColumn( tr( "Working" ) )
+                           .AddColumn( tr( "Resting" ) );
     dispoDispoRamassageAmbulances_ = new ListDisplayer< AgentMedicalPanel >( this, *this, factory );
-    dispoDispoRamassageAmbulances_->AddColumn( tr( "Ambulances ramassage" ) )
+    dispoDispoRamassageAmbulances_->AddColumn( tr( "Collect ambulances" ) )
                                    .AddColumn( tr( "Total" ) )
-                                   .AddColumn( tr( "Disponible" ) )
-                                   .AddColumn( tr( "Au travail" ) )
-                                   .AddColumn( tr( "Au repos" ) );
+                                   .AddColumn( tr( "Available" ) )
+                                   .AddColumn( tr( "Working" ) )
+                                   .AddColumn( tr( "Resting" ) );
     dispoDispoDoctors_ = new ListDisplayer< AgentMedicalPanel >( this, *this, factory );
-    dispoDispoDoctors_->AddColumn( tr( "Médecins" ) )
+    dispoDispoDoctors_->AddColumn( tr( "Doctors" ) )
                        .AddColumn( tr( "Total" ) )
-                       .AddColumn( tr( "Disponibles" ) )
-                       .AddColumn( tr( "Au travail" ) )
-                       .AddColumn( tr( "Au repos" ) );
+                       .AddColumn( tr( "Available" ) )
+                       .AddColumn( tr( "Working" ) )
+                       .AddColumn( tr( "Resting" ) );
 
     controllers_.Register( *this );
 }

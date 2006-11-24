@@ -43,17 +43,17 @@ ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject
     }
     grid->addWidget( typeCombo_, 0, 1 );
 
-    grid->addWidget( new QLabel( tr( "Sous type:" ), this ), 1, 0 );
+    grid->addWidget( new QLabel( tr( "Sub-type:" ), this ), 1, 0 );
     preliminaryCombo_ = new QComboBox( this );
     for( int i = 0; i < eNbrMissionGenSousTypeObstacle; ++i )
         preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
     grid->addWidget( preliminaryCombo_, 1, 1 );
 
-    density_ = new ParamNumericField( this, asnObject.densite, tr( "Densité" ), 0., 5. );
+    density_ = new ParamNumericField( this, asnObject.densite, tr( "Density" ), 0., 5. );
     grid->addMultiCellWidget( density_, 2, 2, 0, 1 );
     tc2_     = new EntityParameter< kernel::Automat_ABC >( this, asnObject.tc2, tr( "TC2" ), tr( "TC2" ) );
     grid->addMultiCellWidget( tc2_, 3, 3, 0, 1 );
-    location_ = new ParamLocation( this, asnObject.position, tr( "Localisation" ), layer, converter );
+    location_ = new ParamLocation( this, asnObject.position, tr( "Location" ), layer, converter );
     grid->addMultiCellWidget( location_, 4, 4, 0, 1 );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );

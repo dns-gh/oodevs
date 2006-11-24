@@ -14,7 +14,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_gui/ListDisplayer.h"
-#include "clients_gui/Tools.h"
 #include "preparation/Dotations.h"
 #include "preparation/Dotation.h"
 
@@ -26,7 +25,7 @@ using namespace gui;
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Ressources" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Resources" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {

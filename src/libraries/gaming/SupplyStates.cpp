@@ -43,7 +43,7 @@ SupplyStates::~SupplyStates()
 // -----------------------------------------------------------------------------
 void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Logistique", "Chaine ravitaillement/Chaine activée" ), bChainEnabled_ );
+    dico.Register( *this, tools::translate( "SupplyStates", "Supply system/System enabled" ), bChainEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +86,8 @@ void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
 // -----------------------------------------------------------------------------
 void SupplyStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Logistique", "Etat chaine rav." ) )
-                .Display( tools::translate( "Logistique", "Etat chaine" ), 
-                    bChainEnabled_ ? tools::translate( "Logistique", "Activée" )
-                                   : tools::translate( "Logistique", "Désactivée" ) );
+    displayer.Group( tools::translate( "SupplyStates", "Supply system state" ) )
+                .Display( tools::translate( "SupplyStates", "System state" ), 
+                    bChainEnabled_ ? tools::translate( "SupplyStates", "Enabled" )
+                                   : tools::translate( "SupplyStates", "Disabled" ) );
 }

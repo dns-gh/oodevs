@@ -139,10 +139,10 @@ void ParamObstacleList::OnSelectionChanged( QListViewItem* item )
 void ParamObstacleList::OnRequestPopup( QListViewItem* item, const QPoint& pos, int )
 {
     popup_->clear();
-    popup_->insertItem( tr( "Nouvel obstacle" ), this, SLOT( NewObstacle() ) );
+    popup_->insertItem( tr( "New obstacle" ), this, SLOT( NewObstacle() ) );
     if( item )
-        popup_->insertItem( tr( "Effacer" ), this, SLOT( DeleteSelected() ) );
-    popup_->insertItem( tr( "Effacer la liste" ), this, SLOT( ClearList() ) );
+        popup_->insertItem( tr( "Remove" ), this, SLOT( DeleteSelected() ) );
+    popup_->insertItem( tr( "Clear list" ), this, SLOT( ClearList() ) );
     popup_->popup( pos );
 }
 

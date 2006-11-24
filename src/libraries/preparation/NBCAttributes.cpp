@@ -59,8 +59,8 @@ NBCAttributes::~NBCAttributes()
 // -----------------------------------------------------------------------------
 void NBCAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "NBC", "Nuage/Zone NBC" ) )
-        .Display( tools::translate( "NBC", "Agent NBC:" ), nbc_ );
+    displayer.Group( tools::translate( "NBC", "NBC cloud/zone" ) )
+        .Display( tools::translate( "NBC", "NBC agent:" ), nbc_ );
 }
 
 
@@ -92,5 +92,5 @@ void NBCAttributes::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void NBCAttributes::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "NBCAttributes", "Info/NBC attributes/NBC Agent" ), nbc_ );
+    dico.Register( *this, tools::translate( "NBCAttributes", "Info/NBC attributes/NBC agent" ), nbc_ );
 }

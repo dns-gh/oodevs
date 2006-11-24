@@ -100,16 +100,16 @@ void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpda
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Population", "Flux" ) )
-                .Display( tools::translate( "Population", "Id:" ), nID_ )
-                .Display( tools::translate( "Population", "Flux associée:" ), pFlow_ )
+    displayer.Group( tools::translate( "Population", "Flow" ) )
+                .Display( tools::translate( "Population", "Identifier:" ), nID_ )
+                .Display( tools::translate( "Population", "Associated flow:" ), pFlow_ )
                 .Display( tools::translate( "Population", "Direction:" ), rDirection_ * Units::degrees )
-                .Display( tools::translate( "Population", "Vitesse:" ), rSpeed_ * Units::kilometersPerHour )
-                .Display( tools::translate( "Population", "Humains vivants:" ), nNbrAliveHumans_ )
-                .Display( tools::translate( "Population", "Humains morts:" ), nNbrDeadHumans_ )
-                .Display( tools::translate( "Population", "Attitude:" ), eAttitude_ )
-                .Display( tools::translate( "Population", "Percue:" ), bIsPerceived_ )
-                .Display( tools::translate( "Population", "Portions connues:" ), flowParts_.size() );
+                .Display( tools::translate( "Population", "Speed:" ), rSpeed_ * Units::kilometersPerHour )
+                .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
+                .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )
+                .Display( tools::translate( "Population", "Mood:" ), eAttitude_ )
+                .Display( tools::translate( "Population", "Perceived:" ), bIsPerceived_ )
+                .Display( tools::translate( "Population", "Known chunks:" ), flowParts_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,5 +118,5 @@ void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PopulationFlowKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Population", "Populations connues" ) ).Start( tools::translate( "Population", "Flow - " ) ).Add( nID_ ).End();
+    displayer.Display( tools::translate( "Population", "Known populations" ) ).Start( tools::translate( "Population", "Flow - " ) ).Add( nID_ ).End();
 }

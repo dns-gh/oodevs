@@ -21,15 +21,15 @@ DisconnectDialog::DisconnectDialog( QWidget* pParent, Network& network )
     : QDialog( pParent ) 
     , network_( network )
 {
-    setCaption( tr("Déconnexion") );
+    setCaption( tr("Disconnect") );
 
     QGridLayout* pMainLayout = new QGridLayout( this, 5, 5 );
     pMainLayout->setMargin( 10 );
     pMainLayout->setSpacing( 10 );
 
     // Buttons
-    QPushButton* pOKButton     = new QPushButton( tr("OK")    , this );
-    QPushButton* pCancelButton = new QPushButton( tr("Annuler"), this );
+    QPushButton* pOKButton     = new QPushButton( tr("Ok")    , this );
+    QPushButton* pCancelButton = new QPushButton( tr("Cancel"), this );
     pMainLayout->addWidget( pOKButton,     0, 0 );
     pMainLayout->addWidget( pCancelButton, 0, 1 );
     pOKButton->setDefault( TRUE );

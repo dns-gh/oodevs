@@ -32,8 +32,8 @@ AttributeView::AttributeView( QWidget* parent, Controllers& controllers, const E
     setSelectionMode( QTable::Single );
     verticalHeader()->hide();
     setLeftMargin( 0 );
-    horizontalHeader()->setLabel( 0, tr( "Attribut" ) );
-    horizontalHeader()->setLabel( 1, tr( "Valeur" ) );
+    horizontalHeader()->setLabel( 0, tr( "Attribute" ) );
+    horizontalHeader()->setLabel( 1, tr( "Value" ) );
     horizontalHeader()->setClickEnabled( false );
     setTopMargin( 16 );
     setColumnReadOnly( 0, false );

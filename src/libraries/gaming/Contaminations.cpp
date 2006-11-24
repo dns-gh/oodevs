@@ -44,9 +44,9 @@ Contaminations::~Contaminations()
 // -----------------------------------------------------------------------------
 void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "NBC", "NBC/Tenue NBC mise" ), bNbcProtectionSuitWorn_ );
-    dico.Register( *this, tools::translate( "NBC", "NBC/Agents contaminants" ), contaminatingNbcAgents_ );
-    dico.Register( *this, tools::translate( "NBC", "NBC/Niveau de contamination" ), nContamination_ );
+    dico.Register( *this, tools::translate( "NBC", "NBC/NBC suit on" ), bNbcProtectionSuitWorn_ );
+    dico.Register( *this, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
+    dico.Register( *this, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,10 +79,10 @@ void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 void Contaminations::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "NBC", "NBC" ) )
-                .Display( tools::translate( "NBC", "Tenue NBC:" ), 
-                        bNbcProtectionSuitWorn_ ? tools::translate( "NBC", "Mise" ) : tools::translate( "NBC", "Non mise" ) ) // $$$$ AGE 2006-02-22: Boolean
-                .Display( tools::translate( "NBC", "Agents contaminants:" ), contaminatingNbcAgents_ )
-                .Display( tools::translate( "NBC", "Contamination:" ), nContamination_ );
+                .Display( tools::translate( "NBC", "NBC suit:" ), 
+                        bNbcProtectionSuitWorn_ ? tools::translate( "NBC", "on" ) : tools::translate( "NBC", "off" ) ) // $$$$ AGE 2006-02-22: Boolean
+                .Display( tools::translate( "NBC", "Contaminating agents:" ), contaminatingNbcAgents_ )
+                .Display( tools::translate( "NBC", "Contamination level:" ), nContamination_ );
 }
 
 // -----------------------------------------------------------------------------

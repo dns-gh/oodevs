@@ -24,11 +24,11 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers 
     : QDialog( parent )
     , pGraphicPrefPanel_( 0 )
 {
-    setCaption( tr( "Préférences" ) );
+    setCaption( tr( "Preferences" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
 
     QTabWidget* tabWidget = new QTabWidget( this );
-    tabWidget->addTab( new OptionsPanel( this, controllers ), tr( "Général" ) );
+    tabWidget->addTab( new OptionsPanel( this, controllers ), tr( "General" ) );
     pGraphicPrefPanel_ = new GraphicsPanel( this );
     tabWidget->addTab( pGraphicPrefPanel_, tr( "Terrain" ) );
     pMainLayout->addWidget( tabWidget );

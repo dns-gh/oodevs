@@ -41,14 +41,14 @@ LogisticToolbar::LogisticToolbar( QMainWindow* pParent, Controllers& controllers
     , controllers_( controllers )
     , agents_( agents )
 {
-    setLabel( tr( "Options logistique" ) );
+    setLabel( tr( "Logistic options" ) );
 
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( loglink ),     tr( "Afficher les liens logistiques" ),               this, controllers.options_, "LogisticLinks" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( missinglog ),  tr( "Afficher les liens logistiques manquant" ),      this, controllers.options_, "MissingLogisticLinks" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( realtimelog ), tr( "Affichage temps réel des actions logistiques" ), this, controllers.options_, "RealTimeLogistic" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( loglink ),     tr( "Display logistic links" ),             this, controllers.options_, "LogisticLinks" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( missinglog ),  tr( "Display missing logistic links" ),     this, controllers.options_, "MissingLogisticLinks" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( realtimelog ), tr( "Real-time logistic actions display" ), this, controllers.options_, "RealTimeLogistic" ) );
     
-    new QToolButton( MAKE_ICON( aggregate ),    tr( "Aggréger tous les automates" ), "", this,    SLOT( AggregateAll() ), this );
-    new QToolButton( MAKE_ICON( desaggregate ), tr( "Désaggréger tous les automates" ), "", this, SLOT( DisaggregateAll() ), this );
+    new QToolButton( MAKE_ICON( aggregate ),    tr( "Aggregate all automats" ), "", this,    SLOT( AggregateAll() ), this );
+    new QToolButton( MAKE_ICON( desaggregate ), tr( "Disaggregate all automats" ), "", this, SLOT( DisaggregateAll() ), this );
 
     controllers_.Register( *this );
 }

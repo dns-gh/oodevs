@@ -158,7 +158,7 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruct
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Population", "Populations connues" ) ).Start( popu_ ).Add( " - " ).Add( id_ ).End();
+    displayer.Item( tools::translate( "Population", "Known populations" ) ).Start( popu_ ).Add( " - " ).Add( id_ ).End();
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +167,10 @@ void PopulationKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 {
-   displayer.Group( tools::translate( "Population", "Détails" ) )
-                .Display( tools::translate( "Population", "Id:" ), id_ )
-                .Display( tools::translate( "Population", "Population associée:" ), popu_ )
-                .Display( tools::translate( "Population", "Camp:" ), popu_.GetTeam() );
+   displayer.Group( tools::translate( "Population", "Details" ) )
+                .Display( tools::translate( "Population", "Identifier:" ), id_ )
+                .Display( tools::translate( "Population", "Associated population:" ), popu_ )
+                .Display( tools::translate( "Population", "Side:" ), popu_.GetTeam() );
 }
 
 // -----------------------------------------------------------------------------

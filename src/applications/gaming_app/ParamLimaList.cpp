@@ -31,7 +31,7 @@ ParamLimaList::ParamLimaList( QWidget* pParent, ASN1T_LimasOrder& limas, const Q
     result_.elem = 0;
 
     addColumn( label );
-    addColumn( tools::translate( "ParamLimaList", "Function" ) );
+    addColumn( tr( "Function" ) );
     setResizeMode( QListView::LastColumn );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
@@ -100,8 +100,8 @@ void ParamLimaList::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
 {
     pPopupMenu_->clear();
     if( pItem != 0 )
-        pPopupMenu_->insertItem( tr( "Effacer" ), this, SLOT( OnDeleteSelectedItem() ) );
-    pPopupMenu_->insertItem( tr( "Effacer la liste" ), this, SLOT( OnClearList() ) );
+        pPopupMenu_->insertItem( tr( "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
+    pPopupMenu_->insertItem( tr( "Clear list" ), this, SLOT( OnClearList() ) );
     pPopupMenu_->popup( pos );
 }
 

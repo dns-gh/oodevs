@@ -25,10 +25,10 @@ RecorderToolbar::RecorderToolbar( QMainWindow* pParent, Network& network )
     : QToolBar    ( pParent )
     , msgRecorder_( *new MsgRecorder( network ) )
 {
-    setCaption( tr("Enregisteur d'ordres") );
-    pPlayButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Rejouer un fichier d'ordres" ), "", this, SLOT( Play() ),   this );
-    pStopButton_ = new QToolButton( QPixmap( xpm_recstop ), tr( "Stop" ),                        "", this, SLOT( Stop() ), this );
-    pRecButton_ =  new QToolButton( QPixmap( xpm_recrec ),  tr( "Enregister des ordres" ),       "", this, SLOT( Record() ),   this );
+    setCaption( tr("Order recorder") );
+    pPlayButton_ = new QToolButton( QPixmap( xpm_recplay ), tr( "Replay order file" ), "", this, SLOT( Play() ),   this );
+    pStopButton_ = new QToolButton( QPixmap( xpm_recstop ), tr( "Stop" ),              "", this, SLOT( Stop() ), this );
+    pRecButton_ =  new QToolButton( QPixmap( xpm_recrec ),  tr( "Start recording" ),   "", this, SLOT( Record() ),   this );
 
     pStopButton_->setEnabled( false );
 }
@@ -49,7 +49,7 @@ RecorderToolbar::~RecorderToolbar()
 // -----------------------------------------------------------------------------
 void RecorderToolbar::Play()
 {
-    QString strFileName = QFileDialog::getOpenFileName( QString::null, tr( "Fichiers d'ordres (*.ord)" ), 0, 0, tr("Ouvrir") );
+    QString strFileName = QFileDialog::getOpenFileName( QString::null, tr( "Order files (*.ord)" ), 0, 0, tr("Open") );
     if( strFileName == QString::null )
         return;
 

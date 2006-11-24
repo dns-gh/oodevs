@@ -70,19 +70,18 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
     selectedEntity_ = &agent;
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
-        QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+        QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
 
-        int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
+        int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
-        AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
-        AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
-        AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
-        AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
-        AddMagic( tr( "Détruire composante" ),       SLOT( DestroyComponent() ),  magicMenu );
-        AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
-
+        AddMagic( tr( "Recover - All" ),        T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
+        AddMagic( tr( "Recover - Equipments" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
+        AddMagic( tr( "Recover - Resources" ),  T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
         if( orders->CanRetrieveTransporters() )
-            AddMagic( tr( "Récupérer transporteurs" ), SLOT( RecoverHumanTransporters() ), magicMenu );
+            AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
+        AddMagic( tr( "Recover - Troops" ),     T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
+        AddMagic( tr( "Destroy - All" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
+        AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );
     }
 }
 
@@ -96,9 +95,9 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, 
         return;
 
     selectedEntity_ = &agent;
-    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
-    AddMagic( tr( "Se rendre" ), SLOT( Surrender() ), magicMenu );
-    int moveId = AddMagic( tr( "Téléportation" ), SLOT( Move() ), magicMenu );
+    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic order" ) );
+    AddMagic( tr( "Surrender" ), SLOT( Surrender() ), magicMenu );
+    int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         bMoveAllowed = decisions->IsEmbraye();
@@ -116,7 +115,7 @@ void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, C
         return;
 
     selectedEntity_ = &group;
-    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
 } 
 
@@ -130,7 +129,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu&
         return;
 
     selectedEntity_ = &team;
-    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
+    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
 }
 
@@ -140,11 +139,11 @@ void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu&
 // -----------------------------------------------------------------------------
 void MagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
 {
-    AddMagic( tr( "Recompletement total" ),      T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
-    AddMagic( tr( "Recompletement personnel" ),  T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
-    AddMagic( tr( "Recompletement équipement" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
-    AddMagic( tr( "Recompletement ressources" ), T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
-    AddMagic( tr( "Destruction totale" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
+    AddMagic( tr( "Recover - All" ),        T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
+    AddMagic( tr( "Recover - Troops" ),     T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
+    AddMagic( tr( "Recover - Equipments" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
+    AddMagic( tr( "Recover - Resources" ),  T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
+    AddMagic( tr( "Destroy - All" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
 }
 
 // -----------------------------------------------------------------------------

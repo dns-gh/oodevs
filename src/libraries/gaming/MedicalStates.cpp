@@ -44,9 +44,9 @@ MedicalStates::~MedicalStates()
 // -----------------------------------------------------------------------------
 void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Logistique", "Chaine médicale/Chaine activée" ), bChainEnabled_ );
-    dico.Register( *this, tools::translate( "Logistique", "Chaine médicale/Priorités" ), priorities_ );
-    dico.Register( *this, tools::translate( "Logistique", "Chaine médicale/Priorités tactiques" ), tacticalPriorities_ );
+    dico.Register( *this, tools::translate( "MedicalStates", "Medical system/System enabled" ), bChainEnabled_ );
+    dico.Register( *this, tools::translate( "MedicalStates", "Medical system/Priorities" ), priorities_ );
+    dico.Register( *this, tools::translate( "MedicalStates", "Medical system/Tactical priorities" ), tacticalPriorities_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,9 +98,9 @@ void MedicalStates::DoUpdate( const ASN1T_MsgLogSanteEtat& message )
 // -----------------------------------------------------------------------------
 void MedicalStates::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Logistique", "Etat chaine santé" ) )
-                .Display( tools::translate( "Logistique", "Etat chaine" ), bChainEnabled_ ?
-                    tools::translate( "Logistique", "Activée" ) : tools::translate( "Logistique", "Désactivée" ) )
-                .Display( tools::translate( "Logistique", "Priorités" ), priorities_ )
-                .Display( tools::translate( "Logistique", "Priorités tactiques" ), tacticalPriorities_ );
+    displayer.Group( tools::translate( "MedicalStates", "Medical system state" ) )
+                .Display( tools::translate( "MedicalStates", "System status" ), bChainEnabled_ ?
+                    tools::translate( "MedicalStates", "Enabled" ) : tools::translate( "MedicalStates", "Disabled" ) )
+                .Display( tools::translate( "MedicalStates", "Priorities" ), priorities_ )
+                .Display( tools::translate( "MedicalStates", "Tactical priorities" ), tacticalPriorities_ );
 }

@@ -44,9 +44,9 @@ HumanFactors::~HumanFactors()
 // -----------------------------------------------------------------------------
 void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) const
 {
-    dictionary.Register( *this, tools::translate( "Facteurs Humains", "Facteurs Humains/Experience" ), experience_ );
-    dictionary.Register( *this, tools::translate( "Facteurs Humains", "Facteurs Humains/Fatigue" ), tiredness_ );
-    dictionary.Register( *this, tools::translate( "Facteurs Humains", "Facteurs Humains/Moral" ), morale_ );
+    dictionary.Register( *this, tools::translate( "Human factors", "Human factors/Experience" ), experience_ );
+    dictionary.Register( *this, tools::translate( "Human factors", "Human factors/Tiredness" ), tiredness_ );
+    dictionary.Register( *this, tools::translate( "Human factors", "Human factors/Moral" ), morale_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +73,10 @@ void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void HumanFactors::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Facteurs Humains", "Facteurs humains" ) )
-                .Display( tools::translate( "Facteurs Humains", "Experience:" ), experience_ )
-                .Display( tools::translate( "Facteurs Humains", "Moral:" ), morale_ )
-                .Display( tools::translate( "Facteurs Humains", "Fatigue:" ), tiredness_ );
+    displayer.Group( tools::translate( "Human factors", "Human factors" ) )
+                .Display( tools::translate( "Human factors", "Experience:" ), experience_ )
+                .Display( tools::translate( "Human factors", "Moral:" ), morale_ )
+                .Display( tools::translate( "Human factors", "Tiredness:" ), tiredness_ );
 }
    
 // -----------------------------------------------------------------------------

@@ -33,19 +33,19 @@ using namespace gui;
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
 LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, const Profile_ABC& profile )
-    : QDialog( parent, "Affecter quotas ravitaillement" )
+    : QDialog( parent, tr( "Supply quotas allocation" ) )
     , controllers_( controllers )
     , publisher_( publisher )
     , model_( model )
     , profile_( profile )
     , selected_( controllers )
 {
-    setCaption( tr( "Affecter des quotas ravitaillement" ) );
+    setCaption( tr( "Supply quotas allocation" ) );
     QVBoxLayout* layout = new QVBoxLayout( this );
 
     QHBox* box = new QHBox( this );
     box->setMargin( 5 );
-    new QLabel( tr( "Cible:" ), box );
+    new QLabel( tr( "Target:" ), box );
     targetCombo_ = new ValuedComboBox< const Automat_ABC* >( box );
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
@@ -61,8 +61,8 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
 
     box = new QHBox( this );
     box->setMargin( 5 );
-    QPushButton* okButton = new QPushButton( tr( "OK" ), box );
-    QPushButton* cancelButton = new QPushButton( tr( "Annuler" ), box );
+    QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
+    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), box );
     okButton->setDefault( true );
     layout->addWidget( box );
 
@@ -97,7 +97,7 @@ void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& age
         if( type.IsLogisticSupply() )
         {
             selected_ = &agent;
-            menu.InsertItem( "Commande", tr( "Affecter des quotas ravitaillement" ), this, SLOT( Show() ) );
+            menu.InsertItem( "Commande", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
         }
     }
 }

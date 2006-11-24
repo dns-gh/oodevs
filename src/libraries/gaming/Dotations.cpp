@@ -47,7 +47,7 @@ Dotations::~Dotations()
 // -----------------------------------------------------------------------------
 void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Dotations", "Dotations/Plus de carburant" ), bEmptyGasTank_ );
+    dico.Register( *this, tools::translate( "Dotations", "Dotations/Out of gas" ), bEmptyGasTank_ );
 }
 
 // -----------------------------------------------------------------------------

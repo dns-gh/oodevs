@@ -6,7 +6,8 @@ SOURCES         = Tools.cpp \
                   Point.cpp \
                   Polygon.cpp \
                   TristateOption.cpp \
-                  Formatter.cpp
+                  Formatter.cpp \
+                  EntityHierarchies.inl
 
 TRANSLATIONS    = clients_kernel_fr.ts \
                   clients_kernel_en.ts

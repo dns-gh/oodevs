@@ -19,21 +19,21 @@ using namespace gui;
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 CrossingSitePrototype_ABC::CrossingSitePrototype_ABC( QWidget* parent )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Site de franchissement" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tr( "Crossing site" ) )
 {
-    new QLabel( tr( "Largeur:" ), this );
+    new QLabel( tr( "Width:" ), this );
     width_ = new QSpinBox( 0, 10000, 10, this );
     width_->setSuffix( Units::meters );
 
-    new QLabel( tr( "Profondeur:" ), this );
+    new QLabel( tr( "Depth:" ), this );
     depth_ = new QSpinBox( 0, 1000, 10, this );
     depth_->setSuffix( Units::meters );
 
-    new QLabel( tr( "Vitesse courant:" ), this );
+    new QLabel( tr( "Stream speed:" ), this );
     speed_ = new QSpinBox( 0, 100, 1, this );
     speed_->setSuffix( Units::metersPerSecond );
 
-    new QLabel( tr( "Berges à aménager:" ), this );
+    new QLabel( tr( "Build river banks:" ), this );
     needsConstruction_ = new QCheckBox( this );
 }
     

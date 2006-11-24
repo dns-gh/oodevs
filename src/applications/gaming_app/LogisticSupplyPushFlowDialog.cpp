@@ -33,19 +33,19 @@ using namespace gui;
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
 LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, const Profile_ABC& profile )
-    : QDialog( parent, "Pousser flux log" )
+    : QDialog( parent, tr( "Push supply flow" ) )
     , controllers_( controllers )
     , publisher_( publisher )
     , model_( model )
     , profile_( profile )
     , selected_( controllers )
 {
-    setCaption( tr( "Pousser des flux" ) );
+    setCaption( tr( "Push supply flow" ) );
     QVBoxLayout* layout = new QVBoxLayout( this );
 
     QHBox* box = new QHBox( this );
     box->setMargin( 5 );
-    new QLabel( tr( "Cible:" ), box );
+    new QLabel( tr( "Target:" ), box );
     targetCombo_ = new ValuedComboBox< const Automat_ABC* >( box );
     targetCombo_->setMinimumWidth( 150 );
     layout->addWidget( box );
@@ -53,8 +53,8 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     table_ = new QTable( 0, 3, this );
     table_->setMargin( 5 );
     table_->horizontalHeader()->setLabel( 0, tr( "Dotation" ) );
-    table_->horizontalHeader()->setLabel( 1, tr( "Quantité" ) );
-    table_->horizontalHeader()->setLabel( 2, tr( "Disponible" ) );
+    table_->horizontalHeader()->setLabel( 1, tr( "Quantity" ) );
+    table_->horizontalHeader()->setLabel( 2, tr( "Available" ) );
     table_->setLeftMargin( 0 );
     table_->setMinimumSize( 300, 200 );
     table_->setColumnReadOnly( 2, true );
@@ -62,8 +62,8 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
 
     box = new QHBox( this );
     box->setMargin( 5 );
-    QPushButton* okButton = new QPushButton( tr( "OK" ), box );
-    QPushButton* cancelButton = new QPushButton( tr( "Annuler" ), box );
+    QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
+    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), box );
     okButton->setDefault( true );
     layout->addWidget( box );
 
@@ -98,7 +98,7 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, 
         if( type.IsLogisticSupply() )
         {
             selected_ = &agent;
-            menu.InsertItem( "Commande", tr( "Pousser des flux" ), this, SLOT( Show() ) );
+            menu.InsertItem( "Commande", tr( "Push supply flow" ), this, SLOT( Show() ) );
         }
     }
 }

@@ -40,7 +40,7 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& cont
     , controllers_( controllers )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    setCaption( tr( "Diplomatie" ) );
+    setCaption( tr( "Diplomacy" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
 
     table_ = new QTable( this );
@@ -50,8 +50,8 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& cont
 
     QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
     pButtonLayout->setAlignment( Qt::Right );
-    QPushButton* okBtn     = new QPushButton( tr( "OK" ), this );
-    QPushButton* cancelBtn = new QPushButton( tr( "Annuler" ), this );
+    QPushButton* okBtn     = new QPushButton( tr( "Ok" ), this );
+    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), this );
     pButtonLayout->addWidget( okBtn );
     pButtonLayout->addWidget( cancelBtn );
     okBtn->setDefault( true );
@@ -143,7 +143,7 @@ void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
-    menu.InsertItem( "Commande", tr( "Diplomatie" ), this, SLOT( show() ) );
+    menu.InsertItem( "Commande", tr( "Diplomacy" ), this, SLOT( show() ) );
 }
 
 // -----------------------------------------------------------------------------

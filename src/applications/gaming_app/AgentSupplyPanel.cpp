@@ -29,33 +29,33 @@ using namespace gui;
 // Created: AGE 2005-04-01
 // -----------------------------------------------------------------------------
 AgentSupplyPanel::AgentSupplyPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : LogisticPanel< AgentSupplyPanel, LogSupplyConsign >( parent, panel, controllers, factory, tr( "Chaine ravitaillement" ) )
+    : LogisticPanel< AgentSupplyPanel, LogSupplyConsign >( parent, panel, controllers, factory, tr( "Supply system" ) )
     , controllers_( controllers )
     , factory_( factory )
 {
-    AddConsignColumn( "Pion fournissant les moyens :" );
-    AddConsignColumn( "Pion convoyant :" );
-    AddConsignColumn( "Etat :" );
+    AddConsignColumn( tr( "Supplier:" ) );
+    AddConsignColumn( tr( "Convoyer:" ) );
+    AddConsignColumn( tr( "State:" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( "Etat chaine rav." )
-                .AddLabel( "Etat chaine" );
+    display_->AddGroup( tr( "Supply system state" ) )
+                .AddLabel( tr( "System status" ) );
 
     pStocks_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
-    pStocks_->AddColumn( "Stock" )
-             .AddColumn( "Quantité" );
+    pStocks_->AddColumn( tr( "Stock" ) )
+             .AddColumn( tr( "Quantity" ) );
 
     pQuotas_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
-    pQuotas_->AddColumn( "Type" )
-             .AddColumn( "Quota" );
+    pQuotas_->AddColumn( tr( "Type" ) )
+             .AddColumn( tr( "Quota" ) );
 
     
     pDispoTransporters_ = new ListDisplayer< AgentSupplyPanel >( this, *this, factory );
-    pDispoTransporters_->AddColumn( "Transporteurs pour convois" )
-                        .AddColumn( "Total" )
-                        .AddColumn( "Disponible" )
-                        .AddColumn( "Au travail" )
-                        .AddColumn( "Au repos" );
+    pDispoTransporters_->AddColumn( tr( "Transporters" ) )
+                        .AddColumn( tr( "Total" ) )
+                        .AddColumn( tr( "Available" ) )
+                        .AddColumn( tr( "Working" ) )
+                        .AddColumn( tr( "Resting" ) );
 
     controllers_.Register( *this );
 }
@@ -134,7 +134,7 @@ void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& 
     // $$$$ AGE 2006-02-28: crado
     QListViewItem* last  = item->firstChild();
     QListViewItem* child = last;
-    while( child && child->text( 0 ) != tr( "Dotations demandées/accordées/convoyées" ) )
+    while( child && child->text( 0 ) != tr( "Dotations requested/granted/convoyed" ) )
     {
         last = child;
         child = child->nextSibling();
@@ -142,7 +142,7 @@ void AgentSupplyPanel::Display( const LogSupplyConsign* consign, Displayer_ABC& 
     if( ! child )
     {
         child = factory_.CreateItem( item, last );
-        child->setText( 0, tr( "Dotations demandées/accordées/convoyées" ) );
+        child->setText( 0, tr( "Dotations requested/granted/convoyed" ) );
     }
 
     // $$$$ AGE 2006-07-04: 

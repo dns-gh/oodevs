@@ -25,28 +25,28 @@ DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& s
     , strategy_( strategy )
     , layer_   ( layer )
 {
-    setLabel( tr( "Dessin" ) );
+    setLabel( tr( "Drawing" ) );
 
     dock_ = new QDockWindow( mainWindow );
     DrawerPanel* panel = new DrawerPanel( dock_, layer_, tools );
     dock_->setWidget( panel );
     dock_->setResizeEnabled( true );
     dock_->setCloseMode( QDockWindow::Always );
-    dock_->setCaption( tr( "Dessins" ) );
+    dock_->setCaption( tr( "Drawing" ) );
     dock_->setMaximumWidth( 140 );
     mainWindow->moveDockWindow( dock_, Qt::DockTornOff );
     dock_->hide();
 
     draw_ = new QToolButton( this, "draw" );
     draw_->setIconSet( MAKE_ICON( visible ) );
-    draw_->setTextLabel( tr( "Dessiner" ) );
+    draw_->setTextLabel( tr( "Draw" ) );
     draw_->setToggleButton( true );
     draw_->setOn( false );
     connect( draw_, SIGNAL( toggled( bool ) ), this, SLOT( OnDraw( bool ) ) );
 
     show_ = new QToolButton( this, "show" );
     show_->setIconSet( MAKE_ICON( visible ) );
-    show_->setTextLabel( tr( "Afficher les dessins" ) );
+    show_->setTextLabel( tr( "Display drawings" ) );
     show_->setToggleButton( true );
     show_->setOn( true );
     connect( show_, SIGNAL( toggled( bool ) ), this, SLOT( OnShow( bool ) ) );

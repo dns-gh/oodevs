@@ -35,7 +35,7 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers, GlWidget* c
     setResizeEnabled( false );
     setCloseMode( Always );
     parent->setDockEnabled( this, Qt::DockTop, false );
-    setCaption( tr( "Mini vues" ) );
+    setCaption( tr( "Miniviews" ) );
     grid_ = new SmartGridWidget( this, 2, Qt::Vertical );
     setWidget( grid_ );
    
@@ -61,8 +61,8 @@ void MiniViews::NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::Cont
     {
         selected_ = &agent;
         bool remove = miniViews_.find( &agent ) != miniViews_.end();
-        static const QString supprimer = tr( "Supprimer la minivue" );
-        static const QString ajouter   = tr( "Ajouter une minivue" );
+        static const QString supprimer = tr( "Remove miniview" );
+        static const QString ajouter   = tr( "Add miniview" );
         menu.InsertItem( "Interface", remove ? supprimer : ajouter , this, SLOT( OnMiniView() ) );
     }
 }

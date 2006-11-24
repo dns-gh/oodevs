@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "ObjectListView.h"
 #include "moc_ObjectListView.cpp"
-#include "clients_gui/Tools.h"
 #include "PreparationProfile.h"
 
 // -----------------------------------------------------------------------------
@@ -40,7 +39,7 @@ ObjectListView::~ObjectListView()
 void ObjectListView::NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu )
 {
     if( selected_ )
-        menu.InsertItem( "Commande", tools::translate( "Preparation", "Supprimer" ), this, SLOT( OnDelete() ) );
+        menu.InsertItem( "Commande", tr( "Delete" ), this, SLOT( OnDelete() ) );
 }
 
 // -----------------------------------------------------------------------------

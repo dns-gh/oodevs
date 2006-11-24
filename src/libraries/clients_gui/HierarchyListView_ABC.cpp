@@ -44,7 +44,7 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     
 
     setMinimumSize( 1, 1 );
-    addColumn( tr( "Unités" ) );
+    addColumn( tr( "Units" ) );
     setRootIsDecorated( true );
     setAcceptDrops( true );
     header()->hide();

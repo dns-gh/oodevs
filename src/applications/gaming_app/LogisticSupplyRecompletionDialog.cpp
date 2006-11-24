@@ -82,26 +82,26 @@ private:
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
 LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, const kernel::Profile_ABC& profile )
-    : QDialog( parent, "Recompletement" )
+    : QDialog( parent, tr( "Recompletion" ) )
     , controllers_( controllers )
     , publisher_( publisher )
     , static_( staticModel )
     , profile_( profile )
     , selected_( controllers )
 {
-    setCaption( tr( "Recompletement" ) );
+    setCaption( tr( "Recompletion" ) );
     resize( 280, 430 );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     mainLayout->setSpacing( 5 );
     mainLayout->setMargin( 5 );
 
     // Equipment and personal
-    QGroupBox* equiPersoGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Equipement - Personnel" ), this );
+    QGroupBox* equiPersoGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Equipment - Crew" ), this );
     equiPersoGroupBox->setFlat( true );
 
     equipmentsTable_ = new QTable( 0, 3, equiPersoGroupBox );
-    equipmentsTable_->horizontalHeader()->setLabel( 0, tr( "Equipement" ) );
-    equipmentsTable_->horizontalHeader()->setLabel( 1, tr( "Nombre" ) );
+    equipmentsTable_->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
+    equipmentsTable_->horizontalHeader()->setLabel( 1, tr( "Count" ) );
     equipmentsTable_->horizontalHeader()->setLabel( 2, tr( "Max" ) );
     equipmentsTable_->setColumnWidth( 0, equipmentsTable_->columnWidth( 0 ) + 20 );
     equipmentsTable_->setColumnWidth( 1, 50 );
@@ -112,8 +112,8 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
 
     personalsTable_ = new QTable( 0, 4, equiPersoGroupBox );
     personalsTable_->horizontalHeader()->setLabel( 0, "" );
-    personalsTable_->horizontalHeader()->setLabel( 1, tr( "Personnel" ) );
-    personalsTable_->horizontalHeader()->setLabel( 2, tr( "Quantité" ) );
+    personalsTable_->horizontalHeader()->setLabel( 1, tr( "Crew" ) );
+    personalsTable_->horizontalHeader()->setLabel( 2, tr( "Count" ) );
     personalsTable_->horizontalHeader()->setLabel( 3, tr( "Max" ) );
     personalsTable_->setColumnWidth( 0, 20 );
     personalsTable_->setColumnWidth( 2, 60 );
@@ -132,7 +132,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     dotationsTable_ = new QTable( 0, 3, dotationsGroupBox );
     dotationsTable_->horizontalHeader()->setLabel( 0, "" );
     dotationsTable_->horizontalHeader()->setLabel( 1, tr( "Dotation" ) );
-    dotationsTable_->horizontalHeader()->setLabel( 2, tr( "Quantité" ) );
+    dotationsTable_->horizontalHeader()->setLabel( 2, tr( "Quantity" ) );
     dotationsTable_->setColumnWidth( 0, 20 );
     dotationsTable_->setColumnWidth( 2, 60 );
     dotationsTable_->setColumnReadOnly( 1, true );
@@ -142,8 +142,8 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     // Munitions Families
     munitionsFamilyTable_ = new QTable( 0, 3, dotationsGroupBox );
     munitionsFamilyTable_->horizontalHeader()->setLabel( 0, "" );
-    munitionsFamilyTable_->horizontalHeader()->setLabel( 1, tr( "Munition" ) );
-    munitionsFamilyTable_->horizontalHeader()->setLabel( 2, tr( "Quantité" ) );
+    munitionsFamilyTable_->horizontalHeader()->setLabel( 1, tr( "Ammo" ) );
+    munitionsFamilyTable_->horizontalHeader()->setLabel( 2, tr( "Quantity" ) );
     munitionsFamilyTable_->setColumnWidth( 0, 20 );
     munitionsFamilyTable_->setColumnWidth( 2, 60 );
     munitionsFamilyTable_->setColumnReadOnly( 1, true );
@@ -159,7 +159,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     stockTable_ = new QTable( 0, 3, stockGroupBox );
     stockTable_->horizontalHeader()->setLabel( 0, "" );
     stockTable_->horizontalHeader()->setLabel( 1, tr( "Dotation" ) );
-    stockTable_->horizontalHeader()->setLabel( 2, tr( "Quantité" ) );
+    stockTable_->horizontalHeader()->setLabel( 2, tr( "Quantity" ) );
     stockTable_->setColumnWidth( 0, 20 );
     stockTable_->setColumnWidth( 2, 60 );
     stockTable_->setColumnReadOnly( 1, true );
@@ -170,8 +170,8 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
 
     // ok / cancel butons
     QHBoxLayout* buttonLayout = new QHBoxLayout( mainLayout );
-    QPushButton* okButton     = new QPushButton( tr("OK")    , this );
-    QPushButton* cancelButton = new QPushButton( tr("Annuler"), this );
+    QPushButton* okButton     = new QPushButton( tr("Ok")    , this );
+    QPushButton* cancelButton = new QPushButton( tr("Cancel"), this );
     buttonLayout->addWidget( okButton     );
     buttonLayout->addWidget( cancelButton );
     okButton->setDefault( TRUE );
@@ -244,9 +244,9 @@ void LogisticSupplyRecompletionDialog::InitializePersonal()
     if( const Troops* troops = selected_->Retrieve< Troops >() )
     {
         personalsTable_->setNumRows( 0 );
-        AddPersonal( 0, tr( "officier" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
-        AddPersonal( 1, tr( "sous-officier" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
-        AddPersonal( 2, tr( "mdr" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
+        AddPersonal( 0, tr( "officers" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
+        AddPersonal( 1, tr( "warrant-officiers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
+        AddPersonal( 2, tr( "private" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
         personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
     }
 }
@@ -295,10 +295,10 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
 void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
-    AddAmmunition( 0, tr( "Obus" ) );
-    AddAmmunition( 1, tr( "Missile Air" ) );
-    AddAmmunition( 2, tr( "Missile Sol" ) );
-    AddAmmunition( 3, tr( "Mitraille" ) );
+    AddAmmunition( 0, tr( "Shell" ) );
+    AddAmmunition( 1, tr( "Air missile" ) );
+    AddAmmunition( 2, tr( "Ground missile" ) );
+    AddAmmunition( 3, tr( "Bullet" ) );
     munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
 }
 
@@ -734,7 +734,7 @@ void LogisticSupplyRecompletionDialog::NotifyContextMenu( const Agent_ABC& agent
     if( profile_.CanDoMagic( agent ) )
     {
         selected_ = &agent;
-        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
-        subMenu->insertItem( tr( "Recompletement partiel" ), this, SLOT( Show() ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
+        subMenu->insertItem( tr( "Partial recompletion" ), this, SLOT( Show() ) );
     }
 }

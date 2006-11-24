@@ -141,10 +141,10 @@ void ParamPathList::OnSelectionChanged( QListViewItem* item )
 void ParamPathList::OnRequestPopup( QListViewItem* item, const QPoint& pos, int )
 {
     popup_->clear();
-    popup_->insertItem( tr( "Nouvel itinéraire" ), this, SLOT( NewPath() ) );
+    popup_->insertItem( tr( "New route" ), this, SLOT( NewPath() ) );
     if( item )
-        popup_->insertItem( tr( "Effacer" ), this, SLOT( DeleteSelected() ) );
-    popup_->insertItem( tr( "Effacer la liste" ), this, SLOT( ClearList() ) );
+        popup_->insertItem( tr( "Remove" ), this, SLOT( DeleteSelected() ) );
+    popup_->insertItem( tr( "Clear list" ), this, SLOT( ClearList() ) );
     popup_->popup( pos );
 }
 
@@ -160,8 +160,8 @@ void ParamPathList::NewPath()
 
     ASN1T_Itineraire* asn = new ASN1T_Itineraire();
     ValuedListItem* item = new ValuedListItem( listView_ );
-    item->setText( 0, tr( "Itinéraire" ) );
-    ParamPath* param = new ParamPath( this, *asn, tr( "Itinéraire" ).ascii(), tr( "Itinéraire" ).ascii(), layer_, converter_, agent_ );
+    item->setText( 0, tr( "Route" ) );
+    ParamPath* param = new ParamPath( this, *asn, tr( "Route" ).ascii(), tr( "Route" ).ascii(), layer_, converter_, agent_ );
     item->SetValue( param );
     param->show();
     listView_->setSelected( item, true );

@@ -143,6 +143,6 @@ void AutomatDecisions::Disengage() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Decisions", "Mission automate:" ), current_ );
+    displayer.Display( tools::translate( "Decisions", "Automat mission:" ), current_ );
 }
 

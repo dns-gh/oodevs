@@ -26,10 +26,10 @@ RotaPrototype_ABC::RotaPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAg
     : ObjectPrototypeAttributes_ABC( parent, tr( "ROTA" ) )
     , resolver_( resolver )
 {
-    new QLabel( tr( "Danger:" ), this );
+    new QLabel( tr( "Danger level:" ), this );
     danger_ = new QSpinBox( 0, 100, 1, this );
 
-    nbcAgentsLabel_ = new RichLabel( tr( "Agent_ABC(s) NBC:" ), this );
+    nbcAgentsLabel_ = new RichLabel( tr( "NBC agents:" ), this );
     nbcAgents_ = new QListView( this );
     nbcAgents_->setSelectionMode( QListView::Multi );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible

@@ -36,7 +36,7 @@ ObjectListView::ObjectListView( QWidget* pParent, Controllers& controllers, Item
     , profile_( profile )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tr( "Objets" ) );
+    addColumn( tr( "Objects" ) );
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );
     header()->hide();

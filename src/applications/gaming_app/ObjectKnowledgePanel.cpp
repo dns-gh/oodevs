@@ -28,7 +28,7 @@ using namespace gui;
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Connaissances objet" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Object knowledges" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )

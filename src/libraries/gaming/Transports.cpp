@@ -43,8 +43,8 @@ Transports::~Transports()
 // -----------------------------------------------------------------------------
 void Transports::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Transport", "Transport/Transporteur" ), transporter_ );
-    dico.Register( *this, tools::translate( "Transport", "Transport/Pions Transportés" ), transported_ );
+    dico.Register( *this, tools::translate( "Transports", "Transports/Tow trucks" ), transporter_ );
+    dico.Register( *this, tools::translate( "Transports", "Transports/Towed units" ), transported_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,5 +73,5 @@ void Transports::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Transports::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Transport", "Pions Transportés" ) ).Display( "", transported_ ); // $$$$ AGE 2006-02-22: remove a level
+    displayer.Group( tools::translate( "Transports", "Towed units" ) ).Display( "", transported_ ); // $$$$ AGE 2006-02-22: remove a level
 }

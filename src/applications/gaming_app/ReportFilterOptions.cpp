@@ -18,11 +18,11 @@
 ReportFilterOptions::ReportFilterOptions( QWidget* pParent )
     : QVBox( pParent )
 {
-    QCheckBox* pDisplayRCs = new QCheckBox( tr( "Afficher les compte-rendus" ), this );
-    QCheckBox* pDisplayTraces = new QCheckBox( tr( "Afficher les traces" ), this );
-    QCheckBox* pDisplayEvents = new QCheckBox( tr( "Afficher les évènements" ), this );
-    QCheckBox* pDisplayMessages = new QCheckBox( tr( "Afficher les messages" ), this );
-    QCheckBox* pDisplayWarnings = new QCheckBox( tr( "Afficher les alertes" ), this );
+    QCheckBox* pDisplayRCs = new QCheckBox( tr( "Display reports" ), this );
+    QCheckBox* pDisplayTraces = new QCheckBox( tr( "Display traces" ), this );
+    QCheckBox* pDisplayEvents = new QCheckBox( tr( "Display events" ), this );
+    QCheckBox* pDisplayMessages = new QCheckBox( tr( "Display messages" ), this );
+    QCheckBox* pDisplayWarnings = new QCheckBox( tr( "Display warnings" ), this );
     pDisplayRCs->setChecked( true ); pDisplayTraces->setChecked( true ); pDisplayEvents->setChecked( true ); pDisplayMessages->setChecked( true ); pDisplayWarnings->setChecked( true );
     toDisplay_.insert( Report_ABC::eRC ); toDisplay_.insert( Report_ABC::eTrace ); toDisplay_.insert( Report_ABC::eEvent ); toDisplay_.insert( Report_ABC::eMessage ); toDisplay_.insert( Report_ABC::eWarning );
     connect( pDisplayRCs,       SIGNAL( toggled( bool ) ), this, SLOT( OnToggleRCs( bool ) ) );

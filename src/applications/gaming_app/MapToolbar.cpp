@@ -38,17 +38,17 @@ namespace
 MapToolbar::MapToolbar( QMainWindow* pParent, Controllers& controllers )
     : QToolBar    ( pParent, "map toolbar" )
 {
-    setLabel( tr( "Options carte" ) );
+    setLabel( tr( "Map options" ) );
 
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textsmall ),     tr( "Afficher petits textes" ),   this, controllers.options_, "SmallText" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textbig ),       tr( "Afficher grands textes" ),   this, controllers.options_, "BigText" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( tacticallines ), tr( "Afficher lignes tactiques" ), this, controllers.options_, "TacticalLines" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textsmall ),     tr( "Display small text" ),     this, controllers.options_, "SmallText" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( textbig ),       tr( "Display large text" ),     this, controllers.options_, "BigText" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( tacticallines ), tr( "Display tactical lines" ), this, controllers.options_, "TacticalLines" ) );
 
-    new BooleanOptionButton( MAKE_ICON( weather ), tr( "Afficher météo" ), this, controllers.options_, "Weather" );
+    new BooleanOptionButton( MAKE_ICON( weather ), tr( "Display weather" ), this, controllers.options_, "Weather" );
 
     addSeparator();
 
-    new QLabel( tr( "Grille:" ), this );
+    new QLabel( tr( "Grid:" ), this );
     ToolListButton< float >* pGridStep_ = new ToolListButton< float >( this, controllers.options_, "GridSize" );
     pGridStep_->AddItem( tr( "Off"    ),  -1 );
     pGridStep_->AddItem( tr( "0.1km"  ),  0.1f );

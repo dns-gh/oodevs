@@ -14,7 +14,6 @@
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AutomatType.h"
-#include "clients_gui/Tools.h"
 
 using namespace kernel;
 using namespace gui;
@@ -29,8 +28,8 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const Age
     , types_( list )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tools::translate( "Preparation", "Unit type" ) );
-    addColumn( tools::translate( "Preparation", "Count" ) );
+    addColumn( tr( "Unit type" ) );
+    addColumn( tr( "Count" ) );
     setRootIsDecorated( true );
     header()->hide();
     setSorting( -1 );
@@ -253,7 +252,7 @@ void UnitListView::Display( const AutomatType& type, ValuedListItem* item )
 
     const AgentType& pc = *type.GetTypePC();
     ValuedListItem* pcItem = new ValuedListItem( item );
-    pcItem->Set( &pc, pc.GetName(), tools::translate( "Preparation", "CP" ) );
+    pcItem->Set( &pc, pc.GetName(), tr( "CP" ) );
     pcItem->setDragEnabled( true );
 }
 

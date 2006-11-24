@@ -105,7 +105,7 @@ void Circle::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 QString Circle::GetName() const
 {
-    static const QString name = tools::translate( "Localisation", "Cercle" );
+    static const QString name = tools::translate( "Localisation", "Circle" );
     return name;
 }
 

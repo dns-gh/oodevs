@@ -99,15 +99,18 @@ void MergingTacticalHierarchies::UnregisterSubordinate( const kernel::Entity_ABC
 // -----------------------------------------------------------------------------
 void MergingTacticalHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
 {
-    const std::string newChildSymbol = entity.Get< TacticalHierarchies >().GetSymbol();
-    if( symbol_.empty() )
-        symbol_ = newChildSymbol;
-    else
+    if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
     {
-        unsigned i = 0;
-        const unsigned max = std::min( symbol_.length(), newChildSymbol.length() );
-        while( i < max && symbol_[ i ] == newChildSymbol[ i ] )
-            ++i;
-        symbol_ = symbol_.substr( 0, i );
+        const std::string newChildSymbol = hierarchies->GetSymbol();
+        if( symbol_.empty() )
+            symbol_ = newChildSymbol;
+        else
+        {
+            unsigned i = 0;
+            const unsigned max = std::min( symbol_.length(), newChildSymbol.length() );
+            while( i < max && symbol_[ i ] == newChildSymbol[ i ] )
+                ++i;
+            symbol_ = symbol_.substr( 0, i );
+        }
     }
 }

@@ -91,6 +91,6 @@ void NBCAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void NBCAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "NBC", "Nuage/Zone NBC" ) )
-        .Display( tools::translate( "NBC", "Agent NBC:" ), nbc_ );
+    displayer.Group( tools::translate( "NBC", "NBC cloud/zone" ) )
+        .Display( tools::translate( "NBC", "NBC agent:" ), nbc_ );
 }

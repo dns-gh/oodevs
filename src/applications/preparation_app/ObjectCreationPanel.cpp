@@ -22,12 +22,12 @@ using namespace gui;
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, const GlTools_ABC& tools )
-    : InfoPanel_ABC( parent, panel, tr( "Objets" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Objects" ) )
     , controllers_( controllers )
     , tools_( tools )
     , created_( new ObjectPrototype( this, controllers, model, teamsModel, layer ) )
 {
-    QPushButton* pOkButton = new QPushButton( tr( "Créer" ), this );
+    QPushButton* pOkButton = new QPushButton( tr( "Create" ), this );
     connect( pOkButton, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }

@@ -35,8 +35,8 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     , menu_( new QPopupMenu( this ) )
     , readTimer_( new QTimer( this ) )
 {
-    AddColumn( "Reçu" );
-    AddColumn( "Compte-rendu" );
+    AddColumn( tr( "Received" ) );
+    AddColumn( tr( "Report" ) );
     
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
@@ -188,8 +188,8 @@ void ReportListView::OnRequestPopup( QListViewItem* item, const QPoint& pos, int
     if( !selected_ )
         return;
     menu_->clear();
-    menu_->insertItem( tr( "Tout effacer" ),          this, SLOT( OnClearAll() ) );
-    menu_->insertItem( tr( "Effacer les msg debug" ), this, SLOT( OnClearTrace() ) );
+    menu_->insertItem( tr( "Clear" ),          this, SLOT( OnClearAll() ) );
+    menu_->insertItem( tr( "Clear traces" ), this, SLOT( OnClearTrace() ) );
 //    if( item )
 //        menu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
     menu_->popup( pos );

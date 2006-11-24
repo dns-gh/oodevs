@@ -35,38 +35,38 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
     QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 9, 2, 5 );
     pSubLayout2->setMargin( 5 );
 
-    QLabel* pL2 = new QLabel( tr( "Taille des polices" ), pDisplayPanel );
+    QLabel* pL2 = new QLabel( tr( "Font size" ), pDisplayPanel );
     pFontSpinbox_ = new QSpinBox( 1, 50, 1, pDisplayPanel );
     pSubLayout2->addWidget( pL2, 1, 0 );
     pSubLayout2->addWidget( pFontSpinbox_, 1, 1 );
     pSubLayout2->setRowStretch( 9, 10 );
     connect( pFontSpinbox_, SIGNAL( valueChanged( int ) ), this, SLOT( FontSizeChanged( int ) ) );
 
-    pDrawObjectIcons_ = new QCheckBox( tr( "Afficher les icones des objets"), pDisplayPanel );
+    pDrawObjectIcons_ = new QCheckBox( tr( "Display object icons"), pDisplayPanel );
     pSubLayout2->addWidget( pDrawObjectIcons_, 2, 0 );
     connect( pDrawObjectIcons_, SIGNAL( toggled( bool ) ), this, SLOT( DrawObjectsChanged( bool ) ) );
 
-    pDrawHoveredInfo_ = new QCheckBox( tr( "Afficher des informations au survol des pions" ), pDisplayPanel );
+    pDrawHoveredInfo_ = new QCheckBox( tr( "Display state summary on mouse over" ), pDisplayPanel );
     pSubLayout2->addWidget( pDrawHoveredInfo_, 3, 0 );
     connect( pDrawHoveredInfo_, SIGNAL( toggled( bool ) ), this, SLOT( DrawHoveredInfoChanged( bool ) ) );
 
-    pDisplayRCOnMap_ = new QCheckBox( tr("Afficher les RC sur la carte"), pDisplayPanel );
+    pDisplayRCOnMap_ = new QCheckBox( tr("Display reports on map"), pDisplayPanel );
     pSubLayout2->addWidget( pDisplayRCOnMap_, 4, 0 );
     connect( pDisplayRCOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawRCsChanged( bool ) ) );
 
-    pDisplayOnlySubscribedAgentsRC_ = new QCheckBox( tr("Afficher uniquement les RC des unités abonnées"), pDisplayPanel );
+    pDisplayOnlySubscribedAgentsRC_ = new QCheckBox( tr("Display only subscribed-unit reports on map"), pDisplayPanel );
     pSubLayout2->addWidget( pDisplayOnlySubscribedAgentsRC_, 5, 0 );
     connect( pDisplayOnlySubscribedAgentsRC_, SIGNAL( toggled( bool ) ), this, SLOT( DrawSubscribedRCsOnlyChanged( bool ) ) );
 
-    pDisplayMessagesOnMap_ = new QCheckBox( tr("Afficher aussi les messages"), pDisplayPanel );
+    pDisplayMessagesOnMap_ = new QCheckBox( tr("Display message"), pDisplayPanel );
     pSubLayout2->addWidget( pDisplayMessagesOnMap_, 6, 0 );
     connect( pDisplayMessagesOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawMessagesChanged( bool ) ) );
 
-    pDisplayTracesOnMap_ = new QCheckBox( tr("Afficher aussi les traces"), pDisplayPanel );
+    pDisplayTracesOnMap_ = new QCheckBox( tr("Display traces"), pDisplayPanel );
     pSubLayout2->addWidget( pDisplayTracesOnMap_, 7, 0 );
     connect( pDisplayTracesOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawTracesChanged( bool ) ) );
 
-    pDisplayIdentificationLevelOnMap_ = new QCheckBox( tr("Afficher aussi les RC d'identification"), pDisplayPanel );
+    pDisplayIdentificationLevelOnMap_ = new QCheckBox( tr("Display detection reports"), pDisplayPanel );
     pSubLayout2->addWidget( pDisplayIdentificationLevelOnMap_, 8, 0 );
     connect( pDisplayIdentificationLevelOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawIdentificationsChanged( bool ) ) );
 

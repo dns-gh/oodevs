@@ -32,7 +32,7 @@ QString tools::translate( const char* context, const char* what )
 // -----------------------------------------------------------------------------
 QString tools::Unknown()
 {
-    static const QString unknown = tools::translate( "tools", "Inconnu" );
+    static const QString unknown = tools::translate( "tools", "Unknown" );
     return unknown;
 }
 
@@ -45,13 +45,13 @@ QString tools::ToString( E_TroopHealthState nState )
     static const QString healthStates[] = 
     {
         tools::translate( "E_TroopHealthState", "Total" ),
-        tools::translate( "E_TroopHealthState", "Opérationnels" ),
-        tools::translate( "E_TroopHealthState", "Morts" ),
-        tools::translate( "E_TroopHealthState", "Blessés" ),
-        tools::translate( "E_TroopHealthState", "Blessés mentalement" ),
-        tools::translate( "E_TroopHealthState", "Contaminés" ),
-        tools::translate( "E_TroopHealthState", "En traitement" ),
-        tools::translate( "E_TroopHealthState", "Utilisés pour maintenance" )
+        tools::translate( "E_TroopHealthState", "Operational" ),
+        tools::translate( "E_TroopHealthState", "Dead" ),
+        tools::translate( "E_TroopHealthState", "Injured" ),
+        tools::translate( "E_TroopHealthState", "Mentally injured" ),
+        tools::translate( "E_TroopHealthState", "Contaminated" ),
+        tools::translate( "E_TroopHealthState", "Under treatment " ),
+        tools::translate( "E_TroopHealthState", "Assigned to maintenance" )
     };
     if( nState >= 0 && nState < eTroopHealthStateNbrStates )
         return healthStates[ nState ];
@@ -66,9 +66,9 @@ QString tools::ToString( E_PerceptionResult nResult )
 {
     static const QString perceptions[] = 
     {
-        tools::translate( "E_PerceptionResult", "Non vu" ),
+        tools::translate( "E_PerceptionResult", "Not seen" ),
         tools::translate( "E_PerceptionResult", "Detection" ),
-        tools::translate( "E_PerceptionResult", "Reconnaissance" ),
+        tools::translate( "E_PerceptionResult", "Recognition" ),
         tools::translate( "E_PerceptionResult", "Identification" ),
     };
     if( nResult >= 0 && nResult < 4 )

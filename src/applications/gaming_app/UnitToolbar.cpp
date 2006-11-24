@@ -35,13 +35,13 @@ namespace
 UnitToolbar::UnitToolbar( QMainWindow* pParent, Controllers& controllers )
     : QToolBar( pParent, "unit toolbar" )
 {
-    setLabel( tr( "Options unité" ) );
+    setLabel( tr( "Unit options" ) );
 
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionlines ),    tr( "Afficher lignes de vision" ),   this, controllers.options_, "VisionLines" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visioncones ),    tr( "Afficher cones de vision" ),    this, controllers.options_, "VisionCones" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionsurfaces ), tr( "Afficher surfaces de vision" ), this, controllers.options_, "VisionSurfaces" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( path ),           tr( "Afficher les itinéraires" ),    this, controllers.options_, "Paths" ) );
-    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( oldpath ),        tr( "Afficher chemin parcouru" ),    this, controllers.options_, "OldPaths" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionlines ),    tr( "Display vision lines" ),    this, controllers.options_, "VisionLines" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visioncones ),    tr( "Display vision cones" ),    this, controllers.options_, "VisionCones" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( visionsurfaces ), tr( "Display vision surfaces" ), this, controllers.options_, "VisionSurfaces" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( path ),           tr( "Display routes" ),          this, controllers.options_, "Paths" ) );
+    Populate( *new ToolListButton< TristateOption >( MAKE_ICON( oldpath ),        tr( "Display covered route" ),   this, controllers.options_, "OldPaths" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -95,7 +95,7 @@ void Lines::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 QString Lines::GetName() const
 {
-    static const QString name = tools::translate( "Localisation", "Ligne" );
+    static const QString name = tools::translate( "Localisation", "Line" );
     return name;
 }
 

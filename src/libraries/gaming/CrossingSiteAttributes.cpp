@@ -86,9 +86,9 @@ void CrossingSiteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void CrossingSiteAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Site de franchissement" ) )
-                .Display( tools::translate( "Object", "Largeur:" ), width_ * Units::meters )
-                .Display( tools::translate( "Object", "Profondeur:" ), depth_ * Units::meters )
-                .Display( tools::translate( "Object", "Vitesse du courant:" ), speed_ * Units::metersPerSecond )
-                .Display( tools::translate( "Object", "Berges à aménager:" ), needsConstruction_ );
+    displayer.Group( tools::translate( "Object", "Crossing site" ) )
+                .Display( tools::translate( "Object", "Width:" ), width_ * Units::meters )
+                .Display( tools::translate( "Object", "Depth:" ), depth_ * Units::meters )
+                .Display( tools::translate( "Object", "Stream speed:" ), speed_ * Units::metersPerSecond )
+                .Display( tools::translate( "Object", "Build river banks:" ), needsConstruction_ );
 }

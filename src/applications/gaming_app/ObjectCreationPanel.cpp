@@ -27,7 +27,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, Controllers& controll
     , tools_( tools )
     , created_( new ObjectPrototype( this, controllers, model, layer ) )
 {
-    QPushButton* pOkButton = new QPushButton( tr( "Créer" ), this );
+    QPushButton* pOkButton = new QPushButton( tr( "Create" ), this );
     connect( pOkButton, SIGNAL( clicked() ), this, SLOT( Commit() ) );
 }
     

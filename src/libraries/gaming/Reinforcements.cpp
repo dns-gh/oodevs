@@ -43,8 +43,8 @@ Reinforcements::~Reinforcements()
 // -----------------------------------------------------------------------------
 void Reinforcements::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Renforts", "Renforts/Renforce" ), reinforced_ );
-    dico.Register( *this, tools::translate( "Renforts", "Renforts/Est renforcé par" ), reinforcements_ );
+    dico.Register( *this, tools::translate( "Reinforcements", "Reinforcements/Reinforcing" ), reinforced_ );
+    dico.Register( *this, tools::translate( "Reinforcements", "Reinforcements/Reinforced by" ), reinforcements_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,9 +77,9 @@ void Reinforcements::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Reinforcements::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Renforts", "Renforts" ) )
-        .Display( tools::translate( "Renforts", "Renforce:" ), reinforced_ )
-        .Display( tools::translate( "Renforts", "Est renforcé par:" ), reinforcements_ );
+    displayer.Group( tools::translate( "Reinforcements", "Reinforcements" ) )
+        .Display( tools::translate( "Reinforcements", "Reinforcing:" ), reinforced_ )
+        .Display( tools::translate( "Reinforcements", "Reinforced by:" ), reinforcements_ );
 }
 
 // $$$$ AGE 2006-04-06: Draw something ?

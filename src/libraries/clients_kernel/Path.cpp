@@ -101,7 +101,7 @@ void Path::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 QString Path::GetName() const
 {
-    static const QString name = tools::translate( "Localisation", "Chemin" );
+    static const QString name = tools::translate( "Localisation", "Path" );
     return name;
 }
 

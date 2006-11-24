@@ -25,7 +25,6 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_gui/Tools.h"
 
 using namespace kernel;
 
@@ -95,7 +94,7 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
     if( element )
         model_.limits_.CreateLimit( points, *const_cast< kernel::Entity_ABC* >( element ) );
 //    else
-//        throw std::exception( tools::translate( "ModelBuilder", "Cannot create a limit at the selected tactical level." ) );
+//        throw std::exception( tr( "Cannot create a limit at the selected tactical level." ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +107,7 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
     if( element )
         model_.limits_.CreateLima( points, *const_cast< kernel::Entity_ABC* >( element ) );
 //    else
-//        throw std::exception( tools::translate( "ModelBuilder", "Cannot create a lima at the selected tactical level." ) );
+//        throw std::exception( tr( "Cannot create a lima at the selected tactical level." ) );
 }
 
 // -----------------------------------------------------------------------------

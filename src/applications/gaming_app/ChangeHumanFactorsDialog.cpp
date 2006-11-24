@@ -40,18 +40,18 @@ namespace
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
 ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, const Profile_ABC& profile )
-    : QDialog( pParent, "Facteurs Humains" )
+    : QDialog( pParent, tr( "Human factors" ) )
     , controllers_( controllers )
     , publisher_( publisher )
     , profile_( profile )
     , selected_( controllers )
 {
-    setCaption( "Facteurs humains" );
+    setCaption( tr( "Human factors" ) );
     QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
     pLayout->setRowStretch( 6, 1 );
     pLayout->setRowStretch( 2, 0 );
     
-    pLayout->addWidget( new QLabel( tr( "Fatigue:" ), this ), 1, 0 );
+    pLayout->addWidget( new QLabel( tr( "Tiredness:" ), this ), 1, 0 );
     pTirednessCombo_ = new ValuedComboBox< E_UnitFatigue >( this );
     pLayout->addWidget( pTirednessCombo_, 1, 1 );
 
@@ -63,12 +63,12 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     pExperienceCombo_ = new ValuedComboBox< E_UnitExperience >( this );
     pLayout->addWidget( pExperienceCombo_, 3, 1 );
 
-    pAllUnitsCheckBox_ = new QCheckBox( tr( "Toutes les unités" ), this );
+    pAllUnitsCheckBox_ = new QCheckBox( tr( "All units" ), this );
     pLayout->addMultiCellWidget( pAllUnitsCheckBox_, 4, 4, 0, 1 );
 
     QHBox* box = new QHBox( this );
-    QPushButton* okBtn = new QPushButton( tr( "OK" ), box );
-    QPushButton* cancelBtn = new QPushButton( tr( "Annuler" ), box );
+    QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
+    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
     pLayout->addMultiCellWidget( box, 5, 5, 0, 1, Qt::AlignCenter );
 
@@ -193,7 +193,7 @@ void ChangeHumanFactorsDialog::NotifyContextMenu( const Agent_ABC& agent, Contex
     if( profile_.CanDoMagic( agent ) )
     {
         selected_ = &agent;
-        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Ordres magiques" ) );
-        subMenu->insertItem( tr( "Facteurs humains" ), this, SLOT( Show() ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
+        subMenu->insertItem( tr( "Human factors" ), this, SLOT( Show() ) );
     }
 }

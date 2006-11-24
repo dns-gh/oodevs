@@ -87,10 +87,10 @@ void LogisticRouteAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 // -----------------------------------------------------------------------------
 void LogisticRouteAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Itinéraire logistique" ) )
-                .Display( tools::translate( "Object", "Equipé:" ), bLogRouteEquipped_ )
-                .Display( tools::translate( "Object", "Débit:" ), nLogRouteFlow_ * Units::vehiclesPerHour )
-                .Display( tools::translate( "Object", "Largeur:" ), nLogRouteWidth_ * Units::meters )
-                .Display( tools::translate( "Object", "Longueur:" ), nLogRouteLength_ * Units::meters )
-                .Display( tools::translate( "Object", "Poids supporté:" ), nLogRouteMaxWeight_ * Units::tons );
+    displayer.Group( tools::translate( "Object", "Logistic route" ) )
+                .Display( tools::translate( "Object", "Equipped:" ), bLogRouteEquipped_ )
+                .Display( tools::translate( "Object", "Flow:" ), nLogRouteFlow_ * Units::vehiclesPerHour )
+                .Display( tools::translate( "Object", "Width:" ), nLogRouteWidth_ * Units::meters )
+                .Display( tools::translate( "Object", "Length:" ), nLogRouteLength_ * Units::meters )
+                .Display( tools::translate( "Object", "Maximum weight:" ), nLogRouteMaxWeight_ * Units::tons );
 }

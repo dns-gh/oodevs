@@ -33,7 +33,7 @@ using namespace gui;
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
 AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Connaissances agent" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Unit knowledge" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
@@ -41,29 +41,29 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , display_     ( 0 )
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tr( "Agents connus" ) );
+    pKnowledgeListView_->AddColumn( tr( "Known units" ) );
     
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Détails" ) )
-                .AddLabel( tr( "Id:" ) )
-                .AddLabel( tr( "Agent associé:" ) )
-                .AddLabel( tr( "Position:" ) )
+    display_->AddGroup( tr( "Details" ) )
+                .AddLabel( tr( "Identifier:" ) )
+                .AddLabel( tr( "Associated agent:" ) )
+                .AddLabel( tr( "Location:" ) )
                 .AddLabel( tr( "Direction:" ) )
-                .AddLabel( tr( "Vitesse:" ) )
-                .AddLabel( tr( "Etat ops.:" ) )
-                .AddLabel( tr( "Niveau de perception:" ) )
-                .AddLabel( tr( "Niveau max de perception:" ) )
-                .AddLabel( tr( "Camp:" ) )
-                .AddLabel( tr( "Niveau:" ) )
+                .AddLabel( tr( "Speed:" ) )
+                .AddLabel( tr( "Operational state:" ) )
+                .AddLabel( tr( "Perception level:" ) )
+                .AddLabel( tr( "Max perception level:" ) )
+                .AddLabel( tr( "Side:" ) )
+                .AddLabel( tr( "Level:" ) )
                 .AddLabel( tr( "Nature:" ) )
-                .AddLabel( tr( "Rendu:" ) )
-                .AddLabel( tr( "Fait prisonnier:" ) )
-                .AddLabel( tr( "Réfugiés pris en compte:" ) )
-                .AddLabel( tr( "PC:" ) )
-                .AddLabel( tr( "Pertinence:"  ) );
+                .AddLabel( tr( "Surrender:" ) )
+                .AddLabel( tr( "Prisoner:" ) )
+                .AddLabel( tr( "Refugees picked up:" ) )
+                .AddLabel( tr( "Command post:" ) )
+                .AddLabel( tr( "Relevance:"  ) );
 
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( tr( "Agent" ) ).
+    pPerceptionListView_->AddColumn( tr( "Unit" ) ).
                           AddColumn( tr( "Niveau perception" ) );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );

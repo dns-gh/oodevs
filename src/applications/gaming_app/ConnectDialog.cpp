@@ -22,7 +22,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
     : QDialog ( pParent, 0, true ) 
     , network_( network )
 {
-    setCaption( tr("Paramètres de connection") );
+    setCaption( tr("Connection parameters") );
 
     QGridLayout* pMainLayout = new QGridLayout( this, 3, 2 );
     pMainLayout->setMargin( 10 );
@@ -31,7 +31,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
     uint nCurRow = 0;
     
     // Host name
-    pMainLayout->addWidget( new QLabel( tr("Nom de l'hôte"), this ), nCurRow, 0 );
+    pMainLayout->addWidget( new QLabel( tr("Host name"), this ), nCurRow, 0 );
     pHostNameComboBox_ = new QComboBox( TRUE, this );
     pHostNameComboBox_->setMaxCount( 5 );
     pHostNameComboBox_->setAutoCompletion( TRUE );
@@ -45,8 +45,8 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
 
     // Buttons
     ++ nCurRow;
-    QPushButton* pOKButton     = new QPushButton( tr( "OK" )    , this );
-    QPushButton* pCancelButton = new QPushButton( tr( "Annuler" ), this );
+    QPushButton* pOKButton     = new QPushButton( tr( "Ok" )    , this );
+    QPushButton* pCancelButton = new QPushButton( tr( "Cancel" ), this );
     pMainLayout->addWidget( pOKButton, nCurRow, 0     );
     pMainLayout->addWidget( pCancelButton, nCurRow, 1 );
     pOKButton->setDefault( TRUE );

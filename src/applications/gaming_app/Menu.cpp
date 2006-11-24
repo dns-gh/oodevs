@@ -44,43 +44,41 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    int itemId = menu->insertItem( MAKE_ICON( open ), tr( "&Ouvrir scipio.xml..." ), parent(), SLOT( Open() ) );
-    menu->setAccel( CTRL + Key_O, itemId );
-    menu->insertItem( tr( "Fermer" ), parent(), SLOT( Close() ) );
+    menu->insertItem( MAKE_ICON( open ), tr( "&Open exercice..." ), parent(), SLOT( Open() ), CTRL + Key_O );
+    menu->insertItem( tr( "Close" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( open ), tr( "Ouvrir fichier d'ordres..." ), &recorderToolBar, SLOT( Play() ) );
-    menu->insertItem( MAKE_ICON( save ), tr( "Enregistrer fichier d'ordre..." ), &recorderToolBar, SLOT( Stop() ) );
+    menu->insertItem( MAKE_ICON( open ), tr( "Open orders..." ), &recorderToolBar, SLOT( Play() ) );
+    menu->insertItem( MAKE_ICON( save ), tr( "Save orders..." ), &recorderToolBar, SLOT( Stop() ) );
     menu->insertSeparator();
-    menu->insertItem( tr( "&Quitter" ), pParent, SLOT( close() ), CTRL + Key_Q );
-    itemId = insertItem( tr( "&Fichier" ), menu );
-    setAccel( ALT + Key_F, itemId );
+    menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
+    insertItem( tr( "&File" ), menu );
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
 
-    AddSubMenu( subMenu, tr( "Lignes de vision" )  , MAKE_ICON( visionlines )   , controllers.options_, "VisionLines" );
-    AddSubMenu( subMenu, tr( "Cones de vision" )   , MAKE_ICON( visioncones )   , controllers.options_, "VisionCones" );
-    AddSubMenu( subMenu, tr( "Surfaces de vision" ), MAKE_ICON( visionsurfaces ), controllers.options_, "VisionSurfaces" );
+    AddSubMenu( subMenu, tr( "Vision lines" )   , MAKE_ICON( visionlines )   , controllers.options_, "VisionLines" );
+    AddSubMenu( subMenu, tr( "Vision cones" )   , MAKE_ICON( visioncones )   , controllers.options_, "VisionCones" );
+    AddSubMenu( subMenu, tr( "Vision surfaces" ), MAKE_ICON( visionsurfaces ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
-    AddSubMenu( subMenu, tr( "Itinéraires" )       , MAKE_ICON( path )          , controllers.options_, "Paths" );
-    AddSubMenu( subMenu, tr( "Chemin parcouru" )   , MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
-    menu->insertItem( tr( "Unités..." ), subMenu );
+    AddSubMenu( subMenu, tr( "Routes" )        , MAKE_ICON( path )          , controllers.options_, "Paths" );
+    AddSubMenu( subMenu, tr( "Covered routes" ), MAKE_ICON( oldpath )       , controllers.options_, "OldPaths" );
+    menu->insertItem( tr( "Units..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu( subMenu, tr( "Liens logistiques" )              , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
-    AddSubMenu( subMenu, tr( "Liens logistiques manquant" )     , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
-    AddSubMenu( subMenu, tr( "Actions logistiques" ), MAKE_ICON( realtimelog ), controllers.options_, "RealTimeLogistic" );
-    menu->insertItem( tr( "Logistique..." ), subMenu );
+    AddSubMenu( subMenu, tr( "Links" )            , MAKE_ICON( loglink )    , controllers.options_, "LogisticLinks" );
+    AddSubMenu( subMenu, tr( "Missing links" )    , MAKE_ICON( missinglog ) , controllers.options_, "MissingLogisticLinks" );
+    AddSubMenu( subMenu, tr( "Real time actions" ), MAKE_ICON( realtimelog ), controllers.options_, "RealTimeLogistic" );
+    menu->insertItem( tr( "Logistic..." ), subMenu );
 
     subMenu = new QPopupMenu( menu );
-    AddSubMenu( subMenu, tr( "Petits textes" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
-    AddSubMenu( subMenu, tr( "Grands textes" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
-    AddSubMenu( subMenu, tr( "Lignes tactiques" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
+    AddSubMenu( subMenu, tr( "Small texts" )   , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
+    AddSubMenu( subMenu, tr( "Large texts" )   , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
+    AddSubMenu( subMenu, tr( "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
 
     OptionMenu< bool >* boolMenu = new OptionMenu< bool >( subMenu, controllers.options_, "Weather" );
     boolMenu->AddItem( tr( "On" ), true );
     boolMenu->AddItem( tr( "Off" ), false );
-    subMenu->insertItem( MAKE_ICON( weather ), tr( "Météo" ), boolMenu );
+    subMenu->insertItem( MAKE_ICON( weather ), tr( "Weather" ), boolMenu );
 
     subMenu->insertSeparator();
 
@@ -93,7 +91,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     gridMenu->AddItem( tr( "2.5km"  ),  2.5f );
     gridMenu->AddItem( tr( "5km"  ),  5.0f );
     gridMenu->AddItem( tr( "10km" ), 10.0f );
-    subMenu->insertItem( tr( "Grille" ), gridMenu );
+    subMenu->insertItem( tr( "Grid" ), gridMenu );
 
     menu->insertItem( tr( "Terrain..." ), subMenu );
     menu->insertSeparator();
@@ -101,17 +99,15 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
     boolMenu->AddItem( tr( "2D" ), false );
     boolMenu->AddItem( tr( "3D" ), true );
-    menu->insertItem( MAKE_ICON( threed ), tr( "Mode d'affichage" ), boolMenu );
+    menu->insertItem( MAKE_ICON( threed ), tr( "Display mode" ), boolMenu );
 
     menu->insertSeparator();
-    menu->insertItem( tr( "&Préférences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
-    itemId = insertItem( tr( "Affi&chage" ), menu );
-    setAccel( ALT + Key_C, itemId );
+    menu->insertItem( tr( "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
+    insertItem( tr( "&Display" ), menu );
 
     menu = new QPopupMenu( this );
-    menu->insertItem( tr( "A propos" ), new AboutDialog( this, factory ), SLOT( exec() ) );
-    itemId = insertItem( tr( "Ai&de" ), menu );
-    setAccel( ALT + Key_D, itemId );
+    menu->insertItem( tr( "About" ), new AboutDialog( this, factory ), SLOT( exec() ) );
+    insertItem( tr( "&Help" ), menu );
 }
     
 // -----------------------------------------------------------------------------

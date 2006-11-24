@@ -13,7 +13,6 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/PropertiesWidget.h"
-#include "clients_gui/Tools.h"
 #include "PropertiesTableDisplayer.h"
 
 using namespace kernel;
@@ -24,7 +23,7 @@ using namespace gui;
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
 PropertiesPanel::PropertiesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, kernel::EditorFactory_ABC& editorFactory )
-    : InfoPanel_ABC( parent, panel, tools::translate( "PropertiesPanel", "Properties" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Properties" ) )
     , controllers_( controllers )
     , selected_( controllers )
     , tableItemDisplayer_( *new PropertiesTableDisplayer() )

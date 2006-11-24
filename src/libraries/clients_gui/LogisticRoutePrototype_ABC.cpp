@@ -19,25 +19,25 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 LogisticRoutePrototype_ABC::LogisticRoutePrototype_ABC( QWidget* parent )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Itinéraire logistique" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tr( "Logistic route" ) )
 {
-    new QLabel( tr( "Débit:" ), this );
+    new QLabel( tr( "Flow:" ), this );
     flow_ = new QSpinBox( 0, 10000, 1, this );
     flow_->setSuffix( Units::vehiclesPerHour );
 
-    new QLabel( tr( "Largeur:" ), this );
+    new QLabel( tr( "Width:" ), this );
     width_ = new QSpinBox( 0, 10000, 1, this );
     width_->setSuffix( Units::meters );
 
-    new QLabel( tr( "Longueur:" ), this );
+    new QLabel( tr( "Length:" ), this );
     length_ = new QSpinBox( 0, 10000, 1, this );
     length_->setSuffix( Units::meters );
 
-    new QLabel( tr( "Poids maximum:" ), this );
+    new QLabel( tr( "Maximum weight:" ), this );
     maxWeight_ = new QSpinBox( 0, 10000, 1, this );
     maxWeight_->setSuffix( Units::tons );
 
-    equipped_ = new QCheckBox( tr( "Equipé:" ), this );
+    equipped_ = new QCheckBox( tr( "Equipped:" ), this );
 }
 
 // -----------------------------------------------------------------------------

@@ -134,6 +134,6 @@ void Report_ABC::Display( Displayer_ABC& displayer ) const
 {
     displayer.Display( 0, GetColor( eType_ ) );
     displayer.Display( 0, bNew_ ? Styles::bold : Styles::weak );
-    displayer.Display( tools::translate( "CR", "Reçu" ), QTime().addSecs( nTime_ ) );
-    displayer.Display( tools::translate( "CR", "Compte-rendu" ), strTitle_ );
+    displayer.Display( tools::translate( "Report", "Received" ), QTime().addSecs( nTime_ ) );
+    displayer.Display( tools::translate( "Report", "Report" ), strTitle_ );
 }

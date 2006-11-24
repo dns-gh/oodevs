@@ -96,9 +96,9 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
         const AutomatDecisions& decisions = agent.Get< AutomatDecisions >();
         AddAutomatMissions( decisions, menu );
         if( ! decisions.IsEmbraye() )
-            menu.InsertItem( "Commande", tr( "Embrayer" ), this, SLOT( Engage() ) );
+            menu.InsertItem( "Commande", tr( "Engage" ), this, SLOT( Engage() ) );
         else
-            menu.InsertItem( "Commande", tr( "Debrayer" ), this, SLOT( Disengage() ) );
+            menu.InsertItem( "Commande", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
 }
 
@@ -160,11 +160,11 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
 // -----------------------------------------------------------------------------
 void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& menu )
 {
-    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Missions Pion" ), SLOT( ActivateAgentMission( int ) ) );
+    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Unit missions" ), SLOT( ActivateAgentMission( int ) ) );
     const bool isEmbraye = decisions.IsEmbraye();
     menu.SetItemEnabled( id, ! isEmbraye );
     if( ! isEmbraye )
-        AddFragOrders( decisions, menu, tr( "Ordres de conduite" ), SLOT( ActivateFragOrder( int ) ) );
+        AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,10 +173,10 @@ void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& me
 // -----------------------------------------------------------------------------
 void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, ContextMenu& menu )
 {
-    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Missions Automate" ), SLOT( ActivateAutomatMission( int ) ) );
+    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
     menu.SetItemEnabled( id, decisions.IsEmbraye() );
     if( decisions.IsEmbraye() )
-        AddFragOrders( decisions, menu, tr( "Ordres de conduite" ), SLOT( ActivateFragOrder( int ) ) );
+        AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& 
                 int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
                 missions.setItemParameter( nId, mission.GetId() );
             }
-            menu.InsertItem( "Ordre", tr( "Missions Population" ), &missions  );
+            menu.InsertItem( "Ordre", tr( "Population missions" ), &missions  );
         }
     }
 }

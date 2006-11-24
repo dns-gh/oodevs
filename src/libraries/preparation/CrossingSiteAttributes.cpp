@@ -64,11 +64,11 @@ CrossingSiteAttributes::~CrossingSiteAttributes()
 // -----------------------------------------------------------------------------
 void CrossingSiteAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Site de franchissement" ) )
-                .Display( tools::translate( "Object", "Largeur:" ), width_ )
-                .Display( tools::translate( "Object", "Profondeur:" ), depth_ )
-                .Display( tools::translate( "Object", "Vitesse du courant:" ), speed_ )
-                .Display( tools::translate( "Object", "Berges à aménager:" ), needsConstruction_ );
+    displayer.Group( tools::translate( "Object", "Crossing site" ) )
+                .Display( tools::translate( "Object", "Width:" ), width_ )
+                .Display( tools::translate( "Object", "Depth:" ), depth_ )
+                .Display( tools::translate( "Object", "Stream speed:" ), speed_ )
+                .Display( tools::translate( "Object", "Build river banks:" ), needsConstruction_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,5 +130,5 @@ void CrossingSiteAttributes::CreateDictionary( kernel::PropertiesDictionary& dic
     dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Width" ), width_ );
     dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Depth" ), depth_ );
     dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Speed" ), speed_ );
-    dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Construction needed" ), needsConstruction_ );
+    dico.Register( *this, tools::translate( "CrossingSiteAttributes", "Info/Crossing site attributes/Build river banks" ), needsConstruction_ );
 }

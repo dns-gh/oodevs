@@ -30,12 +30,12 @@ using namespace gui;
 // Created: SBO 2006-06-21
 // -----------------------------------------------------------------------------
 Spy::Spy( QWidget* parent, Controllers& controllers )
-    : QVBox( parent, "Espion" )
+    : QVBox( parent, tr( "Spy" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
     QVBox* box = new QVBox( this );
-    QPushButton* button = new QPushButton( MAKE_ICON( cross ), tr( "Vider" ), box );
+    QPushButton* button = new QPushButton( MAKE_ICON( cross ), tr( "Clear" ), box );
     button->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding ) );
     toolBox_ = new QToolBox( box );
     box->setStretchFactor( toolBox_, 100 );
@@ -110,7 +110,7 @@ void Spy::NotifyContextMenu( const Entity_ABC& agent, ContextMenu& menu )
     if( it == spied_.end() )
     {
         selected_ = &agent;
-        menu.InsertItem( "Interface", "Espionner", this, SLOT( Bookmark() ) );
+        menu.InsertItem( "Interface", tr( "Spy" ), this, SLOT( Bookmark() ) );
     }
 }
 

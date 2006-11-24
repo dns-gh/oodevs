@@ -27,32 +27,32 @@ using namespace gui;
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
 AgentMaintenancePanel::AgentMaintenancePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( parent, panel, controllers, factory, tr( "Chaine maintenance" ) )
+    : LogisticPanel< AgentMaintenancePanel, LogMaintenanceConsign >( parent, panel, controllers, factory, tr( "Maintenance system" ) )
     , controllers_( controllers )
 {
-    AddConsignColumn( tr( "Type d'équipement :" ) );
-    AddConsignColumn( tr( "Type de panne :" ) );
-    AddConsignColumn( tr( "Etat :" ) );
+    AddConsignColumn( tr( "Equipment:" ) );
+    AddConsignColumn( tr( "Breakdown:" ) );
+    AddConsignColumn( tr( "State:" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Etat chaine maintenance" ) )
-                .AddLabel( tr( "Etat chaine" ) )
-                .AddLabel( tr( "Régime de travail" ) )
-                .AddLabel( tr( "Priorités" ) )
-                .AddLabel( tr( "Priorités tactiques" ) );
+    display_->AddGroup( tr( "Maintenance system state" ) )
+                .AddLabel( tr( "System status" ) )
+                .AddLabel( tr( "Working scheme" ) )
+                .AddLabel( tr( "Priorities" ) )
+                .AddLabel( tr( "Tactical priorities" ) );
 
     dispoHaulers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this, factory );
-    dispoHaulers_->AddColumn( tr( "Remorqueur" ) )
+    dispoHaulers_->AddColumn( tr( "Tow trucks" ) )
                   .AddColumn( tr( "Total" ) )
-                  .AddColumn( tr( "Disponible" ) )
-                  .AddColumn( tr( "Au travail" ) )
-                  .AddColumn( tr( "Au repos" ) );
+                  .AddColumn( tr( "Available" ) )
+                  .AddColumn( tr( "Working" ) )
+                  .AddColumn( tr( "Resting" ) );
     dispoRepairers_ = new ListDisplayer< AgentMaintenancePanel >( this, *this, factory );
-    dispoRepairers_->AddColumn( tr( "Réparateur" ) )
+    dispoRepairers_->AddColumn( tr( "Repairers" ) )
                     .AddColumn( tr( "Total" ) )
-                    .AddColumn( tr( "Disponible" ) )
-                    .AddColumn( tr( "Au travail" ) )
-                    .AddColumn( tr( "Au repos" ) );
+                    .AddColumn( tr( "Available" ) )
+                    .AddColumn( tr( "Working" ) )
+                    .AddColumn( tr( "Resting" ) );
 
     controllers_.Register( *this );
 }

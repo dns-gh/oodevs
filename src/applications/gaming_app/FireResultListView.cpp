@@ -27,12 +27,12 @@ FireResultListView::FireResultListView( QWidget* parent, ItemFactory_ABC& factor
     : ListDisplayer< FireResultListView >( parent, *this, factory )
     , factory_( factory )
 {
-    AddColumn( "Cible" );
-    AddColumn( "Attrition" );
+    AddColumn( tr( "Target" ) );
+    AddColumn( tr( "Attrition" ) );
     
-    agentDisplay_ = new SubItemDisplayer( "Cible", factory );
-    agentDisplay_->AddChild( "Equipements" );
-    agentDisplay_->AddChild( "Humains" );
+    agentDisplay_ = new SubItemDisplayer( tr( "Target" ), factory );
+    agentDisplay_->AddChild( tr( "Equipments" ) );
+    agentDisplay_->AddChild( tr( "Humans" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,8 +56,8 @@ void FireResultListView::Display( const PopulationFireResult* result, Displayer_
     }
     // $$$$ AGE 2006-03-10: Move in PopulationFireResult
     item->SetValue( result );
-    displayer.Display( "Cible", result->target_ );
-    displayer.Item( "Attrition" ).Start( tr( "Morts:" ) ).Add( result->deadPeople_ ).End();
+    displayer.Display( tr( "Target" ), result->target_ );
+    displayer.Item( tr( "Attrition" ) ).Start( tr( "Dead:" ) ).Add( result->deadPeople_ ).End();
 }
 
 // -----------------------------------------------------------------------------
@@ -75,9 +75,9 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     item->SetValue( result );
     Displayer_ABC& displayer = (*agentDisplay_)( item );
 
-    displayer.Display( "Cible", result->target_ );
-    displayer.Display( "Equipments", tr( " (dispo, indispo, réparable):" ) );
-    displayer.Display( "Humains", tr( " (officier, ss-officier, mdr)" ) );
+    displayer.Display( tr( "Target" ), result->target_ );
+    displayer.Display( tr( "Equipments" ), tr( " (avail, unavail, fixable):" ) );
+    displayer.Display( "Troops", tr( " (officer, warrant-off., private)" ) );
 
     // $$$$ AGE 2006-02-28: crado. Essayer de faire un displayer qui puisse cascader 
     // $$$$ AGE 2006-02-28: les subItems et meler des listes aussi mais sans que l'interface
@@ -96,7 +96,7 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
 
     last = item->firstChild();
     QListViewItem* humans = last;
-    while( humans && humans->text( 0 ) != tr( "Humains" ) ) {
+    while( humans && humans->text( 0 ) != tr( "Troops" ) ) {
         last = humans;
         humans = humans->nextSibling();
     }
@@ -113,8 +113,8 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( "Cible", equipment.type_ );
-    displayer.Item( "Attrition" ).Start( equipment.available_ )
+    displayer.Display( tr( "Target" ), equipment.type_ );
+    displayer.Item( tr( "Attrition" ) ).Start( equipment.available_ )
                     .Add( " / " ).Add( equipment.unavailable_ )
                     .Add( " / " ).Add( equipment.repairable_ ).End();
 }
@@ -125,8 +125,8 @@ void FireResultListView::Display( const Equipment& equipment, Displayer_ABC& dis
 // -----------------------------------------------------------------------------
 void FireResultListView::Display( const Casualties& casualties, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( "Cible", casualties.wound_ );
-    displayer.Item( "Attrition" ).Start( casualties.officers_ )
+    displayer.Display( tr( "Target" ), casualties.wound_ );
+    displayer.Item( tr( "Attrition" ) ).Start( casualties.officers_ )
                     .Add( " / " ).Add( casualties.subOfficers_ )
                     .Add( " / " ).Add( casualties.troopers_ ).End();
 }

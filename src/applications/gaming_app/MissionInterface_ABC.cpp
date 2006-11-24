@@ -106,8 +106,8 @@ bool MissionInterface_ABC::IsEmpty() const
 void MissionInterface_ABC::CreateOkCancelButtons()
 {
     QHBox* pBox = new QHBox( this );
-    QPushButton* pOk = new QPushButton( tr( "Valider" ), pBox );
-    QPushButton* pCancel = new QPushButton( tr( "Annuler" ), pBox );
+    QPushButton* pOk = new QPushButton( tr( "Ok" ), pBox );
+    QPushButton* pCancel = new QPushButton( tr( "Cancel" ), pBox );
     pOk->setDefault( true );
 
     connect( pOk, SIGNAL( clicked() ), this, SLOT( OnOk() ) );

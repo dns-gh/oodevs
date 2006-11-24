@@ -9,71 +9,119 @@
 <context>
     <name>AgentsLayer</name>
     <message>
-        <source>Aggreger</source>
+        <source>Aggregate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>D&#xe9;saggreger</source>
+        <source>Disaggregate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CampPrototype_ABC</name>
     <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TC2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TC2 du camp</source>
+        <source>Side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side&apos;s TC2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CrossingSitePrototype_ABC</name>
     <message>
-        <source>Site de franchissement</source>
+        <source>Crossing site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Largeur:</source>
+        <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Profondeur:</source>
+        <source>Depth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vitesse courant:</source>
+        <source>Stream speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Berges &#xe0; am&#xe9;nager:</source>
+        <source>Build river banks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DrawerToolbar</name>
+    <message>
+        <source>Drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditorFactory</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GraphicPreferences</name>
+    <message>
+        <source>Transparency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Colors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>GraphicsPanel</name>
     <message>
-        <source>Okay</source>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Appliquer</source>
+        <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nope</source>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>HierarchyListView_ABC</name>
     <message>
-        <source>Unit&#xe9;s</source>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LimitsLayer</name>
+    <message>
+        <source>Create limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create lima</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -107,90 +155,88 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Effacer la liste</source>
+        <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LogisticRoutePrototype_ABC</name>
     <message>
-        <source>Itin&#xe9;raire logistique</source>
+        <source>Logistic route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>D&#xe9;bit:</source>
+        <source>Flow:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Largeur:</source>
+        <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Longueur:</source>
+        <source>Length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Poids maximum:</source>
+        <source>Maximum weight:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equip&#xe9;:</source>
+        <source>Equipped:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MiniViews</name>
     <message>
-        <source>Mini vues</source>
+        <source>Miniviews</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Supprimer la minivue</source>
+        <source>Remove miniview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ajouter une minivue</source>
+        <source>Add miniview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>NBCPrototype_ABC</name>
     <message>
-        <source>Param&#xe8;tres NBC</source>
+        <source>NBC parameters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agent NBC:</source>
+        <source>NBC Agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NatureEditionCategory</name>
+    <message>
+        <source>undefined</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ObjectListView</name>
     <message>
-        <source>Objets</source>
+        <source>Objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ObjectPanel</name>
+    <message>
+        <source>Object state</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ObjectPrototype_ABC</name>
     <message>
-        <source>Informations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Nom:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Position:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -198,42 +244,58 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nouvel objet</source>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New object</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>OptionsPanel</name>
     <message>
-        <source>Taille des polices</source>
+        <source>Font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher les icones des objets</source>
+        <source>Display object icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher des informations au survol des pions</source>
+        <source>Display state summary on mouse over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher les RC sur la carte</source>
+        <source>Display reports on map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher uniquement les RC des unit&#xe9;s abonn&#xe9;es</source>
+        <source>Display only subscribed-unit reports on map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher aussi les messages</source>
+        <source>Display message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher aussi les traces</source>
+        <source>Display traces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Afficher aussi les RC d&apos;identification</source>
+        <source>Display detection reports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -258,58 +320,58 @@
 <context>
     <name>PopulationPanel</name>
     <message>
-        <source>Etat population</source>
+        <source>Population state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Informations</source>
+        <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nom:</source>
+        <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nombre de personnes vivantes:</source>
+        <source>Alive people:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Morts:</source>
+        <source>Dead people:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Morceau</source>
+        <source>Chunks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hommes vivants</source>
+        <source>Alive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hommes morts</source>
+        <source>Dead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Attitude</source>
+        <source>Mood</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Densit&#xe9; vivants</source>
+        <source>Alive density</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
     <message>
-        <source>Pr&#xe9;f&#xe9;rences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>G&#xe9;n&#xe9;ral</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -320,15 +382,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Danger:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent_ABC(s) NBC:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agents:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -357,12 +419,12 @@
 <context>
     <name>TerrainPreference</name>
     <message>
-        <source>Epaisseur du trait: </source>
+        <source> px</source>
         <comment>TerrainPreference</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> px</source>
+        <source>Line thickness: </source>
         <comment>TerrainPreference</comment>
         <translation type="unfinished"></translation>
     </message>

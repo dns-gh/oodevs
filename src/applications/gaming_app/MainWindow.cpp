@@ -139,14 +139,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     SymbolIcons* icons = new SymbolIcons( this, widget2d_ );
 
-    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile, *icons ),            tr( "ODB" ) );
-    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile, *icons ), tr( "Agents" ) );
-    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),                    tr( "Objets" ) );
+    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile, *icons ),            tr( "Tactical" ) );
+    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile, *icons ), tr( "Communication" ) );
+    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),                    tr( "Objects" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),                    tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
-    pListDockWnd_->setCaption( tr( "Unités" ) );
+    pListDockWnd_->setCaption( tr( "Orbat" ) );
     setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
     // Spy
@@ -156,7 +156,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pSpyWnd->setWidget( spy_ );
     pSpyWnd->setResizeEnabled( true );
     pSpyWnd->setCloseMode( QDockWindow::Always );
-    pSpyWnd->setCaption( tr( "Espion" ) );
+    pSpyWnd->setCaption( tr( "Spy" ) );
     setDockEnabled( pSpyWnd, Qt::DockTop, false );
 
     // Mini views
@@ -180,7 +180,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
-    pInfoDockWnd_->setCaption( tr( "Informations" ) );
+    pInfoDockWnd_->setCaption( tr( "Information" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
     // A few layers
@@ -213,7 +213,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pObjectCreationWnd->setWidget( objectCreationPanel );
     pObjectCreationWnd->setResizeEnabled( true );
     pObjectCreationWnd->setCloseMode( QDockWindow::Always );
-    pObjectCreationWnd->setCaption( tr( "Création d'objet" ) );
+    pObjectCreationWnd->setCaption( tr( "Object creation" ) );
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
     
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );

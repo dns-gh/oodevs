@@ -9,7 +9,6 @@
 
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_gui/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperiorEditor constructor
@@ -21,7 +20,7 @@ LogisticSuperiorEditor< Superior >::LogisticSuperiorEditor( QWidget* parent, ker
     , controllers_( controllers )
     , filter_( selected )
 {
-    AddItem( tools::translate( "LogisticSuperiorEditor", "None" ), 0 );
+    AddItem( tr( "None" ), 0 );
     kernel::Iterator< const kernel::Automat_ABC& > it = resolver.CreateIterator();
     while( it.HasMoreElements() )
     {

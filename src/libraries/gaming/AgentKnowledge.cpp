@@ -145,22 +145,22 @@ QString AgentKnowledge::GetTypeName() const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "AgentKnowledge", "Id:" ), id_ )
-             .Display( tools::translate( "AgentKnowledge", "Agent associé:" ), realAgent_ )
-             .Display( tools::translate( "AgentKnowledge", "Position:" ), strPosition_ )
+    displayer.Display( tools::translate( "AgentKnowledge", "Identifier:" ), id_ )
+             .Display( tools::translate( "AgentKnowledge", "Associated agent:" ), realAgent_ )
+             .Display( tools::translate( "AgentKnowledge", "Location:" ), strPosition_ )
              .Display( tools::translate( "AgentKnowledge", "Direction:" ), nDirection_ * Units::degrees )
-             .Display( tools::translate( "AgentKnowledge", "Vitesse:" ), nSpeed_ * Units::kilometersPerHour )
-             .Display( tools::translate( "AgentKnowledge", "Etat ops.:" ), nEtatOps_ * Units::percentage )
-             .Display( tools::translate( "AgentKnowledge", "Niveau de perception:" ), nCurrentPerceptionLevel_  )
-             .Display( tools::translate( "AgentKnowledge", "Niveau max de perception:" ), nMaxPerceptionLevel_ )
-             .Display( tools::translate( "AgentKnowledge", "Camp:" ), team_  )
-             .Display( tools::translate( "AgentKnowledge", "Niveau:" ), nLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Speed:" ), nSpeed_ * Units::kilometersPerHour )
+             .Display( tools::translate( "AgentKnowledge", "Operational state:" ), nEtatOps_ * Units::percentage )
+             .Display( tools::translate( "AgentKnowledge", "Perception level:" ), nCurrentPerceptionLevel_  )
+             .Display( tools::translate( "AgentKnowledge", "Max perception level:" ), nMaxPerceptionLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Side:" ), team_  )
+             .Display( tools::translate( "AgentKnowledge", "Level:" ), nLevel_ )
              .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
-             .Display( tools::translate( "AgentKnowledge", "Rendu:" ), bSurrendered_ )
-             .Display( tools::translate( "AgentKnowledge", "Fait prisonnier:" ), bPrisonner_ )
-             .Display( tools::translate( "AgentKnowledge", "Réfugiés pris en compte:" ), bRefugies_ )
-             .Display( tools::translate( "AgentKnowledge", "PC:" ), bIsPC_ )
-             .Display( tools::translate( "AgentKnowledge", "Pertinence:" ), nRelevance_ * Units::percentage );
+             .Display( tools::translate( "AgentKnowledge", "Surrender:" ), bSurrendered_ )
+             .Display( tools::translate( "AgentKnowledge", "Prisoner:" ), bPrisonner_ )
+             .Display( tools::translate( "AgentKnowledge", "Refugees picked up:" ), bRefugies_ )
+             .Display( tools::translate( "AgentKnowledge", "Command post:" ), bIsPC_ )
+             .Display( tools::translate( "AgentKnowledge", "Relevance:" ), nRelevance_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,11 +169,11 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "AgentKnowledge", "Niveau de perception:" ), nCurrentPerceptionLevel_ )
-             .Display( tools::translate( "AgentKnowledge", "Camp:" ), team_  )
+    displayer.Display( tools::translate( "AgentKnowledge", "Percepetion level:" ), nCurrentPerceptionLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Side:" ), team_  )
              .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
-             .Display( tools::translate( "AgentKnowledge", "Niveau:" ), nLevel_ )
-             .Display( tools::translate( "AgentKnowledge", "Pertinence:" ), nRelevance_ * Units::percentage );
+             .Display( tools::translate( "AgentKnowledge", "Level:" ), nLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Relevance:" ), nRelevance_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------

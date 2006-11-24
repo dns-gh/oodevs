@@ -57,12 +57,12 @@ QString tools::ToString( ASN1T_EnumTypeLocalisation nType )
 {
     static const QString localisations[] = 
     {
-        tools::translate( "Localisation", "Cercle" ),
+        tools::translate( "Localisation", "Circle" ),
         tools::translate( "Localisation", "Ellipse" ),
-        tools::translate( "Localisation", "Ligne" ),
-        tools::translate( "Localisation", "Polygone" ),
+        tools::translate( "Localisation", "Line" ),
+        tools::translate( "Localisation", "Polygon" ),
         tools::translate( "Localisation", "Point" ),
-        tools::translate( "Localisation", "Secteur" ),
+        tools::translate( "Localisation", "Sector" ),
     };
     if( nType >= 0 && nType < 6 )
         return localisations[ nType ];

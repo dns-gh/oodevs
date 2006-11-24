@@ -35,7 +35,7 @@ Team::Team( Controller& controller, KnowledgeGroupFactory_ABC& kgFactory, Object
     , objectFactory_( objectFactory )
     , karma_( &karmas.GetDefault() )
 {
-    name_ = tools::translate( "Preparation", "Armée %1" ).arg( id_ );
+    name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

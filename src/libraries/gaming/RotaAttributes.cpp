@@ -87,6 +87,6 @@ void RotaAttributes::DoUpdate( const ASN1T_MsgObjectCreation& message )
 void RotaAttributes::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "NBC", "ROTA" ) )
-                .Display( tools::translate( "NBC", "Danger:" ), danger_ )
-                .Display( tools::translate( "NBC", "Agents NBC:" ), agents_ );
+                .Display( tools::translate( "NBC", "Danger level:" ), danger_ )
+                .Display( tools::translate( "NBC", "NBC agent(s):" ), agents_ );
 }

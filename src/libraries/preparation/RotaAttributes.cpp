@@ -71,8 +71,8 @@ void RotaAttributes::ReadNbcAgent( xml::xistream& xis, const kernel::Resolver_AB
 void RotaAttributes::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "NBC", "ROTA" ) )
-                .Display( tools::translate( "NBC", "Danger:" ), danger_ )
-                .Display( tools::translate( "NBC", "Agents NBC:" ), agents_ );
+                .Display( tools::translate( "NBC", "Danger level:" ), danger_ )
+                .Display( tools::translate( "NBC", "NBC agent(s):" ), agents_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,6 +119,6 @@ void RotaAttributes::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void RotaAttributes::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "RotaAttributes", "Info/ROTA attributes/Danger" ), danger_ );
+    dico.Register( *this, tools::translate( "RotaAttributes", "Info/ROTA attributes/Danger level" ), danger_ );
     dico.Register( *this, tools::translate( "RotaAttributes", "Info/ROTA attributes/Agents" ), agents_ );
 }

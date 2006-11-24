@@ -67,12 +67,12 @@ LogisticRouteAttributes::~LogisticRouteAttributes()
 // -----------------------------------------------------------------------------
 void LogisticRouteAttributes::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Itinéraire logistique" ) )
-                .Display( tools::translate( "Object", "Equipé:" ), equipped_ )
-                .Display( tools::translate( "Object", "Débit:" ), flow_ )
-                .Display( tools::translate( "Object", "Largeur:" ), width_ )
-                .Display( tools::translate( "Object", "Longueur:" ), length_ )
-                .Display( tools::translate( "Object", "Poids supporté:" ), maxWeight_ );
+    displayer.Group( tools::translate( "Object", "Logistic route" ) )
+                .Display( tools::translate( "Object", "Equipped:" ), equipped_ )
+                .Display( tools::translate( "Object", "Flow:" ), flow_ )
+                .Display( tools::translate( "Object", "Width:" ), width_ )
+                .Display( tools::translate( "Object", "Length:" ), length_ )
+                .Display( tools::translate( "Object", "Maximum weight:" ), maxWeight_ );
 }
 
 // -----------------------------------------------------------------------------

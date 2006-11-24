@@ -139,20 +139,20 @@ void Network::Update()
             session_ = it->link_;
             if( it->error_.empty() )
             {
-                MT_LOG_INFO_MSG( tools::translate( "Reseau", "Connecté à " ) << it->link_->GetRemoteAddress().GetAddressAsString() );
+                MT_LOG_INFO_MSG( tools::translate( "Network", "Connected to " ) << it->link_->GetRemoteAddress().GetAddressAsString() );
                 manager_->Enable( *session_ );
                 simu_.Connect( it->address_ );
                 profile_.Login( *manager_ );
             }
             else if( it->lost_ )
             {
-                MT_LOG_WARNING_MSG( tools::translate( "Reseau", "Connexion à " ) << it->address_ << tools::translate( "Reseau", " perdue (raison :" ) << it->error_ << ")" );   
+                MT_LOG_WARNING_MSG( tools::translate( "Network", "Connection to " ) << it->address_ << tools::translate( "Network", " lost (cause :" ) << it->error_ << ")" );   
                 manager_->Disconnect();
                 simu_.Disconnect();
             }
             else
             {
-                MT_LOG_WARNING_MSG( tools::translate( "Reseau", "Non connecté à " ) << it->address_ << tools::translate( "Reseau", " (raison :" ) << it->error_ << ")" );   
+                MT_LOG_WARNING_MSG( tools::translate( "Network", "Not connected to " ) << it->address_ << tools::translate( "Network", " (cause :" ) << it->error_ << ")" );   
                 manager_->Disconnect();
                 simu_.Disconnect();
             }

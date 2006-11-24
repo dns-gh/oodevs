@@ -34,37 +34,37 @@ using namespace gui;
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Ressources" ) )
+    : InfoPanel_ABC( parent, panel, tr( "Resources" ) )
     , controllers_( controllers )
     , selected_( controllers )
 {
     pEquipment_ = new T_ListView( this, *this, factory );
-    pEquipment_->AddColumn( tr( "Equipement" ) )
-                .AddColumn( tr( "Disponible" ) )
-                .AddColumn( tr( "Indisponible" ) )
-                .AddColumn( tr( "Réparable" ) )
-                .AddColumn( tr( "En maintenance" ) )
-                .AddColumn( tr( "Prisonniers" ) ) ;
+    pEquipment_->AddColumn( tr( "Equipment" ) )
+                .AddColumn( tr( "Available" ) )
+                .AddColumn( tr( "Unavailable" ) )
+                .AddColumn( tr( "Fixable" ) )
+                .AddColumn( tr( "In maintenance" ) )
+                .AddColumn( tr( "Prisoner" ) ) ;
 
     pResources_ = new T_ListView( this, *this, factory );
     pResources_->AddColumn( tr( "Resource" ) )
-                .AddColumn( tr( "Quantité" ) );
+                .AddColumn( tr( "Quantity" ) );
 
     pTroops_ = new T_ListView( this, *this, factory );
-    pTroops_->AddColumn( tr( "Catégorie" ) )
-             .AddColumn( tr( "Officiers" ) )
-             .AddColumn( tr( "Sous officiers" ) )
-             .AddColumn( tr( "Mdr" ) );
+    pTroops_->AddColumn( tr( "Rank" ) )
+             .AddColumn( tr( "Officer" ) )
+             .AddColumn( tr( "Warrant-officer" ) )
+             .AddColumn( tr( "Private" ) );
 
     pLendings_ = new T_ListView( this, *this, factory );
-    pLendings_->AddColumn( tr( "Emprunteur" ) )
-               .AddColumn( tr( "Equipement" ) )
-               .AddColumn( tr( "Quantité" ) );
+    pLendings_->AddColumn( tr( "Borrower" ) )
+               .AddColumn( tr( "Equipment" ) )
+               .AddColumn( tr( "Quantity" ) );
 
     pBorrowings_ = new T_ListView( this, *this, factory );
-    pBorrowings_->AddColumn( tr( "Prêteur" ) )
-                 .AddColumn( tr( "Equipement" ) )
-                 .AddColumn( tr( "Quantité" ) );
+    pBorrowings_->AddColumn( tr( "Lender" ) )
+                 .AddColumn( tr( "Equipment" ) )
+                 .AddColumn( tr( "Quantity" ) );
 
     controllers_.Register( *this );
 }
@@ -121,7 +121,7 @@ void AgentResourcesPanel::NotifyUpdated( const Dotations& a )
 void AgentResourcesPanel::Display( const Dotation& dotation, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( tr( "Resource" ), dotation.type_ )
-             .Display( tr( "Quantité" ), dotation.quantity_ );
+             .Display( tr( "Quantity" ), dotation.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -143,12 +143,12 @@ void AgentResourcesPanel::NotifyUpdated( const Equipments& a )
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( tr( "Equipement" ), equipment.type_  )
-             .Display( tr( "Disponible" ), equipment.available_ )
-             .Display( tr( "Indisponible" ), equipment.unavailable_ )
-             .Display( tr( "Réparable" ), equipment.repairable_ )
-             .Display( tr( "En maintenance" ), equipment.inMaintenance_ )
-             .Display( tr( "Prisonniers" ), equipment.prisonners_ );
+    displayer.Display( tr( "Equipment" ), equipment.type_  )
+             .Display( tr( "Available" ), equipment.available_ )
+             .Display( tr( "Unavailable" ), equipment.unavailable_ )
+             .Display( tr( "Fixable" ), equipment.repairable_ )
+             .Display( tr( "In maintenance" ), equipment.inMaintenance_ )
+             .Display( tr( "Prisoner" ), equipment.prisonners_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,8 +184,8 @@ void AgentResourcesPanel::NotifyUpdated( const Borrowings& a )
 void AgentResourcesPanel::Display( const Loan& loan, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( QString(), loan.agent_ )
-             .Display( tr( "Equipement" ), loan.type_ )
-             .Display( tr( "Quantité" ), loan.quantity_ );
+             .Display( tr( "Equipment" ), loan.type_ )
+             .Display( tr( "Quantity" ), loan.quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,10 +208,10 @@ void AgentResourcesPanel::NotifyUpdated( const Troops& a )
 // -----------------------------------------------------------------------------
 void AgentResourcesPanel::Display( const Humans& humans, Displayer_ABC& displayer, ValuedListItem* )
 {
-    displayer.Display( tr( "Catégorie" ), humans.state_ )
-             .Display( tr( "Officiers" ), humans.officers_ )
-             .Display( tr( "Sous officiers" ), humans.subOfficers_ )
-             .Display( tr( "Mdr" ), humans.troopers_ );
+    displayer.Display( tr( "Rank" ), humans.state_ )
+             .Display( tr( "Officier" ), humans.officers_ )
+             .Display( tr( "Warrant-officer" ), humans.subOfficers_ )
+             .Display( tr( "Private" ), humans.troopers_ );
 }
 
 // -----------------------------------------------------------------------------

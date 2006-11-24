@@ -47,8 +47,8 @@ Automat::~Automat()
 // -----------------------------------------------------------------------------
 void Automat::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Automat", "Info/Identifiant" ), id_ );
-    dico.Register( *this, tools::translate( "Automat", "Info/Nom" ), name_ );
+    dico.Register( *this, tools::translate( "Automat", "Info/Identifier" ), id_ );
+    dico.Register( *this, tools::translate( "Automat", "Info/Name" ), name_ );
 }
 
 // -----------------------------------------------------------------------------

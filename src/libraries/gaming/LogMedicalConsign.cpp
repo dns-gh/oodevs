@@ -90,16 +90,16 @@ void LogMedicalConsign::Update( const ASN1T_MsgLogSanteTraitementHumainUpdate& m
 // -----------------------------------------------------------------------------
 void LogMedicalConsign::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Logistique", "Consigne :" ), nID_ )
-             .Display( tools::translate( "Logistique", "Pion demandeur :" ), pion_ )
-             .Display( tools::translate( "Logistique", "Pion traitant :" ), pPionLogHandling_ )
-             .Display( tools::translate( "Logistique", "Reac. mental :" ), bMentalDeceased_ )
-             .Display( tools::translate( "Logistique", "Contaminé NBC :" ), bContaminated_ )
-             .Display( tools::translate( "Logistique", "Etat :" ), nState_ );
+    displayer.Display( tools::translate( "Logistic", "Instruction:" ), nID_ )
+             .Display( tools::translate( "Logistic", "Consumer:" ), pion_ )
+             .Display( tools::translate( "Logistic", "Handler:" ), pPionLogHandling_ )
+             .Display( tools::translate( "Logistic", "Mentally injured:" ), bMentalDeceased_ )
+             .Display( tools::translate( "Logistic", "NBC contaminated:" ), bContaminated_ )
+             .Display( tools::translate( "Logistic", "State:" ), nState_ );
     if( diagnosed_ )
-        displayer.Display( tools::translate( "Logistique", "Blessure :" ), wound_ );
+        displayer.Display( tools::translate( "Logistic", "Injury:" ), wound_ );
     else
-        displayer.Display( tools::translate( "Logistique", "Blessure :" ), tools::translate( "Logistique", "Non diagnostiquée" ) );
+        displayer.Display( tools::translate( "Logistic", "Injury:" ), tools::translate( "Logistic", "Not diagnosed" ) );
 }
 
 // -----------------------------------------------------------------------------

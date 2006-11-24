@@ -24,7 +24,7 @@ ParamEquipmentList::ParamEquipmentList( QWidget* pParent, ASN1T_MaintenancePrior
     : QTable ( 0, 1, pParent )
     , pAsnEquipmentList_ ( &asnListEquipment )
 {
-    horizontalHeader()->setLabel( 0, tr( "Equipement" ) );
+    horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
     setColumnWidth( 0, 200 );
     setLeftMargin( 0 );
     setShowGrid( false );

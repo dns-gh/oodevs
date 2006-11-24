@@ -87,11 +87,14 @@ void AutomatHierarchies::UpdateSymbol( bool up /*= true*/ )
 // -----------------------------------------------------------------------------
 void AutomatHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
 {
-    const std::string childLevel = entity.Get< TacticalHierarchies >().GetLevel();
-    if( level_.empty() )
-        level_ = Increase( childLevel );
-    else
-        level_ = Max( level_, Increase( childLevel ) );
+    if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
+    {
+        const std::string childLevel = hierarchies->GetLevel();
+        if( level_.empty() )
+            level_ = Increase( childLevel );
+        else
+            level_ = Max( level_, Increase( childLevel ) );
+    }
     MergingTacticalHierarchies::MergeSymbol( entity );
 }
 

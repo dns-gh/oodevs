@@ -24,7 +24,7 @@ ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites&
     : QTable( 0, 1, parent )
     , pAsnHumanWoundList_( &asnListHumanWound )
 {
-    horizontalHeader()->setLabel( 0, tr( "Blessures" ) );
+    horizontalHeader()->setLabel( 0, tr( "Injuries" ) );
     setColumnWidth( 0, 200 );
     setLeftMargin( 0 );
     setShowGrid( false );

@@ -88,19 +88,19 @@ void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Détails" ) )
-                .Display( tools::translate( "Object", "Id:" ), id_ )
-                .Display( tools::translate( "Object", "Objet associé:" ), pRealObject_ )
+    displayer.Group( tools::translate( "Object", "Details" ) )
+                .Display( tools::translate( "Object", "Identifier:" ), id_ )
+                .Display( tools::translate( "Object", "Associated object:" ), pRealObject_ )
                 .Display( tools::translate( "Object", "Type:" ), type_ )
                 .Display( tools::translate( "Object", "Construction:" ), nPourcentageConstruction_ * Units::percentage )
-                .Display( tools::translate( "Object", "Valeur:" ), nPourcentageValorisation_ * Units::percentage )
-                .Display( tools::translate( "Object", "Contournement:" ), nPourcentageContournement_* Units::percentage )
-                .Display( tools::translate( "Object", "En préparation:" ), bEnPreparation_ )
-                .Display( tools::translate( "Object", "Perçu:" ), bIsPerceived_ )
-                .Display( tools::translate( "Object", "Pertinence:" ), nRelevance_ );
+                .Display( tools::translate( "Object", "Value:" ), nPourcentageValorisation_ * Units::percentage )
+                .Display( tools::translate( "Object", "Bypass:" ), nPourcentageContournement_* Units::percentage )
+                .Display( tools::translate( "Object", "Setting up:" ), bEnPreparation_ )
+                .Display( tools::translate( "Object", "Perceived:" ), bIsPerceived_ )
+                .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
     if( ! position_.empty() )
-        displayer.Group( tools::translate( "Object", "Détails" ) )
-                 .Display( tools::translate( "Object", "Position:" ), position_ );
+        displayer.Group( tools::translate( "Object", "Details" ) )
+                 .Display( tools::translate( "Object", "Location:" ), position_ );
 
 }
 
@@ -111,9 +111,9 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
     if( pRealObject_ )
-        displayer.Display( tools::translate( "Object", "Objets connus" ), pRealObject_ );
+        displayer.Display( tools::translate( "Object", "Known objects" ), pRealObject_ );
     else
-        displayer.Display( tools::translate( "Object", "Objets connus" ), id_ );
+        displayer.Display( tools::translate( "Object", "Known objects" ), id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString ObjectKnowledge::GetName() const
 {
-    return pRealObject_ ? pRealObject_->GetName() : tools::translate( "Object", "Unknown Object" );
+    return pRealObject_ ? pRealObject_->GetName() : tools::translate( "Object", "Unknown object" );
 }
 
 // -----------------------------------------------------------------------------

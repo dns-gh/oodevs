@@ -69,11 +69,11 @@ void Equipments::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Equipments::AddToDictionary( const Equipment& equipment )
 {
-    const QString baseName = tools::translate( "Composantes", "Composantes" ) + "/" + equipment.GetName() + "/";
+    const QString baseName = tools::translate( "Equipments", "Equipments" ) + "/" + equipment.GetName() + "/";
 
-    dico_.Register( *this, baseName + tools::translate( "Composantes", "Disponible" ), equipment.available_ );
-    dico_.Register( *this, baseName + tools::translate( "Composantes", "Indisponible" ), equipment.unavailable_ );
-    dico_.Register( *this, baseName + tools::translate( "Composantes", "Réparables" ), equipment.repairable_ );
-    dico_.Register( *this, baseName + tools::translate( "Composantes", "En maintenance" ), equipment.inMaintenance_ );
-    dico_.Register( *this, baseName + tools::translate( "Composantes", "Prisonniers" ), equipment.prisonners_ );
+    dico_.Register( *this, baseName + tools::translate( "Equipments", "Available" ), equipment.available_ );
+    dico_.Register( *this, baseName + tools::translate( "Equipments", "Unavailable" ), equipment.unavailable_ );
+    dico_.Register( *this, baseName + tools::translate( "Equipments", "Fixable" ), equipment.repairable_ );
+    dico_.Register( *this, baseName + tools::translate( "Equipments", "In maintenance" ), equipment.inMaintenance_ );
+    dico_.Register( *this, baseName + tools::translate( "Equipments", "Prisoner" ), equipment.prisonners_ );
 }

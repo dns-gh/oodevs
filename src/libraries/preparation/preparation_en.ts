@@ -1,153 +1,161 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>E_PerceptionResult</name>
+    <name>Agent</name>
     <message>
-        <source>Identification</source>
+        <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Detection</source>
+        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Not seen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recognition</source>
+        <source>Info/Command post</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>E_TroopHealthState</name>
+    <name>Automat</name>
     <message>
-        <source>Total</source>
+        <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Operational</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dead</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Injured</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mentally injured</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contaminated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Under treatment </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Assigned to maintenance</source>
+        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>EntityHierarchies</name>
+    <name>CampAttributes</name>
     <message>
-        <source>Hierarchies/Superior</source>
+        <source>Info/Camp attributes/Superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Formatter</name>
+    <name>CrossingSiteAttributes</name>
     <message>
-        <source> - </source>
+        <source>Info/Crossing site attributes/Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>, </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Localisation</name>
-    <message>
-        <source>Point</source>
+        <source>Info/Crossing site attributes/Depth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Circle</source>
+        <source>Info/Crossing site attributes/Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polygon</source>
+        <source>Info/Crossing site attributes/Build river banks</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Tristate</name>
+    <name>Dotations</name>
     <message>
-        <source>Off</source>
+        <source>Dotations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto</source>
+        <source>Dotations/Dotations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>Units</name>
+    <name>Formation</name>
     <message>
-        <source>m</source>
+        <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&#xb0;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>m/s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>veh/h</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>t</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>h</source>
+        <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>tools</name>
+    <name>KnowledgeGroup</name>
     <message>
-        <source>Unknown</source>
+        <source>Knowledge group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Lima</name>
+    <message>
+        <source>Lima</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Limit</name>
+    <message>
+        <source>Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LogisticHierarchies</name>
+    <message>
+        <source>/&lt;Dotations&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Object</name>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build river banks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Preparation</name>
+    <message>
+        <source>friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enemy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>neutral</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -98,7 +98,7 @@ void Polygon::Draw( const GlTools_ABC& tools ) const
 // -----------------------------------------------------------------------------
 QString Polygon::GetName() const
 {
-    static const QString name = tools::translate( "Localisation", "Polygone" );
+    static const QString name = tools::translate( "Localisation", "Polygon" );
     return name;
 }
 

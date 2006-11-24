@@ -20,10 +20,10 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const Resolver_ABC< NBCAgent >& resolver )
-    : ObjectPrototypeAttributes_ABC( parent, tr( "Paramètres NBC" ) )
+    : ObjectPrototypeAttributes_ABC( parent, tr( "NBC parameters" ) )
     , resolver_( resolver )
 {
-    new QLabel( tr( "Agent NBC:" ), this );
+    new QLabel( tr( "NBC Agent:" ), this );
     nbcAgents_ = new ValuedComboBox< const NBCAgent* >( this );
     FillTypes();
 }

@@ -32,55 +32,55 @@ using namespace kernel;
     // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
     // $$$$ AGE 2006-08-23: par le modèle correspondant et pire : traduits de la même maniere.
     // $$$$ AGE 2006-08-23: Faire des fichiers avec un tas de statics référencés par les 2 ?
-    GetBuilder().AddGroup( tr( "Informations" ) )
-                .AddLabel( tr( "Id:" ) )
-                .AddLabel( tr( "Nom:" ) )
+    GetBuilder().AddGroup( tr( "Information" ) )
+                .AddLabel( tr( "Identifier:" ) )
+                .AddLabel( tr( "Name:" ) )
                 .AddLabel( tr( "Type:" ) )
-                .AddLabel( tr( "Position:" ) )
+                .AddLabel( tr( "Location:" ) )
                 .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
-                .AddSpinBox( tr( "Valorisation:" ), 0, 100, 1 )
-                .AddSpinBox( tr( "Contournement:" ), 0, 100, 1 )
-                .AddCheckBox( tr( "En préparation:" ) );
+                .AddSpinBox( tr( "Development:" ), 0, 100, 1 )
+                .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )
+                .AddCheckBox( tr( "Setting up:" ) );
 
-    GetBuilder().Group( tr( "Informations" ) )
-                .AddLabel( tr( "Dotation construction:" ) )
-                .AddLabel( tr( "Dotation valorisation:" ) );
+    GetBuilder().Group( tr( "Information" ) )
+                .AddLabel( tr( "Construction dotation:" ) )
+                .AddLabel( tr( "Development dotation:" ) );
 
-    GetBuilder().AddGroup( tr( "Site de franchissement" ) )
-                .AddLabel( tr( "Largeur:" ) )
-                .AddLabel( tr( "Profondeur:" ) )
-                .AddLabel( tr( "Vitesse du courant:" ) )
-                .AddLabel( tr( "Berges à aménager:" ) );
+    GetBuilder().AddGroup( tr( "Crossing site" ) )
+                .AddLabel( tr( "Width:" ) )
+                .AddLabel( tr( "Depth:" ) )
+                .AddLabel( tr( "Stream speed:" ) )
+                .AddLabel( tr( "Build river banks:" ) );
 
     GetBuilder().AddGroup( tr( "Camp" ) )
                 .AddLabel( tr( "TC2:" ) );
 
-    GetBuilder().AddGroup( tr( "Nuage/Zone NBC" ) )
-                .AddLabel( tr( "Agent NBC:" ) );
+    GetBuilder().AddGroup( tr( "NBC cloud/zone" ) )
+                .AddLabel( tr( "NBC agent:" ) );
 
     GetBuilder().AddGroup( tr( "ROTA" ) )
-                .AddLabel( tr( "Danger:" ) )
-                .AddLabel( tr( "Agents NBC:" ) );
+                .AddLabel( tr( "Danger level:" ) )
+                .AddLabel( tr( "NBC agent(s):" ) );
 
-    GetBuilder().AddGroup( tr( "Itinéraire logistique" ) )
-                .AddLabel( tr( "Equipé:" ) )
-                .AddLabel( tr( "Débit:" ) )
-                .AddLabel( tr( "Largeur:" ) )
-                .AddLabel( tr( "Longueur:" ) )
-                .AddLabel( tr( "Poids supporté:" ) );
+    GetBuilder().AddGroup( tr( "Logistic route" ) )
+                .AddLabel( tr( "Equipped:" ) )
+                .AddLabel( tr( "Flow:" ) )
+                .AddLabel( tr( "Width:" ) )
+                .AddLabel( tr( "Length:" ) )
+                .AddLabel( tr( "Maximum weight:" ) );
 
-    Displayer_ABC& infos = GetBuilder().Group( tr( "Informations" ) );
+    Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
     construction_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
-    valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Valorisation:" ) ) );
-    contournement_ = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Contournement:" ) ) );
-    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "En préparation:" ) ) );
+    valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Development:" ) ) );
+    contournement_ = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Bypass:" ) ) );
+    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Setting up:" ) ) );
 
     QWidget* pSpacer = new QWidget( this );
     pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
 
     QHBox* pHBox  = new QHBox( this );
-    QPushButton* pApplyButton_  = new QPushButton( tr( "Appliquer" ), pHBox );
-    QPushButton* pCancelButton_ = new QPushButton( tr( "Annuler" )  , pHBox );
+    QPushButton* pApplyButton_  = new QPushButton( tr( "Apply" ), pHBox );
+    QPushButton* pCancelButton_ = new QPushButton( tr( "Cancel" )  , pHBox );
 
     connect( pApplyButton_,  SIGNAL( clicked() ), this, SLOT( OnApply() ) );
     connect( pCancelButton_, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );

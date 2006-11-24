@@ -18,17 +18,17 @@ ParamAgentType::ParamAgentType( QWidget* parent, ASN1T_NatureAtlas& asn, const Q
     : QButtonGroup( 2, Qt::Horizontal, label, parent )
     , asn_        ( asn )
 {
-    pArmoredCheckBox_        = new QCheckBox( tr( "Blindé" )         , this );
-    pASSCheckBox_            = new QCheckBox( tr( "ASS" )            , this );
-    pHQCheckBox_             = new QCheckBox( tr( "PC" )             , this );
-    pLogCheckBox_            = new QCheckBox( tr( "Log" )            , this );
-    pMortarCheckBox_         = new QCheckBox( tr( "Mortier" )        , this );
-    pRocketLauncherCheckBox_ = new QCheckBox( tr( "Lance roquette" ) , this );
-    pVehiculeCheckBox_       = new QCheckBox( tr( "Vehicule" )       , this );
-    pFootTroopsCheckBox_     = new QCheckBox( tr( "Personnal à pied"), this );
-    pHelicopterCheckBox_     = new QCheckBox( tr( "Helicoptère" )    , this );
-    pUndefinedCheckBox_      = new QCheckBox( tr( "Indéfini" )       , this );
-    pNoneCheckBox_           = new QCheckBox( tr( "Aucun" )          , this );
+    pArmoredCheckBox_        = new QCheckBox( tr( "Armored" )         , this );
+    pASSCheckBox_            = new QCheckBox( tr( "SSA" )             , this );
+    pHQCheckBox_             = new QCheckBox( tr( "Command post" )    , this );
+    pLogCheckBox_            = new QCheckBox( tr( "Logistic" )        , this );
+    pMortarCheckBox_         = new QCheckBox( tr( "Mortar" )          , this );
+    pRocketLauncherCheckBox_ = new QCheckBox( tr( "Rocket launcher" ) , this );
+    pVehiculeCheckBox_       = new QCheckBox( tr( "Vehicle" )         , this );
+    pFootTroopsCheckBox_     = new QCheckBox( tr( "Footman")          , this );
+    pHelicopterCheckBox_     = new QCheckBox( tr( "Helicopter" )      , this );
+    pUndefinedCheckBox_      = new QCheckBox( tr( "Undefined" )       , this );
+    pNoneCheckBox_           = new QCheckBox( tr( "None" )            , this );
 }
 
 // -----------------------------------------------------------------------------

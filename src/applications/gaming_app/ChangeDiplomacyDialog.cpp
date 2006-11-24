@@ -28,34 +28,34 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& cont
     , publisher_( publisher )
     , profile_( profile )
 {
-    setCaption( tr( "Diplomatie" ) );
+    setCaption( tr( "Diplomacy" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     QHBoxLayout* pDataLayout = new QHBoxLayout( pMainLayout );
     pDataLayout->setMargin( 10 );
     pDataLayout->setSpacing( 10 );
 
-    pDataLayout->addWidget( new QLabel( tr( "L'armée" ), this ) );
+    pDataLayout->addWidget( new QLabel( tr( "Side" ), this ) );
 
     pArmy1ComboBox_ = new ValuedComboBox< unsigned long >( this );
     pDataLayout->addWidget( pArmy1ComboBox_ );
 
-    pDataLayout->addWidget( new QLabel( tr( " est " ) , this ) );
+    pDataLayout->addWidget( new QLabel( tr( " is " ) , this ) );
 
     pDiplomacyComboBox_ = new ValuedComboBox<ASN1T_EnumDiplomatie>( this );
-    pDiplomacyComboBox_->AddItem( tr( "inconnue" ), EnumDiplomatie::inconnu );
-    pDiplomacyComboBox_->AddItem( tr( "amie" ),     EnumDiplomatie::ami );
-    pDiplomacyComboBox_->AddItem( tr( "ennemie" ),  EnumDiplomatie::ennemi );
-    pDiplomacyComboBox_->AddItem( tr( "neutre" ),   EnumDiplomatie::neutre );
+    pDiplomacyComboBox_->AddItem( tr( "unknown" ), EnumDiplomatie::inconnu );
+    pDiplomacyComboBox_->AddItem( tr( "friend" ),  EnumDiplomatie::ami );
+    pDiplomacyComboBox_->AddItem( tr( "enemy" ),   EnumDiplomatie::ennemi );
+    pDiplomacyComboBox_->AddItem( tr( "neutral" ), EnumDiplomatie::neutre );
     pDataLayout->addWidget( pDiplomacyComboBox_ );
 
-    pDataLayout->addWidget( new QLabel( tr( "avec l'armée" ), this ) );
+    pDataLayout->addWidget( new QLabel( tr( "with side" ), this ) );
 
     pArmy2ComboBox_ = new ValuedComboBox< unsigned long >( this );
     pDataLayout->addWidget( pArmy2ComboBox_ );
 
     QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
-    QPushButton* pCancelButton = new QPushButton( tr("Annuler"), this );
-    QPushButton* pOKButton     = new QPushButton( tr("OK")    , this );
+    QPushButton* pOKButton     = new QPushButton( tr("Ok")    , this );
+    QPushButton* pCancelButton = new QPushButton( tr("Cancel"), this );
     pButtonLayout->addWidget( pCancelButton );
     pButtonLayout->addWidget( pOKButton     );
     pOKButton->setDefault( TRUE );
@@ -130,6 +130,6 @@ void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu
     if( profile_.CanDoMagic( team ) )
     {
         pArmy1ComboBox_->SetCurrentItem( team.GetId() );
-        menu.InsertItem( "Commande", tr( "Diplomatie" ), this, SLOT( show() ) );
+        menu.InsertItem( "Commande", tr( "Diplomacy" ), this, SLOT( show() ) );
     }
 }

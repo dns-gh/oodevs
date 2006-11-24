@@ -26,9 +26,9 @@ GraphicsPanel::GraphicsPanel( QWidget* parent )
     preferences_.Display( this );
 
     QHBox* buttons = new QHBox( this );
-    QPushButton* ok     = new QPushButton( tr( "Okay" ), buttons );
-    QPushButton* apply  = new QPushButton( tr( "Appliquer" ), buttons );
-    QPushButton* cancel = new QPushButton( tr( "Nope" ), buttons );
+    QPushButton* ok     = new QPushButton( tr( "Ok" ), buttons );
+    QPushButton* apply  = new QPushButton( tr( "Apply" ), buttons );
+    QPushButton* cancel = new QPushButton( tr( "Cancel" ), buttons );
     ok->setDefault( true );
 
     connect( ok, SIGNAL( clicked() ), this, SLOT( OnOk() ) );
