@@ -116,7 +116,7 @@ MIL_NbcAgentType::MIL_NbcAgentType( const std::string& strName, MIL_InputArchive
             bGasPoisonous_ = true;
         if( archive.Section( "Contamination", MIL_InputArchive::eNothing ) )
         {
-            bLiquidContaminating_ = true;
+            bGasContaminating_ = true;
             archive.EndSection(); // Contamination
         }
         archive.ReadTimeField( "DureeDeVie", nGasLifeTime_, CheckValueGreater( 0 ) );
