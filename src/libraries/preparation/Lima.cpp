@@ -25,7 +25,7 @@ Lima::Lima( Controller& controller, IdManager& idManager )
     : TacticalLine_ABC( controller, tools::translate( "Lima", "Lima" ), idManager )
     , controller_     ( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ Lima::Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idMan
     : TacticalLine_ABC( controller, xis, idManager )
     , controller_( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
  
 // -----------------------------------------------------------------------------
@@ -45,8 +45,7 @@ Lima::Lima( kernel::Controller& controller, xml::xistream& xis, IdManager& idMan
 // -----------------------------------------------------------------------------
 Lima::~Lima()
 {
-    DestroyExtensions();
-    controller_.Delete( *(kernel::TacticalLine_ABC*)this );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------

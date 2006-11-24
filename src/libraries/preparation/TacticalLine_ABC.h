@@ -11,6 +11,7 @@
 #define __TacticalLine_ABC_h_
 
 #include "clients_kernel/Types.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -35,7 +36,7 @@ class IdManager;
 */
 // Created: APE 2004-04-14
 // =============================================================================
-class TacticalLine_ABC : public kernel::TacticalLine_ABC
+class TacticalLine_ABC : public kernel::EntityImplementation< kernel::TacticalLine_ABC >
                        , public kernel::Extension_ABC
                        , public kernel::Drawable_ABC
                        , public kernel::Serializable_ABC
@@ -51,8 +52,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned long GetId  () const;
-    virtual QString       GetName() const;
     virtual bool          IsLimit() const = 0;
     //@}
 
@@ -68,13 +67,6 @@ private:
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void CreateDictionary( kernel::Controller& controller );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    unsigned long  id_;
-    QString        name_;
     //@}
 };
 

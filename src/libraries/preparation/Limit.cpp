@@ -25,7 +25,7 @@ Limit::Limit( Controller& controller, IdManager& idManager )
     : TacticalLine_ABC( controller, tools::translate( "Limit", "Limit" ), idManager )
     , controller_( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ Limit::Limit( kernel::Controller& controller, xml::xistream& xis, IdManager& idM
     : TacticalLine_ABC( controller, xis, idManager )
     , controller_( controller )
 {
-    controller_.Create( *(kernel::TacticalLine_ABC*)this );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -45,8 +45,7 @@ Limit::Limit( kernel::Controller& controller, xml::xistream& xis, IdManager& idM
 //-----------------------------------------------------------------------------
 Limit::~Limit()
 {
-    DestroyExtensions();
-    controller_.Delete( *(kernel::TacticalLine_ABC*)this );
+    Destroy();
 }
 
 // -----------------------------------------------------------------------------

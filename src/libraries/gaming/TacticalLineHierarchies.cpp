@@ -11,16 +11,20 @@
 #include "TacticalLineHierarchies.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Controller.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineHierarchies constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder
+TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder
                                                 , const ASN1T_TacticalLinesDiffusion& asnMsg
-                                                , const kernel::Resolver_ABC< kernel::Automat_ABC >& automats
-                                                , const kernel::Resolver_ABC< kernel::Formation_ABC >& formations )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, 0 )
+                                                , const Resolver_ABC< Automat_ABC >& automats
+                                                , const Resolver_ABC< Formation_ABC >& formations )
+    : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
+    , controller_( controller )
     , automats_  ( automats )
     , formations_( formations )
 {
@@ -31,17 +35,16 @@ TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller
 // Name: TacticalLineHierarchies constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
-                                                , const kernel::Resolver_ABC< kernel::Automat_ABC >& automats
-                                                , const kernel::Resolver_ABC< kernel::Formation_ABC >& formations )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, 0 )
+TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder, const Entity_ABC& superior
+                                                , const Resolver_ABC< Automat_ABC >& automats
+                                                , const Resolver_ABC< Formation_ABC >& formations )
+    : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
+    , controller_( controller )
     , automats_  ( automats )
     , formations_( formations )
 {
-    superior_ = automats_.Find( superior.GetId() );
-    superiorIsAutomat_ = superior_;
-    if( !superiorIsAutomat_ )
-        superior_ = &formations_.Get( superior.GetId() );
+    superiorIsAutomat_ = dynamic_cast< const Automat_ABC* >( &superior );
+    SetSuperior( &superior );
 }
     
 // -----------------------------------------------------------------------------
@@ -54,15 +57,6 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLineHierarchies::GetSuperior
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* TacticalLineHierarchies::GetSuperior() const
-{
-    return superior_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLineHierarchies::Update
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
@@ -70,9 +64,10 @@ void TacticalLineHierarchies::Update( const ASN1T_TacticalLinesDiffusion& messag
 {
     superiorIsAutomat_ = message.t == T_TacticalLinesDiffusion_automate;
     if( superiorIsAutomat_ )
-        superior_ = &automats_.Get( message.u.automate );
+        SetSuperior( &automats_.Get( message.u.automate ) );
     else
-        superior_ = &formations_.Get( message.u.formation );
+        SetSuperior( &formations_.Get( message.u.formation ) );
+    controller_.Update( *(TacticalHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,11 +94,11 @@ void TacticalLineHierarchies::DoUpdate( const ASN1T_MsgLimitUpdate& message )
 // -----------------------------------------------------------------------------
 void TacticalLineHierarchies::WriteTo( ASN1T_TacticalLinesDiffusion& message ) const
 {
-    if( !superior_ )
+    if( !GetSuperior() )
         throw std::runtime_error( __FUNCTION__ );
     message.t = superiorIsAutomat_ ? T_TacticalLinesDiffusion_automate : T_TacticalLinesDiffusion_formation;
     if( superiorIsAutomat_ )
-        message.u.automate  = superior_->GetId();
+        message.u.automate  = GetSuperior()->GetId();
     else
-        message.u.formation = superior_->GetId();
+        message.u.formation = GetSuperior()->GetId();
 }

@@ -10,7 +10,7 @@
 #ifndef __ObjectHierarchies_h_
 #define __ObjectHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-19
 // =============================================================================
-class ObjectHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class ObjectHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
 {
 
 public:
@@ -29,23 +29,11 @@ public:
     virtual ~ObjectHierarchies();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const;
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
-    //@}
-
 private:
     //! @name Copy/Assignement
     //@{
     ObjectHierarchies( const ObjectHierarchies& );            //!< Copy constructor
     ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignement operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const kernel::Entity_ABC* superior_;
     //@}
 };
 

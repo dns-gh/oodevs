@@ -11,7 +11,7 @@
 #define __ObjectHierarchies_h_
 
 #include "ASN_Messages.h"
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
@@ -27,7 +27,7 @@ namespace kernel
 */
 // Created: AGE 2006-10-16
 // =============================================================================
-class ObjectHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class ObjectHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
                         , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
@@ -40,9 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const; // $$$$ AGE 2006-11-20: to prevent team hierarchy 
     virtual void DoUpdate( const ASN1T_MsgObjectCreation& );
-    virtual void DoUpdate( const kernel::InstanciationComplete& );
     //@}
 
 private:
@@ -56,7 +54,6 @@ private:
     //! @name Member data
     //@{
     const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
-    const kernel::Team_ABC* superior_;
     //@}
 };
 

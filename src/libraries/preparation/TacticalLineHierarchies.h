@@ -10,7 +10,7 @@
 #ifndef __TacticalLineHierarchies_h_
 #define __TacticalLineHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 // =============================================================================
@@ -19,7 +19,7 @@
 */
 // Created: SBO 2006-10-19
 // =============================================================================
-class TacticalLineHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
 {
 
 public:

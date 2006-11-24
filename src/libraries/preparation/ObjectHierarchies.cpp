@@ -15,8 +15,7 @@
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
 ObjectHierarchies::ObjectHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::EntityHierarchies< kernel::TacticalHierarchies >( controller, holder, 0 )
-    , superior_( superior )
+    : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
 {
     // NOTHING
 }
@@ -30,20 +29,3 @@ ObjectHierarchies::~ObjectHierarchies()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectHierarchies::GetSuperior
-// Created: SBO 2006-10-20
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC* ObjectHierarchies::GetSuperior() const
-{
-    return superior_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectHierarchies::DoUpdate
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-void ObjectHierarchies::DoUpdate( const kernel::InstanciationComplete& )
-{
-    // NOTHING
-}

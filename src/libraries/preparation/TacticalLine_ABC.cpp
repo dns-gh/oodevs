@@ -23,7 +23,7 @@ using namespace xml;
 // Created: APE 2004-04-14
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QString& baseName, IdManager& idManager )
-    : id_( idManager.GetNextId() )
+    : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
     RegisterSelf( *this );
     name_ = ( baseName + " %1" ).arg( id_ );
@@ -35,7 +35,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QStrin
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
 TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistream& xis, IdManager& idManager )
-    : id_( idManager.GetNextId() )
+    : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
     RegisterSelf( *this );
     std::string name;
@@ -51,24 +51,6 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, xml::xistrea
 TacticalLine_ABC::~TacticalLine_ABC()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::GetId
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-unsigned long TacticalLine_ABC::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLine_ABC::GetName
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-QString TacticalLine_ABC::GetName() const
-{
-    return name_;
 }
 
 // -----------------------------------------------------------------------------

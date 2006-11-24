@@ -10,7 +10,7 @@
 #ifndef __TacticalLineHierarchies_h_
 #define __TacticalLineHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "ASN_Types.h"
@@ -28,7 +28,7 @@ namespace kernel
 */
 // Created: SBO 2006-11-14
 // =============================================================================
-class TacticalLineHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
                               , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
                               , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
 {
@@ -45,7 +45,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const;
     void WriteTo( ASN1T_TacticalLinesDiffusion& message ) const;
     //@}
 
@@ -66,9 +65,9 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Automat_ABC >& automats_;
     const kernel::Resolver_ABC< kernel::Formation_ABC >& formations_;
-    const kernel::Entity_ABC* superior_;
     bool superiorIsAutomat_;
     //@}
 };

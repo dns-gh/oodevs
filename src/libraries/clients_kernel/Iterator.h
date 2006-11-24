@@ -40,6 +40,30 @@ public:
 };
 
 // =============================================================================
+/** @class  NullIterator
+    @brief  Null Iterator
+*/
+// Created: AGE 2005-11-13
+// =============================================================================
+template< typename Item >
+class NullIterator : public Iterator_ABC< Item >
+{
+    
+public:
+    //! @name Constructors/Destructor
+    //@{
+             NullIterator() {};
+    virtual ~NullIterator() {};
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool HasMoreElements() const { return false; };
+    virtual Item NextElement() { throw std::runtime_error( __FUNCTION__ ); }
+    //@}
+};
+
+// =============================================================================
 /** @class  Iterator
     @brief  Iterator wrapper
 */

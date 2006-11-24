@@ -54,9 +54,10 @@ void LimitsModel::Purge()
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLimit( const T_PointVector& points, kernel::Entity_ABC& superior )
 {
-    TacticalLine_ABC* line = new Limit( controllers_.controller_, idManager_ );
+    Limit* line = new Limit( controllers_.controller_, idManager_ );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, *line ) );
     line->Attach( *new TacticalLineHierarchies( controllers_.controller_, *line, &superior ) );
+    line->Polish();
     if( TacticalLines* lines = superior.Retrieve< TacticalLines >() )
         lines->AddLine( *line );
     Register( line->GetId(), *line );
@@ -68,9 +69,10 @@ void LimitsModel::CreateLimit( const T_PointVector& points, kernel::Entity_ABC& 
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLima( const T_PointVector& points, kernel::Entity_ABC& superior )
 {
-    TacticalLine_ABC* line = new Lima( controllers_.controller_, idManager_ );
+    Lima* line = new Lima( controllers_.controller_, idManager_ );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, *line ) );
     line->Attach( *new TacticalLineHierarchies( controllers_.controller_, *line, &superior ) );
+    line->Polish();
     if( TacticalLines* lines = superior.Retrieve< TacticalLines >() )
         lines->AddLine( *line );
     Register( line->GetId(), *line );
@@ -82,9 +84,10 @@ void LimitsModel::CreateLima( const T_PointVector& points, kernel::Entity_ABC& s
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLimit( xml::xistream& xis, kernel::Entity_ABC& superior )
 {
-    TacticalLine_ABC* line = new Limit( controllers_.controller_, xis, idManager_ );
+    Limit* line = new Limit( controllers_.controller_, xis, idManager_ );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( xis, converter_, *line ) );
     line->Attach( *new TacticalLineHierarchies( controllers_.controller_, *line, &superior ) );
+    line->Polish();
     if( TacticalLines* lines = superior.Retrieve< TacticalLines >() )
         lines->AddLine( *line );
     Register( line->GetId(), *line );
@@ -96,9 +99,10 @@ void LimitsModel::CreateLimit( xml::xistream& xis, kernel::Entity_ABC& superior 
 // -----------------------------------------------------------------------------
 void LimitsModel::CreateLima( xml::xistream& xis, kernel::Entity_ABC& superior )
 {
-    TacticalLine_ABC* line = new Lima( controllers_.controller_, xis, idManager_ );
+    Lima* line = new Lima( controllers_.controller_, xis, idManager_ );
     line->Attach< kernel::Positions >( *new TacticalLinePositions( xis, converter_, *line ) );
     line->Attach( *new TacticalLineHierarchies( controllers_.controller_, *line, &superior ) );
+    line->Polish();
     if( TacticalLines* lines = superior.Retrieve< TacticalLines >() )
         lines->AddLine( *line );
     Register( line->GetId(), *line );
