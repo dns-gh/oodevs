@@ -17,6 +17,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -170,7 +171,7 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
    displayer.Group( tools::translate( "Population", "Details" ) )
                 .Display( tools::translate( "Population", "Identifier:" ), id_ )
                 .Display( tools::translate( "Population", "Associated population:" ), popu_ )
-                .Display( tools::translate( "Population", "Side:" ), popu_.GetTeam() );
+                .Display( tools::translate( "Population", "Side:" ), popu_.Get< TacticalHierarchies >().GetTop() );
 }
 
 // -----------------------------------------------------------------------------

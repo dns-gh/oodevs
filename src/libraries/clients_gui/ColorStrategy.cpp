@@ -173,8 +173,7 @@ void ColorStrategy::SelectColor( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Population_ABC& population )
 {
-    const Team_ABC& team = population.GetTeam();
-     QColor color = teamColors_[ &team ].second;
+    QColor color = FindColor( population );
     if( selectedPopulation_ == &population )
         color = SelectedColor( color );
     tools_.Select( selectedPopulation_ == &population );

@@ -87,7 +87,7 @@ void SupplyStates::DoUpdate( const ASN1T_MsgLogRavitaillementEtat& message )
 void SupplyStates::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "SupplyStates", "Supply system state" ) )
-                .Display( tools::translate( "SupplyStates", "System state" ), 
+                .Display( tools::translate( "SupplyStates", "System status" ), 
                     bChainEnabled_ ? tools::translate( "SupplyStates", "Enabled" )
                                    : tools::translate( "SupplyStates", "Disabled" ) );
 }

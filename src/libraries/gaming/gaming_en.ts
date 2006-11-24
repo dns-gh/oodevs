@@ -13,10 +13,6 @@
 <context>
     <name>AgentKnowledge</name>
     <message>
-        <source>Direction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Nature:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -80,6 +76,10 @@
         <source>Percepetion level:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Heading:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Attributes</name>
@@ -89,10 +89,6 @@
     </message>
     <message>
         <source>Info/Speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -153,10 +149,6 @@
     </message>
     <message>
         <source>Speed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -253,6 +245,14 @@
     </message>
     <message>
         <source>Refugees picked up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Heading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -619,10 +619,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NBC/NBC suit on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NBC/Contaminating agents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -664,6 +660,10 @@
     </message>
     <message>
         <source>NBC cloud/zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC/NBC suit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -824,10 +824,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Direction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Flow - </source>
         <translation type="unfinished"></translation>
     </message>
@@ -903,6 +899,10 @@
         <source>Side:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Heading:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Reinforcements</name>
@@ -949,15 +949,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>System state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System status</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

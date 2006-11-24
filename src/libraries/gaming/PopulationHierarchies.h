@@ -7,34 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __ObjectHierarchies_h_
-#define __ObjectHierarchies_h_
+#ifndef __PopulationHierarchies_h_
+#define __PopulationHierarchies_h_
 
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 // =============================================================================
-/** @class  ObjectHierarchies
-    @brief  ObjectHierarchies
+/** @class  PopulationHierarchies
+    @brief  PopulationHierarchies
 */
-// Created: SBO 2006-10-19
+// Created: AGE 2006-11-24
 // =============================================================================
-class ObjectHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
+class PopulationHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
-    virtual ~ObjectHierarchies();
+             PopulationHierarchies( const kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior );
+    virtual ~PopulationHierarchies();
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    ObjectHierarchies( const ObjectHierarchies& );            //!< Copy constructor
-    ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignement operator
+    PopulationHierarchies( const PopulationHierarchies& );            //!< Copy constructor
+    PopulationHierarchies& operator=( const PopulationHierarchies& ); //!< Assignement operator
     //@}
 };
 
-#endif // __ObjectHierarchies_h_
+#endif // __PopulationHierarchies_h_

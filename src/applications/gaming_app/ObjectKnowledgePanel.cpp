@@ -34,46 +34,46 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( "Objets connus" );
+    pKnowledgeListView_->AddColumn( tr( "Known objects" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( "Détails" )
-                .AddLabel( "Id:" )
-                .AddLabel( "Objet associé:" )
-                .AddLabel( "Position:" )
-                .AddLabel( "Type:" )
-                .AddLabel( "Construction:" )
-                .AddLabel( "Valeur:" )
-                .AddLabel( "Contournement:" )
-                .AddLabel( "En préparation:" )
-                .AddLabel( "Perçu:" )
-                .AddLabel( "Pertinence:" );
+    display_->AddGroup( tr( "Details" ) )
+                .AddLabel( tr( "Identifier:" ) )
+                .AddLabel( tr( "Associated object:" ) )
+                .AddLabel( tr( "Location:" ) )
+                .AddLabel( tr( "Type:" ) )
+                .AddLabel( tr( "Construction:" ) )
+                .AddLabel( tr( "Development:" ) )
+                .AddLabel( tr( "Bypass:" ) )
+                .AddLabel( tr( "Setting up:" ) )
+                .AddLabel( tr( "Perceived:" ) )
+                .AddLabel( tr( "Relevance:" ) );
 
-    display_->AddGroup( "Site de franchissement" )
-                .AddLabel( "Largeur:" )
-                .AddLabel( "Profondeur:" )
-                .AddLabel( "Vitesse du courant:" )
-                .AddLabel( "Berges à aménager:" );
+    display_->AddGroup( tr( "Crossing site" ) )
+                .AddLabel( tr( "Width:" ) )
+                .AddLabel( tr( "Depth:" ) )
+                .AddLabel( tr( "Stream speed:" ) )
+                .AddLabel( tr( "Build river banks:" ) );
 
-    display_->AddGroup( "Camp" )
-                .AddLabel( "TC2:" );
+    display_->AddGroup( tr( "Camp" ) )
+                .AddLabel( tr( "TC2:" ) );
 
-    display_->AddGroup( "Nuage/Zone NBC" )
-                .AddLabel( "Agent NBC:" );
+    display_->AddGroup( tr( "NBC cloud/zone" ) )
+                .AddLabel( tr( "NBC agent:" ) );
 
-    display_->AddGroup( "ROTA" )
-                .AddLabel( "Danger:" )
-                .AddLabel( "Agents NBC:" );
+    display_->AddGroup( tr( "ROTA" ) )
+                .AddLabel( tr( "Danger level:" ) )
+                .AddLabel( tr( "NBC agent(s):" ) );
 
-    display_->AddGroup( "Itinéraire logistique" )
-                .AddLabel( "Equipé:" )
-                .AddLabel( "Débit:" )
-                .AddLabel( "Largeur:" )
-                .AddLabel( "Longueur:" )
-                .AddLabel( "Poids supporté:" );
+    display_->AddGroup( tr( "Logistic route" ) )
+                .AddLabel( tr( "Equipped:" ) )
+                .AddLabel( tr( "Flow:" ) )
+                .AddLabel( tr( "Width:" ) )
+                .AddLabel( tr( "Length:" ) )
+                .AddLabel( tr( "Maximum weight:" ) );
 
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( "Agent" );
+    pPerceptionListView_->AddColumn( tr( "Agent" ) );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );

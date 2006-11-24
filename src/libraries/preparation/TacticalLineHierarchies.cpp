@@ -15,7 +15,7 @@
 // Name: TacticalLineHierarchies constructor
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-TacticalLineHierarchies::TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+TacticalLineHierarchies::TacticalLineHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
     : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
     , superior_( superior )
 {

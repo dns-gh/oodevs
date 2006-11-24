@@ -51,7 +51,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Team_ABC& GetTeam() const;
     virtual const kernel::PopulationType& GetType() const;
 
     virtual unsigned int GetLivingHumans() const;

@@ -10,7 +10,7 @@
 #ifndef __PopulationHierarchies_h_
 #define __PopulationHierarchies_h_
 
-#include "clients_kernel/EntityHierarchies.h"
+#include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 // =============================================================================
@@ -19,13 +19,13 @@
 */
 // Created: SBO 2006-11-08
 // =============================================================================
-class PopulationHierarchies : public kernel::EntityHierarchies< kernel::TacticalHierarchies >
+class PopulationHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+             PopulationHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~PopulationHierarchies();
     //@}
 

@@ -116,7 +116,7 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Team_ABC& parent, const ke
 {
     Population* result = new Population( type, controllers_.controller_, idManager_ );
     result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
 
     if( Populations* popus = parent.Retrieve< Populations >() )
         popus->AddPopulation( *result );
@@ -189,7 +189,7 @@ kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_A
 {
     Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
     result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( controllers_.controller_, *result, &parent ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
 
     if( Populations* popus = parent.Retrieve< Populations >() )
         popus->AddPopulation( *result );

@@ -25,7 +25,7 @@ class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::Tactic
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
+             TacticalLineHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~TacticalLineHierarchies();
     //@}
 

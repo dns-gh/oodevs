@@ -245,7 +245,7 @@ void LogisticSupplyRecompletionDialog::InitializePersonal()
     {
         personalsTable_->setNumRows( 0 );
         AddPersonal( 0, tr( "officers" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
-        AddPersonal( 1, tr( "warrant-officiers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
+        AddPersonal( 1, tr( "warrant-officers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
         AddPersonal( 2, tr( "private" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
         personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
     }

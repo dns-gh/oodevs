@@ -44,7 +44,7 @@ Contaminations::~Contaminations()
 // -----------------------------------------------------------------------------
 void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "NBC", "NBC/NBC suit on" ), bNbcProtectionSuitWorn_ );
+    dico.Register( *this, tools::translate( "NBC", "NBC/NBC suit" ), bNbcProtectionSuitWorn_ );
     dico.Register( *this, tools::translate( "NBC", "NBC/Contaminating agents" ), contaminatingNbcAgents_ );
     dico.Register( *this, tools::translate( "NBC", "NBC/Contamination level" ), nContamination_ );
 }

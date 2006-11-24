@@ -11,7 +11,6 @@
 #include "Population.h"
 #include "IdManager.h"
 #include "clients_kernel/PopulationType.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/Tools.h"
@@ -66,17 +65,6 @@ Population::Population( xml::xistream& xis, kernel::Controller& controller, IdMa
 Population::~Population()
 {
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetTeam
-// Created: SBO 2006-11-08
-// -----------------------------------------------------------------------------
-const kernel::Team_ABC& Population::GetTeam() const
-{
-    if( const kernel::TacticalHierarchies* hierarchies = Retrieve< kernel::TacticalHierarchies >() )
-        return static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() );
-    throw std::runtime_error( "Population has no team." );
 }
 
 // -----------------------------------------------------------------------------

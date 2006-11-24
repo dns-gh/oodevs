@@ -31,41 +31,41 @@ using namespace gui;
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, "Connaissances population" )
+    : InfoPanel_ABC( parent, panel, tr( "Population knowledges" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
     knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
-    knowledgeList_->AddColumn( "Populations connues" );
+    knowledgeList_->AddColumn( tr( "Known populations" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( "Détails" )
-                .AddLabel( "Id:" )
-                .AddLabel( "Population associée:" )
-                .AddLabel( "Camp:" );
+    display_->AddGroup( tr( "Details" ) )
+                .AddLabel( tr( "Identifier:" ) )
+                .AddLabel( tr( "Associated population:" ) )
+                .AddLabel( tr( "Side:" ) );
 
-    display_->AddGroup( "Concentration" )
-                .AddLabel( "Id:" )
-                .AddLabel( "Concentration associée:" )
-                .AddLabel( "Position:" )
-                .AddLabel( "Humains vivants:" )
-                .AddLabel( "Humains morts:" )
-                .AddLabel( "Attitude:" )
-                .AddLabel( "Percue:" )
-                .AddLabel( "Pertinence:" );
+    display_->AddGroup( tr( "Concentration" ) )
+                .AddLabel( tr( "Identifier:" ) )
+                .AddLabel( tr( "Associated concentration:" ) )
+                .AddLabel( tr( "Location:" ) )
+                .AddLabel( tr( "Alive people:" ) )
+                .AddLabel( tr( "Dead people:" ) )
+                .AddLabel( tr( "Mood:" ) )
+                .AddLabel( tr( "Perceived:" ) )
+                .AddLabel( tr( "Relevance:" ) );
 
-    display_->AddGroup( "Flux" )
-                .AddLabel( "Id:" )
-                .AddLabel( "Flux associée:" )
-                .AddLabel( "Direction:" )
-                .AddLabel( "Vitesse:" )
-                .AddLabel( "Humains vivants:" )
-                .AddLabel( "Humains morts:" )
-                .AddLabel( "Attitude:" )
-                .AddLabel( "Percue:" )
-                .AddLabel( "Portions connues:" );
+    display_->AddGroup( tr( "Flow" ) )
+                .AddLabel( tr( "Identifier:" ) )
+                .AddLabel( tr( "Associated flow:" ) )
+                .AddLabel( tr( "Heading:" ) )
+                .AddLabel( tr( "Speed:" ) )
+                .AddLabel( tr( "Alive people:" ) )
+                .AddLabel( tr( "Dead people:" ) )
+                .AddLabel( tr( "Mood:" ) )
+                .AddLabel( tr( "Perceived:" ) )
+                .AddLabel( tr( "Known chunks:" ) );
 
     connect( knowledgeList_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( knowledgeList_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
@@ -126,8 +126,8 @@ void PopulationKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const Q
 void PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    display_->Group( "Flux" ).Hide();
-    display_->Group( "Concentration" ).Hide();
+    display_->Group( tr( "Flow" ) ).Hide();
+    display_->Group( tr( "Concentration" ) ).Hide();
     if( item && item->IsA< const PopulationKnowledge_ABC* >() ) {
         subSelected_ = item->GetValue< const PopulationKnowledge_ABC* >();
         subSelected_->Display( *display_ );
@@ -198,7 +198,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationFlowKnowledge& ele
 {
     if( ! IsVisible() || selectedPart_ != &element )
         return;
-    display_->Group( "Concentration" ).Hide();
+    display_->Group( tr( "Concentration" ) ).Hide();
     element.Display( *display_ );
 }
 
@@ -210,7 +210,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationConcentrationKnowl
 {
     if( ! IsVisible() || selectedPart_ != &element )
         return;
-    display_->Group( "Flux" ).Hide();
+    display_->Group( tr( "Flow" ) ).Hide();
     element.Display( *display_ );
 }
 

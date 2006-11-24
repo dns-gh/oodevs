@@ -28,19 +28,13 @@ namespace kernel
 // Created: AGE 2006-10-16
 // =============================================================================
 class ObjectHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
-                        , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectHierarchies( kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver );
+             ObjectHierarchies( kernel::Entity_ABC& entity, const kernel::Team_ABC& superior );
     virtual ~ObjectHierarchies();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectCreation& );
     //@}
 
 private:
@@ -48,12 +42,6 @@ private:
     //@{
     ObjectHierarchies( const ObjectHierarchies& );            //!< Copy constructor
     ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignement operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const kernel::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
     //@}
 };
 

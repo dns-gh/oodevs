@@ -40,7 +40,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual const Team_ABC& GetTeam() const = 0;
     virtual const PopulationType& GetType() const = 0;
 
     virtual unsigned int GetLivingHumans() const = 0;

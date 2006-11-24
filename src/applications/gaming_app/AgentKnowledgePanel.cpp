@@ -48,7 +48,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Associated agent:" ) )
                 .AddLabel( tr( "Location:" ) )
-                .AddLabel( tr( "Direction:" ) )
+                .AddLabel( tr( "Heading:" ) )
                 .AddLabel( tr( "Speed:" ) )
                 .AddLabel( tr( "Operational state:" ) )
                 .AddLabel( tr( "Perception level:" ) )

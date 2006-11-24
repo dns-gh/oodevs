@@ -209,7 +209,7 @@ void AgentResourcesPanel::NotifyUpdated( const Troops& a )
 void AgentResourcesPanel::Display( const Humans& humans, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( tr( "Rank" ), humans.state_ )
-             .Display( tr( "Officier" ), humans.officers_ )
+             .Display( tr( "Officer" ), humans.officers_ )
              .Display( tr( "Warrant-officer" ), humans.subOfficers_ )
              .Display( tr( "Private" ), humans.troopers_ );
 }

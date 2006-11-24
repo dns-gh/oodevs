@@ -39,12 +39,12 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
                 .AddLabel( tr( "Dead:" ) )
                 .AddLabel( tr( "Neutralized:" ) )
                 .AddLabel( tr( "Speed:" ) )
-                .AddLabel( tr( "Direction:" ) )
+                .AddLabel( tr( "Heading:" ) )
                 .AddLabel( tr( "Height:" ) )
                 .AddLabel( tr( "Troops:" ) )
                 .AddLabel( tr( "Human transportation:" ) );
     display_->AddGroup( tr( "NBC" ) )
-                .AddLabel( tr( "NBC suit on:" ) )
+                .AddLabel( tr( "NBC suit:" ) )
                 .AddLabel( tr( "Contaminating agents:" ) )
                 .AddLabel( tr( "Contamination level:" ) );
     display_->AddGroup( tr( "Stances" ) )
@@ -69,7 +69,7 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
                 .AddLabel( tr( "Reinforcing:" ) )
                 .AddLabel( tr( "Reinforced by:" ) );
 
-    display_->AddGroup( tr( "Towed unit" ) )
+    display_->AddGroup( tr( "Towed units" ) )
                 .AddLabel( tr( "" ) );
 
     display_->AddGroup( tr( "Logistic links" ) )
@@ -136,7 +136,7 @@ void AgentStatePanel::NotifySelected( const Agent_ABC* agent )
             UpdateExtension< Contaminations >( *selected_ );
             UpdateExtension< Reinforcements >( *selected_ );
             if( ! UpdateExtension< LogisticLinks_ABC >( *selected_ ) )
-                display_->Group( "Liens logistiques" ).Hide();
+                display_->Group( tr( "Logistic links" ) ).Hide();
             UpdateExtension< Transports >( *selected_ );
         }
         else
@@ -176,7 +176,7 @@ void AgentStatePanel::NotifyUpdated( const Attributes_ABC& attributes )
     if( ! ShouldUpdate( attributes ) )
         return;
 
-    display_->Group( "Info" ) .Display( "Nom:", selected_ );
+    display_->Group( tr( "Info" ) ) .Display( "Name:", selected_ );
     attributes.Display( *display_ );
 }
 

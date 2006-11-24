@@ -16,6 +16,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "ItemFactory_ABC.h"
 #include "ValuedListItem.h"
 
@@ -62,7 +63,7 @@ PopulationListView::~PopulationListView()
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyCreated( const Population_ABC& popu )
 {
-    const Entity_ABC& team = (const Entity_ABC&)popu.GetTeam();
+    const Entity_ABC& team = popu.Get< TacticalHierarchies >().GetTop();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {

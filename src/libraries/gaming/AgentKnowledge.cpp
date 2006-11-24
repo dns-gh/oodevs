@@ -148,7 +148,7 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "AgentKnowledge", "Identifier:" ), id_ )
              .Display( tools::translate( "AgentKnowledge", "Associated agent:" ), realAgent_ )
              .Display( tools::translate( "AgentKnowledge", "Location:" ), strPosition_ )
-             .Display( tools::translate( "AgentKnowledge", "Direction:" ), nDirection_ * Units::degrees )
+             .Display( tools::translate( "AgentKnowledge", "Heading:" ), nDirection_ * Units::degrees )
              .Display( tools::translate( "AgentKnowledge", "Speed:" ), nSpeed_ * Units::kilometersPerHour )
              .Display( tools::translate( "AgentKnowledge", "Operational state:" ), nEtatOps_ * Units::percentage )
              .Display( tools::translate( "AgentKnowledge", "Perception level:" ), nCurrentPerceptionLevel_  )

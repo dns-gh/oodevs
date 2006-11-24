@@ -14,7 +14,7 @@
 // Name: ObjectHierarchies constructor
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-ObjectHierarchies::ObjectHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
+ObjectHierarchies::ObjectHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
     : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
 {
     // NOTHING

@@ -33,7 +33,6 @@ Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& 
     : EntityImplementation< Population_ABC >( controller, message.oid_population, message.nom )
     , converter_    ( converter )
     , type_         ( typeResolver.Get( message.type_population ) )
-    , team_         ( resolver.Get( message.oid_camp ) )
 {
     RegisterSelf( *this );
     Attach( *new PropertiesDictionary( controller ) );
@@ -170,15 +169,6 @@ void Population::DoUpdate( const ASN1T_MsgPopulationUpdate& asnMsg )
 {
     if( asnMsg.m.etat_dominationPresent ) 
         nDomination_ = asnMsg.etat_domination;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetTeam
-// Created: AGE 2006-02-16
-// -----------------------------------------------------------------------------
-const Team_ABC& Population::GetTeam() const
-{
-    return team_;
 }
 
 // -----------------------------------------------------------------------------

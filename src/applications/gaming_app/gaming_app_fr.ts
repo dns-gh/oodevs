@@ -17,10 +17,6 @@
 <context>
     <name>AgentKnowledgePanel</name>
     <message>
-        <source>Direction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Niveau perception</source>
         <translation type="unfinished"></translation>
     </message>
@@ -98,6 +94,10 @@
     </message>
     <message>
         <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -293,19 +293,11 @@
         <source>Lender</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Officier</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AgentStatePanel</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -366,10 +358,6 @@
     </message>
     <message>
         <source>Human transportation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC suit on:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -449,10 +437,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Towed unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logistic links</source>
         <translation type="unfinished"></translation>
     </message>
@@ -482,6 +466,18 @@
     </message>
     <message>
         <source>Refugees picked up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC suit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Towed units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -927,10 +923,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>warrant-officiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>private</source>
         <translation type="unfinished"></translation>
     </message>
@@ -956,6 +948,10 @@
     </message>
     <message>
         <source>Partial recompletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warrant-officers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1349,6 +1345,126 @@
         <source>Object knowledges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Known objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated object:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Development:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bypass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Setting up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perceived:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build river banks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC cloud/zone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROTA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Danger level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipped:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum weight:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParamAgentType</name>
@@ -1502,6 +1618,85 @@
     </message>
     <message>
         <source>Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopulationKnowledgePanel</name>
+    <message>
+        <source>Population knowledges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated population:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concentration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated concentration:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alive people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mood:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perceived:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Associated flow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known chunks:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

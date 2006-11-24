@@ -18,6 +18,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Team_ABC.h"
 
 #include "Agent.h"
 #include "Automat.h"
@@ -69,6 +70,7 @@
 #include "AutomatPositions.h"
 #include "AutomatHierarchies.h"
 #include "AutomatTacticalHierarchies.h"
+#include "PopulationHierarchies.h"
 
 #include "Quotas.h"
 
@@ -109,7 +111,8 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomateCreation& asnMsg )
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach< CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
-    result->Attach< TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, model_.teams_, dico ) );
+    Formation_ABC& formation = ((Resolver< Formation_ABC >&)( model_.teams_ )).Get( asnMsg.oid_formation );
+    result->Attach< TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, formation, dico ) );
     result->Attach( *new AutomatLives( *result ) );
     result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
@@ -161,6 +164,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
     Population* result = new Population( asnMsg, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.types_ );
 
     result->Attach< Positions >( *new PopulationPositions( *result ) );
+    result->Attach( *new PopulationHierarchies( *result, model_.teams_.GetTeam( asnMsg.oid_camp ) ) );
     result->Attach( *new PopulationDecisions( *result ) );
     AttachExtensions( *result );
     result->Polish();

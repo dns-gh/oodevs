@@ -79,7 +79,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const kernel::Team_ABC& GetTeam() const;
     const kernel::PopulationType& GetType() const;
     virtual QString GetTypeName() const;
     //@}
@@ -112,7 +111,6 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::PopulationType&          type_;
-	kernel::Team_ABC&                      team_;
 
     geometry::Rectangle2f                  boundingBox_;
     geometry::Point2f                      center_;

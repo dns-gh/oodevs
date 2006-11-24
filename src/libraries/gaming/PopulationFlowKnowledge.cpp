@@ -103,7 +103,7 @@ void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "Population", "Flow" ) )
                 .Display( tools::translate( "Population", "Identifier:" ), nID_ )
                 .Display( tools::translate( "Population", "Associated flow:" ), pFlow_ )
-                .Display( tools::translate( "Population", "Direction:" ), rDirection_ * Units::degrees )
+                .Display( tools::translate( "Population", "Heading:" ), rDirection_ * Units::degrees )
                 .Display( tools::translate( "Population", "Speed:" ), rSpeed_ * Units::kilometersPerHour )
                 .Display( tools::translate( "Population", "Alive people:" ), nNbrAliveHumans_ )
                 .Display( tools::translate( "Population", "Dead people:" ), nNbrDeadHumans_ )

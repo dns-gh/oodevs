@@ -52,7 +52,7 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     // $$$$ AGE 2006-06-22: unité !
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Info/Direction" ),                       nDirection_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Radio silence" ),         bRadioSilence_ );
@@ -164,7 +164,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Attributes", "Dead:" ),                 bDead_ )
                 .Display( tools::translate( "Attributes", "Neutralized:" ),          bNeutralized_ )
                 .Display( tools::translate( "Attributes", "Speed:" ),                nSpeed_ * Units::kilometersPerHour )
-                .Display( tools::translate( "Attributes", "Direction:" ),            nDirection_ * Units::degrees )
+                .Display( tools::translate( "Attributes", "Heading:" ),              nDirection_ * Units::degrees )
                 .Display( tools::translate( "Attributes", "Height:" ),               nAltitude_  * Units::meters )
                 .Display( tools::translate( "Attributes", "Troops:" ),               bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) )
                 .Display( tools::translate( "Attributes", "Human transportation:" ), bHumanTransportersReady_ ? tools::translate( "Attributes", "Available" ) : tools::translate( "Attributes", "Unavailable" ) );

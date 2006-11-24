@@ -18,10 +18,10 @@ using namespace kernel;
 // Name: AutomatTacticalHierarchies constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, Entity_ABC& holder, const Resolver_ABC< Formation_ABC >& resolver, PropertiesDictionary& dictionary )
+AutomatTacticalHierarchies::AutomatTacticalHierarchies( Controller& controller, Entity_ABC& holder, Formation_ABC& superior, PropertiesDictionary& dictionary )
     : MergingTacticalHierarchies( controller, holder, 0 )
     , controller_( controller )
-    , resolver_( resolver )
+    , superior_( superior )
 {
     // NOTHING
     // $$$$ AGE 2006-10-19: dico !
@@ -40,9 +40,10 @@ AutomatTacticalHierarchies::~AutomatTacticalHierarchies()
 // Name: AutomatTacticalHierarchies::DoUpdate
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void AutomatTacticalHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& message )
+void AutomatTacticalHierarchies::DoUpdate( const InstanciationComplete& message )
 {
-    SetSuperior( &resolver_.Get( message.oid_formation ) );
+    SetSuperior( &superior_ );
+    kernel::MergingTacticalHierarchies::DoUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
