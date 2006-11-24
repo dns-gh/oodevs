@@ -220,7 +220,7 @@ char AgentKnowledge::TeamCharacter( E_PerceptionResult perception ) const
     char result = 'u';
     if( team_ && perception > eDetection )
         if( const Diplomacies* diplomacy = team_->Retrieve< Diplomacies >() )
-            result = diplomacy->GetKharma();
+            result = diplomacy->GetKarma();
     return result;
 }
 

@@ -60,3 +60,21 @@ void TeamHierarchies::SerializeLogistics( xml::xostream& xos ) const
         it->second->Interface().Apply( & Serializable_ABC::SerializeLogistics, xos );
     xos << end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: TeamHierarchies::UpdateSymbol
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+void TeamHierarchies::UpdateSymbol( bool up /*= true*/ )
+{
+    if( ! up )
+    {
+        kernel::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::TacticalHierarchies* child = it.NextElement().Retrieve< kernel::TacticalHierarchies >();
+            if( child )
+                const_cast< kernel::TacticalHierarchies* >( child )->UpdateSymbol( false );
+        }
+    }
+}

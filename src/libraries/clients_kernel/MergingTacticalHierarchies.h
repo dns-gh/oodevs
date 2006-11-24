@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetSymbol() const;
-    virtual void UpdateSymbol();
+    virtual void UpdateSymbol( bool up = true );
     //@}
 
 protected:

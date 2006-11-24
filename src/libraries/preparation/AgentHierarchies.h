@@ -36,6 +36,7 @@ public:
     //@{
     virtual std::string GetLevel() const;
     virtual std::string GetSymbol() const;
+    virtual void UpdateSymbol( bool up = true );
     //@}
 
 private:
@@ -48,12 +49,14 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const kernel::InstanciationComplete& );
+    void UpdateKarma( const kernel::Entity_ABC& superior );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string level_;
+    std::string baseSymbol_;
     std::string symbol_;
     kernel::Entity_ABC* superior_;
     //@}

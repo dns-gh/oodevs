@@ -74,10 +74,11 @@ void AutomatHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 // Name: AutomatHierarchies::UpdateSymbol
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::UpdateSymbol()
+void AutomatHierarchies::UpdateSymbol( bool up /*= true*/ )
 {
-    level_.clear();
-    MergingTacticalHierarchies::UpdateSymbol();
+    if( up )
+        level_.clear();
+    MergingTacticalHierarchies::UpdateSymbol( up );
 }
 
 // -----------------------------------------------------------------------------

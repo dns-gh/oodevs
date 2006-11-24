@@ -139,10 +139,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     SymbolIcons* icons = new SymbolIcons( this, widget2d_ );
 
-    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile, *icons ),    tr( "ODB" ) );
-    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile ), tr( "Agents" ) );
-    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),            tr( "Objets" ) );
-    pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),            tr( "Populations" ) );
+    pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile, *icons ),            tr( "ODB" ) );
+    pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile, *icons ), tr( "Agents" ) );
+    pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),                    tr( "Objets" ) );
+    pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),                    tr( "Populations" ) );
 	pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );

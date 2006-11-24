@@ -131,7 +131,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-    new ::CommunicationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
+    new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
     pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
 
     pListsTabWidget->addTab( pAgentsTabWidget, tr( "Agents" ) );

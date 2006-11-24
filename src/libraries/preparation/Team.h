@@ -64,6 +64,7 @@ public:
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    const TeamKarma& GetKarma() const;
     //@}
 
 private:
@@ -79,6 +80,7 @@ private:
 
     static unsigned long ReadId  ( xml::xistream& xis );
     static QString       ReadName( xml::xistream& xis );
+    void SetKarma( TeamKarma* const& karma );
     //@}
 
 private:

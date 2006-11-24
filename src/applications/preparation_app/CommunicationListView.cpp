@@ -22,8 +22,8 @@ using namespace kernel;
 // Name: CommunicationListView constructor
 // Created: SBO 2006-09-25
 // -----------------------------------------------------------------------------
-CommunicationListView::CommunicationListView( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
-    : gui::HierarchyListView< kernel::CommunicationHierarchies >( parent, controllers, factory, PreparationProfile::GetProfile() )
+CommunicationListView::CommunicationListView( QWidget* parent, Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, ModelBuilder& modelBuilder )
+    : gui::HierarchyListView< kernel::CommunicationHierarchies >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , factory_( factory )
     , modelBuilder_( modelBuilder )
 {

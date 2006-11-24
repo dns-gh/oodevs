@@ -141,14 +141,15 @@ void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangl
     {
         // $$$$ AGE 2006-09-11: error management !
         SVGFactory factory( *renderer_ );
+        const std::string filename = symbol + ".svg";
         try
         {
-            node.first  = factory.Compile( symbol + ".svg", *references_, 10  ); // $$$$ AGE 2006-09-11: 
-            node.second = factory.Compile( symbol + ".svg", *references_, 100 ); // $$$$ AGE 2006-09-11: 
+            node.first  = factory.Compile( filename, *references_, 10  ); // $$$$ AGE 2006-09-11: 
+            node.second = factory.Compile( filename, *references_, 100 ); // $$$$ AGE 2006-09-11: 
         }
         catch( ... )
         {
-            // $$$$ AGE 2006-10-23: 
+            std::cout << "Could not open svg symbol '" << filename << "'" << std::endl;// $$$$ AGE 2006-10-23: 
         };
     }
     Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod

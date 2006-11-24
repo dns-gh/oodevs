@@ -113,7 +113,7 @@ void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgPionCreation& message )
     kernel::Automat_ABC& superior = automatResolver_.Get( message.oid_automate );
     const Diplomacies* diplo = superior.Get< I >().GetTop().Retrieve< Diplomacies >();
     if( diplo )
-        std::replace( symbol_.begin(), symbol_.end(), '*', diplo->GetKharma() );
+        std::replace( symbol_.begin(), symbol_.end(), '*', diplo->GetKarma() );
     SetSuperior( & superior );
 }
 

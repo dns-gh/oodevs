@@ -17,6 +17,7 @@
 #include "TeamKarma.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
@@ -167,5 +168,24 @@ void Team::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Karma" ), karma_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Karma" ), karma_, *this, &Team::SetKarma );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::GetKarma
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+const TeamKarma& Team::GetKarma() const
+{
+    return *karma_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::SetKarma
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+void Team::SetKarma( TeamKarma* const& karma )
+{
+    karma_ = karma;
+    Get< kernel::TacticalHierarchies >().UpdateSymbol( false );
 }

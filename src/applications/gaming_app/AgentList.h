@@ -19,6 +19,7 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
+    class SymbolIcons;
 }
 
 class Publisher_ABC;
@@ -35,7 +36,7 @@ class AgentList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentList( kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
+             AgentList( kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons );
     virtual ~AgentList();
     //@}
 

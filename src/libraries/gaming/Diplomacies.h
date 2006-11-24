@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    char GetKharma() const;
+    char GetKarma() const;
     ASN1T_EnumDiplomatie GetRelationship( const kernel::Entity_ABC& rhs ) const;
     //@}
 
@@ -75,7 +75,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
-    char kharma_;
+    char karma_;
     //@}
 };
 

@@ -49,10 +49,11 @@ void AutomatTacticalHierarchies::DoUpdate( const ASN1T_MsgAutomateCreation& mess
 // Name: AutomatTacticalHierarchies::UpdateSymbol
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void AutomatTacticalHierarchies::UpdateSymbol()
+void AutomatTacticalHierarchies::UpdateSymbol( bool up /*= true*/ )
 {
-    level_.clear();
-    MergingTacticalHierarchies::UpdateSymbol();
+    if( up )
+        level_.clear();
+    MergingTacticalHierarchies::UpdateSymbol( up );
 }
 
 // -----------------------------------------------------------------------------

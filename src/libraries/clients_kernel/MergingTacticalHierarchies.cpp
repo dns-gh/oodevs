@@ -45,8 +45,18 @@ std::string MergingTacticalHierarchies::GetSymbol() const
 // Name: MergingTacticalHierarchies::UpdateSymbol
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void MergingTacticalHierarchies::UpdateSymbol()
+void MergingTacticalHierarchies::UpdateSymbol( bool up /*= true*/ )
 {
+    if( ! up )
+    {
+        Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const TacticalHierarchies* child = it.NextElement().Retrieve< TacticalHierarchies >();
+            if( child )
+                const_cast< TacticalHierarchies* >( child )->UpdateSymbol( false );
+        }
+    }
     const std::string oldSymbol = symbol_;
     const std::string oldLevel = GetLevel();
     symbol_.clear();
@@ -55,8 +65,9 @@ void MergingTacticalHierarchies::UpdateSymbol()
         MergeSymbol( it.NextElement() );
     if( symbol_ != oldSymbol || GetLevel() != oldLevel )
         controller_.Update( *(Symbol_ABC*)this );
-    if( TacticalHierarchies* superior = SuperiorHierarchy() )
-        superior->UpdateSymbol();
+    if( up )
+        if( TacticalHierarchies* superior = SuperiorHierarchy() )
+            superior->UpdateSymbol();
 }
 
 // -----------------------------------------------------------------------------

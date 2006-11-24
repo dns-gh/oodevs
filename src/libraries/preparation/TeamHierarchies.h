@@ -30,6 +30,11 @@ public:
     virtual ~TeamHierarchies();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void UpdateSymbol( bool up = true );
+    //@}
+
 private:
     //! @name Operations
     //@{

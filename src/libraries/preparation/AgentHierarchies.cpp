@@ -11,6 +11,8 @@
 #include "AgentHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "TeamKarma.h"
+#include "Team.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentHierarchies constructor
@@ -19,7 +21,8 @@
 AgentHierarchies::AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder, kernel::Entity_ABC* superior )
     : TacticalHierarchies( controller, holder, 0 )
     , level_ ( holder.GetType().GetLevelSymbol() )
-    , symbol_( holder.GetType().GetSymbol() )
+    , baseSymbol_( holder.GetType().GetSymbol() )
+    , symbol_( baseSymbol_ )
     , superior_( superior )
 {
     // NOTHING
@@ -58,6 +61,32 @@ std::string AgentHierarchies::GetSymbol() const
 // -----------------------------------------------------------------------------
 void AgentHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 {
+    if( superior_ )
+        UpdateKarma( *superior_ );
     SetSuperior( superior_ );
     TacticalHierarchies::DoUpdate( ic );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::UpdateKarma
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+void AgentHierarchies::UpdateKarma( const kernel::Entity_ABC& superior )
+{
+    const kernel::Entity_ABC& top = superior.Get< kernel::TacticalHierarchies >().GetTop();
+    const Team& team = static_cast< const Team& >( top );
+    const std::string oldSymbol = symbol_;
+    symbol_ = baseSymbol_;
+    std::replace( symbol_.begin(), symbol_.end(), '*', team.GetKarma().GetIdentifier() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::UpdateSymbol
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+void AgentHierarchies::UpdateSymbol( bool up /*= true*/ )
+{
+    if( ! up && GetSuperior() )
+        UpdateKarma( *GetSuperior() );
+    TacticalHierarchies::UpdateSymbol( up );
 }

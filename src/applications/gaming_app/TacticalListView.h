@@ -10,7 +10,8 @@
 #ifndef __TacticalListView_h_
 #define __TacticalListView_h_
 
-#include "clients_gui/TacticalListView.h"
+#include "clients_gui/HierarchyListView.h"
+#include "clients_kernel/TacticalHierarchies.h"
 class AutomatDecisions;
 
 // =============================================================================
@@ -19,7 +20,7 @@ class AutomatDecisions;
 */
 // Created: AGE 2006-11-23
 // =============================================================================
-class TacticalListView : public gui::TacticalListView
+class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
                        , public kernel::ElementObserver_ABC< AutomatDecisions >
 {
 

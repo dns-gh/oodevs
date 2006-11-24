@@ -18,10 +18,10 @@
 // -----------------------------------------------------------------------------
 TeamKarmas::TeamKarmas()
 {
-    default_ = new TeamKarma( tools::translate( "TeamKarmas", "Friend" ), "friend" );
+    default_ = new TeamKarma( tools::translate( "TeamKarmas", "Friend" ), "friend", 'f' );
     Register( "friend" , *default_ );
-    Register( "neutral", *new TeamKarma( tools::translate( "TeamKarmas", "Neutral" ), "neutral" ) );
-    Register( "enemy"  , *new TeamKarma( tools::translate( "TeamKarmas", "Enemy" ), "enemy" ) );
+    Register( "neutral", *new TeamKarma( tools::translate( "TeamKarmas", "Neutral" ), "neutral", 'n' ) );
+    Register( "enemy"  , *new TeamKarma( tools::translate( "TeamKarmas", "Enemy" ), "enemy", 'h' ) );
 
 }
 

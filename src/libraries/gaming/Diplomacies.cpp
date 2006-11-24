@@ -22,7 +22,7 @@ using namespace kernel;
 Diplomacies::Diplomacies( Controller& controller, const Resolver_ABC< Team_ABC >& resolver )
     : controller_( controller )
     , resolver_( resolver )
-    , kharma_( 'u' )
+    , karma_( 'u' )
 {
     // NOTHING
 }
@@ -79,20 +79,20 @@ void Diplomacies::DoUpdate( const ASN1T_MsgSideCreation& message )
 {
     switch( message.type )
     {
-    case EnumDiplomatie::inconnu : kharma_ = 'u'; break;
-    case EnumDiplomatie::ami :     kharma_ = 'f'; break;
-    case EnumDiplomatie::ennemi :  kharma_ = 'h'; break;
-    case EnumDiplomatie::neutre :  kharma_ = 'n'; break;
+    case EnumDiplomatie::inconnu : karma_ = 'u'; break;
+    case EnumDiplomatie::ami :     karma_ = 'f'; break;
+    case EnumDiplomatie::ennemi :  karma_ = 'h'; break;
+    case EnumDiplomatie::neutre :  karma_ = 'n'; break;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Diplomacies::GetKharma
+// Name: Diplomacies::GetKarma
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-char Diplomacies::GetKharma() const
+char Diplomacies::GetKarma() const
 {
-    return kharma_;
+    return karma_;
 }
 
 // -----------------------------------------------------------------------------

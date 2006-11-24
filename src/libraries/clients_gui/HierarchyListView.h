@@ -29,7 +29,7 @@ class HierarchyListView : public HierarchyListView_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
+             HierarchyListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons );
     virtual ~HierarchyListView();
     //@}
 

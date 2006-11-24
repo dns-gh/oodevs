@@ -34,7 +34,7 @@ std::string TacticalHierarchies::GetLevel() const
 // Name: TacticalHierarchies::UpdateSymbol
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void TacticalHierarchies::UpdateSymbol()
+void TacticalHierarchies::UpdateSymbol( bool /*up*/ /*= true*/ )
 {
     // NOTHING
 }

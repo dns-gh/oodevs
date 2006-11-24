@@ -10,7 +10,7 @@
 #ifndef __TacticalListView_h_
 #define __TacticalListView_h_
 
-#include "clients_gui/TacticalListView.h"
+#include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 namespace kernel
@@ -30,7 +30,7 @@ class ModelBuilder;
 */
 // Created: SBO 2006-08-29
 // =============================================================================
-class TacticalListView : public gui::TacticalListView
+class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
                        , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
                        , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< AutomatDecisions >

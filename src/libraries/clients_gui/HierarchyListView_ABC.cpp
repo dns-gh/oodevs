@@ -18,8 +18,10 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Hierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
+#include "SymbolIcons.h"
 
 using namespace kernel;
 using namespace gui;
@@ -30,23 +32,28 @@ const char* HierarchyListView_ABC::agentMimeType_ = "agent"; // $$$$ AGE 2006-09
 // Name: HierarchyListView_ABC constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile  )
+HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, gui::SymbolIcons& icons )
     : ListView< HierarchyListView_ABC >( pParent, *this, factory )
     , controllers_( controllers )
-    , factory_( factory )
-    , profile_( profile )
-    , selected_( controllers_ )
+    , factory_    ( factory )
+    , profile_    ( profile )
+    , icons_      ( icons )
+    , selected_   ( controllers_ )
 {
+    timer_ = new QTimer( this );
+    
+
     setMinimumSize( 1, 1 );
     addColumn( tr( "Unités" ) );
     setRootIsDecorated( true );
     setAcceptDrops( true );
     header()->hide();
 
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
-    connect( this, SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
-    connect( this, SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( this,   SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
+    connect( this,   SIGNAL( doubleClicked       ( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
+    connect( this,   SIGNAL( spacePressed        ( QListViewItem* ) ),                     this, SLOT( OnRequestCenter() ) );
+    connect( this,   SIGNAL( selectionChanged    ( QListViewItem* ) ),                     this, SLOT( OnSelectionChange( QListViewItem* ) ) );
+    connect( timer_, SIGNAL( timeout() ),                                                  this, SLOT( Update() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +125,31 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
+    DisplayIcon( entity.Retrieve< TacticalHierarchies >(), item );
     SetVisible( item, isVisible );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::DisplayIcon
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::DisplayIcon( const kernel::TacticalHierarchies* hierarchies, gui::ValuedListItem* item )
+{
+    std::string symbolName; 
+    std::string levelName;  
+    if( hierarchies )
+    {
+        symbolName = hierarchies->GetSymbol();
+        levelName  = hierarchies->GetLevel();
+    }
+    QPixmap pixmap;
+    if( ! symbolName.empty() || ! levelName.empty() )
+    {
+        pixmap = icons_.GetSymbol( symbolName, levelName );
+        if( pixmap.isNull() )
+            timer_->start( 500, true );
+    }
+    item->setPixmap( 0, pixmap );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,6 +309,18 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
     if( & profile_ == &profile )
         Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: HierarchyListView_ABC::NotifyUpdated
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+void HierarchyListView_ABC::NotifyUpdated( const kernel::Symbol_ABC& symbol )
+{
+    const Entity_ABC& entity = symbol.GetEntity();
+    ValuedListItem* item = FindItem( &entity, firstChild() );
+    if( item )
+        DisplayIcon( entity.Retrieve< TacticalHierarchies >(), item );
 }
 
 // -----------------------------------------------------------------------------

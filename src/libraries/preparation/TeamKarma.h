@@ -22,7 +22,7 @@ class TeamKarma
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamKarma( const QString& name, const QString& value );
+             TeamKarma( const QString& name, const QString& value, char id );
     virtual ~TeamKarma();
     //@}
 
@@ -30,6 +30,7 @@ public:
     //@{
     const QString& GetName() const;
     const QString& GetValue() const;
+    char GetIdentifier() const;
     //@}
 
 private:
@@ -44,6 +45,7 @@ private:
     //@{
     QString name_;
     QString value_;
+    char id_;
     //@}
 };
 

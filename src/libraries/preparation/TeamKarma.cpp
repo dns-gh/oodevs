@@ -14,9 +14,10 @@
 // Name: TeamKarma constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-TeamKarma::TeamKarma( const QString& name, const QString& value )
+TeamKarma::TeamKarma( const QString& name, const QString& value, char id )
     : name_( name )
     , value_( value )
+    , id_( id  )
 {
     // NOTHING
 }
@@ -46,4 +47,13 @@ const QString& TeamKarma::GetName() const
 const QString& TeamKarma::GetValue() const
 {
     return value_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamKarma::GetIdentifier
+// Created: AGE 2006-11-24
+// -----------------------------------------------------------------------------
+char TeamKarma::GetIdentifier() const
+{
+    return id_;
 }

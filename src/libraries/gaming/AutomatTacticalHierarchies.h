@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetLevel() const;
-    virtual void UpdateSymbol();
+    virtual void UpdateSymbol( bool up = true );
     //@}
 
 private:

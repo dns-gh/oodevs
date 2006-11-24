@@ -68,7 +68,7 @@ void Agent::InitializeSymbol() const
     
     const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
     const Diplomacies* diplo = team.Retrieve< Diplomacies >();
-    char karma = diplo ? diplo->GetKharma() : 'u';
+    char karma = diplo ? diplo->GetKarma() : 'u';
     std::replace( symbol_.begin(), symbol_.end(), '*', karma );
 }
 

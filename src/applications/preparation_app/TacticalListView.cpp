@@ -22,6 +22,8 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_gui/Tools.h"
 
+using namespace gui;
+
 #include "moc_TacticalListView.cpp"
 
 using namespace kernel;
@@ -31,7 +33,7 @@ using namespace kernel;
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
-    : gui::TacticalListView( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
+    : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , factory_( factory )
     , modelBuilder_( modelBuilder )
     , levels_( levels )
@@ -63,7 +65,7 @@ void TacticalListView::Display( const Entity_ABC& agent, gui::ValuedListItem* it
         item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
     else
         item->setPixmap( 1, QPixmap() );
-    gui::TacticalListView::Display( agent, item );
+    HierarchyListView< kernel::TacticalHierarchies >::Display( agent, item );
 }
 
 // -----------------------------------------------------------------------------
