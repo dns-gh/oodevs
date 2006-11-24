@@ -240,13 +240,30 @@ void MIL_Object_ABC::ProcessEvents()
 void MIL_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation )
 {
     TER_Object_ABC::UpdateLocalisation( newLocalisation );
-    while( !agentInsideSet_.empty() )
-        (**agentInsideSet_.begin()).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( *this );
 
-    TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
-    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject );
-    for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsInsideObject.begin(); itAgent != agentsInsideObject.end(); ++itAgent )
-        static_cast< PHY_RoleInterface_Location& >( **itAgent ).NotifyPutInsideObject( *this );
+    TER_Agent_ABC::T_AgentPtrVector newInsideTmp;
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), newInsideTmp );
+
+    T_AgentSet newInside;
+    for( TER_Agent_ABC::CIT_AgentPtrVector it = newInsideTmp.begin(); it != newInsideTmp.end(); ++it )
+    {
+        MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
+        newInside.insert( &agent );
+    }
+
+    T_AgentSet intersection;
+    std::set_difference( agentInsideSet_.begin(), agentInsideSet_.end(), 
+                         newInside      .begin(), newInside      .end(), 
+                         std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
+    for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
+        (**it).GetRole< PHY_RoleInterface_Location >().NotifyPutOutsideObject( *this );
+
+    intersection.clear();
+    std::set_difference( newInside      .begin(), newInside      .end(), 
+                         agentInsideSet_.begin(), agentInsideSet_.end(), 
+                         std::insert_iterator< T_AgentSet >( intersection, intersection.end() ) );
+    for( CIT_AgentSet it = intersection.begin(); it != intersection.end(); ++it )
+        (**it).GetRole< PHY_RoleInterface_Location >().NotifyPutInsideObject( *this );      
 }
 
 // -----------------------------------------------------------------------------
