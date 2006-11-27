@@ -10,8 +10,8 @@
 #ifndef __astec_pch_h_
 #define __astec_pch_h_
 
-#define APP_NAME    "ASTEC - EM"
-#define APP_VERSION "beta-2"
+#define APP_NAME    "C-SWORD - GAMING_APP"
+#define APP_VERSION "beta-1"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
