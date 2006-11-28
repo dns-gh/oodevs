@@ -93,7 +93,7 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Object", "Associated object:" ), pRealObject_ )
                 .Display( tools::translate( "Object", "Type:" ), type_ )
                 .Display( tools::translate( "Object", "Construction:" ), nPourcentageConstruction_ * Units::percentage )
-                .Display( tools::translate( "Object", "Value:" ), nPourcentageValorisation_ * Units::percentage )
+                .Display( tools::translate( "Object", "Development:" ), nPourcentageValorisation_ * Units::percentage )
                 .Display( tools::translate( "Object", "Bypass:" ), nPourcentageContournement_* Units::percentage )
                 .Display( tools::translate( "Object", "Setting up:" ), bEnPreparation_ )
                 .Display( tools::translate( "Object", "Perceived:" ), bIsPerceived_ )
