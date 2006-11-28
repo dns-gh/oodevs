@@ -67,14 +67,14 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    bool Load( const std::string& scipioXml );
     kernel::Options& GetOptions() const;
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    void New();
+    bool New();
     void Open();
     void Close();
     bool Save();

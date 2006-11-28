@@ -34,7 +34,7 @@ LogisticHierarchies_ABC< I >::LogisticHierarchies_ABC( kernel::Controller& contr
 template< typename I >
 LogisticHierarchies_ABC< I >::~LogisticHierarchies_ABC()
 {
-    // NOTHING
+    kernel::Resolver< Dotation >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------

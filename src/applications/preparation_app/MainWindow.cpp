@@ -250,20 +250,24 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 // Name: MainWindow::New
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-void MainWindow::New()
+bool MainWindow::New()
 {
     std::string current;
     while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
     {
         const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", this, 0, "Choose scipio.xml" );
         if( filename.isEmpty() )
-            return;
+            return false;
         current = filename;
         if( current.substr( 0, 2 ) == "//" )
             std::replace( current.begin(), current.end(), '/', '\\' );
     }
-    Load( current );
-    SetWindowTitle( true );
+    if( Load( current ) )
+    {
+        SetWindowTitle( true );
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -272,10 +276,9 @@ void MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::Open()
 {
-    New();
     try
     {
-        if( !scipioXml_.empty() )
+        if( New() && !scipioXml_.empty() )
         {
             loading_ = true;
             model_.Load( scipioXml_.c_str() ); // $$$$ SBO 2006-10-05: should be a different file
@@ -286,32 +289,43 @@ void MainWindow::Open()
     catch( InvalidModelException& e )
     {
         Close();
-        QMessageBox::critical( 0, APP_NAME, e.what() );
+        QMessageBox::critical( this, APP_NAME, e.what() );
     }
+    
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::Load
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-void MainWindow::Load( const std::string& scipioXml )
+bool MainWindow::Load( const std::string& scipioXml )
 {
-    BuildIconLayout();
-    scipioXml_ = scipioXml;
-    delete widget2d_; widget2d_ = 0;
-    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_, *eventStrategy_ );
-    glProxy_->ChangeTo( widget2d_ );
-    glProxy_->RegisterTo( widget2d_ );
-    delete glPlaceHolder_; glPlaceHolder_ = 0;
-    setCentralWidget( widget2d_ );
-    model_.Purge();
-    staticModel_.Load( scipioXml );
-    SetWindowTitle( false );
+    try
+    {
+        BuildIconLayout();
+        scipioXml_ = scipioXml;
+        delete widget2d_; widget2d_ = 0;
+        widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_, *eventStrategy_ );
+        glProxy_->ChangeTo( widget2d_ );
+        glProxy_->RegisterTo( widget2d_ );
+        delete glPlaceHolder_; glPlaceHolder_ = 0;
+        setCentralWidget( widget2d_ );
+        model_.Purge();
+        staticModel_.Load( scipioXml );
+        SetWindowTitle( false );
 
-    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-    connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
-    displayTimer_->start( 50 );
-    widget2d_->show();
+        connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+        connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
+        displayTimer_->start( 50 );
+        widget2d_->show();
+    }
+    catch( xml::exception& e )
+    {
+        Close();
+        QMessageBox::critical( this, APP_NAME, ( tr( "Error reading xml file: " ) + e.what() ).ascii() );
+        return false;
+    }
+    return true;
 }
 
 // -----------------------------------------------------------------------------
