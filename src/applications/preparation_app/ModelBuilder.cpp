@@ -117,28 +117,39 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
 bool ModelBuilder::OnDelete()
 {
     if( selectedAgent_ )
-        delete (const Agent_ABC*)selectedAgent_;
+        DeleteEntity( *selectedAgent_ );
     else if( selectedAutomat_ )
-        delete (const Automat_ABC*)selectedAutomat_;
+        DeleteEntity( *selectedAutomat_ );
     else if( selectedGroup_ )
-    {
-        const Team_ABC& team = static_cast< const Team_ABC& >( selectedGroup_->Get< CommunicationHierarchies >().GetUp() );
-        Iterator< const Entity_ABC& > it = team.Get< CommunicationHierarchies >().CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-            if( &it.NextElement() != selectedGroup_ )
-            {
-                delete (const KnowledgeGroup_ABC*)selectedGroup_;
-                return true;
-            }
-        return false;
-    }
+        DeleteEntity( *selectedGroup_ );
     else if( selectedTeam_ )
-        delete (const Team_ABC*)selectedTeam_;
+        DeleteEntity( *selectedTeam_ );
     else if( selectedFormation_ )
-        delete (const Formation_ABC*)selectedFormation_;
+        DeleteEntity( *selectedFormation_ );
     else
         return false;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::DeleteEntity
+// Created: AGE 2006-11-28
+// -----------------------------------------------------------------------------
+void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
+{
+    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            DeleteEntity( it.NextElement() );
+    }
+    if( const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >() )
+    {
+        Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            DeleteEntity( it.NextElement() );
+    }
+    delete &entity;
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +171,7 @@ void ModelBuilder::ClearSelection()
 // -----------------------------------------------------------------------------
 void ModelBuilder::BeforeSelection()
 {
-    ClearSelection();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -178,6 +189,7 @@ void ModelBuilder::AfterSelection()
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const Team_ABC& element )
 {
+    ClearSelection();
     selectedTeam_ = &element;
 }
     
@@ -187,6 +199,7 @@ void ModelBuilder::Select( const Team_ABC& element )
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const KnowledgeGroup_ABC& element )
 {
+    ClearSelection();
     selectedGroup_ = &element;
 }
     
@@ -196,6 +209,7 @@ void ModelBuilder::Select( const KnowledgeGroup_ABC& element )
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const Agent_ABC& element )
 {
+    ClearSelection();
     selectedAgent_ = &element;
 }
 
@@ -205,6 +219,7 @@ void ModelBuilder::Select( const Agent_ABC& element )
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const Formation_ABC& element )
 {
+    ClearSelection();
     selectedFormation_ = &element;
 }
 
@@ -214,6 +229,7 @@ void ModelBuilder::Select( const Formation_ABC& element )
 // -----------------------------------------------------------------------------
 void ModelBuilder::Select( const kernel::Automat_ABC& element )
 {
+    ClearSelection();
     selectedAutomat_ = &element;
 }
 

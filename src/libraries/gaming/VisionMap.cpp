@@ -53,15 +53,16 @@ void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& 
     glTranslatef( translation, translation, 0 );
     glPushAttrib( GL_CURRENT_BIT );
     glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
-        glBegin( GL_POINTS );
-            for( CIT_VisionMap it = vision_.begin(); it != vision_.end(); ++it )
-            {
-                const geometry::Point2f p = map_.Map( it->first.first, it->first.second );
-                assert( it->second >= 1 );
-                glColor4fv( colors[it->second-1] );
-                glVertex2fv( (float*)(&p) );
-            }
-        glEnd();
+    // $$$$ AGE 2006-11-28: y'a pas moins efficace...
+    glBegin( GL_POINTS );
+        for( CIT_VisionMap it = vision_.begin(); it != vision_.end(); ++it )
+        {
+            const geometry::Point2f p = map_.Map( it->first.first, it->first.second );
+            assert( it->second >= 1 );
+            glColor4fv( colors[it->second-1] );
+            glVertex2fv( (float*)(&p) );
+        }
+    glEnd();
     glPopAttrib();
     glPopMatrix();
 }

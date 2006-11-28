@@ -53,14 +53,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Entity_ABC* GetSuperior() const = 0;
     void Load( xml::xistream& xis );
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void SetSuperiorInternal( kernel::Entity_ABC* superior ) = 0;
     virtual void CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& owner, const QString& name );
     virtual void SerializeLogistics( xml::xostream& xos ) const;
     //@}

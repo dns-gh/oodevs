@@ -28,6 +28,7 @@ VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Worke
     , map_( factory_.CreateVisionMap() )
     , needUpdating_( true )
     , updating_( false )
+    , commiting_( false )
 {
     // NOTHING
 }
@@ -80,7 +81,7 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: VisionCones::Updater
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-VisionCones::Updater::Updater( const VisionCones& cones )
+VisionCones::Updater::Updater( VisionCones& cones )
     : cones_( & cones )
     , locker_( cones )
 {
@@ -97,11 +98,15 @@ void VisionCones::Updater::operator()()
     {
 
         cones_->updating_ = true;
-        cones_->map_->Clear();
+        VisionMap* map = cones_->factory_.CreateVisionMap();
         for( CIT_Surfaces it = cones_->surfaces_.begin(); it != cones_->surfaces_.end(); ++it )
-            (*it)->Update( *cones_->map_ );
+            (*it)->Update( *map );
+        cones_->commiting_ = true;
         cones_->needUpdating_ = false;
         cones_->updating_ = false;
+        std::swap( map, cones_->map_ );
+        delete map;
+        cones_->commiting_ = false;
     }
     catch( ... )
     {
@@ -115,7 +120,7 @@ void VisionCones::Updater::operator()()
 // -----------------------------------------------------------------------------
 void VisionCones::Update() const
 {
-    workers_.Enqueue( Updater( *this ) );
+    workers_.Enqueue( Updater( *const_cast< VisionCones* >( this ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,9 +132,12 @@ void VisionCones::Draw( const geometry::Point2f& , const geometry::Rectangle2f& 
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );
-    if( tools.ShouldDisplay( "VisionSurfaces" ) && ! updating_ )
-        if( needUpdating_ )
+
+    if( tools.ShouldDisplay( "VisionSurfaces" ) )
+    {
+        if( needUpdating_ && ! updating_ )
             Update();
-        else
+        if( ! commiting_ )
             map_->Draw( viewport, tools );
+    }
 }

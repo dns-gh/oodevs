@@ -32,16 +32,6 @@ LogisticHierarchies< Superior, I >::~LogisticHierarchies()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticHierarchies::GetSuperior
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-template< typename Superior, typename I >
-const kernel::Entity_ABC* LogisticHierarchies< Superior, I >::GetSuperior() const
-{
-    return (const kernel::Automat_ABC*)tc2_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LogisticHierarchies::Load
 // Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
@@ -71,4 +61,5 @@ template< typename Superior, typename I >
 void LogisticHierarchies< Superior, I >::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
     tc2_ = static_cast< kernel::Automat_ABC* >( superior );
+    LogisticHierarchies_ABC< I >::SetSuperiorInternal( superior );
 }

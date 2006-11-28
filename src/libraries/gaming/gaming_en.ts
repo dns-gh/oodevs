@@ -785,10 +785,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Value:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Perceived:</source>
         <translation type="unfinished"></translation>
     </message>

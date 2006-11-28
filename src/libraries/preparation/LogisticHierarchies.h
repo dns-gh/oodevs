@@ -33,7 +33,6 @@ public:
     //! @name Operations
     //@{
     virtual void Load( xml::xistream& xis, const kernel::Automat_ABC* superior );
-    virtual const kernel::Entity_ABC* GetSuperior() const;
     //@}
 
 private:

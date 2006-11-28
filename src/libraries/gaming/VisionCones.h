@@ -68,9 +68,9 @@ private:
     typedef T_Surfaces::const_iterator CIT_Surfaces;
     struct Updater
     {
-        Updater( const VisionCones& cones );
+        Updater( VisionCones& cones );
         void operator()();
-        const VisionCones* cones_;
+        VisionCones* cones_;
         kernel::ThreadShared::Locker locker_;
     };
     //@}
@@ -91,8 +91,10 @@ private:
     VisionMap* map_;
     T_Surfaces surfaces_;
     double elongationFactor_;
-    mutable volatile bool updating_;
     mutable volatile bool needUpdating_;
+    mutable volatile bool updating_;
+    mutable volatile bool commiting_; // $$$$ AGE 2006-11-28: not really enough on dual procs...
+    
     //@}
 };
 

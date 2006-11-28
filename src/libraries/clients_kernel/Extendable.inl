@@ -22,6 +22,7 @@ unsigned int Extendable< BaseType >::id_ = 0;
 // -----------------------------------------------------------------------------
 template< typename BaseType >
 template< typename Extension >
+#pragma auto_inline( off )
 unsigned int Extendable< BaseType >::GetExtensionId()
 {
     static unsigned id = id_++;

@@ -47,6 +47,7 @@ InterfaceContainer< BaseType >::~InterfaceContainer()
 // -----------------------------------------------------------------------------
 template< typename BaseType >
 template< typename Interface >
+#pragma auto_inline( off )
 unsigned int InterfaceContainer< BaseType >::GetInterfaceId()
 {
     static unsigned id = id_++;

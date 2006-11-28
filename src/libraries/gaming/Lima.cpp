@@ -97,7 +97,7 @@ void Lima::UpdateToSim( E_State state )
 // -----------------------------------------------------------------------------
 void Lima::Select( ActionController& actions ) const
 {
-    actions.Select( *this, *(kernel::TacticalLine_ABC*)this );
+    actions.Select( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,8 +106,7 @@ void Lima::Select( ActionController& actions ) const
 // -----------------------------------------------------------------------------
 void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
 {
-    actions.Select( *this, *(kernel::TacticalLine_ABC*)this );
-    actions.ContextMenu( *this, *(kernel::TacticalLine_ABC*)this, point );
+    actions.ContextMenu( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this, point );
 }
 
 // -----------------------------------------------------------------------------
