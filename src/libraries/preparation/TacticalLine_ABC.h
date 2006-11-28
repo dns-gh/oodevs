@@ -50,11 +50,6 @@ public:
     virtual ~TacticalLine_ABC();
     //@}
 
-    //! @name Accessors
-    //@{
-    virtual bool          IsLimit() const = 0;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{

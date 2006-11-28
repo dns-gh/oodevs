@@ -15,6 +15,11 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
+namespace kernel
+{
+    class TacticalLine_ABC;
+}
+
 namespace gui
 {
     class RichLabel;
@@ -30,7 +35,7 @@ class Limit;
 // =============================================================================
 class LimitParameter : public QHBox
                      , public Param_ABC
-                     , public kernel::ContextMenuObserver_ABC< Limit >
+                     , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
                      , public kernel::ElementObserver_ABC< Limit >
 
 {
@@ -67,7 +72,7 @@ private:
     //! @name Helpers
     //@{
     void Display( const QString& what );
-    virtual void NotifyContextMenu( const Limit& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Limit& ) {};
     virtual void NotifyDeleted( const Limit& entity );
     //@}
@@ -79,8 +84,8 @@ private:
     std::string     menu_;
     gui::RichLabel* pLabel_;
     QLabel*         entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
-    const Limit*    potential_;
-    const Limit*    selected_;
+    const Limit* potential_;
+    const Limit* selected_;
     //@}
 };
 

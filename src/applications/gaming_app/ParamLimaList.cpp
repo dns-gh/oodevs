@@ -154,16 +154,19 @@ void ParamLimaList::MenuItemValidated( int function )
 // Name: ParamLimaList::NotifyContextMenu
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void ParamLimaList::NotifyContextMenu( const Lima& entity, kernel::ContextMenu& menu )
+void ParamLimaList::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu )
 {
-    potential_ = &entity;
-    QPopupMenu* limaMenu = new QPopupMenu( menu );
-    for( int n = 0; n < eLimaFuncNbr; ++n )
+    if( !entity.IsLimit() )
     {
-        int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( MenuItemValidated( int ) ) ); 
-        limaMenu->setItemParameter( nId, n );
+        potential_ = static_cast< const Lima* >( &entity );
+        QPopupMenu* limaMenu = new QPopupMenu( menu );
+        for( int n = 0; n < eLimaFuncNbr; ++n )
+        {
+            int nId = limaMenu->insertItem( tools::ToString( (E_FuncLimaType)n ), this, SLOT( MenuItemValidated( int ) ) ); 
+            limaMenu->setItemParameter( nId, n );
+        }
+        menu.InsertItem( "Parametre", menu_.c_str(), limaMenu );
     }
-    menu.InsertItem( "Parametre", menu_.c_str(), limaMenu );
 }
 
 // -----------------------------------------------------------------------------

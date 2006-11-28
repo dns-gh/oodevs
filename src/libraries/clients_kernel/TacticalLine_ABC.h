@@ -33,6 +33,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsLimit() const = 0;
     //@}
 
 private:

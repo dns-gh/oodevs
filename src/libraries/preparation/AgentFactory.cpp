@@ -25,6 +25,7 @@
 #include "AutomatHierarchies.h"
 #include "AutomatCommunications.h"
 #include "Dotations.h"
+#include "Stocks.h"
 #include "MaintenanceStates.h"
 #include "MedicalStates.h"
 #include "SupplyStates.h"
@@ -41,6 +42,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/AutomatType.h"
 #include "StaticModel.h"
 
 using namespace kernel;
@@ -79,6 +81,8 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new Dotations( controllers_.controller_, *result, dico ) );
+//    if( parent.GetType().IsTC2() && commandPost )
+//        result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
 
     result->Polish();
     return result;
@@ -154,6 +158,8 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
+//    if( parent.GetType().IsTC2() && result->IsCommandPost() )
+//        result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
 
     result->Polish();
     return result;

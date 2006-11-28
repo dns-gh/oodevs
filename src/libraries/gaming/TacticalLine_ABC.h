@@ -61,7 +61,6 @@ public:
     //@{
     virtual unsigned long GetId  () const;
     virtual QString       GetName() const;
-    virtual bool          IsLimit() const = 0;
     //@}
 
 protected:

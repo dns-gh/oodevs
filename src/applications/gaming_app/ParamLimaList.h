@@ -15,6 +15,11 @@
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
+namespace kernel
+{
+    class TacticalLine_ABC;
+}
+
 class Lima;
 
 // =============================================================================
@@ -26,7 +31,7 @@ class Lima;
 class ParamLimaList : public QListView
                     , public Param_ABC
                     , public kernel::ElementObserver_ABC< Lima >
-                    , public kernel::ContextMenuObserver_ABC< Lima >
+                    , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
 {
     Q_OBJECT;
 
@@ -64,7 +69,7 @@ private:
     //! @name Helpers
     //@{
     void Clean();
-    virtual void NotifyContextMenu( const Lima& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const Lima& ) {};
     virtual void NotifyDeleted( const Lima& entity );
     //@}

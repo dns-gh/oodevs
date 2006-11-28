@@ -91,10 +91,13 @@ void LimitParameter::CommitTo( ASN1T_Line& asn )
 // Name: LimitParameter::NotifyContextMenu
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void LimitParameter::NotifyContextMenu( const Limit& entity, kernel::ContextMenu& menu )
+void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu )
 {
-    potential_ = &entity;
-    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    if( entity.IsLimit() )
+    {
+        potential_ = static_cast< const Limit* >( &entity );
+        menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    }
 }
     
 // -----------------------------------------------------------------------------
