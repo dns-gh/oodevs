@@ -164,7 +164,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
     Population* result = new Population( asnMsg, controllers_.controller_, static_.coordinateConverter_, model_.teams_, static_.types_ );
 
     result->Attach< Positions >( *new PopulationPositions( *result ) );
-    result->Attach( *new PopulationHierarchies( *result, model_.teams_.GetTeam( asnMsg.oid_camp ) ) );
+    result->Attach< TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( asnMsg.oid_camp ) ) );
     result->Attach( *new PopulationDecisions( *result ) );
     AttachExtensions( *result );
     result->Polish();

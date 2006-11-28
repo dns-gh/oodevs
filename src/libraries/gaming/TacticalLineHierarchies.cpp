@@ -67,7 +67,6 @@ void TacticalLineHierarchies::Update( const ASN1T_TacticalLinesDiffusion& messag
         SetSuperior( &automats_.Get( message.u.automate ) );
     else
         SetSuperior( &formations_.Get( message.u.formation ) );
-    controller_.Update( *(TacticalHierarchies*)this );
 }
 
 // -----------------------------------------------------------------------------
