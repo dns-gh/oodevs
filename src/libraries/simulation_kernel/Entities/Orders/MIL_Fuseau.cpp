@@ -622,7 +622,7 @@ bool MIL_Fuseau::SplitIntoSubFuseaux( uint nNbrSubFuseau, T_FuseauPtrList& conta
 //-----------------------------------------------------------------------------
 bool MIL_Fuseau::ComputeFurthestExtremityPoint( MT_Vector2D& vResult ) const
 {
-    if( !pLeftLimit_ || pRightLimit_ )
+    if( !pLeftLimit_ || !pRightLimit_ )
         return false;
 
     MT_Line lineFurthestBorder( *pLeftLimit_->GetPoints().rbegin(), *pRightLimit_->GetPoints().rbegin() );
@@ -637,7 +637,7 @@ bool MIL_Fuseau::ComputeFurthestExtremityPoint( MT_Vector2D& vResult ) const
 //-----------------------------------------------------------------------------
 bool MIL_Fuseau::ComputeClosestExtremityPoint( MT_Vector2D& vResult ) const
 {
-    if( !pLeftLimit_ || pRightLimit_ )
+    if( !pLeftLimit_ || !pRightLimit_ )
         return false;
 
     MT_Line lineClosestBorder( *pLeftLimit_->GetPoints().begin(), *pRightLimit_->GetPoints().begin() );
