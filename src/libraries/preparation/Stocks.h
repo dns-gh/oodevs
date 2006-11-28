@@ -1,0 +1,74 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __Stocks_h_
+#define __Stocks_h_
+
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Resolver.h"
+#include "clients_kernel/Serializable_ABC.h"
+
+namespace kernel
+{
+    class Controller;
+    class DotationType;
+    class PropertiesDictionary;
+    class Entity_ABC;
+}
+
+namespace xml
+{
+    class xistream;
+}
+
+class Dotation;
+class DotationsItem;
+
+// =============================================================================
+/** @class  Stocks
+    @brief  Stocks
+*/
+// Created: SBO 2006-11-27
+// =============================================================================
+class Stocks : public kernel::Extension_ABC
+             , public kernel::Resolver< Dotation >
+             , public kernel::Serializable_ABC
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             Stocks( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
+             Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver, kernel::PropertiesDictionary& dico );
+    virtual ~Stocks();
+    //@}
+
+private:
+    //! @name Copy/Assignement
+    //@{
+    Stocks( const Stocks& );            //!< Copy constructor
+    Stocks& operator=( const Stocks& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void CreateDictionary( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
+    virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void ReadDotation( xml::xistream& xis, const kernel::Resolver_ABC< kernel::DotationType, QString >& resolver );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controller& controller_;
+    DotationsItem* item_;
+    //@}
+};
+
+#endif // __Stocks_h_
