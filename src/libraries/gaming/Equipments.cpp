@@ -73,7 +73,7 @@ void Equipments::AddToDictionary( const Equipment& equipment )
 
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Available" ), equipment.available_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Unavailable" ), equipment.unavailable_ );
-    dico_.Register( *this, baseName + tools::translate( "Equipments", "Fixable" ), equipment.repairable_ );
+    dico_.Register( *this, baseName + tools::translate( "Equipments", "Repairable" ), equipment.repairable_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "In maintenance" ), equipment.inMaintenance_ );
     dico_.Register( *this, baseName + tools::translate( "Equipments", "Prisoner" ), equipment.prisonners_ );
 }

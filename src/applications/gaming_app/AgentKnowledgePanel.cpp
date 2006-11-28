@@ -64,7 +64,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
 
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Unit" ) ).
-                          AddColumn( tr( "Niveau perception" ) );
+                          AddColumn( tr( "Perception level" ) );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
@@ -128,7 +128,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 void AgentKnowledgePanel::Display( const AgentKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
     item->SetValue( &k );
-    displayer.Display( "Agents connus", k.GetEntity() );
+    displayer.Display( tr( "Known units" ), k.GetEntity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge_ABC& k )
     if( ! IsVisible() || subSelected_ != & k )
         return;
 
-    k.Display( display_->Group( "Détails" ) );
+    k.Display( display_->Group( tr( "Details" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -274,6 +274,6 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* item )
 {
     item->SetValue( perception.detected_ );
-    displayer.Display( "Agent", perception.detected_->GetName() ); // to prevent link
-    displayer.Display( "Niveau perception", perception.level_ );
+    displayer.Display( tr( "Unit" ), perception.detected_->GetName() ); // to prevent link
+    displayer.Display( tr( "Perception level" ), perception.level_ );
 }

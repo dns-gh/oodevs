@@ -76,7 +76,7 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     Displayer_ABC& displayer = (*agentDisplay_)( item );
 
     displayer.Display( tr( "Target" ), result->target_ );
-    displayer.Display( tr( "Equipments" ), tr( " (avail, unavail, fixable):" ) );
+    displayer.Display( tr( "Equipments" ), tr( " (avail, unavail, repairable):" ) );
     displayer.Display( "Troops", tr( " (officer, warrant-off., private)" ) );
 
     // $$$$ AGE 2006-02-28: crado. Essayer de faire un displayer qui puisse cascader 

@@ -52,5 +52,5 @@ void DirectFire::Draw( const geometry::Point2f& where, const geometry::Rectangle
 {
     const Positions* p = target_->Retrieve< Positions >();
     if( p && ! viewport.Intersect( geometry::Rectangle2f( where, p->GetPosition() ) ).IsEmpty() )
-        tools.DrawArrow( where, p->GetPosition() );
+        tools.DrawArrow( where, p->GetPosition(), 2.f );
 }

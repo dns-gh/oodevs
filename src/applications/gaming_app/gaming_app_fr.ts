@@ -17,10 +17,6 @@
 <context>
     <name>AgentKnowledgePanel</name>
     <message>
-        <source>Niveau perception</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Nature:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -98,6 +94,10 @@
     </message>
     <message>
         <source>Heading:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perception level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -291,6 +291,10 @@
     </message>
     <message>
         <source>Lender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repairable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -767,15 +771,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> (avail, unavail, fixable):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> (officer, warrant-off., private)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Troops</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (avail, unavail, repairable):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

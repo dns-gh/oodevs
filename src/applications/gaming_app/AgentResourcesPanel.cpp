@@ -42,7 +42,7 @@ AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, PanelStack_ABC& panel
     pEquipment_->AddColumn( tr( "Equipment" ) )
                 .AddColumn( tr( "Available" ) )
                 .AddColumn( tr( "Unavailable" ) )
-                .AddColumn( tr( "Fixable" ) )
+                .AddColumn( tr( "Repairable" ) )
                 .AddColumn( tr( "In maintenance" ) )
                 .AddColumn( tr( "Prisoner" ) ) ;
 
