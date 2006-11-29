@@ -18,6 +18,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Team::Team( const ASN1T_MsgSideCreation& asnMsg, Controller& controller )
     : EntityImplementation< Team_ABC >( controller, asnMsg.oid, asnMsg.nom )
+    , karma_( asnMsg.type )
 {
     // NOTHING
 }
@@ -29,4 +30,31 @@ Team::Team( const ASN1T_MsgSideCreation& asnMsg, Controller& controller )
 Team::~Team()
 {
     Destroy();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::IsFriend
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+bool Team::IsFriend() const
+{
+    return karma_ == EnumDiplomatie::ami;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Team::IsEnemy
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+bool Team::IsEnemy() const
+{
+    return karma_ == EnumDiplomatie::ennemi;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: Team::IsNeutral
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+bool Team::IsNeutral() const
+{
+    return karma_ == EnumDiplomatie::neutre;
 }

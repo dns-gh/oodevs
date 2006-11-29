@@ -30,11 +30,24 @@ public:
     virtual ~Team();
     //@}
 
+    //! @name Operations
+    //@{
+    virtual bool IsFriend () const;
+    virtual bool IsEnemy  () const;
+    virtual bool IsNeutral() const;
+    //@}
+
 private:
     //! @name Copy / Assignement
     //@{
     Team( const Team& );
     Team& operator=( const Team& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ASN1T_EnumDiplomatie karma_;
     //@}
 };
 

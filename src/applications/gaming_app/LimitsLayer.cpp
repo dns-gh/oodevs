@@ -71,8 +71,9 @@ bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
     if( ! TacticalLinesLayer::ShouldDisplay( entity ) )
         return false;
-    if( const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior() )
-        return gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( *superior );
+    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+        if( const kernel::Entity_ABC* superior = hierarchies->GetSuperior() )
+            return gui::EntityLayer< kernel::TacticalLine_ABC >::ShouldDisplay( *superior );
     return false;
 }
 

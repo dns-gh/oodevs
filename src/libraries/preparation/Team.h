@@ -65,6 +65,10 @@ public:
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     const TeamKarma& GetKarma() const;
+
+    virtual bool IsFriend () const;
+    virtual bool IsEnemy  () const;
+    virtual bool IsNeutral() const;
     //@}
 
 private:

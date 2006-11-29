@@ -189,3 +189,30 @@ void Team::SetKarma( TeamKarma* const& karma )
     karma_ = karma;
     Get< kernel::TacticalHierarchies >().UpdateSymbol( false );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Team::IsFriend
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+bool Team::IsFriend() const
+{
+    return karma_->GetIdentifier() == 'f';
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::IsEnemy
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+bool Team::IsEnemy() const
+{
+    return karma_->GetIdentifier() == 'h';
+}
+
+// -----------------------------------------------------------------------------
+// Name: Team::IsNeutral
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+bool Team::IsNeutral() const
+{
+    return karma_->GetIdentifier() == 'n';
+}

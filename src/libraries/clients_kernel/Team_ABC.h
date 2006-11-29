@@ -35,6 +35,9 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsFriend () const = 0;
+    virtual bool IsEnemy  () const = 0;
+    virtual bool IsNeutral() const = 0;
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
