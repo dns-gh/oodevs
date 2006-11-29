@@ -71,6 +71,7 @@
 #include "AutomatHierarchies.h"
 #include "AutomatTacticalHierarchies.h"
 #include "PopulationHierarchies.h"
+#include "PcAttributes.h"
 
 #include "Quotas.h"
 
@@ -147,6 +148,8 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new LogisticConsigns( controllers_.controller_ ) );
     result->Attach< CommunicationHierarchies >( *new AgentHierarchies< CommunicationHierarchies >( controllers_.controller_, *result, model_.agents_ ) );
     result->Attach< TacticalHierarchies >     ( *new AgentHierarchies< TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
+    if( asnMsg.pc )
+        result->Attach( *new PcAttributes( *result ) );
     AttachExtensions( *result );
 
     result->Update( asnMsg );
