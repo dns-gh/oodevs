@@ -307,8 +307,7 @@ void HierarchyListView_ABC::NotifyActivated( const Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    if( & profile_ == &profile )
-        Update();
+    Update();
 }
 
 // -----------------------------------------------------------------------------

@@ -1430,6 +1430,8 @@ void AgentServerMsgMgr::OnReceiveMsgStopPionFire( const ASN1T_MsgStopPionFire& m
     Entity_ABC* src = GetModel().fires_.FindFirer( message );
     if( src )
         src->Update( message );
+    else
+        MT_LOG_WARNING_MSG( "Could not find fire" );
     GetModel().fires_.RemoveFire( message );
 }
 

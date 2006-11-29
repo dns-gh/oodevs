@@ -195,9 +195,6 @@ void ObjectListView::NotifyActivated( const Entity_ABC& element )
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    if( & profile_ != &profile )
-        return;
-
     QListViewItemIterator it( this );
     while( ValuedListItem* item = (ValuedListItem*)( *it ) )
     {

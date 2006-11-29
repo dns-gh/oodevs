@@ -39,6 +39,7 @@
 #include "Properties.h"
 #include "TacticalList.h"
 #include "XPSPlayer.h"
+#include "ProfileFilterObject.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -105,7 +106,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& profile )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& p )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_( controllers )
     , staticModel_( staticModel )
@@ -119,6 +120,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 {
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME );
+
+    Profile_ABC& profile = *new ProfileFilterObject( this, controllers, p );
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 

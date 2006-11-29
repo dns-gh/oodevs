@@ -105,8 +105,6 @@ void EventToolbar::NotifyCreated( const Report_ABC& report )
 // -----------------------------------------------------------------------------
 void EventToolbar::NotifyUpdated( const Profile_ABC& profile )
 {
-    if( &profile_ != &profile )
-        return;
     T_Agents filtered;
     for( CIT_Agents it = messageAgents_.begin(); it != messageAgents_.end(); ++it )
         if( profile.IsVisible( **it ) )

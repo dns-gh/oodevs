@@ -164,9 +164,6 @@ void PopulationListView::NotifySelected( const Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    if( &profile_ != &profile )
-        return;
-
     // $$$$ AGE 2006-11-21: update !
     // $$$$ AGE 2006-10-13: Should be a HierarchyListView...
 }
