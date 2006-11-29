@@ -160,7 +160,7 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
 // Name: TacticalListView::NotifyContextMenu
 // Created: SBO 2006-09-06
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
     if( agent.Retrieve< AutomatDecisions >() )
     {
@@ -177,11 +177,11 @@ void TacticalListView::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& m
 // -----------------------------------------------------------------------------
 void TacticalListView::Engage()
 {
-    gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() );
-    if( valuedItem && valuedItem->IsA< const Agent_ABC* >() )
+    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
     {
-        Agent_ABC& agent = const_cast< Agent_ABC& >( *valuedItem->GetValue< const Agent_ABC* >() );
-        agent.Get< AutomatDecisions >().Engage();
+        Entity_ABC& entity = const_cast< Entity_ABC& >( *valuedItem->GetValue< const Entity_ABC* >() );
+        if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+            decisions->Engage();
     }
 }
 
@@ -191,11 +191,11 @@ void TacticalListView::Engage()
 // -----------------------------------------------------------------------------
 void TacticalListView::Disengage()
 {
-    gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() );
-    if( valuedItem && valuedItem->IsA< const Agent_ABC* >() )
+    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
     {
-        Agent_ABC& agent = const_cast< Agent_ABC& >( *valuedItem->GetValue< const Agent_ABC* >() );
-        agent.Get< AutomatDecisions >().Disengage();
+        Entity_ABC& entity = const_cast< Entity_ABC& >( *valuedItem->GetValue< const Entity_ABC* >() );
+        if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+            decisions->Disengage();
     }
 }
 

@@ -36,7 +36,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
                        , public kernel::ElementObserver_ABC< AutomatDecisions >
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
-                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                       , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
 {
     Q_OBJECT;
 
@@ -74,7 +74,7 @@ private:
     virtual void NotifyUpdated( const AutomatDecisions& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void keyPressEvent( QKeyEvent* event );
 
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
