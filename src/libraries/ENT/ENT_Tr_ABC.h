@@ -72,7 +72,7 @@ public:
     // Name: InverseFindInConverter
     // Created: JVT 03-04-29
     //-----------------------------------------------------------------------------
-    template < typename T > static const std::string& InverseFindInConverter( const converter<T> conv[], T val , E_Conversion e = eToSim )
+    template < typename T > static const std::string& InverseFindInConverter( const converter<T> conv[], T val , E_Conversion e = eToTr )
     {
         static std::string strBadName_ = "";
 

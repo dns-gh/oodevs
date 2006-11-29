@@ -92,10 +92,10 @@ public:
     static const std::string& ConvertFromAmbianceMission( E_AmbianceMission, E_Conversion = eToSim );
     static const std::string& ConvertFromTC2GererMaterielAvantDeplacement( E_TC2GererMaterielAvantDeplacement, E_Conversion = eToSim );
 
-    static const std::string& ConvertFromAutomataMission  ( E_AutomataMission  , E_Conversion = eToSim );
-    static const std::string& ConvertFromUnitMission      ( E_UnitMission      , E_Conversion = eToSim );
-    static const std::string& ConvertFromPopulationMission( E_PopulationMission, E_Conversion = eToSim );
-    static const std::string& ConvertFromFragOrder        ( E_FragOrder        , E_Conversion = eToSim );
+    static const std::string& ConvertFromAutomataMission  ( E_AutomataMission  , E_Conversion = eToTr );
+    static const std::string& ConvertFromUnitMission      ( E_UnitMission      , E_Conversion = eToTr );
+    static const std::string& ConvertFromPopulationMission( E_PopulationMission, E_Conversion = eToTr );
+    static const std::string& ConvertFromFragOrder        ( E_FragOrder        , E_Conversion = eToTr );
 
     // ConvertTo functions
     static E_TypeLocalisation ConvertToTypeLocalisation( const std::string& );

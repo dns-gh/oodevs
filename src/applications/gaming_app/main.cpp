@@ -10,6 +10,8 @@
 #include "gaming_app_pch.h"
 #include "Application.h"
 
+#include "ENT/ENT_Tr.h"
+
 #include "tools/Win32/StackWalkerProxy.h"
 #include <qapplication.h>
 #include <qmessagebox.h>
@@ -18,7 +20,7 @@
 namespace
 {
     ////
-    static const QString locale = "_fr";
+    static const QString locale = "_en";
     ////
 
     void AddTranslator( const char* t )
@@ -57,6 +59,7 @@ namespace
             AddTranslator( "clients_gui" );
             AddTranslator( "gaming" );
             AddTranslator( "gaming_app" );
+            ENT_Tr::InitTranslations();
             return app;
         }
         catch( ... )

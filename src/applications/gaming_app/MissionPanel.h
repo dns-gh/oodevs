@@ -92,7 +92,6 @@ private:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
-    int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddAgentMissions( const Decisions& decisions, kernel::ContextMenu& menu ); 
     void AddAutomatMissions( const AutomatDecisions& decisions, kernel::ContextMenu& menu ); 
     template< typename D >

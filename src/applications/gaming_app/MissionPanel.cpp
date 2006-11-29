@@ -104,22 +104,6 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionPanel::AddMissions
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot )
-{
-    QPopupMenu& missions = *new QPopupMenu( menu );
-    while( it.HasMoreElements() )
-    {
-        const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( mission.GetName(), this, slot );
-        missions.setItemParameter( nId, mission.GetId() );
-    }
-    return menu.InsertItem( "Order", name, &missions  );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MissionPanel::AddFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
@@ -161,7 +145,17 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
 // -----------------------------------------------------------------------------
 void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& menu )
 {
-    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Unit missions" ), SLOT( ActivateAgentMission( int ) ) );
+    QPopupMenu& missions = *new QPopupMenu( menu );
+
+    Iterator< const Mission& > it = decisions.GetMissions();
+    while( it.HasMoreElements() )
+    {
+        const Mission& mission = it.NextElement();
+        int nId = missions.insertItem( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)mission.GetId() ).c_str(), this, SLOT( ActivateAgentMission( int ) ) );
+        missions.setItemParameter( nId, mission.GetId() );
+    }
+    const int id = menu.InsertItem( "Order",  tr( "Unit missions" ), &missions  );
+
     const bool isEmbraye = decisions.IsEmbraye();
     menu.SetItemEnabled( id, ! isEmbraye );
     if( ! isEmbraye )
@@ -174,7 +168,17 @@ void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& me
 // -----------------------------------------------------------------------------
 void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, ContextMenu& menu )
 {
-    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
+    QPopupMenu& missions = *new QPopupMenu( menu );
+
+    Iterator< const Mission& > it = decisions.GetMissions();
+    while( it.HasMoreElements() )
+    {
+        const Mission& mission = it.NextElement();
+        int nId = missions.insertItem( ENT_Tr::ConvertFromAutomataMission( (E_AutomataMission)mission.GetId() ).c_str(), this, SLOT( ActivateAutomatMission( int ) ) );
+        missions.setItemParameter( nId, mission.GetId() );
+    }
+    const int id = menu.InsertItem( "Order",  tr( "Automat missions" ), &missions  );
+
     menu.SetItemEnabled( id, decisions.IsEmbraye() );
     if( decisions.IsEmbraye() )
         AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
@@ -248,7 +252,7 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& 
             while( it.HasMoreElements() )
             {
                 const Mission& mission = it.NextElement();
-                int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
+                int nId = missions.insertItem( ENT_Tr::ConvertFromPopulationMission( (E_PopulationMission)mission.GetId() ).c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
                 missions.setItemParameter( nId, mission.GetId() );
             }
             menu.InsertItem( "Order", tr( "Population missions" ), &missions  );
