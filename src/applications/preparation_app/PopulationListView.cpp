@@ -9,7 +9,6 @@
 
 #include "preparation_app_pch.h"
 #include "PopulationListView.h"
-#include "moc_PopulationListView.cpp"
 #include "PreparationProfile.h"
 
 // -----------------------------------------------------------------------------
@@ -33,32 +32,12 @@ PopulationListView::~PopulationListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationListView::NotifyContextMenu
-// Created: SBO 2006-10-16
-// -----------------------------------------------------------------------------
-void PopulationListView::NotifyContextMenu( const kernel::Population_ABC&, kernel::ContextMenu& menu )
-{
-    if( selected_ )
-        menu.InsertItem( "Commande", tr( "Delete" ), this, SLOT( OnDelete() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationListView::keyPressEvent
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
 void PopulationListView::keyPressEvent( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
-        delete (const kernel::Entity_ABC*)selected_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationListView::OnDelete
-// Created: SBO 2006-10-16
-// -----------------------------------------------------------------------------
-void PopulationListView::OnDelete()
-{
-    if( selected_ )
         delete (const kernel::Entity_ABC*)selected_;
 }
 

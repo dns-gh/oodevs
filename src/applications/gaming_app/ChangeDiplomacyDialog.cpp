@@ -130,6 +130,6 @@ void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu
     if( profile_.CanDoMagic( team ) )
     {
         pArmy1ComboBox_->SetCurrentItem( team.GetId() );
-        menu.InsertItem( "Commande", tr( "Diplomacy" ), this, SLOT( show() ) );
+        menu.InsertItem( "Command", tr( "Diplomacy" ), this, SLOT( show() ) );
     }
 }

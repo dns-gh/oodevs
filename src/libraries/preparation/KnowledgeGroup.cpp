@@ -30,7 +30,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, Re
     : EntityImplementation< KnowledgeGroup_ABC >( controller, idManager.GetNextId(), "" )
     , type_( types.Find( "Standard" ) ) // $$$$ SBO 2006-11-17: Hard coded default
 {
-    name_ = tools::translate( "KnowledgeGroup", "Knowledge group" );
+    name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -46,7 +46,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
     xis >> attribute( "type", type )
         >> attribute( "name", name );
     type_ = &types.Get( type.c_str() );
-    name_ = name.c_str();
+    name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
 
     RegisterSelf( *this );
@@ -84,15 +84,6 @@ void KnowledgeGroup::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Name" ), name_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "KnowledgeGroup", "Info/Type" ), type_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::GetName
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-QString KnowledgeGroup::GetName() const
-{
-    return QString( "%1 [%2]" ).arg( name_ ).arg( id_ );
 }
 
 // -----------------------------------------------------------------------------

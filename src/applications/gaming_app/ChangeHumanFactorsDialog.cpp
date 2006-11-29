@@ -193,7 +193,7 @@ void ChangeHumanFactorsDialog::NotifyContextMenu( const Agent_ABC& agent, Contex
     if( profile_.CanDoMagic( agent ) )
     {
         selected_ = &agent;
-        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Human factors" ), this, SLOT( Show() ) );
     }
 }

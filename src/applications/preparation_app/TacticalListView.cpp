@@ -106,9 +106,9 @@ void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 void TacticalListView::keyPressEvent( QKeyEvent* event )
 {
     if( selectedItem() && event->key() == Qt::Key_Delete )
-        if( modelBuilder_.OnDelete() )
-            return;
-    QListView::keyPressEvent( event );
+        modelBuilder_.DeleteEntity( *((ValuedListItem*)selectedItem())->GetValue< const Entity_ABC* >() );
+    else
+        QListView::keyPressEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,11 +133,10 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 {
     if( !isVisible() )
         return;
-    QPopupMenu* subMenu = menu.SubMenu( "Commande", tr( "Create formation" ) );
+    QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
     const HierarchyLevel_ABC* level = levels_.GetRoot();
     while( level && ( level = level->GetNext() ) )
         subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
-    menu.InsertItem( "Commande", tr( "Delete" ), &modelBuilder_, SLOT( OnDelete() ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -151,11 +150,10 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
     const HierarchyLevel_ABC* level = &formation.GetLevel();
     if( level && level->GetNext() )
     {
-        QPopupMenu* subMenu = menu.SubMenu( "Commande", tr( "Create formation" ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
         while( level && ( level = level->GetNext() ) )
             subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
     }
-    menu.InsertItem( "Commande", tr( "Delete" ), &modelBuilder_, SLOT( OnDelete() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,11 +165,10 @@ void TacticalListView::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& m
     if( agent.Retrieve< AutomatDecisions >() )
     {
         if( ! agent.Retrieve< AutomatDecisions >()->IsEmbraye() )
-            menu.InsertItem( "Commande", tr( "Engage" ), this, SLOT( Engage() ) );
+            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
         else
-            menu.InsertItem( "Commande", tr( "Disengage" ), this, SLOT( Disengage() ) );
+            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
-    menu.InsertItem( "Commande", tr( "Delete" ), &modelBuilder_, SLOT( OnDelete() ) );
 }
 
 // -----------------------------------------------------------------------------

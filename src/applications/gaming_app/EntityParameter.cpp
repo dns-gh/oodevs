@@ -67,7 +67,7 @@ void EntityParameterBase::SetId( ASN1T_OID id )
 // -----------------------------------------------------------------------------
 void EntityParameterBase::AddToMenu( ContextMenu& menu )
 {
-    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    menu.InsertItem( "Parameter", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -105,7 +105,7 @@ void ParamPath::CommitTo( ASN1T_Itineraire& destination )
 // -----------------------------------------------------------------------------
 void ParamPath::NotifyContextMenu( const geometry::Point2f&, ContextMenu& menu )
 {   
-    menu.InsertItem( "Parametre", menu_, this, SLOT( StartPath() ) );
+    menu.InsertItem( "Parameter", menu_, this, SLOT( StartPath() ) );
 }
 
 // -----------------------------------------------------------------------------

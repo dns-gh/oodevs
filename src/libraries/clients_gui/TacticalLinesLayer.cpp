@@ -79,8 +79,8 @@ void TacticalLinesLayer::NotifyContextMenu( const geometry::Point2f&, kernel::Co
 {
     if( CanCreateLine() )
     {
-        menu.InsertItem( "Parametre", tools::translate( "LimitsLayer", "Create limit" ), this, SLOT( OnCreateLimit() ) );
-        menu.InsertItem( "Parametre", tools::translate( "LimitsLayer", "Create lima"  ), this, SLOT( OnCreateLima() ) );
+        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create limit" ), this, SLOT( OnCreateLimit() ) );
+        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create lima"  ), this, SLOT( OnCreateLima() ) );
     }
 }
 

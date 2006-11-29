@@ -734,7 +734,7 @@ void LogisticSupplyRecompletionDialog::NotifyContextMenu( const Agent_ABC& agent
     if( profile_.CanDoMagic( agent ) )
     {
         selected_ = &agent;
-        QPopupMenu* subMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Partial recompletion" ), this, SLOT( Show() ) );
     }
 }

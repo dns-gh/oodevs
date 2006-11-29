@@ -70,7 +70,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
     selectedEntity_ = &agent;
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
-        QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
+        QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
 
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
@@ -95,7 +95,7 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, 
         return;
 
     selectedEntity_ = &agent;
-    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic order" ) );
+    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic order" ) );
     AddMagic( tr( "Surrender" ), SLOT( Surrender() ), magicMenu );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
@@ -115,7 +115,7 @@ void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, C
         return;
 
     selectedEntity_ = &group;
-    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
+    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
 } 
 
@@ -129,7 +129,7 @@ void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu&
         return;
 
     selectedEntity_ = &team;
-    QPopupMenu* magicMenu = menu.SubMenu( "Ordre", tr( "Magic orders" ) );
+    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
 }
 

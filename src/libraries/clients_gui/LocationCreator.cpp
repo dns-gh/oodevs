@@ -84,7 +84,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     if( !pPopupMenu_ )
         return;
     popupPoint_ = point;
-    menu.InsertItem( "Parametre", menu_, pPopupMenu_ );
+    menu.InsertItem( "Creation", menu_, pPopupMenu_ );
 }
 
 // -----------------------------------------------------------------------------

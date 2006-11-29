@@ -38,6 +38,12 @@ private:
     ObjectsLayer( const ObjectsLayer& );            //!< Copy constructor
     ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignement operator
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    //@}
 };
 
 }

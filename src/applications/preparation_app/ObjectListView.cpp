@@ -9,7 +9,6 @@
 
 #include "preparation_app_pch.h"
 #include "ObjectListView.h"
-#include "moc_ObjectListView.cpp"
 #include "PreparationProfile.h"
 
 // -----------------------------------------------------------------------------
@@ -33,32 +32,12 @@ ObjectListView::~ObjectListView()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectListView::NotifyContextMenu
-// Created: SBO 2006-10-16
-// -----------------------------------------------------------------------------
-void ObjectListView::NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu )
-{
-    if( selected_ )
-        menu.InsertItem( "Commande", tr( "Delete" ), this, SLOT( OnDelete() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectListView::keyPressEvent
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
 void ObjectListView::keyPressEvent( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
-        delete (const kernel::Entity_ABC*)selected_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectListView::OnDelete
-// Created: SBO 2006-10-16
-// -----------------------------------------------------------------------------
-void ObjectListView::OnDelete()
-{
-    if( selected_ )
         delete (const kernel::Entity_ABC*)selected_;
 }
 

@@ -46,7 +46,7 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
     , nDotationValorization_         ( 0 )
 {
     RegisterSelf( *this );
-    name_ = type.GetName();
+    name_ = tools::translate( "Object", "%1 [%2]" ).arg( type.GetName() ).arg( id_ );
     CreateDictionary( controller );
 }
 
@@ -123,15 +123,6 @@ const kernel::ObjectType& Object::ReadType( xml::xistream& xis, const Resolver_A
 const ObjectType& Object::GetType() const
 {
     return type_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetName
-// Created: SBO 2006-10-30
-// -----------------------------------------------------------------------------
-QString Object::GetName() const
-{
-    return QString( "%1 [%2]" ).arg( name_ ).arg( id_ );
 }
 
 // -----------------------------------------------------------------------------

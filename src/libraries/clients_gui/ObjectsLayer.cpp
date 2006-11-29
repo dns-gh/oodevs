@@ -33,3 +33,13 @@ ObjectsLayer::~ObjectsLayer()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsLayer::ContextMenu
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+void ObjectsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
+{
+    const kernel::Object_ABC& object = static_cast< const kernel::Object_ABC& >( entity );
+    controllers_.actions_.ContextMenu( object, entity, point, where );
+}

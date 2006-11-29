@@ -97,7 +97,7 @@ void LogisticSupplyChangeQuotasDialog::NotifyContextMenu( const Automat_ABC& age
         if( type.IsLogisticSupply() )
         {
             selected_ = &agent;
-            menu.InsertItem( "Commande", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
+            menu.InsertItem( "Command", tr( "Allocate supply quotas" ), this, SLOT( Show() ) );
         }
     }
 }

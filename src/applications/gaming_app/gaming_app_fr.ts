@@ -254,10 +254,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fixable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>In maintenance</source>
         <translation type="unfinished"></translation>
     </message>

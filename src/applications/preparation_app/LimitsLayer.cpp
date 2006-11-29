@@ -40,7 +40,7 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::CanCreateLine()
 {
-    return true; // $$$$ AGE 2006-11-21: 
+    return modelBuilder_.CanCreateLine();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ bool LimitsLayer::CanCreateLine()
 // -----------------------------------------------------------------------------
 void LimitsLayer::Delete( const kernel::TacticalLine_ABC& line )
 {
-    delete &line;// $$$$ SBO 2006-11-07: 
+    modelBuilder_.DeleteEntity( line );
 }
 
 // -----------------------------------------------------------------------------

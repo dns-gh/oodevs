@@ -33,10 +33,11 @@ PopulationsLayer::~PopulationsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationsLayer::DisplayTooltip
-// Created: AGE 2006-06-29
+// Name: PopulationsLayer::ContextMenu
+// Created: SBO 2006-11-28
 // -----------------------------------------------------------------------------
-void PopulationsLayer::DisplayTooltip( const Population_ABC& entity, Displayer_ABC& displayer )
+void PopulationsLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
 {
-    // NOTHING
-}            
+    const kernel::Population_ABC& popu = static_cast< const kernel::Population_ABC& >( entity );
+    controllers_.actions_.ContextMenu( popu, entity, point, where );
+}

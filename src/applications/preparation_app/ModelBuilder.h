@@ -12,6 +12,7 @@
 
 #include <qobject.h>
 #include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel
@@ -42,6 +43,7 @@ class ModelBuilder : public QObject
                    , public kernel::SelectionObserver_Base< kernel::Agent_ABC >
                    , public kernel::SelectionObserver_Base< kernel::Automat_ABC >
                    , public kernel::SelectionObserver_Base< kernel::Formation_ABC >
+                   , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT;
 
@@ -55,14 +57,16 @@ public:
     //! @name Operations
     //@{
     void ClearSelection();
+    bool CanCreateLine() const;
     void CreateLimit( const T_PointVector& points );
     void CreateLima ( const T_PointVector& points );
+    void DeleteEntity( const kernel::Entity_ABC& entity );
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    bool OnDelete();
+    void OnDelete();
     void OnCreate();
     void OnCreateFormation( int level );
     void OnCreateCommunication();
@@ -85,7 +89,7 @@ private:
     virtual void Select( const kernel::Agent_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
     virtual void Select( const kernel::Formation_ABC& element );
-    void DeleteEntity( const kernel::Entity_ABC& entity );
+    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:
@@ -98,6 +102,7 @@ private:
     kernel::SafePointer< kernel::Agent_ABC >          selectedAgent_;
     kernel::SafePointer< kernel::Automat_ABC >        selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC >      selectedFormation_;
+    kernel::SafePointer< kernel::Entity_ABC >         toDelete_;
     //@}
 };
 

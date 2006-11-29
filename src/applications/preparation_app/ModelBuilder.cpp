@@ -40,6 +40,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
     , selectedAgent_( controllers )
     , selectedAutomat_( controllers )
     , selectedFormation_( controllers )
+    , toDelete_( controllers )
 {
     controllers_.Register( *this );
 }
@@ -85,6 +86,15 @@ void ModelBuilder::OnCreateCommunication()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelBuilder::CanCreateLine
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+bool ModelBuilder::CanCreateLine() const
+{
+    return selectedFormation_ || selectedAutomat_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelBuilder::CreateLimit
 // Created: SBO 2006-11-07
 // -----------------------------------------------------------------------------
@@ -111,24 +121,23 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelBuilder::NotifyContextMenu
+// Created: SBO 2006-11-28
+// -----------------------------------------------------------------------------
+void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    toDelete_ = &entity;
+    menu.InsertItem( "Command", tr( "Delete" ), this, SLOT( OnDelete() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelBuilder::OnDelete
 // Created: SBO 2006-09-04
 // -----------------------------------------------------------------------------
-bool ModelBuilder::OnDelete()
+void ModelBuilder::OnDelete()
 {
-    if( selectedAgent_ )
-        DeleteEntity( *selectedAgent_ );
-    else if( selectedAutomat_ )
-        DeleteEntity( *selectedAutomat_ );
-    else if( selectedGroup_ )
-        DeleteEntity( *selectedGroup_ );
-    else if( selectedTeam_ )
-        DeleteEntity( *selectedTeam_ );
-    else if( selectedFormation_ )
-        DeleteEntity( *selectedFormation_ );
-    else
-        return false;
-    return true;
+    if( toDelete_ )
+        DeleteEntity( *toDelete_ );
 }
 
 // -----------------------------------------------------------------------------

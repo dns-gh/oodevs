@@ -98,7 +98,7 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, 
         if( type.IsLogisticSupply() )
         {
             selected_ = &agent;
-            menu.InsertItem( "Commande", tr( "Push supply flow" ), this, SLOT( Show() ) );
+            menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( Show() ) );
         }
     }
 }

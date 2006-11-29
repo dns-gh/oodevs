@@ -76,7 +76,7 @@ void CommunicationListView::NotifyContextMenu( const Team_ABC&, ContextMenu& men
 {
     if( !isVisible() )
         return;
-    menu.InsertItem( "Commande", tr( "Create knowledge group" ), &modelBuilder_, SLOT( OnCreateCommunication() ) );
+    menu.InsertItem( "Creation", tr( "Create knowledge group" ), &modelBuilder_, SLOT( OnCreateCommunication() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ bool CommunicationListView::Drop( const Entity_ABC& item, const Entity_ABC& targ
 void CommunicationListView::keyPressEvent( QKeyEvent* event )
 {
     if( selectedItem() && event->key() == Qt::Key_Delete )
-        if( modelBuilder_.OnDelete() )
-            return;
-    QListView::keyPressEvent( event );
+        modelBuilder_.DeleteEntity( *((gui::ValuedListItem*)selectedItem())->GetValue< const Entity_ABC* >() );
+    else
+        QListView::keyPressEvent( event );
 }

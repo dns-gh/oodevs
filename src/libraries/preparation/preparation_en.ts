@@ -72,13 +72,13 @@
         <source>Info/Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Formation [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>
-    <message>
-        <source>Knowledge group</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Info/Identifier</source>
         <translation type="unfinished"></translation>
@@ -89,6 +89,10 @@
     </message>
     <message>
         <source>Info/Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge group [%1]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -11,7 +11,6 @@
 #define __PopulationListView_h_
 
 #include "clients_gui/PopulationListView.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 // =============================================================================
@@ -21,21 +20,13 @@
 // Created: SBO 2006-10-16
 // =============================================================================
 class PopulationListView : public gui::PopulationListView
-                         , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
              PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~PopulationListView();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnDelete();
     //@}
 
 private:
@@ -48,7 +39,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyContextMenu( const kernel::Population_ABC&, kernel::ContextMenu& );
     virtual void keyPressEvent( QKeyEvent* key );
     //@}
 

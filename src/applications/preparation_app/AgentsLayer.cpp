@@ -140,14 +140,3 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     }
     return false;
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::HandleKeyPress
-// Created: SBO 2006-09-05
-// -----------------------------------------------------------------------------
-bool AgentsLayer::HandleKeyPress( QKeyEvent* key )
-{
-    if( key->key() == Qt::Key_Delete )
-        return modelBuilder_.OnDelete();
-    return false;
-}

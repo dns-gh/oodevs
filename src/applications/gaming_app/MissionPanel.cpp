@@ -96,9 +96,9 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
         const AutomatDecisions& decisions = agent.Get< AutomatDecisions >();
         AddAutomatMissions( decisions, menu );
         if( ! decisions.IsEmbraye() )
-            menu.InsertItem( "Commande", tr( "Engage" ), this, SLOT( Engage() ) );
+            menu.InsertItem( "Command", tr( "Engage" ), this, SLOT( Engage() ) );
         else
-            menu.InsertItem( "Commande", tr( "Disengage" ), this, SLOT( Disengage() ) );
+            menu.InsertItem( "Command", tr( "Disengage" ), this, SLOT( Disengage() ) );
     }
 }
 
@@ -115,7 +115,7 @@ int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu,
         int nId = missions.insertItem( mission.GetName(), this, slot );
         missions.setItemParameter( nId, mission.GetId() );
     }
-    return menu.InsertItem( "Ordre", name, &missions  );
+    return menu.InsertItem( "Order", name, &missions  );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
             }
         }
     }
-    return menu.InsertItem( "Ordre", name, &orders  );
+    return menu.InsertItem( "Order", name, &orders  );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& 
                 int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
                 missions.setItemParameter( nId, mission.GetId() );
             }
-            menu.InsertItem( "Ordre", tr( "Population missions" ), &missions  );
+            menu.InsertItem( "Order", tr( "Population missions" ), &missions  );
         }
     }
 }

@@ -143,7 +143,7 @@ void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
 {
-    menu.InsertItem( "Commande", tr( "Diplomacy" ), this, SLOT( show() ) );
+    menu.InsertItem( "Command", tr( "Diplomacy" ), this, SLOT( show() ) );
 }
 
 // -----------------------------------------------------------------------------

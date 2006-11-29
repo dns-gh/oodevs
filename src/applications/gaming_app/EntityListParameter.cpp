@@ -97,7 +97,7 @@ bool EntityListParameterBase::Invalid()
 // -----------------------------------------------------------------------------
 void EntityListParameterBase::AddToMenu( ContextMenu& menu )
 {
-    menu.InsertItem( "Parametre", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
+    menu.InsertItem( "Parameter", menu_.c_str(), this, SLOT( MenuItemValidated() ) );
 }
 
 // -----------------------------------------------------------------------------

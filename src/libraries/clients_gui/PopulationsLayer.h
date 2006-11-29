@@ -35,7 +35,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DisplayTooltip( const kernel::Population_ABC& entity, kernel::Displayer_ABC& displayer );
+    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     //@}
 
 private:

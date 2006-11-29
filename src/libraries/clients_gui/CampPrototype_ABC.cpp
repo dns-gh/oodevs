@@ -85,7 +85,7 @@ void CampPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, ContextMenu
     if( isVisible() && agent.GetType().IsTC2() )
     {
         selected_ = &agent;
-        menu.InsertItem( "Parametre", tr( "Side's TC2" ), this, SLOT( SetSelected() ) );
+        menu.InsertItem( "Parameter", tr( "Side's TC2" ), this, SLOT( SetSelected() ) );
     }
 }
 

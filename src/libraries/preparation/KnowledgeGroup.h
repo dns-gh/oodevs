@@ -61,7 +61,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    virtual QString GetName() const;
     static unsigned long ReadId( xml::xistream& xis );
     //@}
 

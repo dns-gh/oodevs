@@ -32,6 +32,7 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
     , level_( &level )
 {
     RegisterSelf( *this );
+    name_ = tools::translate( "Formation", "Formation [%1]" ).arg( id_ );
     CreateDictionary( controller );
 }
 
@@ -47,7 +48,7 @@ Formation::Formation( xml::xistream& xis, Controller& controller, const Formatio
         >> attribute( "level", level )
         >> attribute( "name", name );
     level_ = levels.Resolve( level.c_str() );
-    name_  = name.c_str();
+    name_  = name.empty() ? tools::translate( "Formation", "Formation [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );

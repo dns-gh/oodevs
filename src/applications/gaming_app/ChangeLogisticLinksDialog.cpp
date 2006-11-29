@@ -208,6 +208,6 @@ void ChangeLogisticLinksDialog::NotifyContextMenu( const Automat_ABC& agent, Con
     if( profile_.CanBeOrdered( agent ) && agent.Retrieve< LogisticLinks_ABC >() )
     {
         selected_ = &agent;
-        menu.InsertItem( "Commande", tr( "Change logistic links" ), this, SLOT( Show() ) );
+        menu.InsertItem( "Command", tr( "Change logistic links" ), this, SLOT( Show() ) );
     }
 }

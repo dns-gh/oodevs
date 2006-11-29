@@ -11,7 +11,6 @@
 #define __ObjectListView_h_
 
 #include "clients_gui/ObjectListView.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 // =============================================================================
@@ -21,21 +20,12 @@
 // Created: SBO 2006-10-16
 // =============================================================================
 class ObjectListView : public gui::ObjectListView
-                     , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
              ObjectListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~ObjectListView();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnDelete();
     //@}
 
 private:
@@ -48,7 +38,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& );
     virtual void keyPressEvent( QKeyEvent* key );
     //@}
 

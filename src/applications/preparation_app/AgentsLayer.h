@@ -44,7 +44,6 @@ public:
     //@{
     virtual bool HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& point );
     virtual bool HandleDropEvent( QDropEvent* event, const geometry::Point2f& point );
-    virtual bool HandleKeyPress( QKeyEvent* key );
     //@}
 
 private:

@@ -93,7 +93,7 @@ void ParamPoint::Commit()
 void ParamPoint::NotifyContextMenu( const geometry::Point2f& point, ContextMenu& menu )
 {
     popupPoint_ = point;
-    menu.InsertItem( "Parametre", menu_, this, SLOT( AcceptPopupMenuPoint() ) );
+    menu.InsertItem( "Parameter", menu_, this, SLOT( AcceptPopupMenuPoint() ) );
 }
 
 // -----------------------------------------------------------------------------

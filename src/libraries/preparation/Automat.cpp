@@ -28,7 +28,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_         ( &type )
 {
-    name_ = QString( "Automate %1" ).arg( id_ );
+    name_ = QString( "Automate [%1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
