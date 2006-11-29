@@ -146,7 +146,7 @@ void AgentResourcesPanel::Display( const Equipment& equipment, Displayer_ABC& di
     displayer.Display( tr( "Equipment" ), equipment.type_  )
              .Display( tr( "Available" ), equipment.available_ )
              .Display( tr( "Unavailable" ), equipment.unavailable_ )
-             .Display( tr( "Fixable" ), equipment.repairable_ )
+             .Display( tr( "Repairable" ), equipment.repairable_ )
              .Display( tr( "In maintenance" ), equipment.inMaintenance_ )
              .Display( tr( "Prisoner" ), equipment.prisonners_ );
 }
