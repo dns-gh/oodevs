@@ -14,6 +14,8 @@
 #include "ParamPoint.h"
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
+#include "ParamAutomat.h"
+#include "ParamAutomatList.h"
 #include "ParamPath.h"
 #include "ParamPathList.h"
 #include "ParamGDH.h"
@@ -34,6 +36,7 @@
 #include "ParamHumanWoundList.h"
 #include "ParamDotationDType.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/AgentKnowledge_ABC.h"
@@ -223,7 +226,7 @@ void MissionInterface_ABC::CreateAgent( ASN1T_Agent& asn, const QString& strName
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAutomateList( ASN1T_ListAutomate& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    AddParameter( *new ParamAgentList( this, (ASN1T_ListAgent&)asn, strName, strName ), pOptional );
+    AddParameter( *new ParamAutomatList( this, (ASN1T_ListAgent&)asn, strName, strName ), pOptional );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +235,7 @@ void MissionInterface_ABC::CreateAutomateList( ASN1T_ListAutomate& asn, const QS
 // -----------------------------------------------------------------------------
 void MissionInterface_ABC::CreateAutomate( ASN1T_Agent& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
 {
-    AddParameter( *new ParamAgent( this, asn, strName, strName ), pOptional );
+    AddParameter( *new ParamAutomat( this, asn, strName, strName ), pOptional );
 }
 
 // -----------------------------------------------------------------------------
