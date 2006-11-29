@@ -112,6 +112,24 @@ void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiquesAck& message 
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticLinks::DoUpdate
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+void LogisticLinks::DoUpdate( const ASN1T_MsgChangeLiensLogistiques& message )
+{
+    if( message.m.oid_tc2Present )
+        tc2_ = &resolver_.Get( message.oid_tc2 );
+    if( message.m.oid_maintenancePresent )
+        maintenanceSuperior_ = &resolver_.Get( message.oid_maintenance );
+    if( message.m.oid_santePresent )
+         medicalSuperior_ = &resolver_.Get( message.oid_sante );
+    if( message.m.oid_ravitaillementPresent )
+        supplySuperior_ = &resolver_.Get( message.oid_ravitaillement );
+
+    controller_.Update( *(LogisticLinks_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticLinks::Display
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------

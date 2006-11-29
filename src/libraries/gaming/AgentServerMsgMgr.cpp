@@ -1213,6 +1213,15 @@ void AgentServerMsgMgr::OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_Msg
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiques
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiques( const ASN1T_MsgChangeLiensLogistiques& message )
+{
+    GetModel().agents_.GetAutomat( message.oid_automate ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeLiensLogistiquesAck
 // Created: AGE 2005-04-06
 // -----------------------------------------------------------------------------
@@ -1640,7 +1649,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_change_groupe_connaissance_ack:         OnReceiveMsgChangeGroupeConnaissanceAck     ( *message.msg.u.msg_change_groupe_connaissance_ack      , message.context ); break;
         case T_MsgsInClient_msg_msg_object_magic_action_ack:                OnReceiveMsgObjectMagicActionAck            ( *message.msg.u.msg_object_magic_action_ack             , message.context ); break;
         case T_MsgsInClient_msg_msg_change_liens_logistiques_ack:           OnReceiveMsgChangeLiensLogistiquesAck       ( *message.msg.u.msg_change_liens_logistiques_ack        , message.context ); break;
-        case T_MsgsInClient_msg_msg_change_liens_logistiques:               /*$$$TODO; */break;
+        case T_MsgsInClient_msg_msg_change_liens_logistiques:               OnReceiveMsgChangeLiensLogistiques          ( *message.msg.u.msg_change_liens_logistiques ); break;
         case T_MsgsInClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack , message.context ); break;
         case T_MsgsInClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  message.msg.u.msg_log_ravitaillement_change_quotas_ack, message.context ); break;
         case T_MsgsInClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *message.msg.u.msg_population_magic_action_ack         , message.context ); break;

@@ -230,6 +230,7 @@ private:
     void OnReceiveMsgChangeAutomate             ( const ASN1T_MsgChangeAutomate& asnMsg );
     void OnReceiveMsgChangeDiplomacyAck         ( const ASN1T_MsgChangeDiplomatieAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgChangeGroupeConnaissanceAck( const ASN1T_MsgChangeGroupeConnaissanceAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgChangeLiensLogistiques     ( const ASN1T_MsgChangeLiensLogistiques& asnMsg );
     void OnReceiveMsgChangeLiensLogistiquesAck  ( const ASN1T_MsgChangeLiensLogistiquesAck& asnMsg, unsigned long nCtx );
 
     // RC
