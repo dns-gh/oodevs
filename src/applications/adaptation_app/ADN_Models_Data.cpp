@@ -72,7 +72,7 @@ void ADN_Models_Data::OrderInfos::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Models_Data::OrderInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "OrdreConduite" );
-    output.WriteAttribute( "nom", ENT_Tr::ConvertFromFragOrder( nOrderType_.GetData() ) );
+    output.WriteAttribute( "nom", ENT_Tr::ConvertFromFragOrder( nOrderType_.GetData(), ENT_Tr::eToSim ) );
     output.EndSection(); // OrdreConduite
 }
 
