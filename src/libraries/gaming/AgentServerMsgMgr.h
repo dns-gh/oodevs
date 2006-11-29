@@ -256,6 +256,7 @@ private:
 	void OnMsgPopulationFluxUpdate				( const ASN1T_MsgPopulationFluxUpdate& asnMsg ); 
     void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgPopulationOrderManagement  ( const ASN1T_MsgPopulationOrderManagement& asnMsg );
+    void OnReceiveMsgPopulationOrderAck         ( const ASN1T_MsgPopulationOrderAck& asnMsg, unsigned long nCtx );
     //@}
 
     //! @name Helpers

@@ -1575,12 +1575,22 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck
+// Created: SBO 2006-11-29
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck( const ASN1T_MsgPopulationOrderAck& message, unsigned long nCtx )
+{
+    if( CheckAcknowledge( message, "PopulationOrderAck" ) )
+        GetModel().agents_.GetPopulation( message.oid_unite_executante ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement( const ASN1T_MsgPopulationOrderManagement& asnMsg )
+void AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement( const ASN1T_MsgPopulationOrderManagement& message )
 {
-    GetModel().agents_.GetPopulation( asnMsg.oid_unite_executante ).Update( asnMsg );
+    GetModel().agents_.GetPopulation( message.oid_unite_executante ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1653,7 +1663,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_log_ravitaillement_pousser_flux_ack:    OnReceiveMsgLogRavitaillementPousserFluxAck (  message.msg.u.msg_log_ravitaillement_pousser_flux_ack , message.context ); break;
         case T_MsgsInClient_msg_msg_log_ravitaillement_change_quotas_ack:   OnReceiveMsgLogRavitaillementChangeQuotaAck (  message.msg.u.msg_log_ravitaillement_change_quotas_ack, message.context ); break;
         case T_MsgsInClient_msg_msg_population_magic_action_ack:            OnReceiveMsgPopulationMagicActionAck        ( *message.msg.u.msg_population_magic_action_ack         , message.context ); break;
-//        case T_MsgsInClient_msg_msg_population_order_ack  : break; //$$$ TODO
+        case T_MsgsInClient_msg_msg_population_order_ack:                   OnReceiveMsgPopulationOrderAck              ( *message.msg.u.msg_population_order_ack                , message.context ); break;
 
         case T_MsgsInClient_msg_msg_ctrl_info:                            OnReceiveMsgCtrlInfo                  ( *message.msg.u.msg_ctrl_info                           ); break;
         case T_MsgsInClient_msg_msg_ctrl_begin_tick:                      OnReceiveMsgCtrlBeginTick             (  message.msg.u.msg_ctrl_begin_tick                     ); break;
