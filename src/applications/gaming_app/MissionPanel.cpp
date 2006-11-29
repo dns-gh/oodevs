@@ -31,6 +31,7 @@
 #include "gaming/AgentKnowledgeConverter.h"
 #include "gaming/ObjectKnowledgeConverter.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 using namespace gui;
@@ -133,7 +134,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
         const FragOrder& fragOrder = fragIt.NextElement();
         if( fragOrders_.insert( fragOrder.GetId() ).second )
         {
-            int nId = orders.insertItem( fragOrder.GetName(), this, slot );
+            int nId = orders.insertItem( ENT_Tr::ConvertFromFragOrder( (E_FragOrder)fragOrder.GetId() ).c_str(), this, slot );
             orders.setItemParameter( nId, fragOrder.GetId() );
         }
     }
@@ -146,7 +147,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
             const FragOrder& fragOrder = fragIt.NextElement();
             if( fragOrders_.insert( fragOrder.GetId() ).second )
             {
-                int nId = orders.insertItem( fragOrder.GetName(), this, slot );
+                int nId = orders.insertItem( ENT_Tr::ConvertFromFragOrder( (E_FragOrder)fragOrder.GetId() ).c_str(), this, slot );
                 orders.setItemParameter( nId, fragOrder.GetId() );
             }
         }
