@@ -18,6 +18,8 @@ namespace kernel {
     class Entity_ABC;
     class Controllers;
     class Hierarchies;
+    class TacticalHierarchies;
+    class CommunicationHierarchies;
 }
 
 // =============================================================================
@@ -64,7 +66,8 @@ private:
     kernel::Controller& controller_;
     const kernel::Profile_ABC& forward_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
-    const kernel::Hierarchies* entityHierarchies_;
+    const kernel::TacticalHierarchies* tHierarchies_;
+    const kernel::CommunicationHierarchies* cHierarchies_;
     //@}
 };
 

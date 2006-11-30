@@ -27,6 +27,7 @@ class Fires;
 // =============================================================================
 class XPSPlayer : public QObject, public kernel::Observer_ABC
                 , public kernel::ElementObserver_ABC< Fires >
+                , public kernel::ElementObserver_ABC< Simulation >
                 , public kernel::ElementObserver_ABC< Simulation::sStartTick >
 {
 
@@ -42,6 +43,7 @@ protected:
     //@{
     virtual void NotifyUpdated( const Fires& );
     virtual void NotifyUpdated( const Simulation::sStartTick& );
+    virtual void NotifyUpdated( const Simulation& simu );
     //@}
 
 private:

@@ -38,9 +38,9 @@ namespace
     {
         Melody result;
         result.StartSequence();
-            result.SetLights( XPSLights::ruby, XPSLights::ruby, XPSLights::ruby, 7 );
+            result.SetLights( XPSLights::ruby, XPSLights::citrine, XPSLights::ruby, 7 );
             result.Pause( 20 );
-            result.SetLights( XPSLights::citrine, XPSLights::citrine, XPSLights::citrine, 7 );
+            result.SetLights( XPSLights::citrine, XPSLights::ruby, XPSLights::citrine, 7 );
             result.Pause( 20 );
         result.Repeat( 10 );
         result.SetLights( XPSLights::emerald, XPSLights::emerald, XPSLights::emerald, 4 );
@@ -56,6 +56,20 @@ namespace
         result.Pause( 20 );
         return result;
     };
+
+    Melody BuildConnected()
+    {
+        Melody result;
+        result.SetLights( XPSLights::emerald, XPSLights::emerald, XPSLights::emerald, 4 );
+        return result;
+    }
+
+    Melody BuildDisconnected()
+    {
+        Melody result;
+        result.SetLights( XPSLights::ruby, XPSLights::ruby, XPSLights::ruby, 4 );
+        return result;
+    }
 };
 
 // -----------------------------------------------------------------------------
@@ -76,6 +90,26 @@ Melody Melody::TickStart()
 {
     static Melody tickstart = BuildTickStart();
     return tickstart;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Melody::Connected
+// Created: AGE 2006-11-30
+// -----------------------------------------------------------------------------
+Melody Melody::Connected()
+{
+    static Melody connected = BuildConnected();
+    return connected;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Melody::Disconnected
+// Created: AGE 2006-11-30
+// -----------------------------------------------------------------------------
+Melody Melody::Disconnected()
+{
+    static Melody disconnected = BuildDisconnected();
+    return disconnected;
 }
 
 namespace

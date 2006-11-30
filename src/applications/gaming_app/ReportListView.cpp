@@ -133,7 +133,7 @@ void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer
         report->Display( displayer );
     }
     else
-        delete item;
+        RemoveItem( item );
 }
 
 // -----------------------------------------------------------------------------

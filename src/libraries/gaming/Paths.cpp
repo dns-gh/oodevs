@@ -50,7 +50,8 @@ void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         {
             if( pendingMagicMove_ && previousPath_.back().SquareDistance( position ) > magicThreshold )
             {
-                previousPath_.clear();
+                previousPath_.clear(); previousBox_ = Rectangle2f();
+                plannedPath_.clear(); plannedBox_ = Rectangle2f();
                 pendingMagicMove_ = false;
             }
             previousPath_.push_back( position );

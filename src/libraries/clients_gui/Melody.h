@@ -26,6 +26,8 @@ public:
     //@{
     static Melody Explosion();
     static Melody TickStart();
+    static Melody Connected();
+    static Melody Disconnected();
     //@}
 
 public:

@@ -23,7 +23,8 @@ ProfileFilter::ProfileFilter( kernel::Controllers& controllers, const kernel::Pr
      : controller_( controllers.controller_ )
      , forward_( forward )
      , entity_( controllers )
-     , entityHierarchies_( 0 )
+     , tHierarchies_( 0 )
+     , cHierarchies_( 0 )
 {
     // NOTHING
 }
@@ -71,9 +72,8 @@ bool ProfileFilter::CanDoMagic( const kernel::Entity_ABC& entity ) const
 void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity )
 {
     entity_ = & entity;
-    entityHierarchies_ = entity.Retrieve< TacticalHierarchies >();
-    if( ! entityHierarchies_ )
-        entityHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
+    tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
+    cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
     controller_.Update( *(Profile_ABC*)this );
 }
 
@@ -84,7 +84,8 @@ void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity )
 void ProfileFilter::RemoveFilter()
 {
     entity_ = 0;
-    entityHierarchies_ = 0;
+    tHierarchies_ = 0;
+    cHierarchies_ = 0;
     controller_.Update( *(Profile_ABC*)this );
 }
 
@@ -101,5 +102,6 @@ bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
     if( ! h )
         h = entity.Retrieve< CommunicationHierarchies >();
     return ( h && h->IsSubordinateOf( *entity_ ) )
-        || ( entityHierarchies_ && entityHierarchies_->IsSubordinateOf( entity ) );
+        || ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
+        || ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) );
 }

@@ -51,7 +51,7 @@ FireResultListView::~FireResultListView()
 void FireResultListView::Display( const PopulationFireResult* result, Displayer_ABC& displayer, ValuedListItem* item )
 {
     if( ! result ) {
-        delete item;
+        RemoveItem( item );
         return;
     }
     // $$$$ AGE 2006-03-10: Move in PopulationFireResult
@@ -67,7 +67,7 @@ void FireResultListView::Display( const PopulationFireResult* result, Displayer_
 void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&, ValuedListItem* item )
 {
     if( ! result ) {
-        delete item;
+        RemoveItem( item );
         return;
     }
     // SubItemDisplayer;

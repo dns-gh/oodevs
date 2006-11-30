@@ -53,3 +53,12 @@ void XPSPlayer::NotifyUpdated( const Simulation::sStartTick& )
 {
     player_->Handle( Melody::TickStart() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: XPSPlayer::NotifyUpdated
+// Created: AGE 2006-11-30
+// -----------------------------------------------------------------------------
+void XPSPlayer::NotifyUpdated( const Simulation& simu )
+{
+    player_->Handle( simu.IsConnected() ? Melody::Connected() : Melody::Disconnected() );
+}

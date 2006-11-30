@@ -34,6 +34,7 @@ public:
                  : QListView( parent )
                  , list_( list )
                  , factory_( factory )
+                 , toSkip_( 0 )
              {};
     virtual ~ListView()
         {};
@@ -51,13 +52,13 @@ public:
         {
             const Element& element = it.NextElement();
             if( ! currentItem  ) 
-                currentItem = factory_.CreateItem( parent, previousItem );
+                currentItem = CreateItem( parent, previousItem );
             currentItem->SetValue( &element );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
             list_.Display( element, previousItem );
         }
-        return currentItem ? currentItem : factory_.CreateItem( parent, previousItem );
+        return currentItem ? currentItem : CreateItem( parent, previousItem );
     };
     template< typename Iterator, typename Parent >
     ValuedListItem* Display( Iterator from, const Iterator& to, Parent* parent, ValuedListItem* currentItem = 0 )
@@ -68,14 +69,22 @@ public:
         while( from != to )
         {
             if( ! currentItem  ) 
-                currentItem = factory_.CreateItem( parent, previousItem );
+                currentItem = CreateItem( parent, previousItem );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
             list_.Display( *from, previousItem );
             ++from;
         }
-        return currentItem ? currentItem : factory_.CreateItem( parent, previousItem );
+        return currentItem ? currentItem : CreateItem( parent, previousItem );
     };
+
+    void RemoveItem( ValuedListItem* item )
+    {
+        if( item->nextSibling() )
+            delete item;
+        else
+            toSkip_ = item;
+    }
 
     void DeleteTail( ValuedListItem* item )
     {
@@ -86,6 +95,16 @@ public:
             item = next;
         }
     };
+
+    template< typename Parent >
+    ValuedListItem* CreateItem( Parent* parent, ValuedListItem* previousItem )
+    {
+        if( previousItem && previousItem == toSkip_ ) {
+            toSkip_ = 0;
+            return previousItem;
+        }
+        return factory_.CreateItem( parent, previousItem );
+    }
     //@}
 
 private:
@@ -100,6 +119,7 @@ private:
     //@{
     ConcreteList& list_;
     ItemFactory_ABC& factory_;
+    ValuedListItem* toSkip_;
     //@}
 };
 
