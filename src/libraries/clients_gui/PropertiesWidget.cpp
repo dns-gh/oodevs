@@ -15,6 +15,7 @@
 #include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "resources.h"
 
 #include <qpainter.h>
 

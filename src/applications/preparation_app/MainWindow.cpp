@@ -106,7 +106,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     SetWindowTitle( false );
 
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
-    new Dialogs( this, controllers, model_, staticModel );
+    new Dialogs( this, controllers );
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );

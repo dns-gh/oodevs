@@ -13,8 +13,10 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/CommandPostAttributes.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/ASN_Messages.h"
+#include "icons.h"
 
 using namespace kernel;
 
@@ -26,7 +28,8 @@ AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publis
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
     , publisher_( publisher )
 {
-    // NOTHING
+    addColumn( "HiddenPuce", 15 );
+    setColumnAlignment( 1, Qt::AlignCenter );
 }
     
 // -----------------------------------------------------------------------------
@@ -39,15 +42,36 @@ AgentListView::~AgentListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentListView::viewportResizeEvent
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+void AgentListView::viewportResizeEvent( QResizeEvent* e )
+{
+    QScrollView::viewportResizeEvent( e );
+    setColumnWidth( 0, -1 );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: AgentListView::setColumnWidth
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+void AgentListView::setColumnWidth( int column, int w )
+{
+    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentListView::Display
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-void AgentListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item )
+void AgentListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item )
 {
-    const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
+    const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
     if( decisions )
-        item->setPixmap( 0, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
-    gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( agent, item );
+        item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
+    else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
+        item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
+    gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,10 +80,10 @@ void AgentListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item 
 // -----------------------------------------------------------------------------
 void AgentListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
-    const Entity_ABC* entity = & decisions.GetAgent();
-    gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
+    const kernel::Entity_ABC* agent = & decisions.GetAgent();
+    gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
-        item->setPixmap( 0, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
+        item->setPixmap( 1, decisions.IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
 }
 
 // -----------------------------------------------------------------------------

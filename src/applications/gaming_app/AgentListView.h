@@ -24,6 +24,7 @@ class AutomatDecisions;
 // =============================================================================
 /** @class  AgentListView
     @brief  AgentListView
+    // $$$$ SBO 2006-11-30: Factorize additional icon column
 */
 // Created: SBO 2006-08-18
 // =============================================================================
@@ -46,6 +47,9 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual void viewportResizeEvent( QResizeEvent* e );
+    virtual void setColumnWidth( int column, int w );
+
     virtual void NotifyUpdated( const AutomatDecisions& decisions );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Agent_ABC& item,  const kernel::Agent_ABC& target );

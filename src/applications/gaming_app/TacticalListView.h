@@ -17,6 +17,7 @@ class AutomatDecisions;
 // =============================================================================
 /** @class  TacticalListView
     @brief  TacticalListView
+    // $$$$ SBO 2006-11-30: Factorize additional icon column
 */
 // Created: AGE 2006-11-23
 // =============================================================================

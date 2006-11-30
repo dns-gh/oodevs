@@ -27,6 +27,7 @@ class ModelBuilder;
 // =============================================================================
 /** @class  TacticalListView
     @brief  TacticalListView
+    // $$$$ SBO 2006-11-30: Factorize additional icon column
 */
 // Created: SBO 2006-08-29
 // =============================================================================

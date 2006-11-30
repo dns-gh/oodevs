@@ -15,9 +15,6 @@ namespace kernel
     class Controllers;
 }
 
-class Model;
-class StaticModel;
-
 // =============================================================================
 /** @class  Dialogs
     @brief  Dialogs
@@ -30,7 +27,7 @@ class Dialogs : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel );
+             Dialogs( QWidget* parent, kernel::Controllers& controllers );
     virtual ~Dialogs();
     //@}
 };

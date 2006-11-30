@@ -7,27 +7,36 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
-#include "Dialogs.h"
-#include "ChangeDiplomacyDialog.h"
+#include "clients_kernel_pch.h"
+#include "CommandPostAttributes.h"
+#include "Agent_ABC.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: Dialogs constructor
-// Created: AGE 2006-04-20
+// Name: CommandPostAttributes constructor
+// Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers )
-    : QObject( parent )
+CommandPostAttributes::CommandPostAttributes( const Agent_ABC& holder )
+    : holder_( holder )
 {
-    new ChangeDiplomacyDialog( parent, controllers );
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: CommandPostAttributes destructor
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+CommandPostAttributes::~CommandPostAttributes()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Dialogs destructor
-// Created: AGE 2006-04-20
+// Name: CommandPostAttributes::IsCommandPost
+// Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-Dialogs::~Dialogs()
+bool CommandPostAttributes::IsCommandPost() const
 {
-    // NOTHING
+    return holder_.IsCommandPost();
 }

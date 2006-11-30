@@ -11,6 +11,7 @@
 #include "EntitySearchBox_ABC.h"
 #include "moc_EntitySearchBox_ABC.cpp"
 #include "EntitySearchItem.h"
+#include "resources.h"
 
 using namespace kernel;
 using namespace gui;

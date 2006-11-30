@@ -10,7 +10,9 @@
 #include "gaming_app_pch.h"
 #include "TacticalListView.h"
 #include "gaming/AutomatDecisions.h"
+#include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "icons.h"
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView constructor
@@ -20,6 +22,7 @@ TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& contr
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
 {
     addColumn( "HiddenPuce", 15 );
+    setColumnAlignment( 1, Qt::AlignCenter );
     controllers.Update( *this );
 }
 
@@ -55,12 +58,14 @@ void TacticalListView::setColumnWidth( int column, int w )
 // Name: TacticalListView::Display
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::Entity_ABC& agent, gui::ValuedListItem* item )
+void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
-    const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
+    const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
-    gui::HierarchyListView< kernel::TacticalHierarchies >::Display( agent, item );
+    else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
+        item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
+    gui::HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
 
 // -----------------------------------------------------------------------------

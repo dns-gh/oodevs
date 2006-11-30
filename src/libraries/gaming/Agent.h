@@ -55,6 +55,7 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual const kernel::AgentType& GetType() const;
     virtual QString GetTypeName() const;
+    virtual bool IsCommandPost() const;
     //@}
 
 private:

@@ -19,6 +19,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/CommandPostAttributes.h"
 
 #include "Agent.h"
 #include "Automat.h"
@@ -139,6 +140,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
 
     result->Attach( *new Lives() );
     result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
+    result->Attach( *new CommandPostAttributes( *result ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );

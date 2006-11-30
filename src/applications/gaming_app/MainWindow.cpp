@@ -34,7 +34,6 @@
 #include "StatusBar.h"
 #include "Spy.h"
 #include "AgentList.h"
-#include "TacticalLinesSaver.h"
 #include "LoginDialog.h"
 #include "Properties.h"
 #include "TacticalList.h"
@@ -88,6 +87,7 @@
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
+#include "icons.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -251,8 +251,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ReadSettings();
     ReadOptions();
     pMissionPanel_->hide();
-
-    new TacticalLinesSaver( this, model_.limits_ );
 
     new XPSPlayer( this, controllers_ );
 }

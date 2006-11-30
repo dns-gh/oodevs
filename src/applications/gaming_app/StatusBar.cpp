@@ -11,6 +11,7 @@
 #include "StatusBar.h"
 #include "moc_StatusBar.cpp"
 #include "clients_kernel/Controllers.h"
+#include "icons.h"
 
 using namespace kernel;
 

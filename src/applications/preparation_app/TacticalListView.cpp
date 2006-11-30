@@ -15,11 +15,13 @@
 #include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
+#include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "icons.h"
 
 using namespace gui;
 #include "moc_TacticalListView.cpp"
@@ -37,6 +39,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , levels_( levels )
 {
     addColumn( "HiddenPuce", 15 );
+    setColumnAlignment( 1, Qt::AlignCenter );
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 
     controllers.Update( *this );
@@ -74,13 +77,14 @@ void TacticalListView::setColumnWidth( int column, int w )
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const Entity_ABC& agent, gui::ValuedListItem* item )
+void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* item )
 {
     item->setRenameEnabled( 0, true );
-    const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
-    if( decisions )
+    if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
         item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
-    HierarchyListView< kernel::TacticalHierarchies >::Display( agent, item );
+    else if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< kernel::CommandPostAttributes >() )
+        item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
+    HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,11 +115,11 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 {
-    gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
-    if( item )
+    if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
     {
         item->SetNamed( entity );
-//        adjustColumn( 0 );
+        if( const kernel::CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
+            item->setPixmap( 1, commandPost->IsCommandPost() ? MAKE_PIXMAP( commandpost ) : QPixmap() );
     }
 }
 

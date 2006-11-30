@@ -13,6 +13,7 @@
 #include "DrawerPanel.h"
 #include "DrawerLayer.h"
 #include "ExclusiveEventStrategy.h"
+#include "resources.h"
 
 using namespace gui;
 

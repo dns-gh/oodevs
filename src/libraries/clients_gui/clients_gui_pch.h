@@ -87,14 +87,11 @@
 #include <sstream>
 #include <map>
 #include <set>
+#include <cassert>
 
 #include "geometry/Types.h"
 typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
-
-#include "resources.h"
-
-#include "ENT/ENT_Tr.h"
 
 #endif // __astec_gui_pch_h_

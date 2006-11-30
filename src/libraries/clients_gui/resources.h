@@ -78,5 +78,6 @@ DECLARE_ICON( smoke );
 DECLARE_ICON( plus );
 DECLARE_ICON( minus );
 DECLARE_ICON( lock );
+DECLARE_ICON( commandpost );
 
 #endif // __demo_resources_h_

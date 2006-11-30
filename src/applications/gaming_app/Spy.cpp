@@ -18,6 +18,7 @@
 #include "clients_gui/GlWidget.h"
 #include "clients_kernel/Positions.h"
 #include "gaming/Report_ABC.h"
+#include "icons.h"
 
 #include <qtoolbox.h>
 #include <qsizepolicy.h>
