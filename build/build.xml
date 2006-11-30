@@ -288,7 +288,7 @@
       package
     ============================================================================
     -->
-    <target name="package" description="package the distribution" depends="applications">
+    <target name="package" description="package the distribution" >
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/csword.zip">
             <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
@@ -296,8 +296,31 @@
             <fileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>
             <fileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>
         </zip>
-    </target>
 
+        <delete includeemptydirs="true">
+            <fileset dir="${dist.dir}/current" includes="**/*"/>
+        </delete>
+          
+        <exec executable="svn">
+            <arg line="export --force ${data.dir}/test ${dist.dir}/current"/> 
+        </exec>             
+        <exec executable="svn">
+            <arg line="export --force ${run.dir} ${dist.dir}/current"/> 
+        </exec>                       
+        <copy todir="${dist.dir}/current/">
+            <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
+            <fileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe *.qm"/>            
+            <fileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>            
+            <fileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>            
+            <fileset dir="${libraries.dir}/clients_gui" includes="*.qm"/>
+            <fileset dir="${libraries.dir}/clients_kernel" includes="*.qm"/>
+            <fileset dir="${libraries.dir}/gaming" includes="*.qm"/>
+            <fileset dir="${libraries.dir}/ENT" includes="*.qm"/>
+            <fileset dir="${applications.dir}/gaming_app" includes="*.qm"/>
+            <fileset dir="${applications.dir}/adaptation_app/translator" includes="*.qm"/>                        
+            <fileset dir="${run.dir}" includes="*.dll license.dat"/>
+        </copy>                    
+    </target>
     <!--
     ============================================================================
       configure
