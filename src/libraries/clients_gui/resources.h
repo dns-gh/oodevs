@@ -77,5 +77,6 @@ DECLARE_ICON( flare );
 DECLARE_ICON( smoke );
 DECLARE_ICON( plus );
 DECLARE_ICON( minus );
+DECLARE_ICON( lock );
 
 #endif // __demo_resources_h_

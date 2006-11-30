@@ -19,7 +19,7 @@
 TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
 {
-    addColumn( "Embraye" );
+    addColumn( "HiddenPuce", 15 );
     controllers.Update( *this );
 }
 
@@ -33,6 +33,25 @@ TacticalListView::~TacticalListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TacticalListView::viewportResizeEvent
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+void TacticalListView::viewportResizeEvent( QResizeEvent* e )
+{
+    QScrollView::viewportResizeEvent( e );
+    setColumnWidth( 0, -1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::setColumnWidth
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+void TacticalListView::setColumnWidth( int column, int w )
+{
+    QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TacticalListView::Display
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
@@ -40,9 +59,7 @@ void TacticalListView::Display( const kernel::Entity_ABC& agent, gui::ValuedList
 {
     const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >();
     if( decisions )
-        item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
-    else
-        item->setPixmap( 1, QPixmap() );
+        item->setPixmap( 1, decisions->IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
     gui::HierarchyListView< kernel::TacticalHierarchies >::Display( agent, item );
 }
 
@@ -55,5 +72,5 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
     const kernel::Entity_ABC* agent = & decisions.GetAgent();
     gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
     if( item )
-        item->setPixmap( 1, decisions.IsEmbraye() ? MAKE_PIXMAP( embraye ) : MAKE_PIXMAP( debraye ) );
+        item->setPixmap( 1, decisions.IsEmbraye() ? MAKE_PIXMAP( lock ) : QPixmap() );
 }

@@ -69,6 +69,9 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void viewportResizeEvent( QResizeEvent* e );
+    virtual void setColumnWidth( int column, int w );
+
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyUpdated( const AutomatDecisions& );

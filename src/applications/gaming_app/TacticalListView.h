@@ -43,6 +43,12 @@ private:
     TacticalListView( const TacticalListView& );            //!< Copy constructor
     TacticalListView& operator=( const TacticalListView& ); //!< Assignement operator
     //@}
+
+    //! @name Helpers
+    //@{
+    virtual void viewportResizeEvent( QResizeEvent* e );
+    virtual void setColumnWidth( int column, int w );
+    //@}
 };
 
 #endif // __TacticalListView_h_

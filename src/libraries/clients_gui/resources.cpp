@@ -84,6 +84,7 @@
 #include "res/search.xpm"
 #include "res/plus.xpm"
 #include "res/minus.xpm"
+#include "res/lock.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {
