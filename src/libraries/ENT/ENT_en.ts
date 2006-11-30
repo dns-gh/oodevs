@@ -3,7 +3,7 @@
     <name>ENT</name>
     <message>
         <source>Automate ABC ArmerPointDeControle</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To operate a checkpoint</translation>
     </message>
     <message>
         <source>Automate ABC OrganiserAccueilColonneRefugies</source>
@@ -11,35 +11,35 @@
     </message>
     <message>
         <source>Automate ABC ProtegerPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To protect CP</translation>
     </message>
     <message>
         <source>Automate ABC Appuyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To support</translation>
     </message>
     <message>
         <source>Automate ABC Attaquer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To attack</translation>
     </message>
     <message>
         <source>Automate ABC ContreAttaquer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To counter attack</translation>
     </message>
     <message>
         <source>Automate ABC Controler</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To control</translation>
     </message>
     <message>
         <source>Automate ABC Couvrir</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To cover</translation>
     </message>
     <message>
         <source>Automate ABC DonnerCoupArret</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To block</translation>
     </message>
     <message>
         <source>Automate ABC Eclairer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To scout</translation>
     </message>
     <message>
         <source>Automate ABC EffectuerRaid</source>
@@ -47,67 +47,67 @@
     </message>
     <message>
         <source>Automate ABC Interdire</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To deny</translation>
     </message>
     <message>
         <source>Automate ABC Jalonner</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To screen</translation>
     </message>
     <message>
         <source>Automate ABC PrendrePreciserContact</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To take and maintain contact</translation>
     </message>
     <message>
         <source>Automate ABC Reconnaitre</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Automate ABC ReconnaitrePoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To reconnoiter a position</translation>
     </message>
     <message>
         <source>Automate ABC Reduire</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To reduce a resistance</translation>
     </message>
     <message>
         <source>Automate ABC ReleverEnDepassant</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To relieve</translation>
     </message>
     <message>
         <source>Automate ABC Semparer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To seize</translation>
     </message>
     <message>
         <source>Automate ABC Tenir</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To bar</translation>
     </message>
     <message>
         <source>Automate ABC Soutenir</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To support</translation>
     </message>
     <message>
         <source>Automate ABC Surveiller</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To monitor</translation>
     </message>
     <message>
         <source>Automate ABC FlancGarder</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To flank-guard</translation>
     </message>
     <message>
         <source>Automate ABC RenseignerSur</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To report</translation>
     </message>
     <message>
         <source>Automate ABC Fixer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To fix</translation>
     </message>
     <message>
         <source>Automate ABC Freiner</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To delay</translation>
     </message>
     <message>
         <source>Automate ABC SurveillerItineraire</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To monitor a route</translation>
     </message>
     <message>
         <source>Automate ABC RenseignerSurUnAxe</source>
@@ -115,7 +115,7 @@
     </message>
     <message>
         <source>Automate ABC RecueillirUnite</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To assist (rearward)</translation>
     </message>
     <message>
         <source>Automate ALAT Heliporter</source>
@@ -191,11 +191,11 @@
     </message>
     <message>
         <source>Automate ASS SeDeployer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Art Support To deploy</translation>
     </message>
     <message>
         <source>Automate ASS ReconnaitreZonesDeploiement</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Art Support To reconnoiter deployment positions</translation>
     </message>
     <message>
         <source>Automate ASS AcquerirObjectifs</source>
@@ -219,43 +219,43 @@
     </message>
     <message>
         <source>Automate INF AttaquerSouplesse</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To attack</translation>
     </message>
     <message>
         <source>Automate INF Appuyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To support</translation>
     </message>
     <message>
         <source>Automate INF Controler</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To control</translation>
     </message>
     <message>
         <source>Automate INF Couvrir</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To cover</translation>
     </message>
     <message>
         <source>Automate INF DonnerCoupArret</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To block</translation>
     </message>
     <message>
         <source>Automate INF Eclairer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To scout</translation>
     </message>
     <message>
         <source>Automate INF FlancGarder</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To flank-guard</translation>
     </message>
     <message>
         <source>Automate INF Freiner</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To delay</translation>
     </message>
     <message>
         <source>Automate INF Harceler</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To harass</translation>
     </message>
     <message>
         <source>Automate INF Interdire</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To deny</translation>
     </message>
     <message>
         <source>Automate INF MenerDefenseUsure</source>
@@ -263,71 +263,71 @@
     </message>
     <message>
         <source>Automate INF PrendrePreciserMaintenirContact</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To take and maintain contact</translation>
     </message>
     <message>
         <source>Automate INF ReconnaissanceOffensive</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Automate INF RecueillirUnite</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To assist (rearward)</translation>
     </message>
     <message>
         <source>Automate INF Reduire</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To reduce a resistance</translation>
     </message>
     <message>
         <source>Automate INF Relever</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To relieve</translation>
     </message>
     <message>
         <source>Automate INF RompreContact</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To break contact</translation>
     </message>
     <message>
         <source>Automate INF Surveiller</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To monitor</translation>
     </message>
     <message>
         <source>Automate INF Semparer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To seize</translation>
     </message>
     <message>
         <source>Automate INF Fixer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To fix</translation>
     </message>
     <message>
         <source>Automate INF AttaquerEnTerrainDifficile</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To attack</translation>
     </message>
     <message>
         <source>Automate INF BarrerDirection</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To bar</translation>
     </message>
     <message>
         <source>Automate INF DefendreFerme</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To defend</translation>
     </message>
     <message>
         <source>Automate INF Tenir</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To hold</translation>
     </message>
     <message>
         <source>Automate INF AppuyerUnFreinage</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To support a delay maneuver</translation>
     </message>
     <message>
         <source>Automate INF AppuyerUneAttaque</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To support an attack</translation>
     </message>
     <message>
         <source>Automate INF Soutenir</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To support</translation>
     </message>
     <message>
         <source>Automate LOG SeDeployer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Log Support To deploy</translation>
     </message>
     <message>
         <source>Automate Test MoveTo</source>
@@ -335,31 +335,31 @@
     </message>
     <message>
         <source>Automate Decrocher</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To withdraw</translation>
     </message>
     <message>
         <source>Automate ReleverSurPlace</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To relieve</translation>
     </message>
     <message>
         <source>Automate FaireMouvement</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To move</translation>
     </message>
     <message>
         <source>Automate SeFaireDecontaminer</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To get decontaminated</translation>
     </message>
     <message>
         <source>Automate Franchir</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To cross</translation>
     </message>
     <message>
         <source>Automate Stationner</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To park</translation>
     </message>
     <message>
         <source>Automate SeRecompleter</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To get resupplied</translation>
     </message>
     <message>
         <source>Automate NBC ReconnaitreUnAxe</source>
@@ -479,11 +479,11 @@
     </message>
     <message>
         <source>Pion ASS AssurerMiseEnOeuvre</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Art Support To operate </translation>
     </message>
     <message>
         <source>Pion ASS ReconnaitreZoneDeploiement</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Art Support To reconnoiter deployment position</translation>
     </message>
     <message>
         <source>Pion ASS AcquerirLanceursEni</source>
@@ -499,91 +499,91 @@
     </message>
     <message>
         <source>Pion ABC ReconnaitreAxe</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Pion ABC Soutenir</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To support</translation>
     </message>
     <message>
         <source>Pion ABC Couvrir</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To cover</translation>
     </message>
     <message>
         <source>Pion ABC FlancGarder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To flank-guard</translation>
     </message>
     <message>
         <source>Pion ABC Reduire</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To reduce a resistance</translation>
     </message>
     <message>
         <source>Pion ABC Appuyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To support</translation>
     </message>
     <message>
         <source>Pion ABC Fixer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To fix</translation>
     </message>
     <message>
         <source>Pion ABC RenseignerSur</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To report</translation>
     </message>
     <message>
         <source>Pion ABC ControlerZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To control</translation>
     </message>
     <message>
         <source>Pion ABC Surveiller</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To monitor</translation>
     </message>
     <message>
         <source>Pion ABC Barrer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To bar</translation>
     </message>
     <message>
         <source>Pion ABC Attaquer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To attack</translation>
     </message>
     <message>
         <source>Pion ABC ReconnaitrePoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To reconnoiter a position</translation>
     </message>
     <message>
         <source>Pion ABC Eclairer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To scout</translation>
     </message>
     <message>
         <source>Pion ABC Jalonner</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To screen</translation>
     </message>
     <message>
         <source>Pion ABC ContreAttaquer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To counter attack</translation>
     </message>
     <message>
         <source>Pion ABC SemparerZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To seize</translation>
     </message>
     <message>
         <source>Pion ABC ReleverUnite</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To relieve</translation>
     </message>
     <message>
         <source>Pion ABC ArmerPIA</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To operate a checkpoint</translation>
     </message>
     <message>
         <source>Pion ABC OuvrirItineraire</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To open a route</translation>
     </message>
     <message>
         <source>Pion ABC Freiner</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To delay</translation>
     </message>
     <message>
         <source>Pion ABC ArmerPointDeControle</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To operate a checkpoint</translation>
     </message>
     <message>
         <source>Pion ABC OrganiserAccueilColonneRefugies</source>
@@ -627,107 +627,107 @@
     </message>
     <message>
         <source>Pion INF ReconnaitreAxe</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Pion INF Couvrir</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To cover</translation>
     </message>
     <message>
         <source>Pion INF Reduire</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To reduce a resistance</translation>
     </message>
     <message>
         <source>Pion INF Appuyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To support</translation>
     </message>
     <message>
         <source>Pion INF Fixer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To fix</translation>
     </message>
     <message>
         <source>Pion INF ControlerSecteur</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To control</translation>
     </message>
     <message>
         <source>Pion INF SurveillerSecteur</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To monitor</translation>
     </message>
     <message>
         <source>Pion INF Barrer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To bar</translation>
     </message>
     <message>
         <source>Pion INF ReconnaitrePoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To reconnoiter a position</translation>
     </message>
     <message>
         <source>Pion INF Eclairer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To scout</translation>
     </message>
     <message>
         <source>Pion INF Interdire</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To deny</translation>
     </message>
     <message>
         <source>Pion INF Semparer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To seize </translation>
     </message>
     <message>
         <source>Pion INF PrendrePreciserContact</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To take contact</translation>
     </message>
     <message>
         <source>Pion INF Defendre</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To defend</translation>
     </message>
     <message>
         <source>Pion INF DetruireEmbuscade</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To ambush</translation>
     </message>
     <message>
         <source>Pion INF ContreAttaquer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To counter attack</translation>
     </message>
     <message>
         <source>Pion INF Freiner</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To delay</translation>
     </message>
     <message>
         <source>Pion INF FlancGarder</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To flank-guard</translation>
     </message>
     <message>
         <source>Pion INF OrganiserUnCheckPoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To operate a checkpoint</translation>
     </message>
     <message>
         <source>Pion INF Harceler</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To harass</translation>
     </message>
     <message>
         <source>Pion INF DetruireParCoupDeMain</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To destroy</translation>
     </message>
     <message>
         <source>Pion INF RenseignerSur</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To report</translation>
     </message>
     <message>
         <source>Pion INF Soutenir</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To support</translation>
     </message>
     <message>
         <source>Pion INF Securiser</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To secure</translation>
     </message>
     <message>
         <source>Pion INF Recueillir</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To assist (rearward)</translation>
     </message>
     <message>
         <source>Pion LOG SeDeployer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Log Support To deploy </translation>
     </message>
     <message>
         <source>Pion LOG TrierBlesses</source>
@@ -795,27 +795,27 @@
     </message>
     <message>
         <source>Pion FaireMouvement</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To move</translation>
     </message>
     <message>
         <source>Pion Suivre</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To follow</translation>
     </message>
     <message>
         <source>Pion SeFaireDecontaminer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To get decontaminated</translation>
     </message>
     <message>
         <source>Pion Franchir</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To cross</translation>
     </message>
     <message>
         <source>Pion Decrocher</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To withdraw</translation>
     </message>
     <message>
         <source>Pion Stationner</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To park</translation>
     </message>
     <message>
         <source>Pion NBC AnimerUnPlotDeDecontamination</source>
@@ -859,19 +859,19 @@
     </message>
     <message>
         <source>Poursuivre</source>
-        <translation type="unfinished"></translation>
+        <translation>Continue</translation>
     </message>
     <message>
         <source>Interrompre</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Deboucher</source>
-        <translation type="unfinished"></translation>
+        <translation>Cross the LD</translation>
     </message>
     <message>
         <source>Decrocher</source>
-        <translation type="unfinished"></translation>
+        <translation>Withdraw</translation>
     </message>
     <message>
         <source>Automate ASA DefendreItineraire</source>
@@ -923,7 +923,7 @@
     </message>
     <message>
         <source>Automate SeRendre</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To surrender</translation>
     </message>
     <message>
         <source>Pion ALAT AppuyerDirectAuContact</source>
@@ -931,7 +931,7 @@
     </message>
     <message>
         <source>Pion INF RepondreAAggression</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To respond to an assault</translation>
     </message>
     <message>
         <source>Automate LOG AppuyerMouvement</source>
@@ -943,7 +943,7 @@
     </message>
     <message>
         <source>Automate FaireMouvementVersCampRefugies</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To move to refugee camp</translation>
     </message>
     <message>
         <source>Pion ASS EOP AcquerirObjectifs</source>
@@ -1007,7 +1007,7 @@
     </message>
     <message>
         <source>Automate LOG ReconnaitreZoneDeDeploiement</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Automate LOG ArmerPIAs</source>
@@ -1015,7 +1015,7 @@
     </message>
     <message>
         <source>Automate SeFaireTransporter</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To get transported</translation>
     </message>
     <message>
         <source>Automate Generique</source>
@@ -1131,87 +1131,87 @@
     </message>
     <message>
         <source>Population FaireMouvement</source>
-        <translation type="unfinished"></translation>
+        <translation>Population To move</translation>
     </message>
     <message>
         <source>Population Manifester</source>
-        <translation type="unfinished"></translation>
+        <translation>Population To demonstrate</translation>
     </message>
     <message>
         <source>Population CommettreExactions</source>
-        <translation type="unfinished"></translation>
+        <translation>Population To perform acts of violence</translation>
     </message>
     <message>
         <source>Mettre Tenue NBC</source>
-        <translation type="unfinished"></translation>
+        <translation>Put on NBC suit</translation>
     </message>
     <message>
         <source>Enlever Tenue NBC</source>
-        <translation type="unfinished"></translation>
+        <translation>Put off NBC suit</translation>
     </message>
     <message>
         <source>Passer En Silence Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio silence</translation>
     </message>
     <message>
         <source>Arreter Silence Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio silence lifted</translation>
     </message>
     <message>
         <source>Passer En Silence Radar</source>
-        <translation type="unfinished"></translation>
+        <translation>Radar silence</translation>
     </message>
     <message>
         <source>Arreter Silence Radar</source>
-        <translation type="unfinished"></translation>
+        <translation>Radar silence lifted</translation>
     </message>
     <message>
         <source>Recuperer Transporteurs</source>
-        <translation type="unfinished"></translation>
+        <translation>Get back carriers</translation>
     </message>
     <message>
         <source>Attendre Se Poster</source>
-        <translation type="unfinished"></translation>
+        <translation>Wait</translation>
     </message>
     <message>
         <source>Changer Regles Engagement</source>
-        <translation type="unfinished"></translation>
+        <translation>Change ROE</translation>
     </message>
     <message>
         <source>Changer Regles Engagement Population</source>
-        <translation type="unfinished"></translation>
+        <translation>Change ROE (population)</translation>
     </message>
     <message>
         <source>Acquerir Objectif</source>
-        <translation type="unfinished"></translation>
+        <translation>Acquire objectives </translation>
     </message>
     <message>
         <source>Brouiller</source>
-        <translation type="unfinished"></translation>
+        <translation>Jam</translation>
     </message>
     <message>
         <source>Changer Position Debarquement</source>
-        <translation type="unfinished"></translation>
+        <translation>Change unload position </translation>
     </message>
     <message>
         <source>Pion: Changer De Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn: change position</translation>
     </message>
     <message>
         <source>Pion: Contourner</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn: bypass</translation>
     </message>
     <message>
         <source>Pion: Envoyer Vehicule</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn: send vehicle</translation>
     </message>
     <message>
         <source>Pion: Activer Obstacle</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn: activate obstacle</translation>
     </message>
     <message>
         <source>Pion: Appliquer Feux</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn: fire</translation>
     </message>
     <message>
         <source>Pion: Executer Tir</source>
@@ -1219,11 +1219,11 @@
     </message>
     <message>
         <source>Pion: Emettre</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn: lift silence</translation>
     </message>
     <message>
         <source>Pion: Stopper Emission</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn: radar silence</translation>
     </message>
     <message>
         <source>Pion: Renforcer En VSRAM</source>
@@ -1283,83 +1283,83 @@
     </message>
     <message>
         <source>Population: Changer Attitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Population: change attitude</translation>
     </message>
     <message>
         <source>Pion ASY SInfiltrer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Militia To infiltrate</translation>
     </message>
     <message>
         <source>Pion ASY CommettreExactionsSurPopulationDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Militia To perform acts of violence</translation>
     </message>
     <message>
         <source>Pion ASY Renseigner</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Militia To report</translation>
     </message>
     <message>
         <source>Pion ASY CommettreAttentatContrePopulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Militia To perform acts of violence against population</translation>
     </message>
     <message>
         <source>Pion ASY CommettreAttentatContreForcesArmees</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Militia To perform acts of violence against Armed Forces</translation>
     </message>
     <message>
         <source>Pion ASY CommettreAttentatContreInstallation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Militia To destroy a facility</translation>
     </message>
     <message>
         <source>Automate ABC EscorterUnite</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To escort</translation>
     </message>
     <message>
         <source>Automate ABC EscorterUnites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To escort units </translation>
     </message>
     <message>
         <source>Automate ABC AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat MBT To support from firing position</translation>
     </message>
     <message>
         <source>Automate INF EscorterUnite</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To escort</translation>
     </message>
     <message>
         <source>Automate INF EscorterUnites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To escort units</translation>
     </message>
     <message>
         <source>Automate INF AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Inf To support from firing position</translation>
     </message>
     <message>
         <source>Pion ABC EscorterUnite</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To escort</translation>
     </message>
     <message>
         <source>Pion ABC EscorterUnites</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To escort units</translation>
     </message>
     <message>
         <source>Pion ABC AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn MBT To support from a firing position</translation>
     </message>
     <message>
         <source>Pion INF EscorterUnite</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To escort</translation>
     </message>
     <message>
         <source>Pion INF EscorterUnites</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To escort units</translation>
     </message>
     <message>
         <source>Pion INF AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Inf To support from a firing position</translation>
     </message>
     <message>
         <source>Changer Ambiance</source>
-        <translation type="unfinished"></translation>
+        <translation>Switch posture</translation>
     </message>
     <message>
         <source>Pion ABC RASIT RenseignerSur</source>
@@ -1367,51 +1367,51 @@
     </message>
     <message>
         <source>Pion InterdireFranchissementPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To deny population crossing</translation>
     </message>
     <message>
         <source>Pion FiltrerPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To filter population</translation>
     </message>
     <message>
         <source>Pion RenseignerSurPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To report on population</translation>
     </message>
     <message>
         <source>Pion CanaliserPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To canalize population</translation>
     </message>
     <message>
         <source>Pion ControlerPopulationsDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To control population</translation>
     </message>
     <message>
         <source>Pion SecuriserZoneContrePopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To secure a zone (population)</translation>
     </message>
     <message>
         <source>Automate InterdireFranchissementPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To deny population crossing</translation>
     </message>
     <message>
         <source>Automate FiltrerPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To filter population</translation>
     </message>
     <message>
         <source>Automate CanaliserPopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To canalize population</translation>
     </message>
     <message>
         <source>Automate ControlerPopulationsDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To control population</translation>
     </message>
     <message>
         <source>Automate SecuriserZoneContrePopulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To secure a zone (population)</translation>
     </message>
     <message>
         <source>Automate ASY CommettreExactionsSurPopulationDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Militia To perform acts of violence</translation>
     </message>
     <message>
         <source>Modifier Regime Travail Maintenance</source>
@@ -1447,59 +1447,59 @@
     </message>
     <message>
         <source>Automate Transporter</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat To carry</translation>
     </message>
     <message>
         <source>Pion Transporter</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn To carry</translation>
     </message>
     <message>
         <source>Automate GEN ReconnaitreZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Eng To reconnoiter a zone</translation>
     </message>
     <message>
         <source>Automate GEN RealiserTravaux</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Eng To perform works</translation>
     </message>
     <message>
         <source>Automate GEN OuvrirItineraires</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Eng To open routes</translation>
     </message>
     <message>
         <source>Automate GEN DegagerObstaclesDansZone</source>
-        <translation type="unfinished"></translation>
+        <translation>Automat Eng To remove obstacles</translation>
     </message>
     <message>
         <source>Pion GEN OuvrirItineraire</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To open a route</translation>
     </message>
     <message>
         <source>Pion GEN EquiperExploiterSiteFranchissement</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To operate a crossing site</translation>
     </message>
     <message>
         <source>Pion GEN DegagerObstacles</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To remove obstacles</translation>
     </message>
     <message>
         <source>Pion GEN ContournerObstacles</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To bypass obstacles</translation>
     </message>
     <message>
         <source>Pion GEN RealiserTravauxContreMobilite</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To perform counter mobility works</translation>
     </message>
     <message>
         <source>Pion GEN RealiserTravauxAppuiDeploiement</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To perform deployment support works</translation>
     </message>
     <message>
         <source>Pion GEN RealiserCamps</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To build camp</translation>
     </message>
     <message>
         <source>Pion GEN ReprendreTravaux</source>
-        <translation type="unfinished"></translation>
+        <translation>Pawn Eng To continue works</translation>
     </message>
 </context>
 <context>
@@ -1582,63 +1582,63 @@
     </message>
     <message>
         <source>identifiee</source>
-        <translation type="unfinished"></translation>
+        <translation>identified</translation>
     </message>
     <message>
         <source>reconnue</source>
-        <translation type="unfinished"></translation>
+        <translation>recognized</translation>
     </message>
     <message>
         <source>detectee</source>
-        <translation type="unfinished"></translation>
+        <translation>detected</translation>
     </message>
     <message>
         <source>signale</source>
-        <translation type="unfinished"></translation>
+        <translation>reported</translation>
     </message>
     <message>
         <source>munition</source>
-        <translation type="unfinished"></translation>
+        <translation>ammunition</translation>
     </message>
     <message>
         <source>carburant</source>
-        <translation type="unfinished"></translation>
+        <translation>fuel</translation>
     </message>
     <message>
         <source>explosif</source>
-        <translation type="unfinished"></translation>
+        <translation>explosive</translation>
     </message>
     <message>
         <source>mine</source>
-        <translation type="unfinished"></translation>
+        <translation>mine</translation>
     </message>
     <message>
         <source>barbele</source>
-        <translation type="unfinished"></translation>
+        <translation>barbed wire</translation>
     </message>
     <message>
         <source>piece</source>
-        <translation type="unfinished"></translation>
+        <translation>patch</translation>
     </message>
     <message>
         <source>ration</source>
-        <translation type="unfinished"></translation>
+        <translation>daily food ration</translation>
     </message>
     <message>
         <source>obus</source>
-        <translation type="unfinished"></translation>
+        <translation>shell</translation>
     </message>
     <message>
         <source>missile air</source>
-        <translation type="unfinished"></translation>
+        <translation>air missile</translation>
     </message>
     <message>
         <source>missile sol</source>
-        <translation type="unfinished"></translation>
+        <translation>ground missile</translation>
     </message>
     <message>
         <source>mitraille</source>
-        <translation type="unfinished"></translation>
+        <translation>hail of bullets</translation>
     </message>
     <message>
         <source>none</source>
@@ -1646,39 +1646,39 @@
     </message>
     <message>
         <source>reparation</source>
-        <translation type="unfinished"></translation>
+        <translation>repair work</translation>
     </message>
     <message>
         <source>moyen</source>
-        <translation type="unfinished"></translation>
+        <translation>so so</translation>
     </message>
     <message>
         <source>inconnu</source>
-        <translation type="unfinished"></translation>
+        <translation>unknown</translation>
     </message>
     <message>
         <source>non blesse</source>
-        <translation type="unfinished"></translation>
+        <translation>uninjured</translation>
     </message>
     <message>
         <source>mort</source>
-        <translation type="unfinished"></translation>
+        <translation>dead</translation>
     </message>
     <message>
         <source>blesse urgence 1</source>
-        <translation type="unfinished"></translation>
+        <translation>wounded (1)</translation>
     </message>
     <message>
         <source>blesse urgence 2</source>
-        <translation type="unfinished"></translation>
+        <translation>wounded (2)</translation>
     </message>
     <message>
         <source>blesse urgence 3</source>
-        <translation type="unfinished"></translation>
+        <translation>wounded (3)</translation>
     </message>
     <message>
         <source>blesse urgence extreme</source>
-        <translation type="unfinished"></translation>
+        <translation>seriously wounded</translation>
     </message>
     <message>
         <source>o</source>
@@ -1726,43 +1726,43 @@
     </message>
     <message>
         <source>officier</source>
-        <translation type="unfinished"></translation>
+        <translation>officer</translation>
     </message>
     <message>
         <source>sous officer</source>
-        <translation type="unfinished"></translation>
+        <translation>under officer</translation>
     </message>
     <message>
         <source>mdr</source>
-        <translation type="unfinished"></translation>
+        <translation>private</translation>
     </message>
     <message>
         <source>courte portee</source>
-        <translation type="unfinished"></translation>
+        <translation>small range</translation>
     </message>
     <message>
         <source>moyenne portee</source>
-        <translation type="unfinished"></translation>
+        <translation>medium range</translation>
     </message>
     <message>
         <source>longue portee</source>
-        <translation type="unfinished"></translation>
+        <translation>long range</translation>
     </message>
     <message>
         <source>sans munitions</source>
-        <translation type="unfinished"></translation>
+        <translation>without ammunition</translation>
     </message>
     <message>
         <source>aa</source>
-        <translation type="unfinished"></translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>as</source>
-        <translation type="unfinished"></translation>
+        <translation>as</translation>
     </message>
     <message>
         <source>polyvalent</source>
-        <translation type="unfinished"></translation>
+        <translation>polyvalent</translation>
     </message>
     <message>
         <source>en carre</source>
@@ -1850,167 +1850,167 @@
     </message>
     <message>
         <source>bouchon mines</source>
-        <translation type="unfinished"></translation>
+        <translation>mines</translation>
     </message>
     <message>
         <source>zone minee lineaire</source>
-        <translation type="unfinished"></translation>
+        <translation>mined area</translation>
     </message>
     <message>
         <source>zone minee par dispersion</source>
-        <translation type="unfinished"></translation>
+        <translation>mined area (scattered)</translation>
     </message>
     <message>
         <source>fosse anti char</source>
-        <translation type="unfinished"></translation>
+        <translation>anti tank obstacle</translation>
     </message>
     <message>
         <source>abattis</source>
-        <translation type="unfinished"></translation>
+        <translation>abatis</translation>
     </message>
     <message>
         <source>barricade</source>
-        <translation type="unfinished"></translation>
+        <translation>barricade</translation>
     </message>
     <message>
         <source>eboulement</source>
-        <translation type="unfinished"></translation>
+        <translation>collapse</translation>
     </message>
     <message>
         <source>destruction route</source>
-        <translation type="unfinished"></translation>
+        <translation>road destruction</translation>
     </message>
     <message>
         <source>destruction pont</source>
-        <translation type="unfinished"></translation>
+        <translation>bridge destruction</translation>
     </message>
     <message>
         <source>pont flottant continu</source>
-        <translation type="unfinished"></translation>
+        <translation>Eng bridge</translation>
     </message>
     <message>
         <source>poste tir</source>
-        <translation type="unfinished"></translation>
+        <translation>firing post</translation>
     </message>
     <message>
         <source>zone protegee</source>
-        <translation type="unfinished"></translation>
+        <translation>protected area</translation>
     </message>
     <message>
         <source>zone implantation canon</source>
-        <translation type="unfinished"></translation>
+        <translation>gun artillery deployment area</translation>
     </message>
     <message>
         <source>zone implantation cobra</source>
-        <translation type="unfinished"></translation>
+        <translation>counter battery radar deployment area</translation>
     </message>
     <message>
         <source>zone implantation lrm</source>
-        <translation type="unfinished"></translation>
+        <translation>mlrs deployment area</translation>
     </message>
     <message>
         <source>site franchissement</source>
-        <translation type="unfinished"></translation>
+        <translation>crossing site</translation>
     </message>
     <message>
         <source>nuage nbc</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC cloud</translation>
     </message>
     <message>
         <source>plot ravitaillement</source>
-        <translation type="unfinished"></translation>
+        <translation>FARP</translation>
     </message>
     <message>
         <source>site decontamination</source>
-        <translation type="unfinished"></translation>
+        <translation>decontamination site</translation>
     </message>
     <message>
         <source>zone brouillage brod</source>
-        <translation type="unfinished"></translation>
+        <translation>jamming area</translation>
     </message>
     <message>
         <source>rota</source>
-        <translation type="unfinished"></translation>
+        <translation>ROTA zone</translation>
     </message>
     <message>
         <source>zone nbc</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC zone</translation>
     </message>
     <message>
         <source>zone brouillage bromure</source>
-        <translation type="unfinished"></translation>
+        <translation>jamming area (type 2)</translation>
     </message>
     <message>
         <source>aire poser</source>
-        <translation type="unfinished"></translation>
+        <translation>landing area</translation>
     </message>
     <message>
         <source>piste</source>
-        <translation type="unfinished"></translation>
+        <translation>slope</translation>
     </message>
     <message>
         <source>plateforme</source>
-        <translation type="unfinished"></translation>
+        <translation>platform</translation>
     </message>
     <message>
         <source>zone mobilite amelioree</source>
-        <translation type="unfinished"></translation>
+        <translation>mobility enhanced area</translation>
     </message>
     <message>
         <source>zone poser helicoptere</source>
-        <translation type="unfinished"></translation>
+        <translation>landing area (helicopters)</translation>
     </message>
     <message>
         <source>aire logistique</source>
-        <translation type="unfinished"></translation>
+        <translation>logistics support area</translation>
     </message>
     <message>
         <source>itineraire logistique</source>
-        <translation type="unfinished"></translation>
+        <translation>logistics support route</translation>
     </message>
     <message>
         <source>camp prisonniers</source>
-        <translation type="unfinished"></translation>
+        <translation>prisoners camp</translation>
     </message>
     <message>
         <source>camp refugies</source>
-        <translation type="unfinished"></translation>
+        <translation>refugees camp</translation>
     </message>
     <message>
         <source>poste controle</source>
-        <translation type="unfinished"></translation>
+        <translation>checkpoint</translation>
     </message>
     <message>
         <source>terrain largage</source>
-        <translation type="unfinished"></translation>
+        <translation>dropping zone</translation>
     </message>
     <message>
         <source>zone interdite mouvement</source>
-        <translation type="unfinished"></translation>
+        <translation>keep out zone</translation>
     </message>
     <message>
         <source>zone interdite tir</source>
-        <translation type="unfinished"></translation>
+        <translation>fire forbidden zone</translation>
     </message>
     <message>
         <source>zone implantation mortier</source>
-        <translation type="unfinished"></translation>
+        <translation>mortar deployment area</translation>
     </message>
     <message>
         <source>pont flottant discontinu</source>
-        <translation type="unfinished"></translation>
+        <translation>Eng bridge (type2)</translation>
     </message>
     <message>
         <source>installation</source>
-        <translation type="unfinished"></translation>
+        <translation>facility</translation>
     </message>
     <message>
         <source>preliminaire</source>
-        <translation type="unfinished"></translation>
+        <translation>small sized</translation>
     </message>
     <message>
         <source>de manoeuvre</source>
-        <translation type="unfinished"></translation>
+        <translation>reserved</translation>
     </message>
     <message>
         <source>error invalid object</source>
@@ -2038,7 +2038,7 @@
     </message>
     <message>
         <source>normal</source>
-        <translation type="unfinished"></translation>
+        <translation>regular</translation>
     </message>
     <message>
         <source>omnidirectionnel</source>
@@ -2058,11 +2058,11 @@
     </message>
     <message>
         <source>elements terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>terrain feature</translation>
     </message>
     <message>
         <source>objets</source>
-        <translation type="unfinished"></translation>
+        <translation>objects</translation>
     </message>
     <message>
         <source>elements mobiles</source>
@@ -2070,95 +2070,95 @@
     </message>
     <message>
         <source>attente disponibilite ambulance releve</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for evacuation ambulance</translation>
     </message>
     <message>
         <source>ambulance releve deplacement aller</source>
-        <translation type="unfinished"></translation>
+        <translation>evacuation ambulance coming</translation>
     </message>
     <message>
         <source>ambulance releve chargement</source>
-        <translation type="unfinished"></translation>
+        <translation>evacuation ambulance loading</translation>
     </message>
     <message>
         <source>attente chargement complet ambulance releve</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for evacuation ambulance loading</translation>
     </message>
     <message>
         <source>ambulance releve deplacement retour</source>
-        <translation type="unfinished"></translation>
+        <translation>evacuation ambulance going back</translation>
     </message>
     <message>
         <source>ambulance releve dechargement</source>
-        <translation type="unfinished"></translation>
+        <translation>evacuation ambulance unloading</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour diagnostique</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for doctor</translation>
     </message>
     <message>
         <source>diagnostique</source>
-        <translation type="unfinished"></translation>
+        <translation>diagnostic</translation>
     </message>
     <message>
         <source>recherche secteur tri</source>
-        <translation type="unfinished"></translation>
+        <translation>looking for sorting area</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour tri</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for sorting doctor</translation>
     </message>
     <message>
         <source>tri</source>
-        <translation type="unfinished"></translation>
+        <translation>sorting</translation>
     </message>
     <message>
         <source>recherche secteur soin</source>
-        <translation type="unfinished"></translation>
+        <translation>looking for treatment area</translation>
     </message>
     <message>
         <source>attente disponibilite medecin pour soin</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for doctor (treatment)</translation>
     </message>
     <message>
         <source>soin</source>
-        <translation type="unfinished"></translation>
+        <translation>treatment</translation>
     </message>
     <message>
         <source>hospitalisation</source>
-        <translation type="unfinished"></translation>
+        <translation>hospitalization</translation>
     </message>
     <message>
         <source>attente disponibilite ambulance ramassage</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for collection ambulance</translation>
     </message>
     <message>
         <source>ambulance ramassage chargement</source>
-        <translation type="unfinished"></translation>
+        <translation>collection ambulance loading</translation>
     </message>
     <message>
         <source>attente chargement complet ambulance ramassage</source>
-        <translation type="unfinished"></translation>
+        <translation>waiting for collection ambulance loading</translation>
     </message>
     <message>
         <source>ambulance ramassage deplacement aller</source>
-        <translation type="unfinished"></translation>
+        <translation>collection ambulance coming</translation>
     </message>
     <message>
         <source>ambulance ramassage dechargement</source>
-        <translation type="unfinished"></translation>
+        <translation>collection ambulance unloading</translation>
     </message>
     <message>
         <source>termine</source>
-        <translation type="unfinished"></translation>
+        <translation>finished</translation>
     </message>
     <message>
         <source>un echelon</source>
-        <translation type="unfinished"></translation>
+        <translation>1 echelon formation</translation>
     </message>
     <message>
         <source>deux echelons</source>
-        <translation type="unfinished"></translation>
+        <translation>2 echelons formation</translation>
     </message>
     <message>
         <source>error already started</source>
@@ -2190,63 +2190,63 @@
     </message>
     <message>
         <source>pas de precipitation</source>
-        <translation type="unfinished"></translation>
+        <translation>no rainfall</translation>
     </message>
     <message>
         <source>tempete sable</source>
-        <translation type="unfinished"></translation>
+        <translation>sand storm</translation>
     </message>
     <message>
         <source>brouillard</source>
-        <translation type="unfinished"></translation>
+        <translation>fog</translation>
     </message>
     <message>
         <source>crachin</source>
-        <translation type="unfinished"></translation>
+        <translation>drizzle</translation>
     </message>
     <message>
         <source>pluie</source>
-        <translation type="unfinished"></translation>
+        <translation>rain</translation>
     </message>
     <message>
         <source>neige</source>
-        <translation type="unfinished"></translation>
+        <translation>snowfall</translation>
     </message>
     <message>
         <source>ligne debouche</source>
-        <translation type="unfinished"></translation>
+        <translation>line of departure</translation>
     </message>
     <message>
         <source>ligne changement attitude</source>
-        <translation type="unfinished"></translation>
+        <translation>posture switching line</translation>
     </message>
     <message>
         <source>ligne coordination</source>
-        <translation type="unfinished"></translation>
+        <translation>coordination line</translation>
     </message>
     <message>
         <source>ligne interdire</source>
-        <translation type="unfinished"></translation>
+        <translation>deny line</translation>
     </message>
     <message>
         <source>ligne objectif</source>
-        <translation type="unfinished"></translation>
+        <translation>line of objectives</translation>
     </message>
     <message>
         <source>ligne coup arret</source>
-        <translation type="unfinished"></translation>
+        <translation>block line</translation>
     </message>
     <message>
         <source>ligne recueil</source>
-        <translation type="unfinished"></translation>
+        <translation>rearward line</translation>
     </message>
     <message>
         <source>ligne debut mission</source>
-        <translation type="unfinished"></translation>
+        <translation>starting line</translation>
     </message>
     <message>
         <source>ligne fin mission</source>
-        <translation type="unfinished"></translation>
+        <translation>finish line</translation>
     </message>
     <message>
         <source>ligne identification accueil</source>
@@ -2262,19 +2262,19 @@
     </message>
     <message>
         <source>calme</source>
-        <translation type="unfinished"></translation>
+        <translation>quiet</translation>
     </message>
     <message>
         <source>agitee</source>
-        <translation type="unfinished"></translation>
+        <translation>agitated</translation>
     </message>
     <message>
         <source>excitee</source>
-        <translation type="unfinished"></translation>
+        <translation>nervous</translation>
     </message>
     <message>
         <source>agressive</source>
-        <translation type="unfinished"></translation>
+        <translation>agressive</translation>
     </message>
     <message>
         <source>error invalid attribute</source>
@@ -2286,11 +2286,11 @@
     </message>
     <message>
         <source>operationel</source>
-        <translation type="unfinished"></translation>
+        <translation>operational</translation>
     </message>
     <message>
         <source>evenement exceptionnel</source>
-        <translation type="unfinished"></translation>
+        <translation>special event</translation>
     </message>
     <message>
         <source>warning</source>
@@ -2298,23 +2298,23 @@
     </message>
     <message>
         <source>fumigene</source>
-        <translation type="unfinished"></translation>
+        <translation>smoke</translation>
     </message>
     <message>
         <source>eclairant</source>
-        <translation type="unfinished"></translation>
+        <translation>illumination shell</translation>
     </message>
     <message>
         <source>ami</source>
-        <translation type="unfinished"></translation>
+        <translation>friendly</translation>
     </message>
     <message>
         <source>ennemi</source>
-        <translation type="unfinished"></translation>
+        <translation>enemy</translation>
     </message>
     <message>
         <source>neutre</source>
-        <translation type="unfinished"></translation>
+        <translation>neutral</translation>
     </message>
     <message>
         <source>error invalid automate</source>
@@ -2442,139 +2442,139 @@
     </message>
     <message>
         <source>embraye</source>
-        <translation type="unfinished"></translation>
+        <translation>engaged</translation>
     </message>
     <message>
         <source>debraye</source>
-        <translation type="unfinished"></translation>
+        <translation>disengaged</translation>
     </message>
     <message>
         <source>posture mouvement</source>
-        <translation type="unfinished"></translation>
+        <translation>standard posture</translation>
     </message>
     <message>
         <source>posture mouvement discret</source>
-        <translation type="unfinished"></translation>
+        <translation>infiltration posture</translation>
     </message>
     <message>
         <source>posture arret</source>
-        <translation type="unfinished"></translation>
+        <translation>stopping posture</translation>
     </message>
     <message>
         <source>posture poste reflexe</source>
-        <translation type="unfinished"></translation>
+        <translation>short stopping posture</translation>
     </message>
     <message>
         <source>posture poste</source>
-        <translation type="unfinished"></translation>
+        <translation>parking posture</translation>
     </message>
     <message>
         <source>posture poste amenage</source>
-        <translation type="unfinished"></translation>
+        <translation>prepared parking posture</translation>
     </message>
     <message>
         <source>posture poste prepare genie</source>
-        <translation type="unfinished"></translation>
+        <translation>Eng prepared parking posture</translation>
     </message>
     <message>
         <source>favorable</source>
-        <translation type="unfinished"></translation>
+        <translation>high</translation>
     </message>
     <message>
         <source>defavorable</source>
-        <translation type="unfinished"></translation>
+        <translation>low</translation>
     </message>
     <message>
         <source>etat esquive</source>
-        <translation type="unfinished"></translation>
+        <translation>withdrawing</translation>
     </message>
     <message>
         <source>etat fixe</source>
-        <translation type="unfinished"></translation>
+        <translation>fixing</translation>
     </message>
     <message>
         <source>etat poursuite mission</source>
-        <translation type="unfinished"></translation>
+        <translation>NTR</translation>
     </message>
     <message>
         <source>detruit totalement</source>
-        <translation type="unfinished"></translation>
+        <translation>destroyed</translation>
     </message>
     <message>
         <source>detruit tactiquement</source>
-        <translation type="unfinished"></translation>
+        <translation>non operational</translation>
     </message>
     <message>
         <source>operationnel</source>
-        <translation type="unfinished"></translation>
+        <translation>operational</translation>
     </message>
     <message>
         <source>pret au tir</source>
-        <translation type="unfinished"></translation>
+        <translation>ready to fire</translation>
     </message>
     <message>
         <source>indisponible</source>
-        <translation type="unfinished"></translation>
+        <translation>unavailable</translation>
     </message>
     <message>
         <source>tir libre</source>
-        <translation type="unfinished"></translation>
+        <translation>free fire</translation>
     </message>
     <message>
         <source>tir sur riposte</source>
-        <translation type="unfinished"></translation>
+        <translation>fire back only</translation>
     </message>
     <message>
         <source>tir interdit</source>
-        <translation type="unfinished"></translation>
+        <translation>fire not allowed</translation>
     </message>
     <message>
         <source>emploi force interdit</source>
-        <translation type="unfinished"></translation>
+        <translation>force shall not be used</translation>
     </message>
     <message>
         <source>maintien a distance par moyens non letaux</source>
-        <translation type="unfinished"></translation>
+        <translation>non letal weapons use allowed</translation>
     </message>
     <message>
         <source>dispersion par moyens de defense actifs</source>
-        <translation type="unfinished"></translation>
+        <translation>active defense allowed</translation>
     </message>
     <message>
         <source>armes letales autorisees</source>
-        <translation type="unfinished"></translation>
+        <translation>letal weapon use allowed</translation>
     </message>
     <message>
         <source>fatigue</source>
-        <translation type="unfinished"></translation>
+        <translation>tired</translation>
     </message>
     <message>
         <source>epuise</source>
-        <translation type="unfinished"></translation>
+        <translation>exhausted</translation>
     </message>
     <message>
         <source>fanatique</source>
-        <translation type="unfinished"></translation>
+        <translation>fanatic</translation>
     </message>
     <message>
         <source>bon</source>
-        <translation type="unfinished"></translation>
+        <translation>good</translation>
     </message>
     <message>
         <source>mauvais</source>
-        <translation type="unfinished"></translation>
+        <translation>bad</translation>
     </message>
     <message>
         <source>veteran</source>
-        <translation type="unfinished"></translation>
+        <translation>veteran</translation>
     </message>
     <message>
         <source>experimente</source>
-        <translation type="unfinished"></translation>
+        <translation>experienced</translation>
     </message>
     <message>
         <source>conscrit</source>
-        <translation type="unfinished"></translation>
+        <translation>conscript</translation>
     </message>
     <message>
         <source>error unit not automate</source>
@@ -2594,11 +2594,11 @@
     </message>
     <message>
         <source>surete</source>
-        <translation type="unfinished"></translation>
+        <translation>safety posture</translation>
     </message>
     <message>
         <source>vitesse</source>
-        <translation type="unfinished"></translation>
+        <translation>maximum speed posture</translation>
     </message>
     <message>
         <source>deborder materiels vers bld</source>
