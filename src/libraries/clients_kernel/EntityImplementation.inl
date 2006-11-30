@@ -65,6 +65,7 @@ void EntityImplementation< I >::Polish()
 {
     Update( InstanciationComplete() );
     controller_.Create( This() );
+    controller_.Create( *(Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

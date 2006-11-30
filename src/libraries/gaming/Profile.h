@@ -59,6 +59,7 @@ public:
     
     //! @name Accessors
     //@{
+    QString GetLogin() const;
     bool IsLoggedIn() const;
     //@}
 

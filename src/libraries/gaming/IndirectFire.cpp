@@ -44,5 +44,11 @@ IndirectFire::~IndirectFire()
 void IndirectFire::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( ! viewport.Intersect( geometry::Rectangle2f( where, target_ ) ).IsEmpty() )
-        tools.DrawCurvedArrow( where, target_, 0.2f, 10.f );
+    {
+        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+            glLineWidth( 3.f );
+            tools.DrawCurvedArrow( where, target_, 0.2f, 10.f );
+        glPopAttrib();
+
+    }
 }

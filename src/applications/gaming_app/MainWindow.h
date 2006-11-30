@@ -72,7 +72,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-    MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& profile );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& profile );
     virtual ~MainWindow();
     //@}
 
@@ -126,6 +126,7 @@ private:
     Model& model_;
     Network& network_;
     std::string scipioXml_;
+    QString profile_;
 
     gui::GlProxy*                glProxy_;
     gui::ColorStrategy*          strategy_;

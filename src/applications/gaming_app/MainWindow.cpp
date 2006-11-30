@@ -119,7 +119,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , b3d_        ( false )
 {
     setIcon( MAKE_PIXMAP( astec ) );
-    setCaption( APP_NAME );
+    setCaption( APP_NAME + tr( " - Not connected" ) );
 
     Profile_ABC& profile = *new ProfileFilterObject( this, controllers, p );
 
@@ -506,6 +506,18 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
 namespace
 {
     struct Nothing {};
+
+    QString ExtractExerciceName( const std::string& filename )
+    {
+        if( filename.empty() )
+            return "";
+        else
+        {
+            std::string file = bfs::path( filename, bfs::native ).leaf();
+            file = file.substr( 0, file.find_last_of( '.' ) );
+            return file.c_str();
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -516,11 +528,15 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
     if( ! simulation.IsConnected() )
     {
+        setCaption( APP_NAME + tr( " - Not connected" ) );
         controllers_.actions_.Select( Nothing() );
         model_.Purge();
     }
     if( simulation.IsConnected() )
+    {
         CompareConfigPath( simulation.GetSimulationHost(), simulation.GetConfigPath() );
+        setCaption( APP_NAME + QString( " - [%1@%2][%3]" ).arg( profile_ ).arg( simulation.GetSimulationHost().c_str() ).arg( ExtractExerciceName( simulation.GetConfigPath() ) ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -531,10 +547,13 @@ void MainWindow::NotifyUpdated( const Profile& profile )
 {
     if( ! profile.IsLoggedIn() )
     {
+        profile_ = profile.GetLogin();
         static LoginDialog* dialog = new LoginDialog( this, profile, network_.GetMessageMgr() );
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
         QTimer::singleShot( 0, dialog, SLOT(exec()) );
     }
+    else
+        profile_ = profile.GetLogin();
 }
 
 // -----------------------------------------------------------------------------

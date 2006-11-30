@@ -18,6 +18,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "gaming/Tools.h"
 #include "ASN_Messages.h"
 
 using namespace kernel;
@@ -118,6 +119,15 @@ void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
             controller_.Update( *(Profile_ABC*)this );
     };
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::GetLogin
+// Created: SBO 2006-11-30
+// -----------------------------------------------------------------------------
+QString Profile::GetLogin() const
+{
+    return loggedIn_ ? login_.c_str() : tools::translate( "Profile", "login" );
 }
 
 // -----------------------------------------------------------------------------
