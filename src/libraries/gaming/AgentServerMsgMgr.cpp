@@ -1785,9 +1785,6 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
 //-----------------------------------------------------------------------------
 bool AgentServerMsgMgr::OnError( DIN::DIN_Link& /*link*/, const DIN::DIN_ErrorDescription& /*info*/ )
 {
-    for( CIT_Inputs it = workingInputs_.begin(); it != workingInputs_.end(); ++it )
-        delete *it;
-    workingInputs_.clear();
     return false;
 }
 

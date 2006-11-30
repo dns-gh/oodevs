@@ -11,6 +11,7 @@
 #include "AgentSelectionObserver.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -65,6 +66,15 @@ void AgentSelectionObserver::Select( const Population_ABC& element )
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
 void AgentSelectionObserver::Select( const Agent_ABC& element )
+{
+    selected_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentSelectionObserver::Select
+// Created: AGE 2006-11-30
+// -----------------------------------------------------------------------------
+void AgentSelectionObserver::Select( const kernel::Automat_ABC& element )
 {
     selected_ = &element;
 }

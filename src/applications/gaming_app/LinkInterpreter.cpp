@@ -11,6 +11,9 @@
 #include "LinkInterpreter.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "gaming/AgentKnowledge_ABC.h"
+#include "gaming/ObjectKnowledge_ABC.h"
+#include "gaming/PopulationKnowledge_ABC.h"
 
 using namespace kernel;
 using namespace gui;

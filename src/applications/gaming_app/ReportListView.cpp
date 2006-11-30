@@ -127,16 +127,13 @@ void ReportListView::NotifyUpdated( const Reports& reports )
 // -----------------------------------------------------------------------------
 void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( report && & report->GetAgent() == selected_ )
+    if( report && & report->GetAgent() == selected_ && filter_.ShouldDisplay( *report ) )
     {
-        if( filter_.ShouldDisplay( *report ) )
-        {
-            item->SetValue( report );
-            report->Display( displayer );
-        }
-        else
-            delete item;
+        item->SetValue( report );
+        report->Display( displayer );
     }
+    else
+        delete item;
 }
 
 // -----------------------------------------------------------------------------
