@@ -19,6 +19,7 @@ namespace kernel
     class Entity_ABC;
     class Population_ABC;
     class Agent_ABC;
+    class Positions;
 }
 
 // =============================================================================
@@ -49,6 +50,7 @@ public:
     //@{
     unsigned int id_;
     const kernel::Entity_ABC* target_;
+    const kernel::Positions* targetPosition_;
     //@}
 };
 

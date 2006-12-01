@@ -29,7 +29,7 @@ unsigned long Population::nMaxId_ = 200;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< Team_ABC >& resolver, const Resolver_ABC< PopulationType >& typeResolver )
+Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< PopulationType >& typeResolver )
     : EntityImplementation< Population_ABC >( controller, message.oid_population, message.nom )
     , converter_    ( converter )
     , type_         ( typeResolver.Get( message.type_population ) )
@@ -192,7 +192,7 @@ void Population::Draw( const geometry::Point2f& where, const geometry::Rectangle
 namespace
 {
     template< typename Entity, typename ConcreteEntity >
-    void IncorporateBoundingBox( const Resolver< Entity >& resolver, geometry::Rectangle2f& boundingBox )
+    void IncorporateBoundingBox( const Resolver< Entity >& resolver, Rectangle2f& boundingBox, Point2f& center )
     {
         Iterator< const Entity& > it = resolver.CreateIterator();
         while( it.HasMoreElements() )
@@ -201,6 +201,8 @@ namespace
             const geometry::Rectangle2f bbox = concreteEntity.GetBoundingBox();
             boundingBox.Incorporate( bbox.TopRight() );
             boundingBox.Incorporate( bbox.BottomLeft() );
+            if( center.IsZero() )
+                center = concreteEntity.GetPosition();
         }
     }
 }
@@ -212,9 +214,9 @@ namespace
 void Population::ComputeCenter()
 {
     boundingBox_ = Rectangle2f();
-    IncorporateBoundingBox< PopulationConcentration_ABC, PopulationConcentration >( *this, boundingBox_ );
-    IncorporateBoundingBox< PopulationFlow_ABC, PopulationFlow >( *this, boundingBox_ );
-    center_ = boundingBox_.Center();
+    center_ = Point2f();
+    IncorporateBoundingBox< PopulationConcentration_ABC, PopulationConcentration >( *this, boundingBox_, center_ );
+    IncorporateBoundingBox< PopulationFlow_ABC, PopulationFlow >( *this, boundingBox_, center_ );
 }
 
 // -----------------------------------------------------------------------------

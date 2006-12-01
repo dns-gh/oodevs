@@ -18,9 +18,9 @@
 
 namespace kernel
 {
-    class Agent_ABC;
     class Controllers;
     class Profile_ABC;
+    class Entity_ABC;
 }
 
 class Publisher_ABC;
@@ -33,7 +33,7 @@ class Publisher_ABC;
 // =============================================================================
 class ChangeHumanFactorsDialog : public QDialog
                                , public kernel::Observer_ABC
-                               , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                                , public kernel::NullDisplayer
                                , public kernel::Caller< E_UnitFatigue >
                                , public kernel::Caller< E_UnitMoral >
@@ -49,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
     virtual QSize sizeHint() const;
     //@}
 
@@ -70,6 +70,7 @@ private:
     //! @name Helpers
     //@{
     void SendMessage( uint id, ASN1T_EnumUnitFatigue, ASN1T_EnumUnitMoral, ASN1T_EnumUnitExperience );
+    void SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitFatigue, ASN1T_EnumUnitMoral, ASN1T_EnumUnitExperience );
     virtual void Call( const E_UnitFatigue& fatigue );
     virtual void Call( const E_UnitMoral& morale );
     virtual void Call( const E_UnitExperience& experience );
@@ -82,11 +83,10 @@ private:
     Publisher_ABC& publisher_;
     const kernel::Profile_ABC& profile_;
 
-    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     gui::ValuedComboBox< E_UnitFatigue >*     pTirednessCombo_;
     gui::ValuedComboBox< E_UnitMoral >*       pMoralCombo_;
     gui::ValuedComboBox< E_UnitExperience >*  pExperienceCombo_;
-    QCheckBox*                                   pAllUnitsCheckBox_;
     //@}
 };
 

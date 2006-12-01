@@ -33,6 +33,7 @@ DirectFire::DirectFire( const ASN1T_MsgStartPionFire& message, const Resolver_AB
 
     if( message.m.munitionPresent )
         ; // $$$$ AGE 2006-03-10: 
+    targetPosition_ = target_->Retrieve< Positions >();
 }
 
 // -----------------------------------------------------------------------------
@@ -50,12 +51,10 @@ DirectFire::~DirectFire()
 // -----------------------------------------------------------------------------
 void DirectFire::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    const Positions* p = target_->Retrieve< Positions >();
-    if( p && ! viewport.Intersect( geometry::Rectangle2f( where, p->GetPosition() ) ).IsEmpty() )
+    if( targetPosition_ )
     {
-        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-            glLineWidth( 3.f );
-            tools.DrawArrow( where, p->GetPosition() );
-        glPopAttrib();
+        const geometry::Point2f pos = targetPosition_->GetPosition();
+        if( ! viewport.Intersect( geometry::Rectangle2f( where, pos ) ).IsEmpty() )
+            tools.DrawArrow( where, pos );
     }
 }

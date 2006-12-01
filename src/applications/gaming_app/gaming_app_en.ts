@@ -621,10 +621,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1018,10 +1014,6 @@
     </message>
     <message>
         <source>Destroy - Component</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

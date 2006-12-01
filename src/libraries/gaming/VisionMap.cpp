@@ -60,7 +60,7 @@ void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& 
             const geometry::Point2f p = map_.Map( it->first.first, it->first.second );
             assert( it->second >= 1 );
             glColor4fv( colors[it->second-1] );
-            glVertex2fv( (float*)(&p) );
+            tools.DrawCell( p );
         }
     glEnd();
     glPopAttrib();

@@ -114,7 +114,7 @@ void Fires::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& v
     if( ! elements_.empty() )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-        glLineWidth( 2.f );
+        glLineWidth( 3.f );
         glColor4f( COLOR_RED );
         for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
             it->second->Draw( where, viewport, tools );

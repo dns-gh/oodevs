@@ -15,6 +15,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 
 #include "ENT/ENT_Tr.h"
@@ -63,14 +64,11 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     pExperienceCombo_ = new ValuedComboBox< E_UnitExperience >( this );
     pLayout->addWidget( pExperienceCombo_, 3, 1 );
 
-    pAllUnitsCheckBox_ = new QCheckBox( tr( "All units" ), this );
-    pLayout->addMultiCellWidget( pAllUnitsCheckBox_, 4, 4, 0, 1 );
-
     QHBox* box = new QHBox( this );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
-    pLayout->addMultiCellWidget( box, 5, 5, 0, 1, Qt::AlignCenter );
+    pLayout->addMultiCellWidget( box, 4, 4, 0, 1, Qt::AlignCenter );
 
     connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( hide() ) );
@@ -99,11 +97,8 @@ void ChangeHumanFactorsDialog::Show()
     Populate( eNbrUnitExperience, *pExperienceCombo_, &ENT_Tr::ConvertFromUnitExperience );
 
     if( const HumanFactors_ABC* factors = selected_->Retrieve< HumanFactors_ABC >() )
-    {
         factors->Display( *this );
-        pAllUnitsCheckBox_->show();
-        show();
-    }
+    show();
 }
 
 // -----------------------------------------------------------------------------
@@ -144,14 +139,28 @@ void ChangeHumanFactorsDialog::Validate()
     const ASN1T_EnumUnitFatigue tiredness = (ASN1T_EnumUnitFatigue)pTirednessCombo_->GetValue();
     const ASN1T_EnumUnitMoral moral = (ASN1T_EnumUnitMoral)pMoralCombo_->GetValue();
     const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
-    if ( pAllUnitsCheckBox_->isChecked() )
-    {
-        Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-            SendMessage( it.NextElement().GetId(), tiredness, moral, experience );
-    }
-    SendMessage( selected_->GetId(), tiredness, moral, experience );
+    Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    SendMessage( *selected_, tiredness, moral, experience );
     hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::SendMessage
+// Created: AGE 2006-12-01
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitFatigue tiredness, ASN1T_EnumUnitMoral moral, ASN1T_EnumUnitExperience experience )
+{
+    if( entity.Retrieve< HumanFactors_ABC >() )
+        SendMessage( entity.GetId(), tiredness, moral, experience );
+    const Hierarchies* h = entity.Retrieve< CommunicationHierarchies >();
+    if( !h )
+        h = entity.Retrieve< TacticalHierarchies >();
+    if( h )
+    {
+        Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+            SendMessage( it.NextElement(), tiredness, moral, experience );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +197,7 @@ QSize ChangeHumanFactorsDialog::sizeHint() const
 // Name: ChangeHumanFactorsDialog::NotifyContextMenu
 // Created: SBO 2006-08-10
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
+void ChangeHumanFactorsDialog::NotifyContextMenu( const Entity_ABC& agent, ContextMenu& menu )
 {
     if( profile_.CanDoMagic( agent ) )
     {

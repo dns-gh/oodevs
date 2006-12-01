@@ -19,8 +19,6 @@ namespace kernel
 {
     class Entity_ABC;
     class Agent_ABC;
-    class KnowledgeGroup_ABC;
-    class Team_ABC;
     class Automat_ABC;
     class Controllers;
     class Profile_ABC;
@@ -43,8 +41,7 @@ class Publisher_ABC;
 // =============================================================================
 class MagicOrdersInterface : public QObject
                            , public kernel::Observer_ABC
-                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
-                           , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC >
+                           , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                            , public gui::ShapeHandler_ABC
@@ -61,8 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
-    virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void Handle( kernel::Location_ABC& location );

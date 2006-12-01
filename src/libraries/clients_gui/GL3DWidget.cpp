@@ -361,6 +361,33 @@ void Gl3dWidget::DrawImage( const QImage& image, const geometry::Point2f& where 
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawCell
+// Created: AGE 2006-12-01
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawCell( const geometry::Point2f& center ) const
+{
+    static const float halfCellSize = elevation_.GetCellSize() * 0.5f;
+    glBegin( GL_QUADS );
+    {
+        const geometry::Point2f p( center.X() - halfCellSize, center.Y() - halfCellSize );
+        glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
+    }
+    {
+        const geometry::Point2f p( center.X() + halfCellSize, center.Y() - halfCellSize );
+        glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
+    }
+    {
+        const geometry::Point2f p( center.X() + halfCellSize, center.Y() + halfCellSize );
+        glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
+    }
+    {
+        const geometry::Point2f p( center.X() - halfCellSize, center.Y() + halfCellSize );
+        glVertex3f( p.X(), p.Y(), ElevationAt( p ) );
+    }
+    glEnd();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::CenterOn
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------

@@ -293,3 +293,12 @@ void GlProxy::DrawImage( const QImage& image, const geometry::Point2f& where ) c
 {
     tools_->DrawImage( image, where );
 }
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::DrawCell
+// Created: AGE 2006-12-01
+// -----------------------------------------------------------------------------
+void GlProxy::DrawCell( const geometry::Point2f& center ) const
+{
+    tools_->DrawCell( center );
+}

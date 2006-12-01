@@ -100,7 +100,7 @@ bool TacticalLinePositions::IsAt( const geometry::Point2f& point, float precisio
 // -----------------------------------------------------------------------------
 bool TacticalLinePositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 {
-    return rectangle.IsInside( GetPosition() );
+    return ! rectangle.Intersect( boundingBox_ ).IsEmpty();
 }
     
 // -----------------------------------------------------------------------------

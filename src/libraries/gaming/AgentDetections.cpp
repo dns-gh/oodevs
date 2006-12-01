@@ -64,6 +64,7 @@ void AgentDetections::DoUpdate( const DetectionMessage& message )
 // -----------------------------------------------------------------------------
 void AgentDetections::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    // $$$$ AGE 2006-12-01: Could bear improvements
     // $$$$ AGE 2006-04-21: viewport
     if( ! tools.ShouldDisplay( "VisionLines" ) || detections_.empty() )
         return;

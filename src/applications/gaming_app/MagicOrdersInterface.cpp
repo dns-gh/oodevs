@@ -16,11 +16,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 
 #include "gaming/StaticModel.h"
@@ -74,13 +73,8 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
 
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
-        AddMagic( tr( "Recover - All" ),        T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
-        AddMagic( tr( "Recover - Equipments" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
-        AddMagic( tr( "Recover - Resources" ),  T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
-        AddMagic( tr( "Recover - Troops" ),     T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
-        AddMagic( tr( "Destroy - All" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
         AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );
     }
 }
@@ -95,43 +89,28 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, 
         return;
 
     selectedEntity_ = &agent;
-    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic order" ) );
+    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddMagic( tr( "Surrender" ), SLOT( Surrender() ), magicMenu );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         bMoveAllowed = decisions->IsEmbraye();
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
-    FillCommonOrders( magicMenu );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::NotifyContextMenu
 // Created: AGE 2006-07-04
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup_ABC& group, ContextMenu& menu )
+void MagicOrdersInterface::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
 {   
-    if( !profile_.CanDoMagic( group ) )
+    if( !profile_.CanDoMagic( entity ) )
         return;
 
-    selectedEntity_ = &group;
+    selectedEntity_ = &entity;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
 } 
-
-// -----------------------------------------------------------------------------
-// Name: MagicOrdersInterface::NotifyContextMenu
-// Created: AGE 2006-07-04
-// -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const Team_ABC& team, ContextMenu& menu )
-{
-    if( !profile_.CanDoMagic( team ) )
-        return;
-
-    selectedEntity_ = &team;
-    QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-    FillCommonOrders( magicMenu );
-}
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::FillCommonOrders
@@ -191,11 +170,17 @@ namespace
         {
             if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
                 MagicFunctor::operator()( *agent );
-            Iterator< const Entity_ABC& > it = entity.Get< CommunicationHierarchies >().CreateSubordinateIterator();
-            while( it.HasMoreElements() )
+            const Hierarchies* h = entity.Retrieve< CommunicationHierarchies >();
+            if( ! h )
+                h = entity.Retrieve< TacticalHierarchies >();
+            if( h )
             {
-                const Entity_ABC& entity = it.NextElement();
-                operator()( entity ); 
+                Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
+                while( it.HasMoreElements() )
+                {
+                    const Entity_ABC& entity = it.NextElement();
+                    operator()( entity ); 
+                }
             }
         }
     };

@@ -94,7 +94,6 @@ private:
     mutable volatile bool needUpdating_;
     mutable volatile bool updating_;
     mutable volatile bool commiting_; // $$$$ AGE 2006-11-28: not really enough on dual procs...
-    
     //@}
 };
 

@@ -79,6 +79,7 @@ public:
     virtual void DrawApp6Symbol ( const std::string& symbol, const geometry::Point2f& where, float factor = 1.f ) const;
     virtual void DrawIcon       ( const char** xpm, const geometry::Point2f& where, float size = -1.f ) const;
     virtual void DrawImage      ( const QImage& image, const geometry::Point2f& where ) const;
+    virtual void DrawCell       ( const geometry::Point2f& center ) const;
 
     virtual void CenterOn( const geometry::Point2f& point );
     //@}

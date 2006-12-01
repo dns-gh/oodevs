@@ -584,6 +584,15 @@ void GlWidget::DrawImage( const QImage& image, const geometry::Point2f& where ) 
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawCell
+// Created: AGE 2006-12-01
+// -----------------------------------------------------------------------------
+void GlWidget::DrawCell( const geometry::Point2f& center ) const
+{
+    glVertex2fv( (const float*)&center );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::CenterOn
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
