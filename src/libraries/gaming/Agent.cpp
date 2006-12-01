@@ -30,6 +30,8 @@ Agent::Agent( const ASN1T_MsgPionCreation& message, Controller& controller,  con
     , type_( resolver.Get( message.type_pion ) )
     , isPc_( message.pc )
 {
+    if( name_.isEmpty() )
+        name_ = QString( "Agent %1" ).arg( message.oid_pion );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

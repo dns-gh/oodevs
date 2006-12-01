@@ -26,6 +26,8 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controll
     : EntityImplementation< Automat_ABC >( controller, message.oid_automate, message.nom )
     , type_( resolver.Get( message.type_automate ) )
 {
+    if( name_.isEmpty() )
+        name_ = QString( "Automat %1" ).arg( message.oid_automate );
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
