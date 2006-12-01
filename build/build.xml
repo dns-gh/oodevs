@@ -300,7 +300,7 @@
         <delete includeemptydirs="true">
             <fileset dir="${dist.dir}/current" includes="**/*"/>
         </delete>
-          
+        <mkdir dir="${dist.dir}/current"/>          
         <exec executable="svn">
             <arg line="export --force ${data.dir}/test ${dist.dir}/current"/> 
         </exec>             
