@@ -297,7 +297,7 @@
             <fileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>
         </zip>
 
-        <delete includeemptydirs="true" failonerror="false">
+        <!--<delete includeemptydirs="true" failonerror="false">
             <fileset dir="${dist.dir}/current" includes="**/*"/>
         </delete>
         <mkdir dir="${dist.dir}/current"/>          
@@ -319,7 +319,7 @@
             <fileset dir="${applications.dir}/gaming_app" includes="*.qm"/>
             <fileset dir="${applications.dir}/adaptation_app/translator" includes="*.qm"/>                        
             <fileset dir="${run.dir}" includes="*.dll license.dat"/>
-        </copy>                    
+        </copy>                    -->
     </target>
     <!--
     ============================================================================
