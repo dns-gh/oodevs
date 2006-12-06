@@ -16,7 +16,7 @@
 #include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class ElevationTextureTree;
+class TextureTree;
 
 namespace kernel
 {
@@ -72,7 +72,7 @@ private:
     kernel::Controller& controller_;
     const kernel::DetectionMap& elevation_;
     ViewFrustum lastFrustum_;
-    ElevationTextureTree* tree_;
+    TextureTree* tree_;
     float zRatio_;
     bool modelLoaded_;
     //@}

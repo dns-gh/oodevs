@@ -9,8 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "Elevation3dLayer.h"
-#include "graphics/ElevationTextureTree.h"
+#include "graphics/TextureTree.h"
 #include "graphics/Visitor3d.h"
+#include "graphics/ElevationFactory.h"
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
@@ -78,7 +79,10 @@ bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
 void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 {
     if( ! tree_ && modelLoaded_ )
-        tree_ = new ElevationTextureTree( elevation_.GetMap(), *this );
+    {
+        ElevationFactory factory( elevation_.GetMap(), *this );
+        tree_ = new TextureTree( factory, elevation_.Width(), elevation_.Height() );
+    }
 
     if( !tree_ )
         return;
