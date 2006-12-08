@@ -27,22 +27,31 @@ VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Worke
     , workers_( workers )
     , map_( factory_.CreateVisionMap() )
     , needUpdating_( true )
-    , updating_( false )
-    , commiting_( false )
+    , updating_    ( false )
 {
     // NOTHING
 }
-    
+
+struct VisionCones::NotUpdating
+{
+    NotUpdating( VisionCones* cones ) : cones_( cones ) {};
+    bool operator()() const { return ! cones_->updating_; }
+    VisionCones* cones_;
+};
+
 // -----------------------------------------------------------------------------
 // Name: VisionCones destructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 VisionCones::~VisionCones()
 {
-    Join();
-     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
+    boost::mutex::scoped_lock locker( mutex_ );
+    condition_.wait( locker, NotUpdating( this ) );
+
+    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
-     delete map_;
+    delete map_;
+    ClearOldJunk();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +60,8 @@ VisionCones::~VisionCones()
 // -----------------------------------------------------------------------------
 void VisionCones::DoUpdate( const VisionConesMessage& message )
 {
+    boost::mutex::scoped_lock locker( mutex_ );
+
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
     surfaces_.clear();
@@ -62,7 +73,7 @@ void VisionCones::DoUpdate( const VisionConesMessage& message )
     message >> elongationFactor_;
     for( uint i = 0; i < nNbrSurfaces; ++i )
         surfaces_[ i ]->SetElongation( elongationFactor_ );
-    needUpdating_ = true;
+    Invalidate();
 }
 
 // -----------------------------------------------------------------------------
@@ -74,45 +85,48 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
     if( message.m.positionPresent 
      || message.m.experiencePresent 
      || message.m.fatiguePresent )
-        needUpdating_ = true;
+        Invalidate();
 }
 
-// -----------------------------------------------------------------------------
-// Name: VisionCones::Updater
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-VisionCones::Updater::Updater( VisionCones& cones )
-    : cones_( & cones )
-    , locker_( cones )
+struct VisionCones::Updater
 {
-    // NOTHING
-}
-    
-// -----------------------------------------------------------------------------
-// Name: VisionCones::operator()
-// Created: AGE 2006-04-20
-// -----------------------------------------------------------------------------
-void VisionCones::Updater::operator()()
-{
-    try
+    Updater( VisionCones& cones )
+        : cones_           ( &cones )
+        , map_             ( cones.factory_.CreateVisionMap() )
+        , elongationFactor_( cones.elongationFactor_ )
     {
+        cones.updating_ = true;
+        surfaces_.reserve( cones.surfaces_.size() );
+        for( CIT_Surfaces it = cones.surfaces_.begin(); it != cones.surfaces_.end(); ++it )
+            surfaces_.push_back( new Surface( **it ) );
+    };
 
-        cones_->updating_ = true;
-        VisionMap* map = cones_->factory_.CreateVisionMap();
-        for( CIT_Surfaces it = cones_->surfaces_.begin(); it != cones_->surfaces_.end(); ++it )
-            (*it)->Update( *map );
-        cones_->commiting_ = true;
+    void operator()()
+    {
+        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+            (*it)->Update( *map_ );
+        Commit();
+    };
+
+    void Commit()
+    {
+        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+            delete *it;
+
+        boost::mutex::scoped_lock locker( cones_->mutex_ );
+
+        cones_->oldMaps_.push_back( cones_->map_ );
+        cones_->map_          = map_;
+        cones_->updating_     = false;
         cones_->needUpdating_ = false;
-        cones_->updating_ = false;
-        std::swap( map, cones_->map_ );
-        delete map;
-        cones_->commiting_ = false;
-    }
-    catch( ... )
-    {
-        // $$$$ AGE 2006-04-20: 
-    }
-}
+        cones_->condition_.notify_one();
+    };
+private:
+    VisionCones* cones_;
+    VisionMap* map_;
+    T_Surfaces surfaces_;
+    double elongationFactor_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones::Update
@@ -124,11 +138,26 @@ void VisionCones::Update() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: VisionCones::ClearOldJunk
+// Created: AGE 2006-12-08
+// -----------------------------------------------------------------------------
+void VisionCones::ClearOldJunk() const
+{
+    for( std::vector< VisionMap* >::const_iterator it = oldMaps_.begin(); it != oldMaps_.end(); ++it )
+        delete *it;
+    oldMaps_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: VisionCones::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
 void VisionCones::Draw( const geometry::Point2f& , const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
+    boost::mutex::scoped_lock locker( mutex_ );
+     
+    ClearOldJunk();
+
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );
@@ -137,7 +166,15 @@ void VisionCones::Draw( const geometry::Point2f& , const geometry::Rectangle2f& 
     {
         if( needUpdating_ && ! updating_ )
             Update();
-        if( ! commiting_ )
-            map_->Draw( viewport, tools );
+        map_->Draw( viewport, tools );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones::Invalidate
+// Created: AGE 2006-12-08
+// -----------------------------------------------------------------------------
+void VisionCones::Invalidate()
+{
+    needUpdating_ = true;
 }

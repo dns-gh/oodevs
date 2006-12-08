@@ -16,7 +16,9 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
-#include "clients_kernel/ThreadShared.h"
+
+#include "boost/thread/mutex.hpp"
+#include "boost/thread/condition.hpp"
 
 namespace kernel
 {
@@ -40,7 +42,6 @@ class VisionCones : public kernel::Extension_ABC
                   , public kernel::Updatable_ABC< VisionConesMessage >
                   , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                   , public kernel::Drawable_ABC
-                  , public kernel::ThreadShared
 {
 
 public:
@@ -66,20 +67,16 @@ private:
     //@{
     typedef std::vector< Surface* >      T_Surfaces;
     typedef T_Surfaces::const_iterator CIT_Surfaces;
-    struct Updater
-    {
-        Updater( VisionCones& cones );
-        void operator()();
-        VisionCones* cones_;
-        kernel::ThreadShared::Locker locker_;
-    };
+    struct Updater; struct NotUpdating;
     //@}
 
     //! @name Helpers
     //@{
     virtual void DoUpdate( const VisionConesMessage& message );
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    void Invalidate();
     void Update() const;
+    void ClearOldJunk() const;
     //@}
 
 private:
@@ -88,12 +85,16 @@ private:
     const kernel::Agent_ABC& agent_;
     SurfaceFactory& factory_;
     kernel::Workers& workers_;
+
+    mutable boost::mutex mutex_;
+    boost::condition condition_;
+    
+    bool needUpdating_;
+    bool updating_;
     VisionMap* map_;
     T_Surfaces surfaces_;
+    mutable std::vector< VisionMap* > oldMaps_;
     double elongationFactor_;
-    mutable volatile bool needUpdating_;
-    mutable volatile bool updating_;
-    mutable volatile bool commiting_; // $$$$ AGE 2006-11-28: not really enough on dual procs...
     //@}
 };
 

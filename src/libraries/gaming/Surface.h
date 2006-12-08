@@ -49,7 +49,6 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    Surface( const Surface& );
     Surface& operator=( const Surface& );
     //@}
 
