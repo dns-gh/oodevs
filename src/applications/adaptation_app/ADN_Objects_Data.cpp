@@ -36,6 +36,7 @@ ADN_Objects_Data::ScoreLocationInfos::ScoreLocationInfos()
 , nScore_               ( 0 )
 {
     nScore_.SetDataName( "le poids de placement" );
+    nScore_.SetParentNode( *this );
 }
 
 

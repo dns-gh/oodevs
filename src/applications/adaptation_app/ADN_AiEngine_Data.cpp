@@ -46,8 +46,8 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
 {
     rMinorEquipmentWeight_.SetDataName( "Poids des composantes non majeures." );
     rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
-    rHumanWeight_         .SetDataName( "Poids du personnel." );
     rMajorEquipmentWeight_.SetUndoAvailable( false );
+    rHumanWeight_         .SetDataName( "Poids du personnel." );
 
     rPertinenceMaxDecrease_.SetDataName( "la dégradation de la dangerosité par la pertinence" );
     rOperationalStateMaxDecrease_.SetDataName( "la dégradation de la dangerosité par l'état opérationnel" );

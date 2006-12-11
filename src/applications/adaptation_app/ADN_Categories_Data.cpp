@@ -87,6 +87,7 @@ ADN_Categories_Data::ArmorInfos::ArmorInfos()
 , rBreakdownNEVA_ ( 0 )
 {
     strName_.SetDataName( "le nom de la catégorie de blindage" );
+    strName_.SetParentNode( *this );
 }
 
 
@@ -353,24 +354,38 @@ private:
     std::string val_;
 };
 
-
-
-struct StringInVectorCmp
+namespace
 {
-    bool operator()( ADN_Type_String* pL, ADN_Type_String* pR )
+    template< typename Vector, typename Extractor >
+    bool HasDuplicates( const Vector& vect, const Extractor& extractor )
     {
-        return pL->GetData().compare( pR->GetData() ) < 0;
-    }
-};
+        std::vector< std::string > tmp;
+        tmp.reserve( vect.size() );
+        for( Vector::const_iterator it = vect.begin(); it != vect.end(); ++it )
+            tmp.push_back( extractor( **it ) );
 
-struct StringInVectorEqual
-{
-    bool operator()( ADN_Type_String* pL, ADN_Type_String* pR )
+        std::sort( tmp.begin(), tmp.end() );
+        std::vector< std::string >::iterator itNewEnd = std::unique( tmp.begin(), tmp.end() );
+        size_t total = std::distance( tmp.begin(), itNewEnd );
+        return total != tmp.size();
+    }
+
+    struct StringExtractor
     {
-        return pL->GetData() == pR->GetData();
-    }
-};
+        std::string operator()( ADN_Type_String& value ) const
+        {
+            return value.GetData();
+        }
+    };
 
+    struct ArmorExtractor
+    {
+        std::string operator()( ADN_Categories_Data::ArmorInfos& armor ) const
+        {
+            return armor.strName_.GetData();
+        }
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::ReadSizes
@@ -452,26 +467,14 @@ void ADN_Categories_Data::ReadDotationNatures( ADN_XmlInput_Helper& input )
 void ADN_Categories_Data::WriteSizes( MT_OutputArchive_ABC& output )
 {
     // Check the sizes data for duplicates.
-    T_SizeInfos_Vector::iterator itSize;
-
-    ADN_Type_Vector_ABC< ADN_Type_String > tmpVector;
-    tmpVector.reserve( vSizes_.size() );
-
-    for( itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
-        tmpVector.AddItem( (*itSize) );
-
-    std::sort( tmpVector.begin(), tmpVector.end(), StringInVectorCmp() );
-    ADN_Type_Vector_ABC< ADN_Type_String >::iterator itNewEnd = std::unique( tmpVector.begin(), tmpVector.end(), StringInVectorEqual() );
-    size_t nTotal = std::distance( tmpVector.begin(), itNewEnd );
-
-    if( nTotal != tmpVector.size() )
+    if( HasDuplicates( vSizes_, StringExtractor() ) )
         throw ADN_DataException( "Duplication de données dans les catégories",
         "Il existe une ou plusieurs catégories de taille avec le même nom.",
         "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
 
     // Write the data.
     output.BeginList( "Volumes", vSizes_.size() );
-    for( itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
+    for( T_SizeInfos_Vector::const_iterator itSize = vSizes_.begin(); itSize != vSizes_.end(); ++itSize )
     {
         output.Section( "Volume" );
 
@@ -494,28 +497,15 @@ void ADN_Categories_Data::WriteSizes( MT_OutputArchive_ABC& output )
 void ADN_Categories_Data::WriteArmors( MT_OutputArchive_ABC& output )
 {
     // Check the armors data for duplicates.
-    ADN_Type_Vector_ABC< ADN_Type_String > tmpVector;
-    tmpVector.reserve( vArmors_.size() );
-    T_ArmorInfos_Vector::iterator itArmor;
-
-    for( itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
-        tmpVector.AddItem( & (*itArmor)->strName_ );
-
-    std::sort( tmpVector.begin(), tmpVector.end(), StringInVectorCmp() );
-    ADN_Type_Vector_ABC< ADN_Type_String >::iterator itNewEnd = std::unique( tmpVector.begin(), tmpVector.end(), StringInVectorEqual() );
-    size_t nTotal = std::distance( tmpVector.begin(), itNewEnd );
-
-    if( nTotal != tmpVector.size() )
+    if( HasDuplicates( vArmors_, ArmorExtractor() ) )
         throw ADN_DataException( "Duplication de données dans les catégories",
         "Il existe une ou plusieurs catégories de blindage avec le même nom.",
         "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
 
     // Write the data.
     output.BeginList( "Protections", vArmors_.size() );
-    for( itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
-    {
+    for( T_ArmorInfos_Vector::const_iterator itArmor = vArmors_.begin(); itArmor != vArmors_.end(); ++itArmor )
         (*itArmor)->WriteArchive( output );
-    }
     output.EndList();    // Protections
 
 }
@@ -527,26 +517,14 @@ void ADN_Categories_Data::WriteArmors( MT_OutputArchive_ABC& output )
 void ADN_Categories_Data::WriteDotationNatures( MT_OutputArchive_ABC& output )
 {
     // Check the dotation natures for duplicates.
-    T_DotationNatureInfos_Vector::iterator it;
-
-    ADN_Type_Vector_ABC< ADN_Type_String > tmpVector;
-    tmpVector.reserve( vDotationNatures_.size() );
-
-    for( it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
-        tmpVector.AddItem( *it );
-
-    std::sort( tmpVector.begin(), tmpVector.end(), StringInVectorCmp() );
-    ADN_Type_Vector_ABC< ADN_Type_String >::iterator itNewEnd = std::unique( tmpVector.begin(), tmpVector.end(), StringInVectorEqual() );
-    size_t nTotal = std::distance( tmpVector.begin(), itNewEnd );
-
-    if( nTotal != tmpVector.size() )
+    if( HasDuplicates( vDotationNatures_, StringExtractor() ) )
         throw ADN_DataException( "Duplication de données dans les catégories",
         "Il existe une ou plusieurs nature de dotation avec le même nom.",
         "Assurez vous qu'il n'y a pas de doublons dans l'onglet 'Catégories'" );
 
     // Write the data.
     output.BeginList( "Natures", vDotationNatures_.size() );
-    for( it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
+    for( T_DotationNatureInfos_Vector::const_iterator it = vDotationNatures_.begin(); it != vDotationNatures_.end(); ++it )
     {
         output.Section( "Nature" );
 
