@@ -184,6 +184,15 @@ const kernel::Population_ABC* PopulationKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::GetRecognizedEntity
+// Created: SBO 2006-12-08
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* PopulationKnowledge::GetRecognizedEntity() const
+{
+    return &popu_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationKnowledge::GetOwner
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------

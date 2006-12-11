@@ -144,6 +144,15 @@ const kernel::Object_ABC* ObjectKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::GetRecognizedEntity
+// Created: SBO 2006-12-08
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
+{
+    return pRealObject_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledge::GetOwner
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------

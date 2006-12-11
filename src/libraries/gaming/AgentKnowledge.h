@@ -60,6 +60,7 @@ public:
     virtual QString GetTypeName() const;
 
     virtual const kernel::Agent_ABC* GetEntity() const;
+    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
     //@}
 

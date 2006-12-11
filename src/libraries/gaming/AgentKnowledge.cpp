@@ -113,6 +113,16 @@ const kernel::Agent_ABC* AgentKnowledge::GetEntity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetRecognizedEntity
+// Created: SBO 2006-12-08
+// -----------------------------------------------------------------------------
+const kernel::Entity_ABC* AgentKnowledge::GetRecognizedEntity() const
+{
+    E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
+    return ( team_ && perception > eDetection ) ? &realAgent_ : 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::GetOwner
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------

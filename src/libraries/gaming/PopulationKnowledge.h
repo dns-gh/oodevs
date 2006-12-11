@@ -47,7 +47,8 @@ public:
     //@{
     virtual QString GetName() const;
     virtual QString GetTypeName() const;
-    virtual const kernel::Population_ABC*     GetEntity() const;
+    virtual const kernel::Population_ABC* GetEntity() const;
+    virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
 
     void Display( kernel::Displayer_ABC& displayer ) const;

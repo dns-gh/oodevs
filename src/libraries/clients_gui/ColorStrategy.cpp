@@ -186,8 +186,10 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
     QColor color( 255, 255, 255 );
-    if( const Entity_ABC* entity = knowledge.GetEntity() )
+    if( const Entity_ABC* entity = knowledge.GetRecognizedEntity() )
         color = FindColor( *entity );
+    else
+        color = QColor( 255, 220, 000 ); // $$$$ SBO 2006-12-08: unrecognized entities must be Yellow!
     if( selectedKnowledge_ == &knowledge )
         color = SelectedColor( color );
     color = KnowledgeColor( color );
@@ -325,7 +327,7 @@ void ColorStrategy::InitializeColors()
     enemyAvailable_.push_back( QColor( 255, 000, 255 ) ); // magenta
     enemyAvailable_.push_back( QColor( 255, 50, 50 ) );   // rouge
 
-    friendlyAvailable_.push_back( QColor( 255, 220, 000 ) ); // jaune
+    friendlyAvailable_.push_back( QColor( 171, 100, 60 ) ); // vert d'eau
     friendlyAvailable_.push_back( QColor( 50, 50, 128 ) ); // cobalt
     friendlyAvailable_.push_back( QColor( 000, 230, 230 ) ); // cyan
     friendlyAvailable_.push_back( QColor( 100, 125, 255 ) ); // bleu
