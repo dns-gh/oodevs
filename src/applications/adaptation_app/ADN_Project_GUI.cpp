@@ -96,6 +96,7 @@ void ADN_Project_GUI::Build()
     builder.AddFileField( pFilesGroup, tr( "Pathfind" ), data_.dataInfos_.szPathfinder_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "HLA" ), data_.dataInfos_.szHLA_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "Populations" ), data_.dataInfos_.szPopulation_, XML_FILTER );
+    builder.AddFileField( pFilesGroup, tr( "Reports" ), data_.dataInfos_.szReports_, XML_FILTER );
 
     // Network
     QGroupBox* pNetworkGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Network" ), pMainWidget_ );

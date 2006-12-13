@@ -103,7 +103,9 @@ public:
         ADN_Type_String szODB_;
         ADN_Type_String szPathfinder_;
         ADN_Type_String szHLA_;
+
         ADN_Type_String szPopulation_;
+        ADN_Type_String szReports_;
     };
 
 

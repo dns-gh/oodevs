@@ -67,9 +67,9 @@ static const char* scipioXml =
 "    <Communications>Data/Communications.xml</Communications>"
 "    <ODB>Data/ODB.xml</ODB>"
 "    <Pathfind>Data/Pathfind.xml</Pathfind>"
-"    <Missions>Data/Missions.xml</Missions>"
 "    <HLA>Data/HLA.xml</HLA>"
 "    <Populations>Data/Populations.xml</Populations>"
+"    <ComptesRendus>Data/Reports.xml</ComptesRendus>"
 "  </Donnees>"
 "</Scipio>";
 

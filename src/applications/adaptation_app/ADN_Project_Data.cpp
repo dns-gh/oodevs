@@ -158,6 +158,7 @@ ADN_Project_Data::DataInfos::DataInfos()
 , szPathfinder_()
 , szHLA_()
 , szPopulation_()
+, szReports_()
 {
 }
 
@@ -196,6 +197,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "Pathfind", szPathfinder_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "HLA", szHLA_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Populations", szPopulation_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "ComptesRendus", szReports_, ADN_XmlInput_Helper::eThrow );
     input.EndSection();   // Donnees
 }
 
@@ -235,6 +237,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "Pathfind", szPathfinder_.GetData() );
     output.WriteField( "HLA", szHLA_.GetData() );
     output.WriteField( "Populations", szPopulation_.GetData() );
+    output.WriteField( "ComptesRendus", szReports_.GetData() );
     output.EndSection();   // Donnees
 }
 
