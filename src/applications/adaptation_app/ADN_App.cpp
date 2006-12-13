@@ -129,14 +129,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     catch( ADN_Exception_ABC& e )
     {
         if( outputFile.empty() )
-        {
-            std::stringstream ss;
-            ss << e.GetExceptionTitle().c_str() << std::endl << e.GetExceptionMessage().c_str() << std::endl;
-
-            MT_LOG_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
-
-//            QMessageBox::critical( pMainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
-        }
+            QMessageBox::critical( pMainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
         else
         {
             std::stringstream ss;
