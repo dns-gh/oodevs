@@ -222,27 +222,6 @@ void MIL_AgentServer::ReadPathFindData( MIL_InputArchive& archive )
     pPathFindManager_  = new DEC_PathFind_Manager( pathfindArchive );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadMissionsData
-// Created: NLD 2005-03-04
-// -----------------------------------------------------------------------------
-/*void MIL_AgentServer::ReadMissionsData( MIL_InputArchive& archive )
-{
-    MT_LOG_INFO_MSG( "Initializing missions data" );
-
-    std::string strFile;
-    archive.ReadField( "Missions", strFile );
-
-    MIL_InputArchive archiveType;
-    archiveType.AddWarningStream( std::cout );
-    archiveType.Open( strFile );
-
-    config_.AddFileToCRC( strFile );
-    MIL_AutomateMissionType::Initialize( archiveType );
-
-    archiveType.Close();
-}*/
-
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::ReadTerData
 // Created: FBD 02-11-27

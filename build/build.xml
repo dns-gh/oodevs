@@ -13,7 +13,7 @@
         <sequential>
             <for list="@{files}" param="file" delimiter=";">
                 <sequential>
-                    <echo>@{file}</echo>
+                    <echo>ERROR: @{file}</echo>
                 </sequential>
             </for>
         </sequential>

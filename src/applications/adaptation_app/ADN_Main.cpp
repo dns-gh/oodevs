@@ -113,12 +113,22 @@ int main( uint nArgc, char** ppArgv )
         if( !outputFile.empty() )
             MessageBox( 0, strMsg.str().c_str(), "Scipio Adaptation Tool - MT_Exception", MB_ICONERROR | MB_OK );
         else
-            MT_LOG_ERROR_MSG( strMsg.str().c_str() );
+            //MT_LOG_ERROR_MSG( strMsg.str().c_str() );
+            MT_LOG_ERROR_MSG( exception.what() );
         app.quit();
         MT_LOG_UNREGISTER_LOGGER( consoleLogger );
         return EXIT_FAILURE;
     }
-    
+
+    /*
+        catch( MT_ScipioException& exception )
+    {
+        std::cerr << Wrap( exception.GetMsg(), prefix ) << std::endl
+                  << Wrap( exception.GetDescription(), prefix ) << std::endl;
+    }
+    */
+
+
     app.quit();
     MT_LOG_UNREGISTER_LOGGER( consoleLogger );
     return EXIT_SUCCESS;

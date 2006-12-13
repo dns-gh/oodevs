@@ -54,6 +54,40 @@ ADN_App::~ADN_App()
 }
 
 
+//$$$$ C DEGUEU !
+// -----------------------------------------------------------------------------
+// Name: SIM_App::IsAlreadyWrapped
+// Created: MCO 2005-02-22
+// -----------------------------------------------------------------------------
+bool IsAlreadyWrapped( const std::string& content )
+{
+    return content.find( "WARNING" ) != std::string::npos || content.find( "ERROR" ) != std::string::npos || content.find( "INFO" ) != std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIM_App::Wrap
+// Created: MCO 2005-02-21
+// -----------------------------------------------------------------------------
+std::string Wrap( const std::string& content, const std::string& prefix )
+{
+    std::string result;
+    std::stringstream input( content );
+    std::string line;
+    bool bFirst = true;
+    while( std::getline( input, line ) )
+    {
+        if( ! bFirst )
+            result += '\n';
+        else
+            bFirst = false;
+        if( ! IsAlreadyWrapped( line ) )
+            result += prefix;
+        result += line;
+    }
+    return result;
+}
+//$$$$ C DEGUEU !
+
 //-----------------------------------------------------------------------------
 // Name: ADN_App::Initialize
 // Created: JDY 03-06-19
@@ -95,12 +129,20 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     catch( ADN_Exception_ABC& e )
     {
         if( outputFile.empty() )
-            QMessageBox::critical( pMainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+        {
+            std::stringstream ss;
+            ss << e.GetExceptionTitle().c_str() << std::endl << e.GetExceptionMessage().c_str() << std::endl;
+
+            MT_LOG_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
+
+//            QMessageBox::critical( pMainWindow_, e.GetExceptionTitle().c_str(), e.GetExceptionMessage().c_str() );
+        }
         else
         {
             std::stringstream ss;
             ss << e.GetExceptionTitle().c_str() << std::endl << e.GetExceptionMessage().c_str() << std::endl;
-            MT_LOG_ERROR_MSG( ss.str().c_str() );
+
+            MT_LOG_ERROR_MSG( Wrap( ss.str(), "ERROR: " ) );
         }
         return false;
     }
