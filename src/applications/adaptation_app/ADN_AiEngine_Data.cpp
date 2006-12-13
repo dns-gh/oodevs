@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-06-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AiEngine_Data.cpp $
-// $Author: Nld $
-// $Modtime: 30/06/05 12:59 $
-// $Revision: 9 $
-// $Workfile: ADN_AiEngine_Data.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_AiEngine_Data.h"
@@ -96,6 +87,7 @@ void ADN_AiEngine_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "DIATypes", strDIATypesFile_ );
     input.ReadField( "DIAWorkspace", strDIAWorkspaceFile_ );
     input.ReadField( "Modeles", strModelsFile_ );
+    input.ReadField( "Missions", strMissionsFile_ );
     input.ReadField( "PortDebogueur", nDebuggerPort_ );
     input.EndSection(); // DirectIA
 
@@ -178,6 +170,7 @@ void ADN_AiEngine_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "DIATypes", strDIATypesFile_.GetData() );
     output.WriteField( "DIAWorkspace", strDIAWorkspaceFile_.GetData() );
     output.WriteField( "Modeles", strModelsFile_.GetData() );
+    output.WriteField( "Missions", strMissionsFile_.GetData() );
     output.WriteField( "PortDebogueur", nDebuggerPort_.GetData() );
     output.EndSection(); // DirectIA
 

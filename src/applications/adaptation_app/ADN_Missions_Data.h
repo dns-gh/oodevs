@@ -159,6 +159,7 @@ private:
     void ReadArchive( ADN_XmlInput_Helper& input );
     void ReadMiscMission( ADN_XmlInput_Helper& input, const std::string& name, ADN_TypePtr_InVector_ABC< Mission >& ptrMission );
     void WriteArchive( MT_OutputArchive_ABC& output );
+    std::string ComputeFileName() const;
 
 public:
     T_Mission_Vector   unitMissions_;

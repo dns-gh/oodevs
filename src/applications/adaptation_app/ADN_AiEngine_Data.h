@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2004-06-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_AiEngine_Data.h $
-// $Author: Nld $
-// $Modtime: 30/06/05 12:48 $
-// $Revision: 8 $
-// $Workfile: ADN_AiEngine_Data.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_AiEngine_Data_h_
 #define __ADN_AiEngine_Data_h_
@@ -58,6 +49,7 @@ public:
     ADN_Type_String strDIATypesFile_;
     ADN_Type_String strDIAWorkspaceFile_;
     ADN_Type_String strModelsFile_;
+    ADN_Type_String strMissionsFile_;
     ADN_Type_Int    nDebuggerPort_;
 
     ADN_Type_Double rPertinenceMaxDecrease_;

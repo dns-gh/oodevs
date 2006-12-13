@@ -94,7 +94,6 @@ void ADN_Project_GUI::Build()
     builder.AddFileField( pFilesGroup, tr( "Com" ), data_.dataInfos_.szCom_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "ODB" ), data_.dataInfos_.szODB_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "Pathfind" ), data_.dataInfos_.szPathfinder_, XML_FILTER );
-    builder.AddFileField( pFilesGroup, tr( "Missions" ), data_.dataInfos_.szMissions_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "HLA" ), data_.dataInfos_.szHLA_, XML_FILTER );
     builder.AddFileField( pFilesGroup, tr( "Populations" ), data_.dataInfos_.szPopulation_, XML_FILTER );
 

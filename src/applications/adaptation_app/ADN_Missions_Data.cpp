@@ -17,6 +17,7 @@
 #include "ADN_Tools.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
+#include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
 
 // =============================================================================
@@ -408,9 +409,25 @@ ADN_Missions_Data::~ADN_Missions_Data()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szMissions_.GetData() );
+    vFiles.push_back( ComputeFileName() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::ComputeFileName
+// Created: APE 2005-02-15
+// -----------------------------------------------------------------------------
+std::string ADN_Missions_Data::ComputeFileName() const
+{
+    std::string szDecisionalFile = ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szDecisional_.GetData();
+    assert( szDecisionalFile.length() > 0 );
+
+    int nPos = szDecisionalFile.rfind( '/', szDecisionalFile.length() -1 );
+    if( nPos < 0 || nPos >= (int)szDecisionalFile.length() ) 
+        nPos = szDecisionalFile.length();
+    std::string szDecisionalDirectory = szDecisionalFile.substr( 0, nPos );
+    std::string strFile = szDecisionalDirectory + "/" + ADN_Workspace::GetWorkspace().GetAiEngine().GetData().strMissionsFile_.GetData();
+    return strFile;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::Reset
