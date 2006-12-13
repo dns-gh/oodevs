@@ -31,7 +31,9 @@
 #include "Dialogs.h"
 #include "LimitsLayer.h"
 #include "PopulationsLayer.h"
-#include "preparationProfile.h"
+#include "PreparationProfile.h"
+#include "FileToolbar.h"
+
 #include "preparation/Exceptions.h"
 
 #include "clients_kernel/ActionController.h"
@@ -181,6 +183,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_ );
     pCreationPanel->AddPanel( objectCreationPanel );
 
+    new FileToolbar( this );
 //    new MapToolbar( this, controllers );
 //    new UnitToolbar( this, controllers );
 //    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 

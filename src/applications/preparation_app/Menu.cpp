@@ -43,11 +43,11 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog 
     : QMenuBar( pParent )
 {
     QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( tr( "&New..." ), parent(), SLOT( New() ), CTRL + Key_N );
+    menu->insertItem( MAKE_ICON( new ) , tr( "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
     menu->insertItem( MAKE_ICON( open ), tr( "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
     menu->insertItem( tr( "Close" ), parent(), SLOT( Close() ) );
     menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( save ), tr( "&Save" ), parent(), SLOT( Save() ), CTRL + Key_S );
+    menu->insertItem( MAKE_ICON( save )  , tr( "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
     menu->insertItem( MAKE_ICON( saveas ), tr( "&Save as..." ), parent(), SLOT( SaveAs() ) );
     menu->insertSeparator();
     menu->insertItem( tr( "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
