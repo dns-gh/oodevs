@@ -307,6 +307,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     forward_->Register( objectKnowledges );
     forward_->Register( limits );
     forward_->Register( metrics );
+    forward_->Register( elevation3d );
     forward_->SetDefault( defaultLayer );
 }
 
@@ -328,7 +329,6 @@ void MainWindow::Open()
     }
     Load( current );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::Load

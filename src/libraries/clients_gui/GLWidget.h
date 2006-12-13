@@ -117,6 +117,7 @@ private:
     virtual void paintGL();
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
+    virtual void updateGL();
     unsigned int GenerateCircle();
 
     void RenderMiniViews();

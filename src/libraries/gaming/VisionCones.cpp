@@ -51,7 +51,6 @@ VisionCones::~VisionCones()
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
     delete map_;
-    ClearOldJunk();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,8 +114,8 @@ struct VisionCones::Updater
 
         boost::mutex::scoped_lock locker( cones_->mutex_ );
 
-        cones_->oldMaps_.push_back( cones_->map_ );
-        cones_->map_          = map_;
+        std::swap( cones_->map_, map_ );
+        delete map_;
         cones_->updating_     = false;
         cones_->needUpdating_ = false;
         cones_->condition_.notify_one();
@@ -138,17 +137,6 @@ void VisionCones::Update() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: VisionCones::ClearOldJunk
-// Created: AGE 2006-12-08
-// -----------------------------------------------------------------------------
-void VisionCones::ClearOldJunk() const
-{
-    for( std::vector< VisionMap* >::const_iterator it = oldMaps_.begin(); it != oldMaps_.end(); ++it )
-        delete *it;
-    oldMaps_.clear();
-}
-
-// -----------------------------------------------------------------------------
 // Name: VisionCones::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
@@ -156,8 +144,6 @@ void VisionCones::Draw( const geometry::Point2f& , const geometry::Rectangle2f& 
 {
     boost::mutex::scoped_lock locker( mutex_ );
      
-    ClearOldJunk();
-
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );

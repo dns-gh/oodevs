@@ -76,7 +76,6 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     void Invalidate();
     void Update() const;
-    void ClearOldJunk() const;
     //@}
 
 private:
@@ -93,7 +92,6 @@ private:
     bool updating_;
     VisionMap* map_;
     T_Surfaces surfaces_;
-    mutable std::vector< VisionMap* > oldMaps_;
     double elongationFactor_;
     //@}
 };
