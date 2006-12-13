@@ -64,7 +64,7 @@
     ============================================================================
     -->
     <target name="libraries" description="build all libraries"
-            depends="library.MT_Tools_Scipio,library.ENT,library.ASN,library.simulation_terrain,library.simulation_kernel,library.simulation_missions,
+            depends="library.MT_Tools_Scipio,library.ENT,library.ASN,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui"/>
 
     <target name="library.MT_Tools_Scipio" description="build MT_Tools_Scipio static library">
@@ -95,13 +95,6 @@
         <build-lib name="simulation_kernel">
             <includepath path="${include.dir}/ASN"/>
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
-        </build-lib>
-    </target>
-
-    <target name="library.simulation_missions" description="build simulation_missions static library" depends="library.simulation_kernel">
-        <build-lib name="simulation_missions" excludes="**/MIL_*">
-            <includepath path="${libraries.dir}/simulation_kernel"/>
-            <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
 
@@ -148,11 +141,11 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.simulation_missions,library.dispatcher">
+    <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
                    libs="HLA,libFedTime,masalloc,paranoia,tools,xeumeuleu
                          MT_Tools_Scipio,ASN,asn1per,
-                         simulation_terrain,simulation_kernel,simulation_missions,dispatcher">
+                         simulation_terrain,simulation_kernel,dispatcher">
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${libraries.dir}/simulation_kernel"/>
@@ -215,7 +208,6 @@
         <clean name="ENT"/>
         <clean name="simulation_terrain"/>
         <clean name="simulation_kernel"/>
-        <clean name="simulation_missions"/>
         <clean name="simulation_tester"/>
         <clean name="simulation_app"/>
         <clean name="clients_kernel"/>
