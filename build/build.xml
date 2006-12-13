@@ -268,7 +268,7 @@
         <if>
             <isset property="adaptation_test.is-different"/>
             <then>
-                <echo>the following files differ :</echo>
+                <echo>"ERROR: the following files differ :</echo>
                 <echo-files files="${adaptation_test.is-different}"/>
                 <fail message="saved data differs from loaded data."/>
             </then>
