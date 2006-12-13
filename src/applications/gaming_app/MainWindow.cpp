@@ -38,7 +38,7 @@
 #include "Properties.h"
 #include "TacticalList.h"
 #include "XPSPlayer.h"
-#include "ProfileFilterObject.h"
+#include "ProfileFilterToolbar.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -55,6 +55,7 @@
 #include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Profile.h"
+#include "gaming/ProfileFilter.h"
 
 #include "clients_gui/Gl3dWidget.h"
 #include "clients_gui/GlWidget.h"
@@ -121,7 +122,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME + tr( " - Not connected" ) );
 
-    Profile_ABC& profile = *new ProfileFilterObject( this, controllers, p );
+    ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem.
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
@@ -225,8 +226,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new UnitToolbar( this, controllers );
     new LogisticToolbar( this, controllers, *agentsLayer );
     new EventToolbar( this, controllers, profile );
+    new ProfileFilterToolbar( this, controllers, profile );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
-
 
     // Drawer
     forward_ = new CircularEventStrategy();

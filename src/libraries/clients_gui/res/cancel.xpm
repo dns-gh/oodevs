@@ -1,5 +1,5 @@
 /* XPM */
-static char * Explorer_10_xpm[] = {
+static const char * xpm_cancel[] = {
 "32 32 255 2",
 "  	c None",
 ". 	c #FB6A6A",
