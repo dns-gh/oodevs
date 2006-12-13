@@ -24,18 +24,19 @@ using namespace gui;
 // Name: ParamPathList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
+ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire*& asnPathList, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent, ActionController& controller )
     : QVBox( parent )
     , layer_( layer )
     , converter_( converter )
     , controller_( controller )
     , agent_( agent )
-    , asn_( asnPathList )
+    , asn_( new ASN1T_ListItineraire() )
     , paths_( 0 )
     , listView_( new ParamListView( this, label ) )
     , selected_( 0 )
     , popup_( new QPopupMenu( this ) )
 {
+    asnPathList = asn_;
     connect( listView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     disconnect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), listView_, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
     connect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
@@ -48,6 +49,7 @@ ParamPathList::ParamPathList( QWidget* parent, ASN1T_ListItineraire& asnPathList
 // -----------------------------------------------------------------------------
 ParamPathList::~ParamPathList()
 {
+    delete asn_;
     delete[] paths_;
 }
 
@@ -80,19 +82,19 @@ void ParamPathList::Commit()
         return;
     
     const unsigned int childs = listView_->childCount();
-    asn_.n = childs;
+    asn_->n = childs;
 
     if( !childs && IsOptional() )
         return;
 
     paths_ = new ASN1T_Itineraire[ childs ];
-    asn_.elem = paths_;
+    asn_->elem = paths_;
 
     QListViewItemIterator it( listView_ );
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        item->GetValue< ParamPath* >()->CommitTo( asn_.elem[i] );
+        item->GetValue< ParamPath* >()->CommitTo( asn_->elem[i] );
     }
 }
 
@@ -161,7 +163,8 @@ void ParamPathList::NewPath()
     ASN1T_Itineraire* asn = new ASN1T_Itineraire();
     ValuedListItem* item = new ValuedListItem( listView_ );
     item->setText( 0, tr( "Route" ) );
-    ParamPath* param = new ParamPath( this, *asn, tr( "Route" ).ascii(), tr( "Route" ).ascii(), layer_, converter_, agent_ );
+    
+    ParamPath* param = new ParamPath( this, asn, tr( "Route" ).ascii(), tr( "Route" ).ascii(), layer_, converter_, agent_ );
     item->SetValue( param );
     param->show();
     listView_->setSelected( item, true );

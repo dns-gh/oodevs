@@ -9,66 +9,48 @@
 
 #include "gaming_app_pch.h"
 #include "AutomateMissionInterface.h"
-#include "OptionalParamFunctor_ABC.h"
+#include "MissionInterfaceFactory.h"
+#include "MissionInterfaceBuilder.h"
 #include "gaming/ASN_Messages.h"
-#include "gaming/ASN_Types.h"
 #include "clients_kernel/Entity_ABC.h"
-
-#include "ENT/ENT_Tr.h"
+#include "clients_kernel/Mission.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface constructor
 // Created: APE 2004-05-06
 // -----------------------------------------------------------------------------
-AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
-    : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectKnowledgeConverter, objectTypes )
-    , publisher_( publisher )
-    , agent_( agent )
-    , nMissionId_( nMissionId )
+AutomateMissionInterface::AutomateMissionInterface( QWidget* parent, Entity_ABC& entity, const Mission& mission, ActionController& controller
+                                                  , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
+    : MissionInterface_ABC( parent, entity, controller )
+    , publisher_          ( publisher )
+    , order_              ( new ASN_MsgAutomateOrder() )
 {
-    pASNMsgOrder_ = new ASN_MsgAutomateOrder();
-    pASNMsgOrder_->GetAsnMsg().oid_unite_executante = agent_.GetId();
+    order_->GetAsnMsg().oid_unite_executante = entity.GetId();
+    order_->GetAsnMsg().mission = mission.GetId();
 
-    QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromAutomataMission( E_AutomataMission( nMissionId_ ) ).c_str(), this );
+    QLabel* pLabel = new QLabel( mission.GetName(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
     pLabel->setAlignment( Qt::AlignCenter );
     QFont font = pLabel->font();
     font.setBold( true );
     pLabel->setFont( font );
 
-    CreateInterface();
+    builder.Begin( *this, entity );
+    factory.CreateMissionInterface( builder, mission.GetId(), order_->GetAsnMsg() );
+    builder.End();
+    CreateOkCancelButtons();
 }
 
-namespace
-{
-    struct OrderBlahBlah : public OptionalParamFunctor_ABC
-    {
-        OrderBlahBlah( ASN1T_MsgAutomateOrder& ) {};
-        virtual void SetOptionalPresent() {
-            // NOTHING
-        }
-    };
-};
-
 // -----------------------------------------------------------------------------
-// Name: AutomateMissionInterface::CreateDefaultParameters
-// Created: APE 2004-05-06
+// Name: AutomateMissionInterface destructor
+// Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void AutomateMissionInterface::CreateDefaultParameters()
+AutomateMissionInterface::~AutomateMissionInterface()
 {
-    ASN1T_MsgAutomateOrder& order = pASNMsgOrder_->GetAsnMsg();
-    CreateLimits( order.order_context.limite_gauche, order.order_context.limite_droite, "Fixer limite 1", "Fixer limite 2" );
-    CreateLimaList( order.order_context.limas, "Ajouter aux limas", BuildOptionalParamFunctor< OrderBlahBlah, ASN1T_MsgAutomateOrder >( order ) );
-    ParamRadioBtnGroup<ASN1T_EnumAutomateOrderFormation>& buttonGroup = CreateRadioButtonGroup( order.formation, "Formation" );
-    buttonGroup.AddButton( "Un échelon", EnumAutomateOrderFormation::un_echelon );
-    buttonGroup.AddButton( "Deux échelons", EnumAutomateOrderFormation::deux_echelons, true );
-
-    CreateDirection( order.order_context.direction_dangereuse, "Direction dangeureuse" );
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AutomateMissionInterface::OnOk
@@ -80,11 +62,9 @@ void AutomateMissionInterface::OnOk()
         return;
 
     Commit();
-    ASN1T_MsgAutomateOrder& order = pASNMsgOrder_->GetAsnMsg();
-    order.order_context.m.limite_gauchePresent = 1;
-    order.order_context.m.limite_droitePresent = 1;
-    pASNMsgOrder_->Send( publisher_, 45 );
+    ASN1T_MsgAutomateOrder& order = order_->GetAsnMsg();
+    order.order_context.m.limite_gauchePresent = 1; // $$$$ SBO 2006-11-23: move somehow in ParamLimits
+    order.order_context.m.limite_droitePresent = 1; // $$$$ SBO 2006-11-23: 
+    order_->Send( publisher_, 45 );
     parentWidget()->hide();
 }
-
-#include "AutomateMissionInterface_Gen.cpp"

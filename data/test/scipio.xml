@@ -19,7 +19,7 @@
     <Protections>Data/Protections.xml</Protections>
     <DotationNatures>Data/DotationNatures.xml</DotationNatures>
     <Objets>Data/Objets.xml</Objets>
-    <Dotations>Data/Dotations.xml</Dotations>a
+    <Dotations>Data/Dotations.xml</Dotations>
     <Lanceurs>Data/Lanceurs.xml</Lanceurs>
     <Armements>Data/Armements.xml</Armements>
     <Capteurs>Data/Capteurs.xml</Capteurs>
@@ -36,11 +36,11 @@
     <Maintenance>Data/Maintenance.xml</Maintenance>
     <Ravitaillement>Data/Ravitaillement.xml</Ravitaillement>
     <Communications>Data/Communications.xml</Communications>
-    <ODB>Data/odb_test.xml</ODB>
+    <ODB>Data/test3.xml</ODB>
     <Pathfind>Data/Pathfind.xml</Pathfind>
-    <Missions>Data/Missions.xml</Missions>
     <HLA>Data/HLA.xml</HLA>
     <Populations>Data/Populations.xml</Populations>
+    <ComptesRendus>Data/Reports.xml</ComptesRendus>
   </Donnees>
 
   <Dispatcher>

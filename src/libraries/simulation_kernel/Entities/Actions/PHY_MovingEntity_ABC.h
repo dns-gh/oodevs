@@ -83,7 +83,7 @@ public:
     virtual bool CanMove              () const = 0;
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const = 0;
     virtual bool HasResources         () = 0;
-    virtual void SendRC               ( const MIL_RC& rc ) const = 0;
+    virtual void SendRC               ( int nReportID ) const = 0;
     //@}
 
     //! @name Tools

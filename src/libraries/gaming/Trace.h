@@ -1,31 +1,27 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: NLD 2002-07-15 $
-// $ATracehive: /MVW_v10/Build/SDK/Light/sTrace/Trace.h $
-// $Author: Ape $
-// $Modtime: 4/08/04 12:04 $
-// $Revision: 3 $
-// $Workfile: Trace.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __Trace_h_
 #define __Trace_h_
 
-#include "Report_ABC.h"
+#include "Report.h"
 #include "DIN_Types.h"
-
-namespace kernel
-{
-    class Agent_ABC;
-}
 
 class Simulation;
 
 // =============================================================================
-// Created: AGN 2003-12-22
+/** @class  ReportFactory
+    @brief  ReportFactory
+*/
+// Created: SBO 2006-12-07
 // =============================================================================
-class Trace : public Report_ABC
+class Trace : public Report
 {
 public:
     //! @name Constructor/Destructor
@@ -41,6 +37,5 @@ private:
     Trace& operator=( const Trace& );
     //@}
 };
-
 
 #endif // __Trace_h_

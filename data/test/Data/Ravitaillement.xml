@@ -20,7 +20,7 @@
       <Temps nbCamions="5000">300s</Temps>
     </TempsDechargement>
     <TypeUnite nom="Pion Convoi"/>
-    <Mission nom="Pion LOG Convoyer"/>
+    <Mission nom="LOG Convoyer"/>
   </Convois>
 
   <AlertesDisponibiliteMoyens>

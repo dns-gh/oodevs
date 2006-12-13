@@ -19,17 +19,64 @@
 #include "MIL_TacticalLineManager.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Tools/MIL_IDManager.h"
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext constructor
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+MIL_OrderContext::MIL_OrderContext()
+    : limas_    ()  
+    , fuseau_   ()
+    , dirDanger_( 0., 1. )
+{
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_OrderContext::MIL_OrderContext()
+MIL_OrderContext::MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vector2D& vOrientationRefPos )
     : limas_    ()  
     , fuseau_   ()
     , dirDanger_()
 {
+    // Dir danger
+    NET_ASN_Tools::ReadDirection( asn.direction_dangereuse, dirDanger_ );
+
+    // Limas
+    limas_.clear();
+    for( uint i = 0; i < asn.limas.n; ++i )
+        limas_.push_back( MIL_LimaOrder( asn.limas.elem[ i ] ) );
+
+    // Limites
+    T_PointVector leftLimitData;
+    T_PointVector rightLimitData;
+
+	if( asn.m.limite_gauchePresent && !NET_ASN_Tools::ReadLine( asn.limite_gauche, leftLimitData ) )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+
+    if( asn.m.limite_droitePresent && !NET_ASN_Tools::ReadLine( asn.limite_droite, rightLimitData ))
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+
+    if( !leftLimitData.empty() && !rightLimitData.empty() && leftLimitData == rightLimitData )
+        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+
+    if( leftLimitData.empty() || rightLimitData.empty() )
+        fuseau_.Reset();
+    else
+        fuseau_.Reset( vOrientationRefPos, leftLimitData, rightLimitData, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext constructor
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
+    : limas_    ( rhs.limas_     )  
+    , fuseau_   () //$$$
+    , dirDanger_( rhs.dirDanger_ )
+{
+    fuseau_ = rhs.fuseau_;
 }
 
 //-----------------------------------------------------------------------------
@@ -39,100 +86,6 @@ MIL_OrderContext::MIL_OrderContext()
 MIL_OrderContext::~MIL_OrderContext()
 {
     fuseau_.Reset();
-}
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::FindLima
-// Created: NLD 2006-11-16
-// -----------------------------------------------------------------------------
-MIL_LimaOrder* MIL_OrderContext::FindLima( uint nID )
-{
-    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
-        if( it->GetID() == nID )
-            return &(*it);
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::FindLima
-// Created: NLD 2006-11-14
-// -----------------------------------------------------------------------------
-MIL_LimaOrder* MIL_OrderContext::FindLima( const MIL_LimaFunction& func )
-{
-    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
-        if( it->HasFunction( func ) )
-            return &(*it);
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::Initialize
-// Created: NLD 2006-11-14
-// -----------------------------------------------------------------------------
-ASN1T_EnumOrderErrorCode MIL_OrderContext::Initialize( const ASN1T_OrderContext& asn, const MT_Vector2D& vOrientationRefPos )
-{
-    try
-    {
-        // Dir danger
-        NET_ASN_Tools::ReadDirection( asn.direction_dangereuse, dirDanger_ );
-
-        // Limas
-        limas_.clear();
-        for( uint i = 0; i < asn.limas.n; ++i )
-            limas_.push_back( MIL_LimaOrder( asn.limas.elem[ i ] ) );
-
-        // Limites
-        T_PointVector leftLimitData;
-        T_PointVector rightLimitData;
-
-	    if( asn.m.limite_gauchePresent && !NET_ASN_Tools::ReadLine( asn.limite_gauche, leftLimitData ) )
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
-
-        if( asn.m.limite_droitePresent && !NET_ASN_Tools::ReadLine( asn.limite_droite, rightLimitData ))
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
-
-        if( !leftLimitData.empty() && !rightLimitData.empty() && leftLimitData == rightLimitData )
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
-
-        if( leftLimitData.empty() || rightLimitData.empty() )
-            fuseau_.Reset();
-        else
-            fuseau_.Reset( vOrientationRefPos, leftLimitData, rightLimitData, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
-    }
-    catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& e )
-    {
-        limas_.clear();
-        fuseau_.Reset();
-        return e.GetErrorID();
-    }
-    return EnumOrderErrorCode::no_error;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::Initialize
-// Created: NLD 2006-11-14
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::Initialize()
-{
-    dirDanger_ = MT_Vector2D( 0., 1. );
-    assert( limas_.empty() );
-    limas_.clear();
-    fuseau_.Reset();
- }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::Initialize
-// Created: NLD 2006-11-14
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::Initialize( const MIL_OrderContext& mission )
-{
-    dirDanger_ = mission.GetDirDanger();
-    fuseau_    = mission.GetFuseau   ();
-    limas_     = mission.limas_;
 }
 
 // =============================================================================

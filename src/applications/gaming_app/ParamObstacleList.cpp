@@ -22,17 +22,18 @@ using namespace gui;
 // Name: ParamObstacleList constructor
 // Created: SBO 2006-06-28
 // -----------------------------------------------------------------------------
-ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject& asnObjectList, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
+ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject*& asnObjectList, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter, ActionController& controller )
     : QVBox( parent )
     , controller_( controller )
     , objectTypes_( objectTypes )
     , layer_( layer )
     , converter_( converter )
-    , asn_( asnObjectList )
+    , asn_( new ASN1T_ListMissionGenObject() )
     , objects_( 0 )
     , selected_( 0 )
     , popup_( new QPopupMenu( this ) )
 {
+    asnObjectList = asn_;
     listView_ = new ParamListView( this, label );
     connect( listView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     disconnect( listView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), listView_, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
@@ -46,6 +47,7 @@ ParamObstacleList::ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObjec
 // -----------------------------------------------------------------------------
 ParamObstacleList::~ParamObstacleList()
 {
+    delete asn_;
     delete objects_;
 }
 
@@ -78,19 +80,19 @@ void ParamObstacleList::Commit()
         return;
     
     const unsigned int childs = listView_->childCount();
-    asn_.n = childs;
+    asn_->n = childs;
 
     if( !childs && IsOptional() )
         return;
 
     objects_ = new ASN1T_MissionGenObject[ childs ];
-    asn_.elem = objects_;
+    asn_->elem = objects_;
 
     QListViewItemIterator it( listView_ );
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        item->GetValue< ParamObstacle* >()->CommitTo( asn_.elem[i] );
+        item->GetValue< ParamObstacle* >()->CommitTo( asn_->elem[i] );
     }
 }
 
@@ -159,7 +161,7 @@ void ParamObstacleList::NewObstacle()
     ASN1T_MissionGenObject* object = new ASN1T_MissionGenObject();
     ValuedListItem* item = new ValuedListItem( listView_ );
     item->setText( 0, tr( "Obstacle" ) );
-    ParamObstacle* param = new ParamObstacle( this, *object, tr( "Obstacle" ).ascii(), objectTypes_, layer_, converter_ );
+    ParamObstacle* param = new ParamObstacle( this, object, tr( "Obstacle" ).ascii(), objectTypes_, layer_, converter_ );
     item->SetValue( param );
     param->show();
     listView_->setSelected( item, true );

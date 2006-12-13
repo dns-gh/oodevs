@@ -26,8 +26,8 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
     , nID_               ( MIL_IDManager::fireResultsPopulation_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPopulationFire asnMsg;
-    asnMsg.GetAsnMsg().oid_tir  = nID_;
-    asnMsg.GetAsnMsg().oid_src  = firer_.GetID();
+    asnMsg().oid_tir  = nID_;
+    asnMsg().oid_src  = firer_.GetID();
     asnMsg.Send();
 }
 
@@ -38,12 +38,12 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
 PHY_FireResults_Population::~PHY_FireResults_Population()
 {
     NET_ASN_MsgStopPopulationFire asnMsg;
-    asnMsg.GetAsnMsg().oid_tir     = nID_;
+    asnMsg().oid_tir     = nID_;
 
-    Serialize( asnMsg.GetAsnMsg().degats_pions );
+    Serialize( asnMsg().degats_pions );
 
     asnMsg.Send();
 
-    CleanAfterSerialization( asnMsg.GetAsnMsg().degats_pions );
+    CleanAfterSerialization( asnMsg().degats_pions );
 }
 

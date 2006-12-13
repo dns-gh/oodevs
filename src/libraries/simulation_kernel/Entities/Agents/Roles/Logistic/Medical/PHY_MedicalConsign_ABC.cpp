@@ -108,10 +108,10 @@ void PHY_MedicalConsign_ABC::SendFullState( NET_ASN_MsgLogSanteTraitementHumainU
     assert( pHumanState_ );
     assert( pMedical_ );
     
-    asn.GetAsnMsg().m.oid_pion_log_traitantPresent = 1;
-    asn.GetAsnMsg().m.etatPresent                  = 1;
-    asn.GetAsnMsg().oid_pion_log_traitant          = pMedical_->GetPion().GetID();
-    asn.GetAsnMsg().etat                           = (ASN1T_EnumLogSanteTraitementEtat)nState_;
+    asn().m.oid_pion_log_traitantPresent = 1;
+    asn().m.etatPresent                  = 1;
+    asn().oid_pion_log_traitant          = pMedical_->GetPion().GetID();
+    asn().etat                           = (ASN1T_EnumLogSanteTraitementEtat)nState_;
 }
 
 // -----------------------------------------------------------------------------

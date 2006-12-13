@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-28 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __MIL_Population_h_
 #define __MIL_Population_h_
@@ -22,7 +13,7 @@
 #include "MIL.h"
 
 #include "Entities/MIL_VisitableEntity_ABC.h"
-#include "Entities/Orders/Population/MIL_PopulationOrderManager.h"
+#include "Entities/Orders/MIL_PopulationOrderManager.h"
 #include "Entities/Actions/PHY_Actor.h"
 
 class MIL_PopulationType;
@@ -130,13 +121,13 @@ public:
 
     //! @name Network 
     //@{
-    void OnReceiveMsgPopulationOrder( ASN1T_MsgPopulationOrder& msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgOrderConduite  ( ASN1T_MsgOrderConduite& msg, MIL_MOSContextID nCtx );
-    void SendCreation               () const;
-    void SendFullState              ();
-    void UpdateNetwork              ();
+    void OnReceiveMsgOrder    ( ASN1T_MsgPopulationOrder& msg );
+    void OnReceiveMsgFragOrder( ASN1T_MsgFragOrder&       msg );
+    void SendCreation         () const;
+    void SendFullState        ();
+    void UpdateNetwork        ();
 
-    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx );
     //@}
 
     //! @name CheckPoints

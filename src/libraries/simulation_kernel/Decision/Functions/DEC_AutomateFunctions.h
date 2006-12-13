@@ -28,7 +28,7 @@ public:
     // Accessors    
     static void IsSurrendered      ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void IsPrisoner         ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
-    static void IsEmbraye          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
+    static void IsEngaged          ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );
     static void DebrayeAutomate    ( DIA_Call_ABC& call,       MIL_Automate& callerAutomate );
 
     static void GetPionsWithoutPC  ( DIA_Call_ABC& call, const MIL_Automate& callerAutomate );

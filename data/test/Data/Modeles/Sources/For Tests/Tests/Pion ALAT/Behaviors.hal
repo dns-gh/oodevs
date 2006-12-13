@@ -44,15 +44,15 @@ behavior BEH_Defaut( id nDummy )
     	selection ordres_recus = DIA_GetCategory( "ordres_recus" );
     	with ( x in ordres_recus)
     	{
-    		Rep_OrdreConduite ordre = x;
-			switch ( ordre.eOrdre_ )
+    		Rep_OrdreConduite ordre = x;   		
+			switch( ordre.__type_  )
 			{
-                case eOrdreConduite_MettreTenueNBC:
+                case Rep_OrderConduite_MettreTenueNBC:
                 {
                     DEC_Agent_MettreTenueProtectionNBC();
                     break;
                 }
-                case eOrdreConduite_EnleverTenueNBC:
+                case Rep_OrderConduite_EnleverTenueNBC:
                 {
                     DEC_Agent_EnleverTenueProtectionNBC();
                     break;

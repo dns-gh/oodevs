@@ -3,7 +3,7 @@
 
   <Unite nom="PC TC2" type="Pion LOG TC2">
     <MosID>1</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="xxxx"/>
       <QualificatifAtlas type="ASA"/>
@@ -86,7 +86,7 @@
 
   <Unite nom="PC BLD Maintenance" type="Pion LOG BLD Maintenance">
     <MosID>2</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -156,7 +156,7 @@
 
   <Unite nom="PC BLT Maintenance" type="Pion LOG BLT Maintenance">
     <MosID>3</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -226,7 +226,7 @@
 
   <Unite nom="Cie Reparation BLT - M" type="Pion LOG BLT Maintenance">
     <MosID>4</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -303,7 +303,7 @@
 
   <Unite nom="Cie Reparation BLT - EA" type="Pion LOG BLT Maintenance">
     <MosID>5</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -375,7 +375,7 @@
 
   <Unite nom="Groupe evacuation maintenance BLT" type="Pion LOG BLT Maintenance">
     <MosID>6</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -449,7 +449,7 @@
 
   <Unite nom="Cie Reparation BLD - M" type="Pion LOG BLT Maintenance">
     <MosID>7</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -526,7 +526,7 @@
 
   <Unite nom="Cie Reparation BLD - EA" type="Pion LOG BLD Maintenance">
     <MosID>8</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -598,7 +598,7 @@
 
   <Unite nom="Groupe evacuation maintenance BLD" type="Pion LOG BLD Maintenance">
     <MosID>9</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -671,7 +671,7 @@
 
   <Unite nom="Section Combat GEN" type="Pion INF">
     <MosID>10</MosID>
-    <ModeleDecisionnel>Pion Test</ModeleDecisionnel>
+    <ModeleDecisionnel>Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -752,7 +752,7 @@
 
   <Unite nom="Section Combat GEN 2" type="Pion INF">
     <MosID>11</MosID>
-    <ModeleDecisionnel>Pion Test</ModeleDecisionnel>
+    <ModeleDecisionnel>Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -821,7 +821,7 @@
 
   <Unite nom="Escadrille ALAT" type="Pion ALAT">
     <MosID>12</MosID>
-    <ModeleDecisionnel>Pion Test ALAT</ModeleDecisionnel>
+    <ModeleDecisionnel>Test ALAT</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -891,7 +891,7 @@
 
   <Unite nom="Section Combat NBC" type="Pion NBC">
     <MosID>13</MosID>
-    <ModeleDecisionnel>Pion NBC Test</ModeleDecisionnel>
+    <ModeleDecisionnel>NBC Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -960,7 +960,7 @@
 
   <Unite nom="Section Combat RENS" type="Pion RENS">
     <MosID>14</MosID>
-    <ModeleDecisionnel>Pion RENS Test</ModeleDecisionnel>
+    <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1032,7 +1032,7 @@
 
   <Unite nom="Drone RENS" type="Pion RENS">
     <MosID>15</MosID>
-    <ModeleDecisionnel>Pion RENS Test</ModeleDecisionnel>
+    <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1103,7 +1103,7 @@
 
   <Unite nom="PC BLD Sante" type="Pion LOG BLD Sante">
     <MosID>16</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1115,7 +1115,9 @@
       <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
-    <Equipements/>
+    <Equipements>
+        <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
+    </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
       <SousOfficier>2</SousOfficier>
@@ -1173,7 +1175,7 @@
 
   <Unite nom="Secteur tri BLD" type="Pion LOG BLD Sante">
     <MosID>17</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1245,7 +1247,7 @@
 
   <Unite nom="Secteur soin chirurgical BLD" type="Pion LOG BLD Sante">
     <MosID>18</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1315,7 +1317,7 @@
 
   <Unite nom="Secteur soin mental BLD" type="Pion LOG BLD Sante">
     <MosID>19</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1388,7 +1390,7 @@
 
   <Unite nom="Secteur soin NBC BLD" type="Pion LOG BLD Sante">
     <MosID>20</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1460,7 +1462,7 @@
 
   <Unite nom="Secteur tri/soin BLD" type="Pion LOG BLD Sante">
     <MosID>21</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1533,7 +1535,7 @@
 
   <Unite nom="Groupe evacuation sante BLD" type="Pion LOG BLD Sante">
     <MosID>22</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1605,7 +1607,7 @@
 
   <Unite nom="PC BLT Sante" type="Pion LOG BLT Sante">
     <MosID>23</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1675,7 +1677,7 @@
 
   <Unite nom="Secteur tri BLT" type="Pion LOG BLT Sante">
     <MosID>24</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1747,7 +1749,7 @@
 
   <Unite nom="Secteur soin chirurgical BLT" type="Pion LOG BLT Sante">
     <MosID>25</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1820,7 +1822,7 @@
 
   <Unite nom="Secteur soin mental BLT" type="Pion LOG BLT Sante">
     <MosID>26</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1892,7 +1894,7 @@
 
   <Unite nom="Secteur soin NBC BLT" type="Pion LOG BLT Sante">
     <MosID>27</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -1964,7 +1966,7 @@
 
   <Unite nom="Secteur tri/soin BLT" type="Pion LOG BLT Sante">
     <MosID>28</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -2038,7 +2040,7 @@
 
   <Unite nom="Groupe evacuation sante BLT" type="Pion LOG BLT Sante">
     <MosID>29</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -2110,7 +2112,7 @@
 
   <Unite nom="PC BLD Ravitaillement" type="Pion LOG BLD Ravitaillement">
     <MosID>30</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -2122,7 +2124,9 @@
       <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
-    <Equipements/>
+    <Equipements>
+        <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
+    </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
       <SousOfficier>2</SousOfficier>
@@ -2180,7 +2184,7 @@
 
   <Unite nom="Pion RAV stocks" type="Pion LOG BLD Ravitaillement">
     <MosID>31</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -2261,7 +2265,7 @@
 
   <Unite nom="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
     <MosID>32</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>
@@ -2343,7 +2347,7 @@
 
   <Unite nom="Pion Convoi" type="Pion LOG Convoi">
     <MosID>33</MosID>
-    <ModeleDecisionnel>Pion Test LOG</ModeleDecisionnel>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="oo"/>
       <Arme type="transport"/>
@@ -2422,7 +2426,7 @@
 
   <Unite nom="Pion Refugie" type="Pion REFUGIE">
     <MosID>34</MosID>
-    <ModeleDecisionnel>Pion REFUGIE Test</ModeleDecisionnel>
+    <ModeleDecisionnel>REFUGIE Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
       <Arme type="genie"/>

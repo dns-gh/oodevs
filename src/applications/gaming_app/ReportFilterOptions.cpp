@@ -24,7 +24,7 @@ ReportFilterOptions::ReportFilterOptions( QWidget* pParent )
     QCheckBox* pDisplayMessages = new QCheckBox( tr( "Display messages" ), this );
     QCheckBox* pDisplayWarnings = new QCheckBox( tr( "Display warnings" ), this );
     pDisplayRCs->setChecked( true ); pDisplayTraces->setChecked( true ); pDisplayEvents->setChecked( true ); pDisplayMessages->setChecked( true ); pDisplayWarnings->setChecked( true );
-    toDisplay_.insert( Report_ABC::eRC ); toDisplay_.insert( Report_ABC::eTrace ); toDisplay_.insert( Report_ABC::eEvent ); toDisplay_.insert( Report_ABC::eMessage ); toDisplay_.insert( Report_ABC::eWarning );
+    toDisplay_.insert( Report::eRC ); toDisplay_.insert( Report::eTrace ); toDisplay_.insert( Report::eEvent ); toDisplay_.insert( Report::eMessage ); toDisplay_.insert( Report::eWarning );
     connect( pDisplayRCs,       SIGNAL( toggled( bool ) ), this, SLOT( OnToggleRCs( bool ) ) );
     connect( pDisplayTraces,    SIGNAL( toggled( bool ) ), this, SLOT( OnToggleTraces( bool ) ) );
     connect( pDisplayEvents,    SIGNAL( toggled( bool ) ), this, SLOT( OnToggleEvents( bool ) ) );
@@ -45,7 +45,7 @@ ReportFilterOptions::~ReportFilterOptions()
 // Name: ReportFilterOptions::ShouldDisplay
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-bool ReportFilterOptions::ShouldDisplay( const Report_ABC& report ) const
+bool ReportFilterOptions::ShouldDisplay( const Report& report ) const
 {
     return toDisplay_.find( report.GetType() ) != toDisplay_.end();
 }
@@ -54,7 +54,7 @@ bool ReportFilterOptions::ShouldDisplay( const Report_ABC& report ) const
 // Name: ReportFilterOptions::Toggle
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::Toggle( bool bOn, Report_ABC::E_Type type )
+void ReportFilterOptions::Toggle( bool bOn, Report::E_Type type )
 {
     if( bOn )
         toDisplay_.insert( type );
@@ -69,7 +69,7 @@ void ReportFilterOptions::Toggle( bool bOn, Report_ABC::E_Type type )
 // -----------------------------------------------------------------------------
 void ReportFilterOptions::OnToggleRCs( bool bOn )
 {
-    Toggle( bOn, Report_ABC::eRC );
+    Toggle( bOn, Report::eRC );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ void ReportFilterOptions::OnToggleRCs( bool bOn )
 // -----------------------------------------------------------------------------
 void ReportFilterOptions::OnToggleTraces( bool bOn )
 {
-    Toggle( bOn, Report_ABC::eTrace );
+    Toggle( bOn, Report::eTrace );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ void ReportFilterOptions::OnToggleTraces( bool bOn )
 // -----------------------------------------------------------------------------
 void ReportFilterOptions::OnToggleEvents( bool bOn )
 {
-    Toggle( bOn, Report_ABC::eEvent );
+    Toggle( bOn, Report::eEvent );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void ReportFilterOptions::OnToggleEvents( bool bOn )
 // -----------------------------------------------------------------------------
 void ReportFilterOptions::OnToggleMessages( bool bOn )
 {
-    Toggle( bOn, Report_ABC::eMessage );
+    Toggle( bOn, Report::eMessage );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,5 +105,5 @@ void ReportFilterOptions::OnToggleMessages( bool bOn )
 // -----------------------------------------------------------------------------
 void ReportFilterOptions::OnToggleWarnings( bool bOn )
 {
-    Toggle( bOn, Report_ABC::eWarning );
+    Toggle( bOn, Report::eWarning );
 }

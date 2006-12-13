@@ -454,16 +454,6 @@ std::string AGR_FragOrder::HumanName() const
     
     std::string strResult = BaseName();
     
-    int nPos = strResult.find( '_' );
-    if( nPos != strResult.npos )
-    {
-        std::string strTarget = strResult.substr( 0, nPos );
-        if(    strTarget == "Automate" 
-            || strTarget == "Pion"
-            || strTarget == "Population" )
-            strResult.insert( nPos, ":" );
-    }
-
     boost::replace_all( strResult, "_", " " );
 
     std::string::iterator prevIt = strResult.begin();
@@ -558,4 +548,31 @@ bool AGR_FragOrder::IsAvailableForAllMissions() const
 bool AGR_FragOrder::IsAvailableWithoutMissions() const
 {
     return bAvailableWithoutMissions_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AGR_FragOrder::GenerateMissionXML
+// Created: NLD 2006-11-25
+// -----------------------------------------------------------------------------
+std::string AGR_FragOrder::GenerateMissionXML( uint nIdx ) const
+{
+    std::stringstream strResult;
+
+    strResult << "\t<fragorder";
+    strResult << " id=\"" << nIdx << "\"";
+    strResult << " name=\"" << HumanName() << "\"";
+    strResult << " dia-type=\"" << DIATypeName() << "\"";
+    
+    if( IsAvailableForAllMissions() )
+        strResult << " available-for-all-mission=\"true\"";
+    if( IsAvailableWithoutMissions() )
+        strResult << " available-without-mission=\"true\"";
+    strResult << ">" << std::endl;
+
+    for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
+        strResult << (**it).MissionXMLCode();
+    
+    strResult << "\t</fragorder>    " << std::endl;
+    return strResult.str();
 }

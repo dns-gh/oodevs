@@ -13,7 +13,7 @@
 
 #include "MIL_AutomateTypeREFUGIE.h"
 #include "Decision/DEC_ModelAutomate.h"
-#include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
+#include "Entities/Orders/MIL_AutomateMissionType.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeREFUGIE constructor

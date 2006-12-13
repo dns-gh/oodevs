@@ -320,6 +320,7 @@ signatures
     U /*T_Point*/                           A::DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( S /*T_ListeConnaissancesAgent*/ );
     A                                       A::DEC_Geometrie_PionDevant                                ( S /*T_ListePions*/, U /*T_Direction*/ );
     A                                       A::DEC_Geometrie_PionDerriere                              ( S /*T_ListePions*/, U /*T_Direction*/ );
+    U /*T_Point*/                           A::DEC_Geometrie_CalculerPositionParRapportALima                    ( U /*T_Lima*/, R /*dist avant lima*/, B /*retour*/ );
                                             
     // Etat                                 
     V                                       A::DEC_Elongation( R /*facteur d'élongation du pion*/ );

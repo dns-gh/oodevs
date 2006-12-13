@@ -4,6 +4,7 @@
 
 include "Common/Moteur/Functions/Pions.hal";
 include "Common/Moteur/Functions/PionsLOG.hal";
+include "Common/Moteur/EngineReports.hal";
 
 signatures
 {
@@ -19,7 +20,7 @@ functions
     //-------------------------------------------------------------------------
     none EVT_DEC_OrdreConduite( Rep_OrdreConduite ordreConduite )
     {
-        DEC_Debug( "EVT_DEC_OrdreConduite : " + EnumToString( ordreConduite.eOrdre_, E_TypeOrdreConduite ) + " Hint : " + ordreConduite.szHint_ );
+        DEC_Debug( "EVT_DEC_OrdreConduite" );
     
         // ajout a la liste des ordres recus
         DIA_AddToCategory( "ordres_recus", ordreConduite );

@@ -159,7 +159,7 @@ void PHY_RoleHLA_Composantes::UpdateComposante( const std::string& strComposante
             return;
         }
     }
-    const PHY_ComposanteType_ABC* pComposante = PHY_ComposanteTypePion::FindComposanteType( strComposanteName );
+    const PHY_ComposanteType_ABC* pComposante = PHY_ComposanteTypePion::Find( strComposanteName );
     if( pComposante )
         composantes_.push_back( new PHY_ComposanteHLA( *pComposante, nComposantes ) );
 }

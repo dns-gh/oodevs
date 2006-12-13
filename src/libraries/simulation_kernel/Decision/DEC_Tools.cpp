@@ -46,6 +46,8 @@ const DIA_TypeDef* DEC_Tools::pTypeSantePriorites_                = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionObjectsLocalisation_ = 0;
 const DIA_TypeDef* DEC_Tools::pTypePerceptionFlyingShell_         = 0;
 const DIA_TypeDef* DEC_Tools::pTypeDotation_                      = 0;
+const DIA_TypeDef* DEC_Tools::pTypeEquipement_                    = 0;
+const DIA_TypeDef* DEC_Tools::pTypeTirIndirect_                   = 0;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Tools::InitializeDIA
@@ -79,6 +81,8 @@ void DEC_Tools::InitializeDIA()
     pTypePerceptionObjectsLocalisation_ = &GetDIAType( "T_PerceptionLocalisationObjet"  );
     pTypePerceptionFlyingShell_         = &GetDIAType( "T_PerceptionTirIndirect"        );
     pTypeDotation_                      = &GetDIAType( "T_Dotation"                     );
+    pTypeEquipement_                    = &GetDIAType( "T_Equipement"                   );
+    pTypeTirIndirect_                   = &GetDIAType( "T_TirIndirect"                  );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,6 +373,10 @@ void DEC_Tools::ManageDeletion( void* pPtr, const DIA_Type* pType )
     else if( *pType == *pTypePerceptionFlyingShell_ )
         ; // NOTHING
     else if( *pType == *pTypeDotation_ )
+        ; // NOTHING
+    else if( *pType == *pTypeEquipement_ )
+        ; // NOTHING
+    else if( *pType == *pTypeTirIndirect_ )
         ; // NOTHING
     else
         assert( false );

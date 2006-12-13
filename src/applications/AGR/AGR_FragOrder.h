@@ -63,6 +63,7 @@ public:
     void GenerateMilClassHeader( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateMilClassCpp   ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
 
+    std::string GenerateMissionXML( uint nIdx ) const;
     std::string GenerateDiaDefinition() const;
     std::string MosLight2CreationCode() const;
     std::string MosLight2DeletionCode() const;

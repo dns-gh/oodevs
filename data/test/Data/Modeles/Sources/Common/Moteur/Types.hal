@@ -23,6 +23,8 @@ typedef UserType T_Population_ConnaissanceAgent;    // Type C++ : id de MIL_Agen
 typedef UserType T_Population_ConnaissanceObjet;    // Type C++ : id de MIL_RealObject_ABC (connaissances objets pour les entités population)
 typedef UserType T_Action;                          // Type C++ : PHY_Action_ABC
 typedef UserType T_Dotation;                        // Type C++ : PHY_DotationCategory
+typedef UserType T_Equipement;                      // Type C++ : PHY_ComposanteType_ABC
+typedef UserType T_TirIndirect;                     // Type C++ : uint d'ID de tir indirect
 typedef UserType T_PerceptionPoint;
 typedef UserType T_PerceptionLocalisation;
 typedef UserType T_PerceptionRadar;
@@ -32,6 +34,7 @@ typedef UserType T_PerceptionTirIndirect;
 typedef UserType T_MaintenancePriorites;
 typedef UserType T_SantePriorites;
 typedef UserType T_GenObjet;
+
 
 typedef list<T_ConnaissanceObjet>            T_ListeConnaissancesObjet;
 typedef list<T_ConnaissanceAgent>            T_ListeConnaissancesAgent;
@@ -44,7 +47,6 @@ typedef list<T_Direction>                    T_ListeDirections;
 typedef list<T_GenObjet>                     T_ListeGenObjets;
  
 include "Common/Moteur/Types_Enums.hal";
-include "Common/Moteur/Types_Enums_Generated.hal";
 include "Common/Moteur/Types_RC.hal";
 include "Common/Moteur/Types_Objets.hal";
 include "Common/Moteur/Types_PathFind.hal";

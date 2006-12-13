@@ -44,6 +44,7 @@ class ADN_Units_GUI;
 class ADN_Units_Data;
 class ADN_Models_GUI;
 class ADN_Models_Data;
+class ADN_Missions_Data;
 class ADN_Automata_GUI;
 class ADN_Automata_Data;
 class ADN_AiEngine_GUI;
@@ -52,9 +53,6 @@ class ADN_Breakdowns_Data;
 class ADN_Breakdowns_GUI;
 class ADN_Population_Data;
 class ADN_Population_GUI;
-
-
-
 
 // =============================================================================
 /** @class  ADN_Workspace
@@ -91,6 +89,7 @@ public:
     ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >& GetComposantes();
     ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >& GetUnits();
     ADN_WorkspaceElement< ADN_Models_Data, ADN_GUI_ABC >& GetModels();
+    ADN_WorkspaceElement< ADN_Missions_Data, ADN_GUI_ABC >& GetMissions();
     ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >& GetAutomata();
     ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>& GetAiEngine();
     ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& GetBreakdowns();
@@ -124,13 +123,13 @@ private:
         eBreakdowns,
         eComposantes,
         eAiEngine,
+        eMissions,
         eModels,
         eUnits,
         eAutomata,
         eCommunications,
         eHumanFactors,
         eMaintenance,
-        eMissions,
         eKnowledgeGroups,
         eHLA,
         eSupply,
@@ -270,6 +269,16 @@ inline
 ADN_WorkspaceElement< ADN_Models_Data, ADN_GUI_ABC >& ADN_Workspace::GetModels()
 {
     return (ADN_WorkspaceElement< ADN_Models_Data, ADN_GUI_ABC >&)(*elements_[eModels]);
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetMissions
+// Created: SBO 2006-12-04
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Missions_Data, ADN_GUI_ABC >& ADN_Workspace::GetMissions()
+{
+    return (ADN_WorkspaceElement< ADN_Missions_Data, ADN_GUI_ABC >&)(*elements_[eMissions]);
 }
 
 

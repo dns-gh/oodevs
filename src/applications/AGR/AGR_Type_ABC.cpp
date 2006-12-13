@@ -326,3 +326,42 @@ bool AGR_Type_ABC::AllowOptionalMembers() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::GetFunctionSuffix
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+const std::string& AGR_Type_ABC::GetFunctionSuffix() const
+{
+    return strFunctionSuffix_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::MissionXMLCode
+// Created: NLD 2006-11-26
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::MissionXMLCode( const AGR_Member& member ) const
+{
+    std::stringstream strResult;
+    strResult << "\t\t<parameter";   
+    strResult << " name=\"" << member.HumanName() << "\"";
+    strResult << " dia-name=\"" << member.CPPName() << "\"";
+    strResult << " type=\"" << strFunctionSuffix_ << "\"";
+    if( member.IsOptional() )
+        strResult << " optional=\"true\"";
+    strResult << "/>" << std::endl;
+    return strResult.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Type_ABC::RCXMLCode
+// Created: NLD 2006-12-07
+// -----------------------------------------------------------------------------
+std::string AGR_Type_ABC::RCXMLCode() const
+{
+    std::stringstream strResult;
+    strResult << "\t\t<parameter";   
+    strResult << " type=\"" << GetFunctionSuffix() << "\"";
+    strResult << "/>" << std::endl;
+    return strResult.str();
+}

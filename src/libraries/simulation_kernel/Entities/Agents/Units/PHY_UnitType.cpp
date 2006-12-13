@@ -142,7 +142,7 @@ void PHY_UnitType::InitializeComposantes( MIL_InputArchive& archive )
         std::string strComposanteType;
         archive.ReadAttribute( "nom", strComposanteType );
 
-        const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::FindComposanteType( strComposanteType );
+        const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( strComposanteType );
         if( !pComposanteType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown composante type", archive.GetContext() );
 

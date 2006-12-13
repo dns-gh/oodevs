@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 class MIL_Automate;
-class MIL_AutomateMission_ABC;
+class MIL_AutomateMission;
 
 class NET_ASN_MsgAutomateAttributes;
 
@@ -56,10 +56,10 @@ public:
     void Clean          ();
     bool HasStateChanged() const;
 
-    void StartMissionMrtBehavior     ( MIL_AutomateMission_ABC& mission );
-    void StopMissionMrtBehavior      ( MIL_AutomateMission_ABC& mission );
-    void StartMissionConduiteBehavior( MIL_AutomateMission_ABC& mission );
-    void StopMissionConduiteBehavior ( MIL_AutomateMission_ABC& mission );
+    void StartMissionMrtBehavior     ( MIL_AutomateMission& mission );
+    void StopMissionMrtBehavior      ( MIL_AutomateMission& mission );
+    void StartMissionConduiteBehavior( MIL_AutomateMission& mission );
+    void StopMissionConduiteBehavior ( MIL_AutomateMission& mission );
     //@}
 
     //! @name Notifications

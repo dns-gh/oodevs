@@ -17,7 +17,7 @@
 #include "AttributeView.h"
 #include "clients_gui/GlWidget.h"
 #include "clients_kernel/Positions.h"
-#include "gaming/Report_ABC.h"
+#include "gaming/Report.h"
 #include "icons.h"
 
 #include <qtoolbox.h>
@@ -160,9 +160,9 @@ QWidget* Spy::CreateView( const Entity_ABC& agent )
 // Name: Spy::NotifyCreated
 // Created: SBO 2006-06-26
 // -----------------------------------------------------------------------------
-void Spy::NotifyCreated( const Report_ABC& report )
+void Spy::NotifyCreated( const Report& report )
 {
-    const Entity_ABC* agent = &report.GetAgent();
+    const Entity_ABC* agent = &report.GetOwner();
     CIT_Agents it = spied_.find( agent );
     if( it == spied_.end() )
         return;

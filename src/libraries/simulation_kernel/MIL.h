@@ -43,7 +43,7 @@ typedef T_LimaVector::const_iterator  CIT_LimaVector;
 
 /// $$$ NLD - Degueu à déplacer
 
-typedef uint32 MIL_MOSContextID;
+//typedef uint32 uint;
 
 namespace NEK
 {

@@ -15,41 +15,27 @@
 namespace kernel
 {
     class Mission;
-    class ObjectTypes;
-    class Automat_ABC;
 }
 
 class ASN_MsgAutomateOrder;
 class Publisher_ABC;
+class MissionInterfaceFactory;
+class MissionInterfaceBuilder;
 
 // =============================================================================
-// Created: APE 2004-04-20
+/** @class  MissionInterfaceBuilder
+    @brief  Mission interface builder
+*/
+// Created: SBO 2006-11-22
 // =============================================================================
 class AutomateMissionInterface : public MissionInterface_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomateMissionInterface( QWidget* parent, kernel::Entity_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             AutomateMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::ActionController& controller
+                                     , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder );
     virtual ~AutomateMissionInterface();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void CreateDefaultParameters();
-    void CreateInterface();
-    //@}
-
-    //! @name Generated helpers
-    //@{
-    #include "AutomateMissionInterface_Gen.h" 
-    //@}
-
-private:
-    //! @name Slots
-    //@{
-    void OnOk();
     //@}
 
 private:
@@ -59,13 +45,16 @@ private:
     AutomateMissionInterface& operator=( const AutomateMissionInterface& );
     //@}
 
+    //! @name Virtual Slots
+    //@{
+    virtual void OnOk();
+    //@}
+
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& publisher_;
-    kernel::Entity_ABC& agent_;
-    uint                  nMissionId_;
-    ASN_MsgAutomateOrder* pASNMsgOrder_;
+    Publisher_ABC&        publisher_;
+    ASN_MsgAutomateOrder* order_;
     //@}
 };
 

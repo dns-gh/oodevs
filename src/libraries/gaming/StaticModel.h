@@ -21,6 +21,8 @@ namespace kernel
 }
 
 class SurfaceFactory;
+class ReportFactory;
+class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  StaticModel
@@ -34,7 +36,7 @@ class StaticModel
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit StaticModel( kernel::Controllers& controllers );
+             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver );
     virtual ~StaticModel();
     //@}
 
@@ -54,6 +56,7 @@ public:
     kernel::ObjectTypes&             objectTypes_;
     kernel::FormationLevels&         levels_;
     SurfaceFactory&                  surfaceFactory_;
+    ReportFactory&                   reportFactory_;
     //@}
 
 private:

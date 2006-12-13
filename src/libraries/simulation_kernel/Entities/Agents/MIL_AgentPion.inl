@@ -146,28 +146,3 @@ const std::string& MIL_AgentPion::GetName() const
 {
     return strName_;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgPionOrder
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-void MIL_AgentPion::OnReceiveMsgPionOrder( ASN1T_MsgPionOrder& msg, MIL_MOSContextID nCtx )
-{
-    orderManager_.OnReceiveMsgPionOrder( msg, nCtx );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgOrderConduite
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-void MIL_AgentPion::OnReceiveMsgOrderConduite( ASN1T_MsgOrderConduite& msg, MIL_MOSContextID nCtx )
-{
-    orderManager_.OnReceiveMsgOrderConduite( msg, nCtx );
-}
-

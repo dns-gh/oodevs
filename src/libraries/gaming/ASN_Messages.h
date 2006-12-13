@@ -119,7 +119,7 @@ GENERATE_SEND_ASN_MSG_PTR( UnitMagicAction, unit_magic_action )
 GENERATE_SEND_ASN_MSG_PTR( PopulationMagicAction, population_magic_action )
 
 GENERATE_SEND_ASN_MSG_PTR( PionOrder, pion_order )
-GENERATE_SEND_ASN_MSG_PTR( OrderConduite, order_conduite )
+GENERATE_SEND_ASN_MSG_PTR( FragOrder, frag_order )
 GENERATE_SEND_ASN_MSG_PTR( AutomateOrder, automate_order )
 GENERATE_SEND_ASN_MSG_PTR( SetAutomateMode, set_automate_mode )
 GENERATE_SEND_ASN_MSG_PTR( PopulationOrder, population_order )

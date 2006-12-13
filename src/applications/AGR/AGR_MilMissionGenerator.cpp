@@ -62,6 +62,6 @@ void AGR_MilMissionGenerator::Generate( const AGR_Workspace& workspace, const st
     {
         const AGR_Mission& mission = **it;
         mission.GenerateMilClassHeader( workspace, strOutputPath );
-        mission.GenerateMilClassCpp( workspace, strOutputPath );
-    }
+        mission.GenerateMilClassCpp( workspace, strOutputPath );       
+    }   
 }

@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "Knowledge/DEC_Knowledge_Def.h"
+#include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
@@ -23,7 +24,7 @@ class MIL_AgentPion;
 // @class  DEC_PopulationKnowledge
 // Created: JVT 2004-08-03
 // =============================================================================
-class DEC_PopulationKnowledge
+class DEC_PopulationKnowledge : public DEC_KnowledgeResolver_ABC
 {
     MT_COPYNOTALLOWED( DEC_PopulationKnowledge )
 
@@ -45,6 +46,21 @@ public:
     //@{
     void Update();
     void Clean ();
+    //@}
+
+    //! @name Resolver
+    //@{
+    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_KnowledgeAgent&  asn ) const;
+    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const;
+    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent (       uint                   nID ) const;
+
+    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_KnowledgeObject& asn ) const;
+    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const;
+    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const;
+
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& asn ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const DIA_Variable_ABC&          dia ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const;
     //@}
 
     //! @name Operations

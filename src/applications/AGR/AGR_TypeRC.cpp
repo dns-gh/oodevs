@@ -604,3 +604,40 @@ std::string AGR_TypeRC::GenerateTIC( const AGR_RC& rcInstance ) const
     strTmp << std::endl;
     return strTmp.str();
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_TypeRC::GenerateXML
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+std::string AGR_TypeRC::GenerateXML( const AGR_RC& rcInstance, uint nIdx ) const
+{
+    std::stringstream strResult;
+
+    strResult << "\t<report"
+              << " id=\"" << nIdx << "\""
+              << " message=\"" << strHumanName_ << "\"";
+
+    
+    if( pType_ )
+    {
+        strResult << ">" << std::endl;
+        strResult << pType_->RCXMLCode();
+        strResult << "\t</report>" << std::endl;
+    }
+    else if( !params_.empty() )
+    {
+        strResult << ">" << std::endl;
+        for( CIT_ParamVector it = params_.begin(); it != params_.end(); ++it )
+        {
+            const Param& param = (**it);
+            strResult << param.pType_->RCXMLCode();
+        }    
+        strResult << "\t</report>" << std::endl;
+    }
+    else
+    {
+        strResult << "/>" << std::endl;
+    }
+    return strResult.str();
+}
+

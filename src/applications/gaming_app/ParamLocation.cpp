@@ -25,13 +25,16 @@ using namespace gui;
 // Name: ParamLocation constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation*& asn, const QString& label, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QHBox      ( pParent )
     , converter_ ( converter )
-    , serializer_( converter, asn )
+    , asn_       ( new ASN1T_Localisation() )
+    , serializer_( converter, *asn_ )
     , controller_( 0 )
     , location_( 0 )
 {
+    asn = asn_;
+
     setSpacing( 5 );
     pLabel_ = new RichLabel( label, false, this, "" );
 
@@ -42,8 +45,8 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const Q
 
     creator_ = new LocationCreator( this, label, layer, *this );
 
-    asn.vecteur_point.elem = 0;
-    asn.vecteur_point.n = 0;
+    asn_->vecteur_point.elem = 0;
+    asn_->vecteur_point.n = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +55,7 @@ ParamLocation::ParamLocation( QWidget* pParent, ASN1T_Localisation& asn, const Q
 // -----------------------------------------------------------------------------
 ParamLocation::~ParamLocation()
 {
+    delete asn_;
     delete location_;
 }
 

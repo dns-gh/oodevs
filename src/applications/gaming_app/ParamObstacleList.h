@@ -41,7 +41,7 @@ class ParamObstacleList : public QVBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject& asnObjectList, const QString& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
+             ParamObstacleList( QWidget* parent, ASN1T_ListMissionGenObject*& asnObjectList, const QString& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
     virtual ~ParamObstacleList();
     //@}
 
@@ -77,7 +77,7 @@ private:
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
     
-    ASN1T_ListMissionGenObject& asn_;
+    ASN1T_ListMissionGenObject* asn_;
     ASN1T_MissionGenObject* objects_;
     ParamListView* listView_;
     gui::ValuedListItem* selected_;

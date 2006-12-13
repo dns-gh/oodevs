@@ -35,7 +35,7 @@ class ParamAgentKnowledgeList : public EntityListParameter< AgentKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent*& asn, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamAgentKnowledgeList();
     //@}
 

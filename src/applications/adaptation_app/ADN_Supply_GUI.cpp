@@ -67,7 +67,7 @@ void ADN_Supply_GUI::Build()
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
 
     builder.AddField< ADN_SupplyUnitSelector >( pHolder, tr( "Unit" ), data_.ptrUnit_ );
-    builder.AddEnumField<E_UnitMission>( pHolder, tr( "Mission" ), data_.nSupplyMission_, ENT_Tr::ConvertFromUnitMission );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), data_.ptrSupplyMission_ );
 
     QHGroupBox* pTrucksGroup = new QHGroupBox( tr( "Convoy setup times" ), pGroup );
     ADN_Supply_TrucksTable* pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );

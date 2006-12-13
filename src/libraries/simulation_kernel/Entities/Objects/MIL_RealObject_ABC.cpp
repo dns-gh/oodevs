@@ -350,31 +350,31 @@ void MIL_RealObject_ABC::SendCreation()
 
     assert( pType_ );
 
-    asnMsg.GetAsnMsg().oid  = nID_;
-    asnMsg.GetAsnMsg().nom  = strName_.c_str(); // !! pointeur sur const char*
-    asnMsg.GetAsnMsg().type = pType_->GetAsnID();
-    asnMsg.GetAsnMsg().camp = GetArmy().GetID();
+    asnMsg().oid  = nID_;
+    asnMsg().nom  = strName_.c_str(); // !! pointeur sur const char*
+    asnMsg().type = pType_->GetAsnID();
+    asnMsg().camp = GetArmy().GetID();
     
-    NET_ASN_Tools::WriteLocation( GetLocalisation(), asnMsg.GetAsnMsg().localisation );
+    NET_ASN_Tools::WriteLocation( GetLocalisation(), asnMsg().localisation );
 
     if( pType_->GetDotationCategoryForConstruction() )
     {
-        asnMsg.GetAsnMsg().m.type_dotation_constructionPresent = 1;
-        asnMsg.GetAsnMsg().type_dotation_construction          = pType_->GetDotationCategoryForConstruction()->GetMosID();
+        asnMsg().m.type_dotation_constructionPresent = 1;
+        asnMsg().type_dotation_construction          = pType_->GetDotationCategoryForConstruction()->GetMosID();
     }
 
     if( pType_->GetDotationCategoryForMining() )
     {
-        asnMsg.GetAsnMsg().m.type_dotation_valorisationPresent = 1;
-        asnMsg.GetAsnMsg().type_dotation_valorisation          = pType_->GetDotationCategoryForMining()->GetMosID();
+        asnMsg().m.type_dotation_valorisationPresent = 1;
+        asnMsg().type_dotation_valorisation          = pType_->GetDotationCategoryForMining()->GetMosID();
     }
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent = 0;
+    asnMsg().m.attributs_specifiquesPresent = 0;
     WriteSpecificAttributes( asnMsg );
     
     asnMsg.Send();
 
-    NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().localisation );
+    NET_ASN_Tools::Delete( asnMsg().localisation );
 }
 
 
@@ -387,7 +387,7 @@ void MIL_RealObject_ABC::SendDestruction()
     if( pView_ && pView_->HideObject() )
         return;
     NET_ASN_MsgObjectDestruction asnMsg;
-    asnMsg.GetAsnMsg() = nID_;
+    asnMsg() = nID_;
     asnMsg.Send();
 }
 
@@ -431,7 +431,7 @@ void MIL_RealObject_ABC::SendMsgUpdate()
 
     NET_ASN_MsgObjectUpdate asnMsg;
     
-    ASN1T_MsgObjectUpdate& asn = asnMsg.GetAsnMsg();
+    ASN1T_MsgObjectUpdate& asn = asnMsg();
     asn.oid                    = nID_;
     asn.en_preparation         = bPrepared_;
 
@@ -473,7 +473,7 @@ void MIL_RealObject_ABC::SendMsgUpdate()
     {
         bFlag = true;
         asn.m.localisationPresent = 1;
-        NET_ASN_Tools::WriteLocation( GetLocalisation(), asnMsg.GetAsnMsg().localisation );
+        NET_ASN_Tools::WriteLocation( GetLocalisation(), asnMsg().localisation );
     }
 
     if( xAttrToUpdate_ & eAttrUpdate_SpecificAttributes )
@@ -492,8 +492,8 @@ void MIL_RealObject_ABC::SendMsgUpdate()
     xAttrToUpdate_ = 0;
     asnMsg.Send();
 
-    if( asnMsg.GetAsnMsg().m.localisationPresent )
-        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().localisation );
+    if( asnMsg().m.localisationPresent )
+        NET_ASN_Tools::Delete( asnMsg().localisation );
 }
 
 // -----------------------------------------------------------------------------

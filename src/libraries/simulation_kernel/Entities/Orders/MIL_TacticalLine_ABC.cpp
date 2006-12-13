@@ -52,7 +52,7 @@ MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const ASN1T_TacticalLine& asn )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_TacticalLine_ABC constructor
+// Name: MIL_TacticalLine_ABC constructµor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
 MIL_TacticalLine_ABC::MIL_TacticalLine_ABC( const MIL_Automate& automateBroadcasted, MIL_InputArchive& archive )

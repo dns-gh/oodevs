@@ -151,11 +151,11 @@ void PHY_RolePion_Surrender::NotifyOutsidePrisonerCamp( const MIL_CampPrisonnier
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Surrender::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.prisonnierPresent = 1;
-    msg.GetAsnMsg().prisonnier          = bPrisoner_;
+    msg().m.prisonnierPresent = 1;
+    msg().prisonnier          = bPrisoner_;
 
-    msg.GetAsnMsg().m.renduPresent  = 1;
-    msg.GetAsnMsg().rendu           = bSurrendered_;
+    msg().m.renduPresent  = 1;
+    msg().rendu           = bSurrendered_;
 }
 
 // -----------------------------------------------------------------------------

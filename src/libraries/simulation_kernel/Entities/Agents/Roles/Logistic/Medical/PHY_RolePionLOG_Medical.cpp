@@ -22,7 +22,7 @@
 #include "PHY_MedicalSortingConsign.h"
 #include "PHY_MedicalHealingConsign.h"
 #include "PHY_MedicalResourcesAlarms.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -805,11 +805,11 @@ void PHY_RolePionLOG_Medical::StartUsingForLogistic( PHY_ComposantePion& composa
     composante.StartUsingForLogistic();
 
     if( PHY_MedicalResourcesAlarms::IsEvacuationResourcesLevelReached( rEvacuationRatio, GetAvailabilityRatio( evacuationUsePred ) ) )
-        MIL_RC::pRcAlerteDisponibiliteMoyensReleve_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_EvacuationResourcesLevelReached );
     if( PHY_MedicalResourcesAlarms::IsCollectionResourcesLevelReached( rCollectionRatio, GetAvailabilityRatio( collectionUsePred ) ) )
-        MIL_RC::pRcAlerteDisponibiliteMoyensRamassage_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_CollectionResourcesLevelReached );
     if( PHY_MedicalResourcesAlarms::IsDoctorResourcesLevelReached( rDoctorsRatio, GetAvailabilityRatio( doctorUsePred ) ) )
-        MIL_RC::pRcAlerteDisponibiliteMedecins_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_DoctorResourcesLevelReached );
 }
 
 // -----------------------------------------------------------------------------
@@ -861,64 +861,64 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 {
     NET_ASN_MsgLogSanteEtat asn;
 
-    asn.GetAsnMsg().m.chaine_activeePresent                      = 1;
-    asn.GetAsnMsg().m.prioritesPresent                           = 1;
-    asn.GetAsnMsg().m.priorites_tactiquesPresent                 = 1;
-    asn.GetAsnMsg().m.disponibilites_ambulances_ramassagePresent = 1;
-    asn.GetAsnMsg().m.disponibilites_ambulances_relevePresent    = 1;
-    asn.GetAsnMsg().m.disponibilites_medecinsPresent             = 1;
+    asn().m.chaine_activeePresent                      = 1;
+    asn().m.prioritesPresent                           = 1;
+    asn().m.priorites_tactiquesPresent                 = 1;
+    asn().m.disponibilites_ambulances_ramassagePresent = 1;
+    asn().m.disponibilites_ambulances_relevePresent    = 1;
+    asn().m.disponibilites_medecinsPresent             = 1;
 
     assert( pPion_ );
-    asn.GetAsnMsg().oid_pion        = pPion_->GetID();
-    asn.GetAsnMsg().chaine_activee  = bSystemEnabled_;
+    asn().oid_pion        = pPion_->GetID();
+    asn().chaine_activee  = bSystemEnabled_;
 
-    asn.GetAsnMsg().priorites.n = priorities_.size();
+    asn().priorites.n = priorities_.size();
     if( !priorities_.empty() )
     {
         ASN1T_EnumHumanWound* pAsnPriorities = new ASN1T_EnumHumanWound[ priorities_.size() ];
         uint i = 0 ;
         for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetAsnID();
-        asn.GetAsnMsg().priorites.elem = pAsnPriorities;
+        asn().priorites.elem = pAsnPriorities;
     }
 
-    asn.GetAsnMsg().priorites_tactiques.n = tacticalPriorities_.size();
+    asn().priorites_tactiques.n = tacticalPriorities_.size();
     if( !tacticalPriorities_.empty() )
     {
         ASN1T_Automate* pAsnPriorities = new ASN1T_Automate[ tacticalPriorities_.size() ];
         uint i = 0 ;
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetID();
-        asn.GetAsnMsg().priorites_tactiques.elem = pAsnPriorities;
+        asn().priorites_tactiques.elem = pAsnPriorities;
     }
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate1 );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_ambulances_releve );
+    SendComposanteUse( composanteUse, asn().disponibilites_ambulances_releve );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate2 );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_ambulances_ramassage );
+    SendComposanteUse( composanteUse, asn().disponibilites_ambulances_ramassage );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate3 );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_medecins );
+    SendComposanteUse( composanteUse, asn().disponibilites_medecins );
 
     asn.Send();
 
-    if( asn.GetAsnMsg().priorites.n > 0 )
-        delete [] asn.GetAsnMsg().priorites.elem;
-    if( asn.GetAsnMsg().priorites_tactiques.n > 0 )
-        delete [] asn.GetAsnMsg().priorites_tactiques.elem;
-    if( asn.GetAsnMsg().disponibilites_ambulances_ramassage.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_ambulances_ramassage.elem;
-    if( asn.GetAsnMsg().disponibilites_ambulances_releve.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_ambulances_releve.elem;
-    if( asn.GetAsnMsg().disponibilites_medecins.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_medecins.elem;
+    if( asn().priorites.n > 0 )
+        delete [] asn().priorites.elem;
+    if( asn().priorites_tactiques.n > 0 )
+        delete [] asn().priorites_tactiques.elem;
+    if( asn().disponibilites_ambulances_ramassage.n > 0 )
+        delete [] asn().disponibilites_ambulances_ramassage.elem;
+    if( asn().disponibilites_ambulances_releve.n > 0 )
+        delete [] asn().disponibilites_ambulances_releve.elem;
+    if( asn().disponibilites_medecins.n > 0 )
+        delete [] asn().disponibilites_medecins.elem;
 }
 
 // -----------------------------------------------------------------------------

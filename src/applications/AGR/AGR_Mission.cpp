@@ -362,15 +362,35 @@ void AGR_Mission::GenerateTesterClassCpp( const AGR_Workspace& workspace, const 
     workspace.WriteStringInFile( strBaseContent, strOutputPath + strResultFileName );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AGR_Mission::GenerateMissionXML
+// Created: NLD 2006-11-25
+// -----------------------------------------------------------------------------
+std::string AGR_Mission::GenerateMissionXML( uint nIdx ) const
+{
+    std::stringstream strResult;
 
+    strResult << "\t<mission";
+    strResult << " id=\"" << nIdx << "\"";
+    strResult << " name=\"" << WeaponName() << ( WeaponName().empty() ? "" : " " ) << HumanMissionName() << "\"";
+    strResult << " dia-type=\"T_" << Name() << "\"";
+    if( eMissionType_ == eMissionAutomate )
+    {
+        strResult << " mrt-dia-behavior=\"" << MRTBehavior() << "\"";   
+        strResult << " cdt-dia-behavior=\"" << ConduiteBehavior() << "\"";   
+    }
+    else
+        strResult << " dia-behavior=\"MIS_" << Name().substr( std::string( "Mission_" ).size() ) << "\"";   
+    strResult << ">" << std::endl;
 
-
-
+    for( CIT_MemberVector it = MemberList().begin(); it != MemberList().end(); ++it )
+        strResult << (**it).MissionXMLCode();
+    strResult << "\t</mission>" << std::endl;
+    return strResult.str();
+}
 
 // -----------------------------------------------------------------------------
 // Name: AGR_Mission::GenerateDiaDefinition
-/** @return
-*/
 // Created: AGN 2004-04-23
 // -----------------------------------------------------------------------------
 std::string AGR_Mission::GenerateDiaDefinition() const
@@ -401,7 +421,6 @@ std::string AGR_Mission::GenerateDiaDefinition() const
 //        }
 //        else
             strResult += member.DIAType();
-
     }
     strResult += "};\n";
     return strResult;
@@ -600,7 +619,7 @@ std::string AGR_Mission::WeaponName() const
 
     int nPos = strName.find( '_' );
     if( nPos == strName.npos )
-        return "COMMUNES";
+        return "";
     return strName.erase( nPos );
 }
 

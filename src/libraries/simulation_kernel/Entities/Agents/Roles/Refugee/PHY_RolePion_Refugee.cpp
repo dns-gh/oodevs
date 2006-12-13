@@ -143,8 +143,8 @@ void PHY_RolePion_Refugee::NotifyOutsideRefugeeCamp( const MIL_CampRefugies& cam
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.refugie_pris_en_comptePresent = 1;
-    msg.GetAsnMsg().refugie_pris_en_compte          = bManaged_;
+    msg().m.refugie_pris_en_comptePresent = 1;
+    msg().refugie_pris_en_compte          = bManaged_;
 }
 
 // -----------------------------------------------------------------------------

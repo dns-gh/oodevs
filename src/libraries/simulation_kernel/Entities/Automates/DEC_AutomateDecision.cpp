@@ -17,10 +17,10 @@
 #include "MIL_AutomateType.h"
 #include "Decision/DEC_ModelAutomate.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
-#include "Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
+#include "Entities/Orders/MIL_AutomateMissionType.h"
+#include "Entities/Orders/MIL_AutomateMission.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Messages.h"
 #include "CheckPoints/DIA_Serializer.h"
@@ -249,8 +249,8 @@ void DEC_AutomateDecision::UpdateDecision()
         assert( pAutomate_ );
         LogCrash( pAutomate_ );
         CleanStateAfterCrash();
-        MIL_RC::pRcMissionImpossible_->Send( *pAutomate_, MIL_RC::eRcTypeMessage );
-        pAutomate_->GetOrderManager().CancelAllOrders();               
+        MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_MissionImpossible_ );
+        pAutomate_->GetOrderManager().ReplaceMission();               
     }
 }
 
@@ -262,9 +262,9 @@ void DEC_AutomateDecision::UpdateDecision()
 // Name: DEC_AutomateDecision::StartMissionMrtBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission_ABC& mission )
+void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetMrtBehaviorName();
+    const std::string& strBehavior = mission.GetType().GetDIAMrtBehavior();
     missionMrtBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
     missionMrtBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionMrtBehaviorDummyId_++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionMrtBehaviorParameters_ );
@@ -275,13 +275,13 @@ void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_AutomateMission_ABC& mis
 // Name: DEC_AutomateDecision::StopMissionMrtBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission_ABC& mission )
+void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission& mission )
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetMrtBehaviorName();
+        const std::string& strBehavior = mission.GetType().GetDIAMrtBehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionMrtBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
+        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission*)0 );
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
@@ -293,9 +293,9 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_AutomateMission_ABC& miss
 // Name: DEC_AutomateDecision::StartMissionConduiteBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission_ABC& mission )
+void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetConduiteBehaviorName();
+    const std::string& strBehavior = mission.GetType().GetDIACdtBehavior();
     missionConduiteBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
     missionConduiteBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionConduiteBehaviorDummyId_++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionConduiteBehaviorParameters_ );
@@ -306,13 +306,13 @@ void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_AutomateMission_ABC
 // Name: DEC_AutomateDecision::StopMissionConduiteBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission_ABC& mission )
+void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_AutomateMission& mission )
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetConduiteBehaviorName();
+        const std::string& strBehavior = mission.GetType().GetDIACdtBehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionConduiteBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission_ABC*)0 );
+        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_AutomateMission*)0 );
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
@@ -378,15 +378,15 @@ void DEC_AutomateDecision::Reset()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::SendFullState( NET_ASN_MsgAutomateAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.rapport_de_forcePresent    = 1;
-    msg.GetAsnMsg().m.roePresent                 = 1;
-    msg.GetAsnMsg().m.combat_de_rencontrePresent = 1;
-    msg.GetAsnMsg().m.etat_operationnelPresent   = 1;
+    msg().m.rapport_de_forcePresent    = 1;
+    msg().m.roePresent                 = 1;
+    msg().m.combat_de_rencontrePresent = 1;
+    msg().m.etat_operationnelPresent   = 1;
 
-    msg.GetAsnMsg().rapport_de_force      = (ASN1T_EnumEtatRapFor)nForceRatioState_;
-    msg.GetAsnMsg().combat_de_rencontre   = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
-    msg.GetAsnMsg().etat_operationnel     = (ASN1T_EnumEtatOperationnel)nOperationalState_;
-    msg.GetAsnMsg().roe                   = (ASN1T_EnumRoe)nRulesOfEngagementState_;
+    msg().rapport_de_force      = (ASN1T_EnumEtatRapFor)nForceRatioState_;
+    msg().combat_de_rencontre   = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
+    msg().etat_operationnel     = (ASN1T_EnumEtatOperationnel)nOperationalState_;
+    msg().roe                   = (ASN1T_EnumRoe)nRulesOfEngagementState_;
 }
 
 // -----------------------------------------------------------------------------

@@ -35,7 +35,7 @@ class ParamObjectKnowledgeList : public EntityListParameter< ObjectKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject*& asn, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamObjectKnowledgeList();
     //@}
 

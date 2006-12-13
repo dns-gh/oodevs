@@ -22,7 +22,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationStockContainer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/RC/MIL_RC_SeuilLogistiqueStockDepasse.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePionLOG_Supply, "PHY_RolePionLOG_Supply" )
@@ -191,7 +191,7 @@ void PHY_RolePionLOG_Supply::StartUsingForLogistic( PHY_ComposantePion& composan
     composante.StartUsingForLogistic();
 
     if( PHY_SupplyResourcesAlarms::IsConvoyTransporterResourcesLevelReached( rTransporterRatio, GetConvoyTransportersAvailabilityRatio() ) )
-        MIL_RC::pRcAlerteDisponibiliteVecteurs_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_ConvoyTransporterResourcesLevelReached );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ void PHY_RolePionLOG_Supply::NotifySupplyNeeded( const PHY_DotationCategory& dot
     assert( pPion_ );   
     
     if( bNewNeed )
-        MIL_RC::pRcSeuilLogistiqueStockDepasse_->Send( *pPion_, MIL_RC::eRcTypeOperational, dotationCategory );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_LogisticStockThresholdExceeded );
 
     pPion_->GetAutomate().NotifyStockSupplyNeeded( dotationCategory );
 }
@@ -369,26 +369,26 @@ void PHY_RolePionLOG_Supply::SendFullState() const
 {
     NET_ASN_MsgLogRavitaillementEtat asn;
 
-    asn.GetAsnMsg().m.chaine_activeePresent                       = 1;
-    asn.GetAsnMsg().m.disponibilites_transporteurs_convoisPresent = 1;
+    asn().m.chaine_activeePresent                       = 1;
+    asn().m.disponibilites_transporteurs_convoisPresent = 1;
 
     assert( pPion_ );
-    asn.GetAsnMsg().oid_pion        = pPion_->GetID();
-    asn.GetAsnMsg().chaine_activee  = bSystemEnabled_;
+    asn().oid_pion        = pPion_->GetID();
+    asn().chaine_activee  = bSystemEnabled_;
   
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     GetRole< PHY_RolePion_Composantes >().GetConvoyTransportersUse( composanteUse );
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_transporteurs_convois  );
+    SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois  );
 
     assert( pStocks_ );
     pStocks_->SendFullState( asn );
 
     asn.Send();
 
-    if( asn.GetAsnMsg().disponibilites_transporteurs_convois.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_transporteurs_convois.elem;
-    if( asn.GetAsnMsg().stocks.n > 0 )
-        delete [] asn.GetAsnMsg().stocks.elem;
+    if( asn().disponibilites_transporteurs_convois.n > 0 )
+        delete [] asn().disponibilites_transporteurs_convois.elem;
+    if( asn().stocks.n > 0 )
+        delete [] asn().stocks.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -403,26 +403,26 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
 
     NET_ASN_MsgLogRavitaillementEtat asn;
     assert( pPion_ );
-    asn.GetAsnMsg().oid_pion = pPion_->GetID();
+    asn().oid_pion = pPion_->GetID();
 
     if( bHasChanged_ || GetRole< PHY_RolePion_Composantes >().HasChanged() )
     {
-        asn.GetAsnMsg().m.chaine_activeePresent                       = 1;
-        asn.GetAsnMsg().m.disponibilites_transporteurs_convoisPresent = 1;
+        asn().m.chaine_activeePresent                       = 1;
+        asn().m.disponibilites_transporteurs_convoisPresent = 1;
 
-        asn.GetAsnMsg().chaine_activee  = bSystemEnabled_;
+        asn().chaine_activee  = bSystemEnabled_;
       
         PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
         GetRole< PHY_RolePion_Composantes >().GetConvoyTransportersUse( composanteUse );
-        SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_transporteurs_convois );
+        SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois );
     }
 
     pStocks_->SendChangedState( asn );    
 
     asn.Send();
 
-    if( asn.GetAsnMsg().m.disponibilites_transporteurs_convoisPresent && asn.GetAsnMsg().disponibilites_transporteurs_convois.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_transporteurs_convois.elem;
-    if( asn.GetAsnMsg().m.stocksPresent && asn.GetAsnMsg().stocks.n > 0 )
-        delete [] asn.GetAsnMsg().stocks.elem;
+    if( asn().m.disponibilites_transporteurs_convoisPresent && asn().disponibilites_transporteurs_convois.n > 0 )
+        delete [] asn().disponibilites_transporteurs_convois.elem;
+    if( asn().m.stocksPresent && asn().stocks.n > 0 )
+        delete [] asn().stocks.elem;
 }

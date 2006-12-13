@@ -105,9 +105,9 @@ GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimaCreationRequestAck                
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimaDestructionRequestAck                     , lima_destruction_request_ack                      );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, LimaUpdateRequestAck                          , lima_update_request_ack                           );
 GENERATE_ASN_MSG_SENDER         ( Client, PionOrderAck                                  , pion_order_ack                                    );
-GENERATE_ASN_MSG_SENDER         ( Client, OrderConduiteAck                              , order_conduite_ack                                );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrderAck                              , automate_order_ack                                );
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationOrderAck                            , population_order_ack                              );
+GENERATE_ASN_MSG_SENDER         ( Client, FragOrderAck                                  , frag_order_ack                                    );
 GENERATE_ASN_MSG_SENDER         ( Client, SetAutomateModeAck                            , set_automate_mode_ack                             );
 GENERATE_ASN_MSG_SENDER         ( Client, UnitMagicActionAck                            , unit_magic_action_ack                             );
 GENERATE_ASN_MSG_SENDER         ( Client, ObjectMagicActionAck                          , object_magic_action_ack                           );
@@ -163,7 +163,6 @@ GENERATE_ASN_MSG_SENDER         ( Client, CR                                    
 GENERATE_ASN_MSG_SENDER         ( Client, PionOrderManagement                           , pion_order_management                             );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrderManagement                       , automate_order_management                         );
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationOrderManagement                     , population_order_management                       );
-GENERATE_ASN_MSG_SENDER         ( Client, AutomateMRT                                   , automate_mrt                                      );
 GENERATE_ASN_MSG_SENDER         ( Client, PionOrder                                     , pion_order                                        );
 GENERATE_ASN_MSG_SENDER         ( Client, AutomateOrder                                 , automate_order                                    );
 GENERATE_ASN_MSG_SENDER         ( Client, ObjectCreation                                , object_creation                                   );
@@ -224,9 +223,9 @@ GENERATE_ASN_MSG_SENDER         ( Sim, LimaCreationRequest           , lima_crea
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Sim, LimaDestructionRequest        , lima_destruction_request         );
 GENERATE_ASN_MSG_SENDER         ( Sim, LimaUpdateRequest             , lima_update_request              );
 GENERATE_ASN_MSG_SENDER         ( Sim, PionOrder                     , pion_order                       );
-GENERATE_ASN_MSG_SENDER         ( Sim, OrderConduite                 , order_conduite                   );
 GENERATE_ASN_MSG_SENDER         ( Sim, AutomateOrder                 , automate_order                   );
 GENERATE_ASN_MSG_SENDER         ( Sim, PopulationOrder               , population_order                 );
+GENERATE_ASN_MSG_SENDER         ( Sim, FragOrder                     , frag_order                       );
 GENERATE_ASN_MSG_SENDER         ( Sim, SetAutomateMode               , set_automate_mode                );
 GENERATE_ASN_MSG_SENDER         ( Sim, UnitMagicAction               , unit_magic_action                );
 GENERATE_ASN_MSG_SENDER         ( Sim, ObjectMagicAction             , object_magic_action              );

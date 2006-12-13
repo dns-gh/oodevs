@@ -42,6 +42,8 @@ class StaticModel;
 class AgentKnowledgeConverter_ABC;
 class ObjectKnowledgeConverter_ABC;
 class Publisher_ABC;
+class MissionInterfaceFactory;
+class MissionInterfaceBuilder;
 
 // =============================================================================
 // Created: APE 2004-03-19
@@ -58,7 +60,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-    MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile );
+             MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile );
     virtual ~MissionPanel();
     //@}
 
@@ -92,6 +94,7 @@ private:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Population_ABC& agent, kernel::ContextMenu& menu );
+    int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddAgentMissions( const Decisions& decisions, kernel::ContextMenu& menu ); 
     void AddAutomatMissions( const AutomatDecisions& decisions, kernel::ContextMenu& menu ); 
     template< typename D >
@@ -112,6 +115,8 @@ private:
     AgentKnowledgeConverter_ABC* knowledgeConverter_;
     ObjectKnowledgeConverter_ABC* objectKnowledgeConverter_;
     MissionInterface_ABC* pMissionInterface_;
+    MissionInterfaceFactory* interfaceFactory_;
+    MissionInterfaceBuilder* interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}
 };

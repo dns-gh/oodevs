@@ -59,8 +59,8 @@ public:
     static void Initialize( MIL_InputArchive& archive );
     static void Terminate ();
 
-    static const PHY_ComposanteTypePion* FindComposanteType( const std::string& strName );
-    static const PHY_ComposanteTypePion* FindComposanteType( ASN1T_TypeEquipement nAsnID );
+    static const PHY_ComposanteTypePion* Find( const std::string& strName );
+    static const PHY_ComposanteTypePion* Find( ASN1T_TypeEquipement nAsnID );
     //@}
 
     //! @name Instanciation

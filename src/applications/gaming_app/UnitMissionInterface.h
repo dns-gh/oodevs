@@ -15,21 +15,26 @@
 namespace kernel
 {
     class Mission;
-    class ObjectTypes;
 }
 
 class ASN_MsgPionOrder;
 class Publisher_ABC;
+class MissionInterfaceFactory;
+class MissionInterfaceBuilder;
 
 // =============================================================================
-// Created: APE 2004-04-20
+/** @class  MissionInterfaceBuilder
+    @brief  Mission interface builder
+*/
+// Created: SBO 2006-11-22
 // =============================================================================
 class UnitMissionInterface : public MissionInterface_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMissionInterface( QWidget* parent, kernel::Entity_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             UnitMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::Mission& mission, kernel::ActionController& controller
+                                 , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder );
     virtual ~UnitMissionInterface();
     //@}
 
@@ -40,20 +45,7 @@ private:
     UnitMissionInterface& operator=( const UnitMissionInterface& );
     //@}
 
-private:
-    //! @name Helpers
-    //@{
-    void CreateDefaultParameters();
-    void CreateInterface();
-    //@}
-
-    //! @name Generated helpers
-    //@{
-#include "UnitMissionInterface_Gen.h" 
-    //@}
-
-private:
-    //! @name Slots
+    //! @name Virtual Slots
     //@{
     virtual void OnOk();
     //@}
@@ -61,10 +53,8 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& publisher_;
-    kernel::Entity_ABC& agent_;
-    uint nMissionId_;
-    ASN_MsgPionOrder* pASNMsgOrder_;
+    Publisher_ABC&    publisher_;
+    ASN_MsgPionOrder* order_;
     //@}
 };
 

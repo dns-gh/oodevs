@@ -32,10 +32,9 @@
 #include "Entities/Objects/MIL_CampRefugies.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
-#include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
-#include "Entities/Orders/Automate/MIL_AutomateMission_ABC.h"
+#include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
@@ -58,7 +57,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
     , nID_                               ( nID )
     , pFormation_                        ( &formation )
     , strName_                           ( type.GetName() )
-    , bEmbraye_                          ( true )
+    , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
     , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
@@ -78,7 +77,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, uint nID, MIL_Formatio
     , pPrisonerCamp_                     ( 0 )
     , pRefugeeCamp_                      ( false )
 {
-    archive.ReadAttribute( "engaged", bEmbraye_, MIL_InputArchive::eNothing );
+    archive.ReadAttribute( "engaged", bEngaged_, MIL_InputArchive::eNothing );
     archive.ReadAttribute( "name"   , strName_ , MIL_InputArchive::eNothing );
 
     uint nKnowledgeGroup;
@@ -103,7 +102,7 @@ MIL_Automate::MIL_Automate()
     , nID_                               ( 0 )
     , pFormation_                        ( 0 )
     , strName_                           ()
-    , bEmbraye_                          ( true )
+    , bEngaged_                          ( true )
     , pKnowledgeGroup_                   ( 0 )
     , pDecision_                         ( 0 )
     , orderManager_                      ( *this )
@@ -194,7 +193,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
     file >> const_cast< uint& >( nID_ )
          >> pFormation_
          >> strName_
-         >> bEmbraye_
+         >> bEngaged_
          >> pKnowledgeGroup_
          >> pDecision_
          >> pPionPC_
@@ -213,18 +212,12 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const uint )
 
     if( pRefugeeCamp_ )
     {
-        Embraye();
-        MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType().InstanciateMission( *this );
-        mission.Initialize();
-        orderManager_.OnReceiveAutomateOrder( mission );
+        Engage();
+        orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType() );
     }
 
-    if( bPrisoner_ && bEmbraye_ )
-    {
-        MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetSurrenderingMissionType().InstanciateMission( *this );
-        mission.Initialize();
-        orderManager_.OnReceiveAutomateOrder( mission );
-    }
+    if( bPrisoner_ && bEngaged_ )
+        orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetSurrenderingMissionType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +234,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const uint ) const
          << nID_
          << pFormation_
          << strName_
-         << bEmbraye_
+         << bEngaged_
          << pKnowledgeGroup_
          << pDecision_
          << pPionPC_
@@ -356,7 +349,7 @@ void MIL_Automate::WriteODB( MT_XXmlOutputArchive& archive ) const
     archive.Section( "automat" );
     archive.WriteAttribute( "id"             , nID_ );
     archive.WriteAttribute( "name"           , strName_ );
-    archive.WriteAttribute( "engaged"        , bEmbraye_ );
+    archive.WriteAttribute( "engaged"        , bEngaged_ );
     archive.WriteAttribute( "knowledge-group", pKnowledgeGroup_->GetID() ); 
     archive.WriteAttribute( "type"           , pType_->GetName() );
 
@@ -430,6 +423,7 @@ bool MIL_Automate::CheckComposition() const
 void MIL_Automate::UpdateDecision()
 {
     assert( pDecision_ );
+    orderManager_.Update();
     pDecision_->UpdateDecision();
 }
 
@@ -471,12 +465,12 @@ void MIL_Automate::UpdateNetwork() const
     if( bAutomateModeChanged_ || pDecision_->HasStateChanged() )
     {
         NET_ASN_MsgAutomateAttributes msg;
-        msg.GetAsnMsg().oid_automate = nID_;
+        msg().oid_automate = nID_;
     
         if( bAutomateModeChanged_ )
         {
-            msg.GetAsnMsg().m.etat_automatePresent = 1;
-            msg.GetAsnMsg().etat_automate = bEmbraye_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
+            msg().m.etat_automatePresent = 1;
+            msg().etat_automate = bEngaged_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
         }
 
         pDecision_->SendChangedState( msg );
@@ -493,8 +487,6 @@ void MIL_Automate::UpdateNetwork() const
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateState()
 {
-    orderManager_.Update();
-
     if( !bDotationSupplyNeeded_ || !dotationSupplyStates_.empty() || ( !pTC2_ && !pNominalTC2_ ) )
         return;
 
@@ -538,7 +530,8 @@ void MIL_Automate::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotat
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( GetTC2() && ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
-        MIL_RC::pRcDemandeRavitaillementDotations_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_DotationSupplyRequest );
+
     nTickRcDotationSupplyQuerySent_ = nCurrentTick;
 }
 
@@ -558,7 +551,7 @@ void MIL_Automate::RequestDotationSupply()
 // -----------------------------------------------------------------------------
 void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supplyState )
 {
-    MIL_RC::pRcRavitaillementDotationsEffectue_->Send( *this, MIL_RC::eRcTypeOperational );
+    MIL_Report::PostEvent( *this, MIL_Report::eReport_DotationSupplyDone );
     for( IT_SupplyDotationStateMap it = dotationSupplyStates_.begin(); it != dotationSupplyStates_.end(); ++it )
     {
         if( it->second == &supplyState )
@@ -571,30 +564,31 @@ void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supply
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_Automate::Debraye
+// Name: MIL_Automate::Disengage
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
-void MIL_Automate::Debraye()
+void MIL_Automate::Disengage()
 {
-    if( !bEmbraye_ )
+    if( !bEngaged_ )
         return;
-    orderManager_.Debraye(); // Annule tout sauf les ordres des subordonnés
-    bEmbraye_             = false;
+
+    bEngaged_             = false;
     bAutomateModeChanged_ = true;
+    orderManager_.Disengage(); // Annule tout sauf les ordres des subordonnés
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_Automate::Embraye
+// Name: MIL_Automate::Engage
 // Created: NLD 2003-04-11
 //-----------------------------------------------------------------------------
-void MIL_Automate::Embraye()
+void MIL_Automate::Engage()
 {
-    if( bEmbraye_ )
+    if( bEngaged_ )
         return;
 
-    bEmbraye_             = true;
+    bEngaged_             = true;
     bAutomateModeChanged_ = true;
-    orderManager_.Embraye(); // Annule tout (même les ordres des subordonnés)
+    orderManager_.Engage(); // Annule tout
 }
 
 // -----------------------------------------------------------------------------
@@ -648,11 +642,9 @@ bool MIL_Automate::OrientateRefugee( const MIL_CampRefugies& camp )
 
     pRefugeeCamp_ = &camp;
 
-    Embraye();
+    Engage();
 
-    MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType().InstanciateMission( *this );
-    mission.Initialize();
-    orderManager_.OnReceiveAutomateOrder( mission );
+    orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetMoveToRefugeeCampMissionType() );
     return true;
 }
 
@@ -717,7 +709,7 @@ void MIL_Automate::Surrender()
     if( bSurrendered_ )
         return;
 
-    orderManager_.CancelAllOrders();
+    orderManager_.ReplaceMission();
     pPrisonerCamp_ = 0;
     bSurrendered_  = true;
     pTC2_          = 0;
@@ -744,11 +736,9 @@ bool MIL_Automate::TakePrisoner( const MIL_AgentPion& pionTakingPrisoner, const 
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         (**itPion).GetRole< PHY_RolePion_Surrender >().NotifyTakenPrisoner();
 
-    Embraye();
+    Engage();
 
-    MIL_AutomateMission_ABC& mission = MIL_AutomateMissionType::GetSurrenderingMissionType().InstanciateMission( *this );
-    mission.Initialize();
-    orderManager_.OnReceiveAutomateOrder( mission );
+    orderManager_.OnReceiveMission( MIL_AutomateMissionType::GetSurrenderingMissionType() );
     return true;
 }
 
@@ -810,12 +800,12 @@ bool MIL_Automate::GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const
 void MIL_Automate::SendCreation() const
 {
     NET_ASN_MsgAutomateCreation asn;
-    asn.GetAsnMsg().oid_automate            = nID_;
-    asn.GetAsnMsg().type_automate           = pType_->GetID();
-    asn.GetAsnMsg().oid_camp                = GetArmy().GetID();
-    asn.GetAsnMsg().oid_groupe_connaissance = GetKnowledgeGroup().GetID();
-    asn.GetAsnMsg().oid_formation           = pFormation_->GetID();
-    asn.GetAsnMsg().nom                     = strName_.c_str();
+    asn().oid_automate            = nID_;
+    asn().type_automate           = pType_->GetID();
+    asn().oid_camp                = GetArmy().GetID();
+    asn().oid_groupe_connaissance = GetKnowledgeGroup().GetID();
+    asn().oid_formation           = pFormation_->GetID();
+    asn().nom                     = strName_.c_str();
     asn.Send();
 
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
@@ -831,9 +821,9 @@ void MIL_Automate::SendFullState() const
     assert( pDecision_ );
 
     NET_ASN_MsgAutomateAttributes asn;
-    asn.GetAsnMsg().oid_automate = nID_;
-    asn.GetAsnMsg().m.etat_automatePresent = 1;
-    asn.GetAsnMsg().etat_automate = bEmbraye_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
+    asn().oid_automate = nID_;
+    asn().m.etat_automatePresent = 1;
+    asn().etat_automate = bEngaged_ ? EnumAutomateState::embraye : EnumAutomateState::debraye;
     pDecision_->SendFullState( asn );
     asn.Send();
 
@@ -867,12 +857,12 @@ void MIL_Automate::SendLogisticLinks() const
 {
     NET_ASN_MsgChangeLiensLogistiques asn;
 
-    asn.GetAsnMsg().oid_automate = nID_;
+    asn().oid_automate = nID_;
 
     if( pTC2_ )
     {
-        asn.GetAsnMsg().m.oid_tc2Present = 1;
-        asn.GetAsnMsg().oid_tc2          = pTC2_->GetID();
+        asn().m.oid_tc2Present = 1;
+        asn().oid_tc2          = pTC2_->GetID();
     }
 
     asn.Send();
@@ -882,32 +872,32 @@ void MIL_Automate::SendLogisticLinks() const
 // Name: MIL_Automate::OnReceiveMsgSetAutomateMode
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg, MIL_MOSContextID nCtx )
+void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg, uint nCtx )
 {
     NET_ASN_MsgSetAutomateModeAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().unit_id    = asnMsg.unit_id;
-    asnReplyMsg.GetAsnMsg().error_code = EnumSetAutomateModeErrorCode::no_error;
+    asnReplyMsg().unit_id    = asnMsg.unit_id;
+    asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::no_error;
 
 //    if( IsSurrendered() )
 //    {
-//        asnReplyMsg.GetAsnMsg().error_code = EnumSetAutomateModeErrorCode::error_unit_surrendered;
+//        asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::error_unit_surrendered;
 //        asnReplyMsg.Send( nCtx );
 //        return;
 //    }
 
     if( asnMsg.mode == EnumAutomateState::debraye )
     {
-        if( !IsEmbraye() )
-            asnReplyMsg.GetAsnMsg().error_code = EnumSetAutomateModeErrorCode::error_already_debraye;
+        if( !IsEngaged() )
+            asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::error_already_debraye;
         else
-            Debraye();
+            Disengage();
     }
     else if( asnMsg.mode == EnumAutomateState::embraye )
     {
-        if( IsEmbraye() )
-            asnReplyMsg.GetAsnMsg().error_code = EnumSetAutomateModeErrorCode::error_already_embraye;
+        if( IsEngaged() )
+            asnReplyMsg().error_code = EnumSetAutomateModeErrorCode::error_already_embraye;
         else
-            Embraye();
+            Engage();
     }
     else
         assert( false );
@@ -919,7 +909,7 @@ void MIL_Automate::OnReceiveMsgSetAutomateMode( ASN1T_MsgSetAutomateMode& asnMsg
 // Name: MIL_Automate::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, MIL_MOSContextID nCtx )
+void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
 {
     if( asnMsg.action.t == T_MsgUnitMagicAction_action_move_to )
     {
@@ -927,16 +917,16 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
         MIL_Tools::ConvertCoordMosToSim( *asnMsg.action.u.move_to, vPosTmp );
 
         NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-        asnReplyMsg.GetAsnMsg().oid        = asnMsg.oid;
+        asnReplyMsg().oid        = asnMsg.oid;
 
         const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RolePion_Location >().GetPosition() );
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RolePion_Location >().GetPosition() + vTranslation );
 
         pDecision_->Reset();
-        orderManager_.CancelAllOrders();
+        orderManager_.ReplaceMission();
 
-        asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::no_error;
+        asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
         asnReplyMsg.Send( nCtx );
     }
     else if( asnMsg.action.t == T_MsgUnitMagicAction_action_se_rendre )
@@ -946,8 +936,8 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
             (**itPion).OnReceiveMagicSurrender(); 
         
         NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-        asnReplyMsg.GetAsnMsg().oid        = asnMsg.oid;
-            asnReplyMsg.GetAsnMsg().error_code = EnumUnitAttrErrorCode::no_error;
+        asnReplyMsg().oid        = asnMsg.oid;
+            asnReplyMsg().error_code = EnumUnitAttrErrorCode::no_error;
         asnReplyMsg.Send( nCtx );
     }
     else
@@ -958,17 +948,17 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnaissance& asnMsg, MIL_MOSContextID nCtx )
+void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnaissance& asnMsg, uint nCtx )
 {
     NET_ASN_MsgChangeGroupeConnaissanceAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid_automate            = asnMsg.oid_automate;
-    asnReplyMsg.GetAsnMsg().oid_camp                = asnMsg.oid_camp;
-    asnReplyMsg.GetAsnMsg().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
+    asnReplyMsg().oid_automate            = asnMsg.oid_automate;
+    asnReplyMsg().oid_camp                = asnMsg.oid_camp;
+    asnReplyMsg().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
     
     MIL_Army* pNewArmy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp );
     if( !pNewArmy || *pNewArmy != GetArmy() )
     {
-        asnReplyMsg.GetAsnMsg().error_code = EnumChangeGroupeConnaissanceErrorCode::error_invalid_camp;
+        asnReplyMsg().error_code = EnumChangeGroupeConnaissanceErrorCode::error_invalid_camp;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -976,7 +966,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnai
     MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( asnMsg.oid_groupe_connaissance );
     if( !pNewKnowledgeGroup )
     {
-        asnReplyMsg.GetAsnMsg().error_code = EnumChangeGroupeConnaissanceErrorCode::error_invalid_groupe_connaissance;
+        asnReplyMsg().error_code = EnumChangeGroupeConnaissanceErrorCode::error_invalid_groupe_connaissance;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -988,7 +978,7 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnai
         pKnowledgeGroup_->RegisterAutomate( *this );
     }
 
-    asnReplyMsg.GetAsnMsg().error_code = EnumChangeGroupeConnaissanceErrorCode::no_error;
+    asnReplyMsg().error_code = EnumChangeGroupeConnaissanceErrorCode::no_error;
     asnReplyMsg.Send( nCtx );  
 }
 
@@ -996,22 +986,22 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( ASN1T_MsgChangeGroupeConnai
 // Name: MIL_Automate::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiques& msg, MIL_MOSContextID nCtx )
+void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiques& msg, uint nCtx )
 {
     NET_ASN_MsgChangeLiensLogistiquesAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid_automate = msg.oid_automate;
+    asnReplyMsg().oid_automate = msg.oid_automate;
 
     if( IsSurrendered() )
     {
-        asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_unit_surrendered;
+        asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_unit_surrendered;
         asnReplyMsg.Send( nCtx );
         return;
     }
 
     if( msg.m.oid_tc2Present )
     {
-        asnReplyMsg.GetAsnMsg().m.oid_tc2Present = 1;
-        asnReplyMsg.GetAsnMsg().oid_tc2 = msg.oid_tc2;
+        asnReplyMsg().m.oid_tc2Present = 1;
+        asnReplyMsg().oid_tc2 = msg.oid_tc2;
 
         if( msg.oid_tc2 == 0 )
             pTC2_ = 0;
@@ -1020,14 +1010,14 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiq
             MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.oid_tc2 );
             if( !pTC2 || !pTC2->GetType().IsLogistic() )
             {
-                asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2;
+                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
             pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2 );
         }
     }
-    asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::no_error;
+    asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::no_error;
     asnReplyMsg.Send( nCtx );
 }
 
@@ -1035,10 +1025,10 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiq
 // Name: MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& /*msg*/, MIL_MOSContextID nCtx )
+void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& /*msg*/, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementChangeQuotasAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur;
+    asnReplyMsg() = MsgLogRavitaillementChangeQuotasAck::error_invalid_receveur;
     asnReplyMsg.Send( nCtx );
 }
 
@@ -1046,9 +1036,28 @@ void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillement
 // Name: MIL_Automate::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& /*msg*/, MIL_MOSContextID nCtx )
+void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& /*msg*/, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementPousserFluxAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_receveur;
+    asnReplyMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_receveur;
     asnReplyMsg.Send( nCtx );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveMsgOrder
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveMsgOrder( ASN1T_MsgAutomateOrder& msg )
+{
+    orderManager_.OnReceiveMission( msg );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveMsgFragOrder
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
+{
+    orderManager_.OnReceiveFragOrder( msg );
 }

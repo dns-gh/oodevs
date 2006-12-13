@@ -277,8 +277,8 @@ void PHY_RoleAction_Loading::CheckConsistency()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.embarquePresent = 1;
-    msg.GetAsnMsg().embarque = bIsLoaded_;
+    msg().m.embarquePresent = 1;
+    msg().embarque = bIsLoaded_;
 }
 
 // -----------------------------------------------------------------------------

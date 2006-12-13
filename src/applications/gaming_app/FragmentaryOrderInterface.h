@@ -14,12 +14,13 @@
 
 namespace kernel
 {
-    class Mission;
-    class ObjectTypes;
+    class FragOrder;
 }
 
-class ASN_MsgOrderConduite;
+class ASN_MsgFragOrder;
 class Publisher_ABC;
+class MissionInterfaceFactory;
+class MissionInterfaceBuilder;
 
 // =============================================================================
 // Created: APE 2004-05-12
@@ -29,22 +30,9 @@ class FragmentaryOrderInterface : public MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& agent, uint nMissionId, kernel::ActionController& controller, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::ObjectTypes& objectTypes, Publisher_ABC& publisher );
+             FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrder& fragOrder, kernel::ActionController& controller
+                                      , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder );
     virtual ~FragmentaryOrderInterface();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void CreateInterface();
-
-#include "FragmentaryOrderInterface_Gen.h"
-    //@}
-
-private:
-    //! @name Slots
-    //@{
-    void OnOk();
     //@}
 
 private:
@@ -54,12 +42,16 @@ private:
     FragmentaryOrderInterface& operator=( const FragmentaryOrderInterface& );
     //@}
 
+    //! @name Virtual Slots
+    //@{
+    virtual void OnOk();
+    //@}
+
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& publisher_;
-    uint nMissionId_;
-    ASN_MsgOrderConduite* pASNMsgOrder_;
+    Publisher_ABC&    publisher_;
+    ASN_MsgFragOrder* order_;
     //@}
 };
 

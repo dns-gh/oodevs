@@ -9,8 +9,8 @@
 
 #include "gaming_pch.h"
 #include "Reports.h"
-#include "RC.h"
-#include "Trace.h"
+#include "ReportFactory.h"
+#include "Report.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "RcEntityResolver_ABC.h"
@@ -21,14 +21,11 @@ using namespace kernel;
 // Name: Reports constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation, const RcEntityResolver_ABC& rcResolver,
-                  const Resolver_ABC< DotationType >& dotationResolver, const Resolver_ABC< EquipmentType >& equipmentResolver )
+Reports::Reports( const Entity_ABC& agent, Controller& controller, const Simulation& simulation, const ReportFactory& reportFactory )
     : agent_( agent )
     , controller_( controller )
     , simulation_( simulation )
-    , rcResolver_( rcResolver )
-    , dotationResolver_( dotationResolver )
-    , equipmentResolver_( equipmentResolver )
+    , reportFactory_( reportFactory )
 {
     // NOTHING
 }
@@ -48,21 +45,21 @@ Reports::~Reports()
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
 void Reports::DoUpdate( const ASN1T_MsgCR& message )
-{   
-    Report_ABC& rc = *new RC( agent_, simulation_, message, rcResolver_, dotationResolver_, equipmentResolver_ );
-    reports_.push_back( &rc );
-    controller_.Create( rc );
+{
+    Report* report = reportFactory_.CreateReport( agent_, simulation_, message );
+    reports_.push_back( report );
+    controller_.Create( *report );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const TraceMessage& msg )
+void Reports::DoUpdate( const TraceMessage& message )
 {
-    Report_ABC& trace = *new Trace( agent_, simulation_, msg );
-    reports_.push_back( &trace );
-    controller_.Create( trace );
+    Report* trace = reportFactory_.CreateTrace( agent_, simulation_, message );
+    reports_.push_back( trace );
+    controller_.Create( *trace );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +73,7 @@ void Reports::Clear()
     reports_.clear();
     controller_.Update( *this ); 
     // $$$$ AGE 2006-09-18: pas cohérent : 
-    // $$$$ AGE 2006-09-18: il faut observer le Create( Report_ABC )
+    // $$$$ AGE 2006-09-18: il faut observer le Create( Report )
     // $$$$ AGE 2006-09-18: et le Update( Reports );
 }
 
@@ -87,10 +84,7 @@ void Reports::Clear()
 void Reports::MarkAsRead()
 {
     for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
-    {
-        Report_ABC* report = *it;
-        report->Read();
-    }
+        (*it)->Read();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,8 +97,8 @@ void Reports::ClearTraces()
     tokeep.reserve( reports_.size() );
     for( CIT_Reports it = reports_.begin(); it != reports_.end(); ++it )
     {
-        Report_ABC* report = *it;
-        if( !report || report->GetType() == Report_ABC::eTrace )
+        Report* report = *it;
+        if( !report || report->GetType() == Report::eTrace )
             delete report;
         else
             tokeep.push_back( report );
@@ -131,7 +125,7 @@ void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
     unsigned int displayed = 0;
     for( T_Reports::const_reverse_iterator it = reports_.rbegin(); it != reports_.rend() && displayed++ < 5; ++it )
     {
-        const Report_ABC& report = **it;
+        const Report& report = **it;
         report.DisplayInTooltip( displayer );
     }
 }

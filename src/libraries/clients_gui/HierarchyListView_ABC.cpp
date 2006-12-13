@@ -125,6 +125,7 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
+
     DisplayIcon( entity.Retrieve< TacticalHierarchies >(), item );
     SetVisible( item, isVisible );
 }

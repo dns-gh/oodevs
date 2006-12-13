@@ -193,9 +193,9 @@ void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectCreatio
     asnAttributes_.longueur           = (int)rLength_;
     asnAttributes_.debit              = (int)rFlow_;
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent                = 1;
-    asnMsg.GetAsnMsg().attributs_specifiques.t                       = T_AttrObjectSpecific_itineraire_logistique;
-    asnMsg.GetAsnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
+    asnMsg().m.attributs_specifiquesPresent                = 1;
+    asnMsg().attributs_specifiques.t                       = T_AttrObjectSpecific_itineraire_logistique;
+    asnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -210,9 +210,9 @@ void MIL_ItineraireLogistique::WriteSpecificAttributes( NET_ASN_MsgObjectUpdate&
     asnAttributes_.longueur           = (int)rLength_;
     asnAttributes_.debit              = (int)rFlow_;
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent                = 1;
-    asnMsg.GetAsnMsg().attributs_specifiques.t                       = T_AttrObjectSpecific_itineraire_logistique;
-    asnMsg.GetAsnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
+    asnMsg().m.attributs_specifiquesPresent                = 1;
+    asnMsg().attributs_specifiques.t                       = T_AttrObjectSpecific_itineraire_logistique;
+    asnMsg().attributs_specifiques.u.itineraire_logistique = &asnAttributes_;
 }
 
 // =============================================================================

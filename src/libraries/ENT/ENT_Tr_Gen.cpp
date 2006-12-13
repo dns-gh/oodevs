@@ -30,44 +30,6 @@ ENT_Tr::T_ConverterTypeLocalisation ENT_Tr::TypeLocalisationConverter_[] =
     T_ConverterTypeLocalisation( "", "", (E_TypeLocalisation)-1 )
 };
 
-ENT_Tr::T_ConverterGDH_Qualificatif ENT_Tr::GDH_QualificatifConverter_[] =
-{
-    T_ConverterGDH_Qualificatif( "at", QT_TRANSLATE_NOOP( "ENT_Tr", "at" ), eGDH_Qualificatif_At ),
-    T_ConverterGDH_Qualificatif( "after", QT_TRANSLATE_NOOP( "ENT_Tr", "after" ), eGDH_Qualificatif_After ),
-    T_ConverterGDH_Qualificatif( "as of", QT_TRANSLATE_NOOP( "ENT_Tr", "as of" ), eGDH_Qualificatif_AsOf ),
-    T_ConverterGDH_Qualificatif( "before", QT_TRANSLATE_NOOP( "ENT_Tr", "before" ), eGDH_Qualificatif_Before ),
-    T_ConverterGDH_Qualificatif( "cleared", QT_TRANSLATE_NOOP( "ENT_Tr", "cleared" ), eGDH_Qualificatif_Cleared ),
-    T_ConverterGDH_Qualificatif( "due", QT_TRANSLATE_NOOP( "ENT_Tr", "due" ), eGDH_Qualificatif_Due ),
-    T_ConverterGDH_Qualificatif( "end", QT_TRANSLATE_NOOP( "ENT_Tr", "end" ), eGDH_Qualificatif_End ),
-    T_ConverterGDH_Qualificatif( "off", QT_TRANSLATE_NOOP( "ENT_Tr", "off" ), eGDH_Qualificatif_Off ),
-    T_ConverterGDH_Qualificatif( "on", QT_TRANSLATE_NOOP( "ENT_Tr", "on" ), eGDH_Qualificatif_On ),
-    T_ConverterGDH_Qualificatif( "since", QT_TRANSLATE_NOOP( "ENT_Tr", "since" ), eGDH_Qualificatif_Since ),
-    T_ConverterGDH_Qualificatif( "start", QT_TRANSLATE_NOOP( "ENT_Tr", "start" ), eGDH_Qualificatif_Start ),
-    T_ConverterGDH_Qualificatif( "until", QT_TRANSLATE_NOOP( "ENT_Tr", "until" ), eGDH_Qualificatif_Until ),
-    T_ConverterGDH_Qualificatif( "wef", QT_TRANSLATE_NOOP( "ENT_Tr", "wef" ), eGDH_Qualificatif_Wef ),
-    T_ConverterGDH_Qualificatif( "", "", (E_GDH_Qualificatif)-1 )
-};
-
-ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
-{
-    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "non blesse" ), eHumanWound_NonBlesse ),
-    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "mort" ), eHumanWound_Mort ),
-    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 1" ), eHumanWound_BlesseUrgence1 ),
-    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 2" ), eHumanWound_BlesseUrgence2 ),
-    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 3" ), eHumanWound_BlesseUrgence3 ),
-    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence extreme" ), eHumanWound_BlesseUrgenceExtreme ),
-    T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
-};
-
-ENT_Tr::T_ConverterUnitIdentificationLevel ENT_Tr::UnitIdentificationLevelConverter_[] =
-{
-    T_ConverterUnitIdentificationLevel( "identifiee", QT_TRANSLATE_NOOP( "ENT_Tr", "identifiee" ), eUnitIdentificationLevel_Identifiee ),
-    T_ConverterUnitIdentificationLevel( "reconnue", QT_TRANSLATE_NOOP( "ENT_Tr", "reconnue" ), eUnitIdentificationLevel_Reconnue ),
-    T_ConverterUnitIdentificationLevel( "detectee", QT_TRANSLATE_NOOP( "ENT_Tr", "detectee" ), eUnitIdentificationLevel_Detectee ),
-    T_ConverterUnitIdentificationLevel( "signale", QT_TRANSLATE_NOOP( "ENT_Tr", "signale" ), eUnitIdentificationLevel_Signale ),
-    T_ConverterUnitIdentificationLevel( "", "", (E_UnitIdentificationLevel)-1 )
-};
-
 ENT_Tr::T_ConverterFamilleDotation ENT_Tr::FamilleDotationConverter_[] =
 {
     T_ConverterFamilleDotation( "munition", QT_TRANSLATE_NOOP( "ENT_Tr", "munition" ), eFamilleDotation_Munition ),
@@ -89,6 +51,33 @@ ENT_Tr::T_ConverterFamilleMunition ENT_Tr::FamilleMunitionConverter_[] =
     T_ConverterFamilleMunition( "", "", (E_FamilleMunition)-1 )
 };
 
+ENT_Tr::T_ConverterGDH_Qualificatif ENT_Tr::GDH_QualificatifConverter_[] =
+{
+    T_ConverterGDH_Qualificatif( "at", QT_TRANSLATE_NOOP( "ENT_Tr", "at" ), eGDH_Qualificatif_At ),
+    T_ConverterGDH_Qualificatif( "after", QT_TRANSLATE_NOOP( "ENT_Tr", "after" ), eGDH_Qualificatif_After ),
+    T_ConverterGDH_Qualificatif( "as of", QT_TRANSLATE_NOOP( "ENT_Tr", "as of" ), eGDH_Qualificatif_AsOf ),
+    T_ConverterGDH_Qualificatif( "before", QT_TRANSLATE_NOOP( "ENT_Tr", "before" ), eGDH_Qualificatif_Before ),
+    T_ConverterGDH_Qualificatif( "cleared", QT_TRANSLATE_NOOP( "ENT_Tr", "cleared" ), eGDH_Qualificatif_Cleared ),
+    T_ConverterGDH_Qualificatif( "due", QT_TRANSLATE_NOOP( "ENT_Tr", "due" ), eGDH_Qualificatif_Due ),
+    T_ConverterGDH_Qualificatif( "end", QT_TRANSLATE_NOOP( "ENT_Tr", "end" ), eGDH_Qualificatif_End ),
+    T_ConverterGDH_Qualificatif( "off", QT_TRANSLATE_NOOP( "ENT_Tr", "off" ), eGDH_Qualificatif_Off ),
+    T_ConverterGDH_Qualificatif( "on", QT_TRANSLATE_NOOP( "ENT_Tr", "on" ), eGDH_Qualificatif_On ),
+    T_ConverterGDH_Qualificatif( "since", QT_TRANSLATE_NOOP( "ENT_Tr", "since" ), eGDH_Qualificatif_Since ),
+    T_ConverterGDH_Qualificatif( "start", QT_TRANSLATE_NOOP( "ENT_Tr", "start" ), eGDH_Qualificatif_Start ),
+    T_ConverterGDH_Qualificatif( "until", QT_TRANSLATE_NOOP( "ENT_Tr", "until" ), eGDH_Qualificatif_Until ),
+    T_ConverterGDH_Qualificatif( "wef", QT_TRANSLATE_NOOP( "ENT_Tr", "wef" ), eGDH_Qualificatif_Wef ),
+    T_ConverterGDH_Qualificatif( "", "", (E_GDH_Qualificatif)-1 )
+};
+
+ENT_Tr::T_ConverterUnitIdentificationLevel ENT_Tr::UnitIdentificationLevelConverter_[] =
+{
+    T_ConverterUnitIdentificationLevel( "identifiee", QT_TRANSLATE_NOOP( "ENT_Tr", "identifiee" ), eUnitIdentificationLevel_Identifiee ),
+    T_ConverterUnitIdentificationLevel( "reconnue", QT_TRANSLATE_NOOP( "ENT_Tr", "reconnue" ), eUnitIdentificationLevel_Reconnue ),
+    T_ConverterUnitIdentificationLevel( "detectee", QT_TRANSLATE_NOOP( "ENT_Tr", "detectee" ), eUnitIdentificationLevel_Detectee ),
+    T_ConverterUnitIdentificationLevel( "signale", QT_TRANSLATE_NOOP( "ENT_Tr", "signale" ), eUnitIdentificationLevel_Signale ),
+    T_ConverterUnitIdentificationLevel( "", "", (E_UnitIdentificationLevel)-1 )
+};
+
 ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
 {
     T_ConverterNatureLevel( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eNatureLevel_None ),
@@ -104,6 +93,17 @@ ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
     T_ConverterNatureLevel( "xxxx", QT_TRANSLATE_NOOP( "ENT_Tr", "xxxx" ), eNatureLevel_xxxx ),
     T_ConverterNatureLevel( "xxxxx", QT_TRANSLATE_NOOP( "ENT_Tr", "xxxxx" ), eNatureLevel_xxxxx ),
     T_ConverterNatureLevel( "", "", (E_NatureLevel)-1 )
+};
+
+ENT_Tr::T_ConverterHumanWound ENT_Tr::HumanWoundConverter_[] =
+{
+    T_ConverterHumanWound( "non blesse", QT_TRANSLATE_NOOP( "ENT_Tr", "non blesse" ), eHumanWound_NonBlesse ),
+    T_ConverterHumanWound( "mort", QT_TRANSLATE_NOOP( "ENT_Tr", "mort" ), eHumanWound_Mort ),
+    T_ConverterHumanWound( "blesse urgence 1", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 1" ), eHumanWound_BlesseUrgence1 ),
+    T_ConverterHumanWound( "blesse urgence 2", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 2" ), eHumanWound_BlesseUrgence2 ),
+    T_ConverterHumanWound( "blesse urgence 3", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence 3" ), eHumanWound_BlesseUrgence3 ),
+    T_ConverterHumanWound( "blesse urgence extreme", QT_TRANSLATE_NOOP( "ENT_Tr", "blesse urgence extreme" ), eHumanWound_BlesseUrgenceExtreme ),
+    T_ConverterHumanWound( "", "", (E_HumanWound)-1 )
 };
 
 ENT_Tr::T_ConverterHumanRank ENT_Tr::HumanRankConverter_[] =
@@ -269,203 +269,6 @@ ENT_Tr::T_ConverterChangeLiensLogistiquesErrorCode ENT_Tr::ChangeLiensLogistique
     T_ConverterChangeLiensLogistiquesErrorCode( "", "", (E_ChangeLiensLogistiquesErrorCode)-1 )
 };
 
-ENT_Tr::T_Converter_ALAT_PorteeAction ENT_Tr::_ALAT_PorteeActionConverter_[] =
-{
-    T_Converter_ALAT_PorteeAction( "courte portee", QT_TRANSLATE_NOOP( "ENT_Tr", "courte portee" ), e_ALAT_PorteeAction_CourtePortee ),
-    T_Converter_ALAT_PorteeAction( "moyenne portee", QT_TRANSLATE_NOOP( "ENT_Tr", "moyenne portee" ), e_ALAT_PorteeAction_MoyennePortee ),
-    T_Converter_ALAT_PorteeAction( "longue portee", QT_TRANSLATE_NOOP( "ENT_Tr", "longue portee" ), e_ALAT_PorteeAction_LonguePortee ),
-    T_Converter_ALAT_PorteeAction( "sans munitions", QT_TRANSLATE_NOOP( "ENT_Tr", "sans munitions" ), e_ALAT_PorteeAction_SansMunitions ),
-    T_Converter_ALAT_PorteeAction( "", "", (E__ALAT_PorteeAction)-1 )
-};
-
-ENT_Tr::T_Converter_ALAT_AmbianceMission ENT_Tr::_ALAT_AmbianceMissionConverter_[] =
-{
-    T_Converter_ALAT_AmbianceMission( "aa", QT_TRANSLATE_NOOP( "ENT_Tr", "aa" ), e_ALAT_AmbianceMission_aa ),
-    T_Converter_ALAT_AmbianceMission( "as", QT_TRANSLATE_NOOP( "ENT_Tr", "as" ), e_ALAT_AmbianceMission_As ),
-    T_Converter_ALAT_AmbianceMission( "polyvalent", QT_TRANSLATE_NOOP( "ENT_Tr", "polyvalent" ), e_ALAT_AmbianceMission_Polyvalent ),
-    T_Converter_ALAT_AmbianceMission( "", "", (E__ALAT_AmbianceMission)-1 )
-};
-
-ENT_Tr::T_ConverterModeDeploiement ENT_Tr::ModeDeploiementConverter_[] =
-{
-    T_ConverterModeDeploiement( "en carre", QT_TRANSLATE_NOOP( "ENT_Tr", "en carre" ), eModeDeploiement_EnCarre ),
-    T_ConverterModeDeploiement( "en triangle", QT_TRANSLATE_NOOP( "ENT_Tr", "en triangle" ), eModeDeploiement_EnTriangle ),
-    T_ConverterModeDeploiement( "nasse trois sections", QT_TRANSLATE_NOOP( "ENT_Tr", "nasse trois sections" ), eModeDeploiement_NasseTroisSections ),
-    T_ConverterModeDeploiement( "nasse quatre sections", QT_TRANSLATE_NOOP( "ENT_Tr", "nasse quatre sections" ), eModeDeploiement_NasseQuatreSections ),
-    T_ConverterModeDeploiement( "double rideau", QT_TRANSLATE_NOOP( "ENT_Tr", "double rideau" ), eModeDeploiement_DoubleRideau ),
-    T_ConverterModeDeploiement( "simple rideau", QT_TRANSLATE_NOOP( "ENT_Tr", "simple rideau" ), eModeDeploiement_SimpleRideau ),
-    T_ConverterModeDeploiement( "", "", (E_ModeDeploiement)-1 )
-};
-
-ENT_Tr::T_ConverterTypeLima ENT_Tr::TypeLimaConverter_[] =
-{
-    T_ConverterTypeLima( "ligne debouche", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debouche" ), eTypeLima_LigneDebouche ),
-    T_ConverterTypeLima( "ligne changement attitude", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne changement attitude" ), eTypeLima_LigneChangementAttitude ),
-    T_ConverterTypeLima( "ligne coordination", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coordination" ), eTypeLima_LigneCoordination ),
-    T_ConverterTypeLima( "ligne interdire", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne interdire" ), eTypeLima_LigneInterdire ),
-    T_ConverterTypeLima( "ligne objectif", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne objectif" ), eTypeLima_LigneObjectif ),
-    T_ConverterTypeLima( "ligne coup arret", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coup arret" ), eTypeLima_LigneCoupArret ),
-    T_ConverterTypeLima( "ligne recueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne recueil" ), eTypeLima_LigneRecueil ),
-    T_ConverterTypeLima( "ligne debut mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debut mission" ), eTypeLima_LigneDebutMission ),
-    T_ConverterTypeLima( "ligne fin mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne fin mission" ), eTypeLima_LigneFinMission ),
-    T_ConverterTypeLima( "ligne identification accueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne identification accueil" ), eTypeLima_LigneIdentificationAccueil ),
-    T_ConverterTypeLima( "", "", (E_TypeLima)-1 )
-};
-
-ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[] =
-{
-    T_ConverterInfoContextErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eInfoContextErrorCode_NoError ),
-    T_ConverterInfoContextErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eInfoContextErrorCode_ErrorInvalidId ),
-    T_ConverterInfoContextErrorCode( "error invalid geometry", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid geometry" ), eInfoContextErrorCode_ErrorInvalidGeometry ),
-    T_ConverterInfoContextErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eInfoContextErrorCode_ErrorInvalidLimaFunction ),
-    T_ConverterInfoContextErrorCode( "error invalid diffusion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid diffusion" ), eInfoContextErrorCode_ErrorInvalidDiffusion ),
-    T_ConverterInfoContextErrorCode( "", "", (E_InfoContextErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterOrderErrorCode ENT_Tr::OrderErrorCodeConverter_[] =
-{
-    T_ConverterOrderErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eOrderErrorCode_NoError ),
-    T_ConverterOrderErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), eOrderErrorCode_ErrorInvalidUnit ),
-    T_ConverterOrderErrorCode( "error invalid limit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid limit" ), eOrderErrorCode_ErrorInvalidLimit ),
-    T_ConverterOrderErrorCode( "error invalid lima", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima" ), eOrderErrorCode_ErrorInvalidLima ),
-    T_ConverterOrderErrorCode( "error invalid mission", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid mission" ), eOrderErrorCode_ErrorInvalidMission ),
-    T_ConverterOrderErrorCode( "error invalid mission parameters", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid mission parameters" ), eOrderErrorCode_ErrorInvalidMissionParameters ),
-    T_ConverterOrderErrorCode( "error unit cannot receive order", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit cannot receive order" ), eOrderErrorCode_ErrorUnitCannotReceiveOrder ),
-    T_ConverterOrderErrorCode( "error invalid order conduite", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order conduite" ), eOrderErrorCode_ErrorInvalidOrderConduite ),
-    T_ConverterOrderErrorCode( "error invalid order mission", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order mission" ), eOrderErrorCode_ErrorInvalidOrderMission ),
-    T_ConverterOrderErrorCode( "error invalid order initial", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order initial" ), eOrderErrorCode_ErrorInvalidOrderInitial ),
-    T_ConverterOrderErrorCode( "error invalid order conduite parameters", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order conduite parameters" ), eOrderErrorCode_ErrorInvalidOrderConduiteParameters ),
-    T_ConverterOrderErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eOrderErrorCode_ErrorUnitSurrendered ),
-    T_ConverterOrderErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eOrderErrorCode_ErrorInvalidLimaFunction ),
-    T_ConverterOrderErrorCode( "", "", (E_OrderErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterOrderState ENT_Tr::OrderStateConverter_[] =
-{
-    T_ConverterOrderState( "started", QT_TRANSLATE_NOOP( "ENT_Tr", "started" ), eOrderState_Started ),
-    T_ConverterOrderState( "cancelled", QT_TRANSLATE_NOOP( "ENT_Tr", "cancelled" ), eOrderState_Cancelled ),
-    T_ConverterOrderState( "stopped", QT_TRANSLATE_NOOP( "ENT_Tr", "stopped" ), eOrderState_Stopped ),
-    T_ConverterOrderState( "", "", (E_OrderState)-1 )
-};
-
-ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
-{
-    T_ConverterObjectType( "bouchon mines", QT_TRANSLATE_NOOP( "ENT_Tr", "bouchon mines" ), eObjectType_BouchonMines ),
-    T_ConverterObjectType( "zone minee lineaire", QT_TRANSLATE_NOOP( "ENT_Tr", "zone minee lineaire" ), eObjectType_ZoneMineeLineaire ),
-    T_ConverterObjectType( "zone minee par dispersion", QT_TRANSLATE_NOOP( "ENT_Tr", "zone minee par dispersion" ), eObjectType_ZoneMineeParDispersion ),
-    T_ConverterObjectType( "fosse anti char", QT_TRANSLATE_NOOP( "ENT_Tr", "fosse anti char" ), eObjectType_FosseAntiChar ),
-    T_ConverterObjectType( "abattis", QT_TRANSLATE_NOOP( "ENT_Tr", "abattis" ), eObjectType_Abattis ),
-    T_ConverterObjectType( "barricade", QT_TRANSLATE_NOOP( "ENT_Tr", "barricade" ), eObjectType_Barricade ),
-    T_ConverterObjectType( "eboulement", QT_TRANSLATE_NOOP( "ENT_Tr", "eboulement" ), eObjectType_Eboulement ),
-    T_ConverterObjectType( "destruction route", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction route" ), eObjectType_DestructionRoute ),
-    T_ConverterObjectType( "destruction pont", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction pont" ), eObjectType_DestructionPont ),
-    T_ConverterObjectType( "pont flottant continu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant continu" ), eObjectType_PontFlottantContinu ),
-    T_ConverterObjectType( "poste tir", QT_TRANSLATE_NOOP( "ENT_Tr", "poste tir" ), eObjectType_PosteTir ),
-    T_ConverterObjectType( "zone protegee", QT_TRANSLATE_NOOP( "ENT_Tr", "zone protegee" ), eObjectType_ZoneProtegee ),
-    T_ConverterObjectType( "zone implantation canon", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation canon" ), eObjectType_ZoneImplantationCanon ),
-    T_ConverterObjectType( "zone implantation cobra", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation cobra" ), eObjectType_ZoneImplantationCobra ),
-    T_ConverterObjectType( "zone implantation lrm", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation lrm" ), eObjectType_ZoneImplantationLrm ),
-    T_ConverterObjectType( "site franchissement", QT_TRANSLATE_NOOP( "ENT_Tr", "site franchissement" ), eObjectType_SiteFranchissement ),
-    T_ConverterObjectType( "nuage nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "nuage nbc" ), eObjectType_NuageNbc ),
-    T_ConverterObjectType( "plot ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "plot ravitaillement" ), eObjectType_PlotRavitaillement ),
-    T_ConverterObjectType( "site decontamination", QT_TRANSLATE_NOOP( "ENT_Tr", "site decontamination" ), eObjectType_SiteDecontamination ),
-    T_ConverterObjectType( "zone brouillage brod", QT_TRANSLATE_NOOP( "ENT_Tr", "zone brouillage brod" ), eObjectType_ZoneBrouillageBrod ),
-    T_ConverterObjectType( "rota", QT_TRANSLATE_NOOP( "ENT_Tr", "rota" ), eObjectType_Rota ),
-    T_ConverterObjectType( "zone nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "zone nbc" ), eObjectType_ZoneNbc ),
-    T_ConverterObjectType( "zone brouillage bromure", QT_TRANSLATE_NOOP( "ENT_Tr", "zone brouillage bromure" ), eObjectType_ZoneBrouillageBromure ),
-    T_ConverterObjectType( "aire poser", QT_TRANSLATE_NOOP( "ENT_Tr", "aire poser" ), eObjectType_AirePoser ),
-    T_ConverterObjectType( "piste", QT_TRANSLATE_NOOP( "ENT_Tr", "piste" ), eObjectType_Piste ),
-    T_ConverterObjectType( "plateforme", QT_TRANSLATE_NOOP( "ENT_Tr", "plateforme" ), eObjectType_Plateforme ),
-    T_ConverterObjectType( "zone mobilite amelioree", QT_TRANSLATE_NOOP( "ENT_Tr", "zone mobilite amelioree" ), eObjectType_ZoneMobiliteAmelioree ),
-    T_ConverterObjectType( "zone poser helicoptere", QT_TRANSLATE_NOOP( "ENT_Tr", "zone poser helicoptere" ), eObjectType_ZonePoserHelicoptere ),
-    T_ConverterObjectType( "aire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "aire logistique" ), eObjectType_AireLogistique ),
-    T_ConverterObjectType( "itineraire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "itineraire logistique" ), eObjectType_ItineraireLogistique ),
-    T_ConverterObjectType( "camp prisonniers", QT_TRANSLATE_NOOP( "ENT_Tr", "camp prisonniers" ), eObjectType_CampPrisonniers ),
-    T_ConverterObjectType( "camp refugies", QT_TRANSLATE_NOOP( "ENT_Tr", "camp refugies" ), eObjectType_CampRefugies ),
-    T_ConverterObjectType( "poste controle", QT_TRANSLATE_NOOP( "ENT_Tr", "poste controle" ), eObjectType_PosteControle ),
-    T_ConverterObjectType( "terrain largage", QT_TRANSLATE_NOOP( "ENT_Tr", "terrain largage" ), eObjectType_TerrainLargage ),
-    T_ConverterObjectType( "zone interdite mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite mouvement" ), eObjectType_ZoneInterditeMouvement ),
-    T_ConverterObjectType( "zone interdite tir", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite tir" ), eObjectType_ZoneInterditeTir ),
-    T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation mortier" ), eObjectType_ZoneImplantationMortier ),
-    T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant discontinu" ), eObjectType_PontFlottantDiscontinu ),
-    T_ConverterObjectType( "installation", QT_TRANSLATE_NOOP( "ENT_Tr", "installation" ), eObjectType_Installation ),
-    T_ConverterObjectType( "", "", (E_ObjectType)-1 )
-};
-
-ENT_Tr::T_ConverterMissionGenSousTypeObstacle ENT_Tr::MissionGenSousTypeObstacleConverter_[] =
-{
-    T_ConverterMissionGenSousTypeObstacle( "preliminaire", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminaire" ), eMissionGenSousTypeObstacle_Preliminaire ),
-    T_ConverterMissionGenSousTypeObstacle( "de manoeuvre", QT_TRANSLATE_NOOP( "ENT_Tr", "de manoeuvre" ), eMissionGenSousTypeObstacle_DeManoeuvre ),
-    T_ConverterMissionGenSousTypeObstacle( "", "", (E_MissionGenSousTypeObstacle)-1 )
-};
-
-ENT_Tr::T_ConverterObjectErrorCode ENT_Tr::ObjectErrorCodeConverter_[] =
-{
-    T_ConverterObjectErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eObjectErrorCode_NoError ),
-    T_ConverterObjectErrorCode( "error invalid object", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid object" ), eObjectErrorCode_ErrorInvalidObject ),
-    T_ConverterObjectErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eObjectErrorCode_ErrorInvalidId ),
-    T_ConverterObjectErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eObjectErrorCode_ErrorInvalidCamp ),
-    T_ConverterObjectErrorCode( "error invalid localisation", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid localisation" ), eObjectErrorCode_ErrorInvalidLocalisation ),
-    T_ConverterObjectErrorCode( "error missing specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error missing specific attributes" ), eObjectErrorCode_ErrorMissingSpecificAttributes ),
-    T_ConverterObjectErrorCode( "error invalid specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid specific attributes" ), eObjectErrorCode_ErrorInvalidSpecificAttributes ),
-    T_ConverterObjectErrorCode( "", "", (E_ObjectErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterModeDeploiementSectionMistral ENT_Tr::ModeDeploiementSectionMistralConverter_[] =
-{
-    T_ConverterModeDeploiementSectionMistral( "omnidirectionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "omnidirectionnel" ), eModeDeploiementSectionMistral_Omnidirectionnel ),
-    T_ConverterModeDeploiementSectionMistral( "directionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "directionnel" ), eModeDeploiementSectionMistral_Directionnel ),
-    T_ConverterModeDeploiementSectionMistral( "", "", (E_ModeDeploiementSectionMistral)-1 )
-};
-
-ENT_Tr::T_ConverterGenTypePontage ENT_Tr::GenTypePontageConverter_[] =
-{
-    T_ConverterGenTypePontage( "continu", QT_TRANSLATE_NOOP( "ENT_Tr", "continu" ), eGenTypePontage_Continu ),
-    T_ConverterGenTypePontage( "discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "discontinu" ), eGenTypePontage_Discontinu ),
-    T_ConverterGenTypePontage( "", "", (E_GenTypePontage)-1 )
-};
-
-ENT_Tr::T_ConverterMissionInfNatureObjectif ENT_Tr::MissionInfNatureObjectifConverter_[] =
-{
-    T_ConverterMissionInfNatureObjectif( "elements terrain", QT_TRANSLATE_NOOP( "ENT_Tr", "elements terrain" ), eMissionInfNatureObjectif_ElementsTerrain ),
-    T_ConverterMissionInfNatureObjectif( "objets", QT_TRANSLATE_NOOP( "ENT_Tr", "objets" ), eMissionInfNatureObjectif_Objets ),
-    T_ConverterMissionInfNatureObjectif( "elements mobiles", QT_TRANSLATE_NOOP( "ENT_Tr", "elements mobiles" ), eMissionInfNatureObjectif_ElementsMobiles ),
-    T_ConverterMissionInfNatureObjectif( "", "", (E_MissionInfNatureObjectif)-1 )
-};
-
-ENT_Tr::T_ConverterLogSanteTraitementEtat ENT_Tr::LogSanteTraitementEtatConverter_[] =
-{
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance releve" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement aller" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve chargement" ), eLogSanteTraitementEtat_AmbulanceReleveChargement ),
-    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance releve" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement retour" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour ),
-    T_ConverterLogSanteTraitementEtat( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve dechargement" ), eLogSanteTraitementEtat_AmbulanceReleveDechargement ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour diagnostique" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique ),
-    T_ConverterLogSanteTraitementEtat( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostique" ), eLogSanteTraitementEtat_Diagnostique ),
-    T_ConverterLogSanteTraitementEtat( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur tri" ), eLogSanteTraitementEtat_RechercheSecteurTri ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour tri" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri ),
-    T_ConverterLogSanteTraitementEtat( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "tri" ), eLogSanteTraitementEtat_Tri ),
-    T_ConverterLogSanteTraitementEtat( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur soin" ), eLogSanteTraitementEtat_RechercheSecteurSoin ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour soin" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin ),
-    T_ConverterLogSanteTraitementEtat( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "soin" ), eLogSanteTraitementEtat_Soin ),
-    T_ConverterLogSanteTraitementEtat( "hospitalisation", QT_TRANSLATE_NOOP( "ENT_Tr", "hospitalisation" ), eLogSanteTraitementEtat_Hospitalisation ),
-    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance ramassage" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage ),
-    T_ConverterLogSanteTraitementEtat( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage chargement" ), eLogSanteTraitementEtat_AmbulanceRamassageChargement ),
-    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance ramassage" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage ),
-    T_ConverterLogSanteTraitementEtat( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage deplacement aller" ), eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller ),
-    T_ConverterLogSanteTraitementEtat( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage dechargement" ), eLogSanteTraitementEtat_AmbulanceRamassageDechargement ),
-    T_ConverterLogSanteTraitementEtat( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogSanteTraitementEtat_Termine ),
-    T_ConverterLogSanteTraitementEtat( "", "", (E_LogSanteTraitementEtat)-1 )
-};
-
-ENT_Tr::T_ConverterAutomateOrderFormation ENT_Tr::AutomateOrderFormationConverter_[] =
-{
-    T_ConverterAutomateOrderFormation( "un echelon", QT_TRANSLATE_NOOP( "ENT_Tr", "un echelon" ), eAutomateOrderFormation_UnEchelon ),
-    T_ConverterAutomateOrderFormation( "deux echelons", QT_TRANSLATE_NOOP( "ENT_Tr", "deux echelons" ), eAutomateOrderFormation_DeuxEchelons ),
-    T_ConverterAutomateOrderFormation( "", "", (E_AutomateOrderFormation)-1 )
-};
-
 ENT_Tr::T_ConverterCtrlErrorCode ENT_Tr::CtrlErrorCodeConverter_[] =
 {
     T_ConverterCtrlErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eCtrlErrorCode_NoError ),
@@ -494,6 +297,31 @@ ENT_Tr::T_ConverterPrecipitationType ENT_Tr::PrecipitationTypeConverter_[] =
     T_ConverterPrecipitationType( "pluie", QT_TRANSLATE_NOOP( "ENT_Tr", "pluie" ), ePrecipitationType_Pluie ),
     T_ConverterPrecipitationType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "neige" ), ePrecipitationType_Neige ),
     T_ConverterPrecipitationType( "", "", (E_PrecipitationType)-1 )
+};
+
+ENT_Tr::T_ConverterTypeLima ENT_Tr::TypeLimaConverter_[] =
+{
+    T_ConverterTypeLima( "ligne debouche", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debouche" ), eTypeLima_LigneDebouche ),
+    T_ConverterTypeLima( "ligne changement attitude", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne changement attitude" ), eTypeLima_LigneChangementAttitude ),
+    T_ConverterTypeLima( "ligne coordination", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coordination" ), eTypeLima_LigneCoordination ),
+    T_ConverterTypeLima( "ligne interdire", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne interdire" ), eTypeLima_LigneInterdire ),
+    T_ConverterTypeLima( "ligne objectif", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne objectif" ), eTypeLima_LigneObjectif ),
+    T_ConverterTypeLima( "ligne coup arret", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne coup arret" ), eTypeLima_LigneCoupArret ),
+    T_ConverterTypeLima( "ligne recueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne recueil" ), eTypeLima_LigneRecueil ),
+    T_ConverterTypeLima( "ligne debut mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne debut mission" ), eTypeLima_LigneDebutMission ),
+    T_ConverterTypeLima( "ligne fin mission", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne fin mission" ), eTypeLima_LigneFinMission ),
+    T_ConverterTypeLima( "ligne identification accueil", QT_TRANSLATE_NOOP( "ENT_Tr", "ligne identification accueil" ), eTypeLima_LigneIdentificationAccueil ),
+    T_ConverterTypeLima( "", "", (E_TypeLima)-1 )
+};
+
+ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[] =
+{
+    T_ConverterInfoContextErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eInfoContextErrorCode_NoError ),
+    T_ConverterInfoContextErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eInfoContextErrorCode_ErrorInvalidId ),
+    T_ConverterInfoContextErrorCode( "error invalid geometry", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid geometry" ), eInfoContextErrorCode_ErrorInvalidGeometry ),
+    T_ConverterInfoContextErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eInfoContextErrorCode_ErrorInvalidLimaFunction ),
+    T_ConverterInfoContextErrorCode( "error invalid diffusion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid diffusion" ), eInfoContextErrorCode_ErrorInvalidDiffusion ),
+    T_ConverterInfoContextErrorCode( "", "", (E_InfoContextErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
@@ -594,424 +422,126 @@ ENT_Tr::T_ConverterMsgLogRavitaillementPousserFluxAck ENT_Tr::MsgLogRavitailleme
     T_ConverterMsgLogRavitaillementPousserFluxAck( "", "", (E_MsgLogRavitaillementPousserFluxAck)-1 )
 };
 
-ENT_Tr::T_ConverterAmbianceMission ENT_Tr::AmbianceMissionConverter_[] =
+ENT_Tr::T_ConverterLogSanteTraitementEtat ENT_Tr::LogSanteTraitementEtatConverter_[] =
 {
-    T_ConverterAmbianceMission( "surete", QT_TRANSLATE_NOOP( "ENT_Tr", "surete" ), eAmbianceMission_Surete ),
-    T_ConverterAmbianceMission( "vitesse", QT_TRANSLATE_NOOP( "ENT_Tr", "vitesse" ), eAmbianceMission_Vitesse ),
-    T_ConverterAmbianceMission( "", "", (E_AmbianceMission)-1 )
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance releve" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement aller" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve chargement" ), eLogSanteTraitementEtat_AmbulanceReleveChargement ),
+    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance releve" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve deplacement retour", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve deplacement retour" ), eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour ),
+    T_ConverterLogSanteTraitementEtat( "ambulance releve dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance releve dechargement" ), eLogSanteTraitementEtat_AmbulanceReleveDechargement ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour diagnostique" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique ),
+    T_ConverterLogSanteTraitementEtat( "diagnostique", QT_TRANSLATE_NOOP( "ENT_Tr", "diagnostique" ), eLogSanteTraitementEtat_Diagnostique ),
+    T_ConverterLogSanteTraitementEtat( "recherche secteur tri", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur tri" ), eLogSanteTraitementEtat_RechercheSecteurTri ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour tri", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour tri" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri ),
+    T_ConverterLogSanteTraitementEtat( "tri", QT_TRANSLATE_NOOP( "ENT_Tr", "tri" ), eLogSanteTraitementEtat_Tri ),
+    T_ConverterLogSanteTraitementEtat( "recherche secteur soin", QT_TRANSLATE_NOOP( "ENT_Tr", "recherche secteur soin" ), eLogSanteTraitementEtat_RechercheSecteurSoin ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite medecin pour soin", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite medecin pour soin" ), eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin ),
+    T_ConverterLogSanteTraitementEtat( "soin", QT_TRANSLATE_NOOP( "ENT_Tr", "soin" ), eLogSanteTraitementEtat_Soin ),
+    T_ConverterLogSanteTraitementEtat( "hospitalisation", QT_TRANSLATE_NOOP( "ENT_Tr", "hospitalisation" ), eLogSanteTraitementEtat_Hospitalisation ),
+    T_ConverterLogSanteTraitementEtat( "attente disponibilite ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente disponibilite ambulance ramassage" ), eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage ),
+    T_ConverterLogSanteTraitementEtat( "ambulance ramassage chargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage chargement" ), eLogSanteTraitementEtat_AmbulanceRamassageChargement ),
+    T_ConverterLogSanteTraitementEtat( "attente chargement complet ambulance ramassage", QT_TRANSLATE_NOOP( "ENT_Tr", "attente chargement complet ambulance ramassage" ), eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage ),
+    T_ConverterLogSanteTraitementEtat( "ambulance ramassage deplacement aller", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage deplacement aller" ), eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller ),
+    T_ConverterLogSanteTraitementEtat( "ambulance ramassage dechargement", QT_TRANSLATE_NOOP( "ENT_Tr", "ambulance ramassage dechargement" ), eLogSanteTraitementEtat_AmbulanceRamassageDechargement ),
+    T_ConverterLogSanteTraitementEtat( "termine", QT_TRANSLATE_NOOP( "ENT_Tr", "termine" ), eLogSanteTraitementEtat_Termine ),
+    T_ConverterLogSanteTraitementEtat( "", "", (E_LogSanteTraitementEtat)-1 )
 };
 
-ENT_Tr::T_ConverterTC2GererMaterielAvantDeplacement ENT_Tr::TC2GererMaterielAvantDeplacementConverter_[] =
+ENT_Tr::T_ConverterObjectErrorCode ENT_Tr::ObjectErrorCodeConverter_[] =
 {
-    T_ConverterTC2GererMaterielAvantDeplacement( "deborder materiels vers bld", QT_TRANSLATE_NOOP( "ENT_Tr", "deborder materiels vers bld" ), eTC2GererMaterielAvantDeplacement_DeborderMaterielsVersBld ),
-    T_ConverterTC2GererMaterielAvantDeplacement( "detruire materiels en reparation", QT_TRANSLATE_NOOP( "ENT_Tr", "detruire materiels en reparation" ), eTC2GererMaterielAvantDeplacement_DetruireMaterielsEnReparation ),
-    T_ConverterTC2GererMaterielAvantDeplacement( "reparer materiels sur place", QT_TRANSLATE_NOOP( "ENT_Tr", "reparer materiels sur place" ), eTC2GererMaterielAvantDeplacement_ReparerMaterielsSurPlace ),
-    T_ConverterTC2GererMaterielAvantDeplacement( "", "", (E_TC2GererMaterielAvantDeplacement)-1 )
+    T_ConverterObjectErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eObjectErrorCode_NoError ),
+    T_ConverterObjectErrorCode( "error invalid object", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid object" ), eObjectErrorCode_ErrorInvalidObject ),
+    T_ConverterObjectErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eObjectErrorCode_ErrorInvalidId ),
+    T_ConverterObjectErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eObjectErrorCode_ErrorInvalidCamp ),
+    T_ConverterObjectErrorCode( "error invalid localisation", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid localisation" ), eObjectErrorCode_ErrorInvalidLocalisation ),
+    T_ConverterObjectErrorCode( "error missing specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error missing specific attributes" ), eObjectErrorCode_ErrorMissingSpecificAttributes ),
+    T_ConverterObjectErrorCode( "error invalid specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid specific attributes" ), eObjectErrorCode_ErrorInvalidSpecificAttributes ),
+    T_ConverterObjectErrorCode( "", "", (E_ObjectErrorCode)-1 )
 };
 
-
-
-
-ENT_Tr::T_ConverterAutomataMission ENT_Tr::automataMissionConverter_[] =
+ENT_Tr::T_ConverterObjectType ENT_Tr::ObjectTypeConverter_[] =
 {
-    T_ConverterAutomataMission( "Automate ALAT AllerSeRecompleter", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT AllerSeRecompleter" ), eMission_Automate_ALAT_AllerSeRecompleter ),
-    T_ConverterAutomataMission( "Automate ALAT DetruireNeutraliserDansProfondeur", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT DetruireNeutraliserDansProfondeur" ), eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur ),
-    T_ConverterAutomataMission( "Automate ALAT DetruireNeutraliserDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT DetruireNeutraliserDansZone" ), eMission_Automate_ALAT_DetruireNeutraliserDansZone ),
-    T_ConverterAutomataMission( "Automate ALAT DonnerCoupArret", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT DonnerCoupArret" ), eMission_Automate_ALAT_DonnerCoupArret ),
-    T_ConverterAutomataMission( "Automate ALAT AttaquerFormationAeromobile", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT AttaquerFormationAeromobile" ), eMission_Automate_ALAT_AttaquerFormationAeromobile ),
-    T_ConverterAutomataMission( "Automate ALAT RecueillirFormationAeromobile", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT RecueillirFormationAeromobile" ), eMission_Automate_ALAT_RecueillirFormationAeromobile ),
-    T_ConverterAutomataMission( "Automate ALAT Heliporter", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Heliporter" ), eMission_Automate_ALAT_Heliporter ),
-    T_ConverterAutomataMission( "Automate ALAT Jalonner", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Jalonner" ), eMission_Automate_ALAT_Jalonner ),
-    T_ConverterAutomataMission( "Automate ALAT Helitransporter", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Helitransporter" ), eMission_Automate_ALAT_Helitransporter ),
-    T_ConverterAutomataMission( "Automate ALAT Appuyer", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Appuyer" ), eMission_Automate_ALAT_Appuyer ),
-    T_ConverterAutomataMission( "Automate ALAT Couvrir", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Couvrir" ), eMission_Automate_ALAT_Couvrir ),
-    T_ConverterAutomataMission( "Automate ALAT Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Surveiller" ), eMission_Automate_ALAT_Surveiller ),
-    T_ConverterAutomataMission( "Automate ALAT Reconnaitre", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Reconnaitre" ), eMission_Automate_ALAT_Reconnaitre ),
-    T_ConverterAutomataMission( "Automate ALAT Freiner", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Freiner" ), eMission_Automate_ALAT_Freiner ),
-    T_ConverterAutomataMission( "Automate ALAT Escorter", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Escorter" ), eMission_Automate_ALAT_Escorter ),
-    T_ConverterAutomataMission( "Automate ALAT Attaquer", QT_TRANSLATE_NOOP( "ENT", "Automate ALAT Attaquer" ), eMission_Automate_ALAT_Attaquer ),
-    T_ConverterAutomataMission( "Automate ASA DefendreSite", QT_TRANSLATE_NOOP( "ENT", "Automate ASA DefendreSite" ), eMission_Automate_ASA_DefendreSite ),
-    T_ConverterAutomataMission( "Automate ASA DefendreZone", QT_TRANSLATE_NOOP( "ENT", "Automate ASA DefendreZone" ), eMission_Automate_ASA_DefendreZone ),
-    T_ConverterAutomataMission( "Automate ASA DefendreUnites", QT_TRANSLATE_NOOP( "ENT", "Automate ASA DefendreUnites" ), eMission_Automate_ASA_DefendreUnites ),
-    T_ConverterAutomataMission( "Automate ASA Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate ASA Surveiller" ), eMission_Automate_ASA_Surveiller ),
-    T_ConverterAutomataMission( "Automate ASA DefendreItineraire", QT_TRANSLATE_NOOP( "ENT", "Automate ASA DefendreItineraire" ), eMission_Automate_ASA_DefendreItineraire ),
-    T_ConverterAutomataMission( "Automate ASA MISTRAL DefendreZone", QT_TRANSLATE_NOOP( "ENT", "Automate ASA MISTRAL DefendreZone" ), eMission_Automate_ASA_MISTRAL_DefendreZone ),
-    T_ConverterAutomataMission( "Automate ASA MISTRAL DefendreSite", QT_TRANSLATE_NOOP( "ENT", "Automate ASA MISTRAL DefendreSite" ), eMission_Automate_ASA_MISTRAL_DefendreSite ),
-    T_ConverterAutomataMission( "Automate ASA MISTRAL Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate ASA MISTRAL Surveiller" ), eMission_Automate_ASA_MISTRAL_Surveiller ),
-    T_ConverterAutomataMission( "Automate ASA HAWK DefendreZone", QT_TRANSLATE_NOOP( "ENT", "Automate ASA HAWK DefendreZone" ), eMission_Automate_ASA_HAWK_DefendreZone ),
-    T_ConverterAutomataMission( "Automate ASA HAWK DefendreSite", QT_TRANSLATE_NOOP( "ENT", "Automate ASA HAWK DefendreSite" ), eMission_Automate_ASA_HAWK_DefendreSite ),
-    T_ConverterAutomataMission( "Automate ASA HAWK Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate ASA HAWK Surveiller" ), eMission_Automate_ASA_HAWK_Surveiller ),
-    T_ConverterAutomataMission( "Automate ASS SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Automate ASS SeDeployer" ), eMission_Automate_ASS_SeDeployer ),
-    T_ConverterAutomataMission( "Automate ASS ReconnaitreZonesDeploiement", QT_TRANSLATE_NOOP( "ENT", "Automate ASS ReconnaitreZonesDeploiement" ), eMission_Automate_ASS_ReconnaitreZonesDeploiement ),
-    T_ConverterAutomataMission( "Automate ASS AcquerirObjectifs", QT_TRANSLATE_NOOP( "ENT", "Automate ASS AcquerirObjectifs" ), eMission_Automate_ASS_AcquerirObjectifs ),
-    T_ConverterAutomataMission( "Automate ABC Appuyer", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Appuyer" ), eMission_Automate_ABC_Appuyer ),
-    T_ConverterAutomataMission( "Automate ABC Attaquer", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Attaquer" ), eMission_Automate_ABC_Attaquer ),
-    T_ConverterAutomataMission( "Automate ABC ContreAttaquer", QT_TRANSLATE_NOOP( "ENT", "Automate ABC ContreAttaquer" ), eMission_Automate_ABC_ContreAttaquer ),
-    T_ConverterAutomataMission( "Automate ABC Controler", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Controler" ), eMission_Automate_ABC_Controler ),
-    T_ConverterAutomataMission( "Automate ABC Couvrir", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Couvrir" ), eMission_Automate_ABC_Couvrir ),
-    T_ConverterAutomataMission( "Automate ABC DonnerCoupArret", QT_TRANSLATE_NOOP( "ENT", "Automate ABC DonnerCoupArret" ), eMission_Automate_ABC_DonnerCoupArret ),
-    T_ConverterAutomataMission( "Automate ABC Eclairer", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Eclairer" ), eMission_Automate_ABC_Eclairer ),
-    T_ConverterAutomataMission( "Automate ABC EffectuerRaid", QT_TRANSLATE_NOOP( "ENT", "Automate ABC EffectuerRaid" ), eMission_Automate_ABC_EffectuerRaid ),
-    T_ConverterAutomataMission( "Automate ABC Interdire", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Interdire" ), eMission_Automate_ABC_Interdire ),
-    T_ConverterAutomataMission( "Automate ABC Jalonner", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Jalonner" ), eMission_Automate_ABC_Jalonner ),
-    T_ConverterAutomataMission( "Automate ABC PrendrePreciserContact", QT_TRANSLATE_NOOP( "ENT", "Automate ABC PrendrePreciserContact" ), eMission_Automate_ABC_PrendrePreciserContact ),
-    T_ConverterAutomataMission( "Automate ABC Reconnaitre", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Reconnaitre" ), eMission_Automate_ABC_Reconnaitre ),
-    T_ConverterAutomataMission( "Automate ABC ReconnaitrePoint", QT_TRANSLATE_NOOP( "ENT", "Automate ABC ReconnaitrePoint" ), eMission_Automate_ABC_ReconnaitrePoint ),
-    T_ConverterAutomataMission( "Automate ABC Reduire", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Reduire" ), eMission_Automate_ABC_Reduire ),
-    T_ConverterAutomataMission( "Automate ABC ReleverEnDepassant", QT_TRANSLATE_NOOP( "ENT", "Automate ABC ReleverEnDepassant" ), eMission_Automate_ABC_ReleverEnDepassant ),
-    T_ConverterAutomataMission( "Automate ABC Semparer", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Semparer" ), eMission_Automate_ABC_Semparer ),
-    T_ConverterAutomataMission( "Automate ABC Tenir", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Tenir" ), eMission_Automate_ABC_Tenir ),
-    T_ConverterAutomataMission( "Automate ABC Soutenir", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Soutenir" ), eMission_Automate_ABC_Soutenir ),
-    T_ConverterAutomataMission( "Automate ABC Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Surveiller" ), eMission_Automate_ABC_Surveiller ),
-    T_ConverterAutomataMission( "Automate ABC FlancGarder", QT_TRANSLATE_NOOP( "ENT", "Automate ABC FlancGarder" ), eMission_Automate_ABC_FlancGarder ),
-    T_ConverterAutomataMission( "Automate ABC RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Automate ABC RenseignerSur" ), eMission_Automate_ABC_RenseignerSur ),
-    T_ConverterAutomataMission( "Automate ABC Fixer", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Fixer" ), eMission_Automate_ABC_Fixer ),
-    T_ConverterAutomataMission( "Automate ABC Freiner", QT_TRANSLATE_NOOP( "ENT", "Automate ABC Freiner" ), eMission_Automate_ABC_Freiner ),
-    T_ConverterAutomataMission( "Automate ABC SurveillerItineraire", QT_TRANSLATE_NOOP( "ENT", "Automate ABC SurveillerItineraire" ), eMission_Automate_ABC_SurveillerItineraire ),
-    T_ConverterAutomataMission( "Automate ABC RenseignerSurUnAxe", QT_TRANSLATE_NOOP( "ENT", "Automate ABC RenseignerSurUnAxe" ), eMission_Automate_ABC_RenseignerSurUnAxe ),
-    T_ConverterAutomataMission( "Automate ABC RecueillirUnite", QT_TRANSLATE_NOOP( "ENT", "Automate ABC RecueillirUnite" ), eMission_Automate_ABC_RecueillirUnite ),
-    T_ConverterAutomataMission( "Automate ABC EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Automate ABC EscorterUnite" ), eMission_Automate_ABC_EscorterUnite ),
-    T_ConverterAutomataMission( "Automate ABC EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Automate ABC EscorterUnites" ), eMission_Automate_ABC_EscorterUnites ),
-    T_ConverterAutomataMission( "Automate ABC ArmerPointDeControle", QT_TRANSLATE_NOOP( "ENT", "Automate ABC ArmerPointDeControle" ), eMission_Automate_ABC_ArmerPointDeControle ),
-    T_ConverterAutomataMission( "Automate ABC OrganiserAccueilColonneRefugies", QT_TRANSLATE_NOOP( "ENT", "Automate ABC OrganiserAccueilColonneRefugies" ), eMission_Automate_ABC_OrganiserAccueilColonneRefugies ),
-    T_ConverterAutomataMission( "Automate ABC ProtegerPC", QT_TRANSLATE_NOOP( "ENT", "Automate ABC ProtegerPC" ), eMission_Automate_ABC_ProtegerPC ),
-    T_ConverterAutomataMission( "Automate ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Automate ABC AppuyerSurPosition" ), eMission_Automate_ABC_AppuyerSurPosition ),
-    T_ConverterAutomataMission( "Automate GEN SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Automate GEN SeDeployer" ), eMission_Automate_GEN_SeDeployer ),
-    T_ConverterAutomataMission( "Automate GEN ReconnaitreZone", QT_TRANSLATE_NOOP( "ENT", "Automate GEN ReconnaitreZone" ), eMission_Automate_GEN_ReconnaitreZone ),
-    T_ConverterAutomataMission( "Automate GEN RealiserTravaux", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RealiserTravaux" ), eMission_Automate_GEN_RealiserTravaux ),
-    T_ConverterAutomataMission( "Automate GEN OuvrirItineraires", QT_TRANSLATE_NOOP( "ENT", "Automate GEN OuvrirItineraires" ), eMission_Automate_GEN_OuvrirItineraires ),
-    T_ConverterAutomataMission( "Automate GEN RetablirItineraires", QT_TRANSLATE_NOOP( "ENT", "Automate GEN RetablirItineraires" ), eMission_Automate_GEN_RetablirItineraires ),
-    T_ConverterAutomataMission( "Automate GEN FaireFranchir", QT_TRANSLATE_NOOP( "ENT", "Automate GEN FaireFranchir" ), eMission_Automate_GEN_FaireFranchir ),
-    T_ConverterAutomataMission( "Automate GEN FranchirDeViveForce", QT_TRANSLATE_NOOP( "ENT", "Automate GEN FranchirDeViveForce" ), eMission_Automate_GEN_FranchirDeViveForce ),
-    T_ConverterAutomataMission( "Automate GEN DegagerObstaclesDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate GEN DegagerObstaclesDansZone" ), eMission_Automate_GEN_DegagerObstaclesDansZone ),
-    T_ConverterAutomataMission( "Automate INF AttaquerSouplesse", QT_TRANSLATE_NOOP( "ENT", "Automate INF AttaquerSouplesse" ), eMission_Automate_INF_AttaquerSouplesse ),
-    T_ConverterAutomataMission( "Automate INF Appuyer", QT_TRANSLATE_NOOP( "ENT", "Automate INF Appuyer" ), eMission_Automate_INF_Appuyer ),
-    T_ConverterAutomataMission( "Automate INF Controler", QT_TRANSLATE_NOOP( "ENT", "Automate INF Controler" ), eMission_Automate_INF_Controler ),
-    T_ConverterAutomataMission( "Automate INF Couvrir", QT_TRANSLATE_NOOP( "ENT", "Automate INF Couvrir" ), eMission_Automate_INF_Couvrir ),
-    T_ConverterAutomataMission( "Automate INF DonnerCoupArret", QT_TRANSLATE_NOOP( "ENT", "Automate INF DonnerCoupArret" ), eMission_Automate_INF_DonnerCoupArret ),
-    T_ConverterAutomataMission( "Automate INF Eclairer", QT_TRANSLATE_NOOP( "ENT", "Automate INF Eclairer" ), eMission_Automate_INF_Eclairer ),
-    T_ConverterAutomataMission( "Automate INF FlancGarder", QT_TRANSLATE_NOOP( "ENT", "Automate INF FlancGarder" ), eMission_Automate_INF_FlancGarder ),
-    T_ConverterAutomataMission( "Automate INF Freiner", QT_TRANSLATE_NOOP( "ENT", "Automate INF Freiner" ), eMission_Automate_INF_Freiner ),
-    T_ConverterAutomataMission( "Automate INF Harceler", QT_TRANSLATE_NOOP( "ENT", "Automate INF Harceler" ), eMission_Automate_INF_Harceler ),
-    T_ConverterAutomataMission( "Automate INF Interdire", QT_TRANSLATE_NOOP( "ENT", "Automate INF Interdire" ), eMission_Automate_INF_Interdire ),
-    T_ConverterAutomataMission( "Automate INF MenerDefenseUsure", QT_TRANSLATE_NOOP( "ENT", "Automate INF MenerDefenseUsure" ), eMission_Automate_INF_MenerDefenseUsure ),
-    T_ConverterAutomataMission( "Automate INF PrendrePreciserMaintenirContact", QT_TRANSLATE_NOOP( "ENT", "Automate INF PrendrePreciserMaintenirContact" ), eMission_Automate_INF_PrendrePreciserMaintenirContact ),
-    T_ConverterAutomataMission( "Automate INF ReconnaissanceOffensive", QT_TRANSLATE_NOOP( "ENT", "Automate INF ReconnaissanceOffensive" ), eMission_Automate_INF_ReconnaissanceOffensive ),
-    T_ConverterAutomataMission( "Automate INF RecueillirUnite", QT_TRANSLATE_NOOP( "ENT", "Automate INF RecueillirUnite" ), eMission_Automate_INF_RecueillirUnite ),
-    T_ConverterAutomataMission( "Automate INF Reduire", QT_TRANSLATE_NOOP( "ENT", "Automate INF Reduire" ), eMission_Automate_INF_Reduire ),
-    T_ConverterAutomataMission( "Automate INF Relever", QT_TRANSLATE_NOOP( "ENT", "Automate INF Relever" ), eMission_Automate_INF_Relever ),
-    T_ConverterAutomataMission( "Automate INF RompreContact", QT_TRANSLATE_NOOP( "ENT", "Automate INF RompreContact" ), eMission_Automate_INF_RompreContact ),
-    T_ConverterAutomataMission( "Automate INF Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate INF Surveiller" ), eMission_Automate_INF_Surveiller ),
-    T_ConverterAutomataMission( "Automate INF Semparer", QT_TRANSLATE_NOOP( "ENT", "Automate INF Semparer" ), eMission_Automate_INF_Semparer ),
-    T_ConverterAutomataMission( "Automate INF Fixer", QT_TRANSLATE_NOOP( "ENT", "Automate INF Fixer" ), eMission_Automate_INF_Fixer ),
-    T_ConverterAutomataMission( "Automate INF AttaquerEnTerrainDifficile", QT_TRANSLATE_NOOP( "ENT", "Automate INF AttaquerEnTerrainDifficile" ), eMission_Automate_INF_AttaquerEnTerrainDifficile ),
-    T_ConverterAutomataMission( "Automate INF BarrerDirection", QT_TRANSLATE_NOOP( "ENT", "Automate INF BarrerDirection" ), eMission_Automate_INF_BarrerDirection ),
-    T_ConverterAutomataMission( "Automate INF DefendreFerme", QT_TRANSLATE_NOOP( "ENT", "Automate INF DefendreFerme" ), eMission_Automate_INF_DefendreFerme ),
-    T_ConverterAutomataMission( "Automate INF Tenir", QT_TRANSLATE_NOOP( "ENT", "Automate INF Tenir" ), eMission_Automate_INF_Tenir ),
-    T_ConverterAutomataMission( "Automate INF AppuyerUnFreinage", QT_TRANSLATE_NOOP( "ENT", "Automate INF AppuyerUnFreinage" ), eMission_Automate_INF_AppuyerUnFreinage ),
-    T_ConverterAutomataMission( "Automate INF AppuyerUneAttaque", QT_TRANSLATE_NOOP( "ENT", "Automate INF AppuyerUneAttaque" ), eMission_Automate_INF_AppuyerUneAttaque ),
-    T_ConverterAutomataMission( "Automate INF Soutenir", QT_TRANSLATE_NOOP( "ENT", "Automate INF Soutenir" ), eMission_Automate_INF_Soutenir ),
-    T_ConverterAutomataMission( "Automate INF EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Automate INF EscorterUnite" ), eMission_Automate_INF_EscorterUnite ),
-    T_ConverterAutomataMission( "Automate INF EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Automate INF EscorterUnites" ), eMission_Automate_INF_EscorterUnites ),
-    T_ConverterAutomataMission( "Automate INF AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Automate INF AppuyerSurPosition" ), eMission_Automate_INF_AppuyerSurPosition ),
-    T_ConverterAutomataMission( "Automate LOG SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Automate LOG SeDeployer" ), eMission_Automate_LOG_SeDeployer ),
-    T_ConverterAutomataMission( "Automate LOG AppuyerMouvement", QT_TRANSLATE_NOOP( "ENT", "Automate LOG AppuyerMouvement" ), eMission_Automate_LOG_AppuyerMouvement ),
-    T_ConverterAutomataMission( "Automate LOG ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Automate LOG ReconnaitreItineraire" ), eMission_Automate_LOG_ReconnaitreItineraire ),
-    T_ConverterAutomataMission( "Automate LOG AppuyerMouvementDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate LOG AppuyerMouvementDansZone" ), eMission_Automate_LOG_AppuyerMouvementDansZone ),
-    T_ConverterAutomataMission( "Automate LOG MettreEnOeuvreZoneStationnement", QT_TRANSLATE_NOOP( "ENT", "Automate LOG MettreEnOeuvreZoneStationnement" ), eMission_Automate_LOG_MettreEnOeuvreZoneStationnement ),
-    T_ConverterAutomataMission( "Automate LOG AppuyerFranchissementDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate LOG AppuyerFranchissementDansZone" ), eMission_Automate_LOG_AppuyerFranchissementDansZone ),
-    T_ConverterAutomataMission( "Automate LOG BloquerZone", QT_TRANSLATE_NOOP( "ENT", "Automate LOG BloquerZone" ), eMission_Automate_LOG_BloquerZone ),
-    T_ConverterAutomataMission( "Automate LOG ReconnaitreZoneContaminee", QT_TRANSLATE_NOOP( "ENT", "Automate LOG ReconnaitreZoneContaminee" ), eMission_Automate_LOG_ReconnaitreZoneContaminee ),
-    T_ConverterAutomataMission( "Automate LOG ReconnaitreZoneDeDeploiement", QT_TRANSLATE_NOOP( "ENT", "Automate LOG ReconnaitreZoneDeDeploiement" ), eMission_Automate_LOG_ReconnaitreZoneDeDeploiement ),
-    T_ConverterAutomataMission( "Automate LOG Surveiller", QT_TRANSLATE_NOOP( "ENT", "Automate LOG Surveiller" ), eMission_Automate_LOG_Surveiller ),
-    T_ConverterAutomataMission( "Automate LOG ArmerPIAs", QT_TRANSLATE_NOOP( "ENT", "Automate LOG ArmerPIAs" ), eMission_Automate_LOG_ArmerPIAs ),
-    T_ConverterAutomataMission( "Automate Test MoveTo", QT_TRANSLATE_NOOP( "ENT", "Automate Test MoveTo" ), eMission_Automate_Test_MoveTo ),
-    T_ConverterAutomataMission( "Automate Decrocher", QT_TRANSLATE_NOOP( "ENT", "Automate Decrocher" ), eMission_Automate_Decrocher ),
-    T_ConverterAutomataMission( "Automate ReleverSurPlace", QT_TRANSLATE_NOOP( "ENT", "Automate ReleverSurPlace" ), eMission_Automate_ReleverSurPlace ),
-    T_ConverterAutomataMission( "Automate FaireMouvement", QT_TRANSLATE_NOOP( "ENT", "Automate FaireMouvement" ), eMission_Automate_FaireMouvement ),
-    T_ConverterAutomataMission( "Automate SeFaireDecontaminer", QT_TRANSLATE_NOOP( "ENT", "Automate SeFaireDecontaminer" ), eMission_Automate_SeFaireDecontaminer ),
-    T_ConverterAutomataMission( "Automate Franchir", QT_TRANSLATE_NOOP( "ENT", "Automate Franchir" ), eMission_Automate_Franchir ),
-    T_ConverterAutomataMission( "Automate Stationner", QT_TRANSLATE_NOOP( "ENT", "Automate Stationner" ), eMission_Automate_Stationner ),
-    T_ConverterAutomataMission( "Automate SeFaireTransporter", QT_TRANSLATE_NOOP( "ENT", "Automate SeFaireTransporter" ), eMission_Automate_SeFaireTransporter ),
-    T_ConverterAutomataMission( "Automate Transporter", QT_TRANSLATE_NOOP( "ENT", "Automate Transporter" ), eMission_Automate_Transporter ),
-    T_ConverterAutomataMission( "Automate SeRecompleter", QT_TRANSLATE_NOOP( "ENT", "Automate SeRecompleter" ), eMission_Automate_SeRecompleter ),
-    T_ConverterAutomataMission( "Automate SeRendre", QT_TRANSLATE_NOOP( "ENT", "Automate SeRendre" ), eMission_Automate_SeRendre ),
-    T_ConverterAutomataMission( "Automate FaireMouvementVersCampRefugies", QT_TRANSLATE_NOOP( "ENT", "Automate FaireMouvementVersCampRefugies" ), eMission_Automate_FaireMouvementVersCampRefugies ),
-    T_ConverterAutomataMission( "Automate InterdireFranchissementPopulations", QT_TRANSLATE_NOOP( "ENT", "Automate InterdireFranchissementPopulations" ), eMission_Automate_InterdireFranchissementPopulations ),
-    T_ConverterAutomataMission( "Automate FiltrerPopulations", QT_TRANSLATE_NOOP( "ENT", "Automate FiltrerPopulations" ), eMission_Automate_FiltrerPopulations ),
-    T_ConverterAutomataMission( "Automate CanaliserPopulations", QT_TRANSLATE_NOOP( "ENT", "Automate CanaliserPopulations" ), eMission_Automate_CanaliserPopulations ),
-    T_ConverterAutomataMission( "Automate ControlerPopulationsDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate ControlerPopulationsDansZone" ), eMission_Automate_ControlerPopulationsDansZone ),
-    T_ConverterAutomataMission( "Automate SecuriserZoneContrePopulations", QT_TRANSLATE_NOOP( "ENT", "Automate SecuriserZoneContrePopulations" ), eMission_Automate_SecuriserZoneContrePopulations ),
-    T_ConverterAutomataMission( "Automate ASY CommettreExactionsSurPopulationDansZone", QT_TRANSLATE_NOOP( "ENT", "Automate ASY CommettreExactionsSurPopulationDansZone" ), eMission_Automate_ASY_CommettreExactionsSurPopulationDansZone ),
-    T_ConverterAutomataMission( "Automate Generique", QT_TRANSLATE_NOOP( "ENT", "Automate Generique" ), eMission_Automate_Generique ),
-    T_ConverterAutomataMission( "Automate NBC ReconnaitreUnAxe", QT_TRANSLATE_NOOP( "ENT", "Automate NBC ReconnaitreUnAxe" ), eMission_Automate_NBC_ReconnaitreUnAxe ),
-    T_ConverterAutomataMission( "Automate NBC ReconnaitreUneZone", QT_TRANSLATE_NOOP( "ENT", "Automate NBC ReconnaitreUneZone" ), eMission_Automate_NBC_ReconnaitreUneZone ),
-    T_ConverterAutomataMission( "Automate NBC ArmerUnSiteDeDecontamination", QT_TRANSLATE_NOOP( "ENT", "Automate NBC ArmerUnSiteDeDecontamination" ), eMission_Automate_NBC_ArmerUnSiteDeDecontamination ),
-    T_ConverterAutomataMission( "Automate NBC DecontaminerUneZone", QT_TRANSLATE_NOOP( "ENT", "Automate NBC DecontaminerUneZone" ), eMission_Automate_NBC_DecontaminerUneZone ),
-    T_ConverterAutomataMission( "Automate NBC ReconnaitreDesSitesROTA", QT_TRANSLATE_NOOP( "ENT", "Automate NBC ReconnaitreDesSitesROTA" ), eMission_Automate_NBC_ReconnaitreDesSitesROTA ),
-    T_ConverterAutomataMission( "Automate RENS ROHUM RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Automate RENS ROHUM RenseignerSur" ), eMission_Automate_RENS_ROHUM_RenseignerSur ),
-    T_ConverterAutomataMission( "Automate RENS ROHUM OrienterGuider", QT_TRANSLATE_NOOP( "ENT", "Automate RENS ROHUM OrienterGuider" ), eMission_Automate_RENS_ROHUM_OrienterGuider ),
-    T_ConverterAutomataMission( "Automate RENS ROHUM SExfiltrer", QT_TRANSLATE_NOOP( "ENT", "Automate RENS ROHUM SExfiltrer" ), eMission_Automate_RENS_ROHUM_SExfiltrer ),
-    T_ConverterAutomataMission( "Automate RENS ROIM CL289 RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Automate RENS ROIM CL289 RenseignerSur" ), eMission_Automate_RENS_ROIM_CL289_RenseignerSur ),
-    T_ConverterAutomataMission( "Automate RENS ROIM SDTI RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Automate RENS ROIM SDTI RenseignerSur" ), eMission_Automate_RENS_ROIM_SDTI_RenseignerSur ),
-    T_ConverterAutomataMission( "Automate RENS ROEM Appuyer", QT_TRANSLATE_NOOP( "ENT", "Automate RENS ROEM Appuyer" ), eMission_Automate_RENS_ROEM_Appuyer ),
-    T_ConverterAutomataMission( "Automate RENS ROEM RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Automate RENS ROEM RenseignerSur" ), eMission_Automate_RENS_ROEM_RenseignerSur ),
-    T_ConverterAutomataMission( "Automate RENS RADINT RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Automate RENS RADINT RenseignerSur" ), eMission_Automate_RENS_RADINT_RenseignerSur ),
-    T_ConverterAutomataMission( "Automate TRANS Commander", QT_TRANSLATE_NOOP( "ENT", "Automate TRANS Commander" ), eMission_Automate_TRANS_Commander ),
-
-    T_ConverterAutomataMission( "", "", (E_AutomataMission)-1  )
+    T_ConverterObjectType( "bouchon mines", QT_TRANSLATE_NOOP( "ENT_Tr", "bouchon mines" ), eObjectType_BouchonMines ),
+    T_ConverterObjectType( "zone minee lineaire", QT_TRANSLATE_NOOP( "ENT_Tr", "zone minee lineaire" ), eObjectType_ZoneMineeLineaire ),
+    T_ConverterObjectType( "zone minee par dispersion", QT_TRANSLATE_NOOP( "ENT_Tr", "zone minee par dispersion" ), eObjectType_ZoneMineeParDispersion ),
+    T_ConverterObjectType( "fosse anti char", QT_TRANSLATE_NOOP( "ENT_Tr", "fosse anti char" ), eObjectType_FosseAntiChar ),
+    T_ConverterObjectType( "abattis", QT_TRANSLATE_NOOP( "ENT_Tr", "abattis" ), eObjectType_Abattis ),
+    T_ConverterObjectType( "barricade", QT_TRANSLATE_NOOP( "ENT_Tr", "barricade" ), eObjectType_Barricade ),
+    T_ConverterObjectType( "eboulement", QT_TRANSLATE_NOOP( "ENT_Tr", "eboulement" ), eObjectType_Eboulement ),
+    T_ConverterObjectType( "destruction route", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction route" ), eObjectType_DestructionRoute ),
+    T_ConverterObjectType( "destruction pont", QT_TRANSLATE_NOOP( "ENT_Tr", "destruction pont" ), eObjectType_DestructionPont ),
+    T_ConverterObjectType( "pont flottant continu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant continu" ), eObjectType_PontFlottantContinu ),
+    T_ConverterObjectType( "poste tir", QT_TRANSLATE_NOOP( "ENT_Tr", "poste tir" ), eObjectType_PosteTir ),
+    T_ConverterObjectType( "zone protegee", QT_TRANSLATE_NOOP( "ENT_Tr", "zone protegee" ), eObjectType_ZoneProtegee ),
+    T_ConverterObjectType( "zone implantation canon", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation canon" ), eObjectType_ZoneImplantationCanon ),
+    T_ConverterObjectType( "zone implantation cobra", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation cobra" ), eObjectType_ZoneImplantationCobra ),
+    T_ConverterObjectType( "zone implantation lrm", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation lrm" ), eObjectType_ZoneImplantationLrm ),
+    T_ConverterObjectType( "site franchissement", QT_TRANSLATE_NOOP( "ENT_Tr", "site franchissement" ), eObjectType_SiteFranchissement ),
+    T_ConverterObjectType( "nuage nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "nuage nbc" ), eObjectType_NuageNbc ),
+    T_ConverterObjectType( "plot ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "plot ravitaillement" ), eObjectType_PlotRavitaillement ),
+    T_ConverterObjectType( "site decontamination", QT_TRANSLATE_NOOP( "ENT_Tr", "site decontamination" ), eObjectType_SiteDecontamination ),
+    T_ConverterObjectType( "zone brouillage brod", QT_TRANSLATE_NOOP( "ENT_Tr", "zone brouillage brod" ), eObjectType_ZoneBrouillageBrod ),
+    T_ConverterObjectType( "rota", QT_TRANSLATE_NOOP( "ENT_Tr", "rota" ), eObjectType_Rota ),
+    T_ConverterObjectType( "zone nbc", QT_TRANSLATE_NOOP( "ENT_Tr", "zone nbc" ), eObjectType_ZoneNbc ),
+    T_ConverterObjectType( "zone brouillage bromure", QT_TRANSLATE_NOOP( "ENT_Tr", "zone brouillage bromure" ), eObjectType_ZoneBrouillageBromure ),
+    T_ConverterObjectType( "aire poser", QT_TRANSLATE_NOOP( "ENT_Tr", "aire poser" ), eObjectType_AirePoser ),
+    T_ConverterObjectType( "piste", QT_TRANSLATE_NOOP( "ENT_Tr", "piste" ), eObjectType_Piste ),
+    T_ConverterObjectType( "plateforme", QT_TRANSLATE_NOOP( "ENT_Tr", "plateforme" ), eObjectType_Plateforme ),
+    T_ConverterObjectType( "zone mobilite amelioree", QT_TRANSLATE_NOOP( "ENT_Tr", "zone mobilite amelioree" ), eObjectType_ZoneMobiliteAmelioree ),
+    T_ConverterObjectType( "zone poser helicoptere", QT_TRANSLATE_NOOP( "ENT_Tr", "zone poser helicoptere" ), eObjectType_ZonePoserHelicoptere ),
+    T_ConverterObjectType( "aire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "aire logistique" ), eObjectType_AireLogistique ),
+    T_ConverterObjectType( "itineraire logistique", QT_TRANSLATE_NOOP( "ENT_Tr", "itineraire logistique" ), eObjectType_ItineraireLogistique ),
+    T_ConverterObjectType( "camp prisonniers", QT_TRANSLATE_NOOP( "ENT_Tr", "camp prisonniers" ), eObjectType_CampPrisonniers ),
+    T_ConverterObjectType( "camp refugies", QT_TRANSLATE_NOOP( "ENT_Tr", "camp refugies" ), eObjectType_CampRefugies ),
+    T_ConverterObjectType( "poste controle", QT_TRANSLATE_NOOP( "ENT_Tr", "poste controle" ), eObjectType_PosteControle ),
+    T_ConverterObjectType( "terrain largage", QT_TRANSLATE_NOOP( "ENT_Tr", "terrain largage" ), eObjectType_TerrainLargage ),
+    T_ConverterObjectType( "zone interdite mouvement", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite mouvement" ), eObjectType_ZoneInterditeMouvement ),
+    T_ConverterObjectType( "zone interdite tir", QT_TRANSLATE_NOOP( "ENT_Tr", "zone interdite tir" ), eObjectType_ZoneInterditeTir ),
+    T_ConverterObjectType( "zone implantation mortier", QT_TRANSLATE_NOOP( "ENT_Tr", "zone implantation mortier" ), eObjectType_ZoneImplantationMortier ),
+    T_ConverterObjectType( "pont flottant discontinu", QT_TRANSLATE_NOOP( "ENT_Tr", "pont flottant discontinu" ), eObjectType_PontFlottantDiscontinu ),
+    T_ConverterObjectType( "installation", QT_TRANSLATE_NOOP( "ENT_Tr", "installation" ), eObjectType_Installation ),
+    T_ConverterObjectType( "", "", (E_ObjectType)-1 )
 };
 
-
-ENT_Tr::T_ConverterUnitMission ENT_Tr::unitMissionConverter_[] =
+ENT_Tr::T_ConverterMissionGenSousTypeObstacle ENT_Tr::MissionGenSousTypeObstacleConverter_[] =
 {
-    T_ConverterUnitMission( "Pion ALAT AllerSeRecompleter", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT AllerSeRecompleter" ), eMission_Pion_ALAT_AllerSeRecompleter ),
-    T_ConverterUnitMission( "Pion ALAT ReconnaitreDansLaProfondeur", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT ReconnaitreDansLaProfondeur" ), eMission_Pion_ALAT_ReconnaitreDansLaProfondeur ),
-    T_ConverterUnitMission( "Pion ALAT ReconnaitreContourEnnemi", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT ReconnaitreContourEnnemi" ), eMission_Pion_ALAT_ReconnaitreContourEnnemi ),
-    T_ConverterUnitMission( "Pion ALAT DetruireNeutraliserDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT DetruireNeutraliserDansZone" ), eMission_Pion_ALAT_DetruireNeutraliserDansZone ),
-    T_ConverterUnitMission( "Pion ALAT DetruireAeromobile", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT DetruireAeromobile" ), eMission_Pion_ALAT_DetruireAeromobile ),
-    T_ConverterUnitMission( "Pion ALAT Freiner", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Freiner" ), eMission_Pion_ALAT_Freiner ),
-    T_ConverterUnitMission( "Pion ALAT Jalonner", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Jalonner" ), eMission_Pion_ALAT_Jalonner ),
-    T_ConverterUnitMission( "Pion ALAT Escorter", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Escorter" ), eMission_Pion_ALAT_Escorter ),
-    T_ConverterUnitMission( "Pion ALAT Heliporter", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Heliporter" ), eMission_Pion_ALAT_Heliporter ),
-    T_ConverterUnitMission( "Pion ALAT HeliporterHelitransporterPlotRavitaillement", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT HeliporterHelitransporterPlotRavitaillement" ), eMission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement ),
-    T_ConverterUnitMission( "Pion ALAT Helitransporter", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Helitransporter" ), eMission_Pion_ALAT_Helitransporter ),
-    T_ConverterUnitMission( "Pion ALAT IMEX", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT IMEX" ), eMission_Pion_ALAT_IMEX ),
-    T_ConverterUnitMission( "Pion ALAT Eclairer", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Eclairer" ), eMission_Pion_ALAT_Eclairer ),
-    T_ConverterUnitMission( "Pion ALAT Surveiller", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Surveiller" ), eMission_Pion_ALAT_Surveiller ),
-    T_ConverterUnitMission( "Pion ALAT AppuyerDirectAuContact", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT AppuyerDirectAuContact" ), eMission_Pion_ALAT_AppuyerDirectAuContact ),
-    T_ConverterUnitMission( "Pion ALAT Couvrir", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Couvrir" ), eMission_Pion_ALAT_Couvrir ),
-    T_ConverterUnitMission( "Pion ALAT Attaquer", QT_TRANSLATE_NOOP( "ENT", "Pion ALAT Attaquer" ), eMission_Pion_ALAT_Attaquer ),
-    T_ConverterUnitMission( "Pion ASA DefendreSite", QT_TRANSLATE_NOOP( "ENT", "Pion ASA DefendreSite" ), eMission_Pion_ASA_DefendreSite ),
-    T_ConverterUnitMission( "Pion ASA DefendreSiteAPartirPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ASA DefendreSiteAPartirPosition" ), eMission_Pion_ASA_DefendreSiteAPartirPosition ),
-    T_ConverterUnitMission( "Pion ASA DefendreZone", QT_TRANSLATE_NOOP( "ENT", "Pion ASA DefendreZone" ), eMission_Pion_ASA_DefendreZone ),
-    T_ConverterUnitMission( "Pion ASA DefendreZoneAPartirPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ASA DefendreZoneAPartirPosition" ), eMission_Pion_ASA_DefendreZoneAPartirPosition ),
-    T_ConverterUnitMission( "Pion ASA Surveiller", QT_TRANSLATE_NOOP( "ENT", "Pion ASA Surveiller" ), eMission_Pion_ASA_Surveiller ),
-    T_ConverterUnitMission( "Pion ASA DefendreUnites", QT_TRANSLATE_NOOP( "ENT", "Pion ASA DefendreUnites" ), eMission_Pion_ASA_DefendreUnites ),
-    T_ConverterUnitMission( "Pion ASA MISTRAL DefendreSite", QT_TRANSLATE_NOOP( "ENT", "Pion ASA MISTRAL DefendreSite" ), eMission_Pion_ASA_MISTRAL_DefendreSite ),
-    T_ConverterUnitMission( "Pion ASA MISTRAL DefendreSiteAPartirPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ASA MISTRAL DefendreSiteAPartirPosition" ), eMission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition ),
-    T_ConverterUnitMission( "Pion ASA MISTRAL DefendreZone", QT_TRANSLATE_NOOP( "ENT", "Pion ASA MISTRAL DefendreZone" ), eMission_Pion_ASA_MISTRAL_DefendreZone ),
-    T_ConverterUnitMission( "Pion ASA MISTRAL DefendreZoneAPartirPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ASA MISTRAL DefendreZoneAPartirPosition" ), eMission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition ),
-    T_ConverterUnitMission( "Pion ASA MISTRAL Surveiller", QT_TRANSLATE_NOOP( "ENT", "Pion ASA MISTRAL Surveiller" ), eMission_Pion_ASA_MISTRAL_Surveiller ),
-    T_ConverterUnitMission( "Pion ASS AssurerMiseEnOeuvre", QT_TRANSLATE_NOOP( "ENT", "Pion ASS AssurerMiseEnOeuvre" ), eMission_Pion_ASS_AssurerMiseEnOeuvre ),
-    T_ConverterUnitMission( "Pion ASS AssurerMiseEnOeuvreSurPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ASS AssurerMiseEnOeuvreSurPosition" ), eMission_Pion_ASS_AssurerMiseEnOeuvreSurPosition ),
-    T_ConverterUnitMission( "Pion ASS ReconnaitreZoneDeploiement", QT_TRANSLATE_NOOP( "ENT", "Pion ASS ReconnaitreZoneDeploiement" ), eMission_Pion_ASS_ReconnaitreZoneDeploiement ),
-    T_ConverterUnitMission( "Pion ASS AcquerirLanceursEni", QT_TRANSLATE_NOOP( "ENT", "Pion ASS AcquerirLanceursEni" ), eMission_Pion_ASS_AcquerirLanceursEni ),
-    T_ConverterUnitMission( "Pion ASS EO AcquerirObjectifs", QT_TRANSLATE_NOOP( "ENT", "Pion ASS EO AcquerirObjectifs" ), eMission_Pion_ASS_EO_AcquerirObjectifs ),
-    T_ConverterUnitMission( "Pion ASS EOP AcquerirObjectifs", QT_TRANSLATE_NOOP( "ENT", "Pion ASS EOP AcquerirObjectifs" ), eMission_Pion_ASS_EOP_AcquerirObjectifs ),
-    T_ConverterUnitMission( "Pion ASS RATAC AcquerirObjectifs", QT_TRANSLATE_NOOP( "ENT", "Pion ASS RATAC AcquerirObjectifs" ), eMission_Pion_ASS_RATAC_AcquerirObjectifs ),
-    T_ConverterUnitMission( "Pion ABC ReconnaitreAxe", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ReconnaitreAxe" ), eMission_Pion_ABC_ReconnaitreAxe ),
-    T_ConverterUnitMission( "Pion ABC Soutenir", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Soutenir" ), eMission_Pion_ABC_Soutenir ),
-    T_ConverterUnitMission( "Pion ABC Couvrir", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Couvrir" ), eMission_Pion_ABC_Couvrir ),
-    T_ConverterUnitMission( "Pion ABC FlancGarder", QT_TRANSLATE_NOOP( "ENT", "Pion ABC FlancGarder" ), eMission_Pion_ABC_FlancGarder ),
-    T_ConverterUnitMission( "Pion ABC Reduire", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Reduire" ), eMission_Pion_ABC_Reduire ),
-    T_ConverterUnitMission( "Pion ABC Appuyer", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Appuyer" ), eMission_Pion_ABC_Appuyer ),
-    T_ConverterUnitMission( "Pion ABC Fixer", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Fixer" ), eMission_Pion_ABC_Fixer ),
-    T_ConverterUnitMission( "Pion ABC RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion ABC RenseignerSur" ), eMission_Pion_ABC_RenseignerSur ),
-    T_ConverterUnitMission( "Pion ABC ControlerZone", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ControlerZone" ), eMission_Pion_ABC_ControlerZone ),
-    T_ConverterUnitMission( "Pion ABC Surveiller", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Surveiller" ), eMission_Pion_ABC_Surveiller ),
-    T_ConverterUnitMission( "Pion ABC Barrer", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Barrer" ), eMission_Pion_ABC_Barrer ),
-    T_ConverterUnitMission( "Pion ABC Attaquer", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Attaquer" ), eMission_Pion_ABC_Attaquer ),
-    T_ConverterUnitMission( "Pion ABC ReconnaitrePoint", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ReconnaitrePoint" ), eMission_Pion_ABC_ReconnaitrePoint ),
-    T_ConverterUnitMission( "Pion ABC Eclairer", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Eclairer" ), eMission_Pion_ABC_Eclairer ),
-    T_ConverterUnitMission( "Pion ABC Jalonner", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Jalonner" ), eMission_Pion_ABC_Jalonner ),
-    T_ConverterUnitMission( "Pion ABC ContreAttaquer", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ContreAttaquer" ), eMission_Pion_ABC_ContreAttaquer ),
-    T_ConverterUnitMission( "Pion ABC SemparerZone", QT_TRANSLATE_NOOP( "ENT", "Pion ABC SemparerZone" ), eMission_Pion_ABC_SemparerZone ),
-    T_ConverterUnitMission( "Pion ABC ReleverUnite", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ReleverUnite" ), eMission_Pion_ABC_ReleverUnite ),
-    T_ConverterUnitMission( "Pion ABC ArmerPIA", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ArmerPIA" ), eMission_Pion_ABC_ArmerPIA ),
-    T_ConverterUnitMission( "Pion ABC OuvrirItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion ABC OuvrirItineraire" ), eMission_Pion_ABC_OuvrirItineraire ),
-    T_ConverterUnitMission( "Pion ABC Freiner", QT_TRANSLATE_NOOP( "ENT", "Pion ABC Freiner" ), eMission_Pion_ABC_Freiner ),
-    T_ConverterUnitMission( "Pion ABC EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Pion ABC EscorterUnite" ), eMission_Pion_ABC_EscorterUnite ),
-    T_ConverterUnitMission( "Pion ABC EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Pion ABC EscorterUnites" ), eMission_Pion_ABC_EscorterUnites ),
-    T_ConverterUnitMission( "Pion ABC ArmerPointDeControle", QT_TRANSLATE_NOOP( "ENT", "Pion ABC ArmerPointDeControle" ), eMission_Pion_ABC_ArmerPointDeControle ),
-    T_ConverterUnitMission( "Pion ABC OrganiserAccueilColonneRefugies", QT_TRANSLATE_NOOP( "ENT", "Pion ABC OrganiserAccueilColonneRefugies" ), eMission_Pion_ABC_OrganiserAccueilColonneRefugies ),
-    T_ConverterUnitMission( "Pion ABC AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Pion ABC AppuyerSurPosition" ), eMission_Pion_ABC_AppuyerSurPosition ),
-    T_ConverterUnitMission( "Pion ABC RASIT RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion ABC RASIT RenseignerSur" ), eMission_Pion_ABC_RASIT_RenseignerSur ),
-    T_ConverterUnitMission( "Pion GEN OuvrirItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN OuvrirItineraire" ), eMission_Pion_GEN_OuvrirItineraire ),
-    T_ConverterUnitMission( "Pion GEN RetablirItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RetablirItineraire" ), eMission_Pion_GEN_RetablirItineraire ),
-    T_ConverterUnitMission( "Pion GEN ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReconnaitreItineraire" ), eMission_Pion_GEN_ReconnaitreItineraire ),
-    T_ConverterUnitMission( "Pion GEN ReconnaitreZone", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReconnaitreZone" ), eMission_Pion_GEN_ReconnaitreZone ),
-    T_ConverterUnitMission( "Pion GEN ReconnaitreSiteFranchissement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReconnaitreSiteFranchissement" ), eMission_Pion_GEN_ReconnaitreSiteFranchissement ),
-    T_ConverterUnitMission( "Pion GEN EquiperExploiterSiteFranchissement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN EquiperExploiterSiteFranchissement" ), eMission_Pion_GEN_EquiperExploiterSiteFranchissement ),
-    T_ConverterUnitMission( "Pion GEN ExecuterVariantement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ExecuterVariantement" ), eMission_Pion_GEN_ExecuterVariantement ),
-    T_ConverterUnitMission( "Pion GEN DegagerObstacles", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DegagerObstacles" ), eMission_Pion_GEN_DegagerObstacles ),
-    T_ConverterUnitMission( "Pion GEN ContournerObstacles", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ContournerObstacles" ), eMission_Pion_GEN_ContournerObstacles ),
-    T_ConverterUnitMission( "Pion GEN DepolluerZone", QT_TRANSLATE_NOOP( "ENT", "Pion GEN DepolluerZone" ), eMission_Pion_GEN_DepolluerZone ),
-    T_ConverterUnitMission( "Pion GEN Renforcer", QT_TRANSLATE_NOOP( "ENT", "Pion GEN Renforcer" ), eMission_Pion_GEN_Renforcer ),
-    T_ConverterUnitMission( "Pion GEN RealiserTravauxProtection", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserTravauxProtection" ), eMission_Pion_GEN_RealiserTravauxProtection ),
-    T_ConverterUnitMission( "Pion GEN RealiserTravauxContreMobilite", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserTravauxContreMobilite" ), eMission_Pion_GEN_RealiserTravauxContreMobilite ),
-    T_ConverterUnitMission( "Pion GEN RealiserTravauxAppuiDeploiement", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserTravauxAppuiDeploiement" ), eMission_Pion_GEN_RealiserTravauxAppuiDeploiement ),
-    T_ConverterUnitMission( "Pion GEN RealiserCamps", QT_TRANSLATE_NOOP( "ENT", "Pion GEN RealiserCamps" ), eMission_Pion_GEN_RealiserCamps ),
-    T_ConverterUnitMission( "Pion GEN ReprendreTravaux", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ReprendreTravaux" ), eMission_Pion_GEN_ReprendreTravaux ),
-    T_ConverterUnitMission( "Pion GEN AmeliorerMobilite", QT_TRANSLATE_NOOP( "ENT", "Pion GEN AmeliorerMobilite" ), eMission_Pion_GEN_AmeliorerMobilite ),
-    T_ConverterUnitMission( "Pion GEN ActiverObstacle", QT_TRANSLATE_NOOP( "ENT", "Pion GEN ActiverObstacle" ), eMission_Pion_GEN_ActiverObstacle ),
-    T_ConverterUnitMission( "Pion INF ReconnaitreAxe", QT_TRANSLATE_NOOP( "ENT", "Pion INF ReconnaitreAxe" ), eMission_Pion_INF_ReconnaitreAxe ),
-    T_ConverterUnitMission( "Pion INF Couvrir", QT_TRANSLATE_NOOP( "ENT", "Pion INF Couvrir" ), eMission_Pion_INF_Couvrir ),
-    T_ConverterUnitMission( "Pion INF Reduire", QT_TRANSLATE_NOOP( "ENT", "Pion INF Reduire" ), eMission_Pion_INF_Reduire ),
-    T_ConverterUnitMission( "Pion INF Appuyer", QT_TRANSLATE_NOOP( "ENT", "Pion INF Appuyer" ), eMission_Pion_INF_Appuyer ),
-    T_ConverterUnitMission( "Pion INF Fixer", QT_TRANSLATE_NOOP( "ENT", "Pion INF Fixer" ), eMission_Pion_INF_Fixer ),
-    T_ConverterUnitMission( "Pion INF ControlerSecteur", QT_TRANSLATE_NOOP( "ENT", "Pion INF ControlerSecteur" ), eMission_Pion_INF_ControlerSecteur ),
-    T_ConverterUnitMission( "Pion INF SurveillerSecteur", QT_TRANSLATE_NOOP( "ENT", "Pion INF SurveillerSecteur" ), eMission_Pion_INF_SurveillerSecteur ),
-    T_ConverterUnitMission( "Pion INF Barrer", QT_TRANSLATE_NOOP( "ENT", "Pion INF Barrer" ), eMission_Pion_INF_Barrer ),
-    T_ConverterUnitMission( "Pion INF ReconnaitrePoint", QT_TRANSLATE_NOOP( "ENT", "Pion INF ReconnaitrePoint" ), eMission_Pion_INF_ReconnaitrePoint ),
-    T_ConverterUnitMission( "Pion INF Eclairer", QT_TRANSLATE_NOOP( "ENT", "Pion INF Eclairer" ), eMission_Pion_INF_Eclairer ),
-    T_ConverterUnitMission( "Pion INF Interdire", QT_TRANSLATE_NOOP( "ENT", "Pion INF Interdire" ), eMission_Pion_INF_Interdire ),
-    T_ConverterUnitMission( "Pion INF Semparer", QT_TRANSLATE_NOOP( "ENT", "Pion INF Semparer" ), eMission_Pion_INF_Semparer ),
-    T_ConverterUnitMission( "Pion INF PrendrePreciserContact", QT_TRANSLATE_NOOP( "ENT", "Pion INF PrendrePreciserContact" ), eMission_Pion_INF_PrendrePreciserContact ),
-    T_ConverterUnitMission( "Pion INF Defendre", QT_TRANSLATE_NOOP( "ENT", "Pion INF Defendre" ), eMission_Pion_INF_Defendre ),
-    T_ConverterUnitMission( "Pion INF DetruireEmbuscade", QT_TRANSLATE_NOOP( "ENT", "Pion INF DetruireEmbuscade" ), eMission_Pion_INF_DetruireEmbuscade ),
-    T_ConverterUnitMission( "Pion INF ContreAttaquer", QT_TRANSLATE_NOOP( "ENT", "Pion INF ContreAttaquer" ), eMission_Pion_INF_ContreAttaquer ),
-    T_ConverterUnitMission( "Pion INF Freiner", QT_TRANSLATE_NOOP( "ENT", "Pion INF Freiner" ), eMission_Pion_INF_Freiner ),
-    T_ConverterUnitMission( "Pion INF FlancGarder", QT_TRANSLATE_NOOP( "ENT", "Pion INF FlancGarder" ), eMission_Pion_INF_FlancGarder ),
-    T_ConverterUnitMission( "Pion INF OrganiserUnCheckPoint", QT_TRANSLATE_NOOP( "ENT", "Pion INF OrganiserUnCheckPoint" ), eMission_Pion_INF_OrganiserUnCheckPoint ),
-    T_ConverterUnitMission( "Pion INF Harceler", QT_TRANSLATE_NOOP( "ENT", "Pion INF Harceler" ), eMission_Pion_INF_Harceler ),
-    T_ConverterUnitMission( "Pion INF DetruireParCoupDeMain", QT_TRANSLATE_NOOP( "ENT", "Pion INF DetruireParCoupDeMain" ), eMission_Pion_INF_DetruireParCoupDeMain ),
-    T_ConverterUnitMission( "Pion INF EscorterUnite", QT_TRANSLATE_NOOP( "ENT", "Pion INF EscorterUnite" ), eMission_Pion_INF_EscorterUnite ),
-    T_ConverterUnitMission( "Pion INF EscorterUnites", QT_TRANSLATE_NOOP( "ENT", "Pion INF EscorterUnites" ), eMission_Pion_INF_EscorterUnites ),
-    T_ConverterUnitMission( "Pion INF RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion INF RenseignerSur" ), eMission_Pion_INF_RenseignerSur ),
-    T_ConverterUnitMission( "Pion INF Soutenir", QT_TRANSLATE_NOOP( "ENT", "Pion INF Soutenir" ), eMission_Pion_INF_Soutenir ),
-    T_ConverterUnitMission( "Pion INF Securiser", QT_TRANSLATE_NOOP( "ENT", "Pion INF Securiser" ), eMission_Pion_INF_Securiser ),
-    T_ConverterUnitMission( "Pion INF Recueillir", QT_TRANSLATE_NOOP( "ENT", "Pion INF Recueillir" ), eMission_Pion_INF_Recueillir ),
-    T_ConverterUnitMission( "Pion INF RepondreAAggression", QT_TRANSLATE_NOOP( "ENT", "Pion INF RepondreAAggression" ), eMission_Pion_INF_RepondreAAggression ),
-    T_ConverterUnitMission( "Pion INF AppuyerSurPosition", QT_TRANSLATE_NOOP( "ENT", "Pion INF AppuyerSurPosition" ), eMission_Pion_INF_AppuyerSurPosition ),
-    T_ConverterUnitMission( "Pion LOG SeDeployer", QT_TRANSLATE_NOOP( "ENT", "Pion LOG SeDeployer" ), eMission_Pion_LOG_SeDeployer ),
-    T_ConverterUnitMission( "Pion LOG Renforcer", QT_TRANSLATE_NOOP( "ENT", "Pion LOG Renforcer" ), eMission_Pion_LOG_Renforcer ),
-    T_ConverterUnitMission( "Pion LOG PreparerBascule", QT_TRANSLATE_NOOP( "ENT", "Pion LOG PreparerBascule" ), eMission_Pion_LOG_PreparerBascule ),
-    T_ConverterUnitMission( "Pion LOG DecontaminerBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG DecontaminerBlesses" ), eMission_Pion_LOG_DecontaminerBlesses ),
-    T_ConverterUnitMission( "Pion LOG TrierEtTraiterBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TrierEtTraiterBlesses" ), eMission_Pion_LOG_TrierEtTraiterBlesses ),
-    T_ConverterUnitMission( "Pion LOG TrierBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TrierBlesses" ), eMission_Pion_LOG_TrierBlesses ),
-    T_ConverterUnitMission( "Pion LOG TraiterBlesses", QT_TRANSLATE_NOOP( "ENT", "Pion LOG TraiterBlesses" ), eMission_Pion_LOG_TraiterBlesses ),
-    T_ConverterUnitMission( "Pion LOG PrendreEnCompteReactionsMentales", QT_TRANSLATE_NOOP( "ENT", "Pion LOG PrendreEnCompteReactionsMentales" ), eMission_Pion_LOG_PrendreEnCompteReactionsMentales ),
-    T_ConverterUnitMission( "Pion LOG Convoyer", QT_TRANSLATE_NOOP( "ENT", "Pion LOG Convoyer" ), eMission_Pion_LOG_Convoyer ),
-    T_ConverterUnitMission( "Pion LOG Reparer", QT_TRANSLATE_NOOP( "ENT", "Pion LOG Reparer" ), eMission_Pion_LOG_Reparer ),
-    T_ConverterUnitMission( "Pion LOG AppuyerMouvement", QT_TRANSLATE_NOOP( "ENT", "Pion LOG AppuyerMouvement" ), eMission_Pion_LOG_AppuyerMouvement ),
-    T_ConverterUnitMission( "Pion LOG ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion LOG ReconnaitreItineraire" ), eMission_Pion_LOG_ReconnaitreItineraire ),
-    T_ConverterUnitMission( "Pion LOG ReconnaitreZoneContaminee", QT_TRANSLATE_NOOP( "ENT", "Pion LOG ReconnaitreZoneContaminee" ), eMission_Pion_LOG_ReconnaitreZoneContaminee ),
-    T_ConverterUnitMission( "Pion LOG AppuyerMouvementDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion LOG AppuyerMouvementDansZone" ), eMission_Pion_LOG_AppuyerMouvementDansZone ),
-    T_ConverterUnitMission( "Pion LOG MettreEnOeuvreZoneStationnement", QT_TRANSLATE_NOOP( "ENT", "Pion LOG MettreEnOeuvreZoneStationnement" ), eMission_Pion_LOG_MettreEnOeuvreZoneStationnement ),
-    T_ConverterUnitMission( "Pion LOG AppuyerFranchissementSurUnPoint", QT_TRANSLATE_NOOP( "ENT", "Pion LOG AppuyerFranchissementSurUnPoint" ), eMission_Pion_LOG_AppuyerFranchissementSurUnPoint ),
-    T_ConverterUnitMission( "Pion LOG BloquerZone", QT_TRANSLATE_NOOP( "ENT", "Pion LOG BloquerZone" ), eMission_Pion_LOG_BloquerZone ),
-    T_ConverterUnitMission( "Pion LOG ReconnaitreZoneDeDeploiement", QT_TRANSLATE_NOOP( "ENT", "Pion LOG ReconnaitreZoneDeDeploiement" ), eMission_Pion_LOG_ReconnaitreZoneDeDeploiement ),
-    T_ConverterUnitMission( "Pion LOG ArmerPIA", QT_TRANSLATE_NOOP( "ENT", "Pion LOG ArmerPIA" ), eMission_Pion_LOG_ArmerPIA ),
-    T_ConverterUnitMission( "Pion LOG Surveiller", QT_TRANSLATE_NOOP( "ENT", "Pion LOG Surveiller" ), eMission_Pion_LOG_Surveiller ),
-    T_ConverterUnitMission( "Pion Test Heliporter", QT_TRANSLATE_NOOP( "ENT", "Pion Test Heliporter" ), eMission_Pion_Test_Heliporter ),
-    T_ConverterUnitMission( "Pion Test MoveTo", QT_TRANSLATE_NOOP( "ENT", "Pion Test MoveTo" ), eMission_Pion_Test_MoveTo ),
-    T_ConverterUnitMission( "Pion Test CreateObject", QT_TRANSLATE_NOOP( "ENT", "Pion Test CreateObject" ), eMission_Pion_Test_CreateObject ),
-    T_ConverterUnitMission( "Pion Test DestroyObject", QT_TRANSLATE_NOOP( "ENT", "Pion Test DestroyObject" ), eMission_Pion_Test_DestroyObject ),
-    T_ConverterUnitMission( "Pion Test CreateBypass", QT_TRANSLATE_NOOP( "ENT", "Pion Test CreateBypass" ), eMission_Pion_Test_CreateBypass ),
-    T_ConverterUnitMission( "Pion Test Fire", QT_TRANSLATE_NOOP( "ENT", "Pion Test Fire" ), eMission_Pion_Test_Fire ),
-    T_ConverterUnitMission( "Pion Test ChangePosture", QT_TRANSLATE_NOOP( "ENT", "Pion Test ChangePosture" ), eMission_Pion_Test_ChangePosture ),
-    T_ConverterUnitMission( "Pion Test PathFind", QT_TRANSLATE_NOOP( "ENT", "Pion Test PathFind" ), eMission_Pion_Test_PathFind ),
-    T_ConverterUnitMission( "Pion Test FindPosition", QT_TRANSLATE_NOOP( "ENT", "Pion Test FindPosition" ), eMission_Pion_Test_FindPosition ),
-    T_ConverterUnitMission( "Pion Test Reinforce", QT_TRANSLATE_NOOP( "ENT", "Pion Test Reinforce" ), eMission_Pion_Test_Reinforce ),
-    T_ConverterUnitMission( "Pion PlastronEnnemi", QT_TRANSLATE_NOOP( "ENT", "Pion PlastronEnnemi" ), eMission_Pion_PlastronEnnemi ),
-    T_ConverterUnitMission( "Pion FaireMouvement", QT_TRANSLATE_NOOP( "ENT", "Pion FaireMouvement" ), eMission_Pion_FaireMouvement ),
-    T_ConverterUnitMission( "Pion Suivre", QT_TRANSLATE_NOOP( "ENT", "Pion Suivre" ), eMission_Pion_Suivre ),
-    T_ConverterUnitMission( "Pion Transporter", QT_TRANSLATE_NOOP( "ENT", "Pion Transporter" ), eMission_Pion_Transporter ),
-    T_ConverterUnitMission( "Pion SeFaireDecontaminer", QT_TRANSLATE_NOOP( "ENT", "Pion SeFaireDecontaminer" ), eMission_Pion_SeFaireDecontaminer ),
-    T_ConverterUnitMission( "Pion Franchir", QT_TRANSLATE_NOOP( "ENT", "Pion Franchir" ), eMission_Pion_Franchir ),
-    T_ConverterUnitMission( "Pion Decrocher", QT_TRANSLATE_NOOP( "ENT", "Pion Decrocher" ), eMission_Pion_Decrocher ),
-    T_ConverterUnitMission( "Pion Stationner", QT_TRANSLATE_NOOP( "ENT", "Pion Stationner" ), eMission_Pion_Stationner ),
-    T_ConverterUnitMission( "Pion SeFaireTransporter", QT_TRANSLATE_NOOP( "ENT", "Pion SeFaireTransporter" ), eMission_Pion_SeFaireTransporter ),
-    T_ConverterUnitMission( "Pion InterdireFranchissementPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion InterdireFranchissementPopulations" ), eMission_Pion_InterdireFranchissementPopulations ),
-    T_ConverterUnitMission( "Pion FiltrerPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion FiltrerPopulations" ), eMission_Pion_FiltrerPopulations ),
-    T_ConverterUnitMission( "Pion RenseignerSurPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion RenseignerSurPopulations" ), eMission_Pion_RenseignerSurPopulations ),
-    T_ConverterUnitMission( "Pion CanaliserPopulations", QT_TRANSLATE_NOOP( "ENT", "Pion CanaliserPopulations" ), eMission_Pion_CanaliserPopulations ),
-    T_ConverterUnitMission( "Pion ControlerPopulationsDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion ControlerPopulationsDansZone" ), eMission_Pion_ControlerPopulationsDansZone ),
-    T_ConverterUnitMission( "Pion SecuriserZoneContrePopulations", QT_TRANSLATE_NOOP( "ENT", "Pion SecuriserZoneContrePopulations" ), eMission_Pion_SecuriserZoneContrePopulations ),
-    T_ConverterUnitMission( "Pion Generique", QT_TRANSLATE_NOOP( "ENT", "Pion Generique" ), eMission_Pion_Generique ),
-    T_ConverterUnitMission( "Pion MILICE Provoquer", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE Provoquer" ), eMission_Pion_MILICE_Provoquer ),
-    T_ConverterUnitMission( "Pion MILICE PrendreEtTenir", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE PrendreEtTenir" ), eMission_Pion_MILICE_PrendreEtTenir ),
-    T_ConverterUnitMission( "Pion MILICE DetruireEmbuscade", QT_TRANSLATE_NOOP( "ENT", "Pion MILICE DetruireEmbuscade" ), eMission_Pion_MILICE_DetruireEmbuscade ),
-    T_ConverterUnitMission( "Pion JOINT AIR EffectuerRaid", QT_TRANSLATE_NOOP( "ENT", "Pion JOINT AIR EffectuerRaid" ), eMission_Pion_JOINT_AIR_EffectuerRaid ),
-    T_ConverterUnitMission( "Pion NBC AnimerUnPlotDeDecontamination", QT_TRANSLATE_NOOP( "ENT", "Pion NBC AnimerUnPlotDeDecontamination" ), eMission_Pion_NBC_AnimerUnPlotDeDecontamination ),
-    T_ConverterUnitMission( "Pion NBC ReconnaitreItineraire", QT_TRANSLATE_NOOP( "ENT", "Pion NBC ReconnaitreItineraire" ), eMission_Pion_NBC_ReconnaitreItineraire ),
-    T_ConverterUnitMission( "Pion NBC ReconnaitreZone", QT_TRANSLATE_NOOP( "ENT", "Pion NBC ReconnaitreZone" ), eMission_Pion_NBC_ReconnaitreZone ),
-    T_ConverterUnitMission( "Pion NBC DecontaminerZone", QT_TRANSLATE_NOOP( "ENT", "Pion NBC DecontaminerZone" ), eMission_Pion_NBC_DecontaminerZone ),
-    T_ConverterUnitMission( "Pion NBC ReconnaitreUnSiteROTA", QT_TRANSLATE_NOOP( "ENT", "Pion NBC ReconnaitreUnSiteROTA" ), eMission_Pion_NBC_ReconnaitreUnSiteROTA ),
-    T_ConverterUnitMission( "Pion RENS ROHUM RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROHUM RenseignerSur" ), eMission_Pion_RENS_ROHUM_RenseignerSur ),
-    T_ConverterUnitMission( "Pion RENS ROHUM SExfiltrer", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROHUM SExfiltrer" ), eMission_Pion_RENS_ROHUM_SExfiltrer ),
-    T_ConverterUnitMission( "Pion RENS ROHUM OrienterGuider", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROHUM OrienterGuider" ), eMission_Pion_RENS_ROHUM_OrienterGuider ),
-    T_ConverterUnitMission( "Pion RENS ROEM Appuyer", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROEM Appuyer" ), eMission_Pion_RENS_ROEM_Appuyer ),
-    T_ConverterUnitMission( "Pion RENS ROEM RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROEM RenseignerSur" ), eMission_Pion_RENS_ROEM_RenseignerSur ),
-    T_ConverterUnitMission( "Pion RENS ROEM MettreEnOeuvre", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROEM MettreEnOeuvre" ), eMission_Pion_RENS_ROEM_MettreEnOeuvre ),
-    T_ConverterUnitMission( "Pion RENS RADINT RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion RENS RADINT RenseignerSur" ), eMission_Pion_RENS_RADINT_RenseignerSur ),
-    T_ConverterUnitMission( "Pion RENS RADINT MettreEnOeuvre", QT_TRANSLATE_NOOP( "ENT", "Pion RENS RADINT MettreEnOeuvre" ), eMission_Pion_RENS_RADINT_MettreEnOeuvre ),
-    T_ConverterUnitMission( "Pion RENS ROIM MettreEnOeuvre", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROIM MettreEnOeuvre" ), eMission_Pion_RENS_ROIM_MettreEnOeuvre ),
-    T_ConverterUnitMission( "Pion RENS ROIM SDTI RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROIM SDTI RenseignerSur" ), eMission_Pion_RENS_ROIM_SDTI_RenseignerSur ),
-    T_ConverterUnitMission( "Pion RENS ROIM CL289 RenseignerSur", QT_TRANSLATE_NOOP( "ENT", "Pion RENS ROIM CL289 RenseignerSur" ), eMission_Pion_RENS_ROIM_CL289_RenseignerSur ),
-    T_ConverterUnitMission( "Pion TRANS EtablirGererLiaison", QT_TRANSLATE_NOOP( "ENT", "Pion TRANS EtablirGererLiaison" ), eMission_Pion_TRANS_EtablirGererLiaison ),
-    T_ConverterUnitMission( "Pion ASY SInfiltrer", QT_TRANSLATE_NOOP( "ENT", "Pion ASY SInfiltrer" ), eMission_Pion_ASY_SInfiltrer ),
-    T_ConverterUnitMission( "Pion ASY CommettreAttentatContrePopulation", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreAttentatContrePopulation" ), eMission_Pion_ASY_CommettreAttentatContrePopulation ),
-    T_ConverterUnitMission( "Pion ASY CommettreAttentatContreForcesArmees", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreAttentatContreForcesArmees" ), eMission_Pion_ASY_CommettreAttentatContreForcesArmees ),
-    T_ConverterUnitMission( "Pion ASY CommettreAttentatContreInstallation", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreAttentatContreInstallation" ), eMission_Pion_ASY_CommettreAttentatContreInstallation ),
-    T_ConverterUnitMission( "Pion ASY CommettreExactionsSurPopulationDansZone", QT_TRANSLATE_NOOP( "ENT", "Pion ASY CommettreExactionsSurPopulationDansZone" ), eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone ),
-    T_ConverterUnitMission( "Pion ASY Renseigner", QT_TRANSLATE_NOOP( "ENT", "Pion ASY Renseigner" ), eMission_Pion_ASY_Renseigner ),
-
-    T_ConverterUnitMission( "", "", (E_UnitMission)-1  )
+    T_ConverterMissionGenSousTypeObstacle( "preliminaire", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminaire" ), eMissionGenSousTypeObstacle_Preliminaire ),
+    T_ConverterMissionGenSousTypeObstacle( "de manoeuvre", QT_TRANSLATE_NOOP( "ENT_Tr", "de manoeuvre" ), eMissionGenSousTypeObstacle_DeManoeuvre ),
+    T_ConverterMissionGenSousTypeObstacle( "", "", (E_MissionGenSousTypeObstacle)-1 )
 };
 
-ENT_Tr::T_ConverterPopulationMission ENT_Tr::populationMissionConverter_[] =
+ENT_Tr::T_ConverterOrderErrorCode ENT_Tr::OrderErrorCodeConverter_[] =
 {
-    T_ConverterPopulationMission( "Population FaireMouvement", QT_TRANSLATE_NOOP( "ENT", "Population FaireMouvement" ), eMission_Population_FaireMouvement ),
-    T_ConverterPopulationMission( "Population Manifester", QT_TRANSLATE_NOOP( "ENT", "Population Manifester" ), eMission_Population_Manifester ),
-    T_ConverterPopulationMission( "Population CommettreExactions", QT_TRANSLATE_NOOP( "ENT", "Population CommettreExactions" ), eMission_Population_CommettreExactions ),
-
-    T_ConverterPopulationMission( "", "", (E_PopulationMission)-1  )
+    T_ConverterOrderErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eOrderErrorCode_NoError ),
+    T_ConverterOrderErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), eOrderErrorCode_ErrorInvalidUnit ),
+    T_ConverterOrderErrorCode( "error invalid limit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid limit" ), eOrderErrorCode_ErrorInvalidLimit ),
+    T_ConverterOrderErrorCode( "error invalid lima", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima" ), eOrderErrorCode_ErrorInvalidLima ),
+    T_ConverterOrderErrorCode( "error invalid mission", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid mission" ), eOrderErrorCode_ErrorInvalidMission ),
+    T_ConverterOrderErrorCode( "error invalid mission parameters", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid mission parameters" ), eOrderErrorCode_ErrorInvalidMissionParameters ),
+    T_ConverterOrderErrorCode( "error unit cannot receive order", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit cannot receive order" ), eOrderErrorCode_ErrorUnitCannotReceiveOrder ),
+    T_ConverterOrderErrorCode( "error invalid order conduite", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order conduite" ), eOrderErrorCode_ErrorInvalidOrderConduite ),
+    T_ConverterOrderErrorCode( "error invalid order mission", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order mission" ), eOrderErrorCode_ErrorInvalidOrderMission ),
+    T_ConverterOrderErrorCode( "error invalid order initial", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order initial" ), eOrderErrorCode_ErrorInvalidOrderInitial ),
+    T_ConverterOrderErrorCode( "error invalid order conduite parameters", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order conduite parameters" ), eOrderErrorCode_ErrorInvalidOrderConduiteParameters ),
+    T_ConverterOrderErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eOrderErrorCode_ErrorUnitSurrendered ),
+    T_ConverterOrderErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eOrderErrorCode_ErrorInvalidLimaFunction ),
+    T_ConverterOrderErrorCode( "", "", (E_OrderErrorCode)-1 )
 };
 
-ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
+ENT_Tr::T_ConverterOrderState ENT_Tr::OrderStateConverter_[] =
 {
-    T_ConverterFragOrder( "MettreTenueNBC", QT_TRANSLATE_NOOP( "ENT", "Mettre Tenue NBC" ), eOrdreConduite_MettreTenueNBC ),
-    T_ConverterFragOrder( "EnleverTenueNBC", QT_TRANSLATE_NOOP( "ENT", "Enlever Tenue NBC" ), eOrdreConduite_EnleverTenueNBC ),
-    T_ConverterFragOrder( "PasserEnSilenceRadio", QT_TRANSLATE_NOOP( "ENT", "Passer En Silence Radio" ), eOrdreConduite_PasserEnSilenceRadio ),
-    T_ConverterFragOrder( "ArreterSilenceRadio", QT_TRANSLATE_NOOP( "ENT", "Arreter Silence Radio" ), eOrdreConduite_ArreterSilenceRadio ),
-    T_ConverterFragOrder( "PasserEnSilenceRadar", QT_TRANSLATE_NOOP( "ENT", "Passer En Silence Radar" ), eOrdreConduite_PasserEnSilenceRadar ),
-    T_ConverterFragOrder( "ArreterSilenceRadar", QT_TRANSLATE_NOOP( "ENT", "Arreter Silence Radar" ), eOrdreConduite_ArreterSilenceRadar ),
-    T_ConverterFragOrder( "RecupererTransporteurs", QT_TRANSLATE_NOOP( "ENT", "Recuperer Transporteurs" ), eOrdreConduite_RecupererTransporteurs ),
-    T_ConverterFragOrder( "AttendreSePoster", QT_TRANSLATE_NOOP( "ENT", "Attendre Se Poster" ), eOrdreConduite_AttendreSePoster ),
-    T_ConverterFragOrder( "Poursuivre", QT_TRANSLATE_NOOP( "ENT", "Poursuivre" ), eOrdreConduite_Poursuivre ),
-    T_ConverterFragOrder( "Interrompre", QT_TRANSLATE_NOOP( "ENT", "Interrompre" ), eOrdreConduite_Interrompre ),
-    T_ConverterFragOrder( "ChangerAmbiance", QT_TRANSLATE_NOOP( "ENT", "Changer Ambiance" ), eOrdreConduite_ChangerAmbiance ),
-    T_ConverterFragOrder( "ChangerReglesEngagement", QT_TRANSLATE_NOOP( "ENT", "Changer Regles Engagement" ), eOrdreConduite_ChangerReglesEngagement ),
-    T_ConverterFragOrder( "ChangerParametresRecompletementALAT", QT_TRANSLATE_NOOP( "ENT", "Changer Parametres Recompletement ALAT" ), eOrdreConduite_ChangerParametresRecompletementALAT ),
-    T_ConverterFragOrder( "ChangerReglesEngagementPopulation", QT_TRANSLATE_NOOP( "ENT", "Changer Regles Engagement Population" ), eOrdreConduite_ChangerReglesEngagementPopulation ),
-    T_ConverterFragOrder( "Deboucher", QT_TRANSLATE_NOOP( "ENT", "Deboucher" ), eOrdreConduite_Deboucher ),
-    T_ConverterFragOrder( "Decrocher", QT_TRANSLATE_NOOP( "ENT", "Decrocher" ), eOrdreConduite_Decrocher ),
-    T_ConverterFragOrder( "AcquerirObjectif", QT_TRANSLATE_NOOP( "ENT", "Acquerir Objectif" ), eOrdreConduite_AcquerirObjectif ),
-    T_ConverterFragOrder( "Brouiller", QT_TRANSLATE_NOOP( "ENT", "Brouiller" ), eOrdreConduite_Brouiller ),
-    T_ConverterFragOrder( "ChangerPositionDebarquement", QT_TRANSLATE_NOOP( "ENT", "Changer Position Debarquement" ), eOrdreConduite_ChangerPositionDebarquement ),
-    T_ConverterFragOrder( "Pion ChangerDePosition", QT_TRANSLATE_NOOP( "ENT", "Pion: Changer De Position" ), eOrdreConduite_Pion_ChangerDePosition ),
-    T_ConverterFragOrder( "Pion Contourner", QT_TRANSLATE_NOOP( "ENT", "Pion: Contourner" ), eOrdreConduite_Pion_Contourner ),
-    T_ConverterFragOrder( "Pion EnvoyerVehicule", QT_TRANSLATE_NOOP( "ENT", "Pion: Envoyer Vehicule" ), eOrdreConduite_Pion_EnvoyerVehicule ),
-    T_ConverterFragOrder( "Pion ActiverObstacle", QT_TRANSLATE_NOOP( "ENT", "Pion: Activer Obstacle" ), eOrdreConduite_Pion_ActiverObstacle ),
-    T_ConverterFragOrder( "Pion AppliquerFeux", QT_TRANSLATE_NOOP( "ENT", "Pion: Appliquer Feux" ), eOrdreConduite_Pion_AppliquerFeux ),
-    T_ConverterFragOrder( "Pion ExecuterTir", QT_TRANSLATE_NOOP( "ENT", "Pion: Executer Tir" ), eOrdreConduite_Pion_ExecuterTir ),
-    T_ConverterFragOrder( "Pion Emettre", QT_TRANSLATE_NOOP( "ENT", "Pion: Emettre" ), eOrdreConduite_Pion_Emettre ),
-    T_ConverterFragOrder( "Pion StopperEmission", QT_TRANSLATE_NOOP( "ENT", "Pion: Stopper Emission" ), eOrdreConduite_Pion_StopperEmission ),
-    T_ConverterFragOrder( "Pion RenforcerEnVSRAM", QT_TRANSLATE_NOOP( "ENT", "Pion: Renforcer En VSRAM" ), eOrdreConduite_Pion_RenforcerEnVSRAM ),
-    T_ConverterFragOrder( "Pion TransfererVSRAM", QT_TRANSLATE_NOOP( "ENT", "Pion: Transferer VSRAM" ), eOrdreConduite_Pion_TransfererVSRAM ),
-    T_ConverterFragOrder( "Pion ReprendreAuxOrdresVSRAM", QT_TRANSLATE_NOOP( "ENT", "Pion: Reprendre Aux Ordres VSRAM" ), eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM ),
-    T_ConverterFragOrder( "Pion RenforcerEnRemorqueurs", QT_TRANSLATE_NOOP( "ENT", "Pion: Renforcer En Remorqueurs" ), eOrdreConduite_Pion_RenforcerEnRemorqueurs ),
-    T_ConverterFragOrder( "Pion TransfererRemorqueurs", QT_TRANSLATE_NOOP( "ENT", "Pion: Transferer Remorqueurs" ), eOrdreConduite_Pion_TransfererRemorqueurs ),
-    T_ConverterFragOrder( "Pion ReprendreAuxOrdresRemorqueurs", QT_TRANSLATE_NOOP( "ENT", "Pion: Reprendre Aux Ordres Remorqueurs" ), eOrdreConduite_Pion_ReprendreAuxOrdresRemorqueurs ),
-    T_ConverterFragOrder( "ModifierRegimeTravailMaintenance", QT_TRANSLATE_NOOP( "ENT", "Modifier Regime Travail Maintenance" ), eOrdreConduite_ModifierRegimeTravailMaintenance ),
-    T_ConverterFragOrder( "ModifierPrioritesReparations", QT_TRANSLATE_NOOP( "ENT", "Modifier Priorites Reparations" ), eOrdreConduite_ModifierPrioritesReparations ),
-    T_ConverterFragOrder( "ModifierPrioritesBlesses", QT_TRANSLATE_NOOP( "ENT", "Modifier Priorites Blesses" ), eOrdreConduite_ModifierPrioritesBlesses ),
-    T_ConverterFragOrder( "ModifierPrioritesTactiquesReparations", QT_TRANSLATE_NOOP( "ENT", "Modifier Priorites Tactiques Reparations" ), eOrdreConduite_ModifierPrioritesTactiquesReparations ),
-    T_ConverterFragOrder( "ModifierPrioritesTactiquesBlesses", QT_TRANSLATE_NOOP( "ENT", "Modifier Priorites Tactiques Blesses" ), eOrdreConduite_ModifierPrioritesTactiquesBlesses ),
-    T_ConverterFragOrder( "Automate RealiserVariantement", QT_TRANSLATE_NOOP( "ENT", "Automate: Realiser Variantement" ), eOrdreConduite_Automate_RealiserVariantement ),
-    T_ConverterFragOrder( "Automate DesequiperSiteFranchissement", QT_TRANSLATE_NOOP( "ENT", "Automate: Desequiper Site Franchissement" ), eOrdreConduite_Automate_DesequiperSiteFranchissement ),
-    T_ConverterFragOrder( "Automate AffecterPionAObstacle", QT_TRANSLATE_NOOP( "ENT", "Automate: Affecter Pion AObstacle" ), eOrdreConduite_Automate_AffecterPionAObstacle ),
-    T_ConverterFragOrder( "Automate ReconnaitreZoneImplantation", QT_TRANSLATE_NOOP( "ENT", "Automate: Reconnaitre Zone Implantation" ), eOrdreConduite_Automate_ReconnaitreZoneImplantation ),
-    T_ConverterFragOrder( "Automate TC2 GererMaterielAvantDeplacement", QT_TRANSLATE_NOOP( "ENT", "Automate: TC2 Gerer Materiel Avant Deplacement" ), eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement ),
-    T_ConverterFragOrder( "Automate ActiverObstacle", QT_TRANSLATE_NOOP( "ENT", "Automate: Activer Obstacle" ), eOrdreConduite_Automate_ActiverObstacle ),
-    T_ConverterFragOrder( "Automate TransfererRenforts", QT_TRANSLATE_NOOP( "ENT", "Automate: Transferer Renforts" ), eOrdreConduite_Automate_TransfererRenforts ),
-    T_ConverterFragOrder( "Population ChangerAttitude", QT_TRANSLATE_NOOP( "ENT", "Population: Changer Attitude" ), eOrdreConduite_Population_ChangerAttitude ),
-
-    T_ConverterFragOrder( "", "", (E_FragOrder)-1  )
+    T_ConverterOrderState( "started", QT_TRANSLATE_NOOP( "ENT_Tr", "started" ), eOrderState_Started ),
+    T_ConverterOrderState( "stopped", QT_TRANSLATE_NOOP( "ENT_Tr", "stopped" ), eOrderState_Stopped ),
+    T_ConverterOrderState( "", "", (E_OrderState)-1 )
 };
 
+ENT_Tr::T_ConverterAutomateOrderFormation ENT_Tr::AutomateOrderFormationConverter_[] =
+{
+    T_ConverterAutomateOrderFormation( "un echelon", QT_TRANSLATE_NOOP( "ENT_Tr", "un echelon" ), eAutomateOrderFormation_UnEchelon ),
+    T_ConverterAutomateOrderFormation( "deux echelons", QT_TRANSLATE_NOOP( "ENT_Tr", "deux echelons" ), eAutomateOrderFormation_DeuxEchelons ),
+    T_ConverterAutomateOrderFormation( "", "", (E_AutomateOrderFormation)-1 )
+};
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
@@ -1020,12 +550,12 @@ ENT_Tr::T_ConverterFragOrder ENT_Tr::fragOrderConverter_[] =
 void ENT_Tr::InitTranslations()
 {
         InitTr( TypeLocalisationConverter_, "ENT_Tr" );
-    InitTr( GDH_QualificatifConverter_, "ENT_Tr" );
-    InitTr( HumanWoundConverter_, "ENT_Tr" );
-    InitTr( UnitIdentificationLevelConverter_, "ENT_Tr" );
     InitTr( FamilleDotationConverter_, "ENT_Tr" );
     InitTr( FamilleMunitionConverter_, "ENT_Tr" );
+    InitTr( GDH_QualificatifConverter_, "ENT_Tr" );
+    InitTr( UnitIdentificationLevelConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
+    InitTr( HumanWoundConverter_, "ENT_Tr" );
     InitTr( HumanRankConverter_, "ENT_Tr" );
     InitTr( DiplomatieConverter_, "ENT_Tr" );
     InitTr( ChangeDiplomatieErrorCodeConverter_, "ENT_Tr" );
@@ -1044,24 +574,11 @@ void ENT_Tr::InitTranslations()
     InitTr( SetAutomateModeErrorCodeConverter_, "ENT_Tr" );
     InitTr( ChangeAutomateErrorCodeConverter_, "ENT_Tr" );
     InitTr( ChangeLiensLogistiquesErrorCodeConverter_, "ENT_Tr" );
-    InitTr( _ALAT_PorteeActionConverter_, "ENT_Tr" );
-    InitTr( _ALAT_AmbianceMissionConverter_, "ENT_Tr" );
-    InitTr( ModeDeploiementConverter_, "ENT_Tr" );
-    InitTr( TypeLimaConverter_, "ENT_Tr" );
-    InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
-    InitTr( OrderErrorCodeConverter_, "ENT_Tr" );
-    InitTr( OrderStateConverter_, "ENT_Tr" );
-    InitTr( ObjectTypeConverter_, "ENT_Tr" );
-    InitTr( MissionGenSousTypeObstacleConverter_, "ENT_Tr" );
-    InitTr( ObjectErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ModeDeploiementSectionMistralConverter_, "ENT_Tr" );
-    InitTr( GenTypePontageConverter_, "ENT_Tr" );
-    InitTr( MissionInfNatureObjectifConverter_, "ENT_Tr" );
-    InitTr( LogSanteTraitementEtatConverter_, "ENT_Tr" );
-    InitTr( AutomateOrderFormationConverter_, "ENT_Tr" );
     InitTr( CtrlErrorCodeConverter_, "ENT_Tr" );
     InitTr( EtatSimConverter_, "ENT_Tr" );
     InitTr( PrecipitationTypeConverter_, "ENT_Tr" );
+    InitTr( TypeLimaConverter_, "ENT_Tr" );
+    InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( PopulationAttrErrorCodeConverter_, "ENT_Tr" );
     InitTr( TypeCRConverter_, "ENT_Tr" );
@@ -1072,13 +589,13 @@ void ENT_Tr::InitTranslations()
     InitTr( LogRavitaillementTraitementEtatConverter_, "ENT_Tr" );
     InitTr( MsgLogRavitaillementChangeQuotasAckConverter_, "ENT_Tr" );
     InitTr( MsgLogRavitaillementPousserFluxAckConverter_, "ENT_Tr" );
-    InitTr( AmbianceMissionConverter_, "ENT_Tr" );
-    InitTr( TC2GererMaterielAvantDeplacementConverter_, "ENT_Tr" );
-
-    InitTr( automataMissionConverter_ );
-    InitTr( unitMissionConverter_ );
-    InitTr( populationMissionConverter_ );
-    InitTr( fragOrderConverter_ );
+    InitTr( LogSanteTraitementEtatConverter_, "ENT_Tr" );
+    InitTr( ObjectErrorCodeConverter_, "ENT_Tr" );
+    InitTr( ObjectTypeConverter_, "ENT_Tr" );
+    InitTr( MissionGenSousTypeObstacleConverter_, "ENT_Tr" );
+    InitTr( OrderErrorCodeConverter_, "ENT_Tr" );
+    InitTr( OrderStateConverter_, "ENT_Tr" );
+    InitTr( AutomateOrderFormationConverter_, "ENT_Tr" );
 }
 
 
@@ -1089,33 +606,6 @@ void ENT_Tr::InitTranslations()
 const std::string& ENT_Tr::ConvertFromTypeLocalisation( E_TypeLocalisation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( TypeLocalisationConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromGDH_Qualificatif
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromGDH_Qualificatif( E_GDH_Qualificatif nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( GDH_QualificatifConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitIdentificationLevel
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitIdentificationLevel( E_UnitIdentificationLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( UnitIdentificationLevelConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1137,12 +627,39 @@ const std::string& ENT_Tr::ConvertFromFamilleMunition( E_FamilleMunition nValue,
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromGDH_Qualificatif
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromGDH_Qualificatif( E_GDH_Qualificatif nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( GDH_QualificatifConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromUnitIdentificationLevel
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromUnitIdentificationLevel( E_UnitIdentificationLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( UnitIdentificationLevelConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromNatureLevel
 // Created: AGR
 //-----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromNatureLevel( E_NatureLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( NatureLevelConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromHumanWound
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromHumanWound( E_HumanWound nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( HumanWoundConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1308,141 +825,6 @@ const std::string& ENT_Tr::ConvertFromChangeLiensLogistiquesErrorCode( E_ChangeL
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFrom_ALAT_PorteeAction
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFrom_ALAT_PorteeAction( E__ALAT_PorteeAction nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( _ALAT_PorteeActionConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFrom_ALAT_AmbianceMission
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFrom_ALAT_AmbianceMission( E__ALAT_AmbianceMission nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( _ALAT_AmbianceMissionConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromModeDeploiement
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromModeDeploiement( E_ModeDeploiement nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ModeDeploiementConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTypeLima
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTypeLima( E_TypeLima nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( TypeLimaConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromInfoContextErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromInfoContextErrorCode( E_InfoContextErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( InfoContextErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromOrderErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromOrderErrorCode( E_OrderErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( OrderErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromOrderState
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromOrderState( E_OrderState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( OrderStateConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromObjectType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObjectType( E_ObjectType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ObjectTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMissionGenSousTypeObstacle
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMissionGenSousTypeObstacle( E_MissionGenSousTypeObstacle nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( MissionGenSousTypeObstacleConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromObjectErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObjectErrorCode( E_ObjectErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ObjectErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromModeDeploiementSectionMistral
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromModeDeploiementSectionMistral( E_ModeDeploiementSectionMistral nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ModeDeploiementSectionMistralConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromGenTypePontage
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromGenTypePontage( E_GenTypePontage nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( GenTypePontageConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromMissionInfNatureObjectif
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromMissionInfNatureObjectif( E_MissionInfNatureObjectif nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( MissionInfNatureObjectifConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogSanteTraitementEtat
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( LogSanteTraitementEtatConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAutomateOrderFormation
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAutomateOrderFormation( E_AutomateOrderFormation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( AutomateOrderFormationConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromCtrlErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1467,6 +849,24 @@ const std::string& ENT_Tr::ConvertFromEtatSim( E_EtatSim nValue, ENT_Tr_ABC::E_C
 const std::string& ENT_Tr::ConvertFromPrecipitationType( E_PrecipitationType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( PrecipitationTypeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromTypeLima
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromTypeLima( E_TypeLima nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( TypeLimaConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromInfoContextErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromInfoContextErrorCode( E_InfoContextErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( InfoContextErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -1560,63 +960,67 @@ const std::string& ENT_Tr::ConvertFromMsgLogRavitaillementPousserFluxAck( E_MsgL
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAmbianceMission
+// Name: ENT_Tr::ConvertFromLogSanteTraitementEtat
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAmbianceMission( E_AmbianceMission nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromLogSanteTraitementEtat( E_LogSanteTraitementEtat nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( AmbianceMissionConverter_, nValue, nConverterType );
+    return ENT_Tr::InverseFindInConverter( LogSanteTraitementEtatConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromTC2GererMaterielAvantDeplacement
+// Name: ENT_Tr::ConvertFromObjectErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromTC2GererMaterielAvantDeplacement( E_TC2GererMaterielAvantDeplacement nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+const std::string& ENT_Tr::ConvertFromObjectErrorCode( E_ObjectErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( TC2GererMaterielAvantDeplacementConverter_, nValue, nConverterType );
-}
-
-
-
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAutomataMission
-// Created: JDY 03-07-24
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAutomataMission( E_AutomataMission val, ENT_Tr_ABC::E_Conversion e )
-{
-   return ENT_Tr::InverseFindInConverter( automataMissionConverter_, val ,e );
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitMission
-// Created: JDY 03-07-24
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitMission( E_UnitMission val, ENT_Tr_ABC::E_Conversion e )
-{
-    return ENT_Tr::InverseFindInConverter( unitMissionConverter_, val ,e );
+    return ENT_Tr::InverseFindInConverter( ObjectErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPopulationMission
-// Created: JDY 03-07-24
+// Name: ENT_Tr::ConvertFromObjectType
+// Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationMission( E_PopulationMission val, ENT_Tr_ABC::E_Conversion e )
+const std::string& ENT_Tr::ConvertFromObjectType( E_ObjectType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( populationMissionConverter_, val ,e );
+    return ENT_Tr::InverseFindInConverter( ObjectTypeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromFragOrder
-// Created: JDY 03-07-24
+// Name: ENT_Tr::ConvertFromMissionGenSousTypeObstacle
+// Created: AGR
 //-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromFragOrder( E_FragOrder val, ENT_Tr_ABC::E_Conversion e )
+const std::string& ENT_Tr::ConvertFromMissionGenSousTypeObstacle( E_MissionGenSousTypeObstacle nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
-    return ENT_Tr::InverseFindInConverter( fragOrderConverter_, val, e );
+    return ENT_Tr::InverseFindInConverter( MissionGenSousTypeObstacleConverter_, nValue, nConverterType );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromOrderErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromOrderErrorCode( E_OrderErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( OrderErrorCodeConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromOrderState
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromOrderState( E_OrderState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( OrderStateConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromAutomateOrderFormation
+// Created: AGR
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromAutomateOrderFormation( E_AutomateOrderFormation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( AutomateOrderFormationConverter_, nValue, nConverterType );
+}
 
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToTypeLocalisation
@@ -1625,33 +1029,6 @@ const std::string& ENT_Tr::ConvertFromFragOrder( E_FragOrder val, ENT_Tr_ABC::E_
 E_TypeLocalisation ENT_Tr::ConvertToTypeLocalisation( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( TypeLocalisationConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToGDH_Qualificatif
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_GDH_Qualificatif ENT_Tr::ConvertToGDH_Qualificatif( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( GDH_QualificatifConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToHumanWound
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitIdentificationLevel
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitIdentificationLevel ENT_Tr::ConvertToUnitIdentificationLevel( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( UnitIdentificationLevelConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1673,12 +1050,39 @@ E_FamilleMunition ENT_Tr::ConvertToFamilleMunition( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToGDH_Qualificatif
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_GDH_Qualificatif ENT_Tr::ConvertToGDH_Qualificatif( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( GDH_QualificatifConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToUnitIdentificationLevel
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_UnitIdentificationLevel ENT_Tr::ConvertToUnitIdentificationLevel( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( UnitIdentificationLevelConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToNatureLevel
 // Created: AGR
 //-----------------------------------------------------------------------------
 E_NatureLevel ENT_Tr::ConvertToNatureLevel( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( NatureLevelConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToHumanWound
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_HumanWound ENT_Tr::ConvertToHumanWound( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( HumanWoundConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1844,141 +1248,6 @@ E_ChangeLiensLogistiquesErrorCode ENT_Tr::ConvertToChangeLiensLogistiquesErrorCo
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertTo_ALAT_PorteeAction
-// Created: AGR
-//-----------------------------------------------------------------------------
-E__ALAT_PorteeAction ENT_Tr::ConvertTo_ALAT_PorteeAction( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( _ALAT_PorteeActionConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertTo_ALAT_AmbianceMission
-// Created: AGR
-//-----------------------------------------------------------------------------
-E__ALAT_AmbianceMission ENT_Tr::ConvertTo_ALAT_AmbianceMission( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( _ALAT_AmbianceMissionConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToModeDeploiement
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ModeDeploiement ENT_Tr::ConvertToModeDeploiement( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ModeDeploiementConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTypeLima
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_TypeLima ENT_Tr::ConvertToTypeLima( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( TypeLimaConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToInfoContextErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_InfoContextErrorCode ENT_Tr::ConvertToInfoContextErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( InfoContextErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToOrderErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_OrderErrorCode ENT_Tr::ConvertToOrderErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( OrderErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToOrderState
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_OrderState ENT_Tr::ConvertToOrderState( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( OrderStateConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToObjectType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ObjectType ENT_Tr::ConvertToObjectType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ObjectTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMissionGenSousTypeObstacle
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_MissionGenSousTypeObstacle ENT_Tr::ConvertToMissionGenSousTypeObstacle( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( MissionGenSousTypeObstacleConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToObjectErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ObjectErrorCode ENT_Tr::ConvertToObjectErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ObjectErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToModeDeploiementSectionMistral
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ModeDeploiementSectionMistral ENT_Tr::ConvertToModeDeploiementSectionMistral( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ModeDeploiementSectionMistralConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToGenTypePontage
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_GenTypePontage ENT_Tr::ConvertToGenTypePontage( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( GenTypePontageConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToMissionInfNatureObjectif
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_MissionInfNatureObjectif ENT_Tr::ConvertToMissionInfNatureObjectif( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( MissionInfNatureObjectifConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogSanteTraitementEtat
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogSanteTraitementEtat ENT_Tr::ConvertToLogSanteTraitementEtat( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( LogSanteTraitementEtatConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAutomateOrderFormation
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_AutomateOrderFormation ENT_Tr::ConvertToAutomateOrderFormation( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( AutomateOrderFormationConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToCtrlErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -2003,6 +1272,24 @@ E_EtatSim ENT_Tr::ConvertToEtatSim( const std::string& strName )
 E_PrecipitationType ENT_Tr::ConvertToPrecipitationType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( PrecipitationTypeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToTypeLima
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_TypeLima ENT_Tr::ConvertToTypeLima( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( TypeLimaConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToInfoContextErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_InfoContextErrorCode ENT_Tr::ConvertToInfoContextErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( InfoContextErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -2096,60 +1383,65 @@ E_MsgLogRavitaillementPousserFluxAck ENT_Tr::ConvertToMsgLogRavitaillementPousse
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAmbianceMission
+// Name: ENT_Tr::ConvertToLogSanteTraitementEtat
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_AmbianceMission ENT_Tr::ConvertToAmbianceMission( const std::string& strName )
+E_LogSanteTraitementEtat ENT_Tr::ConvertToLogSanteTraitementEtat( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( AmbianceMissionConverter_, strName );
+    return ENT_Tr::FindInConverter( LogSanteTraitementEtatConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToTC2GererMaterielAvantDeplacement
+// Name: ENT_Tr::ConvertToObjectErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_TC2GererMaterielAvantDeplacement ENT_Tr::ConvertToTC2GererMaterielAvantDeplacement( const std::string& strName )
+E_ObjectErrorCode ENT_Tr::ConvertToObjectErrorCode( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( TC2GererMaterielAvantDeplacementConverter_, strName );
-}
-
-
-
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAutomataMission
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_AutomataMission ENT_Tr::ConvertToAutomataMission( const std::string& strName )
-{
-   return ENT_Tr::FindInConverter( automataMissionConverter_, strName );
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitMission
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitMission ENT_Tr::ConvertToUnitMission( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( unitMissionConverter_, strName );
+    return ENT_Tr::FindInConverter( ObjectErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPopulationMission
+// Name: ENT_Tr::ConvertToObjectType
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_PopulationMission ENT_Tr::ConvertToPopulationMission( const std::string& strName )
+E_ObjectType ENT_Tr::ConvertToObjectType( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( populationMissionConverter_, strName );
+    return ENT_Tr::FindInConverter( ObjectTypeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToFragOrder
+// Name: ENT_Tr::ConvertToMissionGenSousTypeObstacle
 // Created: AGR
 //-----------------------------------------------------------------------------
-E_FragOrder ENT_Tr::ConvertToFragOrder( const std::string& strName )
+E_MissionGenSousTypeObstacle ENT_Tr::ConvertToMissionGenSousTypeObstacle( const std::string& strName )
 {
-    return ENT_Tr::FindInConverter( fragOrderConverter_, strName );
+    return ENT_Tr::FindInConverter( MissionGenSousTypeObstacleConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToOrderErrorCode
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_OrderErrorCode ENT_Tr::ConvertToOrderErrorCode( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( OrderErrorCodeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToOrderState
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_OrderState ENT_Tr::ConvertToOrderState( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( OrderStateConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToAutomateOrderFormation
+// Created: AGR
+//-----------------------------------------------------------------------------
+E_AutomateOrderFormation ENT_Tr::ConvertToAutomateOrderFormation( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( AutomateOrderFormationConverter_, strName );
 }
 

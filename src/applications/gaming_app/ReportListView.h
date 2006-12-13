@@ -21,7 +21,7 @@ namespace kernel
     class Controllers;
 }
 
-class Report_ABC;
+class Report;
 class ReportFilterOptions;
 class Reports;
 
@@ -35,7 +35,7 @@ class ReportListView : public gui::ListDisplayer< ReportListView >
                      , public kernel::Observer_ABC
                      , public AgentSelectionObserver
                      , public kernel::ElementObserver_ABC< Reports > 
-                     , public kernel::ElementObserver_ABC< Report_ABC >
+                     , public kernel::ElementObserver_ABC< Report >
 {
     Q_OBJECT
 public:
@@ -48,7 +48,7 @@ public:
     //! @name Operations
     //@{
     virtual void showEvent( QShowEvent* );
-    void Display( const Report_ABC* report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    void Display( const Report* report, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 public slots:
@@ -69,7 +69,7 @@ private:
     virtual void NotifySelected( const kernel::Entity_ABC* element );
 
     virtual void NotifyUpdated( const Reports& reports );
-    virtual void NotifyCreated( const Report_ABC& report );
+    virtual void NotifyCreated( const Report& report );
 
     bool ShouldUpdate( const Reports& reports );
 

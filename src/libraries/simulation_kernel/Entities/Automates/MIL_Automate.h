@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "Entities/Actions/PHY_Actor.h"
-#include "Entities/Orders/Automate/MIL_AutomateOrderManager.h"
+#include "Entities/Orders/MIL_AutomateOrderManager.h"
 
 class MIL_Formation;
 class MIL_AutomateType;
@@ -94,7 +94,7 @@ public:
     const T_PionVector&                     GetPions         () const; // Including pion PC
           DEC_AutomateDecision&             GetDecision      () const;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
-          bool                              IsEmbraye        () const;
+          bool                              IsEngaged        () const;
 
     const MIL_Fuseau&                       GetFuseau        () const;
     const MT_Vector2D&                      GetDirDanger     () const;
@@ -145,14 +145,14 @@ public:
     virtual void SendFullState                    () const;
             void SendKnowledge                    () const;
 
-            void OnReceiveMsgAutomateOrder        ( ASN1T_MsgAutomateOrder&                 msg, MIL_MOSContextID nCtx );
-            void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, MIL_MOSContextID nCtx );
-            void OnReceiveMsgOrderConduite        ( ASN1T_MsgOrderConduite&                 msg, MIL_MOSContextID nCtx );
-            void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, MIL_MOSContextID nCtx );
-            void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgChangeGroupeConnaissance&      msg, MIL_MOSContextID nCtx );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, MIL_MOSContextID nCtx );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, MIL_MOSContextID nCtx );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, MIL_MOSContextID nCtx );
+            void OnReceiveMsgOrder                ( ASN1T_MsgAutomateOrder&                 msg );
+            void OnReceiveMsgFragOrder            ( ASN1T_MsgFragOrder&                     msg );
+            void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, uint nCtx );
+            void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, uint nCtx );
+            void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgChangeGroupeConnaissance&      msg, uint nCtx );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, uint nCtx );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, uint nCtx );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, uint nCtx );
     //@}
 
     //! @name Misc
@@ -175,8 +175,8 @@ public:
 
     //! @name Tools
     //@{
-    void Embraye();
-    void Debraye();
+    void Engage   ();
+    void Disengage();
     //@}
 
 protected:
@@ -202,7 +202,7 @@ private:
     const uint              nID_;
           MIL_Formation*    pFormation_;
           std::string       strName_;
-          bool              bEmbraye_;
+          bool              bEngaged_;
 
     MIL_KnowledgeGroup*      pKnowledgeGroup_;
     DEC_AutomateDecision*    pDecision_; 

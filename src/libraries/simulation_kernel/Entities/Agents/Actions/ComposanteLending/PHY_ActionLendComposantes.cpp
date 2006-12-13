@@ -15,7 +15,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_C
     pTarget_ = &pAgent->GetPion().GetRole< PHY_RolePion_Composantes >();
    
     nTimer_ = role_.GetLentComposantesTravelTime( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
-    MIL_RC::pRcPretMaterielEnCours_->Send( pion, MIL_RC::eRcTypeOperational );
+    MIL_Report::PostEvent( pion, MIL_Report::eReport_EquipmentLoanInProgress );
     
     diaReturnVariable_.SetValue( false );
 }
@@ -51,7 +51,7 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DIA_C
 PHY_ActionLendComposantes::~PHY_ActionLendComposantes()
 {
     if( diaReturnVariable_.ToBool() == false )
-        MIL_RC::pRcPretMaterielAnnule_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( role_.GetPion(), MIL_Report::eReport_EquipmentLoanCanceled );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,14 +66,14 @@ void PHY_ActionLendComposantes::Execute()
         const uint nNbrLent = role_.LendComposantes( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
 
         if( nNbrLent == 0 )
-            MIL_RC::pRcPretMaterielImpossible_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
+            MIL_Report::PostEvent( role_.GetPion(), MIL_Report::eReport_EquipmentLoanImpossible );
         else
         {
-            MIL_RC::pRcMaterielPrete_->Send( pTarget_->GetPion(), MIL_RC::eRcTypeOperational );
+            MIL_Report::PostEvent( pTarget_->GetPion(), MIL_Report::eReport_EquipmentLent );
             if( nNbrLent < nNbrToLend_ )
-                MIL_RC::pRcPretMaterielPartiellementEffectue_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
+                MIL_Report::PostEvent( role_.GetPion(), MIL_Report::eReport_EquipmentLoanPartiallyDone );
             else
-                MIL_RC::pRcPretMaterielEffectue_->Send( role_.GetPion(), MIL_RC::eRcTypeOperational );
+                MIL_Report::PostEvent( role_.GetPion(), MIL_Report::eReport_EquipmentLoanDone );
         }
 
         bLoanDone_ = true;

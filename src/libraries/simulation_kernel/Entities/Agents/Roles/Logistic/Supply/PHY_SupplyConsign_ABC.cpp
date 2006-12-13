@@ -64,15 +64,15 @@ void PHY_SupplyConsign_ABC::SendFullState( NET_ASN_MsgLogRavitaillementTraitemen
     assert( pConvoyingAutomate_ );
     assert( pSuppliedAutomate_ );
 
-    asn.GetAsnMsg().m.etatPresent                                       = 1;
-    asn.GetAsnMsg().m.oid_automate_log_traitantPresent                  = 1;    
-    asn.GetAsnMsg().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
-    asn.GetAsnMsg().m.oid_pion_convoyantPresent                         = 1;
+    asn().m.etatPresent                                       = 1;
+    asn().m.oid_automate_log_traitantPresent                  = 1;    
+    asn().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
+    asn().m.oid_pion_convoyantPresent                         = 1;
     
-    asn.GetAsnMsg().etat                                       = (ASN1T_EnumLogRavitaillementTraitementEtat)nState_;
-    asn.GetAsnMsg().oid_automate_log_traitant                  = pSupplyingAutomate_->GetID();
-    asn.GetAsnMsg().oid_automate_log_fournissant_moyens_convoi = pConvoyingAutomate_->GetID();
-    asn.GetAsnMsg().oid_pion_convoyant                         = 0;
+    asn().etat                                       = (ASN1T_EnumLogRavitaillementTraitementEtat)nState_;
+    asn().oid_automate_log_traitant                  = pSupplyingAutomate_->GetID();
+    asn().oid_automate_log_fournissant_moyens_convoi = pConvoyingAutomate_->GetID();
+    asn().oid_pion_convoyant                         = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,13 +91,13 @@ void PHY_SupplyConsign_ABC::SendChangedState( NET_ASN_MsgLogRavitaillementTraite
 // -----------------------------------------------------------------------------
 void PHY_SupplyConsign_ABC::SendDefaultState( NET_ASN_MsgLogRavitaillementTraitementUpdate& asn )
 {
-    asn.GetAsnMsg().m.oid_automate_log_traitantPresent                  = 1;
-    asn.GetAsnMsg().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
-    asn.GetAsnMsg().m.oid_pion_convoyantPresent                         = 1;
-    asn.GetAsnMsg().m.etatPresent                                       = 1;
+    asn().m.oid_automate_log_traitantPresent                  = 1;
+    asn().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
+    asn().m.oid_pion_convoyantPresent                         = 1;
+    asn().m.etatPresent                                       = 1;
 
-    asn.GetAsnMsg().oid_pion_convoyant                         = 0;
-    asn.GetAsnMsg().oid_automate_log_fournissant_moyens_convoi = 0;
-    asn.GetAsnMsg().oid_automate_log_traitant                  = 0;
-    asn.GetAsnMsg().etat                                       = EnumLogRavitaillementTraitementEtat::termine;
+    asn().oid_pion_convoyant                         = 0;
+    asn().oid_automate_log_fournissant_moyens_convoi = 0;
+    asn().oid_automate_log_traitant                  = 0;
+    asn().etat                                       = EnumLogRavitaillementTraitementEtat::termine;
 }

@@ -19,8 +19,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/Orders/Pion/MIL_PionMissionType.h"
-#include "Entities/Orders/Pion/MIL_PionMission_ABC.h"
+#include "Entities/Orders/MIL_PionMissionType.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_StockConvoy, "PHY_StockConvoy" )
 
@@ -56,7 +55,7 @@ PHY_StockConvoy::~PHY_StockConvoy()
 {
     if( pPionConvoy_ )
     {
-        pPionConvoy_->GetOrderManager().CancelAllOrders();
+        pPionConvoy_->GetOrderManager().ReplaceMission();
 
         for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
             it->second->UndoLend();
@@ -130,10 +129,7 @@ void PHY_StockConvoy::ActivateConvoyMission()
 {
     assert( pConvoyMissionType_ );
     assert( pPionConvoy_ );
-
-    MIL_PionMission_ABC& mission = pConvoyMissionType_->InstanciateMission( *pPionConvoy_ );
-    mission.Initialize(); // $$$$$ Initialize peut renvoyer false $$$$$$ <= checker que pions convois ont la mission à l'init et que la mission ne prend aucun paramètre
-    pPionConvoy_->GetOrderManager().OnReceivePionOrder( mission );
+    pPionConvoy_->GetOrderManager().OnReceiveMission( *pConvoyMissionType_ );
     bMissionActivated_ = true;
 }
 

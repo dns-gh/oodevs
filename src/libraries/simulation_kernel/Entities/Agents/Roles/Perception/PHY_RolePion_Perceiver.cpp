@@ -37,7 +37,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
-#include "Entities/RC/MIL_RC_ObservationTirIndirect.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
@@ -1118,7 +1118,7 @@ bool PHY_RolePion_Perceiver::IsIdentified( const MIL_PopulationConcentration& co
 void PHY_RolePion_Perceiver::NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const
 {
     assert( pPion_ );
-    MIL_RC::pRcObservationTirIndirect_->Send( *pPion_, MIL_RC::eRcTypeOperational, flyingShell );
+    MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_IndirectFireObservation, flyingShell );
 }
 
 // -----------------------------------------------------------------------------
@@ -1240,8 +1240,8 @@ void PHY_RolePion_Perceiver::SendDebugState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.radar_actifPresent = 1;
-    msg.GetAsnMsg().radar_actif          = IsUsingActiveRadar();
+    msg().m.radar_actifPresent = 1;
+    msg().radar_actif          = IsUsingActiveRadar();
 }
 
 // -----------------------------------------------------------------------------

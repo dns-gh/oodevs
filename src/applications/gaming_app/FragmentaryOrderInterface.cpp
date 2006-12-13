@@ -9,42 +9,50 @@
 
 #include "gaming_app_pch.h"
 #include "FragmentaryOrderInterface.h"
-
-#include "MissionPanel.h"
+#include "MissionInterfaceFactory.h"
+#include "MissionInterfaceBuilder.h"
 #include "gaming/ASN_Messages.h"
-#include "gaming/ASN_Types.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_gui/Tools.h"
-
-#include "ENT/ENT_Tr.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/FragOrder.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: FragmentaryOrderInterface constructor
-// Created: APE 2004-05-12
+// Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& agent, uint nMissionId, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes, Publisher_ABC& publisher )
-    : MissionInterface_ABC( parent, agent, controller, layer, converter, knowledgeConverter, objectKnowledgeConverter, objectTypes )
-    , publisher_      ( publisher )
-    , nMissionId_     ( nMissionId )
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrder& fragOrder, ActionController& controller
+                                                    , Publisher_ABC& publisher, MissionInterfaceFactory& factory, MissionInterfaceBuilder& builder )
+    : MissionInterface_ABC( parent, entity, controller )
+    , publisher_          ( publisher )
+    , order_              ( new ASN_MsgFragOrder() )
 {
-    pASNMsgOrder_ = new ASN_MsgOrderConduite();
-    pASNMsgOrder_->GetAsnMsg().unit_id = agent.GetId();
-    pASNMsgOrder_->GetAsnMsg().order_conduite.t = nMissionId_ + 1; // $$$$ AGE 2006-04-21: décallage asn enum. corriger.
+    order_->GetAsnMsg().oid_unite_executante = entity.GetId();
+    order_->GetAsnMsg().frag_order = fragOrder.GetId();
 
-    QLabel* pLabel = new QLabel( ENT_Tr::ConvertFromFragOrder( ( E_FragOrder )nMissionId_ ).c_str(), this );
+    QLabel* pLabel = new QLabel( fragOrder.GetName(), this );
     pLabel->setFrameStyle( QFrame::Box | QFrame::Sunken );
     pLabel->setAlignment( Qt::AlignCenter );
     QFont font = pLabel->font();
     font.setBold( true );
     pLabel->setFont( font );
 
-    CreateInterface();
+    builder.Begin( *this, entity );
+    factory.CreateMissionInterface( builder, fragOrder.GetId(), order_->GetAsnMsg() );
+    builder.End();
+    CreateOkCancelButtons();
 
-    QWidget* pSpacer = new QWidget( this );
-    setStretchFactor( pSpacer, 100 );
+    QWidget* pSpacer = new QWidget( this ); // $$$$ SBO 2006-11-23: ?
+    setStretchFactor( pSpacer, 100 );       // $$$$ SBO 2006-11-23: ?
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragmentaryOrderInterface destructor
+// Created: SBO 2006-11-27
+// -----------------------------------------------------------------------------
+FragmentaryOrderInterface::~FragmentaryOrderInterface()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +65,6 @@ void FragmentaryOrderInterface::OnOk()
         return;
 
     Commit();
-    pASNMsgOrder_->Send( publisher_, 36999 );
+    order_->Send( publisher_, 36999 );
     parentWidget()->hide();
 }
-
-#include "FragmentaryOrderInterface_Gen.cpp"

@@ -13,7 +13,6 @@
 
 #include "MIL_FloatingBridge_ABC.h"
 #include "MIL_RealObjectType.h"
-#include "Entities/RC/MIL_RC.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_DynamicData.h"
 #include "HLA/Deserializer.h"

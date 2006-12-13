@@ -60,6 +60,7 @@ public:
     void GenerateTesterClassHeader( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
     void GenerateTesterClassCpp   ( const AGR_Workspace& workspace, const std::string& strOutputPath ) const;
 
+    std::string GenerateMissionXML( uint nIdx) const;
     std::string GenerateDiaDefinition() const;
     std::string GenerateMosImplementation() const;
     std::string GenerateMos2Implementation() const;

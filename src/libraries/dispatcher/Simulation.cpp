@@ -95,9 +95,9 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( lima_destruction_request_ack                      );
         DISPATCH_ASN_MSG( lima_update_request_ack                           );
         DISPATCH_ASN_MSG( pion_order_ack                                    );
-        DISPATCH_ASN_MSG( order_conduite_ack                                );
         DISPATCH_ASN_MSG( automate_order_ack                                );
         DISPATCH_ASN_MSG( population_order_ack                              );
+        DISPATCH_ASN_MSG( frag_order_ack                                    );
         DISPATCH_ASN_MSG( set_automate_mode_ack                             );
         DISPATCH_ASN_MSG( unit_magic_action_ack                             );
         DISPATCH_ASN_MSG( object_magic_action_ack                           );
@@ -170,9 +170,9 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
         DISPATCH_ASN_MSG( pion_order_management                             );
         DISPATCH_ASN_MSG( automate_order_management                         );
         DISPATCH_ASN_MSG( population_order_management                       );
-        DISPATCH_ASN_MSG( automate_mrt                                      );
         DISPATCH_ASN_MSG( pion_order                                        );
         DISPATCH_ASN_MSG( automate_order                                    );
+        DISPATCH_ASN_MSG( population_order                                  );
         DISPATCH_ASN_MSG( object_creation                                   );
         DISPATCH_ASN_MSG( object_destruction                                );
         DISPATCH_ASN_MSG( object_update                                     );

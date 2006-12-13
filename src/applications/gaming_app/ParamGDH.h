@@ -26,7 +26,7 @@ class ParamGDH : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamGDH( QWidget* parent, ASN1T_GDH& asn, const QString& label );
+             ParamGDH( QWidget* parent, ASN1T_GDH*& asn, const QString& label );
     virtual ~ParamGDH();
     //@}
 
@@ -51,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_GDH&     asn_;
+    ASN1T_GDH*     asn_;
     QDateTimeEdit* pDateTimeEdit_;
     QCheckBox*     pCheckbox_;
     //@}

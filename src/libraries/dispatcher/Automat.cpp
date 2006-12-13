@@ -164,6 +164,7 @@ void Automat::SendFullUpdate( Publisher_ABC& publisher ) const
 
     {
         AsnMsgInClientChangeLiensLogistiques asn;
+        asn().oid_automate = nID_;
         if( pTC2_ )
         {
             asn().m.oid_tc2Present = 1;

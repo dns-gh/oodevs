@@ -77,7 +77,7 @@ void MissionParameters::DoUpdateOrderContext( const ASN1T_OrderContext& context 
     if( context.m.limite_gauchePresent )
         DecodePointList( context.limite_gauche, leftLimit_ );
     if( context.m.limite_droitePresent )
-        DecodePointList( context.limite_gauche, rightLimit_ );
+        DecodePointList( context.limite_droite, rightLimit_ );
     limas_.reserve( context.limas.n );
     for( unsigned int i = 0; i < context.limas.n; ++i )
         AddLima( context.limas.elem[i] );
@@ -110,7 +110,7 @@ void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 template< typename T >
 void MissionParameters::DoUpdateOrderManagement( const T& message )
 {
-    if( message.etat == EnumOrderState::stopped || message.etat == EnumOrderState::cancelled )
+    if( message.etat == EnumOrderState::stopped )
         Clear();
 }
 

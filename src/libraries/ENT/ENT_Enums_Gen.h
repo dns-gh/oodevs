@@ -32,47 +32,6 @@ enum E_TypeLocalisation
 };
 
 
-enum E_GDH_Qualificatif
-{
-    eGDH_Qualificatif_At,
-    eGDH_Qualificatif_After,
-    eGDH_Qualificatif_AsOf,
-    eGDH_Qualificatif_Before,
-    eGDH_Qualificatif_Cleared,
-    eGDH_Qualificatif_Due,
-    eGDH_Qualificatif_End,
-    eGDH_Qualificatif_Off,
-    eGDH_Qualificatif_On,
-    eGDH_Qualificatif_Since,
-    eGDH_Qualificatif_Start,
-    eGDH_Qualificatif_Until,
-    eGDH_Qualificatif_Wef,
-    eNbrGDH_Qualificatif
-};
-
-
-enum E_HumanWound
-{
-    eHumanWound_NonBlesse,
-    eHumanWound_Mort,
-    eHumanWound_BlesseUrgence1,
-    eHumanWound_BlesseUrgence2,
-    eHumanWound_BlesseUrgence3,
-    eHumanWound_BlesseUrgenceExtreme,
-    eNbrHumanWound
-};
-
-
-enum E_UnitIdentificationLevel
-{
-    eUnitIdentificationLevel_Identifiee,
-    eUnitIdentificationLevel_Reconnue,
-    eUnitIdentificationLevel_Detectee,
-    eUnitIdentificationLevel_Signale,
-    eNbrUnitIdentificationLevel
-};
-
-
 enum E_FamilleDotation
 {
     eFamilleDotation_Munition,
@@ -96,6 +55,35 @@ enum E_FamilleMunition
 };
 
 
+enum E_GDH_Qualificatif
+{
+    eGDH_Qualificatif_At,
+    eGDH_Qualificatif_After,
+    eGDH_Qualificatif_AsOf,
+    eGDH_Qualificatif_Before,
+    eGDH_Qualificatif_Cleared,
+    eGDH_Qualificatif_Due,
+    eGDH_Qualificatif_End,
+    eGDH_Qualificatif_Off,
+    eGDH_Qualificatif_On,
+    eGDH_Qualificatif_Since,
+    eGDH_Qualificatif_Start,
+    eGDH_Qualificatif_Until,
+    eGDH_Qualificatif_Wef,
+    eNbrGDH_Qualificatif
+};
+
+
+enum E_UnitIdentificationLevel
+{
+    eUnitIdentificationLevel_Identifiee,
+    eUnitIdentificationLevel_Reconnue,
+    eUnitIdentificationLevel_Detectee,
+    eUnitIdentificationLevel_Signale,
+    eNbrUnitIdentificationLevel
+};
+
+
 enum E_NatureLevel
 {
     eNatureLevel_None,
@@ -111,6 +99,18 @@ enum E_NatureLevel
     eNatureLevel_xxxx,
     eNatureLevel_xxxxx,
     eNbrNatureLevel
+};
+
+
+enum E_HumanWound
+{
+    eHumanWound_NonBlesse,
+    eHumanWound_Mort,
+    eHumanWound_BlesseUrgence1,
+    eHumanWound_BlesseUrgence2,
+    eHumanWound_BlesseUrgence3,
+    eHumanWound_BlesseUrgenceExtreme,
+    eNbrHumanWound
 };
 
 
@@ -295,218 +295,6 @@ enum E_ChangeLiensLogistiquesErrorCode
 };
 
 
-enum E__ALAT_PorteeAction
-{
-    e_ALAT_PorteeAction_CourtePortee,
-    e_ALAT_PorteeAction_MoyennePortee,
-    e_ALAT_PorteeAction_LonguePortee,
-    e_ALAT_PorteeAction_SansMunitions,
-    eNbr_ALAT_PorteeAction
-};
-
-
-enum E__ALAT_AmbianceMission
-{
-    e_ALAT_AmbianceMission_aa,
-    e_ALAT_AmbianceMission_As,
-    e_ALAT_AmbianceMission_Polyvalent,
-    eNbr_ALAT_AmbianceMission
-};
-
-
-enum E_ModeDeploiement
-{
-    eModeDeploiement_EnCarre,
-    eModeDeploiement_EnTriangle,
-    eModeDeploiement_NasseTroisSections,
-    eModeDeploiement_NasseQuatreSections,
-    eModeDeploiement_DoubleRideau,
-    eModeDeploiement_SimpleRideau,
-    eNbrModeDeploiement
-};
-
-
-enum E_TypeLima
-{
-    eTypeLima_LigneDebouche,
-    eTypeLima_LigneChangementAttitude,
-    eTypeLima_LigneCoordination,
-    eTypeLima_LigneInterdire,
-    eTypeLima_LigneObjectif,
-    eTypeLima_LigneCoupArret,
-    eTypeLima_LigneRecueil,
-    eTypeLima_LigneDebutMission,
-    eTypeLima_LigneFinMission,
-    eTypeLima_LigneIdentificationAccueil,
-    eNbrTypeLima
-};
-
-
-enum E_InfoContextErrorCode
-{
-    eInfoContextErrorCode_NoError,
-    eInfoContextErrorCode_ErrorInvalidId,
-    eInfoContextErrorCode_ErrorInvalidGeometry,
-    eInfoContextErrorCode_ErrorInvalidLimaFunction,
-    eInfoContextErrorCode_ErrorInvalidDiffusion,
-    eNbrInfoContextErrorCode
-};
-
-
-enum E_OrderErrorCode
-{
-    eOrderErrorCode_NoError,
-    eOrderErrorCode_ErrorInvalidUnit,
-    eOrderErrorCode_ErrorInvalidLimit,
-    eOrderErrorCode_ErrorInvalidLima,
-    eOrderErrorCode_ErrorInvalidMission,
-    eOrderErrorCode_ErrorInvalidMissionParameters,
-    eOrderErrorCode_ErrorUnitCannotReceiveOrder,
-    eOrderErrorCode_ErrorInvalidOrderConduite,
-    eOrderErrorCode_ErrorInvalidOrderMission,
-    eOrderErrorCode_ErrorInvalidOrderInitial,
-    eOrderErrorCode_ErrorInvalidOrderConduiteParameters,
-    eOrderErrorCode_ErrorUnitSurrendered,
-    eOrderErrorCode_ErrorInvalidLimaFunction,
-    eNbrOrderErrorCode
-};
-
-
-enum E_OrderState
-{
-    eOrderState_Started,
-    eOrderState_Cancelled,
-    eOrderState_Stopped,
-    eNbrOrderState
-};
-
-
-enum E_ObjectType
-{
-    eObjectType_BouchonMines,
-    eObjectType_ZoneMineeLineaire,
-    eObjectType_ZoneMineeParDispersion,
-    eObjectType_FosseAntiChar,
-    eObjectType_Abattis,
-    eObjectType_Barricade,
-    eObjectType_Eboulement,
-    eObjectType_DestructionRoute,
-    eObjectType_DestructionPont,
-    eObjectType_PontFlottantContinu,
-    eObjectType_PosteTir,
-    eObjectType_ZoneProtegee,
-    eObjectType_ZoneImplantationCanon,
-    eObjectType_ZoneImplantationCobra,
-    eObjectType_ZoneImplantationLrm,
-    eObjectType_SiteFranchissement,
-    eObjectType_NuageNbc,
-    eObjectType_PlotRavitaillement,
-    eObjectType_SiteDecontamination,
-    eObjectType_ZoneBrouillageBrod,
-    eObjectType_Rota,
-    eObjectType_ZoneNbc,
-    eObjectType_ZoneBrouillageBromure,
-    eObjectType_AirePoser,
-    eObjectType_Piste,
-    eObjectType_Plateforme,
-    eObjectType_ZoneMobiliteAmelioree,
-    eObjectType_ZonePoserHelicoptere,
-    eObjectType_AireLogistique,
-    eObjectType_ItineraireLogistique,
-    eObjectType_CampPrisonniers,
-    eObjectType_CampRefugies,
-    eObjectType_PosteControle,
-    eObjectType_TerrainLargage,
-    eObjectType_ZoneInterditeMouvement,
-    eObjectType_ZoneInterditeTir,
-    eObjectType_ZoneImplantationMortier,
-    eObjectType_PontFlottantDiscontinu,
-    eObjectType_Installation,
-    eNbrObjectType
-};
-
-
-enum E_MissionGenSousTypeObstacle
-{
-    eMissionGenSousTypeObstacle_Preliminaire,
-    eMissionGenSousTypeObstacle_DeManoeuvre,
-    eNbrMissionGenSousTypeObstacle
-};
-
-
-enum E_ObjectErrorCode
-{
-    eObjectErrorCode_NoError,
-    eObjectErrorCode_ErrorInvalidObject,
-    eObjectErrorCode_ErrorInvalidId,
-    eObjectErrorCode_ErrorInvalidCamp,
-    eObjectErrorCode_ErrorInvalidLocalisation,
-    eObjectErrorCode_ErrorMissingSpecificAttributes,
-    eObjectErrorCode_ErrorInvalidSpecificAttributes,
-    eNbrObjectErrorCode
-};
-
-
-enum E_ModeDeploiementSectionMistral
-{
-    eModeDeploiementSectionMistral_Omnidirectionnel,
-    eModeDeploiementSectionMistral_Directionnel,
-    eNbrModeDeploiementSectionMistral
-};
-
-
-enum E_GenTypePontage
-{
-    eGenTypePontage_Continu,
-    eGenTypePontage_Discontinu,
-    eNbrGenTypePontage
-};
-
-
-enum E_MissionInfNatureObjectif
-{
-    eMissionInfNatureObjectif_ElementsTerrain,
-    eMissionInfNatureObjectif_Objets,
-    eMissionInfNatureObjectif_ElementsMobiles,
-    eNbrMissionInfNatureObjectif
-};
-
-
-enum E_LogSanteTraitementEtat
-{
-    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve,
-    eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller,
-    eLogSanteTraitementEtat_AmbulanceReleveChargement,
-    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve,
-    eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour,
-    eLogSanteTraitementEtat_AmbulanceReleveDechargement,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique,
-    eLogSanteTraitementEtat_Diagnostique,
-    eLogSanteTraitementEtat_RechercheSecteurTri,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri,
-    eLogSanteTraitementEtat_Tri,
-    eLogSanteTraitementEtat_RechercheSecteurSoin,
-    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin,
-    eLogSanteTraitementEtat_Soin,
-    eLogSanteTraitementEtat_Hospitalisation,
-    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage,
-    eLogSanteTraitementEtat_AmbulanceRamassageChargement,
-    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage,
-    eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller,
-    eLogSanteTraitementEtat_AmbulanceRamassageDechargement,
-    eLogSanteTraitementEtat_Termine,
-    eNbrLogSanteTraitementEtat
-};
-
-
-enum E_AutomateOrderFormation
-{
-    eAutomateOrderFormation_UnEchelon,
-    eAutomateOrderFormation_DeuxEchelons,
-    eNbrAutomateOrderFormation
-};
-
-
 enum E_CtrlErrorCode
 {
     eCtrlErrorCode_NoError,
@@ -537,6 +325,33 @@ enum E_PrecipitationType
     ePrecipitationType_Pluie,
     ePrecipitationType_Neige,
     eNbrPrecipitationType
+};
+
+
+enum E_TypeLima
+{
+    eTypeLima_LigneDebouche,
+    eTypeLima_LigneChangementAttitude,
+    eTypeLima_LigneCoordination,
+    eTypeLima_LigneInterdire,
+    eTypeLima_LigneObjectif,
+    eTypeLima_LigneCoupArret,
+    eTypeLima_LigneRecueil,
+    eTypeLima_LigneDebutMission,
+    eTypeLima_LigneFinMission,
+    eTypeLima_LigneIdentificationAccueil,
+    eNbrTypeLima
+};
+
+
+enum E_InfoContextErrorCode
+{
+    eInfoContextErrorCode_NoError,
+    eInfoContextErrorCode_ErrorInvalidId,
+    eInfoContextErrorCode_ErrorInvalidGeometry,
+    eInfoContextErrorCode_ErrorInvalidLimaFunction,
+    eInfoContextErrorCode_ErrorInvalidDiffusion,
+    eNbrInfoContextErrorCode
 };
 
 
@@ -648,424 +463,131 @@ enum E_MsgLogRavitaillementPousserFluxAck
 };
 
 
-enum E_AmbianceMission
+enum E_LogSanteTraitementEtat
 {
-    eAmbianceMission_Surete,
-    eAmbianceMission_Vitesse,
-    eNbrAmbianceMission
+    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceReleve,
+    eLogSanteTraitementEtat_AmbulanceReleveDeplacementAller,
+    eLogSanteTraitementEtat_AmbulanceReleveChargement,
+    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceReleve,
+    eLogSanteTraitementEtat_AmbulanceReleveDeplacementRetour,
+    eLogSanteTraitementEtat_AmbulanceReleveDechargement,
+    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourDiagnostique,
+    eLogSanteTraitementEtat_Diagnostique,
+    eLogSanteTraitementEtat_RechercheSecteurTri,
+    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourTri,
+    eLogSanteTraitementEtat_Tri,
+    eLogSanteTraitementEtat_RechercheSecteurSoin,
+    eLogSanteTraitementEtat_AttenteDisponibiliteMedecinPourSoin,
+    eLogSanteTraitementEtat_Soin,
+    eLogSanteTraitementEtat_Hospitalisation,
+    eLogSanteTraitementEtat_AttenteDisponibiliteAmbulanceRamassage,
+    eLogSanteTraitementEtat_AmbulanceRamassageChargement,
+    eLogSanteTraitementEtat_AttenteChargementCompletAmbulanceRamassage,
+    eLogSanteTraitementEtat_AmbulanceRamassageDeplacementAller,
+    eLogSanteTraitementEtat_AmbulanceRamassageDechargement,
+    eLogSanteTraitementEtat_Termine,
+    eNbrLogSanteTraitementEtat
 };
 
 
-enum E_TC2GererMaterielAvantDeplacement
+enum E_ObjectErrorCode
 {
-    eTC2GererMaterielAvantDeplacement_DeborderMaterielsVersBld,
-    eTC2GererMaterielAvantDeplacement_DetruireMaterielsEnReparation,
-    eTC2GererMaterielAvantDeplacement_ReparerMaterielsSurPlace,
-    eNbrTC2GererMaterielAvantDeplacement
+    eObjectErrorCode_NoError,
+    eObjectErrorCode_ErrorInvalidObject,
+    eObjectErrorCode_ErrorInvalidId,
+    eObjectErrorCode_ErrorInvalidCamp,
+    eObjectErrorCode_ErrorInvalidLocalisation,
+    eObjectErrorCode_ErrorMissingSpecificAttributes,
+    eObjectErrorCode_ErrorInvalidSpecificAttributes,
+    eNbrObjectErrorCode
 };
 
 
-
-
-
-enum E_AutomataMission
+enum E_ObjectType
 {
-    eMission_Automate_ALAT_AllerSeRecompleter = 1,
-    eMission_Automate_ALAT_DetruireNeutraliserDansProfondeur,
-    eMission_Automate_ALAT_DetruireNeutraliserDansZone,
-    eMission_Automate_ALAT_DonnerCoupArret,
-    eMission_Automate_ALAT_AttaquerFormationAeromobile,
-    eMission_Automate_ALAT_RecueillirFormationAeromobile,
-    eMission_Automate_ALAT_Heliporter,
-    eMission_Automate_ALAT_Jalonner,
-    eMission_Automate_ALAT_Helitransporter,
-    eMission_Automate_ALAT_Appuyer,
-    eMission_Automate_ALAT_Couvrir,
-    eMission_Automate_ALAT_Surveiller,
-    eMission_Automate_ALAT_Reconnaitre,
-    eMission_Automate_ALAT_Freiner,
-    eMission_Automate_ALAT_Escorter,
-    eMission_Automate_ALAT_Attaquer,
-    eMission_Automate_ASA_DefendreSite,
-    eMission_Automate_ASA_DefendreZone,
-    eMission_Automate_ASA_DefendreUnites,
-    eMission_Automate_ASA_Surveiller,
-    eMission_Automate_ASA_DefendreItineraire,
-    eMission_Automate_ASA_MISTRAL_DefendreZone,
-    eMission_Automate_ASA_MISTRAL_DefendreSite,
-    eMission_Automate_ASA_MISTRAL_Surveiller,
-    eMission_Automate_ASA_HAWK_DefendreZone,
-    eMission_Automate_ASA_HAWK_DefendreSite,
-    eMission_Automate_ASA_HAWK_Surveiller,
-    eMission_Automate_ASS_SeDeployer,
-    eMission_Automate_ASS_ReconnaitreZonesDeploiement,
-    eMission_Automate_ASS_AcquerirObjectifs,
-    eMission_Automate_ABC_Appuyer,
-    eMission_Automate_ABC_Attaquer,
-    eMission_Automate_ABC_ContreAttaquer,
-    eMission_Automate_ABC_Controler,
-    eMission_Automate_ABC_Couvrir,
-    eMission_Automate_ABC_DonnerCoupArret,
-    eMission_Automate_ABC_Eclairer,
-    eMission_Automate_ABC_EffectuerRaid,
-    eMission_Automate_ABC_Interdire,
-    eMission_Automate_ABC_Jalonner,
-    eMission_Automate_ABC_PrendrePreciserContact,
-    eMission_Automate_ABC_Reconnaitre,
-    eMission_Automate_ABC_ReconnaitrePoint,
-    eMission_Automate_ABC_Reduire,
-    eMission_Automate_ABC_ReleverEnDepassant,
-    eMission_Automate_ABC_Semparer,
-    eMission_Automate_ABC_Tenir,
-    eMission_Automate_ABC_Soutenir,
-    eMission_Automate_ABC_Surveiller,
-    eMission_Automate_ABC_FlancGarder,
-    eMission_Automate_ABC_RenseignerSur,
-    eMission_Automate_ABC_Fixer,
-    eMission_Automate_ABC_Freiner,
-    eMission_Automate_ABC_SurveillerItineraire,
-    eMission_Automate_ABC_RenseignerSurUnAxe,
-    eMission_Automate_ABC_RecueillirUnite,
-    eMission_Automate_ABC_EscorterUnite,
-    eMission_Automate_ABC_EscorterUnites,
-    eMission_Automate_ABC_ArmerPointDeControle,
-    eMission_Automate_ABC_OrganiserAccueilColonneRefugies,
-    eMission_Automate_ABC_ProtegerPC,
-    eMission_Automate_ABC_AppuyerSurPosition,
-    eMission_Automate_GEN_SeDeployer,
-    eMission_Automate_GEN_ReconnaitreZone,
-    eMission_Automate_GEN_RealiserTravaux,
-    eMission_Automate_GEN_OuvrirItineraires,
-    eMission_Automate_GEN_RetablirItineraires,
-    eMission_Automate_GEN_FaireFranchir,
-    eMission_Automate_GEN_FranchirDeViveForce,
-    eMission_Automate_GEN_DegagerObstaclesDansZone,
-    eMission_Automate_INF_AttaquerSouplesse,
-    eMission_Automate_INF_Appuyer,
-    eMission_Automate_INF_Controler,
-    eMission_Automate_INF_Couvrir,
-    eMission_Automate_INF_DonnerCoupArret,
-    eMission_Automate_INF_Eclairer,
-    eMission_Automate_INF_FlancGarder,
-    eMission_Automate_INF_Freiner,
-    eMission_Automate_INF_Harceler,
-    eMission_Automate_INF_Interdire,
-    eMission_Automate_INF_MenerDefenseUsure,
-    eMission_Automate_INF_PrendrePreciserMaintenirContact,
-    eMission_Automate_INF_ReconnaissanceOffensive,
-    eMission_Automate_INF_RecueillirUnite,
-    eMission_Automate_INF_Reduire,
-    eMission_Automate_INF_Relever,
-    eMission_Automate_INF_RompreContact,
-    eMission_Automate_INF_Surveiller,
-    eMission_Automate_INF_Semparer,
-    eMission_Automate_INF_Fixer,
-    eMission_Automate_INF_AttaquerEnTerrainDifficile,
-    eMission_Automate_INF_BarrerDirection,
-    eMission_Automate_INF_DefendreFerme,
-    eMission_Automate_INF_Tenir,
-    eMission_Automate_INF_AppuyerUnFreinage,
-    eMission_Automate_INF_AppuyerUneAttaque,
-    eMission_Automate_INF_Soutenir,
-    eMission_Automate_INF_EscorterUnite,
-    eMission_Automate_INF_EscorterUnites,
-    eMission_Automate_INF_AppuyerSurPosition,
-    eMission_Automate_LOG_SeDeployer,
-    eMission_Automate_LOG_AppuyerMouvement,
-    eMission_Automate_LOG_ReconnaitreItineraire,
-    eMission_Automate_LOG_AppuyerMouvementDansZone,
-    eMission_Automate_LOG_MettreEnOeuvreZoneStationnement,
-    eMission_Automate_LOG_AppuyerFranchissementDansZone,
-    eMission_Automate_LOG_BloquerZone,
-    eMission_Automate_LOG_ReconnaitreZoneContaminee,
-    eMission_Automate_LOG_ReconnaitreZoneDeDeploiement,
-    eMission_Automate_LOG_Surveiller,
-    eMission_Automate_LOG_ArmerPIAs,
-    eMission_Automate_Test_MoveTo,
-    eMission_Automate_Decrocher,
-    eMission_Automate_ReleverSurPlace,
-    eMission_Automate_FaireMouvement,
-    eMission_Automate_SeFaireDecontaminer,
-    eMission_Automate_Franchir,
-    eMission_Automate_Stationner,
-    eMission_Automate_SeFaireTransporter,
-    eMission_Automate_Transporter,
-    eMission_Automate_SeRecompleter,
-    eMission_Automate_SeRendre,
-    eMission_Automate_FaireMouvementVersCampRefugies,
-    eMission_Automate_InterdireFranchissementPopulations,
-    eMission_Automate_FiltrerPopulations,
-    eMission_Automate_CanaliserPopulations,
-    eMission_Automate_ControlerPopulationsDansZone,
-    eMission_Automate_SecuriserZoneContrePopulations,
-    eMission_Automate_ASY_CommettreExactionsSurPopulationDansZone,
-    eMission_Automate_Generique,
-    eMission_Automate_NBC_ReconnaitreUnAxe,
-    eMission_Automate_NBC_ReconnaitreUneZone,
-    eMission_Automate_NBC_ArmerUnSiteDeDecontamination,
-    eMission_Automate_NBC_DecontaminerUneZone,
-    eMission_Automate_NBC_ReconnaitreDesSitesROTA,
-    eMission_Automate_RENS_ROHUM_RenseignerSur,
-    eMission_Automate_RENS_ROHUM_OrienterGuider,
-    eMission_Automate_RENS_ROHUM_SExfiltrer,
-    eMission_Automate_RENS_ROIM_CL289_RenseignerSur,
-    eMission_Automate_RENS_ROIM_SDTI_RenseignerSur,
-    eMission_Automate_RENS_ROEM_Appuyer,
-    eMission_Automate_RENS_ROEM_RenseignerSur,
-    eMission_Automate_RENS_RADINT_RenseignerSur,
-    eMission_Automate_TRANS_Commander,
-
-    eNbrAutomataMission
+    eObjectType_BouchonMines,
+    eObjectType_ZoneMineeLineaire,
+    eObjectType_ZoneMineeParDispersion,
+    eObjectType_FosseAntiChar,
+    eObjectType_Abattis,
+    eObjectType_Barricade,
+    eObjectType_Eboulement,
+    eObjectType_DestructionRoute,
+    eObjectType_DestructionPont,
+    eObjectType_PontFlottantContinu,
+    eObjectType_PosteTir,
+    eObjectType_ZoneProtegee,
+    eObjectType_ZoneImplantationCanon,
+    eObjectType_ZoneImplantationCobra,
+    eObjectType_ZoneImplantationLrm,
+    eObjectType_SiteFranchissement,
+    eObjectType_NuageNbc,
+    eObjectType_PlotRavitaillement,
+    eObjectType_SiteDecontamination,
+    eObjectType_ZoneBrouillageBrod,
+    eObjectType_Rota,
+    eObjectType_ZoneNbc,
+    eObjectType_ZoneBrouillageBromure,
+    eObjectType_AirePoser,
+    eObjectType_Piste,
+    eObjectType_Plateforme,
+    eObjectType_ZoneMobiliteAmelioree,
+    eObjectType_ZonePoserHelicoptere,
+    eObjectType_AireLogistique,
+    eObjectType_ItineraireLogistique,
+    eObjectType_CampPrisonniers,
+    eObjectType_CampRefugies,
+    eObjectType_PosteControle,
+    eObjectType_TerrainLargage,
+    eObjectType_ZoneInterditeMouvement,
+    eObjectType_ZoneInterditeTir,
+    eObjectType_ZoneImplantationMortier,
+    eObjectType_PontFlottantDiscontinu,
+    eObjectType_Installation,
+    eNbrObjectType
 };
 
 
-enum E_UnitMission
+enum E_MissionGenSousTypeObstacle
 {
-    eMission_Pion_ALAT_AllerSeRecompleter = 1,
-    eMission_Pion_ALAT_ReconnaitreDansLaProfondeur,
-    eMission_Pion_ALAT_ReconnaitreContourEnnemi,
-    eMission_Pion_ALAT_DetruireNeutraliserDansZone,
-    eMission_Pion_ALAT_DetruireAeromobile,
-    eMission_Pion_ALAT_Freiner,
-    eMission_Pion_ALAT_Jalonner,
-    eMission_Pion_ALAT_Escorter,
-    eMission_Pion_ALAT_Heliporter,
-    eMission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement,
-    eMission_Pion_ALAT_Helitransporter,
-    eMission_Pion_ALAT_IMEX,
-    eMission_Pion_ALAT_Eclairer,
-    eMission_Pion_ALAT_Surveiller,
-    eMission_Pion_ALAT_AppuyerDirectAuContact,
-    eMission_Pion_ALAT_Couvrir,
-    eMission_Pion_ALAT_Attaquer,
-    eMission_Pion_ASA_DefendreSite,
-    eMission_Pion_ASA_DefendreSiteAPartirPosition,
-    eMission_Pion_ASA_DefendreZone,
-    eMission_Pion_ASA_DefendreZoneAPartirPosition,
-    eMission_Pion_ASA_Surveiller,
-    eMission_Pion_ASA_DefendreUnites,
-    eMission_Pion_ASA_MISTRAL_DefendreSite,
-    eMission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition,
-    eMission_Pion_ASA_MISTRAL_DefendreZone,
-    eMission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition,
-    eMission_Pion_ASA_MISTRAL_Surveiller,
-    eMission_Pion_ASS_AssurerMiseEnOeuvre,
-    eMission_Pion_ASS_AssurerMiseEnOeuvreSurPosition,
-    eMission_Pion_ASS_ReconnaitreZoneDeploiement,
-    eMission_Pion_ASS_AcquerirLanceursEni,
-    eMission_Pion_ASS_EO_AcquerirObjectifs,
-    eMission_Pion_ASS_EOP_AcquerirObjectifs,
-    eMission_Pion_ASS_RATAC_AcquerirObjectifs,
-    eMission_Pion_ABC_ReconnaitreAxe,
-    eMission_Pion_ABC_Soutenir,
-    eMission_Pion_ABC_Couvrir,
-    eMission_Pion_ABC_FlancGarder,
-    eMission_Pion_ABC_Reduire,
-    eMission_Pion_ABC_Appuyer,
-    eMission_Pion_ABC_Fixer,
-    eMission_Pion_ABC_RenseignerSur,
-    eMission_Pion_ABC_ControlerZone,
-    eMission_Pion_ABC_Surveiller,
-    eMission_Pion_ABC_Barrer,
-    eMission_Pion_ABC_Attaquer,
-    eMission_Pion_ABC_ReconnaitrePoint,
-    eMission_Pion_ABC_Eclairer,
-    eMission_Pion_ABC_Jalonner,
-    eMission_Pion_ABC_ContreAttaquer,
-    eMission_Pion_ABC_SemparerZone,
-    eMission_Pion_ABC_ReleverUnite,
-    eMission_Pion_ABC_ArmerPIA,
-    eMission_Pion_ABC_OuvrirItineraire,
-    eMission_Pion_ABC_Freiner,
-    eMission_Pion_ABC_EscorterUnite,
-    eMission_Pion_ABC_EscorterUnites,
-    eMission_Pion_ABC_ArmerPointDeControle,
-    eMission_Pion_ABC_OrganiserAccueilColonneRefugies,
-    eMission_Pion_ABC_AppuyerSurPosition,
-    eMission_Pion_ABC_RASIT_RenseignerSur,
-    eMission_Pion_GEN_OuvrirItineraire,
-    eMission_Pion_GEN_RetablirItineraire,
-    eMission_Pion_GEN_ReconnaitreItineraire,
-    eMission_Pion_GEN_ReconnaitreZone,
-    eMission_Pion_GEN_ReconnaitreSiteFranchissement,
-    eMission_Pion_GEN_EquiperExploiterSiteFranchissement,
-    eMission_Pion_GEN_ExecuterVariantement,
-    eMission_Pion_GEN_DegagerObstacles,
-    eMission_Pion_GEN_ContournerObstacles,
-    eMission_Pion_GEN_DepolluerZone,
-    eMission_Pion_GEN_Renforcer,
-    eMission_Pion_GEN_RealiserTravauxProtection,
-    eMission_Pion_GEN_RealiserTravauxContreMobilite,
-    eMission_Pion_GEN_RealiserTravauxAppuiDeploiement,
-    eMission_Pion_GEN_RealiserCamps,
-    eMission_Pion_GEN_ReprendreTravaux,
-    eMission_Pion_GEN_AmeliorerMobilite,
-    eMission_Pion_GEN_ActiverObstacle,
-    eMission_Pion_INF_ReconnaitreAxe,
-    eMission_Pion_INF_Couvrir,
-    eMission_Pion_INF_Reduire,
-    eMission_Pion_INF_Appuyer,
-    eMission_Pion_INF_Fixer,
-    eMission_Pion_INF_ControlerSecteur,
-    eMission_Pion_INF_SurveillerSecteur,
-    eMission_Pion_INF_Barrer,
-    eMission_Pion_INF_ReconnaitrePoint,
-    eMission_Pion_INF_Eclairer,
-    eMission_Pion_INF_Interdire,
-    eMission_Pion_INF_Semparer,
-    eMission_Pion_INF_PrendrePreciserContact,
-    eMission_Pion_INF_Defendre,
-    eMission_Pion_INF_DetruireEmbuscade,
-    eMission_Pion_INF_ContreAttaquer,
-    eMission_Pion_INF_Freiner,
-    eMission_Pion_INF_FlancGarder,
-    eMission_Pion_INF_OrganiserUnCheckPoint,
-    eMission_Pion_INF_Harceler,
-    eMission_Pion_INF_DetruireParCoupDeMain,
-    eMission_Pion_INF_EscorterUnite,
-    eMission_Pion_INF_EscorterUnites,
-    eMission_Pion_INF_RenseignerSur,
-    eMission_Pion_INF_Soutenir,
-    eMission_Pion_INF_Securiser,
-    eMission_Pion_INF_Recueillir,
-    eMission_Pion_INF_RepondreAAggression,
-    eMission_Pion_INF_AppuyerSurPosition,
-    eMission_Pion_LOG_SeDeployer,
-    eMission_Pion_LOG_Renforcer,
-    eMission_Pion_LOG_PreparerBascule,
-    eMission_Pion_LOG_DecontaminerBlesses,
-    eMission_Pion_LOG_TrierEtTraiterBlesses,
-    eMission_Pion_LOG_TrierBlesses,
-    eMission_Pion_LOG_TraiterBlesses,
-    eMission_Pion_LOG_PrendreEnCompteReactionsMentales,
-    eMission_Pion_LOG_Convoyer,
-    eMission_Pion_LOG_Reparer,
-    eMission_Pion_LOG_AppuyerMouvement,
-    eMission_Pion_LOG_ReconnaitreItineraire,
-    eMission_Pion_LOG_ReconnaitreZoneContaminee,
-    eMission_Pion_LOG_AppuyerMouvementDansZone,
-    eMission_Pion_LOG_MettreEnOeuvreZoneStationnement,
-    eMission_Pion_LOG_AppuyerFranchissementSurUnPoint,
-    eMission_Pion_LOG_BloquerZone,
-    eMission_Pion_LOG_ReconnaitreZoneDeDeploiement,
-    eMission_Pion_LOG_ArmerPIA,
-    eMission_Pion_LOG_Surveiller,
-    eMission_Pion_Test_Heliporter,
-    eMission_Pion_Test_MoveTo,
-    eMission_Pion_Test_CreateObject,
-    eMission_Pion_Test_DestroyObject,
-    eMission_Pion_Test_CreateBypass,
-    eMission_Pion_Test_Fire,
-    eMission_Pion_Test_ChangePosture,
-    eMission_Pion_Test_PathFind,
-    eMission_Pion_Test_FindPosition,
-    eMission_Pion_Test_Reinforce,
-    eMission_Pion_PlastronEnnemi,
-    eMission_Pion_FaireMouvement,
-    eMission_Pion_Suivre,
-    eMission_Pion_Transporter,
-    eMission_Pion_SeFaireDecontaminer,
-    eMission_Pion_Franchir,
-    eMission_Pion_Decrocher,
-    eMission_Pion_Stationner,
-    eMission_Pion_SeFaireTransporter,
-    eMission_Pion_InterdireFranchissementPopulations,
-    eMission_Pion_FiltrerPopulations,
-    eMission_Pion_RenseignerSurPopulations,
-    eMission_Pion_CanaliserPopulations,
-    eMission_Pion_ControlerPopulationsDansZone,
-    eMission_Pion_SecuriserZoneContrePopulations,
-    eMission_Pion_Generique,
-    eMission_Pion_MILICE_Provoquer,
-    eMission_Pion_MILICE_PrendreEtTenir,
-    eMission_Pion_MILICE_DetruireEmbuscade,
-    eMission_Pion_JOINT_AIR_EffectuerRaid,
-    eMission_Pion_NBC_AnimerUnPlotDeDecontamination,
-    eMission_Pion_NBC_ReconnaitreItineraire,
-    eMission_Pion_NBC_ReconnaitreZone,
-    eMission_Pion_NBC_DecontaminerZone,
-    eMission_Pion_NBC_ReconnaitreUnSiteROTA,
-    eMission_Pion_RENS_ROHUM_RenseignerSur,
-    eMission_Pion_RENS_ROHUM_SExfiltrer,
-    eMission_Pion_RENS_ROHUM_OrienterGuider,
-    eMission_Pion_RENS_ROEM_Appuyer,
-    eMission_Pion_RENS_ROEM_RenseignerSur,
-    eMission_Pion_RENS_ROEM_MettreEnOeuvre,
-    eMission_Pion_RENS_RADINT_RenseignerSur,
-    eMission_Pion_RENS_RADINT_MettreEnOeuvre,
-    eMission_Pion_RENS_ROIM_MettreEnOeuvre,
-    eMission_Pion_RENS_ROIM_SDTI_RenseignerSur,
-    eMission_Pion_RENS_ROIM_CL289_RenseignerSur,
-    eMission_Pion_TRANS_EtablirGererLiaison,
-    eMission_Pion_ASY_SInfiltrer,
-    eMission_Pion_ASY_CommettreAttentatContrePopulation,
-    eMission_Pion_ASY_CommettreAttentatContreForcesArmees,
-    eMission_Pion_ASY_CommettreAttentatContreInstallation,
-    eMission_Pion_ASY_CommettreExactionsSurPopulationDansZone,
-    eMission_Pion_ASY_Renseigner,
-
-    eNbrUnitMission
+    eMissionGenSousTypeObstacle_Preliminaire,
+    eMissionGenSousTypeObstacle_DeManoeuvre,
+    eNbrMissionGenSousTypeObstacle
 };
 
-enum E_PopulationMission
-{
-    eMission_Population_FaireMouvement = 1,
-    eMission_Population_Manifester,
-    eMission_Population_CommettreExactions,
 
-    eNbrPopulationMission
+enum E_OrderErrorCode
+{
+    eOrderErrorCode_NoError,
+    eOrderErrorCode_ErrorInvalidUnit,
+    eOrderErrorCode_ErrorInvalidLimit,
+    eOrderErrorCode_ErrorInvalidLima,
+    eOrderErrorCode_ErrorInvalidMission,
+    eOrderErrorCode_ErrorInvalidMissionParameters,
+    eOrderErrorCode_ErrorUnitCannotReceiveOrder,
+    eOrderErrorCode_ErrorInvalidOrderConduite,
+    eOrderErrorCode_ErrorInvalidOrderMission,
+    eOrderErrorCode_ErrorInvalidOrderInitial,
+    eOrderErrorCode_ErrorInvalidOrderConduiteParameters,
+    eOrderErrorCode_ErrorUnitSurrendered,
+    eOrderErrorCode_ErrorInvalidLimaFunction,
+    eNbrOrderErrorCode
 };
 
-enum E_FragOrder
-{
-    eOrdreConduite_MettreTenueNBC,
-    eOrdreConduite_EnleverTenueNBC,
-    eOrdreConduite_PasserEnSilenceRadio,
-    eOrdreConduite_ArreterSilenceRadio,
-    eOrdreConduite_PasserEnSilenceRadar,
-    eOrdreConduite_ArreterSilenceRadar,
-    eOrdreConduite_RecupererTransporteurs,
-    eOrdreConduite_AttendreSePoster,
-    eOrdreConduite_Poursuivre,
-    eOrdreConduite_Interrompre,
-    eOrdreConduite_ChangerAmbiance,
-    eOrdreConduite_ChangerReglesEngagement,
-    eOrdreConduite_ChangerParametresRecompletementALAT,
-    eOrdreConduite_ChangerReglesEngagementPopulation,
-    eOrdreConduite_Deboucher,
-    eOrdreConduite_Decrocher,
-    eOrdreConduite_AcquerirObjectif,
-    eOrdreConduite_Brouiller,
-    eOrdreConduite_ChangerPositionDebarquement,
-    eOrdreConduite_Pion_ChangerDePosition,
-    eOrdreConduite_Pion_Contourner,
-    eOrdreConduite_Pion_EnvoyerVehicule,
-    eOrdreConduite_Pion_ActiverObstacle,
-    eOrdreConduite_Pion_AppliquerFeux,
-    eOrdreConduite_Pion_ExecuterTir,
-    eOrdreConduite_Pion_Emettre,
-    eOrdreConduite_Pion_StopperEmission,
-    eOrdreConduite_Pion_RenforcerEnVSRAM,
-    eOrdreConduite_Pion_TransfererVSRAM,
-    eOrdreConduite_Pion_ReprendreAuxOrdresVSRAM,
-    eOrdreConduite_Pion_RenforcerEnRemorqueurs,
-    eOrdreConduite_Pion_TransfererRemorqueurs,
-    eOrdreConduite_Pion_ReprendreAuxOrdresRemorqueurs,
-    eOrdreConduite_ModifierRegimeTravailMaintenance,
-    eOrdreConduite_ModifierPrioritesReparations,
-    eOrdreConduite_ModifierPrioritesBlesses,
-    eOrdreConduite_ModifierPrioritesTactiquesReparations,
-    eOrdreConduite_ModifierPrioritesTactiquesBlesses,
-    eOrdreConduite_Automate_RealiserVariantement,
-    eOrdreConduite_Automate_DesequiperSiteFranchissement,
-    eOrdreConduite_Automate_AffecterPionAObstacle,
-    eOrdreConduite_Automate_ReconnaitreZoneImplantation,
-    eOrdreConduite_Automate_TC2_GererMaterielAvantDeplacement,
-    eOrdreConduite_Automate_ActiverObstacle,
-    eOrdreConduite_Automate_TransfererRenforts,
-    eOrdreConduite_Population_ChangerAttitude,
 
-    eNbrFragOrder
+enum E_OrderState
+{
+    eOrderState_Started,
+    eOrderState_Stopped,
+    eNbrOrderState
+};
+
+
+enum E_AutomateOrderFormation
+{
+    eAutomateOrderFormation_UnEchelon,
+    eAutomateOrderFormation_DeuxEchelons,
+    eNbrAutomateOrderFormation
 };
 
 

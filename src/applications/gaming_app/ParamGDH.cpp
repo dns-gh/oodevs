@@ -15,10 +15,11 @@
 // Name: ParamGDH constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH& asn, const QString& label )
+ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH*& asn, const QString& label )
     : QHBox( parent )
-    , asn_( asn )
+    , asn_( new ASN1T_GDH() )
 {
+    asn = asn_;
     setSpacing( 5 );
     setSizePolicy( QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum ) );
 
@@ -43,7 +44,7 @@ ParamGDH::ParamGDH( QWidget* parent, ASN1T_GDH& asn, const QString& label )
 // -----------------------------------------------------------------------------
 ParamGDH::~ParamGDH()
 {
-    // NOTHING
+    delete asn_;
 }
 
 // -----------------------------------------------------------------------------
@@ -52,14 +53,14 @@ ParamGDH::~ParamGDH()
 // -----------------------------------------------------------------------------
 void ParamGDH::Commit()
 {
-    asn_.qualificatif = EnumGDH_Qualificatif::at;
+    asn_->qualificatif = EnumGDH_Qualificatif::at;
     if( pCheckbox_->isChecked() )
     {
         static QDateTime baseDateTime( QDate( 1901, 1, 1 ) );
-        asn_.datation = baseDateTime.secsTo( pDateTimeEdit_->dateTime() );
+        asn_->datation = baseDateTime.secsTo( pDateTimeEdit_->dateTime() );
     }
     else
-        asn_.datation = 0;
+        asn_->datation = 0;
 }
 
 // -----------------------------------------------------------------------------

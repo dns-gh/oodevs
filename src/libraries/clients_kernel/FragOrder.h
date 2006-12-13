@@ -10,6 +10,11 @@
 #ifndef __FragOrder_h_
 #define __FragOrder_h_
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace kernel
 {
 
@@ -25,7 +30,7 @@ class FragOrder
 public:
     //! @name Constructors/Destructor
     //@{
-             FragOrder( const QString& name, unsigned int id );
+    explicit FragOrder( xml::xistream& xis );
     virtual ~FragOrder();
     //@}
 
@@ -33,6 +38,8 @@ public:
     //@{
     unsigned long GetId() const;
     QString GetName() const;
+    bool IsDefaultOrder   () const;
+    bool IsMissionRequired() const;
     //@}
 
 private:
@@ -40,6 +47,8 @@ private:
     //@{
     QString name_;
     unsigned int id_;
+    bool isDefaultOrder_;
+    bool isWithoutMission_;
     //@}
 };
 

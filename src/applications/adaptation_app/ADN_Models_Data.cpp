@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-24 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Models_Data.cpp $
-// $Author: Ape $
-// $Modtime: 25/04/05 15:53 $
-// $Revision: 11 $
-// $Workfile: ADN_Models_Data.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Models_Data.h"
 
@@ -36,7 +34,9 @@
 ADN_Models_Data::OrderInfos::OrderInfos()
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
+, fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0 )
 {
+    // NOTHING
 }
 
 
@@ -58,9 +58,10 @@ void ADN_Models_Data::OrderInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "OrdreConduite" );
     input.ReadAttribute( "nom", strName_ );
-    nOrderType_ = ENT_Tr::ConvertToFragOrder( strName_.GetData() );
-    if( nOrderType_ == (E_FragOrder)-1 )
+    ADN_Missions_Data::FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( strName_.GetData() );
+    if( !fragOrder )
         throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid frag order: " ).append( strName_.GetData().c_str() ).ascii() );
+    fragOrder_ = fragOrder;
     input.EndSection(); // OrdreConduite
 }
 
@@ -72,7 +73,7 @@ void ADN_Models_Data::OrderInfos::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Models_Data::OrderInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "OrdreConduite" );
-    output.WriteAttribute( "nom", ENT_Tr::ConvertFromFragOrder( nOrderType_.GetData(), ENT_Tr::eToSim ) );
+    output.WriteAttribute( "nom", fragOrder_.GetData()->strName_.GetData() );
     output.EndSection(); // OrdreConduite
 }
 
@@ -85,9 +86,10 @@ void ADN_Models_Data::OrderInfos::WriteArchive( MT_OutputArchive_ABC& output )
 // Name: MissionInfos::~MissionInfos
 // Created: AGN 2003-12-03
 // -----------------------------------------------------------------------------
-ADN_Models_Data::MissionInfos::MissionInfos()
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
+ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , mission_( missions, 0 )
 {
     vOrders_.SetItemTypeName( "un ordre" );
     vOrders_.SetNodeName( "la liste des ordres" );
@@ -122,7 +124,7 @@ std::string ADN_Models_Data::MissionInfos::GetItemName()
 std::string ADN_Models_Data::MissionInfos::GetNodeName()
 {
     std::string strResult( "de la mission " );
-    return strResult + ADN_Tr::ConvertFromSMission( nMissionType_.GetData(), ENT_Tr_ABC::eToTr );
+    return strResult + mission_.GetNodeName();
 }
 
 
@@ -132,19 +134,18 @@ std::string ADN_Models_Data::MissionInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 ADN_Models_Data::MissionInfos* ADN_Models_Data::MissionInfos::CreateCopy()
 {
-    MissionInfos* pMission = new MissionInfos();
-    pMission->nMissionType_ = nMissionType_.GetData();
+    MissionInfos* pMission = new MissionInfos( mission_.GetVector() );
+    pMission->mission_ = mission_.GetData();
     pMission->strName_ = strName_.GetData();
 
     pMission->vOrders_.reserve( vOrders_.size() );
     for( T_OrderInfos_Vector::iterator it = vOrders_.begin(); it != vOrders_.end(); ++it )
     {
         OrderInfos* pOrder = new OrderInfos();
-        pOrder->nOrderType_ = (*it)->nOrderType_.GetData();
-        pOrder->strName_ = (*it)->strName_.GetData();
+        pOrder->fragOrder_ = (*it)->fragOrder_.GetData();
+        pOrder->strName_   = (*it)->strName_.GetData();
         pMission->vOrders_.AddItem( pOrder );
     }
-
     return pMission;
 }
 
@@ -157,15 +158,16 @@ void ADN_Models_Data::MissionInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Mission" );
     input.ReadAttribute( "nom", strName_ );
-    nMissionType_ = ADN_Tr::ConvertToSMission( strName_.GetData() );
-    if( nMissionType_ == (E_SMission)-1 )
-        input.ThrowError( MT_FormatString( "La mission '%s' est inconnue", strName_.GetData().c_str() ) );
 
+    ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( mission_.GetVector(), strName_.GetData() );
+    if( !mission )
+        throw ADN_DataException( tr( "Data error" ).ascii(), tr( "Invalid mission: " ).append( strName_.GetData().c_str() ).ascii() );
+    mission_ = mission;
     if( input.BeginList( "OrdresConduite", ADN_XmlInput_Helper::eNothing ) )
     {
         while( input.NextListElement() )
         {
-            std::auto_ptr<OrderInfos> spNew( new OrderInfos() );
+            std::auto_ptr< OrderInfos > spNew( new OrderInfos() );
             spNew->ReadArchive( input );
             vOrders_.AddItem( spNew.release() );
         }
@@ -182,15 +184,13 @@ void ADN_Models_Data::MissionInfos::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Models_Data::MissionInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Mission" );
-    output.WriteAttribute( "nom", ADN_Tr::ConvertFromSMission( nMissionType_.GetData() ) );
+    output.WriteAttribute( "nom", mission_.GetData()->strName_.GetData() );
 
     if( ! vOrders_.empty() )
     {
         output.BeginList( "OrdresConduite", vOrders_.size() );
         for( IT_OrderInfos_Vector it = vOrders_.begin(); it != vOrders_.end(); ++it )
-        {
             (*it)->WriteArchive( output );
-        }
         output.EndList(); // OrdresConduite
     }
     output.EndSection(); // Mission
@@ -201,12 +201,29 @@ void ADN_Models_Data::MissionInfos::WriteArchive( MT_OutputArchive_ABC& output )
 // 
 // =============================================================================
 
+namespace
+{
+    ADN_Missions_Data::T_Mission_Vector dummy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_Data::ModelInfos
+// Created: SBO 2006-12-04
+// -----------------------------------------------------------------------------
+ADN_Models_Data::ModelInfos::ModelInfos()
+    : ADN_Ref_ABC()
+    , missions_ ( dummy )
+{
+    // NOTHING
+}
+
 //-----------------------------------------------------------------------------
 // Name: ModelInfos::ModelInfos
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
-ADN_Models_Data::ModelInfos::ModelInfos()
-:   ADN_Ref_ABC()
+ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions )
+    : ADN_Ref_ABC()
+    , missions_( missions )
 {
     strDiaType_ = "T_Pion";
     strFile_ = "DEC\\For Tests\\Empty\\Files.hal";
@@ -260,7 +277,7 @@ std::string ADN_Models_Data::ModelInfos::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
 {
-    ModelInfos* pNewInfo = new ModelInfos();
+    ModelInfos* pNewInfo = new ModelInfos( missions_ );
     pNewInfo->strDiaType_ = strDiaType_.GetData();
     pNewInfo->strFile_ = strFile_.GetData();
 
@@ -288,7 +305,7 @@ void ADN_Models_Data::ModelInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "Missions" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<MissionInfos> spNew( new MissionInfos() );
+        std::auto_ptr<MissionInfos> spNew( new MissionInfos( missions_ ) );
         spNew->ReadArchive( input );
         vMissions_.AddItem( spNew.release() );
     }
@@ -377,7 +394,7 @@ void ADN_Models_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "Pions" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<ModelInfos> spNew( new ModelInfos() );
+        std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions() ) );
         spNew->ReadArchive( input );
         vUnitModels_.AddItem( spNew.release() );
     }
@@ -386,7 +403,7 @@ void ADN_Models_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "Automates" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<ModelInfos> spNew( new ModelInfos() );
+        std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetAutomatMissions() ) );
         spNew->ReadArchive( input );
         vAutomataModels_.AddItem( spNew.release() );
     }
@@ -395,7 +412,7 @@ void ADN_Models_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "Populations" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<ModelInfos> spNew( new ModelInfos() );
+        std::auto_ptr<ModelInfos> spNew( new ModelInfos( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetPopulationMissions() ) );
         spNew->ReadArchive( input );
         vPopulationModels_.AddItem( spNew.release() );
     }
@@ -415,23 +432,17 @@ void ADN_Models_Data::WriteArchive( MT_OutputArchive_ABC& output )
 
     output.BeginList( "Pions", vUnitModels_.size() );
     for( IT_ModelInfos_Vector it1 = vUnitModels_.begin(); it1 != vUnitModels_.end(); ++it1 )
-    {
         (*it1)->WriteArchive( output );
-    }
     output.EndList(); // Pions
 
     output.BeginList( "Automates", vAutomataModels_.size() );
     for( IT_ModelInfos_Vector it2 = vAutomataModels_.begin(); it2 != vAutomataModels_.end(); ++it2 )
-    {
         (*it2)->WriteArchive( output );
-    }
     output.EndList(); // Automates
 
     output.BeginList( "Populations", vPopulationModels_.size() );
     for( IT_ModelInfos_Vector it2 = vPopulationModels_.begin(); it2 != vPopulationModels_.end(); ++it2 )
-    {
         (*it2)->WriteArchive( output );
-    }
     output.EndList(); // Populations
 
     output.EndSection();

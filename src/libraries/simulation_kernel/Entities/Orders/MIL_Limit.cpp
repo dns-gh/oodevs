@@ -61,7 +61,7 @@ MIL_Limit::MIL_Limit( const MIL_Formation& formationBroadcasted, MIL_InputArchiv
 MIL_Limit::~MIL_Limit()
 {
     NET_ASN_MsgLimitDestruction msg;
-    msg.GetAsnMsg() = GetID();
+    msg() = GetID();
     msg.Send();
 }
 
@@ -112,10 +112,10 @@ void MIL_Limit::Update( const ASN1T_MsgLimitUpdateRequest& asn )
 template< typename T > void MIL_Limit::SendMsg() const
 {
     T msg;
-    msg.GetAsnMsg().oid = GetID();  
-    Serialize( msg.GetAsnMsg().tactical_line );
+    msg().oid = GetID();  
+    Serialize( msg().tactical_line );
     msg.Send();
-    CleanAfterSerialization( msg.GetAsnMsg().tactical_line );
+    CleanAfterSerialization( msg().tactical_line );
 }
 
 // -----------------------------------------------------------------------------

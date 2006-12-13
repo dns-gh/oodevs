@@ -152,7 +152,7 @@
     <Indirect>
       <VitesseMoyenne>200</VitesseMoyenne>
       <PorteeMin>500</PorteeMin>
-      <PorteeMax>12000</PorteeMax>
+      <PorteeMax>20000</PorteeMax>
     </Indirect>
   </Armement>
 

@@ -20,14 +20,13 @@ signatures
     A /*T_Pion*/                     A::DEC_Automate_PionPCDeAutomate     ( A /*T_Automate*/ );    
                                                                            
     // MRT                            
-    A                                A::DEC_MRT_CreerMissionPion( A /*T_Pion*/, I /*E_TypeMissionPion*/ );
+    A                                A::DEC_MRT_CreerMissionPion( A /*T_Pion*/, I /*T_Mission_Pion_XXX*/ );
     V                                A::DEC_MRT_Valide          ();
     V                                A::DEC_MRT_AffecteFuseaux  ( S /*T_ListePions*/ );
                                      
     // Conduite                              
-    V                                A::DEC_CDT_DonneOrdreConduiteAPion      ( A /*T_Pion*/, I /*E_TypeOrdreConduite*/, * /*parametres*/ );
-    A /*T_Mission_Pion*/             A::DEC_CDT_CreerMissionPion             ( A /*T_Pion*/, I /*E_TypeMissionPion*/ );
-    V                                A::DEC_CDT_DonnerMissionPion            ( A /*T_Mission_Pion*/ );
+    A /*T_Mission_Pion*/             A::DEC_CDT_CreerMissionPion ( A /*T_Pion*/, I /*E_TypeMissionPion*/ );
+    V                                A::DEC_CDT_DonnerMissionPion( A /*T_Mission_Pion*/ );
                                      
     // Limas / Missions
     B                                A::DEC_NouvelleMission   ();

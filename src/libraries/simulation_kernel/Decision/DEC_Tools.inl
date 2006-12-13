@@ -10,6 +10,28 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeEquipement
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeEquipement( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeEquipement_ );
+    return diaVariable.GetType() == *pTypeEquipement_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::CheckTypeTirIndirect
+// Created: NLD 2004-12-29
+// -----------------------------------------------------------------------------
+inline
+bool DEC_Tools::CheckTypeTirIndirect( const DIA_Variable_ABC& diaVariable )
+{
+    assert( pTypeTirIndirect_ );
+    return diaVariable.GetType() == *pTypeTirIndirect_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Tools::CheckTypeDotation
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
@@ -334,7 +356,7 @@ bool DEC_Tools::CheckTypeMissionPion( const DIA_Variable_ABC& diaVariable )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Tools::GetTypeLocalisation
+// Name: DEC_Tools
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
 inline
@@ -583,4 +605,26 @@ const DIA_TypeDef& DEC_Tools::GetTypeGenObjet()
 {
     assert( pTypeGenObjet_ );
     return *pTypeGenObjet_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypeEquipement
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypeEquipement()
+{
+    assert( pTypeEquipement_ );
+    return *pTypeEquipement_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Tools::GetTypeTirIndirect
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+inline
+const DIA_TypeDef& DEC_Tools::GetTypeTirIndirect()
+{
+    assert( pTypeTirIndirect_ );
+    return *pTypeTirIndirect_;
 }

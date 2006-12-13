@@ -94,8 +94,9 @@ void Application::Initialize( int argc, char** argv )
     profile_     = new Profile( *controllers_ );
     workers_     = new Workers();
     network_     = new Network( *controllers_, *simulation_, *profile_ );
-    staticModel_ = new StaticModel( *controllers_ );
-    model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *new RcEntityResolver( this, *controllers_ ) );
+    RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
+    staticModel_ = new StaticModel( *controllers_, *rcResolver );
+    model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
     network_->GetMessageMgr().SetModel( *model_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_, *profile_ );
 

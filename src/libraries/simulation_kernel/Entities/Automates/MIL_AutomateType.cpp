@@ -353,7 +353,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, "DEC_Automate_ChangeEtatROE"               );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyCloseCombatStateChanged      , "DEC_Automate_ChangeEtatCombatDeRencontre" );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::NotifyOperationalStateChanged      , "DEC_Automate_ChangeEtatOperationnel"      );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsEmbraye                          , "DEC_Automate_EstEmbraye"                  );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsEngaged                          , "DEC_Automate_EstEmbraye"                  );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsSurrendered                      , "DEC_Automate_SEstRendu"                   );
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::IsPrisoner                         , "DEC_Automate_EstPrisonnier"               );
        
@@ -448,9 +448,8 @@ void MIL_AutomateType::InitializeDiaFunctions()
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::MRT_AffectFuseaux    , "DEC_MRT_AffecteFuseaux"   );
 
     // Conduite
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_SendOrderConduiteToPion, "DEC_CDT_DonneOrdreConduiteAPion"       );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_CreatePionMission      , "DEC_CDT_CreerMissionPion"              );
-    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_GivePionMission        , "DEC_CDT_DonnerMissionPion"             );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_CreatePionMission, "DEC_CDT_CreerMissionPion"              );
+    DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_OrdersFunctions::CDT_GivePionMission  , "DEC_CDT_DonnerMissionPion"             );
 
     // Pion management
     DEC_RegisterDIACallFunctor( GetFunctionTable(), &DEC_AutomateFunctions::PionChangeAutomate , "DEC_Pion_ChangeAutomate" );

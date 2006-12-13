@@ -156,9 +156,9 @@ void MIL_SiteFranchissement::WriteSpecificAttributes( NET_ASN_MsgObjectCreation&
     asnAttributes_.vitesse_courant   = (int)rCurrentSpeed_;
     asnAttributes_.berges_a_amenager = bBanksToFitOut_;
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent = 1;
-    asnMsg.GetAsnMsg().attributs_specifiques.t                     = T_AttrObjectSpecific_site_franchissement;
-    asnMsg.GetAsnMsg().attributs_specifiques.u.site_franchissement = &asnAttributes_;
+    asnMsg().m.attributs_specifiquesPresent = 1;
+    asnMsg().attributs_specifiques.t                     = T_AttrObjectSpecific_site_franchissement;
+    asnMsg().attributs_specifiques.u.site_franchissement = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------

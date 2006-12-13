@@ -134,7 +134,7 @@ public:
     void SendFullState              () const;
     void SendKnowledge              () const;
 
-    void OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& msg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& msg, uint nCtx );
     //@}
 
 private:

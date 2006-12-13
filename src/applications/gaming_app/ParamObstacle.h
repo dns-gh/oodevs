@@ -45,7 +45,7 @@ class ParamObstacle : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const QString& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamObstacle( QWidget* parent, ASN1T_MissionGenObject*& asnObject, const QString& label, const kernel::ObjectTypes& objectTypes, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamObstacle();
     //@}
 
@@ -75,7 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MissionGenObject& asnObject_;
+    ASN1T_MissionGenObject* asnObject_;
     ParamLocation* location_;
 
     gui::ValuedComboBox< const kernel::ObjectType* >* typeCombo_;

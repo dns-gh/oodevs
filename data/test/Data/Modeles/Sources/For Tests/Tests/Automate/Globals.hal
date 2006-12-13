@@ -3,6 +3,7 @@
 // *****************************************************************************
 
 include "Common/Moteur/Functions/Automates.hal";
+include "Common/Moteur/EngineReports.hal";
 
 functions
 {

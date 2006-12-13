@@ -311,6 +311,6 @@ void PHY_SupplyStockConsign::SendFullState( NET_ASN_MsgLogRavitaillementTraiteme
     PHY_SupplyConsign_ABC::SendFullState( asn );
 
     assert( pConvoy_ );
-    asn.GetAsnMsg().m.oid_pion_convoyantPresent = 1;
-    asn.GetAsnMsg().oid_pion_convoyant          = pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0;
+    asn().m.oid_pion_convoyantPresent = 1;
+    asn().oid_pion_convoyant          = pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0;
 }

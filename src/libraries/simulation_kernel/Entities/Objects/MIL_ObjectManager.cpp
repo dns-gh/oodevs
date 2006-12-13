@@ -305,12 +305,12 @@ MIL_ControlZone& MIL_ObjectManager::CreateObjectControlZone( MIL_Army& army, con
 // Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicAction& asnMsg, MIL_MOSContextID nCtx )
+void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx )
 {
     ASN1T_EnumObjectErrorCode nErrorCode = EnumObjectErrorCode::no_error;
 
     NET_ASN_MsgObjectMagicActionAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid = asnMsg.oid_objet;
+    asnReplyMsg().oid = asnMsg.oid_objet;
 
     if( asnMsg.action.t == T_MsgObjectMagicAction_action_create_object )
         nErrorCode = CreateObject( asnMsg.oid_objet, *asnMsg.action.u.create_object );
@@ -330,7 +330,7 @@ void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicActio
             }
         }
     }
-    asnReplyMsg.GetAsnMsg().error_code = nErrorCode;
+    asnReplyMsg().error_code = nErrorCode;
     asnReplyMsg.Send( nCtx );
 }
 

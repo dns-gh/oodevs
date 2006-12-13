@@ -24,7 +24,7 @@
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 
 // -----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ bool DEC_PathWalker::SetCurrentPath( DEC_PathResult& path )
         return false;
 
     if( pCurrentPath_->GetState() == DEC_PathResult::ePartial )
-        movingEntity_.SendRC( *MIL_RC::pRcTerrainDifficile_ );
+        movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
 
     itNextPathPoint_ = itCurrentPathPoint_;   
     ++itNextPathPoint_;
@@ -418,7 +418,7 @@ int DEC_PathWalker::Move( DEC_PathResult& path )
     if( !movingEntity_.HasResources() )
     {
         rCurrentSpeed_ = 0.;
-        movingEntity_.SendRC( *MIL_RC::pRcPlusDeCarburant_ );
+        movingEntity_.SendRC( MIL_Report::eReport_OutOfGas );
         return eNotEnoughFuel;
     }
 

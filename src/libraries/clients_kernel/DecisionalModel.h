@@ -37,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
+             DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrder >& fragOrders );
     virtual ~DecisionalModel();
     //@}
 
@@ -57,7 +57,7 @@ private:
     //@{
     void ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver );
     void ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory );
-    void RegisterDefaultFragOrders( MissionFactory& factory );
+    void RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrder >& fragOrders );
     void RegisterFragOrder( MissionFactory& factory, const std::string& order );
     //@}
 

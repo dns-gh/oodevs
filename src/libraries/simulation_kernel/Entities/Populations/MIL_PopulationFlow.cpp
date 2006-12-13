@@ -23,13 +23,13 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationKnowledge.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
-#include "Entities/RC/MIL_RC_DebutInterventionFaceAPopulation.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -331,7 +331,7 @@ void MIL_PopulationFlow::ManageSplit()
     //$$$ TMP CRs - a changer apres refactor objets
     const MIL_RealObject_ABC::T_AgentSet& animators = pSplittingObject_->GetAnimators();
     for( MIL_RealObject_ABC::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
-        MIL_RC::pRcDebutInterventionFaceAPopulation_->Send( **it, MIL_RC::eRcTypeOperational, GetAttitude() );
+        MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );            
 
 /*
     //$$$$$$$$$$$$$$$$$$$$$
@@ -478,9 +478,9 @@ MT_Float MIL_PopulationFlow::GetMaxSpeed() const
 // Name: MIL_PopulationFlow::SendRC
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::SendRC( const MIL_RC& rc ) const
+void MIL_PopulationFlow::SendRC( int nReportID ) const
 {
-    rc.Send( GetPopulation(), MIL_RC::eRcTypeWarning );
+    MIL_Report::PostEvent( GetPopulation(), (MIL_Report::E_EngineReport)nReportID ); //$$$
 }
 
 // -----------------------------------------------------------------------------
@@ -524,8 +524,8 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, M
 void MIL_PopulationFlow::SendCreation() const
 {
     NET_ASN_MsgPopulationFluxCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_flux       = GetID();
-    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
+    asnMsg().oid_flux       = GetID();
+    asnMsg().oid_population = GetPopulation().GetID();
     asnMsg.Send();
 }
 
@@ -536,8 +536,8 @@ void MIL_PopulationFlow::SendCreation() const
 void MIL_PopulationFlow::SendDestruction() const
 {
     NET_ASN_MsgPopulationFluxDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_flux       = GetID();
-    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
+    asnMsg().oid_flux       = GetID();
+    asnMsg().oid_population = GetPopulation().GetID();
     asnMsg.Send();
 }
 
@@ -549,31 +549,31 @@ void MIL_PopulationFlow::SendFullState() const
 {
     NET_ASN_MsgPopulationFluxUpdate asnMsg;
     
-    asnMsg.GetAsnMsg().oid_flux       = GetID();
-    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
+    asnMsg().oid_flux       = GetID();
+    asnMsg().oid_population = GetPopulation().GetID();
 
-    if( SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
-        asnMsg.GetAsnMsg().m.itinerairePresent = 1;
+    if( SerializeCurrentPath( asnMsg().itineraire ) )
+        asnMsg().m.itinerairePresent = 1;
 
-    asnMsg.GetAsnMsg().m.fluxPresent               = 1;
-    asnMsg.GetAsnMsg().m.attitudePresent           = 1;
-    asnMsg.GetAsnMsg().m.directionPresent          = 1;
-    asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-    asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-    asnMsg.GetAsnMsg().m.vitessePresent            = 1;
+    asnMsg().m.fluxPresent               = 1;
+    asnMsg().m.attitudePresent           = 1;
+    asnMsg().m.directionPresent          = 1;
+    asnMsg().m.nb_humains_vivantsPresent = 1;
+    asnMsg().m.nb_humains_mortsPresent   = 1;
+    asnMsg().m.vitessePresent            = 1;
 
-    NET_ASN_Tools::WritePath     ( flowShape_, asnMsg.GetAsnMsg().flux      );
-    NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
-    asnMsg.GetAsnMsg().attitude           = GetAttitude().GetAsnID();
-    asnMsg.GetAsnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
-    asnMsg.GetAsnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
-    asnMsg.GetAsnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+    NET_ASN_Tools::WritePath     ( flowShape_, asnMsg().flux      );
+    NET_ASN_Tools::WriteDirection( direction_, asnMsg().direction );
+    asnMsg().attitude           = GetAttitude().GetAsnID();
+    asnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+    asnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+    asnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
 
     asnMsg.Send();
 
-    NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().flux );
-    if( asnMsg.GetAsnMsg().m.itinerairePresent )
-        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().itineraire );
+    NET_ASN_Tools::Delete( asnMsg().flux );
+    if( asnMsg().m.itinerairePresent )
+        NET_ASN_Tools::Delete( asnMsg().itineraire );
 }
 
 // -----------------------------------------------------------------------------
@@ -587,50 +587,50 @@ void MIL_PopulationFlow::SendChangedState() const
 
     NET_ASN_MsgPopulationFluxUpdate asnMsg;
     
-    asnMsg.GetAsnMsg().oid_flux       = GetID();
-    asnMsg.GetAsnMsg().oid_population = GetPopulation().GetID();
+    asnMsg().oid_flux       = GetID();
+    asnMsg().oid_population = GetPopulation().GetID();
 
-    if( bPathUpdated_ && SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
-        asnMsg.GetAsnMsg().m.itinerairePresent = 1;
+    if( bPathUpdated_ && SerializeCurrentPath( asnMsg().itineraire ) )
+        asnMsg().m.itinerairePresent = 1;
 
     if( bFlowShapeUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.fluxPresent = 1;
-        NET_ASN_Tools::WritePath( flowShape_, asnMsg.GetAsnMsg().flux );
+        asnMsg().m.fluxPresent = 1;
+        NET_ASN_Tools::WritePath( flowShape_, asnMsg().flux );
     }
 
     if( HasAttitudeChanged() )
     {
-        asnMsg.GetAsnMsg().m.attitudePresent = 1;
-        asnMsg.GetAsnMsg().attitude          = GetAttitude().GetAsnID();
+        asnMsg().m.attitudePresent = 1;
+        asnMsg().attitude          = GetAttitude().GetAsnID();
     }
 
     if( bDirectionUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.directionPresent = 1;
-        NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
+        asnMsg().m.directionPresent = 1;
+        NET_ASN_Tools::WriteDirection( direction_, asnMsg().direction );
     }
 
     if( HasHumansChanged() )
     {
-        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1; 
-        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg.GetAsnMsg().nb_humains_vivants          = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
-        asnMsg.GetAsnMsg().nb_humains_morts            = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+        asnMsg().m.nb_humains_vivantsPresent = 1; 
+        asnMsg().m.nb_humains_mortsPresent   = 1;
+        asnMsg().nb_humains_vivants          = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+        asnMsg().nb_humains_morts            = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
     }
 
     if( bSpeedUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.vitessePresent = 1;
-        asnMsg.GetAsnMsg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+        asnMsg().m.vitessePresent = 1;
+        asnMsg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
     }
     
     asnMsg.Send();
 
-    if( asnMsg.GetAsnMsg().m.fluxPresent )
-        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().flux );
-    if( asnMsg.GetAsnMsg().m.itinerairePresent )
-        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().itineraire );
+    if( asnMsg().m.fluxPresent )
+        NET_ASN_Tools::Delete( asnMsg().flux );
+    if( asnMsg().m.itinerairePresent )
+        NET_ASN_Tools::Delete( asnMsg().itineraire );
 }
 
 // =============================================================================

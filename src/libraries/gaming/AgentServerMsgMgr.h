@@ -215,12 +215,11 @@ private:
     // Orders
     void OnReceiveMsgAutomateOrder          ( const ASN1T_MsgAutomateOrder& asnMsg ); 
     void OnReceiveMsgAutomateOrderAck       ( const ASN1T_MsgAutomateOrderAck& asnMsg, unsigned long nCtx ); 
-    void OnReceiveMsgAutomateMRT            ( const ASN1T_MsgAutomateMRT& asnMsg );
     void OnReceiveMsgAutomateOrderManagement( const ASN1T_MsgAutomateOrderManagement& asnMsg );
     void OnReceiveMsgPionOrder              ( const ASN1T_MsgPionOrder& asnMsg ); 
     void OnReceiveMsgPionOrderAck           ( const ASN1T_MsgPionOrderAck& asnMsg, unsigned long nCtx );
     void OnReceiveMsgPionOrderManagement    ( const ASN1T_MsgPionOrderManagement& asnMsg );
-    void OnReceiveMsgOrderConduiteAck       ( const ASN1T_MsgOrderConduiteAck& asnMsg, unsigned long nCtx ); 
+    void OnReceiveMsgFragOrderAck           ( const ASN1T_MsgFragOrderAck& asnMsg, unsigned long nCtx ); 
 
     // Automate mode
     void OnReceiveMsgSetAutomateModeAck( const ASN1T_MsgSetAutomateModeAck& asnMsg, unsigned long nCtx );

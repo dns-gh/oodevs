@@ -31,7 +31,7 @@ class ParamAutomatList : public EntityListParameter< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAutomatList( QWidget* pParent, ASN1T_ListAgent& asn, const QString& label, const QString& menu );
+             ParamAutomatList( QWidget* pParent, ASN1T_ListAgent*& asn, const QString& label, const QString& menu );
     virtual ~ParamAutomatList();
     //@}
 

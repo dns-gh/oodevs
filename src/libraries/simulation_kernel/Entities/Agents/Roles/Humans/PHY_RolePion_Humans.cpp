@@ -20,7 +20,7 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_RolePion_Humans, "PHY_RolePion_Humans" )
@@ -455,7 +455,7 @@ PHY_MedicalHumanState* PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Hu
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
-        MIL_RC::pRcDemandeEvacuationSanitaire_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_MedicalEvacuationRequest );
     nTickRcMedicalQuerySent_ = nCurrentTick;
 
     PHY_MedicalHumanState* pMedicalHumanState = pTC2->MedicalHandleHumanForEvacuation( *pPion_, human );
@@ -519,9 +519,9 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) con
     }
     assert( i == nNbrHumansDataChanged_ );
 
-    asn.GetAsnMsg().dotation_eff_personnel.n        = nNbrHumansDataChanged_;
-    asn.GetAsnMsg().dotation_eff_personnel.elem     = pPersonnel;
-    asn.GetAsnMsg().m.dotation_eff_personnelPresent = 1;
+    asn().dotation_eff_personnel.n        = nNbrHumansDataChanged_;
+    asn().dotation_eff_personnel.elem     = pPersonnel;
+    asn().m.dotation_eff_personnelPresent = 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -551,9 +551,9 @@ void PHY_RolePion_Humans::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
         personnel.nb_utilises_pour_maintenance = humanData.nNbrInLogisticMaintenance_;
     }
 
-    asn.GetAsnMsg().dotation_eff_personnel.n        = ranks.size();
-    asn.GetAsnMsg().dotation_eff_personnel.elem     = pPersonnel;
-    asn.GetAsnMsg().m.dotation_eff_personnelPresent = 1;
+    asn().dotation_eff_personnel.n        = ranks.size();
+    asn().dotation_eff_personnel.elem     = pPersonnel;
+    asn().m.dotation_eff_personnelPresent = 1;
 }
 
 

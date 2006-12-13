@@ -63,7 +63,7 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicAction& asnMsg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx );
     //@}
 
 private:

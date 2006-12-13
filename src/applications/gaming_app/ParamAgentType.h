@@ -25,7 +25,7 @@ class ParamAgentType : public QButtonGroup, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentType( QWidget* parent, ASN1T_NatureAtlas& asn, const QString& label );
+             ParamAgentType( QWidget* parent, ASN1T_NatureAtlas*& asn, const QString& label );
     virtual ~ParamAgentType();
     //@}
 
@@ -44,7 +44,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_NatureAtlas& asn_;
+    ASN1T_NatureAtlas* asn_;
 
     QCheckBox* pArmoredCheckBox_;
     QCheckBox* pASSCheckBox_;

@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 class MIL_Population;
-class MIL_PopulationMission_ABC;
+class MIL_PopulationMission;
 class NET_ASN_MsgPopulationUpdate;
 
 // =============================================================================
@@ -49,8 +49,8 @@ public:
     void UpdateDecision();
     void Clean         ();
 
-    void StartMissionBehavior( MIL_PopulationMission_ABC& mission );
-    void StopMissionBehavior ( MIL_PopulationMission_ABC& mission );
+    void StartMissionBehavior( MIL_PopulationMission& mission );
+    void StopMissionBehavior ( MIL_PopulationMission& mission );
     void Reset               ();
     //@}
 

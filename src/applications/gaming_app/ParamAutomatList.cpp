@@ -17,8 +17,8 @@ using namespace kernel;
 // Name: ParamAutomatList constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAutomatList::ParamAutomatList( QWidget* pParent, ASN1T_ListAgent& asn, const QString& label, const QString& menu )
-    : EntityListParameter< Automat_ABC >( pParent, asn.n, asn.elem, label, menu )
+ParamAutomatList::ParamAutomatList( QWidget* pParent, ASN1T_ListAgent*& asn, const QString& label, const QString& menu )
+    : EntityListParameter< Automat_ABC >( pParent, (ASN1T_ListOID*&)asn, label, menu )
 {
     // NOTHING
 }

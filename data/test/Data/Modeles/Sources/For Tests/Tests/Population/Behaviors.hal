@@ -144,9 +144,9 @@ behavior BEH_GererOrdreConduite()
     	with ( x in ordres_recus)
     	{
     		Rep_OrdreConduite ordre = x;
-			switch ( ordre.eOrdre_ )
+			switch ( ordre.__type_ )
 			{
-                case eOrdreConduite_Population_ChangerAttitude:
+                case Rep_OrderConduite_Population_ChangerAttitude:
                 {
                     Rep_OrderConduite_Population_ChangerAttitude ordreAtt = ordre;
                     DEC_Debug( "changement attitude" );

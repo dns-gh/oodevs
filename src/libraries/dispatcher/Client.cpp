@@ -191,9 +191,9 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
         DISPATCH_ASN_MSG      ( lima_destruction_request );
         DISPATCH_ASN_MSG      ( lima_update_request );
         DISPATCH_ASN_MSG      ( pion_order );
-        DISPATCH_ASN_MSG      ( order_conduite );
         DISPATCH_ASN_MSG      ( automate_order);
         DISPATCH_ASN_MSG      ( population_order );
+        DISPATCH_ASN_MSG      ( frag_order );
         DISPATCH_ASN_MSG      ( set_automate_mode );
         DISPATCH_ASN_MSG      ( unit_magic_action );
         DISPATCH_ASN_MSG      ( object_magic_action );

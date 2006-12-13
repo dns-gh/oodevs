@@ -3,119 +3,119 @@
     <name>ENT</name>
     <message>
         <source>Automate ABC ArmerPointDeControle</source>
-        <translation>Automate ABC ArmerPointDeControle</translation>
+        <translation type="obsolete">Automate ABC ArmerPointDeControle</translation>
     </message>
     <message>
         <source>Automate ABC OrganiserAccueilColonneRefugies</source>
-        <translation>Automate ABC OrganiserAccueilColonneRefugies</translation>
+        <translation type="obsolete">Automate ABC OrganiserAccueilColonneRefugies</translation>
     </message>
     <message>
         <source>Automate ABC ProtegerPC</source>
-        <translation>Automate ABC ProtegerPC</translation>
+        <translation type="obsolete">Automate ABC ProtegerPC</translation>
     </message>
     <message>
         <source>Automate ABC Appuyer</source>
-        <translation>Automate ABC Appuyer</translation>
+        <translation type="obsolete">Automate ABC Appuyer</translation>
     </message>
     <message>
         <source>Automate ABC Attaquer</source>
-        <translation>Automate ABC Attaquer</translation>
+        <translation type="obsolete">Automate ABC Attaquer</translation>
     </message>
     <message>
         <source>Automate ABC ContreAttaquer</source>
-        <translation>Automate ABC ContreAttaquer</translation>
+        <translation type="obsolete">Automate ABC ContreAttaquer</translation>
     </message>
     <message>
         <source>Automate ABC Controler</source>
-        <translation>Automate ABC Controler</translation>
+        <translation type="obsolete">Automate ABC Controler</translation>
     </message>
     <message>
         <source>Automate ABC Couvrir</source>
-        <translation>Automate ABC Couvrir</translation>
+        <translation type="obsolete">Automate ABC Couvrir</translation>
     </message>
     <message>
         <source>Automate ABC DonnerCoupArret</source>
-        <translation>Automate ABC DonnerCoupArret</translation>
+        <translation type="obsolete">Automate ABC DonnerCoupArret</translation>
     </message>
     <message>
         <source>Automate ABC Eclairer</source>
-        <translation>Automate ABC Eclairer</translation>
+        <translation type="obsolete">Automate ABC Eclairer</translation>
     </message>
     <message>
         <source>Automate ABC EffectuerRaid</source>
-        <translation>Automate ABC EffectuerRaid</translation>
+        <translation type="obsolete">Automate ABC EffectuerRaid</translation>
     </message>
     <message>
         <source>Automate ABC Interdire</source>
-        <translation>Automate ABC Interdire</translation>
+        <translation type="obsolete">Automate ABC Interdire</translation>
     </message>
     <message>
         <source>Automate ABC Jalonner</source>
-        <translation>Automate ABC Jalonner</translation>
+        <translation type="obsolete">Automate ABC Jalonner</translation>
     </message>
     <message>
         <source>Automate ABC PrendrePreciserContact</source>
-        <translation>Automate ABC PrendrePreciserContact</translation>
+        <translation type="obsolete">Automate ABC PrendrePreciserContact</translation>
     </message>
     <message>
         <source>Automate ABC Reconnaitre</source>
-        <translation>Automate ABC Reconnaitre</translation>
+        <translation type="obsolete">Automate ABC Reconnaitre</translation>
     </message>
     <message>
         <source>Automate ABC ReconnaitrePoint</source>
-        <translation>Automate ABC ReconnaitrePoint</translation>
+        <translation type="obsolete">Automate ABC ReconnaitrePoint</translation>
     </message>
     <message>
         <source>Automate ABC Reduire</source>
-        <translation>Automate ABC Reduire</translation>
+        <translation type="obsolete">Automate ABC Reduire</translation>
     </message>
     <message>
         <source>Automate ABC ReleverEnDepassant</source>
-        <translation>Automate ABC ReleverEnDepassant</translation>
+        <translation type="obsolete">Automate ABC ReleverEnDepassant</translation>
     </message>
     <message>
         <source>Automate ABC Semparer</source>
-        <translation>Automate ABC Semparer</translation>
+        <translation type="obsolete">Automate ABC Semparer</translation>
     </message>
     <message>
         <source>Automate ABC Tenir</source>
-        <translation>Automate ABC Tenir</translation>
+        <translation type="obsolete">Automate ABC Tenir</translation>
     </message>
     <message>
         <source>Automate ABC Soutenir</source>
-        <translation>Automate ABC Soutenir</translation>
+        <translation type="obsolete">Automate ABC Soutenir</translation>
     </message>
     <message>
         <source>Automate ABC Surveiller</source>
-        <translation>Automate ABC Surveiller</translation>
+        <translation type="obsolete">Automate ABC Surveiller</translation>
     </message>
     <message>
         <source>Automate ABC FlancGarder</source>
-        <translation>Automate ABC FlancGarder</translation>
+        <translation type="obsolete">Automate ABC FlancGarder</translation>
     </message>
     <message>
         <source>Automate ABC RenseignerSur</source>
-        <translation>Automate ABC RenseignerSur</translation>
+        <translation type="obsolete">Automate ABC RenseignerSur</translation>
     </message>
     <message>
         <source>Automate ABC Fixer</source>
-        <translation>Automate ABC Fixer</translation>
+        <translation type="obsolete">Automate ABC Fixer</translation>
     </message>
     <message>
         <source>Automate ABC Freiner</source>
-        <translation>Automate ABC Freiner</translation>
+        <translation type="obsolete">Automate ABC Freiner</translation>
     </message>
     <message>
         <source>Automate ABC SurveillerItineraire</source>
-        <translation>Automate ABC SurveillerItineraire</translation>
+        <translation type="obsolete">Automate ABC SurveillerItineraire</translation>
     </message>
     <message>
         <source>Automate ABC RenseignerSurUnAxe</source>
-        <translation>Automate ABC RenseignerSurUnAxe</translation>
+        <translation type="obsolete">Automate ABC RenseignerSurUnAxe</translation>
     </message>
     <message>
         <source>Automate ABC RecueillirUnite</source>
-        <translation>Automate ABC RecueillirUnite</translation>
+        <translation type="obsolete">Automate ABC RecueillirUnite</translation>
     </message>
     <message>
         <source>Automate ABC EscorterUnConvoi</source>
@@ -123,15 +123,15 @@
     </message>
     <message>
         <source>Automate ALAT Heliporter</source>
-        <translation>Automate ALAT Heliporter</translation>
+        <translation type="obsolete">Automate ALAT Heliporter</translation>
     </message>
     <message>
         <source>Automate ALAT Jalonner</source>
-        <translation>Automate ALAT Jalonner</translation>
+        <translation type="obsolete">Automate ALAT Jalonner</translation>
     </message>
     <message>
         <source>Automate ALAT Helitransporter</source>
-        <translation>Automate ALAT Helitransporter</translation>
+        <translation type="obsolete">Automate ALAT Helitransporter</translation>
     </message>
     <message>
         <source>Automate ALAT ExtrairePersonnel</source>
@@ -139,11 +139,11 @@
     </message>
     <message>
         <source>Automate ALAT Appuyer</source>
-        <translation>Automate ALAT Appuyer</translation>
+        <translation type="obsolete">Automate ALAT Appuyer</translation>
     </message>
     <message>
         <source>Automate ALAT Couvrir</source>
-        <translation>Automate ALAT Couvrir</translation>
+        <translation type="obsolete">Automate ALAT Couvrir</translation>
     </message>
     <message>
         <source>Automate ALAT Controler</source>
@@ -151,39 +151,39 @@
     </message>
     <message>
         <source>Automate ALAT Surveiller</source>
-        <translation>Automate ALAT Surveiller</translation>
+        <translation type="obsolete">Automate ALAT Surveiller</translation>
     </message>
     <message>
         <source>Automate ALAT Reconnaitre</source>
-        <translation>Automate ALAT Reconnaitre</translation>
+        <translation type="obsolete">Automate ALAT Reconnaitre</translation>
     </message>
     <message>
         <source>Automate ALAT Freiner</source>
-        <translation>Automate ALAT Freiner</translation>
+        <translation type="obsolete">Automate ALAT Freiner</translation>
     </message>
     <message>
         <source>Automate ALAT Escorter</source>
-        <translation>Automate ALAT Escorter</translation>
+        <translation type="obsolete">Automate ALAT Escorter</translation>
     </message>
     <message>
         <source>Automate ALAT Attaquer</source>
-        <translation>Automate ALAT Attaquer</translation>
+        <translation type="obsolete">Automate ALAT Attaquer</translation>
     </message>
     <message>
         <source>Automate ALAT RecueillirFormationAeromobile</source>
-        <translation>Automate ALAT RecueillirFormationAeromobile</translation>
+        <translation type="obsolete">Automate ALAT RecueillirFormationAeromobile</translation>
     </message>
     <message>
         <source>Automate ALAT AttaquerFormationAeromobile</source>
-        <translation>Automate ALAT AttaquerFormationAeromobile</translation>
+        <translation type="obsolete">Automate ALAT AttaquerFormationAeromobile</translation>
     </message>
     <message>
         <source>Automate ALAT DonnerCoupArret</source>
-        <translation>Automate ALAT DonnerCoupArret</translation>
+        <translation type="obsolete">Automate ALAT DonnerCoupArret</translation>
     </message>
     <message>
         <source>Automate ALAT DetruireNeutraliserDansProfondeur</source>
-        <translation>Automate ALAT DetruireNeutraliserDansProfondeur</translation>
+        <translation type="obsolete">Automate ALAT DetruireNeutraliserDansProfondeur</translation>
     </message>
     <message>
         <source>Automate ALAT EffectuerRechercheEtSauvetage</source>
@@ -191,39 +191,39 @@
     </message>
     <message>
         <source>Automate ASA DefendreZone</source>
-        <translation>Automate ASA DefendreZone</translation>
+        <translation type="obsolete">Automate ASA DefendreZone</translation>
     </message>
     <message>
         <source>Automate ASA DefendreSite</source>
-        <translation>Automate ASA DefendreSite</translation>
+        <translation type="obsolete">Automate ASA DefendreSite</translation>
     </message>
     <message>
         <source>Automate ASA Surveiller</source>
-        <translation>Automate ASA Surveiller</translation>
+        <translation type="obsolete">Automate ASA Surveiller</translation>
     </message>
     <message>
         <source>Automate ASA DefendreUnites</source>
-        <translation>Automate ASA DefendreUnites</translation>
+        <translation type="obsolete">Automate ASA DefendreUnites</translation>
     </message>
     <message>
         <source>Automate ASS SeDeployer</source>
-        <translation>Automate ASS SeDeployer</translation>
+        <translation type="obsolete">Automate ASS SeDeployer</translation>
     </message>
     <message>
         <source>Automate ASS ReconnaitreZonesDeploiement</source>
-        <translation>Automate ASS ReconnaitreZonesDeploiement</translation>
+        <translation type="obsolete">Automate ASS ReconnaitreZonesDeploiement</translation>
     </message>
     <message>
         <source>Automate ASS AcquerirObjectifs</source>
-        <translation>Automate ASS AcquerirObjectifs</translation>
+        <translation type="obsolete">Automate ASS AcquerirObjectifs</translation>
     </message>
     <message>
         <source>Automate GEN SeDeployer</source>
-        <translation>Automate GEN SeDeployer</translation>
+        <translation type="obsolete">Automate GEN SeDeployer</translation>
     </message>
     <message>
         <source>Automate GEN FaireFranchir</source>
-        <translation>Automate GEN FaireFranchir</translation>
+        <translation type="obsolete">Automate GEN FaireFranchir</translation>
     </message>
     <message>
         <source>Automate GEN RealiserSystemeObstacles</source>
@@ -231,11 +231,11 @@
     </message>
     <message>
         <source>Automate GEN FranchirDeViveForce</source>
-        <translation>Automate GEN FranchirDeViveForce</translation>
+        <translation type="obsolete">Automate GEN FranchirDeViveForce</translation>
     </message>
     <message>
         <source>Automate GEN RetablirItineraires</source>
-        <translation>Automate GEN RetablirItineraires</translation>
+        <translation type="obsolete">Automate GEN RetablirItineraires</translation>
     </message>
     <message>
         <source>Automate GEN AmenagerAireStationnement</source>
@@ -279,143 +279,143 @@
     </message>
     <message>
         <source>Automate INF AttaquerSouplesse</source>
-        <translation>Automate INF AttaquerSouplesse</translation>
+        <translation type="obsolete">Automate INF AttaquerSouplesse</translation>
     </message>
     <message>
         <source>Automate INF Appuyer</source>
-        <translation>Automate INF Appuyer</translation>
+        <translation type="obsolete">Automate INF Appuyer</translation>
     </message>
     <message>
         <source>Automate INF Controler</source>
-        <translation>Automate INF Controler</translation>
+        <translation type="obsolete">Automate INF Controler</translation>
     </message>
     <message>
         <source>Automate INF Couvrir</source>
-        <translation>Automate INF Couvrir</translation>
+        <translation type="obsolete">Automate INF Couvrir</translation>
     </message>
     <message>
         <source>Automate INF DonnerCoupArret</source>
-        <translation>Automate INF DonnerCoupArret</translation>
+        <translation type="obsolete">Automate INF DonnerCoupArret</translation>
     </message>
     <message>
         <source>Automate INF Eclairer</source>
-        <translation>Automate INF Eclairer</translation>
+        <translation type="obsolete">Automate INF Eclairer</translation>
     </message>
     <message>
         <source>Automate INF FlancGarder</source>
-        <translation>Automate INF FlancGarder</translation>
+        <translation type="obsolete">Automate INF FlancGarder</translation>
     </message>
     <message>
         <source>Automate INF Freiner</source>
-        <translation>Automate INF Freiner</translation>
+        <translation type="obsolete">Automate INF Freiner</translation>
     </message>
     <message>
         <source>Automate INF Harceler</source>
-        <translation>Automate INF Harceler</translation>
+        <translation type="obsolete">Automate INF Harceler</translation>
     </message>
     <message>
         <source>Automate INF Interdire</source>
-        <translation>Automate INF Interdire</translation>
+        <translation type="obsolete">Automate INF Interdire</translation>
     </message>
     <message>
         <source>Automate INF MenerDefenseUsure</source>
-        <translation>Automate INF MenerDefenseUsure</translation>
+        <translation type="obsolete">Automate INF MenerDefenseUsure</translation>
     </message>
     <message>
         <source>Automate INF PrendrePreciserMaintenirContact</source>
-        <translation>Automate INF PrendrePreciserMaintenirContact</translation>
+        <translation type="obsolete">Automate INF PrendrePreciserMaintenirContact</translation>
     </message>
     <message>
         <source>Automate INF ReconnaissanceOffensive</source>
-        <translation>Automate INF ReconnaissanceOffensive</translation>
+        <translation type="obsolete">Automate INF ReconnaissanceOffensive</translation>
     </message>
     <message>
         <source>Automate INF RecueillirUnite</source>
-        <translation>Automate INF RecueillirUnite</translation>
+        <translation type="obsolete">Automate INF RecueillirUnite</translation>
     </message>
     <message>
         <source>Automate INF Reduire</source>
-        <translation>Automate INF Reduire</translation>
+        <translation type="obsolete">Automate INF Reduire</translation>
     </message>
     <message>
         <source>Automate INF Relever</source>
-        <translation>Automate INF Relever</translation>
+        <translation type="obsolete">Automate INF Relever</translation>
     </message>
     <message>
         <source>Automate INF RompreContact</source>
-        <translation>Automate INF RompreContact</translation>
+        <translation type="obsolete">Automate INF RompreContact</translation>
     </message>
     <message>
         <source>Automate INF Surveiller</source>
-        <translation>Automate INF Surveiller</translation>
+        <translation type="obsolete">Automate INF Surveiller</translation>
     </message>
     <message>
         <source>Automate INF Semparer</source>
-        <translation>Automate INF Semparer</translation>
+        <translation type="obsolete">Automate INF Semparer</translation>
     </message>
     <message>
         <source>Automate INF Fixer</source>
-        <translation>Automate INF Fixer</translation>
+        <translation type="obsolete">Automate INF Fixer</translation>
     </message>
     <message>
         <source>Automate INF AttaquerEnTerrainDifficile</source>
-        <translation>Automate INF AttaquerEnTerrainDifficile</translation>
+        <translation type="obsolete">Automate INF AttaquerEnTerrainDifficile</translation>
     </message>
     <message>
         <source>Automate INF BarrerDirection</source>
-        <translation>Automate INF BarrerDirection</translation>
+        <translation type="obsolete">Automate INF BarrerDirection</translation>
     </message>
     <message>
         <source>Automate INF DefendreFerme</source>
-        <translation>Automate INF DefendreFerme</translation>
+        <translation type="obsolete">Automate INF DefendreFerme</translation>
     </message>
     <message>
         <source>Automate INF Tenir</source>
-        <translation>Automate INF Tenir</translation>
+        <translation type="obsolete">Automate INF Tenir</translation>
     </message>
     <message>
         <source>Automate INF AppuyerUnFreinage</source>
-        <translation>Automate INF AppuyerUnFreinage</translation>
+        <translation type="obsolete">Automate INF AppuyerUnFreinage</translation>
     </message>
     <message>
         <source>Automate INF AppuyerUneAttaque</source>
-        <translation>Automate INF AppuyerUneAttaque</translation>
+        <translation type="obsolete">Automate INF AppuyerUneAttaque</translation>
     </message>
     <message>
         <source>Automate INF Soutenir</source>
-        <translation>Automate INF Soutenir</translation>
+        <translation type="obsolete">Automate INF Soutenir</translation>
     </message>
     <message>
         <source>Automate LOG SeDeployer</source>
-        <translation>Automate LOG SeDeployer</translation>
+        <translation type="obsolete">Automate LOG SeDeployer</translation>
     </message>
     <message>
         <source>Automate Test MoveTo</source>
-        <translation>Automate Test MoveTo</translation>
+        <translation type="obsolete">Automate Test MoveTo</translation>
     </message>
     <message>
         <source>Automate Decrocher</source>
-        <translation>Automate Decrocher</translation>
+        <translation type="obsolete">Automate Decrocher</translation>
     </message>
     <message>
         <source>Automate ReleverSurPlace</source>
-        <translation>Automate ReleverSurPlace</translation>
+        <translation type="obsolete">Automate ReleverSurPlace</translation>
     </message>
     <message>
         <source>Automate FaireMouvement</source>
-        <translation>Automate FaireMouvement</translation>
+        <translation type="obsolete">Automate FaireMouvement</translation>
     </message>
     <message>
         <source>Automate SeFaireDecontaminer</source>
-        <translation>Automate SeFaireDecontaminer</translation>
+        <translation type="obsolete">Automate SeFaireDecontaminer</translation>
     </message>
     <message>
         <source>Automate Franchir</source>
-        <translation>Automate Franchir</translation>
+        <translation type="obsolete">Automate Franchir</translation>
     </message>
     <message>
         <source>Automate Stationner</source>
-        <translation>Automate Stationner</translation>
+        <translation type="obsolete">Automate Stationner</translation>
     </message>
     <message>
         <source>Automate SeFaireHeliporter</source>
@@ -423,39 +423,39 @@
     </message>
     <message>
         <source>Automate SeRecompleter</source>
-        <translation>Automate SeRecompleter</translation>
+        <translation type="obsolete">Automate SeRecompleter</translation>
     </message>
     <message>
         <source>Automate NBC ReconnaitreUnAxe</source>
-        <translation>Automate NBC ReconnaitreUnAxe</translation>
+        <translation type="obsolete">Automate NBC ReconnaitreUnAxe</translation>
     </message>
     <message>
         <source>Automate NBC ReconnaitreUneZone</source>
-        <translation>Automate NBC ReconnaitreUneZone</translation>
+        <translation type="obsolete">Automate NBC ReconnaitreUneZone</translation>
     </message>
     <message>
         <source>Automate NBC ArmerUnSiteDeDecontamination</source>
-        <translation>Automate NBC ArmerUnSiteDeDecontamination</translation>
+        <translation type="obsolete">Automate NBC ArmerUnSiteDeDecontamination</translation>
     </message>
     <message>
         <source>Automate NBC DecontaminerUneZone</source>
-        <translation>Automate NBC DecontaminerUneZone</translation>
+        <translation type="obsolete">Automate NBC DecontaminerUneZone</translation>
     </message>
     <message>
         <source>Automate NBC ReconnaitreDesSitesROTA</source>
-        <translation>Automate NBC ReconnaitreDesSitesROTA</translation>
+        <translation type="obsolete">Automate NBC ReconnaitreDesSitesROTA</translation>
     </message>
     <message>
         <source>Automate RENS ROHUM RenseignerSur</source>
-        <translation>Automate RENS ROHUM RenseignerSur</translation>
+        <translation type="obsolete">Automate RENS ROHUM RenseignerSur</translation>
     </message>
     <message>
         <source>Automate RENS ROHUM OrienterGuider</source>
-        <translation>Automate RENS ROHUM OrienterGuider</translation>
+        <translation type="obsolete">Automate RENS ROHUM OrienterGuider</translation>
     </message>
     <message>
         <source>Automate RENS ROHUM SExfiltrer</source>
-        <translation>Automate RENS ROHUM SExfiltrer</translation>
+        <translation type="obsolete">Automate RENS ROHUM SExfiltrer</translation>
     </message>
     <message>
         <source>Automate RENS ROIM AcquerirObjectifFixe</source>
@@ -471,7 +471,7 @@
     </message>
     <message>
         <source>Automate TRANS Commander</source>
-        <translation>Automate TRANS Commander</translation>
+        <translation type="obsolete">Automate TRANS Commander</translation>
     </message>
     <message>
         <source>Pion ALAT Relever</source>
@@ -483,43 +483,43 @@
     </message>
     <message>
         <source>Pion ALAT ReconnaitreDansLaProfondeur</source>
-        <translation>Pion ALAT ReconnaitreDansLaProfondeur</translation>
+        <translation type="obsolete">Pion ALAT ReconnaitreDansLaProfondeur</translation>
     </message>
     <message>
         <source>Pion ALAT ReconnaitreContourEnnemi</source>
-        <translation>Pion ALAT ReconnaitreContourEnnemi</translation>
+        <translation type="obsolete">Pion ALAT ReconnaitreContourEnnemi</translation>
     </message>
     <message>
         <source>Pion ALAT DetruireNeutraliserDansZone</source>
-        <translation>Pion ALAT DetruireNeutraliserDansZone</translation>
+        <translation type="obsolete">Pion ALAT DetruireNeutraliserDansZone</translation>
     </message>
     <message>
         <source>Pion ALAT DetruireAeromobile</source>
-        <translation>Pion ALAT DetruireAeromobile</translation>
+        <translation type="obsolete">Pion ALAT DetruireAeromobile</translation>
     </message>
     <message>
         <source>Pion ALAT Freiner</source>
-        <translation>Pion ALAT Freiner</translation>
+        <translation type="obsolete">Pion ALAT Freiner</translation>
     </message>
     <message>
         <source>Pion ALAT Jalonner</source>
-        <translation>Pion ALAT Jalonner</translation>
+        <translation type="obsolete">Pion ALAT Jalonner</translation>
     </message>
     <message>
         <source>Pion ALAT Escorter</source>
-        <translation>Pion ALAT Escorter</translation>
+        <translation type="obsolete">Pion ALAT Escorter</translation>
     </message>
     <message>
         <source>Pion ALAT Heliporter</source>
-        <translation>Pion ALAT Heliporter</translation>
+        <translation type="obsolete">Pion ALAT Heliporter</translation>
     </message>
     <message>
         <source>Pion ALAT HeliporterHelitransporterPlotRavitaillement</source>
-        <translation>Pion ALAT HeliporterHelitransporterPlotRavitaillement</translation>
+        <translation type="obsolete">Pion ALAT HeliporterHelitransporterPlotRavitaillement</translation>
     </message>
     <message>
         <source>Pion ALAT Helitransporter</source>
-        <translation>Pion ALAT Helitransporter</translation>
+        <translation type="obsolete">Pion ALAT Helitransporter</translation>
     </message>
     <message>
         <source>Pion ALAT EffectuerRechercheEtSauvetage</source>
@@ -527,15 +527,15 @@
     </message>
     <message>
         <source>Pion ALAT IMEX</source>
-        <translation>Pion ALAT IMEX</translation>
+        <translation type="obsolete">Pion ALAT IMEX</translation>
     </message>
     <message>
         <source>Pion ALAT Eclairer</source>
-        <translation>Pion ALAT Eclairer</translation>
+        <translation type="obsolete">Pion ALAT Eclairer</translation>
     </message>
     <message>
         <source>Pion ALAT Surveiller</source>
-        <translation>Pion ALAT Surveiller</translation>
+        <translation type="obsolete">Pion ALAT Surveiller</translation>
     </message>
     <message>
         <source>Pion ALAT Appuyer</source>
@@ -543,27 +543,27 @@
     </message>
     <message>
         <source>Pion ALAT Couvrir</source>
-        <translation>Pion ALAT Couvrir</translation>
+        <translation type="obsolete">Pion ALAT Couvrir</translation>
     </message>
     <message>
         <source>Pion ASA DefendreSite</source>
-        <translation>Pion ASA DefendreSite</translation>
+        <translation type="obsolete">Pion ASA DefendreSite</translation>
     </message>
     <message>
         <source>Pion ASA DefendreSiteAPartirPosition</source>
-        <translation>Pion ASA DefendreSiteAPartirPosition</translation>
+        <translation type="obsolete">Pion ASA DefendreSiteAPartirPosition</translation>
     </message>
     <message>
         <source>Pion ASA DefendreZone</source>
-        <translation>Pion ASA DefendreZone</translation>
+        <translation type="obsolete">Pion ASA DefendreZone</translation>
     </message>
     <message>
         <source>Pion ASA DefendreZoneAPartirPosition</source>
-        <translation>Pion ASA DefendreZoneAPartirPosition</translation>
+        <translation type="obsolete">Pion ASA DefendreZoneAPartirPosition</translation>
     </message>
     <message>
         <source>Pion ASA Surveiller</source>
-        <translation>Pion ASA Surveiller</translation>
+        <translation type="obsolete">Pion ASA Surveiller</translation>
     </message>
     <message>
         <source>Pion ASA SurveillerAPartirPosition</source>
@@ -571,111 +571,111 @@
     </message>
     <message>
         <source>Pion ASA DefendreUnites</source>
-        <translation>Pion ASA DefendreUnites</translation>
+        <translation type="obsolete">Pion ASA DefendreUnites</translation>
     </message>
     <message>
         <source>Pion ASS AssurerMiseEnOeuvre</source>
-        <translation>Pion ASS AssurerMiseEnOeuvre</translation>
+        <translation type="obsolete">Pion ASS AssurerMiseEnOeuvre</translation>
     </message>
     <message>
         <source>Pion ASS ReconnaitreZoneDeploiement</source>
-        <translation>Pion ASS ReconnaitreZoneDeploiement</translation>
+        <translation type="obsolete">Pion ASS ReconnaitreZoneDeploiement</translation>
     </message>
     <message>
         <source>Pion ASS AcquerirLanceursEni</source>
-        <translation>Pion ASS AcquerirLanceursEni</translation>
+        <translation type="obsolete">Pion ASS AcquerirLanceursEni</translation>
     </message>
     <message>
         <source>Pion ASS EO AcquerirObjectifs</source>
-        <translation>Pion ASS EO AcquerirObjectifs</translation>
+        <translation type="obsolete">Pion ASS EO AcquerirObjectifs</translation>
     </message>
     <message>
         <source>Pion ASS RATAC AcquerirObjectifs</source>
-        <translation>Pion ASS RATAC AcquerirObjectifs</translation>
+        <translation type="obsolete">Pion ASS RATAC AcquerirObjectifs</translation>
     </message>
     <message>
         <source>Pion ABC ReconnaitreAxe</source>
-        <translation>Pion ABC ReconnaitreAxe</translation>
+        <translation type="obsolete">Pion ABC ReconnaitreAxe</translation>
     </message>
     <message>
         <source>Pion ABC Soutenir</source>
-        <translation>Pion ABC Soutenir</translation>
+        <translation type="obsolete">Pion ABC Soutenir</translation>
     </message>
     <message>
         <source>Pion ABC Couvrir</source>
-        <translation>Pion ABC Couvrir</translation>
+        <translation type="obsolete">Pion ABC Couvrir</translation>
     </message>
     <message>
         <source>Pion ABC FlancGarder</source>
-        <translation>Pion ABC FlancGarder</translation>
+        <translation type="obsolete">Pion ABC FlancGarder</translation>
     </message>
     <message>
         <source>Pion ABC Reduire</source>
-        <translation>Pion ABC Reduire</translation>
+        <translation type="obsolete">Pion ABC Reduire</translation>
     </message>
     <message>
         <source>Pion ABC Appuyer</source>
-        <translation>Pion ABC Appuyer</translation>
+        <translation type="obsolete">Pion ABC Appuyer</translation>
     </message>
     <message>
         <source>Pion ABC Fixer</source>
-        <translation>Pion ABC Fixer</translation>
+        <translation type="obsolete">Pion ABC Fixer</translation>
     </message>
     <message>
         <source>Pion ABC RenseignerSur</source>
-        <translation>Pion ABC RenseignerSur</translation>
+        <translation type="obsolete">Pion ABC RenseignerSur</translation>
     </message>
     <message>
         <source>Pion ABC ControlerZone</source>
-        <translation>Pion ABC ControlerZone</translation>
+        <translation type="obsolete">Pion ABC ControlerZone</translation>
     </message>
     <message>
         <source>Pion ABC Surveiller</source>
-        <translation>Pion ABC Surveiller</translation>
+        <translation type="obsolete">Pion ABC Surveiller</translation>
     </message>
     <message>
         <source>Pion ABC Barrer</source>
-        <translation>Pion ABC Barrer</translation>
+        <translation type="obsolete">Pion ABC Barrer</translation>
     </message>
     <message>
         <source>Pion ABC Attaquer</source>
-        <translation>Pion ABC Attaquer</translation>
+        <translation type="obsolete">Pion ABC Attaquer</translation>
     </message>
     <message>
         <source>Pion ABC ReconnaitrePoint</source>
-        <translation>Pion ABC ReconnaitrePoint</translation>
+        <translation type="obsolete">Pion ABC ReconnaitrePoint</translation>
     </message>
     <message>
         <source>Pion ABC Eclairer</source>
-        <translation>Pion ABC Eclairer</translation>
+        <translation type="obsolete">Pion ABC Eclairer</translation>
     </message>
     <message>
         <source>Pion ABC Jalonner</source>
-        <translation>Pion ABC Jalonner</translation>
+        <translation type="obsolete">Pion ABC Jalonner</translation>
     </message>
     <message>
         <source>Pion ABC ContreAttaquer</source>
-        <translation>Pion ABC ContreAttaquer</translation>
+        <translation type="obsolete">Pion ABC ContreAttaquer</translation>
     </message>
     <message>
         <source>Pion ABC SemparerZone</source>
-        <translation>Pion ABC SemparerZone</translation>
+        <translation type="obsolete">Pion ABC SemparerZone</translation>
     </message>
     <message>
         <source>Pion ABC ReleverUnite</source>
-        <translation>Pion ABC ReleverUnite</translation>
+        <translation type="obsolete">Pion ABC ReleverUnite</translation>
     </message>
     <message>
         <source>Pion ABC ArmerPIA</source>
-        <translation>Pion ABC ArmerPIA</translation>
+        <translation type="obsolete">Pion ABC ArmerPIA</translation>
     </message>
     <message>
         <source>Pion ABC OuvrirItineraire</source>
-        <translation>Pion ABC OuvrirItineraire</translation>
+        <translation type="obsolete">Pion ABC OuvrirItineraire</translation>
     </message>
     <message>
         <source>Pion ABC Freiner</source>
-        <translation>Pion ABC Freiner</translation>
+        <translation type="obsolete">Pion ABC Freiner</translation>
     </message>
     <message>
         <source>Pion ABC EscorterUnConvoi</source>
@@ -683,11 +683,11 @@
     </message>
     <message>
         <source>Pion ABC ArmerPointDeControle</source>
-        <translation>Pion ABC ArmerPointDeControle</translation>
+        <translation type="obsolete">Pion ABC ArmerPointDeControle</translation>
     </message>
     <message>
         <source>Pion ABC OrganiserAccueilColonneRefugies</source>
-        <translation>Pion ABC OrganiserAccueilColonneRefugies</translation>
+        <translation type="obsolete">Pion ABC OrganiserAccueilColonneRefugies</translation>
     </message>
     <message>
         <source>Pion GEN RealiserFosseAC</source>
@@ -759,7 +759,7 @@
     </message>
     <message>
         <source>Pion GEN Renforcer</source>
-        <translation>Pion GEN Renforcer</translation>
+        <translation type="obsolete">Pion GEN Renforcer</translation>
     </message>
     <message>
         <source>Pion GEN FranchirEntonnoir</source>
@@ -779,11 +779,11 @@
     </message>
     <message>
         <source>Pion GEN RealiserTravauxProtection</source>
-        <translation>Pion GEN RealiserTravauxProtection</translation>
+        <translation type="obsolete">Pion GEN RealiserTravauxProtection</translation>
     </message>
     <message>
         <source>Pion GEN RetablirItineraire</source>
-        <translation>Pion GEN RetablirItineraire</translation>
+        <translation type="obsolete">Pion GEN RetablirItineraire</translation>
     </message>
     <message>
         <source>Pion GEN EquiperExploiterContinu</source>
@@ -803,11 +803,11 @@
     </message>
     <message>
         <source>Pion GEN ReconnaitreSiteFranchissement</source>
-        <translation>Pion GEN ReconnaitreSiteFranchissement</translation>
+        <translation type="obsolete">Pion GEN ReconnaitreSiteFranchissement</translation>
     </message>
     <message>
         <source>Pion GEN ReconnaitreItineraire</source>
-        <translation>Pion GEN ReconnaitreItineraire</translation>
+        <translation type="obsolete">Pion GEN ReconnaitreItineraire</translation>
     </message>
     <message>
         <source>Pion GEN DeminerSiteFranchissement</source>
@@ -815,7 +815,7 @@
     </message>
     <message>
         <source>Pion GEN ReconnaitreZone</source>
-        <translation>Pion GEN ReconnaitreZone</translation>
+        <translation type="obsolete">Pion GEN ReconnaitreZone</translation>
     </message>
     <message>
         <source>Pion GEN CreerPlateForme</source>
@@ -839,11 +839,11 @@
     </message>
     <message>
         <source>Pion GEN ActiverObstacle</source>
-        <translation>Pion GEN ActiverObstacle</translation>
+        <translation type="obsolete">Pion GEN ActiverObstacle</translation>
     </message>
     <message>
         <source>Pion GEN AmeliorerMobilite</source>
-        <translation>Pion GEN AmeliorerMobilite</translation>
+        <translation type="obsolete">Pion GEN AmeliorerMobilite</translation>
     </message>
     <message>
         <source>Pion GEN RealiserAireLogistique</source>
@@ -851,7 +851,7 @@
     </message>
     <message>
         <source>Pion GEN DepolluerZone</source>
-        <translation>Pion GEN DepolluerZone</translation>
+        <translation type="obsolete">Pion GEN DepolluerZone</translation>
     </message>
     <message>
         <source>Pion GEN AmenagerTerrainPoser</source>
@@ -875,87 +875,87 @@
     </message>
     <message>
         <source>Pion INF ReconnaitreAxe</source>
-        <translation>Pion INF ReconnaitreAxe</translation>
+        <translation type="obsolete">Pion INF ReconnaitreAxe</translation>
     </message>
     <message>
         <source>Pion INF Couvrir</source>
-        <translation>Pion INF Couvrir</translation>
+        <translation type="obsolete">Pion INF Couvrir</translation>
     </message>
     <message>
         <source>Pion INF Reduire</source>
-        <translation>Pion INF Reduire</translation>
+        <translation type="obsolete">Pion INF Reduire</translation>
     </message>
     <message>
         <source>Pion INF Appuyer</source>
-        <translation>Pion INF Appuyer</translation>
+        <translation type="obsolete">Pion INF Appuyer</translation>
     </message>
     <message>
         <source>Pion INF Fixer</source>
-        <translation>Pion INF Fixer</translation>
+        <translation type="obsolete">Pion INF Fixer</translation>
     </message>
     <message>
         <source>Pion INF ControlerSecteur</source>
-        <translation>Pion INF ControlerSecteur</translation>
+        <translation type="obsolete">Pion INF ControlerSecteur</translation>
     </message>
     <message>
         <source>Pion INF SurveillerSecteur</source>
-        <translation>Pion INF SurveillerSecteur</translation>
+        <translation type="obsolete">Pion INF SurveillerSecteur</translation>
     </message>
     <message>
         <source>Pion INF Barrer</source>
-        <translation>Pion INF Barrer</translation>
+        <translation type="obsolete">Pion INF Barrer</translation>
     </message>
     <message>
         <source>Pion INF ReconnaitrePoint</source>
-        <translation>Pion INF ReconnaitrePoint</translation>
+        <translation type="obsolete">Pion INF ReconnaitrePoint</translation>
     </message>
     <message>
         <source>Pion INF Eclairer</source>
-        <translation>Pion INF Eclairer</translation>
+        <translation type="obsolete">Pion INF Eclairer</translation>
     </message>
     <message>
         <source>Pion INF Interdire</source>
-        <translation>Pion INF Interdire</translation>
+        <translation type="obsolete">Pion INF Interdire</translation>
     </message>
     <message>
         <source>Pion INF Semparer</source>
-        <translation>Pion INF Semparer</translation>
+        <translation type="obsolete">Pion INF Semparer</translation>
     </message>
     <message>
         <source>Pion INF PrendrePreciserContact</source>
-        <translation>Pion INF PrendrePreciserContact</translation>
+        <translation type="obsolete">Pion INF PrendrePreciserContact</translation>
     </message>
     <message>
         <source>Pion INF Defendre</source>
-        <translation>Pion INF Defendre</translation>
+        <translation type="obsolete">Pion INF Defendre</translation>
     </message>
     <message>
         <source>Pion INF DetruireEmbuscade</source>
-        <translation>Pion INF DetruireEmbuscade</translation>
+        <translation type="obsolete">Pion INF DetruireEmbuscade</translation>
     </message>
     <message>
         <source>Pion INF ContreAttaquer</source>
-        <translation>Pion INF ContreAttaquer</translation>
+        <translation type="obsolete">Pion INF ContreAttaquer</translation>
     </message>
     <message>
         <source>Pion INF Freiner</source>
-        <translation>Pion INF Freiner</translation>
+        <translation type="obsolete">Pion INF Freiner</translation>
     </message>
     <message>
         <source>Pion INF FlancGarder</source>
-        <translation>Pion INF FlancGarder</translation>
+        <translation type="obsolete">Pion INF FlancGarder</translation>
     </message>
     <message>
         <source>Pion INF OrganiserUnCheckPoint</source>
-        <translation>Pion INF OrganiserUnCheckPoint</translation>
+        <translation type="obsolete">Pion INF OrganiserUnCheckPoint</translation>
     </message>
     <message>
         <source>Pion INF Harceler</source>
-        <translation>Pion INF Harceler</translation>
+        <translation type="obsolete">Pion INF Harceler</translation>
     </message>
     <message>
         <source>Pion INF DetruireParCoupDeMain</source>
-        <translation>Pion INF DetruireParCoupDeMain</translation>
+        <translation type="obsolete">Pion INF DetruireParCoupDeMain</translation>
     </message>
     <message>
         <source>Pion INF EscorterUnConvoi</source>
@@ -963,11 +963,11 @@
     </message>
     <message>
         <source>Pion INF RenseignerSur</source>
-        <translation>Pion INF RenseignerSur</translation>
+        <translation type="obsolete">Pion INF RenseignerSur</translation>
     </message>
     <message>
         <source>Pion INF Soutenir</source>
-        <translation>Pion INF Soutenir</translation>
+        <translation type="obsolete">Pion INF Soutenir</translation>
     </message>
     <message>
         <source>Pion INF Provoquer</source>
@@ -979,15 +979,15 @@
     </message>
     <message>
         <source>Pion INF Securiser</source>
-        <translation>Pion INF Securiser</translation>
+        <translation type="obsolete">Pion INF Securiser</translation>
     </message>
     <message>
         <source>Pion INF Recueillir</source>
-        <translation>Pion INF Recueillir</translation>
+        <translation type="obsolete">Pion INF Recueillir</translation>
     </message>
     <message>
         <source>Pion LOG SeDeployer</source>
-        <translation>Pion LOG SeDeployer</translation>
+        <translation type="obsolete">Pion LOG SeDeployer</translation>
     </message>
     <message>
         <source>Pion LOG DistribuerMoyens</source>
@@ -995,7 +995,7 @@
     </message>
     <message>
         <source>Pion LOG TrierBlesses</source>
-        <translation>Pion LOG TrierBlesses</translation>
+        <translation type="obsolete">Pion LOG TrierBlesses</translation>
     </message>
     <message>
         <source>Pion LOG TraiterEU</source>
@@ -1011,15 +1011,15 @@
     </message>
     <message>
         <source>Pion LOG PrendreEnCompteReactionsMentales</source>
-        <translation>Pion LOG PrendreEnCompteReactionsMentales</translation>
+        <translation type="obsolete">Pion LOG PrendreEnCompteReactionsMentales</translation>
     </message>
     <message>
         <source>Pion LOG DecontaminerBlesses</source>
-        <translation>Pion LOG DecontaminerBlesses</translation>
+        <translation type="obsolete">Pion LOG DecontaminerBlesses</translation>
     </message>
     <message>
         <source>Pion LOG Reparer</source>
-        <translation>Pion LOG Reparer</translation>
+        <translation type="obsolete">Pion LOG Reparer</translation>
     </message>
     <message>
         <source>Pion LOG Evacuer</source>
@@ -1027,75 +1027,75 @@
     </message>
     <message>
         <source>Pion LOG Convoyer</source>
-        <translation>Pion LOG Convoyer</translation>
+        <translation type="obsolete">Pion LOG Convoyer</translation>
     </message>
     <message>
         <source>Pion Test Heliporter</source>
-        <translation>Pion Test Heliporter</translation>
+        <translation type="obsolete">Pion Test Heliporter</translation>
     </message>
     <message>
         <source>Pion Test MoveTo</source>
-        <translation>Pion Test MoveTo</translation>
+        <translation type="obsolete">Pion Test MoveTo</translation>
     </message>
     <message>
         <source>Pion Test CreateObject</source>
-        <translation>Pion Test CreateObject</translation>
+        <translation type="obsolete">Pion Test CreateObject</translation>
     </message>
     <message>
         <source>Pion Test DestroyObject</source>
-        <translation>Pion Test DestroyObject</translation>
+        <translation type="obsolete">Pion Test DestroyObject</translation>
     </message>
     <message>
         <source>Pion Test CreateBypass</source>
-        <translation>Pion Test CreateBypass</translation>
+        <translation type="obsolete">Pion Test CreateBypass</translation>
     </message>
     <message>
         <source>Pion Test Fire</source>
-        <translation>Pion Test Fire</translation>
+        <translation type="obsolete">Pion Test Fire</translation>
     </message>
     <message>
         <source>Pion Test ChangePosture</source>
-        <translation>Pion Test ChangePosture</translation>
+        <translation type="obsolete">Pion Test ChangePosture</translation>
     </message>
     <message>
         <source>Pion Test PathFind</source>
-        <translation>Pion Test PathFind</translation>
+        <translation type="obsolete">Pion Test PathFind</translation>
     </message>
     <message>
         <source>Pion Test FindPosition</source>
-        <translation>Pion Test FindPosition</translation>
+        <translation type="obsolete">Pion Test FindPosition</translation>
     </message>
     <message>
         <source>Pion Test Reinforce</source>
-        <translation>Pion Test Reinforce</translation>
+        <translation type="obsolete">Pion Test Reinforce</translation>
     </message>
     <message>
         <source>Pion PlastronEnnemi</source>
-        <translation>Pion PlastronEnnemi</translation>
+        <translation type="obsolete">Pion PlastronEnnemi</translation>
     </message>
     <message>
         <source>Pion FaireMouvement</source>
-        <translation>Pion FaireMouvement</translation>
+        <translation type="obsolete">Pion FaireMouvement</translation>
     </message>
     <message>
         <source>Pion Suivre</source>
-        <translation>Pion Suivre</translation>
+        <translation type="obsolete">Pion Suivre</translation>
     </message>
     <message>
         <source>Pion SeFaireDecontaminer</source>
-        <translation>Pion SeFaireDecontaminer</translation>
+        <translation type="obsolete">Pion SeFaireDecontaminer</translation>
     </message>
     <message>
         <source>Pion Franchir</source>
-        <translation>Pion Franchir</translation>
+        <translation type="obsolete">Pion Franchir</translation>
     </message>
     <message>
         <source>Pion Decrocher</source>
-        <translation>Pion Decrocher</translation>
+        <translation type="obsolete">Pion Decrocher</translation>
     </message>
     <message>
         <source>Pion Stationner</source>
-        <translation>Pion Stationner</translation>
+        <translation type="obsolete">Pion Stationner</translation>
     </message>
     <message>
         <source>Pion SeFaireHeliporter</source>
@@ -1103,35 +1103,35 @@
     </message>
     <message>
         <source>Pion NBC AnimerUnPlotDeDecontamination</source>
-        <translation>Pion NBC AnimerUnPlotDeDecontamination</translation>
+        <translation type="obsolete">Pion NBC AnimerUnPlotDeDecontamination</translation>
     </message>
     <message>
         <source>Pion NBC ReconnaitreItineraire</source>
-        <translation>Pion NBC ReconnaitreItineraire</translation>
+        <translation type="obsolete">Pion NBC ReconnaitreItineraire</translation>
     </message>
     <message>
         <source>Pion NBC ReconnaitreZone</source>
-        <translation>Pion NBC ReconnaitreZone</translation>
+        <translation type="obsolete">Pion NBC ReconnaitreZone</translation>
     </message>
     <message>
         <source>Pion NBC DecontaminerZone</source>
-        <translation>Pion NBC DecontaminerZone</translation>
+        <translation type="obsolete">Pion NBC DecontaminerZone</translation>
     </message>
     <message>
         <source>Pion NBC ReconnaitreUnSiteROTA</source>
-        <translation>Pion NBC ReconnaitreUnSiteROTA</translation>
+        <translation type="obsolete">Pion NBC ReconnaitreUnSiteROTA</translation>
     </message>
     <message>
         <source>Pion RENS ROHUM RenseignerSur</source>
-        <translation>Pion RENS ROHUM RenseignerSur</translation>
+        <translation type="obsolete">Pion RENS ROHUM RenseignerSur</translation>
     </message>
     <message>
         <source>Pion RENS ROHUM SExfiltrer</source>
-        <translation>Pion RENS ROHUM SExfiltrer</translation>
+        <translation type="obsolete">Pion RENS ROHUM SExfiltrer</translation>
     </message>
     <message>
         <source>Pion RENS ROHUM OrienterGuider</source>
-        <translation>Pion RENS ROHUM OrienterGuider</translation>
+        <translation type="obsolete">Pion RENS ROHUM OrienterGuider</translation>
     </message>
     <message>
         <source>Pion RENS ROIM AcquerirObjectifFixe</source>
@@ -1147,11 +1147,11 @@
     </message>
     <message>
         <source>Pion RENS ROIM MettreEnOeuvre</source>
-        <translation>Pion RENS ROIM MettreEnOeuvre</translation>
+        <translation type="obsolete">Pion RENS ROIM MettreEnOeuvre</translation>
     </message>
     <message>
         <source>Pion TRANS EtablirGererLiaison</source>
-        <translation>Pion TRANS EtablirGererLiaison</translation>
+        <translation type="obsolete">Pion TRANS EtablirGererLiaison</translation>
     </message>
     <message>
         <source>MettreTenueNBC</source>
@@ -1175,11 +1175,11 @@
     </message>
     <message>
         <source>Poursuivre</source>
-        <translation>Poursuivre</translation>
+        <translation type="obsolete">Poursuivre</translation>
     </message>
     <message>
         <source>Interrompre</source>
-        <translation>Interrompre</translation>
+        <translation type="obsolete">Interrompre</translation>
     </message>
     <message>
         <source>ChangerReglesEngagement</source>
@@ -1187,11 +1187,11 @@
     </message>
     <message>
         <source>Deboucher</source>
-        <translation>Deboucher</translation>
+        <translation type="obsolete">Deboucher</translation>
     </message>
     <message>
         <source>Decrocher</source>
-        <translation>Decrocher</translation>
+        <translation type="obsolete">Decrocher</translation>
     </message>
     <message>
         <source>AssignerPositionEmbarquement</source>
@@ -1279,19 +1279,19 @@
     </message>
     <message>
         <source>Automate ASA DefendreItineraire</source>
-        <translation>Automate ASA DefendreItineraire</translation>
+        <translation type="obsolete">Automate ASA DefendreItineraire</translation>
     </message>
     <message>
         <source>Automate ASA MISTRAL DefendreZone</source>
-        <translation>Automate ASA MISTRAL DefendreZone</translation>
+        <translation type="obsolete">Automate ASA MISTRAL DefendreZone</translation>
     </message>
     <message>
         <source>Automate ASA MISTRAL DefendreSite</source>
-        <translation>Automate ASA MISTRAL DefendreSite</translation>
+        <translation type="obsolete">Automate ASA MISTRAL DefendreSite</translation>
     </message>
     <message>
         <source>Automate ASA MISTRAL Surveiller</source>
-        <translation>Automate ASA MISTRAL Surveiller</translation>
+        <translation type="obsolete">Automate ASA MISTRAL Surveiller</translation>
     </message>
     <message>
         <source>Automate LOG EscorterConvoi</source>
@@ -1315,27 +1315,27 @@
     </message>
     <message>
         <source>Automate RENS ROEM Appuyer</source>
-        <translation>Automate RENS ROEM Appuyer</translation>
+        <translation type="obsolete">Automate RENS ROEM Appuyer</translation>
     </message>
     <message>
         <source>Pion ASA MISTRAL DefendreSite</source>
-        <translation>Pion ASA MISTRAL DefendreSite</translation>
+        <translation type="obsolete">Pion ASA MISTRAL DefendreSite</translation>
     </message>
     <message>
         <source>Pion ASA MISTRAL DefendreSiteAPartirPosition</source>
-        <translation>Pion ASA MISTRAL DefendreSiteAPartirPosition</translation>
+        <translation type="obsolete">Pion ASA MISTRAL DefendreSiteAPartirPosition</translation>
     </message>
     <message>
         <source>Pion ASA MISTRAL DefendreZone</source>
-        <translation>Pion ASA MISTRAL DefendreZone</translation>
+        <translation type="obsolete">Pion ASA MISTRAL DefendreZone</translation>
     </message>
     <message>
         <source>Pion ASA MISTRAL DefendreZoneAPartirPosition</source>
-        <translation>Pion ASA MISTRAL DefendreZoneAPartirPosition</translation>
+        <translation type="obsolete">Pion ASA MISTRAL DefendreZoneAPartirPosition</translation>
     </message>
     <message>
         <source>Pion ASA MISTRAL Surveiller</source>
-        <translation>Pion ASA MISTRAL Surveiller</translation>
+        <translation type="obsolete">Pion ASA MISTRAL Surveiller</translation>
     </message>
     <message>
         <source>Pion ASA MISTRAL SurveillerAPartirPosition</source>
@@ -1367,7 +1367,7 @@
     </message>
     <message>
         <source>Pion LOG ReconnaitreItineraire</source>
-        <translation>Pion LOG ReconnaitreItineraire</translation>
+        <translation type="obsolete">Pion LOG ReconnaitreItineraire</translation>
     </message>
     <message>
         <source>Pion LOG SurveillerItineraire</source>
@@ -1379,35 +1379,35 @@
     </message>
     <message>
         <source>Pion RENS ROEM Appuyer</source>
-        <translation>Pion RENS ROEM Appuyer</translation>
+        <translation type="obsolete">Pion RENS ROEM Appuyer</translation>
     </message>
     <message>
         <source>Automate SeRendre</source>
-        <translation>Automate SeRendre</translation>
+        <translation type="obsolete">Automate SeRendre</translation>
     </message>
     <message>
         <source>Pion ALAT AppuyerDirectAuContact</source>
-        <translation>Pion ALAT AppuyerDirectAuContact</translation>
+        <translation type="obsolete">Pion ALAT AppuyerDirectAuContact</translation>
     </message>
     <message>
         <source>Pion INF RepondreAAggression</source>
-        <translation>Pion INF RepondreAAggression</translation>
+        <translation type="obsolete">Pion INF RepondreAAggression</translation>
     </message>
     <message>
         <source>Automate LOG AppuyerMouvement</source>
-        <translation>Automate LOG AppuyerMouvement</translation>
+        <translation type="obsolete">Automate LOG AppuyerMouvement</translation>
     </message>
     <message>
         <source>Automate LOG ReconnaitreItineraire</source>
-        <translation>Automate LOG ReconnaitreItineraire</translation>
+        <translation type="obsolete">Automate LOG ReconnaitreItineraire</translation>
     </message>
     <message>
         <source>Automate FaireMouvementVersCampRefugies</source>
-        <translation>Automate FaireMouvementVersCampRefugies</translation>
+        <translation type="obsolete">Automate FaireMouvementVersCampRefugies</translation>
     </message>
     <message>
         <source>Pion ASS EOP AcquerirObjectifs</source>
-        <translation>Pion ASS EOP AcquerirObjectifs</translation>
+        <translation type="obsolete">Pion ASS EOP AcquerirObjectifs</translation>
     </message>
     <message>
         <source>Pion GEN EquiperExploiter</source>
@@ -1415,7 +1415,7 @@
     </message>
     <message>
         <source>Pion GEN ExecuterVariantement</source>
-        <translation>Pion GEN ExecuterVariantement</translation>
+        <translation type="obsolete">Pion GEN ExecuterVariantement</translation>
     </message>
     <message>
         <source>Pion GEN AppuyerDebarquementTroupesGU</source>
@@ -1423,23 +1423,23 @@
     </message>
     <message>
         <source>Pion LOG PreparerBascule</source>
-        <translation>Pion LOG PreparerBascule</translation>
+        <translation type="obsolete">Pion LOG PreparerBascule</translation>
     </message>
     <message>
         <source>Pion LOG AppuyerMouvement</source>
-        <translation>Pion LOG AppuyerMouvement</translation>
+        <translation type="obsolete">Pion LOG AppuyerMouvement</translation>
     </message>
     <message>
         <source>Pion MILICE Provoquer</source>
-        <translation>Pion MILICE Provoquer</translation>
+        <translation type="obsolete">Pion MILICE Provoquer</translation>
     </message>
     <message>
         <source>Pion MILICE PrendreEtTenir</source>
-        <translation>Pion MILICE PrendreEtTenir</translation>
+        <translation type="obsolete">Pion MILICE PrendreEtTenir</translation>
     </message>
     <message>
         <source>Pion MILICE DetruireEmbuscade</source>
-        <translation>Pion MILICE DetruireEmbuscade</translation>
+        <translation type="obsolete">Pion MILICE DetruireEmbuscade</translation>
     </message>
     <message>
         <source>Pion JOINT MARINE Transporter</source>
@@ -1447,7 +1447,7 @@
     </message>
     <message>
         <source>Pion JOINT AIR EffectuerRaid</source>
-        <translation>Pion JOINT AIR EffectuerRaid</translation>
+        <translation type="obsolete">Pion JOINT AIR EffectuerRaid</translation>
     </message>
     <message>
         <source>Automate TC2 GererMaterielAvantDeplacement</source>
@@ -1459,31 +1459,31 @@
     </message>
     <message>
         <source>Automate LOG Surveiller</source>
-        <translation>Automate LOG Surveiller</translation>
+        <translation type="obsolete">Automate LOG Surveiller</translation>
     </message>
     <message>
         <source>Automate LOG AppuyerMouvementDansZone</source>
-        <translation>Automate LOG AppuyerMouvementDansZone</translation>
+        <translation type="obsolete">Automate LOG AppuyerMouvementDansZone</translation>
     </message>
     <message>
         <source>Automate LOG MettreEnOeuvreZoneStationnement</source>
-        <translation>Automate LOG MettreEnOeuvreZoneStationnement</translation>
+        <translation type="obsolete">Automate LOG MettreEnOeuvreZoneStationnement</translation>
     </message>
     <message>
         <source>Automate LOG AppuyerFranchissementDansZone</source>
-        <translation>Automate LOG AppuyerFranchissementDansZone</translation>
+        <translation type="obsolete">Automate LOG AppuyerFranchissementDansZone</translation>
     </message>
     <message>
         <source>Automate LOG BloquerZone</source>
-        <translation>Automate LOG BloquerZone</translation>
+        <translation type="obsolete">Automate LOG BloquerZone</translation>
     </message>
     <message>
         <source>Automate LOG ReconnaitreZoneContaminee</source>
-        <translation>Automate LOG ReconnaitreZoneContaminee</translation>
+        <translation type="obsolete">Automate LOG ReconnaitreZoneContaminee</translation>
     </message>
     <message>
         <source>Automate LOG ReconnaitreZoneDeDeploiement</source>
-        <translation>Automate LOG ReconnaitreZoneDeDeploiement</translation>
+        <translation type="obsolete">Automate LOG ReconnaitreZoneDeDeploiement</translation>
     </message>
     <message>
         <source>Pion GEN RealiserCampPrisonniers</source>
@@ -1495,75 +1495,75 @@
     </message>
     <message>
         <source>Pion LOG ReconnaitreZoneContaminee</source>
-        <translation>Pion LOG ReconnaitreZoneContaminee</translation>
+        <translation type="obsolete">Pion LOG ReconnaitreZoneContaminee</translation>
     </message>
     <message>
         <source>Pion LOG AppuyerMouvementDansZone</source>
-        <translation>Pion LOG AppuyerMouvementDansZone</translation>
+        <translation type="obsolete">Pion LOG AppuyerMouvementDansZone</translation>
     </message>
     <message>
         <source>Pion LOG MettreEnOeuvreZoneStationnement</source>
-        <translation>Pion LOG MettreEnOeuvreZoneStationnement</translation>
+        <translation type="obsolete">Pion LOG MettreEnOeuvreZoneStationnement</translation>
     </message>
     <message>
         <source>Pion LOG AppuyerFranchissementSurUnPoint</source>
-        <translation>Pion LOG AppuyerFranchissementSurUnPoint</translation>
+        <translation type="obsolete">Pion LOG AppuyerFranchissementSurUnPoint</translation>
     </message>
     <message>
         <source>Pion LOG BloquerZone</source>
-        <translation>Pion LOG BloquerZone</translation>
+        <translation type="obsolete">Pion LOG BloquerZone</translation>
     </message>
     <message>
         <source>Pion LOG ReconnaitreZoneDeDeploiement</source>
-        <translation>Pion LOG ReconnaitreZoneDeDeploiement</translation>
+        <translation type="obsolete">Pion LOG ReconnaitreZoneDeDeploiement</translation>
     </message>
     <message>
         <source>Pion LOG ArmerPIA</source>
-        <translation>Pion LOG ArmerPIA</translation>
+        <translation type="obsolete">Pion LOG ArmerPIA</translation>
     </message>
     <message>
         <source>Pion LOG Surveiller</source>
-        <translation>Pion LOG Surveiller</translation>
+        <translation type="obsolete">Pion LOG Surveiller</translation>
     </message>
     <message>
         <source>Pion RENS ROIM SDTI RenseignerSur</source>
-        <translation>Pion RENS ROIM SDTI RenseignerSur</translation>
+        <translation type="obsolete">Pion RENS ROIM SDTI RenseignerSur</translation>
     </message>
     <message>
         <source>Pion RENS ROIM CL289 RenseignerSur</source>
-        <translation>Pion RENS ROIM CL289 RenseignerSur</translation>
+        <translation type="obsolete">Pion RENS ROIM CL289 RenseignerSur</translation>
     </message>
     <message>
         <source>Automate RENS ROIM CL289 RenseignerSur</source>
-        <translation>Automate RENS ROIM CL289 RenseignerSur</translation>
+        <translation type="obsolete">Automate RENS ROIM CL289 RenseignerSur</translation>
     </message>
     <message>
         <source>Automate RENS ROIM SDTI RenseignerSur</source>
-        <translation>Automate RENS ROIM SDTI RenseignerSur</translation>
+        <translation type="obsolete">Automate RENS ROIM SDTI RenseignerSur</translation>
     </message>
     <message>
         <source>Automate RENS ROEM RenseignerSur</source>
-        <translation>Automate RENS ROEM RenseignerSur</translation>
+        <translation type="obsolete">Automate RENS ROEM RenseignerSur</translation>
     </message>
     <message>
         <source>Automate RENS RADINT RenseignerSur</source>
-        <translation>Automate RENS RADINT RenseignerSur</translation>
+        <translation type="obsolete">Automate RENS RADINT RenseignerSur</translation>
     </message>
     <message>
         <source>Pion RENS ROEM RenseignerSur</source>
-        <translation>Pion RENS ROEM RenseignerSur</translation>
+        <translation type="obsolete">Pion RENS ROEM RenseignerSur</translation>
     </message>
     <message>
         <source>Pion RENS ROEM MettreEnOeuvre</source>
-        <translation>Pion RENS ROEM MettreEnOeuvre</translation>
+        <translation type="obsolete">Pion RENS ROEM MettreEnOeuvre</translation>
     </message>
     <message>
         <source>Pion RENS RADINT RenseignerSur</source>
-        <translation>Pion RENS RADINT RenseignerSur</translation>
+        <translation type="obsolete">Pion RENS RADINT RenseignerSur</translation>
     </message>
     <message>
         <source>Pion RENS RADINT MettreEnOeuvre</source>
-        <translation>Pion RENS RADINT MettreEnOeuvre</translation>
+        <translation type="obsolete">Pion RENS RADINT MettreEnOeuvre</translation>
     </message>
     <message>
         <source>AcquerirObjectif</source>
@@ -1571,427 +1571,19 @@
     </message>
     <message>
         <source>Brouiller</source>
-        <translation>Brouiller</translation>
+        <translation type="obsolete">Brouiller</translation>
     </message>
     <message>
         <source>Automate LOG ArmerPIAs</source>
-        <translation>Automate LOG ArmerPIAs</translation>
+        <translation type="obsolete">Automate LOG ArmerPIAs</translation>
     </message>
     <message>
         <source>Automate SeFaireTransporter</source>
-        <translation>Automate SeFaireTransporter</translation>
+        <translation type="obsolete">Automate SeFaireTransporter</translation>
     </message>
     <message>
         <source>Pion SeFaireTransporter</source>
-        <translation>Pion SeFaireTransporter</translation>
-    </message>
-    <message>
-        <source>Automate ALAT DetruireNeutraliserDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK DefendreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK DefendreSite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Attaquer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASS AssurerMiseEnOeuvreSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TraiterBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TrierEtTraiterBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate Generique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Generique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ABC EscorterUnite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ABC EscorterUnites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate INF EscorterUnite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate INF EscorterUnites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ABC EscorterUnite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ABC AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate INF AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ABC EscorterUnites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ABC AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ABC RASIT RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion INF EscorterUnite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion INF EscorterUnites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion INF AppuyerSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASY SInfiltrer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASY CommettreAttentatContrePopulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASY CommettreAttentatContreForcesArmees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASY CommettreAttentatContreInstallation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASY CommettreExactionsSurPopulationDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASY Renseigner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population FaireMouvement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population Manifester</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population CommettreExactions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mettre Tenue NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enlever Tenue NBC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passer En Silence Radio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arreter Silence Radio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passer En Silence Radar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arreter Silence Radar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recuperer Transporteurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attendre Se Poster</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changer Ambiance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changer Regles Engagement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changer Regles Engagement Population</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Acquerir Objectif</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changer Position Debarquement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Changer De Position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Contourner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Envoyer Vehicule</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Activer Obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Appliquer Feux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Executer Tir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Emettre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Stopper Emission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Renforcer En VSRAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Transferer VSRAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Reprendre Aux Ordres VSRAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Reparations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Blesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Tactiques Reparations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Tactiques Blesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Realiser Variantement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Desequiper Site Franchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Affecter Pion AObstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Reconnaitre Zone Implantation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: TC2 Gerer Materiel Avant Deplacement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Activer Obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Transferer Renforts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population: Changer Attitude</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion InterdireFranchissementPopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion FiltrerPopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RenseignerSurPopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion CanaliserPopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ControlerPopulationsDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion SecuriserZoneContrePopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate InterdireFranchissementPopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate FiltrerPopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate CanaliserPopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ControlerPopulationsDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate SecuriserZoneContrePopulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASY CommettreExactionsSurPopulationDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Regime Travail Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Renforcer En Remorqueurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Transferer Remorqueurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Reprendre Aux Ordres Remorqueurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Renforcer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT AllerSeRecompleter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT AllerSeRecompleter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changer Parametres Recompletement ALAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate Transporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Transporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN ReconnaitreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN RealiserTravaux</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN OuvrirItineraires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN DegagerObstaclesDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN OuvrirItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN EquiperExploiterSiteFranchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN DegagerObstacles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ContournerObstacles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserTravauxContreMobilite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserTravauxAppuiDeploiement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserCamps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ReprendreTravaux</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pion SeFaireTransporter</translation>
     </message>
 </context>
 <context>
@@ -2229,58 +1821,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>courte portee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>moyenne portee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>longue portee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sans munitions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>aa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>as</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>polyvalent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>en carre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>en triangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>nasse trois sections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>nasse quatre sections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>double rideau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>simple rideau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>no error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2330,10 +1870,6 @@
     </message>
     <message>
         <source>started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2530,34 +2066,6 @@
     </message>
     <message>
         <source>normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>omnidirectionnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>directionnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>continu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>discontinu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>elements terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>objets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>elements mobiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3050,26 +2558,6 @@
     </message>
     <message>
         <source>agressive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>surete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vitesse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>deborder materiels vers bld</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>detruire materiels en reparation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reparer materiels sur place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

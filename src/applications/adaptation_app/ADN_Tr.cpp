@@ -396,15 +396,38 @@ ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
     T_ConverterEquipmentState( "", "", (E_EquipmentState)-1 )
 };
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromSMission
-// Created: APE 2005-02-18
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromSMission( E_SMission nValue, E_Conversion nConversion )
+ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[] =
 {
-    return ADN_Tr::InverseFindInConverter( smissionConverter_, nValue, nConversion );
-}
-
+    T_ConverterMissionParameterType( "Agent", QT_TRANSLATE_NOOP("ADN_Tr", "Agent" ), eMissionParameterTypeAgent ),
+    T_ConverterMissionParameterType( "AgentList", QT_TRANSLATE_NOOP("ADN_Tr", "AgentList" ), eMissionParameterTypeAgentList ),
+    T_ConverterMissionParameterType( "Automate", QT_TRANSLATE_NOOP("ADN_Tr", "Automate" ), eMissionParameterTypeAutomate ),
+    T_ConverterMissionParameterType( "AutomateList", QT_TRANSLATE_NOOP("ADN_Tr", "AutomateList" ), eMissionParameterTypeAutomateList ),
+    T_ConverterMissionParameterType( "GenObject", QT_TRANSLATE_NOOP("ADN_Tr", "GenObject" ), eMissionParameterTypeGenObject ),
+    T_ConverterMissionParameterType( "GenObjectList", QT_TRANSLATE_NOOP("ADN_Tr", "GenObjectList" ), eMissionParameterTypeGenObjectList ),
+    T_ConverterMissionParameterType( "Dotation", QT_TRANSLATE_NOOP("ADN_Tr", "Dotation" ), eMissionParameterTypeDotation ),
+    T_ConverterMissionParameterType( "NatureAtlas", QT_TRANSLATE_NOOP("ADN_Tr", "NatureAtlas" ), eMissionParameterTypeNatureAtlas ),
+    T_ConverterMissionParameterType( "Bool", QT_TRANSLATE_NOOP("ADN_Tr", "Bool" ), eMissionParameterTypeBool ),
+    T_ConverterMissionParameterType( "Direction", QT_TRANSLATE_NOOP("ADN_Tr", "Direction" ), eMissionParameterTypeDirection ),
+    T_ConverterMissionParameterType( "GDH", QT_TRANSLATE_NOOP("ADN_Tr", "GDH" ), eMissionParameterTypeGDH ),
+    T_ConverterMissionParameterType( "Numeric", QT_TRANSLATE_NOOP("ADN_Tr", "Numeric" ), eMissionParameterTypeNumeric ),
+    T_ConverterMissionParameterType( "Enumeration", QT_TRANSLATE_NOOP("ADN_Tr", "Enumeration" ), eMissionParameterTypeEnumeration ),
+    T_ConverterMissionParameterType( "AgentKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledge" ), eMissionParameterTypeAgentKnowledge ),
+    T_ConverterMissionParameterType( "AgentKnowledgeList", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledgeList" ), eMissionParameterTypeAgentKnowledgeList ),
+    T_ConverterMissionParameterType( "ObjectKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectKnowledge" ), eMissionParameterTypeObjectKnowledge ),
+    T_ConverterMissionParameterType( "ObjectKnowledgeList", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectKnowledgeList" ), eMissionParameterTypeObjectKnowledgeList ),
+    T_ConverterMissionParameterType( "PopulationKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "PopulationKnowledge" ), eMissionParameterTypePopulationKnowledge ),
+    T_ConverterMissionParameterType( "Path", QT_TRANSLATE_NOOP("ADN_Tr", "Path" ), eMissionParameterTypePath ),
+    T_ConverterMissionParameterType( "PathList", QT_TRANSLATE_NOOP("ADN_Tr", "PathList" ), eMissionParameterTypePathList ),
+    T_ConverterMissionParameterType( "Point", QT_TRANSLATE_NOOP("ADN_Tr", "Point" ), eMissionParameterTypePoint ),
+    T_ConverterMissionParameterType( "PointList", QT_TRANSLATE_NOOP("ADN_Tr", "PointList" ), eMissionParameterTypePointList ),
+    T_ConverterMissionParameterType( "Polygon", QT_TRANSLATE_NOOP("ADN_Tr", "Polygon" ), eMissionParameterTypePolygon ),
+    T_ConverterMissionParameterType( "PolygonList", QT_TRANSLATE_NOOP("ADN_Tr", "PolygonList" ), eMissionParameterTypePolygonList ),
+    T_ConverterMissionParameterType( "Location", QT_TRANSLATE_NOOP("ADN_Tr", "Location" ), eMissionParameterTypeLocation ),
+    T_ConverterMissionParameterType( "LocationList", QT_TRANSLATE_NOOP("ADN_Tr", "LocationList" ), eMissionParameterTypeLocationList ),
+    T_ConverterMissionParameterType( "MaintenancePriorities", QT_TRANSLATE_NOOP("ADN_Tr", "MaintenancePriorities" ), eMissionParameterTypeMaintenancePriorities ),
+    T_ConverterMissionParameterType( "MedicalPriorities", QT_TRANSLATE_NOOP("ADN_Tr", "MedicalPriorities" ), eMissionParameterTypeMedicalPriorities ),
+    T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
+};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromLocation
@@ -608,12 +631,12 @@ const std::string& ADN_Tr::ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTir
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToSMission
-// Created: APE 2005-02-18
+// Name: ADN_Tr::ConvertFromMissionParameterType
+// Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-E_SMission ADN_Tr::ConvertToSMission( const std::string& strName )
+const std::string& ADN_Tr::ConvertFromMissionParameterType( E_MissionParameterType nValue, E_Conversion nConverterType )
 {
-    return ADN_Tr::FindInConverter( smissionConverter_, strName );
+    return ADN_Tr::InverseFindInConverter( missionParameterTypeConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -814,12 +837,20 @@ E_TypeMunitionTirIndirect ADN_Tr::ConvertToTypeMunitionTirIndirect( const std::s
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToMissionParameterType
+// Created: SBO 2006-12-04
+// -----------------------------------------------------------------------------
+E_MissionParameterType ADN_Tr::ConvertToMissionParameterType( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( missionParameterTypeConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
 void ADN_Tr::InitTranslations()
 {
-    InitTr( smissionConverter_, "ADN_Tr" );
     InitTr( locationConverter_, "ADN_Tr" );
     InitTr( consumptionTypeConverter_, "ADN_Tr" );
     InitTr( timeCategoryConverter_, "ADN_Tr" );
@@ -841,4 +872,5 @@ void ADN_Tr::InitTranslations()
     InitTr( deviceCategoryConverter_, "ADN_Tr" );
     InitTr( equipmentStateConverter_, "ADN_Tr" );
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
+    InitTr( missionParameterTypeConverter_, "ADN_Tr" );
 }

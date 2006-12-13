@@ -10,11 +10,11 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::FindComposanteType
+// Name: PHY_ComposanteTypePion::Find
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
 inline
-const PHY_ComposanteTypePion* PHY_ComposanteTypePion::FindComposanteType( const std::string& strName )
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& strName )
 {
     CIT_ComposanteTypeMap it = composantesTypes_.find( strName );
     if( it == composantesTypes_.end() )
@@ -23,11 +23,11 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::FindComposanteType( const 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ComposanteTypePion::FindComposanteType
+// Name: PHY_ComposanteTypePion::Find
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 inline
-const PHY_ComposanteTypePion* PHY_ComposanteTypePion::FindComposanteType( ASN1T_TypeEquipement nAsnID )
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( ASN1T_TypeEquipement nAsnID )
 {
     for( CIT_ComposanteTypeMap it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
     {

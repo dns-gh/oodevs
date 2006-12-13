@@ -366,29 +366,29 @@ void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) co
 {
     if( bPostureHasChanged_ )
     {
-        msg.GetAsnMsg().m.posture_oldPresent = 1;
-        msg.GetAsnMsg().m.posture_newPresent = 1;
-        msg.GetAsnMsg().posture_old = pLastPosture_   ->GetAsnID();
-        msg.GetAsnMsg().posture_new = pCurrentPosture_->GetAsnID();
+        msg().m.posture_oldPresent = 1;
+        msg().m.posture_newPresent = 1;
+        msg().posture_old = pLastPosture_   ->GetAsnID();
+        msg().posture_new = pCurrentPosture_->GetAsnID();
     }
 
     if( bPercentageHasChanged_ )
     {
-        msg.GetAsnMsg().m.posture_pourcentagePresent = 1;
-        msg.GetAsnMsg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
+        msg().m.posture_pourcentagePresent = 1;
+        msg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
         rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
     }
 
     if( bStealthFactorHasChanged_ )
     {
-        msg.GetAsnMsg().m.mode_furtif_actifPresent = 1;
-        msg.GetAsnMsg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
+        msg().m.mode_furtif_actifPresent = 1;
+        msg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
     }
 
     if( bInstallationStateHasChanged_ )
     {
-        msg.GetAsnMsg().m.etat_installationPresent = 1;
-        msg.GetAsnMsg().etat_installation          = (uint)( rInstallationState_ * 100. );
+        msg().m.etat_installationPresent = 1;
+        msg().etat_installation          = (uint)( rInstallationState_ * 100. );
         rLastInstallationStateSent_                = rInstallationState_;
     }
 }
@@ -399,20 +399,20 @@ void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.posture_oldPresent = 1;
-    msg.GetAsnMsg().m.posture_newPresent = 1;
-    msg.GetAsnMsg().posture_old = pLastPosture_   ->GetAsnID();
-    msg.GetAsnMsg().posture_new = pCurrentPosture_->GetAsnID();
+    msg().m.posture_oldPresent = 1;
+    msg().m.posture_newPresent = 1;
+    msg().posture_old = pLastPosture_   ->GetAsnID();
+    msg().posture_new = pCurrentPosture_->GetAsnID();
 
-    msg.GetAsnMsg().m.posture_pourcentagePresent = 1;
-    msg.GetAsnMsg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
+    msg().m.posture_pourcentagePresent = 1;
+    msg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
     rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
 
-    msg.GetAsnMsg().m.mode_furtif_actifPresent = 1;
-    msg.GetAsnMsg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
+    msg().m.mode_furtif_actifPresent = 1;
+    msg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
 
-    msg.GetAsnMsg().m.etat_installationPresent = 1;
-    msg.GetAsnMsg().etat_installation          = (uint)( rInstallationState_ * 100. );
+    msg().m.etat_installationPresent = 1;
+    msg().etat_installation          = (uint)( rInstallationState_ * 100. );
     rLastInstallationStateSent_                = rInstallationState_;
 }
 

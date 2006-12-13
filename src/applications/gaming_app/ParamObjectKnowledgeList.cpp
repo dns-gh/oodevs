@@ -21,8 +21,8 @@ using namespace kernel;
 // Name: ParamObjectKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject& asn, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
-    : EntityListParameter< ObjectKnowledge_ABC >( pParent, asn.n, asn.elem, label, menu )
+ParamObjectKnowledgeList::ParamObjectKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeObject*& asn, const QString& label, const QString& menu, ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
+    : EntityListParameter< ObjectKnowledge_ABC >( pParent, (ASN1T_ListOID*&)asn, label, menu )
     , converter_( converter )
     , agent_( agent )
 {

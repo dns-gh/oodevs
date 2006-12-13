@@ -17,7 +17,7 @@
 #include "MT_Tools/MT_Role_ABC.h"
 
 class MIL_AgentPion;
-class MIL_PionMission_ABC;
+class MIL_PionMission;
 class NET_ASN_MsgUnitAttributes;
 class DEC_Path;
 class PHY_RoePopulation;
@@ -66,8 +66,8 @@ public:
     void UpdateDecision();
     void Clean         ();
 
-    void StartMissionBehavior( MIL_PionMission_ABC& mission );
-    void StopMissionBehavior ( MIL_PionMission_ABC& mission );
+    void StartMissionBehavior( MIL_PionMission& mission );
+    void StopMissionBehavior ( MIL_PionMission& mission );
     void Reset               ();
 
     void NotifyAutomateChanged();

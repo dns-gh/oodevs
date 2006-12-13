@@ -162,7 +162,7 @@ void MIL_TacticalLineManager::DestroyLimitData( const TER_LimitData& data )
 void MIL_TacticalLineManager::OnReceiveMsgLimitCreationRequest( const ASN1T_MsgLimitCreationRequest& asn, uint nCtx )
 {
     NET_ASN_MsgLimitCreationRequestAck ack;
-    ack.GetAsnMsg() = EnumInfoContextErrorCode::no_error;
+    ack() = EnumInfoContextErrorCode::no_error;
     try
     {
         MIL_Limit* pLimit = new MIL_Limit( asn );
@@ -171,7 +171,7 @@ void MIL_TacticalLineManager::OnReceiveMsgLimitCreationRequest( const ASN1T_MsgL
     }
     catch( NET_AsnException< ASN1T_EnumInfoContextErrorCode >& e )
     {
-        ack.GetAsnMsg() = e.GetErrorID();
+        ack() = e.GetErrorID();
     }
     ack.Send( nCtx );
 }
@@ -183,11 +183,11 @@ void MIL_TacticalLineManager::OnReceiveMsgLimitCreationRequest( const ASN1T_MsgL
 void MIL_TacticalLineManager::OnReceiveMsgLimitUpdateRequest( const ASN1T_MsgLimitUpdateRequest& asn, uint nCtx )
 {
     NET_ASN_MsgLimitUpdateRequestAck ack;
-    ack.GetAsnMsg() = EnumInfoContextErrorCode::no_error;
+    ack() = EnumInfoContextErrorCode::no_error;
 
     CIT_LimitMap it = limits_.find( asn.oid );
     if( it == limits_.end() )
-        ack.GetAsnMsg() = EnumInfoContextErrorCode::error_invalid_id;
+        ack() = EnumInfoContextErrorCode::error_invalid_id;
     else
     {
         try
@@ -196,7 +196,7 @@ void MIL_TacticalLineManager::OnReceiveMsgLimitUpdateRequest( const ASN1T_MsgLim
         }
         catch( NET_AsnException< ASN1T_EnumInfoContextErrorCode >& e )
         {
-            ack.GetAsnMsg() = e.GetErrorID();
+            ack() = e.GetErrorID();
         }
     }
     ack.Send( nCtx );
@@ -209,11 +209,11 @@ void MIL_TacticalLineManager::OnReceiveMsgLimitUpdateRequest( const ASN1T_MsgLim
 void MIL_TacticalLineManager::OnReceiveMsgLimitDestructionRequest( const ASN1T_MsgLimitDestructionRequest& asn, uint nCtx )
 {
     NET_ASN_MsgLimitDestructionRequestAck ack;
-    ack.GetAsnMsg() = EnumInfoContextErrorCode::no_error;
+    ack() = EnumInfoContextErrorCode::no_error;
 
     IT_LimitMap it = limits_.find( asn );
     if( it == limits_.end() )
-        ack.GetAsnMsg() = EnumInfoContextErrorCode::error_invalid_id;
+        ack() = EnumInfoContextErrorCode::error_invalid_id;
     else
     {
         delete it->second;
@@ -229,7 +229,7 @@ void MIL_TacticalLineManager::OnReceiveMsgLimitDestructionRequest( const ASN1T_M
 void MIL_TacticalLineManager::OnReceiveMsgLimaCreationRequest( const ASN1T_MsgLimaCreationRequest& asn, uint nCtx )
 {
     NET_ASN_MsgLimaCreationRequestAck ack;
-    ack.GetAsnMsg() = EnumInfoContextErrorCode::no_error;
+    ack() = EnumInfoContextErrorCode::no_error;
     try
     {
         MIL_Lima* pLima = new MIL_Lima( asn );
@@ -238,7 +238,7 @@ void MIL_TacticalLineManager::OnReceiveMsgLimaCreationRequest( const ASN1T_MsgLi
     }
     catch( NET_AsnException< ASN1T_EnumInfoContextErrorCode >& e )
     {
-        ack.GetAsnMsg() = e.GetErrorID();
+        ack() = e.GetErrorID();
     }
     ack.Send( nCtx );
 }
@@ -250,11 +250,11 @@ void MIL_TacticalLineManager::OnReceiveMsgLimaCreationRequest( const ASN1T_MsgLi
 void MIL_TacticalLineManager::OnReceiveMsgLimaUpdateRequest( const ASN1T_MsgLimaUpdateRequest& asn, uint nCtx )
 {
     NET_ASN_MsgLimaUpdateRequestAck ack;
-    ack.GetAsnMsg() = EnumInfoContextErrorCode::no_error;
+    ack() = EnumInfoContextErrorCode::no_error;
 
     CIT_LimaMap it = limas_.find( asn.oid );
     if( it == limas_.end() )
-        ack.GetAsnMsg() = EnumInfoContextErrorCode::error_invalid_id;
+        ack() = EnumInfoContextErrorCode::error_invalid_id;
     else
     {
         try
@@ -263,7 +263,7 @@ void MIL_TacticalLineManager::OnReceiveMsgLimaUpdateRequest( const ASN1T_MsgLima
         }
         catch( NET_AsnException< ASN1T_EnumInfoContextErrorCode >& e )
         {
-            ack.GetAsnMsg() = e.GetErrorID();
+            ack() = e.GetErrorID();
         }
     }
     ack.Send( nCtx );
@@ -276,11 +276,11 @@ void MIL_TacticalLineManager::OnReceiveMsgLimaUpdateRequest( const ASN1T_MsgLima
 void MIL_TacticalLineManager::OnReceiveMsgLimaDestructionRequest( const ASN1T_MsgLimaDestructionRequest& asn, uint nCtx )
 {
     NET_ASN_MsgLimaDestructionRequestAck ack;
-    ack.GetAsnMsg() = EnumInfoContextErrorCode::no_error;
+    ack() = EnumInfoContextErrorCode::no_error;
 
     IT_LimaMap it = limas_.find( asn );
     if( it == limas_.end() )
-        ack.GetAsnMsg() = EnumInfoContextErrorCode::error_invalid_id;
+        ack() = EnumInfoContextErrorCode::error_invalid_id;
     else
     {
         delete it->second;

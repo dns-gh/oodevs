@@ -16,7 +16,6 @@ typedef struct Rep_Ordre : Representation
 
 typedef struct Rep_OrdreConduite : Rep_Ordre
 {
-    E_TypeOrdreConduite eOrdre_;
 }; 
 
 // =============================================================================
@@ -24,8 +23,7 @@ typedef struct Rep_OrdreConduite : Rep_Ordre
 // =============================================================================
 typedef struct T_Mission_Pion : Thing
 {
-    E_TypeMissionAutomate   missionType_;
-    T_Direction             dirDangereuse_;
+    T_Direction dirDangereuse_;
 };
 
 // =============================================================================
@@ -46,9 +44,8 @@ typedef enum E_AutomateTypeDeplacement
 
 typedef struct T_Mission_Automate : Thing
 {
-    E_TypeMissionAutomate   missionType_;
-    T_Direction             directionEnnemi_;
-    E_AutomateFormation     formation_;
+    T_Direction         directionEnnemi_;
+    E_AutomateFormation formation_;
 };
 
 // =============================================================================
@@ -56,7 +53,6 @@ typedef struct T_Mission_Automate : Thing
 // =============================================================================
 typedef struct T_Mission_Population : Thing
 {
-    E_TypeMissionPopulation missionType_;
 };
 
 

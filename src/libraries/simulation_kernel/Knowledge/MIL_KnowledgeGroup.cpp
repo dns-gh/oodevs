@@ -190,8 +190,8 @@ void MIL_KnowledgeGroup::SendCreation() const
     assert( pArmy_ );
 
     NET_ASN_MsgKnowledgeGroupCreation asn;   
-    asn.GetAsnMsg().oid      = nID_;
-    asn.GetAsnMsg().oid_camp = pArmy_->GetID();
+    asn().oid      = nID_;
+    asn().oid_camp = pArmy_->GetID();
     asn.Send();
 }
 

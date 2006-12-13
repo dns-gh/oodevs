@@ -134,29 +134,29 @@ void NET_RolePion_Dotations::SendMsg( NET_ASN_MsgUnitAttributes& asnMsg ) const
 {
     asnMsg.Send();
 
-    if( asnMsg.GetAsnMsg().m.pions_renforcantPresent && asnMsg.GetAsnMsg().pions_renforcant.n > 0 )
-        delete [] asnMsg.GetAsnMsg().pions_renforcant.elem;
+    if( asnMsg().m.pions_renforcantPresent && asnMsg().pions_renforcant.n > 0 )
+        delete [] asnMsg().pions_renforcant.elem;
 
-    if( asnMsg.GetAsnMsg().m.contamine_par_agents_nbcPresent && asnMsg.GetAsnMsg().contamine_par_agents_nbc.n > 0 )
-        delete [] asnMsg.GetAsnMsg().contamine_par_agents_nbc.elem;
+    if( asnMsg().m.contamine_par_agents_nbcPresent && asnMsg().contamine_par_agents_nbc.n > 0 )
+        delete [] asnMsg().contamine_par_agents_nbc.elem;
 
-    if( asnMsg.GetAsnMsg().m.pions_transportesPresent && asnMsg.GetAsnMsg().pions_transportes.n > 0 )
-        delete [] asnMsg.GetAsnMsg().pions_transportes.elem;
+    if( asnMsg().m.pions_transportesPresent && asnMsg().pions_transportes.n > 0 )
+        delete [] asnMsg().pions_transportes.elem;
 
-    if( asnMsg.GetAsnMsg().m.dotation_eff_ressourcePresent && asnMsg.GetAsnMsg().dotation_eff_ressource.n > 0 )
-        delete [] asnMsg.GetAsnMsg().dotation_eff_ressource.elem;
+    if( asnMsg().m.dotation_eff_ressourcePresent && asnMsg().dotation_eff_ressource.n > 0 )
+        delete [] asnMsg().dotation_eff_ressource.elem;
 
-    if( asnMsg.GetAsnMsg().m.dotation_eff_materielPresent && asnMsg.GetAsnMsg().dotation_eff_materiel.n > 0 )
-        delete [] asnMsg.GetAsnMsg().dotation_eff_materiel.elem;
+    if( asnMsg().m.dotation_eff_materielPresent && asnMsg().dotation_eff_materiel.n > 0 )
+        delete [] asnMsg().dotation_eff_materiel.elem;
 
-    if( asnMsg.GetAsnMsg().m.dotation_eff_personnelPresent && asnMsg.GetAsnMsg().dotation_eff_personnel.n > 0 )
-        delete [] asnMsg.GetAsnMsg().dotation_eff_personnel.elem;
+    if( asnMsg().m.dotation_eff_personnelPresent && asnMsg().dotation_eff_personnel.n > 0 )
+        delete [] asnMsg().dotation_eff_personnel.elem;
 
-    if( asnMsg.GetAsnMsg().m.equipements_pretesPresent && asnMsg.GetAsnMsg().equipements_pretes.n > 0 )
-        delete [] asnMsg.GetAsnMsg().equipements_pretes.elem;
+    if( asnMsg().m.equipements_pretesPresent && asnMsg().equipements_pretes.n > 0 )
+        delete [] asnMsg().equipements_pretes.elem;
 
-    if( asnMsg.GetAsnMsg().m.equipements_empruntesPresent && asnMsg.GetAsnMsg().equipements_empruntes.n > 0 )
-        delete [] asnMsg.GetAsnMsg().equipements_empruntes.elem;
+    if( asnMsg().m.equipements_empruntesPresent && asnMsg().equipements_empruntes.n > 0 )
+        delete [] asnMsg().equipements_empruntes.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ void NET_RolePion_Dotations::SendChangedState() const
 
     NET_ASN_MsgUnitAttributes msg;
     assert( pPion_ );
-    msg.GetAsnMsg().oid_pion = pPion_->GetID();
+    msg().oid_pion = pPion_->GetID();
 
     GetRole< PHY_RolePion_Humans         >().SendChangedState( msg );
     GetRole< PHY_RolePion_Dotations      >().SendChangedState( msg );
@@ -205,16 +205,16 @@ void NET_RolePion_Dotations::SendChangedState() const
     bool bIsDead = pPion_->IsDead();
     if( bLastStateDead_ != bIsDead )
     {
-        msg.GetAsnMsg().m.mortPresent = 1;
-        msg.GetAsnMsg().mort          = bIsDead;
+        msg().m.mortPresent = 1;
+        msg().mort          = bIsDead;
         bLastStateDead_               = bIsDead;        
     }
 
     bool bIsNeutralized = pPion_->IsNeutralized();
     if( bLastStateNeutralized_ != bIsNeutralized )
     {
-        msg.GetAsnMsg().m.neutralisePresent = 1;
-        msg.GetAsnMsg().neutralise          = bIsNeutralized;
+        msg().m.neutralisePresent = 1;
+        msg().neutralise          = bIsNeutralized;
         bLastStateNeutralized_              = bIsNeutralized;        
     }       
 
@@ -239,11 +239,11 @@ void NET_RolePion_Dotations::SendFullState() const
     assert( pPion_ );
 
     NET_ASN_MsgUnitAttributes msg;
-    msg.GetAsnMsg().oid_pion            = pPion_->GetID();
-    msg.GetAsnMsg().m.mortPresent       = 1;
-    msg.GetAsnMsg().mort                = bLastStateDead_ = pPion_->IsDead();
-    msg.GetAsnMsg().m.neutralisePresent = 1;
-    msg.GetAsnMsg().neutralise          = bLastStateNeutralized_ = pPion_->IsNeutralized();
+    msg().oid_pion            = pPion_->GetID();
+    msg().m.mortPresent       = 1;
+    msg().mort                = bLastStateDead_ = pPion_->IsDead();
+    msg().m.neutralisePresent = 1;
+    msg().neutralise          = bLastStateNeutralized_ = pPion_->IsNeutralized();
     GetRole< PHY_RolePion_Humans         >().SendFullState( msg );
     GetRole< PHY_RolePion_Dotations      >().SendFullState( msg );
     GetRole< PHY_RolePion_Posture        >().SendFullState( msg ); // Current, old, pourcentage

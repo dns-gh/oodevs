@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-02-17 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Tr.h $
-// $Author: Ape $
-// $Modtime: 7/06/05 9:57 $
-// $Revision: 10 $
-// $Workfile: ADN_Tr.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_Tr_h_
 #define __ADN_Tr_h_
@@ -34,7 +25,6 @@ class ADN_Tr
 public:
     //! @name Convert From functions
     //@{
-    static const std::string& ConvertFromSMission ( E_SMission, E_Conversion = eToSim );
     static const std::string& ConvertFromLocation ( E_Location , E_Conversion = eToSim );
     static const std::string& ConvertFromConsumptionType ( E_ConsumptionType, E_Conversion = eToSim );
     static const std::string& ConvertFromTimeCategory( E_TimeCategory, E_Conversion = eToSim );
@@ -56,11 +46,11 @@ public:
     static const std::string& ConvertFromDeviceCategory( E_DeviceCategory, E_Conversion = eToSim );
     static const std::string& ConvertFromEquipmentState( E_EquipmentState, E_Conversion = eToSim );
     static const std::string& ConvertFromTypeMunitionTirIndirect( E_TypeMunitionTirIndirect, E_Conversion = eToSim );
+    static const std::string& ConvertFromMissionParameterType( E_MissionParameterType, E_Conversion = eToSim );
     //@}
 
     //! @name Convert To functions
     //@{
-    static E_SMission        ConvertToSMission         ( const std::string& );
     static E_Location        ConvertToLocation         ( const std::string& );
     static E_ConsumptionType ConvertToConsumptionType  ( const std::string& );
     static E_TimeCategory    ConvertToTimeCategory     ( const std::string& );
@@ -82,6 +72,7 @@ public:
     static E_DeviceCategory  ConvertToDeviceCategory   ( const std::string& );
     static E_EquipmentState  ConvertToEquipmentState   ( const std::string& );
     static E_TypeMunitionTirIndirect ConvertToTypeMunitionTirIndirect( const std::string& );
+    static E_MissionParameterType ConvertToMissionParameterType( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -89,7 +80,6 @@ public:
 public:
     //! @name typdefs
     //@{
-    typedef converter<E_SMission>            T_ConverterSMission;
     typedef converter<E_Location>            T_ConverterLocation;
     typedef converter<E_ConsumptionType>     T_ConverterConsumptionType;
     typedef converter<E_TimeCategory>        T_ConverterTimeCategory;
@@ -111,11 +101,11 @@ public:
     typedef converter<E_DeviceCategory>      T_ConverterDeviceCategory;
     typedef converter<E_EquipmentState>      T_ConverterEquipmentState;
     typedef converter<E_TypeMunitionTirIndirect> T_ConverterTypeMunitionTirIndirect;
+    typedef converter<E_MissionParameterType> T_ConverterMissionParameterType;
     //@}
 
     //! @name Convertors
     //@{
-    static T_ConverterSMission          smissionConverter_[];
     static T_ConverterLocation          locationConverter_[];
     static T_ConverterConsumptionType   consumptionTypeConverter_[];
     static T_ConverterTimeCategory      timeCategoryConverter_[];
@@ -137,6 +127,7 @@ public:
     static T_ConverterDeviceCategory    deviceCategoryConverter_[];
     static T_ConverterEquipmentState    equipmentStateConverter_[];
     static T_ConverterTypeMunitionTirIndirect munitionTirIndirectConverter_ [];
+    static T_ConverterMissionParameterType missionParameterTypeConverter_ [];
     //@}
 };
 

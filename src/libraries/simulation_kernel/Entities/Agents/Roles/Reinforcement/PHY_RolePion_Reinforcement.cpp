@@ -193,11 +193,11 @@ void PHY_RolePion_Reinforcement::Clean()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.pion_renforcePresent = 1;
-    msg.GetAsnMsg().pion_renforce          = pPionReinforced_ ? pPionReinforced_->GetID() : 0;
+    msg().m.pion_renforcePresent = 1;
+    msg().pion_renforce          = pPionReinforced_ ? pPionReinforced_->GetID() : 0;
 
-    msg.GetAsnMsg().m.pions_renforcantPresent = 1;
-    msg.GetAsnMsg().pions_renforcant.n        = reinforcements_.size();
+    msg().m.pions_renforcantPresent = 1;
+    msg().pions_renforcant.n        = reinforcements_.size();
     if( !reinforcements_.empty() )
     {   
         ASN1T_OID* pAgents = new ASN1T_OID[ reinforcements_.size() ];
@@ -205,7 +205,7 @@ void PHY_RolePion_Reinforcement::SendFullState( NET_ASN_MsgUnitAttributes& msg )
         for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it, ++i )
             pAgents[ i ] = (**it).GetID();
 
-        msg.GetAsnMsg().pions_renforcant.elem = pAgents;
+        msg().pions_renforcant.elem = pAgents;
     }
 }
 

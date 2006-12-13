@@ -238,11 +238,11 @@ void PHY_RolePion_Transported::Clean()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.pion_transporteurPresent = 1;
-    msg.GetAsnMsg().pion_transporteur          = pTransporter_ ? pTransporter_->GetID() : 0;
+    msg().m.pion_transporteurPresent = 1;
+    msg().pion_transporteur          = pTransporter_ ? pTransporter_->GetID() : 0;
 
-    msg.GetAsnMsg().m.transporteurs_disponiblesPresent  = 1;
-    msg.GetAsnMsg().transporteurs_disponibles           = !HasHumanTransportersToRecover();
+    msg().m.transporteurs_disponiblesPresent  = 1;
+    msg().transporteurs_disponibles           = !HasHumanTransportersToRecover();
 }
 
 // -----------------------------------------------------------------------------

@@ -18,6 +18,7 @@
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/AgentTypes.h"
 
 #include "gaming/Decisions.h"
 #include "gaming/AutomatDecisions.h"
@@ -28,10 +29,11 @@
 #include "AutomateMissionInterface.h"
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
+#include "MissionInterfaceFactory.h"
+#include "MissionInterfaceBuilder.h"
 #include "gaming/AgentKnowledgeConverter.h"
 #include "gaming/ObjectKnowledgeConverter.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 using namespace gui;
@@ -41,19 +43,21 @@ using namespace gui;
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile )
-    : QDockWindow       ( pParent )
-    , controllers_      ( controllers )
-    , static_           ( model )
-    , publisher_        ( publisher )
-    , layer_            ( layer )
-    , converter_        ( static_.coordinateConverter_ )
-    , tools_            ( tools )
-    , profile_          ( profile )
-    , pMissionInterface_( 0 )
-    , selectedEntity_   ( controllers )
+    : QDockWindow              ( pParent )
+    , controllers_             ( controllers )
+    , static_                  ( model )
+    , publisher_               ( publisher )
+    , layer_                   ( layer )
+    , converter_               ( static_.coordinateConverter_ )
+    , tools_                   ( tools )
+    , profile_                 ( profile )
+    , knowledgeConverter_      ( new AgentKnowledgeConverter( controllers ) )
+    , objectKnowledgeConverter_( new ObjectKnowledgeConverter( controllers ) )
+    , pMissionInterface_       ( 0 )
+    , interfaceFactory_        ( new MissionInterfaceFactory( controllers ) )
+    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_ ) ) 
+    , selectedEntity_          ( controllers )
 {
-    knowledgeConverter_ = new AgentKnowledgeConverter( controllers );
-    objectKnowledgeConverter_ = new ObjectKnowledgeConverter( controllers );
     setResizeEnabled( true );
     setCaption( tr( "Mission" ) );
     setCloseMode( QDockWindow::Always );
@@ -68,7 +72,10 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
 MissionPanel::~MissionPanel()
 {
     controllers_.Remove( *this );
+    delete interfaceBuilder_;
+    delete interfaceFactory_;
     delete knowledgeConverter_;
+    delete objectKnowledgeConverter_;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,6 +111,22 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::AddMissions
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+int MissionPanel::AddMissions( Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot )
+{
+    QPopupMenu& missions = *new QPopupMenu( menu );
+    while( it.HasMoreElements() )
+    {
+        const Mission& mission = it.NextElement();
+        int nId = missions.insertItem( mission.GetName(), this, slot );
+        missions.setItemParameter( nId, mission.GetId() );
+    }
+    return menu.InsertItem( "Order", name, &missions  );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::AddFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
@@ -118,7 +141,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
         const FragOrder& fragOrder = fragIt.NextElement();
         if( fragOrders_.insert( fragOrder.GetId() ).second )
         {
-            int nId = orders.insertItem( ENT_Tr::ConvertFromFragOrder( (E_FragOrder)fragOrder.GetId() ).c_str(), this, slot );
+            int nId = orders.insertItem( fragOrder.GetName(), this, slot );
             orders.setItemParameter( nId, fragOrder.GetId() );
         }
     }
@@ -131,7 +154,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
             const FragOrder& fragOrder = fragIt.NextElement();
             if( fragOrders_.insert( fragOrder.GetId() ).second )
             {
-                int nId = orders.insertItem( ENT_Tr::ConvertFromFragOrder( (E_FragOrder)fragOrder.GetId() ).c_str(), this, slot );
+                int nId = orders.insertItem( fragOrder.GetName(), this, slot );
                 orders.setItemParameter( nId, fragOrder.GetId() );
             }
         }
@@ -145,17 +168,7 @@ int MissionPanel::AddFragOrders( const D& decisions, ContextMenu& menu, const QS
 // -----------------------------------------------------------------------------
 void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& menu )
 {
-    QPopupMenu& missions = *new QPopupMenu( menu );
-
-    Iterator< const Mission& > it = decisions.GetMissions();
-    while( it.HasMoreElements() )
-    {
-        const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( ENT_Tr::ConvertFromUnitMission( (E_UnitMission)mission.GetId() ).c_str(), this, SLOT( ActivateAgentMission( int ) ) );
-        missions.setItemParameter( nId, mission.GetId() );
-    }
-    const int id = menu.InsertItem( "Order",  tr( "Unit missions" ), &missions  );
-
+    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Unit missions" ), SLOT( ActivateAgentMission( int ) ) );
     const bool isEmbraye = decisions.IsEmbraye();
     menu.SetItemEnabled( id, ! isEmbraye );
     if( ! isEmbraye )
@@ -168,17 +181,7 @@ void MissionPanel::AddAgentMissions( const Decisions& decisions, ContextMenu& me
 // -----------------------------------------------------------------------------
 void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, ContextMenu& menu )
 {
-    QPopupMenu& missions = *new QPopupMenu( menu );
-
-    Iterator< const Mission& > it = decisions.GetMissions();
-    while( it.HasMoreElements() )
-    {
-        const Mission& mission = it.NextElement();
-        int nId = missions.insertItem( ENT_Tr::ConvertFromAutomataMission( (E_AutomataMission)mission.GetId() ).c_str(), this, SLOT( ActivateAutomatMission( int ) ) );
-        missions.setItemParameter( nId, mission.GetId() );
-    }
-    const int id = menu.InsertItem( "Order",  tr( "Automat missions" ), &missions  );
-
+    const int id = AddMissions( decisions.GetMissions(), menu, tr( "Automat missions" ), SLOT( ActivateAutomatMission( int ) ) );
     menu.SetItemEnabled( id, decisions.IsEmbraye() );
     if( decisions.IsEmbraye() )
         AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
@@ -193,7 +196,8 @@ void MissionPanel::ActivateAgentMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), (uint)id , controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
+    pMissionInterface_ = new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
     setWidget( pMissionInterface_ );
 
     // For some magic reason, the following line resizes the widget
@@ -210,7 +214,8 @@ void MissionPanel::ActivateAutomatMission( int id )
 {
     hide();
     delete pMissionInterface_;
-    pMissionInterface_ = new AutomateMissionInterface( this, *selectedEntity_.ConstCast(), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
+    pMissionInterface_ = new AutomateMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
@@ -225,7 +230,8 @@ void MissionPanel::ActivateFragOrder( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    FragOrder& order = ((Resolver_ABC< FragOrder >&)static_.types_).Get( id );
+    pMissionInterface_ = new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
     if( pMissionInterface_->IsEmpty() )
         pMissionInterface_->OnOk();
     else
@@ -252,7 +258,7 @@ void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& 
             while( it.HasMoreElements() )
             {
                 const Mission& mission = it.NextElement();
-                int nId = missions.insertItem( ENT_Tr::ConvertFromPopulationMission( (E_PopulationMission)mission.GetId() ).c_str(), this, SLOT( ActivatePopulationMission( int ) ) );
+                int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
                 missions.setItemParameter( nId, mission.GetId() );
             }
             menu.InsertItem( "Order", tr( "Population missions" ), &missions  );
@@ -269,7 +275,8 @@ void MissionPanel::ActivatePopulationMission( int id )
     hide();
     delete pMissionInterface_;
     // $$$$ AGE 2006-03-31: 
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), (uint)id, controllers_.actions_, layer_, converter_, *knowledgeConverter_, *objectKnowledgeConverter_, static_.objectTypes_, publisher_ );
+    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();

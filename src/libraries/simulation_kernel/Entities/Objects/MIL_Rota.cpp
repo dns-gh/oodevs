@@ -207,9 +207,9 @@ void MIL_Rota::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
             asnAttributes_.agents_nbc.elem[ i ]  = (**itNbc).GetID();
     }
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent = 1;
-    asnMsg.GetAsnMsg().attributs_specifiques.t        = T_AttrObjectSpecific_rota;
-    asnMsg.GetAsnMsg().attributs_specifiques.u.rota   = &asnAttributes_;
+    asnMsg().m.attributs_specifiquesPresent = 1;
+    asnMsg().attributs_specifiques.t        = T_AttrObjectSpecific_rota;
+    asnMsg().attributs_specifiques.u.rota   = &asnAttributes_;
 }
 
 // -----------------------------------------------------------------------------

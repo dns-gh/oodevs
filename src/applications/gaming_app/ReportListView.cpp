@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ReportListView.h"
 
-#include "gaming/Report_ABC.h"
+#include "gaming/Report.h"
 #include "ReportFilterOptions.h"
 #include "gaming/Reports.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -125,9 +125,9 @@ void ReportListView::NotifyUpdated( const Reports& reports )
 // Name: ReportListView::Display
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer, ValuedListItem* item )
+void ReportListView::Display( const Report* report, Displayer_ABC& displayer, ValuedListItem* item )
 {
-    if( report && & report->GetAgent() == selected_ && filter_.ShouldDisplay( *report ) )
+    if( report && & report->GetOwner() == selected_ && filter_.ShouldDisplay( *report ) )
     {
         item->SetValue( report );
         report->Display( displayer );
@@ -140,9 +140,9 @@ void ReportListView::Display( const Report_ABC* report, Displayer_ABC& displayer
 // Name: ReportListView::NotifyCreated
 // Created: AGE 2006-03-09
 // -----------------------------------------------------------------------------
-void ReportListView::NotifyCreated( const Report_ABC& report )
+void ReportListView::NotifyCreated( const Report& report )
 {
-    if( ! isVisible() || & report.GetAgent() != selected_ )
+    if( ! isVisible() || & report.GetOwner() != selected_ )
         return;
     if( ! filter_.ShouldDisplay( report ) )
         return;
@@ -170,8 +170,8 @@ void ReportListView::OnReadTimerOut()
     ValuedListItem* item = (ValuedListItem*)( selectedItem() );
     if( item )
     {
-        const Report_ABC* report = item->GetValue< const Report_ABC* >();
-        const_cast< Report_ABC* >( report )->Read();
+        const Report* report = item->GetValue< const Report* >();
+        const_cast< Report* >( report )->Read();
         report->Display( GetItemDisplayer( item ) );
     }
 }

@@ -219,14 +219,14 @@ void MIL_Formation::SendCreation() const
     assert( pArmy_ );
 
     NET_ASN_MsgFormationCreation asn;
-    asn.GetAsnMsg().oid      = nID_;
-    asn.GetAsnMsg().oid_camp = pArmy_->GetID();
-    asn.GetAsnMsg().nom      = strName_.c_str();
-    asn.GetAsnMsg().niveau   = pLevel_->GetAsnID();
+    asn().oid      = nID_;
+    asn().oid_camp = pArmy_->GetID();
+    asn().nom      = strName_.c_str();
+    asn().niveau   = pLevel_->GetAsnID();
     if( pParent_ )
     {
-        asn.GetAsnMsg().m.oid_formation_parentePresent = 1;
-        asn.GetAsnMsg().oid_formation_parente = pParent_->GetID();
+        asn().m.oid_formation_parentePresent = 1;
+        asn().oid_formation_parente = pParent_->GetID();
     }
     asn.Send();
 

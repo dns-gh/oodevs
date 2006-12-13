@@ -19,7 +19,6 @@
 #include "ASN/ASN/Generated/ScipioKnowledgeGroup.h"
 #include "ASN/ASN/Generated/ScipioFormation.h"
 #include "ASN/ASN/Generated/ScipioControl.h"
-#include "ASN/ASN/Generated/ScipioCR.h"
 #include "ASN/ASN/Generated/ScipioLimaLimite.h"
 #include "ASN/ASN/Generated/ScipioFire.h"
 #include "ASN/ASN/Generated/ScipioMessages.h"
@@ -27,13 +26,9 @@
 #include "ASN/ASN/Generated/ScipioUnit.h"
 #include "ASN/ASN/Generated/ScipioAutomate.h"
 #include "ASN/ASN/Generated/ScipioOrder.h"
-#include "ASN/ASN/Generated/ScipioPionOrder.h"
-#include "ASN/ASN/Generated/ScipioOrderConduite.h"
-#include "ASN/ASN/Generated/ScipioAutomateOrder.h"
 #include "ASN/ASN/Generated/ScipioObject.h"
 #include "ASN/ASN/Generated/ScipioPopulation.h"
 #include "ASN/ASN/Generated/ScipioPopulationKnowledge.h"
-#include "ASN/ASN/Generated/ScipioPopulationOrder.h"
 
 #pragma warning( pop ) 
 

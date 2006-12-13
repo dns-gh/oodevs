@@ -73,7 +73,7 @@ private:
 
 public:
     ADN_TypePtr_InVector_ABC<ADN_Units_Data::UnitInfos> ptrUnit_;
-    ADN_Type_Enum<E_UnitMission, eNbrUnitMission> nSupplyMission_;
+    ADN_TypePtr_InVector_ABC<ADN_Missions_Data::Mission> ptrSupplyMission_;
 
     T_ConvoyInfoVector vConvoySetupInfos_;
     T_ConvoyInfoVector vConvoyLoadingInfos_;

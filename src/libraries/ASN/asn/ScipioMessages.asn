@@ -25,10 +25,9 @@ MsgsOutSim ::= SEQUENCE
         msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
                                                                             
         msg-pion-order-ack                                      MsgPionOrderAck,
-        msg-order-conduite-ack                                  MsgOrderConduiteAck,
         msg-automate-order-ack                                  MsgAutomateOrderAck,
         msg-population-order-ack                                MsgPopulationOrderAck,
-                                                                
+        msg-frag-order-ack                                      MsgFragOrderAck,                                                                
         msg-set-automate-mode-ack                               MsgSetAutomateModeAck,
                                                                 
         msg-unit-magic-action-ack                               MsgUnitMagicActionAck,
@@ -101,9 +100,9 @@ MsgsOutSim ::= SEQUENCE
         msg-pion-order-management                               MsgPionOrderManagement,
         msg-automate-order-management                           MsgAutomateOrderManagement,
         msg-population-order-management                         MsgPopulationOrderManagement,
-        msg-automate-mrt                                        MsgAutomateMRT,
-        msg-pion-order                                          MsgPionOrder,
+        msg-pion-order                                          MsgPionOrder,        
         msg-automate-order                                      MsgAutomateOrder,
+        msg-population-order                                    MsgPopulationOrder,
 
         msg-object-creation                                     MsgObjectCreation,
         msg-object-destruction                                  MsgObjectDestruction,
@@ -172,10 +171,10 @@ MsgsInSim ::= SEQUENCE
         msg-lima-update-request                 MsgLimaUpdateRequest,
                                                         
         msg-pion-order                          MsgPionOrder,
-        msg-order-conduite                      MsgOrderConduite,
         msg-automate-order                      MsgAutomateOrder,
         msg-population-order                    MsgPopulationOrder,
-                                                
+        msg-frag-order                          MsgFragOrder,
+                                                        
         msg-set-automate-mode                   MsgSetAutomateMode,
                                                 
         msg-unit-magic-action                   MsgUnitMagicAction,
@@ -209,10 +208,9 @@ MsgsInClient ::= SEQUENCE
         msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
 
         msg-pion-order-ack                                      MsgPionOrderAck,
-        msg-order-conduite-ack                                  MsgOrderConduiteAck,
         msg-automate-order-ack                                  MsgAutomateOrderAck,
         msg-population-order-ack                                MsgPopulationOrderAck,
-                                                                
+        msg-frag-order-ack                                      MsgFragOrderAck,                                                                
         msg-set-automate-mode-ack                               MsgSetAutomateModeAck,
                                                                 
         msg-unit-magic-action-ack                               MsgUnitMagicActionAck,
@@ -289,9 +287,9 @@ MsgsInClient ::= SEQUENCE
         msg-pion-order-management                               MsgPionOrderManagement,
         msg-automate-order-management                           MsgAutomateOrderManagement,
         msg-population-order-management                         MsgPopulationOrderManagement,
-        msg-automate-mrt                                        MsgAutomateMRT,
         msg-pion-order                                          MsgPionOrder,
         msg-automate-order                                      MsgAutomateOrder,
+        msg-population-order                                    MsgPopulationOrder,
 
         msg-object-creation                                     MsgObjectCreation,
         msg-object-destruction                                  MsgObjectDestruction,
@@ -366,9 +364,9 @@ MsgsOutClient ::= SEQUENCE
         msg-lima-update-request                 MsgLimaUpdateRequest,
                                                         
         msg-pion-order                          MsgPionOrder,
-        msg-order-conduite                      MsgOrderConduite,
         msg-automate-order                      MsgAutomateOrder,
         msg-population-order                    MsgPopulationOrder,
+        msg-frag-order                          MsgFragOrder,
                                                 
         msg-set-automate-mode                   MsgSetAutomateMode,
                                                 

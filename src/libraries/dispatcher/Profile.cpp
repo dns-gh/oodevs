@@ -175,9 +175,9 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
         case T_MsgsOutClient_msg_msg_lima_destruction_request           : return true;
         case T_MsgsOutClient_msg_msg_lima_update_request                : return true;
         case T_MsgsOutClient_msg_msg_pion_order                         : return true;
-        case T_MsgsOutClient_msg_msg_order_conduite                     : return true;
         case T_MsgsOutClient_msg_msg_automate_order                     : return true;
         case T_MsgsOutClient_msg_msg_population_order                   : return true;
+        case T_MsgsOutClient_msg_msg_frag_order                         : return true;
         case T_MsgsOutClient_msg_msg_set_automate_mode                  : return true;
         case T_MsgsOutClient_msg_msg_unit_magic_action                  : return true;
         case T_MsgsOutClient_msg_msg_object_magic_action                : return true;

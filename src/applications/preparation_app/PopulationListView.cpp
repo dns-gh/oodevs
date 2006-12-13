@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "PopulationListView.h"
 #include "PreparationProfile.h"
+#include "PreparationProfile.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView constructor

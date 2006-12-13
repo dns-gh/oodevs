@@ -241,7 +241,7 @@ void DEC_AgentFunctions::IsPC( DIA_Call_ABC& call, const MIL_AgentPion& callerAg
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::IsAutomateEmbraye( DIA_Call_ABC& call, const MIL_AgentPion& callerAgent )
 {
-    call.GetResult().SetValue( callerAgent.GetAutomate().IsEmbraye() );
+    call.GetResult().SetValue( callerAgent.GetAutomate().IsEngaged() );
 }
 
 // -----------------------------------------------------------------------------
@@ -628,7 +628,7 @@ void DEC_AgentFunctions::RelievePion( DIA_Call_ABC& call, MIL_AgentPion& callerA
         return;
     }
 
-    pAgentToRelieve->GetPion().GetOrderManager().OnReceiveRCMissionFinished(); //$$$ TMP - renommer la méthode
+    pAgentToRelieve->GetPion().GetOrderManager().ReplaceMission( 0 ); //$$$ TMP - renommer la méthode
     call.GetResult().SetValue( true );
 }
 

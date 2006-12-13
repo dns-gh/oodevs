@@ -38,7 +38,7 @@ class ParamPoint : public QHBox, public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPoint( QWidget* pParent, ASN1T_Point& asn, const QString& label, const QString& menu, const kernel::CoordinateConverter_ABC& converter );
+             ParamPoint( QWidget* pParent, ASN1T_Point*& asn, const QString& label, const QString& menu, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamPoint();
     //@}
 
@@ -66,7 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_Point&       asn_;
+    ASN1T_Point*       asn_;
     const kernel::CoordinateConverter_ABC& converter_;
 
     QString         menu_;

@@ -10,7 +10,6 @@
 #include "Decision/DEC_Workspace.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
-#include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 
@@ -192,7 +191,7 @@ void MIL_AgentServer::ReadStaticData( MIL_InputArchive& archive )
 
     MIL_IDManager::Initialize( archive );
     ReadTerData     ( archive );
-    ReadMissionsData( archive );
+//    ReadMissionsData( archive );
 
     pMeteoDataManager_ = new PHY_MeteoDataManager( archive );
     pWorkspaceDIA_     = new DEC_Workspace       ( archive );
@@ -227,7 +226,7 @@ void MIL_AgentServer::ReadPathFindData( MIL_InputArchive& archive )
 // Name: MIL_AgentServer::ReadMissionsData
 // Created: NLD 2005-03-04
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadMissionsData( MIL_InputArchive& archive )
+/*void MIL_AgentServer::ReadMissionsData( MIL_InputArchive& archive )
 {
     MT_LOG_INFO_MSG( "Initializing missions data" );
 
@@ -242,7 +241,7 @@ void MIL_AgentServer::ReadMissionsData( MIL_InputArchive& archive )
     MIL_AutomateMissionType::Initialize( archiveType );
 
     archiveType.Close();
-}
+}*/
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::ReadTerData
@@ -423,7 +422,7 @@ void MIL_AgentServer::MainSimLoop()
 void MIL_AgentServer::SendMsgBeginTick() const
 {
     NET_ASN_MsgCtrlBeginTick msgBeginTick;
-    msgBeginTick.GetAsnMsg() = GetCurrentTimeStep();
+    msgBeginTick() = GetCurrentTimeStep();
     msgBeginTick.Send();
 }
 
@@ -434,10 +433,10 @@ void MIL_AgentServer::SendMsgBeginTick() const
 void MIL_AgentServer::SendMsgEndTick() const
 {
     NET_ASN_MsgCtrlEndTick msgEndTick;
-    msgEndTick.GetAsnMsg().current_tick        = GetCurrentTimeStep();
-    msgEndTick.GetAsnMsg().tick_duration       = (ASN1INT)pProfilerMgr_->GetLastTickDuration();
-    msgEndTick.GetAsnMsg().nb_pathfinds_courts = pPathFindManager_->GetNbrShortRequests();
-    msgEndTick.GetAsnMsg().nb_pathfinds_longs  = pPathFindManager_->GetNbrLongRequests ();
+    msgEndTick().current_tick        = GetCurrentTimeStep();
+    msgEndTick().tick_duration       = (ASN1INT)pProfilerMgr_->GetLastTickDuration();
+    msgEndTick().nb_pathfinds_courts = pPathFindManager_->GetNbrShortRequests();
+    msgEndTick().nb_pathfinds_longs  = pPathFindManager_->GetNbrLongRequests ();
     msgEndTick.Send();
 }
 

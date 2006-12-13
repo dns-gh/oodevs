@@ -107,3 +107,13 @@ std::string AGR_RC::GenerateTICRCClassBodyInitialize() const
     assert( pType_ );
     return pType_->GenerateTIC( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_RC::GenerateXML
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+std::string AGR_RC::GenerateXML( uint nIdx ) const
+{
+    assert( pType_ );
+    return pType_->GenerateXML( *this, nIdx );
+}

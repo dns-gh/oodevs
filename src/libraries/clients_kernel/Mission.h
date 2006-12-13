@@ -12,6 +12,11 @@
 
 #include "Resolver.h"
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace kernel
 {
     class FragOrder;
@@ -28,7 +33,8 @@ class Mission : public Resolver< FragOrder >
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission( const QString& name, unsigned int id, bool automat );
+    explicit Mission( xml::xistream& xis );
+    explicit Mission( const Mission& mission );
     virtual ~Mission();
     //@}
 

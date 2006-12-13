@@ -216,23 +216,23 @@ MT_Float PHY_RolePion_NBC::ModifyReloadingDuration( MT_Float rDuration ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_NBC::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.contamine_par_agents_nbcPresent = 1;
-    msg.GetAsnMsg().contamine_par_agents_nbc.n = nbcAgentTypesContaminating_.size();
+    msg().m.contamine_par_agents_nbcPresent = 1;
+    msg().contamine_par_agents_nbc.n = nbcAgentTypesContaminating_.size();
     if( !nbcAgentTypesContaminating_.empty() )
     {
         ASN1T_OID* pNbcAgents = new ASN1T_OID[ nbcAgentTypesContaminating_.size() ];
-        msg.GetAsnMsg().contamine_par_agents_nbc.elem = pNbcAgents;
+        msg().contamine_par_agents_nbc.elem = pNbcAgents;
 
         uint i = 0;
         for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
             pNbcAgents[ i++ ] = (**itNbcAgent).GetID();
     }
 
-    msg.GetAsnMsg().m.en_tenue_de_protection_nbcPresent = 1;
-    msg.GetAsnMsg().en_tenue_de_protection_nbc          = bNbcProtectionSuitWorn_;
+    msg().m.en_tenue_de_protection_nbcPresent = 1;
+    msg().en_tenue_de_protection_nbc          = bNbcProtectionSuitWorn_;
 
-    msg.GetAsnMsg().m.etat_contaminationPresent = 1;
-    msg.GetAsnMsg().etat_contamination          = (uint)( rContaminationState_ * 100. );
+    msg().m.etat_contaminationPresent = 1;
+    msg().etat_contamination          = (uint)( rContaminationState_ * 100. );
 }
 
 // -----------------------------------------------------------------------------

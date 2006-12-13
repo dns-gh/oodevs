@@ -24,7 +24,7 @@ typedef enum E_TypeRC
     eRC_ReconnaissancePoint,
     eRC_EnPosteFaceADirectionDangereuse,
     eRC_EnJalonnement,
-    eRC_PreparationMission, // Parametre : delai (float), 
+    eRC_PreparationMission, // Parametre : float
     eRC_DebutMission,
     eRC_FinMission,
     eRC_DispositifInstalle,
@@ -114,7 +114,7 @@ typedef enum E_TypeRC
     eRC_MaterielRetourDeMaintenance, // Parametre : TypeEquipement
     eRC_MaterielRepareSurPlace, // Parametre : TypeEquipement
     eRC_DemandeRavitaillementDotations,
-    eRC_DemandeRavitaillementStock,
+    eRC_DemandeRavitaillementStocks,
     eRC_DemandeEvacuationSanitaire,
     eRC_DemandeEvacuationMateriel,
     eRC_AllocationConsentieBientotEpuisee, // Parametre : TypeDotation
@@ -204,12 +204,12 @@ typedef enum E_TypeRC
     eRC_PasDeCampPrisonniersDisponible,
     eRC_Rendu,
     eRC_TirDansZoneInterdite,
-    eRC_TirSurCampAmi, // Parametre : T_Pion
-    eRC_TireParCampAmi, // Parametre : T_Pion
-    eRC_TirSurCampNeutre, // Parametre : T_Pion
-    eRC_TireParCampNeutre, // Parametre : T_Pion
-    eRC_TirSurCivil, // Parametre : T_Pion
-    eRC_TireParCivil, // Parametre : T_Pion
+    eRC_TirSurCampAmi,
+    eRC_TireParCampAmi,
+    eRC_TirSurCampNeutre,
+    eRC_TireParCampNeutre,
+    eRC_TirSurCivil,
+    eRC_TireParCivil,
     eRC_TirIndirectFratricide,
     eRC_TirIndirectSurPopulation,
     eRC_DestructionPC,
@@ -232,14 +232,6 @@ typedef enum E_TypeRC
     eRC_TirRestreint,
     eRC_TirInterdit,
     eRC_TirLibre,
-    eRC_UniteDetectee, // Parametre : T_ConnaissanceAgent
-    eRC_UniteAmieReconnue, // Parametre : T_ConnaissanceAgent
-    eRC_UniteEnnemieReconnue, // Parametre : T_ConnaissanceAgent
-    eRC_UniteNeutreReconnue, // Parametre : T_ConnaissanceAgent
-    eRC_UniteAmieIdentifiee, // Parametre : T_ConnaissanceAgent
-    eRC_UniteEnnemieIdentifiee, // Parametre : T_ConnaissanceAgent
-    eRC_UniteNeutreIdentifiee, // Parametre : T_ConnaissanceAgent
-    eRC_ObjetDetecte, // Parametre : T_ConnaissanceObjet
     eRC_Trace, // Parametre : message
     eRC_TraceID, // Parametre : float
     eRC_EmploiForceInterdit,

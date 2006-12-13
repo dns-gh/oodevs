@@ -3,1503 +3,783 @@
     <name>ENT</name>
     <message>
         <source>Automate ABC ArmerPointDeControle</source>
-        <translation>Automat MBT To operate a checkpoint</translation>
-    </message>
-    <message>
-        <source>Automate ABC OrganiserAccueilColonneRefugies</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat MBT To operate a checkpoint</translation>
     </message>
     <message>
         <source>Automate ABC ProtegerPC</source>
-        <translation>Automat MBT To protect CP</translation>
+        <translation type="obsolete">Automat MBT To protect CP</translation>
     </message>
     <message>
         <source>Automate ABC Appuyer</source>
-        <translation>Automat MBT To support</translation>
+        <translation type="obsolete">Automat MBT To support</translation>
     </message>
     <message>
         <source>Automate ABC Attaquer</source>
-        <translation>Automat MBT To attack</translation>
+        <translation type="obsolete">Automat MBT To attack</translation>
     </message>
     <message>
         <source>Automate ABC ContreAttaquer</source>
-        <translation>Automat MBT To counter attack</translation>
+        <translation type="obsolete">Automat MBT To counter attack</translation>
     </message>
     <message>
         <source>Automate ABC Controler</source>
-        <translation>Automat MBT To control</translation>
+        <translation type="obsolete">Automat MBT To control</translation>
     </message>
     <message>
         <source>Automate ABC Couvrir</source>
-        <translation>Automat MBT To cover</translation>
+        <translation type="obsolete">Automat MBT To cover</translation>
     </message>
     <message>
         <source>Automate ABC DonnerCoupArret</source>
-        <translation>Automat MBT To block</translation>
+        <translation type="obsolete">Automat MBT To block</translation>
     </message>
     <message>
         <source>Automate ABC Eclairer</source>
-        <translation>Automat MBT To scout</translation>
-    </message>
-    <message>
-        <source>Automate ABC EffectuerRaid</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat MBT To scout</translation>
     </message>
     <message>
         <source>Automate ABC Interdire</source>
-        <translation>Automat MBT To deny</translation>
+        <translation type="obsolete">Automat MBT To deny</translation>
     </message>
     <message>
         <source>Automate ABC Jalonner</source>
-        <translation>Automat MBT To screen</translation>
+        <translation type="obsolete">Automat MBT To screen</translation>
     </message>
     <message>
         <source>Automate ABC PrendrePreciserContact</source>
-        <translation>Automat MBT To take and maintain contact</translation>
+        <translation type="obsolete">Automat MBT To take and maintain contact</translation>
     </message>
     <message>
         <source>Automate ABC Reconnaitre</source>
-        <translation>Automat MBT To perform a reconnaissance</translation>
+        <translation type="obsolete">Automat MBT To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Automate ABC ReconnaitrePoint</source>
-        <translation>Automat MBT To reconnoiter a position</translation>
+        <translation type="obsolete">Automat MBT To reconnoiter a position</translation>
     </message>
     <message>
         <source>Automate ABC Reduire</source>
-        <translation>Automat MBT To reduce a resistance</translation>
+        <translation type="obsolete">Automat MBT To reduce a resistance</translation>
     </message>
     <message>
         <source>Automate ABC ReleverEnDepassant</source>
-        <translation>Automat MBT To relieve</translation>
+        <translation type="obsolete">Automat MBT To relieve</translation>
     </message>
     <message>
         <source>Automate ABC Semparer</source>
-        <translation>Automat MBT To seize</translation>
+        <translation type="obsolete">Automat MBT To seize</translation>
     </message>
     <message>
         <source>Automate ABC Tenir</source>
-        <translation>Automat MBT To bar</translation>
+        <translation type="obsolete">Automat MBT To bar</translation>
     </message>
     <message>
         <source>Automate ABC Soutenir</source>
-        <translation>Automat MBT To support</translation>
+        <translation type="obsolete">Automat MBT To support</translation>
     </message>
     <message>
         <source>Automate ABC Surveiller</source>
-        <translation>Automat MBT To monitor</translation>
+        <translation type="obsolete">Automat MBT To monitor</translation>
     </message>
     <message>
         <source>Automate ABC FlancGarder</source>
-        <translation>Automat MBT To flank-guard</translation>
+        <translation type="obsolete">Automat MBT To flank-guard</translation>
     </message>
     <message>
         <source>Automate ABC RenseignerSur</source>
-        <translation>Automat MBT To report</translation>
+        <translation type="obsolete">Automat MBT To report</translation>
     </message>
     <message>
         <source>Automate ABC Fixer</source>
-        <translation>Automat MBT To fix</translation>
+        <translation type="obsolete">Automat MBT To fix</translation>
     </message>
     <message>
         <source>Automate ABC Freiner</source>
-        <translation>Automat MBT To delay</translation>
+        <translation type="obsolete">Automat MBT To delay</translation>
     </message>
     <message>
         <source>Automate ABC SurveillerItineraire</source>
-        <translation>Automat MBT To monitor a route</translation>
-    </message>
-    <message>
-        <source>Automate ABC RenseignerSurUnAxe</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat MBT To monitor a route</translation>
     </message>
     <message>
         <source>Automate ABC RecueillirUnite</source>
-        <translation>Automat MBT To assist (rearward)</translation>
-    </message>
-    <message>
-        <source>Automate ALAT Heliporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Jalonner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Helitransporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Appuyer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Couvrir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Reconnaitre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Freiner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Escorter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT Attaquer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT RecueillirFormationAeromobile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT AttaquerFormationAeromobile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT DonnerCoupArret</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT DetruireNeutraliserDansProfondeur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA DefendreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA DefendreSite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA DefendreUnites</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat MBT To assist (rearward)</translation>
     </message>
     <message>
         <source>Automate ASS SeDeployer</source>
-        <translation>Automat Art Support To deploy</translation>
+        <translation type="obsolete">Automat Art Support To deploy</translation>
     </message>
     <message>
         <source>Automate ASS ReconnaitreZonesDeploiement</source>
-        <translation>Automat Art Support To reconnoiter deployment positions</translation>
-    </message>
-    <message>
-        <source>Automate ASS AcquerirObjectifs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN SeDeployer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN FaireFranchir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN FranchirDeViveForce</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate GEN RetablirItineraires</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat Art Support To reconnoiter deployment positions</translation>
     </message>
     <message>
         <source>Automate INF AttaquerSouplesse</source>
-        <translation>Automat Inf To attack</translation>
+        <translation type="obsolete">Automat Inf To attack</translation>
     </message>
     <message>
         <source>Automate INF Appuyer</source>
-        <translation>Automat Inf To support</translation>
+        <translation type="obsolete">Automat Inf To support</translation>
     </message>
     <message>
         <source>Automate INF Controler</source>
-        <translation>Automat Inf To control</translation>
+        <translation type="obsolete">Automat Inf To control</translation>
     </message>
     <message>
         <source>Automate INF Couvrir</source>
-        <translation>Automat Inf To cover</translation>
+        <translation type="obsolete">Automat Inf To cover</translation>
     </message>
     <message>
         <source>Automate INF DonnerCoupArret</source>
-        <translation>Automat Inf To block</translation>
+        <translation type="obsolete">Automat Inf To block</translation>
     </message>
     <message>
         <source>Automate INF Eclairer</source>
-        <translation>Automat Inf To scout</translation>
+        <translation type="obsolete">Automat Inf To scout</translation>
     </message>
     <message>
         <source>Automate INF FlancGarder</source>
-        <translation>Automat Inf To flank-guard</translation>
+        <translation type="obsolete">Automat Inf To flank-guard</translation>
     </message>
     <message>
         <source>Automate INF Freiner</source>
-        <translation>Automat Inf To delay</translation>
+        <translation type="obsolete">Automat Inf To delay</translation>
     </message>
     <message>
         <source>Automate INF Harceler</source>
-        <translation>Automat Inf To harass</translation>
+        <translation type="obsolete">Automat Inf To harass</translation>
     </message>
     <message>
         <source>Automate INF Interdire</source>
-        <translation>Automat Inf To deny</translation>
-    </message>
-    <message>
-        <source>Automate INF MenerDefenseUsure</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat Inf To deny</translation>
     </message>
     <message>
         <source>Automate INF PrendrePreciserMaintenirContact</source>
-        <translation>Automat Inf To take and maintain contact</translation>
+        <translation type="obsolete">Automat Inf To take and maintain contact</translation>
     </message>
     <message>
         <source>Automate INF ReconnaissanceOffensive</source>
-        <translation>Automat Inf To perform a reconnaissance</translation>
+        <translation type="obsolete">Automat Inf To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Automate INF RecueillirUnite</source>
-        <translation>Automat Inf To assist (rearward)</translation>
+        <translation type="obsolete">Automat Inf To assist (rearward)</translation>
     </message>
     <message>
         <source>Automate INF Reduire</source>
-        <translation>Automat Inf To reduce a resistance</translation>
+        <translation type="obsolete">Automat Inf To reduce a resistance</translation>
     </message>
     <message>
         <source>Automate INF Relever</source>
-        <translation>Automat Inf To relieve</translation>
+        <translation type="obsolete">Automat Inf To relieve</translation>
     </message>
     <message>
         <source>Automate INF RompreContact</source>
-        <translation>Automat Inf To break contact</translation>
+        <translation type="obsolete">Automat Inf To break contact</translation>
     </message>
     <message>
         <source>Automate INF Surveiller</source>
-        <translation>Automat Inf To monitor</translation>
+        <translation type="obsolete">Automat Inf To monitor</translation>
     </message>
     <message>
         <source>Automate INF Semparer</source>
-        <translation>Automat Inf To seize</translation>
+        <translation type="obsolete">Automat Inf To seize</translation>
     </message>
     <message>
         <source>Automate INF Fixer</source>
-        <translation>Automat Inf To fix</translation>
+        <translation type="obsolete">Automat Inf To fix</translation>
     </message>
     <message>
         <source>Automate INF AttaquerEnTerrainDifficile</source>
-        <translation>Automat Inf To attack</translation>
+        <translation type="obsolete">Automat Inf To attack</translation>
     </message>
     <message>
         <source>Automate INF BarrerDirection</source>
-        <translation>Automat Inf To bar</translation>
+        <translation type="obsolete">Automat Inf To bar</translation>
     </message>
     <message>
         <source>Automate INF DefendreFerme</source>
-        <translation>Automat Inf To defend</translation>
+        <translation type="obsolete">Automat Inf To defend</translation>
     </message>
     <message>
         <source>Automate INF Tenir</source>
-        <translation>Automat Inf To hold</translation>
+        <translation type="obsolete">Automat Inf To hold</translation>
     </message>
     <message>
         <source>Automate INF AppuyerUnFreinage</source>
-        <translation>Automat Inf To support a delay maneuver</translation>
+        <translation type="obsolete">Automat Inf To support a delay maneuver</translation>
     </message>
     <message>
         <source>Automate INF AppuyerUneAttaque</source>
-        <translation>Automat Inf To support an attack</translation>
+        <translation type="obsolete">Automat Inf To support an attack</translation>
     </message>
     <message>
         <source>Automate INF Soutenir</source>
-        <translation>Automat Inf To support</translation>
+        <translation type="obsolete">Automat Inf To support</translation>
     </message>
     <message>
         <source>Automate LOG SeDeployer</source>
-        <translation>Automat Log Support To deploy</translation>
-    </message>
-    <message>
-        <source>Automate Test MoveTo</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat Log Support To deploy</translation>
     </message>
     <message>
         <source>Automate Decrocher</source>
-        <translation>Automat To withdraw</translation>
+        <translation type="obsolete">Automat To withdraw</translation>
     </message>
     <message>
         <source>Automate ReleverSurPlace</source>
-        <translation>Automat To relieve</translation>
+        <translation type="obsolete">Automat To relieve</translation>
     </message>
     <message>
         <source>Automate FaireMouvement</source>
-        <translation>Automat To move</translation>
+        <translation type="obsolete">Automat To move</translation>
     </message>
     <message>
         <source>Automate SeFaireDecontaminer</source>
-        <translation>Automat To get decontaminated</translation>
+        <translation type="obsolete">Automat To get decontaminated</translation>
     </message>
     <message>
         <source>Automate Franchir</source>
-        <translation>Automat To cross</translation>
+        <translation type="obsolete">Automat To cross</translation>
     </message>
     <message>
         <source>Automate Stationner</source>
-        <translation>Automat To park</translation>
+        <translation type="obsolete">Automat To park</translation>
     </message>
     <message>
         <source>Automate SeRecompleter</source>
-        <translation>Automat To get resupplied</translation>
-    </message>
-    <message>
-        <source>Automate NBC ReconnaitreUnAxe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate NBC ReconnaitreUneZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate NBC ArmerUnSiteDeDecontamination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate NBC DecontaminerUneZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate NBC ReconnaitreDesSitesROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS ROHUM RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS ROHUM OrienterGuider</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS ROHUM SExfiltrer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate TRANS Commander</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT ReconnaitreDansLaProfondeur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT ReconnaitreContourEnnemi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT DetruireNeutraliserDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT DetruireAeromobile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Freiner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Jalonner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Escorter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Heliporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT HeliporterHelitransporterPlotRavitaillement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Helitransporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT IMEX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Eclairer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Couvrir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA DefendreSite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA DefendreSiteAPartirPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA DefendreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA DefendreZoneAPartirPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA DefendreUnites</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat To get resupplied</translation>
     </message>
     <message>
         <source>Pion ASS AssurerMiseEnOeuvre</source>
-        <translation>Pawn Art Support To operate </translation>
+        <translation type="obsolete">Pawn Art Support To operate </translation>
     </message>
     <message>
         <source>Pion ASS ReconnaitreZoneDeploiement</source>
-        <translation>Pawn Art Support To reconnoiter deployment position</translation>
-    </message>
-    <message>
-        <source>Pion ASS AcquerirLanceursEni</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASS EO AcquerirObjectifs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASS RATAC AcquerirObjectifs</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pawn Art Support To reconnoiter deployment position</translation>
     </message>
     <message>
         <source>Pion ABC ReconnaitreAxe</source>
-        <translation>Pawn MBT To perform a reconnaissance</translation>
+        <translation type="obsolete">Pawn MBT To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Pion ABC Soutenir</source>
-        <translation>Pawn MBT To support</translation>
+        <translation type="obsolete">Pawn MBT To support</translation>
     </message>
     <message>
         <source>Pion ABC Couvrir</source>
-        <translation>Pawn MBT To cover</translation>
+        <translation type="obsolete">Pawn MBT To cover</translation>
     </message>
     <message>
         <source>Pion ABC FlancGarder</source>
-        <translation>Pawn MBT To flank-guard</translation>
+        <translation type="obsolete">Pawn MBT To flank-guard</translation>
     </message>
     <message>
         <source>Pion ABC Reduire</source>
-        <translation>Pawn MBT To reduce a resistance</translation>
+        <translation type="obsolete">Pawn MBT To reduce a resistance</translation>
     </message>
     <message>
         <source>Pion ABC Appuyer</source>
-        <translation>Pawn MBT To support</translation>
+        <translation type="obsolete">Pawn MBT To support</translation>
     </message>
     <message>
         <source>Pion ABC Fixer</source>
-        <translation>Pawn MBT To fix</translation>
+        <translation type="obsolete">Pawn MBT To fix</translation>
     </message>
     <message>
         <source>Pion ABC RenseignerSur</source>
-        <translation>Pawn MBT To report</translation>
+        <translation type="obsolete">Pawn MBT To report</translation>
     </message>
     <message>
         <source>Pion ABC ControlerZone</source>
-        <translation>Pawn MBT To control</translation>
+        <translation type="obsolete">Pawn MBT To control</translation>
     </message>
     <message>
         <source>Pion ABC Surveiller</source>
-        <translation>Pawn MBT To monitor</translation>
+        <translation type="obsolete">Pawn MBT To monitor</translation>
     </message>
     <message>
         <source>Pion ABC Barrer</source>
-        <translation>Pawn MBT To bar</translation>
+        <translation type="obsolete">Pawn MBT To bar</translation>
     </message>
     <message>
         <source>Pion ABC Attaquer</source>
-        <translation>Pawn MBT To attack</translation>
+        <translation type="obsolete">Pawn MBT To attack</translation>
     </message>
     <message>
         <source>Pion ABC ReconnaitrePoint</source>
-        <translation>Pawn MBT To reconnoiter a position</translation>
+        <translation type="obsolete">Pawn MBT To reconnoiter a position</translation>
     </message>
     <message>
         <source>Pion ABC Eclairer</source>
-        <translation>Pawn MBT To scout</translation>
+        <translation type="obsolete">Pawn MBT To scout</translation>
     </message>
     <message>
         <source>Pion ABC Jalonner</source>
-        <translation>Pawn MBT To screen</translation>
+        <translation type="obsolete">Pawn MBT To screen</translation>
     </message>
     <message>
         <source>Pion ABC ContreAttaquer</source>
-        <translation>Pawn MBT To counter attack</translation>
+        <translation type="obsolete">Pawn MBT To counter attack</translation>
     </message>
     <message>
         <source>Pion ABC SemparerZone</source>
-        <translation>Pawn MBT To seize</translation>
+        <translation type="obsolete">Pawn MBT To seize</translation>
     </message>
     <message>
         <source>Pion ABC ReleverUnite</source>
-        <translation>Pawn MBT To relieve</translation>
+        <translation type="obsolete">Pawn MBT To relieve</translation>
     </message>
     <message>
         <source>Pion ABC ArmerPIA</source>
-        <translation>Pawn MBT To operate a checkpoint</translation>
+        <translation type="obsolete">Pawn MBT To operate a checkpoint</translation>
     </message>
     <message>
         <source>Pion ABC OuvrirItineraire</source>
-        <translation>Pawn MBT To open a route</translation>
+        <translation type="obsolete">Pawn MBT To open a route</translation>
     </message>
     <message>
         <source>Pion ABC Freiner</source>
-        <translation>Pawn MBT To delay</translation>
+        <translation type="obsolete">Pawn MBT To delay</translation>
     </message>
     <message>
         <source>Pion ABC ArmerPointDeControle</source>
-        <translation>Pawn MBT To operate a checkpoint</translation>
-    </message>
-    <message>
-        <source>Pion ABC OrganiserAccueilColonneRefugies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN Renforcer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RealiserTravauxProtection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN RetablirItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ReconnaitreSiteFranchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ReconnaitreItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ReconnaitreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ActiverObstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN AmeliorerMobilite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN DepolluerZone</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pawn MBT To operate a checkpoint</translation>
     </message>
     <message>
         <source>Pion INF ReconnaitreAxe</source>
-        <translation>Pawn Inf To perform a reconnaissance</translation>
+        <translation type="obsolete">Pawn Inf To perform a reconnaissance</translation>
     </message>
     <message>
         <source>Pion INF Couvrir</source>
-        <translation>Pawn Inf To cover</translation>
+        <translation type="obsolete">Pawn Inf To cover</translation>
     </message>
     <message>
         <source>Pion INF Reduire</source>
-        <translation>Pawn Inf To reduce a resistance</translation>
+        <translation type="obsolete">Pawn Inf To reduce a resistance</translation>
     </message>
     <message>
         <source>Pion INF Appuyer</source>
-        <translation>Pawn Inf To support</translation>
+        <translation type="obsolete">Pawn Inf To support</translation>
     </message>
     <message>
         <source>Pion INF Fixer</source>
-        <translation>Pawn Inf To fix</translation>
+        <translation type="obsolete">Pawn Inf To fix</translation>
     </message>
     <message>
         <source>Pion INF ControlerSecteur</source>
-        <translation>Pawn Inf To control</translation>
+        <translation type="obsolete">Pawn Inf To control</translation>
     </message>
     <message>
         <source>Pion INF SurveillerSecteur</source>
-        <translation>Pawn Inf To monitor</translation>
+        <translation type="obsolete">Pawn Inf To monitor</translation>
     </message>
     <message>
         <source>Pion INF Barrer</source>
-        <translation>Pawn Inf To bar</translation>
+        <translation type="obsolete">Pawn Inf To bar</translation>
     </message>
     <message>
         <source>Pion INF ReconnaitrePoint</source>
-        <translation>Pawn Inf To reconnoiter a position</translation>
+        <translation type="obsolete">Pawn Inf To reconnoiter a position</translation>
     </message>
     <message>
         <source>Pion INF Eclairer</source>
-        <translation>Pawn Inf To scout</translation>
+        <translation type="obsolete">Pawn Inf To scout</translation>
     </message>
     <message>
         <source>Pion INF Interdire</source>
-        <translation>Pawn Inf To deny</translation>
+        <translation type="obsolete">Pawn Inf To deny</translation>
     </message>
     <message>
         <source>Pion INF Semparer</source>
-        <translation>Pawn Inf To seize </translation>
+        <translation type="obsolete">Pawn Inf To seize </translation>
     </message>
     <message>
         <source>Pion INF PrendrePreciserContact</source>
-        <translation>Pawn Inf To take contact</translation>
+        <translation type="obsolete">Pawn Inf To take contact</translation>
     </message>
     <message>
         <source>Pion INF Defendre</source>
-        <translation>Pawn Inf To defend</translation>
+        <translation type="obsolete">Pawn Inf To defend</translation>
     </message>
     <message>
         <source>Pion INF DetruireEmbuscade</source>
-        <translation>Pawn Inf To ambush</translation>
+        <translation type="obsolete">Pawn Inf To ambush</translation>
     </message>
     <message>
         <source>Pion INF ContreAttaquer</source>
-        <translation>Pawn Inf To counter attack</translation>
+        <translation type="obsolete">Pawn Inf To counter attack</translation>
     </message>
     <message>
         <source>Pion INF Freiner</source>
-        <translation>Pawn Inf To delay</translation>
+        <translation type="obsolete">Pawn Inf To delay</translation>
     </message>
     <message>
         <source>Pion INF FlancGarder</source>
-        <translation>Pawn Inf To flank-guard</translation>
+        <translation type="obsolete">Pawn Inf To flank-guard</translation>
     </message>
     <message>
         <source>Pion INF OrganiserUnCheckPoint</source>
-        <translation>Pawn Inf To operate a checkpoint</translation>
+        <translation type="obsolete">Pawn Inf To operate a checkpoint</translation>
     </message>
     <message>
         <source>Pion INF Harceler</source>
-        <translation>Pawn Inf To harass</translation>
+        <translation type="obsolete">Pawn Inf To harass</translation>
     </message>
     <message>
         <source>Pion INF DetruireParCoupDeMain</source>
-        <translation>Pawn Inf To destroy</translation>
+        <translation type="obsolete">Pawn Inf To destroy</translation>
     </message>
     <message>
         <source>Pion INF RenseignerSur</source>
-        <translation>Pawn Inf To report</translation>
+        <translation type="obsolete">Pawn Inf To report</translation>
     </message>
     <message>
         <source>Pion INF Soutenir</source>
-        <translation>Pawn Inf To support</translation>
+        <translation type="obsolete">Pawn Inf To support</translation>
     </message>
     <message>
         <source>Pion INF Securiser</source>
-        <translation>Pawn Inf To secure</translation>
+        <translation type="obsolete">Pawn Inf To secure</translation>
     </message>
     <message>
         <source>Pion INF Recueillir</source>
-        <translation>Pawn Inf To assist (rearward)</translation>
+        <translation type="obsolete">Pawn Inf To assist (rearward)</translation>
     </message>
     <message>
         <source>Pion LOG SeDeployer</source>
-        <translation>Pawn Log Support To deploy </translation>
-    </message>
-    <message>
-        <source>Pion LOG TrierBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG PrendreEnCompteReactionsMentales</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG DecontaminerBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Reparer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Convoyer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test Heliporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test MoveTo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test CreateObject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test DestroyObject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test CreateBypass</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test Fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test ChangePosture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test PathFind</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test FindPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Test Reinforce</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion PlastronEnnemi</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pawn Log Support To deploy </translation>
     </message>
     <message>
         <source>Pion FaireMouvement</source>
-        <translation>Pawn To move</translation>
+        <translation type="obsolete">Pawn To move</translation>
     </message>
     <message>
         <source>Pion Suivre</source>
-        <translation>Pawn To follow</translation>
+        <translation type="obsolete">Pawn To follow</translation>
     </message>
     <message>
         <source>Pion SeFaireDecontaminer</source>
-        <translation>Pawn To get decontaminated</translation>
+        <translation type="obsolete">Pawn To get decontaminated</translation>
     </message>
     <message>
         <source>Pion Franchir</source>
-        <translation>Pawn To cross</translation>
+        <translation type="obsolete">Pawn To cross</translation>
     </message>
     <message>
         <source>Pion Decrocher</source>
-        <translation>Pawn To withdraw</translation>
+        <translation type="obsolete">Pawn To withdraw</translation>
     </message>
     <message>
         <source>Pion Stationner</source>
-        <translation>Pawn To park</translation>
-    </message>
-    <message>
-        <source>Pion NBC AnimerUnPlotDeDecontamination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion NBC ReconnaitreItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion NBC ReconnaitreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion NBC DecontaminerZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion NBC ReconnaitreUnSiteROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROHUM RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROHUM SExfiltrer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROHUM OrienterGuider</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROIM MettreEnOeuvre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion TRANS EtablirGererLiaison</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pawn To park</translation>
     </message>
     <message>
         <source>Poursuivre</source>
-        <translation>Continue</translation>
+        <translation type="obsolete">Continue</translation>
     </message>
     <message>
         <source>Interrompre</source>
-        <translation>Cancel</translation>
+        <translation type="obsolete">Cancel</translation>
     </message>
     <message>
         <source>Deboucher</source>
-        <translation>Cross the LD</translation>
+        <translation type="obsolete">Cross the LD</translation>
     </message>
     <message>
         <source>Decrocher</source>
-        <translation>Withdraw</translation>
-    </message>
-    <message>
-        <source>Automate ASA DefendreItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA MISTRAL DefendreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA MISTRAL DefendreSite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA MISTRAL Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS ROEM Appuyer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA MISTRAL DefendreSite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA MISTRAL DefendreSiteAPartirPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA MISTRAL DefendreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA MISTRAL DefendreZoneAPartirPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASA MISTRAL Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG ReconnaitreItineraire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROEM Appuyer</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Withdraw</translation>
     </message>
     <message>
         <source>Automate SeRendre</source>
-        <translation>Automat To surrender</translation>
-    </message>
-    <message>
-        <source>Pion ALAT AppuyerDirectAuContact</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat To surrender</translation>
     </message>
     <message>
         <source>Pion INF RepondreAAggression</source>
-        <translation>Pawn Inf To respond to an assault</translation>
-    </message>
-    <message>
-        <source>Automate LOG AppuyerMouvement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG ReconnaitreItineraire</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pawn Inf To respond to an assault</translation>
     </message>
     <message>
         <source>Automate FaireMouvementVersCampRefugies</source>
-        <translation>Automat To move to refugee camp</translation>
-    </message>
-    <message>
-        <source>Pion ASS EOP AcquerirObjectifs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion GEN ExecuterVariantement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG PreparerBascule</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG AppuyerMouvement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion MILICE Provoquer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT DetruireNeutraliserDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK DefendreZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK DefendreSite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ASA HAWK Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG AppuyerMouvementDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG MettreEnOeuvreZoneStationnement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG AppuyerFranchissementDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG BloquerZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG ReconnaitreZoneContaminee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate LOG ReconnaitreZoneDeDeploiement</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Automate LOG ArmerPIAs</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat To move to refugee camp</translation>
     </message>
     <message>
         <source>Automate SeFaireTransporter</source>
-        <translation>Automat To get transported</translation>
-    </message>
-    <message>
-        <source>Automate Generique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS ROIM CL289 RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS ROIM SDTI RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS ROEM RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate RENS RADINT RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT Attaquer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ASS AssurerMiseEnOeuvreSurPosition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TraiterBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG TrierEtTraiterBlesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG ReconnaitreZoneContaminee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG AppuyerMouvementDansZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG MettreEnOeuvreZoneStationnement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG AppuyerFranchissementSurUnPoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG BloquerZone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG ReconnaitreZoneDeDeploiement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG ArmerPIA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Surveiller</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion SeFaireTransporter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion Generique</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion MILICE PrendreEtTenir</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion MILICE DetruireEmbuscade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion JOINT AIR EffectuerRaid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROEM RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROEM MettreEnOeuvre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS RADINT RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS RADINT MettreEnOeuvre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROIM SDTI RenseignerSur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion RENS ROIM CL289 RenseignerSur</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat To get transported</translation>
     </message>
     <message>
         <source>Population FaireMouvement</source>
-        <translation>Population To move</translation>
+        <translation type="obsolete">Population To move</translation>
     </message>
     <message>
         <source>Population Manifester</source>
-        <translation>Population To demonstrate</translation>
+        <translation type="obsolete">Population To demonstrate</translation>
     </message>
     <message>
         <source>Population CommettreExactions</source>
-        <translation>Population To perform acts of violence</translation>
+        <translation type="obsolete">Population To perform acts of violence</translation>
     </message>
     <message>
         <source>Mettre Tenue NBC</source>
-        <translation>Put on NBC suit</translation>
+        <translation type="obsolete">Put on NBC suit</translation>
     </message>
     <message>
         <source>Enlever Tenue NBC</source>
-        <translation>Put off NBC suit</translation>
+        <translation type="obsolete">Put off NBC suit</translation>
     </message>
     <message>
         <source>Passer En Silence Radio</source>
-        <translation>Radio silence</translation>
+        <translation type="obsolete">Radio silence</translation>
     </message>
     <message>
         <source>Arreter Silence Radio</source>
-        <translation>Radio silence lifted</translation>
+        <translation type="obsolete">Radio silence lifted</translation>
     </message>
     <message>
         <source>Passer En Silence Radar</source>
-        <translation>Radar silence</translation>
+        <translation type="obsolete">Radar silence</translation>
     </message>
     <message>
         <source>Arreter Silence Radar</source>
-        <translation>Radar silence lifted</translation>
+        <translation type="obsolete">Radar silence lifted</translation>
     </message>
     <message>
         <source>Recuperer Transporteurs</source>
-        <translation>Get back carriers</translation>
+        <translation type="obsolete">Get back carriers</translation>
     </message>
     <message>
         <source>Attendre Se Poster</source>
-        <translation>Wait</translation>
+        <translation type="obsolete">Wait</translation>
     </message>
     <message>
         <source>Changer Regles Engagement</source>
-        <translation>Change ROE</translation>
+        <translation type="obsolete">Change ROE</translation>
     </message>
     <message>
         <source>Changer Regles Engagement Population</source>
-        <translation>Change ROE (population)</translation>
+        <translation type="obsolete">Change ROE (population)</translation>
     </message>
     <message>
         <source>Acquerir Objectif</source>
-        <translation>Acquire objectives </translation>
+        <translation type="obsolete">Acquire objectives </translation>
     </message>
     <message>
         <source>Brouiller</source>
-        <translation>Jam</translation>
+        <translation type="obsolete">Jam</translation>
     </message>
     <message>
         <source>Changer Position Debarquement</source>
-        <translation>Change unload position </translation>
+        <translation type="obsolete">Change unload position </translation>
     </message>
     <message>
         <source>Pion: Changer De Position</source>
-        <translation>Pawn: change position</translation>
+        <translation type="obsolete">Pawn: change position</translation>
     </message>
     <message>
         <source>Pion: Contourner</source>
-        <translation>Pawn: bypass</translation>
+        <translation type="obsolete">Pawn: bypass</translation>
     </message>
     <message>
         <source>Pion: Envoyer Vehicule</source>
-        <translation>Pawn: send vehicle</translation>
+        <translation type="obsolete">Pawn: send vehicle</translation>
     </message>
     <message>
         <source>Pion: Activer Obstacle</source>
-        <translation>Pawn: activate obstacle</translation>
+        <translation type="obsolete">Pawn: activate obstacle</translation>
     </message>
     <message>
         <source>Pion: Appliquer Feux</source>
-        <translation>Pawn: fire</translation>
-    </message>
-    <message>
-        <source>Pion: Executer Tir</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pawn: fire</translation>
     </message>
     <message>
         <source>Pion: Emettre</source>
-        <translation>Pawn: lift silence</translation>
+        <translation type="obsolete">Pawn: lift silence</translation>
     </message>
     <message>
         <source>Pion: Stopper Emission</source>
-        <translation>Pawn: radar silence</translation>
-    </message>
-    <message>
-        <source>Pion: Renforcer En VSRAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Transferer VSRAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Reprendre Aux Ordres VSRAM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Reparations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Blesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Tactiques Reparations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modifier Priorites Tactiques Blesses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Realiser Variantement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Desequiper Site Franchissement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Affecter Pion AObstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Reconnaitre Zone Implantation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: TC2 Gerer Materiel Avant Deplacement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Activer Obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate: Transferer Renforts</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pawn: radar silence</translation>
     </message>
     <message>
         <source>Population: Changer Attitude</source>
-        <translation>Population: change attitude</translation>
+        <translation type="obsolete">Population: change attitude</translation>
     </message>
     <message>
         <source>Pion ASY SInfiltrer</source>
-        <translation>Pawn Militia To infiltrate</translation>
+        <translation type="obsolete">Pawn Militia To infiltrate</translation>
     </message>
     <message>
         <source>Pion ASY CommettreExactionsSurPopulationDansZone</source>
-        <translation>Pawn Militia To perform acts of violence</translation>
+        <translation type="obsolete">Pawn Militia To perform acts of violence</translation>
     </message>
     <message>
         <source>Pion ASY Renseigner</source>
-        <translation>Pawn Militia To report</translation>
+        <translation type="obsolete">Pawn Militia To report</translation>
     </message>
     <message>
         <source>Pion ASY CommettreAttentatContrePopulation</source>
-        <translation>Pawn Militia To perform acts of violence against population</translation>
+        <translation type="obsolete">Pawn Militia To perform acts of violence against population</translation>
     </message>
     <message>
         <source>Pion ASY CommettreAttentatContreForcesArmees</source>
-        <translation>Pawn Militia To perform acts of violence against Armed Forces</translation>
+        <translation type="obsolete">Pawn Militia To perform acts of violence against Armed Forces</translation>
     </message>
     <message>
         <source>Pion ASY CommettreAttentatContreInstallation</source>
-        <translation>Pawn Militia To destroy a facility</translation>
+        <translation type="obsolete">Pawn Militia To destroy a facility</translation>
     </message>
     <message>
         <source>Automate ABC EscorterUnite</source>
-        <translation>Automat MBT To escort</translation>
+        <translation type="obsolete">Automat MBT To escort</translation>
     </message>
     <message>
         <source>Automate ABC EscorterUnites</source>
-        <translation>Automat MBT To escort units </translation>
+        <translation type="obsolete">Automat MBT To escort units </translation>
     </message>
     <message>
         <source>Automate ABC AppuyerSurPosition</source>
-        <translation>Automat MBT To support from firing position</translation>
+        <translation type="obsolete">Automat MBT To support from firing position</translation>
     </message>
     <message>
         <source>Automate INF EscorterUnite</source>
-        <translation>Automat Inf To escort</translation>
+        <translation type="obsolete">Automat Inf To escort</translation>
     </message>
     <message>
         <source>Automate INF EscorterUnites</source>
-        <translation>Automat Inf To escort units</translation>
+        <translation type="obsolete">Automat Inf To escort units</translation>
     </message>
     <message>
         <source>Automate INF AppuyerSurPosition</source>
-        <translation>Automat Inf To support from firing position</translation>
+        <translation type="obsolete">Automat Inf To support from firing position</translation>
     </message>
     <message>
         <source>Pion ABC EscorterUnite</source>
-        <translation>Pawn MBT To escort</translation>
+        <translation type="obsolete">Pawn MBT To escort</translation>
     </message>
     <message>
         <source>Pion ABC EscorterUnites</source>
-        <translation>Pawn MBT To escort units</translation>
+        <translation type="obsolete">Pawn MBT To escort units</translation>
     </message>
     <message>
         <source>Pion ABC AppuyerSurPosition</source>
-        <translation>Pawn MBT To support from a firing position</translation>
+        <translation type="obsolete">Pawn MBT To support from a firing position</translation>
     </message>
     <message>
         <source>Pion INF EscorterUnite</source>
-        <translation>Pawn Inf To escort</translation>
+        <translation type="obsolete">Pawn Inf To escort</translation>
     </message>
     <message>
         <source>Pion INF EscorterUnites</source>
-        <translation>Pawn Inf To escort units</translation>
+        <translation type="obsolete">Pawn Inf To escort units</translation>
     </message>
     <message>
         <source>Pion INF AppuyerSurPosition</source>
-        <translation>Pawn Inf To support from a firing position</translation>
+        <translation type="obsolete">Pawn Inf To support from a firing position</translation>
     </message>
     <message>
         <source>Changer Ambiance</source>
-        <translation>Switch posture</translation>
-    </message>
-    <message>
-        <source>Pion ABC RASIT RenseignerSur</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Switch posture</translation>
     </message>
     <message>
         <source>Pion InterdireFranchissementPopulations</source>
-        <translation>Pawn To deny population crossing</translation>
+        <translation type="obsolete">Pawn To deny population crossing</translation>
     </message>
     <message>
         <source>Pion FiltrerPopulations</source>
-        <translation>Pawn To filter population</translation>
+        <translation type="obsolete">Pawn To filter population</translation>
     </message>
     <message>
         <source>Pion RenseignerSurPopulations</source>
-        <translation>Pawn To report on population</translation>
+        <translation type="obsolete">Pawn To report on population</translation>
     </message>
     <message>
         <source>Pion CanaliserPopulations</source>
-        <translation>Pawn To canalize population</translation>
+        <translation type="obsolete">Pawn To canalize population</translation>
     </message>
     <message>
         <source>Pion ControlerPopulationsDansZone</source>
-        <translation>Pawn To control population</translation>
+        <translation type="obsolete">Pawn To control population</translation>
     </message>
     <message>
         <source>Pion SecuriserZoneContrePopulations</source>
-        <translation>Pawn To secure a zone (population)</translation>
+        <translation type="obsolete">Pawn To secure a zone (population)</translation>
     </message>
     <message>
         <source>Automate InterdireFranchissementPopulations</source>
-        <translation>Automat To deny population crossing</translation>
+        <translation type="obsolete">Automat To deny population crossing</translation>
     </message>
     <message>
         <source>Automate FiltrerPopulations</source>
-        <translation>Automat To filter population</translation>
+        <translation type="obsolete">Automat To filter population</translation>
     </message>
     <message>
         <source>Automate CanaliserPopulations</source>
-        <translation>Automat To canalize population</translation>
+        <translation type="obsolete">Automat To canalize population</translation>
     </message>
     <message>
         <source>Automate ControlerPopulationsDansZone</source>
-        <translation>Automat To control population</translation>
+        <translation type="obsolete">Automat To control population</translation>
     </message>
     <message>
         <source>Automate SecuriserZoneContrePopulations</source>
-        <translation>Automat To secure a zone (population)</translation>
+        <translation type="obsolete">Automat To secure a zone (population)</translation>
     </message>
     <message>
         <source>Automate ASY CommettreExactionsSurPopulationDansZone</source>
-        <translation>Automat Militia To perform acts of violence</translation>
-    </message>
-    <message>
-        <source>Modifier Regime Travail Maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Renforcer En Remorqueurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Transferer Remorqueurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion: Reprendre Aux Ordres Remorqueurs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion LOG Renforcer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate ALAT AllerSeRecompleter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pion ALAT AllerSeRecompleter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Changer Parametres Recompletement ALAT</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Automat Militia To perform acts of violence</translation>
     </message>
     <message>
         <source>Automate Transporter</source>
-        <translation>Automat To carry</translation>
+        <translation type="obsolete">Automat To carry</translation>
     </message>
     <message>
         <source>Pion Transporter</source>
-        <translation>Pawn To carry</translation>
+        <translation type="obsolete">Pawn To carry</translation>
     </message>
     <message>
         <source>Automate GEN ReconnaitreZone</source>
-        <translation>Automat Eng To reconnoiter a zone</translation>
+        <translation type="obsolete">Automat Eng To reconnoiter a zone</translation>
     </message>
     <message>
         <source>Automate GEN RealiserTravaux</source>
-        <translation>Automat Eng To perform works</translation>
+        <translation type="obsolete">Automat Eng To perform works</translation>
     </message>
     <message>
         <source>Automate GEN OuvrirItineraires</source>
-        <translation>Automat Eng To open routes</translation>
+        <translation type="obsolete">Automat Eng To open routes</translation>
     </message>
     <message>
         <source>Automate GEN DegagerObstaclesDansZone</source>
-        <translation>Automat Eng To remove obstacles</translation>
+        <translation type="obsolete">Automat Eng To remove obstacles</translation>
     </message>
     <message>
         <source>Pion GEN OuvrirItineraire</source>
-        <translation>Pawn Eng To open a route</translation>
+        <translation type="obsolete">Pawn Eng To open a route</translation>
     </message>
     <message>
         <source>Pion GEN EquiperExploiterSiteFranchissement</source>
-        <translation>Pawn Eng To operate a crossing site</translation>
+        <translation type="obsolete">Pawn Eng To operate a crossing site</translation>
     </message>
     <message>
         <source>Pion GEN DegagerObstacles</source>
-        <translation>Pawn Eng To remove obstacles</translation>
+        <translation type="obsolete">Pawn Eng To remove obstacles</translation>
     </message>
     <message>
         <source>Pion GEN ContournerObstacles</source>
-        <translation>Pawn Eng To bypass obstacles</translation>
+        <translation type="obsolete">Pawn Eng To bypass obstacles</translation>
     </message>
     <message>
         <source>Pion GEN RealiserTravauxContreMobilite</source>
-        <translation>Pawn Eng To perform counter mobility works</translation>
+        <translation type="obsolete">Pawn Eng To perform counter mobility works</translation>
     </message>
     <message>
         <source>Pion GEN RealiserTravauxAppuiDeploiement</source>
-        <translation>Pawn Eng To perform deployment support works</translation>
+        <translation type="obsolete">Pawn Eng To perform deployment support works</translation>
     </message>
     <message>
         <source>Pion GEN RealiserCamps</source>
-        <translation>Pawn Eng To build camp</translation>
+        <translation type="obsolete">Pawn Eng To build camp</translation>
     </message>
     <message>
         <source>Pion GEN ReprendreTravaux</source>
-        <translation>Pawn Eng To continue works</translation>
+        <translation type="obsolete">Pawn Eng To continue works</translation>
     </message>
 </context>
 <context>
@@ -1738,55 +1018,31 @@
     </message>
     <message>
         <source>courte portee</source>
-        <translation>small range</translation>
+        <translation type="obsolete">small range</translation>
     </message>
     <message>
         <source>moyenne portee</source>
-        <translation>medium range</translation>
+        <translation type="obsolete">medium range</translation>
     </message>
     <message>
         <source>longue portee</source>
-        <translation>long range</translation>
+        <translation type="obsolete">long range</translation>
     </message>
     <message>
         <source>sans munitions</source>
-        <translation>without ammunition</translation>
+        <translation type="obsolete">without ammunition</translation>
     </message>
     <message>
         <source>aa</source>
-        <translation>aa</translation>
+        <translation type="obsolete">aa</translation>
     </message>
     <message>
         <source>as</source>
-        <translation>as</translation>
+        <translation type="obsolete">as</translation>
     </message>
     <message>
         <source>polyvalent</source>
-        <translation>polyvalent</translation>
-    </message>
-    <message>
-        <source>en carre</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>en triangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>nasse trois sections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>nasse quatre sections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>double rideau</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>simple rideau</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">polyvalent</translation>
     </message>
     <message>
         <source>no error</source>
@@ -1838,10 +1094,6 @@
     </message>
     <message>
         <source>started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2041,32 +1293,12 @@
         <translation>regular</translation>
     </message>
     <message>
-        <source>omnidirectionnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>directionnel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>continu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>discontinu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>elements terrain</source>
-        <translation>terrain feature</translation>
+        <translation type="obsolete">terrain feature</translation>
     </message>
     <message>
         <source>objets</source>
-        <translation>objects</translation>
-    </message>
-    <message>
-        <source>elements mobiles</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">objects</translation>
     </message>
     <message>
         <source>attente disponibilite ambulance releve</source>
@@ -2594,23 +1826,11 @@
     </message>
     <message>
         <source>surete</source>
-        <translation>safety posture</translation>
+        <translation type="obsolete">safety posture</translation>
     </message>
     <message>
         <source>vitesse</source>
-        <translation>maximum speed posture</translation>
-    </message>
-    <message>
-        <source>deborder materiels vers bld</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>detruire materiels en reparation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reparer materiels sur place</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">maximum speed posture</translation>
     </message>
     <message>
         <source>error invalid diffusion</source>

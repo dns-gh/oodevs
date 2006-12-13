@@ -42,6 +42,7 @@ public:
     std::string GenerateMILRCClassBodyIncludes  () const;
     std::string GenerateMOS2                    () const;
     std::string GenerateTICRCClassBodyInitialize() const;
+    std::string GenerateXML                     ( uint nIdx ) const;
     //@}
 
     //! @name Accessors

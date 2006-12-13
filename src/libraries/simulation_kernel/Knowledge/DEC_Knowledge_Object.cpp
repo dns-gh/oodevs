@@ -19,7 +19,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/RC/MIL_RC_ObjetDetecte.h"
 #include "Entities/MIL_Army.h"
 #include "Tools/MIL_MOSIDManager.h"
 #include "Network/NET_ASN_Messages.h"
@@ -363,8 +362,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
     const PHY_PerceptionLevel&  currentPerceptionLevel = perception.GetCurrentPerceptionLevel();
     
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
-    if( UpdateMaxPerceptionLevel( currentPerceptionLevel ) )
-        MIL_RC::pRcObjetDetecte_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
+    UpdateMaxPerceptionLevel    ( currentPerceptionLevel );
 
     // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue
     //      => Pas de eNotPerceived aux ticks suivant la perte de contact
@@ -593,26 +591,26 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
         return;
 
     NET_ASN_MsgObjectKnowledgeUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance    = nID_;
+    asnMsg().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
-    asnMsg.GetAsnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
     
-    BuildMsgRealObject            ( asnMsg.GetAsnMsg() );
-    BuildMsgPerceptionSources     ( asnMsg.GetAsnMsg() );
-    BuildMsgRelevance             ( asnMsg.GetAsnMsg() );
-    BuildMsgLocalisations         ( asnMsg.GetAsnMsg() );
-    BuildMsgCurrentPerceptionLevel( asnMsg.GetAsnMsg() );
-    BuildMsgSpecificAttributes    ( asnMsg.GetAsnMsg() );
-    BuildMsgStates                ( asnMsg.GetAsnMsg() );
+    BuildMsgRealObject            ( asnMsg() );
+    BuildMsgPerceptionSources     ( asnMsg() );
+    BuildMsgRelevance             ( asnMsg() );
+    BuildMsgLocalisations         ( asnMsg() );
+    BuildMsgCurrentPerceptionLevel( asnMsg() );
+    BuildMsgSpecificAttributes    ( asnMsg() );
+    BuildMsgStates                ( asnMsg() );
     
     asnMsg.Send();
 
-    if( asnMsg.GetAsnMsg().m.perception_par_compagniePresent && asnMsg.GetAsnMsg().perception_par_compagnie.n > 0 )
-        delete [] asnMsg.GetAsnMsg().perception_par_compagnie.elem; //$$$ RAM
+    if( asnMsg().m.perception_par_compagniePresent && asnMsg().perception_par_compagnie.n > 0 )
+        delete [] asnMsg().perception_par_compagnie.elem; //$$$ RAM
 
-    if( asnMsg.GetAsnMsg().m.localisationPresent )
-        NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().localisation );
+    if( asnMsg().m.localisationPresent )
+        NET_ASN_Tools::Delete( asnMsg().localisation );
 }
 
 // -----------------------------------------------------------------------------
@@ -622,28 +620,28 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
     NET_ASN_MsgObjectKnowledgeCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance    = nID_;
+    asnMsg().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
-    asnMsg.GetAsnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
     assert( pObjectType_ );
-    asnMsg.GetAsnMsg().type                = pObjectType_->GetAsnID();
+    asnMsg().type                = pObjectType_->GetAsnID();
 
     if ( pObjectKnown_ )
-        asnMsg.GetAsnMsg().oid_objet_reel = pObjectKnown_->GetID();
+        asnMsg().oid_objet_reel = pObjectKnown_->GetID();
     else
-        asnMsg.GetAsnMsg().oid_objet_reel = 0;
+        asnMsg().oid_objet_reel = 0;
 
     if( pObjectType_->GetDotationCategoryForConstruction() )
     {
-        asnMsg.GetAsnMsg().m.type_dotation_constructionPresent = 1;
-        asnMsg.GetAsnMsg().type_dotation_construction          = pObjectType_->GetDotationCategoryForConstruction()->GetMosID();
+        asnMsg().m.type_dotation_constructionPresent = 1;
+        asnMsg().type_dotation_construction          = pObjectType_->GetDotationCategoryForConstruction()->GetMosID();
     }
 
     if( pObjectType_->GetDotationCategoryForMining() )
     {
-        asnMsg.GetAsnMsg().m.type_dotation_valorisationPresent = 1;
-        asnMsg.GetAsnMsg().type_dotation_valorisation          = pObjectType_->GetDotationCategoryForMining()->GetMosID();
+        asnMsg().m.type_dotation_valorisationPresent = 1;
+        asnMsg().type_dotation_valorisation          = pObjectType_->GetDotationCategoryForMining()->GetMosID();
     }
     
     asnMsg.Send();
@@ -656,10 +654,10 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 void DEC_Knowledge_Object::SendMsgDestruction() const
 {
     NET_ASN_MsgObjectKnowledgeDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance    = nID_;
+    asnMsg().oid_connaissance    = nID_;
     
     assert( pArmyKnowing_ );
-    asnMsg.GetAsnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
+    asnMsg().oid_camp_possesseur = pArmyKnowing_->GetID();
     asnMsg.Send();
 }
     

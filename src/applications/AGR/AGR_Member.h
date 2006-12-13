@@ -59,6 +59,7 @@ public:
     std::string MissionInitialisationCode() const;
     std::string Mos2InitialisationCode   () const;
     std::string Mos2OptionalParamCode    () const;
+    std::string MissionXMLCode           () const;
 
     std::string SerializationCode        () const;
     std::string SerializationCleaningCode() const;

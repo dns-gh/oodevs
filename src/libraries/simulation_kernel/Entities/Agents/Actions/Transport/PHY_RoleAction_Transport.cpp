@@ -502,11 +502,11 @@ bool PHY_RoleAction_Transport::CanTransportPion( const MIL_AgentPion& transporte
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.pions_transportesPresent = 1;
+    msg().m.pions_transportesPresent = 1;
 
     if( transportedPions_.empty() )
     {
-        msg.GetAsnMsg().pions_transportes.n = 0;
+        msg().pions_transportes.n = 0;
         return;
     }
 
@@ -520,8 +520,8 @@ void PHY_RoleAction_Transport::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
             ++nNbrTransported;
         }
     }
-    msg.GetAsnMsg().pions_transportes.n    = nNbrTransported;
-    msg.GetAsnMsg().pions_transportes.elem = pTransports;
+    msg().pions_transportes.n    = nNbrTransported;
+    msg().pions_transportes.elem = pTransports;
 }
 
 // -----------------------------------------------------------------------------

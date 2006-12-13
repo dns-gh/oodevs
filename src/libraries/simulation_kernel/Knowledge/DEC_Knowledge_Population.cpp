@@ -389,10 +389,10 @@ void DEC_Knowledge_Population::SendMsgCreation() const
 
     NET_ASN_MsgPopulationKnowledgeCreation asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
-    asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
-    asnMsg.GetAsnMsg().oid_population_reelle = pPopulationKnown_->GetID();    
-    asnMsg.GetAsnMsg().camp                  = GetArmy()         .GetID();
+    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
+    asnMsg().oid_population_reelle = pPopulationKnown_->GetID();    
+    asnMsg().camp                  = GetArmy()         .GetID();
     asnMsg.Send();
 }
 
@@ -406,8 +406,8 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
 
     NET_ASN_MsgPopulationKnowledgeDestruction asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
-    asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
+    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
     asnMsg.Send();
 }
 
@@ -420,10 +420,10 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
     if( bReconAttributesValid_ && bDecStateUpdated_ )
     {
         NET_ASN_MsgPopulationKnowledgeUpdate asnMsg;
-        asnMsg.GetAsnMsg().oid_connaissance         = nID_;
-        asnMsg.GetAsnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
-        asnMsg.GetAsnMsg().m.etat_dominationPresent = 1;
-        asnMsg.GetAsnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
+        asnMsg().oid_connaissance         = nID_;
+        asnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
+        asnMsg().m.etat_dominationPresent = 1;
+        asnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
         asnMsg.Send();
     }
 
@@ -445,10 +445,10 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
     if( bReconAttributesValid_ )
     {
         NET_ASN_MsgPopulationKnowledgeUpdate asnMsg;
-        asnMsg.GetAsnMsg().oid_connaissance         = nID_;
-        asnMsg.GetAsnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
-        asnMsg.GetAsnMsg().m.etat_dominationPresent = 1;
-        asnMsg.GetAsnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
+        asnMsg().oid_connaissance         = nID_;
+        asnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
+        asnMsg().m.etat_dominationPresent = 1;
+        asnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
         asnMsg.Send();
     }
 

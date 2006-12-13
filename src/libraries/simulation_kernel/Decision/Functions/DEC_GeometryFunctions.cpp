@@ -1154,8 +1154,6 @@ void DEC_GeometryFunctions::ComputeKnowledgeAgentBarycenter( DIA_Call_ABC& call,
         }
     }
 
-    assert( nNbr && "Should not be called when empty !" );
-
     if( nNbr )
         *pResult /= (MT_Float)nNbr;
 

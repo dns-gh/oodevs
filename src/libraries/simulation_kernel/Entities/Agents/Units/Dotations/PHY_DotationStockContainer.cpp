@@ -23,7 +23,7 @@
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_SupplyStockRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePionLOG_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_DotationStockContainer, "PHY_DotationStockContainer" )
@@ -368,7 +368,7 @@ void PHY_DotationStockContainer::CheckStockCapacities()
 
         if( stock.rVolume_ > stockCapacity.rVolume_ || stock.rWeight_ > stockCapacity.rWeight_ )
         {
-            MIL_RC::pRcDepassementCapaciteStockage_->Send( pRoleSupply_->GetPion(), MIL_RC::eRcTypeEvent );
+            MIL_Report::PostEvent( pRoleSupply_->GetPion(), MIL_Report::eReport_StockCapacityExceeded );
             return;
         }
     }
@@ -408,7 +408,7 @@ void PHY_DotationStockContainer::FillSupplyRequest( PHY_SupplyStockRequestContai
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::SendChangedState( NET_ASN_MsgLogRavitaillementEtat& asn ) const
 {
-    asn.GetAsnMsg().stocks.n = stocksChanged_.size();
+    asn().stocks.n = stocksChanged_.size();
     if( stocksChanged_.empty() )
         return;
 
@@ -422,8 +422,8 @@ void PHY_DotationStockContainer::SendChangedState( NET_ASN_MsgLogRavitaillementE
         asnRessource.quantite_disponible  = (uint)dotation.GetValue();
     }
     
-    asn.GetAsnMsg().stocks.elem     = pResources;
-    asn.GetAsnMsg().m.stocksPresent = 1;
+    asn().stocks.elem     = pResources;
+    asn().m.stocksPresent = 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -432,7 +432,7 @@ void PHY_DotationStockContainer::SendChangedState( NET_ASN_MsgLogRavitaillementE
 // -----------------------------------------------------------------------------
 void PHY_DotationStockContainer::SendFullState( NET_ASN_MsgLogRavitaillementEtat& asn ) const
 {
-    asn.GetAsnMsg().stocks.n = stocks_.size();
+    asn().stocks.n = stocks_.size();
 
     if( stocks_.empty() )
         return;
@@ -448,6 +448,6 @@ void PHY_DotationStockContainer::SendFullState( NET_ASN_MsgLogRavitaillementEtat
         asnRessource.quantite_disponible       = (uint)dotationStock.GetValue();
     }
 
-    asn.GetAsnMsg().stocks.elem     = pResources;
-    asn.GetAsnMsg().m.stocksPresent = 1;
+    asn().stocks.elem     = pResources;
+    asn().m.stocksPresent = 1;
 }

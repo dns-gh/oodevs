@@ -321,12 +321,12 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
 
     // ASN Ctrl info message
     NET_ASN_MsgCtrlInfo asnMsgCtrlInfo;  
-    asnMsgCtrlInfo.GetAsnMsg().current_tick         = workspace.GetCurrentTimeStep();
-	asnMsgCtrlInfo.GetAsnMsg().tick_duration        = workspace.GetTimeStepDuration();
-    asnMsgCtrlInfo.GetAsnMsg().time_factor          = workspace.GetTimeFactor();
-    asnMsgCtrlInfo.GetAsnMsg().id_exercice          = workspace.GetExerciceID();
-    asnMsgCtrlInfo.GetAsnMsg().etat                 = (ASN1T_EnumEtatSim)MIL_AgentServer::GetWorkspace().GetSimState();
-    asnMsgCtrlInfo.GetAsnMsg().checkpoint_frequence = workspace.GetCheckPointManager().GetCheckPointFrequency();
+    asnMsgCtrlInfo().current_tick         = workspace.GetCurrentTimeStep();
+	asnMsgCtrlInfo().tick_duration        = workspace.GetTimeStepDuration();
+    asnMsgCtrlInfo().time_factor          = workspace.GetTimeFactor();
+    asnMsgCtrlInfo().id_exercice          = workspace.GetExerciceID();
+    asnMsgCtrlInfo().etat                 = (ASN1T_EnumEtatSim)MIL_AgentServer::GetWorkspace().GetSimState();
+    asnMsgCtrlInfo().checkpoint_frequence = workspace.GetCheckPointManager().GetCheckPointFrequency();
     asnMsgCtrlInfo.Send();
 
     // Init message - MOS Light ONLY
@@ -356,9 +356,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlStop()
 {
     NET_ASN_MsgCtrlStopAck msg;
     if( MIL_AgentServer::GetWorkspace().StopSim() )
-        msg.GetAsnMsg() = EnumCtrlErrorCode::no_error;
+        msg() = EnumCtrlErrorCode::no_error;
     else
-        msg.GetAsnMsg() = EnumCtrlErrorCode::error_not_started;
+        msg() = EnumCtrlErrorCode::error_not_started;
     msg.Send();
 }
 
@@ -370,9 +370,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlPause()
 {
     NET_ASN_MsgCtrlPauseAck msg;
     if( MIL_AgentServer::GetWorkspace().PauseSim() )
-        msg.GetAsnMsg() = EnumCtrlErrorCode::no_error;
+        msg() = EnumCtrlErrorCode::no_error;
     else
-        msg.GetAsnMsg() = EnumCtrlErrorCode::error_already_paused;
+        msg() = EnumCtrlErrorCode::error_already_paused;
     msg.Send();
 }
 
@@ -384,9 +384,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlResume()
 {
     NET_ASN_MsgCtrlResumeAck msg;
     if( MIL_AgentServer::GetWorkspace().ResumeSim() )
-        msg.GetAsnMsg() = EnumCtrlErrorCode::no_error;
+        msg() = EnumCtrlErrorCode::no_error;
     else
-        msg.GetAsnMsg() = EnumCtrlErrorCode::error_not_paused;
+        msg() = EnumCtrlErrorCode::error_not_paused;
     msg.Send();
 }
 
@@ -399,11 +399,11 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactor( const ASN1T_MsgCt
     NET_ASN_MsgCtrlChangeTimeFactorAck msg;
 
     if( MIL_AgentServer::GetWorkspace().SetTimeFactor( asnMsg ) )
-        msg.GetAsnMsg().error_code = EnumCtrlErrorCode::no_error;
+        msg().error_code = EnumCtrlErrorCode::no_error;
     else
-        msg.GetAsnMsg().error_code = EnumCtrlErrorCode::error_invalid_time_factor;
+        msg().error_code = EnumCtrlErrorCode::error_invalid_time_factor;
 
-    msg.GetAsnMsg().time_factor = MIL_AgentServer::GetWorkspace().GetTimeFactor();
+    msg().time_factor = MIL_AgentServer::GetWorkspace().GetTimeFactor();
     msg.Send();
 }
 
@@ -471,7 +471,7 @@ void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageControllerVector& messages
         NET_ASN_MsgsInSimController& msgCtrl = **it;
         ASN1T_MsgsInSim& asnMsg = msgCtrl.GetMessage();
 
-        MIL_MOSContextID nCtx = asnMsg.context;
+        uint nCtx = asnMsg.context;
         switch( asnMsg.msg.t )
         {
             case T_MsgsInSim_msg_msg_ctrl_client_announcement          : OnReceiveMsgCtrlClientAnnouncement( *msgCtrl.GetLink() ); break;
@@ -490,9 +490,9 @@ void NET_AS_MOSServerMsgMgr::DoUpdate( const T_MessageControllerVector& messages
             case T_MsgsInSim_msg_msg_lima_destruction_request          : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaDestructionRequest (  asnMsg.msg.u.msg_lima_destruction_request        , nCtx ); break;
             case T_MsgsInSim_msg_msg_lima_update_request               : workspace.GetTacticalLineManager  ().OnReceiveMsgLimaUpdateRequest      ( *asnMsg.msg.u.msg_lima_update_request             , nCtx ); break;            
             case T_MsgsInSim_msg_msg_pion_order                        : workspace.GetEntityManager        ().OnReceiveMsgPionOrder              ( *asnMsg.msg.u.msg_pion_order                      , nCtx ); break;         
-            case T_MsgsInSim_msg_msg_order_conduite                    : workspace.GetEntityManager        ().OnReceiveMsgOrderConduite          ( *asnMsg.msg.u.msg_order_conduite                  , nCtx ); break;
             case T_MsgsInSim_msg_msg_automate_order                    : workspace.GetEntityManager        ().OnReceiveMsgAutomateOrder          ( *asnMsg.msg.u.msg_automate_order                  , nCtx ); break;
             case T_MsgsInSim_msg_msg_population_order                  : workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder        ( *asnMsg.msg.u.msg_population_order                , nCtx ); break;
+            case T_MsgsInSim_msg_msg_frag_order                        : workspace.GetEntityManager        ().OnReceiveMsgFragOrder              ( *asnMsg.msg.u.msg_frag_order                      , nCtx ); break;
             case T_MsgsInSim_msg_msg_population_magic_action           : workspace.GetEntityManager        ().OnReceiveMsgPopulationMagicAction  ( *asnMsg.msg.u.msg_population_magic_action         , nCtx ); break;
             case T_MsgsInSim_msg_msg_set_automate_mode                 : workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode        ( *asnMsg.msg.u.msg_set_automate_mode               , nCtx ); break;
             case T_MsgsInSim_msg_msg_unit_magic_action                 : workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction        ( *asnMsg.msg.u.msg_unit_magic_action               , nCtx ); break;

@@ -142,13 +142,13 @@ void PHY_RolePion_HumanFactors::ReadOverloading( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.fatiguePresent    = 1;
-    msg.GetAsnMsg().m.moralPresent      = 1;
-    msg.GetAsnMsg().m.experiencePresent = 1;
+    msg().m.fatiguePresent    = 1;
+    msg().m.moralPresent      = 1;
+    msg().m.experiencePresent = 1;
 
-    msg.GetAsnMsg().fatigue    = pTiredness_ ->GetAsnID();
-    msg.GetAsnMsg().moral      = pMorale_    ->GetAsnID();
-    msg.GetAsnMsg().experience = pExperience_->GetAsnID();
+    msg().fatigue    = pTiredness_ ->GetAsnID();
+    msg().moral      = pMorale_    ->GetAsnID();
+    msg().experience = pExperience_->GetAsnID();
 }
 
 // -----------------------------------------------------------------------------

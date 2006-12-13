@@ -31,9 +31,9 @@ public:
     : ADN_Connector_Table_ABC(tab,false)
     {}
 
-    void  AddSubItems(int i,void *obj)
+    void AddSubItems( int i, void* obj )
     {
-        assert(obj);
+        assert( obj );
         
         E_RoePopulation nRoe = static_cast<FireEffectRoeInfos*>(obj)->nRoe_;
         uint nNbrHiddenRoe = (uint)eRoePopulation_EmploiForceInterdit + 1;

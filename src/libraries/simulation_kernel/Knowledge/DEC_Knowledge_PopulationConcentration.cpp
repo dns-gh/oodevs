@@ -254,12 +254,12 @@ void DEC_Knowledge_PopulationConcentration::SendMsgCreation() const
 
     NET_ASN_MsgPopulationConcentrationKnowledgeCreation asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
-    asnMsg.GetAsnMsg().oid_concentration_reelle       = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
+    asnMsg().oid_connaissance_concentration = nID_;
+    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_concentration_reelle       = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
 
-    NET_ASN_Tools::WritePoint( position_, asnMsg.GetAsnMsg().position );
+    NET_ASN_Tools::WritePoint( position_, asnMsg().position );
 
     asnMsg.Send();
 }
@@ -274,9 +274,9 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
 
     NET_ASN_MsgPopulationConcentrationKnowledgeDestruction asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_connaissance_concentration = nID_;
+    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
     asnMsg.Send();
 }
 
@@ -290,29 +290,29 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
 
     NET_ASN_MsgPopulationConcentrationKnowledgeUpdate asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_connaissance_concentration = nID_;
+    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
     
-    asnMsg.GetAsnMsg().m.est_percuPresent                = 1;
-    asnMsg.GetAsnMsg().m.oid_concentration_reellePresent = 1;
-    asnMsg.GetAsnMsg().m.pertinencePresent               = 1;
+    asnMsg().m.est_percuPresent                = 1;
+    asnMsg().m.oid_concentration_reellePresent = 1;
+    asnMsg().m.pertinencePresent               = 1;
 
-    asnMsg.GetAsnMsg().est_percu                = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
-    asnMsg.GetAsnMsg().oid_concentration_reelle = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
-    asnMsg.GetAsnMsg().pertinence               = (uint)( rRelevance_ * 100. );
+    asnMsg().est_percu                = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+    asnMsg().oid_concentration_reelle = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
+    asnMsg().pertinence               = (uint)( rRelevance_ * 100. );
     rLastRelevanceSent_ = rRelevance_;
 
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-        asnMsg.GetAsnMsg().m.attitudePresent           = 1;
+        asnMsg().m.nb_humains_mortsPresent   = 1;
+        asnMsg().m.nb_humains_vivantsPresent = 1;
+        asnMsg().m.attitudePresent           = 1;
     
-        asnMsg.GetAsnMsg().nb_humains_morts         = uint( floor( rNbrDeadHumans_  + 0.5f ) );
-        asnMsg.GetAsnMsg().nb_humains_vivants       = uint( floor( rNbrAliveHumans_ + 0.5f ) );
-        asnMsg.GetAsnMsg().attitude                 = pAttitude_->GetAsnID();
+        asnMsg().nb_humains_morts         = uint( floor( rNbrDeadHumans_  + 0.5f ) );
+        asnMsg().nb_humains_vivants       = uint( floor( rNbrAliveHumans_ + 0.5f ) );
+        asnMsg().attitude                 = pAttitude_->GetAsnID();
     }
 
     asnMsg.Send();    
@@ -332,26 +332,26 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
 
     NET_ASN_MsgPopulationConcentrationKnowledgeUpdate asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_concentration = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_connaissance_concentration = nID_;
+    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
     {
-        asnMsg.GetAsnMsg().m.est_percuPresent = 1;
-        asnMsg.GetAsnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+        asnMsg().m.est_percuPresent = 1;
+        asnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
     }
 
     if( bRealConcentrationUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.oid_concentration_reellePresent = 1;
-        asnMsg.GetAsnMsg().oid_concentration_reelle = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
+        asnMsg().m.oid_concentration_reellePresent = 1;
+        asnMsg().oid_concentration_reelle = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
     }
 
     if( bRelevanceUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.pertinencePresent = 1;
-        asnMsg.GetAsnMsg().pertinence          = (uint)( rRelevance_ * 100. );
+        asnMsg().m.pertinencePresent = 1;
+        asnMsg().pertinence          = (uint)( rRelevance_ * 100. );
         rLastRelevanceSent_                    = rRelevance_;
     }
 
@@ -360,16 +360,16 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-            asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-            asnMsg.GetAsnMsg().nb_humains_morts            = uint( floor( rNbrDeadHumans_  + 0.5f ) );
-            asnMsg.GetAsnMsg().nb_humains_vivants          = uint( floor( rNbrAliveHumans_ + 0.5f ) );
+            asnMsg().m.nb_humains_mortsPresent   = 1;
+            asnMsg().m.nb_humains_vivantsPresent = 1;
+            asnMsg().nb_humains_morts            = uint( floor( rNbrDeadHumans_  + 0.5f ) );
+            asnMsg().nb_humains_vivants          = uint( floor( rNbrAliveHumans_ + 0.5f ) );
         }
 
         if( bAttitudeUpdated_ )
         {
-            asnMsg.GetAsnMsg().m.attitudePresent = 1;
-            asnMsg.GetAsnMsg().attitude          = pAttitude_->GetAsnID();
+            asnMsg().m.attitudePresent = 1;
+            asnMsg().attitude          = pAttitude_->GetAsnID();
         }
     }
 

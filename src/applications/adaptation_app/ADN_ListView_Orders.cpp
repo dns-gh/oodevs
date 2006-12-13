@@ -50,7 +50,7 @@ public:
     ADN_ListViewItem* CreateItem(void * obj)
     {
         // create new list item
-        ADN_ListViewItem *pItem                 = new ADN_ListViewItem(&list_,obj,1);
+        ADN_ListViewItem *pItem = new ADN_ListViewItem(&list_,obj,1);
 
         // connect list item with object's name
         pItem->Connect(0,&static_cast<OrderInfos*>(obj)->strName_);
@@ -96,19 +96,19 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
 {
     std::auto_ptr< QPopupMenu > pTargetMenu( new QPopupMenu(this) );
 
-    
-    // Get the list of the possible munitions
     bool bDisplayAdd = false;
-    bool bDisplayRem = GetCurrentData()!=0;
+    bool bDisplayRem = GetCurrentData() != 0;
     
-    for( int n = 0; n < eNbrFragOrder; ++n )
+    unsigned int n = 0;
+    ADN_Missions_Data::T_FragOrder_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
+    for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
     {
-        std::string strOrderName = ENT_Tr::ConvertFromFragOrder( (E_FragOrder)n, ENT_Tr_ABC::eToTr );
+        std::string strOrderName = (*it)->strName_.GetData();
         if( Contains( strOrderName ) )
             continue;
-
         bDisplayAdd = true;
         pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );
+        ++n;
     }
     if( ! bDisplayAdd && !bDisplayRem )
         return;
@@ -119,16 +119,11 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     if ( bDisplayRem )
         pMenu->insertItem( tr( "Remove order"), 1 );
     
-    int nMenu=pMenu->exec(pt);
+    int nMenu = pMenu->exec( pt );
     if ( nMenu == 1 )
-    {
         RemoveCurrentItem();
-    }
     else if ( nMenu > 1 )
-    {
-        assert( nMenu - 2< eNbrFragOrder );
         CreateNewItem( nMenu - 2 );
-    }
 }
 
 
@@ -166,10 +161,17 @@ void ADN_ListView_Orders::ConnectItem( bool /*bConnect*/ )
 // -----------------------------------------------------------------------------
 void ADN_ListView_Orders::CreateNewItem( int n )
 {
-    // Get the list of the defined targets
     OrderInfos* pNewInfo = new OrderInfos();
-    pNewInfo->nOrderType_ = (E_FragOrder)(n);
-    pNewInfo->strName_ = ENT_Tr::ConvertFromFragOrder( (E_FragOrder)(n), ENT_Tr_ABC::eToTr );
+    // $$$$ SBO 2006-12-04: Close your eyes and begin to relax, take a deep breath and let it out slowly...
+    if( ADN_Missions_Data::FragOrder* fragOrder = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders().at( n ) )
+    {
+        pNewInfo->strName_   = fragOrder->strName_.GetData();
+        pNewInfo->fragOrder_ = fragOrder;
+    }
+    else
+    {
+        // $$$$ SBO 2006-12-04: commit suicide
+    }
 
     ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
     pCList->AddItem( pNewInfo );
@@ -184,11 +186,11 @@ void ADN_ListView_Orders::CreateNewItem( int n )
 void ADN_ListView_Orders::RemoveCurrentItem()
 {
     // delete composante
-    OrderInfos* pCurComposante=(OrderInfos*)GetCurrentData();
-    if ( pCurComposante )
+    OrderInfos* pCurComposante = (OrderInfos*)GetCurrentData();
+    if( pCurComposante )
     {
         // remove current data from list
         // take care cause pCurData_ can change!!
-        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
+        static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( pCurComposante );
     }    
 }

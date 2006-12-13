@@ -200,7 +200,7 @@ void MIL_CampRefugies::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMs
 
     asnAttributes_.tc2 = pTC2_->GetID();
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent        = 1;
-    asnMsg.GetAsnMsg().attributs_specifiques.t               = T_AttrObjectSpecific_camp_refugies;
-    asnMsg.GetAsnMsg().attributs_specifiques.u.camp_refugies = &asnAttributes_;
+    asnMsg().m.attributs_specifiquesPresent        = 1;
+    asnMsg().attributs_specifiques.t               = T_AttrObjectSpecific_camp_refugies;
+    asnMsg().attributs_specifiques.u.camp_refugies = &asnAttributes_;
 }

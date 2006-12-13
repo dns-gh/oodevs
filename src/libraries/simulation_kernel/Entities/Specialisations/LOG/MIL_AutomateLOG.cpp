@@ -29,7 +29,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
-#include "Entities/RC/MIL_RC_AllocationConsentieBientotEpuisee.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_AutomateLOG, "MIL_AutomateLOG" )
@@ -473,7 +473,7 @@ void MIL_AutomateLOG::ConsumeQuota( const PHY_DotationCategory& dotationCategory
 
     quota.rQuota_ -= rQuotaConsumed;
     if( quota.rQuota_ <= quota.rQuotaThreshold_ )
-        MIL_RC::pRcAllocationConsentieBientotEpuisee_->Send( *this, MIL_RC::eRcTypeOperational, dotationCategory );
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
     bQuotasHaveChanged_ = true;  
 }
 
@@ -674,7 +674,7 @@ void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotat
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( GetTC2() && ( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 ) )
-        MIL_RC::pRcDemandeRavitaillementStocks_->Send( *this, MIL_RC::eRcTypeOperational ); // Rcs uniquement quand la log est branchée
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_StockSupplyRequest );
     nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }
 
@@ -701,7 +701,7 @@ void MIL_AutomateLOG::RemoveSupplyStockState( const PHY_SupplyStockState& supply
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::NotifyStockSupplied( const PHY_SupplyStockState& supplyState )
 {
-    MIL_RC::pRcRavitaillementStockEffectue_->Send( *this, MIL_RC::eRcTypeOperational );
+    MIL_Report::PostEvent( *this, MIL_Report::eReport_StockSupplyDone );
     RemoveSupplyStockState( supplyState );
 }
 
@@ -711,7 +711,7 @@ void MIL_AutomateLOG::NotifyStockSupplied( const PHY_SupplyStockState& supplySta
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::NotifyStockSupplyCanceled( const PHY_SupplyStockState& supplyState )
 {
-    MIL_RC::pRcRavitaillementStockAnnule_->Send( *this, MIL_RC::eRcTypeOperational );
+    MIL_Report::PostEvent( *this, MIL_Report::eReport_StockSupplyCanceled );
     RemoveSupplyStockState( supplyState );
     bStockSupplyNeeded_ = true;
 }
@@ -755,8 +755,8 @@ void MIL_AutomateLOG::UpdateNetwork() const
 void MIL_AutomateLOG::SendQuotas() const
 {
     NET_ASN_MsgLogRavitaillementQuotas asn;
-    asn.GetAsnMsg().oid_automate = GetID();
-    asn.GetAsnMsg().quotas.n     = stockQuotas_.size();
+    asn().oid_automate = GetID();
+    asn().quotas.n     = stockQuotas_.size();
     if( !stockQuotas_.empty() )
     {
         ASN1T_DotationQuota* pDotationQuota = new ASN1T_DotationQuota[ stockQuotas_.size() ];
@@ -767,12 +767,12 @@ void MIL_AutomateLOG::SendQuotas() const
             dotQuota.ressource_id     = it->first->GetMosID();
             dotQuota.quota_disponible = (uint)it->second.rQuota_;
         }
-        asn.GetAsnMsg().quotas.elem = pDotationQuota;
+        asn().quotas.elem = pDotationQuota;
     }
     asn.Send();
 
-    if( asn.GetAsnMsg().quotas.n > 0 )
-        delete [] asn.GetAsnMsg().quotas.elem;
+    if( asn().quotas.n > 0 )
+        delete [] asn().quotas.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -793,10 +793,10 @@ void MIL_AutomateLOG::SendFullState() const
 // Name: MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiques& msg, MIL_MOSContextID nCtx )
+void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogistiques& msg, uint nCtx )
 {
     NET_ASN_MsgChangeLiensLogistiquesAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid_automate = msg.oid_automate;
+    asnReplyMsg().oid_automate = msg.oid_automate;
 
     bool bNewTC2                 = false;
     bool bNewMaintenanceSuperior = false;
@@ -811,14 +811,14 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
     if( msg.m.oid_tc2Present )
     {
         bNewTC2 = true;
-        asnReplyMsg.GetAsnMsg().m.oid_tc2Present = 1;
-        asnReplyMsg.GetAsnMsg().oid_tc2 = msg.oid_tc2;
+        asnReplyMsg().m.oid_tc2Present = 1;
+        asnReplyMsg().oid_tc2 = msg.oid_tc2;
         if( msg.oid_tc2 != 0 )
         {
             pNewTC2 = GetLogisticAutomate( msg.oid_tc2 );
             if( !pNewTC2 )
             {
-                asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2;
+                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_tc2;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -827,15 +827,15 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
     if( msg.m.oid_maintenancePresent )
     {
         bNewMaintenanceSuperior = true;
-        asnReplyMsg.GetAsnMsg().m.oid_maintenancePresent = 1;
-        asnReplyMsg.GetAsnMsg().oid_maintenance = msg.oid_maintenance;
+        asnReplyMsg().m.oid_maintenancePresent = 1;
+        asnReplyMsg().oid_maintenance = msg.oid_maintenance;
 
         if( msg.oid_maintenance != 0 )
         {
             pNewMaintenanceSuperior = GetLogisticAutomate( msg.oid_maintenance );
             if( !pNewMaintenanceSuperior )
             {
-                asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance;
+                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_maintenance;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -844,15 +844,15 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
     if( msg.m.oid_santePresent )
     {
         bNewMedicalSuperior = true;
-        asnReplyMsg.GetAsnMsg().m.oid_santePresent = 1;
-        asnReplyMsg.GetAsnMsg().oid_sante = msg.oid_sante;
+        asnReplyMsg().m.oid_santePresent = 1;
+        asnReplyMsg().oid_sante = msg.oid_sante;
 
         if( msg.oid_sante != 0 )
         {
             pNewMedicalSuperior = GetLogisticAutomate( msg.oid_sante );
             if( !pNewMedicalSuperior )
             {
-                asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_sante;
+                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_sante;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -861,15 +861,15 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
     if( msg.m.oid_ravitaillementPresent )
     {
         bNewSupplySuperior = true;
-        asnReplyMsg.GetAsnMsg().m.oid_ravitaillementPresent = 1;
-        asnReplyMsg.GetAsnMsg().oid_ravitaillement = msg.oid_ravitaillement;
+        asnReplyMsg().m.oid_ravitaillementPresent = 1;
+        asnReplyMsg().oid_ravitaillement = msg.oid_ravitaillement;
 
         if( msg.oid_ravitaillement != 0 )
         {
             pNewSupplySuperior = GetLogisticAutomate( msg.oid_ravitaillement );
             if( !pNewSupplySuperior )
             {
-                asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_ravitaillement;
+                asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::error_invalid_automate_ravitaillement;
                 asnReplyMsg.Send( nCtx );
                 return;
             }
@@ -885,7 +885,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
     if( bNewSupplySuperior )
         pSupplySuperior_ = pNewSupplySuperior;
 
-    asnReplyMsg.GetAsnMsg().error_code = EnumChangeLiensLogistiquesErrorCode::no_error;
+    asnReplyMsg().error_code = EnumChangeLiensLogistiquesErrorCode::no_error;
     asnReplyMsg.Send( nCtx );
 }
 
@@ -893,13 +893,13 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( ASN1T_MsgChangeLiensLogis
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg, MIL_MOSContextID nCtx )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& asnMsg, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementChangeQuotasAck asnReplyMsg;
 
     if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur ) != pSupplySuperior_ )
     {
-        asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur;
+        asnReplyMsg() = MsgLogRavitaillementChangeQuotasAck::error_invalid_donneur;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -916,7 +916,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillem
             dotationQuota.rQuotaThreshold_ = asnQuota.quota_disponible * 0.1; //$$ fichier de conf cpp ;)
         }
     }
-    asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementChangeQuotasAck::no_error;
+    asnReplyMsg() = MsgLogRavitaillementChangeQuotasAck::no_error;
     asnReplyMsg.Send( nCtx );
     bQuotasHaveChanged_ = true;
 }
@@ -925,7 +925,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillem
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& asnMsg, MIL_MOSContextID nCtx )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementPousserFlux& asnMsg, uint nCtx )
 {
     NET_ASN_MsgLogRavitaillementPousserFluxAck asnReplyMsg;
 
@@ -933,7 +933,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
 
     if( !pSupplier )
     {
-        asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_donneur;
+        asnReplyMsg() = MsgLogRavitaillementPousserFluxAck::error_invalid_donneur;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -945,7 +945,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( ASN1T_MsgLogRavitaillementP
     if( pSupplyState )
         pushedFlowsSupplyStates_.insert( pSupplyState );
 
-    asnReplyMsg.GetAsnMsg() = MsgLogRavitaillementPousserFluxAck::no_error;
+    asnReplyMsg() = MsgLogRavitaillementPousserFluxAck::no_error;
     asnReplyMsg.Send( nCtx );
 }
 
@@ -957,28 +957,28 @@ void MIL_AutomateLOG::SendLogisticLinks() const
 {
     NET_ASN_MsgChangeLiensLogistiques asn;
 
-    asn.GetAsnMsg().oid_automate = GetID();
+    asn().oid_automate = GetID();
 
     if( GetTC2() )
     {
-        asn.GetAsnMsg().m.oid_tc2Present = 1;
-        asn.GetAsnMsg().oid_tc2          = GetTC2()->GetID();
+        asn().m.oid_tc2Present = 1;
+        asn().oid_tc2          = GetTC2()->GetID();
     }
 
     if( pMaintenanceSuperior_ )
     {
-        asn.GetAsnMsg().m.oid_maintenancePresent = 1;
-        asn.GetAsnMsg().oid_maintenance          = pMaintenanceSuperior_->GetID();
+        asn().m.oid_maintenancePresent = 1;
+        asn().oid_maintenance          = pMaintenanceSuperior_->GetID();
     }
     if( pMedicalSuperior_ )
     {
-        asn.GetAsnMsg().m.oid_santePresent = 1;
-        asn.GetAsnMsg().oid_sante          = pMedicalSuperior_->GetID();
+        asn().m.oid_santePresent = 1;
+        asn().oid_sante          = pMedicalSuperior_->GetID();
     }
     if( pSupplySuperior_ )
     {
-        asn.GetAsnMsg().m.oid_ravitaillementPresent = 1;
-        asn.GetAsnMsg().oid_ravitaillement          = pSupplySuperior_->GetID();
+        asn().m.oid_ravitaillementPresent = 1;
+        asn().oid_ravitaillement          = pSupplySuperior_->GetID();
     }
 
     asn.Send();

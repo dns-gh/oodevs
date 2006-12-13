@@ -1086,19 +1086,6 @@ void AgentServerMsgMgr::OnReceiveMsgAutomateOrderAck( const ASN1T_MsgAutomateOrd
         GetModel().agents_.GetAutomat( message.oid_unite_executante ).Update( message );
 }
 
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAutomateMRT
-// Created: NLD 2003-05-13
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAutomateMRT( const ASN1T_MsgAutomateMRT& message )
-{
-    for( uint i = 0; i < message.missions.n; ++i )
-    {
-        ASN1T_MsgPionOrder& asnPionOrder = message.missions.elem[i];
-        GetModel().agents_.FindAllAgent( asnPionOrder.oid_unite_executante )->Update( asnPionOrder );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgAutomateOrderManagement
 // Created: SBO 2006-11-20
@@ -1137,12 +1124,12 @@ void AgentServerMsgMgr::OnReceiveMsgPionOrderManagement( const ASN1T_MsgPionOrde
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck
+// Name: AgentServerMsgMgr::OnReceiveMsgFragOrderAck
 // Created: NLD 2003-01-09
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgOrderConduiteAck( const ASN1T_MsgOrderConduiteAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveMsgFragOrderAck( const ASN1T_MsgFragOrderAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( message, "OrderConduiteAck" );
+    CheckAcknowledge( message, "FragOrderAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -1653,7 +1640,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_lima_destruction_request_ack:           OnReceiveMsgLimaDestructionRequestAck       ( message.msg.u.msg_lima_destruction_request_ack        , message.context ); break;
         case T_MsgsInClient_msg_msg_automate_order_ack:                     OnReceiveMsgAutomateOrderAck                ( *message.msg.u.msg_automate_order_ack                  , message.context ); break;
         case T_MsgsInClient_msg_msg_pion_order_ack:                         OnReceiveMsgPionOrderAck                    ( *message.msg.u.msg_pion_order_ack                      , message.context ); break;
-        case T_MsgsInClient_msg_msg_order_conduite_ack:                     OnReceiveMsgOrderConduiteAck                ( *message.msg.u.msg_order_conduite_ack                  , message.context ); break;
+        case T_MsgsInClient_msg_msg_frag_order_ack:                         OnReceiveMsgFragOrderAck                    ( *message.msg.u.msg_frag_order_ack                      , message.context ); break;
         case T_MsgsInClient_msg_msg_unit_magic_action_ack:                  OnReceiveMsgUnitMagicActionAck              ( *message.msg.u.msg_unit_magic_action_ack               , message.context ); break;
         case T_MsgsInClient_msg_msg_set_automate_mode_ack:                  OnReceiveMsgSetAutomateModeAck              ( *message.msg.u.msg_set_automate_mode_ack               , message.context ); break;
         case T_MsgsInClient_msg_msg_change_automate_ack:                    OnReceiveMsgChangeAutomateAck               ( *message.msg.u.msg_change_automate_ack                 , message.context ); break;
@@ -1722,7 +1709,6 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_pion_order_management:                OnReceiveMsgPionOrderManagement       ( *message.msg.u.msg_pion_order_management               ); break;
         case T_MsgsInClient_msg_msg_automate_order_management:            OnReceiveMsgAutomateOrderManagement   ( *message.msg.u.msg_automate_order_management           ); break;
         case T_MsgsInClient_msg_msg_population_order_management:          OnReceiveMsgPopulationOrderManagement ( *message.msg.u.msg_population_order_management         ); break;
-        case T_MsgsInClient_msg_msg_automate_mrt:                         OnReceiveMsgAutomateMRT               ( *message.msg.u.msg_automate_mrt                        ); break;
         case T_MsgsInClient_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.msg.u.msg_pion_order ); break;
         case T_MsgsInClient_msg_msg_automate_order:                       OnReceiveMsgAutomateOrder             ( *message.msg.u.msg_automate_order ); break;
 

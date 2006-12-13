@@ -450,3 +450,88 @@ DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::GetKnowledgeObject( const DE
 {
     return GetKnowledgeObject( collision.GetObject() );
 }
+
+// =============================================================================
+// RESOLVER
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& /*asn*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeAgent( uint /*nID*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& /*asn*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgeObject( uint /*nID*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& /*asn*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation( const DIA_Variable_ABC& /*dia*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Army::ResolveKnowledgePopulation( uint /*nID*/ ) const
+{
+    return 0;
+}

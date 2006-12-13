@@ -575,9 +575,9 @@ void MIL_Army::SendCreation() const
     ASN1T_MsgSideCreation;
 
     NET_ASN_MsgSideCreation asn;
-    asn.GetAsnMsg().oid  = nID_;
-    asn.GetAsnMsg().nom  = strName_.c_str();
-    asn.GetAsnMsg().type = (ASN1T_EnumDiplomatie)( nType_ );
+    asn().oid  = nID_;
+    asn().nom  = strName_.c_str();
+    asn().type = (ASN1T_EnumDiplomatie)( nType_ );
     asn.Send();
 
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
@@ -602,9 +602,9 @@ void MIL_Army::SendFullState() const
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         NET_ASN_MsgChangeDiplomatie asn;
-        asn.GetAsnMsg().oid_camp1  = nID_;
-        asn.GetAsnMsg().oid_camp2  = it->first->GetID();
-        asn.GetAsnMsg().diplomatie = (ASN1T_EnumDiplomatie)( it->second );
+        asn().oid_camp1  = nID_;
+        asn().oid_camp2  = it->first->GetID();
+        asn().diplomatie = (ASN1T_EnumDiplomatie)( it->second );
         asn.Send();
     }
 
@@ -637,17 +637,17 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg, MIL_MOSContextID nCtx )
+void MIL_Army::OnReceiveMsgChangeDiplomacy( ASN1T_MsgChangeDiplomatie& asnMsg, uint nCtx )
 {
     NET_ASN_MsgChangeDiplomatieAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid_camp1   = asnMsg.oid_camp1;
-    asnReplyMsg.GetAsnMsg().oid_camp2   = asnMsg.oid_camp2;
-    asnReplyMsg.GetAsnMsg().diplomatie  = asnMsg.diplomatie;
-    asnReplyMsg.GetAsnMsg().error_code  = EnumChangeDiplomatieErrorCode::no_error;
+    asnReplyMsg().oid_camp1   = asnMsg.oid_camp1;
+    asnReplyMsg().oid_camp2   = asnMsg.oid_camp2;
+    asnReplyMsg().diplomatie  = asnMsg.diplomatie;
+    asnReplyMsg().error_code  = EnumChangeDiplomatieErrorCode::no_error;
 
     MIL_Army* pArmy2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindArmy( asnMsg.oid_camp2 );
     if( !pArmy2 || *pArmy2 == *this )
-        asnReplyMsg.GetAsnMsg().error_code  = EnumChangeDiplomatieErrorCode::error_invalid_camp;
+        asnReplyMsg().error_code  = EnumChangeDiplomatieErrorCode::error_invalid_camp;
     else
     {
         E_Diplomacy nDiplomacy = eUnknown;

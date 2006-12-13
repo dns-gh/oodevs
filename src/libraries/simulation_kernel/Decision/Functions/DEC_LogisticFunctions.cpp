@@ -28,7 +28,7 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Tools.h"
 
 // =============================================================================
@@ -538,14 +538,14 @@ static void UndoLendComposantes( DIA_Call_ABC& call, MIL_AgentPion& callerAgent,
     const uint nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
 
     if( nNbrGotBack == 0 )
-        MIL_RC::pRcRecuperationMaterielPreteImpossible_->Send( callerAgent, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingImpossible );
     else
     {
-        MIL_RC::pRcMaterielRendu_->Send( pTarget->GetPion(), MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( pTarget->GetPion(), MIL_Report::eReport_EquipmentLoanGivenBack );
         if( nNbrGotBack < nNbrToGetBack )
-            MIL_RC::pRcRecuperationMaterielPretePartiellementEffectuee_->Send( callerAgent, MIL_RC::eRcTypeOperational );
+            MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingPartiallyDone );
         else
-            MIL_RC::pRcRecuperationMaterielPreteEffectuee_->Send( callerAgent, MIL_RC::eRcTypeOperational );
+            MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingDone );
     }
 }
 

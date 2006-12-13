@@ -9,18 +9,25 @@
 
 #include "clients_kernel_pch.h"
 #include "FragOrder.h"
+#include "xeumeuleu/xml.h"
 
 using namespace kernel;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: FragOrder constructor
-// Created: AGE 2006-03-14
+// Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-FragOrder::FragOrder( const QString& name, unsigned int id )
-    : name_( name )
-    , id_( id )
+FragOrder::FragOrder( xml::xistream& xis )
+    : isDefaultOrder_  ( false )
+    , isWithoutMission_( false )
 {
-    // NOTHING
+    std::string name;
+    xis >> attribute( "name", name )
+        >> attribute( "id", (int&)id_ )
+        >> optional() >> attribute( "available-for-all-mission", isDefaultOrder_ )
+        >> optional() >> attribute( "available-without-mission", isWithoutMission_ );
+    name_ = name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,4 +55,22 @@ unsigned long FragOrder::GetId() const
 QString FragOrder::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FragOrder::IsDefaultOrder
+// Created: SBO 2006-12-01
+// -----------------------------------------------------------------------------
+bool FragOrder::IsDefaultOrder() const
+{
+    return isDefaultOrder_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: FragOrder::IsMissionRequired
+// Created: SBO 2006-12-01
+// -----------------------------------------------------------------------------
+bool FragOrder::IsMissionRequired() const
+{
+    return !isWithoutMission_;
 }

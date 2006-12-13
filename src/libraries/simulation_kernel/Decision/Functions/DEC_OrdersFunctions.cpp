@@ -15,9 +15,8 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
-#include "Entities/Orders/Pion/MIL_PionMissionType.h"
-#include "Entities/Orders/Pion/MIL_PionMission_ABC.h"
-#include "Entities/Orders/Automate/MIL_AutomateMRT.h"
+#include "Entities/Orders/MIL_PionMissionType.h"
+#include "Entities/Orders/MIL_PionMission.h"
 #include "Decision/DEC_Tools.h"
 
 //=============================================================================
@@ -35,10 +34,10 @@ void DEC_OrdersFunctions::MRT_CreatePionMission( DIA_Call_ABC& call, MIL_Automat
     DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
     assert( pPion );
 
-    const MIL_PionMissionType* pMissionType = MIL_PionMissionType::FindPionMissionType( call.GetParameter( 1 ).ToId() );
+    const MIL_PionMissionType* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
     assert( pMissionType );
 
-    MIL_PionMission_ABC* pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
+    MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
     call.GetResult().SetValue( *pPionMission );
 }
 
@@ -61,11 +60,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
     T_ObjectVector pions = call.GetParameter( 0 ).ToSelection();
 
     //$$$ NAZE
-    assert( callerAutomate.IsEmbraye() );
-    MIL_AutomateOrderManager& automateOrderManager = callerAutomate.GetOrderManager();
-    MIL_AutomateMRT*          pMRT                 = automateOrderManager.GetMRT();
-    assert( pMRT );
-    assert( !pMRT->IsActivated() );
+    assert( callerAutomate.IsEngaged() );
 
     // Découpage
     MIL_Fuseau::T_FuseauPtrList subFuseaux;
@@ -81,7 +76,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
             MIL_Fuseau& fuseau = **itFuseau;
             if( fuseau.IsInside( pion.GetRole< PHY_RolePion_Location >().GetPosition() ) )
             {
-                pMRT->SetFuseauForPion( pion, fuseau );
+                callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, fuseau );
                 subFuseaux.erase( itFuseau );
                 break;
             }
@@ -91,7 +86,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
         if( itFuseau == subFuseaux.end() )
         {
             MIL_Fuseau& fuseau = **subFuseaux.begin();
-            pMRT->SetFuseauForPion( pion, fuseau );
+            callerAutomate.GetOrderManager().MRT_SetFuseauForPion( pion, fuseau );
             subFuseaux.erase( subFuseaux.begin() );
         }
     }
@@ -101,19 +96,6 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( DIA_Call_ABC& call, MIL_Automate& c
 //=============================================================================
 // Conduite (CDT)
 //=============================================================================
-
-//-----------------------------------------------------------------------------
-// Name: DEC_OrdersFunctions::CDT_SendOrderConduiteToPion
-// Created: NLD 2003-04-15
-//-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_SendOrderConduiteToPion( DIA_Call_ABC& call, MIL_Automate& /*callerAutomate*/ )
-{
-    assert( DEC_Tools::CheckTypePion( call.GetParameter( 0 ) ) );
-
-    DEC_RolePion_Decision* pPion = call.GetParameter( 0 ).ToUserObject( pPion );
-    assert( pPion );
-    pPion->GetPion().GetOrderManager().OnReceiveOrderConduite( call.GetParameters() );
-}
 
 //-----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::CDT_CreatePionMission
@@ -128,10 +110,10 @@ void DEC_OrdersFunctions::CDT_CreatePionMission( DIA_Call_ABC& call, MIL_Automat
     assert( pPion );
 
     // Instanciate and check the new mission
-    const MIL_PionMissionType* pMissionType = MIL_PionMissionType::FindPionMissionType( call.GetParameter( 1 ).ToId() );
+    const MIL_PionMissionType* pMissionType = MIL_PionMissionType::FindFromDiaID( call.GetParameter( 1 ).ToId() );
     assert( pMissionType );
 
-    MIL_PionMission_ABC* pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
+    MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
     call.GetResult().SetValue( *pPionMission );
 }
 
@@ -143,7 +125,7 @@ void DEC_OrdersFunctions::CDT_GivePionMission( DIA_Call_ABC& call, MIL_Automate&
 {
     assert( DEC_Tools::CheckTypeMissionPion( call.GetParameter( 0 ) ) );
 
-    MIL_PionMission_ABC* pPionMission = call.GetParameter( 0 ).ToUserObject( pPionMission );
+    MIL_PionMission* pPionMission = call.GetParameter( 0 ).ToUserObject( pPionMission );
     assert( pPionMission );
 
     callerAutomate.GetOrderManager().CDT_GivePionMission( *pPionMission );

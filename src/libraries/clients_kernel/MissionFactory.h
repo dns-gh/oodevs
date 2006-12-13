@@ -10,6 +10,8 @@
 #ifndef __MissionFactory_h_
 #define __MissionFactory_h_
 
+#include "Resolver_ABC.h"
+
 namespace kernel
 {
     class Mission;
@@ -27,7 +29,8 @@ class MissionFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionFactory();
+             MissionFactory( const Resolver_ABC< Mission, QString >& unitMissions, const Resolver_ABC< Mission, QString >& automatMissions
+                           , const Resolver_ABC< Mission, QString >& populationMissions, const Resolver_ABC< FragOrder, QString >& fragOrders );
     virtual ~MissionFactory();
     //@}
 
@@ -40,18 +43,25 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    Mission* AddFragOrders( Mission* mission );
-    //@}
-
-private:
     //! @name Copy/Assignement
     //@{
     MissionFactory( const MissionFactory& );            //!< Copy constructor
     MissionFactory& operator=( const MissionFactory& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    Mission* AddFragOrders( Mission* mission );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const Resolver_ABC< Mission, QString >& unitMissions_;
+    const Resolver_ABC< Mission, QString >& automatMissions_;
+    const Resolver_ABC< Mission, QString >& populationMissions_;
+    const Resolver_ABC< FragOrder, QString >& fragOrders_;
+    //@}
 };
 
 }

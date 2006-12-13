@@ -251,12 +251,12 @@ void DEC_AutomateFunctions::PionChangeAutomate( DIA_Call_ABC& call, MIL_Automate
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateFunctions::IsEmbraye
+// Name: DEC_AutomateFunctions::IsEngaged
 // Created: JVT 2004-11-26
 // -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::IsEmbraye( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
+void DEC_AutomateFunctions::IsEngaged( DIA_Call_ABC& call, const MIL_Automate& callerAutomate )
 {
-    call.GetResult().SetValue( callerAutomate.IsEmbraye() );
+    call.GetResult().SetValue( callerAutomate.IsEngaged() );
 }
 
 // -----------------------------------------------------------------------------
@@ -637,7 +637,7 @@ void DEC_AutomateFunctions::MakePionRelievePion( DIA_Call_ABC& call, const MIL_A
         return;
     }
 
-    pAgentToRelieve->GetPion().GetOrderManager().OnReceiveRCMissionFinished(); //$$$ TMP - renommer la méthode
+    pAgentToRelieve->GetPion().GetOrderManager().ReplaceMission();
     call.GetResult().SetValue( true );
 }
 
@@ -667,8 +667,8 @@ void DEC_AutomateFunctions::CanPionRelievePion( DIA_Call_ABC& call, const MIL_Au
 // -----------------------------------------------------------------------------
 void DEC_AutomateFunctions::DebrayeAutomate( DIA_Call_ABC& call, MIL_Automate& callerAutomate )
 {
-    call.GetResult().SetValue( callerAutomate.IsEmbraye() );
-    callerAutomate.Debraye();
+    call.GetResult().SetValue( callerAutomate.IsEngaged() );
+    callerAutomate.Disengage();
 }
 
 // -----------------------------------------------------------------------------

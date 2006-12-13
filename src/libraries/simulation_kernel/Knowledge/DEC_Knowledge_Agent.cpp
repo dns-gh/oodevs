@@ -22,14 +22,6 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/RC/MIL_RC.h"
-#include "Entities/RC/MIL_RC_UniteDetectee.h"
-#include "Entities/RC/MIL_RC_UniteAmieReconnue.h"
-#include "Entities/RC/MIL_RC_UniteEnnemieReconnue.h"
-#include "Entities/RC/MIL_RC_UniteNeutreReconnue.h"
-#include "Entities/RC/MIL_RC_UniteAmieIdentifiee.h"
-#include "Entities/RC/MIL_RC_UniteEnnemieIdentifiee.h"
-#include "Entities/RC/MIL_RC_UniteNeutreIdentifiee.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
@@ -315,38 +307,6 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_AgentPerception& perceptio
     dataIdentification_.Update( perception.GetIdentificationData() );
 
     UpdatePerceptionSources( perception );
-
-    // CRs auto - $$$$ IDEE STUPIDE DSRO - A VIRER UN JOUR
-    if( bMaxPerceptionLevelUpdated_ && !IsDead() )
-    {
-        if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ )
-            MIL_RC::pRcUniteDetectee_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
-
-        else if( GetArmy() && pKnowledgeGroup_->GetArmy().IsAFriend( *GetArmy() ) == eTristate_True )
-        {
-            if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
-                MIL_RC::pRcUniteAmieReconnue_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
-            else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                MIL_RC::pRcUniteAmieIdentifiee_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
-        }
-
-        else if( GetArmy() && pKnowledgeGroup_->GetArmy().IsAnEnemy( *GetArmy() ) == eTristate_True )
-        {
-            if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
-                MIL_RC::pRcUniteEnnemieReconnue_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
-            else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                MIL_RC::pRcUniteEnnemieIdentifiee_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
-        }
-
-        else if( GetArmy() && pKnowledgeGroup_->GetArmy().IsNeutral( *GetArmy() ) == eTristate_True )
-        {
-            if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ )
-                MIL_RC::pRcUniteNeutreReconnue_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
-            else if( perception.GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                MIL_RC::pRcUniteNeutreIdentifiee_->Send( perception.GetAgentPerceiving(), MIL_RC::eRcTypeOperational, *this );
-        }
-    }
-
     nTimeExtrapolationEnd_ = nTimeLastUpdate_ + pKnowledgeGroup_->GetType().GetKnowledgeAgentExtrapolationTime();
 }   
 
@@ -471,39 +431,39 @@ void DEC_Knowledge_Agent::SendChangedState()
     assert( pKnowledgeGroup_ );
 
     NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
-    asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
+    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     
     if( bRelevanceUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.pertinencePresent = 1;
-        asnMsg.GetAsnMsg().pertinence = (int)( rRelevance_ * 100. );
+        asnMsg().m.pertinencePresent = 1;
+        asnMsg().pertinence = (int)( rRelevance_ * 100. );
         rLastRelevanceSent_ = rRelevance_;
     }
 
     if( bCurrentPerceptionLevelUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.identification_levelPresent = 1;
-        asnMsg.GetAsnMsg().identification_level = pCurrentPerceptionLevel_->GetAsnID();
+        asnMsg().m.identification_levelPresent = 1;
+        asnMsg().identification_level = pCurrentPerceptionLevel_->GetAsnID();
     }
 
     if( bMaxPerceptionLevelUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.max_identification_levelPresent = 1;
-        asnMsg.GetAsnMsg().max_identification_level = pMaxPerceptionLevel_->GetAsnID();
+        asnMsg().m.max_identification_levelPresent = 1;
+        asnMsg().max_identification_level = pMaxPerceptionLevel_->GetAsnID();
     }
 
     if( bPerceptionPerAutomateUpdated )
-        WriteMsgPerceptionSources( asnMsg.GetAsnMsg() );
+        WriteMsgPerceptionSources( asnMsg() );
 
-    dataDetection_     .SendChangedState( asnMsg.GetAsnMsg() );
-    dataRecognition_   .SendChangedState( asnMsg.GetAsnMsg() );
-    dataIdentification_.SendChangedState( asnMsg.GetAsnMsg() );
+    dataDetection_     .SendChangedState( asnMsg() );
+    dataRecognition_   .SendChangedState( asnMsg() );
+    dataIdentification_.SendChangedState( asnMsg() );
 
     asnMsg.Send();
 
-    if( asnMsg.GetAsnMsg().m.perception_par_compagniePresent && asnMsg.GetAsnMsg().perception_par_compagnie.n > 0 )
-        delete [] asnMsg.GetAsnMsg().perception_par_compagnie.elem; //$$$ RAM
+    if( asnMsg().m.perception_par_compagniePresent && asnMsg().perception_par_compagnie.n > 0 )
+        delete [] asnMsg().perception_par_compagnie.elem; //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------
@@ -515,29 +475,29 @@ void DEC_Knowledge_Agent::SendFullState()
     assert( pKnowledgeGroup_ );
 
     NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
-    asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
+    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     
-    asnMsg.GetAsnMsg().m.pertinencePresent = 1;
-    asnMsg.GetAsnMsg().pertinence = (int)( rRelevance_ * 100. );
+    asnMsg().m.pertinencePresent = 1;
+    asnMsg().pertinence = (int)( rRelevance_ * 100. );
     rLastRelevanceSent_ = rRelevance_;
     
-    asnMsg.GetAsnMsg().m.identification_levelPresent = 1;
-    asnMsg.GetAsnMsg().identification_level = pCurrentPerceptionLevel_->GetAsnID();
+    asnMsg().m.identification_levelPresent = 1;
+    asnMsg().identification_level = pCurrentPerceptionLevel_->GetAsnID();
 
-    asnMsg.GetAsnMsg().m.max_identification_levelPresent = 1;
-    asnMsg.GetAsnMsg().max_identification_level = pMaxPerceptionLevel_->GetAsnID();
+    asnMsg().m.max_identification_levelPresent = 1;
+    asnMsg().max_identification_level = pMaxPerceptionLevel_->GetAsnID();
 
-    WriteMsgPerceptionSources( asnMsg.GetAsnMsg() );
+    WriteMsgPerceptionSources( asnMsg() );
 
-    dataDetection_     .SendFullState( asnMsg.GetAsnMsg() );
-    dataRecognition_   .SendFullState( asnMsg.GetAsnMsg() );
-    dataIdentification_.SendFullState( asnMsg.GetAsnMsg() );
+    dataDetection_     .SendFullState( asnMsg() );
+    dataRecognition_   .SendFullState( asnMsg() );
+    dataIdentification_.SendFullState( asnMsg() );
 
     asnMsg.Send();
 
-    if( asnMsg.GetAsnMsg().m.perception_par_compagniePresent && asnMsg.GetAsnMsg().perception_par_compagnie.n > 0 )
-        delete [] asnMsg.GetAsnMsg().perception_par_compagnie.elem; //$$$ RAM
+    if( asnMsg().m.perception_par_compagniePresent && asnMsg().perception_par_compagnie.n > 0 )
+        delete [] asnMsg().perception_par_compagnie.elem; //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------
@@ -592,10 +552,10 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     assert( pAgentKnown_ );
 
     NET_ASN_MsgUnitKnowledgeCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
-    asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
-    asnMsg.GetAsnMsg().oid_unite_reelle      = pAgentKnown_->GetID();    
-    asnMsg.GetAsnMsg().type_unite            = pAgentKnown_->GetType().GetID();
+    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
+    asnMsg().oid_unite_reelle      = pAgentKnown_->GetID();    
+    asnMsg().type_unite            = pAgentKnown_->GetType().GetID();
     asnMsg.Send();
 }
 
@@ -608,8 +568,8 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
     assert( pKnowledgeGroup_ );
     
     NET_ASN_MsgUnitKnowledgeDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_connaissance      = nID_;
-    asnMsg.GetAsnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
+    asnMsg().oid_connaissance      = nID_;
+    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
     asnMsg.Send();
 }
     

@@ -152,11 +152,11 @@ void PHY_RolePion_Communications::Unjam( const MIL_RealObject_ABC& jammer )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.communications_brouilleesPresent = 1;
-    msg.GetAsnMsg().communications_brouillees = !jammers_.empty();
+    msg().m.communications_brouilleesPresent = 1;
+    msg().communications_brouillees = !jammers_.empty();
 
-    msg.GetAsnMsg().m.silence_radioPresent  = 1;
-    msg.GetAsnMsg().silence_radio           = bBlackoutActivated_;
+    msg().m.silence_radioPresent  = 1;
+    msg().silence_radio           = bBlackoutActivated_;
 }
 
 // -----------------------------------------------------------------------------

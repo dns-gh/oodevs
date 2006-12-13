@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-28 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Population.h"
@@ -30,10 +21,11 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/RC/MIL_RC.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
+#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_AsnException.h"
 
 BOOST_CLASS_EXPORT_GUID( MIL_Population, "MIL_Population" )
 
@@ -236,7 +228,7 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rS
     }
     NotifyAttackedBy( exterminator );
 
-    MIL_RC::pRcAttentatTerroristeDansPopulation_->Send( *this, MIL_RC::eRcTypeOperational );
+    MIL_Report::PostEvent( *this, MIL_Report::eReport_TerroristAttackAgainstPopulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,6 +272,7 @@ void MIL_Population::CleanKnowledges()
 void MIL_Population::UpdateDecision()
 {
     assert( pDecision_ );
+    orderManager_.Update();
     pDecision_->UpdateDecision();
 }
 
@@ -289,8 +282,6 @@ void MIL_Population::UpdateDecision()
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateState()
 {
-    orderManager_.Update();
-
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
         delete *it;
     trashedConcentrations_.clear();
@@ -791,21 +782,39 @@ MT_Float MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgOrder
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void MIL_Population::OnReceiveMsgOrder( ASN1T_MsgPopulationOrder& msg )
+{
+    orderManager_.OnReceiveMission( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgFragOrder
+// Created: SBO 2005-11-23
+// -----------------------------------------------------------------------------
+void MIL_Population::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
+{
+    orderManager_.OnReceiveFragOrder( msg );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, MIL_MOSContextID nCtx )
+void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx )
 {
     NET_ASN_MsgPopulationMagicActionAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid = asnMsg.oid_population;
+    asnReplyMsg().oid = asnMsg.oid_population;
 
     switch( asnMsg.action.t )
     {
-        case T_MsgPopulationMagicAction_action_move_to           : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgMagicMove     ( *asnMsg.action.u.move_to ); break;
-        case T_MsgPopulationMagicAction_action_destruction_totale: asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgDestroyAll    (); break;
-        case T_MsgPopulationMagicAction_action_change_attitude   : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgChangeAttitude( *asnMsg.action.u.change_attitude ); break;
-        case T_MsgPopulationMagicAction_action_tuer              : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgKill          ( asnMsg.action.u.tuer ); break;
-        case T_MsgPopulationMagicAction_action_ressusciter       : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResurrect     ( asnMsg.action.u.ressusciter ); break;
+        case T_MsgPopulationMagicAction_action_move_to           : asnReplyMsg().error_code = OnReceiveMsgMagicMove     ( *asnMsg.action.u.move_to ); break;
+        case T_MsgPopulationMagicAction_action_destruction_totale: asnReplyMsg().error_code = OnReceiveMsgDestroyAll    (); break;
+        case T_MsgPopulationMagicAction_action_change_attitude   : asnReplyMsg().error_code = OnReceiveMsgChangeAttitude( *asnMsg.action.u.change_attitude ); break;
+        case T_MsgPopulationMagicAction_action_tuer              : asnReplyMsg().error_code = OnReceiveMsgKill          ( asnMsg.action.u.tuer ); break;
+        case T_MsgPopulationMagicAction_action_ressusciter       : asnReplyMsg().error_code = OnReceiveMsgResurrect     ( asnMsg.action.u.ressusciter ); break;
         default:
             assert( false );
     }
@@ -832,7 +841,7 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgMagicMove( ASN1T_M
         (**it).MagicMove( vPosTmp );
 
     pDecision_->Reset();
-    orderManager_.CancelAllOrders();
+    orderManager_.ReplaceMission();
     bHasDoneMagicMove_ = true;
     return EnumPopulationAttrErrorCode::no_error;
 }
@@ -850,7 +859,7 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgDestroyAll()
         (**it).KillAllHumans();
 
     pDecision_->Reset();
-    orderManager_.CancelAllOrders();
+    orderManager_.ReplaceMission();
     return EnumPopulationAttrErrorCode::no_error;
 }
 
@@ -948,10 +957,10 @@ ASN1T_EnumPopulationAttrErrorCode MIL_Population::OnReceiveMsgResurrect( ASN1T_M
 void MIL_Population::SendCreation() const
 {
     NET_ASN_MsgPopulationCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_population  = nID_;
-    asnMsg.GetAsnMsg().type_population = pType_->GetID();
-    asnMsg.GetAsnMsg().oid_camp        = pArmy_->GetID();
-    asnMsg.GetAsnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
+    asnMsg().oid_population  = nID_;
+    asnMsg().type_population = pType_->GetID();
+    asnMsg().oid_camp        = pArmy_->GetID();
+    asnMsg().nom             = strName_.c_str(); // !! pointeur sur const char*   
     asnMsg.Send();
 
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -974,7 +983,7 @@ void MIL_Population::SendFullState()
     assert( pDecision_ );
 
     NET_ASN_MsgPopulationUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_population = nID_;   
+    asnMsg().oid_population = nID_;   
     pDecision_->SendFullState( asnMsg );
     asnMsg.Send();
 
@@ -1008,7 +1017,7 @@ void MIL_Population::UpdateNetwork()
     if( pDecision_->HasStateChanged() )
     {
         NET_ASN_MsgPopulationUpdate asnMsg;
-        asnMsg.GetAsnMsg().oid_population = nID_;   
+        asnMsg().oid_population = nID_;   
         pDecision_->SendChangedState( asnMsg );
         asnMsg.Send();
     }

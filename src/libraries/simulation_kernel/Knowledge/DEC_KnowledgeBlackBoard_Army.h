@@ -58,6 +58,21 @@ public:
     virtual void SendChangedState() const;
     //@}
 
+    //! @name Resolver
+    //@{
+    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const ASN1T_KnowledgeAgent&  asn ) const;
+    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent ( const DIA_Variable_ABC&      dia ) const;
+    virtual DEC_Knowledge_Agent*      ResolveKnowledgeAgent (       uint                   nID ) const;
+
+    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const ASN1T_KnowledgeObject& asn ) const;
+    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject( const DIA_Variable_ABC&      dia ) const;
+    virtual DEC_Knowledge_Object*     ResolveKnowledgeObject(       uint                   nID ) const;
+
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& asn ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const DIA_Variable_ABC&          dia ) const;
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const;
+    //@}
+
     //! @name Queries
     //@{
     bool                  IsKnown                 ( const MIL_RealObject_ABC& oject ) const;

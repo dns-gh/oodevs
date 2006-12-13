@@ -206,8 +206,8 @@ void PHY_SupplyDotationState::SendMsgCreation() const
     assert( pSuppliedAutomate_ );
 
     NET_ASN_MsgLogRavitaillementTraitementCreation asn;
-    asn.GetAsnMsg().oid_consigne    = nID_;
-    asn.GetAsnMsg().oid_automate    = pSuppliedAutomate_->GetID();
+    asn().oid_consigne    = nID_;
+    asn().oid_automate    = pSuppliedAutomate_->GetID();
 
     ASN1T_DemandeDotation* pAsnRequests = new ASN1T_DemandeDotation[ requests_.size() ];
     uint i = 0;
@@ -217,11 +217,11 @@ void PHY_SupplyDotationState::SendMsgCreation() const
         it->second.Serialize( asnDemande );
     }
 
-    asn.GetAsnMsg().dotations.n    = requests_.size();
-    asn.GetAsnMsg().dotations.elem = pAsnRequests;
+    asn().dotations.n    = requests_.size();
+    asn().dotations.elem = pAsnRequests;
     asn.Send();
 
-    delete [] asn.GetAsnMsg().dotations.elem;
+    delete [] asn().dotations.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -234,8 +234,8 @@ void PHY_SupplyDotationState::SendFullState() const
 
     SendMsgCreation();
     NET_ASN_MsgLogRavitaillementTraitementUpdate asn;
-    asn.GetAsnMsg().oid_consigne = nID_;
-    asn.GetAsnMsg().oid_automate = pSuppliedAutomate_->GetID();
+    asn().oid_consigne = nID_;
+    asn().oid_automate = pSuppliedAutomate_->GetID();
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
@@ -255,8 +255,8 @@ void PHY_SupplyDotationState::SendChangedState() const
     assert( pSuppliedAutomate_ );
 
     NET_ASN_MsgLogRavitaillementTraitementUpdate asn;
-    asn.GetAsnMsg().oid_consigne = nID_;
-    asn.GetAsnMsg().oid_automate = pSuppliedAutomate_->GetID();
+    asn().oid_consigne = nID_;
+    asn().oid_automate = pSuppliedAutomate_->GetID();
 
     if( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) )
     {
@@ -270,7 +270,7 @@ void PHY_SupplyDotationState::SendChangedState() const
     {
         assert( !requests_.empty() );
 
-        asn.GetAsnMsg().m.dotationsPresent = 1;
+        asn().m.dotationsPresent = 1;
 
         ASN1T_DemandeDotation* pAsnRequests = new ASN1T_DemandeDotation[ requests_.size() ];
         uint i = 0;
@@ -280,13 +280,13 @@ void PHY_SupplyDotationState::SendChangedState() const
             it->second.Serialize( asnDemande );
         }
 
-        asn.GetAsnMsg().dotations.n    = requests_.size();
-        asn.GetAsnMsg().dotations.elem = pAsnRequests;   
+        asn().dotations.n    = requests_.size();
+        asn().dotations.elem = pAsnRequests;   
     }
 
     asn.Send();
-    if( asn.GetAsnMsg().m.dotationsPresent && asn.GetAsnMsg().dotations.n > 0 )
-        delete [] asn.GetAsnMsg().dotations.elem;
+    if( asn().m.dotationsPresent && asn().dotations.n > 0 )
+        delete [] asn().dotations.elem;
 }
     
 // -----------------------------------------------------------------------------
@@ -298,8 +298,8 @@ void PHY_SupplyDotationState::SendMsgDestruction() const
     assert( pSuppliedAutomate_ );
 
     NET_ASN_MsgLogRavitaillementTraitementDestruction asn;
-    asn.GetAsnMsg().oid_consigne = nID_;
-    asn.GetAsnMsg().oid_automate = pSuppliedAutomate_->GetID();
+    asn().oid_consigne = nID_;
+    asn().oid_automate = pSuppliedAutomate_->GetID();
     asn.Send();
 }
 

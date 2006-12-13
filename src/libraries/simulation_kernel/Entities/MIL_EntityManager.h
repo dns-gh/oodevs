@@ -135,20 +135,20 @@ public:
     //! @name Network
     //@{
     void OnReceiveMsgUnitMagicAction      ( DIN::DIN_Input&                         msg );
-    void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgPopulationOrder      ( ASN1T_MsgPopulationOrder&               msg, MIL_MOSContextID nCtx );     
-    void OnReceiveMsgPionOrder            ( ASN1T_MsgPionOrder&                     msg, MIL_MOSContextID nCtx ); 
-    void OnReceiveMsgAutomateOrder        ( ASN1T_MsgAutomateOrder&                 msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgOrderConduite        ( ASN1T_MsgOrderConduite&                 msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgObjectMagicAction    ( ASN1T_MsgObjectMagicAction&             msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction&         msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgChangeDiplomacy      ( ASN1T_MsgChangeDiplomatie&              msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgChangeGroupeConnaissance&      msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgChangeAutomate       ( ASN1T_MsgChangeAutomate&                msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgUnitMagicAction      ( ASN1T_MsgUnitMagicAction&               msg, uint nCtx );
+    void OnReceiveMsgPopulationOrder      ( ASN1T_MsgPopulationOrder&               msg, uint nCtx );     
+    void OnReceiveMsgPionOrder            ( ASN1T_MsgPionOrder&                     msg, uint nCtx ); 
+    void OnReceiveMsgAutomateOrder        ( ASN1T_MsgAutomateOrder&                 msg, uint nCtx );
+    void OnReceiveMsgSetAutomateMode      ( ASN1T_MsgSetAutomateMode&               msg, uint nCtx );
+    void OnReceiveMsgFragOrder            ( ASN1T_MsgFragOrder&                     msg, uint nCtx );
+    void OnReceiveMsgObjectMagicAction    ( ASN1T_MsgObjectMagicAction&             msg, uint nCtx );
+    void OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction&         msg, uint nCtx );
+    void OnReceiveMsgChangeDiplomacy      ( ASN1T_MsgChangeDiplomatie&              msg, uint nCtx );
+    void OnReceiveMsgChangeKnowledgeGroup ( ASN1T_MsgChangeGroupeConnaissance&      msg, uint nCtx );
+    void OnReceiveMsgChangeLogisticLinks  ( ASN1T_MsgChangeLiensLogistiques&        msg, uint nCtx );
+    void OnReceiveMsgChangeAutomate       ( ASN1T_MsgChangeAutomate&                msg, uint nCtx );
+    void OnReceiveMsgLogSupplyChangeQuotas( ASN1T_MsgLogRavitaillementChangeQuotas& msg, uint nCtx );
+    void OnReceiveMsgLogSupplyPushFlow    ( ASN1T_MsgLogRavitaillementPousserFlux&  msg, uint nCtx );
     //@}
 
     //! @name Population channeling

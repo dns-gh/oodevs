@@ -23,6 +23,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
@@ -30,9 +31,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -296,7 +295,7 @@ DEC_RolePion_Decision* NET_ASN_Tools::ReadAgent( const ASN1T_Agent& asnAgent )
     MIL_AgentPion* pPion = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( asnAgent );
     if( !pPion )
         return 0;
-    return &pPion->GetRole< DEC_RolePion_Decision >();
+    return &pPion->GetDecision();
 }
 
 //-----------------------------------------------------------------------------
@@ -359,21 +358,21 @@ bool NET_ASN_Tools::ReadAutomateList( const ASN1T_ListAutomate& asnListAgent, T_
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static $$NLDJVT$$ Interet de cette fonction
-DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_KnowledgeAgent& asnAgent, const MIL_KnowledgeGroup& knowledge )
+DEC_Knowledge_Agent* NET_ASN_Tools::ReadAgentKnowledge( const ASN1T_KnowledgeAgent& asnAgent, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    return knowledge.GetKnowledge().GetKnowledgeAgentFromID( asnAgent );
+    return resolver.ResolveKnowledgeAgent( asnAgent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadListKnowledgeAgent
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnListAgent, T_KnowledgeAgentDiaIDVector& knowledges, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnListAgent, T_KnowledgeAgentDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
 {
     knowledges.clear(); knowledges.reserve( asnListAgent.n );
     for( uint n = 0; n < asnListAgent.n; ++n )
     {        
-        DEC_Knowledge_Agent* pKnowledge = ReadAgentKnowledge( asnListAgent.elem[n], knowledge );
+        DEC_Knowledge_Agent* pKnowledge = ReadAgentKnowledge( asnListAgent.elem[n], resolver );
         if( pKnowledge == 0 )
             return false;
         knowledges.push_back( (void*)pKnowledge->GetID() );
@@ -387,21 +386,21 @@ bool NET_ASN_Tools::ReadAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asnL
 // Created: AGN 03-04-24
 //-----------------------------------------------------------------------------
 // static
-DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_KnowledgeObject& asnObject, const MIL_KnowledgeGroup& knowledge )
+DEC_Knowledge_Object* NET_ASN_Tools::ReadObjectKnowledge( const ASN1T_KnowledgeObject& asnObject, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    return knowledge.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asnObject );
+    return resolver.ResolveKnowledgeObject( asnObject );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadListKnowledgeObject
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asnListObject, T_KnowledgeObjectDiaIDVector& knowledges, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asnListObject, T_KnowledgeObjectDiaIDVector& knowledges, const DEC_KnowledgeResolver_ABC& resolver )
 {
     knowledges.clear(); knowledges.reserve( asnListObject.n );
     for( uint n = 0; n < asnListObject.n; ++n )
     {        
-        DEC_Knowledge_Object* pKnowledge = ReadObjectKnowledge( asnListObject.elem[n], knowledge );
+        DEC_Knowledge_Object* pKnowledge = ReadObjectKnowledge( asnListObject.elem[n], resolver );
         if( !pKnowledge )
             return false;
         knowledges.push_back( (void*)pKnowledge->GetID() );
@@ -413,9 +412,9 @@ bool NET_ASN_Tools::ReadObjectKnowledgeList( const ASN1T_ListKnowledgeObject& as
 // Name: NET_ASN_Tools::ReadPopulationKnowledge
 // Created: HME 05-12-22
 //-----------------------------------------------------------------------------
-DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_KnowledgePopulation& asnPopulation, const MIL_KnowledgeGroup& knowledge )
+DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const ASN1T_KnowledgePopulation& asnPopulation, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    return knowledge.GetKnowledge().GetKnowledgePopulationFromID( asnPopulation );
+    return resolver.ResolveKnowledgePopulation( asnPopulation );
 }
 
 // -----------------------------------------------------------------------------
@@ -780,7 +779,7 @@ void NET_ASN_Tools::WriteAgentKnowledge( const DEC_Knowledge_Agent& knowledge, A
 // Name: NET_ASN_Tools::WriteListKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& knowledges, ASN1T_ListKnowledgeAgent& asnListKnowledge, const MIL_KnowledgeGroup& knowledge )
+void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& knowledges, ASN1T_ListKnowledgeAgent& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver )
 {
     asnListKnowledge.n = knowledges.size();
     if( knowledges.empty() )
@@ -790,7 +789,7 @@ void NET_ASN_Tools::WriteAgentKnowledgeList( const T_KnowledgeAgentDiaIDVector& 
     uint i = 0;
     for( CIT_KnowledgeAgentDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )    
     {
-        const DEC_Knowledge_Agent* pKnowledge = knowledge.GetKnowledge().GetKnowledgeAgentFromID( (uint)*itKnowledge );
+        const DEC_Knowledge_Agent* pKnowledge = resolver.ResolveKnowledgeAgent( (uint)*itKnowledge );
         if( pKnowledge )
             asnListKnowledge.elem[i] = pKnowledge->GetID();
         else
@@ -813,7 +812,7 @@ void NET_ASN_Tools::WriteObjectKnowledge( const DEC_Knowledge_Object& knowledge,
 // Name: NET_ASN_Tools::WriteListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const MIL_KnowledgeGroup& knowledge )
+void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector& knowledges, ASN1T_ListKnowledgeObject& asnListKnowledge, const DEC_KnowledgeResolver_ABC& resolver )
 {
     asnListKnowledge.n = knowledges.size();
     if( knowledges.empty() )
@@ -823,7 +822,7 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
     uint i = 0;
     for( CIT_KnowledgeObjectDiaIDVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )    
     {
-        const DEC_Knowledge_Object* pKnowledge = knowledge.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( (uint)*itKnowledge );
+        const DEC_Knowledge_Object* pKnowledge = resolver.ResolveKnowledgeObject( (uint)*itKnowledge );
         if( pKnowledge )
             asnListKnowledge.elem[i] = pKnowledge->GetID();
         else
@@ -1017,9 +1016,9 @@ void NET_ASN_Tools::Delete( ASN1T_ListKnowledgeObject& asn )
 // Name: NET_ASN_Tools::CopyObjectKnowledge
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledge( const ASN1T_KnowledgeObject& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyObjectKnowledge( const ASN1T_KnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    DEC_Knowledge_Object* pKnowledge = NET_ASN_Tools::ReadObjectKnowledge( asn, knowledge );
+    DEC_Knowledge_Object* pKnowledge = NET_ASN_Tools::ReadObjectKnowledge( asn, resolver );
     if( !pKnowledge ) 
         return false;
 
@@ -1031,12 +1030,11 @@ bool NET_ASN_Tools::CopyObjectKnowledge( const ASN1T_KnowledgeObject& asn, DIA_V
 // Name: NET_ASN_Tools::CopyObjectKnowledge
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgeObject& asn, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyObjectKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgeObject& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeConnaissanceObjet( dia ) );
 
-    uint nDiaID = (uint)dia.ToPtr();
-    DEC_Knowledge_Object* pKnowledge = knowledge.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nDiaID );
+    DEC_Knowledge_Object* pKnowledge = resolver.ResolveKnowledgeObject( dia );
     if( !pKnowledge )
         return false;
     
@@ -1061,11 +1059,11 @@ void NET_ASN_Tools::CopyObjectKnowledge( const DIA_Variable_ABC& diaFrom, DIA_Va
 // Name: NET_ASN_Tools::CopyListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyObjectKnowledgeList( const ASN1T_ListKnowledgeObject& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
     T_KnowledgeObjectDiaIDVector knowledges;
     
-    if( !NET_ASN_Tools::ReadObjectKnowledgeList( asn, knowledges, knowledge ) )
+    if( !NET_ASN_Tools::ReadObjectKnowledgeList( asn, knowledges, resolver ) )
         return false;
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( dia );
@@ -1077,14 +1075,14 @@ bool NET_ASN_Tools::CopyObjectKnowledgeList( const ASN1T_ListKnowledgeObject& as
 // Name: NET_ASN_Tools::CopyListKnowledgeObject
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyObjectKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeObject& asn, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyObjectKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeObject& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeListeConnaissancesObjet( dia ) );
 
     const DIA_Variable_ObjectList& diaObjectList = static_cast< const DIA_Variable_ObjectList& >( dia );
 
     T_KnowledgeObjectDiaIDVector knowledges = diaObjectList.ToUserTypeList( knowledges );
-    NET_ASN_Tools::WriteObjectKnowledgeList( knowledges, asn, knowledge );
+    NET_ASN_Tools::WriteObjectKnowledgeList( knowledges, asn, resolver );
     return true;
 }
 
@@ -1112,9 +1110,9 @@ void NET_ASN_Tools::CopyObjectKnowledgeList( const DIA_Variable_ABC& diaFrom, DI
 // Name: NET_ASN_Tools::CopyKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledge( const ASN1T_KnowledgeAgent& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyAgentKnowledge( const ASN1T_KnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    DEC_Knowledge_Agent* pKnowledge = NET_ASN_Tools::ReadAgentKnowledge( asn, knowledge );
+    DEC_Knowledge_Agent* pKnowledge = NET_ASN_Tools::ReadAgentKnowledge( asn, resolver );
     if( !pKnowledge ) 
         return false;
 
@@ -1126,12 +1124,11 @@ bool NET_ASN_Tools::CopyAgentKnowledge( const ASN1T_KnowledgeAgent& asn, DIA_Var
 // Name: NET_ASN_Tools::CopyKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgeAgent& asn, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyAgentKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgeAgent& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeConnaissanceAgent( dia ) );
 
-    uint nDiaID = (uint)dia.ToPtr();
-    DEC_Knowledge_Agent* pKnowledge = knowledge.GetKnowledge().GetKnowledgeAgentFromID( nDiaID );
+    DEC_Knowledge_Agent* pKnowledge = resolver.ResolveKnowledgeAgent( dia );
     if( !pKnowledge )
         return false;
     
@@ -1155,11 +1152,11 @@ void NET_ASN_Tools::CopyAgentKnowledge( const DIA_Variable_ABC& diaFrom, DIA_Var
 // Name: NET_ASN_Tools::CopyListKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
     T_KnowledgeAgentDiaIDVector knowledges;
     
-    if( !NET_ASN_Tools::ReadAgentKnowledgeList( asn, knowledges, knowledge ) )
+    if( !NET_ASN_Tools::ReadAgentKnowledgeList( asn, knowledges, resolver ) )
         return false;
 
     DIA_Variable_ObjectList& diaObjectList = static_cast< DIA_Variable_ObjectList& >( dia );
@@ -1171,15 +1168,16 @@ bool NET_ASN_Tools::CopyAgentKnowledgeList( const ASN1T_ListKnowledgeAgent& asn,
 // Name: NET_ASN_Tools::CopyListKnowledgeAgent
 // Created: NLD 2004-03-25
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyAgentKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeAgent& asn, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyAgentKnowledgeList( const DIA_Variable_ABC& dia, ASN1T_ListKnowledgeAgent& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeListeConnaissancesAgent( dia ) );
 
     const DIA_Variable_ObjectList& diaObjectList = static_cast< const DIA_Variable_ObjectList& >( dia );
 
     T_KnowledgeAgentDiaIDVector knowledges = diaObjectList.ToUserTypeList( knowledges );
-    NET_ASN_Tools::WriteAgentKnowledgeList( knowledges, asn, knowledge );
+    NET_ASN_Tools::WriteAgentKnowledgeList( knowledges, asn, resolver );
     return true;
+
 }
 
 // -----------------------------------------------------------------------------
@@ -1382,7 +1380,7 @@ bool NET_ASN_Tools::CopyMaintenancePriorities( const ASN1T_MaintenancePriorites&
     for( uint i = 0; i < asn.n; ++i )
     {
         uint nCompTypeMosID = asn.elem[i];
-        const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::FindComposanteType( nCompTypeMosID );
+        const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( nCompTypeMosID );
         if( !pType )
         {
             dia.SetValue( 0, &DEC_Tools::GetTypeMaintenancePriorites() );
@@ -1838,9 +1836,9 @@ void NET_ASN_Tools::CopyPolygonList( const DIA_Variable_ABC& diaFrom, DIA_Variab
 // Name: NET_ASN_Tools::CopyPoint
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPoint( const ASN1T_Point& asn, DIA_Variable_ABC& dia, bool bValueIfOptional /*= true*/ )
+bool NET_ASN_Tools::CopyPoint( const ASN1T_Point& asn, DIA_Variable_ABC& dia, bool bNullValue /*= false*/ )
 {
-    if( !bValueIfOptional )
+    if( bNullValue )
     {
         dia.SetValue( (void*)0, &DEC_Tools::GetTypePoint() );
         return true;
@@ -2177,6 +2175,37 @@ bool NET_ASN_Tools::CopyDirection( const DIA_Variable_ABC& diaFrom, DIA_Variable
 }
 
 // -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyString
+// Created: NLD 2004-04-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyString( const ASN1VisibleString& asn, DIA_Variable_ABC& dia )
+{
+    std::string strTmp = asn;
+    dia.SetValue( strTmp ); 
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyString
+// Created: NLD 2004-04-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyString( const DIA_Variable_ABC& dia, ASN1VisibleString& asn )
+{
+    asn = dia.ToString().c_str();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyString
+// Created: NLD 2004-04-22
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyString( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    diaTo.SetValue( diaFrom.ToString() );    
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyBool
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
@@ -2205,7 +2234,6 @@ bool NET_ASN_Tools::CopyBool( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC&
     diaTo.SetValue( diaFrom.ToBool() );    
     return true;
 }
-
     
 // -----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::CopyNumeric
@@ -2316,10 +2344,10 @@ bool NET_ASN_Tools::CopyNatureAtlas( const DIA_Variable_ABC& diaFrom, DIA_Variab
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyDotation
+// Name: NET_ASN_Tools::CopyDotationType
 // Created: NLD 2006-08-04
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyDotation( const ASN1T_TypeDotation& asn, DIA_Variable_ABC& dia )
+bool NET_ASN_Tools::CopyDotationType( const ASN1T_TypeDotation& asn, DIA_Variable_ABC& dia )
 {
     const PHY_DotationCategory* pData = PHY_DotationType::FindDotationCategory( asn );
     if( !pData ) 
@@ -2330,10 +2358,10 @@ bool NET_ASN_Tools::CopyDotation( const ASN1T_TypeDotation& asn, DIA_Variable_AB
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyDotation
+// Name: NET_ASN_Tools::CopyDotationType
 // Created: NLD 2006-08-04
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyDotation( const DIA_Variable_ABC& dia, ASN1T_TypeDotation& asn )
+bool NET_ASN_Tools::CopyDotationType( const DIA_Variable_ABC& dia, ASN1T_TypeDotation& asn )
 {
     assert( DEC_Tools::CheckTypeDotation( dia ) );
 
@@ -2347,14 +2375,88 @@ bool NET_ASN_Tools::CopyDotation( const DIA_Variable_ABC& dia, ASN1T_TypeDotatio
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyDotation
+// Name: NET_ASN_Tools::CopyDotationType
 // Created: NLD 2006-08-04
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyDotation( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+bool NET_ASN_Tools::CopyDotationType( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
 {
     assert( DEC_Tools::CheckTypeDotation( diaFrom ) );
     assert( DEC_Tools::CheckTypeDotation( diaTo ) );
     diaTo.SetValue( diaFrom.ToPtr(), &DEC_Tools::GetTypeDotation() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// EQUIPMENT
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyEquipmentType
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyEquipmentType( const ASN1T_TypeEquipement& asn, DIA_Variable_ABC& dia )
+{
+    const PHY_ComposanteTypePion* pData = PHY_ComposanteTypePion::Find( asn );
+    if( !pData ) 
+        return false;
+
+    dia.SetValue( (void*)pData, &DEC_Tools::GetTypeEquipement() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyEquipmentType
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyEquipmentType( const DIA_Variable_ABC& dia, ASN1T_TypeEquipement& asn )
+{
+    assert( DEC_Tools::CheckTypeEquipement( dia ) );
+
+    const PHY_ComposanteTypePion* pTmp = dia.ToUserPtr( pTmp );
+    assert( pTmp );
+    if( !pTmp )
+        return false;
+
+    asn = pTmp->GetMosID();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyEquipmentType
+// Created: NLD 2006-08-04
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyEquipmentType( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    assert( DEC_Tools::CheckTypeEquipement( diaFrom ) );
+    assert( DEC_Tools::CheckTypeEquipement( diaTo ) );
+    diaTo.SetValue( diaFrom.ToPtr(), &DEC_Tools::GetTypeEquipement() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Indirect fire
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyIndirectFire
+// Created: NLD 2006-12-07
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyIndirectFire( const DIA_Variable_ABC& dia, ASN1T_TirPion& asn )
+{
+    assert( DEC_Tools::CheckTypeTirIndirect( dia ) );
+    asn = (uint)dia.ToPtr();
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NET_ASN_Tools::CopyIndirectFire
+// Created: NLD 2006-12-07
+// -----------------------------------------------------------------------------
+bool NET_ASN_Tools::CopyIndirectFire( const DIA_Variable_ABC& diaFrom, DIA_Variable_ABC& diaTo )
+{
+    assert( DEC_Tools::CheckTypeTirIndirect( diaFrom ) );
+    assert( DEC_Tools::CheckTypeTirIndirect( diaTo ) );
+    diaTo.SetValue( diaFrom.ToPtr(), &DEC_Tools::GetTypeTirIndirect() );
     return true;
 }
 
@@ -2390,9 +2492,9 @@ bool NET_ASN_Tools::CopyEnumeration( const DIA_Variable_ABC& diaFrom, DIA_Variab
 // Name: NET_ASN_Tools::CopyKnowledgePopulation
 // Created: HME 05-12-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPopulationKnowledge( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyPopulationKnowledge( const ASN1T_KnowledgePopulation& asn, DIA_Variable_ABC& dia, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    DEC_Knowledge_Population* pKnowledge = NET_ASN_Tools::ReadPopulationKnowledge( asn, knowledge );
+    DEC_Knowledge_Population* pKnowledge = NET_ASN_Tools::ReadPopulationKnowledge( asn, resolver );
     if( !pKnowledge ) 
         return false;
 
@@ -2404,12 +2506,11 @@ bool NET_ASN_Tools::CopyPopulationKnowledge( const ASN1T_KnowledgePopulation& as
 // Name: NET_ASN_Tools::CopyKnowledgePopulation
 // Created: HME 05-12-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyPopulationKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const MIL_KnowledgeGroup& knowledge )
+bool NET_ASN_Tools::CopyPopulationKnowledge( const DIA_Variable_ABC& dia, ASN1T_KnowledgePopulation& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     assert( DEC_Tools::CheckTypeConnaissancePopulation( dia ) );
 
-    uint nDiaID = (uint)dia.ToPtr();
-    DEC_Knowledge_Population* pKnowledge = knowledge.GetKnowledge().GetKnowledgePopulationFromID( nDiaID );
+    DEC_Knowledge_Population* pKnowledge = resolver.ResolveKnowledgePopulation( dia );
     if( !pKnowledge )
         return false;
     

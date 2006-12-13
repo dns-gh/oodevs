@@ -25,15 +25,17 @@ using namespace gui;
 // Name: ParamPath constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
+ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter, const Entity_ABC& agent )
     : QHBox( pParent )
     , converter_( converter )
     , layer_( layer )
     , positions_( agent.Get< Positions >() )
-    , serializer_( converter, asn )
+    , asn_ ( new ASN1T_Itineraire() )
+    , serializer_( converter, *asn_ )
     , menu_( menu )
     , location_( 0 )
 {
+    asn = asn_;
     setSpacing( 5 );
     pLabel_ = new RichLabel( label, false, this, "" );
 
@@ -49,6 +51,7 @@ ParamPath::ParamPath( QWidget* pParent, ASN1T_Itineraire& asn, const QString& la
 // -----------------------------------------------------------------------------
 ParamPath::~ParamPath()
 {
+    delete asn_;
     delete location_;
 }
 

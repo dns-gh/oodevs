@@ -21,12 +21,13 @@ using namespace gui;
 // Name: ParamPoint constructor
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const QString& label, const QString& menu, const CoordinateConverter_ABC& converter )
+ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point*& asn, const QString& label, const QString& menu, const CoordinateConverter_ABC& converter )
     : QHBox     ( pParent )
-    , asn_      ( asn )
+    , asn_      ( new ASN1T_Point() )
     , converter_( converter )
     , menu_     ( menu )
 {
+    asn = asn_;
     setSpacing( 5 );
     pLabel_ = new RichLabel( label, false, this, "" );
 
@@ -42,7 +43,7 @@ ParamPoint::ParamPoint( QWidget* pParent, ASN1T_Point& asn, const QString& label
 // -----------------------------------------------------------------------------
 ParamPoint::~ParamPoint()
 {
-    // NOTHING
+    delete asn_;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,9 +79,9 @@ void ParamPoint::Commit()
     if( pPosLabel_->text() == "---" )
         return;
     SetOptionalPresent();
-    asn_.type                  = EnumTypeLocalisation::point;
-    asn_.vecteur_point.n       = 1;
-    asn_.vecteur_point.elem    = &asnPoint_;
+    asn_->type                  = EnumTypeLocalisation::point;
+    asn_->vecteur_point.n       = 1;
+    asn_->vecteur_point.elem    = &asnPoint_;
     const std::string coord = converter_.ConvertToMgrs( paramPoint_ );
     asnPoint_ = coord.c_str();
 }

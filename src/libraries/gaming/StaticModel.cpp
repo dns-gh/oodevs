@@ -18,6 +18,7 @@
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/FormationLevels.h"
 #include "SurfaceFactory.h"
+#include "ReportFactory.h"
 
 using namespace kernel;
 
@@ -25,7 +26,7 @@ using namespace kernel;
 // Name: StaticModel constructor
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-StaticModel::StaticModel( Controllers& controllers )
+StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& rcResolver )
     : controllers_        ( controllers )
     , coordinateConverter_( *new CoordinateConverter() )
     , detection_          ( *new DetectionMap() )
@@ -33,6 +34,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
     , surfaceFactory_     ( *new SurfaceFactory( detection_, types_ ) )
+    , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_ ) )
 {
     // NOTHING
 }
@@ -43,6 +45,7 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &reportFactory_;
     delete &surfaceFactory_;
     delete &levels_;
     delete &objectTypes_;
@@ -62,6 +65,7 @@ void StaticModel::Load( const std::string& scipioXml )
     objectTypes_.Load( scipioXml );
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( scipioXml );
     detection_.Load( scipioXml );
+    reportFactory_.Load( scipioXml );
     controllers_.controller_.Update( ModelLoaded( scipioXml ) );
 }
 
@@ -71,6 +75,7 @@ void StaticModel::Load( const std::string& scipioXml )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
+    reportFactory_.Purge();
     types_.Purge();
     objectTypes_.Purge();
 }

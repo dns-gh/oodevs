@@ -18,7 +18,7 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
-#include "Entities/Orders/Pion/MIL_PionMissionType.h"
+#include "Entities/Orders/MIL_PionMissionType.h"
 #include "Tools/MIL_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -83,7 +83,7 @@ void PHY_Convoy_ABC::InitializeConvoyMission( MIL_InputArchive& archive )
     std::string strMission;
     archive.ReadAttribute( "nom", strMission );
 
-    pConvoyMissionType_ = MIL_PionMissionType::FindPionMissionType( strMission );
+    pConvoyMissionType_ = MIL_PionMissionType::Find( strMission );
     if( !pConvoyMissionType_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Invalid mission name for convoy", archive.GetContext() );
 

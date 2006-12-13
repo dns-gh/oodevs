@@ -131,7 +131,7 @@ void MsgRecorder::OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
         return;
 
     if(    nType != T_MsgsOutClient_msg_msg_pion_order
-        && nType != T_MsgsOutClient_msg_msg_order_conduite
+        && nType != T_MsgsOutClient_msg_msg_frag_order
         && nType != T_MsgsOutClient_msg_msg_automate_order )
         return;
 

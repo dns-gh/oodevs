@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-24 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Models_Data.h $
-// $Author: Ape $
-// $Modtime: 7/04/05 11:21 $
-// $Revision: 7 $
-// $Workfile: ADN_Models_Data.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Models_Data_h_
 #define __ADN_Models_Data_h_
@@ -18,6 +16,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_Tools.h"
+#include "ADN_Missions_Data.h"
 
 class ADN_XmlInput_Helper;
 
@@ -44,22 +43,8 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        ADN_Type_Enum< E_FragOrder, eNbrFragOrder >    nOrderType_;
-        ADN_Type_String                     strName_;           // do not use directly !!!
-
-    public:
-        class Cmp : public std::unary_function< OrderInfos* , bool >
-        {
-        public:
-            Cmp(E_FragOrder val) : val_(val) {}
-            ~Cmp() {}
-
-            bool operator()( OrderInfos* tgtnfos ) const 
-            { return tgtnfos->nOrderType_.GetData()==val_; }
-
-        private:
-            E_FragOrder val_;
-        };
+        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::FragOrder > fragOrder_;
+        ADN_Type_String                                          strName_; // do not use directly !!!
     };
     
     typedef ADN_Type_Vector_ABC<OrderInfos> T_OrderInfos_Vector;
@@ -74,8 +59,8 @@ public:
         MT_COPYNOTALLOWED( MissionInfos )
             
     public:
-        MissionInfos();
-        ~MissionInfos();
+        explicit MissionInfos( ADN_Missions_Data::T_Mission_Vector& missions );
+        virtual ~MissionInfos();
 
         std::string GetItemName();
         virtual std::string GetNodeName();
@@ -86,23 +71,9 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
-        ADN_Type_Enum< E_SMission,eNbrSMissionTest> nMissionType_;
-        ADN_Type_String                          strName_;           // do not use directly !!!
+        ADN_TypePtr_InVector_ABC< ADN_Missions_Data::Mission > mission_;
+        ADN_Type_String                          strName_; // do not use directly !!!
         T_OrderInfos_Vector                      vOrders_;
-
-    public:
-        class Cmp : public std::unary_function< MissionInfos* , bool >
-        {
-        public:
-            Cmp(E_SMission val) : val_(val) {}
-            ~Cmp() {}
-
-            bool operator()( MissionInfos* tgtnfos ) const 
-            { return tgtnfos->nMissionType_.GetData()==val_; }
-
-        private:
-            E_SMission val_;
-        };
     };
 
     typedef ADN_Type_Vector_ABC<MissionInfos> T_MissionInfos_Vector;
@@ -126,7 +97,8 @@ public:
         };
 
     public:
-        ModelInfos();
+                 ModelInfos();
+        explicit ModelInfos( ADN_Missions_Data::T_Mission_Vector& missions );
         virtual ~ModelInfos();
 
         virtual std::string GetNodeName();
@@ -138,10 +110,10 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& output );
 
     public:
+        ADN_Missions_Data::T_Mission_Vector& missions_;
         ADN_Type_String                     strName_;
         ADN_Type_String                     strDiaType_;
         ADN_Type_String                     strFile_;
-
         T_MissionInfos_Vector               vMissions_;
     };
 

@@ -26,10 +26,11 @@ using namespace gui;
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject*& asnObject, const QString& label, const ObjectTypes& objectTypes, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : QGroupBox( 0, Qt::Horizontal, label, parent )
-    , asnObject_( asnObject )
+    , asnObject_( new ASN1T_MissionGenObject() )
 {
+    asnObject = asnObject_;
     QGridLayout* grid = new QGridLayout( 5, 2, 2 );
     layout()->addItem( grid );
     grid->addWidget( new QLabel( tr( "Type:" ), this ), 0, 0 );
@@ -49,11 +50,11 @@ ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject
         preliminaryCombo_->insertItem( ENT_Tr::ConvertFromMissionGenSousTypeObstacle( ( E_MissionGenSousTypeObstacle )i ).c_str(), i );
     grid->addWidget( preliminaryCombo_, 1, 1 );
 
-    density_ = new ParamNumericField( this, asnObject.densite, tr( "Density" ), 0., 5. );
+    density_ = new ParamNumericField( this, asnObject_->densite, tr( "Density" ), 0., 5. );
     grid->addMultiCellWidget( density_, 2, 2, 0, 1 );
-    tc2_     = new EntityParameter< kernel::Automat_ABC >( this, asnObject.tc2, tr( "TC2" ), tr( "TC2" ) );
+    tc2_     = new EntityParameter< kernel::Automat_ABC >( this, asnObject_->tc2, tr( "TC2" ), tr( "TC2" ) );
     grid->addMultiCellWidget( tc2_, 3, 3, 0, 1 );
-    location_ = new ParamLocation( this, asnObject.position, tr( "Location" ), layer, converter );
+    location_ = new ParamLocation( this, (ASN1T_Localisation*&)asnObject_->position, tr( "Location" ), layer, converter );
     grid->addMultiCellWidget( location_, 4, 4, 0, 1 );
 
     connect( typeCombo_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
@@ -67,7 +68,7 @@ ParamObstacle::ParamObstacle( QWidget* parent, ASN1T_MissionGenObject& asnObject
 // -----------------------------------------------------------------------------
 ParamObstacle::~ParamObstacle()
 {
-    // NOTHING
+    delete asnObject_;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,8 +120,8 @@ bool ParamObstacle::CheckValidity()
 // -----------------------------------------------------------------------------
 void ParamObstacle::Commit()
 {
-    asnObject_.type          = (ASN1T_EnumObjectType)typeCombo_->GetValue()->id_;
-    asnObject_.preliminaire  = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
+    asnObject_->type          = (ASN1T_EnumObjectType)typeCombo_->GetValue()->id_;
+    asnObject_->preliminaire  = (ASN1T_EnumMissionGenSousTypeObstacle)preliminaryCombo_->currentItem();
     switch( typeCombo_->GetValue()->id_ )
     {
     case EnumObjectType::zone_minee_lineaire:
@@ -142,8 +143,8 @@ void ParamObstacle::Commit()
 // -----------------------------------------------------------------------------
 void ParamObstacle::CommitTo( ASN1T_MissionGenObject& destination )
 {
-    destination.preliminaire = asnObject_.preliminaire;
-    destination.type         = asnObject_.type;
+    destination.preliminaire = asnObject_->preliminaire;
+    destination.type         = asnObject_->type;
     destination.densite      = 0;
     destination.tc2          = 0;
     switch( destination.type )

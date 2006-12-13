@@ -29,7 +29,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_RealObject_ABC.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -368,12 +368,12 @@ void PHY_RoleAction_Moving::SendCurrentPath() const
     NET_ASN_MsgUnitPathFind asnMsg;
     
     assert( pPion_ );
-    asnMsg.GetAsnMsg().oid_pion = pPion_->GetID();   
-    if( !SerializeCurrentPath( asnMsg.GetAsnMsg().itineraire ) )
+    asnMsg().oid_pion = pPion_->GetID();   
+    if( !SerializeCurrentPath( asnMsg().itineraire ) )
         return;
 
     asnMsg.Send();
-    delete [] asnMsg.GetAsnMsg().itineraire.vecteur_point.elem;
+    delete [] asnMsg().itineraire.vecteur_point.elem;
 }
 
 // -----------------------------------------------------------------------------
@@ -534,8 +534,8 @@ bool PHY_RoleAction_Moving::HasResources()
 // Name: PHY_RoleAction_Moving::SendRC
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendRC( const MIL_RC& rc ) const
+void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 {
     assert( pPion_ );
-    rc.Send( *pPion_, MIL_RC::eRcTypeWarning );
+    MIL_Report::PostEvent( *pPion_, (MIL_Report::E_EngineReport)nReportID );
 }

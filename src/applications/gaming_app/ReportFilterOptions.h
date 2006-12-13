@@ -10,7 +10,7 @@
 #ifndef __ReportFilterOptions_h_
 #define __ReportFilterOptions_h_
 
-#include "gaming/Report_ABC.h"
+#include "gaming/Report.h"
 
 // =============================================================================
 /** @class  ReportFilterOptions
@@ -30,7 +30,7 @@ public:
 
     //! @name Operations
     //@{
-    bool ShouldDisplay( const Report_ABC& report ) const;
+    bool ShouldDisplay( const Report& report ) const;
     //@}
 
 signals:
@@ -58,13 +58,13 @@ private:
 
     //! @name Helpers
     //@{
-    void Toggle( bool, Report_ABC::E_Type type );
+    void Toggle( bool, Report::E_Type type );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::set< Report_ABC::E_Type > toDisplay_;
+    std::set< Report::E_Type > toDisplay_;
     //@}
 
 };

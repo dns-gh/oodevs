@@ -412,9 +412,9 @@ void PHY_DotationGroupContainer::SendChangedState( NET_ASN_MsgUnitAttributes& as
         asnRessource.quantite_disponible      = (uint)dotation.GetValue();
     }
     
-    asn.GetAsnMsg().dotation_eff_ressource.n        = dotationsChanged_.size();
-    asn.GetAsnMsg().dotation_eff_ressource.elem     = pResources;
-    asn.GetAsnMsg().m.dotation_eff_ressourcePresent = 1;
+    asn().dotation_eff_ressource.n        = dotationsChanged_.size();
+    asn().dotation_eff_ressource.elem     = pResources;
+    asn().m.dotation_eff_ressourcePresent = 1;
 }
 
 // -----------------------------------------------------------------------------
@@ -448,7 +448,7 @@ void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn )
         }
     }
 
-    asn.GetAsnMsg().dotation_eff_ressource.n        = nNbrDotations;
-    asn.GetAsnMsg().dotation_eff_ressource.elem     = pResources;
-    asn.GetAsnMsg().m.dotation_eff_ressourcePresent = 1;
+    asn().dotation_eff_ressource.n        = nNbrDotations;
+    asn().dotation_eff_ressource.elem     = pResources;
+    asn().m.dotation_eff_ressourcePresent = 1;
 }

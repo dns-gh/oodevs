@@ -16,7 +16,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "Entities/RC/MIL_RC_PopulationVictimeAffrontements.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -31,12 +31,12 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPionFire asnMsg;
-    asnMsg.GetAsnMsg().m.munitionPresent = 0;
-    asnMsg.GetAsnMsg().oid_tir           = nID_;
-    asnMsg.GetAsnMsg().tireur            = firer.GetID();
-    asnMsg.GetAsnMsg().type              = MsgStartPionFire_type::direct;
-    asnMsg.GetAsnMsg().cible.t           = T_MsgStartPionFire_cible_pion;
-    asnMsg.GetAsnMsg().cible.u.pion      = target.GetID();    
+    asnMsg().m.munitionPresent = 0;
+    asnMsg().oid_tir           = nID_;
+    asnMsg().tireur            = firer.GetID();
+    asnMsg().type              = MsgStartPionFire_type::direct;
+    asnMsg().cible.t           = T_MsgStartPionFire_cible_pion;
+    asnMsg().cible.u.pion      = target.GetID();    
     
     asnMsg.Send();
 }
@@ -51,12 +51,12 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MI
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPionFire asnMsg;
-    asnMsg.GetAsnMsg().m.munitionPresent  = 0;
-    asnMsg.GetAsnMsg().oid_tir            = nID_;
-    asnMsg.GetAsnMsg().tireur             = firer.GetID();
-    asnMsg.GetAsnMsg().type               = MsgStartPionFire_type::direct;
-    asnMsg.GetAsnMsg().cible.t            = T_MsgStartPionFire_cible_population;
-    asnMsg.GetAsnMsg().cible.u.population = target.GetID();    
+    asnMsg().m.munitionPresent  = 0;
+    asnMsg().oid_tir            = nID_;
+    asnMsg().tireur             = firer.GetID();
+    asnMsg().type               = MsgStartPionFire_type::direct;
+    asnMsg().cible.t            = T_MsgStartPionFire_cible_population;
+    asnMsg().cible.u.population = target.GetID();    
     
     asnMsg.Send();
 }
@@ -71,18 +71,18 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT
     , nID_               ( MIL_IDManager::fireResultsPion_.GetFreeSimID() )
 {
     NET_ASN_MsgStartPionFire asnMsg;
-    asnMsg.GetAsnMsg().m.munitionPresent = 1;
-    asnMsg.GetAsnMsg().oid_tir           = nID_;
-    asnMsg.GetAsnMsg().tireur            = firer.GetID();
-    asnMsg.GetAsnMsg().type              = MsgStartPionFire_type::indirect;
-    asnMsg.GetAsnMsg().cible.t           = T_MsgStartPionFire_cible_position;
-    asnMsg.GetAsnMsg().cible.u.position  = new ASN1T_CoordUTM();
-    asnMsg.GetAsnMsg().munition          = dotationCategory.GetMosID();
-    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg.GetAsnMsg().cible.u.position );
+    asnMsg().m.munitionPresent = 1;
+    asnMsg().oid_tir           = nID_;
+    asnMsg().tireur            = firer.GetID();
+    asnMsg().type              = MsgStartPionFire_type::indirect;
+    asnMsg().cible.t           = T_MsgStartPionFire_cible_position;
+    asnMsg().cible.u.position  = new ASN1T_CoordUTM();
+    asnMsg().munition          = dotationCategory.GetMosID();
+    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().cible.u.position );
 
     asnMsg.Send();
 
-    delete asnMsg.GetAsnMsg().cible.u.position;   
+    delete asnMsg().cible.u.position;   
 }
 
 // -----------------------------------------------------------------------------
@@ -92,15 +92,15 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_AgentPion& firer, const MT
 PHY_FireResults_Pion::~PHY_FireResults_Pion()
 {
     NET_ASN_MsgStopPionFire asnMsg;
-    asnMsg.GetAsnMsg().oid_tir = nID_;
+    asnMsg().oid_tir = nID_;
 
-    Serialize( asnMsg.GetAsnMsg().degats_pions       );
-    Serialize( asnMsg.GetAsnMsg().degats_populations );
+    Serialize( asnMsg().degats_pions       );
+    Serialize( asnMsg().degats_populations );
    
     asnMsg.Send();
 
-    CleanAfterSerialization( asnMsg.GetAsnMsg().degats_pions       );
-    CleanAfterSerialization( asnMsg.GetAsnMsg().degats_populations );
+    CleanAfterSerialization( asnMsg().degats_pions       );
+    CleanAfterSerialization( asnMsg().degats_populations );
 
     // $$$ Merde pour VABF Popu
     static MT_Random randomGenerator;
@@ -112,8 +112,8 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
 
         uint rNbrWounded = damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 );
 
-        MIL_RC::pRcPopulationVictimeAffrontements_->Send( population, MIL_RC::eRcTypeMessage, damages.GetNbrKilledHumans(), rNbrWounded );
-        MIL_RC::pRcPopulationVictimeAffrontements_->Send( firer_    , MIL_RC::eRcTypeMessage, damages.GetNbrKilledHumans(), rNbrWounded );
+        MIL_Report::PostEvent( population, MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );
+        MIL_Report::PostEvent( firer_    , MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );
     }
 }
 

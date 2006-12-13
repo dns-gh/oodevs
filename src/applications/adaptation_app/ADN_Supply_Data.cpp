@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-22 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Supply_Data.cpp $
-// $Author: Ape $
-// $Modtime: 25/04/05 18:18 $
-// $Revision: 4 $
-// $Workfile: ADN_Supply_Data.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_Data.h"
@@ -97,7 +88,9 @@ void ADN_Supply_Data::ConvoyInfo::WriteArchive( MT_OutputArchive_ABC& output )
 ADN_Supply_Data::ADN_Supply_Data()
 : ADN_Data_ABC()
 , ptrUnit_    ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0, "ADN_Supply_Data::ptrUnit_" )
+, ptrSupplyMission_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
 {
+    // NOTHING
 }
 
 
@@ -186,7 +179,13 @@ void ADN_Supply_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.EndSection(); // TypeUnite
 
     input.Section( "Mission" );
-    input.ReadAttribute( "nom", nSupplyMission_, ENT_Tr::ConvertToUnitMission, ADN_XmlInput_Helper::eThrow );
+    std::string supplyMission;
+    input.ReadAttribute( "nom", supplyMission );
+    ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
+    ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
+    if( mission == 0 )
+        input.ThrowError( tr( "Mission '%1' does not exist." ).arg( supplyMission.c_str() ).ascii() );
+    ptrSupplyMission_ = mission;
     input.EndSection(); // Mission
 
     input.EndSection(); // Convois
@@ -247,7 +246,7 @@ void ADN_Supply_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.EndSection(); // TypeUnite
 
     output.Section( "Mission" );
-    output.WriteAttribute( "nom", ENT_Tr::ConvertFromUnitMission( nSupplyMission_.GetData() ) );
+    output.WriteAttribute( "nom", ptrSupplyMission_.GetData()->strName_.GetData() );
     output.EndSection(); // Mission
 
     output.EndSection(); // Convois

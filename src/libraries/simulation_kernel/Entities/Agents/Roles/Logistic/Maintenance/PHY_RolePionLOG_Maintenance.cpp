@@ -18,7 +18,7 @@
 #include "PHY_MaintenanceTransportConsign.h"
 #include "PHY_MaintenanceComposanteState.h"
 #include "PHY_MaintenanceResourcesAlarms.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
@@ -111,7 +111,7 @@ namespace boost
             {
                 ASN1T_TypeEquipement nID;
                 file >> nID;
-                vector.push_back( PHY_ComposanteTypePion::FindComposanteType( nID ) );
+                vector.push_back( PHY_ComposanteTypePion::Find( nID ) );
             }
         }
         
@@ -249,9 +249,9 @@ void PHY_RolePionLOG_Maintenance::StartUsingForLogistic( PHY_ComposantePion& com
     composante.StartUsingForLogistic();
 
     if( PHY_MaintenanceResourcesAlarms::IsRepairerResourcesLevelReached( rRepairerRatio, GetAvailabilityRatio( repairerUsePred, pWorkRate_ ) ) )
-        MIL_RC::pRcAlerteDisponibiliteReparateurs_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_RepairerResourcesLevelReached );
     if( PHY_MaintenanceResourcesAlarms::IsHaulerResourcesLevelReached( rHaulerRatio, GetAvailabilityRatio( haulerUsePred ) ) )
-        MIL_RC::pRcAlerteDisponibiliteRemorqueurs_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_HaulerResourcesLevelReached );
 }
 
 // -----------------------------------------------------------------------------
@@ -590,7 +590,7 @@ void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
     {
         nWorkRateWarningRCTick_ = 0;
         assert( pPion_ );
-        MIL_RC::pRcRegimeMaintenanceDelaiDepasse_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_MaintenanceWorkRateExceeded );
     }
 }
 
@@ -669,58 +669,58 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
 {
     NET_ASN_MsgLogMaintenanceEtat asn;
 
-    asn.GetAsnMsg().m.chaine_activeePresent             = 1;
-    asn.GetAsnMsg().m.regime_travailPresent             = 1;
-    asn.GetAsnMsg().m.prioritesPresent                  = 1;
-    asn.GetAsnMsg().m.priorites_tactiquesPresent        = 1;
-    asn.GetAsnMsg().m.disponibilites_remorqueursPresent = 1; 
-    asn.GetAsnMsg().m.disponibilites_reparateursPresent = 1;
+    asn().m.chaine_activeePresent             = 1;
+    asn().m.regime_travailPresent             = 1;
+    asn().m.prioritesPresent                  = 1;
+    asn().m.priorites_tactiquesPresent        = 1;
+    asn().m.disponibilites_remorqueursPresent = 1; 
+    asn().m.disponibilites_reparateursPresent = 1;
 
     assert( pPion_ );
-    asn.GetAsnMsg().oid_pion        = pPion_->GetID();
-    asn.GetAsnMsg().chaine_activee  = bSystemEnabled_;
-    asn.GetAsnMsg().regime_travail  = pWorkRate_->GetAsnID();
+    asn().oid_pion        = pPion_->GetID();
+    asn().chaine_activee  = bSystemEnabled_;
+    asn().regime_travail  = pWorkRate_->GetAsnID();
 
-    asn.GetAsnMsg().priorites.n = priorities_.size();
+    asn().priorites.n = priorities_.size();
     if( !priorities_.empty() )
     {
         ASN1T_TypeEquipement* pAsnPriorities = new ASN1T_TypeEquipement[ priorities_.size() ];
         uint i = 0 ;
         for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetMosID();
-        asn.GetAsnMsg().priorites.elem = pAsnPriorities;
+        asn().priorites.elem = pAsnPriorities;
     }
 
-    asn.GetAsnMsg().priorites_tactiques.n = tacticalPriorities_.size();
+    asn().priorites_tactiques.n = tacticalPriorities_.size();
     if( !tacticalPriorities_.empty() )
     {
         ASN1T_Automate* pAsnPriorities = new ASN1T_Automate[ tacticalPriorities_.size() ];
         uint i = 0 ;
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             pAsnPriorities[ i++ ] = (**itPriority).GetID();
-        asn.GetAsnMsg().priorites_tactiques.elem = pAsnPriorities;
+        asn().priorites_tactiques.elem = pAsnPriorities;
     }
    
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate1 );   
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_remorqueurs, 0 );
+    SendComposanteUse( composanteUse, asn().disponibilites_remorqueurs, 0 );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate2 );   
-    SendComposanteUse( composanteUse, asn.GetAsnMsg().disponibilites_reparateurs, pWorkRate_ );
+    SendComposanteUse( composanteUse, asn().disponibilites_reparateurs, pWorkRate_ );
 
     asn.Send();
 
-    if( asn.GetAsnMsg().priorites.n > 0 )
-        delete [] asn.GetAsnMsg().priorites.elem;
-    if( asn.GetAsnMsg().priorites_tactiques.n > 0 )
-        delete [] asn.GetAsnMsg().priorites_tactiques.elem;
-    if( asn.GetAsnMsg().disponibilites_remorqueurs.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_remorqueurs.elem;
-    if( asn.GetAsnMsg().disponibilites_reparateurs.n > 0 )
-        delete [] asn.GetAsnMsg().disponibilites_reparateurs.elem;
+    if( asn().priorites.n > 0 )
+        delete [] asn().priorites.elem;
+    if( asn().priorites_tactiques.n > 0 )
+        delete [] asn().priorites_tactiques.elem;
+    if( asn().disponibilites_remorqueurs.n > 0 )
+        delete [] asn().disponibilites_remorqueurs.elem;
+    if( asn().disponibilites_reparateurs.n > 0 )
+        delete [] asn().disponibilites_reparateurs.elem;
 }
 
 // -----------------------------------------------------------------------------

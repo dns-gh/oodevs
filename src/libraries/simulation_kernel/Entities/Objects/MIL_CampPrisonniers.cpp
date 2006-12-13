@@ -199,7 +199,7 @@ void MIL_CampPrisonniers::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& as
 
     asnAttributes_.tc2 = pTC2_->GetID();
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent           = 1;
-    asnMsg.GetAsnMsg().attributs_specifiques.t                  = T_AttrObjectSpecific_camp_prisonniers;
-    asnMsg.GetAsnMsg().attributs_specifiques.u.camp_prisonniers = &asnAttributes_;
+    asnMsg().m.attributs_specifiquesPresent           = 1;
+    asnMsg().attributs_specifiques.t                  = T_AttrObjectSpecific_camp_prisonniers;
+    asnMsg().attributs_specifiques.u.camp_prisonniers = &asnAttributes_;
 }

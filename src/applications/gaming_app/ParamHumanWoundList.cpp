@@ -20,10 +20,11 @@ using namespace gui;
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites& asnListHumanWound, const QString& /*strLabel*/ )
+ParamHumanWoundList::ParamHumanWoundList( QWidget* parent, ASN1T_SantePriorites*& asnListHumanWound, const QString& /*strLabel*/ )
     : QTable( 0, 1, parent )
-    , pAsnHumanWoundList_( &asnListHumanWound )
+    , pAsnHumanWoundList_( new ASN1T_SantePriorites() )
 {
+    asnListHumanWound = pAsnHumanWoundList_;
     horizontalHeader()->setLabel( 0, tr( "Injuries" ) );
     setColumnWidth( 0, 200 );
     setLeftMargin( 0 );

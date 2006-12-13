@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-28 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationConcentration.h"
@@ -23,7 +14,7 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
@@ -272,9 +263,9 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_RealObject_A
 
     //$$$ RC TMP
     if( pSplittingObject_->GetExitingPopulationDensity() == 0. )
-        MIL_RC::pRcBloquee_->Send( GetPopulation(), MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Blocked );
     else
-        MIL_RC::pRcFiltree_->Send( GetPopulation(), MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( GetPopulation(), MIL_Report::eReport_Filtered );
 }
 
 // =============================================================================
@@ -288,9 +279,9 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_RealObject_A
 void MIL_PopulationConcentration::SendCreation() const
 {
     NET_ASN_MsgPopulationConcentrationCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_concentration = GetID();
-    asnMsg.GetAsnMsg().oid_population    = GetPopulation().GetID();
-    NET_ASN_Tools::WritePoint( position_, asnMsg.GetAsnMsg().position ); 
+    asnMsg().oid_concentration = GetID();
+    asnMsg().oid_population    = GetPopulation().GetID();
+    NET_ASN_Tools::WritePoint( position_, asnMsg().position ); 
     asnMsg.Send();
 }
 
@@ -301,8 +292,8 @@ void MIL_PopulationConcentration::SendCreation() const
 void MIL_PopulationConcentration::SendDestruction() const
 {
     NET_ASN_MsgPopulationConcentrationDestruction asnMsg;
-    asnMsg.GetAsnMsg().oid_concentration = GetID();
-    asnMsg.GetAsnMsg().oid_population    = GetPopulation().GetID();
+    asnMsg().oid_concentration = GetID();
+    asnMsg().oid_population    = GetPopulation().GetID();
     asnMsg.Send();
 }
 
@@ -313,16 +304,16 @@ void MIL_PopulationConcentration::SendDestruction() const
 void MIL_PopulationConcentration::SendFullState() const
 {
     NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_concentration = GetID();
-    asnMsg.GetAsnMsg().oid_population    = GetPopulation().GetID();
+    asnMsg().oid_concentration = GetID();
+    asnMsg().oid_population    = GetPopulation().GetID();
 
-    asnMsg.GetAsnMsg().m.attitudePresent           = 1;
-    asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-    asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
+    asnMsg().m.attitudePresent           = 1;
+    asnMsg().m.nb_humains_mortsPresent   = 1;
+    asnMsg().m.nb_humains_vivantsPresent = 1;
     
-    asnMsg.GetAsnMsg().attitude           = GetAttitude().GetAsnID();
-    asnMsg.GetAsnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
-    asnMsg.GetAsnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+    asnMsg().attitude           = GetAttitude().GetAsnID();
+    asnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+    asnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
 
     asnMsg.Send();
 }
@@ -337,22 +328,22 @@ void MIL_PopulationConcentration::SendChangedState() const
         return;
 
     NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
-    asnMsg.GetAsnMsg().oid_concentration = GetID();
-    asnMsg.GetAsnMsg().oid_population    = GetPopulation().GetID();
+    asnMsg().oid_concentration = GetID();
+    asnMsg().oid_population    = GetPopulation().GetID();
 
     if( HasAttitudeChanged() )
     {
-        asnMsg.GetAsnMsg().m.attitudePresent = 1;
-        asnMsg.GetAsnMsg().attitude          = GetAttitude().GetAsnID();
+        asnMsg().m.attitudePresent = 1;
+        asnMsg().attitude          = GetAttitude().GetAsnID();
     }
 
     if( HasHumansChanged() )
     {
-        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
+        asnMsg().m.nb_humains_mortsPresent   = 1;
+        asnMsg().m.nb_humains_vivantsPresent = 1;
     
-        asnMsg.GetAsnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
-        asnMsg.GetAsnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
+        asnMsg().nb_humains_morts   = GetPopulation().GetBoundedPeople( GetNbrDeadHumans () );
+        asnMsg().nb_humains_vivants = GetPopulation().GetBoundedPeople( GetNbrAliveHumans() );
     }
 
     asnMsg.Send();

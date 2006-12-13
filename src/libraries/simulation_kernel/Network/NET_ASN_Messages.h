@@ -28,7 +28,7 @@
 class NET_ASN_Msg##ASNMSG                                                   \
 {                                                                           \
 public:                                                                     \
-    void Send( MIL_MOSContextID nCtx = 0 )                                  \
+    void Send( uint nCtx = 0 )                                  \
     {                                                                       \
         ASN1T_MsgsOutSim    globalAsnMsg;                                   \
                                                                             \
@@ -38,10 +38,7 @@ public:                                                                     \
         MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
-    {                                                                       \
-        return asnMsg_;                                                     \
-    }                                                                       \
+    ASN1T_Msg##ASNMSG& operator()() { return asnMsg_; }                     \
                                                                             \
 private:                                                                    \
     ASN1T_Msg##ASNMSG asnMsg_;                                              \
@@ -53,7 +50,7 @@ private:                                                                    \
 class NET_ASN_Msg##ASNMSG                                                   \
 {                                                                           \
 public:                                                                     \
-    void Send( MIL_MOSContextID nCtx = 0 )                                  \
+    void Send( uint nCtx = 0 )                                  \
     {                                                                       \
         ASN1T_MsgsOutSim    globalAsnMsg;                                   \
                                                                             \
@@ -63,10 +60,7 @@ public:                                                                     \
         MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr().SendMsgOutSim( globalAsnMsg ); \
     }                                                                       \
                                                                             \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                          \
-    {                                                                       \
-        return asnMsg_;                                                     \
-    }                                                                       \
+    ASN1T_Msg##ASNMSG& operator()() { return asnMsg_; }                     \
                                                                             \
 private:                                                                    \
     ASN1T_Msg##ASNMSG asnMsg_;                                              \
@@ -76,7 +70,7 @@ private:                                                                    \
 class NET_ASN_Msg##ASNMSG                                                           \
 {                                                                                   \
 public:                                                                             \
-    void Send( MIL_MOSContextID nCtx = 0 )                                          \
+    void Send( uint nCtx = 0 )                                          \
     {                                                                               \
         ASN1T_MsgsOutSim    globalAsnMsg;                                           \
                                                                                     \
@@ -180,22 +174,16 @@ NET_GENERATE_SEND_ASN_MSG_PTR ( UnitKnowledgeDestruction, unit_knowledge_destruc
 NET_GENERATE_SEND_ASN_MSG_PTR( PionOrderManagement      , pion_order_management       )
 NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrderManagement  , automate_order_management   )
 NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrderManagement, population_order_management )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionOrder                , pion_order                  )
+NET_GENERATE_SEND_ASN_MSG_PTR( PionOrderAck             , pion_order_ack              )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrder            , automate_order              )
+NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrderAck         , automate_order_ack          )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrder          , population_order            )
+NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrderAck       , population_order_ack        )
+NET_GENERATE_SEND_ASN_MSG_PTR( FragOrderAck             , frag_order_ack              )
 
-// Orders conduite
-NET_GENERATE_SEND_ASN_MSG_PTR( OrderConduiteAck           , order_conduite_ack            )
-
-// Orders pion
-NET_GENERATE_SEND_ASN_MSG_PTR( PionOrder              , pion_order                         )
-NET_GENERATE_SEND_ASN_MSG_PTR( PionOrderAck           , pion_order_ack                     )
-
-// Orders automate
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrder     , automate_order        )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateOrderAck  , automate_order_ack    )
-NET_GENERATE_SEND_ASN_MSG_PTR( AutomateMRT       , automate_mrt          )
-NET_GENERATE_SEND_ASN_MSG_PTR( SetAutomateModeAck, set_automate_mode_ack )
-
-// Orders population
-NET_GENERATE_SEND_ASN_MSG_PTR( PopulationOrderAck       , population_order_ack )
+// Misc
+NET_GENERATE_SEND_ASN_MSG_PTR( SetAutomateModeAck       , set_automate_mode_ack       )
 NET_GENERATE_SEND_ASN_MSG_PTR( PopulationMagicActionAck , population_magic_action_ack )
 
 // CR

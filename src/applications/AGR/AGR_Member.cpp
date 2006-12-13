@@ -311,3 +311,12 @@ std::string AGR_Member::DIAType() const
 {
     return pType_->DIAType( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Member::MissionXMLCode
+// Created: NLD 2006-11-26
+// -----------------------------------------------------------------------------
+std::string AGR_Member::MissionXMLCode() const
+{
+    return pType_->MissionXMLCode( *this );
+}

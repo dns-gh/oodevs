@@ -15,6 +15,7 @@
 #include "MIL.h"
 
 #include "DEC_Knowledge_Def.h"
+#include "DEC_KnowledgeResolver_ABC.h"
 
 class DEC_KnowledgeSource_ABC;
 
@@ -24,7 +25,7 @@ class DEC_KnowledgeSource_ABC;
 */
 // Created: NLD 2004-03-11
 // =============================================================================
-class DEC_KnowledgeBlackBoard_ABC 
+class DEC_KnowledgeBlackBoard_ABC : public DEC_KnowledgeResolver_ABC
 {
     MT_COPYNOTALLOWED( DEC_KnowledgeBlackBoard_ABC )
 

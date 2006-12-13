@@ -61,7 +61,7 @@ MIL_Lima::MIL_Lima( const MIL_Formation& formationBroadcasted, MIL_InputArchive&
 MIL_Lima::~MIL_Lima()
 {
     NET_ASN_MsgLimaDestruction msg;
-    msg.GetAsnMsg() = GetID();
+    msg() = GetID();
     msg.Send();
 }
 
@@ -112,10 +112,10 @@ void MIL_Lima::Update( const ASN1T_MsgLimaUpdateRequest& asn )
 template< typename T > void MIL_Lima::SendMsg() const
 {
     T msg;
-    msg.GetAsnMsg().oid = GetID();  
-    Serialize( msg.GetAsnMsg().tactical_line );
+    msg().oid = GetID();  
+    Serialize( msg().tactical_line );
     msg.Send();
-    CleanAfterSerialization( msg.GetAsnMsg().tactical_line );
+    CleanAfterSerialization( msg().tactical_line );
 }
 
 // -----------------------------------------------------------------------------

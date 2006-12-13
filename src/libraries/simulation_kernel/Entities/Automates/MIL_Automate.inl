@@ -185,13 +185,13 @@ const std::string& MIL_Automate::GetName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::IsEmbraye
+// Name: MIL_Automate::IsEngaged
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 inline
-bool MIL_Automate::IsEmbraye() const
+bool MIL_Automate::IsEngaged() const
 {
-    return bEmbraye_;
+    return bEngaged_;
 }
 
 // =============================================================================
@@ -219,27 +219,6 @@ void MIL_Automate::UnregisterPion( MIL_AgentPion& pion )
     IT_PionVector it = std::find( pions_.begin(), pions_.end(), &pion );
     assert( it != pions_.end() );
     pions_.erase( it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::OnReceiveMsgAutomateOrder
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-void MIL_Automate::OnReceiveMsgAutomateOrder( ASN1T_MsgAutomateOrder&   msg, MIL_MOSContextID nCtx )
-{
-    orderManager_.OnReceiveMsgAutomateOrder( msg, nCtx );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::OnReceiveMsgOrderConduite
-// Created: NLD 2004-09-07
-// -----------------------------------------------------------------------------
-inline
-void MIL_Automate::OnReceiveMsgOrderConduite( ASN1T_MsgOrderConduite&   msg, MIL_MOSContextID nCtx )
-{
-    assert( IsEmbraye() );
-    orderManager_.OnReceiveMsgOrderConduite( msg, nCtx );
 }
 
 // -----------------------------------------------------------------------------

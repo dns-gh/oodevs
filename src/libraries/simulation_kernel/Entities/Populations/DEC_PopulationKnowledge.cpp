@@ -147,3 +147,88 @@ void DEC_PopulationKnowledge::GetPionsSecuring( T_PopulationKnowledgeAgentDiaIDV
     for( CIT_AgentSet it = securers_.begin(); it != securers_.end(); ++it )
         container.push_back( (void*)(**it).GetID() );
 }
+
+// =============================================================================
+// RESOLVER
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& /*asn*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( const DIA_Variable_ABC& /*dia*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_PopulationKnowledge::ResolveKnowledgeAgent( uint /*nID*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_PopulationKnowledge::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& /*asn*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_PopulationKnowledge::ResolveKnowledgeObject( const DIA_Variable_ABC& /*dia*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_PopulationKnowledge::ResolveKnowledgeObject( uint /*nID*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& /*asn*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const DIA_Variable_ABC& /*dia*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
+// Created: NLD 2006-11-23
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( uint /*nID*/ ) const
+{
+    return 0;
+}

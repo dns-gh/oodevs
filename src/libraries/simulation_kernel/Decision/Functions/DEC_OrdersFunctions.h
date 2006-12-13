@@ -41,7 +41,6 @@ public:
     static void MRT_Validate                        ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void MRT_AffectFuseaux                   ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     
-    static void CDT_SendOrderConduiteToPion         ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void CDT_CreatePionMission               ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
     static void CDT_GivePionMission                 ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 };

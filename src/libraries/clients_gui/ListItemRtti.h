@@ -41,7 +41,7 @@ class DotationRequest;
 class LogSupplyConsign;
 class LogMaintenanceConsign;
 class LogMedicalConsign;
-class Report_ABC;
+class Report;
 class PopulationFireResult;
 class AgentFireResult;
 class Lima;
@@ -99,7 +99,7 @@ DECLARE_RTTI( const DotationRequest                      , 14 )
 DECLARE_RTTI( const LogSupplyConsign                     , 15 )
 DECLARE_RTTI( const LogMaintenanceConsign                , 16 )
 DECLARE_RTTI( const LogMedicalConsign                    , 17 )
-DECLARE_RTTI( const Report_ABC                           , 18 )
+DECLARE_RTTI( const Report                               , 18 )
 DECLARE_RTTI( const PopulationFireResult                 , 19 )
 DECLARE_RTTI( const AgentFireResult                      , 20 )
 DECLARE_RTTI( const Lima                                 , 21 )

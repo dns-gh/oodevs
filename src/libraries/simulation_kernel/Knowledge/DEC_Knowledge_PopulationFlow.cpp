@@ -332,48 +332,48 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
 
     NET_ASN_MsgPopulationFluxKnowledgeUpdate asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_flux = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_connaissance_flux = nID_;
+    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
     
-    asnMsg.GetAsnMsg().m.est_percuPresent          = 1;
-    asnMsg.GetAsnMsg().m.oid_flux_reelPresent      = 1;
-    asnMsg.GetAsnMsg().m.portions_fluxPresent      = 1;
-    asnMsg.GetAsnMsg().m.directionPresent          = 1;
-    asnMsg.GetAsnMsg().m.vitessePresent            = 1;
+    asnMsg().m.est_percuPresent          = 1;
+    asnMsg().m.oid_flux_reelPresent      = 1;
+    asnMsg().m.portions_fluxPresent      = 1;
+    asnMsg().m.directionPresent          = 1;
+    asnMsg().m.vitessePresent            = 1;
 
-    asnMsg.GetAsnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
-    asnMsg.GetAsnMsg().oid_flux_reel      = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
-    asnMsg.GetAsnMsg().vitesse            = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
-    NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
-    asnMsg.GetAsnMsg().portions_flux.n    = flowParts_.size();
+    asnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+    asnMsg().oid_flux_reel      = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
+    asnMsg().vitesse            = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+    NET_ASN_Tools::WriteDirection( direction_, asnMsg().direction );
+    asnMsg().portions_flux.n    = flowParts_.size();
     if( !flowParts_.empty() )
     {
-        asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg.GetAsnMsg().portions_flux.n ];
+        asnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg().portions_flux.n ];
         uint i = 0;
         for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
-            (*it->second).Serialize( asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
+            (*it->second).Serialize( asnMsg().portions_flux.elem[ i ] );
     }
 
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-        asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-        asnMsg.GetAsnMsg().m.attitudePresent           = 1;
+        asnMsg().m.nb_humains_mortsPresent   = 1;
+        asnMsg().m.nb_humains_vivantsPresent = 1;
+        asnMsg().m.attitudePresent           = 1;
 
-        asnMsg.GetAsnMsg().nb_humains_morts   = uint( floor( rNbrDeadHumans_  + 0.5f ) );
-        asnMsg.GetAsnMsg().nb_humains_vivants = uint( floor( rNbrAliveHumans_ + 0.5f ) );
-        asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
+        asnMsg().nb_humains_morts   = uint( floor( rNbrDeadHumans_  + 0.5f ) );
+        asnMsg().nb_humains_vivants = uint( floor( rNbrAliveHumans_ + 0.5f ) );
+        asnMsg().attitude           = pAttitude_->GetAsnID();
     }
 
     asnMsg.Send();  
-    if( asnMsg.GetAsnMsg().m.portions_fluxPresent )
+    if( asnMsg().m.portions_fluxPresent )
     {
-        for( uint i = 0; i < asnMsg.GetAsnMsg().portions_flux.n; ++i )
-            NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux.elem[ i ].forme );
-        if( asnMsg.GetAsnMsg().portions_flux.n > 0 )
-            delete [] asnMsg.GetAsnMsg().portions_flux.elem;
+        for( uint i = 0; i < asnMsg().portions_flux.n; ++i )
+            NET_ASN_Tools::Delete( asnMsg().portions_flux.elem[ i ].forme );
+        if( asnMsg().portions_flux.n > 0 )
+            delete [] asnMsg().portions_flux.elem;
     }
 }
    
@@ -391,44 +391,44 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
 
     NET_ASN_MsgPopulationFluxKnowledgeUpdate asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_flux       = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_connaissance_flux       = nID_;
+    asnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
     {
-        asnMsg.GetAsnMsg().m.est_percuPresent = 1;
-        asnMsg.GetAsnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+        asnMsg().m.est_percuPresent = 1;
+        asnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
     }
 
     if( bRealFlowUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.oid_flux_reelPresent = 1;
-        asnMsg.GetAsnMsg().oid_flux_reel          = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
+        asnMsg().m.oid_flux_reelPresent = 1;
+        asnMsg().oid_flux_reel          = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
     }
 
     if( bDirectionUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.directionPresent = 1;
-        NET_ASN_Tools::WriteDirection( direction_, asnMsg.GetAsnMsg().direction );
+        asnMsg().m.directionPresent = 1;
+        NET_ASN_Tools::WriteDirection( direction_, asnMsg().direction );
     }
 
     if( bSpeedUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.vitessePresent = 1;
-        asnMsg.GetAsnMsg().vitesse          = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+        asnMsg().m.vitessePresent = 1;
+        asnMsg().vitesse          = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
     }
 
     if( bFlowPartsUpdated_ )
     {
-        asnMsg.GetAsnMsg().m.portions_fluxPresent = 1;
-        asnMsg.GetAsnMsg().portions_flux.n        = flowParts_.size();
+        asnMsg().m.portions_fluxPresent = 1;
+        asnMsg().portions_flux.n        = flowParts_.size();
         if( !flowParts_.empty() )
         {
-            asnMsg.GetAsnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg.GetAsnMsg().portions_flux.n ];
+            asnMsg().portions_flux.elem = new ASN1T_PortionFlux[ asnMsg().portions_flux.n ];
             uint i = 0;
             for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
-                (*it->second).Serialize( asnMsg.GetAsnMsg().portions_flux.elem[ i ] );
+                (*it->second).Serialize( asnMsg().portions_flux.elem[ i ] );
         }
     }
 
@@ -437,26 +437,26 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg.GetAsnMsg().m.nb_humains_mortsPresent   = 1;
-            asnMsg.GetAsnMsg().m.nb_humains_vivantsPresent = 1;
-            asnMsg.GetAsnMsg().nb_humains_morts            = uint( floor( rNbrDeadHumans_  + 0.5f ) );
-            asnMsg.GetAsnMsg().nb_humains_vivants          = uint( floor( rNbrAliveHumans_ + 0.5f ) );
+            asnMsg().m.nb_humains_mortsPresent   = 1;
+            asnMsg().m.nb_humains_vivantsPresent = 1;
+            asnMsg().nb_humains_morts            = uint( floor( rNbrDeadHumans_  + 0.5f ) );
+            asnMsg().nb_humains_vivants          = uint( floor( rNbrAliveHumans_ + 0.5f ) );
         }
 
         if( bAttitudeUpdated_ )
         {
-            asnMsg.GetAsnMsg().m.attitudePresent = 1;
-            asnMsg.GetAsnMsg().attitude           = pAttitude_->GetAsnID();
+            asnMsg().m.attitudePresent = 1;
+            asnMsg().attitude           = pAttitude_->GetAsnID();
         }
     }
 
     asnMsg.Send();
-    if( asnMsg.GetAsnMsg().m.portions_fluxPresent )
+    if( asnMsg().m.portions_fluxPresent )
     {
-        for( uint i = 0; i < asnMsg.GetAsnMsg().portions_flux.n; ++i )
-            NET_ASN_Tools::Delete( asnMsg.GetAsnMsg().portions_flux.elem[ i ].forme );
-        if( asnMsg.GetAsnMsg().portions_flux.n > 0 )
-            delete [] asnMsg.GetAsnMsg().portions_flux.elem;
+        for( uint i = 0; i < asnMsg().portions_flux.n; ++i )
+            NET_ASN_Tools::Delete( asnMsg().portions_flux.elem[ i ].forme );
+        if( asnMsg().portions_flux.n > 0 )
+            delete [] asnMsg().portions_flux.elem;
     }
 }
 
@@ -470,10 +470,10 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 
     NET_ASN_MsgPopulationFluxKnowledgeCreation asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_flux       = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
-    asnMsg.GetAsnMsg().oid_flux_reel               = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
+    asnMsg().oid_connaissance_flux       = nID_;
+    asnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_flux_reel               = pFlowKnown_ ? pFlowKnown_->GetID() : 0;
 
     asnMsg.Send();
 }
@@ -488,9 +488,9 @@ void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
 
     NET_ASN_MsgPopulationFluxKnowledgeDestruction asnMsg;
 
-    asnMsg.GetAsnMsg().oid_connaissance_flux       = nID_;
-    asnMsg.GetAsnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
-    asnMsg.GetAsnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().oid_connaissance_flux       = nID_;
+    asnMsg().oid_connaissance_population = pPopulationKnowledge_->GetID();
+    asnMsg().oid_groupe_possesseur       = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
 
     asnMsg.Send();
 }

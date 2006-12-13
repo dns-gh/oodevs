@@ -30,6 +30,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_OrderContext();
+             MIL_OrderContext( const ASN1T_OrderContext& asn, const MT_Vector2D& vOrientationRefPos );
+             MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
     //@}
 
@@ -40,27 +42,18 @@ public:
     const T_LimaVector&  GetLimas    () const;
           MIL_LimaOrder* FindLima    ( uint nID );
           MIL_LimaOrder* FindLima    ( const MIL_LimaFunction& function );
-          void           SetFuseau   ( const MIL_Fuseau& fuseau );
-    //@}
-
-protected:
-    //! @name Initialization
-    //@{
-    virtual ASN1T_EnumOrderErrorCode Initialize( const ASN1T_OrderContext& asn, const MT_Vector2D& vOrientationRefPos );
-    virtual void                     Initialize();
-    virtual void                     Initialize( const MIL_OrderContext& mission );
+          void           AffectFuseau( const MIL_Fuseau& fuseau );
     //@}
 
     //! @name Network
     //@{
-    virtual void Serialize              ( ASN1T_OrderContext& asn ) const;
-    virtual void CleanAfterSerialization( ASN1T_OrderContext& asn ) const;
+    void Serialize              ( ASN1T_OrderContext& asn ) const;
+    void CleanAfterSerialization( ASN1T_OrderContext& asn ) const;
     //@}
  
 private:
     //! @name Copy/Assignement
     //@{
-    MIL_OrderContext( const MIL_OrderContext& );            //!< Copy constructor
     MIL_OrderContext& operator=( const MIL_OrderContext& ); //!< Assignement operator
     //@}
 

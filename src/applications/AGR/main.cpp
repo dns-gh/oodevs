@@ -10,6 +10,7 @@
 #include "AGR_FichesMissionsGenerator.h"
 #include "AGR_TesterMissionGenerator.h"
 #include "AGR_TesterProjectGenerator.h"
+#include "AGR_XmlGenerator.h"
 #include "AGR_MilRCGenerator.h"
 
 #include "MT_Tools/MT_Version.h"
@@ -48,7 +49,7 @@ int main( int /*argc*/, char** /*argv*/ )
 
         std::cout << "Generating XSD files from ASN files" << std::endl;
         MT_MakeDir( "agr_tmp" );
-        std::string strCommandLine( "asn2xsd.exe ../../src/libraries/asn/asn/*.asn -o ./agr_tmp" );
+        std::string strCommandLine( "asn2xsd.exe ../../src/libraries/asnold/asn/*.asn -o ./agr_tmp" );
         int nErrorCode = system( strCommandLine.c_str() );
         if( nErrorCode != EXIT_SUCCESS )
         {
@@ -75,6 +76,8 @@ int main( int /*argc*/, char** /*argv*/ )
         generators.push_back( new AGR_FichesMissionsGenerator() );
         generators.push_back( new AGR_TesterMissionGenerator() );
         generators.push_back( new AGR_TesterProjectGenerator() );
+        generators.push_back( new AGR_XmlGenerator() );
+
         
 
         MT_MakeDir( strOutputPath );        

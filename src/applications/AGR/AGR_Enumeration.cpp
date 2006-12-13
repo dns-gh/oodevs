@@ -127,3 +127,46 @@ std::string AGR_Enumeration::TesterSerializationCode( const AGR_Member& member )
        << " );\n";
     return ss.str();
 }
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Enumeration::MissionXMLCode
+// Created: NLD 2006-11-26
+// -----------------------------------------------------------------------------
+std::string AGR_Enumeration::MissionXMLCode( const AGR_Member& member ) const
+{
+    std::stringstream strResult;
+    strResult << "\t\t<parameter";   
+    strResult << " name=\"" << member.HumanName() << "\"";
+    strResult << " dia-name=\"" << member.CPPName() << "\"";
+    strResult << " type=\"enumeration\"";
+    if( member.IsOptional() )
+        strResult << " optional=\"true\"";
+    strResult << ">" << std::endl;
+
+    uint i = 0;
+    for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues, ++i )
+        strResult << "\t\t\t<value id=\"" << i << "\" name=\"" << *itValues << "\"></value>" << std::endl;
+
+    strResult << "\t\t</parameter>" << std::endl;
+
+    return strResult.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AGR_Enumeration::RCXMLCode
+// Created: NLD 2006-12-07
+// -----------------------------------------------------------------------------
+std::string AGR_Enumeration::RCXMLCode() const
+{
+    std::stringstream strResult;
+    strResult << "\t\t<parameter";   
+    strResult << " type=\"" << GetFunctionSuffix() << "\"";
+    strResult << ">" << std::endl;
+
+    uint i = 0;
+    for( CIT_String_Vector itValues = valueList_.begin(); itValues != valueList_.end(); ++itValues, ++i )
+        strResult << "\t\t\t<value id=\"" << i << "\" name=\"" << *itValues << "\"></value>" << std::endl;
+
+    strResult << "\t\t</parameter>" << std::endl;
+    return strResult.str();
+}

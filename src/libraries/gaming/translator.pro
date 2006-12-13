@@ -21,6 +21,11 @@ SOURCES         =   Agent.cpp \
                     MedicalStates.cpp \
                     NBCAttributes.cpp \
                     Network.cpp \
+                    Reinforcements.cpp \
+                    Report.cpp \
+                    Agent.cpp \
+                    SupplyStates.cpp \
+                    Transports.cpp \
                     Object.cpp \
                     ObjectKnowledge.cpp \
                     Population.cpp \

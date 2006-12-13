@@ -117,7 +117,7 @@ private:
     void ReadODB         ( MIL_InputArchive& );
     void ReadTerData     ( MIL_InputArchive& );
     void ReadHLA         ( MIL_InputArchive& );
-    void ReadMissionsData( MIL_InputArchive& );
+//    void ReadMissionsData( MIL_InputArchive& );
     void ReadPathFindData( MIL_InputArchive& );
     //@}
 

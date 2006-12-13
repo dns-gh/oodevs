@@ -545,3 +545,4 @@ void MainWindow::SetWindowTitle( bool needsSaving )
         filename += "*";
     setCaption( QString( APP_NAME " - [%1]" ).arg( filename ) );
 }
+

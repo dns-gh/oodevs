@@ -77,6 +77,8 @@ public:
     static bool CheckTypeMaintenancePriorites               ( const DIA_Variable_ABC& diaVariable );   
     static bool CheckTypeSantePriorites                     ( const DIA_Variable_ABC& diaVariable ); 
     static bool CheckTypeDotation                           ( const DIA_Variable_ABC& diaVariable ); 
+    static bool CheckTypeEquipement                         ( const DIA_Variable_ABC& diaVariable ); 
+    static bool CheckTypeTirIndirect                        ( const DIA_Variable_ABC& diaVariable ); 
     //@}
 
     //! @name Accessors
@@ -104,6 +106,8 @@ public:
     static const DIA_TypeDef& GetTypeSantePriorites                 ();    
     static const DIA_TypeDef& GetTypeDotation                       ();
     static const DIA_TypeDef& GetTypeGenObjet                       ();
+    static const DIA_TypeDef& GetTypeEquipement                     ();
+    static const DIA_TypeDef& GetTypeTirIndirect                    ();
     //@}
 
 private:
@@ -133,6 +137,8 @@ private:
     static const DIA_TypeDef* pTypeSantePriorites_;
     static const DIA_TypeDef* pTypePerceptionFlyingShell_;
     static const DIA_TypeDef* pTypeDotation_;
+    static const DIA_TypeDef* pTypeEquipement_;
+    static const DIA_TypeDef* pTypeTirIndirect_;
 };
 
 //! @name DIA Functions registration tools

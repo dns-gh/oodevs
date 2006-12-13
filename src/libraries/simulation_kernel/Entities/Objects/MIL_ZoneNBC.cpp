@@ -219,9 +219,9 @@ void MIL_ZoneNBC::WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg )
     assert( pNbcAgent_ );
     asnAttributes_.agent_nbc  = pNbcAgent_->GetType().GetID();
 
-    asnMsg.GetAsnMsg().m.attributs_specifiquesPresent   = 1;
-    asnMsg.GetAsnMsg().attributs_specifiques.t          = T_AttrObjectSpecific_zone_nbc;
-    asnMsg.GetAsnMsg().attributs_specifiques.u.zone_nbc = &asnAttributes_;
+    asnMsg().m.attributs_specifiquesPresent   = 1;
+    asnMsg().attributs_specifiques.t          = T_AttrObjectSpecific_zone_nbc;
+    asnMsg().attributs_specifiques.u.zone_nbc = &asnAttributes_;
 }
 
 // =============================================================================

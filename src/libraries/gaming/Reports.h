@@ -15,22 +15,18 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-
-class Report_ABC;
-class Simulation;
 
 namespace kernel
 {
     class Controller;
     class Entity_ABC;
     class Displayer_ABC;
-    class DotationType;
-    class EquipmentType;
 }
 
-class RcEntityResolver_ABC;
+class Report;
+class Simulation;
+class ReportFactory;
 
 // =============================================================================
 /** @class  Reports
@@ -48,10 +44,8 @@ class Reports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller, const Simulation& simulation, 
-                      const RcEntityResolver_ABC& rcResolver, 
-                      const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver,
-                      const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver );
+             Reports( const kernel::Entity_ABC& agent, kernel::Controller& controller
+                    , const Simulation& simulation, const ReportFactory& reportFactory );
     virtual ~Reports();
     //@}
 
@@ -74,7 +68,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Report_ABC* >      T_Reports;
+    typedef std::vector< Report* >          T_Reports;
     typedef T_Reports::iterator            IT_Reports;
     typedef T_Reports::const_iterator     CIT_Reports;
     //@}
@@ -91,9 +85,8 @@ private:
     const kernel::Entity_ABC& agent_;
     kernel::Controller& controller_;
     const Simulation& simulation_;
-    const RcEntityResolver_ABC& rcResolver_;
-    const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
+    const ReportFactory& reportFactory_;
+
 public:  // $$$$ AGE 2006-03-09: 
     T_Reports reports_;
     //@}

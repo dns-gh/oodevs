@@ -17,11 +17,12 @@
 #include "MIL_PopulationType.h"
 #include "Decision/DEC_ModelPopulation.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/Orders/Population/MIL_PopulationMissionType.h"
-#include "Entities/Orders/Population/MIL_PopulationMission_ABC.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_PopulationMissionType.h"
+#include "Entities/Orders/MIL_PopulationMission.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "CheckPoints/DIA_Serializer.h"
 #include "MT_Tools/MT_CrashHandler.h"
+#include "Network/NET_ASN_Messages.h"
 #include "DIA/DIA_Script_Exception.h"
 #include "DIA/DIA_Internal_Exception.h"
 
@@ -220,8 +221,8 @@ void DEC_PopulationDecision::UpdateDecision()
         assert( pPopulation_ );
         LogCrash( pPopulation_ );
         CleanStateAfterCrash();
-        MIL_RC::pRcMissionImpossible_->Send( *pPopulation_, MIL_RC::eRcTypeMessage );
-        pPopulation_->GetOrderManager().CancelAllOrders();               
+        MIL_Report::PostEvent( *pPopulation_, MIL_Report::eReport_MissionImpossible_ );
+        pPopulation_->GetOrderManager().ReplaceMission();
     }
 }
 
@@ -233,9 +234,9 @@ void DEC_PopulationDecision::UpdateDecision()
 // Name: DEC_PopulationDecision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission_ABC& mission )
+void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetBehaviorName();
+    const std::string& strBehavior = mission.GetType().GetDIABehavior();
     missionBehaviorParameters_.GetParameter( 0 ).SetValue( mission );
     missionBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionBehaviorDummyId_++ );
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionBehaviorParameters_ );
@@ -246,13 +247,13 @@ void DEC_PopulationDecision::StartMissionBehavior( MIL_PopulationMission_ABC& mi
 // Name: DEC_PopulationDecision::StopMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission_ABC& mission )
+void DEC_PopulationDecision::StopMissionBehavior( MIL_PopulationMission& mission )
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetBehaviorName();
+        const std::string& strBehavior = mission.GetType().GetDIABehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PopulationMission_ABC*)0 );
+        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PopulationMission*)0 );
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
@@ -318,8 +319,8 @@ void DEC_PopulationDecision::Reset()
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::SendFullState( NET_ASN_MsgPopulationUpdate& msg )
 {
-    msg.GetAsnMsg().m.etat_dominationPresent = 1;
-    msg.GetAsnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
+    msg().m.etat_dominationPresent = 1;
+    msg().etat_domination          = (uint)( rDominationState_ * 100. );
     rLastDominationState_ = rDominationState_;
 }
 

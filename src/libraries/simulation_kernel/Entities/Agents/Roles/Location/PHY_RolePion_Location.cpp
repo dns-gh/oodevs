@@ -416,26 +416,26 @@ void PHY_RolePion_Location::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
 {
     if( bPositionHasChanged_ )
     {
-        msg.GetAsnMsg().m.positionPresent = 1;
-        NET_ASN_Tools::WritePoint( vPosition_, msg.GetAsnMsg().position );
+        msg().m.positionPresent = 1;
+        NET_ASN_Tools::WritePoint( vPosition_, msg().position );
     }
 
     if( bDirectionHasChanged_ )
     {
-        msg.GetAsnMsg().m.directionPresent = 1;
-        NET_ASN_Tools::WriteDirection( vDirection_, msg.GetAsnMsg().direction );
+        msg().m.directionPresent = 1;
+        NET_ASN_Tools::WriteDirection( vDirection_, msg().direction );
     }
 
     if( bHeightHasChanged_ )
     {
-        msg.GetAsnMsg().m.hauteurPresent = 1;
-        msg.GetAsnMsg().hauteur          = (uint)rHeight_;
+        msg().m.hauteurPresent = 1;
+        msg().hauteur          = (uint)rHeight_;
     }
 
     if( bCurrentSpeedHasChanged_ )
     {
-        msg.GetAsnMsg().m.vitessePresent = 1;
-        msg.GetAsnMsg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ );
+        msg().m.vitessePresent = 1;
+        msg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ );
     }
 }
 
@@ -445,17 +445,17 @@ void PHY_RolePion_Location::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) c
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().m.positionPresent = 1;
-    NET_ASN_Tools::WritePoint( vPosition_, msg.GetAsnMsg().position );
+    msg().m.positionPresent = 1;
+    NET_ASN_Tools::WritePoint( vPosition_, msg().position );
 
-    msg.GetAsnMsg().m.directionPresent = 1;
-    NET_ASN_Tools::WriteDirection( vDirection_, msg.GetAsnMsg().direction );
+    msg().m.directionPresent = 1;
+    NET_ASN_Tools::WriteDirection( vDirection_, msg().direction );
 
-    msg.GetAsnMsg().m.hauteurPresent = 1;
-    msg.GetAsnMsg().hauteur          = (uint)rHeight_;
+    msg().m.hauteurPresent = 1;
+    msg().hauteur          = (uint)rHeight_;
 
-    msg.GetAsnMsg().m.vitessePresent = 1;
-    msg.GetAsnMsg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ );
+    msg().m.vitessePresent = 1;
+    msg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ );
 }
 
 // -----------------------------------------------------------------------------

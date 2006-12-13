@@ -60,7 +60,7 @@ bool Decisions::IsEmbraye() const
 void Decisions::DoUpdate( const ASN1T_MsgPionOrder& message )
 {
     const Resolver_ABC< Mission >& resolver = GetDecisionalModel();
-    current_ = & resolver.Get( message.mission.t );
+    current_ = & resolver.Get( message.mission );
     controller_.Update( *this );
 }
 

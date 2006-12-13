@@ -1,4 +1,4 @@
-//*****************************************************************************
+
 // Created: JVT 02-06-28
 //*****************************************************************************
 
@@ -14,10 +14,15 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Orders/Pion/MIL_PionMissionType.h"
-#include "Entities/Orders/Automate/MIL_AutomateMissionType.h"
-#include "Entities/Orders/Population/MIL_PopulationMissionType.h"
-#include "Entities/Orders/Conduite/MIL_OrderConduiteType.h"
+#include "Entities/Orders/MIL_PionMissionType.h"
+#include "Entities/Orders/MIL_PionMission.h"
+#include "Entities/Orders/MIL_AutomateMissionType.h"
+#include "Entities/Orders/MIL_AutomateMission.h"
+#include "Entities/Orders/MIL_PopulationMissionType.h"
+#include "Entities/Orders/MIL_PopulationMission.h"
+#include "Entities/Orders/MIL_FragOrderType.h"
+#include "Entities/Orders/MIL_FragOrder.h"
+#include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
 #include "Decision/Knowledge/DEC_Rep_PathPoint_Special.h"
@@ -327,9 +332,10 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
 
     bool bNeedScriptParsing = false;//!MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
 
+
+    MT_LOG_INFO_MSG( "Initializing DIA" );
     InitializeDIATypes    ( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
     InitializeDIAWorkspace( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
-    InitializeModels      ( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
 
     DEC_Tools                ::InitializeDIA();
     DEC_PopulationDecision   ::InitializeDIA();
@@ -339,10 +345,14 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     DEC_Rep_PathPoint_Front  ::InitializeDIA();
     DEC_Rep_PathPoint_Special::InitializeDIA();
     DEC_Rep_PathPoint_Lima   ::InitializeDIA();       
-    MIL_PionMissionType      ::InitializeDIA();
-    MIL_AutomateMissionType  ::InitializeDIA();
-    MIL_OrderConduiteType    ::InitializeDIA();   
-    MIL_PopulationMissionType::InitializeDIA();   
+    MIL_PionMission          ::InitializeDIA();
+    MIL_AutomateMission      ::InitializeDIA();
+    MIL_PopulationMission    ::InitializeDIA();
+    MIL_FragOrder            ::InitializeDIA();
+    MIL_ParameterType_ABC    ::Initialize   ();
+
+    InitializeMissions( initArchive );
+    InitializeModels  ( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
             
     // Finish the initialiazation of the Workspace by linking function calls
     pFuncTable_ = new DIA_FunctionTable< DEC_Workspace >();
@@ -380,11 +390,34 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Workspace::InitializeMissions
+// Created: NLD 2006-11-24
+// -----------------------------------------------------------------------------
+void DEC_Workspace::InitializeMissions( MIL_InputArchive& initArchive )
+{
+    std::string strMissionsFile;
+    initArchive.ReadField( "Missions", strMissionsFile );
+
+    MIL_InputArchive missionsArchive;
+    missionsArchive.AddWarningStream( std::cout );
+    missionsArchive.Open( strMissionsFile );
+
+    MIL_PionMissionType      ::Initialize( missionsArchive );
+    MIL_AutomateMissionType  ::Initialize( missionsArchive );
+    MIL_PopulationMissionType::Initialize( missionsArchive );
+    MIL_FragOrderType        ::Initialize( missionsArchive );
+
+    missionsArchive.Close();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Workspace::InitializeModels
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath )
 {
+    const bool bUseOnlyDIAArchive = MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive();
+
     std::string strModelsFile;
     initArchive.ReadField( "Modeles", strModelsFile );
 
@@ -395,6 +428,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
     modelArchive.Section( "Modeles" );
 
     // Pions
+    MT_LOG_INFO_MSG( "Initializing unit DIA models" );
     modelArchive.BeginList( "Pions" );
     while( modelArchive.NextListElement() )
     {
@@ -406,7 +440,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
         const DEC_ModelPion*& pModel = pionModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPion( *this, strName, modelArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelPion( *this, strName, modelArchive, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strSourcePath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele
@@ -414,6 +448,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
     modelArchive.EndList(); // Pions
 
     // Automates
+    MT_LOG_INFO_MSG( "Initializing automat DIA models" );
     modelArchive.BeginList( "Automates" );
     while( modelArchive.NextListElement() )
     {
@@ -425,7 +460,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
         const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelAutomate( *this, strName, modelArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelAutomate( *this, strName, modelArchive, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strSourcePath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele
@@ -433,6 +468,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
     modelArchive.EndList(); // Automates
 
     // Populations
+    MT_LOG_INFO_MSG( "Initializing population DIA models" );
     modelArchive.BeginList( "Populations" );
     while( modelArchive.NextListElement() )
     {
@@ -444,7 +480,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
         const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strSourcePath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele

@@ -1,8 +1,1610 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<Missions>
+<missions>
+    <units>
+    	<mission id="145" name="ALAT Aller Se Recompleter" dia-type="T_Mission_Pion_ALAT_AllerSeRecompleter" dia-behavior="MIS_Pion_ALAT_AllerSeRecompleter">
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="146" name="ALAT Reconnaitre Dans La Profondeur" dia-type="T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur" dia-behavior="MIS_Pion_ALAT_ReconnaitreDansLaProfondeur">
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Point dislocation" dia-name="pointDislocation_" type="Point"/>
+    		<parameter name="Zone" dia-name="zone_" type="Location"/>
+    	</mission>
+    	<mission id="147" name="ALAT Reconnaitre Contour Ennemi" dia-type="T_Mission_Pion_ALAT_ReconnaitreContourEnnemi" dia-behavior="MIS_Pion_ALAT_ReconnaitreContourEnnemi">
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="148" name="ALAT Detruire Neutraliser Dans Zone" dia-type="T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" dia-behavior="MIS_Pion_ALAT_DetruireNeutraliserDansZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Point dislocation" dia-name="pointDislocation_" type="Point"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Neutraliser" dia-name="neutraliser_" type="Bool"/>
+    	</mission>
+    	<mission id="149" name="ALAT Detruire Aeromobile" dia-type="T_Mission_Pion_ALAT_DetruireAeromobile" dia-behavior="MIS_Pion_ALAT_DetruireAeromobile">
+    		<parameter name="Unite a detruire" dia-name="uniteADetruire_" type="AgentKnowledgeList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="150" name="ALAT Freiner" dia-type="T_Mission_Pion_ALAT_Freiner" dia-behavior="MIS_Pion_ALAT_Freiner">
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="151" name="ALAT Jalonner" dia-type="T_Mission_Pion_ALAT_Jalonner" dia-behavior="MIS_Pion_ALAT_Jalonner">
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="152" name="ALAT Escorter" dia-type="T_Mission_Pion_ALAT_Escorter" dia-behavior="MIS_Pion_ALAT_Escorter">
+    		<parameter name="Unites a escorter" dia-name="unitesAEscorter_" type="AgentList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="153" name="ALAT Heliporter" dia-type="T_Mission_Pion_ALAT_Heliporter" dia-behavior="MIS_Pion_ALAT_Heliporter">
+    		<parameter name="Unites a heliporter" dia-name="unitesAHeliporter_" type="AgentList"/>
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Avec materiel" dia-name="avecMateriel_" type="Bool"/>
+    	</mission>
+    	<mission id="154" name="ALAT Heliporter Helitransporter Plot Ravitaillement" dia-type="T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement" dia-behavior="MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement">
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    		<parameter name="Position regroupement" dia-name="positionRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="155" name="ALAT Helitransporter" dia-type="T_Mission_Pion_ALAT_Helitransporter" dia-behavior="MIS_Pion_ALAT_Helitransporter">
+    		<parameter name="Unites a helitransporter" dia-name="unitesAHelitransporter_" type="AgentList"/>
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Avec materiel" dia-name="avecMateriel_" type="Bool"/>
+    	</mission>
+    	<mission id="156" name="ALAT IMEX" dia-type="T_Mission_Pion_ALAT_IMEX" dia-behavior="MIS_Pion_ALAT_IMEX">
+    		<parameter name="Unites a appuyer" dia-name="unitesAAppuyer_" type="AgentList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="157" name="ALAT Eclairer" dia-type="T_Mission_Pion_ALAT_Eclairer" dia-behavior="MIS_Pion_ALAT_Eclairer">
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="158" name="ALAT Surveiller" dia-type="T_Mission_Pion_ALAT_Surveiller" dia-behavior="MIS_Pion_ALAT_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="159" name="ALAT Appuyer Direct Au Contact" dia-type="T_Mission_Pion_ALAT_AppuyerDirectAuContact" dia-behavior="MIS_Pion_ALAT_AppuyerDirectAuContact">
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Unites a appuyer" dia-name="unitesAAppuyer_" type="AgentList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="160" name="ALAT Couvrir" dia-type="T_Mission_Pion_ALAT_Couvrir" dia-behavior="MIS_Pion_ALAT_Couvrir">
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Unites a couvrir" dia-name="unitesACouvrir_" type="AgentList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="161" name="ALAT Attaquer" dia-type="T_Mission_Pion_ALAT_Attaquer" dia-behavior="MIS_Pion_ALAT_Attaquer">
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="162" name="ASA Defendre Site" dia-type="T_Mission_Pion_ASA_DefendreSite" dia-behavior="MIS_Pion_ASA_DefendreSite">
+    		<parameter name="Site" dia-name="site_" type="Polygon"/>
+    	</mission>
+    	<mission id="163" name="ASA Defendre Site APartir Position" dia-type="T_Mission_Pion_ASA_DefendreSiteAPartirPosition" dia-behavior="MIS_Pion_ASA_DefendreSiteAPartirPosition">
+    		<parameter name="Site" dia-name="site_" type="Polygon"/>
+    		<parameter name="Point de deploiement" dia-name="pointDeDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="164" name="ASA Defendre Zone" dia-type="T_Mission_Pion_ASA_DefendreZone" dia-behavior="MIS_Pion_ASA_DefendreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="165" name="ASA Defendre Zone APartir Position" dia-type="T_Mission_Pion_ASA_DefendreZoneAPartirPosition" dia-behavior="MIS_Pion_ASA_DefendreZoneAPartirPosition">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Point de deploiement" dia-name="pointDeDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="166" name="ASA Surveiller" dia-type="T_Mission_Pion_ASA_Surveiller" dia-behavior="MIS_Pion_ASA_Surveiller">
+    		<parameter name="Point de deploiement" dia-name="pointDeDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="167" name="ASA Defendre Unites" dia-type="T_Mission_Pion_ASA_DefendreUnites" dia-behavior="MIS_Pion_ASA_DefendreUnites">
+    		<parameter name="Unites" dia-name="unites_" type="AgentList"/>
+    	</mission>
+    	<mission id="168" name="ASA MISTRAL Defendre Site" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreSite" dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreSite">
+    		<parameter name="Site" dia-name="site_" type="Polygon"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="omnidirectionnel"></value>
+    			<value id="1" name="directionnel"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="169" name="ASA MISTRAL Defendre Site APartir Position" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition">
+    		<parameter name="Site" dia-name="site_" type="Polygon"/>
+    		<parameter name="Point de deploiement" dia-name="pointDeDeploiement_" type="Point"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="omnidirectionnel"></value>
+    			<value id="1" name="directionnel"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="170" name="ASA MISTRAL Defendre Zone" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreZone" dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="omnidirectionnel"></value>
+    			<value id="1" name="directionnel"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="171" name="ASA MISTRAL Defendre Zone APartir Position" dia-type="T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition" dia-behavior="MIS_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Point de deploiement" dia-name="pointDeDeploiement_" type="Point"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="omnidirectionnel"></value>
+    			<value id="1" name="directionnel"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="172" name="ASA MISTRAL Surveiller" dia-type="T_Mission_Pion_ASA_MISTRAL_Surveiller" dia-behavior="MIS_Pion_ASA_MISTRAL_Surveiller">
+    		<parameter name="Point de deploiement" dia-name="pointDeDeploiement_" type="Point"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="omnidirectionnel"></value>
+    			<value id="1" name="directionnel"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="173" name="ASS Assurer Mise En Oeuvre" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvre" dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvre">
+    		<parameter name="Zone implantation" dia-name="zoneImplantation_" type="ObjectKnowledge"/>
+    		<parameter name="Presence contre batterie" dia-name="presenceContreBatterie_" type="Bool"/>
+    	</mission>
+    	<mission id="174" name="ASS Assurer Mise En Oeuvre Sur Position" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition" dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvreSurPosition">
+    		<parameter name="Position implantation" dia-name="positionImplantation_" type="Point"/>
+    		<parameter name="Presence contre batterie" dia-name="presenceContreBatterie_" type="Bool"/>
+    	</mission>
+    	<mission id="175" name="ASS Reconnaitre Zone Deploiement" dia-type="T_Mission_Pion_ASS_ReconnaitreZoneDeploiement" dia-behavior="MIS_Pion_ASS_ReconnaitreZoneDeploiement">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="176" name="ASS Acquerir Lanceurs Eni" dia-type="T_Mission_Pion_ASS_AcquerirLanceursEni" dia-behavior="MIS_Pion_ASS_AcquerirLanceursEni">
+    		<parameter name="Zones a observer" dia-name="zonesAObserver_" type="PolygonList"/>
+    		<parameter name="Zone implantation" dia-name="zoneImplantation_" type="ObjectKnowledge"/>
+    		<parameter name="Menance roem" dia-name="menanceRoem_" type="Bool"/>
+    	</mission>
+    	<mission id="177" name="ASS EO Acquerir Objectifs" dia-type="T_Mission_Pion_ASS_EO_AcquerirObjectifs" dia-behavior="MIS_Pion_ASS_EO_AcquerirObjectifs">
+    		<parameter name="Zone a observer" dia-name="zoneAObserver_" type="Polygon"/>
+    		<parameter name="Unite a appuyer" dia-name="uniteAAppuyer_" type="Automate"/>
+    		<parameter name="Categories" dia-name="categories_" type="NatureAtlas"/>
+    	</mission>
+    	<mission id="178" name="ASS EOP Acquerir Objectifs" dia-type="T_Mission_Pion_ASS_EOP_AcquerirObjectifs" dia-behavior="MIS_Pion_ASS_EOP_AcquerirObjectifs">
+    		<parameter name="Zone a observer" dia-name="zoneAObserver_" type="Polygon"/>
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Point"/>
+    		<parameter name="Position debarquement" dia-name="positionDebarquement_" type="Point"/>
+    	</mission>
+    	<mission id="179" name="ASS RATAC Acquerir Objectifs" dia-type="T_Mission_Pion_ASS_RATAC_AcquerirObjectifs" dia-behavior="MIS_Pion_ASS_RATAC_AcquerirObjectifs">
+    		<parameter name="Zone a observer" dia-name="zoneAObserver_" type="Polygon"/>
+    		<parameter name="Categories" dia-name="categories_" type="NatureAtlas"/>
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="180" name="ABC Reconnaitre Axe" dia-type="T_Mission_Pion_ABC_ReconnaitreAxe" dia-behavior="MIS_Pion_ABC_ReconnaitreAxe">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="181" name="ABC Soutenir" dia-type="T_Mission_Pion_ABC_Soutenir" dia-behavior="MIS_Pion_ABC_Soutenir">
+    		<parameter name="Unite a soutenir" dia-name="uniteASoutenir_" type="Agent"/>
+    	</mission>
+    	<mission id="182" name="ABC Couvrir" dia-type="T_Mission_Pion_ABC_Couvrir" dia-behavior="MIS_Pion_ABC_Couvrir">
+    		<parameter name="Position" dia-name="position_" type="Point"/>
+    		<parameter name="Unites a couvrir" dia-name="unitesACouvrir_" type="AgentList"/>
+    	</mission>
+    	<mission id="183" name="ABC Flanc Garder" dia-type="T_Mission_Pion_ABC_FlancGarder" dia-behavior="MIS_Pion_ABC_FlancGarder">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Unites a couvrir" dia-name="unitesACouvrir_" type="AgentList"/>
+    	</mission>
+    	<mission id="184" name="ABC Reduire" dia-type="T_Mission_Pion_ABC_Reduire" dia-behavior="MIS_Pion_ABC_Reduire">
+    		<parameter name="Unite a reduire" dia-name="uniteAReduire_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="185" name="ABC Appuyer" dia-type="T_Mission_Pion_ABC_Appuyer" dia-behavior="MIS_Pion_ABC_Appuyer">
+    		<parameter name="Unite a appuyer" dia-name="uniteAAppuyer_" type="Agent"/>
+    	</mission>
+    	<mission id="186" name="ABC Fixer" dia-type="T_Mission_Pion_ABC_Fixer" dia-behavior="MIS_Pion_ABC_Fixer">
+    		<parameter name="Unite a fixer" dia-name="uniteAFixer_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="187" name="ABC Renseigner Sur" dia-type="T_Mission_Pion_ABC_RenseignerSur" dia-behavior="MIS_Pion_ABC_RenseignerSur">
+    		<parameter name="Point a renseigner" dia-name="pointARenseigner_" type="Point"/>
+    	</mission>
+    	<mission id="188" name="ABC Controler Zone" dia-type="T_Mission_Pion_ABC_ControlerZone" dia-behavior="MIS_Pion_ABC_ControlerZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="189" name="ABC Surveiller" dia-type="T_Mission_Pion_ABC_Surveiller" dia-behavior="MIS_Pion_ABC_Surveiller">
+    		<parameter name="Position" dia-name="position_" type="Point"/>
+    	</mission>
+    	<mission id="190" name="ABC Barrer" dia-type="T_Mission_Pion_ABC_Barrer" dia-behavior="MIS_Pion_ABC_Barrer">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Point"/>
+    	</mission>
+    	<mission id="191" name="ABC Attaquer" dia-type="T_Mission_Pion_ABC_Attaquer" dia-behavior="MIS_Pion_ABC_Attaquer">
+    		<parameter name="Itineraire assaut" dia-name="itineraireAssaut_" type="Path"/>
+    	</mission>
+    	<mission id="192" name="ABC Reconnaitre Point" dia-type="T_Mission_Pion_ABC_ReconnaitrePoint" dia-behavior="MIS_Pion_ABC_ReconnaitrePoint">
+    		<parameter name="Point a reconnaitre" dia-name="pointAReconnaitre_" type="Point"/>
+    	</mission>
+    	<mission id="193" name="ABC Eclairer" dia-type="T_Mission_Pion_ABC_Eclairer" dia-behavior="MIS_Pion_ABC_Eclairer">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="194" name="ABC Jalonner" dia-type="T_Mission_Pion_ABC_Jalonner" dia-behavior="MIS_Pion_ABC_Jalonner">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="195" name="ABC Contre Attaquer" dia-type="T_Mission_Pion_ABC_ContreAttaquer" dia-behavior="MIS_Pion_ABC_ContreAttaquer">
+    		<parameter name="Itineraire assaut" dia-name="itineraireAssaut_" type="Path"/>
+    	</mission>
+    	<mission id="196" name="ABC Semparer Zone" dia-type="T_Mission_Pion_ABC_SemparerZone" dia-behavior="MIS_Pion_ABC_SemparerZone">
+    		<parameter name="Zone a prendre" dia-name="zoneAPrendre_" type="Polygon"/>
+    	</mission>
+    	<mission id="197" name="ABC Relever Unite" dia-type="T_Mission_Pion_ABC_ReleverUnite" dia-behavior="MIS_Pion_ABC_ReleverUnite">
+    		<parameter name="Unite a relever" dia-name="uniteARelever_" type="Agent"/>
+    	</mission>
+    	<mission id="198" name="ABC Armer PIA" dia-type="T_Mission_Pion_ABC_ArmerPIA" dia-behavior="MIS_Pion_ABC_ArmerPIA">
+    		<parameter name="Pia" dia-name="pia_" type="Point"/>
+    	</mission>
+    	<mission id="199" name="ABC Ouvrir Itineraire" dia-type="T_Mission_Pion_ABC_OuvrirItineraire" dia-behavior="MIS_Pion_ABC_OuvrirItineraire">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="200" name="ABC Freiner" dia-type="T_Mission_Pion_ABC_Freiner" dia-behavior="MIS_Pion_ABC_Freiner">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="201" name="ABC Escorter Unite" dia-type="T_Mission_Pion_ABC_EscorterUnite" dia-behavior="MIS_Pion_ABC_EscorterUnite">
+    		<parameter name="Unite a escorter" dia-name="uniteAEscorter_" type="Agent"/>
+    	</mission>
+    	<mission id="202" name="ABC Escorter Unites" dia-type="T_Mission_Pion_ABC_EscorterUnites" dia-behavior="MIS_Pion_ABC_EscorterUnites">
+    		<parameter name="Automate a escorter" dia-name="automateAEscorter_" type="Automate"/>
+    	</mission>
+    	<mission id="203" name="ABC Armer Point De Controle" dia-type="T_Mission_Pion_ABC_ArmerPointDeControle" dia-behavior="MIS_Pion_ABC_ArmerPointDeControle">
+    		<parameter name="Point de controle" dia-name="pointDeControle_" type="Point"/>
+    	</mission>
+    	<mission id="204" name="ABC Organiser Accueil Colonne Refugies" dia-type="T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies" dia-behavior="MIS_Pion_ABC_OrganiserAccueilColonneRefugies">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Point"/>
+    	</mission>
+    	<mission id="205" name="ABC Appuyer Sur Position" dia-type="T_Mission_Pion_ABC_AppuyerSurPosition" dia-behavior="MIS_Pion_ABC_AppuyerSurPosition">
+    		<parameter name="Position" dia-name="position_" type="Point"/>
+    		<parameter name="Unites a appuyer" dia-name="unitesAAppuyer_" type="AgentList"/>
+    	</mission>
+    	<mission id="206" name="ABC RASIT Renseigner Sur" dia-type="T_Mission_Pion_ABC_RASIT_RenseignerSur" dia-behavior="MIS_Pion_ABC_RASIT_RenseignerSur">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="207" name="GEN Ouvrir Itineraire" dia-type="T_Mission_Pion_GEN_OuvrirItineraire" dia-behavior="MIS_Pion_GEN_OuvrirItineraire">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="208" name="GEN Retablir Itineraire" dia-type="T_Mission_Pion_GEN_RetablirItineraire" dia-behavior="MIS_Pion_GEN_RetablirItineraire">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="209" name="GEN Reconnaitre Itineraire" dia-type="T_Mission_Pion_GEN_ReconnaitreItineraire" dia-behavior="MIS_Pion_GEN_ReconnaitreItineraire">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="210" name="GEN Reconnaitre Zone" dia-type="T_Mission_Pion_GEN_ReconnaitreZone" dia-behavior="MIS_Pion_GEN_ReconnaitreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Location"/>
+    	</mission>
+    	<mission id="211" name="GEN Reconnaitre Site Franchissement" dia-type="T_Mission_Pion_GEN_ReconnaitreSiteFranchissement" dia-behavior="MIS_Pion_GEN_ReconnaitreSiteFranchissement">
+    		<parameter name="Site franchissement" dia-name="siteFranchissement_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="212" name="GEN Equiper Exploiter Site Franchissement" dia-type="T_Mission_Pion_GEN_EquiperExploiterSiteFranchissement" dia-behavior="MIS_Pion_GEN_EquiperExploiterSiteFranchissement">
+    		<parameter name="Site franchissement" dia-name="siteFranchissement_" type="ObjectKnowledge"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Type pontage" dia-name="typePontage_" type="enumeration">
+    			<value id="0" name="continu"></value>
+    			<value id="1" name="discontinu"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="213" name="GEN Executer Variantement" dia-type="T_Mission_Pion_GEN_ExecuterVariantement" dia-behavior="MIS_Pion_GEN_ExecuterVariantement">
+    		<parameter name="Site franchissement" dia-name="siteFranchissement_" type="ObjectKnowledge"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Type pontage" dia-name="typePontage_" type="enumeration">
+    			<value id="0" name="continu"></value>
+    			<value id="1" name="discontinu"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="214" name="GEN Degager Obstacles" dia-type="T_Mission_Pion_GEN_DegagerObstacles" dia-behavior="MIS_Pion_GEN_DegagerObstacles">
+    		<parameter name="Obstacles" dia-name="obstacles_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="215" name="GEN Contourner Obstacles" dia-type="T_Mission_Pion_GEN_ContournerObstacles" dia-behavior="MIS_Pion_GEN_ContournerObstacles">
+    		<parameter name="Obstacles" dia-name="obstacles_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="216" name="GEN Depolluer Zone" dia-type="T_Mission_Pion_GEN_DepolluerZone" dia-behavior="MIS_Pion_GEN_DepolluerZone">
+    		<parameter name="Zone" dia-name="zone_" type="Location"/>
+    	</mission>
+    	<mission id="217" name="GEN Renforcer" dia-type="T_Mission_Pion_GEN_Renforcer" dia-behavior="MIS_Pion_GEN_Renforcer">
+    		<parameter name="Lieu renforcement" dia-name="lieuRenforcement_" type="Point"/>
+    		<parameter name="Unite" dia-name="unite_" type="Agent"/>
+    	</mission>
+    	<mission id="218" name="GEN Realiser Travaux Protection" dia-type="T_Mission_Pion_GEN_RealiserTravauxProtection" dia-behavior="MIS_Pion_GEN_RealiserTravauxProtection">
+    		<parameter name="Travaux" dia-name="travaux_" type="GenObjectList"/>
+    	</mission>
+    	<mission id="219" name="GEN Realiser Travaux Contre Mobilite" dia-type="T_Mission_Pion_GEN_RealiserTravauxContreMobilite" dia-behavior="MIS_Pion_GEN_RealiserTravauxContreMobilite">
+    		<parameter name="Travaux" dia-name="travaux_" type="GenObjectList"/>
+    	</mission>
+    	<mission id="220" name="GEN Realiser Travaux Appui Deploiement" dia-type="T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement" dia-behavior="MIS_Pion_GEN_RealiserTravauxAppuiDeploiement">
+    		<parameter name="Travaux" dia-name="travaux_" type="GenObjectList"/>
+    	</mission>
+    	<mission id="221" name="GEN Realiser Camps" dia-type="T_Mission_Pion_GEN_RealiserCamps" dia-behavior="MIS_Pion_GEN_RealiserCamps">
+    		<parameter name="Travaux" dia-name="travaux_" type="GenObjectList"/>
+    	</mission>
+    	<mission id="222" name="GEN Reprendre Travaux" dia-type="T_Mission_Pion_GEN_ReprendreTravaux" dia-behavior="MIS_Pion_GEN_ReprendreTravaux">
+    		<parameter name="Travaux" dia-name="travaux_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="223" name="GEN Ameliorer Mobilite" dia-type="T_Mission_Pion_GEN_AmeliorerMobilite" dia-behavior="MIS_Pion_GEN_AmeliorerMobilite">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="224" name="GEN Activer Obstacle" dia-type="T_Mission_Pion_GEN_ActiverObstacle" dia-behavior="MIS_Pion_GEN_ActiverObstacle">
+    		<parameter name="Obstacle" dia-name="obstacle_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="225" name="INF Reconnaitre Axe" dia-type="T_Mission_Pion_INF_ReconnaitreAxe" dia-behavior="MIS_Pion_INF_ReconnaitreAxe">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="226" name="INF Couvrir" dia-type="T_Mission_Pion_INF_Couvrir" dia-behavior="MIS_Pion_INF_Couvrir">
+    		<parameter name="Point couverture" dia-name="pointCouverture_" type="Point"/>
+    		<parameter name="Cible" dia-name="cible_" type="Agent"/>
+    	</mission>
+    	<mission id="227" name="INF Reduire" dia-type="T_Mission_Pion_INF_Reduire" dia-behavior="MIS_Pion_INF_Reduire">
+    		<parameter name="Unite a reduire" dia-name="uniteAReduire_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="228" name="INF Appuyer" dia-type="T_Mission_Pion_INF_Appuyer" dia-behavior="MIS_Pion_INF_Appuyer">
+    		<parameter name="Unite a appuyer" dia-name="uniteAAppuyer_" type="Agent"/>
+    	</mission>
+    	<mission id="229" name="INF Fixer" dia-type="T_Mission_Pion_INF_Fixer" dia-behavior="MIS_Pion_INF_Fixer">
+    		<parameter name="Ennemi" dia-name="ennemi_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="230" name="INF Controler Secteur" dia-type="T_Mission_Pion_INF_ControlerSecteur" dia-behavior="MIS_Pion_INF_ControlerSecteur">
+    		<parameter name="Secteur" dia-name="secteur_" type="Polygon"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="231" name="INF Surveiller Secteur" dia-type="T_Mission_Pion_INF_SurveillerSecteur" dia-behavior="MIS_Pion_INF_SurveillerSecteur">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Point"/>
+    	</mission>
+    	<mission id="232" name="INF Barrer" dia-type="T_Mission_Pion_INF_Barrer" dia-behavior="MIS_Pion_INF_Barrer">
+    		<parameter name="Position a barrer" dia-name="positionABarrer_" type="Point"/>
+    	</mission>
+    	<mission id="233" name="INF Reconnaitre Point" dia-type="T_Mission_Pion_INF_ReconnaitrePoint" dia-behavior="MIS_Pion_INF_ReconnaitrePoint">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Point a reconnaitre" dia-name="pointAReconnaitre_" type="Point"/>
+    	</mission>
+    	<mission id="234" name="INF Eclairer" dia-type="T_Mission_Pion_INF_Eclairer" dia-behavior="MIS_Pion_INF_Eclairer">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="235" name="INF Interdire" dia-type="T_Mission_Pion_INF_Interdire" dia-behavior="MIS_Pion_INF_Interdire">
+    		<parameter name="Point a interdire" dia-name="pointAInterdire_" type="Point"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="236" name="INF Semparer" dia-type="T_Mission_Pion_INF_Semparer" dia-behavior="MIS_Pion_INF_Semparer">
+    		<parameter name="Objectif" dia-name="objectif_" type="Point"/>
+    	</mission>
+    	<mission id="237" name="INF Prendre Preciser Contact" dia-type="T_Mission_Pion_INF_PrendrePreciserContact" dia-behavior="MIS_Pion_INF_PrendrePreciserContact">
+    		<parameter name="Ennemi" dia-name="ennemi_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="238" name="INF Defendre" dia-type="T_Mission_Pion_INF_Defendre" dia-behavior="MIS_Pion_INF_Defendre">
+    		<parameter name="Point a defendre" dia-name="pointADefendre_" type="Point"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="239" name="INF Detruire Embuscade" dia-type="T_Mission_Pion_INF_DetruireEmbuscade" dia-behavior="MIS_Pion_INF_DetruireEmbuscade">
+    		<parameter name="Position embuscade" dia-name="positionEmbuscade_" type="Point"/>
+    		<parameter name="Position regroupement" dia-name="positionRegroupement_" type="Point"/>
+    		<parameter name="Ennemi" dia-name="ennemi_" type="AgentKnowledge"/>
+    		<parameter name="Nature obstacle" dia-name="natureObstacle_" type="enumeration">
+    			<value id="0" name="bouchon_mines"></value>
+    			<value id="1" name="zone_minee_lineaire"></value>
+    			<value id="2" name="zone_minee_par_dispersion"></value>
+    			<value id="3" name="fosse_anti_char"></value>
+    			<value id="4" name="abattis"></value>
+    			<value id="5" name="barricade"></value>
+    			<value id="6" name="eboulement"></value>
+    			<value id="7" name="destruction_route"></value>
+    			<value id="8" name="destruction_pont"></value>
+    			<value id="9" name="pont_flottant_continu"></value>
+    			<value id="10" name="poste_tir"></value>
+    			<value id="11" name="zone_protegee"></value>
+    			<value id="12" name="zone_implantation_canon"></value>
+    			<value id="13" name="zone_implantation_cobra"></value>
+    			<value id="14" name="zone_implantation_lrm"></value>
+    			<value id="15" name="site_franchissement"></value>
+    			<value id="16" name="nuage_nbc"></value>
+    			<value id="17" name="plot_ravitaillement"></value>
+    			<value id="18" name="site_decontamination"></value>
+    			<value id="19" name="zone_brouillage_brod"></value>
+    			<value id="20" name="rota"></value>
+    			<value id="21" name="zone_nbc"></value>
+    			<value id="22" name="zone_brouillage_bromure"></value>
+    			<value id="23" name="aire_poser"></value>
+    			<value id="24" name="piste"></value>
+    			<value id="25" name="plateforme"></value>
+    			<value id="26" name="zone_mobilite_amelioree"></value>
+    			<value id="27" name="zone_poser_helicoptere"></value>
+    			<value id="28" name="aire_logistique"></value>
+    			<value id="29" name="itineraire_logistique"></value>
+    			<value id="30" name="camp_prisonniers"></value>
+    			<value id="31" name="camp_refugies"></value>
+    			<value id="32" name="poste_controle"></value>
+    			<value id="33" name="terrain_largage"></value>
+    			<value id="34" name="zone_interdite_mouvement"></value>
+    			<value id="35" name="zone_interdite_tir"></value>
+    			<value id="36" name="zone_implantation_mortier"></value>
+    			<value id="37" name="pont_flottant_discontinu"></value>
+    			<value id="38" name="installation"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="240" name="INF Contre Attaquer" dia-type="T_Mission_Pion_INF_ContreAttaquer" dia-behavior="MIS_Pion_INF_ContreAttaquer">
+    		<parameter name="Ennemi" dia-name="ennemi_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="241" name="INF Freiner" dia-type="T_Mission_Pion_INF_Freiner" dia-behavior="MIS_Pion_INF_Freiner">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="242" name="INF Flanc Garder" dia-type="T_Mission_Pion_INF_FlancGarder" dia-behavior="MIS_Pion_INF_FlancGarder">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Unite a flancgarder" dia-name="uniteAFlancgarder_" type="Agent"/>
+    	</mission>
+    	<mission id="243" name="INF Organiser Un Check Point" dia-type="T_Mission_Pion_INF_OrganiserUnCheckPoint" dia-behavior="MIS_Pion_INF_OrganiserUnCheckPoint">
+    		<parameter name="Point installation" dia-name="pointInstallation_" type="Point"/>
+    	</mission>
+    	<mission id="244" name="INF Harceler" dia-type="T_Mission_Pion_INF_Harceler" dia-behavior="MIS_Pion_INF_Harceler">
+    		<parameter name="Secteur" dia-name="secteur_" type="Polygon"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Nature objectif" dia-name="natureObjectif_" type="enumeration">
+    			<value id="0" name="elements_terrain"></value>
+    			<value id="1" name="objets"></value>
+    			<value id="2" name="elements_mobiles"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="245" name="INF Detruire Par Coup De Main" dia-type="T_Mission_Pion_INF_DetruireParCoupDeMain" dia-behavior="MIS_Pion_INF_DetruireParCoupDeMain">
+    		<parameter name="Objectif" dia-name="objectif_" type="Point"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Heure destruction" dia-name="heureDestruction_" type="GDH"/>
+    		<parameter name="Nature destruction" dia-name="natureDestruction_" type="enumeration">
+    			<value id="0" name="elements_terrain"></value>
+    			<value id="1" name="objets"></value>
+    			<value id="2" name="elements_mobiles"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="246" name="INF Escorter Unite" dia-type="T_Mission_Pion_INF_EscorterUnite" dia-behavior="MIS_Pion_INF_EscorterUnite">
+    		<parameter name="Unite a escorter" dia-name="uniteAEscorter_" type="Agent"/>
+    	</mission>
+    	<mission id="247" name="INF Escorter Unites" dia-type="T_Mission_Pion_INF_EscorterUnites" dia-behavior="MIS_Pion_INF_EscorterUnites">
+    		<parameter name="Automate a escorter" dia-name="automateAEscorter_" type="Automate"/>
+    	</mission>
+    	<mission id="248" name="INF Renseigner Sur" dia-type="T_Mission_Pion_INF_RenseignerSur" dia-behavior="MIS_Pion_INF_RenseignerSur">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="249" name="INF Soutenir" dia-type="T_Mission_Pion_INF_Soutenir" dia-behavior="MIS_Pion_INF_Soutenir">
+    		<parameter name="Unite a soutenir" dia-name="uniteASoutenir_" type="Agent"/>
+    	</mission>
+    	<mission id="250" name="INF Securiser" dia-type="T_Mission_Pion_INF_Securiser" dia-behavior="MIS_Pion_INF_Securiser">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="251" name="INF Recueillir" dia-type="T_Mission_Pion_INF_Recueillir" dia-behavior="MIS_Pion_INF_Recueillir">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Point"/>
+    		<parameter name="Pia" dia-name="pia_" type="Point"/>
+    	</mission>
+    	<mission id="252" name="INF Repondre AAggression" dia-type="T_Mission_Pion_INF_RepondreAAggression" dia-behavior="MIS_Pion_INF_RepondreAAggression">
+    		<parameter name="Aggresseur" dia-name="aggresseur_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="253" name="INF Appuyer Sur Position" dia-type="T_Mission_Pion_INF_AppuyerSurPosition" dia-behavior="MIS_Pion_INF_AppuyerSurPosition">
+    		<parameter name="Position" dia-name="position_" type="Point"/>
+    		<parameter name="Unites a appuyer" dia-name="unitesAAppuyer_" type="AgentList"/>
+    	</mission>
+    	<mission id="254" name="LOG Se Deployer" dia-type="T_Mission_Pion_LOG_SeDeployer" dia-behavior="MIS_Pion_LOG_SeDeployer">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="255" name="LOG Renforcer" dia-type="T_Mission_Pion_LOG_Renforcer" dia-behavior="MIS_Pion_LOG_Renforcer">
+    		<parameter name="Lieu renforcement" dia-name="lieuRenforcement_" type="Point"/>
+    		<parameter name="Automate" dia-name="automate_" type="Automate"/>
+    	</mission>
+    	<mission id="256" name="LOG Preparer Bascule" dia-type="T_Mission_Pion_LOG_PreparerBascule" dia-behavior="MIS_Pion_LOG_PreparerBascule">
+    		<parameter name="Automate pour bascule" dia-name="automatePourBascule_" type="Automate"/>
+    		<parameter name="Rester sur place" dia-name="resterSurPlace_" type="Bool"/>
+    	</mission>
+    	<mission id="257" name="LOG Decontaminer Blesses" dia-type="T_Mission_Pion_LOG_DecontaminerBlesses" dia-behavior="MIS_Pion_LOG_DecontaminerBlesses">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="258" name="LOG Trier Et Traiter Blesses" dia-type="T_Mission_Pion_LOG_TrierEtTraiterBlesses" dia-behavior="MIS_Pion_LOG_TrierEtTraiterBlesses">
+    		<parameter name="Blessures traitees" dia-name="blessuresTraitees_" type="MedicalPriorities"/>
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="259" name="LOG Trier Blesses" dia-type="T_Mission_Pion_LOG_TrierBlesses" dia-behavior="MIS_Pion_LOG_TrierBlesses">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="260" name="LOG Traiter Blesses" dia-type="T_Mission_Pion_LOG_TraiterBlesses" dia-behavior="MIS_Pion_LOG_TraiterBlesses">
+    		<parameter name="Blessures traitees" dia-name="blessuresTraitees_" type="MedicalPriorities"/>
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="261" name="LOG Prendre En Compte Reactions Mentales" dia-type="T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" dia-behavior="MIS_Pion_LOG_PrendreEnCompteReactionsMentales">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="262" name="LOG Convoyer" dia-type="T_Mission_Pion_LOG_Convoyer" dia-behavior="MIS_Pion_LOG_Convoyer">
+    	</mission>
+    	<mission id="263" name="LOG Reparer" dia-type="T_Mission_Pion_LOG_Reparer" dia-behavior="MIS_Pion_LOG_Reparer">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="264" name="LOG Appuyer Mouvement" dia-type="T_Mission_Pion_LOG_AppuyerMouvement" dia-behavior="MIS_Pion_LOG_AppuyerMouvement">
+    		<parameter name="Unite a appuyer" dia-name="uniteAAppuyer_" type="Agent"/>
+    	</mission>
+    	<mission id="265" name="LOG Reconnaitre Itineraire" dia-type="T_Mission_Pion_LOG_ReconnaitreItineraire" dia-behavior="MIS_Pion_LOG_ReconnaitreItineraire">
+    		<parameter name="Itineraire log" dia-name="itineraireLog_" type="Path"/>
+    	</mission>
+    	<mission id="266" name="LOG Reconnaitre Zone Contaminee" dia-type="T_Mission_Pion_LOG_ReconnaitreZoneContaminee" dia-behavior="MIS_Pion_LOG_ReconnaitreZoneContaminee">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="267" name="LOG Appuyer Mouvement Dans Zone" dia-type="T_Mission_Pion_LOG_AppuyerMouvementDansZone" dia-behavior="MIS_Pion_LOG_AppuyerMouvementDansZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="268" name="LOG Mettre En Oeuvre Zone Stationnement" dia-type="T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement" dia-behavior="MIS_Pion_LOG_MettreEnOeuvreZoneStationnement">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="269" name="LOG Appuyer Franchissement Sur Un Point" dia-type="T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint" dia-behavior="MIS_Pion_LOG_AppuyerFranchissementSurUnPoint">
+    		<parameter name="Pont flottant" dia-name="pontFlottant_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="270" name="LOG Bloquer Zone" dia-type="T_Mission_Pion_LOG_BloquerZone" dia-behavior="MIS_Pion_LOG_BloquerZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="271" name="LOG Reconnaitre Zone De Deploiement" dia-type="T_Mission_Pion_LOG_ReconnaitreZoneDeDeploiement" dia-behavior="MIS_Pion_LOG_ReconnaitreZoneDeDeploiement">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="272" name="LOG Armer PIA" dia-type="T_Mission_Pion_LOG_ArmerPIA" dia-behavior="MIS_Pion_LOG_ArmerPIA">
+    		<parameter name="Point" dia-name="point_" type="Point"/>
+    	</mission>
+    	<mission id="273" name="LOG Surveiller" dia-type="T_Mission_Pion_LOG_Surveiller" dia-behavior="MIS_Pion_LOG_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="274" name="Test Heliporter" dia-type="T_Mission_Pion_Test_Heliporter" dia-behavior="MIS_Pion_Test_Heliporter">
+    		<parameter name="Agents" dia-name="agents_" type="AgentList"/>
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    	</mission>
+    	<mission id="275" name="Test Move To" dia-type="T_Mission_Pion_Test_MoveTo" dia-behavior="MIS_Pion_Test_MoveTo">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Type itineraire" dia-name="typeItineraire_" type="enumeration">
+    			<value id="0" name="movement"></value>
+    			<value id="1" name="recon"></value>
+    			<value id="2" name="infiltration"></value>
+    			<value id="3" name="assault"></value>
+    			<value id="4" name="retreat"></value>
+    			<value id="5" name="backup"></value>
+    			<value id="6" name="mine_clearance"></value>
+    			<value id="7" name="logistic"></value>
+    		</parameter>
+    		<parameter name="Debarque" dia-name="debarque_" type="Bool"/>
+    		<parameter name="Verrouillage vision" dia-name="verrouillageVision_" type="enumeration">
+    			<value id="0" name="rien"></value>
+    			<value id="1" name="point"></value>
+    			<value id="2" name="direction"></value>
+    		</parameter>
+    		<parameter name="Vision point" dia-name="visionPoint_" type="Point" optional="true"/>
+    		<parameter name="Vision direction" dia-name="visionDirection_" type="Direction"/>
+    	</mission>
+    	<mission id="276" name="Test Create Object" dia-type="T_Mission_Pion_Test_CreateObject" dia-behavior="MIS_Pion_Test_CreateObject">
+    		<parameter name="Forme" dia-name="forme_" type="Location"/>
+    		<parameter name="Type" dia-name="type_" type="enumeration">
+    			<value id="0" name="bouchon_mines"></value>
+    			<value id="1" name="zone_minee_lineaire"></value>
+    			<value id="2" name="zone_minee_par_dispersion"></value>
+    			<value id="3" name="fosse_anti_char"></value>
+    			<value id="4" name="abattis"></value>
+    			<value id="5" name="barricade"></value>
+    			<value id="6" name="eboulement"></value>
+    			<value id="7" name="destruction_route"></value>
+    			<value id="8" name="destruction_pont"></value>
+    			<value id="9" name="pont_flottant_continu"></value>
+    			<value id="10" name="poste_tir"></value>
+    			<value id="11" name="zone_protegee"></value>
+    			<value id="12" name="zone_implantation_canon"></value>
+    			<value id="13" name="zone_implantation_cobra"></value>
+    			<value id="14" name="zone_implantation_lrm"></value>
+    			<value id="15" name="site_franchissement"></value>
+    			<value id="16" name="nuage_nbc"></value>
+    			<value id="17" name="plot_ravitaillement"></value>
+    			<value id="18" name="site_decontamination"></value>
+    			<value id="19" name="zone_brouillage_brod"></value>
+    			<value id="20" name="rota"></value>
+    			<value id="21" name="zone_nbc"></value>
+    			<value id="22" name="zone_brouillage_bromure"></value>
+    			<value id="23" name="aire_poser"></value>
+    			<value id="24" name="piste"></value>
+    			<value id="25" name="plateforme"></value>
+    			<value id="26" name="zone_mobilite_amelioree"></value>
+    			<value id="27" name="zone_poser_helicoptere"></value>
+    			<value id="28" name="aire_logistique"></value>
+    			<value id="29" name="itineraire_logistique"></value>
+    			<value id="30" name="camp_prisonniers"></value>
+    			<value id="31" name="camp_refugies"></value>
+    			<value id="32" name="poste_controle"></value>
+    			<value id="33" name="terrain_largage"></value>
+    			<value id="34" name="zone_interdite_mouvement"></value>
+    			<value id="35" name="zone_interdite_tir"></value>
+    			<value id="36" name="zone_implantation_mortier"></value>
+    			<value id="37" name="pont_flottant_discontinu"></value>
+    			<value id="38" name="installation"></value>
+    		</parameter>
+    		<parameter name="Param" dia-name="param_" type="Numeric"/>
+    	</mission>
+    	<mission id="277" name="Test Destroy Object" dia-type="T_Mission_Pion_Test_DestroyObject" dia-behavior="MIS_Pion_Test_DestroyObject">
+    		<parameter name="Objet" dia-name="objet_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="278" name="Test Create Bypass" dia-type="T_Mission_Pion_Test_CreateBypass" dia-behavior="MIS_Pion_Test_CreateBypass">
+    		<parameter name="Objet" dia-name="objet_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="279" name="Test Fire" dia-type="T_Mission_Pion_Test_Fire" dia-behavior="MIS_Pion_Test_Fire">
+    		<parameter name="Point" dia-name="point_" type="Point"/>
+    		<parameter name="Tir indirect" dia-name="tirIndirect_" type="Bool"/>
+    		<parameter name="Munitions" dia-name="munitions_" type="DotationType"/>
+    		<parameter name="Nb it" dia-name="nbIt_" type="Numeric"/>
+    		<parameter name="Targets" dia-name="targets_" type="AgentKnowledgeList"/>
+    	</mission>
+    	<mission id="280" name="Test Change Posture" dia-type="T_Mission_Pion_Test_ChangePosture" dia-behavior="MIS_Pion_Test_ChangePosture">
+    		<parameter name="Posture" dia-name="posture_" type="enumeration">
+    			<value id="0" name="mouvement"></value>
+    			<value id="1" name="arret"></value>
+    			<value id="2" name="poste_reflexe"></value>
+    			<value id="3" name="poste"></value>
+    			<value id="4" name="poste_amenage"></value>
+    			<value id="5" name="poste_prepare_genie"></value>
+    			<value id="6" name="automatique"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="281" name="Test Path Find" dia-type="T_Mission_Pion_Test_PathFind" dia-behavior="MIS_Pion_Test_PathFind">
+    		<parameter name="Nb pathfind" dia-name="nbPathfind_" type="Numeric"/>
+    	</mission>
+    	<mission id="282" name="Test Find Position" dia-type="T_Mission_Pion_Test_FindPosition" dia-behavior="MIS_Pion_Test_FindPosition">
+    		<parameter name="Point" dia-name="point_" type="Point"/>
+    		<parameter name="Retreat" dia-name="retreat_" type="Point"/>
+    		<parameter name="Unite" dia-name="unite_" type="AgentList"/>
+    		<parameter name="Type objectif" dia-name="typeObjectif_" type="enumeration">
+    			<value id="0" name="agent"></value>
+    			<value id="1" name="point"></value>
+    			<value id="2" name="rep_point"></value>
+    			<value id="3" name="objet"></value>
+    			<value id="4" name="zone"></value>
+    		</parameter>
+    		<parameter name="Type operation" dia-name="typeOperation_" type="enumeration">
+    			<value id="0" name="see"></value>
+    			<value id="1" name="shoot"></value>
+    			<value id="2" name="add"></value>
+    			<value id="3" name="rem"></value>
+    			<value id="4" name="safety"></value>
+    			<value id="5" name="border"></value>
+    			<value id="6" name="appui"></value>
+    			<value id="7" name="support"></value>
+    			<value id="8" name="ambush"></value>
+    			<value id="9" name="random"></value>
+    		</parameter>
+    		<parameter name="Avoid" dia-name="avoid_" type="Bool"/>
+    		<parameter name="Reco" dia-name="reco_" type="Bool"/>
+    		<parameter name="No obstacle avoid" dia-name="noObstacleAvoid_" type="Bool"/>
+    		<parameter name="Debordement" dia-name="debordement_" type="Bool"/>
+    		<parameter name="Dec points" dia-name="decPoints_" type="Bool"/>
+    		<parameter name="Niveau identification" dia-name="niveauIdentification_" type="enumeration">
+    			<value id="0" name="identifiee"></value>
+    			<value id="1" name="reconnue"></value>
+    			<value id="2" name="detectee"></value>
+    			<value id="3" name="signale"></value>
+    		</parameter>
+    		<parameter name="Dgo" dia-name="dgo_" type="Direction"/>
+    	</mission>
+    	<mission id="283" name="Test Reinforce" dia-type="T_Mission_Pion_Test_Reinforce" dia-behavior="MIS_Pion_Test_Reinforce">
+    		<parameter name="Unite" dia-name="unite_" type="Agent"/>
+    		<parameter name="Renforce" dia-name="renforce_" type="Bool"/>
+    	</mission>
+    	<mission id="284" name="Plastron Ennemi" dia-type="T_Mission_Pion_PlastronEnnemi" dia-behavior="MIS_Pion_PlastronEnnemi">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Point mission" dia-name="pointMission_" type="Point"/>
+    		<parameter name="Type" dia-name="type_" type="enumeration">
+    			<value id="0" name="defense_statique"></value>
+    			<value id="1" name="defense_dynamique"></value>
+    			<value id="2" name="esquive"></value>
+    			<value id="3" name="reco_offensive"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="285" name="Faire Mouvement" dia-type="T_Mission_Pion_FaireMouvement" dia-behavior="MIS_Pion_FaireMouvement">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="286" name="Suivre" dia-type="T_Mission_Pion_Suivre" dia-behavior="MIS_Pion_Suivre">
+    		<parameter name="Unite a suivre" dia-name="uniteASuivre_" type="Agent"/>
+    	</mission>
+    	<mission id="287" name="Transporter" dia-type="T_Mission_Pion_Transporter" dia-behavior="MIS_Pion_Transporter">
+    		<parameter name="Unites a transporter" dia-name="unitesATransporter_" type="AgentList"/>
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    		<parameter name="Avec materiel" dia-name="avecMateriel_" type="Bool"/>
+    	</mission>
+    	<mission id="288" name="Se Faire Decontaminer" dia-type="T_Mission_Pion_SeFaireDecontaminer" dia-behavior="MIS_Pion_SeFaireDecontaminer">
+    		<parameter name="Point arrivee" dia-name="pointArrivee_" type="Point"/>
+    		<parameter name="Site decontamination" dia-name="siteDecontamination_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="289" name="Franchir" dia-type="T_Mission_Pion_Franchir" dia-behavior="MIS_Pion_Franchir">
+    		<parameter name="Pont flottant" dia-name="pontFlottant_" type="ObjectKnowledge"/>
+    		<parameter name="Point arrivee" dia-name="pointArrivee_" type="Point"/>
+    	</mission>
+    	<mission id="290" name="Decrocher" dia-type="T_Mission_Pion_Decrocher" dia-behavior="MIS_Pion_Decrocher">
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    	</mission>
+    	<mission id="291" name="Stationner" dia-type="T_Mission_Pion_Stationner" dia-behavior="MIS_Pion_Stationner">
+    		<parameter name="Point attente" dia-name="pointAttente_" type="Point"/>
+    	</mission>
+    	<mission id="292" name="Se Faire Transporter" dia-type="T_Mission_Pion_SeFaireTransporter" dia-behavior="MIS_Pion_SeFaireTransporter">
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    	</mission>
+    	<mission id="293" name="Interdire Franchissement Populations" dia-type="T_Mission_Pion_InterdireFranchissementPopulations" dia-behavior="MIS_Pion_InterdireFranchissementPopulations">
+    		<parameter name="Point" dia-name="point_" type="Point"/>
+    	</mission>
+    	<mission id="294" name="Filtrer Populations" dia-type="T_Mission_Pion_FiltrerPopulations" dia-behavior="MIS_Pion_FiltrerPopulations">
+    		<parameter name="Point" dia-name="point_" type="Point"/>
+    	</mission>
+    	<mission id="295" name="Renseigner Sur Populations" dia-type="T_Mission_Pion_RenseignerSurPopulations" dia-behavior="MIS_Pion_RenseignerSurPopulations">
+    		<parameter name="Point" dia-name="point_" type="Point"/>
+    	</mission>
+    	<mission id="296" name="Canaliser Populations" dia-type="T_Mission_Pion_CanaliserPopulations" dia-behavior="MIS_Pion_CanaliserPopulations">
+    		<parameter name="Zone" dia-name="zone_" type="Location"/>
+    	</mission>
+    	<mission id="297" name="Controler Populations Dans Zone" dia-type="T_Mission_Pion_ControlerPopulationsDansZone" dia-behavior="MIS_Pion_ControlerPopulationsDansZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="298" name="Securiser Zone Contre Populations" dia-type="T_Mission_Pion_SecuriserZoneContrePopulations" dia-behavior="MIS_Pion_SecuriserZoneContrePopulations">
+    		<parameter name="Point" dia-name="point_" type="Point"/>
+    	</mission>
+    	<mission id="299" name="Generique" dia-type="T_Mission_Pion_Generique" dia-behavior="MIS_Pion_Generique">
+    		<parameter name="Zones" dia-name="zones_" type="PolygonList"/>
+    		<parameter name="Points" dia-name="points_" type="PointList"/>
+    		<parameter name="Itineraires" dia-name="itineraires_" type="PathList"/>
+    		<parameter name="Unites" dia-name="unites_" type="AgentList"/>
+    		<parameter name="Automates" dia-name="automates_" type="AutomateList"/>
+    		<parameter name="Connaissances agents" dia-name="connaissancesAgents_" type="AgentKnowledgeList"/>
+    		<parameter name="Connaissances objets" dia-name="connaissancesObjets_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="300" name="MILICE Provoquer" dia-type="T_Mission_Pion_MILICE_Provoquer" dia-behavior="MIS_Pion_MILICE_Provoquer">
+    		<parameter name="Unite a provoquer" dia-name="uniteAProvoquer_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="301" name="MILICE Prendre Et Tenir" dia-type="T_Mission_Pion_MILICE_PrendreEtTenir" dia-behavior="MIS_Pion_MILICE_PrendreEtTenir">
+    		<parameter name="Point a prendre" dia-name="pointAPrendre_" type="Point"/>
+    	</mission>
+    	<mission id="302" name="MILICE Detruire Embuscade" dia-type="T_Mission_Pion_MILICE_DetruireEmbuscade" dia-behavior="MIS_Pion_MILICE_DetruireEmbuscade">
+    		<parameter name="Position embuscade" dia-name="positionEmbuscade_" type="Point"/>
+    		<parameter name="Position regroupement" dia-name="positionRegroupement_" type="Point"/>
+    		<parameter name="Nature obstacle" dia-name="natureObstacle_" type="enumeration">
+    			<value id="0" name="bouchon_mines"></value>
+    			<value id="1" name="zone_minee_lineaire"></value>
+    			<value id="2" name="zone_minee_par_dispersion"></value>
+    			<value id="3" name="fosse_anti_char"></value>
+    			<value id="4" name="abattis"></value>
+    			<value id="5" name="barricade"></value>
+    			<value id="6" name="eboulement"></value>
+    			<value id="7" name="destruction_route"></value>
+    			<value id="8" name="destruction_pont"></value>
+    			<value id="9" name="pont_flottant_continu"></value>
+    			<value id="10" name="poste_tir"></value>
+    			<value id="11" name="zone_protegee"></value>
+    			<value id="12" name="zone_implantation_canon"></value>
+    			<value id="13" name="zone_implantation_cobra"></value>
+    			<value id="14" name="zone_implantation_lrm"></value>
+    			<value id="15" name="site_franchissement"></value>
+    			<value id="16" name="nuage_nbc"></value>
+    			<value id="17" name="plot_ravitaillement"></value>
+    			<value id="18" name="site_decontamination"></value>
+    			<value id="19" name="zone_brouillage_brod"></value>
+    			<value id="20" name="rota"></value>
+    			<value id="21" name="zone_nbc"></value>
+    			<value id="22" name="zone_brouillage_bromure"></value>
+    			<value id="23" name="aire_poser"></value>
+    			<value id="24" name="piste"></value>
+    			<value id="25" name="plateforme"></value>
+    			<value id="26" name="zone_mobilite_amelioree"></value>
+    			<value id="27" name="zone_poser_helicoptere"></value>
+    			<value id="28" name="aire_logistique"></value>
+    			<value id="29" name="itineraire_logistique"></value>
+    			<value id="30" name="camp_prisonniers"></value>
+    			<value id="31" name="camp_refugies"></value>
+    			<value id="32" name="poste_controle"></value>
+    			<value id="33" name="terrain_largage"></value>
+    			<value id="34" name="zone_interdite_mouvement"></value>
+    			<value id="35" name="zone_interdite_tir"></value>
+    			<value id="36" name="zone_implantation_mortier"></value>
+    			<value id="37" name="pont_flottant_discontinu"></value>
+    			<value id="38" name="installation"></value>
+    		</parameter>
+    	</mission>
+    	<mission id="303" name="JOINT AIR Effectuer Raid" dia-type="T_Mission_Pion_JOINT_AIR_EffectuerRaid" dia-behavior="MIS_Pion_JOINT_AIR_EffectuerRaid">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="304" name="NBC Animer Un Plot De Decontamination" dia-type="T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination" dia-behavior="MIS_Pion_NBC_AnimerUnPlotDeDecontamination">
+    		<parameter name="Position site decontamination" dia-name="positionSiteDecontamination_" type="Point"/>
+    	</mission>
+    	<mission id="305" name="NBC Reconnaitre Itineraire" dia-type="T_Mission_Pion_NBC_ReconnaitreItineraire" dia-behavior="MIS_Pion_NBC_ReconnaitreItineraire">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="306" name="NBC Reconnaitre Zone" dia-type="T_Mission_Pion_NBC_ReconnaitreZone" dia-behavior="MIS_Pion_NBC_ReconnaitreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="307" name="NBC Decontaminer Zone" dia-type="T_Mission_Pion_NBC_DecontaminerZone" dia-behavior="MIS_Pion_NBC_DecontaminerZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="308" name="NBC Reconnaitre Un Site ROTA" dia-type="T_Mission_Pion_NBC_ReconnaitreUnSiteROTA" dia-behavior="MIS_Pion_NBC_ReconnaitreUnSiteROTA">
+    		<parameter name="Site ROTA" dia-name="siteROTA_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="309" name="RENS ROHUM Renseigner Sur" dia-type="T_Mission_Pion_RENS_ROHUM_RenseignerSur" dia-behavior="MIS_Pion_RENS_ROHUM_RenseignerSur">
+    		<parameter name="Zone a observer" dia-name="zoneAObserver_" type="Polygon"/>
+    	</mission>
+    	<mission id="310" name="RENS ROHUM SExfiltrer" dia-type="T_Mission_Pion_RENS_ROHUM_SExfiltrer" dia-behavior="MIS_Pion_RENS_ROHUM_SExfiltrer">
+    		<parameter name="Point de regroupement" dia-name="pointDeRegroupement_" type="Point"/>
+    	</mission>
+    	<mission id="311" name="RENS ROHUM Orienter Guider" dia-type="T_Mission_Pion_RENS_ROHUM_OrienterGuider" dia-behavior="MIS_Pion_RENS_ROHUM_OrienterGuider">
+    		<parameter name="Ami" dia-name="ami_" type="Agent"/>
+    	</mission>
+    	<mission id="312" name="RENS ROEM Appuyer" dia-type="T_Mission_Pion_RENS_ROEM_Appuyer" dia-behavior="MIS_Pion_RENS_ROEM_Appuyer">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    	</mission>
+    	<mission id="313" name="RENS ROEM Renseigner Sur" dia-type="T_Mission_Pion_RENS_ROEM_RenseignerSur" dia-behavior="MIS_Pion_RENS_ROEM_RenseignerSur">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="314" name="RENS ROEM Mettre En Oeuvre" dia-type="T_Mission_Pion_RENS_ROEM_MettreEnOeuvre" dia-behavior="MIS_Pion_RENS_ROEM_MettreEnOeuvre">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="315" name="RENS RADINT Renseigner Sur" dia-type="T_Mission_Pion_RENS_RADINT_RenseignerSur" dia-behavior="MIS_Pion_RENS_RADINT_RenseignerSur">
+    		<parameter name="Zones de recherche" dia-name="zonesDeRecherche_" type="PolygonList"/>
+    	</mission>
+    	<mission id="316" name="RENS RADINT Mettre En Oeuvre" dia-type="T_Mission_Pion_RENS_RADINT_MettreEnOeuvre" dia-behavior="MIS_Pion_RENS_RADINT_MettreEnOeuvre">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="317" name="RENS ROIM Mettre En Oeuvre" dia-type="T_Mission_Pion_RENS_ROIM_MettreEnOeuvre" dia-behavior="MIS_Pion_RENS_ROIM_MettreEnOeuvre">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="318" name="RENS ROIM SDTI Renseigner Sur" dia-type="T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur" dia-behavior="MIS_Pion_RENS_ROIM_SDTI_RenseignerSur">
+    		<parameter name="Ficelle de vole" dia-name="ficelleDeVole_" type="Path"/>
+    	</mission>
+    	<mission id="319" name="RENS ROIM CL289 Renseigner Sur" dia-type="T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur" dia-behavior="MIS_Pion_RENS_ROIM_CL289_RenseignerSur">
+    		<parameter name="Ficelle de vole" dia-name="ficelleDeVole_" type="Path"/>
+    		<parameter name="Zones de recherche" dia-name="zonesDeRecherche_" type="PolygonList"/>
+    	</mission>
+    	<mission id="320" name="TRANS Etablir Gerer Liaison" dia-type="T_Mission_Pion_TRANS_EtablirGererLiaison" dia-behavior="MIS_Pion_TRANS_EtablirGererLiaison">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    	</mission>
+    	<mission id="321" name="ASY SInfiltrer" dia-type="T_Mission_Pion_ASY_SInfiltrer" dia-behavior="MIS_Pion_ASY_SInfiltrer">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="322" name="ASY Commettre Attentat Contre Population" dia-type="T_Mission_Pion_ASY_CommettreAttentatContrePopulation" dia-behavior="MIS_Pion_ASY_CommettreAttentatContrePopulation">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Point repli" dia-name="pointRepli_" type="Point"/>
+    		<parameter name="Population cible" dia-name="populationCible_" type="PopulationKnowledge"/>
+    	</mission>
+    	<mission id="323" name="ASY Commettre Attentat Contre Forces Armees" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees" dia-behavior="MIS_Pion_ASY_CommettreAttentatContreForcesArmees">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Point repli" dia-name="pointRepli_" type="Point"/>
+    		<parameter name="Type attentat forces armees" dia-name="typeAttentatForcesArmees_" type="enumeration">
+    			<value id="0" name="assasinat_officier"></value>
+    			<value id="1" name="destruction_composante_majeure"></value>
+    		</parameter>
+    		<parameter name="Unite cible" dia-name="uniteCible_" type="AgentKnowledge"/>
+    	</mission>
+    	<mission id="324" name="ASY Commettre Attentat Contre Installation" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreInstallation" dia-behavior="MIS_Pion_ASY_CommettreAttentatContreInstallation">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    		<parameter name="Point repli" dia-name="pointRepli_" type="Point"/>
+    		<parameter name="Installation cible" dia-name="installationCible_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="325" name="ASY Commettre Exactions Sur Population Dans Zone" dia-type="T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone" dia-behavior="MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="326" name="ASY Renseigner" dia-type="T_Mission_Pion_ASY_Renseigner" dia-behavior="MIS_Pion_ASY_Renseigner">
+    		<parameter name="Destinataire" dia-name="destinataire_" type="Automate"/>
+    	</mission>
+    </units>
+    
+    <automats>
+    	<mission id="1" name="ALAT Aller Se Recompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter">
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="2" name="ALAT Detruire Neutraliser Dans Profondeur" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansProfondeur" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur" cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansProfondeur">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Point dislocation" dia-name="pointDislocation_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Neutraliser" dia-name="neutraliser_" type="Bool"/>
+    	</mission>
+    	<mission id="3" name="ALAT Detruire Neutraliser Dans Zone" dia-type="T_Mission_Automate_ALAT_DetruireNeutraliserDansZone" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DetruireNeutraliserDansZone" cdt-dia-behavior="MIS_Automate_CDT_ALAT_DetruireNeutraliserDansZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Point dislocation" dia-name="pointDislocation_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Neutraliser" dia-name="neutraliser_" type="Bool"/>
+    	</mission>
+    	<mission id="4" name="ALAT Donner Coup Arret" dia-type="T_Mission_Automate_ALAT_DonnerCoupArret" mrt-dia-behavior="MIS_Automate_MRT_ALAT_DonnerCoupArret" cdt-dia-behavior="MIS_Automate_CDT_ALAT_DonnerCoupArret">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="5" name="ALAT Attaquer Formation Aeromobile" dia-type="T_Mission_Automate_ALAT_AttaquerFormationAeromobile" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AttaquerFormationAeromobile" cdt-dia-behavior="MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile">
+    		<parameter name="Unites a attaquer" dia-name="unitesAAttaquer_" type="AgentKnowledgeList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="6" name="ALAT Recueillir Formation Aeromobile" dia-type="T_Mission_Automate_ALAT_RecueillirFormationAeromobile" mrt-dia-behavior="MIS_Automate_MRT_ALAT_RecueillirFormationAeromobile" cdt-dia-behavior="MIS_Automate_CDT_ALAT_RecueillirFormationAeromobile">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="7" name="ALAT Heliporter" dia-type="T_Mission_Automate_ALAT_Heliporter" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Heliporter" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Heliporter">
+    		<parameter name="Unites a heliporter" dia-name="unitesAHeliporter_" type="AgentList"/>
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Avec materiel" dia-name="avecMateriel_" type="Bool"/>
+    	</mission>
+    	<mission id="8" name="ALAT Jalonner" dia-type="T_Mission_Automate_ALAT_Jalonner" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Jalonner" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Jalonner">
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="9" name="ALAT Helitransporter" dia-type="T_Mission_Automate_ALAT_Helitransporter" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Helitransporter" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Helitransporter">
+    		<parameter name="Unites a helitransporter" dia-name="unitesAHelitransporter_" type="AgentList"/>
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Avec materiel" dia-name="avecMateriel_" type="Bool"/>
+    	</mission>
+    	<mission id="10" name="ALAT Appuyer" dia-type="T_Mission_Automate_ALAT_Appuyer" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Appuyer" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Appuyer">
+    		<parameter name="Unites a appuyer" dia-name="unitesAAppuyer_" type="AgentList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Point dislocation" dia-name="pointDislocation_" type="Point"/>
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="11" name="ALAT Couvrir" dia-type="T_Mission_Automate_ALAT_Couvrir" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Couvrir" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Couvrir">
+    		<parameter name="Unites a appuyer" dia-name="unitesAAppuyer_" type="AgentList"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="12" name="ALAT Surveiller" dia-type="T_Mission_Automate_ALAT_Surveiller" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Surveiller" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Point logistique" dia-name="pointLogistique_" type="Point"/>
+    	</mission>
+    	<mission id="13" name="ALAT Reconnaitre" dia-type="T_Mission_Automate_ALAT_Reconnaitre" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Reconnaitre" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Reconnaitre">
+    		<parameter name="PointRegroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="14" name="ALAT Freiner" dia-type="T_Mission_Automate_ALAT_Freiner" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Freiner" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Freiner">
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="15" name="ALAT Escorter" dia-type="T_Mission_Automate_ALAT_Escorter" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Escorter" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Escorter">
+    		<parameter name="Unites a escorter" dia-name="unitesAEscorter_" type="AgentList"/>
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="16" name="ALAT Attaquer" dia-type="T_Mission_Automate_ALAT_Attaquer" mrt-dia-behavior="MIS_Automate_MRT_ALAT_Attaquer" cdt-dia-behavior="MIS_Automate_CDT_ALAT_Attaquer">
+    		<parameter name="Cibles prioritaires" dia-name="ciblesPrioritaires_" type="NatureAtlas"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    		<parameter name="Plots ravitaillement" dia-name="plotsRavitaillement_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="17" name="ASA Defendre Site" dia-type="T_Mission_Automate_ASA_DefendreSite" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreSite" cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreSite">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Positions sections" dia-name="positionsSections_" type="PointList"/>
+    	</mission>
+    	<mission id="18" name="ASA Defendre Zone" dia-type="T_Mission_Automate_ASA_DefendreZone" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreZone" cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Positions sections" dia-name="positionsSections_" type="PointList"/>
+    	</mission>
+    	<mission id="19" name="ASA Defendre Unites" dia-type="T_Mission_Automate_ASA_DefendreUnites" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreUnites" cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreUnites">
+    		<parameter name="Unites" dia-name="unites_" type="AgentList"/>
+    	</mission>
+    	<mission id="20" name="ASA Surveiller" dia-type="T_Mission_Automate_ASA_Surveiller" mrt-dia-behavior="MIS_Automate_MRT_ASA_Surveiller" cdt-dia-behavior="MIS_Automate_CDT_ASA_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Positions sections" dia-name="positionsSections_" type="PointList"/>
+    	</mission>
+    	<mission id="21" name="ASA Defendre Itineraire" dia-type="T_Mission_Automate_ASA_DefendreItineraire" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreItineraire" cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreItineraire">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="22" name="ASA MISTRAL Defendre Zone" dia-type="T_Mission_Automate_ASA_MISTRAL_DefendreZone" mrt-dia-behavior="MIS_Automate_MRT_ASA_MISTRAL_DefendreZone" cdt-dia-behavior="MIS_Automate_CDT_ASA_MISTRAL_DefendreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="en_carre"></value>
+    			<value id="1" name="en_triangle"></value>
+    			<value id="2" name="nasse_trois_sections"></value>
+    			<value id="3" name="nasse_quatre_sections"></value>
+    			<value id="4" name="double_rideau"></value>
+    			<value id="5" name="simple_rideau"></value>
+    		</parameter>
+    		<parameter name="Angle" dia-name="angle_" type="Numeric"/>
+    	</mission>
+    	<mission id="23" name="ASA MISTRAL Defendre Site" dia-type="T_Mission_Automate_ASA_MISTRAL_DefendreSite" mrt-dia-behavior="MIS_Automate_MRT_ASA_MISTRAL_DefendreSite" cdt-dia-behavior="MIS_Automate_CDT_ASA_MISTRAL_DefendreSite">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="en_carre"></value>
+    			<value id="1" name="en_triangle"></value>
+    			<value id="2" name="nasse_trois_sections"></value>
+    			<value id="3" name="nasse_quatre_sections"></value>
+    			<value id="4" name="double_rideau"></value>
+    			<value id="5" name="simple_rideau"></value>
+    		</parameter>
+    		<parameter name="Angle" dia-name="angle_" type="Numeric"/>
+    	</mission>
+    	<mission id="24" name="ASA MISTRAL Surveiller" dia-type="T_Mission_Automate_ASA_MISTRAL_Surveiller" mrt-dia-behavior="MIS_Automate_MRT_ASA_MISTRAL_Surveiller" cdt-dia-behavior="MIS_Automate_CDT_ASA_MISTRAL_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Mode deploiement" dia-name="modeDeploiement_" type="enumeration">
+    			<value id="0" name="en_carre"></value>
+    			<value id="1" name="en_triangle"></value>
+    			<value id="2" name="nasse_trois_sections"></value>
+    			<value id="3" name="nasse_quatre_sections"></value>
+    			<value id="4" name="double_rideau"></value>
+    			<value id="5" name="simple_rideau"></value>
+    		</parameter>
+    		<parameter name="Angle" dia-name="angle_" type="Numeric"/>
+    	</mission>
+    	<mission id="25" name="ASA HAWK Defendre Zone" dia-type="T_Mission_Automate_ASA_HAWK_DefendreZone" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_DefendreZone" cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_DefendreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Positions sections" dia-name="positionsSections_" type="PointList"/>
+    	</mission>
+    	<mission id="26" name="ASA HAWK Defendre Site" dia-type="T_Mission_Automate_ASA_HAWK_DefendreSite" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_DefendreSite" cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_DefendreSite">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Positions sections" dia-name="positionsSections_" type="PointList"/>
+    	</mission>
+    	<mission id="27" name="ASA HAWK Surveiller" dia-type="T_Mission_Automate_ASA_HAWK_Surveiller" mrt-dia-behavior="MIS_Automate_MRT_ASA_HAWK_Surveiller" cdt-dia-behavior="MIS_Automate_CDT_ASA_HAWK_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Positions sections" dia-name="positionsSections_" type="PointList"/>
+    	</mission>
+    	<mission id="28" name="ASS Se Deployer" dia-type="T_Mission_Automate_ASS_SeDeployer" mrt-dia-behavior="MIS_Automate_MRT_ASS_SeDeployer" cdt-dia-behavior="MIS_Automate_CDT_ASS_SeDeployer">
+    		<parameter name="Zone deploiement" dia-name="zoneDeploiement_" type="Polygon"/>
+    	</mission>
+    	<mission id="29" name="ASS Reconnaitre Zones Deploiement" dia-type="T_Mission_Automate_ASS_ReconnaitreZonesDeploiement" mrt-dia-behavior="MIS_Automate_MRT_ASS_ReconnaitreZonesDeploiement" cdt-dia-behavior="MIS_Automate_CDT_ASS_ReconnaitreZonesDeploiement">
+    		<parameter name="Positions a reconnaitre" dia-name="positionsAReconnaitre_" type="PointList"/>
+    	</mission>
+    	<mission id="30" name="ASS Acquerir Objectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs">
+    		<parameter name="Zones a observer" dia-name="zonesAObserver_" type="PolygonList"/>
+    		<parameter name="Positions deploiement" dia-name="positionsDeploiement_" type="PointList"/>
+    		<parameter name="Categories" dia-name="categories_" type="NatureAtlas"/>
+    	</mission>
+    	<mission id="31" name="ABC Appuyer" dia-type="T_Mission_Automate_ABC_Appuyer" mrt-dia-behavior="MIS_Automate_MRT_ABC_Appuyer" cdt-dia-behavior="MIS_Automate_CDT_ABC_Appuyer">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="32" name="ABC Attaquer" dia-type="T_Mission_Automate_ABC_Attaquer" mrt-dia-behavior="MIS_Automate_MRT_ABC_Attaquer" cdt-dia-behavior="MIS_Automate_CDT_ABC_Attaquer">
+    	</mission>
+    	<mission id="33" name="ABC Contre Attaquer" dia-type="T_Mission_Automate_ABC_ContreAttaquer" mrt-dia-behavior="MIS_Automate_MRT_ABC_ContreAttaquer" cdt-dia-behavior="MIS_Automate_CDT_ABC_ContreAttaquer">
+    	</mission>
+    	<mission id="34" name="ABC Controler" dia-type="T_Mission_Automate_ABC_Controler" mrt-dia-behavior="MIS_Automate_MRT_ABC_Controler" cdt-dia-behavior="MIS_Automate_CDT_ABC_Controler">
+    		<parameter name="Zone a controler" dia-name="zoneAControler_" type="Polygon"/>
+    	</mission>
+    	<mission id="35" name="ABC Couvrir" dia-type="T_Mission_Automate_ABC_Couvrir" mrt-dia-behavior="MIS_Automate_MRT_ABC_Couvrir" cdt-dia-behavior="MIS_Automate_CDT_ABC_Couvrir">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Polygon"/>
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="36" name="ABC Donner Coup Arret" dia-type="T_Mission_Automate_ABC_DonnerCoupArret" mrt-dia-behavior="MIS_Automate_MRT_ABC_DonnerCoupArret" cdt-dia-behavior="MIS_Automate_CDT_ABC_DonnerCoupArret">
+    		<parameter name="Zone regroupement" dia-name="zoneRegroupement_" type="Polygon"/>
+    	</mission>
+    	<mission id="37" name="ABC Eclairer" dia-type="T_Mission_Automate_ABC_Eclairer" mrt-dia-behavior="MIS_Automate_MRT_ABC_Eclairer" cdt-dia-behavior="MIS_Automate_CDT_ABC_Eclairer">
+    	</mission>
+    	<mission id="38" name="ABC Effectuer Raid" dia-type="T_Mission_Automate_ABC_EffectuerRaid" mrt-dia-behavior="MIS_Automate_MRT_ABC_EffectuerRaid" cdt-dia-behavior="MIS_Automate_CDT_ABC_EffectuerRaid">
+    	</mission>
+    	<mission id="39" name="ABC Interdire" dia-type="T_Mission_Automate_ABC_Interdire" mrt-dia-behavior="MIS_Automate_MRT_ABC_Interdire" cdt-dia-behavior="MIS_Automate_CDT_ABC_Interdire">
+    	</mission>
+    	<mission id="40" name="ABC Jalonner" dia-type="T_Mission_Automate_ABC_Jalonner" mrt-dia-behavior="MIS_Automate_MRT_ABC_Jalonner" cdt-dia-behavior="MIS_Automate_CDT_ABC_Jalonner">
+    	</mission>
+    	<mission id="41" name="ABC Prendre Preciser Contact" dia-type="T_Mission_Automate_ABC_PrendrePreciserContact" mrt-dia-behavior="MIS_Automate_MRT_ABC_PrendrePreciserContact" cdt-dia-behavior="MIS_Automate_CDT_ABC_PrendrePreciserContact">
+    	</mission>
+    	<mission id="42" name="ABC Reconnaitre" dia-type="T_Mission_Automate_ABC_Reconnaitre" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reconnaitre" cdt-dia-behavior="MIS_Automate_CDT_ABC_Reconnaitre">
+    	</mission>
+    	<mission id="43" name="ABC Reconnaitre Point" dia-type="T_Mission_Automate_ABC_ReconnaitrePoint" mrt-dia-behavior="MIS_Automate_MRT_ABC_ReconnaitrePoint" cdt-dia-behavior="MIS_Automate_CDT_ABC_ReconnaitrePoint">
+    		<parameter name="Point a reconnaitre" dia-name="pointAReconnaitre_" type="Polygon"/>
+    	</mission>
+    	<mission id="44" name="ABC Reduire" dia-type="T_Mission_Automate_ABC_Reduire" mrt-dia-behavior="MIS_Automate_MRT_ABC_Reduire" cdt-dia-behavior="MIS_Automate_CDT_ABC_Reduire">
+    		<parameter name="Zone resistance" dia-name="zoneResistance_" type="Polygon"/>
+    	</mission>
+    	<mission id="45" name="ABC Relever En Depassant" dia-type="T_Mission_Automate_ABC_ReleverEnDepassant" mrt-dia-behavior="MIS_Automate_MRT_ABC_ReleverEnDepassant" cdt-dia-behavior="MIS_Automate_CDT_ABC_ReleverEnDepassant">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="46" name="ABC Semparer" dia-type="T_Mission_Automate_ABC_Semparer" mrt-dia-behavior="MIS_Automate_MRT_ABC_Semparer" cdt-dia-behavior="MIS_Automate_CDT_ABC_Semparer">
+    		<parameter name="Objectif" dia-name="objectif_" type="Polygon"/>
+    	</mission>
+    	<mission id="47" name="ABC Tenir" dia-type="T_Mission_Automate_ABC_Tenir" mrt-dia-behavior="MIS_Automate_MRT_ABC_Tenir" cdt-dia-behavior="MIS_Automate_CDT_ABC_Tenir">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Polygon"/>
+    	</mission>
+    	<mission id="48" name="ABC Soutenir" dia-type="T_Mission_Automate_ABC_Soutenir" mrt-dia-behavior="MIS_Automate_MRT_ABC_Soutenir" cdt-dia-behavior="MIS_Automate_CDT_ABC_Soutenir">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="49" name="ABC Surveiller" dia-type="T_Mission_Automate_ABC_Surveiller" mrt-dia-behavior="MIS_Automate_MRT_ABC_Surveiller" cdt-dia-behavior="MIS_Automate_CDT_ABC_Surveiller">
+    		<parameter name="Zone installation" dia-name="zoneInstallation_" type="Polygon"/>
+    	</mission>
+    	<mission id="50" name="ABC Flanc Garder" dia-type="T_Mission_Automate_ABC_FlancGarder" mrt-dia-behavior="MIS_Automate_MRT_ABC_FlancGarder" cdt-dia-behavior="MIS_Automate_CDT_ABC_FlancGarder">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="51" name="ABC Renseigner Sur" dia-type="T_Mission_Automate_ABC_RenseignerSur" mrt-dia-behavior="MIS_Automate_MRT_ABC_RenseignerSur" cdt-dia-behavior="MIS_Automate_CDT_ABC_RenseignerSur">
+    		<parameter name="Zone a renseigner" dia-name="zoneARenseigner_" type="Polygon"/>
+    	</mission>
+    	<mission id="52" name="ABC Fixer" dia-type="T_Mission_Automate_ABC_Fixer" mrt-dia-behavior="MIS_Automate_MRT_ABC_Fixer" cdt-dia-behavior="MIS_Automate_CDT_ABC_Fixer">
+    		<parameter name="Ennemis" dia-name="ennemis_" type="AgentKnowledgeList"/>
+    	</mission>
+    	<mission id="53" name="ABC Freiner" dia-type="T_Mission_Automate_ABC_Freiner" mrt-dia-behavior="MIS_Automate_MRT_ABC_Freiner" cdt-dia-behavior="MIS_Automate_CDT_ABC_Freiner">
+    	</mission>
+    	<mission id="54" name="ABC Surveiller Itineraire" dia-type="T_Mission_Automate_ABC_SurveillerItineraire" mrt-dia-behavior="MIS_Automate_MRT_ABC_SurveillerItineraire" cdt-dia-behavior="MIS_Automate_CDT_ABC_SurveillerItineraire">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="55" name="ABC Renseigner Sur Un Axe" dia-type="T_Mission_Automate_ABC_RenseignerSurUnAxe" mrt-dia-behavior="MIS_Automate_MRT_ABC_RenseignerSurUnAxe" cdt-dia-behavior="MIS_Automate_CDT_ABC_RenseignerSurUnAxe">
+    	</mission>
+    	<mission id="56" name="ABC Recueillir Unite" dia-type="T_Mission_Automate_ABC_RecueillirUnite" mrt-dia-behavior="MIS_Automate_MRT_ABC_RecueillirUnite" cdt-dia-behavior="MIS_Automate_CDT_ABC_RecueillirUnite">
+    		<parameter name="Zone regroupement" dia-name="zoneRegroupement_" type="Polygon"/>
+    	</mission>
+    	<mission id="57" name="ABC Escorter Unite" dia-type="T_Mission_Automate_ABC_EscorterUnite" mrt-dia-behavior="MIS_Automate_MRT_ABC_EscorterUnite" cdt-dia-behavior="MIS_Automate_CDT_ABC_EscorterUnite">
+    		<parameter name="Unite a escorter" dia-name="uniteAEscorter_" type="Agent"/>
+    	</mission>
+    	<mission id="58" name="ABC Escorter Unites" dia-type="T_Mission_Automate_ABC_EscorterUnites" mrt-dia-behavior="MIS_Automate_MRT_ABC_EscorterUnites" cdt-dia-behavior="MIS_Automate_CDT_ABC_EscorterUnites">
+    		<parameter name="Automate a escorter" dia-name="automateAEscorter_" type="Automate"/>
+    	</mission>
+    	<mission id="59" name="ABC Armer Point De Controle" dia-type="T_Mission_Automate_ABC_ArmerPointDeControle" mrt-dia-behavior="MIS_Automate_MRT_ABC_ArmerPointDeControle" cdt-dia-behavior="MIS_Automate_CDT_ABC_ArmerPointDeControle">
+    		<parameter name="Zone de controle" dia-name="zoneDeControle_" type="Polygon"/>
+    	</mission>
+    	<mission id="60" name="ABC Organiser Accueil Colonne Refugies" dia-type="T_Mission_Automate_ABC_OrganiserAccueilColonneRefugies" mrt-dia-behavior="MIS_Automate_MRT_ABC_OrganiserAccueilColonneRefugies" cdt-dia-behavior="MIS_Automate_CDT_ABC_OrganiserAccueilColonneRefugies">
+    		<parameter name="Zone installation" dia-name="zoneInstallation_" type="Polygon"/>
+    	</mission>
+    	<mission id="61" name="ABC Proteger PC" dia-type="T_Mission_Automate_ABC_ProtegerPC" mrt-dia-behavior="MIS_Automate_MRT_ABC_ProtegerPC" cdt-dia-behavior="MIS_Automate_CDT_ABC_ProtegerPC">
+    		<parameter name="Pc" dia-name="pc_" type="Automate"/>
+    	</mission>
+    	<mission id="62" name="ABC Appuyer Sur Position" dia-type="T_Mission_Automate_ABC_AppuyerSurPosition" mrt-dia-behavior="MIS_Automate_MRT_ABC_AppuyerSurPosition" cdt-dia-behavior="MIS_Automate_CDT_ABC_AppuyerSurPosition">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Polygon"/>
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="63" name="GEN Se Deployer" dia-type="T_Mission_Automate_GEN_SeDeployer" mrt-dia-behavior="MIS_Automate_MRT_GEN_SeDeployer" cdt-dia-behavior="MIS_Automate_CDT_GEN_SeDeployer">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="64" name="GEN Reconnaitre Zone" dia-type="T_Mission_Automate_GEN_ReconnaitreZone" mrt-dia-behavior="MIS_Automate_MRT_GEN_ReconnaitreZone" cdt-dia-behavior="MIS_Automate_CDT_GEN_ReconnaitreZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="65" name="GEN Realiser Travaux" dia-type="T_Mission_Automate_GEN_RealiserTravaux" mrt-dia-behavior="MIS_Automate_MRT_GEN_RealiserTravaux" cdt-dia-behavior="MIS_Automate_CDT_GEN_RealiserTravaux">
+    		<parameter name="Travaux" dia-name="travaux_" type="GenObjectList"/>
+    	</mission>
+    	<mission id="66" name="GEN Ouvrir Itineraires" dia-type="T_Mission_Automate_GEN_OuvrirItineraires" mrt-dia-behavior="MIS_Automate_MRT_GEN_OuvrirItineraires" cdt-dia-behavior="MIS_Automate_CDT_GEN_OuvrirItineraires">
+    		<parameter name="Itineraires" dia-name="itineraires_" type="PathList"/>
+    	</mission>
+    	<mission id="67" name="GEN Retablir Itineraires" dia-type="T_Mission_Automate_GEN_RetablirItineraires" mrt-dia-behavior="MIS_Automate_MRT_GEN_RetablirItineraires" cdt-dia-behavior="MIS_Automate_CDT_GEN_RetablirItineraires">
+    		<parameter name="Itineraires" dia-name="itineraires_" type="PathList"/>
+    	</mission>
+    	<mission id="68" name="GEN Faire Franchir" dia-type="T_Mission_Automate_GEN_FaireFranchir" mrt-dia-behavior="MIS_Automate_MRT_GEN_FaireFranchir" cdt-dia-behavior="MIS_Automate_CDT_GEN_FaireFranchir">
+    		<parameter name="Sites de franchissement" dia-name="sitesDeFranchissement_" type="ObjectKnowledgeList"/>
+    		<parameter name="Zone regroupement" dia-name="zoneRegroupement_" type="Location"/>
+    	</mission>
+    	<mission id="69" name="GEN Franchir De Vive Force" dia-type="T_Mission_Automate_GEN_FranchirDeViveForce" mrt-dia-behavior="MIS_Automate_MRT_GEN_FranchirDeViveForce" cdt-dia-behavior="MIS_Automate_CDT_GEN_FranchirDeViveForce">
+    		<parameter name="Obstacles" dia-name="obstacles_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="70" name="GEN Degager Obstacles Dans Zone" dia-type="T_Mission_Automate_GEN_DegagerObstaclesDansZone" mrt-dia-behavior="MIS_Automate_MRT_GEN_DegagerObstaclesDansZone" cdt-dia-behavior="MIS_Automate_CDT_GEN_DegagerObstaclesDansZone">
+    		<parameter name="Obstacles" dia-name="obstacles_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="71" name="INF Attaquer Souplesse" dia-type="T_Mission_Automate_INF_AttaquerSouplesse" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerSouplesse" cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerSouplesse">
+    		<parameter name="Objectifs" dia-name="objectifs_" type="PointList"/>
+    	</mission>
+    	<mission id="72" name="INF Appuyer" dia-type="T_Mission_Automate_INF_Appuyer" mrt-dia-behavior="MIS_Automate_MRT_INF_Appuyer" cdt-dia-behavior="MIS_Automate_CDT_INF_Appuyer">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="73" name="INF Controler" dia-type="T_Mission_Automate_INF_Controler" mrt-dia-behavior="MIS_Automate_MRT_INF_Controler" cdt-dia-behavior="MIS_Automate_CDT_INF_Controler">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="74" name="INF Couvrir" dia-type="T_Mission_Automate_INF_Couvrir" mrt-dia-behavior="MIS_Automate_MRT_INF_Couvrir" cdt-dia-behavior="MIS_Automate_CDT_INF_Couvrir">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    		<parameter name="Objectifs" dia-name="objectifs_" type="PointList"/>
+    	</mission>
+    	<mission id="75" name="INF Donner Coup Arret" dia-type="T_Mission_Automate_INF_DonnerCoupArret" mrt-dia-behavior="MIS_Automate_MRT_INF_DonnerCoupArret" cdt-dia-behavior="MIS_Automate_CDT_INF_DonnerCoupArret">
+    		<parameter name="Zone regroupement" dia-name="zoneRegroupement_" type="Polygon"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="76" name="INF Eclairer" dia-type="T_Mission_Automate_INF_Eclairer" mrt-dia-behavior="MIS_Automate_MRT_INF_Eclairer" cdt-dia-behavior="MIS_Automate_CDT_INF_Eclairer">
+    	</mission>
+    	<mission id="77" name="INF Flanc Garder" dia-type="T_Mission_Automate_INF_FlancGarder" mrt-dia-behavior="MIS_Automate_MRT_INF_FlancGarder" cdt-dia-behavior="MIS_Automate_CDT_INF_FlancGarder">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="78" name="INF Freiner" dia-type="T_Mission_Automate_INF_Freiner" mrt-dia-behavior="MIS_Automate_MRT_INF_Freiner" cdt-dia-behavior="MIS_Automate_CDT_INF_Freiner">
+    	</mission>
+    	<mission id="79" name="INF Harceler" dia-type="T_Mission_Automate_INF_Harceler" mrt-dia-behavior="MIS_Automate_MRT_INF_Harceler" cdt-dia-behavior="MIS_Automate_CDT_INF_Harceler">
+    		<parameter name="Zone surveillance" dia-name="zoneSurveillance_" type="Polygon"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Polygon"/>
+    	</mission>
+    	<mission id="80" name="INF Interdire" dia-type="T_Mission_Automate_INF_Interdire" mrt-dia-behavior="MIS_Automate_MRT_INF_Interdire" cdt-dia-behavior="MIS_Automate_CDT_INF_Interdire">
+    		<parameter name="Points a interdire" dia-name="pointsAInterdire_" type="PointList"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="81" name="INF Mener Defense Usure" dia-type="T_Mission_Automate_INF_MenerDefenseUsure" mrt-dia-behavior="MIS_Automate_MRT_INF_MenerDefenseUsure" cdt-dia-behavior="MIS_Automate_CDT_INF_MenerDefenseUsure">
+    	</mission>
+    	<mission id="82" name="INF Prendre Preciser Maintenir Contact" dia-type="T_Mission_Automate_INF_PrendrePreciserMaintenirContact" mrt-dia-behavior="MIS_Automate_MRT_INF_PrendrePreciserMaintenirContact" cdt-dia-behavior="MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact">
+    	</mission>
+    	<mission id="83" name="INF Reconnaissance Offensive" dia-type="T_Mission_Automate_INF_ReconnaissanceOffensive" mrt-dia-behavior="MIS_Automate_MRT_INF_ReconnaissanceOffensive" cdt-dia-behavior="MIS_Automate_CDT_INF_ReconnaissanceOffensive">
+    	</mission>
+    	<mission id="84" name="INF Recueillir Unite" dia-type="T_Mission_Automate_INF_RecueillirUnite" mrt-dia-behavior="MIS_Automate_MRT_INF_RecueillirUnite" cdt-dia-behavior="MIS_Automate_CDT_INF_RecueillirUnite">
+    		<parameter name="Zone deploiement" dia-name="zoneDeploiement_" type="Polygon"/>
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    		<parameter name="Pias" dia-name="pias_" type="PointList"/>
+    	</mission>
+    	<mission id="85" name="INF Reduire" dia-type="T_Mission_Automate_INF_Reduire" mrt-dia-behavior="MIS_Automate_MRT_INF_Reduire" cdt-dia-behavior="MIS_Automate_CDT_INF_Reduire">
+    		<parameter name="Points resistance" dia-name="pointsResistance_" type="PointList"/>
+    	</mission>
+    	<mission id="86" name="INF Relever" dia-type="T_Mission_Automate_INF_Relever" mrt-dia-behavior="MIS_Automate_MRT_INF_Relever" cdt-dia-behavior="MIS_Automate_CDT_INF_Relever">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="87" name="INF Rompre Contact" dia-type="T_Mission_Automate_INF_RompreContact" mrt-dia-behavior="MIS_Automate_MRT_INF_RompreContact" cdt-dia-behavior="MIS_Automate_CDT_INF_RompreContact">
+    		<parameter name="Zone regroupement" dia-name="zoneRegroupement_" type="Polygon"/>
+    	</mission>
+    	<mission id="88" name="INF Surveiller" dia-type="T_Mission_Automate_INF_Surveiller" mrt-dia-behavior="MIS_Automate_MRT_INF_Surveiller" cdt-dia-behavior="MIS_Automate_CDT_INF_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    		<parameter name="Zone regroupement" dia-name="zoneRegroupement_" type="Polygon"/>
+    	</mission>
+    	<mission id="89" name="INF Semparer" dia-type="T_Mission_Automate_INF_Semparer" mrt-dia-behavior="MIS_Automate_MRT_INF_Semparer" cdt-dia-behavior="MIS_Automate_CDT_INF_Semparer">
+    		<parameter name="Objectif" dia-name="objectif_" type="Polygon"/>
+    	</mission>
+    	<mission id="90" name="INF Fixer" dia-type="T_Mission_Automate_INF_Fixer" mrt-dia-behavior="MIS_Automate_MRT_INF_Fixer" cdt-dia-behavior="MIS_Automate_CDT_INF_Fixer">
+    		<parameter name="Ennemis" dia-name="ennemis_" type="AgentKnowledgeList"/>
+    	</mission>
+    	<mission id="91" name="INF Attaquer En Terrain Difficile" dia-type="T_Mission_Automate_INF_AttaquerEnTerrainDifficile" mrt-dia-behavior="MIS_Automate_MRT_INF_AttaquerEnTerrainDifficile" cdt-dia-behavior="MIS_Automate_CDT_INF_AttaquerEnTerrainDifficile">
+    		<parameter name="Objectifs" dia-name="objectifs_" type="PointList"/>
+    	</mission>
+    	<mission id="92" name="INF Barrer Direction" dia-type="T_Mission_Automate_INF_BarrerDirection" mrt-dia-behavior="MIS_Automate_MRT_INF_BarrerDirection" cdt-dia-behavior="MIS_Automate_CDT_INF_BarrerDirection">
+    		<parameter name="Position" dia-name="position_" type="Polygon"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="93" name="INF Defendre Ferme" dia-type="T_Mission_Automate_INF_DefendreFerme" mrt-dia-behavior="MIS_Automate_MRT_INF_DefendreFerme" cdt-dia-behavior="MIS_Automate_CDT_INF_DefendreFerme">
+    		<parameter name="Position" dia-name="position_" type="Polygon"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="94" name="INF Tenir" dia-type="T_Mission_Automate_INF_Tenir" mrt-dia-behavior="MIS_Automate_MRT_INF_Tenir" cdt-dia-behavior="MIS_Automate_CDT_INF_Tenir">
+    		<parameter name="Position" dia-name="position_" type="Polygon"/>
+    		<parameter name="Preparer terrain" dia-name="preparerTerrain_" type="Bool"/>
+    	</mission>
+    	<mission id="95" name="INF Appuyer Un Freinage" dia-type="T_Mission_Automate_INF_AppuyerUnFreinage" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerUnFreinage" cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerUnFreinage">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="96" name="INF Appuyer Une Attaque" dia-type="T_Mission_Automate_INF_AppuyerUneAttaque" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerUneAttaque" cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerUneAttaque">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="97" name="INF Soutenir" dia-type="T_Mission_Automate_INF_Soutenir" mrt-dia-behavior="MIS_Automate_MRT_INF_Soutenir" cdt-dia-behavior="MIS_Automate_CDT_INF_Soutenir">
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="98" name="INF Escorter Unite" dia-type="T_Mission_Automate_INF_EscorterUnite" mrt-dia-behavior="MIS_Automate_MRT_INF_EscorterUnite" cdt-dia-behavior="MIS_Automate_CDT_INF_EscorterUnite">
+    		<parameter name="Unite a escorter" dia-name="uniteAEscorter_" type="Agent"/>
+    	</mission>
+    	<mission id="99" name="INF Escorter Unites" dia-type="T_Mission_Automate_INF_EscorterUnites" mrt-dia-behavior="MIS_Automate_MRT_INF_EscorterUnites" cdt-dia-behavior="MIS_Automate_CDT_INF_EscorterUnites">
+    		<parameter name="Automate a escorter" dia-name="automateAEscorter_" type="Automate"/>
+    	</mission>
+    	<mission id="100" name="INF Appuyer Sur Position" dia-type="T_Mission_Automate_INF_AppuyerSurPosition" mrt-dia-behavior="MIS_Automate_MRT_INF_AppuyerSurPosition" cdt-dia-behavior="MIS_Automate_CDT_INF_AppuyerSurPosition">
+    		<parameter name="Position installation" dia-name="positionInstallation_" type="Polygon"/>
+    		<parameter name="Compagnie" dia-name="compagnie_" type="Automate"/>
+    	</mission>
+    	<mission id="101" name="LOG Se Deployer" dia-type="T_Mission_Automate_LOG_SeDeployer" mrt-dia-behavior="MIS_Automate_MRT_LOG_SeDeployer" cdt-dia-behavior="MIS_Automate_CDT_LOG_SeDeployer">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point" optional="true"/>
+    	</mission>
+    	<mission id="102" name="LOG Appuyer Mouvement" dia-type="T_Mission_Automate_LOG_AppuyerMouvement" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvement" cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvement">
+    		<parameter name="Unites a appuyer" dia-name="unitesAAppuyer_" type="AgentList"/>
+    	</mission>
+    	<mission id="103" name="LOG Reconnaitre Itineraire" dia-type="T_Mission_Automate_LOG_ReconnaitreItineraire" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreItineraire" cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreItineraire">
+    		<parameter name="Itineraire log" dia-name="itineraireLog_" type="Path"/>
+    	</mission>
+    	<mission id="104" name="LOG Appuyer Mouvement Dans Zone" dia-type="T_Mission_Automate_LOG_AppuyerMouvementDansZone" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerMouvementDansZone" cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerMouvementDansZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="105" name="LOG Mettre En Oeuvre Zone Stationnement" dia-type="T_Mission_Automate_LOG_MettreEnOeuvreZoneStationnement" mrt-dia-behavior="MIS_Automate_MRT_LOG_MettreEnOeuvreZoneStationnement" cdt-dia-behavior="MIS_Automate_CDT_LOG_MettreEnOeuvreZoneStationnement">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="106" name="LOG Appuyer Franchissement Dans Zone" dia-type="T_Mission_Automate_LOG_AppuyerFranchissementDansZone" mrt-dia-behavior="MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone" cdt-dia-behavior="MIS_Automate_CDT_LOG_AppuyerFranchissementDansZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="107" name="LOG Bloquer Zone" dia-type="T_Mission_Automate_LOG_BloquerZone" mrt-dia-behavior="MIS_Automate_MRT_LOG_BloquerZone" cdt-dia-behavior="MIS_Automate_CDT_LOG_BloquerZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="108" name="LOG Reconnaitre Zone Contaminee" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneContaminee" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneContaminee" cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneContaminee">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="109" name="LOG Reconnaitre Zone De Deploiement" dia-type="T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement" mrt-dia-behavior="MIS_Automate_MRT_LOG_ReconnaitreZoneDeDeploiement" cdt-dia-behavior="MIS_Automate_CDT_LOG_ReconnaitreZoneDeDeploiement">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="110" name="LOG Surveiller" dia-type="T_Mission_Automate_LOG_Surveiller" mrt-dia-behavior="MIS_Automate_MRT_LOG_Surveiller" cdt-dia-behavior="MIS_Automate_CDT_LOG_Surveiller">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="111" name="LOG Armer PIAs" dia-type="T_Mission_Automate_LOG_ArmerPIAs" mrt-dia-behavior="MIS_Automate_MRT_LOG_ArmerPIAs" cdt-dia-behavior="MIS_Automate_CDT_LOG_ArmerPIAs">
+    	</mission>
+    	<mission id="112" name="Test Move To" dia-type="T_Mission_Automate_Test_MoveTo" mrt-dia-behavior="MIS_Automate_MRT_Test_MoveTo" cdt-dia-behavior="MIS_Automate_CDT_Test_MoveTo">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="113" name="Decrocher" dia-type="T_Mission_Automate_Decrocher" mrt-dia-behavior="MIS_Automate_MRT_Decrocher" cdt-dia-behavior="MIS_Automate_CDT_Decrocher">
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Polygon"/>
+    	</mission>
+    	<mission id="114" name="Relever Sur Place" dia-type="T_Mission_Automate_ReleverSurPlace" mrt-dia-behavior="MIS_Automate_MRT_ReleverSurPlace" cdt-dia-behavior="MIS_Automate_CDT_ReleverSurPlace">
+    		<parameter name="Compagnie a relever" dia-name="compagnieARelever_" type="Automate"/>
+    		<parameter name="Zone installation" dia-name="zoneInstallation_" type="Polygon"/>
+    	</mission>
+    	<mission id="115" name="Faire Mouvement" dia-type="T_Mission_Automate_FaireMouvement" mrt-dia-behavior="MIS_Automate_MRT_FaireMouvement" cdt-dia-behavior="MIS_Automate_CDT_FaireMouvement">
+    		<parameter name="Itineraire" dia-name="itineraire_" type="Path"/>
+    	</mission>
+    	<mission id="116" name="Se Faire Decontaminer" dia-type="T_Mission_Automate_SeFaireDecontaminer" mrt-dia-behavior="MIS_Automate_MRT_SeFaireDecontaminer" cdt-dia-behavior="MIS_Automate_CDT_SeFaireDecontaminer">
+    		<parameter name="Zone arrivee" dia-name="zoneArrivee_" type="Polygon"/>
+    		<parameter name="Site decontamination" dia-name="siteDecontamination_" type="ObjectKnowledge"/>
+    	</mission>
+    	<mission id="117" name="Franchir" dia-type="T_Mission_Automate_Franchir" mrt-dia-behavior="MIS_Automate_MRT_Franchir" cdt-dia-behavior="MIS_Automate_CDT_Franchir">
+    		<parameter name="Pont flottant" dia-name="pontFlottant_" type="ObjectKnowledge"/>
+    		<parameter name="Zone arrivee" dia-name="zoneArrivee_" type="Polygon"/>
+    	</mission>
+    	<mission id="118" name="Stationner" dia-type="T_Mission_Automate_Stationner" mrt-dia-behavior="MIS_Automate_MRT_Stationner" cdt-dia-behavior="MIS_Automate_CDT_Stationner">
+    		<parameter name="Zone attente" dia-name="zoneAttente_" type="Polygon"/>
+    	</mission>
+    	<mission id="119" name="Se Faire Transporter" dia-type="T_Mission_Automate_SeFaireTransporter" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter">
+    		<parameter name="Zone embarquement" dia-name="zoneEmbarquement_" type="Polygon"/>
+    	</mission>
+    	<mission id="120" name="Transporter" dia-type="T_Mission_Automate_Transporter" mrt-dia-behavior="MIS_Automate_MRT_Transporter" cdt-dia-behavior="MIS_Automate_CDT_Transporter">
+    		<parameter name="Unites a transporter" dia-name="unitesATransporter_" type="AgentList"/>
+    		<parameter name="Point debarquement" dia-name="pointDebarquement_" type="Point"/>
+    		<parameter name="Point embarquement" dia-name="pointEmbarquement_" type="Point"/>
+    		<parameter name="Avec materiel" dia-name="avecMateriel_" type="Bool"/>
+    	</mission>
+    	<mission id="121" name="Se Recompleter" dia-type="T_Mission_Automate_SeRecompleter" mrt-dia-behavior="MIS_Automate_MRT_SeRecompleter" cdt-dia-behavior="MIS_Automate_CDT_SeRecompleter">
+    		<parameter name="Zone ravitaillement" dia-name="zoneRavitaillement_" type="Polygon"/>
+    	</mission>
+    	<mission id="122" name="Se Rendre" dia-type="T_Mission_Automate_SeRendre" mrt-dia-behavior="MIS_Automate_MRT_SeRendre" cdt-dia-behavior="MIS_Automate_CDT_SeRendre">
+    	</mission>
+    	<mission id="123" name="Faire Mouvement Vers Camp Refugies" dia-type="T_Mission_Automate_FaireMouvementVersCampRefugies" mrt-dia-behavior="MIS_Automate_MRT_FaireMouvementVersCampRefugies" cdt-dia-behavior="MIS_Automate_CDT_FaireMouvementVersCampRefugies">
+    	</mission>
+    	<mission id="124" name="Interdire Franchissement Populations" dia-type="T_Mission_Automate_InterdireFranchissementPopulations" mrt-dia-behavior="MIS_Automate_MRT_InterdireFranchissementPopulations" cdt-dia-behavior="MIS_Automate_CDT_InterdireFranchissementPopulations">
+    		<parameter name="Points" dia-name="points_" type="PointList"/>
+    	</mission>
+    	<mission id="125" name="Filtrer Populations" dia-type="T_Mission_Automate_FiltrerPopulations" mrt-dia-behavior="MIS_Automate_MRT_FiltrerPopulations" cdt-dia-behavior="MIS_Automate_CDT_FiltrerPopulations">
+    		<parameter name="Points" dia-name="points_" type="PointList"/>
+    	</mission>
+    	<mission id="126" name="Canaliser Populations" dia-type="T_Mission_Automate_CanaliserPopulations" mrt-dia-behavior="MIS_Automate_MRT_CanaliserPopulations" cdt-dia-behavior="MIS_Automate_CDT_CanaliserPopulations">
+    		<parameter name="Zones" dia-name="zones_" type="LocationList"/>
+    	</mission>
+    	<mission id="127" name="Controler Populations Dans Zone" dia-type="T_Mission_Automate_ControlerPopulationsDansZone" mrt-dia-behavior="MIS_Automate_MRT_ControlerPopulationsDansZone" cdt-dia-behavior="MIS_Automate_CDT_ControlerPopulationsDansZone">
+    		<parameter name="Zones" dia-name="zones_" type="PolygonList"/>
+    	</mission>
+    	<mission id="128" name="Securiser Zone Contre Populations" dia-type="T_Mission_Automate_SecuriserZoneContrePopulations" mrt-dia-behavior="MIS_Automate_MRT_SecuriserZoneContrePopulations" cdt-dia-behavior="MIS_Automate_CDT_SecuriserZoneContrePopulations">
+    		<parameter name="Points" dia-name="points_" type="PointList"/>
+    	</mission>
+    	<mission id="129" name="ASY Commettre Exactions Sur Population Dans Zone" dia-type="T_Mission_Automate_ASY_CommettreExactionsSurPopulationDansZone" mrt-dia-behavior="MIS_Automate_MRT_ASY_CommettreExactionsSurPopulationDansZone" cdt-dia-behavior="MIS_Automate_CDT_ASY_CommettreExactionsSurPopulationDansZone">
+    		<parameter name="Zones" dia-name="zones_" type="PolygonList"/>
+    	</mission>
+    	<mission id="130" name="Generique" dia-type="T_Mission_Automate_Generique" mrt-dia-behavior="MIS_Automate_MRT_Generique" cdt-dia-behavior="MIS_Automate_CDT_Generique">
+    		<parameter name="Zones" dia-name="zones_" type="PolygonList"/>
+    		<parameter name="Points" dia-name="points_" type="PointList"/>
+    		<parameter name="Itineraires" dia-name="itineraires_" type="PathList"/>
+    		<parameter name="Unites" dia-name="unites_" type="AgentList"/>
+    		<parameter name="Automates" dia-name="automates_" type="AutomateList"/>
+    		<parameter name="Connaissances agents" dia-name="connaissancesAgents_" type="AgentKnowledgeList"/>
+    		<parameter name="Connaissances objets" dia-name="connaissancesObjets_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="131" name="NBC Reconnaitre Un Axe" dia-type="T_Mission_Automate_NBC_ReconnaitreUnAxe" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUnAxe" cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUnAxe">
+    	</mission>
+    	<mission id="132" name="NBC Reconnaitre Une Zone" dia-type="T_Mission_Automate_NBC_ReconnaitreUneZone" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreUneZone" cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreUneZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="133" name="NBC Armer Un Site De Decontamination" dia-type="T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" mrt-dia-behavior="MIS_Automate_MRT_NBC_ArmerUnSiteDeDecontamination" cdt-dia-behavior="MIS_Automate_CDT_NBC_ArmerUnSiteDeDecontamination">
+    		<parameter name="Site" dia-name="site_" type="Polygon"/>
+    	</mission>
+    	<mission id="134" name="NBC Decontaminer Une Zone" dia-type="T_Mission_Automate_NBC_DecontaminerUneZone" mrt-dia-behavior="MIS_Automate_MRT_NBC_DecontaminerUneZone" cdt-dia-behavior="MIS_Automate_CDT_NBC_DecontaminerUneZone">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="135" name="NBC Reconnaitre Des Sites ROTA" dia-type="T_Mission_Automate_NBC_ReconnaitreDesSitesROTA" mrt-dia-behavior="MIS_Automate_MRT_NBC_ReconnaitreDesSitesROTA" cdt-dia-behavior="MIS_Automate_CDT_NBC_ReconnaitreDesSitesROTA">
+    		<parameter name="Sites ROTA" dia-name="sitesROTA_" type="ObjectKnowledgeList"/>
+    	</mission>
+    	<mission id="136" name="RENS ROHUM Renseigner Sur" dia-type="T_Mission_Automate_RENS_ROHUM_RenseignerSur" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_RenseignerSur">
+    		<parameter name="Zone a observer" dia-name="zoneAObserver_" type="Polygon"/>
+    	</mission>
+    	<mission id="137" name="RENS ROHUM Orienter Guider" dia-type="T_Mission_Automate_RENS_ROHUM_OrienterGuider" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_OrienterGuider" cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_OrienterGuider">
+    		<parameter name="Ami" dia-name="ami_" type="Automate"/>
+    	</mission>
+    	<mission id="138" name="RENS ROHUM SExfiltrer" dia-type="T_Mission_Automate_RENS_ROHUM_SExfiltrer" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_SExfiltrer" cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_SExfiltrer">
+    		<parameter name="Zone de regroupement" dia-name="zoneDeRegroupement_" type="Polygon"/>
+    	</mission>
+    	<mission id="139" name="RENS ROIM CL289 Renseigner Sur" dia-type="T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_CL289_RenseignerSur" cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur">
+    		<parameter name="Ficelle de vole" dia-name="ficelleDeVole_" type="Path"/>
+    		<parameter name="Zones de recherche" dia-name="zonesDeRecherche_" type="PolygonList"/>
+    	</mission>
+    	<mission id="140" name="RENS ROIM SDTI Renseigner Sur" dia-type="T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_SDTI_RenseignerSur" cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur">
+    		<parameter name="Ficelle de vole" dia-name="ficelleDeVole_" type="Path"/>
+    	</mission>
+    	<mission id="141" name="RENS ROEM Appuyer" dia-type="T_Mission_Automate_RENS_ROEM_Appuyer" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_Appuyer" cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_Appuyer">
+    		<parameter name="Position deploiement" dia-name="positionDeploiement_" type="Point"/>
+    		<parameter name="Point regroupement" dia-name="pointRegroupement_" type="Point"/>
+    	</mission>
+    	<mission id="142" name="RENS ROEM Renseigner Sur" dia-type="T_Mission_Automate_RENS_ROEM_RenseignerSur" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_RenseignerSur" cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_RenseignerSur">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="143" name="RENS RADINT Renseigner Sur" dia-type="T_Mission_Automate_RENS_RADINT_RenseignerSur" mrt-dia-behavior="MIS_Automate_MRT_RENS_RADINT_RenseignerSur" cdt-dia-behavior="MIS_Automate_CDT_RENS_RADINT_RenseignerSur">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    	<mission id="144" name="TRANS Commander" dia-type="T_Mission_Automate_TRANS_Commander" mrt-dia-behavior="MIS_Automate_MRT_TRANS_Commander" cdt-dia-behavior="MIS_Automate_CDT_TRANS_Commander">
+    		<parameter name="Zone deploiement" dia-name="zoneDeploiement_" type="Polygon"/>
+    	</mission>
+    </automats>
+    
+    <populations>
+    	<mission id="327" name="Faire Mouvement" dia-type="T_Mission_Population_FaireMouvement" dia-behavior="MIS_Population_FaireMouvement">
+    		<parameter name="Destination" dia-name="destination_" type="Point"/>
+    	</mission>
+    	<mission id="328" name="Manifester" dia-type="T_Mission_Population_Manifester" dia-behavior="MIS_Population_Manifester">
+    		<parameter name="Destination" dia-name="destination_" type="Point"/>
+    	</mission>
+    	<mission id="329" name="Commettre Exactions" dia-type="T_Mission_Population_CommettreExactions" dia-behavior="MIS_Population_CommettreExactions">
+    		<parameter name="Zone" dia-name="zone_" type="Polygon"/>
+    	</mission>
+    </populations>
+    
+    <fragorders>
+    	<fragorder id="330" name="Mettre Tenue NBC" dia-type="Rep_OrderConduite_MettreTenueNBC" available-for-all-mission="true" available-without-mission="true">
+    	</fragorder>    
+    	<fragorder id="331" name="Enlever Tenue NBC" dia-type="Rep_OrderConduite_EnleverTenueNBC" available-for-all-mission="true" available-without-mission="true">
+    	</fragorder>    
+    	<fragorder id="332" name="Passer En Silence Radio" dia-type="Rep_OrderConduite_PasserEnSilenceRadio" available-for-all-mission="true" available-without-mission="true">
+    	</fragorder>    
+    	<fragorder id="333" name="Arreter Silence Radio" dia-type="Rep_OrderConduite_ArreterSilenceRadio" available-for-all-mission="true" available-without-mission="true">
+    	</fragorder>    
+    	<fragorder id="334" name="Passer En Silence Radar" dia-type="Rep_OrderConduite_PasserEnSilenceRadar" available-for-all-mission="true" available-without-mission="true">
+    	</fragorder>    
+    	<fragorder id="335" name="Arreter Silence Radar" dia-type="Rep_OrderConduite_ArreterSilenceRadar" available-for-all-mission="true" available-without-mission="true">
+    	</fragorder>    
+    	<fragorder id="336" name="Recuperer Transporteurs" dia-type="Rep_OrderConduite_RecupererTransporteurs" available-for-all-mission="true" available-without-mission="true">
+    	</fragorder>    
+    	<fragorder id="337" name="Attendre Se Poster" dia-type="Rep_OrderConduite_AttendreSePoster" available-for-all-mission="true">
+    	</fragorder>    
+    	<fragorder id="338" name="Poursuivre" dia-type="Rep_OrderConduite_Poursuivre" available-for-all-mission="true">
+    	</fragorder>    
+    	<fragorder id="339" name="Interrompre" dia-type="Rep_OrderConduite_Interrompre" available-for-all-mission="true">
+    	</fragorder>    
+    	<fragorder id="340" name="Changer Ambiance" dia-type="Rep_OrderConduite_ChangerAmbiance" available-for-all-mission="true">
+    		<parameter name="Order conduite changer ambiance" dia-name="orderConduiteChangerAmbiance_" type="enumeration">
+    			<value id="0" name="surete"></value>
+    			<value id="1" name="vitesse"></value>
+    		</parameter>
+    	</fragorder>    
+    	<fragorder id="341" name="Changer Regles Engagement" dia-type="Rep_OrderConduite_ChangerReglesEngagement" available-for-all-mission="true" available-without-mission="true">
+    		<parameter name="Order conduite changer regles engagement" dia-name="orderConduiteChangerReglesEngagement_" type="enumeration">
+    			<value id="0" name="none"></value>
+    			<value id="1" name="tir_libre"></value>
+    			<value id="2" name="tir_sur_riposte"></value>
+    			<value id="3" name="tir_interdit"></value>
+    		</parameter>
+    	</fragorder>    
+    	<fragorder id="342" name="Changer Parametres Recompletement ALAT" dia-type="Rep_OrderConduite_ChangerParametresRecompletementALAT">
+    		<parameter name="Portee Action" dia-name="porteeAction_" type="enumeration">
+    			<value id="0" name="courte_portee"></value>
+    			<value id="1" name="moyenne_portee"></value>
+    			<value id="2" name="longue_portee"></value>
+    			<value id="3" name="sans_munitions"></value>
+    		</parameter>
+    		<parameter name="Ambiance Mission" dia-name="ambianceMission_" type="enumeration">
+    			<value id="0" name="aa"></value>
+    			<value id="1" name="as"></value>
+    			<value id="2" name="polyvalent"></value>
+    		</parameter>
+    	</fragorder>    
+    	<fragorder id="343" name="Changer Regles Engagement Population" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" available-for-all-mission="true" available-without-mission="true">
+    		<parameter name="Order conduite changer regles engagement population" dia-name="orderConduiteChangerReglesEngagementPopulation_" type="enumeration">
+    			<value id="0" name="none"></value>
+    			<value id="1" name="emploi_force_interdit"></value>
+    			<value id="2" name="maintien_a_distance_par_moyens_non_letaux"></value>
+    			<value id="3" name="dispersion_par_moyens_de_defense_actifs"></value>
+    			<value id="4" name="armes_letales_autorisees"></value>
+    		</parameter>
+    	</fragorder>    
+    	<fragorder id="344" name="Deboucher" dia-type="Rep_OrderConduite_Deboucher">
+    	</fragorder>    
+    	<fragorder id="345" name="Decrocher" dia-type="Rep_OrderConduite_Decrocher">
+    	</fragorder>    
+    	<fragorder id="346" name="Acquerir Objectif" dia-type="Rep_OrderConduite_AcquerirObjectif">
+    		<parameter name="Order conduite acquerir objectif" dia-name="orderConduiteAcquerirObjectif_" type="Location"/>
+    	</fragorder>    
+    	<fragorder id="347" name="Brouiller" dia-type="Rep_OrderConduite_Brouiller">
+    	</fragorder>    
+    	<fragorder id="348" name="Changer Position Debarquement" dia-type="Rep_OrderConduite_ChangerPositionDebarquement">
+    		<parameter name="Order conduite changer position debarquement" dia-name="orderConduiteChangerPositionDebarquement_" type="Point"/>
+    	</fragorder>    
+    	<fragorder id="349" name="Pion Changer De Position" dia-type="Rep_OrderConduite_Pion_ChangerDePosition">
+    		<parameter name="Order conduite pion changer de position" dia-name="orderConduitePionChangerDePosition_" type="Point"/>
+    	</fragorder>    
+    	<fragorder id="350" name="Pion Contourner" dia-type="Rep_OrderConduite_Pion_Contourner">
+    	</fragorder>    
+    	<fragorder id="351" name="Pion Envoyer Vehicule" dia-type="Rep_OrderConduite_Pion_EnvoyerVehicule">
+    	</fragorder>    
+    	<fragorder id="352" name="Pion Activer Obstacle" dia-type="Rep_OrderConduite_Pion_ActiverObstacle">
+    	</fragorder>    
+    	<fragorder id="353" name="Pion Appliquer Feux" dia-type="Rep_OrderConduite_Pion_AppliquerFeux">
+    		<parameter name="Munitions" dia-name="munitions_" type="DotationType"/>
+    		<parameter name="Nb IT" dia-name="nbIT_" type="Numeric"/>
+    		<parameter name="Cible" dia-name="cible_" type="Point"/>
+    	</fragorder>    
+    	<fragorder id="354" name="Pion Executer Tir" dia-type="Rep_OrderConduite_Pion_ExecuterTir">
+    	</fragorder>    
+    	<fragorder id="355" name="Pion Emettre" dia-type="Rep_OrderConduite_Pion_Emettre">
+    	</fragorder>    
+    	<fragorder id="356" name="Pion Stopper Emission" dia-type="Rep_OrderConduite_Pion_StopperEmission">
+    	</fragorder>    
+    	<fragorder id="357" name="Pion Renforcer En VSRAM" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM">
+    		<parameter name="Pion a renforcer" dia-name="pionARenforcer_" type="Agent"/>
+    		<parameter name="Nbr ambulances" dia-name="nbrAmbulances_" type="Numeric"/>
+    	</fragorder>    
+    	<fragorder id="358" name="Pion Transferer VSRAM" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM">
+    		<parameter name="Pion renforce" dia-name="pionRenforce_" type="Agent"/>
+    		<parameter name="Pion a renforcer" dia-name="pionARenforcer_" type="Agent"/>
+    		<parameter name="Nbr ambulances" dia-name="nbrAmbulances_" type="Numeric"/>
+    	</fragorder>    
+    	<fragorder id="359" name="Pion Reprendre Aux Ordres VSRAM" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM">
+    		<parameter name="Pion renforce" dia-name="pionRenforce_" type="Agent"/>
+    		<parameter name="Nbr ambulances" dia-name="nbrAmbulances_" type="Numeric"/>
+    	</fragorder>    
+    	<fragorder id="360" name="Pion Renforcer En Remorqueurs" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs">
+    		<parameter name="Pion a renforcer" dia-name="pionARenforcer_" type="Agent"/>
+    		<parameter name="Nbr remorqueurs" dia-name="nbrRemorqueurs_" type="Numeric"/>
+    	</fragorder>    
+    	<fragorder id="361" name="Pion Transferer Remorqueurs" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs">
+    		<parameter name="Pion renforce" dia-name="pionRenforce_" type="Agent"/>
+    		<parameter name="Pion a renforcer" dia-name="pionARenforcer_" type="Agent"/>
+    		<parameter name="Nbr remorqueurs" dia-name="nbrRemorqueurs_" type="Numeric"/>
+    	</fragorder>    
+    	<fragorder id="362" name="Pion Reprendre Aux Ordres Remorqueurs" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs">
+    		<parameter name="Pion renforce" dia-name="pionRenforce_" type="Agent"/>
+    		<parameter name="Nbr remorqueurs" dia-name="nbrRemorqueurs_" type="Numeric"/>
+    	</fragorder>    
+    	<fragorder id="363" name="Modifier Regime Travail Maintenance" dia-type="Rep_OrderConduite_ModifierRegimeTravailMaintenance">
+    		<parameter name="Order conduite modifier regime travail maintenance" dia-name="orderConduiteModifierRegimeTravailMaintenance_" type="enumeration">
+    			<value id="0" name="regime_1"></value>
+    			<value id="1" name="regime_2"></value>
+    			<value id="2" name="regime_3"></value>
+    			<value id="3" name="regime_4"></value>
+    		</parameter>
+    	</fragorder>    
+    	<fragorder id="364" name="Modifier Priorites Reparations" dia-type="Rep_OrderConduite_ModifierPrioritesReparations">
+    		<parameter name="Order conduite modifier priorites reparations" dia-name="orderConduiteModifierPrioritesReparations_" type="MaintenancePriorities"/>
+    	</fragorder>    
+    	<fragorder id="365" name="Modifier Priorites Blesses" dia-type="Rep_OrderConduite_ModifierPrioritesBlesses">
+    		<parameter name="Order conduite modifier priorites blesses" dia-name="orderConduiteModifierPrioritesBlesses_" type="MedicalPriorities"/>
+    	</fragorder>    
+    	<fragorder id="366" name="Modifier Priorites Tactiques Reparations" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesReparations">
+    		<parameter name="Order conduite modifier priorites tactiques reparations" dia-name="orderConduiteModifierPrioritesTactiquesReparations_" type="AutomateList"/>
+    	</fragorder>    
+    	<fragorder id="367" name="Modifier Priorites Tactiques Blesses" dia-type="Rep_OrderConduite_ModifierPrioritesTactiquesBlesses">
+    		<parameter name="Order conduite modifier priorites tactiques blesses" dia-name="orderConduiteModifierPrioritesTactiquesBlesses_" type="AutomateList"/>
+    	</fragorder>    
+    	<fragorder id="368" name="Automate Realiser Variantement" dia-type="Rep_OrderConduite_Automate_RealiserVariantement">
+    		<parameter name="Site franchissement original" dia-name="siteFranchissementOriginal_" type="ObjectKnowledge"/>
+    		<parameter name="Site franchissement variante" dia-name="siteFranchissementVariante_" type="ObjectKnowledge"/>
+    	</fragorder>    
+    	<fragorder id="369" name="Automate Desequiper Site Franchissement" dia-type="Rep_OrderConduite_Automate_DesequiperSiteFranchissement">
+    		<parameter name="Site franchissement" dia-name="siteFranchissement_" type="ObjectKnowledge"/>
+    	</fragorder>    
+    	<fragorder id="370" name="Automate Affecter Pion AObstacle" dia-type="Rep_OrderConduite_Automate_AffecterPionAObstacle">
+    		<parameter name="Pion" dia-name="pion_" type="Agent"/>
+    		<parameter name="Obstacle" dia-name="obstacle_" type="GenObject"/>
+    	</fragorder>    
+    	<fragorder id="371" name="Automate Reconnaitre Zone Implantation" dia-type="Rep_OrderConduite_Automate_ReconnaitreZoneImplantation">
+    		<parameter name="Order conduite automate reconnaitre zone implantation" dia-name="orderConduiteAutomateReconnaitreZoneImplantation_" type="Point"/>
+    	</fragorder>    
+    	<fragorder id="372" name="Automate TC2 Gerer Materiel Avant Deplacement" dia-type="Rep_OrderConduite_Automate_TC2_GererMaterielAvantDeplacement">
+    		<parameter name="Order conduite automate tc2 gerer materiel avant deplacement" dia-name="orderConduiteAutomateTc2GererMaterielAvantDeplacement_" type="enumeration">
+    			<value id="0" name="deborder_materiels_vers_bld"></value>
+    			<value id="1" name="detruire_materiels_en_reparation"></value>
+    			<value id="2" name="reparer_materiels_sur_place"></value>
+    		</parameter>
+    	</fragorder>    
+    	<fragorder id="373" name="Automate Activer Obstacle" dia-type="Rep_OrderConduite_Automate_ActiverObstacle">
+    		<parameter name="Order conduite automate activer obstacle" dia-name="orderConduiteAutomateActiverObstacle_" type="ObjectKnowledge"/>
+    	</fragorder>    
+    	<fragorder id="374" name="Automate Transferer Renforts" dia-type="Rep_OrderConduite_Automate_TransfererRenforts">
+    		<parameter name="Pion a transferer" dia-name="pionATransferer_" type="Agent"/>
+    		<parameter name="Automate a renforcer" dia-name="automateARenforcer_" type="Automate"/>
+    	</fragorder>    
+    	<fragorder id="375" name="Population Changer Attitude" dia-type="Rep_OrderConduite_Population_ChangerAttitude" available-for-all-mission="true" available-without-mission="true">
+    		<parameter name="Order conduite population changer attitude" dia-name="orderConduitePopulationChangerAttitude_" type="enumeration">
+    			<value id="0" name="calme"></value>
+    			<value id="1" name="agitee"></value>
+    			<value id="2" name="excitee"></value>
+    			<value id="3" name="agressive"></value>
+    		</parameter>
+    	</fragorder>    
+    </fragorders>
 
-  <MissionReddition nom="Automate SeRendre"/>
+    <misc>
+      <mission-automat-surrender          name="Se Rendre"/>
+      <mission-automat-go-to-refugee-camp name="Faire Mouvement Vers Camp Refugies"/>
+    </misc>
 
-  <MissionSeRendreVersCampRefugies nom="Automate FaireMouvementVersCampRefugies"/>
-
-</Missions>
+</missions>

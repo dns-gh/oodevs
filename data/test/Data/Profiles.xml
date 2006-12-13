@@ -2,7 +2,7 @@
 
 <profiles>
     <profile name="test">
-        <password>cock</password>
+        <password>cock2</password>
         <rights>       
             <readonly/>    
             <readwrite>
@@ -13,4 +13,61 @@
             <supervision>true</supervision>
         </rights>
     </profile>
+    
+    
+        <profile name="chef">
+        <password>chef</password>
+        <rights>       
+            <readonly/>    
+            <readwrite>
+                
+                <side id="1"/>
+                <side id="21"/>
+            </readwrite>
+            
+            <supervision>true</supervision>
+        </rights>
+    </profile>
+    
+    <profile name="automate 703">
+        <password>a</password>
+        <rights>
+            <readonly/>    
+            <readwrite>
+                <automat id="703"/>
+            </readwrite>
+        </rights>
+    </profile>
+    
+    <profile name="automate 707">
+        <password>a</password>
+        <rights>
+            <readonly/>    
+            <readwrite>
+                <automat id="707"/>
+            </readwrite>
+        </rights>
+    </profile>
+    
+    <profile name="regiment 702">
+        <password>a</password>
+        <rights>
+            <readonly/>    
+            <readwrite>
+                <formation id="702"/>
+            </readwrite>
+        </rights>
+    </profile>    
+    
+    <profile name="regiment 701">
+        <password>a</password>
+        <rights>
+            <readonly/>    
+            <readwrite>
+                <formation id="701"/>
+            </readwrite>
+        </rights>
+    </profile>    
+    
+    
 </profiles>

@@ -24,7 +24,7 @@ namespace kernel
 }
 
 class QToolBox;
-class Report_ABC;
+class Report;
 
 // =============================================================================
 /** @class  Spy
@@ -38,7 +38,7 @@ class Spy : public QVBox
           , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
           , public kernel::ElementObserver_ABC< kernel::Agent_ABC >
           , public kernel::ElementObserver_ABC< kernel::Population_ABC >
-          , public kernel::ElementObserver_ABC< Report_ABC >
+          , public kernel::ElementObserver_ABC< Report >
 {
     Q_OBJECT;
 
@@ -81,7 +81,7 @@ private:
     //! @name Helpers
     //@{
     QWidget* CreateView( const kernel::Entity_ABC& agent );
-    virtual void NotifyCreated( const Report_ABC& report );
+    virtual void NotifyCreated( const Report& report );
     void NotifyContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& menu );
     void RemoveAgent( const kernel::Entity_ABC& agent );
     //@}

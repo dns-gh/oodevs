@@ -73,5 +73,12 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_Polygon.h"
 
+//$$$ DEGUEU
+#ifdef  NDEBUG
+#   define assert( exp ) ( static_cast< void >( exp ) )
+#else
+#   define assert( exp ) ( (exp) || MT_Assert( #exp, __FILE__, __LINE__ ) )
+#endif  // NDEBUG
+
 #endif // __MIL_pch_h_
 

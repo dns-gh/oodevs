@@ -9,7 +9,7 @@
 //
 // *****************************************************************************
 
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 
@@ -20,9 +20,9 @@
 template< typename T > 
 void DEC_MiscFunctions::RC_Operational( DIA_Call_ABC& call, T& caller )
 {
-    const MIL_RC* pRC = MIL_RC::Find( call.GetParameter( 0 ).ToId() );
-    assert( pRC );
-    pRC->Send( caller, MIL_RC::eRcTypeOperational, call.GetParameters() );
+    const MIL_Report* pReport = MIL_Report::Find( call.GetParameter( 0 ).ToId() );
+    if( pReport )
+        pReport->Send( caller, MIL_Report::eRcTypeOperational, call.GetParameters() );
 }
 
 //-----------------------------------------------------------------------------
@@ -32,9 +32,9 @@ void DEC_MiscFunctions::RC_Operational( DIA_Call_ABC& call, T& caller )
 template< typename T > 
 void DEC_MiscFunctions::RC_Message( DIA_Call_ABC& call, T& caller )
 {
-    const MIL_RC* pRC = MIL_RC::Find( call.GetParameter( 0 ).ToId() );
-    assert( pRC );
-    pRC->Send( caller, MIL_RC::eRcTypeMessage, call.GetParameters() );
+    const MIL_Report* pReport = MIL_Report::Find( call.GetParameter( 0 ).ToId() );
+    if( pReport )
+        pReport->Send( caller, MIL_Report::eRcTypeMessage, call.GetParameters() );
 }
 
 //-----------------------------------------------------------------------------
@@ -44,8 +44,8 @@ void DEC_MiscFunctions::RC_Message( DIA_Call_ABC& call, T& caller )
 template< typename T > 
 void DEC_MiscFunctions::RC_Warning( DIA_Call_ABC& call, T& caller )
 {
-    const MIL_RC* pRC = MIL_RC::Find( call.GetParameter( 0 ).ToId() );
-    assert( pRC );
-    pRC->Send( caller, MIL_RC::eRcTypeWarning, call.GetParameters() );
+    const MIL_Report* pReport = MIL_Report::Find( call.GetParameter( 0 ).ToId() );
+    if( pReport )
+        pReport->Send( caller, MIL_Report::eRcTypeWarning, call.GetParameters() );
 }
 

@@ -30,7 +30,7 @@ class ParamAgentList : public EntityListParameter< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgentList( QWidget* pParent, ASN1T_ListAgent& asn, const QString& label, const QString& menu );
+             ParamAgentList( QWidget* pParent, ASN1T_ListAgent*& asn, const QString& label, const QString& menu );
     virtual ~ParamAgentList();
     //@}
 };

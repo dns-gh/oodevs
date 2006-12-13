@@ -23,13 +23,14 @@ using namespace gui;
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : ParamListView( pParent, label )
     , converter_( converter )
-    , asn_( asn )
+    , asn_( new ASN1T_ListLocalisation() )
     , pAsnLocalisationList_( 0 )
     , controller_( 0 )
 {
+    asn = asn_;
     creator_ = new LocationCreator( this, menu, layer, *this );
 }
 
@@ -37,12 +38,13 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& 
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : ParamListView( pParent, label )
     , converter_( converter )
-    , asn_( (ASN1T_ListLocalisation&)asn )
+    , asn_( new ASN1T_ListLocalisation() )
     , pAsnLocalisationList_( 0 )
 {
+    asn = (ASN1T_ListPolygon*&)asn_;
     creator_ = new LocationCreator( this, menu, layer, *this );
     creator_->Allow( false, false, true, false );
 }
@@ -51,12 +53,13 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn, 
 // Name: ParamLocationList constructor
 // Created: AGE 2006-04-03
 // -----------------------------------------------------------------------------
-ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
+ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint*& asn, const QString& label, const QString& menu, ParametersLayer& layer, const CoordinateConverter_ABC& converter )
     : ParamListView( pParent, label )
     , converter_( converter )
-    , asn_( (ASN1T_ListLocalisation&)asn )
+    , asn_( new ASN1T_ListLocalisation() )
     , pAsnLocalisationList_( 0 )
 {
+    asn = (ASN1T_ListPoint*&)asn_;
     creator_ = new LocationCreator( this, menu, layer, *this );
     creator_->Allow( true, false, false, false );
 }
@@ -67,6 +70,7 @@ ParamLocationList::ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn, co
 // -----------------------------------------------------------------------------
 ParamLocationList::~ParamLocationList()
 {
+    delete asn_;
     delete[] pAsnLocalisationList_;
 }
 
@@ -123,19 +127,19 @@ bool ParamLocationList::CheckValidity()
 void ParamLocationList::Commit()
 {
     const unsigned nNbrChilds = locations_.size();
-    asn_.n = nNbrChilds;
+    asn_->n = nNbrChilds;
 
     if( nNbrChilds == 0 && IsOptional() )
         return;
 
     delete[] pAsnLocalisationList_;
     pAsnLocalisationList_ = new ASN1T_Localisation[ nNbrChilds ];
-    asn_.elem = pAsnLocalisationList_;
+    asn_->elem = pAsnLocalisationList_;
 
     ClearSerializers();
     for( unsigned i = 0; i < locations_.size(); ++i )
     {
-        serializers_.push_back( new LocationSerializer( converter_, asn_.elem[i] ) );
+        serializers_.push_back( new LocationSerializer( converter_, asn_->elem[i] ) );
         serializers_.back()->Serialize( *locations_.at( i ) );
     }
 }

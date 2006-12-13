@@ -21,7 +21,7 @@ using namespace xml;
 // Name: DecisionalModel constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver )
+DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver, const Resolver_ABC< FragOrder >& fragOrders )
 {
     std::string name;
     xis >> attribute( "nom", name )
@@ -30,7 +30,7 @@ DecisionalModel::DecisionalModel( xml::xistream& xis, MissionFactory& factory, c
 			>> list( "Mission", *this, &DecisionalModel::ReadMission, factory, missionResolver )
             >> end();
     name_ = name.c_str();
-    RegisterDefaultFragOrders( factory );
+    RegisterDefaultFragOrders( factory, fragOrders );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,19 +88,15 @@ QString DecisionalModel::GetName() const
 // Name: DecisionalModel::RegisterDefaultFragOrders
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory )
+void DecisionalModel::RegisterDefaultFragOrders( MissionFactory& factory, const Resolver_ABC< FragOrder >& fragOrders )
 {
-    // $$$$ AGE 2006-04-05: hard coded common frag orders
-    RegisterFragOrder( factory, "MettreTenueNBC" );
-    RegisterFragOrder( factory, "EnleverTenueNBC" );
-    RegisterFragOrder( factory, "PasserEnSilenceRadio" );
-    RegisterFragOrder( factory, "ArreterSilenceRadio" );
-    RegisterFragOrder( factory, "PasserEnSilenceRadar" );
-    RegisterFragOrder( factory, "ArreterSilenceRadar" );
-    RegisterFragOrder( factory, "ChangerReglesEngagement" );
-    RegisterFragOrder( factory, "RecupererTransporteurs" );
-    RegisterFragOrder( factory, "ChangerReglesEngagementPopulation" );
-    RegisterFragOrder( factory, "ChangerAmbiance" );
+    Iterator< const FragOrder& > it = fragOrders.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const FragOrder& order = it.NextElement();
+        if( order.IsDefaultOrder() )
+            RegisterFragOrder( factory, order.GetName().ascii() );
+    }
 }
 
 // -----------------------------------------------------------------------------

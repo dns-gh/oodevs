@@ -19,7 +19,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_NbcAgent.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_GUID( PHY_Human, "PHY_Human" )
@@ -344,7 +344,7 @@ bool PHY_Human::NotifyBackToWar()
         return false;
 
     CancelLogisticRequest();
-    MIL_RC::pRcHumainRetourDeSante_->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeOperational );
+    MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), MIL_Report::eReport_HumanBackFromMedical );
     return true;
 }
 
@@ -408,16 +408,16 @@ void PHY_Human::Update()
 
     if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nDeathTimeStep_ )
     {
-        const MIL_RC* pRcToSend = 0;
+        MIL_Report::E_EngineReport nReportID;
         if( !pMedicalState_ )
-            pRcToSend = MIL_RC::pRcDecesBlesse_;
+            nReportID = MIL_Report::eReport_WoundedManDeath;
         else if( pMedicalState_->IsInAmbulance() )
-            pRcToSend = MIL_RC::pRcDecesBlessePendantTransport_;
+            nReportID = MIL_Report::eReport_WoundedManDeathDuringTransport;
         else
-            pRcToSend = MIL_RC::pRcDecesBlessePendantHospitalisation_;
+            nReportID = MIL_Report::eReport_WoundedManDeathDuringHospitalization;
 
         if( SetWound( PHY_HumanWound::killed_ ) )
-            pRcToSend->Send( pComposante_->GetComposante().GetRole().GetPion(), MIL_RC::eRcTypeEvent );
+            MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), nReportID );
     }
 
     // Demande santé

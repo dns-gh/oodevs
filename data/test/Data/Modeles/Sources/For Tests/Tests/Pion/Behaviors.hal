@@ -21,6 +21,7 @@ behavior Crash( float prout, T_Point bite, E_TypeLima prout2 )
 
 default Default()
 {    
+    DEC_RC( eRC_SurLima,eTypeLima_LD ); 
     if( DEC_Agent_EstInstalle() )
         DEC_Debug( "Installe" );
 
@@ -218,29 +219,29 @@ behavior BEH_GererOrdreConduite()
             DEC_Debug( "ROE Population was ==> " + EnumToString( eRoePopu, E_EtatROEPopulation ) );
 
     		Rep_OrdreConduite ordre = x;
-			switch ( ordre.eOrdre_ )
+			switch ( ordre.__type_ )
 			{
-                case eOrdreConduite_MettreTenueNBC:
+                case Rep_OrderConduite_MettreTenueNBC:
                 {
                     DEC_Agent_MettreTenueProtectionNBC();
                     break;
                 }
-                case eOrdreConduite_EnleverTenueNBC:
+                case Rep_OrderConduite_EnleverTenueNBC:
                 {
                     DEC_Agent_EnleverTenueProtectionNBC();
                     break;
                 }
-                case eOrdreConduite_PasserEnSilenceRadio:
+                case Rep_OrderConduite_PasserEnSilenceRadio:
                 {
                     DEC_Agent_PasserEnSilenceRadio();
                     break;
                 }
-                case eOrdreConduite_ArreterSilenceRadio:
+                case Rep_OrderConduite_ArreterSilenceRadio:
                 {
                     DEC_Agent_ArreterSilenceRadio();
                     break;
                 }
-                case eOrdreConduite_ChangerReglesEngagementPopulation:
+                case Rep_OrderConduite_ChangerReglesEngagementPopulation:
                 {
                     Rep_OrderConduite_ChangerReglesEngagementPopulation ordreROE = ordre;
                     DEC_Agent_ChangeEtatROEPopulation( ordreROE.orderConduiteChangerReglesEngagementPopulation_ );
@@ -817,8 +818,6 @@ behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDum
 {
     when updated:
     {
-        persistent float toto=0;
-        
        
        /* if( DIA_ModuleBegins() )
         {
@@ -838,11 +837,10 @@ behavior MIS_Pion_Test_Reinforce( T_Mission_Pion_Test_Reinforce mission, id nDum
         if( DIA_ModuleBegins() )
             DEC_Debug( "MIS_Pion_Test_Reinforce DIA_ModuleBegins" );
         DEC_Debug( "MIS_Pion_Test_Reinforce when updated" );    
-                
-        action ACT_1( nDummy ) : strength = 4;
         
-        action ACT_2( nDummy ) : strength = toto;
-        ++ toto;
+        DEC_ReleverPion( mission.unite_ );
+                
+        
     }
     on spontaneous end:
     {
@@ -1125,7 +1123,10 @@ behavior MIS_Pion_Test_Fire( T_Mission_Pion_Test_Fire mission, id nDummy )
     when updated:
     {
         if( DIA_ModuleBegins() )        
+        {
             DEC_Debug( "MIS_Pion_Test_Fire" );
+            //DEC_Geometrie_CalculerBarycentreListeConnaissancesAgents( mission.targets_ );
+        }
             
         if( mission.tirIndirect_ )
         {

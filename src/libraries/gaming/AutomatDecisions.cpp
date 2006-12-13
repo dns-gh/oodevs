@@ -62,7 +62,7 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateAttributes& message )
 void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomateOrder& message )
 {
     const Resolver_ABC< Mission >& resolver = model_;
-    current_ = & resolver.Get( message.mission.t );
+    current_ = & resolver.Get( message.mission );
     controller_.Update( *this );
 }
 

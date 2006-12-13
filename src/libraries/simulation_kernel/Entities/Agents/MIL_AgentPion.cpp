@@ -41,19 +41,13 @@
 #include "Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Actions/Transport/PHY_RoleAction_Transport.h"
 
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
-#include "Entities/RC/MIL_RC.h"
-#include "Entities/RC/MIL_RC_TirSurCivil.h"
-#include "Entities/RC/MIL_RC_TirSurCampAmi.h"
-#include "Entities/RC/MIL_RC_TirSurCampNeutre.h"
-#include "Entities/RC/MIL_RC_TireParCivil.h"
-#include "Entities/RC/MIL_RC_TireParCampAmi.h"
-#include "Entities/RC/MIL_RC_TireParCampNeutre.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 
@@ -384,6 +378,7 @@ void MIL_AgentPion::CleanKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::UpdateDecision()
 {
+    orderManager_.Update( IsDead() );
     GetRole< DEC_RolePion_Decision >().UpdateDecision();
 }
 
@@ -427,8 +422,6 @@ void MIL_AgentPion::UpdatePhysicalState()
 void MIL_AgentPion::UpdateState()
 {
     UpdatePhysicalState();
-
-    orderManager_.Update( IsDead() );
 }
 
 // -----------------------------------------------------------------------------
@@ -579,11 +572,11 @@ void MIL_AgentPion::SendCreation() const
     assert( pType_ );
 
     NET_ASN_MsgPionCreation asnMsg;
-    asnMsg.GetAsnMsg().oid_pion     = GetID();
-    asnMsg.GetAsnMsg().type_pion    = pType_->GetID();
-    asnMsg.GetAsnMsg().nom          = strName_.c_str(); // !! pointeur sur const char*
-    asnMsg.GetAsnMsg().oid_automate = GetAutomate().GetID();    
-    asnMsg.GetAsnMsg().pc           = IsPC();
+    asnMsg().oid_pion     = GetID();
+    asnMsg().type_pion    = pType_->GetID();
+    asnMsg().nom          = strName_.c_str(); // !! pointeur sur const char*
+    asnMsg().oid_automate = GetAutomate().GetID();    
+    asnMsg().pc           = IsPC();
     asnMsg.Send();
 }
 
@@ -606,6 +599,26 @@ void MIL_AgentPion::SendKnowledge() const
     pKnowledgeBlackBoard_->SendFullState();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgOrder
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveMsgOrder( ASN1T_MsgPionOrder& msg )
+{
+    orderManager_.OnReceiveMission( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgFragOrder
+// Created: NLD 2004-09-07
+// -----------------------------------------------------------------------------
+
+void MIL_AgentPion::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
+{
+    orderManager_.OnReceiveFragOrder( msg );
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
@@ -626,7 +639,7 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 {
     GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
     GetRole< DEC_RolePion_Decision >().Reset();
-    orderManager_.CancelAllOrders();
+    orderManager_.ReplaceMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -645,7 +658,7 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( const MT_Vector2D& vPosition )
 // -----------------------------------------------------------------------------
 ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgMagicMove( ASN1T_MagicActionMoveTo& asn )
 {
-    if( pAutomate_->IsEmbraye() )
+    if( pAutomate_->IsEngaged() )
         return EnumUnitAttrErrorCode::error_automate_embraye;
 
     MT_Vector2D vPosTmp;
@@ -747,7 +760,7 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgResupply( ASN1T_MagicActi
         for( uint i = 0; i < asn.equipements.n; ++i )
         {
             const ASN1T_RecompletementEquipement& asnEquipement = asn.equipements.elem[ i ];
-            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::FindComposanteType( asnEquipement.type_equipement );
+            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( asnEquipement.type_equipement );
             if( pComposanteType )
                 roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre_disponible );
         }
@@ -828,22 +841,22 @@ ASN1T_EnumUnitAttrErrorCode MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, MIL_MOSContextID nCtx )
+void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMsg, uint nCtx )
 {
     NET_ASN_MsgUnitMagicActionAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid        = asnMsg.oid;
+    asnReplyMsg().oid        = asnMsg.oid;
 
     switch( asnMsg.action.t )
     {
-        case T_MsgUnitMagicAction_action_move_to                    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgMagicMove                ( *asnMsg.action.u.move_to ); break;
-        case T_MsgUnitMagicAction_action_recompletement_personnel   : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyHumans           (); break;
-        case T_MsgUnitMagicAction_action_recompletement_ressources  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyResources        (); break;
-        case T_MsgUnitMagicAction_action_recompletement_equipement  : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyEquipement       (); break;
-        case T_MsgUnitMagicAction_action_recompletement_total       : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupplyAll              (); break;
-        case T_MsgUnitMagicAction_action_recompletement_partiel     : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgResupply                 ( *asnMsg.action.u.recompletement_partiel ); break;
-        case T_MsgUnitMagicAction_action_change_facteurs_humains    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgChangeHumanFactors       ( *asnMsg.action.u.change_facteurs_humains ); break;
-        case T_MsgUnitMagicAction_action_destruction_totale         : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgDestroyAll               (); break;
-        case T_MsgUnitMagicAction_action_recuperer_transporteurs    : asnReplyMsg.GetAsnMsg().error_code = OnReceiveMsgRecoverHumansTransporters(); break;
+        case T_MsgUnitMagicAction_action_move_to                    : asnReplyMsg().error_code = OnReceiveMsgMagicMove                ( *asnMsg.action.u.move_to ); break;
+        case T_MsgUnitMagicAction_action_recompletement_personnel   : asnReplyMsg().error_code = OnReceiveMsgResupplyHumans           (); break;
+        case T_MsgUnitMagicAction_action_recompletement_ressources  : asnReplyMsg().error_code = OnReceiveMsgResupplyResources        (); break;
+        case T_MsgUnitMagicAction_action_recompletement_equipement  : asnReplyMsg().error_code = OnReceiveMsgResupplyEquipement       (); break;
+        case T_MsgUnitMagicAction_action_recompletement_total       : asnReplyMsg().error_code = OnReceiveMsgResupplyAll              (); break;
+        case T_MsgUnitMagicAction_action_recompletement_partiel     : asnReplyMsg().error_code = OnReceiveMsgResupply                 ( *asnMsg.action.u.recompletement_partiel ); break;
+        case T_MsgUnitMagicAction_action_change_facteurs_humains    : asnReplyMsg().error_code = OnReceiveMsgChangeHumanFactors       ( *asnMsg.action.u.change_facteurs_humains ); break;
+        case T_MsgUnitMagicAction_action_destruction_totale         : asnReplyMsg().error_code = OnReceiveMsgDestroyAll               (); break;
+        case T_MsgUnitMagicAction_action_recuperer_transporteurs    : asnReplyMsg().error_code = OnReceiveMsgRecoverHumansTransporters(); break;
         case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, nCtx ); return;        
         default:
             assert( false );
@@ -858,9 +871,9 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& asnMs
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMagicSurrender()
 {
-    MIL_RC::pRcRendu_->Send( *this, MIL_RC::eRcTypeOperational );
+    MIL_Report::PostEvent( *this, MIL_Report::eReport_Surrendered );
     GetRole< PHY_RolePion_Surrender >().Surrender();
-    orderManager_.CancelAllOrders();
+    orderManager_.ReplaceMission();
     UpdatePhysicalState();
 }
 
@@ -868,23 +881,23 @@ void MIL_AgentPion::OnReceiveMagicSurrender()
 // Name: MIL_AgentPion::OnReceiveMsgChangeAutomate
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg, MIL_MOSContextID nCtx )
+void MIL_AgentPion::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg, uint nCtx )
 {
     NET_ASN_MsgChangeAutomateAck asnReplyMsg;
-    asnReplyMsg.GetAsnMsg().oid_pion     = asnMsg.oid_pion;
-    asnReplyMsg.GetAsnMsg().oid_automate = asnMsg.oid_automate;
+    asnReplyMsg().oid_pion     = asnMsg.oid_pion;
+    asnReplyMsg().oid_automate = asnMsg.oid_automate;
 
     MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asnMsg.oid_automate );
     if( !pNewAutomate )
     {
-        asnReplyMsg.GetAsnMsg().error_code = EnumChangeAutomateErrorCode::error_invalid_automate;
+        asnReplyMsg().error_code = EnumChangeAutomateErrorCode::error_invalid_automate;
         asnReplyMsg.Send( nCtx );
         return;
     }
 
     if( pNewAutomate->GetArmy() != GetArmy() )
     {
-        asnReplyMsg.GetAsnMsg().error_code = EnumChangeAutomateErrorCode::error_camps_incompatibles;
+        asnReplyMsg().error_code = EnumChangeAutomateErrorCode::error_camps_incompatibles;
         asnReplyMsg.Send( nCtx );
         return;
     }
@@ -893,7 +906,7 @@ void MIL_AgentPion::OnReceiveMsgChangeAutomate( ASN1T_MsgChangeAutomate& asnMsg,
     pAutomate_ = pNewAutomate;
     pAutomate_->RegisterPion  ( *this );
 
-    asnReplyMsg.GetAsnMsg().error_code = EnumChangeAutomateErrorCode::no_error;
+    asnReplyMsg().error_code = EnumChangeAutomateErrorCode::no_error;
     asnReplyMsg.Send( nCtx );
 }
 
@@ -955,8 +968,8 @@ void MIL_AgentPion::ChangeAutomate( MIL_Automate& newAutomate )
     GetRole< DEC_RolePion_Decision >().NotifyAutomateChanged(); //$$$ à gicler quand myself.automate_ sera remplacé par une fonction DEC
 
     NET_ASN_MsgChangeAutomate asnMsg;
-    asnMsg.GetAsnMsg().oid_pion     = GetID();
-    asnMsg.GetAsnMsg().oid_automate = newAutomate.GetID();
+    asnMsg().oid_pion     = GetID();
+    asnMsg().oid_automate = newAutomate.GetID();
     asnMsg.Send();
 }
 
@@ -966,7 +979,7 @@ void MIL_AgentPion::ChangeAutomate( MIL_Automate& newAutomate )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::Surrender()
 {
-    orderManager_.CancelAllOrders();
+    orderManager_.ReplaceMission();
     GetRole< PHY_RolePion_Surrender >().Surrender();
 }
 
@@ -977,11 +990,11 @@ void MIL_AgentPion::Surrender()
 void MIL_AgentPion::NotifyAttackedBy( MIL_AgentPion& attacker )
 {
     if( attacker.GetType().IsRefugee() )
-        MIL_RC::pRcTireParCivil_->Send( *this, MIL_RC::eRcTypeEvent, attacker );
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByCivilian );
     else if( GetArmy().IsNeutral( attacker.GetArmy() ) == eTristate_True )
-        MIL_RC::pRcTireParCampNeutre_->Send( *this, MIL_RC::eRcTypeEvent, attacker );
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByNeutralSide );
     else if( GetArmy().IsAFriend( attacker.GetArmy() ) == eTristate_True )
-        MIL_RC::pRcTireParCampAmi_->Send( *this, MIL_RC::eRcTypeEvent, attacker );
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FiredByFriendSide );
 
     GetKnowledge().GetKsFire().NotifyAttackedBy( attacker );
 }
@@ -1003,11 +1016,11 @@ void MIL_AgentPion::NotifyAttackedBy( MIL_Population& attacker )
 void MIL_AgentPion::NotifyAttacking( MIL_Agent_ABC& target ) const
 {
     if( target.GetType().IsRefugee() )
-        MIL_RC::pRcTirSurCivil_->Send( *this, MIL_RC::eRcTypeEvent, target );
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnCivilian );
     else if( GetArmy().IsNeutral( target.GetArmy() ) == eTristate_True )
-        MIL_RC::pRcTirSurCampNeutre_->Send( *this, MIL_RC::eRcTypeEvent, target );
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnNeutralSide );
     else if( GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
-        MIL_RC::pRcTirSurCampAmi_->Send( *this, MIL_RC::eRcTypeEvent, target );
+        MIL_Report::PostEvent( *this, MIL_Report::eReport_FireOnFriendSide );
 }            
 
 // -----------------------------------------------------------------------------

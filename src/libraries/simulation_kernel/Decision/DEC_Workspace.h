@@ -50,6 +50,7 @@ private:
     static bool CheckFilesDepencies  ( const std::string& strArchiveFile );
 
     void InitializeConfig      ( MIL_InputArchive& archive );
+    void InitializeMissions    ( MIL_InputArchive& initArchive );
     void InitializeDIA         ( MIL_InputArchive& archive );
     void InitializeDIATypes    ( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );
     void InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );

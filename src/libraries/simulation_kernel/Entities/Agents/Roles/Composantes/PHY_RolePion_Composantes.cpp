@@ -13,7 +13,7 @@
 
 #include "PHY_RolePion_Composantes.h"
 
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -239,7 +239,7 @@ namespace boost
                 ASN1T_TypeEquipement nID;
 
                 file >> nID;
-                file >> map[ PHY_ComposanteTypePion::FindComposanteType( nID ) ];
+                file >> map[ PHY_ComposanteTypePion::Find( nID ) ];
             }
         }
     }
@@ -379,7 +379,7 @@ void PHY_RolePion_Composantes::ReadComposantesOverloading( MIL_InputArchive& arc
         std::string strType;
         archive.ReadAttribute( "type", strType );
 
-        const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::FindComposanteType( strType );
+        const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( strType );
         if( !pType )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon composante type", archive.GetContext() );
 
@@ -798,7 +798,8 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
         MT_Vector2D newPosition;
         if( pPion_->GetAutomate().GetAlivePionsBarycenter( newPosition ) )
             pPion_->MagicMove( newPosition );
-        MIL_RC::pRcANouveauDisponibleApresReparation_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_ReAvailableAfterRepairation );
     }
 }
 
@@ -1149,8 +1150,8 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
 
-        asn.GetAsnMsg().m.equipements_pretesPresent = 1;
-        asn.GetAsnMsg().equipements_pretes.n        = loanData.size();
+        asn().m.equipements_pretesPresent = 1;
+        asn().equipements_pretes.n        = loanData.size();
 
         if( !loanData.empty() )
         {
@@ -1164,7 +1165,7 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
                 loan.type_equipement     = it->first.second->GetMosID();
                 loan.nombre              = it->second;
             }
-            asn.GetAsnMsg().equipements_pretes.elem = pLoan;
+            asn().equipements_pretes.elem = pLoan;
         }
     }
 
@@ -1179,8 +1180,8 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
 
-        asn.GetAsnMsg().m.equipements_empruntesPresent = 1;
-        asn.GetAsnMsg().equipements_empruntes.n        = loanData.size();       
+        asn().m.equipements_empruntesPresent = 1;
+        asn().equipements_empruntes.n        = loanData.size();       
 
         if( !loanData.empty() )
         {
@@ -1194,7 +1195,7 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
                 loan.type_equipement  = it->first.second->GetMosID();
                 loan.nombre           = it->second;
             }
-            asn.GetAsnMsg().equipements_empruntes.elem = pLoan;
+            asn().equipements_empruntes.elem = pLoan;
         }
     }
 }
@@ -1205,8 +1206,8 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
 {
-    msg.GetAsnMsg().dotation_eff_materiel.n        = composanteTypes_.size();
-    msg.GetAsnMsg().m.dotation_eff_materielPresent = 1;
+    msg().dotation_eff_materiel.n        = composanteTypes_.size();
+    msg().m.dotation_eff_materielPresent = 1;
     if( !composanteTypes_.empty() )
     {
         ASN1T_DotationEquipement* pEquipments = new ASN1T_DotationEquipement[ composanteTypes_.size() ];
@@ -1224,11 +1225,11 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
             value.nb_dans_chaine_maintenance = properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ];
             value.nb_prisonniers             = properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ];
         }
-        msg.GetAsnMsg().dotation_eff_materiel.elem = pEquipments;
+        msg().dotation_eff_materiel.elem = pEquipments;
     }
 
-    msg.GetAsnMsg().m.etat_operationnel_brutPresent = 1;
-    msg.GetAsnMsg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
+    msg().m.etat_operationnel_brutPresent = 1;
+    msg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
 
     SendLoans( msg );
 }
@@ -1260,15 +1261,15 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
             value.nb_prisonniers             = properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ];
         }
 
-        msg.GetAsnMsg().dotation_eff_materiel.n        = nNbrComposanteChanged_;
-        msg.GetAsnMsg().dotation_eff_materiel.elem     = pEquipments;
-        msg.GetAsnMsg().m.dotation_eff_materielPresent = 1;
+        msg().dotation_eff_materiel.n        = nNbrComposanteChanged_;
+        msg().dotation_eff_materiel.elem     = pEquipments;
+        msg().m.dotation_eff_materielPresent = 1;
     }
 
     if( bOperationalStateChanged_ )
     {
-        msg.GetAsnMsg().m.etat_operationnel_brutPresent = 1;
-        msg.GetAsnMsg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
+        msg().m.etat_operationnel_brutPresent = 1;
+        msg().etat_operationnel_brut          = (uint)( rOperationalState_ * 100. );
     }
 
     if( bLoansChanged_ )
@@ -1539,7 +1540,7 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
     const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMaintenanceQuerySent_ + 1 ) || nTickRcMaintenanceQuerySent_ == 0 )
-        MIL_RC::pRcDemandeEvacuationMateriel_->Send( *pPion_, MIL_RC::eRcTypeOperational );
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_EquipementEvacuationRequest );
     nTickRcMaintenanceQuerySent_ = nCurrentTick;
 
     PHY_MaintenanceComposanteState* pMaintenanceComposanteState = pTC2->MaintenanceHandleComposanteForTransport( *pPion_, composante );

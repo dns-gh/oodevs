@@ -6,15 +6,6 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGN 2003-11-27 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_ListView_Missions.h $
-// $Author: Nld $
-// $Modtime: 29/04/05 16:26 $
-// $Revision: 5 $
-// $Workfile: ADN_ListView_Missions.h $
-//
-// *****************************************************************************
 
 #ifndef __ADN_ListView_Missions_h_
 #define __ADN_ListView_Missions_h_
@@ -22,11 +13,10 @@
 #include "ADN_Types.h"
 #include "ADN_ListView.h"
 #include "ADN_Models_Data.h"
+#include "ADN_Missions_Data.h"
 
 class ADN_ListView_Models;
 class QPopupMenu;
-
-enum E_SMission;
 
 // =============================================================================
 /** @class  ADN_ListView_Missions
@@ -34,25 +24,24 @@ enum E_SMission;
 */
 // Created: AGN 2003-11-27
 // =============================================================================
-class ADN_ListView_Missions
-: public ADN_ListView
+class ADN_ListView_Missions : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent = 0, const char * name = 0, WFlags f = 0);
+    explicit ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent = 0, const char * name = 0, WFlags f = 0 );
     virtual ~ADN_ListView_Missions();
 
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
 
-    void FillList( QCheckListItem* pParent, E_SMission eStart, E_SMission eEnd );
+    void FillList( QCheckListItem* pParent, ADN_Missions_Data::T_Mission_Vector& missions );
     ADN_ListViewItem* FindItem( const std::string& strMissionName );
     void ApplyModifications( QCheckListItem* pStart );
 
 private:
     ADN_ListView_Models* pLVModels_;
-
     ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
+    ADN_Missions_Data::T_Mission_Vector* currentMissions_;
 };
 
 #endif // __ADN_ListView_Missions_h_

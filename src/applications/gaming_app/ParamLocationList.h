@@ -39,9 +39,9 @@ class ParamLocationList : public ParamListView, public Param_ABC, private gui::S
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation& asn, const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamLocationList( QWidget* pParent, ASN1T_ListPolygon& asn,      const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
-             ParamLocationList( QWidget* pParent, ASN1T_ListPoint& asn,        const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListLocalisation*& asn, const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListPolygon*& asn,      const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
+             ParamLocationList( QWidget* pParent, ASN1T_ListPoint*& asn,        const QString& label, const QString& menu, gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter );
     virtual ~ParamLocationList();
 
     //! @name Operations
@@ -82,7 +82,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    ASN1T_ListLocalisation& asn_;
+    ASN1T_ListLocalisation* asn_;
     ASN1T_Localisation* pAsnLocalisationList_;
 
     gui::LocationCreator* creator_;

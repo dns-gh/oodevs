@@ -37,8 +37,7 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
-#include "Entities/RC/MIL_RC_MaterielRepareSurPlace.h"
-#include "Entities/RC/MIL_RC_MaterielRetourDeMaintenance.h"
+#include "Entities/Orders/MIL_Report.h"
 
 MT_Random PHY_ComposantePion::random_;
 MT_Float  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
@@ -136,7 +135,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
 
     ASN1T_TypeEquipement nEqID;
     file >> nEqID;
-    pType_ = PHY_ComposanteTypePion::FindComposanteType( nEqID );
+    pType_ = PHY_ComposanteTypePion::Find( nEqID );
     assert( pType_ );
 
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );   
@@ -657,7 +656,7 @@ void PHY_ComposantePion::NotifyRepairedByMaintenance()
 {
     assert( pRole_ );
     assert( pType_ );
-    MIL_RC::pRcMaterielRetourDeMaintenance_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational, *pType_ );
+    MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eReport_EquipementBackFromMaintenance, *pType_ );
     pRole_->NotifyComposanteRepaired();    
     ReinitializeState( PHY_ComposanteState::undamaged_ );    
 }
@@ -752,7 +751,7 @@ void PHY_ComposantePion::Update()
     if( *pState_ == PHY_ComposanteState::repairableWithoutEvacuation_ && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nAutoRepairTimeStep_ )
     {                
         assert( pType_ );
-        MIL_RC::pRcMaterielRepareSurPlace_->Send( pRole_->GetPion(), MIL_RC::eRcTypeOperational, *pType_ );
+        MIL_Report::PostEvent( pRole_->GetPion(), MIL_Report::eReport_EquipementRepairedInPlace, *pType_ );
         pRole_->NotifyComposanteRepaired();
         ReinitializeState( PHY_ComposanteState::undamaged_ );        
     }

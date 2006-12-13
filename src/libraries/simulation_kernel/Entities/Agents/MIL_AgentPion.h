@@ -16,7 +16,7 @@
 
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
-#include "Entities/Orders/Pion/MIL_PionOrderManager.h"
+#include "Entities/Orders/MIL_PionOrderManager.h"
 #include "Entities/Actions/PHY_Actor.h"
 
 class MIL_AgentPion;
@@ -111,10 +111,10 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
     void OnReceiveMsgUnitMagicAction( DIN::DIN_Input&           msg );
-    void OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgPionOrder      ( ASN1T_MsgPionOrder&       msg, MIL_MOSContextID nCtx ); 
-    void OnReceiveMsgOrderConduite  ( ASN1T_MsgOrderConduite&   msg, MIL_MOSContextID nCtx );
-    void OnReceiveMsgChangeAutomate ( ASN1T_MsgChangeAutomate&  msg, MIL_MOSContextID nCtx );
+    void OnReceiveMsgUnitMagicAction( ASN1T_MsgUnitMagicAction& msg, uint nCtx );
+    void OnReceiveMsgOrder          ( ASN1T_MsgPionOrder&       msg ); 
+    void OnReceiveMsgFragOrder      ( ASN1T_MsgFragOrder&       msg );
+    void OnReceiveMsgChangeAutomate ( ASN1T_MsgChangeAutomate&  msg, uint nCtx );
     void OnReceiveMagicSurrender    ();
     void OnReceiveMsgMagicMove      ( const MT_Vector2D& vPosition ); // Magic move automate
     //@}
@@ -165,7 +165,7 @@ private:
     // Knowledge
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
 
-    MIL_PionOrderManager&     orderManager_;
+    MIL_PionOrderManager&    orderManager_;
 };
 
 #include "MIL_AgentPion.inl"

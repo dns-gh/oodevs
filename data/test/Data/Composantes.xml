@@ -219,7 +219,7 @@
           <Categorie consommationNormalisee="10" contenance="2000" nom="Obus 120 mm" seuilLogistique="20"/>
           <Categorie consommationNormalisee="10" contenance="50" nom="Obus mine" seuilLogistique="20"/>
           <Categorie consommationNormalisee="10" contenance="5" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
-          <Categorie consommationNormalisee="10" contenance="4" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
+          <Categorie consommationNormalisee="10" contenance="40" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
         </Categories>
       </Dotation>
       <Dotation nom="carburant">

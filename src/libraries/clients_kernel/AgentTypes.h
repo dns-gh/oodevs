@@ -24,6 +24,7 @@ namespace kernel
     class PopulationType;
     class MissionFactory;
     class Mission;
+    class FragOrder;
     class SymbolFactory;
     class KnowledgeGroupType;
 
@@ -42,8 +43,10 @@ class AgentTypes : public Resolver< AgentType >
                  , public Resolver< ComponentType >
                  , public Resolver< ComponentType, QString >
                  , public Resolver< SensorType, QString >
-                 , public Resolver< DecisionalModel, QString >
                  , public Resolver< KnowledgeGroupType, QString >
+                 , public Resolver< Mission >
+                 , public Resolver< FragOrder >
+                 , public Resolver< FragOrder, QString >
 {
 
 public:
@@ -69,6 +72,7 @@ private:
     //! @name Types
     //@{
     typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
+    typedef Resolver< Mission, QString > T_MissionResolver;
     //@}
 
     //! @name Helpers
@@ -78,6 +82,7 @@ private:
     void ReadSensors( const std::string& sensors );
     void ReadAgents( const std::string& agents );
     void ReadAutomats( const std::string& automats );
+    void ReadMissions( const std::string& missions );
     void ReadModels( const std::string& models );
     void ReadPopulations( const std::string& populations );
     void ReadKnowledgeGroups( const std::string& groups );
@@ -89,13 +94,28 @@ private:
     void ReadComponent( xml::xistream& xis );
     void ReallyReadSensor( xml::xistream& xis, const std::string& sensor );
     void ReadSensor( xml::xistream& xis );
-    void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver );
+    void ReadModel( xml::xistream& xis, const T_Resolver& missionResolver, Resolver< DecisionalModel, QString >& models );
+    void ReadMission( xml::xistream& xis, T_MissionResolver& missions );
+    void ReadFragOrder( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
+    T_MissionResolver unitMissions_;
+    T_MissionResolver automatMissions_;
+    T_MissionResolver populationMissions_;
+
+    MissionFactory* missionFactory_;
     SymbolFactory* symbolFactory_;
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    Resolver< DecisionalModel, QString > unitModels_;
+    Resolver< DecisionalModel, QString > automatModels_;
+    Resolver< DecisionalModel, QString > populationModels_;
     //@}
 };
 

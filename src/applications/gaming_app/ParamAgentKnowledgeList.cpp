@@ -19,8 +19,8 @@ using namespace kernel;
 // Name: ParamAgentKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent& asn, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
-    : EntityListParameter< AgentKnowledge_ABC >( pParent, asn.n, asn.elem, label, menu )
+ParamAgentKnowledgeList::ParamAgentKnowledgeList( QWidget* pParent, ASN1T_ListKnowledgeAgent*& asn, const QString& label, const QString& menu, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& agent )
+    : EntityListParameter< AgentKnowledge_ABC >( pParent, (ASN1T_ListOID*&)asn, label, menu )
     , converter_( converter )
     , agent_    ( agent )
 {

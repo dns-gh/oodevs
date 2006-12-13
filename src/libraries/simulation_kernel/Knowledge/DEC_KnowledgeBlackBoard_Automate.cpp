@@ -17,7 +17,8 @@
 #include "DEC_Knowledge_RapForGlobal.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/Automates/MIL_Automate.h"
-
+#include "Entities/MIL_Army.h"
+#include "Decision/DEC_Tools.h"
 
 BOOST_CLASS_EXPORT_GUID( DEC_KnowledgeBlackBoard_Automate, "DEC_KnowledgeBlackBoard_Automate" )
 
@@ -79,6 +80,97 @@ MT_Float DEC_KnowledgeBlackBoard_Automate::GetRapForGlobalValue() const
 {
     assert( pKnowledgeRapForGlobal_ );
     return pKnowledgeRapForGlobal_->GetValue();
+}
+
+// =============================================================================
+// RESOLVER
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const ASN1T_KnowledgeAgent& asn ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( const DIA_Variable_ABC& dia ) const
+{
+    assert( DEC_Tools::CheckTypeConnaissanceAgent( dia ) );
+    uint nDiaID = (uint)dia.ToPtr();
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nDiaID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Agent* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeAgent( uint nID ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const ASN1T_KnowledgeObject& asn ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( const DIA_Variable_ABC& dia ) const
+{
+    assert( DEC_Tools::CheckTypeConnaissanceObjet( dia ) );
+    uint nDiaID = (uint)dia.ToPtr();
+    return pAutomate_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nDiaID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgeObject( uint nID ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const ASN1T_KnowledgePopulation& asn ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( const DIA_Variable_ABC& dia ) const
+{
+    assert( DEC_Tools::CheckTypeConnaissancePopulation( dia ) );
+    uint nDiaID = (uint)dia.ToPtr();
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nDiaID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation
+// Created: NLD 2006-11-22
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_Automate::ResolveKnowledgePopulation( uint nID ) const
+{
+    return pAutomate_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nID );
 }
 
 

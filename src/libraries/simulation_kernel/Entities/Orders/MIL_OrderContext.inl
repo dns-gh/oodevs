@@ -30,11 +30,11 @@ const MIL_Fuseau& MIL_OrderContext::GetFuseau() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::SetFuseau
+// Name: MIL_OrderContext::AffectFuseau
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
 inline
-void MIL_OrderContext::SetFuseau( const MIL_Fuseau& fuseau )
+void MIL_OrderContext::AffectFuseau( const MIL_Fuseau& fuseau )
 {
     fuseau_ = fuseau;
 }
@@ -49,3 +49,28 @@ const T_LimaVector& MIL_OrderContext::GetLimas() const
     return limas_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::FindLima
+// Created: NLD 2006-11-16
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_OrderContext::FindLima( uint nID )
+{
+    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+        if( it->GetID() == nID )
+            return &(*it);
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::FindLima
+// Created: NLD 2006-11-14
+// -----------------------------------------------------------------------------
+inline
+MIL_LimaOrder* MIL_OrderContext::FindLima( const MIL_LimaFunction& func )
+{
+    for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+        if( it->HasFunction( func ) )
+            return &(*it);
+    return 0;
+}

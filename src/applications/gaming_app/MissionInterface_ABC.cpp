@@ -41,12 +41,11 @@
 #include "gaming/ObjectKnowledge_ABC.h"
 #include "gaming/AgentKnowledge_ABC.h"
 #include "gaming/PopulationKnowledge_ABC.h"
-#include "ParamLimits.h"
-#include "ParamLimaList.h"
 #include "gaming/Lima.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "OptionalParamFunctor_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -55,15 +54,10 @@ using namespace gui;
 // Name: MissionInterface_ABC constructor
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
-MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Entity_ABC& agent, ActionController& controller, ParametersLayer& layer, const CoordinateConverter_ABC& converter, AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const ObjectTypes& objectTypes )
+MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, Entity_ABC& agent, ActionController& controller )
     : QVBox      ( parent )
     , controller_( controller )
     , agent_     ( agent )
-    , layer_     ( layer )
-    , converter_ ( converter )
-    , knowledgeConverter_( knowledgeConverter )
-    , objectKnowledgeConverter_( objectKnowledgeConverter )
-    , objectTypes_( objectTypes )
 {
     setMargin( 5 );
     setSpacing( 4 );
@@ -78,6 +72,8 @@ MissionInterface_ABC::~MissionInterface_ABC()
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (*it)->RemoveFromController();
     for( CIT_OptionalFunctors it = optionalFunctors_.begin(); it != optionalFunctors_.end(); ++it )
+        delete *it;
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         delete *it;
 }
 
@@ -146,266 +142,4 @@ void MissionInterface_ABC::Draw( const GlTools_ABC& tools, const geometry::Recta
 {
     for( CIT_Parameters it = parameters_.begin() ; it != parameters_.end() ; ++it )
         (*it)->Draw( agent_.Get< Positions >().GetPosition(), extent, tools );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateNatureAtlas
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateNatureAtlas( ASN1T_NatureAtlas& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamAgentType( this, asn, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateGDH
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateGDH( ASN1T_GDH& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamGDH( this, asn, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateDirection
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateDirection( ASN1T_Direction& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamDirection( this, asn, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreatePoint
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreatePoint( ASN1T_Point& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamPoint( this, asn, strName, strName, converter_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreatePath
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreatePath( ASN1T_Itineraire& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamPath( this, asn, strName, strName, layer_, converter_, agent_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreatePathList
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreatePathList( ASN1T_ListItineraire& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamPathList( this, asn, strName, layer_, converter_, agent_, controller_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateAgentList
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAgentList( ASN1T_ListAgent& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamAgentList( this, asn, strName, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateAgent
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAgent( ASN1T_Agent& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamAgent( this, asn, strName, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateAutomateList
-// Created: APE 2004-10-25
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAutomateList( ASN1T_ListAutomate& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamAutomatList( this, (ASN1T_ListAgent&)asn, strName, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateAutomate
-// Created: APE 2004-10-25
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAutomate( ASN1T_Agent& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamAutomat( this, asn, strName, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateLocation
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateLocation( ASN1T_Localisation& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamLocation( this, asn, strName, layer_, converter_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateLocationList
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateLocationList( ASN1T_ListLocalisation& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamLocationList( this, asn, strName, strName, layer_, converter_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateLPolygonList
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreatePolygonList( ASN1T_ListPolygon& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamLocationList( this, asn, strName, strName, layer_, converter_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreatePointList
-// Created: APE 2004-09-08
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreatePointList( ASN1T_ListPoint& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamLocationList( this, asn, strName, strName, layer_, converter_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateAgentKnowledge
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAgentKnowledge( ASN1T_KnowledgeAgent& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamAgentKnowledge( this, asn, strName, strName, knowledgeConverter_, agent_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateAgentKnowledgeList
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateAgentKnowledgeList( ASN1T_ListKnowledgeAgent& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamAgentKnowledgeList( this, asn, strName, strName, knowledgeConverter_, agent_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateObjectKnowledge
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateObjectKnowledge( ASN1T_KnowledgeObject& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamObjectKnowledge( this, asn, strName, strName, objectKnowledgeConverter_, agent_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateObjectKnowledgeList
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateObjectKnowledgeList( ASN1T_ListKnowledgeObject& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamObjectKnowledgeList( this, asn, strName, strName, objectKnowledgeConverter_, agent_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateGenObject
-// Created: APE 2004-05-17
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateGenObject( ASN1T_MissionGenObject& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamObstacle( this, asn, strName, objectTypes_, layer_, converter_ ), pOptional ) ;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateGenObjectList
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateGenObjectList( ASN1T_ListMissionGenObject& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamObstacleList( this, asn, strName, objectTypes_, layer_, converter_, controller_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateBool
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateBool( ASN1BOOL& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional, QWidget* pParent )
-{
-//    (pParent != 0) ? pParent : this
-    AddParameter( *new ParamBool( this, asn, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateNumeric
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateNumeric( ASN1INT& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamNumericField( this, asn, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateNumeric
-// Created: APE 2004-04-30
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateNumeric( ASN1REAL& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamNumericField( this, asn, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateMaintenancePriorities
-// Created: SBO 2005-09-27
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateMaintenancePriorities( ASN1T_MaintenancePriorites& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamEquipmentList( this, asn, strName, objectTypes_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateMedicalPriorities
-// Created: SBO 2005-09-27
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateMedicalPriorities( ASN1T_SantePriorites& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamHumanWoundList( this, asn, strName ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreatePopulationKnowledge
-// Created: HME 2005-12-22
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreatePopulationKnowledge( ASN1T_KnowledgePopulation& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional )
-{
-    AddParameter( *new ParamPopulationKnowledge( this, asn, strName, strName, knowledgeConverter_, agent_ ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateLimaList
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateLimaList( ASN1T_LimasOrder& asn, const QString& strName, OptionalParamFunctor_ABC* pOptional /*= 0*/ )
-{
-    AddParameter( *new ParamLimaList( this, asn, "Limas", strName ), pOptional );
-}
-    
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateLimits
-// Created: SBO 2006-11-14
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateLimits( ASN1T_Line& left, ASN1T_Line& right, const QString& name1, const QString& name2, OptionalParamFunctor_ABC* pOptional /*= 0*/ )
-{
-    AddParameter( *new ParamLimits( this, left, right, "Limite 1", "Limite 2", name1, name2 ), pOptional );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterface_ABC::CreateDotationDType
-// Created: SBO 2006-08-09
-// -----------------------------------------------------------------------------
-void MissionInterface_ABC::CreateDotationDType( ASN1T_TypeDotationTrancheD& asn, const QString& name, OptionalParamFunctor_ABC* pOptional /*= 0*/ )
-{
-    AddParameter( *new ParamDotationDType( this, asn, name, objectTypes_ ), pOptional );
 }

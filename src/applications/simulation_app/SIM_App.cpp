@@ -18,7 +18,6 @@
 #include "SIM_Dispatcher.h"
 
 #include "simulation_kernel/MIL_AgentServer.h"
-#include "simulation_missions/Missions.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
@@ -109,8 +108,6 @@ void SIM_App::Initialize()
 
     MT_Profiler::Initialize();
     MT_MakeDir( "CheckPoints" );
-
-    missions::RegisterMissions();
 
     MIL_AgentServer::CreateWorkspace( startupConfig_ );
 }

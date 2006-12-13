@@ -66,6 +66,10 @@ public:
     virtual std::string TesterParamCleaningCode        ( const AGR_Member& member ) const;
     virtual std::string TesterSerializationCode        ( const AGR_Member& member ) const;
             std::string TesterSerializationCleaningCode( const AGR_Member& member ) const;
+
+    virtual std::string MissionXMLCode           ( const AGR_Member& member ) const;
+    virtual std::string RCXMLCode                () const;
+
     //@}
 
     //! @name Accessors
@@ -73,6 +77,7 @@ public:
     const std::string& ASNType() const;
     const std::string& GetDIAType() const;
     const std::string& GetHumanName() const;
+    const std::string& GetFunctionSuffix() const;
     //@}
 
 private:

@@ -2,167 +2,167 @@
 <Modeles>
 
   <Pions>
-    <Modele nom="Pion Test ALAT">
+    <Modele nom="Test ALAT">
       <DIAType>T_Pion</DIAType>
       <File>For Tests\Tests\Pion ALAT\Files.hal</File>
       <Missions>
-        <Mission nom="Pion Test MoveTo">
+        <Mission nom="Test Move To">
           <OrdresConduite>
-            <OrdreConduite nom="AttendreSePoster"/>
+            <OrdreConduite nom="Attendre Se Poster"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion Test ChangePosture"/>
-        <Mission nom="Pion Test CreateObject"/>
-        <Mission nom="Pion Test DestroyObject"/>
-        <Mission nom="Pion Test CreateBypass"/>
-        <Mission nom="Pion Test Reinforce"/>
-        <Mission nom="Pion Test Heliporter"/>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Heliporter"/>
       </Missions>
     </Modele>
-    <Modele nom="Pion Test LOG">
+    <Modele nom="Test LOG">
       <DIAType>T_Pion</DIAType>
       <File>For Tests\Tests\Pion LOG\Files.hal</File>
       <Missions>
-        <Mission nom="Pion Test MoveTo"/>
-        <Mission nom="Pion Test CreateBypass"/>
-        <Mission nom="Pion LOG Convoyer"/>
-        <Mission nom="Pion LOG PreparerBascule"/>
-        <Mission nom="Pion LOG Renforcer"/>
-        <Mission nom="Pion LOG TraiterBlesses">
+        <Mission nom="Test Move To"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="LOG Convoyer"/>
+        <Mission nom="LOG Preparer Bascule"/>
+        <Mission nom="LOG Renforcer"/>
+        <Mission nom="LOG Traiter Blesses">
           <OrdresConduite>
-            <OrdreConduite nom="ModifierPrioritesBlesses"/>
-            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion LOG TrierBlesses">
+        <Mission nom="LOG Trier Blesses">
           <OrdresConduite>
-            <OrdreConduite nom="ModifierPrioritesBlesses"/>
-            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion LOG TrierEtTraiterBlesses">
+        <Mission nom="LOG Trier Et Traiter Blesses">
           <OrdresConduite>
-            <OrdreConduite nom="ModifierPrioritesBlesses"/>
-            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion LOG SeDeployer">
+        <Mission nom="LOG Se Deployer">
           <OrdresConduite>
-            <OrdreConduite nom="ModifierPrioritesReparations"/>
-            <OrdreConduite nom="ModifierPrioritesBlesses"/>
-            <OrdreConduite nom="ModifierPrioritesTactiquesReparations"/>
-            <OrdreConduite nom="ModifierPrioritesTactiquesBlesses"/>
-            <OrdreConduite nom="ModifierRegimeTravailMaintenance"/>
-            <OrdreConduite nom="Pion RenforcerEnVSRAM"/>
-            <OrdreConduite nom="Pion ReprendreAuxOrdresVSRAM"/>
-            <OrdreConduite nom="Pion RenforcerEnRemorqueurs"/>
-            <OrdreConduite nom="Pion ReprendreAuxOrdresRemorqueurs"/>
+            <OrdreConduite nom="Modifier Priorites Reparations"/>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Reparations"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
+            <OrdreConduite nom="Modifier Regime Travail Maintenance"/>
+            <OrdreConduite nom="Pion Renforcer En VSRAM"/>
+            <OrdreConduite nom="Pion Reprendre Aux Ordres VSRAM"/>
+            <OrdreConduite nom="Pion Renforcer En Remorqueurs"/>
+            <OrdreConduite nom="Pion Reprendre Aux Ordres Remorqueurs"/>
           </OrdresConduite>
         </Mission>
       </Missions>
     </Modele>
-    <Modele nom="Pion Test">
+    <Modele nom="Test">
       <DIAType>T_Pion</DIAType>
       <File>For Tests\Tests\Pion\Files.hal</File>
       <Missions>
-        <Mission nom="Pion Test MoveTo">
+        <Mission nom="Test Move To">
           <OrdresConduite>
-            <OrdreConduite nom="AttendreSePoster"/>
-            <OrdreConduite nom="ChangerPositionDebarquement"/>
-            <OrdreConduite nom="Automate ActiverObstacle"/>
+            <OrdreConduite nom="Attendre Se Poster"/>
+            <OrdreConduite nom="Changer Position Debarquement"/>
+            <OrdreConduite nom="Pion Activer Obstacle"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion Test ChangePosture"/>
-        <Mission nom="Pion Test CreateObject"/>
-        <Mission nom="Pion Test DestroyObject"/>
-        <Mission nom="Pion Test CreateBypass"/>
-        <Mission nom="Pion Test Reinforce"/>
-        <Mission nom="Pion Test Fire"/>
-        <Mission nom="Pion LOG TrierBlesses"/>
-        <Mission nom="Pion CanaliserPopulations"/>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
+        <Mission nom="LOG Trier Blesses"/>
+        <Mission nom="Canaliser Populations"/>
       </Missions>
     </Modele>
-    <Modele nom="Pion Test 2">
+    <Modele nom="Test 2">
       <DIAType>T_Pion</DIAType>
       <File>For Tests\Tests\Pion\Files.hal</File>
       <Missions>
-        <Mission nom="Pion Test MoveTo">
+        <Mission nom="Test Move To">
           <OrdresConduite>
-            <OrdreConduite nom="AttendreSePoster"/>
+            <OrdreConduite nom="Attendre Se Poster"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion Test ChangePosture"/>
-        <Mission nom="Pion Test CreateObject"/>
-        <Mission nom="Pion Test DestroyObject"/>
-        <Mission nom="Pion Test CreateBypass"/>
-        <Mission nom="Pion Test Reinforce"/>
-        <Mission nom="Pion Test Fire"/>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
       </Missions>
     </Modele>
-    <Modele nom="Pion NBC Test">
+    <Modele nom="NBC Test">
       <DIAType>T_Pion</DIAType>
       <File>For Tests\Tests\Pion NBC\Files.hal</File>
       <Missions>
-        <Mission nom="Pion Test MoveTo">
+        <Mission nom="Test Move To">
           <OrdresConduite>
-            <OrdreConduite nom="AttendreSePoster"/>
+            <OrdreConduite nom="Attendre Se Poster"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion Test ChangePosture"/>
-        <Mission nom="Pion Test CreateObject"/>
-        <Mission nom="Pion Test DestroyObject"/>
-        <Mission nom="Pion Test CreateBypass"/>
-        <Mission nom="Pion Test Reinforce"/>
-        <Mission nom="Pion Test Fire"/>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
       </Missions>
     </Modele>
-    <Modele nom="Pion RENS Test">
+    <Modele nom="RENS Test">
       <DIAType>T_Pion</DIAType>
       <File>For Tests\Tests\Pion RENS\Files.hal</File>
       <Missions>
-        <Mission nom="Pion Test MoveTo">
+        <Mission nom="Test Move To">
           <OrdresConduite>
-            <OrdreConduite nom="AttendreSePoster"/>
+            <OrdreConduite nom="Attendre Se Poster"/>
           </OrdresConduite>
         </Mission>
-        <Mission nom="Pion Test ChangePosture"/>
-        <Mission nom="Pion Test CreateObject"/>
-        <Mission nom="Pion Test DestroyObject"/>
-        <Mission nom="Pion Test CreateBypass"/>
-        <Mission nom="Pion Test Reinforce"/>
-        <Mission nom="Pion Test Fire"/>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
       </Missions>
     </Modele>
-    <Modele nom="Pion REFUGIE Test">
+    <Modele nom="REFUGIE Test">
       <DIAType>T_Pion</DIAType>
       <File>For Tests\Tests\Pion REFUGIE\Files.hal</File>
       <Missions>
-        <Mission nom="Pion Test MoveTo"/>
+        <Mission nom="Test Move To"/>
       </Missions>
     </Modele>
   </Pions>
 
   <Automates>
-    <Modele nom="Automate Test">
+    <Modele nom="Test">
       <DIAType>T_Automate</DIAType>
       <File>For Tests\Tests\Automate\Files.hal</File>
       <Missions>
-        <Mission nom="Automate Test MoveTo"/>
-        <Mission nom="Automate FaireMouvementVersCampRefugies"/>
-        <Mission nom="Automate GEN RealiserTravaux"/>
-        <Mission nom="Automate GEN RetablirItineraires"/>
-        <Mission nom="Automate LOG SeDeployer"/>
+        <Mission nom="Test Move To"/>
+        <Mission nom="Faire Mouvement Vers Camp Refugies"/>
+        <Mission nom="GEN Realiser Travaux"/>
+        <Mission nom="GEN Retablir Itineraires"/>
+        <Mission nom="LOG Se Deployer"/>
       </Missions>
     </Modele>
   </Automates>
 
   <Populations>
-    <Modele nom="Population Test">
+    <Modele nom="Test">
       <DIAType>T_Population</DIAType>
       <File>For Tests\Tests\Population\Files.hal</File>
       <Missions>
-        <Mission nom="Population FaireMouvement"/>
-        <Mission nom="Population CommettreExactions"/>
+        <Mission nom="Faire Mouvement"/>
+        <Mission nom="Commettre Exactions"/>
       </Missions>
     </Modele>
   </Populations>

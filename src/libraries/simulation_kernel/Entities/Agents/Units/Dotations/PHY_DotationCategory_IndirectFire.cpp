@@ -21,7 +21,7 @@
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
@@ -113,7 +113,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_AgentPion& firer,
 
             if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
             {
-                MIL_RC::pRcTirIndirectFratricide_->Send( firer, MIL_RC::eRcTypeEvent );
+                MIL_Report::PostEvent( firer, MIL_Report::eReport_FratricideIndirectFire );
                 bRCSent = true;
             }
         }
@@ -135,7 +135,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_AgentPion& firer,
         }
         if( !concentrations.empty() && !bRCSent )
         {
-            MIL_RC::pRcTirIndirectSurPopulation_->Send( firer, MIL_RC::eRcTypeEvent );
+            MIL_Report::PostEvent( firer, MIL_Report::eReport_IndirectFireOnPopulation );
             bRCSent = true;
         }
 
@@ -148,7 +148,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_AgentPion& firer,
         }
         if( !flows.empty() && !bRCSent )
         {
-            MIL_RC::pRcTirIndirectSurPopulation_->Send( firer, MIL_RC::eRcTypeEvent );
+            MIL_Report::PostEvent( firer, MIL_Report::eReport_IndirectFireOnPopulation );
             bRCSent = true;
         }
     }

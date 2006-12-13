@@ -400,4 +400,37 @@ enum E_TypeMunitionTirIndirect
     eNbrTypeMunitionTirIndirect
 };
 
+enum E_MissionParameterType
+{
+    eMissionParameterTypeAgent,
+    eMissionParameterTypeAgentList,
+    eMissionParameterTypeAutomate,
+    eMissionParameterTypeAutomateList,
+    eMissionParameterTypeGenObject,
+    eMissionParameterTypeGenObjectList,
+    eMissionParameterTypeDotation,
+    eMissionParameterTypeNatureAtlas,
+    eMissionParameterTypeBool,
+    eMissionParameterTypeDirection,
+    eMissionParameterTypeGDH,
+    eMissionParameterTypeNumeric,
+    eMissionParameterTypeEnumeration,
+    eMissionParameterTypeAgentKnowledge,
+    eMissionParameterTypeAgentKnowledgeList,
+    eMissionParameterTypeObjectKnowledge,
+    eMissionParameterTypeObjectKnowledgeList,
+    eMissionParameterTypePopulationKnowledge,
+    eMissionParameterTypePath,
+    eMissionParameterTypePathList,
+    eMissionParameterTypePoint,
+    eMissionParameterTypePointList,
+    eMissionParameterTypePolygon,
+    eMissionParameterTypePolygonList,
+    eMissionParameterTypeLocation,
+    eMissionParameterTypeLocationList,
+    eMissionParameterTypeMaintenancePriorities,
+    eMissionParameterTypeMedicalPriorities,
+    eNbrMissionParameterType
+};
+
 #endif // __ADN_Enums_h_

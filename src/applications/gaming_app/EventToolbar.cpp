@@ -14,7 +14,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "gaming/Report_ABC.h"
+#include "gaming/Report.h"
 #include "gaming/statusicons.h"
 #include "gaming/Simulation.h"
 #include "clients_gui/resources.h"
@@ -85,15 +85,15 @@ void EventToolbar::MessageClicked()
 // Name: EventToolbar::NotifyCreated
 // Created: SBO 2006-06-26
 // -----------------------------------------------------------------------------
-void EventToolbar::NotifyCreated( const Report_ABC& report )
+void EventToolbar::NotifyCreated( const Report& report )
 {
-    const Entity_ABC& agent = report.GetAgent();
-    if( profile_.IsVisible( agent ) )
+    const Entity_ABC& entity = report.GetOwner();
+    if( profile_.IsVisible( entity ) )
     {
-        const CIT_Agents it = std::find( messageAgents_.begin(), messageAgents_.end(), &agent );
+        const CIT_Agents it = std::find( messageAgents_.begin(), messageAgents_.end(), &entity );
         if( it == messageAgents_.end() )
         {
-            messageAgents_.push_back( &report.GetAgent() );
+            messageAgents_.push_back( &entity );
             UpdateMessageButton();
         }
     }

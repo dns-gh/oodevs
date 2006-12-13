@@ -18,9 +18,9 @@
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Orders/Pion/MIL_PionMissionType.h"
-#include "Entities/Orders/Pion/MIL_PionMission_ABC.h"
-#include "Entities/RC/MIL_RC.h"
+#include "Entities/Orders/MIL_PionMissionType.h"
+#include "Entities/Orders/MIL_PionMission.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_ModelPion.h"
 #include "Decision/DEC_Tools.h"
 #include "CheckPoints/DIA_Serializer.h"
@@ -300,9 +300,9 @@ void DEC_RolePion_Decision::Reset()
 // Name: DEC_RolePion_Decision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission_ABC& mission )
+void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission& mission )
 {
-    const std::string& strBehavior = mission.GetType().GetBehaviorName();
+    const std::string& strBehavior = mission.GetType().GetDIABehavior();
     missionBehaviorParameters_.GetParameter( 0 ).SetValue( mission ); 
     missionBehaviorParameters_.GetParameter( 1 ).SetValue( (int)nMissionBehaviorDummyId_++ ); 
     DIA_ActivateOrder( &GetBehaviorPart(), strBehavior, 1.0, missionBehaviorParameters_ );
@@ -313,13 +313,13 @@ void DEC_RolePion_Decision::StartMissionBehavior( MIL_PionMission_ABC& mission )
 // Name: DEC_RolePion_Decision::StopMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission_ABC& mission )
+void DEC_RolePion_Decision::StopMissionBehavior( MIL_PionMission& mission )
 {
     __try
     {
-        const std::string& strBehavior = mission.GetType().GetBehaviorName();
+        const std::string& strBehavior = mission.GetType().GetDIABehavior();
         DIA_DesactivateOrder( &GetBehaviorPart(), strBehavior, missionBehaviorParameters_, true );
-        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PionMission_ABC*)0 );
+        GetVariable( nDIAMissionIdx_ ).SetValue( *(MIL_PionMission*)0 );
     }
     __except( MT_CrashHandler::ExecuteHandler( GetExceptionInformation() ) )
     {
@@ -380,9 +380,9 @@ void DEC_RolePion_Decision::UpdateDecision()
     {
         assert( pPion_ );
         LogCrash( *pPion_ );
-        CleanStateAfterCrash();
-        MIL_RC::pRcMissionImpossible_->Send( *pPion_, MIL_RC::eRcTypeMessage );
-        pPion_->GetOrderManager().CancelAllOrders();       
+        CleanStateAfterCrash();       
+        MIL_Report::PostEvent( *pPion_, MIL_Report::eReport_MissionImpossible_ );
+        pPion_->GetOrderManager().ReplaceMission();       
     }
 }
 
@@ -394,19 +394,19 @@ void DEC_RolePion_Decision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) cons
 {
     assert( pRoePopulation_ );
 
-    msg.GetAsnMsg().m.rapport_de_forcePresent              = 1;    
-    msg.GetAsnMsg().m.combat_de_rencontrePresent           = 1;
-    msg.GetAsnMsg().m.etat_operationnelPresent             = 1;
-    msg.GetAsnMsg().m.disponibilite_au_tir_indirectPresent = 1;
-    msg.GetAsnMsg().m.roePresent                           = 1;
-    msg.GetAsnMsg().m.roe_populationPresent                = 1;
+    msg().m.rapport_de_forcePresent              = 1;    
+    msg().m.combat_de_rencontrePresent           = 1;
+    msg().m.etat_operationnelPresent             = 1;
+    msg().m.disponibilite_au_tir_indirectPresent = 1;
+    msg().m.roePresent                           = 1;
+    msg().m.roe_populationPresent                = 1;
 
-    msg.GetAsnMsg().rapport_de_force              = (ASN1T_EnumEtatRapFor)nForceRatioState_;
-    msg.GetAsnMsg().combat_de_rencontre           = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
-    msg.GetAsnMsg().etat_operationnel             = (ASN1T_EnumEtatOperationnel)nOperationalState_;
-    msg.GetAsnMsg().disponibilite_au_tir_indirect = (ASN1T_EnumDisponibiliteAuTir)nIndirectFireAvailability_;
-    msg.GetAsnMsg().roe                           = (ASN1T_EnumRoe)nRulesOfEngagementState_;
-    msg.GetAsnMsg().roe_population                = pRoePopulation_->GetAsnID();
+    msg().rapport_de_force              = (ASN1T_EnumEtatRapFor)nForceRatioState_;
+    msg().combat_de_rencontre           = (ASN1T_EnumEtatCombatRencontre)nCloseCombatState_;
+    msg().etat_operationnel             = (ASN1T_EnumEtatOperationnel)nOperationalState_;
+    msg().disponibilite_au_tir_indirect = (ASN1T_EnumDisponibiliteAuTir)nIndirectFireAvailability_;
+    msg().roe                           = (ASN1T_EnumRoe)nRulesOfEngagementState_;
+    msg().roe_population                = pRoePopulation_->GetAsnID();
 }
 
 // -----------------------------------------------------------------------------
