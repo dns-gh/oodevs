@@ -153,6 +153,15 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach< TacticalHierarchies >     ( *new AgentHierarchies< TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
     if( asnMsg.pc )
         result->Attach( *new PcAttributes( *result ) );
+
+    result->Attach< HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
+    result->Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
+    result->Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico ) );
+    result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico ) );
+    result->Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
+    result->Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
+    result->Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
+    result->Attach( *new Troops( controllers_.controller_ ) );
     AttachExtensions( *result );
 
     result->Update( asnMsg );
@@ -186,17 +195,9 @@ void AgentFactory::AttachExtensions( Entity_ABC& agent )
     PropertiesDictionary& dico = agent.Get< PropertiesDictionary >();
     agent.Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new DebugPoints() );
-    agent.Attach( *new Dotations( controllers_.controller_, static_.objectTypes_, dico ) );
-    agent.Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico ) );
-    agent.Attach< HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
-    agent.Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
-    agent.Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     agent.Attach( *new MissionParameters( static_.coordinateConverter_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
-    agent.Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, static_.reportFactory_ ) );
-    agent.Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
-    agent.Attach( *new Troops( controllers_.controller_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_ ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
