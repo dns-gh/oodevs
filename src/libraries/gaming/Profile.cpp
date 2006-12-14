@@ -30,8 +30,6 @@ using namespace kernel;
 Profile::Profile( Controllers& controllers )
     : controllers_( controllers )
     , controller_( controllers.controller_ )
-    , login_( "test" )
-    , password_( "cock" )
     , loggedIn_( false )
     , supervision_( false )
     , firstTicked_( false )

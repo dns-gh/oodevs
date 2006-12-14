@@ -19,14 +19,12 @@
 using namespace kernel;
 using namespace xml;
 
-IDManager Lima::idManager_( 137 );
-
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 Lima::Lima( Controller& controller, Publisher_ABC& publisher )
-    : TacticalLine_ABC( "Lima", idManager_.GetFreeIdentifier(), publisher )
+    : TacticalLine_ABC( "Lima", 0, publisher )
     , controller_     ( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -40,7 +38,6 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLim
     : TacticalLine_ABC( asnMsg.tactical_line.nom, asnMsg.oid, publisher )
     , controller_     ( controller )
 {
-    idManager_.LockIdentifier( GetId() );
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
  
@@ -51,7 +48,6 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLim
 Lima::~Lima()
 {
     controller_.Delete( *(kernel::TacticalLine_ABC*)this );
-    idManager_.ReleaseIdentifier( GetId() );
 }
 
 // -----------------------------------------------------------------------------

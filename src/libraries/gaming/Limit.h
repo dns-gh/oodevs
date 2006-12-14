@@ -11,7 +11,6 @@
 #define __Limit_h_
 
 #include "TacticalLine_ABC.h"
-#include "clients_kernel/IDManager.h"
 
 namespace kernel
 {
@@ -58,12 +57,9 @@ private:
     virtual void UpdateToSim( E_State state );
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
-    static kernel::IDManager idManager_;
-
-private:
     kernel::Controller& controller_;
     //@}
 };

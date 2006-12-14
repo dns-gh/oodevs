@@ -19,14 +19,12 @@
 using namespace kernel;
 using namespace xml;
 
-IDManager Limit::idManager_( 138 );
-
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
 // Created: APE 2004-04-22
 // -----------------------------------------------------------------------------
 Limit::Limit( Controller& controller, Publisher_ABC& publisher )
-    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), idManager_.GetFreeIdentifier(), publisher )
+    : TacticalLine_ABC( tools::translate( "Limit", "Limit" ), 0, publisher )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -40,7 +38,6 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgL
     : TacticalLine_ABC( asnMsg.tactical_line.nom, asnMsg.oid, publisher )
     , controller_( controller )
 {
-    idManager_.LockIdentifier( GetId() );
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
 }
 
@@ -51,7 +48,6 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgL
 Limit::~Limit()
 {
     controller_.Delete( *(kernel::TacticalLine_ABC*)this );
-    idManager_.ReleaseIdentifier( GetId() );
 }
 
 //-----------------------------------------------------------------------------

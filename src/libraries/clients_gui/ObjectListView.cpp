@@ -97,7 +97,6 @@ void ObjectListView::OnContextMenuRequested( QListViewItem* i, const QPoint& pos
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
 {
-   
     // $$$$ AGE 2006-10-16: 
     const Team_ABC& team = static_cast< const Team_ABC& >( object.Get< TacticalHierarchies >().GetUp() );
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
@@ -193,7 +192,7 @@ void ObjectListView::NotifyActivated( const Entity_ABC& element )
 // Name: ObjectListView::NotifyUpdated
 // Created: AGE 2006-11-17
 // -----------------------------------------------------------------------------
-void ObjectListView::NotifyUpdated( const kernel::Profile_ABC& profile )
+void ObjectListView::NotifyUpdated( const kernel::Profile_ABC& )
 {
     QListViewItemIterator it( this );
     while( ValuedListItem* item = (ValuedListItem*)( *it ) )

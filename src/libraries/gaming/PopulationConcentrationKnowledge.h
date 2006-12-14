@@ -13,7 +13,6 @@
 #define __PopulationConcentrationKnowledge_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/IDManager.h"
 #include "clients_kernel/OptionalValue.h"
 #include "PopulationPartKnowledge_ABC.h"
 

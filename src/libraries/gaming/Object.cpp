@@ -12,13 +12,13 @@
 
 #include "Net_Def.h"
 #include "Tools.h"
-#include "clients_kernel/IDManager.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/IDManager.h"
 
 using namespace kernel;
 

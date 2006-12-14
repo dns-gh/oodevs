@@ -77,10 +77,10 @@ TacticalLineFactory::~TacticalLineFactory()
 // -----------------------------------------------------------------------------
 void TacticalLineFactory::CreateLimit( const T_PointVector& points )
 {
-    std::auto_ptr< ::TacticalLine_ABC > line( new Limit( controllers_.controller_, publisher_ ) );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, *line ) );
-    line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, *selectedSuperior_, model_.agents_, model_.teams_ ) );
-    line->Create();
+    Limit line( controllers_.controller_, publisher_ );
+    line.Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, line ) );
+    line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, *selectedSuperior_, model_.agents_, model_.teams_ ) );
+    line.Create();
 }
     
 // -----------------------------------------------------------------------------
@@ -89,10 +89,10 @@ void TacticalLineFactory::CreateLimit( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void TacticalLineFactory::CreateLima( const T_PointVector& points )
 {
-    std::auto_ptr< ::TacticalLine_ABC > line( new Lima( controllers_.controller_, publisher_ ) );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, *line ) );
-    line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, *selectedSuperior_, model_.agents_, model_.teams_ ) );
-    line->Create(); 
+    Lima line( controllers_.controller_, publisher_ );
+    line.Attach< kernel::Positions >( *new TacticalLinePositions( points, converter_, line ) );
+    line.Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, line, *selectedSuperior_, model_.agents_, model_.teams_ ) );
+    line.Create(); 
 }
 
 // -----------------------------------------------------------------------------

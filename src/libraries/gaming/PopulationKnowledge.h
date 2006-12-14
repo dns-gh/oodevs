@@ -11,7 +11,6 @@
 #define __PopulationKnowledge_h_
 
 #include "ASN_Types.h"
-#include "clients_kernel/IDManager.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"

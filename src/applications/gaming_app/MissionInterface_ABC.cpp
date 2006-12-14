@@ -35,17 +35,19 @@
 #include "ParamEquipmentList.h"
 #include "ParamHumanWoundList.h"
 #include "ParamDotationDType.h"
+#include "OptionalParamFunctor_ABC.h"
+
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "gaming/ObjectKnowledge_ABC.h"
-#include "gaming/AgentKnowledge_ABC.h"
-#include "gaming/PopulationKnowledge_ABC.h"
-#include "gaming/Lima.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "gaming/ObjectKnowledge_ABC.h"
+#include "gaming/AgentKnowledge_ABC.h"
+#include "gaming/PopulationKnowledge_ABC.h"
+#include "gaming/Lima.h"
 
 using namespace kernel;
 using namespace gui;
