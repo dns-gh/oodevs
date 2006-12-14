@@ -256,8 +256,22 @@ void ADN_Missions_Data::Mission::WriteArchive( MT_OutputArchive_ABC& output, con
     QString name = strName_.GetData().c_str();
     QString typeName = type == "units" ? "Pion" : (type == "automats" ? "Automate" : "Population");
 
-    QString category = name.section( ' ', 0, 0 );
-    QString diaName = category.upper() == category ? category + "_" + name.section( ' ', 1 ).remove( ' ' ) : name.remove( ' ' );
+    QString diaName;
+    QString word;
+    int i = 0;
+    do
+    {
+        word = name.section( ' ', i, i );
+        if( word.isEmpty() || word != word.upper() )
+            break;
+        ++i;
+        diaName += word + ( name.section( ' ', i, i ).isEmpty() ? "" : "_" );
+    }
+    while( true );
+    diaName += i > 0 ? name.section( ' ', i ).remove( ' ' ) : name.remove( ' ' );
+
+//    QString category = name.section( ' ', 0, 0 );
+//    QString diaName = category.upper() == category ? category + "_" + name.section( ' ', 1 ).remove( ' ' ) : name.remove( ' ' );
 
     output.WriteAttribute( "dia-type", QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).ascii() );
     if( !isAutomat_.GetData() )
