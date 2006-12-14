@@ -11,6 +11,7 @@
 #include "MissionParameters.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameters constructor
@@ -37,6 +38,7 @@ MissionParameters::~MissionParameters()
 // -----------------------------------------------------------------------------
 void MissionParameters::Clear()
 {
+    boundingBox_ = geometry::Rectangle2f();
     rightLimit_.clear();
     leftLimit_.clear();
     limas_.clear();
@@ -50,7 +52,11 @@ void MissionParameters::DecodePointList( const ASN1T_Line& src, T_PointVector& d
 {
     dest.reserve( src.vecteur_point.n );
     for( unsigned int i = 0; i < src.vecteur_point.n; ++i )
-        dest.push_back( converter_.ConvertToXY( src.vecteur_point.elem[i] ) );
+    {
+        geometry::Point2f point = converter_.ConvertToXY( src.vecteur_point.elem[i] );
+        dest.push_back( point );
+        boundingBox_.Incorporate( point );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -136,22 +142,26 @@ void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrderManagement& messag
 // Name: MissionParameters::Draw
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-void MissionParameters::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+void MissionParameters::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-21: viewport
-//    if( ! tools.ShouldDisplay( "TacticalLines", false )  // $$$$ SBO 2006-11-13: not really TacticalLines... Mission Parameters
-//       && tools.ShouldDisplay( "TacticalLines" ) )
+    if( !viewport.Intersect( boundingBox_ ).IsEmpty() && tools.ShouldDisplay( "TacticalLines" ) )
     {
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+        glLineWidth( 3.f );
         bool state = tools.Select( true );
         if( !rightLimit_.empty() )
-            tools.DrawLines( rightLimit_ ); // $$$$ SBO 2006-11-13: do something better
+            tools.DrawLines( rightLimit_ );
         if( !leftLimit_.empty() )
             tools.DrawLines( leftLimit_ );
         for( unsigned int i = 0; i < limas_.size(); ++i )
         {
             tools.DrawLines( limas_[i].first );
-            // $$$$ SBO 2006-11-20: display lima functions
+            QStringList functions;
+            for( unsigned int j = 0; j < limas_[i].second.size(); ++j )
+                functions.append( tools::ToString( limas_[i].second[j] ) );
+            tools.Print( functions.join( ", " ).ascii(), limas_[i].first.back() );
         }
         tools.Select( state );
+        glPopAttrib();
     }
 }

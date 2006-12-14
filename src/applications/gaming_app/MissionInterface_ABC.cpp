@@ -36,10 +36,6 @@
 #include "ParamHumanWoundList.h"
 #include "ParamDotationDType.h"
 #include "OptionalParamFunctor_ABC.h"
-
-#include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"

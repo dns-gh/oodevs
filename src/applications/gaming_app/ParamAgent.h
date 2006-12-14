@@ -13,11 +13,6 @@
 #include "EntityParameter.h"
 #include "clients_kernel/Agent_ABC.h"
 
-namespace kernel
-{
-    class Agent_ABC;
-}
-
 // =============================================================================
 /** @class  ParamAgent
     @brief  ParamAgent

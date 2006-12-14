@@ -270,9 +270,6 @@ void ADN_Missions_Data::Mission::WriteArchive( MT_OutputArchive_ABC& output, con
     while( true );
     diaName += i > 0 ? name.section( ' ', i ).remove( ' ' ) : name.remove( ' ' );
 
-//    QString category = name.section( ' ', 0, 0 );
-//    QString diaName = category.upper() == category ? category + "_" + name.section( ' ', 1 ).remove( ' ' ) : name.remove( ' ' );
-
     output.WriteAttribute( "dia-type", QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).ascii() );
     if( !isAutomat_.GetData() )
         output.WriteAttribute( "dia-behavior", QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).ascii() );

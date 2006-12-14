@@ -80,6 +80,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    geometry::Rectangle2f boundingBox_;
     T_PointVector leftLimit_;
     T_PointVector rightLimit_;
     T_Limas limas_;

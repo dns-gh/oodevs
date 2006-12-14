@@ -13,6 +13,8 @@
 #include "ParamAgent.h"
 #include "ParamAgentList.h"
 #include "ParamAgentType.h"
+#include "ParamAutomat.h"
+#include "ParamAutomatList.h"
 #include "ParamPath.h"
 #include "ParamPathList.h"
 #include "ParamPoint.h"
@@ -235,9 +237,8 @@ Param_ABC* MissionInterfaceBuilder::BuildAgentList( ASN1T_MissionParameter& asnP
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAutomat( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
-//    asnParameter.value.t = T_MissionParameter_value_automate;
-//    return new ParamAutomat( missionInterface_, asnParameter.value.u.automate, name, name );
-    return 0; // $$$$ SBO 2006-11-30: TODO
+    asnParameter.value.t = T_MissionParameter_value_automate;
+    return new ParamAutomat( missionInterface_, asnParameter.value.u.automate, name, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,9 +247,8 @@ Param_ABC* MissionInterfaceBuilder::BuildAutomat( ASN1T_MissionParameter& asnPar
 // -----------------------------------------------------------------------------
 Param_ABC* MissionInterfaceBuilder::BuildAutomatList( ASN1T_MissionParameter& asnParameter, const QString& name ) const
 {
-//    asnParameter.value.t = T_MissionParameter_value_listAutomate;
-//    return new ParamAgentList( missionInterface_, *asnParameter.value.u.listAutomate, name, name );
-    return 0; // $$$$ SBO 2006-11-30: TODO
+    asnParameter.value.t = T_MissionParameter_value_listAutomate;
+    return new ParamAutomatList( missionInterface_, asnParameter.value.u.listAutomate, name, name );
 }
 
 // -----------------------------------------------------------------------------

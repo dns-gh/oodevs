@@ -10,12 +10,8 @@
 #ifndef __ParamAutomat_h_
 #define __ParamAutomat_h_
 
+#include "clients_kernel/Automat_ABC.h"
 #include "EntityParameter.h"
-
-namespace kernel
-{
-    class Automat_ABC;
-}
 
 // =============================================================================
 /** @class  ParamAutomat

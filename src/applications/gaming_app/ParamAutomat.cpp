@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "ParamAutomat.h"
-#include "clients_kernel/Automat_ABC.h"
 
 using namespace kernel;
 
@@ -17,7 +16,7 @@ using namespace kernel;
 // Name: ParamAutomat constructor
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat(  QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
+ParamAutomat::ParamAutomat( QWidget* pParent, ASN1T_OID& id, const QString& label, const QString& menu )
     : EntityParameter< Automat_ABC >( pParent, id, label, menu )
 {
     // NOTHING
