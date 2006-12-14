@@ -4332,7 +4332,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Missions</source>
-        <translation>Missions</translation>
+        <translation type="obsolete">Missions</translation>
     </message>
     <message>
         <source>HLA</source>
@@ -4425,6 +4425,10 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Maintenance</source>
         <translation>Maintenance</translation>
+    </message>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6825,6 +6829,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Maintenance</source>
         <translation>Maintenance</translation>
+    </message>
+    <message>
+        <source>Reports</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

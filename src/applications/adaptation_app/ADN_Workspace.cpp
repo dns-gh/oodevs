@@ -59,6 +59,8 @@
 #include "ADN_Health_Data.h"
 #include "ADN_Supply_GUI.h"
 #include "ADN_Supply_Data.h"
+#include "ADN_Reports_Data.h"
+#include "ADN_Reports_GUI.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_ProgressIndicator_ABC.h"
@@ -140,6 +142,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[eHealth]         = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
     elements_[eSupply]         = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
     elements_[ePopulation]     = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Populations" ) );
+    elements_[eReports]        = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
 }
 
 
@@ -206,6 +209,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     mainWindow.AddPage( elements_[eCommunications]->GetName(), * elements_[eCommunications]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eKnowledgeGroups]->GetName(), * elements_[eKnowledgeGroups]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eMissions]->GetName(), * elements_[eMissions]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eReports]->GetName(), * elements_[eReports]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eAiEngine]->GetName(), * elements_[eAiEngine]->GetGuiABC().GetMainWidget() );
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );

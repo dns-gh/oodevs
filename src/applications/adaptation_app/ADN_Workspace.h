@@ -53,6 +53,8 @@ class ADN_Breakdowns_Data;
 class ADN_Breakdowns_GUI;
 class ADN_Population_Data;
 class ADN_Population_GUI;
+class ADN_Reports_Data;
+class ADN_Reports_GUI;
 
 // =============================================================================
 /** @class  ADN_Workspace
@@ -94,6 +96,7 @@ public:
     ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>& GetAiEngine();
     ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& GetBreakdowns();
     ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& GetPopulation();
+    ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& GetReports();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -135,6 +138,7 @@ private:
         eSupply,
         eHealth,
         ePopulation,
+        eReports,
         eNbrWorkspaceElements
     };
 
@@ -322,6 +326,16 @@ inline
 ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& ADN_Workspace::GetPopulation()
 {
     return ( ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& )( *elements_[ ePopulation ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetReports
+// Created: SBO 2006-12-14
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& ADN_Workspace::GetReports()
+{
+    return ( ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& )( *elements_[ eReports ] );
 }
 
 // -----------------------------------------------------------------------------
