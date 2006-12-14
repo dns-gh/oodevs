@@ -43,10 +43,10 @@ void MIL_ParameterType_NatureAtlas::Copy( const ASN1T_MissionParameter& from, DI
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
     // Check dest
-    if( !DEC_Tools::CheckTypeLocalisation( to ) )
+    if( to.Type() != eId )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 
-    if( !NET_ASN_Tools::CopyLocation( *from.value.u.point, to ) )
+    if( !NET_ASN_Tools::CopyNatureAtlas( *from.value.u.natureAtlas, to ) )
         throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
 }
 
