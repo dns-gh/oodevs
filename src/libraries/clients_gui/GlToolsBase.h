@@ -12,18 +12,10 @@
 
 #include "clients_kernel/GlTools_ABC.h"
 
-namespace svg
-{
-    class Node_ABC;
-    class References;
-    class TextRenderer;
-    class RenderingContext;
-    class Color;
-}
-
 namespace gui
 {
     class GlFont;
+    class GLSymbols;
 
 // =============================================================================
 /** @class  GlToolsBase
@@ -65,10 +57,6 @@ private:
     //@{
     typedef std::map< const char**, unsigned >            T_Icons;
     typedef T_Icons::const_iterator                     CIT_Icons;
-
-    typedef std::pair< svg::Node_ABC*, svg::Node_ABC* > T_LodSymbol;
-    typedef std::map< std::string, T_LodSymbol >        T_Symbols;
-    typedef T_Symbols::const_iterator                 CIT_Symbols;
     //@}
 
 private:
@@ -78,12 +66,7 @@ private:
     mutable bool selected_;
 
     T_Icons         icons_;
-
-    svg::Color*             current_;
-    svg::TextRenderer*      renderer_;
-    svg::References*        references_;
-    svg::RenderingContext*  renderingContext_;
-    T_Symbols               symbols_;
+    GLSymbols*      symbols_;
     //@}
 };
 

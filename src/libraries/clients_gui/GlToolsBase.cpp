@@ -12,13 +12,12 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/TristateOption.h"
-#include "svgl/svgl.h"
 #include "GlFont.h"
+#include "GLSymbols.h"
 
 using namespace geometry;
 using namespace kernel;
 using namespace gui;
-using namespace svg;
 
 // -----------------------------------------------------------------------------
 // Name: GlToolsBase constructor
@@ -26,11 +25,8 @@ using namespace svg;
 // -----------------------------------------------------------------------------
 GlToolsBase::GlToolsBase( Controllers& controllers )
     : controllers_( controllers )
-    , selected_( false ) 
-    , current_( new Color( "black" ) )
-    , renderer_( new TextRenderer() )
-    , references_( new References() )
-    , renderingContext_( new RenderingContext() )
+    , selected_( false )
+    , symbols_( new GLSymbols() )
 {
     // NOTHING
 }
@@ -43,15 +39,7 @@ GlToolsBase::~GlToolsBase()
 {
     for( CIT_Icons it = icons_.begin(); it != icons_.end(); ++it )
         glDeleteTextures( 1, & it->second );
-    for( CIT_Symbols it = symbols_.begin(); it != symbols_.end(); ++it )
-    {
-        delete it->second.first;
-        delete it->second.second;
-    }
-    delete current_;
-    delete renderer_;
-    delete references_;
-    delete renderingContext_;
+    delete symbols_;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,51 +105,13 @@ void GlToolsBase::BindIcon( const char** xpm )
     glBindTexture( GL_TEXTURE_2D, texture );
 }
 
-namespace
-{
-    void SetCurrentColor( Color& col )
-    {
-        // $$$$ AGE 2006-10-25: pas terrible
-        float color[4];
-        glGetFloatv( GL_CURRENT_COLOR, color );
-        col.Set( color[0], color[1], color[2] );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: GlToolsBase::PrintApp6
 // Created: AGE 2006-04-07
 // -----------------------------------------------------------------------------
 void GlToolsBase::PrintApp6( const std::string& symbol, const geometry::Rectangle2f& viewport, unsigned vWidth /*= 640*/, unsigned vHeight /*= 480*/  )
 {
-    // $$$$ AGE 2006-10-24: 
-    const bool create = symbols_.find( symbol ) == symbols_.end();
-    T_LodSymbol& node = symbols_[ symbol ];
-    if( create )
-    {
-        // $$$$ AGE 2006-09-11: error management !
-        SVGFactory factory( *renderer_ );
-        const std::string filename = symbol + ".svg";
-        try
-        {
-            node.first  = factory.Compile( filename, *references_, 10  ); // $$$$ AGE 2006-09-11: 
-            node.second = factory.Compile( filename, *references_, 100 ); // $$$$ AGE 2006-09-11: 
-        }
-        catch( ... )
-        {
-            std::cout << "Could not open svg symbol '" << filename << "'" << std::endl;// $$$$ AGE 2006-10-23: 
-        };
-    }
-    Node_ABC* renderNode = viewport.Width() > 30000 ? node.second : node.first;  // $$$$ AGE 2006-09-11: hardcoded lod
-    if( renderNode )
-    {
-        const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-        SetCurrentColor( *current_ ); // $$$$ AGE 2006-10-25: 
-        renderingContext_->SetViewport( box, vWidth, vHeight );
-        renderingContext_->PushProperty( RenderingContext::color, *current_ );
-        renderNode->Draw( *renderingContext_, *references_ );
-        renderingContext_->PopProperty( RenderingContext::color );
-    }
+    symbols_->PrintApp6( symbol, viewport, vWidth, vHeight );
 }
 
 // -----------------------------------------------------------------------------

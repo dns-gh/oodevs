@@ -174,7 +174,7 @@
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
         <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="ASN,ENT,gaming,clients_gui,clients_kernel,asn1per,svgl">
+                   libs="ASN,ENT,gaming,clients_gui,clients_kernel,asn1per,svgl,zipstream,zlib">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
@@ -182,7 +182,7 @@
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
         <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="ENT,preparation,clients_gui,clients_kernel,svgl">
+                   libs="ENT,preparation,clients_gui,clients_kernel,svgl,zipstream,zlib">
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
     </target>
@@ -333,6 +333,8 @@
         <update name="xerces-c"/>
         <update name="xeumeuleu"/>
         <update name="svgl"/>
+        <update name="zipstream"/>
+        <update name="zlib"/>
         <update name="terrain" package="generation_app"/>
         <update name="DIA" package="DIA_Tool_DebugGUI_${platform}"/>
     </target>
