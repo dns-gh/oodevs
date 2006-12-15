@@ -245,6 +245,18 @@ void ADN_Missions_Data::Mission::ReadArchive( ADN_XmlInput_Helper& input )
     }
 }
 
+namespace
+{
+    QString BuildDiaMissionType( const QString& name )
+    {
+        QStringList list = QStringList::split( ' ', name );
+        for( unsigned int i = 0; i < list.size() - 1; ++i )
+            if( list[i].length() > 1 && ( list[i] == list[i].upper() || list[i].lower() == "test" ) )
+                list[i].append( "_" );
+        return list.join( "" );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::Mission::WriteArchive
 // Created: SBO 2006-12-04
@@ -252,24 +264,8 @@ void ADN_Missions_Data::Mission::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_Missions_Data::Mission::WriteArchive( MT_OutputArchive_ABC& output, const std::string& type )
 {
     output.WriteAttribute( "name", strName_.GetData() );
-    
-    QString name = strName_.GetData().c_str();
     QString typeName = type == "units" ? "Pion" : (type == "automats" ? "Automate" : "Population");
-
-    QString diaName;
-    QString word;
-    int i = 0;
-    do
-    {
-        word = name.section( ' ', i, i );
-        if( word.isEmpty() || ( word != word.upper() && word.lower() != "test" ) )
-            break;
-        ++i;
-        diaName += word + ( name.section( ' ', i, i ).isEmpty() ? "" : "_" );
-    }
-    while( true );
-    diaName += i > 0 ? name.section( ' ', i ).remove( ' ' ) : name.remove( ' ' );
-
+    QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
     output.WriteAttribute( "dia-type", QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).ascii() );
     if( !isAutomat_.GetData() )
         output.WriteAttribute( "dia-behavior", QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).ascii() );
@@ -362,7 +358,21 @@ void ADN_Missions_Data::FragOrder::ReadArchive( ADN_XmlInput_Helper& input )
         input.EndList();
     }
 }
-    
+
+namespace
+{
+    QString BuildDiaFragOrderType( const QString& name )
+    {
+        QStringList list = QStringList::split( ' ', name );
+        if( list.front() == "Pion" || list.front() == "Automate" || list.front() == "Population" )
+            list[0].append( "_" );
+        for( unsigned int i = 1; i < list.size() - 1; ++i )
+            if( list[i].length() > 1 && list[i] == list[i].upper() )
+                list[i].append( "_" );
+        return QString( "Rep_OrderConduite_%1" ).arg( list.join( "" ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::FragOrder::WriteArchive
 // Created: SBO 2006-12-04
@@ -372,8 +382,7 @@ void ADN_Missions_Data::FragOrder::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteAttribute( "name", strName_.GetData() );
     output.WriteAttribute( "available-for-all-mission", isAvailableForAllMissions_.GetData() );
     output.WriteAttribute( "available-without-mission", isAvailableWithoutMission_.GetData() );
-    QString diaType = QString( "Rep_OrderConduite_%1" ).arg( QString( strName_.GetData().c_str() ).remove( ' ' ) );
-    output.WriteAttribute( "dia-type", diaType.ascii() );
+    output.WriteAttribute( "dia-type", BuildDiaFragOrderType( strName_.GetData().c_str() ).ascii() );
     for( unsigned int i = 0; i < parameters_.size(); ++i )
         if( parameters_[i]->values_.empty() )
         {

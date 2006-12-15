@@ -6169,10 +6169,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NatureAtlas</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6258,6 +6254,18 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>IndirectFire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>String</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EquipmentType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DotationType</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
