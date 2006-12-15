@@ -262,7 +262,7 @@ void ADN_Missions_Data::Mission::WriteArchive( MT_OutputArchive_ABC& output, con
     do
     {
         word = name.section( ' ', i, i );
-        if( word.isEmpty() || word != word.upper() )
+        if( word.isEmpty() || ( word != word.upper() && word.lower() != "test" ) )
             break;
         ++i;
         diaName += word + ( name.section( ' ', i, i ).isEmpty() ? "" : "_" );
