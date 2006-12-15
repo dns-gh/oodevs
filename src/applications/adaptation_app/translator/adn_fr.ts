@@ -6256,6 +6256,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Enumeration</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>IndirectFire</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Composantes_GUI</name>

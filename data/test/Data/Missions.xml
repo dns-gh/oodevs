@@ -626,7 +626,7 @@
     <mission dia-behavior="MIS_Pion_Test_Fire" dia-type="T_Mission_Pion_Test_Fire" id="135" name="Test Fire">
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
       <parameter dia-name="tirIndirect_" name="Tir indirect" optional="false" type="Bool"/>
-      <parameter dia-name="munitions_" name="Munitions" optional="false" type=""/>
+      <parameter dia-name="munitions_" name="Munitions" optional="false" type="IndirectFire"/>
       <parameter dia-name="nbIt_" name="Nb it" optional="false" type="Numeric"/>
       <parameter dia-name="targets_" name="Targets" optional="false" type="AgentKnowledgeList"/>
     </mission>
@@ -1473,7 +1473,7 @@
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_PionEnvoyerVehicule" id="351" name="Pion Envoyer Vehicule"/>
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_PionActiverObstacle" id="352" name="Pion Activer Obstacle"/>
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="Rep_OrderConduite_PionAppliquerFeux" id="353" name="Pion Appliquer Feux">
-      <parameter dia-name="munitions_" name="Munitions" optional="false" type=""/>
+      <parameter dia-name="munitions_" name="Munitions" optional="false" type="IndirectFire"/>
       <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Numeric"/>
       <parameter dia-name="cible_" name="Cible" optional="false" type="Point"/>
     </fragorder>

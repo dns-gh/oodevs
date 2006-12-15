@@ -426,6 +426,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "LocationList", QT_TRANSLATE_NOOP("ADN_Tr", "LocationList" ), eMissionParameterTypeLocationList ),
     T_ConverterMissionParameterType( "MaintenancePriorities", QT_TRANSLATE_NOOP("ADN_Tr", "MaintenancePriorities" ), eMissionParameterTypeMaintenancePriorities ),
     T_ConverterMissionParameterType( "MedicalPriorities", QT_TRANSLATE_NOOP("ADN_Tr", "MedicalPriorities" ), eMissionParameterTypeMedicalPriorities ),
+    T_ConverterMissionParameterType( "IndirectFire", QT_TRANSLATE_NOOP("ADN_Tr", "IndirectFire" ), eMissionParameterTypeIndirectFire ),
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };
 
