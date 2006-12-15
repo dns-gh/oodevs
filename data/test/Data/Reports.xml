@@ -239,11 +239,11 @@
   <report id="96" message="a nouveau disponible apres reparation"/>
 
   <report id="97" message="materiel retour de maintenance">
-    <parameter type=""/>
+    <parameter type="EquipmentType"/>
   </report>
 
   <report id="98" message="materiel repare sur place">
-    <parameter type=""/>
+    <parameter type="EquipmentType"/>
   </report>
 
   <report id="99" message="demande ravitaillement dotations"/>
@@ -255,17 +255,17 @@
   <report id="102" message="demande evacuation materiel"/>
 
   <report id="103" message="allocation consentie bientot epuisee">
-    <parameter type=""/>
+    <parameter type="DotationType"/>
   </report>
 
   <report id="104" message="depassement capacite stockage"/>
 
   <report id="105" message="seuil logistique dotation depasse en %1">
-    <parameter type=""/>
+    <parameter type="DotationType"/>
   </report>
 
   <report id="106" message="seuil logistique stock depasse en %1">
-    <parameter type=""/>
+    <parameter type="DotationType"/>
   </report>
 
   <report id="107" message="ravitaillement dotations effectue"/>
@@ -413,7 +413,7 @@
   <report id="176" message="pret pour conduite tir"/>
 
   <report id="177" message="observation tir indirect id tir : %1">
-    <parameter type=""/>
+    <parameter type="IndirectFire"/>
   </report>
 
   <report id="178" message="zone implantation occupee"/>
@@ -497,7 +497,7 @@
   <report id="217" message="tir libre"/>
 
   <report id="218" message="trace">
-    <parameter type=""/>
+    <parameter type="String"/>
   </report>
 
   <report id="219" message="trace id">
