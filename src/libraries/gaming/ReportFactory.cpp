@@ -136,6 +136,8 @@ QString ReportFactory::RenderParameter( const ASN1T_MissionParameter& value ) co
         return dotationResolver_.Get( value.value.u.typeDotation ).GetCategory();
     case T_MissionParameter_value_tirIndirect:
         return QString::number( value.value.u.tirIndirect );
+    case T_MissionParameter_value_aCharStr:
+        return QString( value.value.u.aCharStr );
     default:
         throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.value.t ).ascii() );
     }
