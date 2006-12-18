@@ -288,17 +288,17 @@
             <fileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>
             <fileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>
         </zip>
-
+        
         <delete includeemptydirs="true" failonerror="false">
             <fileset dir="${dist.dir}/current" includes="**/*"/>
         </delete>
-        <mkdir dir="${dist.dir}/current"/>          
+        <mkdir dir="${dist.dir}/current"/>
         <exec executable="svn">
             <arg line="export --force ${data.dir}/main ${dist.dir}/current"/> 
-        </exec>             
+        </exec>
         <exec executable="svn">
             <arg line="export --force ${run.dir} ${dist.dir}/current"/> 
-        </exec>                       
+        </exec>
         <copy todir="${dist.dir}/current/">
             <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
             <fileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe *.qm"/>            
@@ -312,6 +312,9 @@
             <fileset dir="${applications.dir}/adaptation_app/translator" includes="*.qm"/>                        
             <fileset dir="${run.dir}" includes="*.dll license.dat"/>
         </copy>
+        <zip destfile="${dist.dir}/current/symbols.pak">
+            <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
+        </zip>
     </target>
     <!--
     ============================================================================
