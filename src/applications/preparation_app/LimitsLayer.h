@@ -12,6 +12,11 @@
 
 #include "clients_gui/TacticalLinesLayer.h"
 
+namespace gui
+{
+    class ExclusiveEventStrategy;
+}
+
 class ModelBuilder;
 
 // =============================================================================
@@ -26,7 +31,7 @@ class LimitsLayer : public gui::TacticalLinesLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile );
+             LimitsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile );
     virtual ~LimitsLayer();
     //@}
 
@@ -44,12 +49,19 @@ private:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
+
+    float Precision() const;
+    virtual bool MouseMove ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
     //@}
 
 private:
     //! @name Member data
     //@{
     ModelBuilder& modelBuilder_;
+    gui::ExclusiveEventStrategy& eventStrategy_;
+    const kernel::GlTools_ABC& tools_;
+    geometry::Point2f dragPoint_;
     //@}
 };
 

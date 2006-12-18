@@ -57,13 +57,19 @@ protected:
     virtual void CreateLimit( const T_PointVector& points ) = 0;
     virtual void CreateLima( const T_PointVector& points ) = 0;
     virtual bool CanCreateLine();
+    virtual bool MouseMove       ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool MousePress      ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool MouseDoubleClick( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
 
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
 
-    virtual bool HandleKeyPress  ( QKeyEvent* key );
-    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu );
-    virtual void NotifySelected( const kernel::TacticalLine_ABC* element );
+    virtual bool HandleKeyPress        ( QKeyEvent* key );
+    virtual bool HandleMouseMove       ( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
+    virtual void NotifyContextMenu     ( const geometry::Point2f&, kernel::ContextMenu& menu );
+    virtual void NotifySelected        ( const kernel::TacticalLine_ABC* element );
 
     virtual void Handle( kernel::Location_ABC& location );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );

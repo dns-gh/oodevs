@@ -30,6 +30,7 @@ namespace gui
     class GlPlaceHolder;
     class IconLayout;
     class ColorStrategy;
+    class ExclusiveEventStrategy;
 }
 
 class AgentsLayer;
@@ -116,6 +117,7 @@ private:
     gui::GlProxy*         glProxy_;
     gui::ColorStrategy*   strategy_;
     EventStrategy_ABC*    eventStrategy_;
+    gui::ExclusiveEventStrategy* exclusiveEventStrategy_;
     gui::GlWidget*        widget2d_;
     gui::GlPlaceHolder*   glPlaceHolder_;
     gui::IconLayout*      iconLayout_;

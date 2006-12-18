@@ -69,6 +69,7 @@
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/MissionLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
+#include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
@@ -214,12 +215,13 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
 {
     CircularEventStrategy* eventStrategy = new CircularEventStrategy();
     eventStrategy_ = eventStrategy;
+    exclusiveEventStrategy_ = new ExclusiveEventStrategy( *eventStrategy_ );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
-    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, profile );
+    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *exclusiveEventStrategy_, profile );
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
 //    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );

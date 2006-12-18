@@ -10,6 +10,8 @@
 #include "preparation_app_pch.h"
 #include "LimitsLayer.h"
 #include "ModelBuilder.h"
+#include "preparation/TacticalLinePositions.h"
+#include "clients_gui/ExclusiveEventStrategy.h"
 
 using namespace kernel;
 using namespace gui;
@@ -18,9 +20,11 @@ using namespace gui;
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, const kernel::Profile_ABC& profile )
+LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view, gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile )
     : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
     , modelBuilder_( modelBuilder )
+    , tools_( tools )
+    , eventStrategy_( eventStrategy )
 {
     // NOTHING
 }
@@ -77,4 +81,52 @@ void LimitsLayer::CreateLimit( const T_PointVector& points )
 void LimitsLayer::CreateLima( const T_PointVector& points )
 {
     modelBuilder_.CreateLima( points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Precision
+// Created: SBO 2006-12-18
+// -----------------------------------------------------------------------------
+float LimitsLayer::Precision() const
+{
+    return 5.f * tools_.Pixels();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::MouseMove
+// Created: SBO 2006-12-18
+// -----------------------------------------------------------------------------
+bool LimitsLayer::MouseMove( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point )
+{
+    if( mouse->state() == Qt::LeftButton && ! dragPoint_.IsZero() )
+    {
+        const geometry::Vector2f translation( dragPoint_, point );
+        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->Translate( dragPoint_, translation, Precision() );
+        dragPoint_ = point;
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::MousePress
+// Created: SBO 2006-12-18
+// -----------------------------------------------------------------------------
+bool LimitsLayer::MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point )
+{
+    if( mouse->state() == Qt::ShiftButton )
+        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->InsertPoint( point, Precision() );
+    else if( mouse->state() == Qt::AltButton )
+        static_cast< TacticalLinePositions* >( &entity.Get< Positions >() )->RemovePoint( point, Precision() );
+
+    if( entity.Get< Positions >().IsAt( point, Precision() ) )
+    {
+        eventStrategy_.TakeExclusiveFocus( *this );
+        if( mouse->button() == Qt::LeftButton && mouse->state() == Qt::NoButton ) 
+            dragPoint_ = point;
+        else
+            dragPoint_ = geometry::Point2f();
+        return true;
+    }
+    eventStrategy_.ReleaseExclusiveFocus();
+    return false;
 }

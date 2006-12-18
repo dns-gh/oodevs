@@ -55,6 +55,10 @@ public:
 
     virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& ) const;
+
+    void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
+    void InsertPoint( const geometry::Point2f& point, float precision );
+    void RemovePoint( const geometry::Point2f& point, float precision );
     //@}
 
 private:

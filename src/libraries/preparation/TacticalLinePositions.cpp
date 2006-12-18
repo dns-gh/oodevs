@@ -154,3 +154,72 @@ void TacticalLinePositions::SerializeAttributes( xml::xostream& xos ) const
     for ( CIT_PointVector itPoint = pointList_.begin() ; itPoint != pointList_.end() ; ++itPoint )
         xos << start( "point" ) << converter_.ConvertToMgrs( *itPoint ) << end();
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::Translate
+// Created: SBO 2006-12-18
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision )
+{
+    const float squarePrecision = precision * precision;
+    for( IT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        if( it->SquareDistance( from ) < squarePrecision )
+        {
+            *it += translation;
+            return;
+        }
+    for( IT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        *it += translation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::InsertPoint
+// Created: SBO 2006-12-18
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::InsertPoint( const geometry::Point2f& point, float precision )
+{
+    const float squarePrecision = precision * precision;
+    IT_PointVector itStart = pointList_.begin();
+    const float distance = itStart->SquareDistance( point );
+    if( distance < squarePrecision )
+        return;
+    IT_PointVector itEnd = itStart + 1;
+    float minDistance = std::numeric_limits<float>::infinity();
+    IT_PointVector minIt = pointList_.end();
+    for( ; itEnd != pointList_.end(); ++itStart, ++itEnd )
+    {
+        float distance = itEnd->SquareDistance( point );
+        if( distance < squarePrecision )
+            return;
+        geometry::Segment2f segment( *itStart, *itEnd );
+        distance = segment.SquareDistance( point );
+        if( distance < minDistance )
+        {
+            minDistance = distance;
+            minIt = itStart;
+        }
+    }
+    const geometry::Segment2f segment( *minIt, *( minIt + 1 ) );
+    const geometry::Point2f projected = segment.Project( point );
+    if( projected == segment.Start() )
+        pointList_.insert( minIt, point );
+    else if( projected == segment.End() )
+        pointList_.insert( pointList_.end(), point );
+    else
+        pointList_.insert( minIt + 1, point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::RemovePoint
+// Created: SBO 2006-12-18
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::RemovePoint( const geometry::Point2f& point, float precision )
+{
+    const float squarePrecision = precision * precision;
+    for( IT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        if( it->SquareDistance( point ) < squarePrecision )
+        {
+            pointList_.erase( it );
+            return;
+        }
+}
