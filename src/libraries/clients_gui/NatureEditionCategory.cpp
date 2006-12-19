@@ -115,6 +115,13 @@ QString NatureEditionCategory::GetNature() const
 // -----------------------------------------------------------------------------
 void NatureEditionCategory::SetNature( const QString& nature )
 {
+    if( nature.isEmpty() )
+    {
+        Select( tr( "undefined" ) );
+        if( next_ )
+            next_->SetNature( nature );
+        return;
+    }
     QStringList list = QStringList::split( "/", nature );
     Select( list.front() );
     list.pop_front();
