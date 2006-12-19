@@ -132,16 +132,14 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const geometry::Rect
         glLineWidth( 3.f );
         if( owner_.IsLimit() )
             glColor3f( 0.1f, 0.1f, 0.1f );
-//            if( nLevel_ == eNatureLevel_ooo )
-//            {
-//                glLineWidth( 4.f );
-//                tools.DrawLines( pointList_ );
-//                glColor3f( 0.5f, 0.5f, 0.5f );
-//                glLineWidth( 2.f );
-//            }
         else
             glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
         tools.DrawLines( pointList_ );
+        bool selected = tools.Select( false ); // $$$$ SBO 2006-12-19: huhuhu
+        tools.Select( selected );
+        if( selected )
+            for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+                tools.DrawDisc( *it, 5.f * tools.Pixels() );
     glPopAttrib();
 }
 
