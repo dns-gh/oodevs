@@ -81,7 +81,7 @@ void AgentTypes::Purge()
     unitMissions_.DeleteAll(); 
     automatMissions_.DeleteAll();
     populationMissions_.DeleteAll();
-    Resolver< Mission >::DeleteAll();
+    Resolver< Mission >::Clear();
     Resolver< FragOrder >::DeleteAll();
     Resolver< FragOrder, QString >::Clear();
     Resolver< KnowledgeGroupType, QString >::DeleteAll();
