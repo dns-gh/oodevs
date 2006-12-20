@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Team.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -20,7 +21,8 @@ Team::Team( const ASN1T_MsgSideCreation& asnMsg, Controller& controller )
     : EntityImplementation< Team_ABC >( controller, asnMsg.oid, asnMsg.nom )
     , karma_( asnMsg.type )
 {
-    // NOTHING
+    if( name_.isEmpty() )
+        name_ = QString( tools::translate( "Team", "Army %1" ) ).arg( asnMsg.oid );
 }
 
 // -----------------------------------------------------------------------------

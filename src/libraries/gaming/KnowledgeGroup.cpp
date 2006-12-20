@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "KnowledgeGroup.h"
+#include "Tools.h"
 
 using namespace kernel;
 
@@ -17,7 +18,7 @@ using namespace kernel;
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( unsigned long nId, Controller& controller )
-    : EntityImplementation< KnowledgeGroup_ABC >( controller, nId, QString( "Groupe %1" ).arg( nId ) )
+    : EntityImplementation< KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
 {
     // NOTHING
 }

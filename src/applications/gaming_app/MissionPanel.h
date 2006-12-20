@@ -37,6 +37,7 @@ class QPopupMenu;
 
 class Decisions;
 class AutomatDecisions;
+class PopulationDecisions;
 class MissionInterface_ABC;
 class StaticModel;
 class AgentKnowledgeConverter_ABC;
@@ -97,6 +98,7 @@ private:
     int AddMissions( kernel::Iterator< const kernel::Mission& > it, kernel::ContextMenu& menu, const QString& name, const char* slot );
     void AddAgentMissions( const Decisions& decisions, kernel::ContextMenu& menu ); 
     void AddAutomatMissions( const AutomatDecisions& decisions, kernel::ContextMenu& menu ); 
+    void AddPopulationMissions( const PopulationDecisions& decisions, kernel::ContextMenu& menu ); 
     template< typename D >
     int AddFragOrders( const D& decisions, kernel::ContextMenu& menu, const QString& name, const char* slot );
     //@}

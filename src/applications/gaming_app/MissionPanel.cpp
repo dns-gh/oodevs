@@ -111,6 +111,20 @@ void MissionPanel::NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::NotifyContextMenu
+// Created: AGE 2006-03-14
+// -----------------------------------------------------------------------------
+void MissionPanel::NotifyContextMenu( const Population_ABC& entity, ContextMenu& menu )
+{
+    if( profile_.CanBeOrdered( entity ) )
+    {
+        selectedEntity_ = &entity;
+        const PopulationDecisions& decisions = entity.Get< PopulationDecisions >();
+        AddPopulationMissions( decisions, menu );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::AddMissions
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -188,6 +202,16 @@ void MissionPanel::AddAutomatMissions( const AutomatDecisions& decisions, Contex
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::AddPopulationMissions
+// Created: SBO 2006-12-18
+// -----------------------------------------------------------------------------
+void MissionPanel::AddPopulationMissions( const PopulationDecisions& decisions, kernel::ContextMenu& menu )
+{
+    AddMissions( decisions.GetMissions(), menu, tr( "Population missions" ), SLOT( ActivatePopulationMission( int ) ) );
+    AddFragOrders( decisions, menu, tr( "Fragmentary orders" ), SLOT( ActivateFragOrder( int ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::ActivateAgentMission
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -222,6 +246,22 @@ void MissionPanel::ActivateAutomatMission( int id )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionPanel::ActivatePopulationMission
+// Created: AGE 2006-04-10
+// -----------------------------------------------------------------------------
+void MissionPanel::ActivatePopulationMission( int id )
+{
+    hide();
+    delete pMissionInterface_;
+    // $$$$ AGE 2006-03-31: 
+    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
+    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
+    setWidget( pMissionInterface_ );
+    resize( 10, 10 );
+    show();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionPanel::ActivateFragOrder
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
@@ -240,46 +280,6 @@ void MissionPanel::ActivateFragOrder( int id )
         resize( 10, 10 );
         show();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::NotifyContextMenu
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-void MissionPanel::NotifyContextMenu( const Population_ABC& agent, ContextMenu& menu )
-{
-    if( profile_.CanBeOrdered( agent ) )
-    {
-        selectedEntity_ = &agent;
-        if( const PopulationDecisions* decisions = agent.Retrieve< PopulationDecisions >() )
-        {
-            QPopupMenu& missions = *new QPopupMenu( menu );
-            Iterator< const Mission& > it = decisions->GetMissions();
-            while( it.HasMoreElements() )
-            {
-                const Mission& mission = it.NextElement();
-                int nId = missions.insertItem( mission.GetName(), this, SLOT( ActivatePopulationMission( int ) ) );
-                missions.setItemParameter( nId, mission.GetId() );
-            }
-            menu.InsertItem( "Order", tr( "Population missions" ), &missions  );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionPanel::ActivatePopulationMission
-// Created: AGE 2006-04-10
-// -----------------------------------------------------------------------------
-void MissionPanel::ActivatePopulationMission( int id )
-{
-    hide();
-    delete pMissionInterface_;
-    // $$$$ AGE 2006-03-31: 
-    Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
-    pMissionInterface_ = new PopulationMissionInterface( this, const_cast< Entity_ABC& >( *selectedEntity_ ), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
-    setWidget( pMissionInterface_ );
-    resize( 10, 10 );
-    show();
 }
 
 // -----------------------------------------------------------------------------

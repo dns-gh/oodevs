@@ -10,35 +10,42 @@
 #ifndef __PopulationDecisions_h_
 #define __PopulationDecisions_h_
 
+#include "ASN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Iterator.h"
 
 namespace kernel
 {
+    class Controller;
     class Population_ABC;
     class Mission;
+    class FragOrder;
+    class DecisionalModel;
 }
 
 // =============================================================================
 /** @class  PopulationDecisions
     @brief  PopulationDecisions
-    // $$$$ AGE 2006-06-29: Current mission !
 */
 // Created: AGE 2006-04-10
 // =============================================================================
 class PopulationDecisions : public kernel::Extension_ABC
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationOrder >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationDecisions( const kernel::Population_ABC& popu );
+             PopulationDecisions( kernel::Controller& controller, const kernel::Population_ABC& popu );
     virtual ~PopulationDecisions();
     //@}
 
     //! @name Operations
     //@{
     virtual kernel::Iterator< const kernel::Mission& > GetMissions() const;
+    virtual kernel::Iterator< const kernel::FragOrder& > GetFragOrders() const;
+    const kernel::Mission* GetCurrentMission() const;
     //@}
 
 private:
@@ -48,10 +55,18 @@ private:
     PopulationDecisions& operator=( const PopulationDecisions& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void DoUpdate( const ASN1T_MsgPopulationOrder& message );
+    const kernel::DecisionalModel& GetDecisionalModel() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::Population_ABC& popu_;
+    const kernel::Mission* current_;
     //@}
 };
 

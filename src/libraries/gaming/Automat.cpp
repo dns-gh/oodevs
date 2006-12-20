@@ -27,7 +27,7 @@ Automat::Automat( const ASN1T_MsgAutomateCreation& message, Controller& controll
     , type_( resolver.Get( message.type_automate ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "Automat %1" ).arg( message.oid_automate );
+        name_ = QString( "%1 %2" ).arg( type_.GetName() ).arg( message.oid_automate );
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );

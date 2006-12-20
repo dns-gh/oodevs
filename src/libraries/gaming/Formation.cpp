@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Formation.h"
+#include "clients_kernel/HierarchyLevel_ABC.h"
 
 using namespace kernel;
 
@@ -20,7 +21,8 @@ Formation::Formation( const ASN1T_MsgFormationCreation& message, Controller& con
     : EntityImplementation< Formation_ABC >( controller, message.oid, message.nom )
     , level_( resolver.Get( message.niveau ) )
 {
-    // NOTHING
+    if( name_.isEmpty() )
+        name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.oid );
 }
 
 // -----------------------------------------------------------------------------

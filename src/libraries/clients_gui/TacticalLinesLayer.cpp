@@ -91,7 +91,7 @@ void TacticalLinesLayer::NotifyContextMenu( const geometry::Point2f&, kernel::Co
 void TacticalLinesLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
 {
     const kernel::TacticalLine_ABC& line = static_cast< const kernel::TacticalLine_ABC& >( entity );
-    return controllers_.actions_.ContextMenu( entity, line, point, where );
+    controllers_.actions_.ContextMenu( entity, line, point, where );
 }
 
 // -----------------------------------------------------------------------------

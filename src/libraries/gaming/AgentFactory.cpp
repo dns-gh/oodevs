@@ -180,7 +180,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
 
     result->Attach< Positions >( *new PopulationPositions( *result ) );
     result->Attach< TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( asnMsg.oid_camp ) ) );
-    result->Attach( *new PopulationDecisions( *result ) );
+    result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     AttachExtensions( *result );
     result->Polish();
     return result;
