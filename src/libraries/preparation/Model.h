@@ -33,6 +33,7 @@ class FormationModel;
 class FormationFactory_ABC;
 class IdManager;
 class LimitsModel;
+class WeatherModel;
 
 // =============================================================================
 /** @class  Model
@@ -84,6 +85,7 @@ public:
     AgentsModel& agents_;
     FormationModel& formations_;
     LimitsModel& limits_;
+    WeatherModel& weather_;
     //@}
 
 private:

@@ -35,15 +35,8 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ItemFactory_ABC& factory );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory );
     virtual ~CreationPanels();
-    //@}
-
-private:
-    //! @name Copy/Assignement
-    //@{
-    CreationPanels( const CreationPanels& );            //!< Copy constructor
-    CreationPanels& operator=( const CreationPanels& ); //!< Assignement operator
     //@}
 };
 

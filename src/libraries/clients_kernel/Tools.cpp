@@ -77,6 +77,52 @@ QString tools::ToString( E_PerceptionResult nResult )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: SBO 2006-12-19
+// -----------------------------------------------------------------------------
+QString tools::ToString( kernel::E_LightingType lighting )
+{
+    static const QString lightings[] = 
+    {
+        tools::translate( "E_PerceptionResult", "JourSansNuage" ),
+        tools::translate( "E_PerceptionResult", "JourPeuNuageux" ),
+        tools::translate( "E_PerceptionResult", "JourMoyennementNuageux" ),
+        tools::translate( "E_PerceptionResult", "JourAssezNuageux" ),
+        tools::translate( "E_PerceptionResult", "JourTresNuageux" ),
+        tools::translate( "E_PerceptionResult", "NuitPleineLune" ),
+        tools::translate( "E_PerceptionResult", "NuitTroisQuartDeLune" ),
+        tools::translate( "E_PerceptionResult", "NuitDemiLune" ),
+        tools::translate( "E_PerceptionResult", "NuitQuartDeLune" ),
+        tools::translate( "E_PerceptionResult", "NuitNouvelleLune" ),
+        tools::translate( "E_PerceptionResult", "Eclairant" )
+    };
+    if( lighting >= 0 && lighting < eNbrLightingType )
+        return lightings[ lighting ];
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::ToString
+// Created: SBO 2006-12-20
+// -----------------------------------------------------------------------------
+QString tools::ToString( kernel::E_WeatherType weather )
+{
+    static const QString weathers[] = 
+    {
+        tools::translate( "E_PerceptionResult", "PasDePrecipitation" ),
+        tools::translate( "E_PerceptionResult", "TempeteDeSable" ),
+        tools::translate( "E_PerceptionResult", "Brouillard" ),
+        tools::translate( "E_PerceptionResult", "Crachin" ),
+        tools::translate( "E_PerceptionResult", "Pluie" ),
+        tools::translate( "E_PerceptionResult", "Neige" ),
+        tools::translate( "E_PerceptionResult", "Fumigene" )
+    };
+    if( weather >= 0 && weather < eNbrWeatherType )
+        return weathers[ weather ];
+    return Unknown();
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::GetXmlSection
 // Created: AGE 2005-03-31
 // -----------------------------------------------------------------------------

@@ -17,6 +17,78 @@
         <source>Recognition</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>JourSansNuage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JourPeuNuageux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JourMoyennementNuageux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JourAssezNuageux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JourTresNuageux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NuitPleineLune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NuitTroisQuartDeLune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NuitDemiLune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NuitQuartDeLune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NuitNouvelleLune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eclairant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PasDePrecipitation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TempeteDeSable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brouillard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crachin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pluie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neige</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fumigene</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>E_TroopHealthState</name>

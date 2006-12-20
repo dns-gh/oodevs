@@ -25,6 +25,8 @@ namespace tools
 
     QString ToString( kernel::E_TroopHealthState nState );
     QString ToString( kernel::E_PerceptionResult nResult );
+    QString ToString( kernel::E_LightingType lighting );
+    QString ToString( kernel::E_WeatherType weather );
 
     QString Unknown();
 

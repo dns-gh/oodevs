@@ -19,6 +19,7 @@
 #include "FormationModel.h"
 #include "IdManager.h"
 #include "LimitsModel.h"
+#include "WeatherModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PathTools.h"
@@ -44,12 +45,13 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , teamFactory_( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
+    , orbatFile_( "" )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
-    , orbatFile_( "" )
+    , weather_( *new WeatherModel( controllers.controller_ ) )
 {
     // NOTHING
 }
@@ -60,6 +62,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &weather_;
     delete &limits_;
     delete &formations_;
     delete &formationFactory_;
@@ -78,6 +81,7 @@ Model::~Model()
 void Model::Purge()
 {
     UpdateName( "" );
+    weather_.Purge();
     limits_.Purge();
     formations_.Purge();
     agents_.Purge();
@@ -93,12 +97,14 @@ void Model::Purge()
 void Model::Load( const QString& filename )
 {
     xml::xifstream xis( filename.ascii() );
-    std::string orbat;
+    std::string orbat, weather;
     xis >> start( "Scipio" )
             >> start( "Donnees" )
-            >> content( "ODB", orbat );
+            >> content( "ODB", orbat )
+            >> content( "Meteo", weather );
     UpdateName( path_tools::BuildChildPath( filename.ascii(), orbat ).c_str() );
     teams_.Load( orbatFile_, *this );
+    weather_.Load( path_tools::BuildChildPath( filename.ascii(), weather ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +119,9 @@ void Model::Save( const QString& filename /*= ""*/ )
     teams_.Serialize( xos );
     xos << end();
     UpdateName( file.c_str() );
+
+    xml::xofstream weather( path_tools::BuildChildPath( filename.ascii(), "weather.xml" ), xml::encoding( "ISO-8859-1" ) );
+    weather_.Serialize( weather );
 }
 
 // -----------------------------------------------------------------------------
