@@ -202,11 +202,11 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const kernel::TacticalLine_ABC& line )
 {
-    if( & line == selectedLine_ )
-        ApplyColor( QColor( 255, 127, 13 ) );
-    else
-        ApplyColor( QColor( 255, 255, 255 ) );
-    tools_.Select( & line == selectedLine_ );
+    QColor color = FindColor( line );
+    if( selectedLine_ == &line )
+        color = SelectedColor( color );
+    tools_.Select( selectedLine_ == &line );
+    ApplyColor( color );
 }
 
 // -----------------------------------------------------------------------------
