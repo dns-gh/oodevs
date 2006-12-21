@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "LocalWeather.h"
 #include "Tools.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -23,8 +24,8 @@ namespace
 // Name: LocalWeather constructor
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-LocalWeather::LocalWeather()
-    : Weather()
+LocalWeather::LocalWeather( const kernel::CoordinateConverter_ABC& converter )
+    : converter_( converter )
     , id_( localCounter_++ )
     , name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
 {
@@ -35,13 +36,17 @@ LocalWeather::LocalWeather()
 // Name: LocalWeather constructor
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-LocalWeather::LocalWeather( xml::xistream& xis )
+LocalWeather::LocalWeather( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
     : Weather( xis )
+    , converter_( converter )
     , id_( localCounter_++ )
     , name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
 {
-    xis >> attribute( "hautGauche", topLeft_ )
-        >> attribute( "basDroit", bottomRight_ );
+    std::string topLeft, bottomRight;
+    xis >> attribute( "hautGauche", topLeft )
+        >> attribute( "basDroit", bottomRight );
+    topLeft_ = converter_.ConvertToXY( topLeft );
+    bottomRight_ = converter_.ConvertToXY( bottomRight );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +82,35 @@ QString LocalWeather::GetName() const
 // -----------------------------------------------------------------------------
 void LocalWeather::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "hautGauche", topLeft_ )
-        << attribute( "basDroite" , bottomRight_ );
+    xos << attribute( "hautGauche", converter_.ConvertToMgrs( topLeft_ ) )
+        << attribute( "basDroite" , converter_.ConvertToMgrs( bottomRight_ ) );
     Weather::Serialize( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalWeather::SetPosition
+// Created: SBO 2006-12-21
+// -----------------------------------------------------------------------------
+void LocalWeather::SetPosition( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight )
+{
+     topLeft_ = topLeft;
+     bottomRight_ = bottomRight;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalWeather::GetTopLeft
+// Created: SBO 2006-12-21
+// -----------------------------------------------------------------------------
+geometry::Point2f LocalWeather::GetTopLeft() const
+{
+    return topLeft_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocalWeather::GetBottomRight
+// Created: SBO 2006-12-21
+// -----------------------------------------------------------------------------
+geometry::Point2f LocalWeather::GetBottomRight() const
+{
+    return bottomRight_;
 }

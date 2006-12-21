@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Controllers;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -29,6 +30,7 @@ class WeatherModel;
 class WeatherWidget;
 class LocalWeathersList;
 class LocalWeather;
+class WeatherLayer;
 
 // =============================================================================
 /** @class  WeatherPanel
@@ -45,7 +47,7 @@ class WeatherPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers );
+             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer );
     virtual ~WeatherPanel();
     //@}
 
@@ -55,6 +57,7 @@ private slots:
     void Commit();
     void Reset ();
     void LocalSelectionChanged();
+    void SetPatchPosition();
     //@}
 
 private:
@@ -75,10 +78,12 @@ private:
     //@{
     kernel::Controllers& controllers_;
     WeatherModel* currentModel_;
+    WeatherLayer& layer_;
     QTimeEdit* sunrise_;
     QTimeEdit* sunset_;
     gui::ValuedComboBox< kernel::E_LightingType >* lighting_;
     WeatherWidget* globalWeather_;
+    QVBox* localWeatherBox_;
     LocalWeathersList* localWeathers_;
     LocalWeather* selectedLocal_;
     WeatherWidget* localWeather_;

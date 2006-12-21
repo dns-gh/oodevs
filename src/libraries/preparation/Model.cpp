@@ -51,7 +51,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , agents_( *new AgentsModel( controllers, agentFactory_ ) )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
-    , weather_( *new WeatherModel( controllers.controller_ ) )
+    , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
 {
     // NOTHING
 }

@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Controller;
+    class CoordinateConverter_ABC;
 }
 
 namespace xml
@@ -40,7 +41,7 @@ class WeatherModel : public kernel::Resolver< LocalWeather >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit WeatherModel( kernel::Controller& controller );
+             WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~WeatherModel();
     //@}
 
@@ -69,6 +70,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 
 public:

@@ -11,7 +11,6 @@
 #include "CreationPanels.h"
 #include "UnitsPanel.h"
 #include "PopulationsPanel.h"
-#include "WeatherPanel.h"
 #include "preparation/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
 
@@ -27,7 +26,6 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
 {
     AddPanel( new UnitsPanel      ( this, *this, controllers, staticModel.types_, factory ) );
     AddPanel( new PopulationsPanel( this, *this, controllers, (Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
-    AddPanel( new WeatherPanel    ( this, *this, controllers ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,8 +17,9 @@
 // Name: LocalWeathersList constructor
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-LocalWeathersList::LocalWeathersList( QWidget* parent )
+LocalWeathersList::LocalWeathersList( QWidget* parent, const kernel::CoordinateConverter_ABC& converter )
     : QListView( parent )
+    , converter_( converter )
 {
     addColumn( tr( "Local patch" ) );
     setResizeMode( QListView::LastColumn );
@@ -53,7 +54,7 @@ void LocalWeathersList::ContextMenuRequested( QListViewItem* item, const QPoint&
 // -----------------------------------------------------------------------------
 void LocalWeathersList::CreateItem()
 {
-    LocalWeather* weather = new LocalWeather();
+    LocalWeather* weather = new LocalWeather( converter_ );
     QListViewItem* item = new QListViewItem( this );
     item->setText( 0, weather->GetName() );
     weathers_.push_back( weather );

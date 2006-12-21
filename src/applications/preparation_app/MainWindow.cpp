@@ -31,7 +31,9 @@
 #include "Dialogs.h"
 #include "LimitsLayer.h"
 #include "PopulationsLayer.h"
+#include "WeatherLayer.h"
 #include "PreparationProfile.h"
+#include "WeatherPanel.h"
 #include "FileToolbar.h"
 
 #include "preparation/Exceptions.h"
@@ -178,11 +180,18 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
+    CircularEventStrategy* eventStrategy = new CircularEventStrategy();
+    eventStrategy_ = eventStrategy;
+    exclusiveEventStrategy_ = new ExclusiveEventStrategy( *eventStrategy_ );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
     // object creation window
     ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_ );
     pCreationPanel->AddPanel( objectCreationPanel );
+
+    WeatherLayer* weatherLayer = new WeatherLayer( *glProxy_, *exclusiveEventStrategy_ );
+    WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_.coordinateConverter_, *weatherLayer );
+    pCreationPanel->AddPanel( weatherPanel );
 
     new FileToolbar( this );
 //    new MapToolbar( this, controllers );
@@ -195,7 +204,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setCentralWidget( glPlaceHolder_ );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *agentsLayer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *weatherLayer, *agentsLayer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
 
     pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
     controllers_.Register( *this );
@@ -211,11 +220,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, ::AgentsLayer& agents, GraphicSetup_ABC& setup, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, GraphicSetup_ABC& setup, const Profile_ABC& profile )
 {
-    CircularEventStrategy* eventStrategy = new CircularEventStrategy();
-    eventStrategy_ = eventStrategy;
-    exclusiveEventStrategy_ = new ExclusiveEventStrategy( *eventStrategy_ );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
@@ -224,7 +230,6 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *exclusiveEventStrategy_, profile );
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-//    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     
     // ordre de dessin
@@ -232,7 +237,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( elevation2d );
     glProxy_->Register( terrain );
     glProxy_->Register( grid );
-//    glProxy_->Register( meteo );
+    glProxy_->Register( weather );
     glProxy_->Register( limits );
     glProxy_->Register( objectsLayer );
     glProxy_->Register( populations );
@@ -242,13 +247,14 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( metrics );
 
     // ordre des evenements
-    eventStrategy->Register( parameters );
-    eventStrategy->Register( agents );
-    eventStrategy->Register( populations );
-    eventStrategy->Register( objectsLayer );
-    eventStrategy->Register( limits );
-    eventStrategy->Register( metrics );
-    eventStrategy->SetDefault( defaultLayer );
+    eventStrategy_->Register( parameters );
+    eventStrategy_->Register( agents );
+    eventStrategy_->Register( populations );
+    eventStrategy_->Register( objectsLayer );
+    eventStrategy_->Register( weather );
+    eventStrategy_->Register( limits );
+    eventStrategy_->Register( metrics );
+    static_cast< CircularEventStrategy* >( eventStrategy_ )->SetDefault( defaultLayer );
 }
 
 // -----------------------------------------------------------------------------

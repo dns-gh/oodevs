@@ -12,6 +12,7 @@
 #include "moc_WeatherPanel.cpp"
 #include "WeatherWidget.h"
 #include "LocalWeathersList.h"
+#include "WeatherLayer.h"
 #include "preparation/WeatherModel.h"
 #include "preparation/LocalWeather.h"
 #include "clients_kernel/Controllers.h"
@@ -24,9 +25,10 @@
 // Name: WeatherPanel constructor
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers )
+WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer )
     : gui::InfoPanel_ABC( parent, panel, tr( "Weather" ) )
     , controllers_( controllers )
+    , layer_( layer )
     , currentModel_( 0 )
     , selectedLocal_( 0 )
 {
@@ -41,9 +43,13 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
         lighting_->AddItem( tools::ToString( (kernel::E_LightingType)i ), (kernel::E_LightingType)i );
 
     globalWeather_ = new WeatherWidget( this, tr( "Global weather" ) );
-    localWeathers_ = new LocalWeathersList( this );
-    localWeather_ = new WeatherWidget( this, tr( "Local weather" ) );
-    localWeather_->hide();
+    QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Local weather" ), this );
+    localWeathers_ = new LocalWeathersList( localGroup, converter );
+    localWeatherBox_ = new QVBox( localGroup );
+    localWeather_ = new WeatherWidget( localWeatherBox_, tr( "Weather parameters" ) );
+    QButton* btn = new QPushButton( tr( "Set location" ), localWeatherBox_ );
+    connect( btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
+    localWeatherBox_->hide();
 
     QHBox* box = new QHBox( this );
     box->setMaximumHeight( 30 );
@@ -127,9 +133,19 @@ void WeatherPanel::LocalSelectionChanged()
         if( selectedLocal_ )
             localWeather_->CommitTo( *selectedLocal_ );
         localWeather_->Update( *selected );
-        localWeather_->show();
+        layer_.SetPosition( *selected );
+        localWeatherBox_->show();
         selectedLocal_ = selected;
     }
     else
-        localWeather_->hide();
+        localWeatherBox_->hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::SetPatchPosition
+// Created: SBO 2006-12-21
+// -----------------------------------------------------------------------------
+void WeatherPanel::SetPatchPosition()
+{
+    layer_.StartEdition( *localWeathers_->SelectedItem() );
 }

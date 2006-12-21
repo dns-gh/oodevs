@@ -12,6 +12,11 @@
 
 #include "Weather.h"
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -30,8 +35,8 @@ class LocalWeather : public Weather
 public:
     //! @name Constructors/Destructor
     //@{
-             LocalWeather();
-    explicit LocalWeather( xml::xistream& xis );
+    explicit LocalWeather( const kernel::CoordinateConverter_ABC& converter );
+    explicit LocalWeather( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     virtual ~LocalWeather();
     //@}
 
@@ -40,6 +45,9 @@ public:
     unsigned long GetId() const;
     QString GetName() const;
     void Serialize( xml::xostream& xos ) const;
+    void SetPosition( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
+    geometry::Point2f GetTopLeft() const;
+    geometry::Point2f GetBottomRight() const;
     //@}
 
 private:
@@ -51,10 +59,11 @@ private:
 private:
     //! @name Member data
     //@
+    const kernel::CoordinateConverter_ABC& converter_;
     unsigned long id_;
     QString name_;
-    std::string topLeft_;
-    std::string bottomRight_;
+    geometry::Point2f topLeft_;
+    geometry::Point2f bottomRight_;
     //@}
 };
 

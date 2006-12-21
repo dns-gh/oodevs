@@ -10,6 +10,11 @@
 #ifndef __LocalWeathersList_h_
 #define __LocalWeathersList_h_
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 class WeatherModel;
 class LocalWeather;
 
@@ -26,7 +31,7 @@ class LocalWeathersList : public QListView
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LocalWeathersList( QWidget* parent );
+             LocalWeathersList( QWidget* parent, const kernel::CoordinateConverter_ABC& converter );
     virtual ~LocalWeathersList();
     //@}
 
@@ -66,6 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     T_LocalWeathers      weathers_;
     //@}
 };

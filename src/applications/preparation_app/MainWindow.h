@@ -40,6 +40,7 @@ class StaticModel;
 class GraphicSetup_ABC;
 class EventStrategy_ABC;
 class ObjectCreationPanel;
+class WeatherLayer;
 
 // =============================================================================
 /** @class  MainWindow
@@ -92,7 +93,7 @@ private:
     //! @name Helpers
     //@{
     void BuildIconLayout();
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, AgentsLayer& agents, GraphicSetup_ABC& setup, const kernel::Profile_ABC& profile );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, GraphicSetup_ABC& setup, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

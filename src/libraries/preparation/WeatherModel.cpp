@@ -25,8 +25,9 @@ using namespace kernel;
 // Name: WeatherModel constructor
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-WeatherModel::WeatherModel( kernel::Controller& controller )
+WeatherModel::WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
     : controller_   ( controller )
+    , converter_    ( converter )
     , sunset_       ()
     , sunrise_      ()
     , lighting_     ( (kernel::E_LightingType)-1 )
@@ -153,6 +154,6 @@ void WeatherModel::ReadGlobalWeather( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void WeatherModel::ReadLocalWeather( xml::xistream& xis )
 {
-    LocalWeather* local = new LocalWeather( xis );
+    LocalWeather* local = new LocalWeather( xis, converter_ );
     Register( local->GetId(), *local );
 }
