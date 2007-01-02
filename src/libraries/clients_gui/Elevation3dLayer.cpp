@@ -15,6 +15,12 @@
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/ModelLoaded.h"
+#include "graphics/ShaderProgram.h"
+#include "graphics/FragmentShader.h"
+#include "graphics/extensions.h"
+#include "graphics/MultiTextureLayer.h"
+#include "graphics/Lighting_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,12 +29,11 @@ using namespace gui;
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& elevation )
+Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& elevation, Lighting_ABC& lighting )
     : controller_( controller )
     , elevation_( elevation )
-    , tree_( 0 )
+    , lighting_ ( lighting )
     , zRatio_( 5.f )
-    , modelLoaded_( false )
 {
     controller_.Register( *this );
 }
@@ -40,17 +45,16 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
 Elevation3dLayer::~Elevation3dLayer()
 {
     controller_.Remove( *this );
-    delete tree_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Elevation3dLayer::NotifyUpdated
 // Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-void Elevation3dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
+void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    delete tree_; tree_ = 0;
-    modelLoaded_ = true;
+    textures_.reset( 0 );
+    Load( modelLoaded.scipioXml_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,84 +82,83 @@ bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 {
-    if( ! tree_ && modelLoaded_ )
-    {
-        ElevationFactory factory( elevation_.GetMap(), *this );
-        tree_ = new TextureTree( factory, elevation_.Width(), elevation_.Height() );
-    }
+    if( ! textures_.get() && !program_.get() )
+        CreateShaders();
+    if( ! textures_.get() && !graphicsDirectory_.empty() )
+        CreateTextures();
+    
 
-    if( !tree_ )
+    if( !textures_.get() )
         return;
+    if( program_.get() )
+    {
+        program_->Use();
+        program_->SetUniformValue( "tex0", 0 );
+        program_->SetUniformValue( "tex1", 1 );
+    }
+    
     glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
     glPushMatrix(); 
+        lighting_.Set();
         glScalef( 1.f, 1.f, zRatio_ );
         glColor3f( 1, 1, 1 );
         Visitor3d visitor( elevation_.GetMap(), frustum, frustum != lastFrustum_ );
-        tree_->Accept( visitor );
+        textures_->Accept( visitor );
     glPopMatrix();
     glPopAttrib();
     lastFrustum_ = frustum;
+    if( program_.get() )
+        program_->Unuse();
+    glDisable( GL_LIGHTING );
+    gl::glActiveTexture( gl::GL_TEXTURE0 );
+    glDisable( GL_TEXTURE_2D );
+    gl::glActiveTexture( gl::GL_TEXTURE1 );
 }
 
 namespace
 {
-    unsigned char Map( short nIn, short nInMin, short nInMax, unsigned char nOutMin, unsigned int nOutMax )
-    {
-        if( nIn < nInMin )
-            nIn = nInMin;
-        if( nIn > nInMax )
-            nIn = nInMax;
-        const float rRatio = float( nIn - nInMin ) / float( nInMax - nInMin );
-        const float rOut   = nOutMin + rRatio * ( float( nOutMax ) - float( nOutMin ) );
-        return unsigned char( floor( rOut ) );
-    }
-
-     
-    inline
-    unsigned char Multiply( unsigned char c, float r )
-    {
-        float result = c * r;
-        if( result < 255 )
-            return (unsigned char)( std::floor( result ) );
-        return 255;
-    };
+    static const char* shagger = 
+    "uniform sampler2D tex0;"
+    "uniform sampler2D tex1;"
+    "void main()"
+    "{"
+    "   vec4 color    = texture2D(tex0,gl_TexCoord[0].st);"
+    "   vec3 normal   = 2.0 * texture2D(tex1,gl_TexCoord[1].st).xyz - vec3( 0.5, 0.5, 0.5 );"
+    "   normal        = normalize( gl_NormalMatrix * normal );"
+    "   vec3 lightDir = normalize( vec3( gl_LightSource[0].position ) );"
+    "   float diffuse = max( dot(normal, lightDir), 0.0 );"
+    "   gl_FragColor  = color * ( gl_LightSource[0].ambient + gl_LightSource[0].diffuse * diffuse );"
+    "   gl_FragColor.w = 1.0;"
+    "}";
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: Elevation3dLayer::SelectColor
-// Created: AGE 2006-03-29
+// Name: Elevation3dLayer::CreateShaders
+// Created: AGE 2007-01-02
 // -----------------------------------------------------------------------------
-void Elevation3dLayer::SelectColor( short elevation, float slope, short maxElevation, unsigned char* color )
+void Elevation3dLayer::CreateShaders()
 {
-    static const unsigned char colors[6][3] =
+    gl::Initialize();
+    try 
     {
-        { 0,   60 , 0   },
-        { 0,   96 , 0   },
-        { 60,  120, 0   },
-        { 120, 96 , 0   },
-        { 120, 0,   0   },
-        { 120, 120, 120 }
-    };
-
-    if( elevation == 0 )
-    {
-        *color = *(color+1) = 0;
-        *(color+2) = 128;
-        return;
+        fragment_.reset( new gl::FragmentShader( shagger ) );
+        program_.reset( new gl::ShaderProgram() );
+        program_->AddShader( *fragment_ );
+        program_->Link();
     }
-
-    const unsigned int  nSliceLength = maxElevation / 5;
-    if( nSliceLength > 0 )
+    catch( ... )
     {
-        const int nSlice = elevation / nSliceLength;
-        for( unsigned int nComposante = 0; nComposante < 3; ++nComposante )
-            *( color + nComposante ) = Map( elevation, short( nSlice * nSliceLength ), short( ( nSlice + 1 ) * nSliceLength ), colors[nSlice][nComposante], colors[nSlice+1][nComposante] );
+        // NOTHING
     }
+}
 
-    float rFactor = 1 + 0.5 * slope;
-    if( rFactor <= 0 ) rFactor = 0.1f;
-    if( rFactor >  2 ) rFactor = 2.0f;
-    for( unsigned int nComposante = 0; nComposante < 3; ++nComposante )
-        *( color + nComposante ) = Multiply( *( color + nComposante ), rFactor );
+// -----------------------------------------------------------------------------
+// Name: Elevation3dLayer::CreateTextures
+// Created: AGE 2007-01-02
+// -----------------------------------------------------------------------------
+void Elevation3dLayer::CreateTextures()
+{
+    textures_.reset( new MultiTextureLayer() );
+    textures_->AddTextures( 0, graphicsDirectory_ + "/usrp.texture" );
+    textures_->AddTextures( 1, graphicsDirectory_ + "/normals.texture" );
 }

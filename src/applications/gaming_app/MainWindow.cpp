@@ -88,6 +88,7 @@
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
+#include "clients_gui/Lighting.h"
 #include "icons.h"
 
 #pragma warning( push )
@@ -131,6 +132,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
+    lighting_ = new Lighting();
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
@@ -265,7 +267,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );

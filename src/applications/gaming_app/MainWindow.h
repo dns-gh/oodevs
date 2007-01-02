@@ -36,6 +36,7 @@ namespace gui
     class DrawerLayer;
     class ExclusiveEventStrategy;
     class CircularEventStrategy;
+    class Lighting;
 }
 
 class Spy;
@@ -130,6 +131,7 @@ private:
 
     gui::GlProxy*                glProxy_;
     gui::ColorStrategy*          strategy_;
+    gui::Lighting*               lighting_;
     gui::CircularEventStrategy*  forward_;
     gui::ExclusiveEventStrategy* eventStrategy_;
     gui::GlWidget*               widget2d_;
