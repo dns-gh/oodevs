@@ -11,6 +11,7 @@
 #include "ChangeDiplomacyDialog.h"
 #include "moc_ChangeDiplomacyDialog.cpp"
 #include "gaming/ASN_Messages.h"
+#include "gaming/Diplomacies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -30,38 +31,41 @@ ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, Controllers& cont
 {
     setCaption( tr( "Diplomacy" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
-    QHBoxLayout* pDataLayout = new QHBoxLayout( pMainLayout );
-    pDataLayout->setMargin( 10 );
-    pDataLayout->setSpacing( 10 );
+    pMainLayout->setMargin( 5 );
 
-    pDataLayout->addWidget( new QLabel( tr( "Side" ), this ) );
+    QHBox* box = new QHBox( this );
+    box->setMargin( 10 );
+    box->setSpacing( 10 );
 
-    pArmy1ComboBox_ = new ValuedComboBox< unsigned long >( this );
-    pDataLayout->addWidget( pArmy1ComboBox_ );
+    new QLabel( tr( "Side" ), box );
+    pArmy1ComboBox_ = new ValuedComboBox< const Team_ABC* >( box );
+    new QLabel( tr( " is " ), box );
 
-    pDataLayout->addWidget( new QLabel( tr( " is " ) , this ) );
-
-    pDiplomacyComboBox_ = new ValuedComboBox<ASN1T_EnumDiplomatie>( this );
+    pDiplomacyComboBox_ = new ValuedComboBox< ASN1T_EnumDiplomatie >( box );
     pDiplomacyComboBox_->AddItem( tr( "unknown" ), EnumDiplomatie::inconnu );
     pDiplomacyComboBox_->AddItem( tr( "friend" ),  EnumDiplomatie::ami );
     pDiplomacyComboBox_->AddItem( tr( "enemy" ),   EnumDiplomatie::ennemi );
     pDiplomacyComboBox_->AddItem( tr( "neutral" ), EnumDiplomatie::neutre );
-    pDataLayout->addWidget( pDiplomacyComboBox_ );
 
-    pDataLayout->addWidget( new QLabel( tr( "with side" ), this ) );
+    new QLabel( tr( "with side" ), box );
+    pArmy2ComboBox_ = new ValuedComboBox< const Team_ABC* >( box );
+    pMainLayout->addWidget( box );
 
-    pArmy2ComboBox_ = new ValuedComboBox< unsigned long >( this );
-    pDataLayout->addWidget( pArmy2ComboBox_ );
+    QLabel* spacer = new QLabel( this );
+    spacer->setFrameStyle( QFrame::HLine | QFrame::Sunken );
+    pMainLayout->addWidget( spacer );
 
-    QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
-    QPushButton* pOKButton     = new QPushButton( tr("Ok")    , this );
-    QPushButton* pCancelButton = new QPushButton( tr("Cancel"), this );
-    pButtonLayout->addWidget( pCancelButton );
-    pButtonLayout->addWidget( pOKButton     );
-    pOKButton->setDefault( TRUE );
+    box = new QHBox( this );
+    box->setMaximumWidth( 200 );
+    QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
+    QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    okBtn->setDefault( true );
+    pMainLayout->addWidget( box, 0, Qt::AlignCenter );
 
-    connect( pCancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
-    connect( pOKButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
+    connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( pArmy1ComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateDiplomacy() ) );
+    connect( pArmy2ComboBox_, SIGNAL( activated( int ) ), SLOT( UpdateDiplomacy() ) );
 
     controllers_.Register( *this );
 
@@ -85,8 +89,8 @@ void ChangeDiplomacyDialog::Validate()
 {
     ASN_MsgChangeDiplomatie asn;
 
-    asn.GetAsnMsg().oid_camp1  = pArmy1ComboBox_->GetValue();
-    asn.GetAsnMsg().oid_camp2  = pArmy2ComboBox_->GetValue();
+    asn.GetAsnMsg().oid_camp1  = pArmy1ComboBox_->GetValue()->GetId();
+    asn.GetAsnMsg().oid_camp2  = pArmy2ComboBox_->GetValue()->GetId();
     asn.GetAsnMsg().diplomatie = pDiplomacyComboBox_->GetValue();
     asn.Send( publisher_ );
     hide();
@@ -107,8 +111,8 @@ void ChangeDiplomacyDialog::Reject()
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 {
-    pArmy1ComboBox_->AddItem( team.GetName(), team.GetId() );
-    pArmy2ComboBox_->AddItem( team.GetName(), team.GetId() );
+    pArmy1ComboBox_->AddItem( team.GetName(), &team );
+    pArmy2ComboBox_->AddItem( team.GetName(), &team );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +121,8 @@ void ChangeDiplomacyDialog::NotifyCreated( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ChangeDiplomacyDialog::NotifyDeleted( const Team_ABC& team )
 {
-    pArmy1ComboBox_->RemoveItem( team.GetId() );
-    pArmy2ComboBox_->RemoveItem( team.GetId() );
+    pArmy1ComboBox_->RemoveItem( &team );
+    pArmy2ComboBox_->RemoveItem( &team );
 }
     
 // -----------------------------------------------------------------------------
@@ -129,7 +133,20 @@ void ChangeDiplomacyDialog::NotifyContextMenu( const Team_ABC& team, ContextMenu
 {
     if( profile_.CanDoMagic( team ) )
     {
-        pArmy1ComboBox_->SetCurrentItem( team.GetId() );
+        pArmy1ComboBox_->SetCurrentItem( &team );
+        UpdateDiplomacy();
         menu.InsertItem( "Command", tr( "Diplomacy" ), this, SLOT( show() ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeDiplomacyDialog::UpdateDiplomacy
+// Created: SBO 2007-01-02
+// -----------------------------------------------------------------------------
+void ChangeDiplomacyDialog::UpdateDiplomacy()
+{
+    const Team_ABC* army1 = pArmy1ComboBox_->GetValue();
+    const Team_ABC* army2 = pArmy2ComboBox_->GetValue();
+    if( army1 && army2 )
+        pDiplomacyComboBox_->SetCurrentItem( army1->Get< Diplomacies >().GetRelationship( *army2 ) );
 }

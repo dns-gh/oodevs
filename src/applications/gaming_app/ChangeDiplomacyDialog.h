@@ -25,9 +25,12 @@ namespace kernel
 
 class Publisher_ABC;
 
-//=============================================================================
-// Created:  NLD 2002-01-03 
-//=============================================================================
+// =============================================================================
+/** @class  ChangeDiplomacyDialog
+    @brief  ChangeDiplomacyDialog
+*/
+// Created: AGE 2006-10-11
+// =============================================================================
 class ChangeDiplomacyDialog : public QDialog
                             , public kernel::Observer_ABC
                             , public kernel::ElementObserver_ABC< kernel::Team_ABC >
@@ -46,7 +49,8 @@ private slots:
     //! @name Slots
     //@{
     void Validate();
-    void Reject  ();
+    void Reject();
+    void UpdateDiplomacy();
     //@}
 
 private:
@@ -71,9 +75,9 @@ private:
     Publisher_ABC& publisher_;
     const kernel::Profile_ABC& profile_;
 
-    gui::ValuedComboBox< unsigned long >*      pArmy1ComboBox_;
-    gui::ValuedComboBox< unsigned long >*      pArmy2ComboBox_;
-    gui::ValuedComboBox<ASN1T_EnumDiplomatie>* pDiplomacyComboBox_;
+    gui::ValuedComboBox< const kernel::Team_ABC* >* pArmy1ComboBox_;
+    gui::ValuedComboBox< const kernel::Team_ABC* >* pArmy2ComboBox_;
+    gui::ValuedComboBox< ASN1T_EnumDiplomatie >*    pDiplomacyComboBox_;
     //@}
 };
 
