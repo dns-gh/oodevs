@@ -78,6 +78,8 @@
 #include "clients_gui/SymbolIcons.h"
 
 //#include "clients_gui/NatureEditionWidget.h"
+#include "graphics/FixedLighting.h"
+
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -110,7 +112,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( astec ) );
     SetWindowTitle( false );
 
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *new FixedLighting() ); // $$$$ AGE 2007-01-03: 
     new Dialogs( this, controllers );
 
     glProxy_ = new GlProxy();

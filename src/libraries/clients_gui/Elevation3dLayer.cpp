@@ -127,7 +127,6 @@ namespace
     "{"
     "   vec4 color    = texture2D(tex0,gl_TexCoord[0].st);"
     "   vec3 normal   = 2.0 * ( texture2D(tex1,gl_TexCoord[1].st).xyz - vec3( 0.5, 0.5, 0.5 ) );"
-//    "   normal        = gl_NormalMatrix * normal;"
     "   normal        = normalize( gl_NormalMatrix * normal );"
     "   vec3 lightDir = normalize( vec3( gl_LightSource[0].position ) );"
     "   float diffuse = max( dot(normal, lightDir), 0.0 );"
