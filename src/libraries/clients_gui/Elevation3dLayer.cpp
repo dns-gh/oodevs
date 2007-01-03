@@ -162,7 +162,14 @@ void Elevation3dLayer::CreateShaders()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::CreateTextures()
 {
-    textures_.reset( new MultiTextureLayer() );
-    textures_->AddTextures( 0, graphicsDirectory_ + "/usrp.texture" );
-    textures_->AddTextures( 1, graphicsDirectory_ + "/normals.texture" );
+    try
+    {
+        textures_.reset( new MultiTextureLayer() );
+        textures_->AddTextures( 0, graphicsDirectory_ + "/usrp.texture" );
+        textures_->AddTextures( 1, graphicsDirectory_ + "/normals.texture" );
+    }
+    catch( ... )
+    {
+         // $$$$ AGE 2007-01-03: 
+    }
 }
