@@ -34,11 +34,13 @@ LightingPanel::LightingPanel( QWidget* parent, FixedLighting& lighting )
     new QLabel( tr( "Source position" ), lightBox );
     DirectionWidget* direction = new DirectionWidget( lightBox );
     new QLabel( tr( "Ambient color" ), lightBox );
-    ambient_ = new ColorButton( lightBox );
+    ColorButton* ambient = new ColorButton( lightBox );
     new QLabel( tr( "Diffuse color" ), lightBox );
-    diffuse_ = new ColorButton( lightBox );
+    ColorButton* diffuse = new ColorButton( lightBox );
 
     connect( direction, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
+    connect( ambient, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
+    connect( diffuse, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
 }
     
@@ -57,11 +59,7 @@ LightingPanel::~LightingPanel()
 // -----------------------------------------------------------------------------
 void LightingPanel::Commit()
 {
-    QColor color = ambient_->GetColor();
-    lighting_.SetAmbient( color.red(), color.green(), color.blue() );
-    color = diffuse_->GetColor();
-    lighting_.SetDiffuse( color.red(), color.green(), color.blue() );
-    lighting_.Set();
+     // $$$$ SBO 2007-01-03: TODO !
 }
 
 // -----------------------------------------------------------------------------
@@ -80,5 +78,22 @@ void LightingPanel::Reset()
 void LightingPanel::DirectionChanged( const geometry::Vector3f& direction )
 {
     lighting_.SetLightDirection( direction );
-    lighting_.Set();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingPanel::AmbientChanged
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+void LightingPanel::AmbientChanged( const QColor& color )
+{
+    lighting_.SetAmbient( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingPanel::DiffuseChanged
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+void LightingPanel::DiffuseChanged( const QColor& color )
+{
+    lighting_.SetDiffuse( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f );
 }

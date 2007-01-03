@@ -46,6 +46,8 @@ private slots:
     //! @name Slots
     //@{
     void DirectionChanged( const geometry::Vector3f& direction );
+    void AmbientChanged( const QColor& color );
+    void DiffuseChanged( const QColor& color );
     //@}
 
 private:
@@ -60,9 +62,6 @@ private:
     //@{
     FixedLighting& lighting_;
     QButtonGroup* lightingType_;
-    DirectionWidget* direction_;
-    ColorButton* ambient_;
-    ColorButton* diffuse_;
     //@}
 };
 
