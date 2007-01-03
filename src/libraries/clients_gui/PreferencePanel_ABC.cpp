@@ -3,60 +3,67 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "GraphicsPanel.h"
-#include "GraphicPreferences.h"
+#include "PreferencePanel_ABC.h"
 
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: GraphicsPanel constructor
-// Created: SBO 2006-04-04
+// Name: PreferencePanel_ABC constructor
+// Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-GraphicsPanel::GraphicsPanel( QWidget* parent )
-    : PreferencePanel_ABC( parent )
-    , preferences_( *new GraphicPreferences() )
-    , parent_( parent )
+PreferencePanel_ABC::PreferencePanel_ABC( QWidget* parent )
+    : QScrollView( parent )
+    , pBox_( new QVBox( viewport() ) )
 {
-    preferences_.Display( this );
+    setHScrollBarMode( QScrollView::AlwaysOff );
+    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+    setResizePolicy( AutoOneFit );
+    setFrameStyle( QFrame::Box | QFrame::Sunken );
+
+    addChild( pBox_ );
+    pBox_->setMargin( 5 );
+    pBox_->setSpacing( 5 );
 }
     
 // -----------------------------------------------------------------------------
-// Name: GraphicsPanel destructor
-// Created: SBO 2006-04-04
-// -----------------------------------------------------------------------------
-GraphicsPanel::~GraphicsPanel()
-{
-    delete &preferences_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicsPanel::GetPreferences
-// Created: AGE 2006-04-05
-// -----------------------------------------------------------------------------
-GraphicPreferences& GraphicsPanel::GetPreferences()
-{
-    return preferences_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: GraphicsPanel::Commit
+// Name: PreferencePanel_ABC destructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-void GraphicsPanel::Commit()
+PreferencePanel_ABC::~PreferencePanel_ABC()
 {
-    preferences_.Commit();
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencePanel_ABC::insertChild
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+void PreferencePanel_ABC::insertChild( QObject* pObj )
+{
+    pBox_->insertChild( pObj );
 }
     
 // -----------------------------------------------------------------------------
-// Name: GraphicsPanel::Reset
+// Name: PreferencePanel_ABC::layout
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-void GraphicsPanel::Reset()
+QLayout* PreferencePanel_ABC::layout()
 {
-    preferences_.Revert();
+    if( !pBox_ )
+        return 0;
+    return pBox_->layout();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PreferencePanel_ABC::sizeHint
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+QSize PreferencePanel_ABC::sizeHint() const
+{
+    return minimumSizeHint();
 }

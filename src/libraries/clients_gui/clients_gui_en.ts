@@ -93,21 +93,6 @@
     </message>
 </context>
 <context>
-    <name>GraphicsPanel</name>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>HierarchyListView_ABC</name>
     <message>
         <source>Units</source>
@@ -375,7 +360,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lighting</source>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D/Lighting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

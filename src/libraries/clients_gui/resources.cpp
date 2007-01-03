@@ -87,6 +87,7 @@
 #include "res/lock.xpm"
 #include "res/commandpost.xpm"
 #include "res/cancel.xpm"
+#include "res/option_general.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

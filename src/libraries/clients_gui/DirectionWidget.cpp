@@ -99,5 +99,5 @@ void DirectionWidget::paintEvent( QPaintEvent* )
     paint.drawEllipse( rect() );
     paint.drawLine( rect().center() - QPoint( 2, 0 ), rect().center() + QPoint( 2, 0 ) );
     paint.drawLine( rect().center() - QPoint( 0, 2 ), rect().center() + QPoint( 0, 2 ) );
-    paint.drawEllipse( point_.x(), point_.y(), 3, 3 );
+    paint.drawEllipse( point_.x() - 2, point_.y() - 2, 5, 5 );
 }

@@ -9,10 +9,15 @@
 
 #include "clients_gui_pch.h"
 #include "PreferencesDialog.h"
+#include "moc_PreferencesDialog.cpp"
 #include "OptionsPanel.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
-#include "FixedLightWidget.h"
+#include "PreferencesList.h"
+#include "PreferencePanel_ABC.h"
+#include "Graphics3dPanel.h"
+#include "LightingPanel.h"
+#include "resources.h"
 
 using namespace kernel;
 using namespace gui;
@@ -26,14 +31,52 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     , pGraphicPrefPanel_( 0 )
 {
     setCaption( tr( "Preferences" ) );
-    QVBoxLayout* pMainLayout = new QVBoxLayout( this );
+    QGridLayout* grid = new QGridLayout( this, 3, 2 );
+    grid->setColStretch( 0, 1 );
+    grid->setColStretch( 1, 3 );
+    grid->setRowStretch( 0, 1 );
+    grid->setRowStretch( 1, 5 );
+    grid->setRowStretch( 2, 1 );
 
-    QTabWidget* tabWidget = new QTabWidget( this );
-    tabWidget->addTab( new OptionsPanel( this, controllers ), tr( "General" ) );
+    QHBox* box = new QHBox( this );
+    QLabel* title = new QLabel( tr( "Preferences" ), box );
+    QFont font;
+    font.setBold( true );
+    font.setPointSize( 16 );
+    title->setFont( font );
+    title->setMargin( 10 );
+    title->setBackgroundColor( Qt::white );
+    QLabel* icon = new QLabel( box );
+    icon->setPixmap( MAKE_PIXMAP( option_general ) );
+    icon->setMaximumWidth( 64 );
+    grid->addMultiCellWidget( box, 0, 0, 0, 1 );
+
+    QWidgetStack* pages = new QWidgetStack( this );
+    pages->setMargin( 5 );
+    grid->addWidget( pages, 1, 1 );
+    
+    box = new QHBox( this );
+    box->setMargin( 5 );
+    list_ = new PreferencesList( box, *pages );
+    grid->addWidget( box, 1, 0 );
+
+    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );
     pGraphicPrefPanel_ = new GraphicsPanel( this );
-    tabWidget->addTab( pGraphicPrefPanel_, tr( "Terrain" ) );
-    tabWidget->addTab( new FixedLightWidget( this, lighting ), tr( "Lighting" ) );
-    pMainLayout->addWidget( tabWidget );
+    AddPage( tr( "Terrain" ), *pGraphicPrefPanel_ );
+    AddPage( tr( "3D" ), *new Graphics3dPanel( this ) );
+    AddPage( tr( "3D/Lighting" ), *new LightingPanel( this, lighting ) );
+
+    box = new QHBox( this );
+    box->setMargin( 5 );
+    QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
+    QButton* applyBtn = new QPushButton( tr( "Apply" ), box );
+    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    okBtn->setDefault( true );
+    grid->addWidget( box, 2, 1, Qt::AlignRight );
+
+    connect( okBtn, SIGNAL( clicked() ), SLOT( OnOk() ) );
+    connect( applyBtn, SIGNAL( clicked() ), SLOT( OnApply() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
 
     hide();
 }
@@ -45,6 +88,16 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 PreferencesDialog::~PreferencesDialog()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::AddPage
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page )
+{
+    list_->AddPage( name, &page );
+    pages_.push_back( &page );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,4 +118,35 @@ GraphicPreferences& PreferencesDialog::GetPreferences() const
     if( !pGraphicPrefPanel_ )
         throw std::runtime_error( "Graphic preference panel not initialized" );
     return pGraphicPrefPanel_->GetPreferences();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::OnOk
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+void PreferencesDialog::OnOk()
+{
+    OnApply();
+    hide();
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::OnApply
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+void PreferencesDialog::OnApply()
+{
+    for( IT_Pages it = pages_.begin(); it != pages_.end(); ++it )
+        (*it)->Commit();    
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::OnCancel
+// Created: SBO 2007-01-03
+// -----------------------------------------------------------------------------
+void PreferencesDialog::OnCancel()
+{
+    for( IT_Pages it = pages_.begin(); it != pages_.end(); ++it )
+        (*it)->Reset();
+    hide();
 }

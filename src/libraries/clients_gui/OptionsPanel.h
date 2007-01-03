@@ -12,6 +12,7 @@
 
 #include <qvbox.h>
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "PreferencePanel_ABC.h"
 
 class QCheckBox;
 
@@ -28,7 +29,7 @@ namespace gui
 // =============================================================================
 // Created: APE 2004-07-09
 // =============================================================================
-class OptionsPanel : public QVBox
+class OptionsPanel : public PreferencePanel_ABC
                    , public kernel::Observer_ABC
                    , public kernel::OptionsObserver_ABC
 {

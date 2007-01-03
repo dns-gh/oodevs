@@ -23,13 +23,10 @@ using namespace gui;
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
 OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
-    : QVBox       ( pParent )
+    : PreferencePanel_ABC( pParent )
     , controllers_( controllers )
     , options_    ( controllers_.options_ )
 {
-    setMargin( 5 );
-    setSpacing( 5 );
-
     // Display panel
     QWidget* pDisplayPanel = new QWidget( this );
     QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 9, 2, 5 );

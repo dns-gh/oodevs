@@ -10,6 +10,8 @@
 #ifndef __GraphicsPanel_h_
 #define __GraphicsPanel_h_
 
+#include "PreferencePanel_ABC.h"
+
 namespace gui
 {
     class GraphicPreferences;
@@ -20,10 +22,8 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicsPanel : public QVBox
+class GraphicsPanel : public PreferencePanel_ABC
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -31,14 +31,11 @@ public:
     virtual ~GraphicsPanel();
     //@}
 
-    GraphicPreferences& GetPreferences(); // $$$$ AGE 2006-04-05: 
-
-private slots:
-    //! @name Slots
+    //! @name Operations
     //@{
-    void OnOk();
-    void OnApply();
-    void OnCancel();
+    GraphicPreferences& GetPreferences(); // $$$$ AGE 2006-04-05: 
+    virtual void Commit();
+    virtual void Reset();
     //@}
 
 private:
