@@ -86,10 +86,12 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
         CreateShaders();
     if( ! textures_.get() && !graphicsDirectory_.empty() )
         CreateTextures();
-    
 
     if( !textures_.get() )
         return;
+
+    lighting_.Set();
+
     if( program_.get() )
     {
         program_->Use();
@@ -99,20 +101,21 @@ void Elevation3dLayer::Paint( const ViewFrustum& frustum )
     
     glPushAttrib( GL_CURRENT_BIT | GL_TEXTURE_BIT );
     glPushMatrix(); 
-        lighting_.Set();
         glScalef( 1.f, 1.f, zRatio_ );
         glColor3f( 1, 1, 1 );
         Visitor3d visitor( elevation_.GetMap(), frustum, frustum != lastFrustum_ );
         textures_->Accept( visitor );
     glPopMatrix();
     glPopAttrib();
-    lastFrustum_ = frustum;
+
     if( program_.get() )
         program_->Unuse();
     glDisable( GL_LIGHTING );
     gl::glActiveTexture( gl::GL_TEXTURE0 );
     glDisable( GL_TEXTURE_2D );
     gl::glActiveTexture( gl::GL_TEXTURE1 );
+
+    lastFrustum_ = frustum;
 }
 
 namespace
@@ -123,7 +126,8 @@ namespace
     "void main()"
     "{"
     "   vec4 color    = texture2D(tex0,gl_TexCoord[0].st);"
-    "   vec3 normal   = 2.0 * texture2D(tex1,gl_TexCoord[1].st).xyz - vec3( 0.5, 0.5, 0.5 );"
+    "   vec3 normal   = 2.0 * ( texture2D(tex1,gl_TexCoord[1].st).xyz - vec3( 0.5, 0.5, 0.5 ) );"
+//    "   normal        = gl_NormalMatrix * normal;"
     "   normal        = normalize( gl_NormalMatrix * normal );"
     "   vec3 lightDir = normalize( vec3( gl_LightSource[0].position ) );"
     "   float diffuse = max( dot(normal, lightDir), 0.0 );"

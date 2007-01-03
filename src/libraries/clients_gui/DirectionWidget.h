@@ -7,60 +7,63 @@
 //
 // *****************************************************************************
 
-#ifndef __Lighting_h_
-#define __Lighting_h_
-
-#include "graphics/Lighting_ABC.h"
-class FixedLighting;
+#ifndef __DirectionWidget_h_
+#define __DirectionWidget_h_
 
 namespace gui
 {
 
 // =============================================================================
-/** @class  Lighting
-    @brief  Lighting
+/** @class  DirectionWidget
+    @brief  DirectionWidget
 */
 // Created: AGE 2007-01-02
 // =============================================================================
-class Lighting : public Lighting_ABC
+class DirectionWidget : public QFrame
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Lighting();
-    virtual ~Lighting();
+    explicit DirectionWidget( QWidget* parent );
+    virtual ~DirectionWidget();
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void DirectionChanged( const geometry::Vector3f& direction );
+    //@}
+
+protected:
     //! @name Operations
     //@{
-    void SetAmbient( float r, float g, float b );
-    void SetDiffuse( float r, float g, float b );
-    void SetFixedLighting( const geometry::Vector3f& direction );
-
-    virtual void Set();
+    virtual void mousePressEvent( QMouseEvent* e );
+    virtual void mouseMoveEvent( QMouseEvent* e );
+    virtual void paintEvent( QPaintEvent* e );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Lighting( const Lighting& );            //!< Copy constructor
-    Lighting& operator=( const Lighting& ); //!< Assignement operator
+    DirectionWidget( const DirectionWidget& );            //!< Copy constructor
+    DirectionWidget& operator=( const DirectionWidget& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
     //@{
+    void Move( const QPoint& pos );
+    void Move( float theta, float phy );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Lighting_ABC* current_;
-    std::auto_ptr< FixedLighting > fixed_;
-    geometry::Vector3f direction_;
+    QPoint point_;
     //@}
 };
 
 }
 
-#endif // __Lighting_h_
+#endif // __DirectionWidget_h_

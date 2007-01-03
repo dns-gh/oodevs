@@ -12,6 +12,7 @@
 #include "OptionsPanel.h"
 #include "GraphicsPanel.h"
 #include "GraphicPreferences.h"
+#include "FixedLightWidget.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,7 +21,7 @@ using namespace gui;
 // Name: PreferencesDialog constructor
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
-PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers )
+PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, FixedLighting& lighting )
     : QDialog( parent )
     , pGraphicPrefPanel_( 0 )
 {
@@ -31,6 +32,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers 
     tabWidget->addTab( new OptionsPanel( this, controllers ), tr( "General" ) );
     pGraphicPrefPanel_ = new GraphicsPanel( this );
     tabWidget->addTab( pGraphicPrefPanel_, tr( "Terrain" ) );
+    tabWidget->addTab( new FixedLightWidget( this, lighting ), tr( "Lighting" ) );
     pMainLayout->addWidget( tabWidget );
 
     hide();

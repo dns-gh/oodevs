@@ -70,6 +70,7 @@ void ColorButton::SetColor( const QColor& rgb )
     changed_ = true;
     current_ = rgb;
     repaint();
+    emit ColorChanged( rgb );
 }
 
 // -----------------------------------------------------------------------------

@@ -374,6 +374,10 @@
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lighting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RotaPrototype_ABC</name>

@@ -16,7 +16,7 @@ namespace kernel
 {
     class Controllers;
 }
-
+class FixedLighting;
 namespace gui
 {
     class GraphicPreferences;
@@ -34,7 +34,7 @@ class PreferencesDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             PreferencesDialog( QWidget* parent, kernel::Controllers& controllers );
+             PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, FixedLighting& lighting );
     virtual ~PreferencesDialog();
     //@}
 

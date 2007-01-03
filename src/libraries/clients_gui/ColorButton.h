@@ -40,6 +40,12 @@ public:
     void Commit();
     //@}
 
+signals:
+    //! @name Signals
+    //@{
+    void ColorChanged( const QColor& color );
+    //@}
+
 protected:
     //! @name 
     //@{

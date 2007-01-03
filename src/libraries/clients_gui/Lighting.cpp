@@ -20,7 +20,7 @@ using namespace gui;
 Lighting::Lighting()
     : fixed_( new FixedLighting() )
 {
-    fixed_->SetAmbient( 0.5f, 0.5f, 0.5f );
+    fixed_->SetAmbient( 0.2f, 0.2f, 0.2f );
     fixed_->SetDiffuse( 0.8f, 0.8f, 0.8f );
     fixed_->SetLightDirection( geometry::Vector3f( 0.1f, -0.2f, 0.9f ) );
     current_ = fixed_.get();
@@ -59,6 +59,7 @@ void Lighting::SetDiffuse( float r, float g, float b )
 // -----------------------------------------------------------------------------
 void Lighting::SetFixedLighting( const geometry::Vector3f& direction )
 {
+    direction_ = direction;
     fixed_->SetLightDirection( direction );
     current_ = fixed_.get();
 }
@@ -69,5 +70,10 @@ void Lighting::SetFixedLighting( const geometry::Vector3f& direction )
 // -----------------------------------------------------------------------------
 void Lighting::Set()
 {
+    glColor3f( 1, 0, 0 );
+    glBegin( GL_LINES );
+        glVertex3f( 0, 0, 0 );
+        glVertex3f( direction_.X() * 1000, direction_.Y() * 1000, direction_.Z() * 1000 );
+    glEnd();
     current_->Set();
 }

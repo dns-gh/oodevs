@@ -88,7 +88,7 @@
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
-#include "clients_gui/Lighting.h"
+#include "graphics/FixedLighting.h"
 #include "icons.h"
 
 #pragma warning( push )
@@ -127,12 +127,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers );
+    lighting_ = new FixedLighting();
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
     new Dialogs( this, controllers, model_, staticModel, publisher, profile );
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
-    lighting_ = new Lighting();
+    
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
