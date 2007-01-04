@@ -45,6 +45,7 @@ void RasterTextureSet::Accept( TextureVisitor_ABC& visitor, unsigned level, cons
         try 
         {
             TextureSet::Load( graphicsDirectory_ + "/usrp.texture" );
+            loaded_ = true;
         }
         catch( ... )
         {
