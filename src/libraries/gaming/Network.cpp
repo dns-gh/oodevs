@@ -106,9 +106,11 @@ void Network::Run()
 {
     while( ! terminated_ )
     {
+        unsigned events = 1;
         {
             boost::mutex::scoped_lock locker( mutex_ );
-            engine_->Update();
+            while( events > 0 )
+                events = engine_->Update();
             manager_->Flush();
         }
         Thread::Sleep( 10 );

@@ -166,8 +166,9 @@ namespace
 {
     bool TimedOut( clock_t start )
     {
-        const unsigned maxTime = CLOCKS_PER_SEC / 20;
-        return clock() - start > maxTime;
+        return false;
+//        const unsigned maxTime = CLOCKS_PER_SEC / 20;
+//        return clock() - start > maxTime;
     }
 }
 

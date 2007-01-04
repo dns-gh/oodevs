@@ -52,7 +52,7 @@ class Elevation3dLayer : private kernel::WorldParameters
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation3dLayer( kernel::Controller& controller, const kernel::DetectionMap& elevation, TextureSet& raster, Lighting_ABC& lighting );
+             Elevation3dLayer( kernel::Controller& controller, const kernel::DetectionMap& elevation, Lighting_ABC& lighting );
     virtual ~Elevation3dLayer();
     //@}
 
@@ -81,9 +81,9 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::DetectionMap& elevation_;
-    TextureSet& raster_;
     Lighting_ABC& lighting_;
     ViewFrustum lastFrustum_;
+    std::auto_ptr< TextureSet >         usrp_;
     std::auto_ptr< TextureSet >         normals_;
     std::auto_ptr< MultiTextureLayer >  textures_;
     std::auto_ptr< gl::FragmentShader > fragment_;

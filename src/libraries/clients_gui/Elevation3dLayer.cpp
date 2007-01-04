@@ -30,11 +30,10 @@ using namespace gui;
 // Name: Elevation3dLayer constructor
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& elevation, TextureSet& raster, Lighting_ABC& lighting )
+Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& elevation, Lighting_ABC& lighting )
     : controller_( controller )
     , elevation_( elevation )
     , lighting_ ( lighting )
-    , raster_( raster )
     , zRatio_( 5.f )
 {
     controller_.Register( *this );
@@ -166,8 +165,9 @@ void Elevation3dLayer::CreateTextures()
     try
     {
         textures_.reset( new MultiTextureLayer() );
+        usrp_.   reset( new TextureSet( graphicsDirectory_ + "/usrp.texture" ) );
         normals_.reset( new TextureSet( graphicsDirectory_ + "/normals.texture" ) );
-        textures_->SetLayer( 0, raster_ );
+        textures_->SetLayer( 0, *usrp_ );
         textures_->SetLayer( 1, *normals_ );
     }
     catch( ... )

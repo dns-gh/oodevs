@@ -11,6 +11,7 @@
 #define __Elevation2dLayer_h_
 
 #include "Layer_ABC.h"
+#include "clients_kernel/Observer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
 class ElevationLayer;

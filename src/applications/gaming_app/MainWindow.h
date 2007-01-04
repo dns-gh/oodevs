@@ -36,7 +36,6 @@ namespace gui
     class DrawerLayer;
     class ExclusiveEventStrategy;
     class CircularEventStrategy;
-    class RasterTextureSet;
 }
 
 class Spy;
@@ -132,7 +131,6 @@ private:
 
     gui::GlProxy*                glProxy_;
     gui::ColorStrategy*          strategy_;
-    gui::RasterTextureSet*       raster_;
     FixedLighting*               lighting_;
     gui::CircularEventStrategy*  forward_;
     gui::ExclusiveEventStrategy* eventStrategy_;
