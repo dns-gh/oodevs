@@ -88,6 +88,8 @@
 #include "clients_gui/DrawerLayer.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
+#include "clients_gui/RasterLayer.h"
+#include "clients_gui/RasterTextureSet.h"
 #include "graphics/FixedLighting.h"
 #include "icons.h"
 
@@ -265,10 +267,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, gui::AgentsLayer& agents, DrawerLayer& drawer, GraphicSetup_ABC& setup, const Profile_ABC& profile )
 {
+    raster_ = new RasterTextureSet( controllers_.controller_ );
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    Layer_ABC& raster               = *new RasterLayer( *raster_ );
+    Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *raster_, *lighting_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
@@ -283,7 +287,8 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
-    glProxy_->Register( elevation2d );
+//    glProxy_->Register( elevation2d );
+    glProxy_->Register( raster );
     glProxy_->Register( elevation3d );
     glProxy_->Register( terrain );
     glProxy_->Register( grid );

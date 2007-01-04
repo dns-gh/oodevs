@@ -111,7 +111,7 @@ void Network::Run()
             engine_->Update();
             manager_->Flush();
         }
-        Thread::Sleep( 0 );
+        Thread::Sleep( 10 );
     }
 }
 
