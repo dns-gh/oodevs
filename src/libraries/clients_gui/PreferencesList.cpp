@@ -24,7 +24,7 @@ PreferencesList::PreferencesList( QWidget* parent, QWidgetStack& pages )
     setColumnWidthMode( 0, QListView::Maximum );
     header()->hide();
     setRootIsDecorated( true );
-    setSorting( 0, false ); 
+    setSorting( -1 );
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     setFixedSize( 150, 300 );
 }
@@ -54,7 +54,7 @@ void PreferencesList::AddPage( const QString& name, QWidget* widget )
     if( parent )
         item = new QListViewItem( parent );
     else
-        item = new QListViewItem( this );
+        item = new QListViewItem( this, lastItem() );
     item->setText( 0, list.last() );
 }
 
