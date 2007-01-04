@@ -78,11 +78,11 @@ void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& endTick )
     ++ticks_;
     unsigned long received = network_.GetReceivedAmount();
     networkTotalReceived_->setText( ToUSI( received ) + " - " + ToUSI( received / ticks_ ) + "/tick" );
-    networkReceived_->AddValue( received - previousTotalReceived_ );
+    networkReceived_->AddValue( ticks_, received - previousTotalReceived_ );
     previousTotalReceived_ = received;
 
     unsigned long sent = network_.GetSentAmount();
     networkTotalSent_->setText( ToUSI( sent ) + " - " + ToUSI( sent / ticks_ ) + "/tick" );
-    networkSent_->AddValue( sent - previousTotalSent_ );
+    networkSent_->AddValue( ticks_, sent - previousTotalSent_ );
     previousTotalSent_ = sent;
 }

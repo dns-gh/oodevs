@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Network.h"
-#include "Net_Def.h"
 #include "clients_kernel/Types.h"
 #include "AgentServerMsgMgr.h"
 #include "ASN_Messages.h"
@@ -30,22 +29,18 @@ using namespace kernel;
 // Created: AGE 2006-02-08
 // -----------------------------------------------------------------------------
 Network::Network( kernel::Controllers& controllers, Simulation& simu, Profile& profile )
-    : simu_( simu )
-    , profile_( profile )
-    , engine_( new DIN::DIN_Engine() )
-    , manager_( new AgentServerMsgMgr( controllers, *engine_, simu, profile, mutex_ ) )
-    , session_( 0 )
+    : simu_      ( simu )
+    , profile_   ( profile )
+    , engine_    ( new DIN::DIN_Engine() )
+    , manager_   ( new AgentServerMsgMgr( controllers, *engine_, simu, profile, mutex_ ) )
+    , session_   ( 0 )
     , terminated_( false )
 {
-    DIN_ConnectionProtocols connProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 );
-
-    DIN_ConnectorGuest connector( eConnector_SIM_MOS );
-
     pConnService_ = new DIN_ConnectionServiceClientUserCbk< Network >( 
                                       *this
                                     , *engine_
-                                    , connector
-                                    , connProtocols
+                                    , DIN_ConnectorGuest()
+                                    , DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 )
                                     , eConnMagicMOSServerAgentServer
                                     , "MOS Server to agent server"); 
 

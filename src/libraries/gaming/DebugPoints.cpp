@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "DebugPoints.h"
-#include "Net_Def.h"
 #include "clients_kernel/GlTools_ABC.h"
 
 using namespace kernel;

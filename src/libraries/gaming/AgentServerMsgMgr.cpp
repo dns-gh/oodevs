@@ -12,7 +12,6 @@
 #include "Lima.h"
 #include "Limit.h"
 #include "ASN_Messages.h"
-#include "Net_Def.h"
 #include "Tools.h"
 #include "MsgRecorder.h"
 #include "LogMaintenanceConsign.h"
@@ -48,8 +47,6 @@ using namespace DIN;
 using namespace log_tools;
 using namespace kernel;
 
-//! @name DIN Messages
-//@{
 //! @name DIN Messages
 //@{
 static enum  
@@ -93,8 +90,7 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     , needsVisionCones_( false )
     , needsVisionSurfaces_( false )
 {
-    const DIN_ConnectorGuest theConnector( (DIN::DIN_Connector_ABC::DIN_ConnectionID)( eConnector_SIM_MOS ) );
-    pMessageService_ = new DIN_MessageServiceUserCbk<AgentServerMsgMgr>( *this, engine, theConnector, "Msgs MOS Server -> Agent_ABC Server" );
+    pMessageService_ = new DIN_MessageServiceUserCbk< AgentServerMsgMgr >( *this, engine, DIN_ConnectorGuest(), "Msgs MOS Server -> Agent_ABC Server" );
 
     pMessageService_->RegisterReceivedMessage( eMsgInit                                  , *this, & AgentServerMsgMgr::OnReceiveMsgInit                );
     pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & AgentServerMsgMgr::OnReceiveMsgProfilingValues     );

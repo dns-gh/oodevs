@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 #include "Object.h"
 
-#include "Net_Def.h"
 #include "Tools.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Displayer_ABC.h"

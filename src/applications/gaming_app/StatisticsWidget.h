@@ -10,13 +10,17 @@
 #ifndef __StatisticsWidget_h_
 #define __StatisticsWidget_h_
 
+#include "GQ_Plot.h"
+
+class GQ_PlotData;
+
 // =============================================================================
 /** @class  StatisticsWidget
     @brief  StatisticsWidget
 */
 // Created: SBO 2007-01-04
 // =============================================================================
-class StatisticsWidget : public QListView
+class StatisticsWidget : public GQ_Plot
 {
 
 public:
@@ -28,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddValue( unsigned long value );
+    void AddValue( unsigned int tick, unsigned long value );
     //@}
 
 private:
@@ -36,6 +40,19 @@ private:
     //@{
     StatisticsWidget( const StatisticsWidget& );            //!< Copy constructor
     StatisticsWidget& operator=( const StatisticsWidget& ); //!< Assignement operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< unsigned long > T_Values;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    GQ_PlotData* data_;
+    unsigned long yMax_;
+    T_Values lastValues_;
     //@}
 };
 

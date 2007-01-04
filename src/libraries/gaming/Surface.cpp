@@ -10,7 +10,6 @@
 #include "gaming_pch.h"
 
 #include "Surface.h"
-#include "Net_Def.h"
 #include "clients_kernel/SensorType.h"
 #include "clients_kernel/DetectionMap.h"
 #include "VisionLine.h"
