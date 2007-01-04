@@ -17,6 +17,7 @@
 #include "Profile.h"
 
 #include "DIN/DIN_Engine.h"
+#include "DIN/DIN_Statistics.h"
 #include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
 #include "Tools.h"
 
@@ -207,4 +208,28 @@ void Network::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescrip
     messages_.back().link_ = 0;
     messages_.back().address_ = link.GetRemoteAddress().GetAddressAsString();
     messages_.back().error_ = reason.GetInfo();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Network::GetReceivedAmount
+// Created: SBO 2007-01-04
+// -----------------------------------------------------------------------------
+unsigned long Network::GetReceivedAmount() const
+{
+    if( !engine_ )
+        return 0;
+    const DIN::DIN_Statistics& stats = engine_->GetStatistics();
+    return stats.GetReceivedBytes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Network::GetSentAmount
+// Created: SBO 2007-01-04
+// -----------------------------------------------------------------------------
+unsigned long Network::GetSentAmount() const
+{
+    if( !engine_ )
+        return 0;
+    const DIN::DIN_Statistics& stats = engine_->GetStatistics();
+    return stats.GetSentBytes();
 }

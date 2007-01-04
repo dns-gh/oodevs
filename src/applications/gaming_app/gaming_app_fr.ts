@@ -1067,6 +1067,10 @@
         <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Profiling</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapToolbar</name>

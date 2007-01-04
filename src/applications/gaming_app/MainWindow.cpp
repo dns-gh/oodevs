@@ -39,6 +39,7 @@
 #include "TacticalList.h"
 #include "XPSPlayer.h"
 #include "ProfileFilterToolbar.h"
+#include "ProfilingPanel.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -211,6 +212,16 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pLogDockWnd_->setCaption( tr( "Log" ) );
     setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
     connect( pLogPanel_, SIGNAL( Error() ), pLogDockWnd_, SLOT( show() ) );
+
+    // Profiler
+    QDockWindow* pProfilerDockWnd_ = new QDockWindow( this );
+    moveDockWindow( pProfilerDockWnd_, Qt::DockRight );
+    ProfilingPanel* profilingPanel_ = new ProfilingPanel( pProfilerDockWnd_, controllers_, network_ );
+    pProfilerDockWnd_->setWidget( profilingPanel_ );
+    pProfilerDockWnd_->setResizeEnabled( true );
+    pProfilerDockWnd_->setCloseMode( QDockWindow::Always );
+    pProfilerDockWnd_->setCaption( tr( "Profiling" ) );
+    setDockEnabled( pProfilerDockWnd_, Qt::DockTop, false );
 
     // object creation window
     QDockWindow* pObjectCreationWnd = new QDockWindow( this );
