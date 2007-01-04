@@ -24,6 +24,10 @@ LightingPanel::LightingPanel( QWidget* parent, FixedLighting& lighting )
     : PreferencePanel_ABC( parent )
     , lighting_( lighting )
 {
+    lighting_.SetAmbient( 0.2f, 0.2f, 0.2f );
+    lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
+    lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
+
     lightingType_ = new QButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
     lightingType_->insert( new QRadioButton( tr( "Fixed" ), lightingType_ ) );
     lightingType_->insert( new QRadioButton( tr( "Simulation time" ), lightingType_ ) );
@@ -34,9 +38,9 @@ LightingPanel::LightingPanel( QWidget* parent, FixedLighting& lighting )
     new QLabel( tr( "Source position" ), lightBox );
     DirectionWidget* direction = new DirectionWidget( lightBox );
     new QLabel( tr( "Ambient color" ), lightBox );
-    ColorButton* ambient = new ColorButton( lightBox );
+    ColorButton* ambient = new ColorButton( lightBox, "", QColor( 50, 50, 50 ) );
     new QLabel( tr( "Diffuse color" ), lightBox );
-    ColorButton* diffuse = new ColorButton( lightBox );
+    ColorButton* diffuse = new ColorButton( lightBox, "", QColor( 200, 200, 200 ) );
 
     connect( direction, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
     connect( ambient, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
