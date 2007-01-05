@@ -23,20 +23,21 @@ StatisticsWidget::StatisticsWidget( QWidget* parent )
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
     YAxis().SetAxisRange( 0, 1, true );
-    YAxis().ShowTicks( 1 );
+    YAxis().ShowTicks( 10 );
     YAxis().ShowTicksValue( true );
     YAxis().SetAxisCaption( tr( "Rate (B)" ).ascii() );
     YAxis().SetCaptionMargin( 8 );
 
     XAxis().ShowAxis( true );
     XAxis().ShowGrid( true );
-    XAxis().SetAxisRange( 0, 10, false );
+    XAxis().SetAxisRange( 0, 1, false );
     XAxis().ShowTicks( 1 );
-    XAxis().ShowTicksValue( false );
+    XAxis().ShowTicksValue( true );
     XAxis().SetAxisCaption( tr( "Time (Tick)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
     setMinimumHeight( 100 );
+    setMinimumWidth( 150 );
     RegisterPlotData( *data_ );
 }
 
@@ -56,13 +57,13 @@ StatisticsWidget::~StatisticsWidget()
 void StatisticsWidget::AddValue( unsigned int tick, unsigned long value )
 {
     lastValues_.push_back( value );
-    if( lastValues_.size() > 10 )
+    if( lastValues_.size() > 100 )
         lastValues_.erase( lastValues_.begin() );
 
     T_Values::iterator itMax = std::max_element( lastValues_.begin(), lastValues_.end() );
     if( itMax != lastValues_.end() )
         YAxis().SetAxisRange( 0, *itMax, true );
     data_->AddPoint( tick, value );
-    data_->SetDataRange( std::max( 0, (int)tick - 10 ) );
+    data_->SetDataRange( std::max( 0, (int)tick - 100 ) );
 }
 
