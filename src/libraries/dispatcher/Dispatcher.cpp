@@ -113,8 +113,6 @@ void Dispatcher::DispatchToSimulation( unsigned int nMsgID, const DIN::DIN_Input
     pSimulationNetworker_->Dispatch( nMsgID, dinMsg );   
 }
 
-// ----
-
 // -----------------------------------------------------------------------------
 // Name: Dispatcher::DispatchToClients
 // Created: NLD 2006-09-21

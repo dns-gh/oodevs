@@ -135,3 +135,21 @@ void ValueContainer< const Entity_ABC* >::Activate( kernel::ActionController& ac
     if( value_ )
         value_->Activate( actions );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::SetToolTip
+// Created: SBO 2007-01-05
+// -----------------------------------------------------------------------------
+void ValuedListItem::SetToolTip( const QString& text )
+{
+    toolTip_ = text;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::GetToolTip
+// Created: SBO 2007-01-08
+// -----------------------------------------------------------------------------
+QString ValuedListItem::GetToolTip() const
+{
+    return toolTip_;
+}

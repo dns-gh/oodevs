@@ -62,8 +62,10 @@ public:
     void Set( const T& value, QString label1 = QString::null, QString label2 = QString::null );
     template< typename T >
     void SetNamed( const T& value );
+    void SetToolTip( const QString& text );
 
     int rtti() const;
+    QString GetToolTip() const;
 
     void Select( kernel::ActionController& actions );
     void ContextMenu( kernel::ActionController& actions, const QPoint& where );
@@ -81,6 +83,7 @@ protected:
     //! @name Member data
     //@{
     ValueContainer_ABC* container_;
+    QString toolTip_;
     //@}
 };
 

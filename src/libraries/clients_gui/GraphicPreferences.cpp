@@ -107,13 +107,20 @@ void GraphicPreferences::Commit()
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Save() const
 {
-    xml::xofstream xos( "preferences.xml" ); // $$$$ AGE 2006-04-05: 
-    xos << start( "preferences" )
-            << start( "terrains" );
-    for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
-        Save( xos, **it );
-    xos     << end()
-        << end();
+    try
+    {
+        xml::xofstream xos( "preferences.xml" ); // $$$$ AGE 2006-04-05: 
+        xos << start( "preferences" )
+                << start( "terrains" );
+        for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
+            Save( xos, **it );
+        xos     << end()
+            << end();
+    }
+    catch( ... )
+    {
+        // $$$$ SBO 2007-01-05: 
+    }
 }
 
 // -----------------------------------------------------------------------------

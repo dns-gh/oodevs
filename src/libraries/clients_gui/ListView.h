@@ -16,7 +16,6 @@
 
 namespace gui
 {
-
 // =============================================================================
 /** @class  ListView
     @brief  ListView
@@ -34,10 +33,8 @@ public:
                  : QListView( parent )
                  , list_( list )
                  , factory_( factory )
-                 , toSkip_( 0 )
-             {};
-    virtual ~ListView()
-        {};
+                 , toSkip_( 0 ) {}
+    virtual ~ListView() {}
     //@}
 
     //! @name Operations

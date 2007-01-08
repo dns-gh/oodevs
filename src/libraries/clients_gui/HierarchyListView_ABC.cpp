@@ -22,6 +22,7 @@
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 #include "SymbolIcons.h"
+#include "ListItemToolTip.h"
 
 using namespace kernel;
 using namespace gui;
@@ -40,8 +41,10 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     , icons_      ( icons )
     , selected_   ( controllers_ )
 {
+//    setShowToolTips( false );
+    new ListItemToolTip( viewport(), *this );
+
     timer_ = new QTimer( this );
-    
 
     setMinimumSize( 1, 1 );
     addColumn( tr( "Units" ) );
@@ -122,6 +125,7 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     item->SetNamed( entity );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
+    item->SetToolTip( QString( "%1 [%2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
     
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
