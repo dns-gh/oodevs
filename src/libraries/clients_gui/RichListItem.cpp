@@ -337,7 +337,6 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
     listView()->triggerUpdate();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RichListItem::CreateRichText
 // Created: AGE 2006-03-06

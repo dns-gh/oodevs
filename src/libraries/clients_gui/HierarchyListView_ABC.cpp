@@ -41,7 +41,6 @@ HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& con
     , icons_      ( icons )
     , selected_   ( controllers_ )
 {
-//    setShowToolTips( false );
     new ListItemToolTip( viewport(), *this );
 
     timer_ = new QTimer( this );
@@ -155,6 +154,7 @@ void HierarchyListView_ABC::DisplayIcon( const kernel::TacticalHierarchies* hier
             timer_->start( 500, true );
     }
     item->setPixmap( 0, pixmap );
+    item->invalidateHeight();
 }
 
 // -----------------------------------------------------------------------------
