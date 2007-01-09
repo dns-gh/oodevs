@@ -13,6 +13,11 @@
 #include "AsnTypes.h"
 #include "ModelsContainer.h"
 
+namespace DIN
+{
+    class DIN_Input;
+}
+
 namespace dispatcher
 {
 class Dispatcher;

@@ -11,6 +11,12 @@
 #define __AsnMessageEncoder_h_
 
 #include "AsnTypes.h"
+#include "DIN/MessageService/DIN_BufferedMessage.h"
+
+namespace DIN
+{
+    class DIN_MessageService_ABC;
+}
 
 namespace dispatcher 
 {

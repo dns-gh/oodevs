@@ -64,56 +64,56 @@
     ============================================================================
     -->
     <target name="libraries" description="build all libraries"
-            depends="library.MT_Tools_Scipio,library.ENT,library.ASN,library.simulation_terrain,library.simulation_kernel,
+            depends="library.MT_Tools,library.ENT,library.ASN,library.simulation_terrain,library.simulation_kernel,
                      library.clients_kernel,library.clients_gui"/>
 
-    <target name="library.MT_Tools_Scipio" description="build MT_Tools_Scipio static library">
-        <build-lib name="MT_Tools_Scipio" input="MT_Tools" pch="MT_Tools_pch"/>
+    <target name="library.MT_Tools" description="build MT_Tools static library">
+        <build-lib name="MT_Tools" pattern="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.ASN" description="build ASN static library">
-        <build-lib name="ASN" warnings="production">
+        <build-lib name="ASN" pattern="lib${ant.project.name}_ASN-${platform}-mt@{suffix}" suffix="-gd" warnings="production">
             <includepath path="${include.dir}/asn"/>
         </build-lib>
     </target>
 
     <target name="library.ENT" description="build ENT static library">
-        <build-lib name="ENT" depends="qt"/>
+        <build-lib name="ENT" depends="qt" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools_Scipio,library.ASN">
-        <build-lib name="dispatcher">
+    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.ASN">
+        <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
 
-    <target name="library.simulation_terrain" description="build simulation_terrain static library" depends="library.MT_Tools_Scipio">
-        <build-lib name="simulation_terrain"/>
+    <target name="library.simulation_terrain" description="build simulation_terrain static library" depends="library.MT_Tools">
+        <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.ASN,library.simulation_terrain">
-        <build-lib name="simulation_kernel">
+        <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
         </build-lib>
     </target>
 
     <target name="library.clients_kernel" description="build clients_kernel static library" depends="library.ENT">
-        <build-lib name="clients_kernel" depends="qt"/>
+        <build-lib name="clients_kernel" depends="qt" pattern="lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.clients_gui" description="build clients_gui static library" depends="library.clients_kernel">
-        <build-lib name="clients_gui" excludes="**/font/*" depends="qt"/>
+        <build-lib name="clients_gui" excludes="**/font/*" depends="qt" pattern="lib${ant.project.name}_clients_gui-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.gaming" description="build gaming static library" depends="library.ASN,library.clients_gui">
-        <build-lib name="gaming" depends="qt">
+        <build-lib name="gaming" depends="qt" pattern="lib${ant.project.name}_gaming-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
 
     <target name="library.preparation" description="build gaming static library" depends="library.clients_gui">
-        <build-lib name="preparation" depends="qt"/>
+        <build-lib name="preparation" depends="qt" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <!--
@@ -132,9 +132,10 @@
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
-                   libs="masalloc,paranoia,xeumeuleu,tools,xeumeuleu
-                         MT_Tools_Scipio,ASN,asn1per
-                         dispatcher">
+                   libs="masalloc,paranoia,xeumeuleu,tools,xeumeuleu,asn1per
+                         lib${ant.project.name}_MT_Tools-${platform}-mt
+                         lib${ant.project.name}_ASN-${platform}-mt
+                         lib${ant.project.name}_dispatcher-${platform}-mt">
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${include.dir}/ASN"/>
@@ -143,9 +144,12 @@
 
     <target name="application.simulation_app" description="build CSword Simulation executable" depends="library.dispatcher">
         <build-app name="simulation_app" subsystem="console" depends="mt,din,dia3,terrain,boost"
-                   libs="HLA,libFedTime,masalloc,paranoia,tools,xeumeuleu
-                         MT_Tools_Scipio,ASN,asn1per,
-                         simulation_terrain,simulation_kernel,dispatcher">
+                   libs="HLA,libFedTime,masalloc,paranoia,tools,xeumeuleu,asn1per
+                         lib${ant.project.name}_MT_Tools-${platform}-mt
+                         lib${ant.project.name}_ASN-${platform}-mt
+                         lib${ant.project.name}_simulation_terrain-${platform}-mt
+                         lib${ant.project.name}_simulation_kernel-${platform}-mt
+                         lib${ant.project.name}_dispatcher-${platform}-mt" >
             <syslibset libs="dbghelp,psapi"/>
             <syslibset libs="iphlpapi"/> <!-- paranoia -->
             <includepath path="${libraries.dir}/simulation_kernel"/>
@@ -156,10 +160,10 @@
         </build-app>
     </target>
 
-    <target name="application.simulation_tester" description="build CSword Simulation Tester executable" depends="library.ASN,library.MT_Tools_Scipio">
+    <target name="application.simulation_tester" description="build CSword Simulation Tester executable" depends="library.ASN,library.MT_Tools">
         <!-- TMP
         <build-app name="simulation_tester" subsystem="console" depends="mt,din,terrain"
-                   libs="MT_Tools_SCIPIO,ASN,asn1per"
+                   libs="MT_Tools,ASN,asn1per"
                    excludes="**/Actions/Missions/Pawn/*.cpp,**/Actions/Missions/Automat/*.cpp,**/Actions/Missions/Population/*.cpp">
             <includepath path="${applications.dir}/simulation_tester"/>
             <includepath path="${include.dir}/ASN"/>
@@ -167,14 +171,22 @@
     </target>
 
     <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
-        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu,boost" excludes="**/XmlResources.cpp" libs="ENT,clients_gui,clients_kernel" pch-excludes="qtundo.cpp">
+        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu,boost" excludes="**/XmlResources.cpp" 
+                   libs="lib${ant.project.name}_ENT-${platform}-mt
+                         lib${ant.project.name}_clients_gui-${platform}-mt
+                         lib${ant.project.name}_clients_kernel-${platform}-mt" pch-excludes="qtundo.cpp">
             <syslibset libs="advapi32,user32"/>
         </build-app>
     </target>
 
     <target name="application.gaming_app" description="build CSword Gaming executable" depends="library.gaming">
         <build-app name="gaming_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="ASN,ENT,gaming,clients_gui,clients_kernel,asn1per,svgl,zipstream,zlib">
+                   libs="asn1per,svgl,zipstream,zlib
+                         lib${ant.project.name}_ASN-${platform}-mt
+                         lib${ant.project.name}_ENT-${platform}-mt
+                         lib${ant.project.name}_gaming-${platform}-mt
+                         lib${ant.project.name}_clients_gui-${platform}-mt
+                         lib${ant.project.name}_clients_kernel-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
@@ -182,7 +194,11 @@
 
     <target name="application.preparation_app" description="build CSword Gaming executable" depends="library.preparation">
         <build-app name="preparation_app" excludes="**/**_Gen.*,**/splashscreen.cpp" depends="mt,din,terrain,xeumeuleu,qt,boost"
-                   libs="ENT,preparation,clients_gui,clients_kernel,svgl,zipstream,zlib">
+                   libs="svgl,zipstream,zlib
+                         lib${ant.project.name}_ENT-${platform}-mt
+                         lib${ant.project.name}_preparation-${platform}-mt
+                         lib${ant.project.name}_clients_gui-${platform}-mt
+                         lib${ant.project.name}_clients_kernel-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
     </target>
@@ -193,8 +209,8 @@
         </build-app>
     </target>
 
-    <target name="application.ScriptCompiler" description="build CSword ScriptCompiler executable" depends="library.MT_Tools_Scipio">
-        <build-app name="ScriptCompiler" subsystem="console" depends="mt,dia3" libs="MT_Tools_Scipio"/>
+    <target name="application.ScriptCompiler" description="build CSword ScriptCompiler executable" depends="library.MT_Tools">
+        <build-app name="ScriptCompiler" subsystem="console" depends="mt,dia3" libs="lib${ant.project.name}_MT_Tools-${platform}-mt"/>
     </target>
 
     <!--
@@ -203,7 +219,7 @@
     ============================================================================
     -->
     <target name="clean" description="clean intermediate build artifacts">
-        <clean name="MT_Tools_Scipio"/>
+        <clean name="MT_Tools"/>
         <clean name="ASN"/>
         <clean name="ENT"/>
         <clean name="simulation_terrain"/>

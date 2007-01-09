@@ -11,11 +11,20 @@
 #define __Client_h_
 
 #include "AsnTypes.h"
+#include "DIN/DIN_UserData_ABC.h"
+#include "DIN/DIN_Link.h"
+
+namespace DIN
+{
+    class DIN_MessageService_ABC;
+    class DIN_BufferedMessage;
+    class DIN_Input;
+}
 
 namespace dispatcher
 {
-class Profile;
-class Dispatcher;
+    class Profile;
+    class Dispatcher;
 
 // =============================================================================
 /** @class  Client
@@ -28,7 +37,7 @@ class Client : public DIN::DIN_UserData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    Client( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Client( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
     virtual ~Client();
     //@}
 

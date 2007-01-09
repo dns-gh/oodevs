@@ -11,11 +11,19 @@
 #define __Simulation_h_
 
 #include "AsnTypes.h"
+#include "DIN/DIN_UserData_ABC.h"
+#include "DIN/DIN_Link.h"
+
+namespace DIN
+{
+    class DIN_MessageService_ABC;
+    class DIN_Input;
+    class DIN_BufferedMessage;
+}
 
 namespace dispatcher
 {
-
-class Dispatcher;
+    class Dispatcher;
 
 // =============================================================================
 /** @class  Simulation
@@ -28,7 +36,7 @@ class Simulation : public DIN::DIN_UserData_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Simulation( Dispatcher& dispatcher, DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
     virtual ~Simulation();
     //@}
 

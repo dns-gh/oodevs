@@ -19,6 +19,7 @@
 #include "Network_Def.h"
 #include "ClientPublisher.h"
 #include "AsnMessageEncoder.h"
+#include "DIN/MessageService/DIN_MessageService_ABC.h"
 
 using namespace dispatcher;
 using namespace DIN;

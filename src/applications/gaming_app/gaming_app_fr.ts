@@ -743,15 +743,15 @@
 <context>
     <name>FireResultListView</name>
     <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Target</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Attrition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -763,15 +763,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source> (avail, unavail, repairable):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source> (officer, warrant-off., private)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Troops</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> (avail, unavail, repairable):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -801,19 +801,19 @@
 <context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quota</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Supply quotas allocation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Target:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quota</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -832,15 +832,15 @@
 <context>
     <name>LogisticSupplyPushFlowDialog</name>
     <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Push supply flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Target:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -863,22 +863,6 @@
 <context>
     <name>LogisticSupplyRecompletionDialog</name>
     <message>
-        <source>Max</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Recompletion</source>
         <translation type="unfinished"></translation>
     </message>
@@ -895,7 +879,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Crew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -904,6 +900,10 @@
     </message>
     <message>
         <source>Ammo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -916,6 +916,10 @@
     </message>
     <message>
         <source>officers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warrant-officers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -944,10 +948,6 @@
     </message>
     <message>
         <source>Partial recompletion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>warrant-officers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -989,7 +989,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Recover - Transporters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroy - Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Recover - All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recover - Troops</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1001,38 +1017,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Recover - Transporters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recover - Troops</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Destroy - All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Destroy - Component</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Surrender</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Populations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Properties</source>
+        <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1048,6 +1040,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Populations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Orbat</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1056,24 +1052,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Object creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Not connected</source>
+        <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Profiling</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Object creation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapToolbar</name>
+    <message>
+        <source>Map options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display small text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display large text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display tactical lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid:</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Off</source>
         <translation type="unfinished"></translation>
@@ -1110,81 +1134,9 @@
         <source>3D</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Map options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display small text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display large text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display tactical lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display weather</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid:</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Menu</name>
-    <message>
-        <source>On</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>100m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>250m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>500m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2.5km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>&amp;Open exercice...</source>
         <translation type="unfinished"></translation>
@@ -1262,11 +1214,59 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Weather</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>100m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>250m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>500m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2.5km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>5km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>10km</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1567,15 +1567,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>TC2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sub-type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Density</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1586,10 +1586,6 @@
 <context>
     <name>ParamObstacleList</name>
     <message>
-        <source>Obstacle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New obstacle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1599,6 +1595,10 @@
     </message>
     <message>
         <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obstacle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1688,15 +1688,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Heading:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Known chunks:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1710,23 +1710,15 @@
 <context>
     <name>RecorderToolbar</name>
     <message>
-        <source>Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fichiers d&apos;ordres (*.ord)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enregistrer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Order recorder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Replay order file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1739,6 +1731,14 @@
     </message>
     <message>
         <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fichiers d&apos;ordres (*.ord)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enregistrer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1794,14 +1794,6 @@
 <context>
     <name>SIMControlToolbar</name>
     <message>
-        <source>Pause (P)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Simulation control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1810,7 +1802,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Pause (P)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Speed factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1885,26 +1885,6 @@ Message : </source>
 <context>
     <name>gui</name>
     <message>
-        <source>Type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROTA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1917,7 +1897,15 @@ Message : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Construction:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1961,11 +1949,23 @@ Message : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>NBC cloud/zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NBC agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROTA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

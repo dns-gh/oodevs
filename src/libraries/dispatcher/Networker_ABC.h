@@ -10,6 +10,8 @@
 #ifndef __Networker_ABC_h_
 #define __Networker_ABC_h_
 
+#include "DIN/DIN_Engine.h"
+
 namespace dispatcher 
 {
 class Dispatcher;

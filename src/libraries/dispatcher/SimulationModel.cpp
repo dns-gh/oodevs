@@ -8,10 +8,10 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "SimulationModel.h"
-
 #include "Network_Def.h"
+#include "DIN/DIN_Input.h"
+#include "DIN/MessageService/DIN_BufferedMessage.h"
 
 using namespace dispatcher;
 using namespace DIN;
@@ -31,7 +31,7 @@ SimulationModel::SimulationModel()
     , bProfilingEnabled_   ( false )
     , strConfigPath_       ()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ SimulationModel::SimulationModel()
 // -----------------------------------------------------------------------------
 SimulationModel::~SimulationModel()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,6 @@ void SimulationModel::Send( Publisher_ABC& publisher ) const
     asn().checkpoint_frequence = nCheckpointFrequency_;
     asn().etat                 = nSimState_;
     asn.Send( publisher );
-
 
     DIN_BufferedMessage msg = publisher.GetDinMsg();
     msg << bSendVisionCones_

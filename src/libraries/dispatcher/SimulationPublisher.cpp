@@ -8,10 +8,9 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "SimulationPublisher.h"
-
 #include "Simulation.h"
+#include "DIN/MessageService/DIN_BufferedMessage.h"
 
 using namespace dispatcher;
 
@@ -23,7 +22,7 @@ SimulationPublisher::SimulationPublisher( Simulation& simulation )
     : Publisher_ABC()
     , simulation_  ( simulation )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +31,7 @@ SimulationPublisher::SimulationPublisher( Simulation& simulation )
 // -----------------------------------------------------------------------------
 SimulationPublisher::~SimulationPublisher()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

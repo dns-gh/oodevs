@@ -8,10 +8,9 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "ClientPublisher.h"
-
 #include "Client.h"
+#include "DIN/MessageService/DIN_BufferedMessage.h"
 
 using namespace dispatcher;
 

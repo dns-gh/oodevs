@@ -12,6 +12,11 @@
 
 #include "AsnTypes.h"
 
+namespace DIN
+{
+    class DIN_Input;
+}
+
 namespace dispatcher
 {
 class Publisher_ABC;

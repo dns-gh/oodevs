@@ -10,6 +10,8 @@
 #ifndef __AsnTypes_h__
 #define __AsnTypes_h__
 
+#pragma warning( disable : 4800 ) // $$$$ SBO 2007-01-09: forcing value to true or false (performance warning)
+
 #pragma warning( push, 3 )
 
 #include "ASN/ASN/Generated/ScipioBase.h"
