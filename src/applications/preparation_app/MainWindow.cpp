@@ -182,8 +182,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    CircularEventStrategy* eventStrategy = new CircularEventStrategy();
-    eventStrategy_ = eventStrategy;
+    eventStrategy_ = new CircularEventStrategy();
     exclusiveEventStrategy_ = new ExclusiveEventStrategy( *eventStrategy_ );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
@@ -216,7 +215,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ReadSettings();
     ReadOptions();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::CreateLayers
