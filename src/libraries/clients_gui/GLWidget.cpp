@@ -48,7 +48,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::strin
     : WorldParameters( scipioXml )
     , SetGlOptions()
     , boost::base_from_member< std::auto_ptr< MapLayer_ABC > >( new DragMovementLayer( *this ) )
-    , MapWidget( pParent, width_, height_, context_, strategy, *member )
+    , MapWidget( context_, pParent, width_, height_, strategy, *member )
     , GlToolsBase( controllers )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
