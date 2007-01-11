@@ -30,6 +30,7 @@ namespace gui
     class GlPlaceHolder;
     class IconLayout;
     class ColorStrategy;
+    class CircularEventStrategy;
     class ExclusiveEventStrategy;
 }
 
@@ -38,7 +39,6 @@ class Model;
 class ModelBuilder;
 class StaticModel;
 class GraphicSetup_ABC;
-class EventStrategy_ABC;
 class ObjectCreationPanel;
 class WeatherLayer;
 
@@ -115,15 +115,15 @@ private:
     ModelBuilder* modelBuilder_;
     std::string scipioXml_;
 
-    gui::GlProxy*         glProxy_;
-    gui::ColorStrategy*   strategy_;
-    EventStrategy_ABC*    eventStrategy_;
+    gui::GlProxy*                glProxy_;
+    gui::ColorStrategy*          strategy_;
+    gui::CircularEventStrategy*  eventStrategy_;
     gui::ExclusiveEventStrategy* exclusiveEventStrategy_;
-    gui::GlWidget*        widget2d_;
-    gui::GlPlaceHolder*   glPlaceHolder_;
-    gui::IconLayout*      iconLayout_;
+    gui::GlWidget*               widget2d_;
+    gui::GlPlaceHolder*          glPlaceHolder_;
+    gui::IconLayout*             iconLayout_;
 
-    QTimer*               displayTimer_;
+    QTimer* displayTimer_;
 
     gui::OptionsPanel*    pOptionsPanel_;
     gui::StatusBar*       pStatus_;

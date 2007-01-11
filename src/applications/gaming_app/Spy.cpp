@@ -15,7 +15,6 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "AttributeView.h"
-#include "clients_gui/GlWidget.h"
 #include "clients_kernel/Positions.h"
 #include "gaming/Report.h"
 #include "icons.h"

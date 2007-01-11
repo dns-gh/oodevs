@@ -127,7 +127,6 @@ namespace
     typedef EventFunctor< QWheelEvent >     WheelFunctor;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::Loop
 // Created: AGE 2006-03-17
@@ -150,7 +149,6 @@ bool CircularEventStrategy::Loop( It& use, It first, It begin, It end, Functor f
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::Apply
 // Created: AGE 2006-03-17
@@ -171,7 +169,6 @@ bool CircularEventStrategy::Apply( Functor functor )
         return Loop( last_, first, layers.begin(), layers.end(), functor );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CircularEventStrategy::HandleKeyPress

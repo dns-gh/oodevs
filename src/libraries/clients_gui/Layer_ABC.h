@@ -62,8 +62,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( const ViewFrustum& ) {};
-    virtual void RegisterIn( Gl3dWidget& ) {};
+    virtual void Paint( const ViewFrustum& ) {}
+    virtual void RegisterIn( Gl3dWidget& ) {}
     //@}
 };
 
@@ -79,14 +79,14 @@ class Layer3d_ABC : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer3d_ABC() {};
-    virtual ~Layer3d_ABC() {};
+             Layer3d_ABC() {}
+    virtual ~Layer3d_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Paint( const geometry::Rectangle2f& ) {};
-    virtual void RegisterIn( GlWidget& ) {};
+    virtual void Paint( const geometry::Rectangle2f& ) {}
+    virtual void RegisterIn( GlWidget& ) {}
     //@}
 };
 

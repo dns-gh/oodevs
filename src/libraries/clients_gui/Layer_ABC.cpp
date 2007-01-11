@@ -41,7 +41,7 @@ void Layer_ABC::Paint( const ViewFrustum& )
 {
     const float infinity = std::numeric_limits<float>::infinity();
     const geometry::Rectangle2f universe( -infinity, -infinity, infinity, infinity );
-    ((MapLayer_ABC*)(this))->Paint( universe );
+    MapLayer_ABC::Paint( universe );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,4 +60,4 @@ void Layer_ABC::RegisterIn( Gl3dWidget& widget )
 void Layer_ABC::RegisterIn( GlWidget& widget )
 {
     widget.Register( *new MapLayerProxy( *this ) );
-}   
+}

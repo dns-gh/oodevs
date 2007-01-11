@@ -80,6 +80,7 @@
 //#include "clients_gui/NatureEditionWidget.h"
 #include "graphics/FixedLighting.h"
 
+#include "xeumeuleu/xml.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -88,9 +89,7 @@
 #pragma warning( pop )
 namespace bfs = boost::filesystem;
 
-#include "xeumeuleu/xml.h"
 using namespace xml;
-
 using namespace kernel;
 using namespace gui;
 
@@ -112,7 +111,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( astec ) );
     SetWindowTitle( false );
 
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *new FixedLighting() ); // $$$$ AGE 2007-01-03: 
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *new FixedLighting() ); // $$$$ AGE 2007-01-03:
     new Dialogs( this, controllers );
 
     glProxy_ = new GlProxy();
@@ -128,13 +127,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
     gui::SymbolIcons* icons = new gui::SymbolIcons( this, widget2d_ );
-    
+
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
     new ::TacticalListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_, model_.formations_.levels_ );
     pAgentsTabWidget->addTab( listsTabBox, tr( "Tactical" ) );
-    
+
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
     new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
@@ -154,7 +153,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
     new ::PopulationListView( listsTabBox, controllers, *factory );
     pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
-	pListDockWnd_->setWidget( pListsTabWidget );
+    pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
     pListDockWnd_->setCaption( tr( "Units" ) );
@@ -197,7 +196,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new FileToolbar( this );
 //    new MapToolbar( this, controllers );
 //    new UnitToolbar( this, controllers );
-//    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02: 
+//    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02:
 
     new Menu( this, controllers, *prefDialog );
 
@@ -222,16 +221,16 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, GraphicSetup_ABC& setup, const Profile_ABC& profile )
 {
-    Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
-    Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
-    Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
-    Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
-    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *exclusiveEventStrategy_, profile );
-    Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
-    
+    Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
+    Layer_ABC& elevation2d         = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& terrain             = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
+    Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );
+    Layer_ABC& limits              = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *exclusiveEventStrategy_, profile );
+    Layer_ABC& objectsLayer        = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& populations         = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    Layer_ABC& defaultLayer        = *new DefaultLayer( controllers_ );
+
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );
@@ -254,7 +253,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     eventStrategy_->Register( weather );
     eventStrategy_->Register( limits );
     eventStrategy_->Register( metrics );
-    static_cast< CircularEventStrategy* >( eventStrategy_ )->SetDefault( defaultLayer );
+    eventStrategy_->SetDefault( defaultLayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,7 +301,7 @@ void MainWindow::Open()
         Close();
         QMessageBox::critical( this, APP_NAME, e.what() );
     }
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -396,7 +395,6 @@ bool MainWindow::SaveAs()
 MainWindow::~MainWindow()
 {
     controllers_.Remove( *this );
-//    delete pOptions_;
     delete glProxy_;
     delete modelBuilder_;
 }
@@ -553,4 +551,3 @@ void MainWindow::SetWindowTitle( bool needsSaving )
         filename += "*";
     setCaption( QString( APP_NAME " - [%1]" ).arg( filename ) );
 }
-

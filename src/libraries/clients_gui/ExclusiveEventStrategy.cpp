@@ -86,7 +86,7 @@ void ExclusiveEventStrategy::HandleKeyPress( QKeyEvent* key )
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------
 void ExclusiveEventStrategy::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point )
-{   
+{
     if( layer_ )
         layer_->HandleMousePress( mouse, point );
     else

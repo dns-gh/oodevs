@@ -63,6 +63,7 @@ private:
     //@{
     template< typename It, typename Functor >
     bool Loop( It& use, It first, It begin, It end, Functor functor );
+
     template< typename Functor >
     bool Apply( Functor functor );
     //@}
