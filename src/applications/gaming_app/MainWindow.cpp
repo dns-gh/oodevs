@@ -90,18 +90,19 @@
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "graphics/FixedLighting.h"
+#include "graphics/DragMovementLayer.h"
 #include "icons.h"
+
+#include "xeumeuleu/xml.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
+
 namespace bfs = boost::filesystem;
-
-#include "xeumeuleu/xml.h"
 using namespace xml;
-
 using namespace kernel;
 using namespace gui;
 
@@ -111,15 +112,17 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& p )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , controllers_( controllers )
-    , staticModel_( staticModel )
-    , model_      ( model )
-    , network_    ( network )
-    , glProxy_    ( 0 )
-    , widget2d_   ( 0 )
-    , widget3d_   ( 0 )
-    , iconLayout_ ( 0 )
-    , b3d_        ( false )
+    , controllers_  ( controllers )
+    , staticModel_  ( staticModel )
+    , model_        ( model )
+    , network_      ( network )
+    , forward_      ( new CircularEventStrategy() )
+    , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
+    , glProxy_      ( 0 )
+    , widget2d_     ( 0 )
+    , widget3d_     ( 0 )
+    , iconLayout_   ( 0 )
+    , b3d_          ( false )
 {
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME + tr( " - Not connected" ) );
@@ -134,7 +137,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     glProxy_ = new GlProxy();
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
-    
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
@@ -151,7 +153,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile, *icons ), tr( "Communication" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),                    tr( "Objects" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),                    tr( "Populations" ) );
-	pListDockWnd_->setWidget( pListsTabWidget );
+    pListDockWnd_->setWidget( pListsTabWidget );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
     pListDockWnd_->setCaption( tr( "Orbat" ) );
@@ -233,7 +235,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pObjectCreationWnd->setCloseMode( QDockWindow::Always );
     pObjectCreationWnd->setCaption( tr( "Object creation" ) );
     setDockEnabled( pObjectCreationWnd, Qt::DockTop, false );
-    
+
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
     new SIMControlToolbar( this, controllers, network, publisher );
     new MapToolbar( this, controllers );
@@ -244,11 +246,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
 
     // Drawer
-    forward_ = new CircularEventStrategy();
-    eventStrategy_ = new ExclusiveEventStrategy( *forward_ );
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_ );
-
 
     new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
 
@@ -353,9 +352,12 @@ void MainWindow::Load( const std::string& scipioXml )
 {
     BuildIconLayout();
     scipioXml_ = scipioXml;
-    delete widget2d_; widget2d_ = 0;
-    delete widget3d_; widget3d_ = 0;
-    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_, *eventStrategy_ );
+    delete widget3d_;
+    widget3d_ = 0;
+    delete widget2d_;
+    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
+    moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
+    widget2d_->Configure( *eventStrategy_, *moveLayer_ );
     glProxy_->ChangeTo( widget2d_ );
     glProxy_->RegisterTo( widget2d_ );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
@@ -365,7 +367,7 @@ void MainWindow::Load( const std::string& scipioXml )
 
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
-    
+
     connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
     displayTimer_->start( 50 );
@@ -579,7 +581,7 @@ void MainWindow::CompareConfigPath( const std::string& server, const std::string
 {
     if( serverPath.empty() || ! scipioXml_.empty() )
         return;
-    
+
     if( server.find( "127.0.0.1" ) != std::string::npos )
         Load( serverPath );
     else

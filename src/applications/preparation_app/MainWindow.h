@@ -41,6 +41,7 @@ class StaticModel;
 class GraphicSetup_ABC;
 class ObjectCreationPanel;
 class WeatherLayer;
+class MapLayer_ABC;
 
 // =============================================================================
 /** @class  MainWindow
@@ -115,13 +116,15 @@ private:
     ModelBuilder* modelBuilder_;
     std::string scipioXml_;
 
-    gui::GlProxy*                glProxy_;
-    gui::ColorStrategy*          strategy_;
-    gui::CircularEventStrategy*  eventStrategy_;
-    gui::ExclusiveEventStrategy* exclusiveEventStrategy_;
-    gui::GlWidget*               widget2d_;
-    gui::GlPlaceHolder*          glPlaceHolder_;
-    gui::IconLayout*             iconLayout_;
+    std::auto_ptr< gui::CircularEventStrategy >  eventStrategy_;
+    std::auto_ptr< gui::ExclusiveEventStrategy > exclusiveEventStrategy_;
+    std::auto_ptr< MapLayer_ABC >                moveLayer_;
+
+    gui::GlProxy*       glProxy_;
+    gui::ColorStrategy* strategy_;
+    gui::GlWidget*      widget2d_;
+    gui::GlPlaceHolder* glPlaceHolder_;
+    gui::IconLayout*    iconLayout_;
 
     QTimer* displayTimer_;
 

@@ -11,14 +11,10 @@
 #define __GlWidget_h_
 
 #include "graphics/MapWidget.h"
-#include "boost/utility/base_from_member.hpp"
-
 #include "clients_kernel/WorldParameters.h"
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"
-
-class EventStrategy_ABC;
 
 namespace kernel
 {
@@ -26,7 +22,7 @@ namespace kernel
 }
 
 namespace gui
-{    
+{  
     class MiniView;
     class IconLayout;
     class IconHandler_ABC;
@@ -39,7 +35,6 @@ namespace gui
 // =============================================================================
 class GlWidget : private kernel::WorldParameters
                , private SetGlOptions
-               , private boost::base_from_member< std::auto_ptr< MapLayer_ABC > >
                , public MapWidget
                , public GlToolsBase
                , public View_ABC
@@ -48,7 +43,7 @@ class GlWidget : private kernel::WorldParameters
 public:
     //! @name Constructors/Destructor
     //@{
-             GlWidget( QWidget* pParent, kernel::Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout, EventStrategy_ABC& strategy );
+             GlWidget( QWidget* pParent, kernel::Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout );
     virtual ~GlWidget();
     //@}
 
@@ -97,7 +92,7 @@ private:
     typedef T_Views::iterator         IT_Views;
     typedef T_Views::const_iterator  CIT_Views;
 
-    struct T_IconTask 
+    struct T_IconTask
     {
         T_IconTask( const std::string& name, const QColor& color, IconHandler_ABC& handler )
             : name( name ), color( color ), handler( &handler ) {};
@@ -131,11 +126,11 @@ private:
     //@{
     static const unsigned miniViewSide_ = 128;
     static const unsigned iconSide_     = 128;
-    
+ 
     int windowHeight_;
     int windowWidth_;
     unsigned int circle_;
-    
+ 
     geometry::Rectangle2f viewport_;
     unsigned int frame_;
 
@@ -143,7 +138,7 @@ private:
     IconLayout& iconLayout_;
 
     T_IconTasks tasks_;
-    
+ 
     int listBase_;
     //@}
 };

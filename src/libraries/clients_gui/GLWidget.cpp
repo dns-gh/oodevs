@@ -11,7 +11,6 @@
 #include "GlWidget.h"
 #include "graphics/MapLayer_ABC.h"
 #include "graphics/Scale.h"
-#include "graphics/DragMovementLayer.h"
 #include "MiniView.h"
 #include "IconLayout.h"
 #include "DrawerStyle.h"
@@ -29,7 +28,7 @@ namespace
         SpyLayer( Rectangle2f& viewport, unsigned int& frame )
             : viewport_( &viewport )
             , frame_( &frame )
-        {};
+        {}
         virtual void Paint( const Rectangle2f& viewport )
         {
             * viewport_ = viewport;
@@ -38,17 +37,16 @@ namespace
         Rectangle2f* viewport_;
         unsigned int* frame_;
     };
-};
+}
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout, EventStrategy_ABC& strategy )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout )
     : WorldParameters( scipioXml )
     , SetGlOptions()
-    , boost::base_from_member< std::auto_ptr< MapLayer_ABC > >( new DragMovementLayer( *this ) )
-    , MapWidget( context_, pParent, width_, height_, strategy, *member )
+    , MapWidget( context_, pParent, width_, height_ )
     , GlToolsBase( controllers )
     , windowHeight_( 0 )
     , windowWidth_ ( 0 )
@@ -60,7 +58,6 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::strin
 {
     setAcceptDrops( true );
     Register( *new SpyLayer( viewport_, frame_ ) );
-
     if( context() != context_ || ! context_->isValid() )
         throw std::runtime_error( "Unable to create context" );
 }

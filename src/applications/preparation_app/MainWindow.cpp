@@ -79,6 +79,7 @@
 
 //#include "clients_gui/NatureEditionWidget.h"
 #include "graphics/FixedLighting.h"
+#include "graphics/DragMovementLayer.h"
 
 #include "xeumeuleu/xml.h"
 
@@ -98,15 +99,17 @@ using namespace gui;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model )
-    : QMainWindow  ( 0, 0, Qt::WDestructiveClose )
-    , controllers_ ( controllers )
-    , staticModel_ ( staticModel )
-    , model_       ( model )
-    , modelBuilder_( new ModelBuilder( controllers, model ) )
-    , glProxy_     ( 0 )
-    , widget2d_    ( 0 )
-    , iconLayout_  ( 0 )
-    , needsSaving_ ( false )
+    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    , controllers_           ( controllers )
+    , staticModel_           ( staticModel )
+    , model_                 ( model )
+    , modelBuilder_          ( new ModelBuilder( controllers, model ) )
+    , eventStrategy_         ( new CircularEventStrategy() )
+    , exclusiveEventStrategy_( new ExclusiveEventStrategy( *eventStrategy_ ) )
+    , glProxy_               ( 0 )
+    , widget2d_              ( 0 )
+    , iconLayout_            ( 0 )
+    , needsSaving_           ( false )
 {
     setIcon( MAKE_PIXMAP( astec ) );
     SetWindowTitle( false );
@@ -181,8 +184,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // A few layers
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    eventStrategy_ = new CircularEventStrategy();
-    exclusiveEventStrategy_ = new ExclusiveEventStrategy( *eventStrategy_ );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
     // object creation window
@@ -314,11 +315,14 @@ bool MainWindow::Load( const std::string& scipioXml )
     {
         BuildIconLayout();
         scipioXml_ = scipioXml;
-        delete widget2d_; widget2d_ = 0;
-        widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_, *eventStrategy_ );
+        delete widget2d_;
+        widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
+        moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
+        widget2d_->Configure( *eventStrategy_, *moveLayer_ );
         glProxy_->ChangeTo( widget2d_ );
         glProxy_->RegisterTo( widget2d_ );
-        delete glPlaceHolder_; glPlaceHolder_ = 0;
+        delete glPlaceHolder_;
+        glPlaceHolder_ = 0;
         setCentralWidget( widget2d_ );
         model_.Purge();
         staticModel_.Load( scipioXml );
@@ -350,8 +354,8 @@ void MainWindow::Close()
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
     glPlaceHolder_->show();
-
-    delete widget2d_; widget2d_ = 0;
+    delete widget2d_;
+    widget2d_ = 0;
 }
 
 // -----------------------------------------------------------------------------

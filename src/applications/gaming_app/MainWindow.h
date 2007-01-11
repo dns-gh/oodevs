@@ -49,6 +49,7 @@ class ObjectCreationPanel;
 class GraphicSetup_ABC;
 class LoginDialog;
 class FixedLighting;
+class MapLayer_ABC;
 
 // =============================================================================
 /** @class  MainWindow
@@ -129,11 +130,13 @@ private:
     std::string scipioXml_;
     QString profile_;
 
+    std::auto_ptr< gui::CircularEventStrategy >  forward_;
+    std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
+    std::auto_ptr< MapLayer_ABC >                moveLayer_;
+
     gui::GlProxy*                glProxy_;
     gui::ColorStrategy*          strategy_;
     FixedLighting*               lighting_;
-    gui::CircularEventStrategy*  forward_;
-    gui::ExclusiveEventStrategy* eventStrategy_;
     gui::GlWidget*               widget2d_;
     gui::Gl3dWidget*             widget3d_;
     gui::GlPlaceHolder*          glPlaceHolder_;
