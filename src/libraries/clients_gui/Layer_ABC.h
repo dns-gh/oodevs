@@ -38,6 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const ViewFrustum& frustum );
+    using MapLayer_ABC::Paint;
 
     virtual void RegisterIn( Gl3dWidget& widget );
     virtual void RegisterIn( GlWidget& widget );
@@ -56,7 +57,7 @@ class Layer2d_ABC : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Layer2d_ABC() {};
+             Layer2d_ABC() : alpha_( 1 ) {};
     virtual ~Layer2d_ABC() {};
     //@}
 
@@ -64,6 +65,15 @@ public:
     //@{
     virtual void Paint( const ViewFrustum& ) {}
     virtual void RegisterIn( Gl3dWidget& ) {}
+
+    void SetAlpha( float alpha ) { alpha_ = alpha; };
+    float GetAlpha() const       { return alpha_; };
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    float alpha_;
     //@}
 };
 
