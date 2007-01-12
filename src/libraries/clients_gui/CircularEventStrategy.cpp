@@ -85,7 +85,6 @@ void CircularEventStrategy::Remove( MapLayer_ABC& layer )
     rlast_ = layers_.rbegin();
 }
 
-
 namespace
 {
     struct ExclusiveFunctor

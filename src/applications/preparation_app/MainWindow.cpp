@@ -123,7 +123,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
 //    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
 //    connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
-//
+
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );

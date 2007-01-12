@@ -39,9 +39,9 @@ public:
 
     //! @name Operations
     //@{
-            void SetDefault( MapLayer_ABC& layer );
-    virtual void Register  ( MapLayer_ABC& layer );
-    virtual void Remove    ( MapLayer_ABC& layer );
+    void SetDefault( MapLayer_ABC& layer );
+    void Register  ( MapLayer_ABC& layer );
+    void Remove    ( MapLayer_ABC& layer );
 
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );

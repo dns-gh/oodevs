@@ -52,24 +52,6 @@ void ExclusiveEventStrategy::ReleaseExclusiveFocus()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExclusiveEventStrategy::Register
-// Created: AGE 2006-09-04
-// -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::Register( MapLayer_ABC& layer )
-{
-    forward_.Register( layer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExclusiveEventStrategy::Remove
-// Created: AGE 2006-09-04
-// -----------------------------------------------------------------------------
-void ExclusiveEventStrategy::Remove( MapLayer_ABC& layer )
-{
-    forward_.Remove( layer );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExclusiveEventStrategy::HandleKeyPress
 // Created: AGE 2006-09-04
 // -----------------------------------------------------------------------------

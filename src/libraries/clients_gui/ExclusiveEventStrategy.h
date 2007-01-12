@@ -39,9 +39,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Register( MapLayer_ABC& layer );
-    virtual void Remove  ( MapLayer_ABC& layer );
-
     virtual void HandleKeyPress        ( QKeyEvent* key );
     virtual void HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual void HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
