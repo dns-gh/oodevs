@@ -318,7 +318,8 @@ bool MainWindow::Load( const std::string& scipioXml )
         delete widget2d_;
         widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
         moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
-        widget2d_->Configure( *eventStrategy_, *moveLayer_ );
+        widget2d_->Configure( *eventStrategy_ );
+        widget2d_->Configure( *moveLayer_ );
         glProxy_->ChangeTo( widget2d_ );
         glProxy_->RegisterTo( widget2d_ );
         delete glPlaceHolder_;

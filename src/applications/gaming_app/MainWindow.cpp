@@ -127,7 +127,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( astec ) );
     setCaption( APP_NAME + tr( " - Not connected" ) );
 
-    ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem.
+    ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
@@ -352,12 +352,12 @@ void MainWindow::Load( const std::string& scipioXml )
 {
     BuildIconLayout();
     scipioXml_ = scipioXml;
-    delete widget3d_;
-    widget3d_ = 0;
+    delete widget3d_; widget3d_ = 0;
     delete widget2d_;
     widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
-    widget2d_->Configure( *eventStrategy_, *moveLayer_ );
+    widget2d_->Configure( *eventStrategy_ );
+    widget2d_->Configure( *moveLayer_ );
     glProxy_->ChangeTo( widget2d_ );
     glProxy_->RegisterTo( widget2d_ );
     delete glPlaceHolder_; glPlaceHolder_ = 0;
@@ -368,8 +368,8 @@ void MainWindow::Load( const std::string& scipioXml )
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
 
-    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-    connect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
+    connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT(OnMouseMove( const geometry::Point2f& )) );
+    connect( displayTimer_, SIGNAL(timeout()), centralWidget(), SLOT(updateGL()) );
     displayTimer_->start( 50 );
     widget2d_->show();
 }
@@ -385,7 +385,6 @@ void MainWindow::Close()
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
     glPlaceHolder_->show();
-
     delete widget2d_; widget2d_ = 0;
     delete widget3d_; widget3d_ = 0;
 }
@@ -397,8 +396,8 @@ void MainWindow::Close()
 MainWindow::~MainWindow()
 {
     controllers_.Remove( *this );
-    delete widget2d_; widget2d_ = 0;
-    delete widget3d_; widget3d_ = 0;
+    delete widget2d_;
+    delete widget3d_;
 }
 
 // -----------------------------------------------------------------------------
@@ -581,7 +580,6 @@ void MainWindow::CompareConfigPath( const std::string& server, const std::string
 {
     if( serverPath.empty() || ! scipioXml_.empty() )
         return;
-
     if( server.find( "127.0.0.1" ) != std::string::npos )
         Load( serverPath );
     else
