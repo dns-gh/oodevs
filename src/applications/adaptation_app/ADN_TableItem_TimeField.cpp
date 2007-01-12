@@ -54,7 +54,7 @@ ADN_TableItem_TimeField::~ADN_TableItem_TimeField()
 // -----------------------------------------------------------------------------
 QWidget* ADN_TableItem_TimeField::createEditor() const
 {
-    const_cast< ADN_TimeField* >( pTimeField_ ) = new ADN_TimeField( table()->viewport() );
+    pTimeField_ = new ADN_TimeField( table()->viewport() );
     pTimeField_->setDisabled( false );
     pTimeField_->setText( text() );
     connect( pTimeField_, SIGNAL( ValueChanged() ), this, SLOT( OnValueChanged() ) );

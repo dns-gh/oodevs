@@ -134,7 +134,6 @@ HEADERS += ADN_Objects_Data.h
 HEADERS += ADN_Objects_GUI.h
 HEADERS += ADN_OpenFile_Exception.h
 HEADERS += ADN_OpenMode_Dialog.h
-HEADERS += ADN_Pch.h
 HEADERS += ADN_Point_GUI.h
 HEADERS += ADN_Population_GUI.h
 HEADERS += ADN_Population_Wizard.h

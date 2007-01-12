@@ -70,9 +70,9 @@ protected:
 private:
     //! @name Member data
     //@{
-    ADN_TimeField*    pTimeField_;
-    QRegExpValidator* pValidator_;
-    int               nAlignment_;
+    mutable ADN_TimeField* pTimeField_;
+    QRegExpValidator*      pValidator_;
+    int                    nAlignment_;
     //@}
 
 };
