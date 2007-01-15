@@ -25,7 +25,8 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicPreferences : public QObject, public GraphicSetup_ABC
+class GraphicPreferences : public QObject
+                         , public GraphicSetup_ABC
 {
     Q_OBJECT;
 public:

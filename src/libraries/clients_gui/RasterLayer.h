@@ -3,44 +3,45 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __Elevation2dLayer_h_
-#define __Elevation2dLayer_h_
+#ifndef __RasterLayer_h_
+#define __RasterLayer_h_
 
 #include "Layer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-
-class ElevationLayer;
+#include "clients_kernel/WorldParameters.h"
 
 namespace kernel
 {
-    class DetectionMap;
     class Controller;
     class ModelLoaded;
 }
+
+class TextureSet;
 
 namespace gui
 {
 
 // =============================================================================
-/** @class  Elevation2dLayer
-    @brief  Elevation2dLayer
+/** @class  RasterLayer
+    @brief  RasterLayer
 */
-// Created: AGE 2006-03-29
+// Created: AGE 2007-01-04
 // =============================================================================
-class Elevation2dLayer : public Layer2d_ABC
-                       , public kernel::Observer_ABC
-                       , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+class RasterLayer : public Layer2d_ABC
+                  , public kernel::Observer_ABC
+                  , public kernel::ElementObserver_ABC< kernel::ModelLoaded >
+                  , private kernel::WorldParameters
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Elevation2dLayer( kernel::Controller& controller, const kernel::DetectionMap& elevation );
-    virtual ~Elevation2dLayer();
+    explicit RasterLayer( kernel::Controller& controller );
+    virtual ~RasterLayer();
     //@}
 
     //! @name Operations
@@ -50,22 +51,24 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
-    Elevation2dLayer( const Elevation2dLayer& );            //!< Copy constructor
-    Elevation2dLayer& operator=( const Elevation2dLayer& ); //!< Assignement operator
+    RasterLayer( const RasterLayer& );            //!< Copy constructor
+    RasterLayer& operator=( const RasterLayer& ); //!< Assignement operator
+    //@}
+
+    //! @name Helpers
+    //@{
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const kernel::DetectionMap& elevation_;
-    ElevationLayer* layer_;
-    bool modelLoaded_;
+    std::auto_ptr< TextureSet > textures_;
     //@}
 };
 
 }
 
-#endif // __Elevation2dLayer_h_
+#endif // __RasterLayer_h_

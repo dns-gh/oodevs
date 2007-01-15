@@ -17,6 +17,7 @@
 #include "PreferencePanel_ABC.h"
 #include "Graphics3dPanel.h"
 #include "LightingPanel.h"
+#include "LayersPanel.h"
 #include "resources.h"
 
 using namespace kernel;
@@ -62,7 +63,9 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 
     AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) );
     pGraphicPrefPanel_ = new GraphicsPanel( this );
-    AddPage( tr( "Terrain" ), *pGraphicPrefPanel_ );
+    layersPanel_       = new LayersPanel( this );
+    AddPage( tr( "2D" )        , *layersPanel_ ); 
+    AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "3D" ), *new Graphics3dPanel( this ) );
     AddPage( tr( "3D/Lighting" ), *new LightingPanel( this, lighting ) );
 
@@ -149,4 +152,13 @@ void PreferencesDialog::OnCancel()
     for( IT_Pages it = pages_.begin(); it != pages_.end(); ++it )
         (*it)->Reset();
     hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::AddLayer
+// Created: AGE 2007-01-04
+// -----------------------------------------------------------------------------
+void PreferencesDialog::AddLayer( const QString& name, gui::Layer2d_ABC& layer )
+{
+    layersPanel_->AddLayer( name, layer );
 }

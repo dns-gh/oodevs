@@ -55,11 +55,16 @@ void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
+    if( GetAlpha() == 0 )
+        return;
     if( !layer_ && modelLoaded_ )
     {
         layer_ = new ColoredElevationLayer( elevation_ );
         layer_->Initialize( geometry::Rectangle2f() );
     }
     if( layer_ )
+    {
+        glColor4f( 1, 1, 1, GetAlpha() );
         layer_->Paint( viewport );
+    }
 }

@@ -1071,6 +1071,18 @@
         <source>Object creation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapToolbar</name>

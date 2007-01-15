@@ -36,6 +36,7 @@ namespace gui
     class DrawerLayer;
     class ExclusiveEventStrategy;
     class CircularEventStrategy;
+    class PreferencesDialog;
 }
 
 class Spy;
@@ -46,7 +47,6 @@ class Profile;
 class Network;
 class MissionPanel;
 class ObjectCreationPanel;
-class GraphicSetup_ABC;
 class LoginDialog;
 class FixedLighting;
 class MapLayer_ABC;
@@ -111,7 +111,7 @@ private:
     void BuildIconLayout();
 
     void CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, gui::ParametersLayer& parameters, 
-                       gui::AgentsLayer& agents, gui::DrawerLayer& drawer, GraphicSetup_ABC& setup, const kernel::Profile_ABC& profile );
+                       gui::AgentsLayer& agents, gui::DrawerLayer& drawer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
     //@}
 
     //! @name Copy/Assignment

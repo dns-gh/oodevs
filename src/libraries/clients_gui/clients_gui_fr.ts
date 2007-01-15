@@ -348,10 +348,6 @@
 <context>
     <name>PreferencesDialog</name>
     <message>
-        <source>Terrain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -377,6 +373,14 @@
     </message>
     <message>
         <source>3D/Lighting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D/Terrain</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

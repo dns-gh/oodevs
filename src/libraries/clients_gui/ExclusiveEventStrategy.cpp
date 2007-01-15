@@ -134,3 +134,21 @@ void ExclusiveEventStrategy::HandleEnterDragEvent( QDragEnterEvent* event, const
     else
         forward_.HandleEnterDragEvent( event, point );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ExclusiveEventStrategy::Register
+// Created: AGE 2007-01-15
+// -----------------------------------------------------------------------------
+void ExclusiveEventStrategy::Register( MapLayer_ABC& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExclusiveEventStrategy::Remove
+// Created: AGE 2007-01-15
+// -----------------------------------------------------------------------------
+void ExclusiveEventStrategy::Remove( MapLayer_ABC& )
+{
+    // NOTHING
+}

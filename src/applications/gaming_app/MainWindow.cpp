@@ -80,6 +80,7 @@
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
 #include "clients_gui/TerrainLayer.h"
+#include "clients_gui/RasterLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/GridLayer.h"
 #include "clients_gui/ObjectsLayer.h"
@@ -255,7 +256,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setCentralWidget( glPlaceHolder_ );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), profile );
+    CreateLayers( *pMissionPanel_, *objectCreationPanel, *paramLayer, *agentsLayer, *drawer, *prefDialog, profile );
 
     pStatus_ = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_ );
     controllers_.Register( *this );
@@ -273,13 +274,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, gui::AgentsLayer& agents, DrawerLayer& drawer, GraphicSetup_ABC& setup, const Profile_ABC& profile )
+void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& objects, ParametersLayer& parameters, gui::AgentsLayer& agents, DrawerLayer& drawer, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
-    Layer_ABC& elevation2d          = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer2d_ABC& elevation2d        = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer2d_ABC& raster             = *new RasterLayer( controllers_.controller_ );
+    Layer2d_ABC& terrain            = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
@@ -291,11 +293,16 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
 
+    preferences.AddLayer( tr( "Terrain" ), terrain );
+    preferences.AddLayer( tr( "Raster" ), raster );
+    preferences.AddLayer( tr( "Elevation" ), elevation2d );
+
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );
-    glProxy_->Register( elevation3d );
+    glProxy_->Register( raster );
     glProxy_->Register( terrain );
+    glProxy_->Register( elevation3d );
     glProxy_->Register( grid );
     glProxy_->Register( meteo );
     glProxy_->Register( limits );

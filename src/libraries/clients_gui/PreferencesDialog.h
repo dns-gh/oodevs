@@ -23,6 +23,8 @@ namespace gui
     class GraphicsPanel;
     class PreferencesList;
     class PreferencePanel_ABC;
+    class Layer2d_ABC;
+    class LayersPanel;
 
 // =============================================================================
 /** @class  PreferencesDialog
@@ -45,8 +47,9 @@ public:
     //@{
     virtual QSize sizeHint () const;
     GraphicPreferences& GetPreferences() const; // $$$$ SBO 2006-05-04: 
-    //@}
 
+    void AddLayer( const QString& name, gui::Layer2d_ABC& layer );
+    //@}
 
 private slots:
     //! @name Slots
@@ -79,6 +82,7 @@ private:
     //@{
     T_Pages          pages_;
     PreferencesList* list_;
+    LayersPanel*     layersPanel_;
     GraphicsPanel*   pGraphicPrefPanel_;
     //@}
 };
