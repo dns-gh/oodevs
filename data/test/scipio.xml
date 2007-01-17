@@ -12,7 +12,7 @@
   </SIM>
 
   <Donnees>
-    <Terrain>Data/Terrain MARINE/Terrain.xml</Terrain>
+    <Terrain>Data/Terrain/Terrain.xml</Terrain>
     <Decisionnel>Data/Decisionnel.xml</Decisionnel>
     <Reseau>Data/Reseau.xml</Reseau>
     <Volumes>Data/Volumes.xml</Volumes>
