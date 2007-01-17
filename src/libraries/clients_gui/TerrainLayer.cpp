@@ -125,6 +125,9 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
 
     glEnableClientState( GL_VERTEX_ARRAY );
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
+        glBindTexture( GL_TEXTURE_2D, 0 );
+        glDisable(GL_TEXTURE_GEN_S);
+        glDisable(GL_TEXTURE_GEN_T);
         DrawInnerShapes( viewport );
         DrawShapesBorders( viewport );
         DrawLinearShapes( viewport );

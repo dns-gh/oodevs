@@ -22,6 +22,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 RasterLayer::RasterLayer( kernel::Controller& controller )
     : controller_( controller )
+    , ignore_( false )
 {
     controller_.Register( *this );
 }
@@ -43,7 +44,7 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( GetAlpha() == 0 )
         return;
-    if( ! textures_.get() && ! graphicsDirectory_.empty() )
+    if( ! textures_.get() && ! graphicsDirectory_.empty() && ! ignore_ )
         try
         {
             textures_.reset( new TextureSet( graphicsDirectory_ + "/usrp.texture" ) );
@@ -51,6 +52,7 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
         catch( ... )
         {
             // $$$$ AGE 2007-01-04: 
+            ignore_ = true;
         }
     if( textures_.get() )
     {

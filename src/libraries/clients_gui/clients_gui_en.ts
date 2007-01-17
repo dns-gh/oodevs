@@ -383,6 +383,10 @@
         <source>2D/Terrain</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>2D/Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RotaPrototype_ABC</name>

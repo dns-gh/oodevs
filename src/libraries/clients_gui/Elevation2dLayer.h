@@ -13,7 +13,8 @@
 #include "Layer_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 
-class ElevationLayer;
+class ElevationTextureSet;
+class ElevationShader;
 
 namespace kernel
 {
@@ -24,6 +25,7 @@ namespace kernel
 
 namespace gui
 {
+    class ElevationExtrema;
 
 // =============================================================================
 /** @class  Elevation2dLayer
@@ -47,6 +49,9 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
+
+    void SetColors( const QColor& min, const QColor& max );
+    void SetElevations( unsigned short min, unsigned short max );
     //@}
 
 private:
@@ -56,13 +61,26 @@ private:
     Elevation2dLayer& operator=( const Elevation2dLayer& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void SetGradient();
+    void SetShader();
+    void Cleanup();
+    //@}
+
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const kernel::DetectionMap& elevation_;
-    ElevationLayer* layer_;
+    std::auto_ptr< ElevationExtrema >    extrema_;
+    std::auto_ptr< ElevationShader >     shader_;
+    std::auto_ptr< ElevationTextureSet > layer_;
     bool modelLoaded_;
+
+    QColor min_;
+    QColor max_;
+    unsigned gradient_;
     //@}
 };
 

@@ -66,6 +66,7 @@ private:
     //@{
     kernel::Controller& controller_;
     std::auto_ptr< TextureSet > textures_;
+    bool ignore_;
     //@}
 };
 

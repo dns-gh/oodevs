@@ -19,6 +19,8 @@
 #include "LightingPanel.h"
 #include "LayersPanel.h"
 #include "resources.h"
+#include "ElevationPanel.h"
+#include "Elevation2dLayer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -68,6 +70,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
     AddPage( tr( "3D" ), *new Graphics3dPanel( this ) );
     AddPage( tr( "3D/Lighting" ), *new LightingPanel( this, lighting ) );
+    
 
     box = new QHBox( this );
     box->setMargin( 5 );
@@ -160,5 +163,15 @@ void PreferencesDialog::OnCancel()
 // -----------------------------------------------------------------------------
 void PreferencesDialog::AddLayer( const QString& name, gui::Layer2d_ABC& layer )
 {
+    layersPanel_->AddLayer( name, layer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PreferencesDialog::AddLayer
+// Created: AGE 2007-01-17
+// -----------------------------------------------------------------------------
+void PreferencesDialog::AddLayer( const QString& name, gui::Elevation2dLayer& layer )
+{
+    AddPage( tr( "2D/Elevation" ), *new ElevationPanel( this, layer ) );
     layersPanel_->AddLayer( name, layer );
 }

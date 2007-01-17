@@ -9,9 +9,15 @@
 
 #include "clients_gui_pch.h"
 #include "Elevation2dLayer.h"
-#include "ColoredElevationLayer.h"
 #include "clients_kernel/GLTools_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/DetectionMap.h"
+#include "graphics/ElevationTextureSet.h"
+#include "graphics/ElevationShader.h"
+#include "graphics/extensions.h"
+#include "graphics/Visitor2d.h"
+#include "graphics/ShaderProgram.h"
+#include "ElevationExtrema.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,8 +29,10 @@ using namespace gui;
 Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& elevation )
     : controller_( controller )
     , elevation_( elevation )
-    , layer_( 0 )
     , modelLoaded_( false )
+    , min_( Qt::white )
+    , max_( Qt::black )
+    , gradient_( 0 )
 {
     controller_.Register( *this );
 }
@@ -36,7 +44,31 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
 Elevation2dLayer::~Elevation2dLayer()
 {
     controller_.Remove( *this );
-    delete layer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::SetColors
+// Created: AGE 2007-01-17
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::SetColors( const QColor& min, const QColor& max )
+{
+    min_ = min;
+    max_ = max;
+    glDeleteTextures( 1, &gradient_ );
+    gradient_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::SetElevations
+// Created: AGE 2007-01-17
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::SetElevations( unsigned short min, unsigned short max )
+{
+    if( shader_.get() )
+    {
+        shader_->SetMinimumElevation( min );
+        shader_->SetMaximumElevation( max );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +77,8 @@ Elevation2dLayer::~Elevation2dLayer()
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
-    delete layer_; layer_ = 0;
+    extrema_.reset();
+    layer_.reset();
     modelLoaded_ = true;
 }
 
@@ -57,14 +90,73 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( GetAlpha() == 0 )
         return;
-    if( !layer_ && modelLoaded_ )
+    if( !layer_.get() && modelLoaded_ )
     {
-        layer_ = new ColoredElevationLayer( elevation_ );
-        layer_->Initialize( geometry::Rectangle2f() );
+        extrema_.reset( new ElevationExtrema( elevation_.GetMap() ) );
+        layer_.reset( new ElevationTextureSet( elevation_.GetMap() ) );
     }
-    if( layer_ )
+    if( layer_.get() )
     {
-        glColor4f( 1, 1, 1, GetAlpha() );
-        layer_->Paint( viewport );
+        SetGradient();
+        SetShader();
+        Visitor2d visitor;
+        short min, max;
+        extrema_->FindExtrema( viewport, min, max );
+        SetElevations( min, max );
+        layer_->Accept( visitor, 0, viewport );
+        Cleanup();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::Cleanup
+// Created: AGE 2007-01-17
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::Cleanup()
+{
+    gl::ShaderProgram::Unuse();
+    gl::glActiveTexture( gl::GL_TEXTURE1 );
+    glBindTexture( GL_TEXTURE_1D, 0 );
+    glDisable( GL_TEXTURE_1D );
+    gl::glActiveTexture( gl::GL_TEXTURE0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::SetGradient
+// Created: AGE 2007-01-17
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::SetGradient()
+{
+    gl::Initialize();
+    gl::glActiveTexture( gl::GL_TEXTURE1 );
+    glEnable( GL_TEXTURE_1D );
+    if( ! gradient_ )
+    {
+        glGenTextures( 1, &gradient_ );
+        glBindTexture( GL_TEXTURE_1D, gradient_ );
+        unsigned char gradient[] = 
+            { min_.red(), min_.green(), min_.blue(), 255 * GetAlpha(),
+              max_.red(), max_.green(), max_.blue(), 255 * GetAlpha() };
+        glTexImage1D( GL_TEXTURE_1D, 0, GL_RGBA, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, gradient ) ;
+        glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S , gl::GL_CLAMP_TO_EDGE );
+    }
+    glBindTexture( GL_TEXTURE_1D, gradient_ );
+    gl::glActiveTexture( gl::GL_TEXTURE0 );
+    glEnable( GL_TEXTURE_2D );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::SetShader
+// Created: AGE 2007-01-17
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::SetShader()
+{
+    if( ! shader_.get() )
+    {
+        shader_.reset( new ElevationShader() );
+        SetElevations( 0, elevation_.MaximumElevation() );
+    }
+    shader_->Use();
 }

@@ -278,7 +278,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
 {
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
-    Layer2d_ABC& elevation2d        = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer2d_ABC& raster             = *new RasterLayer( controllers_.controller_ );
     Layer2d_ABC& terrain            = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
