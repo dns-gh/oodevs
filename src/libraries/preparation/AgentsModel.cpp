@@ -17,6 +17,7 @@
 #include "SupplyStates.h"
 #include "Tc2States.h"
 #include "LimitsModel.h"
+#include "AgentsModelChecker.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
@@ -311,4 +312,14 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
         else if( linkType == entity->Get< SupplyHierarchies >().GetLinkType().ascii() )
             entity->Get< SupplyHierarchies >().Load( xis, &automat );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsModel::CheckValidity
+// Created: SBO 2007-01-18
+// -----------------------------------------------------------------------------
+void AgentsModel::CheckValidity() const
+{
+    AgentsModelChecker checker;
+    checker.Check( *this );
 }

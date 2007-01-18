@@ -65,6 +65,7 @@ public:
     void Serialize( xml::xostream& xos ) const;
 
     kernel::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
+    void CheckValidity() const;
     //@}
 
 private:
@@ -79,7 +80,6 @@ private:
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     void ReadTeam( xml::xistream& xis, Model& model );
     void ReadDiplomacy( xml::xistream& xis );
-    void CheckSanity() const;
     //@}
 
 private:

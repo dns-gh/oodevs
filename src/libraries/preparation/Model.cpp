@@ -124,6 +124,9 @@ void Model::Load( const QString& filename )
 // -----------------------------------------------------------------------------
 void Model::Save( const QString& filename /*= ""*/ )
 {
+    teams_ .CheckValidity();
+    agents_.CheckValidity();
+
     std::string file = filename.isEmpty() ? orbatFile_ : filename.ascii();
     xml::xofstream xos( file, xml::encoding( "ISO-8859-1" ) );
     xos << start( "orbat" );

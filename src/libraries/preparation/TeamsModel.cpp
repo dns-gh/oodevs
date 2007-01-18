@@ -180,7 +180,7 @@ void TeamsModel::Load( const std::string& filename, Model& model )
             >> end()
         >> end();
 
-    CheckSanity();
+    CheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -222,10 +222,10 @@ void TeamsModel::ReadDiplomacy( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamsModel::CheckSanity
+// Name: TeamsModel::CheckValidity
 // Created: SBO 2006-10-10
 // -----------------------------------------------------------------------------
-void TeamsModel::CheckSanity() const
+void TeamsModel::CheckValidity() const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {

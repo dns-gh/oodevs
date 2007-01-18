@@ -372,8 +372,16 @@ bool MainWindow::Save()
         return SaveAs();
     else
     {
-        model_.Save();
-        SetWindowTitle( false );
+        try
+        {
+            model_.Save();
+            SetWindowTitle( false );
+        }
+        catch( InvalidModelException& e )
+        {
+            QMessageBox::critical( this, APP_NAME, e.what() );
+            return false;
+        }
     }
     return true;
 }
@@ -391,8 +399,16 @@ bool MainWindow::SaveAs()
     current = filename;
     if( current.substr( 0, 2 ) == "//" )
         std::replace( current.begin(), current.end(), '/', '\\' );
-    model_.Save( current.c_str() );
-    SetWindowTitle( false );
+    try
+    {
+        model_.Save( current.c_str() );
+        SetWindowTitle( false );
+    }
+    catch( InvalidModelException& e )
+    {
+        QMessageBox::critical( this, APP_NAME, e.what() );
+        return false;
+    }
     return true;
 }
 

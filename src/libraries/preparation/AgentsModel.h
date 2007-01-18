@@ -77,6 +77,7 @@ public:
     kernel::Population_ABC* FindPopulation( unsigned long id );
 
     void Purge();
+    void CheckValidity() const;
     //@}
 
     //! @name Delayed initialization
