@@ -33,6 +33,9 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
     , min_( Qt::white )
     , max_( Qt::black )
     , gradient_( 0 )
+    , enabled_( true )
+    , minElevation_( 0 )
+    , maxElevation_( 0 )
 {
     controller_.Register( *this );
 }
@@ -56,6 +59,16 @@ void Elevation2dLayer::SetColors( const QColor& min, const QColor& max )
     max_ = max;
     glDeleteTextures( 1, &gradient_ );
     gradient_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::EnableVariableGradient
+// Created: AGE 2007-01-18
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::EnableVariableGradient( bool enable )
+{
+    lastViewport_ = geometry::Rectangle2f();
+    enabled_ = enable;
 }
 
 // -----------------------------------------------------------------------------
@@ -100,8 +113,19 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
         SetGradient();
         SetShader();
         Visitor2d visitor;
-        short min, max;
-        extrema_->FindExtrema( viewport, min, max );
+        short min = minElevation_;
+        short max = maxElevation_;
+        if( ! enabled_ )
+        {
+            min = minElevation_ = 0;
+            max = maxElevation_ = elevation_.MaximumElevation();
+        }
+        else if( viewport != lastViewport_ )
+        {
+            extrema_->FindExtrema( viewport, min, max );
+            minElevation_ = min; maxElevation_ = max; 
+            lastViewport_ = viewport;
+        }
         SetElevations( min, max );
         layer_->Accept( visitor, 0, viewport );
         Cleanup();
@@ -129,6 +153,7 @@ void Elevation2dLayer::SetGradient()
 {
     gl::Initialize();
     gl::glActiveTexture( gl::GL_TEXTURE1 );
+    glDisable( GL_TEXTURE_2D );
     glEnable( GL_TEXTURE_1D );
     if( ! gradient_ )
     {

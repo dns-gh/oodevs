@@ -23,12 +23,19 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer )
     : PreferencePanel_ABC( parent )
     , layer_( layer )
 {
-    QGroupBox* box = new QGroupBox( 2, Qt::Vertical, tr( "Elevation colors" ), this );
-    new QLabel( tr( "Lowest heights color: " ), box );
-    min_ = new ColorButton( box, "", white );
+    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Elevation colors" ), this );
+    
     new QLabel( tr( "Highest heights color: " ), box );
     max_ = new ColorButton( box, "", black );
+    
+    new QLabel( tr( "Lowest heights color: " ), box );
+    min_ = new ColorButton( box, "", white );
 
+    new QLabel( tr( "Fit color gradient to viewport" ), box );
+    QCheckBox* check = new QCheckBox( box );
+    check->setChecked( true );
+
+    connect( check, SIGNAL( toggled( bool ) ), this, SLOT( OnEnableVariable( bool ) ) );
     connect( min_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( OnColorChanged() ) );
     connect( max_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( OnColorChanged() ) );
 }
@@ -70,4 +77,13 @@ void ElevationPanel::Reset()
 {
     min_->Revert();
     max_->Revert();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ElevationPanel::OnEnableVariable
+// Created: AGE 2007-01-18
+// -----------------------------------------------------------------------------
+void ElevationPanel::OnEnableVariable( bool bDenis )
+{
+    layer_.EnableVariableGradient( bDenis );
 }

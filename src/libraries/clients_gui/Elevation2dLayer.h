@@ -51,7 +51,7 @@ public:
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
 
     void SetColors( const QColor& min, const QColor& max );
-    void SetElevations( unsigned short min, unsigned short max );
+    void EnableVariableGradient( bool enable );
     //@}
 
 private:
@@ -66,6 +66,7 @@ private:
     void SetGradient();
     void SetShader();
     void Cleanup();
+    void SetElevations( unsigned short min, unsigned short max );
     //@}
 
 private:
@@ -81,6 +82,10 @@ private:
     QColor min_;
     QColor max_;
     unsigned gradient_;
+
+    bool enabled_;
+    short minElevation_, maxElevation_;
+    geometry::Rectangle2f lastViewport_;
     //@}
 };
 

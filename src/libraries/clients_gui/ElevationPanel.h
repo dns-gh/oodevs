@@ -45,6 +45,7 @@ private slots:
     //! @name Slots
     //@{
     void OnColorChanged();
+    void OnEnableVariable( bool );
     //@}
 
 private:
