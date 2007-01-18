@@ -35,6 +35,7 @@
 #include "PreparationProfile.h"
 #include "WeatherPanel.h"
 #include "FileToolbar.h"
+#include "ProfileDialog.h"
 
 #include "preparation/Exceptions.h"
 
@@ -131,6 +132,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     gui::SymbolIcons* icons = new gui::SymbolIcons( this, widget2d_ );
 
+    ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
+
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
     QVBox* listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
@@ -199,7 +202,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 //    new UnitToolbar( this, controllers );
 //    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02:
 
-    new Menu( this, controllers, *prefDialog );
+    new Menu( this, controllers, *prefDialog, *profileDialog );
 
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );
@@ -223,7 +226,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, GraphicSetup_ABC& setup, const Profile_ABC& profile )
 {
     Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
-    Layer_ABC& elevation2d         = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Elevation2dLayer& elevation2d  = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& terrain             = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );

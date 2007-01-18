@@ -81,5 +81,10 @@ DECLARE_ICON( lock );
 DECLARE_ICON( commandpost );
 DECLARE_ICON( cancel );
 DECLARE_ICON( option_general );
+DECLARE_ICON( check );
+DECLARE_ICON( check_grey );
+DECLARE_ICON( profiles );
+DECLARE_ICON( left_arrow );
+DECLARE_ICON( right_arrow );
 
 #endif // __demo_resources_h_

@@ -11,6 +11,7 @@
 #include "Panels.h"
 #include "moc_Panels.cpp"
 #include "clients_gui/InfoPanel_ABC.h"
+#include "resources.h"
 
 using namespace gui;
 
@@ -25,10 +26,14 @@ Panels::Panels( QWidget* pParent )
 
     QHBox* box = new QHBox( this );
     box->setMaximumHeight( 20 );
-    previous_ = new QPushButton( "<", box );
+    previous_ = new QPushButton( box );
+    previous_->setPixmap( MAKE_PIXMAP( left_arrow ) );
     previous_->setMaximumSize( 20, 20 );
-    next_ = new QPushButton( ">", box );
+    previous_->setFlat( true );
+    next_ = new QPushButton( box );
+    next_->setPixmap( MAKE_PIXMAP( right_arrow ) );
     next_->setMaximumSize( 20, 20 );
+    next_->setFlat( true );
     combo_ = new QComboBox( box );
     combo_->setFocusPolicy( QWidget::StrongFocus );
 

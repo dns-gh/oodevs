@@ -23,7 +23,6 @@ namespace kernel
 namespace xml
 {
     class xistream;
-    class xostream;
 }
 
 class Weather;
@@ -49,7 +48,7 @@ public:
     //@{
     void Purge();
     void Load( const std::string& filename );
-    void Serialize( xml::xostream& xos ) const;
+    void Serialize( const std::string& filename ) const;
     //@}
 
 private:

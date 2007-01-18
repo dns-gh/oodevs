@@ -42,7 +42,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     grid->setRowStretch( 2, 1 );
 
     QHBox* box = new QHBox( this );
-    QLabel* title = new QLabel( tr( "Preferences" ), box );
+    QLabel* title = new QLabel( caption(), box );
     QFont font;
     font.setBold( true );
     font.setPointSize( 16 );
@@ -52,6 +52,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     QLabel* icon = new QLabel( box );
     icon->setPixmap( MAKE_PIXMAP( option_general ) );
     icon->setMaximumWidth( 64 );
+    icon->setBackgroundColor( Qt::white );
     grid->addMultiCellWidget( box, 0, 0, 0, 1 );
 
     QWidgetStack* pages = new QWidgetStack( this );
@@ -74,6 +75,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 
     box = new QHBox( this );
     box->setMargin( 5 );
+    box->setMaximumHeight( 40 );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     QButton* applyBtn = new QPushButton( tr( "Apply" ), box );
     QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );

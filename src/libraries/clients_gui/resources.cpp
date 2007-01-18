@@ -88,6 +88,11 @@
 #include "res/commandpost.xpm"
 #include "res/cancel.xpm"
 #include "res/option_general.xpm"
+#include "res/check.xpm"
+#include "res/check_grey.xpm"
+#include "res/profiles.xpm"
+#include "res/left_arrow.xpm"
+#include "res/right_arrow.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

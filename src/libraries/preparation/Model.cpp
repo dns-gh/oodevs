@@ -20,6 +20,8 @@
 #include "IdManager.h"
 #include "LimitsModel.h"
 #include "WeatherModel.h"
+#include "ProfilesModel.h"
+#include "ProfileFactory.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PathTools.h"
@@ -45,6 +47,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , teamFactory_( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_ ) )
     , formationFactory_( *new FormationFactory( controllers, idManager_ ) )
+    , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
     , orbatFile_( "" )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( teams_ ) )
@@ -52,6 +55,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
+    , profiles_( *new ProfilesModel( profileFactory_ ) )
 {
     // NOTHING
 }
@@ -62,6 +66,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &profiles_;
+    delete &profileFactory_;
     delete &weather_;
     delete &limits_;
     delete &formations_;
@@ -81,6 +87,7 @@ Model::~Model()
 void Model::Purge()
 {
     UpdateName( "" );
+    profiles_.Purge();
     weather_.Purge();
     limits_.Purge();
     formations_.Purge();
@@ -97,14 +104,18 @@ void Model::Purge()
 void Model::Load( const QString& filename )
 {
     xml::xifstream xis( filename.ascii() );
-    std::string orbat, weather;
+    std::string orbat, weather, profiles;
     xis >> start( "Scipio" )
             >> start( "Donnees" )
-            >> content( "ODB", orbat )
-            >> content( "Meteo", weather );
+                >> content( "ODB", orbat )
+                >> content( "Meteo", weather )
+            >> end()
+            >> start( "Dispatcher" )
+                >> content( "Profiles", profiles );
     UpdateName( path_tools::BuildChildPath( filename.ascii(), orbat ).c_str() );
     teams_.Load( orbatFile_, *this );
     weather_.Load( path_tools::BuildChildPath( filename.ascii(), weather ).c_str() );
+    profiles_.Load( path_tools::BuildChildPath( filename.ascii(), profiles ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,8 +131,8 @@ void Model::Save( const QString& filename /*= ""*/ )
     xos << end();
     UpdateName( file.c_str() );
 
-    xml::xofstream weather( path_tools::BuildChildPath( filename.ascii(), "weather.xml" ), xml::encoding( "ISO-8859-1" ) );
-    weather_.Serialize( weather );
+    weather_ .Serialize( path_tools::BuildChildPath( filename.ascii(), "weather.xml" ) );
+    profiles_.Serialize( path_tools::BuildChildPath( filename.ascii(), "profiles.xml" ) );
 }
 
 // -----------------------------------------------------------------------------

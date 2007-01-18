@@ -81,8 +81,9 @@ void WeatherModel::Load( const std::string& filename )
 // Name: WeatherModel::Serialize
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-void WeatherModel::Serialize( xml::xostream& xos ) const
+void WeatherModel::Serialize( const std::string& filename ) const
 {
+    xml::xofstream xos( filename, xml::encoding( "ISO-8859-1" ) );
     xos << start( "Meteo" )
             << start( "Ephemeride" )
                 << content( "HeureLeverSoleil", QString( "%1h%2m%3s" ).arg( sunrise_.hour() ).arg( sunrise_.minute() ).arg( sunrise_.second() ).ascii() )

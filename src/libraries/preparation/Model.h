@@ -34,6 +34,8 @@ class FormationFactory_ABC;
 class IdManager;
 class LimitsModel;
 class WeatherModel;
+class ProfilesModel;
+class ProfileFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -73,6 +75,7 @@ private:
     TeamFactory_ABC& teamFactory_;
     AgentFactory_ABC& agentFactory_;
     FormationFactory_ABC& formationFactory_;
+    ProfileFactory_ABC& profileFactory_;
     std::string orbatFile_;
     QString name_;
     //@}
@@ -86,6 +89,7 @@ public:
     FormationModel& formations_;
     LimitsModel& limits_;
     WeatherModel& weather_;
+    ProfilesModel& profiles_;
     //@}
 
 private:
