@@ -49,8 +49,6 @@ public:
 
     bool IsReadable ( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
-    bool InheritsReadable ( const kernel::Entity_ABC& entity ) const;
-    bool InheritsWriteable( const kernel::Entity_ABC& entity ) const;
     //@}
 
     //! @name Setters

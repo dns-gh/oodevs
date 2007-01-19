@@ -8,18 +8,18 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "UserProfileRights.h"
-#include "moc_UserProfileRights.cpp"
+#include "UserProfileUnitRights.h"
+#include "moc_UserProfileUnitRights.cpp"
 #include "PreparationProfile.h"
 
 using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights constructor
+// Name: UserProfileUnitRights constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileRights::UserProfileRights( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, SymbolIcons& icons )
+UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, SymbolIcons& icons )
     : HierarchyListView< TacticalHierarchies >( parent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , UserProfileRights_ABC( this )
 {
@@ -27,48 +27,48 @@ UserProfileRights::UserProfileRights( QWidget* parent, Controllers& controllers,
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights destructor
+// Name: UserProfileUnitRights destructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileRights::~UserProfileRights()
+UserProfileUnitRights::~UserProfileUnitRights()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights::viewportResizeEvent
+// Name: UserProfileUnitRights::viewportResizeEvent
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-void UserProfileRights::viewportResizeEvent( QResizeEvent* e )
+void UserProfileUnitRights::viewportResizeEvent( QResizeEvent* e )
 {
     QScrollView::viewportResizeEvent( e );
     setColumnWidth( 0, -1 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights::setColumnWidth
+// Name: UserProfileUnitRights::setColumnWidth
 // Created: SBO 2006-11-30
 // -----------------------------------------------------------------------------
-void UserProfileRights::setColumnWidth( int column, int w )
+void UserProfileUnitRights::setColumnWidth( int column, int w )
 {
     QListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) - columnWidth( 2 ) : w );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights::showEvent
+// Name: UserProfileUnitRights::showEvent
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------
-void UserProfileRights::showEvent( QShowEvent* event )
+void UserProfileUnitRights::showEvent( QShowEvent* event )
 {
     OnShow();
     T_Parent::showEvent( event );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileRights::OnItemClicked
+// Name: UserProfileUnitRights::OnItemClicked
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
-void UserProfileRights::OnItemClicked( QListViewItem* item, const QPoint& point, int column )
+void UserProfileUnitRights::OnItemClicked( QListViewItem* item, const QPoint& point, int column )
 {
     UserProfileRights_ABC::OnItemClicked( item, point, column );
 }

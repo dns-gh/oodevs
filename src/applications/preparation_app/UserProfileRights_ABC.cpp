@@ -24,6 +24,7 @@ using namespace kernel;
 UserProfileRights_ABC::UserProfileRights_ABC( QListView* listView )
     : listView_( listView )
     , selectedProfile_( 0 )
+    , hasChanged_( true )
 {
     listView_->header()->show();
     listView_->addColumn( tools::translate( "UserProfileRights", "Read" ) , 40 );
@@ -82,6 +83,7 @@ void UserProfileRights_ABC::Display( const UserProfile& profile )
 {
     CloseAll();
     listView_->setDisabled( false );
+    hasChanged_ = selectedProfile_ != &profile;
     selectedProfile_ = &profile;
     ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
     while( value )
@@ -119,7 +121,7 @@ void UserProfileRights_ABC::OnItemClicked( QListViewItem* item, const QPoint&, i
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::OnShow()
 {
-    if( selectedProfile_ )
+    if( selectedProfile_ && hasChanged_ )
         Display( *selectedProfile_ );
 }
 

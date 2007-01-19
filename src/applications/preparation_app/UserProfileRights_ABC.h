@@ -83,6 +83,7 @@ private:
     //@{
     QListView* listView_;
     const UserProfile* selectedProfile_;
+    bool hasChanged_;
     //@}
 };
 

@@ -267,31 +267,3 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
     else if( model_.agents_.FindPopulation( id ) )
         SetRight( id, writePopulations_, writeable );
 }
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::InheritsReadable
-// Created: SBO 2007-01-17
-// -----------------------------------------------------------------------------
-bool UserProfile::InheritsReadable( const kernel::Entity_ABC& entity ) const
-{
-    const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
-    if( !superior )
-        return false;
-    if( IsReadable( *superior ) )
-        return true;
-    return InheritsReadable( *superior );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::InheritsWriteable
-// Created: SBO 2007-01-17
-// -----------------------------------------------------------------------------
-bool UserProfile::InheritsWriteable( const kernel::Entity_ABC& entity ) const
-{
-    const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
-    if( !superior )
-        return false;
-    if( IsWriteable( *superior ) )
-        return true;
-    return InheritsWriteable( *superior );
-}

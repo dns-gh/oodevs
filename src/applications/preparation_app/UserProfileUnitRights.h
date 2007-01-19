@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UserProfileRights_h_
-#define __UserProfileRights_h_
+#ifndef __UserProfileUnitRights_h_
+#define __UserProfileUnitRights_h_
 
 #include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -20,21 +20,21 @@ namespace
 }
 
 // =============================================================================
-/** @class  UserProfileRights
-    @brief  UserProfileRights
+/** @class  UserProfileUnitRights
+    @brief  UserProfileUnitRights
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class UserProfileRights : public ::T_Parent
-                        , public UserProfileRights_ABC
+class UserProfileUnitRights : public ::T_Parent
+                            , public UserProfileRights_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileRights( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons );
-    virtual ~UserProfileRights();
+             UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons );
+    virtual ~UserProfileUnitRights();
     //@}
 
 private slots:
@@ -46,8 +46,8 @@ private slots:
 private:
     //! @name Copy/Assignment
     //@{
-    UserProfileRights( const UserProfileRights& );            //!< Copy constructor
-    UserProfileRights& operator=( const UserProfileRights& ); //!< Assignment operator
+    UserProfileUnitRights( const UserProfileUnitRights& );            //!< Copy constructor
+    UserProfileUnitRights& operator=( const UserProfileUnitRights& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -58,4 +58,4 @@ private:
     //@}
 };
 
-#endif // __UserProfileRights_h_
+#endif // __UserProfileUnitRights_h_

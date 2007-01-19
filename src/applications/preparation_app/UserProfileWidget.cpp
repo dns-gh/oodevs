@@ -9,7 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "UserProfileWidget.h"
-#include "UserProfileRights.h"
+#include "UserProfileUnitRights.h"
 #include "UserProfilePopulationRights.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
@@ -39,7 +39,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     new QLabel( tr( "Supervisor actions:" ), holder );
     supervisor_ = new QCheckBox( holder );
     QTabWidget* tabs = new QTabWidget( group );
-    UserProfileRights* unitRights = new UserProfileRights( tabs, controllers, factory, icons );
+    UserProfileUnitRights* unitRights = new UserProfileUnitRights( tabs, controllers, factory, icons );
     tabs->addTab( unitRights, tr( "Units" ) );
     unitRights_ = unitRights;
     UserProfilePopulationRights* populationRights = new UserProfilePopulationRights( tabs, controllers, factory );
