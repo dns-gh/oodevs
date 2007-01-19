@@ -32,6 +32,7 @@ Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& 
     , modelLoaded_( false )
     , min_( Qt::white )
     , max_( Qt::black )
+    , updateGradient_( true )
     , gradient_( 0 )
     , enabled_( true )
     , minElevation_( 0 )
@@ -57,8 +58,7 @@ void Elevation2dLayer::SetColors( const QColor& min, const QColor& max )
 {
     min_ = min;
     max_ = max;
-    glDeleteTextures( 1, &gradient_ );
-    gradient_ = 0;
+    updateGradient_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,8 +153,9 @@ void Elevation2dLayer::SetGradient()
     gl::glActiveTexture( gl::GL_TEXTURE1 );
     glDisable( GL_TEXTURE_2D );
     glEnable( GL_TEXTURE_1D );
-    if( ! gradient_ )
+    if( updateGradient_ )
     {
+        glDeleteTextures( 1, &gradient_ );
         glGenTextures( 1, &gradient_ );
         glBindTexture( GL_TEXTURE_1D, gradient_ );
         unsigned char gradient[] = 
@@ -164,6 +165,7 @@ void Elevation2dLayer::SetGradient()
         glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S , gl::GL_CLAMP_TO_EDGE );
+        updateGradient_ = false;
     }
     glBindTexture( GL_TEXTURE_1D, gradient_ );
     gl::glActiveTexture( gl::GL_TEXTURE0 );
@@ -195,5 +197,6 @@ void Elevation2dLayer::Reset()
     layer_.reset();
     glDeleteTextures( 1, &gradient_ );
     gradient_ = 0;
+    updateGradient_ = true;
     lastViewport_ = geometry::Rectangle2f();
 }

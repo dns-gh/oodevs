@@ -82,6 +82,7 @@ private:
 
     QColor min_;
     QColor max_;
+    bool updateGradient_;
     unsigned gradient_;
 
     bool enabled_;
