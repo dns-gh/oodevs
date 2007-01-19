@@ -19,6 +19,7 @@
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/TacticalHierarchies.h"
 
 #include "gaming/Decisions.h"
 #include "gaming/AutomatDecisions.h"
@@ -89,6 +90,8 @@ void MissionPanel::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu 
         selectedEntity_ = &agent;
         if( const Decisions* decisions = agent.Retrieve< Decisions >() )
             AddAgentMissions( *decisions, menu );
+        if( const Automat_ABC* automat = static_cast< const Automat_ABC* >( agent.Get< kernel::TacticalHierarchies >().GetSuperior() ) )
+            AddAutomatMissions( automat->Get< AutomatDecisions >(), menu );
     }
 }
 
@@ -239,7 +242,10 @@ void MissionPanel::ActivateAutomatMission( int id )
     hide();
     delete pMissionInterface_;
     Mission& mission = ((Resolver_ABC< Mission >&)static_.types_).Get( id );
-    pMissionInterface_ = new AutomateMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
+    Entity_ABC* entity = selectedEntity_.ConstCast();
+    if( !entity->Retrieve< AutomatDecisions >() )
+        entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
+    pMissionInterface_ = new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceFactory_, *interfaceBuilder_ );
     setWidget( pMissionInterface_ );
     resize( 10, 10 );
     show();
