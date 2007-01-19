@@ -46,15 +46,13 @@ public:
     //! @name Operations
     //@{
     virtual void Start               ();
-    virtual void Stop                ();
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
     //@}
 
 private:
     //! @name Tools
     //@{
-    void StartBehavior();
-    void StopBehavior ();
+    void Stop();
     //@}
 
     //! @name Network

@@ -87,6 +87,7 @@ MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate, const MIL_Auto
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::~MIL_AutomateMission()
 {
+    Stop();
 }
 
 // =============================================================================
@@ -121,11 +122,10 @@ bool MIL_AutomateMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrd
 // -----------------------------------------------------------------------------
 void MIL_AutomateMission::Start()
 {
-    if( !bDIAMrtBehaviorActivated_ )
-    {
-        automate_.GetDecision().StartMissionMrtBehavior( *this );
-        bDIAMrtBehaviorActivated_ = true;
-    }
+    assert( !bDIAMrtBehaviorActivated_ );
+
+    automate_.GetDecision().StartMissionMrtBehavior( *this );
+    bDIAMrtBehaviorActivated_ = true;
     Send();
     SendMsgOrderManagement( EnumOrderState::started );
 }
@@ -137,16 +137,15 @@ void MIL_AutomateMission::Start()
 void MIL_AutomateMission::Stop()
 {
     if( bDIAMrtBehaviorActivated_ )
-    {
         automate_.GetDecision().StopMissionMrtBehavior( *this );
-        bDIAMrtBehaviorActivated_ = false;
-    }
     if( bDIACdtBehaviorActivated_ )
-    {
         automate_.GetDecision().StopMissionConduiteBehavior( *this );
-        bDIACdtBehaviorActivated_ = false;
-    }
-    SendMsgOrderManagement( EnumOrderState::stopped );
+
+    if( bDIACdtBehaviorActivated_ || bDIAMrtBehaviorActivated_ )
+        SendMsgOrderManagement( EnumOrderState::stopped );
+
+    bDIACdtBehaviorActivated_ = false;
+    bDIAMrtBehaviorActivated_ = false;    
 }
 
 // -----------------------------------------------------------------------------
@@ -155,14 +154,14 @@ void MIL_AutomateMission::Stop()
 // -----------------------------------------------------------------------------
 void MIL_AutomateMission::GoToCdt()
 {
-    assert( bDIAMrtBehaviorActivated_ );
+    assert(  bDIAMrtBehaviorActivated_ );
     assert( !bDIACdtBehaviorActivated_ );
 
     automate_.GetDecision().StopMissionMrtBehavior( *this );
     bDIAMrtBehaviorActivated_ = false;
 
     automate_.GetDecision().StartMissionConduiteBehavior( *this );
-    bDIAMrtBehaviorActivated_ = true;
+    bDIACdtBehaviorActivated_ = true;
 }
 
 // =============================================================================

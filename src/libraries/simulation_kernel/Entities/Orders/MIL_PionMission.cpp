@@ -92,6 +92,7 @@ MIL_PionMission::MIL_PionMission( const MIL_PionMissionType& type, MIL_AgentPion
 // -----------------------------------------------------------------------------
 MIL_PionMission::~MIL_PionMission()
 {
+    Stop();
 }
 
 // =============================================================================
@@ -126,11 +127,10 @@ bool MIL_PionMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderTy
 // -----------------------------------------------------------------------------
 void MIL_PionMission::Start()
 {
-    if( !bDIABehaviorActivated_ )
-    {
-        pion_.GetDecision().StartMissionBehavior( *this );
-        bDIABehaviorActivated_ = true;
-    }
+    assert( !bDIABehaviorActivated_ );
+
+    pion_.GetDecision().StartMissionBehavior( *this );
+    bDIABehaviorActivated_ = true;
     Send();
     SendMsgOrderManagement( EnumOrderState::started );
 }
@@ -144,9 +144,9 @@ void MIL_PionMission::Stop()
     if( bDIABehaviorActivated_ )
     {
         pion_.GetDecision().StopMissionBehavior( *this );
+        SendMsgOrderManagement( EnumOrderState::stopped );
         bDIABehaviorActivated_ = false;
     }
-    SendMsgOrderManagement( EnumOrderState::stopped );
 }
 
 // =============================================================================

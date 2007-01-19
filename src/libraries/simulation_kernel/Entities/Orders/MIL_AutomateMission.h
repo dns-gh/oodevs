@@ -48,7 +48,6 @@ public:
     //! @name Operations
     //@{
     virtual void                 Start               ();
-    virtual void                 Stop                ();
             void                 GoToCdt             ();
     virtual bool                 IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
             MIL_AutomateMission& CreateCopy          ( MIL_Automate& target ) const;
@@ -57,6 +56,8 @@ public:
 private:
     //! @name Tools
     //@{
+    void Stop();
+
     void StartMrtBehavior();
     void StopMrtBehavior ();
     void StartCdtBehavior();

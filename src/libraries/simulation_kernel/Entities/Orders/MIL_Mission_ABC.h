@@ -41,7 +41,6 @@ public:
      //! @name Operations
     //@{
     virtual void Start               () = 0;
-    virtual void Stop                () = 0;
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const = 0;
     //@}
 

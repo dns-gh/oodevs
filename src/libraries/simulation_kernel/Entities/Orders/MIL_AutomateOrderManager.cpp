@@ -11,8 +11,6 @@
 
 #include "MIL_AutomateOrderManager.h"
 
-
-//#include "MIL_PionMissionType.h"
 #include "MIL_PionMission.h"
 
 #include "MIL_AutomateMissionType.h"
@@ -25,13 +23,7 @@
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-//#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
-//#include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-//
-//#includ"
-
-
 
 #include "Network/NET_AsnException.h"
 

@@ -91,7 +91,6 @@ void MIL_OrderManager_ABC::StopAllMissions()
     }
     if( pMission_ )
     {
-        pMission_->Stop();
         delete pMission_;
         pMission_ = 0;
     }

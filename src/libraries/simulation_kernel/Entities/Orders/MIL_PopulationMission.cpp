@@ -48,35 +48,12 @@ MIL_PopulationMission::MIL_PopulationMission( const MIL_PopulationMissionType& t
 // -----------------------------------------------------------------------------
 MIL_PopulationMission::~MIL_PopulationMission()
 {
+    Stop();
 }
 
 // =============================================================================
 // TOOLS
 // =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission::StartBehavior
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_PopulationMission::StartBehavior()
-{
-    if( bDIABehaviorActivated_ )
-        return;
-    population_.GetDecision().StartMissionBehavior( *this );
-    bDIABehaviorActivated_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationMission::StopBehavior
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_PopulationMission::StopBehavior()
-{
-    if( bDIABehaviorActivated_ )
-        return;
-    population_.GetDecision().StopMissionBehavior( *this );
-    bDIABehaviorActivated_ = true;
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission::IsFragOrderAvailable
@@ -97,7 +74,10 @@ bool MIL_PopulationMission::IsFragOrderAvailable( const MIL_FragOrderType& fragO
 // -----------------------------------------------------------------------------
 void MIL_PopulationMission::Start()
 {
-    StartBehavior();
+    assert( !bDIABehaviorActivated_ );
+
+    population_.GetDecision().StartMissionBehavior( *this );
+    bDIABehaviorActivated_ = true;
     Send();
     SendMsgOrderManagement( EnumOrderState::started );
 }
@@ -108,8 +88,12 @@ void MIL_PopulationMission::Start()
 // -----------------------------------------------------------------------------
 void MIL_PopulationMission::Stop()
 {
-    StopBehavior();
-    SendMsgOrderManagement( EnumOrderState::stopped );
+    if( bDIABehaviorActivated_ )
+    {
+        population_.GetDecision().StopMissionBehavior( *this );
+        bDIABehaviorActivated_ = false;
+        SendMsgOrderManagement( EnumOrderState::stopped );
+    }    
 }
 
 // =============================================================================

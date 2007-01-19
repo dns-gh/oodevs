@@ -50,13 +50,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual void              Start               ();
-    virtual void              Stop                ();
-    virtual bool              IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
+    virtual void             Start               ();
+    virtual bool             IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
             MIL_PionMission& CreateCopy          ( MIL_AgentPion& target ) const;
     //@}
 
 private:
+    //! @name Tools
+    //@{
+    void Stop();
+    //@}
+
     //! @name Network
     //@{
     void Send                  () const;
