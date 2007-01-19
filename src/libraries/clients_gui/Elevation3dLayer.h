@@ -60,6 +60,7 @@ public:
     //@{
     virtual void Paint( const ViewFrustum& frustum );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
+    virtual void Reset();
     //@}
 
 private:

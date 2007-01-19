@@ -39,6 +39,7 @@ Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::s
     , zRatio_( 5 )
     , frame_( 0 )
     , pixels_( 100.f )
+    , isInitialized_( false )
 {
     // NOTHING
 }
@@ -68,14 +69,13 @@ void Gl3dWidget::Register( Layer_ABC& layer )
 // -----------------------------------------------------------------------------
 void Gl3dWidget::initializeGL()
 {
-    static bool isInitialized = false;
-    if( !isInitialized )
+    if( !isInitialized_ )
     {
         const geometry::Rectangle2f viewport( 0, 0, width_, height_ );
         Widget3D::initializeGL();
         for( CIT_Layers it = layers_.begin(); it != layers_.end(); ++it )
             (*it)->Initialize( viewport );
-        isInitialized = true;
+        isInitialized_ = true;
         CenterView();
     }
 }

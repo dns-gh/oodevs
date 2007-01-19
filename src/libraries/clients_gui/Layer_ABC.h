@@ -42,6 +42,9 @@ public:
 
     virtual void RegisterIn( Gl3dWidget& widget );
     virtual void RegisterIn( GlWidget& widget );
+
+    virtual void Reset2d();
+    virtual void Reset3d();
     //@}
 };
 
@@ -68,6 +71,8 @@ public:
 
     void SetAlpha( float alpha ) { alpha_ = alpha; };
     float GetAlpha() const       { return alpha_; };
+    virtual void Reset2d()       { Reset(); }
+    virtual void Reset() {};
     //@}
 
 private:
@@ -97,6 +102,8 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& ) {}
     virtual void RegisterIn( GlWidget& ) {}
+    virtual void Reset3d()       { Reset(); }
+    virtual void Reset() {};
     //@}
 };
 

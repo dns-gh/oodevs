@@ -44,6 +44,9 @@ public:
     void ChangeTo( Gl3dWidget* newWidget );
     void ChangeTo( GlWidget* newWidget );
 
+    void Reset2d();
+    void Reset3d();
+
     void Register       ( Layer_ABC& layer );
 
     virtual void CenterOn( const geometry::Point2f& point );

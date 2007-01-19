@@ -90,8 +90,6 @@ void Elevation2dLayer::SetElevations( unsigned short min, unsigned short max )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
-    extrema_.reset();
-    layer_.reset();
     modelLoaded_ = true;
 }
 
@@ -184,4 +182,18 @@ void Elevation2dLayer::SetShader()
         SetElevations( 0, elevation_.MaximumElevation() );
     }
     shader_->Use();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::Reset
+// Created: AGE 2007-01-19
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::Reset()
+{
+    extrema_.reset();
+    shader_.reset();
+    layer_.reset();
+    glDeleteTextures( 1, &gradient_ );
+    gradient_ = 0;
+    lastViewport_ = geometry::Rectangle2f();
 }

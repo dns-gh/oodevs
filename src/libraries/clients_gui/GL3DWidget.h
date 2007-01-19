@@ -111,6 +111,7 @@ private:
     float zRatio_;
     unsigned int frame_;
     float pixels_;
+    bool isInitialized_;
     //@}
 };
 

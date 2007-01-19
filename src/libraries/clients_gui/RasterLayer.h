@@ -48,6 +48,7 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
+    virtual void Reset();
     //@}
 
 private:
@@ -55,10 +56,6 @@ private:
     //@{
     RasterLayer( const RasterLayer& );            //!< Copy constructor
     RasterLayer& operator=( const RasterLayer& ); //!< Assignement operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

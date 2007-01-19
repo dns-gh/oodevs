@@ -305,7 +305,6 @@ void MainWindow::Open()
         Close();
         QMessageBox::critical( this, APP_NAME, e.what() );
     }
-
 }
 
 // -----------------------------------------------------------------------------

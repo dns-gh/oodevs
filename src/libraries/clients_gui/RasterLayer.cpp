@@ -74,3 +74,13 @@ void RasterLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )
 {
     Load( modelLoaded.scipioXml_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RasterLayer::Reset
+// Created: AGE 2007-01-19
+// -----------------------------------------------------------------------------
+void RasterLayer::Reset()
+{
+    textures_.reset();
+    ignore_ = false;
+}

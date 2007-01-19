@@ -112,7 +112,6 @@ void GlProxy::CheckTools() const
 // -----------------------------------------------------------------------------
 void GlProxy::CenterOn( const geometry::Point2f& point )
 {
-//    CheckView();
     view_->CenterOn( point );
 }
 
@@ -122,7 +121,6 @@ void GlProxy::CenterOn( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 bool GlProxy::Select( bool b ) const
 {
-//    CheckTools();
     return tools_->Select( b );
 }
 
@@ -132,7 +130,6 @@ bool GlProxy::Select( bool b ) const
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldDisplay( const std::string& name ) const
 {
-//    CheckTools();
     return tools_->ShouldDisplay( name );
 }
 
@@ -142,7 +139,6 @@ bool GlProxy::ShouldDisplay( const std::string& name ) const
 // -----------------------------------------------------------------------------
 bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 {
-//    CheckTools();
     return tools_->ShouldDisplay( name, autoCondition );
 }
 
@@ -152,7 +148,6 @@ bool GlProxy::ShouldDisplay( const std::string& name, bool autoCondition ) const
 // -----------------------------------------------------------------------------
 float GlProxy::Pixels() const
 {
-//    CheckTools();
     return tools_->Pixels();
 }
 
@@ -162,7 +157,6 @@ float GlProxy::Pixels() const
 // -----------------------------------------------------------------------------
 unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 {
-//    CheckTools();
     return tools_->StipplePattern( factor );
 }
 
@@ -172,7 +166,6 @@ unsigned short GlProxy::StipplePattern( int factor /*= 1*/ ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCross( const geometry::Point2f& at, float size /*= -1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawCross( at, size );
 }
 
@@ -182,7 +175,6 @@ void GlProxy::DrawCross( const geometry::Point2f& at, float size /*= -1.f*/ ) co
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& to ) const
 {
-//    CheckTools();
     tools_->DrawLine( from, to );
 }
 
@@ -192,7 +184,6 @@ void GlProxy::DrawLine( const geometry::Point2f& from, const geometry::Point2f& 
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLines( const T_PointVector& points ) const
 {
-//    CheckTools();
     tools_->DrawLines( points );
 }
 
@@ -202,7 +193,6 @@ void GlProxy::DrawLines( const T_PointVector& points ) const
 // -----------------------------------------------------------------------------
 void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f& to, float size /*= -1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawArrow( from, to, size );
 }
 
@@ -212,7 +202,6 @@ void GlProxy::DrawArrow( const geometry::Point2f& from, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCurvedArrow( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio /*= 0.2f*/, float size /*= -1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawCurvedArrow( from, to, curveRatio, size );
 }
 
@@ -231,7 +220,6 @@ void GlProxy::DrawArc( const geometry::Point2f& center, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawCircle( center, radius );
 }
 
@@ -241,7 +229,6 @@ void GlProxy::DrawCircle( const geometry::Point2f& center, float radius /*= -1.f
 // -----------------------------------------------------------------------------
 void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawDisc( center, radius );
 }
 
@@ -251,7 +238,6 @@ void GlProxy::DrawDisc( const geometry::Point2f& center, float radius /*= -1.f*/
 // -----------------------------------------------------------------------------
 void GlProxy::DrawLife( const geometry::Point2f& center, float height, float factor /*= 1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawLife( center, height, factor );
 }
 
@@ -261,7 +247,6 @@ void GlProxy::DrawLife( const geometry::Point2f& center, float height, float fac
 // -----------------------------------------------------------------------------
 void GlProxy::Print( const std::string& message, const geometry::Point2f& where ) const
 {
-//    CheckTools();
     tools_->Print( message, where );
 }
 
@@ -271,7 +256,6 @@ void GlProxy::Print( const std::string& message, const geometry::Point2f& where 
 // -----------------------------------------------------------------------------
 void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f& where, float factor /*= 1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawApp6Symbol( symbol, where, factor );
 }
 
@@ -281,7 +265,6 @@ void GlProxy::DrawApp6Symbol( const std::string& symbol, const geometry::Point2f
 // -----------------------------------------------------------------------------
 void GlProxy::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
 {
-//    CheckTools();
     tools_->DrawIcon( xpm, where, size );
 }
 
@@ -301,4 +284,24 @@ void GlProxy::DrawImage( const QImage& image, const geometry::Point2f& where ) c
 void GlProxy::DrawCell( const geometry::Point2f& center ) const
 {
     tools_->DrawCell( center );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::Reset2d
+// Created: AGE 2007-01-19
+// -----------------------------------------------------------------------------
+void GlProxy::Reset2d()
+{
+    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        (*it)->Reset2d();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GlProxy::Reset3d
+// Created: AGE 2007-01-19
+// -----------------------------------------------------------------------------
+void GlProxy::Reset3d()
+{
+    for( IT_Layers it = layers_.begin(); it != layers_.end(); ++it )
+        (*it)->Reset3d();
 }

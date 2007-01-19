@@ -52,6 +52,7 @@ public:
 
     void SetColors( const QColor& min, const QColor& max );
     void EnableVariableGradient( bool enable );
+    virtual void Reset();
     //@}
 
 private:

@@ -57,6 +57,7 @@ public:
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
+    virtual void Reset();
     //@}
 
 private:

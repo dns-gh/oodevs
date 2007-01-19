@@ -359,8 +359,19 @@ void MainWindow::Load( const std::string& scipioXml )
 {
     BuildIconLayout();
     scipioXml_ = scipioXml;
-    delete widget3d_; widget3d_ = 0;
-    delete widget2d_;
+    if( widget3d_ )
+    {
+        widget3d_->makeCurrent();
+        glProxy_->Reset3d();
+        delete widget3d_; widget3d_ = 0;
+    }
+    if( widget2d_ )
+    {
+        widget2d_->makeCurrent();
+        glProxy_->Reset2d();
+        delete widget2d_; widget2d_ = 0;
+    }
+
     widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
     widget2d_->Configure( *eventStrategy_ );

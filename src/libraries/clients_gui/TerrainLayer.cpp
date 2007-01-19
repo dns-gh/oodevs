@@ -70,7 +70,6 @@ void TerrainLayer::Purge()
 void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
     parameters_.Load( modelLoaded.scipioXml_ );
-    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -390,3 +389,11 @@ int TerrainLayer::ShapeTraits::CompareOnY( float rValue, TesselatedShape*const& 
                 , shape->BoundingBox().TopRight() ).CompareOnY( rValue );
 }
 
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::Reset
+// Created: AGE 2007-01-19
+// -----------------------------------------------------------------------------
+void TerrainLayer::Reset()
+{
+    Purge();
+}

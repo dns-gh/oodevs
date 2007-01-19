@@ -54,7 +54,6 @@ Elevation3dLayer::~Elevation3dLayer()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    textures_.reset( 0 );
     Load( modelLoaded.scipioXml_ );
 }
 
@@ -174,4 +173,19 @@ void Elevation3dLayer::CreateTextures()
     {
          // $$$$ AGE 2007-01-03: 
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Elevation3dLayer::Reset
+// Created: AGE 2007-01-19
+// -----------------------------------------------------------------------------
+void Elevation3dLayer::Reset()
+{
+    lastFrustum_ = ViewFrustum();
+    usrp_.reset();
+    normals_.reset();
+    textures_.reset();
+    fragment_.reset();
+    program_.reset();
+    zRatio_ = 5.f;
 }
