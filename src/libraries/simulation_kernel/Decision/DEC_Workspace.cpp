@@ -232,16 +232,15 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
 
     std::string    strErrors;
     T_StringVector openedFiles;
+    std::string strScript;
+    initArchive.ReadField( "DIATypes", strScript );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
     {
-        if( !DIA_ReadScript_TypesBin( strBinaryPath + "/models/type.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_TypesBin( strScript, strBinaryPath + "/models/type.bin", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading type file", strErrors );
     }
     else
     {
-        std::string strScript;
-        initArchive.ReadField( "DIATypes", strScript );
-
         // Check if the script files has been modified
         std::string strOpenedFileArchiveName = strBinaryPath + "/files/type_file.bin";
         bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
@@ -268,16 +267,15 @@ void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool&
 
     std::string    strErrors;
     T_StringVector openedFiles;
+    std::string strScript;
+    initArchive.ReadField( "DIAWorkspace", strScript );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
     {
-        if( !DIA_ReadScript_WorkspaceBin( strBinaryPath + "/models/workspace.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_WorkspaceBin( strScript, strBinaryPath + "/models/workspace.bin", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading workspace file", strErrors );
     }
     else
     {
-        std::string strScript;
-        initArchive.ReadField( "DIAWorkspace", strScript );
-
         std::string strOpenedFileArchiveName = strBinaryPath + "/files/workspace_file.bin";
         bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
 
