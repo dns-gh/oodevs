@@ -1305,6 +1305,14 @@
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Profiles...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profi&amp;les</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterface_ABC</name>

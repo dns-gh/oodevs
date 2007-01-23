@@ -27,6 +27,8 @@
 #include "WeatherModel.h"
 #include "StaticModel.h"
 #include "TacticalLineFactory.h"
+#include "UserProfilesModel.h"
+#include "UserProfileFactory.h"
 
 using namespace kernel;
 
@@ -46,6 +48,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , fireFactory_( *new FireFactory( *this ) )
     , tacticalLineFactory_( *new TacticalLineFactory( controllers, staticModel.coordinateConverter_, *this, publisher ) )
     , fireResultsFactory_( *new FireResultFactory( *this ) )
+    , userProfileFactory_( *new UserProfileFactory( *this, controllers, publisher ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -54,6 +57,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , limits_( *new LimitsModel( tacticalLineFactory_  ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
+    , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
 {
     // NOTHING
 }
@@ -64,6 +68,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &profiles_;
     delete &weather_;
     delete &fires_;
     delete &limits_;
@@ -72,6 +77,7 @@ Model::~Model()
     delete &teams_;
     delete &objects_;
     delete &agents_;
+    delete &userProfileFactory_;
     delete &fireResultsFactory_;
     delete &tacticalLineFactory_;
     delete &fireFactory_;
@@ -89,13 +95,15 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    // $$$$ SBO 2007-01-19: limits_ ?
+    profiles_.Purge();
+    weather_.Purge();
     logistics_.Purge();
     fires_.Purge();
     agents_.Purge();
     objects_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
-    weather_.Purge();
 }
     
 

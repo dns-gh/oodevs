@@ -109,3 +109,75 @@ Profile* ProfileManager::Authenticate( const std::string& strName, const std::st
     return it->second;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::Find
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+Profile* ProfileManager::Find( const std::string& strName ) const
+{
+    CIT_ProfileMap it = profiles_.find( strName );
+    if( it != profiles_.end() )
+        return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::Send
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+void ProfileManager::Send( Publisher_ABC& publisher ) const
+{
+    for( CIT_ProfileMap it = profiles_.begin(); it != profiles_.end(); ++it )
+        it->second->SendCreation( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::Create
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+ASN1T_MsgProfileCreationRequestAck_error_code ProfileManager::Create( const ASN1T_MsgProfileCreationRequest& message )
+{
+    const std::string login = message.login;
+    if( login.empty() )
+        return MsgProfileCreationRequestAck_error_code::invalid_login;
+    // $$$$ SBO 2007-01-22: check password if needed (maybe add a way to specify password constraints...)
+    Profile*& pProfile = profiles_[ login ];
+    if( pProfile )
+        return MsgProfileCreationRequestAck_error_code::duplicate_login;
+    MT_LOG_INFO_MSG( "New profile created : '" << login << "'" );
+    pProfile = new Profile( dispatcher_, message );
+    return MsgProfileCreationRequestAck_error_code::success;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::Update
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+ASN1T_MsgProfileUpdateRequestAck_error_code ProfileManager::Update( const ASN1T_MsgProfileUpdateRequest& message )
+{
+    Profile*& pProfile = profiles_[ message.login ];
+    if( !pProfile )
+        return MsgProfileUpdateRequestAck_error_code::invalid_profile;
+    const std::string newLogin = message.profile.login;
+    if( newLogin.empty() )
+        return MsgProfileUpdateRequestAck_error_code::invalid_login;
+    if( newLogin != message.login && profiles_.find( newLogin ) != profiles_.end() )
+        return MsgProfileUpdateRequestAck_error_code::duplicate_login;
+    // $$$$ SBO 2007-01-22: check password id needed
+    pProfile->Update( message );
+    return MsgProfileUpdateRequestAck_error_code::success;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileManager::Destroy
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+ASN1T_MsgProfileDestructionRequestAck_error_code ProfileManager::Destroy( const ASN1T_MsgProfileDestructionRequest& message )
+{
+    T_ProfileMap::iterator it = profiles_.find( message );
+    if( it == profiles_.end() )
+        return MsgProfileDestructionRequestAck_error_code::invalid_profile;
+    delete it->second;
+    profiles_.erase( it );
+    return MsgProfileDestructionRequestAck_error_code::success;
+}

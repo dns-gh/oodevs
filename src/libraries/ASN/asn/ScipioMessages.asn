@@ -6,8 +6,6 @@
 
 ScipioMessages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
-IMPORTS MsgFormationCreation FROM ScipioFormation;
-
 --
 -- 
 --  
@@ -23,22 +21,22 @@ MsgsOutSim ::= SEQUENCE
         msg-lima-creation-request-ack                           MsgLimaCreationRequestAck,
         msg-lima-destruction-request-ack                        MsgLimaDestructionRequestAck,
         msg-lima-update-request-ack                             MsgLimaUpdateRequestAck,
-                                                                            
+
         msg-pion-order-ack                                      MsgPionOrderAck,
         msg-automate-order-ack                                  MsgAutomateOrderAck,
         msg-population-order-ack                                MsgPopulationOrderAck,
         msg-frag-order-ack                                      MsgFragOrderAck,                                                                
         msg-set-automate-mode-ack                               MsgSetAutomateModeAck,
-                                                                
+
         msg-unit-magic-action-ack                               MsgUnitMagicActionAck,
         msg-object-magic-action-ack                             MsgObjectMagicActionAck,
         msg-population-magic-action-ack                         MsgPopulationMagicActionAck,
-       
+
         msg-change-diplomatie-ack                               MsgChangeDiplomatieAck,
         msg-change-groupe-connaissance-ack                      MsgChangeGroupeConnaissanceAck,
         msg-change-liens-logistiques-ack                        MsgChangeLiensLogistiquesAck,
         msg-change-automate-ack                                 MsgChangeAutomateAck,   
-        
+
         msg-log-ravitaillement-pousser-flux-ack                 MsgLogRavitaillementPousserFluxAck,
         msg-log-ravitaillement-change-quotas-ack                MsgLogRavitaillementChangeQuotasAck,   
 
@@ -67,25 +65,25 @@ MsgsOutSim ::= SEQUENCE
         msg-lima-creation                                       MsgLimaCreation,
         msg-lima-update                                         MsgLimaUpdate,
         msg-lima-destruction                                    MsgLimaDestruction, 
-        
+
         msg-formation-creation                                  MsgFormationCreation,
         msg-knowledge-group-creation                            MsgKnowledgeGroupCreation,
         msg-side-creation                                       MsgSideCreation,
-                
+
         msg-automate-creation                                   MsgAutomateCreation,
         msg-automate-attributes                                 MsgAutomateAttributes,
-        
+
         msg-pion-creation                                       MsgPionCreation,
         msg-unit-attributes                                     MsgUnitAttributes,
         msg-unit-pathfind                                       MsgUnitPathFind,                
-        
+
         msg-change-diplomatie                                   MsgChangeDiplomatie,
         msg-change-automate                                     MsgChangeAutomate,        
         msg-change-liens-logistiques                            MsgChangeLiensLogistiques,
-        
+
         msg-unit-knowledge-creation                             MsgUnitKnowledgeCreation,
         msg-unit-knowledge-update                               MsgUnitKnowledgeUpdate,
-        msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,      
+        msg-unit-knowledge-destruction                          MsgUnitKnowledgeDestruction,
 
         msg-start-pion-fire                                     MsgStartPionFire,
         msg-stop-pion-fire                                      MsgStopPionFire,
@@ -94,7 +92,7 @@ MsgsOutSim ::= SEQUENCE
         msg-explosion                                           MsgExplosion,
         msg-start-fire-effect                                   MsgStartFireEffect,
         msg-stop-fire-effect                                    MsgStopFireEffect,
-        
+
         msg-cr                                                  MsgCR,
 
         msg-pion-order-management                               MsgPionOrderManagement,
@@ -110,23 +108,23 @@ MsgsOutSim ::= SEQUENCE
         msg-object-knowledge-creation                           MsgObjectKnowledgeCreation,
         msg-object-knowledge-update                             MsgObjectKnowledgeUpdate,
         msg-object-knowledge-destruction                        MsgObjectKnowledgeDestruction,
-                  
+
         msg-log-sante-traitement-humain-creation                MsgLogSanteTraitementHumainCreation,
         msg-log-sante-traitement-humain-update                  MsgLogSanteTraitementHumainUpdate,
         msg-log-sante-traitement-humain-destruction             MsgLogSanteTraitementHumainDestruction,
         msg-log-sante-etat                                      MsgLogSanteEtat,
-        
+
         msg-log-maintenance-traitement-equipement-creation      MsgLogMaintenanceTraitementEquipementCreation,
         msg-log-maintenance-traitement-equipement-update        MsgLogMaintenanceTraitementEquipementUpdate,
         msg-log-maintenance-traitement-equipement-destruction   MsgLogMaintenanceTraitementEquipementDestruction,
         msg-log-maintenance-etat                                MsgLogMaintenanceEtat,
-        
+
         msg-log-ravitaillement-traitement-creation              MsgLogRavitaillementTraitementCreation,
         msg-log-ravitaillement-traitement-update                MsgLogRavitaillementTraitementUpdate,
         msg-log-ravitaillement-traitement-destruction           MsgLogRavitaillementTraitementDestruction,
         msg-log-ravitaillement-etat                             MsgLogRavitaillementEtat,
         msg-log-ravitaillement-quotas                           MsgLogRavitaillementQuotas,  
-        
+
         msg-population-creation                                 MsgPopulationCreation,
         msg-population-update                                   MsgPopulationUpdate,
         msg-population-concentration-creation                   MsgPopulationConcentrationCreation,
@@ -135,7 +133,7 @@ MsgsOutSim ::= SEQUENCE
         msg-population-flux-creation                            MsgPopulationFluxCreation,
         msg-population-flux-destruction                         MsgPopulationFluxDestruction,
         msg-population-flux-update                              MsgPopulationFluxUpdate,
-        
+
         msg-population-knowledge-creation                       MsgPopulationKnowledgeCreation,
         msg-population-knowledge-update                         MsgPopulationKnowledgeUpdate,
         msg-population-knowledge-destruction                    MsgPopulationKnowledgeDestruction,
@@ -162,21 +160,21 @@ MsgsInSim ::= SEQUENCE
         msg-ctrl-meteo-locale                   MsgCtrlMeteoLocale,
         msg-ctrl-checkpoint-save-now            MsgCtrlCheckPointSaveNow,
         msg-ctrl-checkpoint-set-frequency       MsgCtrlCheckPointSetFrequency, 
-      
+
         msg-limit-creation-request              MsgLimitCreationRequest,
         msg-limit-destruction-request           MsgLimitDestructionRequest,
         msg-limit-update-request                MsgLimitUpdateRequest,
         msg-lima-creation-request               MsgLimaCreationRequest,
         msg-lima-destruction-request            MsgLimaDestruction,
         msg-lima-update-request                 MsgLimaUpdateRequest,
-                                                        
+
         msg-pion-order                          MsgPionOrder,
         msg-automate-order                      MsgAutomateOrder,
         msg-population-order                    MsgPopulationOrder,
         msg-frag-order                          MsgFragOrder,
-                                                        
+
         msg-set-automate-mode                   MsgSetAutomateMode,
-                                                
+
         msg-unit-magic-action                   MsgUnitMagicAction,
         msg-object-magic-action                 MsgObjectMagicAction,
         msg-population-magic-action             MsgPopulationMagicAction,
@@ -185,7 +183,7 @@ MsgsInSim ::= SEQUENCE
         msg-change-groupe-connaissance          MsgChangeGroupeConnaissance,
         msg-change-liens-logistiques            MsgChangeLiensLogistiques,
         msg-change-automate                     MsgChangeAutomate,
-        
+
         msg-log-ravitaillement-pousser-flux     MsgLogRavitaillementPousserFlux,
         msg-log-ravitaillement-change-quotas    MsgLogRavitaillementChangeQuotas
     }
@@ -246,9 +244,12 @@ MsgsInClient ::= SEQUENCE
         msg-ctrl-send-current-state-end                         MsgCtrlSendCurrentStateEnd,
 
         msg-auth-login-ack                                      MsgAuthLoginAck,
-        msg-ctrl-profile-creation                               MsgCtrlProfileCreation,
-        msg-ctrl-profile-update                                 MsgCtrlProfileUpdate,
-        msg-ctrl-profile-destruction                            MsgCtrlProfileDestruction,
+        msg-profile-creation                                    MsgProfileCreation,
+        msg-profile-creation-request-ack                        MsgProfileCreationRequestAck,
+        msg-profile-update                                      MsgProfileUpdate,
+        msg-profile-update-request-ack                          MsgProfileUpdateRequestAck,
+        msg-profile-destruction                                 MsgProfileDestruction,
+        msg-profile-destruction-request-ack                     MsgProfileDestructionRequestAck,
 
         msg-limit-creation                                      MsgLimitCreation,
         msg-limit-update                                        MsgLimitUpdate,
@@ -352,10 +353,10 @@ MsgsOutClient ::= SEQUENCE
         msg-ctrl-checkpoint-set-frequency       MsgCtrlCheckPointSetFrequency, 
         
         msg-auth-login                          MsgAuthLogin,
-        msg-ctrl-profile-creation               MsgCtrlProfileCreation,
-        msg-ctrl-profile-update                 MsgCtrlProfileUpdate,
-        msg-ctrl-profile-destruction            MsgCtrlProfileDestruction,        
-      
+        msg-profile-creation-request            MsgProfileCreationRequest,
+        msg-profile-update-request              MsgProfileUpdateRequest,
+        msg-profile-destruction-request         MsgProfileDestructionRequest,
+
         msg-limit-creation-request              MsgLimitCreationRequest,
         msg-limit-destruction-request           MsgLimitDestructionRequest,
         msg-limit-update-request                MsgLimitUpdateRequest,

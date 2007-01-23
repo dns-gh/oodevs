@@ -59,11 +59,33 @@ Profile::Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xist
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profile constructor
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+Profile::Profile( Dispatcher& dispatcher, const ASN1T_MsgProfileCreationRequest& message )
+    : dispatcher_           ( dispatcher )
+    , strLogin_             ( message.login )
+    , strPassword_          ( message.m.passwordPresent ? message.password : "" )
+    , readOnlyAutomats_     ()
+    , readOnlySides_        ()
+    , readOnlyFormations_   ()
+    , readOnlyPopulations_  ()
+    , readWriteAutomats_    ()
+    , readWriteSides_       ()
+    , readWriteFormations_  ()
+    , readWritePopulations_ ()
+    , bSupervision_         ( message.superviseur )
+{
+    ReadRights( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Profile destructor
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
+    // NOTHING
 }
 
 // =============================================================================
@@ -135,6 +157,43 @@ void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& contain
 
 }
 
+namespace
+{
+    template< typename T >
+    void SetRights( const ASN1T_ListOID& asn, std::set< T* >& list, const ModelsContainer< T >& model )
+    {
+        list.clear();
+        for( unsigned int i = 0; i < asn.n; ++i )
+            if( T* entity = model.Find( asn.elem[i] ) )
+                list.insert( entity );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::ReadRights
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+void Profile::ReadRights( const ASN1T_Profile& message )
+{
+    Model& model = dispatcher_.GetModel();
+    if( message.m.read_only_automatesPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_only_automates, readOnlyAutomats_, model.GetAutomats() );
+    if( message.m.read_only_campsPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_only_camps, readOnlySides_, model.GetSides() );
+    if( message.m.read_only_formationsPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_only_formations, readOnlyFormations_, model.GetFormations() );
+    if( message.m.read_only_populationsPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_only_populations, readOnlyPopulations_, model.GetPopulations() );
+    if( message.m.read_write_automatesPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_write_automates, readWriteAutomats_, model.GetAutomats() );
+    if( message.m.read_write_campsPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_write_camps, readWriteSides_, model.GetSides() );
+    if( message.m.read_write_formationsPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_write_formations, readWriteFormations_, model.GetFormations() );
+    if( message.m.read_write_populationsPresent )
+        SetRights( (const ASN1T_ListOID&)message.read_write_populations, readWritePopulations_, model.GetPopulations() );
+}
+
 // =============================================================================
 // MAIN
 // =============================================================================
@@ -165,9 +224,9 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
         case T_MsgsOutClient_msg_msg_ctrl_checkpoint_save_now           : return bSupervision_;
         case T_MsgsOutClient_msg_msg_ctrl_checkpoint_set_frequency      : return bSupervision_;
         case T_MsgsOutClient_msg_msg_auth_login                         : return true;
-        case T_MsgsOutClient_msg_msg_ctrl_profile_creation              : return bSupervision_; //$$$ Administration
-        case T_MsgsOutClient_msg_msg_ctrl_profile_update                : return bSupervision_; //$$$ Administration
-        case T_MsgsOutClient_msg_msg_ctrl_profile_destruction           : return bSupervision_; //$$$ Administration
+        case T_MsgsOutClient_msg_msg_profile_creation_request           : return bSupervision_; //$$$ Administration
+        case T_MsgsOutClient_msg_msg_profile_update_request             : return bSupervision_; //$$$ Administration
+        case T_MsgsOutClient_msg_msg_profile_destruction_request        : return bSupervision_; //$$$ Administration
         case T_MsgsOutClient_msg_msg_limit_creation_request             : return true;
         case T_MsgsOutClient_msg_msg_limit_destruction_request          : return true;
         case T_MsgsOutClient_msg_msg_limit_update_request               : return true;
@@ -255,4 +314,31 @@ void Profile::AsnDelete( ASN1T_Profile& asn )
     if( asn.m.read_write_populationsPresent && asn.read_write_populations.n > 0 )
         delete [] asn.read_write_populations.elem;
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::SendCreation
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+void Profile::SendCreation( Publisher_ABC& publisher ) const
+{
+    AsnMsgInClientProfileCreation asn;
+    Send( asn() );
+    asn().m.passwordPresent = 1;
+    asn().password = strPassword_.c_str();
+    asn.Send( publisher );
+    Profile::AsnDelete( asn() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Update
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+void Profile::Update( const ASN1T_MsgProfileUpdateRequest& message )
+{
+    strLogin_ = message.profile.login;
+    if( message.profile.m.passwordPresent )
+        strPassword_ = message.profile.password;
+    bSupervision_ = message.profile.superviseur;
+    ReadRights( message.profile );
 }

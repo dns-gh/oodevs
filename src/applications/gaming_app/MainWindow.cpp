@@ -40,6 +40,7 @@
 #include "XPSPlayer.h"
 #include "ProfileFilterToolbar.h"
 #include "ProfilingPanel.h"
+#include "UserProfileDialog.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -150,6 +151,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
     SymbolIcons* icons = new SymbolIcons( this, widget2d_ );
+    UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
 
     pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile, *icons ),            tr( "Tactical" ) );
     pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile, *icons ), tr( "Communication" ) );
@@ -251,7 +253,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
     new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_ );
 
-    new Menu( this, controllers, *prefDialog, *recorderToolbar, *factory );
+    new Menu( this, controllers, *prefDialog, *profileDialog, *recorderToolbar, *factory );
 
     glPlaceHolder_ = new GlPlaceHolder( this );
     setCentralWidget( glPlaceHolder_ );

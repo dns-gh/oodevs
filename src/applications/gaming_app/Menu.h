@@ -10,6 +10,7 @@
 #ifndef __Menu_h_
 #define __Menu_h_
 
+#include "clients_kernel/ElementObserver_ABC.h"
 #include <qmenubar.h>
 
 class QMainWindow;
@@ -26,6 +27,8 @@ namespace gui
 }
 
 class RecorderToolbar;
+class UserProfileDialog;
+class Profile;
 
 // =============================================================================
 /** @class  Menu
@@ -34,13 +37,35 @@ class RecorderToolbar;
 // Created: SBO 2006-04-28
 // =============================================================================
 class Menu : public QMenuBar
+           , public kernel::Observer_ABC
+           , public kernel::ElementObserver_ABC< Profile >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar, gui::ItemFactory_ABC& factory );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, RecorderToolbar& recorderToolBar, gui::ItemFactory_ABC& factory );
     virtual ~Menu();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Menu( const Menu& );
+    Menu& operator=( const Menu& );
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void NotifyUpdated( const Profile& profile );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controllers& controllers_;
+    UserProfileDialog& profileDialog_;
+    int profileMenu_;
     //@}
 };
 

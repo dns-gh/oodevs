@@ -65,10 +65,11 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string terrainsPath_;
-    std::string modelsPath_;
-    std::string exercisesPath_;
-    std::string gamesPath_;
+    std::string rootDir_;
+    std::string terrainsDir_;
+    std::string modelsDir_;
+    std::string exercisesDir_;
+    std::string gamesDir_;
     std::string exerciseName_;
     std::string gameName_;
     //@}

@@ -10,12 +10,15 @@
 #ifndef __ProfileManager_h_
 #define __ProfileManager_h_
 
+#include "AsnTypes.h"
+
 namespace xml{ class xistream; };
 
 namespace dispatcher
 {
 class Dispatcher;
 class Profile;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  ProfileManager
@@ -32,10 +35,16 @@ public:
     virtual ~ProfileManager();
     //@}
 
-    //! @name Main
+    //! @name Operations
     //@{
     void     Reset       ();
     Profile* Authenticate( const std::string& strName, const std::string& strPassword );
+    Profile* Find        ( const std::string& strName ) const;
+
+    void Send( Publisher_ABC& publisher ) const;
+    ASN1T_MsgProfileCreationRequestAck_error_code    Create ( const ASN1T_MsgProfileCreationRequest&    message );
+    ASN1T_MsgProfileUpdateRequestAck_error_code      Update ( const ASN1T_MsgProfileUpdateRequest&      message );
+    ASN1T_MsgProfileDestructionRequestAck_error_code Destroy( const ASN1T_MsgProfileDestructionRequest& message );
     //@}
 
 private:

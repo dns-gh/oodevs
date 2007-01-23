@@ -14,8 +14,10 @@
 #include "TeamsModel.h"
 #include "FormationModel.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -241,13 +243,13 @@ void UserProfile::SetRight( unsigned long id, T_Ids& ids, bool status )
 void UserProfile::SetReadable( const kernel::Entity_ABC& entity, bool readable )
 {
     const unsigned long id = entity.GetId();
-    if( model_.teams_.Find( id ) )
+    if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
         SetRight( id, readSides_, readable );
-    else if( model_.formations_.Find( id ) )
+    else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
         SetRight( id, readFormations_, readable );
-    else if( model_.agents_.FindAutomat( id ) )
+    else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
         SetRight( id, readAutomats_, readable );
-    else if( model_.agents_.FindPopulation( id ) )
+    else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, readPopulations_, readable );
 }
 
@@ -258,12 +260,12 @@ void UserProfile::SetReadable( const kernel::Entity_ABC& entity, bool readable )
 void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable )
 {
     const unsigned long id = entity.GetId();
-    if( model_.teams_.Find( id ) )
+    if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
         SetRight( id, writeSides_, writeable );
-    else if( model_.formations_.Find( id ) )
+    else if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
         SetRight( id, writeFormations_, writeable );
-    else if( model_.agents_.FindAutomat( id ) )
+    else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
         SetRight( id, writeAutomats_, writeable );
-    else if( model_.agents_.FindPopulation( id ) )
+    else if( dynamic_cast< const kernel::Population_ABC* >( &entity ) )
         SetRight( id, writePopulations_, writeable );
 }

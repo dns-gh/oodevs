@@ -21,6 +21,7 @@ class Automat;
 class Side;
 class Formation;
 class Population;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Profile
@@ -34,6 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xistream& xis );
+             Profile( Dispatcher& dispatcher, const ASN1T_MsgProfileCreationRequest& message );
     virtual ~Profile();
     //@}
 
@@ -47,6 +49,12 @@ public:
     //@{
     void Send( ASN1T_Profile& asn ) const;
     static void AsnDelete( ASN1T_Profile& asn );
+    //@}
+
+    //! @name Operations
+    //@{
+    void SendCreation( Publisher_ABC& publisher ) const;
+    void Update( const ASN1T_MsgProfileUpdateRequest& message );
     //@}
 
 private:
@@ -73,10 +81,15 @@ private:
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
     //@}
 
+    //! @name Helpers
+    //@{
+    void ReadRights( const ASN1T_Profile& message );
+    //@}
+
 private:
-          Dispatcher& dispatcher_;
-    const std::string strLogin_;
-          std::string strPassword_;
+    Dispatcher&     dispatcher_;
+    std::string     strLogin_;
+    std::string     strPassword_;
 
     // Read only
     T_AutomatSet    readOnlyAutomats_;

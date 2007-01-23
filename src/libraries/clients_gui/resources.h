@@ -84,6 +84,7 @@ DECLARE_ICON( option_general );
 DECLARE_ICON( check );
 DECLARE_ICON( check_grey );
 DECLARE_ICON( profiles );
+DECLARE_ICON( profile );
 DECLARE_ICON( left_arrow );
 DECLARE_ICON( right_arrow );
 

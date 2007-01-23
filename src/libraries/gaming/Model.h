@@ -37,6 +37,8 @@ class Publisher_ABC;
 class StaticModel;
 class RcEntityResolver_ABC;
 class TacticalLineFactory;
+class UserProfilesModel;
+class UserProfileFactory_ABC;
 
 // =============================================================================
 /** @class  Model
@@ -75,15 +77,17 @@ public:
     FireFactory&                fireFactory_;
     TacticalLineFactory&        tacticalLineFactory_;
     FireResultFactory&          fireResultsFactory_;
+    UserProfileFactory_ABC&     userProfileFactory_;
 
-    AgentsModel&    agents_;
-    ObjectsModel&   objects_;
-    TeamsModel&     teams_;
+    AgentsModel&          agents_;
+    ObjectsModel&         objects_;
+    TeamsModel&           teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
-    LogisticsModel& logistics_;
-    LimitsModel&    limits_;
-    FiresModel&     fires_;
-    WeatherModel&   weather_;
+    LogisticsModel&       logistics_;
+    LimitsModel&          limits_;
+    FiresModel&           fires_;
+    WeatherModel&         weather_;
+    UserProfilesModel&    profiles_;
     //@}
 
 private:

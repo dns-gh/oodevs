@@ -73,7 +73,10 @@ private:
 
     //! @name Messages
     //@{
-    void OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& asnMsg );
+    void OnReceiveMsgAuthLogin                ( const ASN1T_MsgAuthLogin& asnMsg );
+    void OnReceiveMsgProfileCreationRequest   ( const ASN1T_MsgProfileCreationRequest& asnMsg );
+    void OnReceiveMsgProfileUpdateRequest     ( const ASN1T_MsgProfileUpdateRequest& asnMsg );
+    void OnReceiveMsgProfileDestructionRequest( const ASN1T_MsgProfileDestructionRequest& asnMsg );
     //@}
 
 private:

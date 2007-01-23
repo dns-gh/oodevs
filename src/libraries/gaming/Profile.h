@@ -55,12 +55,14 @@ public:
     void Login( Publisher_ABC& publisher ) const;
     void Login( Publisher_ABC& publisher, const std::string& login, const std::string& password ) const;
     void Update( const ASN1T_MsgAuthLoginAck& asnMsg );
+    void Update( const ASN1T_MsgProfileUpdate& asnMsg );
     //@}
     
     //! @name Accessors
     //@{
     QString GetLogin() const;
     bool IsLoggedIn() const;
+    bool IsSupervision() const;
     //@}
 
     //! @name Operations
@@ -88,6 +90,8 @@ private:
 
     //! @name Helpers
     //@{
+    void Update( const ASN1T_Profile& profile );
+
     template< typename T >
     void ReadList( const T& idList, T_Ids& ids );
     virtual void NotifyCreated( const kernel::Automat_ABC& automat );

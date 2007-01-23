@@ -28,6 +28,8 @@
 #include "ObjectsModel.h"
 #include "TeamsModel.h"
 #include "WeatherModel.h"
+#include "UserProfilesModel.h"
+#include "UserProfile.h"
 #include "DIN_Types.h"
 #include "DIN_InputDeepCopy.h"
 #include "LogTools.h"
@@ -649,6 +651,75 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& mes
     simulation_.EndTick( message );
 }
 
+// =============================================================================
+// Profiles
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfileCreation
+// Created: SBO 2007-01-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgProfileCreation( const ASN1T_MsgProfileCreation& message )
+{
+    GetModel().profiles_.CreateProfile( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfileCreationRequestAck
+// Created: SBO 2007-01-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgProfileCreationRequestAck( const ASN1T_MsgProfileCreationRequestAck& message )
+{
+    CheckAcknowledge( message, "ProfileCreationRequestAck" );
+    // $$$$ SBO 2007-01-19: display profile name + error
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfileDestruction
+// Created: SBO 2007-01-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgProfileDestruction( const ASN1T_MsgProfileDestruction& message )
+{
+    GetModel().profiles_.DeleteProfile( message );
+    // $$$$ SBO 2007-01-23: what if current profile is destroyed?
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfileDestructionRequestAck
+// Created: SBO 2007-01-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgProfileDestructionRequestAck( const ASN1T_MsgProfileDestructionRequestAck& message )
+{
+    CheckAcknowledge( message, "ProfileDestructionRequestAck" );
+    // $$$$ SBO 2007-01-19: display profile name + error
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfileUpdate
+// Created: SBO 2007-01-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgProfileUpdate( const ASN1T_MsgProfileUpdate& message )
+{
+    GetModel().profiles_.Get( message.login ).DoUpdate( message );
+    if( message.login == profile_.GetLogin().ascii() )
+        profile_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck
+// Created: SBO 2007-01-19
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck( const ASN1T_MsgProfileUpdateRequestAck& message )
+{
+    CheckAcknowledge( message, "ProfileUpdateRequestAck" );
+    // $$$$ SBO 2007-01-19: display profile name + error
+}
+
+
+// =============================================================================
+// Entities
+// =============================================================================
+
 //-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUnitAttributes
 // Created: NLD 2003-02-27
@@ -1160,8 +1231,6 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomateAck( const ASN1T_MsgChangeAuto
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeAutomate
-/** @param  message
-*/
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomate& message )
@@ -1171,9 +1240,6 @@ void AgentServerMsgMgr::OnReceiveMsgChangeAutomate( const ASN1T_MsgChangeAutomat
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck
-/** @param  message
-    @param  nCtx
-    */
 // Created: APE 2004-10-27
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgChangeDiplomacyAck( const ASN1T_MsgChangeDiplomatieAck& message, unsigned long )
@@ -1580,10 +1646,10 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement( const ASN1T_MsgPo
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReveiveMsgAuthLoginAck
+// Name: AgentServerMsgMgr::OnReceiveMsgAuthLoginAck
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReveiveMsgAuthLoginAck( const ASN1T_MsgAuthLoginAck& message )
+void AgentServerMsgMgr::OnReceiveMsgAuthLoginAck( const ASN1T_MsgAuthLoginAck& message )
 {
     profile_.Update( message );
 }
@@ -1669,10 +1735,13 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
-        case T_MsgsInClient_msg_msg_auth_login_ack:                       OnReveiveMsgAuthLoginAck              ( *message.msg.u.msg_auth_login_ack ); break;
-        case T_MsgsInClient_msg_msg_ctrl_profile_creation:                /*//$$$$ TODO*/; break;
-        case T_MsgsInClient_msg_msg_ctrl_profile_update:                  /*//$$$$ TODO*/; break;
-        case T_MsgsInClient_msg_msg_ctrl_profile_destruction:             /*//$$$$ TODO*/; break;
+        case T_MsgsInClient_msg_msg_auth_login_ack:                       OnReceiveMsgAuthLoginAck                ( *message.msg.u.msg_auth_login_ack ); break;
+        case T_MsgsInClient_msg_msg_profile_creation:                     OnReceiveMsgProfileCreation             ( *message.msg.u.msg_profile_creation ); break;
+        case T_MsgsInClient_msg_msg_profile_creation_request_ack:         OnReceiveMsgProfileCreationRequestAck   ( *message.msg.u.msg_profile_creation_request_ack ); break;
+        case T_MsgsInClient_msg_msg_profile_update:                       OnReceiveMsgProfileUpdate               ( *message.msg.u.msg_profile_update ); break;
+        case T_MsgsInClient_msg_msg_profile_update_request_ack:           OnReceiveMsgProfileUpdateRequestAck     ( *message.msg.u.msg_profile_update_request_ack ); break;
+        case T_MsgsInClient_msg_msg_profile_destruction:                  OnReceiveMsgProfileDestruction          ( message.msg.u.msg_profile_destruction ); break;
+        case T_MsgsInClient_msg_msg_profile_destruction_request_ack:      OnReceiveMsgProfileDestructionRequestAck( *message.msg.u.msg_profile_destruction_request_ack ); break;
 
         case T_MsgsInClient_msg_msg_limit_creation:                       OnReceiveMsgLimitCreation             ( *message.msg.u.msg_limit_creation                      ); break;
         case T_MsgsInClient_msg_msg_limit_update:                         OnReceiveMsgLimitUpdate               ( *message.msg.u.msg_limit_update                        ); break;

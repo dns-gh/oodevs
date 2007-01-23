@@ -94,9 +94,9 @@ public:                                                                         
 //=============================================================================
 
 GENERATE_SEND_ASN_MSG_PTR( AuthLogin, auth_login )
-GENERATE_SEND_ASN_MSG_PTR( CtrlProfileCreation, ctrl_profile_creation )
-GENERATE_SEND_ASN_MSG_PTR( CtrlProfileUpdate, ctrl_profile_update )
-GENERATE_SEND_ASN_MSG_NOPTR( CtrlProfileDestruction, ctrl_profile_destruction )
+GENERATE_SEND_ASN_MSG_PTR( ProfileCreationRequest, profile_creation_request )
+GENERATE_SEND_ASN_MSG_PTR( ProfileUpdateRequest, profile_update_request )
+GENERATE_SEND_ASN_MSG_NOPTR( ProfileDestructionRequest, profile_destruction_request )
 GENERATE_SEND_ASN_MSG_NOMSG( CtrlStop, ctrl_stop  )
 GENERATE_SEND_ASN_MSG_NOMSG( CtrlPause, ctrl_pause )
 GENERATE_SEND_ASN_MSG_NOMSG( CtrlResume, ctrl_resume )

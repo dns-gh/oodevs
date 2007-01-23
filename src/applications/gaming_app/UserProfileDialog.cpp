@@ -1,0 +1,128 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "gaming_app_pch.h"
+#include "UserProfileDialog.h"
+#include "moc_UserProfileDialog.cpp"
+#include "UserProfileWidget.h"
+#include "UserProfileList.h"
+#include "icons.h"
+#include "gaming/Profile.h"
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileDialog constructor
+// Created: SBO 2007-01-16
+// -----------------------------------------------------------------------------
+UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons, UserProfileFactory_ABC& factory )
+    : QDialog( parent )
+{
+    setCaption( tr( "User profiles" ) );
+    QGridLayout* grid = new QGridLayout( this, 3, 2 );
+    grid->setColStretch( 0, 1 );
+    grid->setColStretch( 1, 3 );
+    grid->setRowStretch( 0, 1 );
+    grid->setRowStretch( 1, 5 );
+    grid->setRowStretch( 2, 1 );
+
+    QHBox* box = new QHBox( this );
+    QLabel* title = new QLabel( caption(), box );
+    QFont font;
+    font.setBold( true );
+    font.setPointSize( 16 );
+    title->setFont( font );
+    title->setMargin( 10 );
+    title->setBackgroundColor( Qt::white );
+    QLabel* icon = new QLabel( box );
+    icon->setPixmap( MAKE_PIXMAP( profiles ) );
+    icon->setMaximumWidth( 64 );
+    icon->setBackgroundColor( Qt::white );
+    grid->addMultiCellWidget( box, 0, 0, 0, 1 );
+
+    box = new QVBox( this );
+    box->setMargin( 5 );
+    pages_ = new UserProfileWidget( box, controllers, itemFactory, profile, icons );
+    pages_->setMargin( 5 );
+    grid->addWidget( box, 1, 1 );
+    
+    box = new QVBox( this );
+    box->setMargin( 5 );
+    list_ = new UserProfileList( box, *pages_, controllers, factory );
+    grid->addWidget( box, 1, 0 );
+
+    box = new QHBox( this );
+    box->setMargin( 5 );
+    box->setMaximumHeight( 40 );
+    QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
+    QButton* applyBtn = new QPushButton( tr( "Apply" ), box );
+    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
+    okBtn->setDefault( true );
+    grid->addWidget( box, 2, 1, Qt::AlignRight );
+
+    connect( okBtn, SIGNAL( clicked() ), SLOT( OnOk() ) );
+    connect( applyBtn, SIGNAL( clicked() ), SLOT( OnApply() ) );
+    connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnCancel() ) );
+
+    hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileDialog destructor
+// Created: SBO 2007-01-16
+// -----------------------------------------------------------------------------
+UserProfileDialog::~UserProfileDialog()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileDialog::sizeHint
+// Created: SBO 2007-01-16
+// -----------------------------------------------------------------------------
+QSize UserProfileDialog::sizeHint() const
+{
+    return QSize( 650, 550 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileDialog::CanBeShown
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+bool UserProfileDialog::CanBeShown( const Profile& profile ) const
+{
+    return profile.IsSupervision();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileDialog::OnOk
+// Created: SBO 2007-01-16
+// -----------------------------------------------------------------------------
+void UserProfileDialog::OnOk()
+{
+    OnApply();
+    hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileDialog::OnApply
+// Created: SBO 2007-01-16
+// -----------------------------------------------------------------------------
+void UserProfileDialog::OnApply()
+{
+    pages_->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileDialog::OnCancel
+// Created: SBO 2007-01-16
+// -----------------------------------------------------------------------------
+void UserProfileDialog::OnCancel()
+{
+    pages_->Reset();
+    hide();
+}

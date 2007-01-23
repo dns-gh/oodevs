@@ -138,8 +138,17 @@ private:
     void OnReceiveMsgAutomateCreation         ( const ASN1T_MsgAutomateCreation& asnMsg );
     void OnReceiveMsgPionCreation             ( const ASN1T_MsgPionCreation& asnMsg );
     void OnReceiveMsgChangeDiplomatie         ( const ASN1T_MsgChangeDiplomatie& asnMsg );
-    void OnReveiveMsgAuthLoginAck             ( const ASN1T_MsgAuthLoginAck& asnMsg );
+    void OnReceiveMsgAuthLoginAck             ( const ASN1T_MsgAuthLoginAck& asnMsg );
 
+    // Profiles
+    void OnReceiveMsgProfileCreation             ( const ASN1T_MsgProfileCreation& message );
+    void OnReceiveMsgProfileCreationRequestAck   ( const ASN1T_MsgProfileCreationRequestAck& message );
+    void OnReceiveMsgProfileDestruction          ( const ASN1T_MsgProfileDestruction& message );
+    void OnReceiveMsgProfileDestructionRequestAck( const ASN1T_MsgProfileDestructionRequestAck& message );
+    void OnReceiveMsgProfileUpdate               ( const ASN1T_MsgProfileUpdate& message );
+    void OnReceiveMsgProfileUpdateRequestAck     ( const ASN1T_MsgProfileUpdateRequestAck& message );
+
+    // Side/Formation/Knowledge Group creation
     void OnReveiveMsgKnowledgeGroupCreation   ( const ASN1T_MsgKnowledgeGroupCreation& asnMsg );
     void OnReveiveMsgSideCreation             ( const ASN1T_MsgSideCreation& asnMsg );
     void OnReveiveMsgFormationCreation        ( const ASN1T_MsgFormationCreation& asnMsg );

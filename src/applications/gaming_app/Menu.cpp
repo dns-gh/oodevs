@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include "AboutDialog.h"
 #include "RecorderToolbar.h"
+#include "UserProfileDialog.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_gui/OptionMenu.h"
@@ -40,8 +41,10 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, RecorderToolbar& recorderToolBar, ItemFactory_ABC& factory )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, UserProfileDialog& profileDialog, RecorderToolbar& recorderToolBar, ItemFactory_ABC& factory )
     : QMenuBar( pParent )
+    , controllers_( controllers )
+    , profileDialog_( profileDialog )
 {
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( open ), tr( "&Open exercice..." ), parent(), SLOT( Open() ), CTRL + Key_O );
@@ -106,8 +109,15 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     insertItem( tr( "&Display" ), menu );
 
     menu = new QPopupMenu( this );
+    menu->insertItem( MAKE_ICON( profile ), tr( "Profiles..." ), &profileDialog_, SLOT( exec() ) );
+    profileMenu_ = insertItem( tr( "Profi&les" ), menu );
+    setItemVisible( profileMenu_, false );
+
+    menu = new QPopupMenu( this );
     menu->insertItem( tr( "About" ), new AboutDialog( this, factory ), SLOT( exec() ) );
     insertItem( tr( "&Help" ), menu );
+
+    controllers_.Register( *this );
 }
     
 // -----------------------------------------------------------------------------
@@ -116,5 +126,14 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 // -----------------------------------------------------------------------------
 Menu::~Menu()
 {
-    // NOTHING
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::NotifyUpdated
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+void Menu::NotifyUpdated( const Profile& profile )
+{
+    setItemVisible( profileMenu_, profileDialog_.CanBeShown( profile ) );
 }

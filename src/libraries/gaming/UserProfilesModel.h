@@ -7,55 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __ProfilesModel_h_
-#define __ProfilesModel_h_
+#ifndef __UserProfilesModel_h_
+#define __UserProfilesModel_h_
 
-namespace xml
-{
-    class xistream;
-}
+#include "ASN_Types.h"
 
 class UserProfile;
-class ProfileFactory_ABC;
+class UserProfileFactory_ABC;
 
 // =============================================================================
-/** @class  ProfilesModel
-    @brief  ProfilesModel
+/** @class  UserProfilesModel
+    @brief  UserProfilesModel
 */
-// Created: SBO 2007-01-16
+// Created: SBO 2007-01-19
 // =============================================================================
-class ProfilesModel
+class UserProfilesModel
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProfilesModel( const ProfileFactory_ABC& factory );
-    virtual ~ProfilesModel();
+    explicit UserProfilesModel( const UserProfileFactory_ABC& factory );
+    virtual ~UserProfilesModel();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const std::string& file );
-    void Serialize( const std::string& file ) const;
+    void CreateProfile( const ASN1T_MsgProfileCreation& message );
+    void DeleteProfile( const ASN1T_MsgProfileDestruction& message );
+    UserProfile& Get( const QString& login );
+    const UserProfile* Find( const QString& login ) const;
     void Purge();
-
-    void CreateProfile();
-    void DeleteProfile( const UserProfile& profile );
-
-    bool Exists( const QString& login ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ProfilesModel( const ProfilesModel& );            //!< Copy constructor
-    ProfilesModel& operator=( const ProfilesModel& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void LoadProfile( xml::xistream& xis );
+    UserProfilesModel( const UserProfilesModel& );            //!< Copy constructor
+    UserProfilesModel& operator=( const UserProfilesModel& ); //!< Assignment operator
     //@}
 
     //! @name Types
@@ -67,9 +56,9 @@ private:
 private:
     //! @name Member data
     //@{
-    const ProfileFactory_ABC& factory_;
+    const UserProfileFactory_ABC& factory_;
     T_UserProfiles userProfiles_;
     //@}
 };
 
-#endif // __ProfilesModel_h_
+#endif // __UserProfilesModel_h_

@@ -203,9 +203,12 @@ GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeCreation       
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeDestruction            , population_flux_knowledge_destruction             );
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeUpdate                 , population_flux_knowledge_update                  );
 GENERATE_ASN_MSG_SENDER         ( Client, AuthLoginAck                                  , auth_login_ack                                    );
-GENERATE_ASN_MSG_SENDER         ( Client, CtrlProfileCreation                           , ctrl_profile_creation                             );
-GENERATE_ASN_MSG_SENDER         ( Client, CtrlProfileUpdate                             , ctrl_profile_update                               );
-GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, CtrlProfileDestruction                        , ctrl_profile_destruction                          );
+GENERATE_ASN_MSG_SENDER         ( Client, ProfileCreation                               , profile_creation                                  );
+GENERATE_ASN_MSG_SENDER         ( Client, ProfileUpdate                                 , profile_update                                    );
+GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, ProfileDestruction                            , profile_destruction                               );
+GENERATE_ASN_MSG_SENDER         ( Client, ProfileCreationRequestAck                     , profile_creation_request_ack                      );
+GENERATE_ASN_MSG_SENDER         ( Client, ProfileUpdateRequestAck                       , profile_update_request_ack                        );
+GENERATE_ASN_MSG_SENDER         ( Client, ProfileDestructionRequestAck                  , profile_destruction_request_ack                   );
 
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Sim, CtrlClientAnnouncement        , ctrl_client_announcement         );
 GENERATE_EMPTY_ASN_MSG_SENDER   ( Sim, CtrlStop                      , ctrl_stop                        );

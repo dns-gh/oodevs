@@ -33,12 +33,13 @@ GeneralConfig::GeneralConfig()
 {
     po::options_description desc( "General options" );
     desc.add_options()
-        ( "terrains-dir" , po::value< std::string >( &terrainsPath_  )->default_value( "../data/terrains/"  ), "specify terrains root directory"  )
-        ( "models-dir"   , po::value< std::string >( &modelsPath_    )->default_value( "../data/models/"    ), "specify models root directory"    )
-        ( "exercises-dir", po::value< std::string >( &exercisesPath_ )->default_value( "../exercises/"      ), "specify exercises root directory" )
-        ( "games-dir"    , po::value< std::string >( &gamesPath_     )                                       , "specify games root directory"     )
-        ( "game"         , po::value< std::string >( &gameName_      )                                       , "specify game name"                )
-        ( "exercise"     , po::value< std::string >( &exerciseName_  )                                       , "specify exercise name"            )
+        ( "root-dir"     , po::value< std::string >( &rootDir_      )->default_value( "../"             ), "specify global root directory"    )
+        ( "terrains-dir" , po::value< std::string >( &terrainsDir_  )->default_value( "data/terrains/"  ), "specify terrains root directory"  )
+        ( "models-dir"   , po::value< std::string >( &modelsDir_    )->default_value( "data/models/"    ), "specify models root directory"    )
+        ( "exercises-dir", po::value< std::string >( &exercisesDir_ )->default_value( "exercises/"      ), "specify exercises root directory" )
+        ( "games-dir"    , po::value< std::string >( &gamesDir_     )                                    , "specify games root directory"     )
+        ( "game"         , po::value< std::string >( &gameName_     )                                    , "specify game name"                )
+        ( "exercise"     , po::value< std::string >( &exerciseName_ )                                    , "specify exercise name"            )
     ;
     AddOptions( desc );
 }
@@ -52,6 +53,16 @@ GeneralConfig::~GeneralConfig()
     // NOTHING
 }
 
+namespace
+{
+    void ResolveRelativePath( const bfs::path& root, std::string& path )
+    {
+        const bfs::path p( path, bfs::native );
+        if( !p.has_root_directory() )
+            path = ( root / p ).native_file_string();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::Parse
 // Created: NLD 2007-01-10
@@ -59,9 +70,16 @@ GeneralConfig::~GeneralConfig()
 void GeneralConfig::Parse( int argc, char** argv )
 {
     CommandLineConfig_ABC::Parse( argc, argv );
+
     if( !IsSet( "games-dir" ) )
-        gamesPath_ = ( bfs::path( exercisesPath_, bfs::native ) / bfs::path( exerciseName_, bfs::native ) ).native_file_string();
+        gamesDir_ = ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exerciseName_, bfs::native ) ).native_file_string();
     // $$$$ NLD 2007-01-10: gerer exerciseName_ = poseidon/exercise.xml
+
+    const bfs::path root( rootDir_, bfs::native );
+    ResolveRelativePath( root, terrainsDir_ );
+    ResolveRelativePath( root, modelsDir_ );
+    ResolveRelativePath( root, exercisesDir_ );
+    ResolveRelativePath( root, gamesDir_ );
 }
 
 namespace
@@ -79,7 +97,7 @@ namespace
 std::string GeneralConfig::GetExerciseFile() const
 {
     // $$$$ NLD 2007-01-10: exerciseName_
-    return ( bfs::path( exercisesPath_, bfs::native ) / bfs::path( exerciseName_, bfs::native ) / "exercise.xml" ).native_file_string();
+    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exerciseName_, bfs::native ) / "exercise.xml" ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +115,7 @@ std::string GeneralConfig::BuildExerciseChildFile( const std::string& file ) con
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetPhysicalFile( const std::string& dataset, const std::string& physical ) const
 {
-    return ( bfs::path( modelsPath_, bfs::native ) / bfs::path( dataset, bfs::native ) / "physical" / bfs::path( physical, bfs::native ) / "physical.xml" ).native_file_string();
+    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "physical" / bfs::path( physical, bfs::native ) / "physical.xml" ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +133,7 @@ std::string GeneralConfig::BuildPhysicalChildFile( const std::string& dataset, c
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetDecisionalFile( const std::string& dataset ) const
 {
-    return ( bfs::path( modelsPath_, bfs::native ) / bfs::path( dataset, bfs::native ) / "decisional/decisional.xml" ).native_file_string();
+    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "decisional/decisional.xml" ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +151,7 @@ std::string GeneralConfig::BuildDecisionalChildFile( const std::string& dataset,
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 {
-    return ( bfs::path( terrainsPath_, bfs::native ) / bfs::path( terrain, bfs::native ) / "terrain.xml" ).native_file_string();
+    return ( bfs::path( terrainsDir_, bfs::native ) / bfs::path( terrain, bfs::native ) / "terrain.xml" ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +169,7 @@ std::string GeneralConfig::BuildTerrainChildFile( const std::string& terrain, co
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetGameFile() const
 {
-    return ( bfs::path( gamesPath_, bfs::native ) / bfs::path( gameName_, bfs::native ) / "game.xml" ).native_file_string();
+    return ( bfs::path( gamesDir_, bfs::native ) / bfs::path( gameName_, bfs::native ) / "game.xml" ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------

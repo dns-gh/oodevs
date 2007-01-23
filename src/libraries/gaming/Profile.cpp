@@ -91,32 +91,56 @@ void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
     loggedIn_ = message.etat == 0;
     if( message.m.profilePresent )
     {
-        if( message.profile.m.read_only_campsPresent )
-            ReadList( message.profile.read_only_camps, readTeams_ );
-        if( message.profile.m.read_write_campsPresent )
-            ReadList( message.profile.read_write_camps, writeTeams_ );
-
-        if( message.profile.m.read_only_automatesPresent )
-            ReadList( message.profile.read_only_automates, readAutomats_ );
-        if( message.profile.m.read_write_automatesPresent )
-            ReadList( message.profile.read_write_automates, writeAutomats_ );
-
-        if( message.profile.m.read_only_populationsPresent )
-            ReadList( message.profile.read_only_populations, readPopulations_ );
-        if( message.profile.m.read_write_populationsPresent )
-            ReadList( message.profile.read_write_populations, writePopulations_ );
-
-        if( message.profile.m.read_only_formationsPresent )
-            ReadList( message.profile.read_only_formations, readFormations_ );
-        if( message.profile.m.read_write_formationsPresent )
-            ReadList( message.profile.read_write_formations, writeFormations_ );
-
-        supervision_ = message.profile.superviseur;
-
+        Update( message.profile );
         if( firstTicked_ )
             controller_.Update( *(Profile_ABC*)this );
-    };
+    }
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Update
+// Created: SBO 2007-01-23
+// -----------------------------------------------------------------------------
+void Profile::Update( const ASN1T_MsgProfileUpdate& message )
+{
+    if( message.login == login_ )
+    {
+        Update( message.profile );
+        controllers_.Update( *this );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Update
+// Created: SBO 2007-01-23
+// -----------------------------------------------------------------------------
+void Profile::Update( const ASN1T_Profile& profile )
+{
+    login_ = profile.login;
+    if( profile.m.passwordPresent )
+        password_ = profile.password;
+    supervision_ = profile.superviseur;
+
+    if( profile.m.read_only_campsPresent )
+        ReadList( profile.read_only_camps, readTeams_ );
+    if( profile.m.read_write_campsPresent )
+        ReadList( profile.read_write_camps, writeTeams_ );
+
+    if( profile.m.read_only_automatesPresent )
+        ReadList( profile.read_only_automates, readAutomats_ );
+    if( profile.m.read_write_automatesPresent )
+        ReadList( profile.read_write_automates, writeAutomats_ );
+
+    if( profile.m.read_only_populationsPresent )
+        ReadList( profile.read_only_populations, readPopulations_ );
+    if( profile.m.read_write_populationsPresent )
+        ReadList( profile.read_write_populations, writePopulations_ );
+
+    if( profile.m.read_only_formationsPresent )
+        ReadList( profile.read_only_formations, readFormations_ );
+    if( profile.m.read_write_formationsPresent )
+        ReadList( profile.read_write_formations, writeFormations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +159,15 @@ QString Profile::GetLogin() const
 bool Profile::IsLoggedIn() const
 {
     return loggedIn_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsSupervision
+// Created: SBO 2007-01-22
+// -----------------------------------------------------------------------------
+bool Profile::IsSupervision() const
+{
+    return supervision_;
 }
 
 // -----------------------------------------------------------------------------
