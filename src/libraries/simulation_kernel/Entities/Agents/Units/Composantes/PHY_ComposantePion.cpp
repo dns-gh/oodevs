@@ -68,8 +68,7 @@ PHY_ComposantePion::PHY_ComposantePion( const PHY_ComposanteTypePion& type, PHY_
     pType_->InstanciateSensors( std::back_inserter( sensors_ ) );
 
     pRole_->NotifyComposanteAdded( *this );
-    if( !pHumans_->IsViable() )
-        ReinitializeState( PHY_ComposanteState::dead_ ); //// $$$ crash ?
+    assert( pHumans_->IsViable() ); //$$$ Pre-check in PHY_UnitType
 }
 
 // -----------------------------------------------------------------------------
@@ -282,7 +281,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
     ManageEndMaintenance();
 
     assert( pRole_ );
-    pRole_->NotifyComposanteChanged ( *this, *pOldState );    
+    pRole_->NotifyComposanteChanged ( *this, *pOldState );
 }
 
 // =============================================================================

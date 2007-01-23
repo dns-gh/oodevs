@@ -270,7 +270,7 @@ void MIL_AgentPion::Initialize( const MT_Vector2D& vPosition )
     RegisterRole< PHY_RoleAction_Objects         >( *this );
     RegisterRole< PHY_RoleAction_DirectFiring    >( *this );
     RegisterRole< PHY_RoleAction_IndirectFiring  >( *this );
-    RegisterRole< DEC_RolePion_Decision          >( *this );
+    RegisterRole< DEC_RolePion_Decision          >( *this );   
 
     if( CanFly() )
         RegisterRole< PHY_RoleAction_Flying >( *this );
@@ -405,7 +405,7 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< PHY_RolePion_Surrender         >().Update( bIsDead );
     GetRole< PHY_RolePion_Refugee           >().Update( bIsDead );    
     GetRole< PHY_RolePion_Population        >().Update( bIsDead );    
-    GetRole< PHY_RolePion_Perceiver         >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes
+    GetRole< PHY_RolePion_Perceiver         >().Update( bIsDead ); // Doit être après PHY_RolePion_Composantes $$$ pourri - utiliser des observers
     GetRole< PHY_RoleAction_Loading         >().Update( bIsDead );
     GetRole< PHY_RoleAction_Transport       >().Update( bIsDead );
     GetRole< PHY_RoleAction_Objects         >().Update( bIsDead );

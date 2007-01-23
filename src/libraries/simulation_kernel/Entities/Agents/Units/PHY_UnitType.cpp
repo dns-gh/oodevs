@@ -50,14 +50,6 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
     , bCanFly_                        ( false )
     , bIsAutonomous_                  ( false )
 {
-    InitializeComposantes                 ( archive );
-    InitializeCommanderRepartition        ( archive );
-    InitializePostureTimes                ( archive );
-    InitializeInstallationTimes           ( archive );
-    InitializeCoupDeSonde                 ( archive );
-    InitializeNBC                         ( archive );
-    InitializeStockLogisticThresholdRatios( archive );
-
     if( archive.Section( "PeutVoler", MIL_InputArchive::eNothing ) )
     {
         bCanFly_ = true;
@@ -69,6 +61,14 @@ PHY_UnitType::PHY_UnitType( MIL_InputArchive& archive )
         bIsAutonomous_ = true;
         archive.EndSection(); // EstAutonome
     }
+
+    InitializeComposantes                 ( archive );
+    InitializeCommanderRepartition        ( archive );
+    InitializePostureTimes                ( archive );
+    InitializeInstallationTimes           ( archive );
+    InitializeCoupDeSonde                 ( archive );
+    InitializeNBC                         ( archive );
+    InitializeStockLogisticThresholdRatios( archive );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,6 +161,9 @@ void PHY_UnitType::InitializeComposantes( MIL_InputArchive& archive )
 
         compData.nNbrHumanInCrew_ = 0;
         archive.ReadAttribute( "equipage", compData.nNbrHumanInCrew_, CheckValueGreaterOrEqual( 0 ) );
+
+        if( compData.nNbrHumanInCrew_ == 0 && !IsAutonomous() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Composante not viable : no humans in crew", archive.GetContext() );
 
         archive.Read( compData.nNbr_ );
         archive.EndSection(); // Equipement
