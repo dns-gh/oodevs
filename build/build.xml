@@ -318,10 +318,10 @@
         </delete>
         <mkdir dir="${dist.dir}/current"/>
         <exec executable="svn">
-            <arg line="export --force ${data.dir}/main ${dist.dir}/current"/> 
+            <arg line="export -force ${data.dir}/main ${dist.dir}/current"/> 
         </exec>
         <exec executable="svn">
-            <arg line="export --force ${run.dir} ${dist.dir}/current"/> 
+            <arg line="export -force ${run.dir} ${dist.dir}/current"/> 
         </exec>
         <copy todir="${dist.dir}/current/">
             <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
