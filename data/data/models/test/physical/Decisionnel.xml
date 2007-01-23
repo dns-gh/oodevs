@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Decisionnel>
+
   <Dangerosite>
     <DegradationMaxParPertinence>20</DegradationMaxParPertinence>
     <DegradationMaxParEtatOps>20</DegradationMaxParEtatOps>
@@ -15,4 +16,5 @@
   <RapportDeForce>
     <TempsDeRemonteeParDefaut>600s</TempsDeRemonteeParDefaut>
   </RapportDeForce>
+
 </Decisionnel>
