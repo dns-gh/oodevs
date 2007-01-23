@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <project name="csword" default="all">
 
-
-    <property name="tmp.dir" location="${dist.dir}/tmp"/>
-
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <!--
@@ -260,19 +257,17 @@
 
     <target name="test-main-scripts" description="run all tests">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="-conffile"/>
-            <arg value="${data.dir}/main/scipio.xml"/>
-            <arg value="-test"/>
-            <arg value="-forceodbcomposition"/>
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=empty"/>
+            <arg value="--test"/>
         </exec>
     </target>
 
     <target name="test-test-scripts" description="run all tests">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
-            <arg value="-conffile"/>
-            <arg value="${data.dir}/test/scipio.xml"/>
-            <arg value="-test"/>
-            <arg value="-forceodbcomposition"/>
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=test"/>
+            <arg value="--test"/>
         </exec>
     </target>
 
@@ -338,14 +333,17 @@
         </copy>-->
     </target>
     
-    <!--
     <target name="Package2" description="package the distribution" >
+   
+        <property name="tmp.dir" location="${dist.dir}/tmp"/>
+       
         <mkdir dir="${dist.dir}"/>
         <mkdir dir="${tmp.dir}"/>
         <zip destfile="${tmp.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
-        </zip>
-        <zip destfile="${dist.dir}/test/current.zip">
+        </zip>                
+        
+        <zip destfile="${dist.dir}/current.zip">
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/adaptation_app/"  includes="*.exe"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.qm"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/preparation_app"  includes="*.exe"/>
@@ -355,17 +353,38 @@
             <zipfileset prefix="applications" dir="${libraries.dir}/gaming"                          includes="*.qm"/>
             <zipfileset prefix="applications" dir="${libraries.dir}/ENT"                             includes="*.qm"/>
             <zipfileset prefix="applications" dir="${applications.dir}/gaming_app"                   includes="*.qm"/>
-            <zipfileset prefix="applications" dir="${applications.dir}/adaptation_app/translator"    includes="*.qm"/>
-            
+            <zipfileset prefix="applications" dir="${applications.dir}/adaptation_app/translator"    includes="*.qm"/>    
             <zipfileset prefix="applications" dir="${tmp.dir}"                                       includes="symbols.pak"/>
-            <zipfileset prefix="applications" dir="${run.dir}"                                       includes="*.dll license.dat"/>
+            <zipfileset prefix="applications" dir="${run.dir}">
+                <include name="license.dat"/>
+                <include name="TAO.dll"/>
+                <include name="TAO_CosNaming.dll"/>
+                <include name="TAO_IORTable.dll"/>
+                <include name="TAO_PortableServer.dll"/>
+                <include name="TAO_RTEvent.dll"/>
+                <include name="TAO_RTSched.dll"/>
+                <include name="TAO_Strategies.dll"/>
+                <include name="TAO_Svc_Utils.dll"/>
+                <include name="ace.dll"/>
+                <include name="asn1per.dll"/>
+                <include name="boost_thread-vc71-mt-1_32.dll"/>
+                <include name="dbghelp.dll"/>
+                <include name="libFedTime.dll"/>
+                <include name="libRTI-NG.dll"/>
+                <include name="librtiInternalIntercept.dll"/>
+                <include name="msvcp71.dll"/>
+                <include name="msvcr71.dll"/>
+                <include name="qt-*.dll"/>
+                <include name="userDdm.dll"/>
+                <include name="xerces-c_2_7.dll"/>
+            </zipfileset>                
             
-            
-            
-            
+            <!-- Cf defaultexcludes : no need of "svn export" -->
+            <zipfileset prefix="data/models"   dir="${data.dir}/data/models/main"/>
+            <zipfileset prefix="data/terrains" dir="${data.dir}/data/terrains"/>
+            <zipfileset prefix="exercises/empty" dir="${data.dir}/exercises/empty"/>
         </zip>
     </target>
-    -->
         
     <!--
     ============================================================================
