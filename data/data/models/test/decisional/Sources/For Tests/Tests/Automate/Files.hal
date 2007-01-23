@@ -1,0 +1,4 @@
+globals     = "For Tests\Tests\Automate\Globals.hal";
+knowledge   = "For Tests\Tests\Automate\Perception.hal";
+motivations = "For Tests\Tests\Automate\Motivations.hal";
+behaviors   = "For Tests\Tests\Automate\Behaviors.hal";

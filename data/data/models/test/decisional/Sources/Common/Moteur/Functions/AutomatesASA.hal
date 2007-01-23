@@ -1,0 +1,9 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+signatures
+{
+    U /*T_ListePoints*/ DEC_Geometrie_PosDeploiementASAOmni     ( R /*nbPositions*/, U /*T_Point*/ /*position centrale*/  , R /*distance au centre*/ );
+    U /*T_ListePoints*/ DEC_Geometrie_PosDeploiementMistralNasse( R /*nbPositions*/, U /*T_Point*/ /*position a défendre*/, R /*angle*/, R /*distance de la position a défendre*/, R /*distance entre sections*/, U /*T_Direction*/ );
+    U /*T_ListePoints*/ DEC_Geometrie_PosDeploiementDoubleRideau( R /*nbPositions*/, U /*T_Point*/ /*position a défendre*/, R /*distance point à défendre*/, R/*distance entre rideaux*/, R /*distance entre sections*/, U /*T_Direction*/ );
+}

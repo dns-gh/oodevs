@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Automates>
+
+  <Unite nom="Compagnie GEN Lourde" type="Automate INF">
+    <MosID>35</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution>
+        <Pion nom="Section Combat GEN">2</Pion>
+        <Pion nom="Section Combat RENS">1</Pion>
+      </Constitution>
+      <RapportDeForce>
+        <TempsDeRemontee>660s</TempsDeRemontee>
+      </RapportDeForce>
+    </Automate>
+    <PionPC type="Section Combat GEN"/>
+  </Unite>
+
+  <Unite nom="TC2" type="Automate LOG TC2">
+    <MosID>36</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution/>
+    </Automate>
+    <PionPC type="PC TC2"/>
+  </Unite>
+
+  <Unite nom="BLD Ravitaillement" type="Automate LOG BLD Ravitaillement">
+    <MosID>37</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution/>
+    </Automate>
+    <PionPC type="PC BLD Ravitaillement"/>
+  </Unite>
+
+  <Unite nom="BLD Maintenance" type="Automate LOG BLD Maintenance">
+    <MosID>38</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution/>
+    </Automate>
+    <PionPC type="PC BLD Maintenance"/>
+  </Unite>
+
+  <Unite nom="BLT Maintenance" type="Automate LOG BLT Maintenance">
+    <MosID>39</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution/>
+    </Automate>
+    <PionPC type="PC BLT Maintenance"/>
+  </Unite>
+
+  <Unite nom="BLD Sante" type="Automate LOG BLD Sante">
+    <MosID>40</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution/>
+    </Automate>
+    <PionPC type="PC BLD Sante"/>
+  </Unite>
+
+  <Unite nom="BLT Sante" type="Automate LOG BLT Sante">
+    <MosID>41</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution/>
+    </Automate>
+    <PionPC type="PC BLT Sante"/>
+  </Unite>
+
+  <Unite nom="Automate Refugie" type="Automate REFUGIE">
+    <MosID>42</MosID>
+    <Automate>
+      <ModeleDecisionnel>Test</ModeleDecisionnel>
+      <Constitution/>
+    </Automate>
+    <PionPC type="Pion Refugie"/>
+  </Unite>
+
+</Automates>

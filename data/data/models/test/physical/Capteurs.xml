@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Capteurs>
+
+  <SurveillanceALAT>
+    <TempsSurveillance>
+      <Vide>10s</Vide>
+      <Foret>20s</Foret>
+      <Urbain>32s</Urbain>
+    </TempsSurveillance>
+  </SurveillanceALAT>
+
+  <RadarsASS>
+    <RadarCOBRA/>
+  </RadarsASS>
+
+  <Radars>
+    <Radar nom="Radar standard" type="radar">
+      <Portee>
+        <RayonAction>10000</RayonAction>
+      </Portee>
+      <DureesAcquisition>
+        <DureeDetection>300s</DureeDetection>
+        <DureeReconnaissance>900s</DureeReconnaissance>
+      </DureesAcquisition>
+    </Radar>
+    <Radar nom="Radar doppler" type="radar">
+      <Portee>
+        <RayonAction>10000</RayonAction>
+      </Portee>
+      <ActivitePionsDetectables>
+        <Deplacement/>
+        <EnTravaux/>
+      </ActivitePionsDetectables>
+      <DureesAcquisition>
+        <DureeDetection>300s</DureeDetection>
+        <DureeReconnaissance>900s</DureeReconnaissance>
+      </DureesAcquisition>
+    </Radar>
+    <Radar nom="Radar HAWK" type="radar">
+      <Portee>
+        <RayonAction>15000</RayonAction>
+        <HauteurMinimale>20</HauteurMinimale>
+        <HauteurMaximale>450</HauteurMaximale>
+      </Portee>
+      <ActivitePionsDetectables>
+        <ArretMoteurEteint/>
+        <ArretMoteurAllume/>
+        <Deplacement/>
+        <EnTravaux/>
+      </ActivitePionsDetectables>
+    </Radar>
+    <Radar nom="Radar MISTRAL" type="radar">
+      <Portee>
+        <RayonAction>50000</RayonAction>
+        <HauteurMinimale>0</HauteurMinimale>
+        <HauteurMaximale>3000</HauteurMaximale>
+      </Portee>
+      <ActivitePionsDetectables>
+        <Deplacement/>
+      </ActivitePionsDetectables>
+    </Radar>
+    <Radar nom="Radar ROLAND" type="radar">
+      <Portee>
+        <RayonAction>6000</RayonAction>
+        <HauteurMinimale>20</HauteurMinimale>
+        <HauteurMaximale>150</HauteurMaximale>
+      </Portee>
+      <ActivitePionsDetectables>
+        <Deplacement/>
+        <EnTravaux/>
+      </ActivitePionsDetectables>
+    </Radar>
+    <Radar nom="Ecoute" type="ecoute">
+      <Portee>
+        <RayonAction>10000</RayonAction>
+      </Portee>
+      <DureesAcquisition>
+        <DureeDetection>60s</DureeDetection>
+        <DureeReconnaissance>120s</DureeReconnaissance>
+        <DureeIdentification>198s</DureeIdentification>
+        <DureesSpecifiquesPionPC>
+          <DureeDetection>300s</DureeDetection>
+          <DureeReconnaissance>480s</DureeReconnaissance>
+          <DureeIdentification>900s</DureeIdentification>
+        </DureesSpecifiquesPionPC>
+      </DureesAcquisition>
+    </Radar>
+    <Radar nom="Ecoute radar" type="ecoute radar">
+      <Portee>
+        <RayonAction>10000</RayonAction>
+      </Portee>
+      <DureesAcquisition>
+        <DureeDetection>6s</DureeDetection>
+        <DureeReconnaissance>36s</DureeReconnaissance>
+      </DureesAcquisition>
+    </Radar>
+  </Radars>
+
+  <Senseurs>
+    <Senseur nom="oeil">
+      <DetectionAgents>
+        <Angle balayage="true" unite="degre">30</Angle>
+        <DistanceDeProximite>50</DistanceDeProximite>
+        <DistancesDeBase>
+          <DD>5000</DD>
+          <DR>2000</DR>
+          <DI>1000</DI>
+        </DistancesDeBase>
+        <ModificateursDeDistance>
+          <PresencePopulation densitePopulation="1" modificateur="0.5"/>
+          <VolumesCible>
+            <Gros>1</Gros>
+            <Moyen>0.9</Moyen>
+            <Petit>0.7</Petit>
+            <Personnel>0.3</Personnel>
+          </VolumesCible>
+          <Precipitations>
+            <PasDePrecipitation>1</PasDePrecipitation>
+            <TempeteDeSable>0</TempeteDeSable>
+            <Brouillard>0.1</Brouillard>
+            <Crachin>0.4</Crachin>
+            <Pluie>0.2</Pluie>
+            <Neige>0.1</Neige>
+            <Fumigene>0.1</Fumigene>
+          </Precipitations>
+          <Eclairements>
+            <JourSansNuage>1</JourSansNuage>
+            <JourPeuNuageux>1</JourPeuNuageux>
+            <JourMoyennementNuageux>1</JourMoyennementNuageux>
+            <JourAssezNuageux>1</JourAssezNuageux>
+            <JourTresNuageux>1</JourTresNuageux>
+            <NuitPleineLune>0.5</NuitPleineLune>
+            <NuitTroisQuartDeLune>0.5</NuitTroisQuartDeLune>
+            <NuitDemiLune>0.5</NuitDemiLune>
+            <NuitQuartDeLune>0.5</NuitQuartDeLune>
+            <NuitNouvelleLune>1</NuitNouvelleLune>
+            <Eclairant>1</Eclairant>
+          </Eclairements>
+          <PosturesSource>
+            <Mouvement>0.3</Mouvement>
+            <MouvementDiscret>0.3</MouvementDiscret>
+            <Arret>0.7</Arret>
+            <PosteReflexe>0.8</PosteReflexe>
+            <Poste>0.9</Poste>
+            <PosteAmenage>1</PosteAmenage>
+            <PostePrepareGenie>1</PostePrepareGenie>
+          </PosturesSource>
+          <PosturesCible>
+            <Mouvement>1</Mouvement>
+            <MouvementDiscret>0.25</MouvementDiscret>
+            <Arret>0.9</Arret>
+            <PosteReflexe>0.8</PosteReflexe>
+            <Poste>0.7</Poste>
+            <PosteAmenage>0.7</PosteAmenage>
+            <PostePrepareGenie>0.7</PostePrepareGenie>
+          </PosturesCible>
+          <Environnements>
+            <Sol>0</Sol>
+            <Vide>1</Vide>
+            <Foret>0</Foret>
+            <Urbain>1</Urbain>
+          </Environnements>
+        </ModificateursDeDistance>
+      </DetectionAgents>
+      <DetectionObjets>
+        <Objets>
+          <Objet type="bouchon mines">
+            <DD>1000</DD>
+            <ModificateursDeDistance>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
+              <PosturesSource>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>0.25</MouvementDiscret>
+                <Arret>0.9</Arret>
+                <PosteReflexe>0.8</PosteReflexe>
+                <Poste>0.3</Poste>
+                <PosteAmenage>0.25</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+              </PosturesSource>
+            </ModificateursDeDistance>
+          </Objet>
+          <Objet type="itineraire logistique">
+            <DD>1000</DD>
+            <ModificateursDeDistance>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
+              <PosturesSource>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>0.25</MouvementDiscret>
+                <Arret>0.9</Arret>
+                <PosteReflexe>0.8</PosteReflexe>
+                <Poste>0.3</Poste>
+                <PosteAmenage>0.25</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+              </PosturesSource>
+            </ModificateursDeDistance>
+          </Objet>
+          <Objet type="site franchissement">
+            <DD>5000</DD>
+            <ModificateursDeDistance>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
+              <PosturesSource>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>1</MouvementDiscret>
+                <Arret>1</Arret>
+                <PosteReflexe>1</PosteReflexe>
+                <Poste>1</Poste>
+                <PosteAmenage>1</PosteAmenage>
+                <PostePrepareGenie>1</PostePrepareGenie>
+              </PosturesSource>
+            </ModificateursDeDistance>
+          </Objet>
+        </Objets>
+      </DetectionObjets>
+    </Senseur>
+    <Senseur nom="oeil NBC">
+      <DetectionAgents>
+        <Angle balayage="true" unite="degre">60</Angle>
+        <DistanceDeProximite>50</DistanceDeProximite>
+        <DistancesDeBase>
+          <DD>200</DD>
+          <DR>150</DR>
+          <DI>75</DI>
+        </DistancesDeBase>
+        <ModificateursDeDistance>
+          <PresencePopulation densitePopulation="1" modificateur="0.5"/>
+          <VolumesCible>
+            <Gros>1</Gros>
+            <Moyen>0.9</Moyen>
+            <Petit>0.7</Petit>
+            <Personnel>0.3</Personnel>
+          </VolumesCible>
+          <Precipitations>
+            <PasDePrecipitation>1</PasDePrecipitation>
+            <TempeteDeSable>0</TempeteDeSable>
+            <Brouillard>0.1</Brouillard>
+            <Crachin>0.4</Crachin>
+            <Pluie>0.2</Pluie>
+            <Neige>0.1</Neige>
+            <Fumigene>0.1</Fumigene>
+          </Precipitations>
+          <Eclairements>
+            <JourSansNuage>0</JourSansNuage>
+            <JourPeuNuageux>0</JourPeuNuageux>
+            <JourMoyennementNuageux>0</JourMoyennementNuageux>
+            <JourAssezNuageux>0</JourAssezNuageux>
+            <JourTresNuageux>0</JourTresNuageux>
+            <NuitPleineLune>0.7</NuitPleineLune>
+            <NuitTroisQuartDeLune>0.4</NuitTroisQuartDeLune>
+            <NuitDemiLune>0.3</NuitDemiLune>
+            <NuitQuartDeLune>0.1</NuitQuartDeLune>
+            <NuitNouvelleLune>1</NuitNouvelleLune>
+            <Eclairant>0</Eclairant>
+          </Eclairements>
+          <PosturesSource>
+            <Mouvement>1</Mouvement>
+            <MouvementDiscret>0.25</MouvementDiscret>
+            <Arret>0.9</Arret>
+            <PosteReflexe>0.8</PosteReflexe>
+            <Poste>0.3</Poste>
+            <PosteAmenage>0.25</PosteAmenage>
+            <PostePrepareGenie>0.2</PostePrepareGenie>
+          </PosturesSource>
+          <PosturesCible>
+            <Mouvement>1</Mouvement>
+            <MouvementDiscret>0.25</MouvementDiscret>
+            <Arret>0.9</Arret>
+            <PosteReflexe>0.8</PosteReflexe>
+            <Poste>0.3</Poste>
+            <PosteAmenage>0.25</PosteAmenage>
+            <PostePrepareGenie>0.2</PostePrepareGenie>
+          </PosturesCible>
+          <Environnements>
+            <Sol>0</Sol>
+            <Vide>1</Vide>
+            <Foret>0.05</Foret>
+            <Urbain>1</Urbain>
+          </Environnements>
+        </ModificateursDeDistance>
+      </DetectionAgents>
+      <DetectionObjets>
+        <Objets>
+          <Objet type="rota">
+            <DD>1000</DD>
+            <ModificateursDeDistance>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
+              <PosturesSource>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>0.25</MouvementDiscret>
+                <Arret>0.9</Arret>
+                <PosteReflexe>0.8</PosteReflexe>
+                <Poste>0.3</Poste>
+                <PosteAmenage>0.25</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+              </PosturesSource>
+            </ModificateursDeDistance>
+          </Objet>
+          <Objet type="nuage nbc">
+            <DD>1000</DD>
+            <ModificateursDeDistance>
+              <PresencePopulation densitePopulation="1" modificateur="0.5"/>
+              <PosturesSource>
+                <Mouvement>1</Mouvement>
+                <MouvementDiscret>0.25</MouvementDiscret>
+                <Arret>0.9</Arret>
+                <PosteReflexe>0.8</PosteReflexe>
+                <Poste>0.3</Poste>
+                <PosteAmenage>0.25</PosteAmenage>
+                <PostePrepareGenie>0.2</PostePrepareGenie>
+              </PosturesSource>
+            </ModificateursDeDistance>
+          </Objet>
+        </Objets>
+      </DetectionObjets>
+    </Senseur>
+  </Senseurs>
+
+</Capteurs>

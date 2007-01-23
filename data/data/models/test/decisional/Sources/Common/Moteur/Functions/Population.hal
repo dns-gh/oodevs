@@ -1,0 +1,53 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+signatures
+{
+    // Actions
+    V                                         A::DEC_StopAction   ( U /*T_Action*/ );
+    V                                         A::DEC_PauseAction  ( U /*T_Action*/ );
+    V                                         A::DEC_ReprendAction( U /*T_Action*/ );        
+
+    // Déplacement            
+    U /*T_Action*/                            A::DEC_StartDeplacement( U /*T_Point*/ );
+
+    // Tir                                  
+    U /*T_Action*/                            A::DEC_StartTirSurPions( R /* intensite */ );
+    U /*T_Action*/                            A::DEC_StartTirSurPion ( R /* intensite */, U /* T_Population_ConnaissanceAgent */ );
+                                            
+    // Effets sur les pions
+    V                                         A::DEC_Population_RalentissementPion_ChangeVitesse   ( R /*vitesse*/ );
+    V                                         A::DEC_Population_RalentissementPion_VitesseParDefaut();
+    V                                         A::DEC_Population_ChangerAttitude                    ( I /* E_AttitudePopulation */ );
+    I /* E_AttitudePopulation */              A::DEC_Population_Attitude                           ();
+    R                                         A::DEC_Population_Vivants                            ();
+    R                                         A::DEC_Population_Morts                              ();
+    
+    // Connaissance
+    I /*E_EtatROEPopulation*/                 A::DEC_ConnaissanceAgent_RoePopulation  (  U /*T_Population_ConnaissanceAgent*/ );
+    S /*T_ListePopulationConnaissancesAgent*/ A::DEC_Connaissances_PionsPrenantAPartie(); 
+    S /*T_ListePopulationConnaissancesAgent*/ A::DEC_Connaissances_PionsSecurisant    (); 
+    
+    S /*T_ListePopulationConnaissancesObjet*/ A::DEC_Connaissances_ObjetsDansZone     ( U /*T_Localisation*/, * /*E_TypeObjects*/ );
+    U /*T_Localisation*/                      A::DEC_ConnaissanceObjet_Localisation   ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
+    B                                         A::DEC_ConnaissanceObjet_EstValide      ( U /*T_Population_ConnaissanceObjet*/ );
+    V                                         A::DEC_ConnaissanceObjet_Degrader       ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/, R /*facteur de degradation 0..1*/ );
+    R                                         A::DEC_ConnaissanceObjet_Distance       ( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
+    U /*T_Point*/                             A::DEC_ConnaissanceObjet_PointPlusProche( U /*T_Population_ConnaissanceObjet*/, I /*E_ValiditeRequete&*/ );
+    I /*E_Tristate*/                          A::DEC_ConnaissanceObjet_EstEnnemi( U /*T_ConnaissanceObjet*/, I /*E_ValiditeRequete*/ );
+    
+    // Etat decisionnel
+    V                                         A::DEC_Population_ChangeEtatDomination( R /*domination entre 0 et 1*/ );
+        
+    // RC
+    V                                         A::DEC_RC     ( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                         A::DEC_Message( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );
+    V                                         A::DEC_Warning( I /*E_TypeRC*/, * /*Paramètres dépendant du type de RC*/ );    
+    
+    // Test / debug 
+    V                                         A::DEC_Trace             ( X );    
+    V                                         A::DEC_Debug             ( X );
+    V                                         A::DEC_DebugAffichePoint ( U /*T_Point*/ );
+    V                                         A::DEC_DebugAffichePoints( U /*T_ListePoints*/ );        
+}
+

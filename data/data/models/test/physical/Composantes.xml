@@ -1,0 +1,2544 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Composantes>
+
+  <Composante Commentaire="" nom="Drone">
+    <MosID>1</MosID>
+    <CodeEMAT6>Drone</CodeEMAT6>
+    <CodeEMAT8>Drone</CodeEMAT8>
+    <CodeLFRIL>Drone</CodeLFRIL>
+    <CodeNNO>Drone</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>Aeronef</Protection>
+    <Volume>Petit</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">10</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">5</Terrain>
+      <Terrain type="dune">5</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">0</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">35</Terrain>
+      <Terrain type="autoroute">50</Terrain>
+      <Terrain type="nationale">40</Terrain>
+      <Terrain type="departementale">40</Terrain>
+      <Terrain type="ruisseau">2</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="Balle Classique 12,7" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus fumigene" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus eclairant" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="20" nom="Obus 120 mm" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="50" nom="Obus mine" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="5" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
+          <Categorie consommationNormalisee="10" contenance="4" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="mine classique" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="40" nom="pont flottant de la mort" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="bouffe" seuilLogistique="80"/>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="flotte" seuilLogistique="80"/>
+        </Categories>
+      </Dotation>
+    </Contenance>
+    <Armements>
+      <Armement lanceur="Lance-fussoir" munition="Fusse a jupette 53mm"/>
+      <Armement lanceur="Lance-fussoir" munition="Obus fumigene"/>
+      <Armement lanceur="Canon 120" munition="Obus 120 mm"/>
+      <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7"/>
+    </Armements>
+    <Transport>
+      <Personnel>
+        <Temps>
+          <TempsEmbarquementParHomme>3s</TempsEmbarquementParHomme>
+          <TempsDebarquementParHomme>6s</TempsDebarquementParHomme>
+        </Temps>
+      </Personnel>
+      <Pion>
+        <Capacite>5</Capacite>
+        <Temps>
+          <TempsChargementParTonne>15s</TempsChargementParTonne>
+          <TempsDechargementParTonne>15s</TempsDechargementParTonne>
+        </Temps>
+      </Pion>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars>
+      <Radar>Radar doppler</Radar>
+      <Radar>Radar HAWK</Radar>
+      <Radar>Ecoute</Radar>
+    </Radars>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint>
+        <Dotation nom="ration">
+          <Categories>
+            <Categorie nom="bouffe">1000</Categorie>
+            <Categorie nom="flotte">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurEteint>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets>
+      <Objet type="bouchon mines">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>600s</TempsInitialDestruction>
+        <TempsConstructionCoef>240s</TempsConstructionCoef>
+        <TempsDestructionCoef>288s</TempsDestructionCoef>
+        <TempsValorisation>0s</TempsValorisation>
+        <TempsDevalorisation>1800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>0</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+      <Objet type="pont flottant continu">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>600s</TempsInitialDestruction>
+        <TempsConstructionCoef>240s</TempsConstructionCoef>
+        <TempsDestructionCoef>288s</TempsDestructionCoef>
+        <TempsValorisation>0s</TempsValorisation>
+        <TempsDevalorisation>1800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>10</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+      <Objet type="abattis">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>0s</TempsInitialDestruction>
+        <TempsConstructionCoef>72s</TempsConstructionCoef>
+        <TempsDestructionCoef>180s</TempsDestructionCoef>
+        <TempsValorisation>3600s</TempsValorisation>
+        <TempsDevalorisation>10800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>0</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+    </Objets>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="CompTest">
+    <MosID>2</MosID>
+    <CodeEMAT6>CompTestEMAT6</CodeEMAT6>
+    <CodeEMAT8>CompTestEMAT8</CodeEMAT8>
+    <CodeLFRIL>CompTestLFRIL</CodeLFRIL>
+    <CodeNNO>CompTestNNO</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">10</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">5</Terrain>
+      <Terrain type="dune">5</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">0</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">35</Terrain>
+      <Terrain type="autoroute">50</Terrain>
+      <Terrain type="nationale">40</Terrain>
+      <Terrain type="departementale">40</Terrain>
+      <Terrain type="ruisseau">2</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="Balle Classique 12,7" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus fumigene" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus eclairant" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="2000" nom="Obus 120 mm" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="50" nom="Obus mine" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="5" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
+          <Categorie consommationNormalisee="10" contenance="40" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="mine classique" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="40" nom="pont flottant de la mort" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="bouffe" seuilLogistique="80"/>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="flotte" seuilLogistique="80"/>
+        </Categories>
+      </Dotation>
+    </Contenance>
+    <Armements>
+      <Armement lanceur="Lance-fussoir" munition="Obus mine"/>
+      <Armement lanceur="Lance-fussoir" munition="Fusse a jupette 53mm"/>
+      <Armement lanceur="Lance-fussoir" munition="Obus fumigene"/>
+      <Armement lanceur="Canon 120" munition="Obus 120 mm"/>
+      <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7"/>
+    </Armements>
+    <Transport>
+      <Personnel>
+        <Temps>
+          <TempsEmbarquementParHomme>3s</TempsEmbarquementParHomme>
+          <TempsDebarquementParHomme>6s</TempsDebarquementParHomme>
+        </Temps>
+      </Personnel>
+      <Pion>
+        <Capacite>5</Capacite>
+        <Temps>
+          <TempsChargementParTonne>15s</TempsChargementParTonne>
+          <TempsDechargementParTonne>15s</TempsDechargementParTonne>
+        </Temps>
+      </Pion>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars>
+      <Radar>Radar doppler</Radar>
+      <Radar>Radar HAWK</Radar>
+      <Radar>Ecoute</Radar>
+    </Radars>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint>
+        <Dotation nom="ration">
+          <Categories>
+            <Categorie nom="bouffe">1000</Categorie>
+            <Categorie nom="flotte">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurEteint>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets>
+      <Objet type="bouchon mines">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>600s</TempsInitialDestruction>
+        <TempsConstructionCoef>240s</TempsConstructionCoef>
+        <TempsDestructionCoef>288s</TempsDestructionCoef>
+        <TempsValorisation>0s</TempsValorisation>
+        <TempsDevalorisation>1800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>0</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+      <Objet type="pont flottant continu">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>600s</TempsInitialDestruction>
+        <TempsConstructionCoef>240s</TempsConstructionCoef>
+        <TempsDestructionCoef>288s</TempsDestructionCoef>
+        <TempsValorisation>0s</TempsValorisation>
+        <TempsDevalorisation>1800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>10</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+      <Objet type="abattis">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsInitialDestruction>0s</TempsInitialDestruction>
+        <TempsConstructionCoef>72s</TempsConstructionCoef>
+        <TempsDestructionCoef>180s</TempsDestructionCoef>
+        <TempsValorisation>3600s</TempsValorisation>
+        <TempsDevalorisation>10800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>0</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+    </Objets>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Delco casse" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="100"/>
+        <Panne nom="Panne 2" pourcentage="0"/>
+        <Panne nom="Panne 3" pourcentage="0"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="CompTest2">
+    <MosID>3</MosID>
+    <CodeEMAT6>CompTest2</CodeEMAT6>
+    <CodeEMAT8>CompTest2</CodeEMAT8>
+    <CodeLFRIL>CompTest2</CodeLFRIL>
+    <CodeNNO>CompTest2</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>Combattant</Protection>
+    <Volume>Petit</Volume>
+    <Vitesses maximum="10">
+      <Terrain type="inconnu">3</Terrain>
+      <Terrain type="foret">2</Terrain>
+      <Terrain type="plantation">1</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">3</Terrain>
+      <Terrain type="urbain">2</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">2</Terrain>
+      <Terrain type="banlieue">3</Terrain>
+      <Terrain type="cote">1</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">2</Terrain>
+      <Terrain type="autoroute">6</Terrain>
+      <Terrain type="nationale">6</Terrain>
+      <Terrain type="departementale">4</Terrain>
+      <Terrain type="ruisseau">2</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">6</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Balle Classique 12,7" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="Obus eclairant" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="2" nom="Obus 120 mm" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="30000" nom="mine classique" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements>
+      <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7"/>
+    </Armements>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>1.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">0</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurEteint>
+      <ArretMoteurAllume>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">30</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurAllume>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">50</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux>
+        <Dotation nom="munition">
+          <Categories>
+            <Categorie nom="Obus eclairant">100</Categorie>
+          </Categories>
+        </Dotation>
+      </EnTravaux>
+    </Consommations>
+    <Objets>
+      <Objet type="fosse anti char">
+        <TempsInitialConstruction>3600s</TempsInitialConstruction>
+        <TempsConstructionCoef>240s</TempsConstructionCoef>
+        <TempsDestructionCoef>288s</TempsDestructionCoef>
+        <TempsValorisation>0s</TempsValorisation>
+        <TempsDevalorisation>1800s</TempsDevalorisation>
+        <CoefGainContournement>1</CoefGainContournement>
+        <VitesseNonContourne>0</VitesseNonContourne>
+        <VitesseContourne>5</VitesseContourne>
+      </Objet>
+    </Objets>
+  </Composante>
+
+  <Composante Commentaire="" nom="CompNBC">
+    <MosID>4</MosID>
+    <CodeEMAT6>CompNBC</CodeEMAT6>
+    <CodeEMAT8>CompNBC</CodeEMAT8>
+    <CodeLFRIL>CompNBC</CodeLFRIL>
+    <CodeNNO>CompNBC</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">20</Terrain>
+      <Terrain type="autoroute">60</Terrain>
+      <Terrain type="nationale">60</Terrain>
+      <Terrain type="departementale">40</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="800" nom="Balle Classique 12,7" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus fumigene" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus eclairant" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="2" nom="Obus 120 mm" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="50" nom="Obus mine" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="5" nom="Fusse a ailettes 50mm" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="4" nom="Fusse a jupette 53mm" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements>
+      <Armement lanceur="Canon 120" munition="Obus 120 mm"/>
+      <Armement lanceur="Lance-fussoir" munition="Fusse a ailettes 50mm"/>
+      <Armement lanceur="Lance-fussoir" munition="Fusse a jupette 53mm"/>
+      <Armement lanceur="Lance-fussoir" munition="Obus mine"/>
+      <Armement lanceur="Lance-fussoir" munition="Obus eclairant"/>
+      <Armement lanceur="Lance-fussoir" munition="Obus fumigene"/>
+    </Armements>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil NBC</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>5</Poids>
+    <Consommations>
+      <ArretMoteurEteint>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">1</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurEteint>
+      <ArretMoteurAllume>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">723</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurAllume>
+      <Deplacement>
+        <Dotation nom="munition">
+          <Categories>
+            <Categorie nom="Balle Classique 12,7">100</Categorie>
+          </Categories>
+        </Dotation>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux>
+        <Dotation nom="munition">
+          <Categories>
+            <Categorie nom="Obus eclairant">540</Categorie>
+          </Categories>
+        </Dotation>
+      </EnTravaux>
+    </Consommations>
+    <Objets>
+      <Objet type="site decontamination">
+        <TempsInitialConstruction>0s</TempsInitialConstruction>
+        <TempsInitialDestruction>0s</TempsInitialDestruction>
+      </Objet>
+    </Objets>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 6" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Remorqueur 5T">
+    <MosID>5</MosID>
+    <CodeEMAT6>Remorqueur</CodeEMAT6>
+    <CodeEMAT8>Remorqueur</CodeEMAT8>
+    <CodeLFRIL>Remorqueur</CodeLFRIL>
+    <CodeNNO>Remorqueur</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars>
+      <Radar>Ecoute radar</Radar>
+    </Radars>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Maintenance>
+        <Remorqueur>
+          <Capacite>5</Capacite>
+          <TempsChargement>15s</TempsChargement>
+          <TempsDechargement>10s</TempsDechargement>
+        </Remorqueur>
+      </Maintenance>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Remorqueur 3T">
+    <MosID>6</MosID>
+    <CodeEMAT6>Remorqueur</CodeEMAT6>
+    <CodeEMAT8>Remorqueur</CodeEMAT8>
+    <CodeLFRIL>Remorqueur</CodeLFRIL>
+    <CodeNNO>Remorqueur</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars>
+      <Radar>Ecoute radar</Radar>
+    </Radars>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Maintenance>
+        <Remorqueur>
+          <Capacite>3</Capacite>
+          <TempsChargement>100s</TempsChargement>
+          <TempsDechargement>60s</TempsDechargement>
+        </Remorqueur>
+      </Maintenance>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="NTI TC2">
+    <MosID>7</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Maintenance>
+        <NTI1 tempsMaxReparation="14400s">
+          <EA/>
+          <M/>
+        </NTI1>
+      </Maintenance>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="NTI BLD M">
+    <MosID>8</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Maintenance>
+        <NTI1>
+          <M/>
+        </NTI1>
+        <NTI2>
+          <M/>
+        </NTI2>
+      </Maintenance>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="NTI BLD EA">
+    <MosID>9</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540.6</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Maintenance>
+        <NTI1>
+          <EA/>
+        </NTI1>
+        <NTI2>
+          <EA/>
+        </NTI2>
+      </Maintenance>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="NTI BLT M">
+    <MosID>10</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Maintenance>
+        <NTI1>
+          <M/>
+        </NTI1>
+        <NTI2>
+          <M/>
+        </NTI2>
+        <NTI3>
+          <M/>
+        </NTI3>
+      </Maintenance>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="NTI BLT EA">
+    <MosID>11</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Maintenance>
+        <NTI1>
+          <EA/>
+        </NTI1>
+        <NTI2>
+          <EA/>
+        </NTI2>
+        <NTI3>
+          <EA/>
+        </NTI3>
+      </Maintenance>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="VSB (releve)">
+    <MosID>12</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <AmbulanceReleve>
+          <Capacite>3</Capacite>
+          <TempsChargementParHumain>15s</TempsChargementParHumain>
+          <TempsDechargementParHumain>10s</TempsDechargementParHumain>
+        </AmbulanceReleve>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="VSR (ramassage)">
+    <MosID>13</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <AmbulanceRamassage>
+          <Capacite>5</Capacite>
+          <TempsChargementParHumain>25s</TempsChargementParHumain>
+          <TempsDechargementParHumain>5s</TempsDechargementParHumain>
+        </AmbulanceRamassage>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+    <DeniveleMaximum>0.9</DeniveleMaximum>
+  </Composante>
+
+  <Composante Commentaire="" nom="Medecin TC2">
+    <MosID>14</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <Medecin/>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Medecin tri">
+    <MosID>15</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <Medecin>
+          <Tri/>
+        </Medecin>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Medecin soin chirurgical">
+    <MosID>16</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <Medecin>
+          <SoinBlessures>
+            <UE/>
+            <U1/>
+          </SoinBlessures>
+        </Medecin>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Medecin soin chirurgical U2/U3">
+    <MosID>17</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <Medecin>
+          <SoinBlessures>
+            <U2/>
+            <U3/>
+          </SoinBlessures>
+        </Medecin>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Medecin soin mental">
+    <MosID>18</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <Medecin>
+          <SoinReacMental/>
+        </Medecin>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Medecin soin NBC">
+    <MosID>19</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Sante>
+        <Medecin>
+          <SoinNBC/>
+        </Medecin>
+      </Sante>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Camion transport solide">
+    <MosID>20</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Ravitaillement>
+        <Transporteur>
+          <Capacite>
+            <Masse>33</Masse>
+            <Volume>10</Volume>
+          </Capacite>
+          <NatureTransportee>Solide</NatureTransportee>
+        </Transporteur>
+      </Ravitaillement>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Camion transport liquide">
+    <MosID>21</MosID>
+    <CodeEMAT6>NTI</CodeEMAT6>
+    <CodeEMAT8>NTI</CodeEMAT8>
+    <CodeLFRIL>NTI</CodeLFRIL>
+    <CodeNNO>NTI</CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">30</Terrain>
+      <Terrain type="foret">20</Terrain>
+      <Terrain type="plantation">10</Terrain>
+      <Terrain type="marais">0</Terrain>
+      <Terrain type="dune">30</Terrain>
+      <Terrain type="urbain">20</Terrain>
+      <Terrain type="etendue eau">0</Terrain>
+      <Terrain type="glace">1</Terrain>
+      <Terrain type="lisiere">25</Terrain>
+      <Terrain type="banlieue">30</Terrain>
+      <Terrain type="cote">10</Terrain>
+      <Terrain type="bord de plantation">1</Terrain>
+      <Terrain type="bord de marais">1</Terrain>
+      <Terrain type="bord de dune">1</Terrain>
+      <Terrain type="bord de glace">1</Terrain>
+      <Terrain type="chemin">1</Terrain>
+      <Terrain type="autoroute">2</Terrain>
+      <Terrain type="nationale">1</Terrain>
+      <Terrain type="departementale">1</Terrain>
+      <Terrain type="ruisseau">20</Terrain>
+      <Terrain type="riviere">0</Terrain>
+      <Terrain type="riviere importante">0</Terrain>
+      <Terrain type="pont">60</Terrain>
+      <Terrain type="falaise">0</Terrain>
+      <Terrain type="voie ferree">2</Terrain>
+      <Terrain type="carrefour">0</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="600" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </Contenance>
+    <Armements/>
+    <Transport>
+      <Personnel/>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars/>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint/>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">540</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <FonctionsLogistiques>
+      <Ravitaillement>
+        <Transporteur>
+          <Capacite>
+            <Masse>33</Masse>
+            <Volume>10</Volume>
+          </Capacite>
+          <NatureTransportee>Liquide</NatureTransportee>
+        </Transporteur>
+      </Ravitaillement>
+    </FonctionsLogistiques>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+  <Composante Commentaire="" nom="Truc Volant">
+    <MosID>22</MosID>
+    <CodeEMAT6></CodeEMAT6>
+    <CodeEMAT8></CodeEMAT8>
+    <CodeLFRIL></CodeLFRIL>
+    <CodeNNO></CodeNNO>
+    <CategorieMateriel>Autres</CategorieMateriel>
+    <Protection>BlindeLeger</Protection>
+    <Volume>Moyen</Volume>
+    <Vitesses maximum="90">
+      <Terrain type="inconnu">500</Terrain>
+      <Terrain type="foret">500</Terrain>
+      <Terrain type="plantation">500</Terrain>
+      <Terrain type="marais">500</Terrain>
+      <Terrain type="dune">500</Terrain>
+      <Terrain type="urbain">500</Terrain>
+      <Terrain type="etendue eau">500</Terrain>
+      <Terrain type="glace">500</Terrain>
+      <Terrain type="lisiere">500</Terrain>
+      <Terrain type="banlieue">500</Terrain>
+      <Terrain type="cote">500</Terrain>
+      <Terrain type="bord de plantation">500</Terrain>
+      <Terrain type="bord de marais">500</Terrain>
+      <Terrain type="bord de dune">500</Terrain>
+      <Terrain type="bord de glace">500</Terrain>
+      <Terrain type="chemin">500</Terrain>
+      <Terrain type="autoroute">500</Terrain>
+      <Terrain type="nationale">500</Terrain>
+      <Terrain type="departementale">500</Terrain>
+      <Terrain type="ruisseau">500</Terrain>
+      <Terrain type="riviere">500</Terrain>
+      <Terrain type="riviere importante">500</Terrain>
+      <Terrain type="pont">500</Terrain>
+      <Terrain type="falaise">500</Terrain>
+      <Terrain type="voie ferree">500</Terrain>
+      <Terrain type="carrefour">500</Terrain>
+    </Vitesses>
+    <Contenance>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="Balle Classique 12,7" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus fumigene" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="100" nom="Obus eclairant" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="20" nom="Obus 120 mm" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="50" nom="Obus mine" seuilLogistique="20"/>
+          <Categorie consommationNormalisee="10" contenance="5" nom="Fusse a ailettes 50mm" seuilLogistique="0"/>
+          <Categorie consommationNormalisee="10" contenance="4" nom="Fusse a jupette 53mm" seuilLogistique="0"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="mine classique" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="10" contenance="40" nom="pont flottant de la mort" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="bouffe" seuilLogistique="80"/>
+          <Categorie consommationNormalisee="10" contenance="1000" nom="flotte" seuilLogistique="80"/>
+        </Categories>
+      </Dotation>
+    </Contenance>
+    <Armements>
+      <Armement lanceur="Lance-fussoir" munition="Fusse a jupette 53mm"/>
+      <Armement lanceur="Lance-fussoir" munition="Obus fumigene"/>
+      <Armement lanceur="Canon 120" munition="Obus 120 mm"/>
+      <Armement lanceur="Mitrailleuse" munition="Balle Classique 12,7"/>
+    </Armements>
+    <Transport>
+      <Personnel>
+        <Temps>
+          <TempsEmbarquementParHomme>3s</TempsEmbarquementParHomme>
+          <TempsDebarquementParHomme>6s</TempsDebarquementParHomme>
+        </Temps>
+      </Personnel>
+      <Pion>
+        <Capacite>5</Capacite>
+        <Temps>
+          <TempsChargementParTonne>15s</TempsChargementParTonne>
+          <TempsDechargementParTonne>15s</TempsDechargementParTonne>
+        </Temps>
+      </Pion>
+    </Transport>
+    <Senseurs>
+      <Senseur hauteur="2">oeil</Senseur>
+    </Senseurs>
+    <Radars>
+      <Radar>Radar doppler</Radar>
+      <Radar>Radar HAWK</Radar>
+      <Radar>Ecoute</Radar>
+    </Radars>
+    <Poids>2.6</Poids>
+    <Consommations>
+      <ArretMoteurEteint>
+        <Dotation nom="ration">
+          <Categories>
+            <Categorie nom="bouffe">1000</Categorie>
+            <Categorie nom="flotte">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </ArretMoteurEteint>
+      <ArretMoteurAllume/>
+      <Deplacement>
+        <Dotation nom="carburant">
+          <Categories>
+            <Categorie nom="gasoil">1000</Categorie>
+          </Categories>
+        </Dotation>
+      </Deplacement>
+      <EnTravaux/>
+    </Consommations>
+    <Objets/>
+    <Pannes>
+      <PannesAleatoires>
+        <Panne nom="Panne 1" pourcentage="100"/>
+      </PannesAleatoires>
+      <PannesAttritions>
+        <Panne nom="Panne 1" pourcentage="30"/>
+        <Panne nom="Panne 2" pourcentage="30"/>
+        <Panne nom="Panne 3" pourcentage="40"/>
+      </PannesAttritions>
+    </Pannes>
+  </Composante>
+
+</Composantes>

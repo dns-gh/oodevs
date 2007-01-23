@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<NBC>
+
+  <ImpactTenueNBC>
+    <CoefModificationVitesseMax>0.4</CoefModificationVitesseMax>
+    <CoefModificationTempsRechargement>1.5</CoefModificationTempsRechargement>
+  </ImpactTenueNBC>
+
+  <VitesseVentLimiteAvantPropagationDirectionnelle>5</VitesseVentLimiteAvantPropagationDirectionnelle>
+
+  <AgentsNBC>
+    <AgentNBC nom="Air">
+      <MosID>8</MosID>
+      <Liquide/>
+    </AgentNBC>
+    <AgentNBC nom="Gaz sarin">
+      <MosID>3</MosID>
+      <Liquide>
+        <Intoxication>
+          <Humains_NonBlesse>0.2</Humains_NonBlesse>
+          <Humains_U1>0.05</Humains_U1>
+          <Humains_U2>0.15</Humains_U2>
+          <Humains_U3>0.15</Humains_U3>
+          <Humains_UE>0.15</Humains_UE>
+          <Humains_Mort>0.3</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+      </Liquide>
+      <Gaz>
+        <Intoxication>
+          <Humains_NonBlesse>0.2</Humains_NonBlesse>
+          <Humains_U1>0.05</Humains_U1>
+          <Humains_U2>0.15</Humains_U2>
+          <Humains_U3>0.15</Humains_U3>
+          <Humains_UE>0.15</Humains_UE>
+          <Humains_Mort>0.3</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+        <DureeDeVie>300s</DureeDeVie>
+        <AngleDePropagation unite="degre">20</AngleDePropagation>
+      </Gaz>
+    </AgentNBC>
+    <AgentNBC nom="H5N1">
+      <MosID>2</MosID>
+      <Liquide>
+        <Intoxication>
+          <Humains_NonBlesse>0.3</Humains_NonBlesse>
+          <Humains_U1>0.1</Humains_U1>
+          <Humains_U2>0.1</Humains_U2>
+          <Humains_U3>0.2</Humains_U3>
+          <Humains_UE>0.1</Humains_UE>
+          <Humains_Mort>0.2</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+      </Liquide>
+      <Gaz>
+        <Intoxication>
+          <Humains_NonBlesse>0.3</Humains_NonBlesse>
+          <Humains_U1>0.1</Humains_U1>
+          <Humains_U2>0.1</Humains_U2>
+          <Humains_U3>0.2</Humains_U3>
+          <Humains_UE>0.1</Humains_UE>
+          <Humains_Mort>0.2</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+        <DureeDeVie>300s</DureeDeVie>
+        <AngleDePropagation unite="degre">20</AngleDePropagation>
+      </Gaz>
+    </AgentNBC>
+    <AgentNBC nom="HCN">
+      <MosID>4</MosID>
+      <Liquide>
+        <Intoxication>
+          <Humains_NonBlesse>0.5</Humains_NonBlesse>
+          <Humains_U1>0.05</Humains_U1>
+          <Humains_U2>0.15</Humains_U2>
+          <Humains_U3>0.15</Humains_U3>
+          <Humains_UE>0.05</Humains_UE>
+          <Humains_Mort>0.1</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+      </Liquide>
+      <Gaz>
+        <Intoxication>
+          <Humains_NonBlesse>0.5</Humains_NonBlesse>
+          <Humains_U1>0.05</Humains_U1>
+          <Humains_U2>0.15</Humains_U2>
+          <Humains_U3>0.15</Humains_U3>
+          <Humains_UE>0.05</Humains_UE>
+          <Humains_Mort>0.1</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+        <DureeDeVie>300s</DureeDeVie>
+        <AngleDePropagation unite="degre">20</AngleDePropagation>
+      </Gaz>
+    </AgentNBC>
+    <AgentNBC nom="Rayon gamma">
+      <MosID>5</MosID>
+      <Liquide>
+        <Intoxication>
+          <Humains_NonBlesse>0.3</Humains_NonBlesse>
+          <Humains_U1>0.1</Humains_U1>
+          <Humains_U2>0.1</Humains_U2>
+          <Humains_U3>0.2</Humains_U3>
+          <Humains_UE>0.1</Humains_UE>
+          <Humains_Mort>0.2</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+      </Liquide>
+      <Gaz>
+        <Intoxication>
+          <Humains_NonBlesse>0.3</Humains_NonBlesse>
+          <Humains_U1>0.1</Humains_U1>
+          <Humains_U2>0.1</Humains_U2>
+          <Humains_U3>0.2</Humains_U3>
+          <Humains_UE>0.1</Humains_UE>
+          <Humains_Mort>0.2</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+        <DureeDeVie>300s</DureeDeVie>
+        <AngleDePropagation unite="degre">20</AngleDePropagation>
+      </Gaz>
+    </AgentNBC>
+    <AgentNBC nom="Soman">
+      <MosID>6</MosID>
+      <Liquide>
+        <Intoxication>
+          <Humains_NonBlesse>0.5</Humains_NonBlesse>
+          <Humains_U1>0.05</Humains_U1>
+          <Humains_U2>0.15</Humains_U2>
+          <Humains_U3>0.15</Humains_U3>
+          <Humains_UE>0.05</Humains_UE>
+          <Humains_Mort>0.1</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+      </Liquide>
+    </AgentNBC>
+    <AgentNBC nom="VX">
+      <MosID>1</MosID>
+      <Liquide>
+        <Intoxication>
+          <Humains_NonBlesse>0.5</Humains_NonBlesse>
+          <Humains_U1>0.05</Humains_U1>
+          <Humains_U2>0.15</Humains_U2>
+          <Humains_U3>0.15</Humains_U3>
+          <Humains_UE>0.05</Humains_UE>
+          <Humains_Mort>0.1</Humains_Mort>
+        </Intoxication>
+        <Contamination/>
+      </Liquide>
+      <Gaz>
+        <Intoxication>
+          <Humains_NonBlesse>0.5</Humains_NonBlesse>
+          <Humains_U1>0.05</Humains_U1>
+          <Humains_U2>0.15</Humains_U2>
+          <Humains_U3>0.15</Humains_U3>
+          <Humains_UE>0.05</Humains_UE>
+          <Humains_Mort>0.1</Humains_Mort>
+        </Intoxication>
+        <DureeDeVie>30s</DureeDeVie>
+        <AngleDePropagation unite="degre">20</AngleDePropagation>
+      </Gaz>
+    </AgentNBC>
+    <AgentNBC nom="Virus ebola">
+      <MosID>7</MosID>
+      <Liquide>
+        <Intoxication>
+          <Humains_NonBlesse>0.3</Humains_NonBlesse>
+          <Humains_U1>0.12</Humains_U1>
+          <Humains_U2>0.08</Humains_U2>
+          <Humains_U3>0.2</Humains_U3>
+          <Humains_UE>0.1</Humains_UE>
+          <Humains_Mort>0.2</Humains_Mort>
+        </Intoxication>
+      </Liquide>
+      <Gaz>
+        <Intoxication>
+          <Humains_NonBlesse>0.3</Humains_NonBlesse>
+          <Humains_U1>0.1</Humains_U1>
+          <Humains_U2>0.1</Humains_U2>
+          <Humains_U3>0.2</Humains_U3>
+          <Humains_UE>0.1</Humains_UE>
+          <Humains_Mort>0.2</Humains_Mort>
+        </Intoxication>
+        <DureeDeVie>300s</DureeDeVie>
+        <AngleDePropagation unite="degre">20</AngleDePropagation>
+      </Gaz>
+    </AgentNBC>
+  </AgentsNBC>
+
+</NBC>

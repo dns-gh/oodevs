@@ -1,0 +1,2508 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Pions>
+
+  <Unite nom="PC TC2" type="Pion LOG TC2">
+    <MosID>1</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="xxxx"/>
+      <QualificatifAtlas type="ASA"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="NTI TC2">3</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 5T">3</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 3T">3</Equipement>
+      <Equipement equipage="4" nom="VSB (releve)">5</Equipement>
+      <Equipement equipage="4" nom="VSR (ramassage)">5</Equipement>
+      <Equipement equipage="4" nom="Medecin TC2">10</Equipement>
+      <Equipement convoyeur="true" equipage="1" nom="Camion transport solide">15</Equipement>
+      <Equipement convoyeur="true" equipage="1" nom="Camion transport liquide">15</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 1" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 2" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 3" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer l'electronique 1" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <Installation>
+      <DelaiInstallation>500s</DelaiInstallation>
+      <DelaiDesinstallation>30s</DelaiDesinstallation>
+    </Installation>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+      <Point type="lima">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>6000s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="PC BLD Maintenance" type="Pion LOG BLD Maintenance">
+    <MosID>2</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements/>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="PC BLT Maintenance" type="Pion LOG BLT Maintenance">
+    <MosID>3</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements/>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Cie Reparation BLT - M" type="Pion LOG BLT Maintenance">
+    <MosID>4</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="NTI BLT M">3</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 1" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 2" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 3" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer l'electronique 1" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Cie Reparation BLT - EA" type="Pion LOG BLT Maintenance">
+    <MosID>5</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="NTI BLT EA">3</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Groupe evacuation maintenance BLT" type="Pion LOG BLT Maintenance">
+    <MosID>6</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="250" nom="Remorqueur 5T">2</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 3T">2</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+      <Point type="lima">100</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Cie Reparation BLD - M" type="Pion LOG BLT Maintenance">
+    <MosID>7</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="NTI BLD M">3</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 1" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 2" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer la mobilite 3" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="1000" nom="Truc pour reparer l'electronique 1" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Cie Reparation BLD - EA" type="Pion LOG BLD Maintenance">
+    <MosID>8</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="NTI BLD EA">3</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Groupe evacuation maintenance BLD" type="Pion LOG BLD Maintenance">
+    <MosID>9</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="250" nom="Remorqueur 5T">2</Equipement>
+      <Equipement equipage="250" nom="Remorqueur 3T">2</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Section Combat GEN" type="Pion INF">
+    <MosID>10</MosID>
+    <ModeleDecisionnel>Test</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" majeur="true" nom="CompTest">3</Equipement>
+      <Equipement embarquable="true" equipage="4" nom="CompTest2">2</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Fusse a jupette 53mm" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Obus 120 mm" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Obus fumigene" seuilLogistique="10"/>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <Installation>
+      <DelaiInstallation>1000s</DelaiInstallation>
+      <DelaiDesinstallation>500s</DelaiDesinstallation>
+    </Installation>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+      <Point type="lima">100</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Section Combat GEN 2" type="Pion INF">
+    <MosID>11</MosID>
+    <ModeleDecisionnel>Test</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Non renseigne"/>
+      <Nature type="combat/engineer"/>
+    </Nature>
+    <Equipements>
+      <Equipement embarquable="true" equipage="4" nom="CompTest2">5</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Escadrille ALAT" type="Pion ALAT">
+    <MosID>12</MosID>
+    <ModeleDecisionnel>Test ALAT</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Non renseigne"/>
+      <Nature type="combat/engineer"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" majeur="true" nom="Truc Volant">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <PeutVoler/>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Section Combat NBC" type="Pion NBC">
+    <MosID>13</MosID>
+    <ModeleDecisionnel>NBC Test</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Non renseigne"/>
+      <Nature type="combat/engineer"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="CompNBC">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>0</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Section Combat RENS" type="Pion RENS">
+    <MosID>14</MosID>
+    <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Non renseigne"/>
+      <Nature type="combat/engineer"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="CompNBC">1</Equipement>
+      <Equipement equipage="4" nom="CompTest">2</Equipement>
+      <Equipement equipage="4" nom="CompTest2">2</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>0</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <PeutVoler/>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Drone RENS" type="Pion RENS">
+    <MosID>15</MosID>
+    <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Non renseigne"/>
+      <Nature type="combat/engineer"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="0" nom="Drone">2</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>0</Officier>
+      <SousOfficier>0</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>120s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <PeutVoler/>
+    <EstAutonome/>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="PC BLD Sante" type="Pion LOG BLD Sante">
+    <MosID>16</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+        <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur tri BLD" type="Pion LOG BLD Sante">
+    <MosID>17</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="1" nom="Medecin tri">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur soin chirurgical BLD" type="Pion LOG BLD Sante">
+    <MosID>18</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements/>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur soin mental BLD" type="Pion LOG BLD Sante">
+    <MosID>19</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin chirurgical">5</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur soin NBC BLD" type="Pion LOG BLD Sante">
+    <MosID>20</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin soin NBC">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur tri/soin BLD" type="Pion LOG BLD Sante">
+    <MosID>21</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin tri">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Groupe evacuation sante BLD" type="Pion LOG BLD Sante">
+    <MosID>22</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="VSR (ramassage)">10</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="PC BLT Sante" type="Pion LOG BLT Sante">
+    <MosID>23</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements/>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur tri BLT" type="Pion LOG BLT Sante">
+    <MosID>24</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin tri">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur soin chirurgical BLT" type="Pion LOG BLT Sante">
+    <MosID>25</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin soin chirurgical">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin chirurgical U2/U3">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur soin mental BLT" type="Pion LOG BLT Sante">
+    <MosID>26</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur soin NBC BLT" type="Pion LOG BLT Sante">
+    <MosID>27</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin soin NBC">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Secteur tri/soin BLT" type="Pion LOG BLT Sante">
+    <MosID>28</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="Medecin tri">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin chirurgical">1</Equipement>
+      <Equipement equipage="4" nom="Medecin soin mental">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Groupe evacuation sante BLT" type="Pion LOG BLT Sante">
+    <MosID>29</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="VSR (ramassage)">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="PC BLD Ravitaillement" type="Pion LOG BLD Ravitaillement">
+    <MosID>30</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+        <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Pion RAV stocks" type="Pion LOG BLD Ravitaillement">
+    <MosID>31</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" nom="CompTest">1</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <Stocks>
+      <SeuilsLogistiques>
+        <SeuilLogistique categorie="Unite essence" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+        <SeuilLogistique categorie="Pieces" seuil="10"/>
+      </SeuilsLogistiques>
+    </Stocks>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Pion RAV camions" type="Pion LOG BLD Ravitaillement">
+    <MosID>32</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement convoyeur="true" equipage="1" nom="Camion transport solide">25</Equipement>
+      <Equipement convoyeur="true" equipage="1" nom="Camion transport liquide">25</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <Stocks>
+      <SeuilsLogistiques>
+        <SeuilLogistique categorie="Unite essence" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+        <SeuilLogistique categorie="Pieces" seuil="10"/>
+      </SeuilsLogistiques>
+    </Stocks>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Pion Convoi" type="Pion LOG Convoi">
+    <MosID>33</MosID>
+    <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="oo"/>
+      <Arme type="transport"/>
+      <Specialisation type="terrestre"/>
+      <Qualificatif type="none"/>
+      <Categorie type="soutien logistique"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="Blinde"/>
+      <CapaciteMission type="Non renseigne"/>
+      <Nature type="combat support service/transportation"/>
+    </Nature>
+    <Equipements/>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <Stocks>
+      <SeuilsLogistiques>
+        <SeuilLogistique categorie="Unite essence" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+        <SeuilLogistique categorie="Pieces" seuil="10"/>
+      </SeuilsLogistiques>
+    </Stocks>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+  <Unite nom="Pion Refugie" type="Pion REFUGIE">
+    <MosID>34</MosID>
+    <ModeleDecisionnel>REFUGIE Test</ModeleDecisionnel>
+    <Nature>
+      <Niveau type="ooo"/>
+      <Arme type="genie"/>
+      <Specialisation type="none"/>
+      <Qualificatif type="none"/>
+      <Categorie type="combat"/>
+      <TypeMobilite type="none"/>
+      <QualificatifAtlas type="None"/>
+      <CapaciteMission type="Genie, combat"/>
+      <Nature type="combat/engineer/combat"/>
+    </Nature>
+    <Equipements>
+      <Equipement equipage="4" majeur="true" nom="CompTest">3</Equipement>
+    </Equipements>
+    <RepartitionDuCommandement>
+      <Officier>1</Officier>
+      <SousOfficier>2</SousOfficier>
+    </RepartitionDuCommandement>
+    <ContenanceTC1>
+      <Dotation nom="munition">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="200" nom="Balle Classique 12,7" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="carburant">
+        <Categories>
+          <Categorie consommationNormalisee="0" contenance="100" nom="gasoil" seuilLogistique="10"/>
+        </Categories>
+      </Dotation>
+      <Dotation nom="explosif">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="mine">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="barbele">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="piece">
+        <Categories/>
+      </Dotation>
+      <Dotation nom="ration">
+        <Categories/>
+      </Dotation>
+    </ContenanceTC1>
+    <Stocks>
+      <SeuilsLogistiques>
+        <SeuilLogistique categorie="Unite essence" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite feu -TD" seuil="10"/>
+        <SeuilLogistique categorie="Unite vivre" seuil="10"/>
+        <SeuilLogistique categorie="Pieces" seuil="10"/>
+      </SeuilsLogistiques>
+    </Stocks>
+    <TempsMiseEnPosture>
+      <PosteReflexe>30s</PosteReflexe>
+      <Poste>300s</Poste>
+      <PosteAmenage>1800s</PosteAmenage>
+      <PostePrepareGenie>1800s</PostePrepareGenie>
+    </TempsMiseEnPosture>
+    <DelaiDecontaminationNBC>180s</DelaiDecontaminationNBC>
+    <DistancesAvantPoints>
+      <Point type="foret">500</Point>
+      <Point type="urbain">500</Point>
+      <Point type="carrefour">500</Point>
+      <Point type="pont">500</Point>
+    </DistancesAvantPoints>
+    <CoupDeSonde>
+      <Largeur>100</Largeur>
+      <Longueur>5000</Longueur>
+    </CoupDeSonde>
+    <RapportDeForce>
+      <TempsDeRemontee>100s</TempsDeRemontee>
+    </RapportDeForce>
+    <PorteeArmes>100</PorteeArmes>
+    <PorteeCapteurs>100</PorteeCapteurs>
+  </Unite>
+
+</Pions>

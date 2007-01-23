@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Modeles>
+
+  <Pions>
+    <Modele nom="Test ALAT">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion ALAT\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To">
+          <OrdresConduite>
+            <OrdreConduite nom="Attendre Se Poster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Heliporter"/>
+      </Missions>
+    </Modele>
+    <Modele nom="Test LOG">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion LOG\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="LOG Convoyer"/>
+        <Mission nom="LOG Preparer Bascule"/>
+        <Mission nom="LOG Renforcer"/>
+        <Mission nom="LOG Traiter Blesses">
+          <OrdresConduite>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="LOG Trier Blesses">
+          <OrdresConduite>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="LOG Trier Et Traiter Blesses">
+          <OrdresConduite>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="LOG Se Deployer">
+          <OrdresConduite>
+            <OrdreConduite nom="Modifier Priorites Reparations"/>
+            <OrdreConduite nom="Modifier Priorites Blesses"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Reparations"/>
+            <OrdreConduite nom="Modifier Priorites Tactiques Blesses"/>
+            <OrdreConduite nom="Modifier Regime Travail Maintenance"/>
+            <OrdreConduite nom="Pion Renforcer En VSRAM"/>
+            <OrdreConduite nom="Pion Reprendre Aux Ordres VSRAM"/>
+            <OrdreConduite nom="Pion Renforcer En Remorqueurs"/>
+            <OrdreConduite nom="Pion Reprendre Aux Ordres Remorqueurs"/>
+          </OrdresConduite>
+        </Mission>
+      </Missions>
+    </Modele>
+    <Modele nom="Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To">
+          <OrdresConduite>
+            <OrdreConduite nom="Attendre Se Poster"/>
+            <OrdreConduite nom="Changer Position Debarquement"/>
+            <OrdreConduite nom="Pion Activer Obstacle"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
+        <Mission nom="LOG Trier Blesses"/>
+        <Mission nom="Canaliser Populations"/>
+      </Missions>
+    </Modele>
+    <Modele nom="Test 2">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To">
+          <OrdresConduite>
+            <OrdreConduite nom="Attendre Se Poster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
+      </Missions>
+    </Modele>
+    <Modele nom="NBC Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion NBC\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To">
+          <OrdresConduite>
+            <OrdreConduite nom="Attendre Se Poster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
+      </Missions>
+    </Modele>
+    <Modele nom="RENS Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion RENS\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To">
+          <OrdresConduite>
+            <OrdreConduite nom="Attendre Se Poster"/>
+          </OrdresConduite>
+        </Mission>
+        <Mission nom="Test Change Posture"/>
+        <Mission nom="Test Create Object"/>
+        <Mission nom="Test Destroy Object"/>
+        <Mission nom="Test Create Bypass"/>
+        <Mission nom="Test Reinforce"/>
+        <Mission nom="Test Fire"/>
+      </Missions>
+    </Modele>
+    <Modele nom="REFUGIE Test">
+      <DIAType>T_Pion</DIAType>
+      <File>For Tests\Tests\Pion REFUGIE\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To"/>
+      </Missions>
+    </Modele>
+  </Pions>
+
+  <Automates>
+    <Modele nom="Test">
+      <DIAType>T_Automate</DIAType>
+      <File>For Tests\Tests\Automate\Files.hal</File>
+      <Missions>
+        <Mission nom="Test Move To"/>
+        <Mission nom="Faire Mouvement Vers Camp Refugies"/>
+        <Mission nom="GEN Realiser Travaux"/>
+        <Mission nom="GEN Retablir Itineraires"/>
+        <Mission nom="LOG Se Deployer"/>
+      </Missions>
+    </Modele>
+  </Automates>
+
+  <Populations>
+    <Modele nom="Test">
+      <DIAType>T_Population</DIAType>
+      <File>For Tests\Tests\Population\Files.hal</File>
+      <Missions>
+        <Mission nom="Faire Mouvement"/>
+        <Mission nom="Commettre Exactions"/>
+      </Missions>
+    </Modele>
+  </Populations>
+
+</Modeles>

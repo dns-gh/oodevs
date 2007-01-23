@@ -1,0 +1,25 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+signatures
+{
+    V A::DEC_Maintenance_ActiverChaine            ();
+    V A::DEC_Maintenance_DesactiverChaine         ();
+    V A::DEC_Maintenance_ChangerPriorites         ( U /*T_MaintenancePriorites*/ );
+    V A::DEC_Maintenance_ChangerPrioritesTactiques( S /*T_ListeAutomates*/ );
+    V A::DEC_Maintenance_ChangerRegimeTravail     ( I /*E_MaintenanceRegimeTravail*/ );
+    
+    
+    V A::DEC_Sante_ActiverChaine                  ();
+    V A::DEC_Sante_DesactiverChaine               ();    
+    V A::DEC_Sante_ActiverFonctionTri             ();    
+    V A::DEC_Sante_DesactiverFonctionTri          ();
+    V A::DEC_Sante_ActiverFonctionSoin            ();
+    V A::DEC_Sante_DesactiverFonctionSoin         ();
+    V A::DEC_Sante_ChangerPriorites               ( U /*T_SantePriorites*/ );
+    V A::DEC_Sante_ChangerPrioritesTactiques      ( S /*T_ListeAutomates*/ );
+        
+    V A::DEC_Ravitaillement_ActiverChaine         ();
+    V A::DEC_Ravitaillement_DesactiverChaine      ();
+}
+

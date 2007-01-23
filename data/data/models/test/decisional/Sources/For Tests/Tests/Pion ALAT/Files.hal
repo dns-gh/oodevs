@@ -1,0 +1,4 @@
+globals     = "For Tests\Tests\Pion ALAT\Globals.hal";
+knowledge   = "For Tests\Tests\Pion ALAT\Perception.hal";
+motivations = "For Tests\Tests\Pion ALAT\Motivations.hal";
+behaviors   = "For Tests\Tests\Pion ALAT\Behaviors.hal";

@@ -1,0 +1,279 @@
+use_priority        =   no;
+max_instances       =   10;
+max_activations     =   10;
+
+behavior BEH_Defaut( id nDummy )
+{
+ 
+            //T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( DEC_Automate_PionPC(), T_Mission_Pion_Test_MoveTo );
+            
+    DEC_Debug( "Rapfor global: " + FloatToString( DEC_RapportDeForceGlobal() ) );
+
+    /*T_ListePions selFusse = DEC_Geometrie_PionEstCoordonne( DEC_Automate_PionPC(), DEC_Automate_PionsSansPC(), 2000 );
+    DEC_Debug( "DEC_Geometrie_PionEstCoordonne : " + FloatToString( DIA_Size( selFusse ) ) );*/
+    
+    //T_ConnaissanceObjet cock;
+    //DEC_ActiverObjet( cock );
+    
+    
+    /*
+    T_ListePions selPions = DEC_Automate_PionsAvecPC();    
+    with( y in selPions )
+    {
+        T_Pion pion = y;    
+        
+        DEC_Debug( "En vol : " + BoolToString( DEC_Automate_PionEstEnVol( pion ) ) );
+    }        
+    */
+    /*
+    DEC_Debug( "DEC_TypeObjet_PeutEtreContourne( eTypeObjectBouchonMines ) : " + BoolToString( DEC_TypeObjet_PeutEtreContourne( eTypeObjectBouchonMines ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtreValorise ( eTypeObjectBouchonMines ) : " + BoolToString( DEC_TypeObjet_PeutEtreValorise ( eTypeObjectBouchonMines ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectBouchonMines ) : " + BoolToString( DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectBouchonMines ) ) );
+
+    DEC_Debug( "DEC_TypeObjet_PeutEtreContourne( eTypeObjectEboulement ) : " + BoolToString( DEC_TypeObjet_PeutEtreContourne( eTypeObjectEboulement ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtreValorise ( eTypeObjectEboulement ) : " + BoolToString( DEC_TypeObjet_PeutEtreValorise ( eTypeObjectEboulement ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectEboulement ) : " + BoolToString( DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectEboulement ) ) );
+    
+    DEC_Debug( "DEC_TypeObjet_PeutEtreContourne( eTypeObjectRota ) : " + BoolToString( DEC_TypeObjet_PeutEtreContourne( eTypeObjectRota ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtreValorise ( eTypeObjectRota ) : " + BoolToString( DEC_TypeObjet_PeutEtreValorise ( eTypeObjectRota ) ) );
+    DEC_Debug( "DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectRota ) : " + BoolToString( DEC_TypeObjet_PeutEtrePrepare  ( eTypeObjectRota ) ) );    
+    */
+}
+
+behavior MIS_Automate_MRT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )
+{           
+         
+    if( DIA_ModuleBegins() )
+    { 
+        DEC_Debug( "MIS_Automate_MRT_Test_MoveTo" );
+                       
+        DEC_RC( eRC_Releve, DEC_Automate_PionPC() );
+
+        T_ListePions selPions = DEC_Automate_PionsAvecPC();
+        
+        //T_Mission_Pion_Test_MoveTo missionPion2 = DEC_MRT_CreerMissionPion( DIA_GetAt( DEC_Automate_PionsSansPC(), 0 ), eMission_Pion_Test_MoveTo );
+
+        DEC_MRT_AffecteFuseaux( selPions );
+        //DEC_RC( eRC_DemandeRavitaillementAcceptee, myself );
+
+        with( y in selPions )
+        {
+            T_Pion pion = y;
+
+            DEC_RC( eRC_SurPIA, pion );
+  
+            
+            T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( pion, T_Mission_Pion_Test_MoveTo );
+            if( missionPion != 0 )
+            {
+                missionPion.typeItineraire_ = eTypeItiLogistique;
+                DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
+                DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.visionDirection_ );
+                DEC_Copie_ListePoints( mission.itineraire_, missionPion.itineraire_ );
+            }
+        }       
+
+        DEC_MRT_Valide();
+    }
+}
+
+behavior Prout( T_Mission_Automate_Test_MoveTo mission )
+{
+    when updated:
+    {
+        if( DIA_ModuleBegins() )
+        {
+            T_Mission_Pion_Test_MoveTo missionPion = DEC_CDT_CreerMissionPion( DIA_GetAt( DEC_Automate_PionsSansPC(), 0 ), T_Mission_Pion_Test_MoveTo );
+            missionPion.typeItineraire_ = eTypeItiLogistique;
+            DEC_Copie_Direction( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
+            DEC_Copie_ListePoints( mission.itineraire_, missionPion.itineraire_ );
+        }
+    }
+    on spontaneous end:
+    {
+        DEC_Debug( "Test" );
+    }
+}
+
+behavior MIS_Automate_CDT_Test_MoveTo( T_Mission_Automate_Test_MoveTo mission, id nDummy )
+{
+    when updated:
+    {   
+        /*if( DIA_ModuleBegins() )
+            behavior Prout( mission );*/
+  
+   
+      /*  persistent bool bDummy = false;
+        T_Lima lima = DEC_GetLima( eTypeLima_LC );
+        if( lima != 0 )
+            DEC_SetMissionLimaFlag( lima, bDummy );
+            
+        bDummy = !bDummy;
+        
+        T_Mission_Pion_Test_MoveTo missionPion2 = DEC_CDT_CreerMissionPion( DIA_GetAt( DEC_Automate_PionsSansPC(), 0 ), eMission_Pion_Test_MoveTo );
+
+    
+        persistent T_CalculLignesAvantArriere tacheTmp;
+
+        if( DIA_ModuleBegins() )
+        {
+            DEC_Debug( "MIS_Automate_CDT_Test_MoveTo" );
+            tacheTmp = DEC_Geometrie_StartCalculLignesAvantEtArriere( DEC_Automate_PionsAvecPC() );
+        }
+        
+        //$$ Test ligne avant/arrière
+        float rProut  = DEC_Geometrie_CalculeDistanceLigneAvant  ( tacheTmp, DEC_Automate_PionPC() );
+        float rProut2 = DEC_Geometrie_CalculeDistanceLigneArriere( tacheTmp, DEC_Automate_PionPC() );
+        DEC_Debug( "Distance ligne avant : " + FloatToString( rProut ) + " - Distance ligne arrière : " + FloatToString( rProut2 ) );
+        
+//        float rProut3 = DEC_CalculeDistanceLigneMoyenne( myself.composants_ );
+//        DEC_Debug( "Distance ligne moyenne : " + FloatToString( rProut3 ) );
+    */
+    }
+        
+    on spontaneous end:
+    {
+    //    DEC_Geometrie_StopCalculLignesAvantEtArriere( tacheTmp );
+    }        
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+behavior MIS_Automate_MRT_SeRendre( T_Mission_Automate_SeRendre mission, id nDummy )
+{
+    if( DIA_ModuleBegins() )
+    {
+        T_Point posCampPrisonnier = DEC_PositionCampPrisonniers();
+        
+        if( posCampPrisonnier != 0 )
+        {
+      
+          T_ListePions selPions = DEC_Automate_PionsAvecPC();
+          with( y in selPions )
+          {
+              T_Pion pion = y;
+      
+              T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( pion, T_Mission_Pion_Test_MoveTo );               
+              DEC_Copie_Direction           ( myself.mission_.directionEnnemi_, missionPion.dirDangereuse_ );
+              DEC_Copie_PointDansListePoints( posCampPrisonnier                 , missionPion.itineraire_      );
+              DEC_Copie_Direction           ( myself.mission_.directionEnnemi_  , missionPion.dirDangereuse_   );
+              DEC_Copie_Direction           ( myself.mission_.directionEnnemi_  , missionPion.visionDirection_ );
+              DEC_Copie_Point               ( posCampPrisonnier                 , missionPion.visionPoint_     );
+                              
+          }
+          DEC_MRT_Valide();
+        }
+    }
+}
+
+behavior MIS_Automate_CDT_SeRendre( T_Mission_Automate_SeRendre mission, id nDummy )
+{
+    DEC_Debug( "MIS_Automate_CDT_SeRendre" );
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+behavior MIS_Automate_MRT_FaireMouvementVersCampRefugies( T_Mission_Automate_FaireMouvementVersCampRefugies mission, id nDummy )
+{
+    when updated:
+    {   
+        if( DIA_ModuleBegins() )
+        {
+            DEC_Debug( "MIS_Automate_MRT_FaireMouvementVersCampRefugies" );
+            DEC_Automate_ChangeEtatPriseEnCompteRefugies( true );
+            
+            T_Point posCampPrisonnier = DEC_PositionCampRefugies();
+            if( posCampPrisonnier != 0 )
+            {
+              T_ListePions selPions = DEC_Automate_PionsAvecPC();
+              with( y in selPions )
+              {
+                  T_Pion pion = y;
+          
+                  T_Mission_Pion_Test_MoveTo missionPion = DEC_MRT_CreerMissionPion( pion, T_Mission_Pion_Test_MoveTo );
+                  DEC_Copie_PointDansListePoints( posCampPrisonnier                 , missionPion.itineraire_      );
+                  DEC_Copie_Direction           ( myself.mission_.directionEnnemi_  , missionPion.dirDangereuse_   );
+                  DEC_Copie_Direction           ( myself.mission_.directionEnnemi_  , missionPion.visionDirection_ );
+                  DEC_Copie_Point               ( posCampPrisonnier                 , missionPion.visionPoint_     );
+              }
+              DEC_MRT_Valide();
+           }
+        }
+    }
+    
+    on spontaneous end:
+    {
+        
+    }
+    
+}
+
+behavior MIS_Automate_CDT_FaireMouvementVersCampRefugies( T_Mission_Automate_FaireMouvementVersCampRefugies mission, id nDummy )
+{
+    when updated:
+    {   
+        if( DIA_ModuleBegins() )
+        {
+            DEC_Debug( "MIS_Automate_CDT_FaireMouvementVersCampRefugies" );
+        }
+    }
+    
+    on spontaneous end:
+    {
+        DEC_Automate_ChangeEtatPriseEnCompteRefugies( false );
+    }
+}
+
+behavior MIS_Automate_MRT_GEN_RetablirItineraires( T_Mission_Automate_GEN_RetablirItineraires mission, id n )
+{
+    // NOTHING: to test PathList mission parameters
+}
+
+behavior MIS_Automate_CDT_GEN_RetablirItineraires( T_Mission_Automate_GEN_RetablirItineraires mission, id n )
+{
+    // NOTHING: to test PathList mission parameters
+} 
+
+
+behavior MIS_Automate_MRT_GEN_RealiserTravaux( T_Mission_Automate_GEN_RealiserTravaux mission, id nDummy )
+{
+    // NOTHING: to test ObstacleList mission parameters
+}
+
+behavior MIS_Automate_CDT_GEN_RealiserTravaux( T_Mission_Automate_GEN_RealiserTravaux mission, id nDummy )
+{
+    // NOTHING: to test ObstacleList mission parameters
+}
+
+
+
+
+behavior MIS_Automate_MRT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer mission, id nDummy )
+{
+    if( DIA_ModuleBegins() )
+    { 
+        DEC_Debug( "MIS_Automate_MRT_LOG_SeDeployer" );
+                       
+        T_ListePions selPions = DEC_Automate_PionsAvecPC();
+        
+//        DEC_MRT_AffecteFuseaux( selPions );
+
+        with( y in selPions )
+        {
+            T_Pion pion = y;
+            
+            T_Mission_Pion_LOG_SeDeployer missionPion = DEC_MRT_CreerMissionPion( pion, T_Mission_Pion_LOG_SeDeployer );
+            if( missionPion != 0 )
+            {
+                if( mission.positionDeploiement_ != 0 )
+                    DEC_Copie_Point( mission.positionDeploiement_, missionPion.positionDeploiement_ );
+            }
+        }       
+
+        DEC_MRT_Valide();
+    }
+}
+
+ behavior MIS_Automate_CDT_LOG_SeDeployer( T_Mission_Automate_LOG_SeDeployer mission, id nDummy )
+{
+}

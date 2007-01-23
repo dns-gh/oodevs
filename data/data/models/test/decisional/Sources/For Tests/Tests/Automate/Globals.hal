@@ -1,0 +1,32 @@
+// *****************************************************************************
+// globals
+// *****************************************************************************
+
+include "Common/Moteur/Functions/Automates.hal";
+include "Common/Moteur/EngineReports.hal";
+
+functions
+{
+/*  //-----------------------------------------------------------------------------
+    // Fonction appellée en mode embrayé lorsqu'un pion fait un compte rendu
+    // param @pion Pion
+    // param @nRC  Type de RC
+    //-----------------------------------------------------------------------------
+    none EVT_DEC_PionRC( T_Pion pion, E_TypeRC nRC )
+    {
+        DEC_Debug( "EVT_DEC_PionRC - type " + EnumToString( nRC, E_TypeRC ) );
+
+        //init
+        Rep_RCPion rc = 0;
+
+        //Creation de la representation
+        rc = DIA_CreateRepresentation( "EVT_DEC_PionRC" + EnumToString( nRC , E_TypeRC ) + pion.szName_ + FloatToString( 2 ), Rep_RCPion );
+
+        //Mise a jour des champs
+        rc.eRC_  = nRC;
+        rc.pion_ = pion;
+
+        //Ajout a la liste des RCs recu par l'automate
+        DIA_AddToCategory( "rcs_pions" , rc );
+    }*/
+}
