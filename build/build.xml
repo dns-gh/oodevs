@@ -272,16 +272,16 @@
     </target>
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-        <property name="adaptation_test.dir1" value="${data.dir}/main"/>
+        <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/worldwide"/>
         <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
         <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-i"/>
-            <arg value="${adaptation_test.dir1}/scipio.xml"/>
+            <arg value="${adaptation_test.dir1}/physical.xml"/>
             <arg value="-o"/>
-            <arg value="${adaptation_test.dir2}/scipio.xml"/>
+            <arg value="${adaptation_test.dir2}/physical.xml"/>
         </exec>
         <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}" 
-                      excludes="**/Terrain/*.*,**/ODB/*.*,**/Meteo.xml,**/ODB.xml,**/PathfindRules.xml,**/Profiles.xml,**/ScipioLauncher.xml" 
+                      excludes="**/Pathfind.xml"
                       includes="**/*.xml" property="adaptation_test.is-different"/>
         <if>
             <isset property="adaptation_test.is-different"/>
