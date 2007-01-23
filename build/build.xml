@@ -303,9 +303,9 @@
       package
     ============================================================================
     -->
-    <!--
+    
     <target name="package" description="package the distribution" >
-        <mkdir dir="${dist.dir}"/>
+       <!-- <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/csword.zip">
             <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
             <fileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe"/>
@@ -335,9 +335,10 @@
             <fileset dir="${applications.dir}/gaming_app" includes="*.qm"/>
             <fileset dir="${applications.dir}/adaptation_app/translator" includes="*.qm"/>                        
             <fileset dir="${run.dir}" includes="*.dll license.dat"/>
-        </copy>
+        </copy>-->
     </target>
     
+    <!--
     <target name="Package2" description="package the distribution" >
         <mkdir dir="${dist.dir}"/>
         <mkdir dir="${tmp.dir}"/>
