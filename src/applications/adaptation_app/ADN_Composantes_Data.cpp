@@ -2185,7 +2185,7 @@ ADN_Composantes_Data::~ADN_Composantes_Data()
 //-----------------------------------------------------------------------------
 void ADN_Composantes_Data::FilesNeeded(T_StringList& files) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szComponents_.GetData());
+    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szComponents_.GetData());
 }
 
 

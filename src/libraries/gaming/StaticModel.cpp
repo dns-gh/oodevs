@@ -58,15 +58,15 @@ StaticModel::~StaticModel()
 // Name: StaticModel::Load
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-void StaticModel::Load( const std::string& scipioXml )
+void StaticModel::Load( const kernel::ExerciseConfig& config )
 {
     Purge();
-    types_.Load( scipioXml );
-    objectTypes_.Load( scipioXml );
-    static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( scipioXml );
-    detection_.Load( scipioXml );
-    reportFactory_.Load( scipioXml );
-    controllers_.controller_.Update( ModelLoaded( scipioXml ) );
+    types_.Load( config );
+    objectTypes_.Load( config );
+    static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
+    detection_.Load( config );
+    reportFactory_.Load( config );
+    controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
 // -----------------------------------------------------------------------------

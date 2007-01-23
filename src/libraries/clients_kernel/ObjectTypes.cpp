@@ -14,7 +14,7 @@
 #include "EquipmentType.h"
 #include "NBCAgent.h"
 #include "BreakdownType.h"
-#include "PathTools.h"
+#include "ExerciseConfig.h"
 #include "ENT/ENT_Tr.h"
 #include "xeumeuleu/xml.h"
 
@@ -34,30 +34,29 @@ ObjectTypes::ObjectTypes()
 // Name: ObjectTypes::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void ObjectTypes::Load( const std::string& scipioXml )
+void ObjectTypes::Load( const ExerciseConfig& config )
 {
     Purge();
 
-    xml::xifstream scipio( scipioXml );
+    xml::xifstream scipio( config.GetPhysicalFile() );
     std::string idFile, dotations, equipments, nbc, pannes, objects;
-    scipio >> start( "Scipio" )
-                >> start( "Donnees" )
-                    >> content( "ClasseIDs", idFile )
-                    >> content( "Dotations", dotations )
-                    >> content( "Composantes", equipments )
-                    >> content( "NBC", nbc )
-                    >> content( "Pannes", pannes )
-                    >> content( "Objets", objects );
+    scipio >> start( "physical" )
+                >> content( "ClasseIDs", idFile )
+                >> content( "Dotations", dotations )
+                >> content( "Composantes", equipments )
+                >> content( "NBC", nbc )
+                >> content( "Pannes", pannes )
+                >> content( "Objets", objects );
 
-    xml::xifstream xis( path_tools::BuildChildPath( scipioXml, idFile ) );
+    xml::xifstream xis( config.BuildPhysicalChildFile( idFile ) );
     xis >> start( "Classes" )
 		>> list( "Classe", *this, &ObjectTypes::ReadObjectClasses );
     
-    ReadObjectTypes( path_tools::BuildChildPath( scipioXml, objects ) );
-    ReadDotations( path_tools::BuildChildPath( scipioXml, dotations ) );
-    ReadEquipments( path_tools::BuildChildPath( scipioXml, equipments ) );
-    ReadNBC( path_tools::BuildChildPath( scipioXml, nbc ) );
-    ReadBreakdowns( path_tools::BuildChildPath( scipioXml, pannes ) );
+    ReadObjectTypes( config.BuildPhysicalChildFile( objects ) );
+    ReadDotations( config.BuildPhysicalChildFile( dotations ) );
+    ReadEquipments( config.BuildPhysicalChildFile( equipments ) );
+    ReadNBC( config.BuildPhysicalChildFile( nbc ) );
+    ReadBreakdowns( config.BuildPhysicalChildFile( pannes ) );
 }
 
 // -----------------------------------------------------------------------------

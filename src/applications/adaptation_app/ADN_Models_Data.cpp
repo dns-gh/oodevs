@@ -379,7 +379,7 @@ void ADN_Models_Data::Reset()
 //-----------------------------------------------------------------------------
 void ADN_Models_Data::FilesNeeded(T_StringList& files) const
 {
-    files.push_back( ComputeFileName() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szModels_.GetData() );
 }
 
 
@@ -446,22 +446,4 @@ void ADN_Models_Data::WriteArchive( MT_OutputArchive_ABC& output )
     output.EndList(); // Populations
 
     output.EndSection();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_Data::ComputeFileName
-// Created: APE 2005-02-15
-// -----------------------------------------------------------------------------
-std::string ADN_Models_Data::ComputeFileName() const
-{
-    std::string szDecisionalFile = ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szDecisional_.GetData();
-    assert( szDecisionalFile.length() > 0 );
-
-    int nPos = szDecisionalFile.rfind( '/', szDecisionalFile.length() -1 );
-    if( nPos < 0 || nPos >= (int)szDecisionalFile.length() ) 
-        nPos = szDecisionalFile.length();
-    std::string szDecisionalDirectory = szDecisionalFile.substr( 0, nPos );
-    std::string strFile = szDecisionalDirectory + "/" + ADN_Workspace::GetWorkspace().GetAiEngine().GetData().strModelsFile_.GetData();
-    return strFile;
 }

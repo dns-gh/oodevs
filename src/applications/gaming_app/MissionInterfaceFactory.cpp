@@ -14,7 +14,7 @@
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/PathTools.h"
+#include "clients_kernel/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -53,29 +53,25 @@ MissionInterfaceFactory::~MissionInterfaceFactory()
 // -----------------------------------------------------------------------------
 void MissionInterfaceFactory::NotifyUpdated( const kernel::ModelLoaded& message )
 {
-    std::string decisional;
-    xifstream xis( message.scipioXml_ );
-    xis >> start( "Scipio" ) >> start( "Donnees" ) >> content( "Decisionnel", decisional );
-    
     std::string missions;
-    decisional = path_tools::BuildChildPath( message.scipioXml_, decisional );
-    xifstream xisDec( decisional );
-    xisDec >> start( "Decisionnel" ) >> start( "DirectIA" ) >> content( "Missions", missions );
-
-    xifstream xisMission( path_tools::BuildChildPath( decisional, missions ) );
-    xisMission >> start( "missions" )
-                    >> start( "automats" )
-                        >> list( "mission", *this, &MissionInterfaceFactory::ReadMission, automatMissions_ )
-                    >> end()
-                    >> start( "units" )
-                        >> list( "mission", *this, &MissionInterfaceFactory::ReadMission, unitMissions_ )
-                    >> end()
-                    >> start( "populations" )
-                        >> list( "mission", *this, &MissionInterfaceFactory::ReadMission, populationMissions_ )
-                    >> end()
-                    >> start( "fragorders" )
-                        >> list( "fragorder", *this, &MissionInterfaceFactory::ReadMission, fragOrders_ )
-                    >> end();
+    xifstream xisPhysical( message.config_.GetPhysicalFile() );
+    xisPhysical >> start( "physical" )
+                    >> content( "Missions", missions );
+    
+    xifstream xis( message.config_.BuildPhysicalChildFile( missions ) );
+    xis >> start( "missions" )
+            >> start( "automats" )
+                >> list( "mission", *this, &MissionInterfaceFactory::ReadMission, automatMissions_ )
+            >> end()
+            >> start( "units" )
+                >> list( "mission", *this, &MissionInterfaceFactory::ReadMission, unitMissions_ )
+            >> end()
+            >> start( "populations" )
+                >> list( "mission", *this, &MissionInterfaceFactory::ReadMission, populationMissions_ )
+            >> end()
+            >> start( "fragorders" )
+                >> list( "fragorder", *this, &MissionInterfaceFactory::ReadMission, fragOrders_ )
+            >> end();
 }
 
 // -----------------------------------------------------------------------------

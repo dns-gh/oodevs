@@ -18,9 +18,9 @@
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
 ADN_Config::ADN_Config()
-: pDialog_         ( 0 )
-, strSimPath_      ()
-, strSimArguments_ ()
+    : pDialog_         ( 0 )
+    , strSimPath_      ()
+    , strSimArguments_ ()
 {
     Load();
 }
@@ -60,8 +60,8 @@ void ADN_Config::Save()
 void ADN_Config::Load()
 {
     // $$$$ SBO 2006-01-02: todo: load from registry
-    strSimPath_      = "./SIM.exe";
-    strSimArguments_ = "-testdata";
+    strSimPath_      = "./simulation_app.exe";
+    strSimArguments_ = "--testdata";
 }
 
 

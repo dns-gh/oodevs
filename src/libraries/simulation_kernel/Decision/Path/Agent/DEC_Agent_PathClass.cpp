@@ -104,7 +104,7 @@ void DEC_Agent_PathClass::InitializeRules( MIL_InputArchive& archive )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strType + "' already defined", archive.GetContext() );
         pRule = new DEC_Agent_PathClass( archive, pBase );
         archive.EndSection(); // Rule
-    };
+    }
     archive.EndList(); // AgentRules
 
     CheckRulesExistence();

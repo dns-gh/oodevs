@@ -34,7 +34,7 @@ class SimulationNetworker : public Networker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     SimulationNetworker( Dispatcher& dispatcher, const std::string& strHostName, unsigned short nPort );
+     SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile );
     ~SimulationNetworker();
     //@}
 

@@ -259,7 +259,7 @@ ADN_Breakdowns_Data::~ADN_Breakdowns_Data()
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szBreakdowns_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szBreakdowns_.GetData() );
 }
 
 

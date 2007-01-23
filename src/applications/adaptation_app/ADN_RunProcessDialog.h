@@ -25,7 +25,7 @@ class ADN_RunProcessDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ADN_RunProcessDialog( QWidget* pParent, const char* szDialogName );
+             ADN_RunProcessDialog( QWidget* pParent, const char* szDialogName );
     virtual ~ADN_RunProcessDialog();
 
     //! @name Operations

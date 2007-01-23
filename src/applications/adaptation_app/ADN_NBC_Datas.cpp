@@ -423,7 +423,7 @@ ADN_NBC_Datas::~ADN_NBC_Datas()
 // -----------------------------------------------------------------------------
 void ADN_NBC_Datas::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szNBC_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szNBC_.GetData() );
 }
 
 

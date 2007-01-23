@@ -101,6 +101,7 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 {
     if( GetAlpha() == 0 )
         return;
+    gl::Initialize();
     if( !layer_.get() && modelLoaded_ )
     {
         extrema_.reset( new ElevationExtrema( elevation_.GetMap() ) );
@@ -136,7 +137,14 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::Cleanup()
 {
-    gl::ShaderProgram::Unuse();
+    try
+    {
+        gl::ShaderProgram::Unuse();
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
     gl::glActiveTexture( gl::GL_TEXTURE1 );
     glBindTexture( GL_TEXTURE_1D, 0 );
     glDisable( GL_TEXTURE_1D );
@@ -178,12 +186,19 @@ void Elevation2dLayer::SetGradient()
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::SetShader()
 {
-    if( ! shader_.get() )
+    try
     {
-        shader_.reset( new ElevationShader() );
-        SetElevations( 0, elevation_.MaximumElevation() );
+        if( ! shader_.get() )
+        {
+            shader_.reset( new ElevationShader() );
+            SetElevations( 0, elevation_.MaximumElevation() );
+        }
+        shader_->Use();
     }
-    shader_->Use();
+    catch( ... )
+    {
+        // NOTHING
+    }
 }
 
 // -----------------------------------------------------------------------------

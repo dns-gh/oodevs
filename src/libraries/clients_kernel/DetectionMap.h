@@ -14,6 +14,7 @@
 
 namespace kernel
 {
+    class ExerciseConfig;
 
 // =============================================================================
 /** @class  DetectionMap
@@ -50,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load( const ExerciseConfig& config );
 
     const Environment* EnvironmentData( unsigned x, unsigned y ) const;
     Environment        EnvironmentAt( const geometry::Point2f& point ) const;

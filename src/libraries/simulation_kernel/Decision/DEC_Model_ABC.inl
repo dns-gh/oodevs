@@ -23,7 +23,7 @@
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
 template< typename T >
-DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath )
+DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std::string& strModel, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath, const std::string& strPrefix )
     : strModel_            ( strModel )
     , pDIAModel_           ( 0 )
     , pDIAType_            ( 0 )
@@ -39,7 +39,7 @@ DEC_Model_ABC< T >::DEC_Model_ABC( const DEC_Workspace& decWorkspace, const std:
     if( !pDIAType_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Unknown DIA Type : " ) + strDIAType );
 
-    InitializeModel   ( decWorkspace, bNeedParsing, bUseOnlyArchive, strBinaryPath, strSourcePath );
+    InitializeModel   ( decWorkspace, bNeedParsing, bUseOnlyArchive, strBinaryPath, strSourcePath, strPrefix );
     InitializeMissions( input );
 }
 
@@ -124,7 +124,7 @@ bool DEC_Model_ABC< T >::FileChanged( const std::string& strFileName, time_t sin
 // Created: NLD 2006-12-13
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath )
+void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath, const std::string& strPrefix )
 {
     pDIAModel_ = decWorkspace.FindDIAModelFromScript( strScript_ );
     if( pDIAModel_ )
@@ -136,8 +136,8 @@ void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, boo
     DIA_Workspace::Instance().RegisterModel( *pDIAModel_, strModel_ );
 
     // tests if we need to update binary archive
-    std::string strArchiveName           = strBinaryPath + "/models/" + strModel_ + ".bin";
-    std::string strOpenedFileArchiveName = strBinaryPath + "/files/"  + strModel_ + ".bin";
+    std::string strArchiveName           = strBinaryPath + "/" + strPrefix + "/" + strModel_ + ".model";
+    std::string strOpenedFileArchiveName = strBinaryPath + "/" + strPrefix + "/" + strModel_ + ".files";
 
     if( !bUseOnlyArchive && NeedScriptParsing( bNeedParsing, strArchiveName, strSourcePath + "/" + strScript_ /*$$$ n'importe quoi */, strOpenedFileArchiveName ) )
     {
@@ -160,7 +160,7 @@ void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, boo
         archiveOut.EnableIntEncoding( true );
         DIA_Tool_Archive_Engine::WriteArchive( *pDIAModel_, archiveOut );
         archiveOut.WriteToFile( strArchiveName, true );
-        DIA_Workspace::Instance().WriteModelDebugFile( *pDIAModel_, std::string( "/debug/" ) + strModel_ + ".ddi" );        
+        DIA_Workspace::Instance().WriteModelDebugFile( *pDIAModel_, std::string( "/debug/" ) + strPrefix + "/" + strModel_ + ".ddi" );        
     }
     else
     {
@@ -179,7 +179,7 @@ void DEC_Model_ABC< T >::InitializeModel( const DEC_Workspace& decWorkspace, boo
         }
         try
         {
-            DIA_Workspace::Instance().ReadModelDebugFile( *pDIAModel_, std::string( "/debug/" ) + strModel_ + ".ddi" );
+            DIA_Workspace::Instance().ReadModelDebugFile( *pDIAModel_, std::string( "/debug/" ) + strPrefix + "/" + strModel_ + ".ddi" );
         }
         catch ( MT_Exception& /*e*/ )
         {

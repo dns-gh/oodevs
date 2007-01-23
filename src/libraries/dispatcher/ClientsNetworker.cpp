@@ -16,6 +16,7 @@
 #include "Client.h"
 #include "AsnMessageDecoder.h"
 #include "AsnMessageEncoder.h"
+#include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
 using namespace DIN;
@@ -25,14 +26,22 @@ using namespace NEK;
 // Name: ClientsNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, unsigned short nPort )
+ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile )
     : Networker_ABC     ( dispatcher )
-    , serverAddress_    ( nPort )
+    , serverAddress_    ()
     , connectionService_( *this, dinEngine_, DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 1 )
     , messageService_   ( *this, dinEngine_, DIN_ConnectorHost() )
     , pServer_          ( 0 )
     , clients_          ()
 {
+    unsigned short port;
+    xml::xifstream xis( configFile );
+    xis >> xml::start( "config" )
+            >> xml::start( "dispatcher" )
+                >> xml::start( "network" )
+                    >> xml::attribute( "server", port );
+    serverAddress_ = NEK_AddressINET( port );
+
     messageService_.SetCbkOnError( &ClientsNetworker::OnErrorReceivingMessage );
     messageService_.RegisterReceivedMessage( eMsgOutClient             , *this, &ClientsNetworker::OnReceiveMsgOutClient              );
     messageService_.RegisterReceivedMessage( eMsgEnableUnitVisionCones , *this, &ClientsNetworker::OnReceiveMsgEnableUnitVisionCones  );

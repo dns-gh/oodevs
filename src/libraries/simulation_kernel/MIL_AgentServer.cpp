@@ -25,7 +25,6 @@
 #include "simulation_terrain/TER_World.h"
 
 #include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_ArchiveDirectoryHelper.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "MT/MT_Archive/MT_InputArchive_ABC.h"
 
@@ -39,7 +38,7 @@ MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
 // Created: DFT 02-02-28
 // Last modified: JVT 03-09-24
 //-----------------------------------------------------------------------------
-MIL_AgentServer::MIL_AgentServer( const MIL_Config& config )
+MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     : MT_Timer_ABC             ()
     , nSimState_               ( eSimLoading )
     , config_                  ( config )
@@ -64,27 +63,20 @@ MIL_AgentServer::MIL_AgentServer( const MIL_Config& config )
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
     
-    MIL_InputArchive archive;
-    archive.AddWarningStream( std::cout );
-    archive.Open( config.GetConfigFileName() );
+    config_.AddFileToCRC( config_.GetExerciseFile() );
+    
+    ReadStaticData();
 
-    config_.AddFileToCRC( config.GetConfigFileName() );
-    Initialize( archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::Initialize
-// Created: NLD 2004-09-08
-// Modified: JVT 2005-03-07 ( changing initialization order... )
-// -----------------------------------------------------------------------------
-void MIL_AgentServer::Initialize( MIL_InputArchive& archive )
-{
-    archive.Section( "Scipio" );
-    ReadStaticData ( archive );
     if( config_.UseCheckPoint() )
-        pCheckPointManager_->LoadCheckPoint( config_.GetCheckPointFileName() );
+        pCheckPointManager_->LoadCheckPoint( config_ );
     else
-        ReadODB( archive );
+    {
+        // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
+        pEntityManager_     = new MIL_EntityManager    ();
+        pCheckPointManager_ = new MIL_CheckPointManager( config_ );
+        pEntityManager_->ReadODB( config_ );
+        ResumeSim();
+    }
 
     if( pFederate_ )
         pEntityManager_->RegisterLocalAgents( *pFederate_ );
@@ -99,7 +91,6 @@ void MIL_AgentServer::Initialize( MIL_InputArchive& archive )
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer destructor
 // Created: DFT 02-02-28
-// Last modified: JVT 03-06-06
 //-----------------------------------------------------------------------------
 MIL_AgentServer::~MIL_AgentServer()
 {
@@ -130,128 +121,49 @@ MIL_AgentServer::~MIL_AgentServer()
 // INIT
 //=============================================================================
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadODB
-// Created: JVT 02-12-05
-//-----------------------------------------------------------------------------
-void MIL_AgentServer::ReadODB( MIL_InputArchive& archive )
-{
-    assert( !pEntityManager_ );
-
-    archive.Section( "SIM" );
-
-    pEntityManager_     = new MIL_EntityManager    ( archive );
-    pCheckPointManager_ = new MIL_CheckPointManager( archive );
-    
-    archive.ReadField( "TimeFactor", nTimeFactor_, CheckValueGreater( 0 ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );    
-        
-    uint nAutoStart = 0;
-    if( archive.ReadField( "AutoStart", nAutoStart, MIL_InputArchive::eNothing ) && nAutoStart == 1 )
-        ResumeSim();
-    archive.EndSection(); // SIM
-
-    // ODB
-    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
-    MT_LOG_STARTUP_MESSAGE( "----  Loading ODB    ----" );
-    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
-
-    std::string strODB;
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UseCheckPointODB() )
-        strODB = pCheckPointManager_->GetCheckPointODBFileName( config_.GetCheckPointODBFileName() );
-    else
-    {
-        archive.Section( "Donnees" );
-        archive.ReadField( "ODB", strODB );
-        archive.EndSection(); // Donnees
-    }
-    MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strODB.c_str() ) );
-
-    MIL_InputArchive odbArchive;
-    odbArchive.AddWarningStream( std::cout );
-    odbArchive.Open( strODB );
-    pEntityManager_->ReadODB( odbArchive );
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::ReadStaticData
 // Created: JVT 2005-03-07
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadStaticData( MIL_InputArchive& archive )
+void MIL_AgentServer::ReadStaticData()
 {   
-    nSimState_ = eSimPaused;
-    archive.Section( "SIM" );
-    archive.ReadField( "TimeStep"  , nTimeStepDuration_ );
+    nSimState_         = eSimPaused;
+    nTimeStepDuration_ = config_.GetTimeStep();
+    nTimeFactor_       = config_.GetTimeFactor();
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
-    archive.EndSection(); // SIM
-    
-    archive.Section( "Donnees" );
-    
-    pAgentServer_ = new NET_AgentServer( archive );
+    MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );    
+        
+    pAgentServer_ = new NET_AgentServer();
 
-    MIL_IDManager::Initialize( archive );
-    ReadTerData     ( archive );
-//    ReadMissionsData( archive );
+    MIL_IDManager::Initialize( config_ );
+    ReadTerData();
+    pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
+    pWorkspaceDIA_     = new DEC_Workspace       ( config_ );
 
-    pMeteoDataManager_ = new PHY_MeteoDataManager( archive );
-    pWorkspaceDIA_     = new DEC_Workspace       ( archive );
-
-    MIL_EntityManager::Initialize( archive );
+    MIL_EntityManager::Initialize( config_ );
 
     if( !config_.IsDataTestMode() )
-        ReadPathFindData( archive );
-    ReadHLA( archive );
-
-    archive.EndSection(); // Donnees
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadPathFindData
-// Created: AGE 2005-03-01
-// -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadPathFindData( MIL_InputArchive& archive )
-{
-    std::string strPathfindFile;
-    archive.ReadField( "Pathfind", strPathfindFile );
-    MIL_InputArchive pathfindArchive;
-    pathfindArchive.AddWarningStream( std::cout );
-    pathfindArchive.Open( strPathfindFile );
-    config_.AddFileToCRC( strPathfindFile );
-
-    MT_ArchiveDirectoryHelper directoryChanger( strPathfindFile );
-    pPathFindManager_  = new DEC_PathFind_Manager( pathfindArchive );
+        pPathFindManager_ = new DEC_PathFind_Manager( config_ );
+    ReadHLA();
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::ReadTerData
 // Created: FBD 02-11-27
 //-----------------------------------------------------------------------------
-void MIL_AgentServer::ReadTerData( MIL_InputArchive& archive )
+void MIL_AgentServer::ReadTerData()
 {
     MT_LOG_INFO_MSG( "Initializing terrain" );
 
-    std::string strTerFile;
-    archive.ReadField( "Terrain", strTerFile );
-
+    std::string strTerFile = config_.GetTerrainFile();
     MIL_InputArchive terArchive;
-    terArchive.AddWarningStream( std::cout );
     terArchive.Open( strTerFile );
     
     config_.AddFileToCRC( strTerFile );
 
-    {
-        MT_ArchiveDirectoryHelper directoryChanger( strTerFile );
-        MT_LOG_INFO_MSG( MT_FormatString( "Terrain data directory : %s", MT_GetCurrentDir().c_str() ) );
-        TER_World::Initialize( terArchive );
-        MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
-    }
-
-    std::string strTerDataPath;
-    MT_ExtractFilePath( strTerFile, strTerDataPath );
-    config_.AddFileToCRC( strTerDataPath + TER_World::GetWorld().GetGraphFileName() );
-    config_.AddFileToCRC( strTerDataPath + TER_World::GetWorld().GetNodeFileName() );
-    config_.AddFileToCRC( strTerDataPath + TER_World::GetWorld().GetLinkFileName() );
-
+    MT_LOG_INFO_MSG( MT_FormatString( "Terrain: %s", config_.GetTerrainFile().c_str() ) );
+    TER_World::Initialize( config_.GetTerrainFile() );
+    MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
     terArchive.Close();
 }
 
@@ -259,36 +171,22 @@ void MIL_AgentServer::ReadTerData( MIL_InputArchive& archive )
 // Name: MIL_AgentServer::ReadHLA
 // Created: AGE 2004-11-05
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadHLA( MIL_InputArchive& archive )
+void MIL_AgentServer::ReadHLA()
 {
-    std::string strHLASubArchive;
-    archive.ReadField( "HLA", strHLASubArchive );
-    MT_LOG_INFO_MSG( "Initializing HLA" );
-    
-    MIL_InputArchive hlaFile;
-    hlaFile.AddWarningStream( std::cout );
-    hlaFile.Open( strHLASubArchive );
-    config_.AddFileToCRC( strHLASubArchive );
-    hlaFile.Section( "HLA" );
-    bool bUse = false;
-    hlaFile.ReadField( "UseHLA", bUse );
-    if( ! bUse )
+    if( !config_.IsHLAEnabled() )
         return;
 
-    std::string strFederationName;
-    hlaFile.ReadField( "Federation", strFederationName );
-    std::string strFederateName;
-    hlaFile.ReadField( "Federate", strFederateName );
+    MT_LOG_INFO_MSG( "Initializing HLA" );
 
-    pFederate_ = new HLA_Federate( strFederateName, nTimeStepDuration_ );
-    if( ! pFederate_->Join( strFederationName ) )
+    pFederate_ = new HLA_Federate( config_.GetHLAFederate(), nTimeStepDuration_ );
+    if( ! pFederate_->Join( config_.GetHLAFederation() ) )
     {
-        MT_LOG_WARNING_MSG( "Could not join federation '" << strFederationName << "'" );
+        MT_LOG_WARNING_MSG( "Could not join federation '" << config_.GetHLAFederation() << "'" );
         delete pFederate_;
         pFederate_ = 0;
     }
     else
-        MT_LOG_INFO_MSG( "Connected to federation '" << strFederationName << "'" );
+        MT_LOG_INFO_MSG( "Connected to federation '" << config_.GetHLAFederation() << "'" );
 }
 
 
@@ -411,11 +309,15 @@ void MIL_AgentServer::SendMsgBeginTick() const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SendMsgEndTick() const
 {
+    assert( pProcessMonitor_ );
+
     NET_ASN_MsgCtrlEndTick msgEndTick;
     msgEndTick().current_tick        = GetCurrentTimeStep();
     msgEndTick().tick_duration       = (ASN1INT)pProfilerMgr_->GetLastTickDuration();
     msgEndTick().nb_pathfinds_courts = pPathFindManager_->GetNbrShortRequests();
     msgEndTick().nb_pathfinds_longs  = pPathFindManager_->GetNbrLongRequests ();
+    msgEndTick().memory              = pProcessMonitor_->GetMemory();
+    msgEndTick().virtual_memory      = pProcessMonitor_->GetVirtualMemory();
     msgEndTick.Send();
 }
 

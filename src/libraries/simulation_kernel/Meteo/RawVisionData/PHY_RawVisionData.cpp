@@ -49,35 +49,27 @@ const PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_InputArchive& initArchive )
+PHY_RawVisionData::PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_Config& config )
     : ppCells_( 0 )
     , nNbrCol_( 0 )
     , nNbrRow_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
 
-    std::string strTerrainFile;
-    initArchive.ReadField( "Terrain", strTerrainFile );
-
-    std::string strTerrainDataPath;
-    MT_ExtractFilePath( strTerrainFile, strTerrainDataPath );
-
     MIL_InputArchive terrainArchive;
 
-    terrainArchive.AddWarningStream( std::cout );
-    terrainArchive.Open( strTerrainFile );
+    terrainArchive.Open( config.GetTerrainFile() );
     terrainArchive.Section( "Terrain" );
-
     std::string strRawVisionDirectory;
     terrainArchive.ReadField( "RawVision", strRawVisionDirectory );
-
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strTerrainDataPath + strRawVisionDirectory + "/detection.dat" );
-    Read( strTerrainDataPath + strRawVisionDirectory + "/detection.dat" );
-
-    sCell::pGlobalMeteo_ = &globalMeteo;
-
     terrainArchive.EndSection(); // Terrain
     terrainArchive.Close();
+
+    std::string detection = config.BuildTerrainChildFile( strRawVisionDirectory + "/detection.dat" );
+    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( detection );
+    Read( detection );
+
+    sCell::pGlobalMeteo_ = &globalMeteo;
 }
 
 //-----------------------------------------------------------------------------

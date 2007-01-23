@@ -47,7 +47,7 @@ public:
     void Update( const ASN1T_MsgCtrlInfo& asnMsg );
     void Update( const ProfilingValuesMessage& message );
     void BeginTick( int );
-    void EndTick();
+    void EndTick( const ASN1T_MsgCtrlEndTick& asnMsg );
     void SetConfigPath( const std::string& path );
     const std::string& GetConfigPath() const;
     const std::string& GetSimulationHost() const;

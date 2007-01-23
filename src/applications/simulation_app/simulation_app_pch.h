@@ -6,6 +6,7 @@
 #ifndef __SIM_PCH_H_
 #define __SIM_PCH_H_
 
+#include <string>
 #include <windows.h>
 
 #endif //__SIM_PCH_H_

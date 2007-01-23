@@ -18,6 +18,7 @@ namespace kernel
     class Controllers;
     class CoordinateConverter_ABC;
     class FormationLevels;
+    class ExerciseConfig;
 }
 
 class SurfaceFactory;
@@ -42,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load( const kernel::ExerciseConfig& config );
     void Purge();
     //@}
 

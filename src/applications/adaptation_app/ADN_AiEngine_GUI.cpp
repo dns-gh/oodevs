@@ -70,22 +70,6 @@ void ADN_AiEngine_GUI::Build()
     // Create the top widget.
     pMainWidget_ = new QWidget( 0, "Ai main widget" );
 
-    // Files
-    QGroupBox* pFilesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Files" ), pMainWidget_ );
-    ADN_FileChooser* pChooser = 0;
-
-    pChooser = builder.AddFileField( pFilesGroup, tr( "Binary folder" ), data_.strBinariesFolder_ );
-    pChooser->SetMode( ADN_FileChooser::eDirectory );
-
-    pChooser = builder.AddFileField( pFilesGroup, tr( "Sources folder" ), data_.strSourcesFolder_ );
-    pChooser->SetMode( ADN_FileChooser::eDirectory );
-
-    pChooser = builder.AddFileField( pFilesGroup, tr( "DIA Types file" ), data_.strDIATypesFile_ );
-    pChooser = builder.AddFileField( pFilesGroup, tr( "DIA Workspace file" ), data_.strDIAWorkspaceFile_ );
-    pChooser = builder.AddFileField( pFilesGroup, tr( "Models file" ), data_.strModelsFile_ );
-
-    builder.AddField<ADN_EditLine_Int>( pFilesGroup, tr( "Debugger port" ), data_.nDebuggerPort_ );
-
     // Danger
     QGroupBox* pDangerBox = new QGroupBox( 3, Qt::Horizontal, tr( "Danger management" ), pMainWidget_ );
 
@@ -102,7 +86,6 @@ void ADN_AiEngine_GUI::Build()
 
     // Layout
     QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pFilesGroup );
     pMainLayout->addWidget( pDangerBox );
     pMainLayout->addWidget( pOpStateBox );
 

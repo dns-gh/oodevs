@@ -11,21 +11,11 @@
 #include "Application.h"
 
 #include "MainWindow.h"
-
+#include "Config.h"
 #include "preparation/StaticModel.h"
 #include "preparation/Model.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
-#include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
-
-namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
 
 using namespace kernel;
 
@@ -73,25 +63,12 @@ Application::~Application()
 // -----------------------------------------------------------------------------
 void Application::Initialize( int argc, char** argv )
 {
-    // Command line options
-    std::string conffile;
-    po::options_description desc( "Allowed options" );
-    desc.add_options()
-        ( "conffile,c", po::value< std::string >( &conffile )->default_value( "./scipio.xml" ), "specify main config file (scipio.xml)" )
-    ;
-    po::variables_map vm;
-    po::store( po::parse_command_line( argc, argv, desc ), vm );
-    po::notify( vm );
-
+    config_      = new Config( argc, argv );
     controllers_ = new Controllers();
     workers_     = new Workers();
     staticModel_ = new StaticModel( *controllers_ );
     model_       = new Model( *controllers_, *staticModel_ );
-    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_ );
-
-    if( bfs::exists( bfs::path( conffile, bfs::native ) ) )
-        mainWindow_->Load( conffile );
-
+    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *config_ );
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.

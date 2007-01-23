@@ -26,7 +26,6 @@
 // -----------------------------------------------------------------------------
 ADN_AiEngine_Data::ADN_AiEngine_Data()
 : ADN_Data_ABC()
-, nDebuggerPort_( 0 )
 , rPertinenceMaxDecrease_( 0.0 )
 , rOperationalStateMaxDecrease_( 0.0 )
 , rNeutralizedStateMaxDecrease_( 0.0 )
@@ -69,7 +68,7 @@ void ADN_AiEngine_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_AiEngine_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back(ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szDecisional_.GetData());
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDecisional_.GetData() );
 }
 
 
@@ -80,16 +79,6 @@ void ADN_AiEngine_Data::FilesNeeded( T_StringList& vFiles ) const
 void ADN_AiEngine_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Decisionnel" );
-
-    input.Section( "DirectIA" );
-    input.ReadField( "RepertoireBinaires", strBinariesFolder_ );
-    input.ReadField( "RepertoireSources", strSourcesFolder_ );
-    input.ReadField( "DIATypes", strDIATypesFile_ );
-    input.ReadField( "DIAWorkspace", strDIAWorkspaceFile_ );
-    input.ReadField( "Modeles", strModelsFile_ );
-    input.ReadField( "Missions", strMissionsFile_ );
-    input.ReadField( "PortDebogueur", nDebuggerPort_ );
-    input.EndSection(); // DirectIA
 
     input.Section( "Dangerosite" );
 
@@ -163,16 +152,6 @@ void ADN_AiEngine_Data::ReadArchive( ADN_XmlInput_Helper& input )
 void ADN_AiEngine_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Decisionnel" );
-
-    output.Section( "DirectIA" );
-    output.WriteField( "RepertoireBinaires", strBinariesFolder_.GetData() );
-    output.WriteField( "RepertoireSources", strSourcesFolder_.GetData() );
-    output.WriteField( "DIATypes", strDIATypesFile_.GetData() );
-    output.WriteField( "DIAWorkspace", strDIAWorkspaceFile_.GetData() );
-    output.WriteField( "Modeles", strModelsFile_.GetData() );
-    output.WriteField( "Missions", strMissionsFile_.GetData() );
-    output.WriteField( "PortDebogueur", nDebuggerPort_.GetData() );
-    output.EndSection(); // DirectIA
 
     output.Section( "Dangerosite" );
     output.WriteField( "DegradationMaxParPertinence", rPertinenceMaxDecrease_.GetData() );

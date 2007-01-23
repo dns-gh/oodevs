@@ -22,6 +22,7 @@
 #include "PathTools.h"
 #include "Mission.h"
 #include "FragOrder.h"
+#include "ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 using namespace kernel;
@@ -40,33 +41,34 @@ AgentTypes::AgentTypes()
 // Name: AgentTypes::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void AgentTypes::Load( const std::string& scipioXml )
+void AgentTypes::Load( const ExerciseConfig& config )
 {
     Purge();
 
-    xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) );
+    xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) ); // $$$$ NLD 2007-01-12: 
     symbolFactory_ = new SymbolFactory( xisSymbols );
 
-    xml::xifstream xis( scipioXml );
-    xis >> start( "Scipio" )    
-            >> start( "Donnees" );
+    xml::xifstream xis( config.GetPhysicalFile() );
+    xis >> start( "physical" );
 
-    std::string components, decisional, agents, automats, sensors, populations, groups;
+    std::string components, missions, models, agents, automats, sensors, populations, groups;
     xis >> content( "Capteurs", sensors )
         >> content( "Composantes", components )
-        >> content( "Decisionnel", decisional )
+        >> content( "Missions", missions )
+        >> content( "Modeles", models )
         >> content( "Pions", agents )
         >> content( "Automates", automats )
         >> content( "Populations", populations )
         >> content( "GroupesConnaissance", groups );
 
-    ReadComponents( path_tools::BuildChildPath( scipioXml, components ) );
-    ReadDecisional( path_tools::BuildChildPath( scipioXml, decisional ) );
-    ReadSensors( path_tools::BuildChildPath( scipioXml, sensors ) );
-    ReadAgents( path_tools::BuildChildPath( scipioXml, agents ) );
-    ReadAutomats( path_tools::BuildChildPath( scipioXml, automats ) );
-    ReadPopulations( path_tools::BuildChildPath( scipioXml, populations ) );
-    ReadKnowledgeGroups( path_tools::BuildChildPath( scipioXml, groups ) );
+    ReadComponents( config.BuildPhysicalChildFile( components ) );
+    ReadMissions( config.BuildPhysicalChildFile( missions ) );
+    ReadModels( config.BuildPhysicalChildFile( models ) );
+    ReadSensors( config.BuildPhysicalChildFile( sensors ) );
+    ReadAgents( config.BuildPhysicalChildFile( agents ) );
+    ReadAutomats( config.BuildPhysicalChildFile( automats ) );
+    ReadPopulations( config.BuildPhysicalChildFile( populations ) );
+    ReadKnowledgeGroups( config.BuildPhysicalChildFile( groups ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,22 +127,6 @@ void AgentTypes::ReadComponent( xml::xistream& xis )
     ComponentType* component = new ComponentType( xis );
     Resolver< ComponentType, QString >::Register( component->GetName(), *component );
     Resolver< ComponentType >::Register( component->GetId(), *component );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentTypes::ReadDecisional
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void AgentTypes::ReadDecisional( const std::string& decisional )
-{
-    xifstream xis( decisional );
-    std::string missions, models;
-    xis >> start( "Decisionnel" )
-            >> start( "DirectIA" )
-                >> content( "Missions", missions )
-                >> content( "Modeles", models );
-    ReadMissions( path_tools::BuildChildPath( decisional, missions ) );
-    ReadModels( path_tools::BuildChildPath( decisional, models ) );
 }
 
 // -----------------------------------------------------------------------------

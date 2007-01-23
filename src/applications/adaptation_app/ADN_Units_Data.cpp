@@ -131,7 +131,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( ADN_XmlInput_Helper& input )
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output )
+void ADN_Units_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output, bool bIsAutonomous )
 {
     output.Section( "Equipement" );
     output.WriteAttribute( "nom", ptrComposante_.GetData()->strName_.GetData() );
@@ -144,6 +144,9 @@ void ADN_Units_Data::ComposanteInfos::WriteArchive( MT_OutputArchive_ABC& output
         output.WriteAttribute( "convoyeur", "true" );
     
     output.WriteAttribute( "equipage", nNbrHumanInCrew_.GetData() );
+    if( !bIsAutonomous && nNbrHumanInCrew_.GetData() == 0 )
+        throw ADN_DataException( "Mauvaises données dans les catégories",
+            "Il existe un pion dont un equipement a un équipage vide." );
 
     output << nNb_.GetData();
 
@@ -790,11 +793,10 @@ void ADN_Units_Data::UnitInfos::WriteArchive( MT_OutputArchive_ABC& output )
 
     output.EndSection(); //Nature
 
-
     output.BeginList( "Equipements", vComposantes_.size() );
     for( IT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
     {
-        (*itComposante)->WriteArchive( output );
+        (*itComposante)->WriteArchive( output, bIsAutonomous_.GetData() );
     }
     output.EndList(); // Equipements
 
@@ -909,7 +911,7 @@ void ADN_Units_Data::Reset()
 //-----------------------------------------------------------------------------
 void ADN_Units_Data::FilesNeeded(T_StringList& files) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szUnits_.GetData());
+    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUnits_.GetData());
 }
 
 

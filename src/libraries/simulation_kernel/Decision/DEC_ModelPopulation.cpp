@@ -19,8 +19,8 @@
 // Name: DEC_ModelPopulation constructor
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
-DEC_ModelPopulation::DEC_ModelPopulation( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strArchivePath, const std::string& strSourcePath )
-    : DEC_Model_ABC< MIL_PopulationMissionType >( decWorkspace, strName, input, bNeedParsing, bUseOnlyArchive, strArchivePath, strSourcePath )
+DEC_ModelPopulation::DEC_ModelPopulation( const DEC_Workspace& decWorkspace, const std::string& strName, MIL_InputArchive& input, bool bNeedParsing, bool bUseOnlyArchive, const std::string& strBinaryPath, const std::string& strSourcePath )
+    : DEC_Model_ABC< MIL_PopulationMissionType >( decWorkspace, strName, input, bNeedParsing, bUseOnlyArchive, strBinaryPath, strSourcePath, "populations" )
 {
 }
 

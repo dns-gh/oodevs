@@ -22,6 +22,7 @@ namespace kernel
 {
     class DetectionMap;
     class Controllers;
+    class ExerciseConfig;
 }
 
 namespace gui
@@ -45,7 +46,7 @@ class Gl3dWidget : private kernel::WorldParameters
 public:
     //! @name Constructors/Destructor
     //@{
-             Gl3dWidget( QWidget* pParent, kernel::Controllers& controllers, const std::string& scipioXml, kernel::DetectionMap& elevation, EventStrategy_ABC& strategy );
+             Gl3dWidget( QWidget* pParent, kernel::Controllers& controllers, const kernel::ExerciseConfig& config, kernel::DetectionMap& elevation, EventStrategy_ABC& strategy );
     virtual ~Gl3dWidget();
     //@}
 

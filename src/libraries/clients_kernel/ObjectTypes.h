@@ -23,6 +23,7 @@ namespace kernel
     class EquipmentType;
     class NBCAgent;
     class BreakdownType;
+    class ExerciseConfig;
 
 // =============================================================================
 /** @class  ObjectTypes
@@ -47,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load( const ExerciseConfig& config );
     void Purge();
     //@}
 

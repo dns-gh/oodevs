@@ -77,7 +77,7 @@ BOOST_CLASS_EXPORT_GUID( MIL_EntityManager, "MIL_EntityManager" )
 // Name: MIL_EntityManager::Initialize
 // Created: JVT 2005-03-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
+void MIL_EntityManager::Initialize( MIL_Config& config )
 {
     // Static types
     PHY_ComposanteState          ::Initialize();
@@ -99,59 +99,47 @@ void MIL_EntityManager::Initialize( MIL_InputArchive& archive )
     PHY_DotationLogisticType     ::Initialize();
     MIL_LimaFunction             ::Initialize();
 
-    InitializeType< MIL_Report                     >( archive, "ComptesRendus"       );
-    InitializeType< PHY_MaintenanceWorkRate        >( archive, "Maintenance"         );
-    InitializeType< PHY_MaintenanceResourcesAlarms >( archive, "Maintenance"         );
-    InitializeType< PHY_Experience                 >( archive, "FacteursHumains"     );
-    InitializeType< PHY_Tiredness                  >( archive, "FacteursHumains"     );    
-    InitializeType< PHY_Volume                     >( archive, "Volumes"             );
-    InitializeType< PHY_Protection                 >( archive, "Protections"         );
-    InitializeType< PHY_DotationNature             >( archive, "DotationNatures"     );
-    InitializeType< PHY_DotationType               >( archive, "Dotations"           );
-    InitializeType< MIL_RealObjectType             >( archive, "Objets"              );
-    InitializeType< MIL_VirtualObjectType          >( archive, "Objets"              );
-    InitializeType< PHY_BreakdownType              >( archive, "Pannes"              );
-    InitializeType< PHY_LauncherType               >( archive, "Lanceurs"            );
-    InitializeType< PHY_WeaponType                 >( archive, "Armements"           );
-    InitializeSensors( archive );
-    InitializeType< PHY_ComposanteTypePion         >( archive, "Composantes"         );
-    InitializeType< MIL_AgentTypePion              >( archive, "Pions"               );
-    InitializeType< MIL_AutomateType               >( archive, "Automates"           );
-    InitializeType< MIL_KnowledgeGroupType         >( archive, "GroupesConnaissance" );
-    InitializeType< MIL_NbcAgentType               >( archive, "NBC"                 );
-    InitializeType< PHY_SupplyResourcesAlarms      >( archive, "Ravitaillement"      );   
-    InitializeType< PHY_Convoy_ABC                 >( archive, "Ravitaillement"      );
-    InitializeType< PHY_MedicalResourcesAlarms     >( archive, "Sante"               );
-    InitializeType< PHY_RolePion_Communications    >( archive, "Communications"      );
-    InitializeType< MIL_PopulationType             >( archive, "Populations"         );
-    InitializeMedical( archive );
+    MIL_InputArchive phyArchive;
+    phyArchive.Open( config.GetPhysicalFile() );
+    phyArchive.Section( "physical" );
+
+    InitializeType< MIL_Report                     >( phyArchive, config, "ComptesRendus"       );
+    InitializeType< PHY_MaintenanceWorkRate        >( phyArchive, config, "Maintenance"         );
+    InitializeType< PHY_MaintenanceResourcesAlarms >( phyArchive, config, "Maintenance"         );
+    InitializeType< PHY_Experience                 >( phyArchive, config, "FacteursHumains"     );
+    InitializeType< PHY_Tiredness                  >( phyArchive, config, "FacteursHumains"     );    
+    InitializeType< PHY_Volume                     >( phyArchive, config, "Volumes"             );
+    InitializeType< PHY_Protection                 >( phyArchive, config, "Protections"         );
+    InitializeType< PHY_DotationNature             >( phyArchive, config, "DotationNatures"     );
+    InitializeType< PHY_DotationType               >( phyArchive, config, "Dotations"           );
+    InitializeType< MIL_RealObjectType             >( phyArchive, config, "Objets"              );
+    InitializeType< MIL_VirtualObjectType          >( phyArchive, config, "Objets"              );
+    InitializeType< PHY_BreakdownType              >( phyArchive, config, "Pannes"              );
+    InitializeType< PHY_LauncherType               >( phyArchive, config, "Lanceurs"            );
+    InitializeType< PHY_WeaponType                 >( phyArchive, config, "Armements"           );
+    InitializeSensors( phyArchive, config );
+    InitializeType< PHY_ComposanteTypePion         >( phyArchive, config, "Composantes"         );
+    InitializeType< MIL_AgentTypePion              >( phyArchive, config, "Pions"               );
+    InitializeType< MIL_AutomateType               >( phyArchive, config, "Automates"           );
+    InitializeType< MIL_KnowledgeGroupType         >( phyArchive, config, "GroupesConnaissance" );
+    InitializeType< MIL_NbcAgentType               >( phyArchive, config, "NBC"                 );
+    InitializeType< PHY_SupplyResourcesAlarms      >( phyArchive, config, "Ravitaillement"      );   
+    InitializeType< PHY_Convoy_ABC                 >( phyArchive, config, "Ravitaillement"      );
+    InitializeType< PHY_MedicalResourcesAlarms     >( phyArchive, config, "Sante"               );
+    InitializeType< PHY_RolePion_Communications    >( phyArchive, config, "Communications"      );
+    InitializeType< MIL_PopulationType             >( phyArchive, config, "Populations"         );
+    InitializeMedical( phyArchive, config );
+
+    phyArchive.EndSection(); // physical
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( MIL_InputArchive& )
-    : effectManager_                ( *new MIL_EffectManager() )
-    , pObjectManager_               (  new MIL_ObjectManager() )
-    , nRandomBreakdownsNextTimeStep_( 0  )
-    , rKnowledgesTime_              ( 0. )
-    , rAutomatesDecisionTime_       ( 0. )
-    , rPionsDecisionTime_           ( 0. )
-    , rPopulationsDecisionTime_     ( 0. )
-    , rActionsTime_                 ( 0. )
-    , rEffectsTime_                 ( 0. )
-    , rStatesTime_                  ( 0. )
-{
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager constructor
-// Created: JVT 2005-03-07
-// -----------------------------------------------------------------------------
 MIL_EntityManager::MIL_EntityManager()
     : effectManager_                ( *new MIL_EffectManager() )
-    , pObjectManager_               ( 0  )
+    , pObjectManager_               (  new MIL_ObjectManager() )
     , nRandomBreakdownsNextTimeStep_( 0  )
     , rKnowledgesTime_              ( 0. )
     , rAutomatesDecisionTime_       ( 0. )
@@ -167,17 +155,17 @@ MIL_EntityManager::MIL_EntityManager()
 // Name: MIL_EntityManager::InitializeSensors
 // Created: NLD 2004-11-05
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive )
+void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive, MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
 
     std::string strFile;
     archive.ReadField( "Capteurs", strFile );
+    strFile = config.BuildPhysicalChildFile( strFile );
 
     MIL_InputArchive archiveType;
-    archiveType.AddWarningStream( std::cout );
     archiveType.Open( strFile );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strFile );
+    config.AddFileToCRC( strFile );
 
     archiveType.Section( "Capteurs" );
     PHY_PerceptionRecoSurveillance::Initialize( archiveType );
@@ -192,18 +180,18 @@ void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive )
 // Name: MIL_EntityManager::InitializeMedical
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::InitializeMedical( MIL_InputArchive& archive )
+void MIL_EntityManager::InitializeMedical( MIL_InputArchive& archive, MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing medical data" );
 
     std::string strFile;
     archive.ReadField( "Sante", strFile );
+    strFile = config.BuildPhysicalChildFile( strFile );
 
     MIL_InputArchive archiveType;
-    archiveType.AddWarningStream( std::cout );
     archiveType.Open( strFile );
     archiveType.Section( "Sante" );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strFile );
+    config.AddFileToCRC( strFile );
 
     PHY_HumanWound::InitializeMedicalData( archiveType );
 
@@ -216,15 +204,15 @@ void MIL_EntityManager::InitializeMedical( MIL_InputArchive& archive )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 template < typename T >
-void MIL_EntityManager::InitializeType( MIL_InputArchive& archive, const std::string& strSection )
+void MIL_EntityManager::InitializeType( MIL_InputArchive& archive, MIL_Config& config, const std::string& strSection )
 {
     std::string strFile;
     archive.ReadField( strSection, strFile );
+    strFile = config.BuildPhysicalChildFile( strFile );
 
     MIL_InputArchive archiveType;
-    archiveType.AddWarningStream( std::cout );
     archiveType.Open( strFile );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strFile );
+    config.AddFileToCRC( strFile );
 
     T::Initialize( archiveType );
 
@@ -302,19 +290,29 @@ MIL_EntityManager::~MIL_EntityManager()
 // Name: MIL_EntityManager::ReadODB
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ReadODB( MIL_InputArchive& archive )
+void MIL_EntityManager::ReadODB( const MIL_Config& config )
 {
-    archive.Section( "orbat" );
+    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
+    MT_LOG_STARTUP_MESSAGE( "----  Loading ODB    ----" );
+    MT_LOG_STARTUP_MESSAGE( "-------------------------" );
 
-    InitializeArmies     ( archive );
-    InitializeDiplomacy  ( archive );
+    const std::string strOrbat = config.GetOrbatFile();
+    MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
+
+    MIL_InputArchive odbArchive;
+    odbArchive.Open( strOrbat );
+
+    odbArchive.Section( "orbat" );
+
+    InitializeArmies   ( odbArchive );
+    InitializeDiplomacy( odbArchive );
 
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automates_  .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , pions_      .size() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populations_.size() ) );
 
-    archive.EndSection(); // ODB
-    archive.Close();
+    odbArchive.EndSection(); // ODB
+    odbArchive.Close();
 
     // Check automate composition
     if( !MIL_AgentServer::GetWorkspace().GetConfig().ForceODBAutomateComposition() )
@@ -1090,6 +1088,10 @@ void MIL_EntityManager::ChannelPopulations( const TER_Localisation& localisation
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const uint )
 {
+    // $$$$ NLD 2007-01-11: A voir
+    delete pObjectManager_;
+    pObjectManager_ = 0;
+
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> armies_
          >> formations_

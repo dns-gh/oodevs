@@ -10,14 +10,15 @@
 #include "simulation_app_pch.h"
 
 #include "SIM_Dispatcher.h"
+#include "SIM_Config.h"
 #include "tools/win32/Win32Exception.h"
 
 // -----------------------------------------------------------------------------
 // Name: SIM_Dispatcher constructor
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
-SIM_Dispatcher::SIM_Dispatcher( const std::string& strConfFile )
-    : dispatcher_( strConfFile )
+SIM_Dispatcher::SIM_Dispatcher( SIM_Config& config )
+    : dispatcher_( config )
 {
     Thread::Start();
 }
@@ -28,6 +29,7 @@ SIM_Dispatcher::SIM_Dispatcher( const std::string& strConfFile )
 // -----------------------------------------------------------------------------
 SIM_Dispatcher::~SIM_Dispatcher()
 {
+    Thread::Kill();
 }
 
 // =============================================================================

@@ -16,6 +16,7 @@ namespace kernel
 {
     class Controllers;
     class ActionController;
+    class ExerciseConfig;
 }
 
 namespace xml
@@ -55,9 +56,9 @@ public:
 
     //! @name Operations
     //@
-    void Load( const QString& filename );
+    void Load( const kernel::ExerciseConfig& config );
+    void Save( const kernel::ExerciseConfig& config );
     void Purge();
-    void Save( const QString& filename = "" );
     QString GetName() const;
     //@}
 

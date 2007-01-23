@@ -20,6 +20,7 @@
 
 class DEC_Path_ABC;
 class TER_PathFinderThread;
+class MIL_Config;
 
 // =============================================================================
 // Created: NLD 2003-08-14
@@ -29,7 +30,7 @@ class DEC_PathFind_Manager : private tools::thread::MessageQueue_ABC< TER_PathFi
     MT_COPYNOTALLOWED( DEC_PathFind_Manager )
 
 public:
-    explicit DEC_PathFind_Manager( MIL_InputArchive& archive );
+    explicit DEC_PathFind_Manager( MIL_Config& config );
     virtual ~DEC_PathFind_Manager();
 
     //! @name Main

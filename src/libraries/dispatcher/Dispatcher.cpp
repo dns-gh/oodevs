@@ -15,49 +15,32 @@
 #include "SimulationNetworker.h"
 #include "ClientsNetworker.h"
 #include "ProfileManager.h"
-
+#include "Config.h"
 #include "xeumeuleu/xml.h"
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
-
-namespace bfs = boost::filesystem;
 
 using namespace dispatcher;
-
-//$$$ a déplacer
-std::string BuildChildPath( const std::string& parent, const std::string& child )
-{
-    bfs::path parentPath( parent.c_str(), bfs::native );
-    bfs::path childPath( child.c_str(), bfs::native );
-    return ( parentPath.branch_path() / childPath ).native_file_string();
-}
 
 // -----------------------------------------------------------------------------
 // Name: Dispatcher constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Dispatcher::Dispatcher( const std::string& strConfFile )
+Dispatcher::Dispatcher( Config& config )
     : pModel_              ( 0 )
     , pSimulationNetworker_( 0 )
     , pClientsNetworker_   ( 0 )
     , pProfileManager_     ( 0 )
 {
-    std::string strProfiles_;
+    std::string profiles;
 
-    xml::xifstream xisMain( strConfFile );
-    xisMain >> xml::start( "Scipio" )
-                >> xml::start( "Dispatcher" )
-                    >> xml::content( "Profiles", strProfiles_ )
-                >> xml::end()
-            >> xml::end();
-        
+    xml::xifstream xisMain( config.GetExerciseFile() );
+    xisMain >> xml::start( "exercise" )
+                >> xml::start( "profiles" )
+                    >> xml::attribute( "file", profiles );
+
     pModel_               = new Model              ( *this );
-    pSimulationNetworker_ = new SimulationNetworker( *this , "localhost", 10000 ); //$$$
-    pClientsNetworker_    = new ClientsNetworker   ( *this , 10001 ); //$$$
-    pProfileManager_      = new ProfileManager     ( *this, BuildChildPath( strConfFile, strProfiles_ ) );
+    pSimulationNetworker_ = new SimulationNetworker( *this, config.GetGameFile() );
+    pClientsNetworker_    = new ClientsNetworker   ( *this, config.GetGameFile() );
+    pProfileManager_      = new ProfileManager     ( *this, config.BuildExerciseChildFile( profiles ) );
 }
 
 // -----------------------------------------------------------------------------

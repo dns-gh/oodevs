@@ -29,16 +29,24 @@
 #include "MT_Tools/MT_InputArchive_Logger.h"
 #include "MT/MT_XmlTools/MT_XXmlInputArchive.h"
 
+#pragma warning( push )
+#pragma warning( disable: 4127 4512 4511 )
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
+
+namespace bfs = boost::filesystem;
+
 TER_World*  TER_World::pInstance_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: TER_World::Initialize
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_World::Initialize( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive )
+void TER_World::Initialize( const std::string& rootFile )
 {
     assert( ! pInstance_ );
-    pInstance_ = new TER_World( archive );
+    pInstance_ = new TER_World( rootFile );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,15 +59,22 @@ void TER_World::DestroyWorld()
     pInstance_ = 0;
 }
 
+namespace
+{
+    std::string BuildChildFile( const std::string& parent, const std::string& child )
+    {
+        return ( bfs::path( parent, bfs::native ).branch_path() / bfs::path( child, bfs::native ) ).native_file_string();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TER_World constructor
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-TER_World::TER_World( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive )
-    : graphFileName_( "/graph.bin" )
-    , nodeFileName_ ( "/nodes.bin" )
-    , linkFileName_ ( "/links.bin" )
+TER_World::TER_World( const std::string& rootFile )
 {
+    MT_InputArchive_Logger< MT_XXmlInputArchive > archive;
+    archive.Open( rootFile );
     archive.Section( "Terrain" );
     std::string strGeoid, strWorld, strPathfind;
     archive.ReadField( "Geoid", strGeoid );
@@ -67,22 +82,19 @@ TER_World::TER_World( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive )
     archive.ReadField( "Pathfind", strPathfind );
     archive.EndSection(); // Terrain
 
-    geocoord::Geoid::Instance().Initialize( strGeoid );
+    geocoord::Geoid::Instance().Initialize( BuildChildFile( rootFile, strGeoid ) );
 
     float rMiddleLatitude, rMiddleLongitude;
     MT_Rect extent;
-    ReadWorld( strWorld, rMiddleLatitude, rMiddleLongitude, extent );
+    ReadWorld( BuildChildFile( rootFile, strWorld ), rMiddleLatitude, rMiddleLongitude, extent );
 
     pAgentManager_      = new TER_AgentManager     ( extent );
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
     pCoordinateManager_ = new TER_CoordinateManager( rMiddleLatitude, rMiddleLongitude, extent );
-       
-    const_cast< std::string& >( graphFileName_ ).insert( const_cast< std::string& >( graphFileName_ ).begin(), strPathfind.begin(), strPathfind.end() );
-    const_cast< std::string& >( nodeFileName_  ).insert( const_cast< std::string& >( nodeFileName_  ).begin(),  strPathfind.begin(), strPathfind.end() );
-    const_cast< std::string& >( linkFileName_  ).insert( const_cast< std::string& >( linkFileName_  ).begin(),  strPathfind.begin(), strPathfind.end() );
-
-    pPathfindManager_   = new TER_PathFindManager( graphFileName_, nodeFileName_, linkFileName_ );
+    pPathfindManager_   = new TER_PathFindManager( BuildChildFile( rootFile, strPathfind + "/graph.bin" )
+                                                 , BuildChildFile( rootFile, strPathfind + "/nodes.bin" )
+                                                 , BuildChildFile( rootFile, strPathfind + "/links.bin" ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ public:
         ComposanteInfos* CreateCopy();
 
         void ReadArchive( ADN_XmlInput_Helper& input );
-        void WriteArchive( MT_OutputArchive_ABC& output );
+        void WriteArchive( MT_OutputArchive_ABC& output, bool bIsAutonomous );
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Composantes_Data::ComposanteInfos> ptrComposante_;

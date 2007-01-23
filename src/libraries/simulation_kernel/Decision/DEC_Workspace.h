@@ -12,6 +12,7 @@
 class DEC_ModelPion;
 class DEC_ModelAutomate;
 class DEC_ModelPopulation;
+class MIL_Config;
 
 //*****************************************************************************
 // Created: JVT 02-06-28
@@ -22,7 +23,7 @@ class DEC_Workspace
     MT_COPYNOTALLOWED( DEC_Workspace )
      
 public:
-	 DEC_Workspace( MIL_InputArchive& archive );
+     DEC_Workspace( MIL_Config& config );
 	~DEC_Workspace();
 
     //! @name Fonction dia
@@ -49,12 +50,12 @@ private:
     static void RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* pTable );
     static bool CheckFilesDepencies  ( const std::string& strArchiveFile );
 
-    void InitializeConfig      ( MIL_InputArchive& archive );
-    void InitializeMissions    ( MIL_InputArchive& initArchive );
-    void InitializeDIA         ( MIL_InputArchive& archive );
+    void InitializeConfig      ( MIL_Config& config );
+    void InitializeMissions    ( MIL_Config& config );
+    void InitializeDIA         ( MIL_Config& config );
     void InitializeDIATypes    ( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );
     void InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool& bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );
-    void InitializeModels      ( MIL_InputArchive& initArchive, bool  bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );   
+    void InitializeModels      ( MIL_Config&       config     , bool  bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath );   
     //@}
 
 private:

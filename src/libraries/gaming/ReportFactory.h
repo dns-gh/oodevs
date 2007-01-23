@@ -24,6 +24,7 @@ namespace kernel
     class Entity_ABC;
     class DotationType;
     class EquipmentType;
+    class ExerciseConfig;
 }
 
 class Simulation;
@@ -51,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load( const kernel::ExerciseConfig& config );
     void Purge();
 
     Report* CreateReport( const kernel::Entity_ABC& agent, const Simulation& simulation, const ASN1T_MsgCR&  asnMsg ) const;

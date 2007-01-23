@@ -300,6 +300,8 @@ void MIL_Automate::InitializeSubordinates( MIL_InputArchive& archive )
             archive.EndList(); // lima
         }
     }
+    if( !pPionPC_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Automat's command post is not defined", archive.GetContext() );
 }
 
 

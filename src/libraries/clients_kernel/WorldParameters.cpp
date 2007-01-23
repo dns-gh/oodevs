@@ -9,8 +9,8 @@
 
 #include "clients_kernel_pch.h"
 #include "WorldParameters.h"
+#include "ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
-#include "PathTools.h"
 
 using namespace kernel;
 using namespace xml;
@@ -32,9 +32,9 @@ WorldParameters::WorldParameters()
 // Name: WorldParameters constructor
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-WorldParameters::WorldParameters( const std::string& scipioXml )
+WorldParameters::WorldParameters( const ExerciseConfig& config )
 {
-    Load( scipioXml );
+    Load( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,25 +50,9 @@ WorldParameters::~WorldParameters()
 // Name: WorldParameters::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void WorldParameters::Load( const std::string& scipioXml )
+void WorldParameters::Load( const ExerciseConfig& config )
 {
-    xml::xifstream scipio( scipioXml );
-    std::string terrain;
-    scipio >> start( "Scipio" )
-                >> start( "Donnees" )
-                    >> content( "Terrain", terrain );
-    ReadTerrain( path_tools::BuildChildPath( scipioXml, terrain ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: WorldParameters::ReadTerrain
-// Created: AGE 2006-03-15
-// -----------------------------------------------------------------------------
-void WorldParameters::ReadTerrain( const std::string& terrain )
-{
-    terrainDirectory_ = path_tools::BuildChildPath( terrain, "." );
-    xifstream xis( terrain );
-
+    xifstream xis( config.GetTerrainFile() );
     std::string world, geoid, graphics, detection;
     xis >> start( "Terrain" )
             >> content( "Geoid", geoid )
@@ -76,10 +60,10 @@ void WorldParameters::ReadTerrain( const std::string& terrain )
             >> content( "RawVision", detection )
             >> content( "Graphics", graphics );
 
-    detection_ = path_tools::BuildChildPath( terrain, detection ) + "/detection.dat";
-    geoid_ = path_tools::BuildChildPath( terrain, geoid );
-    graphicsDirectory_ = path_tools::BuildChildPath( terrain, graphics ) + "/";
-    ReadWorld( path_tools::BuildChildPath( terrain, world ) );
+    detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
+    geoid_ = config.BuildTerrainChildFile( geoid );
+    graphicsDirectory_ = config.BuildTerrainChildFile( graphics );
+    ReadWorld( config.BuildTerrainChildFile( world ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +73,6 @@ void WorldParameters::ReadTerrain( const std::string& terrain )
 void WorldParameters::ReadWorld( const std::string& world )
 {
     xifstream xis( world );
-
     xis >> start( "World" )
             >> content( "Latitude", latitude_ )
             >> content( "Longitude", longitude_ )

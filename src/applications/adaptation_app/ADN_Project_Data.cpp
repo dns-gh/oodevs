@@ -23,143 +23,15 @@
 #include <windows.h>
 
 ADN_Project_Data::WorkDirInfos  ADN_Project_Data::workDir_;
-std::string                     ADN_Project_Data::FileInfos::szUntitled_  ="Untitled";
-
-
-//-----------------------------------------------------------------------------
-// Name: SimInfos::SimInfos
-// Created: JDY 03-06-26
-//-----------------------------------------------------------------------------
-ADN_Project_Data::SimInfos::SimInfos()
-: bAutoStart_   ( 0 )
-, nTimeStep_    ( 0 )
-, nTimeFactor_  ( 0 )
-, nAutosaveTime_( 0 )
-, nNbrMax_      ( 0 )
-{
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: SimInfos::ReadArchive
-// Created: APE 2004-11-17
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::SimInfos::ReadArchive( ADN_XmlInput_Helper& input )
-{
-    input.Section("SIM");
-
-    int nTemp;
-    input.ReadField( "AutoStart", nTemp );
-    bAutoStart_ = (nTemp != 0);
-    input.ReadField( "TimeStep", nTimeStep_ );
-    input.ReadField( "TimeFactor", nTimeFactor_ );
-    input.Section( "SauvegardesAutomatiques" );
-    input.ReadField( "TempsEntreSauvegardes", nAutosaveTime_ );
-    input.ReadField( "NombreMax", nNbrMax_ );
-    input.EndSection(); // SauvegardesAutomatiques
-
-    input.EndSection();   // SIM
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: SimInfos::WriteArchive
-// Created: APE 2004-11-17
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::SimInfos::WriteArchive( MT_OutputArchive_ABC& output )
-{
-    output.Section("SIM");
-
-    output.WriteField( "AutoStart", bAutoStart_.GetData() ? 1 : 0 );
-    output.WriteField( "TimeStep", nTimeStep_.GetData() );
-    output.WriteField( "TimeFactor", nTimeFactor_.GetData() );
-    output.Section( "SauvegardesAutomatiques" );
-    output.WriteField( "TempsEntreSauvegardes", nAutosaveTime_.GetData() );
-    output.WriteField( "NombreMax", nNbrMax_.GetData() );
-    output.EndSection(); // SauvegardesAutomatiques
-
-    output.EndSection();    // SIM
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: PathfinderInfo::PathfinderInfo
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-ADN_Project_Data::PathfinderInfo::PathfinderInfo()
-: nPathfinderNbr_    ( 2 )
-, nDistanceThreshold_( 15000 )
-, szRulesFile_       ( "PathfindRules.xml" )
-, maxComputationTime_( "15s" )
-{
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: PathfinderInfo::ReadArchive
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::PathfinderInfo::ReadArchive( ADN_XmlInput_Helper& input )
-{
-    input.Section( "Pathfind" );
-    input.ReadField( "PathfindNumber", nPathfinderNbr_ );
-    input.ReadField( "DistanceThreshold", nDistanceThreshold_ );
-    input.ReadField( "Rules", szRulesFile_ );
-    input.ReadField( "TempsMaxCalcul", maxComputationTime_, ADN_XmlInput_Helper::eNothing );
-    input.EndSection(); // Pathfind
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: PathfinderInfo::WriteArchive
-// Created: APE 2005-03-22
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::PathfinderInfo::WriteArchive( MT_OutputArchive_ABC& output )
-{
-    output.Section( "Pathfind" );
-    output.WriteField( "PathfindNumber", nPathfinderNbr_.GetData() );
-    output.WriteField( "DistanceThreshold", nDistanceThreshold_.GetData() );
-    output.WriteField( "Rules", szRulesFile_.GetData() );
-    output.WriteField( "TempsMaxCalcul", maxComputationTime_.GetData() );
-    output.EndSection(); // Pathfind
-}
-
+std::string                     ADN_Project_Data::FileInfos::szUntitled_ = "Untitled";
 
 //-----------------------------------------------------------------------------
 // Name: DataInfos::DataInfos
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Project_Data::DataInfos::DataInfos()
-: szTerrain_()
-, szDecisional_()
-, szNetwork_()
-, szSizes_()
-, szArmors_()
-, szDotationNatures_()
-, szObjects_()
-, szEquipements_()
-, szLaunchers_()
-, szWeapons_()
-, szSensors_()
-, szComponents_()
-, szUnits_()
-, szAutomata_()
-, szNBC_()
-, szWeather_()
-, szHealth_()
-, szIDs_()
-, szHumanFactors_()
-, szBreakdowns_ ()
-, szKnowledgeGroups_()
-, szMaintenance_()
-, szSupply_()
-, szCom_()
-, szODB_()
-, szPathfinder_()
-, szHLA_()
-, szPopulation_()
-, szReports_()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -168,10 +40,8 @@ ADN_Project_Data::DataInfos::DataInfos()
 // -----------------------------------------------------------------------------
 void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
 {
-    input.Section("Donnees");
-    input.ReadField( "Terrain", szTerrain_, ADN_XmlInput_Helper::eThrow );
+    input.Section("physical");
     input.ReadField( "Decisionnel", szDecisional_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Reseau", szNetwork_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Volumes", szSizes_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Protections", szArmors_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "DotationNatures", szDotationNatures_, ADN_XmlInput_Helper::eThrow );
@@ -184,7 +54,6 @@ void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "Pions", szUnits_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Automates", szAutomata_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "NBC", szNBC_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Meteo", szWeather_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Sante", szHealth_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "ClasseIDs", szIDs_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "FacteursHumains", szHumanFactors_, ADN_XmlInput_Helper::eThrow );
@@ -193,12 +62,12 @@ void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
     input.ReadField( "Maintenance", szMaintenance_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Ravitaillement", szSupply_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Communications", szCom_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "ODB", szODB_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "Pathfind", szPathfinder_, ADN_XmlInput_Helper::eThrow );
-    input.ReadField( "HLA", szHLA_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "Populations", szPopulation_, ADN_XmlInput_Helper::eThrow );
     input.ReadField( "ComptesRendus", szReports_, ADN_XmlInput_Helper::eThrow );
-    input.EndSection();   // Donnees
+    input.ReadField( "PathFinder", szPathfinder_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Modeles", szModels_, ADN_XmlInput_Helper::eThrow );
+    input.ReadField( "Missions", szMissions_, ADN_XmlInput_Helper::eThrow );
+    input.EndSection();   // physical
 }
 
 
@@ -208,10 +77,8 @@ void ADN_Project_Data::DataInfos::ReadArchive( ADN_XmlInput_Helper& input )
 // -----------------------------------------------------------------------------
 void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
 {
-    output.Section("Donnees");
-    output.WriteField( "Terrain", szTerrain_.GetData() );
+    output.Section("physical");
     output.WriteField( "Decisionnel", szDecisional_.GetData() );
-    output.WriteField( "Reseau", szNetwork_.GetData() );
     output.WriteField( "Volumes", szSizes_.GetData() );
     output.WriteField( "Protections", szArmors_.GetData() );
     output.WriteField( "DotationNatures", szDotationNatures_.GetData() );
@@ -224,7 +91,6 @@ void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "Pions", szUnits_.GetData() );
     output.WriteField( "Automates", szAutomata_.GetData() );
     output.WriteField( "NBC", szNBC_.GetData() );
-    output.WriteField( "Meteo", szWeather_.GetData() );
     output.WriteField( "Sante", szHealth_.GetData() );
     output.WriteField( "ClasseIDs", szIDs_.GetData() );
     output.WriteField( "FacteursHumains", szHumanFactors_.GetData() );
@@ -233,71 +99,22 @@ void ADN_Project_Data::DataInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteField( "Maintenance", szMaintenance_.GetData() );
     output.WriteField( "Ravitaillement", szSupply_.GetData() );
     output.WriteField( "Communications", szCom_.GetData() );
-    output.WriteField( "ODB", szODB_.GetData() );
-    output.WriteField( "Pathfind", szPathfinder_.GetData() );
-    output.WriteField( "HLA", szHLA_.GetData() );
+    output.WriteField( "PathFinder", szPathfinder_.GetData() );
     output.WriteField( "Populations", szPopulation_.GetData() );
     output.WriteField( "ComptesRendus", szReports_.GetData() );
-    output.EndSection();   // Donnees
+    output.WriteField( "Modeles", szModels_.GetData() );
+    output.WriteField( "Missions", szMissions_.GetData() );
+    output.EndSection();   // physical
 }
-
-
-//-----------------------------------------------------------------------------
-// Name: NetInfos::NetInfos
-// Created: JDY 03-06-26
-//-----------------------------------------------------------------------------
-ADN_Project_Data::NetInfos::NetInfos()
-: nServerPort_()
-, nServerMagic_()
-, bNetworkThreadActive_()
-{
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: NetInfos::ReadArchive
-// Created: APE 2004-11-17
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::NetInfos::ReadArchive( ADN_XmlInput_Helper& input )
-{
-    input.Section( "Reseau" );
-
-    input.Section( "Simulation" );
-    input.ReadField( "BasePort", nServerPort_ );
-    input.ReadField( "Magic", nServerMagic_ );
-    input.EndSection();   // Simulation
-    
-    input.ReadField( "ThreadReseauActif", bNetworkThreadActive_ );
-    input.EndSection();   // Reseau
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: NetInfos::WriteArchive
-// Created: APE 2004-11-17
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::NetInfos::WriteArchive( MT_OutputArchive_ABC& output )
-{
-    output.Section( "Reseau" );
-
-    output.Section( "Simulation" );
-    output.WriteField( "BasePort", nServerPort_.GetData() );
-    output.WriteField( "Magic", nServerMagic_.GetData() );
-    output.EndSection();   // Simulation
-    
-    output.WriteField( "ThreadReseauActif", bNetworkThreadActive_.GetData() );
-
-    output.EndSection();   // Reseau
-}
-
 
 //-----------------------------------------------------------------------------
 // Name: FileInfos::FileInfos
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 ADN_Project_Data::FileInfos::FileInfos()
-: szFileName_()
+    : szFileName_()
 {
+    // NOTHING
 }
 
 
@@ -305,9 +122,10 @@ ADN_Project_Data::FileInfos::FileInfos()
 // Name: FileInfos::FileInfos
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-ADN_Project_Data::FileInfos::FileInfos(const std::string& filename)
-: szFileName_(ADN_Project_Data::GetWorkDirInfos().GetPartPath(filename))
+ADN_Project_Data::FileInfos::FileInfos( const std::string& filename )
+    : szFileName_( ADN_Project_Data::GetWorkDirInfos().GetRelativePath( filename ) )
 {
+    // NOTHING
 }
 
 
@@ -315,9 +133,9 @@ ADN_Project_Data::FileInfos::FileInfos(const std::string& filename)
 // Name: FileInfos::operator =
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-ADN_Project_Data::FileInfos& ADN_Project_Data::FileInfos::operator =(const std::string&filename)
+ADN_Project_Data::FileInfos& ADN_Project_Data::FileInfos::operator=( const std::string& filename )
 {
-    szFileName_=ADN_Project_Data::GetWorkDirInfos().GetPartPath(filename);
+    szFileName_ = ADN_Project_Data::GetWorkDirInfos().GetRelativePath( filename );
     return *this;
 }
 
@@ -327,10 +145,11 @@ ADN_Project_Data::FileInfos& ADN_Project_Data::FileInfos::operator =(const std::
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
 ADN_Project_Data::WorkDirInfos::WorkDirInfos()
-: szWorkingDir_()
-, szTempDir_()
-, bTmpActivated_(false)
+    : szWorkingDir_ ()
+    , szTempDir_    ()
+    , bTmpActivated_( false )
 {
+    // NOTHING
 }
 
 
@@ -348,7 +167,7 @@ std::string ADN_Project_Data::WorkDirInfos::GetFullPath( const std::string& part
 // Name: WorkDirInfos::GetPartPath
 // Created: JDY 03-06-24
 //-----------------------------------------------------------------------------
-std::string ADN_Project_Data::WorkDirInfos::GetPartPath( const std::string& full, E_WorkDir e )
+std::string ADN_Project_Data::WorkDirInfos::GetRelativePath( const std::string& full, E_WorkDir e )
 {
     std::string dir = ( e == eWorking ) ? szWorkingDir_.GetData() : szTempDir_.GetData();
     if( strcmpi( dir.c_str(), full.substr( 0, dir.size() ).c_str() ) )
@@ -362,7 +181,7 @@ std::string ADN_Project_Data::WorkDirInfos::GetPartPath( const std::string& full
 // Name: WorkDirInfos::SetWorkingDirectory
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory(const std::string& filename)
+void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& filename )
 {
     char szDrive[_MAX_PATH];
     char szDir[_MAX_PATH];
@@ -379,23 +198,20 @@ void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory(const std::string& file
 // Name: WorkDirInfos::UseTempDirectory
 // Created: JDY 03-09-09
 //-----------------------------------------------------------------------------
-void ADN_Project_Data::WorkDirInfos::UseTempDirectory(bool bActivateTemp)
+void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
 {
-    bTmpActivated_=bActivateTemp;
-
+    bTmpActivated_ = bActivateTemp;
     if( bActivateTemp )
     {
-        char *pTempDir=(char*)malloc(sizeof(char)*_MAX_PATH);
+        char *pTempDir = ( char* )malloc( sizeof( char )*_MAX_PATH );
         int   len;
-        if( ( len=GetTempPath(_MAX_PATH,pTempDir) ) > _MAX_PATH )
+        if( ( len = GetTempPath( _MAX_PATH, pTempDir ) ) > _MAX_PATH )
         {
-            pTempDir=(char*)realloc(pTempDir,sizeof(char)*len+1);
-            assert( (int)GetTempPath(len+1 ,pTempDir) <= len+1 );
+            pTempDir = ( char* )realloc( pTempDir, sizeof( char ) * len + 1 );
+            assert( ( int )GetTempPath( len + 1, pTempDir ) <= len + 1 );
         }
-
-        szTempDir_=ADN_Tools::Replace(pTempDir,'\\','/')+"scipio data.tmp/";
-
-        free(pTempDir);
+        szTempDir_ = ADN_Tools::Replace( pTempDir, '\\', '/' ) + "scipio data.tmp/";
+        free( pTempDir );
     }
 }
 
@@ -405,15 +221,12 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory(bool bActivateTemp)
 // Created: JDY 03-06-20
 //-----------------------------------------------------------------------------
 ADN_Project_Data::ADN_Project_Data()
-: ADN_Data_ABC   ()
-, simInfos_      ()
-, dataInfos_     ()
-, netInfos_      ()
-, pathfinderInfo_()
-, szFile_        ()
+    : ADN_Data_ABC   ()
+    , dataInfos_     ()
+    , szFile_        ()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data destructor
@@ -421,8 +234,8 @@ ADN_Project_Data::ADN_Project_Data()
 //-----------------------------------------------------------------------------
 ADN_Project_Data::~ADN_Project_Data()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Project_Data::SetFile
@@ -430,13 +243,9 @@ ADN_Project_Data::~ADN_Project_Data()
 // -----------------------------------------------------------------------------
 void ADN_Project_Data::SetFile( const std::string& strFile )
 {
-    // Set working directory
     workDir_.SetWorkingDirectory( strFile );
-
-    // Set file
     szFile_ = strFile;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Project_Data::FilesNeeded
@@ -444,14 +253,10 @@ void ADN_Project_Data::SetFile( const std::string& strFile )
 // -----------------------------------------------------------------------------
 void ADN_Project_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    ADN_Project_Data* that = const_cast<ADN_Project_Data*>(this);
+    ADN_Project_Data* that = const_cast< ADN_Project_Data* >( this );
     assert( ! that->szFile_.GetFileName().GetData().empty() );
-//    vFiles.push_back( that->szFile_.GetFileName().GetData() );
-    vFiles.push_back( that->dataInfos_.szNetwork_.GetData() );
-    vFiles.push_back( that->dataInfos_.szPathfinder_.GetData() );
     vFiles.push_back( that->dataInfos_.szIDs_.GetData() );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Reset
@@ -461,16 +266,11 @@ void ADN_Project_Data::Reset()
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
 
-    // load default parameters
-    ADN_XmlInput_Helper defaultScipioFile;
-    defaultScipioFile.SetData( scipioXml );
-    ReadArchive( defaultScipioFile );
-
-    ADN_XmlInput_Helper defaultNetworkFile;
-    defaultNetworkFile.SetData( reseauXml );
-    netInfos_.ReadArchive( defaultNetworkFile );
+    // load default parameters (included has resource)
+    ADN_XmlInput_Helper defaultFile;
+    defaultFile.SetData( physicalXml );
+    ReadArchive( defaultFile );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Load
@@ -480,7 +280,7 @@ void ADN_Project_Data::Load()
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
 
-    // Read the Scipio file
+    // Read main file
     ADN_XmlInput_Helper input;
 
     if( !input.Open(szFile_.GetFileNameFull(), ADN_XmlInput_Helper::eNothing ) )
@@ -488,53 +288,11 @@ void ADN_Project_Data::Load()
 
     try
     {
-        this->ReadArchive( input );
+        dataInfos_.ReadArchive( input );
     }
     catch( ADN_Xml_Exception& xmlException )
     {
         throw ADN_Xml_Exception( szFile_.GetFileNameFull(), xmlException.GetContext(), xmlException.GetErrorMessage() );
-    }
-    catch( MT_ArchiveLogger_Exception& xmlException )
-    {
-        throw ADN_DataException( "", xmlException.what() );
-    }
-
-    // Read the network file.
-    ADN_XmlInput_Helper netInput;
-    std::string strNetFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-        + dataInfos_.szNetwork_.GetData();
-
-    if( !netInput.Open( strNetFile, ADN_XmlInput_Helper::eNothing ) )
-        throw ADN_OpenFile_Exception( strNetFile );
-
-    try
-    {
-        netInfos_.ReadArchive( netInput );
-    }
-    catch( ADN_Xml_Exception& xmlException )
-    {
-        throw ADN_Xml_Exception( strNetFile, xmlException.GetContext(), xmlException.GetErrorMessage() );
-    }
-    catch( MT_ArchiveLogger_Exception& xmlException )
-    {
-        throw ADN_DataException( "", xmlException.what() );
-    }
-
-    // Read the pathfinder file.
-    ADN_XmlInput_Helper pathfinderInput;
-    std::string strPathfinderFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
-        + dataInfos_.szPathfinder_.GetData();
-
-    if( !pathfinderInput.Open( strPathfinderFile, ADN_XmlInput_Helper::eNothing ) )
-        throw ADN_OpenFile_Exception( strPathfinderFile );
-
-    try
-    {
-        pathfinderInfo_.ReadArchive( pathfinderInput );
-    }
-    catch( ADN_Xml_Exception& xmlException )
-    {
-        throw ADN_Xml_Exception( strPathfinderFile, xmlException.GetContext(), xmlException.GetErrorMessage() );
     }
     catch( MT_ArchiveLogger_Exception& xmlException )
     {
@@ -553,30 +311,12 @@ void ADN_Project_Data::Save()
 
     // Save the scipio file.
     MT_XXmlOutputArchive output;
-    this->WriteArchive( output );
+    dataInfos_.WriteArchive( output );
 
     std::string szFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory()  + szFile_.GetFileName().GetData();
     ADN_Tools::CreatePathToFile( szFile );
     if( ! output.WriteToFile( szFile ) )
         throw ADN_SaveFile_Exception( szFile );
-
-    // Save the network file.
-    MT_XXmlOutputArchive netOutput;
-    netInfos_.WriteArchive( netOutput );
-
-    std::string szNetFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + dataInfos_.szNetwork_.GetData();
-    ADN_Tools::CreatePathToFile( szNetFile );
-    if( ! netOutput.WriteToFile( szNetFile ) )
-        throw ADN_SaveFile_Exception( szNetFile );
-
-    // Save the pathfinder file.
-    MT_XXmlOutputArchive pathfinderOutput;
-    pathfinderInfo_.WriteArchive( pathfinderOutput );
-
-    std::string szPathfinderFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + dataInfos_.szPathfinder_.GetData();
-    ADN_Tools::CreatePathToFile( szPathfinderFile );
-    if( ! pathfinderOutput.WriteToFile( szPathfinderFile ) )
-        throw ADN_SaveFile_Exception( szPathfinderFile );
 
     // Save the Id file (from static resource)
     MT_TextOutputArchive idsOutput;
@@ -586,35 +326,4 @@ void ADN_Project_Data::Save()
     ADN_Tools::CreatePathToFile( szIdsFile );
     if( ! idsOutput.WriteToFile( szIdsFile ) )
         throw ADN_SaveFile_Exception( szIdsFile );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Project_Data::ReadArchive
-// Created: AGN 2004-07-02
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::ReadArchive( ADN_XmlInput_Helper& input )
-{
-    input.Section("Scipio");
-    simInfos_.ReadArchive( input );
-    dataInfos_.ReadArchive( input );
-    input.EndSection();   // Scipio
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Project_Data::WriteArchive
-// Created: APE 2004-11-17
-// -----------------------------------------------------------------------------
-void ADN_Project_Data::WriteArchive( MT_OutputArchive_ABC& output )
-{
-    output.Section("Scipio");
-    simInfos_.WriteArchive( output );
-    dataInfos_.WriteArchive( output );
-
-    output.Section( "Dispatcher" );
-    output.WriteField( "Profiles", "Data/Profiles.xml" );
-    output.EndSection(); // Dispatcher
-
-    output.EndSection();   // Scipio
 }

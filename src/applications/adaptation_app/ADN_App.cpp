@@ -14,6 +14,7 @@
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 #include "ADN_Exception_ABC.h"
+#include "ADN_Config.h"
 
 #include <qtextcodec.h>
 #include <qtranslator.h>
@@ -26,10 +27,12 @@ ADN_App* ADN_App::pApplication_ = 0;
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 ADN_App::ADN_App( int argc, char** argv )
-: QApplication( argc, argv )
-, pMainWindow_( 0 )
+    : QApplication( argc, argv )
+    , pMainWindow_( 0 )
+    , config_( new ADN_Config() )
 {
-    assert( pApplication_ == 0 );
+    if( pApplication_ )
+        throw std::runtime_error( "Singleton already initialized" );
     pApplication_ = this;
 }
 
@@ -86,7 +89,6 @@ std::string Wrap( const std::string& content, const std::string& prefix )
     }
     return result;
 }
-//$$$$ C DEGUEU !
 
 //-----------------------------------------------------------------------------
 // Name: ADN_App::Initialize
@@ -108,7 +110,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     ENT_Tr::InitTranslations();
 
     // Create and set the application's main window.
-    pMainWindow_ = new ADN_MainWindow();
+    pMainWindow_ = new ADN_MainWindow( *config_ );
     pMainWindow_->Build();
     setMainWidget( pMainWindow_ );
     pMainWindow_->showMaximized();
@@ -141,4 +143,3 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     }
     return true;
 }
-

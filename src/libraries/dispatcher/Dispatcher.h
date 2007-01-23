@@ -21,6 +21,7 @@ namespace DIN
 namespace dispatcher
 {
 
+class Config;
 class Model;
 class SimulationNetworker;
 class ClientsNetworker;
@@ -37,7 +38,7 @@ class Dispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-     Dispatcher( const std::string& strConfFile );
+     Dispatcher( Config& config );
     ~Dispatcher();
     //@}
 

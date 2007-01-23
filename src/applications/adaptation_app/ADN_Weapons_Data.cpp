@@ -404,7 +404,7 @@ ADN_Weapons_Data::~ADN_Weapons_Data()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_Data::FilesNeeded( T_StringList& files ) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szWeapons_.GetData());
+    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szWeapons_.GetData());
 }
 
 

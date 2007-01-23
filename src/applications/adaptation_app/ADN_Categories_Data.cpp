@@ -206,9 +206,9 @@ ADN_Categories_Data::~ADN_Categories_Data()
 //-----------------------------------------------------------------------------
 void ADN_Categories_Data::FilesNeeded(T_StringList& files) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szSizes_.GetData() );
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szArmors_.GetData() );
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szDotationNatures_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData() );
 }
 
 
@@ -234,7 +234,7 @@ void ADN_Categories_Data::Load()
     ADN_XmlInput_Helper armorsInput;
 
     std::string szArmorsFile= ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-                      + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szArmors_.GetData();
+                      + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
 
     if ( !armorsInput.Open( szArmorsFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( szArmorsFile );
@@ -256,7 +256,7 @@ void ADN_Categories_Data::Load()
     ADN_XmlInput_Helper sizesInput;
 
     std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szSizes_.GetData();
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
 
     if ( !sizesInput.Open( szSizesFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( szSizesFile );
@@ -278,7 +278,7 @@ void ADN_Categories_Data::Load()
     ADN_XmlInput_Helper dotationNaturesInput;
 
     std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szDotationNatures_.GetData();
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
 
     if ( !dotationNaturesInput.Open( szDotationNaturesFile, ADN_XmlInput_Helper::eNothing ) )
         throw ADN_OpenFile_Exception( szDotationNaturesFile );
@@ -309,7 +309,7 @@ void ADN_Categories_Data::Save()
 
     // Write the file.
     std::string szArmorFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szArmors_.GetData();
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
 
     ADN_Tools::CreatePathToFile( szArmorFile );
     if( ! armorOutput.WriteToFile( szArmorFile ) )
@@ -321,7 +321,7 @@ void ADN_Categories_Data::Save()
 
     // Write the file.
     std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szSizes_.GetData();
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
 
     ADN_Tools::CreatePathToFile( szSizesFile );
     if( ! sizesOutput.WriteToFile( szSizesFile ) )
@@ -333,7 +333,7 @@ void ADN_Categories_Data::Save()
 
     // Write the file.
     std::string szNaturesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szDotationNatures_.GetData();
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
 
     ADN_Tools::CreatePathToFile( szNaturesFile );
     if( ! naturesOutput.WriteToFile( szNaturesFile ) )

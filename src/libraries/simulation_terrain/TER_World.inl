@@ -93,33 +93,3 @@ TER_PopulationManager& TER_World::GetPopulationManager() const
     assert( pPopulationManager_ );
     return *pPopulationManager_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetGraphFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-inline
-const std::string& TER_World::GetGraphFileName() const
-{
-    return graphFileName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetNodeFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-inline
-const std::string& TER_World::GetNodeFileName() const
-{
-    return nodeFileName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::GetLinkFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-inline
-const std::string& TER_World::GetLinkFileName() const
-{
-    return linkFileName_;
-}

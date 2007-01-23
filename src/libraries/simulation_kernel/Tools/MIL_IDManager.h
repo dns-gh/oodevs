@@ -23,6 +23,8 @@
 
 #include "MIL_MOSIDManager.h"
 
+class MIL_Config;
+
 // =============================================================================
 // Created: NLD 2005-11-04
 // =============================================================================
@@ -41,7 +43,7 @@ public:
 public:
     //! @name Operations
     //@{
-    static void              Initialize         ( MIL_InputArchive& archive );
+    static void              Initialize         ( MIL_Config& config );
     static MIL_MOSIDManager* FindObjectIDManager( const std::string& strName );
     //@}
 

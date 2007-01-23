@@ -22,7 +22,7 @@
 // Created: JVT 02-10-21
 // Last modified: JVT 04-03-24
 //-----------------------------------------------------------------------------
-PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_InputArchive& initArchive )
+PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     : pEphemeride_ ( 0 )
     , pGlobalMeteo_( 0 )
     , meteos_      ( )
@@ -31,18 +31,16 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_InputArchive& initArchive )
     PHY_Precipitation::Initialize();
     PHY_Lighting     ::Initialize();
 
-    std::string fileName;
-    initArchive.ReadField( "Meteo", fileName );
+    std::string fileName = config.GetWeatherFile();
 
     MIL_InputArchive archive;
-    archive.AddWarningStream( std::cout );
     archive.Open( fileName );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( fileName );
+    config.AddFileToCRC( fileName );
 
     archive.Section( "Meteo" );
     pEphemeride_  = new PHY_Ephemeride( archive );
     InitializeGlobalMeteo( archive );
-    pRawData_     = new PHY_RawVisionData( *pGlobalMeteo_, initArchive );
+    pRawData_     = new PHY_RawVisionData( *pGlobalMeteo_, config );
     InitializeLocalMeteos( archive );
 
     archive.EndSection(); // Meteo

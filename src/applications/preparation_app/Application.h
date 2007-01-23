@@ -21,6 +21,7 @@ namespace kernel
 class MainWindow;
 class StaticModel;
 class Model;
+class Config;
 
 // =============================================================================
 /** @class  Application
@@ -53,6 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Config* config_;
     kernel::Controllers* controllers_;
     StaticModel* staticModel_;
     Model* model_;

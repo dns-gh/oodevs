@@ -66,7 +66,7 @@ public:
     //! @name Operations
     //@{
     static TER_World& GetWorld();
-    static void Initialize( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive );
+    static void Initialize( const std::string& rootFile );
     static void DestroyWorld();
     //@}
 
@@ -92,16 +92,12 @@ public:
     TER_AgentManager&      GetAgentManager     () const;
     TER_ObjectManager&     GetObjectManager    () const;
     TER_PopulationManager& GetPopulationManager() const;
-    
-    const std::string& GetGraphFileName() const;
-    const std::string& GetNodeFileName () const;
-    const std::string& GetLinkFileName () const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-    explicit TER_World( MT_InputArchive_Logger< MT_XXmlInputArchive >& archive );
+    explicit TER_World( const std::string& rootFile );
              TER_World( const TER_World& );            //!< Copy constructor
     virtual ~TER_World();
     TER_World& operator=( const TER_World& ); //!< Assignement operator
@@ -121,10 +117,6 @@ private:
     TER_CoordinateManager* pCoordinateManager_;
     TER_PathFindManager*   pPathfindManager_;
     TER_PopulationManager* pPopulationManager_;
-    
-    const std::string graphFileName_;
-    const std::string nodeFileName_;
-    const std::string linkFileName_;
     //@}
 };
 

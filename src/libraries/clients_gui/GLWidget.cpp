@@ -43,8 +43,8 @@ namespace
 // Name: GlWidget::GlWidget
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, IconLayout& iconLayout )
-    : WorldParameters( scipioXml )
+GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const ExerciseConfig& config, IconLayout& iconLayout )
+    : WorldParameters( config )
     , SetGlOptions()
     , MapWidget( context_, pParent, width_, height_ )
     , GlToolsBase( controllers )

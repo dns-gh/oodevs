@@ -101,7 +101,7 @@ ADN_HumanFactors_Data::~ADN_HumanFactors_Data()
 // -----------------------------------------------------------------------------
 void ADN_HumanFactors_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szHumanFactors_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHumanFactors_.GetData() );
 }
 
 

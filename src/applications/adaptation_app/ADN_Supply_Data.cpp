@@ -113,7 +113,7 @@ ADN_Supply_Data::~ADN_Supply_Data()
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szSupply_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSupply_.GetData() );
 }
 
 

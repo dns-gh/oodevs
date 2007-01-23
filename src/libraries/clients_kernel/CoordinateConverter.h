@@ -19,6 +19,7 @@
 
 namespace kernel
 {
+    class ExerciseConfig;
 
 // =============================================================================
 // Created: APE 2004-07-19
@@ -35,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load( const ExerciseConfig& config );
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
 

@@ -23,6 +23,8 @@
 
 #include <queue>
 
+class MIL_Config;
+
 // =============================================================================
 // Created: NLD 2003-08-05
 // =============================================================================
@@ -31,20 +33,19 @@ class MIL_CheckPointManager
     MT_COPYNOTALLOWED( MIL_CheckPointManager )
     
 public:
-     MIL_CheckPointManager();
-     MIL_CheckPointManager( MIL_InputArchive& );
+              MIL_CheckPointManager();
+     explicit MIL_CheckPointManager( const MIL_Config& config );
     ~MIL_CheckPointManager();
 
     //! @name Main
     //@{
-    void        Update                  ();
-    void        LoadCheckPoint          ( const std::string& strCheckPointPath );
-    std::string GetCheckPointODBFileName( const std::string& strCheckPointPath ) const;
+    void Update        ();
+    void LoadCheckPoint( const MIL_Config& config );
     //@}
 
     //! @name Accessors
     //@{
-    MT_Float GetCheckPointFrequency() const;
+    uint GetCheckPointFrequency() const;
     //@}
 
     //! @name Network
@@ -64,23 +65,22 @@ public:
 private:   
     //! @name Tools
     //@{
-    
-    void ManageOldCheckPoints    ( const std::string& newName );
-    void SaveCheckPoint          ( const std::string& strCheckPointName );
-    void SaveCheckPoint          ( const std::string& strName, const std::string& strPath );
+    void RotateCheckPoints       ( const std::string& newName );
+    bool SaveCheckPoint          ( const std::string& name, const std::string userName = "" );
+    bool SaveOrbatCheckPoint     ( const std::string& name );
+    bool SaveFullCheckPoint      ( const std::string& name, const std::string userName = "" );
+
     void UpdateNextCheckPointTick();
     //@}
     
     //! @name Tools
     //@{
-    static std::string                    GetCheckPointFullPath    ( const std::string& strCheckPointPath );
+    static void                           CreateMetaData     ( const std::string& strPath, const std::string& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
+    static boost::crc_32_type::value_type CreateData         ( const std::string& strFileName );
+    static const std::string              BuildCheckPointName();
 
-    static void                           CreateMetaData           ( const std::string& strPath, const std::string& strName, const boost::crc_32_type::value_type&, const boost::crc_32_type::value_type& );
-    static boost::crc_32_type::value_type CreateData               ( const std::string& strFileName );
-    static const std::string              CreateCheckPointDirectory();
-
-    static void                           CheckCRC                 ( const std::string& strPath );
-    static void                           CheckFilesCRC            ( const std::string& strPath );
+    static void                           CheckCRC           ( const MIL_Config& config );
+    static void                           CheckFilesCRC      ( const MIL_Config& config );
     //@}
 
 private:
@@ -90,13 +90,11 @@ private:
     //@}
     
 private:
-    MT_Float             rCheckPointsFrequency_; // Minutes
-
-    uint                 nLastCheckPointTick_;
-    uint                 nNextCheckPointTick_;
-    
-    uint                 nMaxCheckPointNbr_;
-    T_CheckPointsQueue   currentCheckPoints_;
+    const uint                 nMaxCheckPointNbr_;
+          uint                 nCheckPointsFrequency_; 
+          uint                 nLastCheckPointTick_;
+          uint                 nNextCheckPointTick_;
+          T_CheckPointsQueue   currentCheckPoints_;
 };
 
 #include "MIL_CheckPointManager.inl"

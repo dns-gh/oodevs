@@ -188,7 +188,7 @@ ADN_KnowledgeGroups_Data::~ADN_KnowledgeGroups_Data()
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szKnowledgeGroups_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szKnowledgeGroups_.GetData() );
 }
 
 

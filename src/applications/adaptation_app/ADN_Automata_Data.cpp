@@ -292,7 +292,7 @@ ADN_Automata_Data::~ADN_Automata_Data()
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szAutomata_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szAutomata_.GetData() );
 }
 
 

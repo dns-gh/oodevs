@@ -15,6 +15,8 @@
 #include "tools/thread/Thread.h"
 #include "dispatcher/Dispatcher.h"
 
+class SIM_Config;
+
 // =============================================================================
 /** @class  SIM_Dispatcher
     @brief  SIM_Dispatcher
@@ -23,11 +25,10 @@
 // =============================================================================
 class SIM_Dispatcher : public tools::thread::Thread
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             SIM_Dispatcher( const std::string& strConfFile );
+             SIM_Dispatcher( SIM_Config& config );
     virtual ~SIM_Dispatcher();
     //@}
 

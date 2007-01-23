@@ -19,6 +19,7 @@ namespace kernel
     class Options;
     class Controllers;
     class Profile_ABC;
+    class ExerciseConfig;
 }
 
 namespace gui
@@ -74,13 +75,13 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor/Accessor
     //@{
-             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& profile );
+             MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& profile, kernel::ExerciseConfig& config );
     virtual ~MainWindow();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load();
     kernel::Options& GetOptions() const;
     //@}
 
@@ -127,8 +128,8 @@ private:
     StaticModel& staticModel_;
     Model& model_;
     Network& network_;
-    std::string scipioXml_;
     QString profile_;
+    kernel::ExerciseConfig& config_;
 
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;

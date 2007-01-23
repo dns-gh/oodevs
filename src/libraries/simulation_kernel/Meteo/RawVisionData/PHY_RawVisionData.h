@@ -15,6 +15,7 @@
 #include "MIL.h"
 #include "Meteo/PHY_Meteo.h"
 
+class MIL_Config;
 class PHY_AmmoEffect;
 class MT_Ellipse;
 class PHY_Precipitation;
@@ -82,7 +83,7 @@ public:
     };
 
 public:
-     PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_InputArchive& archive );
+     PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_Config& config );
     ~PHY_RawVisionData();
 
     //-------------------------------------------------------------------------

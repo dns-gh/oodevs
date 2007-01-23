@@ -39,7 +39,9 @@ MsgCtrlEndTick   ::= SEQUENCE
     current-tick        INTEGER,
     tick-duration       INTEGER,    -- En millisecondes
     nb-pathfinds-longs  INTEGER,
-    nb-pathfinds-courts INTEGER
+    nb-pathfinds-courts INTEGER,
+    memory              INTEGER,
+    virtual-memory      INTEGER
 }
 
 MsgCtrlClientAnnouncement ::= NULL
@@ -56,7 +58,6 @@ MsgCtrlInfo ::= SEQUENCE
     current-tick            INTEGER,     
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
-    id-exercice             INTEGER,
     checkpoint-frequence    INTEGER, -- En minutes
     etat                    EnumEtatSim
 }

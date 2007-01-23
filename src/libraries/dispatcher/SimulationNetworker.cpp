@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "SimulationNetworker.h"
 
 #include "Dispatcher.h"
@@ -18,22 +17,33 @@
 #include "Network_Def.h"
 #include "AsnMessageDecoder.h"
 #include "AsnMessageEncoder.h"
+#include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
 using namespace DIN;
 using namespace NEK;
+using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::string& strHostName, unsigned short nPort )
+SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile )
     : Networker_ABC     ( dispatcher )
     , connectionService_( *this, dinEngine_, DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 2 )
     , messageService_   ( *this, dinEngine_, DIN_ConnectorGuest() )
     , pSimulation_      ( 0 )
-    , simulationAddress_( strHostName, nPort )
+    , simulationAddress_()
 {
+    std::string host;
+    xml::xifstream xis( configFile );
+    xis >> xml::start( "config" )
+            >> xml::start( "dispatcher" )
+                >> xml::start( "network" )
+                    >> xml::attribute( "client", host );
+    // $$$$ NLD 2007-01-10: à intégrer dans DIN
+    simulationAddress_ = NEK_AddressINET( host.substr( 0, host.find_first_of( ':' ) ), atoi( host.substr( host.find_first_of( ':' ) + 1 ).c_str() ) );
+
     messageService_.SetCbkOnError( &SimulationNetworker::OnErrorReceivingMessage );
     messageService_.RegisterReceivedMessage( eMsgOutSim                                , *this, &SimulationNetworker::OnReceiveMsgOutSim                                 );
     messageService_.RegisterReceivedMessage( eMsgInit                                  , *this, &SimulationNetworker::OnReceiveMsgInit                                   );

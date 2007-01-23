@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "StaticModel.h"
+#include "TeamKarmas.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/DetectionMap.h"
@@ -16,7 +17,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "TeamKarmas.h"
+#include "clients_kernel/ExerciseConfig.h"
 
 using namespace kernel;
 
@@ -52,14 +53,14 @@ StaticModel::~StaticModel()
 // Name: StaticModel::Load
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-void StaticModel::Load( const std::string& scipioXml )
+void StaticModel::Load( const kernel::ExerciseConfig& config )
 {
     Purge();
-    types_.Load( scipioXml );
-    objectTypes_.Load( scipioXml );
-    static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( scipioXml );
-    detection_.Load( scipioXml );
-    controllers_.controller_.Update( ModelLoaded( scipioXml ) );
+    types_.Load( config );
+    objectTypes_.Load( config );
+    static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
+    detection_.Load( config );
+    controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
 // -----------------------------------------------------------------------------

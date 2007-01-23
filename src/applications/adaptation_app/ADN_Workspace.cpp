@@ -17,7 +17,6 @@
 #include "ADN_NBC_Datas.h"
 #include "ADN_Launchers_GUI.h"
 #include "ADN_Launchers_Data.h"
-#include "ADN_Project_GUI.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Categories_GUI.h"
 #include "ADN_Categories_Data.h"
@@ -53,8 +52,6 @@
 #include "ADN_Missions_Data.h"
 #include "ADN_KnowledgeGroups_GUI.h"
 #include "ADN_KnowledgeGroups_Data.h"
-#include "ADN_HLA_GUI.h"
-#include "ADN_HLA_Data.h"
 #include "ADN_Health_GUI.h"
 #include "ADN_Health_Data.h"
 #include "ADN_Supply_GUI.h"
@@ -95,7 +92,6 @@ ADN_Workspace& ADN_Workspace::GetWorkspace()
     return *pWorkspace_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::CleanWorkspace
 // Created: JDY 03-07-09
@@ -107,19 +103,18 @@ void ADN_Workspace::CleanWorkspace()
     pWorkspace_=0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace constructor
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
 ADN_Workspace::ADN_Workspace()
-: pProgressIndicator_( 0 )
-, pUndoStack_        ( 0 )
-, nOpenMode_         ( eOpenMode_Normal )
+    : pProgressIndicator_( 0 )
+    , pUndoStack_        ( 0 )
+    , nOpenMode_         ( eOpenMode_Normal )
 {
     pWorkspace_ = this;
 
-    elements_[eProject]        = new ADN_WorkspaceElement< ADN_Project_Data, ADN_Project_GUI >( tr( "Project" ) );
+    projectData_ = new ADN_Project_Data();
     elements_[eCategories]     = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
     elements_[eNBC]            = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );
     elements_[eLaunchers]      = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >( tr( "Launchers" ) );
@@ -138,13 +133,11 @@ ADN_Workspace::ADN_Workspace()
     elements_[eMaintenance]    = new ADN_WorkspaceElement< ADN_Maintenance_Data, ADN_Maintenance_GUI>( tr( "Maintenance" ) );
     elements_[eMissions]       = new ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI>( tr( "Missions" ) );
     elements_[eKnowledgeGroups]= new ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI>( tr( "Knowledge groups" ) );
-    elements_[eHLA]            = new ADN_WorkspaceElement< ADN_HLA_Data, ADN_HLA_GUI>( tr( "HLA" ) );
     elements_[eHealth]         = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
     elements_[eSupply]         = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
     elements_[ePopulation]     = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Populations" ) );
     elements_[eReports]        = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace destructor
@@ -154,10 +147,9 @@ ADN_Workspace::~ADN_Workspace()
 {
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
         delete elements_[n];
-
+    delete projectData_;
     delete pUndoStack_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::Build
@@ -177,7 +169,6 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     }
 
     // Force an order for the tabs. Combine some other tabs. Exclude others... All in all, has to be done by hand.
-    mainWindow.AddPage( elements_[eProject]->GetName(), * elements_[eProject]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eCategories]->GetName(), * elements_[eCategories]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eEquipement]->GetName(), * elements_[eEquipement]->GetGuiABC().GetMainWidget() );
@@ -215,7 +206,6 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::Reset
 // Created: JDY 03-07-04
@@ -228,21 +218,20 @@ void ADN_Workspace::Reset(const std::string& filename, bool bVisible )
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
     }
 
-    this->GetProject().GetData().SetFile( filename );
-
+    projectData_->SetFile( filename );
     for( int n = eNbrWorkspaceElements - 1; n >= 0; --n )
     {
         elements_[n]->GetDataABC().Reset();
         if( bVisible )
             pProgressIndicator_->Increment( elements_[n]->GetName() );
     }
+    projectData_->Reset();
 
     if( bVisible )
         pProgressIndicator_->Reset( tr( "Project reseted" ) );
 
     GetUndoStack().clear();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::Load
@@ -257,19 +246,17 @@ void ADN_Workspace::Load(const std::string& filename)
     pProgressIndicator_->Reset( tr( "Loading project..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
-    this->GetProject().GetData().SetFile( filename );
-    this->GetProject().GetData().Load();
+    projectData_->SetFile( filename );
+    projectData_->Load();
     pProgressIndicator_->Increment();
 
-    for( int n = 1; n < eNbrWorkspaceElements; ++n )
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
         elements_[n]->GetDataABC().Load();
         pProgressIndicator_->Increment( elements_[n]->GetName() );
     }
-
     pProgressIndicator_->Reset();
 }
-
 
 inline bool isWritable(const std::string& filename)
 {
@@ -280,22 +267,23 @@ inline bool isWritable(const std::string& filename)
         
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::SaveAs
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-bool ADN_Workspace::SaveAs(const std::string& filename)
+bool ADN_Workspace::SaveAs( const std::string& filename )
 {
+    ADN_Project_Data::WorkDirInfos& dirInfos = ADN_Project_Data::GetWorkDirInfos();
+
     // Set a temporary working directory
-    std::string szOldWorkDir = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData();
-    ADN_Project_Data::GetWorkDirInfos().SetWorkingDirectory(filename);
+    std::string szOldWorkDir = dirInfos.GetWorkingDirectory().GetData();
+    dirInfos.SetWorkingDirectory( filename );
     
     // Retrieve list of needed files
     T_StringList files;
-    int n;
-    files.push_back(  ADN_Project_Data::GetWorkDirInfos().GetPartPath(filename) );
-    for( n = 0; n < eNbrWorkspaceElements; ++n )
+    files.push_back( dirInfos.GetRelativePath( filename ) );
+    projectData_->FilesNeeded( files );
+    for( int n = 0; n < eNbrWorkspaceElements; ++n )
         elements_[n]->GetDataABC().FilesNeeded( files );
 
     /////////////////////////////////////
@@ -307,22 +295,16 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
     dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).ascii() + filename );
     dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).ascii());
 
-    T_StringList::iterator itFileName;
-    for( itFileName=files.begin();itFileName!=files.end();++itFileName)
+    for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
     {
-        std::string szFile=ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + *itFileName;
-        if (! isWritable( szFile ) )
-            dlgLog.addMsg(szFile);
+        const std::string file = dirInfos.GetWorkingDirectory().GetData() + *it;
+        if( !isWritable( file ) )
+            dlgLog.addMsg( file );
     }
-    
     // set old working directory
-    ADN_Project_Data::GetWorkDirInfos().SetWorkingDirectory(szOldWorkDir);
-        
-    
-    if ( ! dlgLog.empty() )
+    dirInfos.SetWorkingDirectory( szOldWorkDir );
+    if( !dlgLog.empty() )
     {    
-        // some files are nort writable so dlgbox
-        // and return immediatelly
         dlgLog.exec();
         pProgressIndicator_->Reset();
         return false;
@@ -333,32 +315,26 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
     try
     {
         // saving in temporary files activated
-        ADN_Project_Data::GetWorkDirInfos().UseTempDirectory(true);
-
+        dirInfos.UseTempDirectory( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
-
-        this->GetProject().GetData().SetFile( filename );
-        
-        for( n = 0; n < eNbrWorkspaceElements; ++n )
+        projectData_->SetFile( filename );
+        projectData_->Save();
+        for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
             pProgressIndicator_->Increment( elements_[n]->GetName() );
         }
-
-        // saving in temporary files disactivated
-        ADN_Project_Data::GetWorkDirInfos().UseTempDirectory(false);
+        dirInfos.UseTempDirectory( false );
 
     }
     catch( ADN_Exception_ABC& exception )
     {
-//        QApplication::restoreOverrideCursor();	// restore original cursor
-//        QMessageBox::critical( 0, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
-        ADN_Project_Data::GetWorkDirInfos().SetWorkingDirectory(szOldWorkDir);
+        dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
         pProgressIndicator_->Reset();
         throw;
     }
-    catch ( MT_ScipioException& exception)
+    catch( MT_ScipioException& exception)
     {
         // an error occured . show message box
         // and set working directory as old one
@@ -368,59 +344,26 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
                << "Line : "        << exception.GetLine()        << std::endl
                << "Message : "     << exception.GetMsg()         << std::endl
                << "Description : " << exception.GetDescription() << std::endl;          
-        ADN_Project_Data::GetWorkDirInfos().SetWorkingDirectory(szOldWorkDir);
+        dirInfos.SetWorkingDirectory( szOldWorkDir ); // $$$$ NLD 2007-01-15: needed ???
         pProgressIndicator_->Reset();
         throw ADN_Xml_Exception( "Scipio - Adaptation Tool - Saving error", strMsg.str().c_str() );
-//        QMessageBox::critical( 0, "Scipio - Adaptation Tool - Saving error", strMsg.str().c_str() );
-//        return false;
     }
     
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
-    for( itFileName = files.begin(); itFileName != files.end(); ++itFileName )
-    {
-        if ( ! ADN_Tools::CopyFileToFile( ( ADN_Project_Data::GetWorkDirInfos().GetTempDirectory().GetData() + *itFileName ).c_str() ,
-                                     ( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + *itFileName ).c_str() ) 
-           )
+    for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
+        if( !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
         {
-            ADN_Project_Data::GetWorkDirInfos().SetWorkingDirectory(szOldWorkDir);
+            dirInfos.SetWorkingDirectory( szOldWorkDir );
             pProgressIndicator_->Reset();
-            throw ADN_SaveFile_Exception( *itFileName );
+            throw ADN_SaveFile_Exception( *it );
         }
-    }
         
-
-    //////////////////////////////////////////////
-    // Dump the call stack to the changelog file
-
-    MT_FileLogger logFile( "change_log.txt" );
-
-    MT_LogManager::Instance().RegisterLogger( logFile );    
-
-    MT_LOG_INFO_MSG( "Modifications faites le " << MT_GetCurrentDate() )
-    char szUserName[256];
-    DWORD nSize = 256;
-
-    BOOL bRes = GetUserName( szUserName, &nSize );
-    
-    if( bRes )
-        MT_LOG_INFO_MSG( "par " << std::string( szUserName, nSize ) )
-
-    QStringList undoList = GetUndoStack().undoList();
-    for( QStringList::iterator itCommand = undoList.begin(); itCommand != undoList.end(); ++itCommand )
-    {
-        MT_LOG_INFO_MSG( (*itCommand).ascii() )
-    }
-
-    MT_LogManager::Instance().UnregisterLogger( logFile );
-
     GetUndoStack().clear();
-
     // Save is ended
     pProgressIndicator_->Reset();
     return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::Save
@@ -428,9 +371,8 @@ bool ADN_Workspace::SaveAs(const std::string& filename)
 //-----------------------------------------------------------------------------
 bool ADN_Workspace::Save()
 {
-    return SaveAs(this->GetProject().GetData().GetFileInfos().GetFileNameFull() );
+    return SaveAs( GetProject().GetFileInfos().GetFileNameFull() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetUndoStack
@@ -442,7 +384,6 @@ QtUndoStack& ADN_Workspace::GetUndoStack()
     return *pUndoStack_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::AddCommand
 // Created: AGN 2004-05-13
@@ -453,7 +394,6 @@ void ADN_Workspace::AddCommand( QtCommand* pNewCommand )
         return;
     pUndoStack_->push( pNewCommand );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::ExportHtml

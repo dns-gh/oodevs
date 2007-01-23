@@ -176,8 +176,42 @@ int Run( uint nArgc, char* pArgv[] )
     // Init the console window size and appearance
     InitConsole();
 
-    SIM_App app( nArgc, pArgv );
-    int nResult = app.Execute();
+    int nResult = EXIT_FAILURE;
+    try
+    {
+        SIM_App app( nArgc, pArgv );
+        nResult = app.Execute();
+    }
+    catch( MT_ScipioException& exception )
+    {
+        std::stringstream strMsg;
+        strMsg << "Context : "     << exception.GetContext()     << std::endl
+               << "File : "        << exception.GetFile()        << std::endl
+               << "Line : "        << exception.GetLine()        << std::endl
+               << "Message : "     << exception.GetMsg()         << std::endl
+               << "Description : " << exception.GetDescription() << std::endl;
+        MessageBox( 0, strMsg.str().c_str(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
+    }
+    catch( MT_Exception& exception )
+    {
+        std::stringstream strMsg;
+        strMsg << "Context : " << exception.GetContext() << std::endl
+               << "Code :"     << exception.GetCode()    << std::endl
+               << "Message : " << exception.GetInfo()    << std::endl;
+        MessageBox( 0, strMsg.str().c_str(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
+    }
+    catch( MT_ArchiveLogger_Exception& exception )
+    {
+        MessageBox ( 0, exception.what(), "Scipio - Invalid input data - Please check ODB data and launch the SIM again", MB_ICONEXCLAMATION | MB_OK | MB_TOPMOST );
+    }
+    catch( std::bad_alloc& /*exception*/ )
+    {
+        MessageBox( 0, "Allocation error : not enough memory", "Scipio - Memory error", MB_ICONERROR | MB_OK | MB_TOPMOST );
+    }
+    catch( std::exception& exception )
+    {
+        MessageBox( 0, exception.what(), "Scipio - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
+    }
 
     MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );

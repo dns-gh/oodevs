@@ -12,6 +12,7 @@
 
 namespace kernel
 {
+    class ExerciseConfig;
 
 // =============================================================================
 /** @class  WorldParameters
@@ -26,19 +27,18 @@ public:
     //! @name Constructors/Destructor
     //@{
              WorldParameters();
-    explicit WorldParameters( const std::string& scipioXml ); 
+    explicit WorldParameters( const ExerciseConfig& config ); 
     virtual ~WorldParameters();
     //@}
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load( const ExerciseConfig& config );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadTerrain( const std::string& terrain );
     void ReadWorld( const std::string& world );
     //@}
 

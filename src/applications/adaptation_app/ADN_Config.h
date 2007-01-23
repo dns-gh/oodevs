@@ -23,7 +23,7 @@ class ADN_Config
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit ADN_Config();
+             ADN_Config();
     virtual ~ADN_Config();
     //@}
 

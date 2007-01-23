@@ -44,7 +44,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controll
 {
     std::string type, name;
     xis >> attribute( "type", type )
-        >> attribute( "name", name );
+        >> optional() >> attribute( "name", name );
     type_ = &types.Get( type.c_str() );
     name_ = name.empty() ? tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ ) : name.c_str();
     idManager.Lock( id_ );

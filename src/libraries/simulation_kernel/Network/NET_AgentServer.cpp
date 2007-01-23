@@ -27,42 +27,16 @@ using namespace tools::thread;
 // Name: NET_AgentServer constructor
 // Created: NLD 2002-07-12
 //-----------------------------------------------------------------------------
-NET_AgentServer::NET_AgentServer( MIL_InputArchive& archive )
+NET_AgentServer::NET_AgentServer()
     : dinEngine_                     (  )
-    , nPortAS_MOS_                   ( 10000 )
-    , nMagicAS_MOS_                  ( 0 )
-    , bSendUnitVisionCones_          ( false )
-    , bThreaded_                     ( false )
+    , bThreaded_                     ( MIL_AgentServer::GetWorkspace().GetConfig().IsThreadedNetwork() )
+    , nPortAS_MOS_                   ( MIL_AgentServer::GetWorkspace().GetConfig().GetNetworkPort() )
     , bTerminated_                   ( false )
+    , pConnectionMgr_                ( new NET_AS_MOSServerConnectionMgr( *this ) )
+    , pMsgMgr_                       ( new NET_AS_MOSServerMsgMgr       ( *this ) )
     , nUnitVisionConesChangeTimeStep_( 0 )
+    , bSendUnitVisionCones_          ( false )
 {
-    std::string strFile;
-    archive.ReadField( "Reseau", strFile );
-
-    MIL_InputArchive networkArchive;
-    networkArchive.AddWarningStream( std::cout );
-    networkArchive.Open( strFile );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strFile );
-    
-    networkArchive.Section( "Reseau" );    
-        
-    uint nBasePort;
-    networkArchive.Section( "Simulation" );
-    networkArchive.ReadField( "BasePort", nBasePort );
-    networkArchive.ReadField( "Magic", nMagicAS_MOS_ );
-
-    nPortAS_MOS_ = (uint16)( nBasePort + MIL_AgentServer::GetWorkspace().GetExerciceID() );    
-
-    networkArchive.EndSection(); // Simulation
-
-    networkArchive.ReadField( "ThreadReseauActif", bThreaded_ );
-
-    networkArchive.EndSection(); // Reseau
-    networkArchive.Close();
-
-    pConnectionMgr_ = new NET_AS_MOSServerConnectionMgr( *this );
-    pMsgMgr_        = new NET_AS_MOSServerMsgMgr       ( *this );
-    
     Start();
     if( bThreaded_ )
     {

@@ -55,7 +55,6 @@ private:
    unsigned int      nCurrentTick_;
    unsigned int      nTickDuration_;
    unsigned int      nTimeFactor_;
-   unsigned int      nExerciseID_;
    unsigned int      nCheckpointFrequency_;
    ASN1T_EnumEtatSim nSimState_;
 

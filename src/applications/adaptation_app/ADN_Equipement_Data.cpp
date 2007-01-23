@@ -767,7 +767,7 @@ ADN_Equipement_Data::~ADN_Equipement_Data()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::FilesNeeded(T_StringList& files ) const
 {
-    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szEquipements_.GetData());
+    files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szEquipements_.GetData());
 }
 
 

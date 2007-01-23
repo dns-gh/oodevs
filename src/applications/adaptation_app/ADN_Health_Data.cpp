@@ -83,7 +83,7 @@ ADN_Health_Data::~ADN_Health_Data()
 // -----------------------------------------------------------------------------
 void ADN_Health_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szHealth_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szHealth_.GetData() );
 }
 
 

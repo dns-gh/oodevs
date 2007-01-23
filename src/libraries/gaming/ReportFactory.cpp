@@ -19,7 +19,7 @@
 #include "Tools.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/PathTools.h"
+#include "clients_kernel/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -52,14 +52,13 @@ ReportFactory::~ReportFactory()
 // Name: ReportFactory::Load
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-void ReportFactory::Load( const std::string& scipioXml )
+void ReportFactory::Load( const kernel::ExerciseConfig& config  )
 {
-    xml::xifstream scipio( scipioXml );
+    xml::xifstream scipio( config.GetPhysicalFile() );
     std::string reports;
-    scipio >> start( "Scipio" )
-                >> start( "Donnees" )
-                    >> content( "ComptesRendus", reports );
-    xifstream xis( path_tools::BuildChildPath( scipioXml, reports ) );
+    scipio >> start( "physical" )
+                >> content( "ComptesRendus", reports );
+    xifstream xis( config.BuildPhysicalChildFile( reports ) );
     xis >> start( "reports" )
             >> list( "report", *this, &ReportFactory::ReadReport )
         >> end();

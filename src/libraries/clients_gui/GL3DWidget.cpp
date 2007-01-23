@@ -29,8 +29,8 @@ using namespace gui;
 // Name: Gl3dWidget constructor
 // Created: AGE 2006-03-28
 // -----------------------------------------------------------------------------
-Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const std::string& scipioXml, DetectionMap& elevation, EventStrategy_ABC& strategy )
-    : WorldParameters( scipioXml )
+Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const ExerciseConfig& config, DetectionMap& elevation, EventStrategy_ABC& strategy )
+    : WorldParameters( config )
     , SetGlOptions()
     , Widget3D( context_, pParent )
     , GlToolsBase( controllers )

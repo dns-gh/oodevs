@@ -142,8 +142,6 @@ private:
     void ReadArchive( ADN_XmlInput_Helper& input );
     void WriteArchive( MT_OutputArchive_ABC& output );
 
-    std::string ComputeFileName() const;
-
 private:
     T_ModelInfos_Vector     vUnitModels_;
     T_ModelInfos_Vector     vAutomataModels_;

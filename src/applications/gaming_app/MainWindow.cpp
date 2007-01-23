@@ -47,7 +47,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/PathTools.h"
+#include "clients_kernel/ExerciseConfig.h"
 
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/Model.h"
@@ -111,12 +111,13 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& p )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Network& network, const kernel::Profile_ABC& p, kernel::ExerciseConfig& config )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )
     , model_        ( model )
     , network_      ( network )
+    , config_       ( config )
     , forward_      ( new CircularEventStrategy() )
     , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
@@ -268,6 +269,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pMissionPanel_->hide();
 
     new XPSPlayer( this, controllers_ );
+
+    if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) )
+        Load();
 }
 
 // -----------------------------------------------------------------------------
@@ -341,24 +345,25 @@ void MainWindow::Open()
     std::string current;
     while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
     {
-        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", this, 0, "Open scipio.xml" );
+        const QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (*.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
         if( filename.isEmpty() )
             return;
         current = filename;
         if( current.substr( 0, 2 ) == "//" )
             std::replace( current.begin(), current.end(), '/', '\\' );
     }
-    Load( current );
+    config_.LoadExercise( current );
+    Load();
+    // $$$$ NLD 2007-01-12: change window title ?
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::Load
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-void MainWindow::Load( const std::string& scipioXml )
+void MainWindow::Load()
 {
     BuildIconLayout();
-    scipioXml_ = scipioXml;
     if( widget3d_ )
     {
         widget3d_->makeCurrent();
@@ -372,7 +377,7 @@ void MainWindow::Load( const std::string& scipioXml )
         delete widget2d_; widget2d_ = 0;
     }
 
-    widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
+    widget2d_ = new GlWidget( this, controllers_, config_, *iconLayout_ );
     moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
     widget2d_->Configure( *eventStrategy_ );
     widget2d_->Configure( *moveLayer_ );
@@ -381,7 +386,7 @@ void MainWindow::Load( const std::string& scipioXml )
     delete glPlaceHolder_; glPlaceHolder_ = 0;
     setCentralWidget( widget2d_ );
     model_.Purge();
-    staticModel_.Load( scipioXml );
+    staticModel_.Load( config_ );
 
     b3d_ = false;
     controllers_.options_.Change( "3D", b3d_ );
@@ -510,7 +515,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
     if( name == "3D" )
     {
         bool new3d = value.To< bool >();
-        if( new3d != b3d_ && ( widget3d_ || ! scipioXml_.empty() ) )
+        if( new3d != b3d_ )
         {
             centralWidget()->hide();
             disconnect( displayTimer_, SIGNAL( timeout()), centralWidget(), SLOT( updateGL() ) );
@@ -518,7 +523,7 @@ void MainWindow::OptionChanged( const std::string& name, const OptionVariant& va
             {
                 if( ! widget3d_ )
                 {
-                    widget3d_ = new Gl3dWidget( this, controllers_, scipioXml_, staticModel_.detection_, *eventStrategy_ );
+                    widget3d_ = new Gl3dWidget( this, controllers_, config_, staticModel_.detection_, *eventStrategy_ );
                     connect( widget3d_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
                     glProxy_->RegisterTo( widget3d_ );
                 }
@@ -596,12 +601,14 @@ void MainWindow::NotifyUpdated( const Profile& profile )
 // -----------------------------------------------------------------------------
 void MainWindow::CompareConfigPath( const std::string& server, const std::string& serverPath )
 {
-    if( serverPath.empty() || ! scipioXml_.empty() )
-        return;
-    if( server.find( "127.0.0.1" ) != std::string::npos )
-        Load( serverPath );
-    else
-        Load( BuildRemotePath( server, serverPath ) );
+    // $$$$ NLD 2007-01-12: TODO: change ASN message...
+//    if( serverPath.empty() || ! scipioXml_.empty() )
+//        return;
+//    
+//    if( server.find( "127.0.0.1" ) != std::string::npos )
+//        Load( serverPath );
+//    else
+//        Load( BuildRemotePath( server, serverPath ) );
 }
 
 // -----------------------------------------------------------------------------

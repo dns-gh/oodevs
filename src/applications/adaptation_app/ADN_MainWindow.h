@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_MainWindow.h $
-// $Author: Ape $
-// $Modtime: 19/04/05 16:34 $
-// $Revision: 13 $
-// $Workfile: ADN_MainWindow.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_MainWindow_h_
 #define __ADN_MainWindow_h_
@@ -41,12 +39,7 @@ class ADN_MainWindow : public QMainWindow
     MT_COPYNOTALLOWED( ADN_MainWindow )
 
 public:
-    enum E_ProjectMenuItems
-    {
-    };
-
-public:
-     ADN_MainWindow();
+    explicit ADN_MainWindow( ADN_Config& config );
     ~ADN_MainWindow();
     
     void Build();

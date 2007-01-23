@@ -54,7 +54,7 @@ ADN_Communications_Data::~ADN_Communications_Data()
 // -----------------------------------------------------------------------------
 void ADN_Communications_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szCom_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szCom_.GetData() );
 }
 
 

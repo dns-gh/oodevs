@@ -23,7 +23,7 @@ using namespace kernel;
 FormationLevels::FormationLevels()
     : root_( 0 )
 {
-    xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) );
+    xml::xifstream xisSymbols( path_tools::BuildWorkingDirectoryPath( "symbols.xml" ) ); // $$$$ NLD 2007-01-12: 
     SymbolFactory factory( xisSymbols );
     Initialize( factory );
 }

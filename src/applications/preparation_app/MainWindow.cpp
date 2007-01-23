@@ -11,17 +11,11 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 
-//#include "ControllerToolbar.h"
-//#include "EventToolbar.h"
 #include "InfoPanels.h"
 #include "CreationPanels.h"
-//#include "LogisticToolbar.h"
-//#include "MapToolbar.h"
 #include "Menu.h"
 #include "ObjectCreationPanel.h"
 #include "ObjectsLayer.h"
-//#include "UnitToolbar.h"
-//#include "LinkInterpreter.h"
 #include "TacticalListView.h"
 #include "CommunicationListView.h"
 #include "ObjectListView.h"
@@ -38,6 +32,9 @@
 #include "ProfileDialog.h"
 
 #include "preparation/Exceptions.h"
+#include "preparation/Model.h"
+#include "preparation/StaticModel.h"
+#include "preparation/FormationModel.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -45,17 +42,12 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-#include "clients_kernel/PathTools.h"
 #include "clients_kernel/FormationLevels.h"
-
-#include "preparation/Model.h"
-#include "preparation/StaticModel.h"
-#include "preparation/FormationModel.h"
+#include "clients_kernel/ExerciseConfig.h"
 
 #include "clients_gui/GlWidget.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GraphicPreferences.h"
-//#include "clients_gui/Logger.h"
 #include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
@@ -77,8 +69,6 @@
 #include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/SymbolIcons.h"
-
-//#include "clients_gui/NatureEditionWidget.h"
 #include "graphics/FixedLighting.h"
 #include "graphics/DragMovementLayer.h"
 
@@ -99,12 +89,13 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model )
+MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, ExerciseConfig& config )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_           ( controllers )
     , staticModel_           ( staticModel )
     , model_                 ( model )
     , modelBuilder_          ( new ModelBuilder( controllers, model ) )
+    , config_                ( config )    
     , eventStrategy_         ( new CircularEventStrategy() )
     , exclusiveEventStrategy_( new ExclusiveEventStrategy( *eventStrategy_ ) )
     , glProxy_               ( 0 )
@@ -122,8 +113,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     strategy_ = new ColorStrategy( controllers, *glProxy_ );
 
     RichItemFactory* factory = new RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
-//    LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
-//    connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
@@ -146,11 +135,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
 
     pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
-
-//    NatureEditionWidget* nature = new NatureEditionWidget( pListsTabWidget, "symbols.xml" );
-//    nature->setText( "combat service support/transportation/spod spoe" );
-//    pListsTabWidget->addTab( nature, tr( "Test" ) );
-
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
     new ::ObjectListView( listsTabBox, controllers, *factory );
@@ -198,9 +182,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pCreationPanel->AddPanel( weatherPanel );
 
     new FileToolbar( this );
-//    new MapToolbar( this, controllers );
-//    new UnitToolbar( this, controllers );
-//    new LogisticToolbar( this, controllers, layers_->GetAgentLayer() ); // $$$$ AGE 2006-05-02:
 
     new Menu( this, controllers, *prefDialog, *profileDialog );
 
@@ -217,6 +198,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     ReadSettings();
     ReadOptions();
+
+    if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) && Load() )
+        if( bfs::exists( bfs::path( config_.GetOrbatFile(), bfs::native ) ) )
+        {
+            loading_ = true;
+            model_.Load( config_ );
+            loading_ = false;
+            SetWindowTitle( false );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -269,14 +259,15 @@ bool MainWindow::New()
     std::string current;
     while( ! bfs::exists( bfs::path( current, bfs::native ) ) )
     {
-        const QString filename = QFileDialog::getOpenFileName( "../data/", "Scipio (*.xml)", this, 0, "Choose scipio.xml" );
+        const QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (*.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
         if( filename.isEmpty() )
             return false;
         current = filename;
         if( current.substr( 0, 2 ) == "//" )
             std::replace( current.begin(), current.end(), '/', '\\' );
     }
-    if( Load( current ) )
+    config_.LoadExercise( current );
+    if( Load() )
     {
         SetWindowTitle( true );
         return true;
@@ -292,10 +283,10 @@ void MainWindow::Open()
 {
     try
     {
-        if( New() && !scipioXml_.empty() )
+        if( New() && bfs::exists( bfs::path( config_.GetOrbatFile(), bfs::native ) ) )
         {
             loading_ = true;
-            model_.Load( scipioXml_.c_str() ); // $$$$ SBO 2006-10-05: should be a different file
+            model_.Load( config_ );
             loading_ = false;
             SetWindowTitle( false );
         }
@@ -311,14 +302,13 @@ void MainWindow::Open()
 // Name: MainWindow::Load
 // Created: AGE 2006-05-03
 // -----------------------------------------------------------------------------
-bool MainWindow::Load( const std::string& scipioXml )
+bool MainWindow::Load()
 {
     try
     {
         BuildIconLayout();
-        scipioXml_ = scipioXml;
         delete widget2d_;
-        widget2d_ = new GlWidget( this, controllers_, scipioXml, *iconLayout_ );
+        widget2d_ = new GlWidget( this, controllers_, config_, *iconLayout_ );
         moveLayer_.reset( new DragMovementLayer( *widget2d_ ) );
         widget2d_->Configure( *eventStrategy_ );
         widget2d_->Configure( *moveLayer_ );
@@ -328,7 +318,7 @@ bool MainWindow::Load( const std::string& scipioXml )
         glPlaceHolder_ = 0;
         setCentralWidget( widget2d_ );
         model_.Purge();
-        staticModel_.Load( scipioXml );
+        staticModel_.Load( config_ );
         SetWindowTitle( false );
 
         connect( widget2d_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -373,7 +363,7 @@ bool MainWindow::Save()
     {
         try
         {
-            model_.Save();
+            model_.Save( config_ );
             SetWindowTitle( false );
         }
         catch( InvalidModelException& e )
@@ -391,23 +381,18 @@ bool MainWindow::Save()
 // -----------------------------------------------------------------------------
 bool MainWindow::SaveAs()
 {
-    std::string current;
-    const QString filename = QFileDialog::getSaveFileName( "../data/", "Ordre de bataille (*.xml)", 0, 0, "Sauvegarde ODB" );
-    if( filename.isEmpty() )
-        return false;
-    current = filename;
-    if( current.substr( 0, 2 ) == "//" )
-        std::replace( current.begin(), current.end(), '/', '\\' );
-    try
-    {
-        model_.Save( current.c_str() );
-        SetWindowTitle( false );
-    }
-    catch( InvalidModelException& e )
-    {
-        QMessageBox::critical( this, APP_NAME, e.what() );
-        return false;
-    }
+    // $$$$ NLD 2007-01-12: user probably shouldn't be able to save orbat to a different file
+    // $$$$ NLD 2007-01-12: at least until exercise.xml can be actually modified
+//    std::string current;
+//    const QString filename = QFileDialog::getSaveFileName( "../data/", "Ordre de bataille (*.xml)", 0, 0, "Sauvegarde ODB" );
+//    if( filename.isEmpty() )
+//        return false;
+//    current = filename;
+//    if( current.substr( 0, 2 ) == "//" )
+//        std::replace( current.begin(), current.end(), '/', '\\' );
+//
+//    model_.Save( current.c_str() );
+//    SetWindowTitle( false );
     return true;
 }
 

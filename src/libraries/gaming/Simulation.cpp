@@ -115,7 +115,7 @@ void Simulation::BeginTick( int tick )
 // Name: Simulation::EndTick
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::EndTick()
+void Simulation::EndTick( const ASN1T_MsgCtrlEndTick& message )
 {
     controller_.Update( endTick_ );
     controller_.Update( *this );

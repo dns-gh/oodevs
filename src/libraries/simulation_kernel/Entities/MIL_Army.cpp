@@ -158,6 +158,7 @@ void MIL_Army::serialize( Archive& file, const uint )
 {
     file & const_cast< std::string& >( strName_ )
          & const_cast< uint& >( nID_ )
+         & nType_
          & diplomacies_
          & knowledgeGroups_
          & formations_
@@ -175,6 +176,7 @@ void MIL_Army::WriteODB( MT_XXmlOutputArchive& archive ) const
     archive.Section( "side" );
     archive.WriteAttribute( "id"  , nID_ );
     archive.WriteAttribute( "name", strName_ );
+    archive.WriteAttribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
 
     archive.Section( "communication" );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )

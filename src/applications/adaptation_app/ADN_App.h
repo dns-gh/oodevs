@@ -13,7 +13,7 @@
 #include <qapplication.h>
 
 class ADN_MainWindow;
-
+class ADN_Config;
 
 // =============================================================================
 /** @class  ADN_App
@@ -39,6 +39,7 @@ public:
 
 private:
     ADN_MainWindow* pMainWindow_; 
+    ADN_Config*     config_;
 };
 
 

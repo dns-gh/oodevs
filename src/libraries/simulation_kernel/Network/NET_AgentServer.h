@@ -27,7 +27,7 @@ class NET_AgentServer : public tools::thread::Thread
     MT_COPYNOTALLOWED( NET_AgentServer );
 
 public:
-     NET_AgentServer( MIL_InputArchive& archive );
+     NET_AgentServer();
     ~NET_AgentServer();
 
     //-------------------------------------------------------------------------
@@ -41,10 +41,9 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    bool                          IsThreaded    () const;
-    DIN::DIN_Engine&              GetDINEngine  ();
-    uint16                        GetPortAS_MOS () const;
-    uint                          GetMagicAS_MOS() const;
+    bool                          IsThreaded   () const;
+    DIN::DIN_Engine&              GetDINEngine ();
+    uint16                        GetPortAS_MOS() const;
 
     NET_AS_MOSServerConnectionMgr& GetConnectionMgr () const;
     NET_AS_MOSServerMsgMgr&        GetMessageMgr    () const;
@@ -52,8 +51,6 @@ public:
     bool                           MustInitUnitVisionCones   () const;
     bool                           MustSendUnitVisionCones   () const;
     void                           SetMustSendUnitVisionCones( bool bEnable );
-
-
     MT_CriticalSection&            GetDINEngineCriticalSection();
     //@}
 
@@ -68,8 +65,8 @@ private:
 
     //! @name Operations
     //@{
-    void Start ();
-    void Stop  ();
+    void Start();
+    void Stop ();
     //@}
 
 private:
@@ -77,14 +74,12 @@ private:
     DIN::DIN_Engine                 dinEngine_;
     MT_CriticalSection              dinEngineCriticalSection_;
     bool                            bThreaded_;
+    uint16                          nPortAS_MOS_;   // le port final (port de base auquel + exerciceID)
     bool                            bTerminated_;
 
     // Managers
     NET_AS_MOSServerConnectionMgr*  pConnectionMgr_;
     NET_AS_MOSServerMsgMgr*         pMsgMgr_;
-
-    uint16                          nPortAS_MOS_;   // le port final (port de base auquel + exerciceID)
-    uint                            nMagicAS_MOS_;
 
     // Debug network properties
     uint                            nUnitVisionConesChangeTimeStep_;

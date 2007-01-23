@@ -644,9 +644,9 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlBeginTick( const ASN1T_MsgCtrlBeginTick&
 // Name: AgentServerMsgMgr::OnReceiveMsgCtrlEndTick
 // Created: NLD 2004-04-05
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& /*message*/ )
+void AgentServerMsgMgr::OnReceiveMsgCtrlEndTick( const ASN1T_MsgCtrlEndTick& message )
 {
-    simulation_.EndTick();
+    simulation_.EndTick( message );
 }
 
 //-----------------------------------------------------------------------------

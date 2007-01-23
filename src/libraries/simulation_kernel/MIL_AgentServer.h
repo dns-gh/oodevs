@@ -46,7 +46,7 @@ public:
     //@}
 
 public:
-     MIL_AgentServer( const MIL_Config& config );
+     MIL_AgentServer( MIL_Config& config );
     ~MIL_AgentServer();
 
     //! @name Checkpoints
@@ -83,7 +83,6 @@ public:
     MIL_CheckPointManager&   GetCheckPointManager  () const;
     MT_TimerManager&         GetTimerManager       ();
     HLA_Federate*            GetHLAFederate        () const;               
-    uint                     GetExerciceID         () const;
     E_SimState               GetSimState           () const;
     MIL_Config&              GetConfig             ();
     //@}
@@ -91,7 +90,7 @@ public:
     //! @name Workspace management
     //@{
 	static MIL_AgentServer& GetWorkspace    ();
-    static void             CreateWorkspace ( const MIL_Config& config );
+    static void             CreateWorkspace ( MIL_Config& config );
     static void             DestroyWorkspace();
     //@}
 
@@ -111,14 +110,9 @@ public:
 private:  
     //! @name
     //@{
-    void Initialize      ( MIL_InputArchive& initArchive );
-
-    void ReadStaticData  ( MIL_InputArchive& );
-    void ReadODB         ( MIL_InputArchive& );
-    void ReadTerData     ( MIL_InputArchive& );
-    void ReadHLA         ( MIL_InputArchive& );
-//    void ReadMissionsData( MIL_InputArchive& );
-    void ReadPathFindData( MIL_InputArchive& );
+    void ReadStaticData();
+    void ReadTerData   ();
+    void ReadHLA       ();
     //@}
 
     //! @name Timer
@@ -136,7 +130,7 @@ private:
 private:
     E_SimState nSimState_;
 
-    MIL_Config config_;
+    MIL_Config& config_;
 
     uint nTimeStepDuration_; /* const */
     uint nTimeFactor_;

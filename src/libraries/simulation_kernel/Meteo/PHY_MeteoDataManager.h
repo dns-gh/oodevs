@@ -9,7 +9,7 @@
 
 #include "Network/NET_ASN_Types.h"
 
-class MT_InputArchive_ABC;
+class MIL_Config;
 class PHY_RawVisionData;
 class PHY_Ephemeride;
 class PHY_Meteo;
@@ -27,7 +27,7 @@ class PHY_MeteoDataManager
     friend class PHY_Meteo; // For UnregisterMeteo
 
 public:
-     PHY_MeteoDataManager( MIL_InputArchive& archive );
+     PHY_MeteoDataManager( MIL_Config& config );
     ~PHY_MeteoDataManager();
     
     //! @name Raw Data management

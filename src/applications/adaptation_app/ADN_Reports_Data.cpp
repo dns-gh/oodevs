@@ -252,7 +252,7 @@ ADN_Reports_Data::~ADN_Reports_Data()
 // -----------------------------------------------------------------------------
 void ADN_Reports_Data::FilesNeeded( T_StringList& files ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szReports_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szReports_.GetData() );
 }
 
 // -----------------------------------------------------------------------------

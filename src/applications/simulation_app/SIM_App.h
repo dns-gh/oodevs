@@ -14,7 +14,7 @@
 
 #include "Sim.h"
 
-#include "simulation_kernel/Tools/MIL_Config.h"
+#include "SIM_Config.h"
 
 class SIM_NetworkLogger;
 class SIM_Dispatcher;
@@ -27,7 +27,7 @@ class SIM_App
     MT_COPYNOTALLOWED( SIM_App );
 
 public:
-     SIM_App( int nArgc, char* pArgv[] );
+     SIM_App( int argc, char** argv );
     ~SIM_App();
     
     int Execute();
@@ -41,7 +41,6 @@ private:
     void Run       (); 
     void Cleanup   ();
     int  Test      ();
-    bool ParseCmdArgs( int nArgc, char* pArgv[], MIL_Config& startupConfig );
 
     std::string Wrap                ( const std::string& content, const std::string& prefix ) const;
     bool        IsAlreadyWrapped    ( const std::string& content ) const;
@@ -52,14 +51,13 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Config  startupConfig_;
+    SIM_Config startupConfig_;
     
     // Error dispatchers
     SIM_NetworkLogger* pNetworkLogger_;
 
     static bool     bCrashWithCoreDump_;
     static bool     bUserInterrupt_;
-    bool            bTestMode_;
     SIM_Dispatcher* pDispatcher_;
     //@}
 };

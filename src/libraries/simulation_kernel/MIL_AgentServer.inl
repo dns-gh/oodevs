@@ -98,16 +98,6 @@ uint MIL_AgentServer::GetTimeFactor() const
     return nTimeFactor_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetExerciceID
-// Created: NLD 2003-03-04
-//-----------------------------------------------------------------------------
-inline
-uint MIL_AgentServer::GetExerciceID() const
-{
-    return config_.GetExerciceID();
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetConfig
 // Created: NLD 2003-12-04
@@ -298,7 +288,7 @@ MIL_AgentServer& MIL_AgentServer::GetWorkspace()
 // Created: NLD 2002-09-09
 //-----------------------------------------------------------------------------
 inline
-void MIL_AgentServer::CreateWorkspace( const MIL_Config& config )
+void MIL_AgentServer::CreateWorkspace( MIL_Config& config )
 {
     assert( pTheAgentServer_ == 0 );
     pTheAgentServer_ = new MIL_AgentServer( config );

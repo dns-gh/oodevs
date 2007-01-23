@@ -11,6 +11,7 @@
 
 #include <cassert>
 #include "dispatcher/Dispatcher.h"
+#include "dispatcher/Config.h"
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 
 #pragma warning( push )
@@ -28,18 +29,16 @@ namespace po = boost::program_options;
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
 App::App( int argc, char** argv )
-    : strConfFile_( )
-    , pDispatcher_( 0 )
+    : pDispatcher_ ( 0 )
 {
-//    std::string strMsg = "Sword(tm) Dispatcher - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
     std::string strMsg = "Sword(tm) Dispatcher";
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( strMsg.c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
 
-    ParseCmdArgs( argc, argv );
-
-    pDispatcher_ = new Dispatcher( strConfFile_ );
+    Config config;
+    config.Parse( argc, argv );
+    pDispatcher_ = new Dispatcher( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,17 +76,3 @@ int App::Execute()
     return 0;
 }
 
-// -----------------------------------------------------------------------------
-// Name: App::ParseCmdArgs
-// Created: NLD 2006-10-10
-// -----------------------------------------------------------------------------
-void App::ParseCmdArgs( int argc, char** argv )
-{
-    po::options_description desc( "Allowed options" );
-    desc.add_options()
-        ( "conffile,c", po::value< std::string >( &strConfFile_ )->default_value( "./scipio.xml" ), "specify main config file (scipio.xml)" )
-    ;
-    po::variables_map vm;
-    po::store( po::parse_command_line( argc, argv, desc ), vm );
-    po::notify( vm );
-}

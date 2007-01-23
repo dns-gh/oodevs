@@ -21,18 +21,16 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 
-static const std::string strCheckPointsDirectory( "CheckPoints/" );
-
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor
 // Created: JVT 2005-03-22
 // -----------------------------------------------------------------------------
 MIL_CheckPointManager::MIL_CheckPointManager()
-    : rCheckPointsFrequency_( 0 )
-    , nMaxCheckPointNbr_    ( 0 )
-    , currentCheckPoints_   ()
+    : nMaxCheckPointNbr_    ( 0 )
+    , nCheckPointsFrequency_( 0 )
     , nLastCheckPointTick_  ( 0 )
     , nNextCheckPointTick_  ( 0 )
+    , currentCheckPoints_   ()
 {
 }
 
@@ -40,21 +38,16 @@ MIL_CheckPointManager::MIL_CheckPointManager()
 // Name: MIL_CheckPointManager constructor
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-MIL_CheckPointManager::MIL_CheckPointManager( MIL_InputArchive& archive )
-    : rCheckPointsFrequency_( 0 )
-    , nMaxCheckPointNbr_    ( 0 )
-    , currentCheckPoints_   ()
+MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
+    : nMaxCheckPointNbr_    ( config.GetCheckPointsKept() )
+    , nCheckPointsFrequency_( config.GetCheckPointsFrequency() )
     , nLastCheckPointTick_  ( 0 )
     , nNextCheckPointTick_  ( 0 )
+    , currentCheckPoints_   ()
 {
-    archive.Section( "SauvegardesAutomatiques" );
-    archive.ReadField( "TempsEntreSauvegardes", rCheckPointsFrequency_, CheckValueGreater( 0. ) );
-    archive.ReadField( "NombreMax", nMaxCheckPointNbr_, CheckValueGreater( 0 ) );
-    archive.EndSection(); // SauvegardesAutomatiques
-
-    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %f minutes", rCheckPointsFrequency_ ) );
-    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
-    
+    _mkdir( config.BuildGameChildFile( "checkpoints" ).c_str() );
+    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );   
     UpdateNextCheckPointTick();
 }
 
@@ -64,59 +57,34 @@ MIL_CheckPointManager::MIL_CheckPointManager( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 MIL_CheckPointManager::~MIL_CheckPointManager()
 {
+    // NOTHING
 }
 
 // =============================================================================
 // MAIN
 // =============================================================================
 
-// -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::GetCheckPointFullPath
-// Created: NLD 2006-05-30
-// -----------------------------------------------------------------------------
-// static
-std::string MIL_CheckPointManager::GetCheckPointFullPath( const std::string& strCheckPointPath )
-{
-    std::string strPath( strCheckPointPath );
-
-    strPath.insert( strPath.begin(), strCheckPointsDirectory.begin(), strCheckPointsDirectory.end() );
-    strPath += "/";
-    return strPath;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::GetCheckPointODBFileName
-// Created: NLD 2006-05-30
-// -----------------------------------------------------------------------------
-std::string MIL_CheckPointManager::GetCheckPointODBFileName( const std::string& strCheckPointPath ) const
-{
-    return GetCheckPointFullPath( strCheckPointPath ) + "ODB.xml";
-}
-
 //-----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::LoadCheckPoint
 // Created: JVT 03-07-23
 //-----------------------------------------------------------------------------
-void MIL_CheckPointManager::LoadCheckPoint( const std::string& strCheckPointPath )
+void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 {
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
 
-    std::string strCheckPointFullPath = GetCheckPointFullPath( strCheckPointPath );
-
-    MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", strCheckPointFullPath.c_str() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", config.BuildCheckpointChildFile( "" ).c_str() ) )
 
     NET_ASN_MsgCtrlCheckPointLoadBegin asnLoadBeginMsg;
     asnLoadBeginMsg.Send();
     
-    if ( MIL_AgentServer::GetWorkspace().GetConfig().UseCheckPointCRC() )
-        CheckCRC( strCheckPointFullPath );
+    if( config.UseCheckPointCRC() )
+        CheckCRC( config );
 
-    std::ifstream file( ( strCheckPointFullPath + "data" ).c_str(), std::ios::in | std::ios::binary );
-
+    std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
     if ( !file || !file.is_open() )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't open file '%s'", ( strCheckPointFullPath + "data" ).c_str() ) );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
 
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
     
@@ -142,10 +110,9 @@ void MIL_CheckPointManager::Update()
     if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() < nNextCheckPointTick_ )
         return;
 
-    const std::string strPath = CreateCheckPointDirectory();
-
-    ManageOldCheckPoints( strPath );
-    SaveCheckPoint( std::string(), strPath );
+    const std::string name = BuildCheckPointName();
+    if( SaveCheckPoint( name ) )
+        RotateCheckPoints( name );
 
     nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
@@ -161,7 +128,7 @@ void MIL_CheckPointManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::UpdateNextCheckPointTick()
 {
-    uint nTick = nLastCheckPointTick_ + MIL_Tools::ConvertMinutesToSim( rCheckPointsFrequency_ );
+    uint nTick = nLastCheckPointTick_ + (uint)MIL_Tools::ConvertSecondsToSim( nCheckPointsFrequency_ );
 
     if( nTick < MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
         nNextCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -171,10 +138,11 @@ void MIL_CheckPointManager::UpdateNextCheckPointTick()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::CreateCheckPointDirectory
+// Name: MIL_CheckPointManager::BuildCheckPointName
 // Created: JVT 2005-02-28
 // -----------------------------------------------------------------------------
-const std::string MIL_CheckPointManager::CreateCheckPointDirectory()
+// static
+const std::string MIL_CheckPointManager::BuildCheckPointName()
 {
     // récupération du temps courrant
     time_t t;
@@ -184,18 +152,13 @@ const std::string MIL_CheckPointManager::CreateCheckPointDirectory()
 
     // Création du nom ( IDEX__YYYY_MM_DD__HHhMMmSEC )
     std::stringstream name;
-    name << strCheckPointsDirectory;
-    name << std::setfill( '0' ) << std::setw( 2 ) <<  MIL_AgentServer::GetWorkspace().GetExerciceID() << "__";
     name << std::setfill( '0' ) << std::setw( 4 ) << ( 1900 + time->tm_year ) << '_';
     name << std::setfill( '0' ) << std::setw( 2 ) << ( 1 + time->tm_mon ) << '_';
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_mday << "__";
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_hour << 'h';
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_min << 'm';
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_sec;
-    name << '/';
 
-    ::_mkdir( name.str().c_str() );
-    
     return name.str();
 }
 
@@ -246,13 +209,13 @@ boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::str
 // Name: MIL_CheckPointManager::CheckFilesCRC
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::CheckFilesCRC( const std::string& strPath )
+void MIL_CheckPointManager::CheckFilesCRC( const MIL_Config& config )
 {
     MIL_InputArchive archive;
     
-    archive.Open( strPath + "/CRCs.xml" );
-    archive.BeginList( "Fichiers" );
+    archive.Open( config.BuildCheckpointChildFile( "CRCs.xml" ) );
 
+    archive.BeginList( "Fichiers" );
     while ( archive.NextListElement() )
     {
         std::string                    strFileName;
@@ -263,63 +226,57 @@ void MIL_CheckPointManager::CheckFilesCRC( const std::string& strPath )
         archive.Read( nCRC );
         archive.EndSection();
         
-        if ( MIL_Tools::ComputeCRC( strFileName ) != nCRC )
-            throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , MT_FormatString( "Checkpoint '%s' can not be loaded - File '%s' has changed since the checkpoint creation", strPath.c_str(), strFileName.c_str() ) );
-    }      
+        if( MIL_Tools::ComputeCRC( strFileName ) != nCRC )
+            throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , MT_FormatString( "Checkpoint can not be loaded - File '%s' has changed since the checkpoint creation", strFileName.c_str() ) );
+    }
     archive.EndList();    
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::CheckCRCFile
+// Name: MIL_CheckPointManager::CheckCRC
 // Created: JVT 2005-03-22
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::CheckCRC( const std::string& strPath )
+void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
 {
     MIL_InputArchive                metaDatas;
     boost::crc_32_type::value_type  nCRC;
     
-    metaDatas.Open( strPath + "/MetaData.xml" );
+    metaDatas.Open( config.BuildCheckpointChildFile( "MetaData.xml" ) );
     metaDatas.Section( "CheckPoint" );
     metaDatas.Section( "CRC" );
     metaDatas.ReadField( "Configuration", nCRC );
     
-    if ( MIL_Tools::ComputeCRC( strPath + "/CRCs.xml" ) != nCRC )
-        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , MT_FormatString( "Checkpoint '%s' can not be loaded - File 'CRCs.xml' has changed since the checkpoint creation", strPath.c_str() ) );
+    if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
+        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Checkpoint can not be loaded - File 'CRCs.xml' has changed since the checkpoint creation" );
 
-    CheckFilesCRC( strPath );
+    CheckFilesCRC( config );
 
     metaDatas.ReadField( "Sauvegarde", nCRC );
     
-    if ( MIL_Tools::ComputeCRC( strPath + "/data" ) != nCRC )
-        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , MT_FormatString( "Checkpoint '%s' can not be loaded - File 'data' has changed since the checkpoint creation", strPath.c_str() ) );
+    if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "data" ) ) != nCRC )
+        throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Checkpoint can not be loaded - File 'data' has changed since the checkpoint creation" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::ManageOldCheckPoints
+// Name: MIL_CheckPointManager::RotateCheckPoints
 // Created: JVT 2005-04-13
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::ManageOldCheckPoints( const std::string& strNewName )
-{
-    using namespace boost::filesystem; 
-
-    assert( currentCheckPoints_.size() <= nMaxCheckPointNbr_ );
-     
+void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
+{         
     if( currentCheckPoints_.size() == nMaxCheckPointNbr_ )
     {
-        const path oldPath( currentCheckPoints_.front() );
-     
         try
         {
-            remove_all( oldPath );
+            const boost::filesystem::path oldPath( currentCheckPoints_.front(), boost::filesystem::native );
+            boost::filesystem::remove_all( oldPath );
         }
         catch( std::exception& exception )
         {
-            MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoing ( '%s' )", exception.what() ) );
+            MT_LOG_ERROR_MSG( MT_FormatString( "Error while removing old checkpoint ( '%s' )", exception.what() ) );
         }
-
-        currentCheckPoints_.pop();        
+        currentCheckPoints_.pop();
     }    
-    currentCheckPoints_.push( strNewName );
+    currentCheckPoints_.push( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", newName ) );
 }
 
 // =============================================================================
@@ -327,70 +284,79 @@ void MIL_CheckPointManager::ManageOldCheckPoints( const std::string& strNewName 
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::SaveCheckPoint
-// Created: JVT 2005-04-13
+// Name: MIL_CheckPointManager::SaveOrbatCheckPoint
+// Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::SaveCheckPoint( const std::string& strName, const std::string& strPath )
+bool MIL_CheckPointManager::SaveOrbatCheckPoint( const std::string& name )
 {
-    // création du fichier
-    MT_LOG_INFO_MSG( "Begin save checkpoint" );
-    NET_ASN_MsgCtrlCheckPointSaveBegin asnSaveBeginMsg;
-    asnSaveBeginMsg.Send();
-
-    // Backup checkpoint (ODB)
     try
     {
         MT_XXmlOutputArchive backupArchive;
         MIL_AgentServer::GetWorkspace().WriteODB( backupArchive );
-        backupArchive.WriteToFile( strPath + "ODB.xml" );
-
-//    if ( !metaDataArchive.WriteToFile( strFileName ) )
-//        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Can't create file '%s'", strFileName.c_str() ) );*/
+        backupArchive.WriteToFile( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "orbat.xml", name ) );
     }
     catch( ... )
     {
         _clearfp();
         MT_LOG_ERROR_MSG( "Can't save backup checkpoint ( Unknown error )" );
+        return false;
     }
-
-    // Full checkpoint
+    return true;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::SaveFullCheckPoint
+// Created: NLD 2007-01-11
+// -----------------------------------------------------------------------------
+bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const std::string userName /*= ""*/ )
+{
+    const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
     try
     {        
-        const boost::crc_32_type::value_type nDataFileCRC = CreateData( strPath + "data" );
-        const boost::crc_32_type::value_type nCRCFileCRC  = MIL_AgentServer::GetWorkspace().GetConfig().serialize( strPath + "CRCs.xml" );
+        const boost::crc_32_type::value_type nDataFileCRC = CreateData( config.BuildCheckpointChildFile( "data", name ) );
+        const boost::crc_32_type::value_type nCRCFileCRC  = config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) );
         
-        CreateMetaData( strPath + "MetaData.xml", strName, nDataFileCRC, nCRCFileCRC );
+        CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName, nDataFileCRC, nCRCFileCRC );
     }
     catch( MT_ScipioException& exception )
     {
         exception.SendToLogger();
+        return false;
     }
     catch( std::exception& exception )
     {
         MT_LOG_ERROR_MSG( MT_FormatString( "Can't save checkpoint ( '%s' )", exception.what() ) );
+        return false;
     }
     catch( ... )
     {
         _clearfp();
         MT_LOG_ERROR_MSG( "Can't save checkpoint ( Unknown error )" );
+        return false;
     }
+    return true;
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::SaveCheckPoint
+// Created: JVT 2005-04-13
+// -----------------------------------------------------------------------------
+bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::string userName /*= ""*/ )
+{
+    // création du fichier
+    MT_LOG_INFO_MSG( "Begin save checkpoint " << name );
+    NET_ASN_MsgCtrlCheckPointSaveBegin asnSaveBeginMsg;
+    asnSaveBeginMsg.Send();
 
+    ::_mkdir( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", name ).c_str() );
+
+    const bool bNotOk = !SaveOrbatCheckPoint( name ) || !SaveFullCheckPoint ( name, userName );
 
     MT_LOG_INFO_MSG( "End save checkpoint" );
     NET_ASN_MsgCtrlCheckPointSaveEnd asnSaveEndMsg;
     asnSaveEndMsg.Send();
-}
 
-//-----------------------------------------------------------------------------
-// Name: MIL_CheckPointManager::SaveCheckPoint
-// Created: JVT 03-07-23
-//-----------------------------------------------------------------------------
-void MIL_CheckPointManager::SaveCheckPoint( const std::string& strName )
-{
-    const std::string strPath = CreateCheckPointDirectory();
-    
-    SaveCheckPoint( strName, strPath );
+    return !bNotOk;
 }
 
 // =============================================================================
@@ -407,7 +373,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgCtrlCh
     if( asnMsg.m.nomPresent )
         strCheckPointName = asnMsg.nom;
 
-    SaveCheckPoint( strCheckPointName );
+    SaveCheckPoint( BuildCheckPointName(), strCheckPointName );
     
     NET_ASN_MsgCtrlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send();
@@ -419,8 +385,8 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgCtrlCh
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgCtrlCheckPointSetFrequency& asnMsg )
 {
-    rCheckPointsFrequency_ = asnMsg;
-
+    nCheckPointsFrequency_ = asnMsg * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
+     
     NET_ASN_MsgCtrlCheckPointSetFrequencyAck asnReplyMsg;
     asnReplyMsg.Send();
 
@@ -433,10 +399,10 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgC
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file >> rCheckPointsFrequency_
+    file >> nCheckPointsFrequency_
          >> nMaxCheckPointNbr_;
    
-    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %f minutes", rCheckPointsFrequency_ ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
 
     nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -449,6 +415,6 @@ void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
-    file << rCheckPointsFrequency_
+    file << nCheckPointsFrequency_
          << nMaxCheckPointNbr_;
 }

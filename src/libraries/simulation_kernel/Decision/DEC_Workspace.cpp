@@ -36,7 +36,6 @@
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 #include "DIA/DIA_Tool_Archive_lib.h"
 #include "DIA/DIA_SDK_Manager.h"
-#include "MT_Tools/MT_ArchiveDirectoryHelper.h"
 
 #include <sys/stat.h>
 
@@ -45,32 +44,15 @@
 // Created: JVT 02-06-28
 // Last modified: JVT 02-09-16
 //-----------------------------------------------------------------------------
-DEC_Workspace::DEC_Workspace( MIL_InputArchive& archive )
+DEC_Workspace::DEC_Workspace( MIL_Config& config )
     : pFuncTable_     ( 0 )
     , pFunctionCaller_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing decision" );
-    DIA_SDK_Manager::InitializeSDK();
-   
-    std::string strFile;
-    archive.ReadField( "Decisionnel", strFile );
+    DIA_SDK_Manager::InitializeSDK();  
 
-    MIL_InputArchive decArchive;
-    decArchive.AddWarningStream( std::cout );
-    decArchive.Open( strFile );
-
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strFile );
-    
-    MT_ArchiveDirectoryHelper directoryChanger( strFile );
-
-    decArchive.Section( "Decisionnel" );
-
-    InitializeConfig( decArchive );
-    InitializeDIA   ( decArchive );
-
-    decArchive.EndSection(); // Decisionnel
-
-    decArchive.Close();
+    InitializeConfig( config );
+    InitializeDIA   ( config );
 }
 
 //-----------------------------------------------------------------------------
@@ -189,37 +171,56 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
 // Name: DEC_Workspace::InitializeConfig
 // Created: NLD 2004-06-14
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeConfig( MIL_InputArchive& archive )
+void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
+    // $$$$ NLD 2007-01-11: A DEPLACER
+    MIL_InputArchive phyArchive;
+    phyArchive.Open( config.GetPhysicalFile() );
+
+    std::string strDecFile;
+    phyArchive.Section( "physical" );
+    phyArchive.ReadField( "Decisionnel", strDecFile );
+    phyArchive.EndSection(); // physical
+
+    strDecFile = config.BuildPhysicalChildFile( strDecFile );
+
+    MIL_InputArchive decArchive;
+    decArchive.Open( strDecFile );
+    config.AddFileToCRC( strDecFile );
+
+    decArchive.Section( "Decisionnel" );
+
     // Dangerosite
-    archive.Section( "Dangerosite" );
+    decArchive.Section( "Dangerosite" );
 
     uint nTmp;
-    archive.ReadField( "DegradationMaxParPertinence", nTmp, CheckValueBound( 0, 100 ) );
+    decArchive.ReadField( "DegradationMaxParPertinence", nTmp, CheckValueBound( 0, 100 ) );
     DEC_Knowledge_Agent::rMaxDangerosityDegradationByRelevance_ = nTmp / 100.;
     
-    archive.ReadField( "DegradationMaxParEtatOps", nTmp, CheckValueBound( 0, 100 ) );
+    decArchive.ReadField( "DegradationMaxParEtatOps", nTmp, CheckValueBound( 0, 100 ) );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByOpState_ = nTmp / 100.;
 
-    archive.ReadField( "DegradationMaxParEtatNeutralise", nTmp, CheckValueBound( 0, 100 ) );
+    decArchive.ReadField( "DegradationMaxParEtatNeutralise", nTmp, CheckValueBound( 0, 100 ) );
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
     PHY_RolePion_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 
-    archive.EndSection(); // Dangerosite
+    decArchive.EndSection(); // Dangerosite
 
     // EtatOpsEtatOps
-    archive.Section( "EtatOps" );
+    decArchive.Section( "EtatOps" );
 
-    archive.ReadField( "PoidsComposantesNonMajeures", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_, CheckValueBound( 0., 1. ) );
-    archive.ReadField( "PoidsComposantesMajeures"   , PHY_RolePion_Composantes::rOpStateWeightMajorComposante_   , CheckValueBound( 0., 1. ) );
-    archive.ReadField( "PoidsPersonnel"             , PHY_ComposantePion      ::rOpStateWeightHumans_            , CheckValueBound( 0., 1. ) );
+    decArchive.ReadField( "PoidsComposantesNonMajeures", PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_, CheckValueBound( 0., 1. ) );
+    decArchive.ReadField( "PoidsComposantesMajeures"   , PHY_RolePion_Composantes::rOpStateWeightMajorComposante_   , CheckValueBound( 0., 1. ) );
+    decArchive.ReadField( "PoidsPersonnel"             , PHY_ComposantePion      ::rOpStateWeightHumans_            , CheckValueBound( 0., 1. ) );
 
     if( PHY_RolePion_Composantes::rOpStateWeightMajorComposante_ + PHY_RolePion_Composantes::rOpStateWeightNonMajorComposante_ != 1. )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1", archive.GetContext() );
-    archive.EndSection(); // EtatOps
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Sum of 'Decisionnel::EtatOps::PoidsComposantesMajeures', 'PoidsComposantesMajeures' and 'PoidsPersonnel' != 1", decArchive.GetContext() );
+    decArchive.EndSection(); // EtatOps
 
-    DEC_Knowledge_RapFor_ABC::Initialize( archive );
+    DEC_Knowledge_RapFor_ABC::Initialize( decArchive );
+
+    decArchive.EndSection(); // Decisionnel
 }
 
 // -----------------------------------------------------------------------------
@@ -236,16 +237,16 @@ void DEC_Workspace::InitializeDIATypes( MIL_InputArchive& initArchive, bool& bNe
     initArchive.ReadField( "DIATypes", strScript );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
     {
-        if( !DIA_ReadScript_TypesBin( strScript, strBinaryPath + "/models/type.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_TypesBin( strScript, strBinaryPath + "/type.model", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading type file", strErrors );
     }
     else
     {
         // Check if the script files has been modified
-        std::string strOpenedFileArchiveName = strBinaryPath + "/files/type_file.bin";
+        std::string strOpenedFileArchiveName = strBinaryPath + "/type.files";
         bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
 
-        if( !DIA_ReadScript_Types( strScript, strBinaryPath + "/models/type.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_Types( strScript, strBinaryPath + "/type.model", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing types files" ) + strScript, strErrors );
         
         // Updating opened files archive
@@ -271,15 +272,15 @@ void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool&
     initArchive.ReadField( "DIAWorkspace", strScript );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive() )
     {
-        if( !DIA_ReadScript_WorkspaceBin( strScript, strBinaryPath + "/models/workspace.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_WorkspaceBin( strScript, strBinaryPath + "/workspace.model", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Error while reading workspace file", strErrors );
     }
     else
     {
-        std::string strOpenedFileArchiveName = strBinaryPath + "/files/workspace_file.bin";
+        std::string strOpenedFileArchiveName = strBinaryPath + "/workspace.files";
         bNeedScriptParsing = bNeedScriptParsing || CheckFilesDepencies( strOpenedFileArchiveName );
 
-        if( !DIA_ReadScript_Workspace( strScript, strBinaryPath + "/models/workspace.bin", strErrors, openedFiles ) )
+        if( !DIA_ReadScript_Workspace( strScript, strBinaryPath + "/workspace.model", strErrors, openedFiles ) )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, std::string( "Error while parsing workspace file " ) + strScript, strErrors );
 
         // Updating opened files archive
@@ -296,23 +297,33 @@ void DEC_Workspace::InitializeDIAWorkspace( MIL_InputArchive& initArchive, bool&
 // Created: JVT 02-07-08
 // Last modified: JVT 03-11-24
 //-----------------------------------------------------------------------------
-void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
+void DEC_Workspace::InitializeDIA( MIL_Config& config )
 {
-    initArchive.Section( "DirectIA" );
+    const std::string strDecFile = config.GetDecisionalFile();
+    
+    MIL_InputArchive decArchive;
+    decArchive.Open( strDecFile );
+    config.AddFileToCRC( strDecFile );
+
+    decArchive.Section( "decisional" );
 
     // Read the archive path output
     std::string strBinaryPath;
     std::string strSourcePath;
-    initArchive.ReadField( "RepertoireBinaires", strBinaryPath );
-    initArchive.ReadField( "RepertoireSources" , strSourcePath );
-    MT_MakeDir( strBinaryPath             );
-    MT_MakeDir( strBinaryPath + "/files"  );
-    MT_MakeDir( strBinaryPath + "/models" );
+    decArchive.ReadField( "RepertoireBinaires", strBinaryPath );
+    decArchive.ReadField( "RepertoireSources" , strSourcePath );
+    strBinaryPath = config.BuildDecisionalChildFile( strBinaryPath );
+    strSourcePath = config.BuildDecisionalChildFile( strSourcePath );
+    MT_MakeDir( strBinaryPath                  );
+    MT_MakeDir( strBinaryPath + "/automats"   );
+    MT_MakeDir( strBinaryPath + "/units"       );
+    MT_MakeDir( strBinaryPath + "/populations" );
     MT_MakeDir( strSourcePath + "/debug"  );
+    MT_MakeDir( strSourcePath + "/debug/automats"  );
+    MT_MakeDir( strSourcePath + "/debug/units"       );
+    MT_MakeDir( strSourcePath + "/debug/populations" );
     DIA_Workspace::Instance().SetWorkingDirectory( strSourcePath );
-    std::string strTmp;
-    MT_FormatDirName( MT_GetCurrentDir() + "/" + strSourcePath, strTmp );
-    MT_LOG_INFO_MSG( MT_FormatString( "DirectIA scripts sources base directory : %s", strTmp.c_str() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( "DirectIA scripts sources base directory : %s", strSourcePath.c_str() ) );
 
     DIA_Workspace::Instance().RegisterDebugInfoGenerator( DIA_CreateDebugInfoGenerator( "/debug/workspace.ddi" ) );
     DIA_Workspace::Instance().RegisterGarbageCollector  ( DEC_Tools::ManageDeletion );
@@ -330,10 +341,9 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
 
     bool bNeedScriptParsing = false;//!MIL_AgentServer::GetWorkspace().GetConfig().UseDIAArchive();
 
-
     MT_LOG_INFO_MSG( "Initializing DIA" );
-    InitializeDIATypes    ( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
-    InitializeDIAWorkspace( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+    InitializeDIATypes    ( decArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+    InitializeDIAWorkspace( decArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
 
     DEC_Tools                ::InitializeDIA();
     DEC_PopulationDecision   ::InitializeDIA();
@@ -349,8 +359,8 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     MIL_FragOrder            ::InitializeDIA();
     MIL_ParameterType_ABC    ::Initialize   ();
 
-    InitializeMissions( initArchive );
-    InitializeModels  ( initArchive, bNeedScriptParsing, strBinaryPath, strSourcePath );
+    InitializeMissions( config );
+    InitializeModels  ( config, bNeedScriptParsing, strBinaryPath, strSourcePath );
             
     // Finish the initialiazation of the Workspace by linking function calls
     pFuncTable_ = new DIA_FunctionTable< DEC_Workspace >();
@@ -376,14 +386,10 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
     }
 
     // Debugger
-    uint nDebuggerPort;
-    initArchive.ReadField( "PortDebogueur", nDebuggerPort );
-    nDebuggerPort += MIL_AgentServer::GetWorkspace().GetExerciceID();
-
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UseDiaDebugServer() )
+    if( config.UseDiaDebugger() )
     {
-        DIA_Workspace::Instance().RegisterDebuger( DIA_CreateDebugServer( (uint16)nDebuggerPort, 10 ) );
-        MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server at port %d", nDebuggerPort ) );
+        DIA_Workspace::Instance().RegisterDebuger( DIA_CreateDebugServer( config.GetDiaDebuggerPort(), 10 ) );
+        MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server on port %d", config.GetDiaDebuggerPort() ) );
     }
 }
 
@@ -391,14 +397,21 @@ void DEC_Workspace::InitializeDIA( MIL_InputArchive& initArchive )
 // Name: DEC_Workspace::InitializeMissions
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeMissions( MIL_InputArchive& initArchive )
+void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
+    MIL_InputArchive phyArchive;
+    phyArchive.Open( config.GetPhysicalFile() );
+
     std::string strMissionsFile;
-    initArchive.ReadField( "Missions", strMissionsFile );
+    phyArchive.Section( "physical" );
+    phyArchive.ReadField( "Missions", strMissionsFile );
+    phyArchive.EndSection(); // physical
+
+    strMissionsFile = config.BuildPhysicalChildFile( strMissionsFile );
 
     MIL_InputArchive missionsArchive;
-    missionsArchive.AddWarningStream( std::cout );
     missionsArchive.Open( strMissionsFile );
+    config.AddFileToCRC( strMissionsFile );
 
     MIL_PionMissionType      ::Initialize( missionsArchive );
     MIL_AutomateMissionType  ::Initialize( missionsArchive );
@@ -412,16 +425,21 @@ void DEC_Workspace::InitializeMissions( MIL_InputArchive& initArchive )
 // Name: DEC_Workspace::InitializeModels
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath )
+void DEC_Workspace::InitializeModels( MIL_Config& config, bool bNeedScriptParsing, const std::string& strBinaryPath, const std::string& strSourcePath )
 {
-    const bool bUseOnlyDIAArchive = MIL_AgentServer::GetWorkspace().GetConfig().UseOnlyDIAArchive();
+    MIL_InputArchive phyArchive;
+    phyArchive.Open( config.GetPhysicalFile() );
 
     std::string strModelsFile;
-    initArchive.ReadField( "Modeles", strModelsFile );
+    phyArchive.Section( "physical" );
+    phyArchive.ReadField( "Modeles", strModelsFile );
+    phyArchive.EndSection(); // physical
+
+    strModelsFile = config.BuildPhysicalChildFile( strModelsFile );
 
     MIL_InputArchive modelArchive;
-    modelArchive.AddWarningStream( std::cout );
     modelArchive.Open( strModelsFile );
+    config.AddFileToCRC( strModelsFile );
 
     modelArchive.Section( "Modeles" );
 
@@ -438,7 +456,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
         const DEC_ModelPion*& pModel = pionModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPion( *this, strName, modelArchive, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelPion( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath, strSourcePath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele
@@ -458,7 +476,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
         const DEC_ModelAutomate*& pModel = automateModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelAutomate( *this, strName, modelArchive, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelAutomate( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath, strSourcePath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele
@@ -478,7 +496,7 @@ void DEC_Workspace::InitializeModels( MIL_InputArchive& initArchive, bool bNeedS
         const DEC_ModelPopulation*& pModel = populationModels_[ strName ];
         if( pModel )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknwon model name", modelArchive.GetContext() );   
-        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, bUseOnlyDIAArchive, strBinaryPath, strSourcePath );
+        pModel = new DEC_ModelPopulation( *this, strName, modelArchive, bNeedScriptParsing, config.UseOnlyDIAArchive(), strBinaryPath, strSourcePath );
         static_cast< DIA_BehaviorPart& >( pModel->GetDIAModel().GetBehaviorTool() ).RegisterInstanceEndHandlerForAllActions( &debug_ );
 
         modelArchive.EndSection(); // Modele

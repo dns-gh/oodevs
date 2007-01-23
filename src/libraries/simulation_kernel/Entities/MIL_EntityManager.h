@@ -16,6 +16,11 @@
 
 #include "MT_Tools/MT_Profiler.h"
 
+namespace DIN
+{
+    class DIN_Input;
+}
+
 class MIL_EffectManager;
 class MIL_ObjectManager;
 class MIL_Army;
@@ -34,6 +39,7 @@ class MIL_ControlZone;
 class MIL_NuageNBC;
 class MIL_ZoneMineeParDispersion;
 class TER_Localisation;
+class MIL_Config;
 
 class HLA_Federate;
 
@@ -53,11 +59,6 @@ struct ASN1T_MsgLogRavitaillementPousserFlux;
 
 class DIA_Parameters;
 
-namespace DIN
-{
-    class DIN_Input;
-};
-
 // =============================================================================
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03
@@ -74,11 +75,10 @@ public:
     //@}
 
 public:
-     MIL_EntityManager( MIL_InputArchive& );
      MIL_EntityManager();
     ~MIL_EntityManager();
 
-    static void Initialize( MIL_InputArchive& archive );
+    static void Initialize( MIL_Config& config );
 
     //! @name Factory
     //@{
@@ -124,7 +124,7 @@ public:
 
     //! @name Operations
     //@{
-    void ReadODB             ( MIL_InputArchive& archive );
+    void ReadODB             ( const MIL_Config& config );
     void SendStateToNewClient() const;
     void Update              ();
     void Clean               ();
@@ -190,9 +190,9 @@ private:
     //@{
     // Types
     template < typename T > 
-    static void InitializeType   ( MIL_InputArchive& archive, const std::string& strSection );
-    static void InitializeMedical( MIL_InputArchive& archive );
-    static void InitializeSensors( MIL_InputArchive& archive );
+    static void InitializeType   ( MIL_InputArchive& archive, MIL_Config& config, const std::string& strSection );
+    static void InitializeMedical( MIL_InputArchive& archive, MIL_Config& config );
+    static void InitializeSensors( MIL_InputArchive& archive, MIL_Config& config );
 
     // ODB
     void InitializeArmies     ( MIL_InputArchive& archive );

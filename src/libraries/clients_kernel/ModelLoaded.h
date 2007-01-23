@@ -12,6 +12,7 @@
 
 namespace kernel
 {
+    class ExerciseConfig;
 
 // =============================================================================
 /** @class  ModelLoaded
@@ -25,13 +26,13 @@ class ModelLoaded
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ModelLoaded( const std::string& scipioXml );
+    explicit ModelLoaded( const ExerciseConfig& config );
     virtual ~ModelLoaded();
     //@}
 
     //! @name Member data
     //@{
-    std::string scipioXml_;
+    const ExerciseConfig& config_;
     //@}
 
 private:

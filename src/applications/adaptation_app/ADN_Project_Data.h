@@ -26,45 +26,6 @@ class ADN_Project_Data : public ADN_Data_ABC
     MT_COPYNOTALLOWED( ADN_Project_Data )
 
 public:
-//*****************************************************************************
-    class SimInfos
-    {
-        MT_COPYNOTALLOWED( SimInfos )
-
-    public:
-        SimInfos();
-
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
-
-    public:
-        ADN_Type_Bool bAutoStart_;
-        ADN_Type_Int nTimeStep_;
-        ADN_Type_Int nTimeFactor_;
-        ADN_Type_Int nAutosaveTime_;
-        ADN_Type_Int nNbrMax_;
-    };
-
-
-//*****************************************************************************
-    class PathfinderInfo
-    {
-        MT_COPYNOTALLOWED( PathfinderInfo )
-
-    public:
-        PathfinderInfo();
-
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
-
-    public:
-        ADN_Type_Int    nPathfinderNbr_;
-        ADN_Type_Int    nDistanceThreshold_;
-        ADN_Type_String szRulesFile_;
-        ADN_Type_Time   maxComputationTime_;
-    };
-    
-//*****************************************************************************
     class DataInfos
     {
         MT_COPYNOTALLOWED( DataInfos )
@@ -76,9 +37,7 @@ public:
         void WriteArchive( MT_OutputArchive_ABC& );
 
     public:
-        ADN_Type_String szTerrain_;
         ADN_Type_String szDecisional_;
-        ADN_Type_String szNetwork_;
         ADN_Type_String szSizes_;
         ADN_Type_String szArmors_;
         ADN_Type_String szDotationNatures_;
@@ -91,7 +50,6 @@ public:
         ADN_Type_String szUnits_;
         ADN_Type_String szAutomata_;
         ADN_Type_String szNBC_;
-        ADN_Type_String szWeather_;
         ADN_Type_String szHealth_;
         ADN_Type_String szIDs_;
         ADN_Type_String szHumanFactors_;
@@ -100,32 +58,14 @@ public:
         ADN_Type_String szMaintenance_;
         ADN_Type_String szSupply_;
         ADN_Type_String szCom_;
-        ADN_Type_String szODB_;
-        ADN_Type_String szPathfinder_;
-        ADN_Type_String szHLA_;
-
         ADN_Type_String szPopulation_;
         ADN_Type_String szReports_;
+        ADN_Type_String szModels_;
+        ADN_Type_String szMissions_;
+
+        // $$$$ NLD 2007-01-15: files not loaded!
+        ADN_Type_String szPathfinder_;
     };
-
-
-//*****************************************************************************
-    class NetInfos
-    {
-        MT_COPYNOTALLOWED( NetInfos )
-
-    public:
-        NetInfos();
-
-        void ReadArchive( ADN_XmlInput_Helper& );
-        void WriteArchive( MT_OutputArchive_ABC& );
-
-    public:
-        ADN_Type_Int nServerPort_;
-        ADN_Type_Int nServerMagic_;
-        ADN_Type_Bool bNetworkThreadActive_;
-    };
-
 
 //*****************************************************************************
     class FileInfos
@@ -173,9 +113,11 @@ public:
 
         const std::string  GetSaveDirectory(); //!< Returns either the working or the temporary directory according to the 
     
-        std::string        GetFullPath(const std::string& part, E_WorkDir e=eWorking); //!< Given "/toto/toto.xml" returns "the/whole/path/toto/toto.xml"
-        std::string        GetPartPath(const std::string& full, E_WorkDir e=eWorking); //!< Given "the/whole/path/toto/toto.xml" returns "/toto/toto.xml"
+        std::string        GetRelativePath(const std::string& full, E_WorkDir e=eWorking); //!< Given "the/whole/path/toto/toto.xml" returns "/toto/toto.xml"
     
+        // private
+        std::string        GetFullPath(const std::string& part, E_WorkDir e=eWorking); //!< Given "/toto/toto.xml" returns "the/whole/path/toto/toto.xml"
+
     private:
         ADN_Type_String     szWorkingDir_;
         ADN_Type_String     szTempDir_;
@@ -185,7 +127,7 @@ public:
 
 //*****************************************************************************
 public:
-    ADN_Project_Data();
+             ADN_Project_Data();
     virtual ~ADN_Project_Data();
 
     void SetFile( const std::string& strFile );
@@ -195,25 +137,14 @@ public:
     void Load();
     void Save();
 
-    DataInfos&              GetDataInfos();
-    NetInfos&               GetNetInfos();
-    FileInfos&              GetFileInfos();
-    static WorkDirInfos&    GetWorkDirInfos();
-
-private:
-    void ReadArchive( ADN_XmlInput_Helper& input );
-    void WriteArchive( MT_OutputArchive_ABC& );
+    DataInfos&           GetDataInfos();
+    FileInfos&           GetFileInfos();
+    static WorkDirInfos& GetWorkDirInfos();
 
 public:
-    SimInfos                simInfos_;
-    DataInfos               dataInfos_;
-
-    NetInfos                netInfos_;
-
-    PathfinderInfo          pathfinderInfo_;
-
-    FileInfos               szFile_;
-    static WorkDirInfos     workDir_;
+    DataInfos            dataInfos_;
+    FileInfos            szFile_;
+    static WorkDirInfos  workDir_;
 };
 
 
@@ -267,7 +198,7 @@ ADN_Type_String& ADN_Project_Data::FileInfos::GetFileName()
 inline
 const std::string ADN_Project_Data::FileInfos::GetFileNameFull()
 {
-    return ADN_Project_Data::GetWorkDirInfos().GetFullPath( szFileName_.GetData(), ADN_Project_Data::WorkDirInfos::eWorking );
+    return workDir_.GetFullPath( szFileName_.GetData(), ADN_Project_Data::WorkDirInfos::eWorking );
 }
 
 
@@ -281,35 +212,12 @@ ADN_Project_Data::DataInfos& ADN_Project_Data::GetDataInfos()
     return dataInfos_;
 }
 
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Project_Data::NetInfos
-// Created: JDY 03-06-23
-//-----------------------------------------------------------------------------
-inline
-ADN_Project_Data::NetInfos&       ADN_Project_Data::GetNetInfos()
-{
-    return netInfos_;
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Project_Data::SimInfos
-// Created: JDY 03-06-23
-//-----------------------------------------------------------------------------
-//inline
-//ADN_Project_Data::SimInfos&       ADN_Project_Data::GetSimInfos()
-//{
-//return simInfos_;
-//}
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Type_String
 // Created: JDY 03-06-23
 //-----------------------------------------------------------------------------
 inline
-ADN_Project_Data::FileInfos&    ADN_Project_Data::GetFileInfos()
+ADN_Project_Data::FileInfos& ADN_Project_Data::GetFileInfos()
 {
     return szFile_;
 }

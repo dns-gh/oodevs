@@ -72,7 +72,7 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void RasterLayer::NotifyUpdated( const kernel::ModelLoaded& modelLoaded )
 {
-    Load( modelLoaded.scipioXml_ );
+    Load( modelLoaded.config_ );
 }
 
 // -----------------------------------------------------------------------------

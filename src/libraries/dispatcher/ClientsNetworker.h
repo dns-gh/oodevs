@@ -34,7 +34,7 @@ class ClientsNetworker : public Networker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ClientsNetworker( Dispatcher& dispatcher, unsigned short nPort );
+     ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile );
     ~ClientsNetworker();
     //@}
 

@@ -44,14 +44,6 @@ private:
     void WriteArchive( MT_OutputArchive_ABC& );
 
 public:
-    ADN_Type_String strBinariesFolder_;
-    ADN_Type_String strSourcesFolder_;
-    ADN_Type_String strDIATypesFile_;
-    ADN_Type_String strDIAWorkspaceFile_;
-    ADN_Type_String strModelsFile_;
-    ADN_Type_String strMissionsFile_;
-    ADN_Type_Int    nDebuggerPort_;
-
     ADN_Type_Double rPertinenceMaxDecrease_;
     ADN_Type_Double rOperationalStateMaxDecrease_;
     ADN_Type_Double rNeutralizedStateMaxDecrease_;

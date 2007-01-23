@@ -54,7 +54,7 @@ Elevation3dLayer::~Elevation3dLayer()
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    Load( modelLoaded.scipioXml_ );
+    Load( modelLoaded.config_ );
 }
 
 // -----------------------------------------------------------------------------

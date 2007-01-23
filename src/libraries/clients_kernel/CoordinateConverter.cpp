@@ -27,9 +27,9 @@ CoordinateConverter::CoordinateConverter()
 // Name: CoordinateConverter::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void CoordinateConverter::Load( const std::string& scipioXml )
+void CoordinateConverter::Load( const ExerciseConfig& config )
 {
-    world_.Load( scipioXml );
+    world_.Load( config );
     geocoord::Geoid::Instance().Initialize( world_.geoid_ );
 
     extent_ = geometry::Rectangle2f( 0, 0, world_.width_, world_.height_ );

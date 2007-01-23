@@ -69,7 +69,7 @@ void TerrainLayer::Purge()
 // -----------------------------------------------------------------------------
 void TerrainLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    parameters_.Load( modelLoaded.scipioXml_ );
+    parameters_.Load( modelLoaded.config_ );
 }
 
 // -----------------------------------------------------------------------------

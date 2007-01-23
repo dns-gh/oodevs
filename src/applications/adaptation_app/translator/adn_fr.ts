@@ -42,31 +42,31 @@
     <name>ADN_AiEngine_GUI</name>
     <message>
         <source>Files</source>
-        <translation>Fichiers</translation>
+        <translation type="obsolete">Fichiers</translation>
     </message>
     <message>
         <source>Binary folder</source>
-        <translation>Répertoire des binaires</translation>
+        <translation type="obsolete">Répertoire des binaires</translation>
     </message>
     <message>
         <source>Sources folder</source>
-        <translation>Répertoire des sources</translation>
+        <translation type="obsolete">Répertoire des sources</translation>
     </message>
     <message>
         <source>DIA Types file</source>
-        <translation>Fichier types DIA</translation>
+        <translation type="obsolete">Fichier types DIA</translation>
     </message>
     <message>
         <source>DIA Workspace file</source>
-        <translation>Fichier workspace DIA</translation>
+        <translation type="obsolete">Fichier workspace DIA</translation>
     </message>
     <message>
         <source>Models file</source>
-        <translation>Fichier modèles</translation>
+        <translation type="obsolete">Fichier modèles</translation>
     </message>
     <message>
         <source>Debugger port</source>
-        <translation>Port du debugger</translation>
+        <translation type="obsolete">Port du debugger</translation>
     </message>
     <message>
         <source>Maximum decrease due to the operational state</source>
@@ -3010,19 +3010,19 @@
     <name>ADN_HLA_GUI</name>
     <message>
         <source>Use HLA</source>
-        <translation>Utiliser HLA</translation>
+        <translation type="obsolete">Utiliser HLA</translation>
     </message>
     <message>
         <source>Federation</source>
-        <translation>Fédération</translation>
+        <translation type="obsolete">Fédération</translation>
     </message>
     <message>
         <source>Federate</source>
-        <translation>Fédéré</translation>
+        <translation type="obsolete">Fédéré</translation>
     </message>
     <message>
         <source>HLA</source>
-        <translation>HLA</translation>
+        <translation type="obsolete">HLA</translation>
     </message>
 </context>
 <context>
@@ -3495,7 +3495,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Scipio File (scipio.xml)</source>
-        <translation>Fichier projet Scipio (scipio.xml)</translation>
+        <translation type="obsolete">Fichier projet Scipio (scipio.xml)</translation>
     </message>
     <message>
         <source>Scipio Adaptation Tool</source>
@@ -3531,7 +3531,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Open Scipio project</source>
-        <translation>Ouvrir un projet Scipio</translation>
+        <translation type="obsolete">Ouvrir un projet Scipio</translation>
     </message>
     <message>
         <source>&amp;Export HTML</source>
@@ -3568,6 +3568,14 @@ du tireur</translation>
     <message>
         <source>Data test failed</source>
         <translation>Echec du test des données</translation>
+    </message>
+    <message>
+        <source>Physical model file (physical.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open physical model project</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4216,99 +4224,99 @@ Assurez vous que le fichier existe.</translation>
     <name>ADN_Project_GUI</name>
     <message>
         <source>Project</source>
-        <translation>Projet</translation>
+        <translation type="obsolete">Projet</translation>
     </message>
     <message>
         <source>Project file</source>
-        <translation>Fichier projet</translation>
+        <translation type="obsolete">Fichier projet</translation>
     </message>
     <message>
         <source>Working Directory</source>
-        <translation>Répertoire de travail</translation>
+        <translation type="obsolete">Répertoire de travail</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation>Fichiers</translation>
+        <translation type="obsolete">Fichiers</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation>Terrain</translation>
+        <translation type="obsolete">Terrain</translation>
     </message>
     <message>
         <source>Decisionnal</source>
-        <translation>Décisionnel</translation>
+        <translation type="obsolete">Décisionnel</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation>Réseau</translation>
+        <translation type="obsolete">Réseau</translation>
     </message>
     <message>
         <source>Sizes</source>
-        <translation>Volumes</translation>
+        <translation type="obsolete">Volumes</translation>
     </message>
     <message>
         <source>Armors</source>
-        <translation>Blindages</translation>
+        <translation type="obsolete">Blindages</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation>Objets</translation>
+        <translation type="obsolete">Objets</translation>
     </message>
     <message>
         <source>Equipements</source>
-        <translation>Dotations</translation>
+        <translation type="obsolete">Dotations</translation>
     </message>
     <message>
         <source>Launchers</source>
-        <translation>Lanceurs</translation>
+        <translation type="obsolete">Lanceurs</translation>
     </message>
     <message>
         <source>Weapons</source>
-        <translation>Armements</translation>
+        <translation type="obsolete">Armements</translation>
     </message>
     <message>
         <source>Sensors</source>
-        <translation>Capteurs</translation>
+        <translation type="obsolete">Capteurs</translation>
     </message>
     <message>
         <source>Components</source>
-        <translation>Composantes</translation>
+        <translation type="obsolete">Composantes</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Pions</translation>
+        <translation type="obsolete">Pions</translation>
     </message>
     <message>
         <source>Automatas</source>
-        <translation>Automates</translation>
+        <translation type="obsolete">Automates</translation>
     </message>
     <message>
         <source>NBC</source>
-        <translation>NBC</translation>
+        <translation type="obsolete">NBC</translation>
     </message>
     <message>
         <source>Weather</source>
-        <translation>Météo</translation>
+        <translation type="obsolete">Météo</translation>
     </message>
     <message>
         <source>Health</source>
-        <translation>Santé</translation>
+        <translation type="obsolete">Santé</translation>
     </message>
     <message>
         <source>IDs</source>
-        <translation>IDs</translation>
+        <translation type="obsolete">IDs</translation>
     </message>
     <message>
         <source>Human factors</source>
-        <translation>Facteurs humains</translation>
+        <translation type="obsolete">Facteurs humains</translation>
     </message>
     <message>
         <source>Breakdowns</source>
-        <translation>Probabilités de pannes aléatoires par jour</translation>
+        <translation type="obsolete">Probabilités de pannes aléatoires par jour</translation>
     </message>
     <message>
         <source>Knowledge groups</source>
-        <translation>Groupes de connaissance</translation>
+        <translation type="obsolete">Groupes de connaissance</translation>
     </message>
     <message>
         <source>Log</source>
@@ -4316,19 +4324,19 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Supply</source>
-        <translation>Ravitaillement</translation>
+        <translation type="obsolete">Ravitaillement</translation>
     </message>
     <message>
         <source>Com</source>
-        <translation>Communications</translation>
+        <translation type="obsolete">Communications</translation>
     </message>
     <message>
         <source>ODB</source>
-        <translation>ODB</translation>
+        <translation type="obsolete">ODB</translation>
     </message>
     <message>
         <source>Pathfind</source>
-        <translation>Pathfind</translation>
+        <translation type="obsolete">Pathfind</translation>
     </message>
     <message>
         <source>Missions</source>
@@ -4336,15 +4344,15 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>HLA</source>
-        <translation>HLA</translation>
+        <translation type="obsolete">HLA</translation>
     </message>
     <message>
         <source>Server port</source>
-        <translation>Port serveur</translation>
+        <translation type="obsolete">Port serveur</translation>
     </message>
     <message>
         <source>Server magic</source>
-        <translation>Magic cookie serveur</translation>
+        <translation type="obsolete">Magic cookie serveur</translation>
     </message>
     <message>
         <source>Launcher port</source>
@@ -4356,11 +4364,11 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Network thread active</source>
-        <translation>Activation du thread réseau</translation>
+        <translation type="obsolete">Activation du thread réseau</translation>
     </message>
     <message>
         <source>Pathfinder</source>
-        <translation>Pathfinder</translation>
+        <translation type="obsolete">Pathfinder</translation>
     </message>
     <message>
         <source>Pathfinder version</source>
@@ -4368,43 +4376,43 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Distance threshold</source>
-        <translation>Seuil de distance</translation>
+        <translation type="obsolete">Seuil de distance</translation>
     </message>
     <message>
         <source>Pathfinder threads</source>
-        <translation>Nbr de pathfind</translation>
+        <translation type="obsolete">Nbr de pathfind</translation>
     </message>
     <message>
         <source>Sim</source>
-        <translation>Sim</translation>
+        <translation type="obsolete">Sim</translation>
     </message>
     <message>
         <source>Auto start</source>
-        <translation>Démarrage automatique</translation>
+        <translation type="obsolete">Démarrage automatique</translation>
     </message>
     <message>
         <source>Time step</source>
-        <translation>Pas de temps</translation>
+        <translation type="obsolete">Pas de temps</translation>
     </message>
     <message>
         <source>s</source>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>Time factor</source>
-        <translation>Facteur de temps</translation>
+        <translation type="obsolete">Facteur de temps</translation>
     </message>
     <message>
         <source>Saves</source>
-        <translation>Sauvegardes</translation>
+        <translation type="obsolete">Sauvegardes</translation>
     </message>
     <message>
         <source>Interval</source>
-        <translation>Intervalle</translation>
+        <translation type="obsolete">Intervalle</translation>
     </message>
     <message>
         <source>Max nbr</source>
-        <translation>Nbr max.</translation>
+        <translation type="obsolete">Nbr max.</translation>
     </message>
     <message>
         <source>Rules file</source>
@@ -4412,23 +4420,19 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>min</source>
-        <translation>min</translation>
+        <translation type="obsolete">min</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation>Populations</translation>
+        <translation type="obsolete">Populations</translation>
     </message>
     <message>
         <source>Max computation time</source>
-        <translation>Temps max de calcul</translation>
+        <translation type="obsolete">Temps max de calcul</translation>
     </message>
     <message>
         <source>Maintenance</source>
-        <translation>Maintenance</translation>
-    </message>
-    <message>
-        <source>Reports</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Maintenance</translation>
     </message>
 </context>
 <context>
@@ -6704,7 +6708,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <name>ADN_Workspace</name>
     <message>
         <source>Project</source>
-        <translation>Projet</translation>
+        <translation type="obsolete">Projet</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -6780,7 +6784,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>HLA</source>
-        <translation>HLA</translation>
+        <translation type="obsolete">HLA</translation>
     </message>
     <message>
         <source>Health</source>

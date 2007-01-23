@@ -55,12 +55,12 @@ DetectionMap::~DetectionMap()
 // Name: DetectionMap::Load
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void DetectionMap::Load( const std::string& scipioXml )
+void DetectionMap::Load( const ExerciseConfig& config  )
 {
     delete map_;
     delete[] environment_;
 
-    WorldParameters parameters( scipioXml );
+    WorldParameters parameters( config );
     map_ = new ElevationMap( parameters.detection_ );
 
     InputBinaryStream archive( parameters.detection_ );

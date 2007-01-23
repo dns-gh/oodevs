@@ -16,8 +16,8 @@ using namespace kernel;
 // Name: ModelLoaded constructor
 // Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-ModelLoaded::ModelLoaded( const std::string& scipioXml )
-    : scipioXml_( scipioXml )
+ModelLoaded::ModelLoaded( const ExerciseConfig& config )
+    : config_( config )
 {
     // NOTHING
 }

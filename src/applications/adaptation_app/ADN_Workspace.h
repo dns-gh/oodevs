@@ -26,7 +26,6 @@ class ADN_NBC_GUI;
 class ADN_NBC_Datas;
 class ADN_Launchers_GUI;
 class ADN_Launchers_Data;
-class ADN_Project_GUI;
 class ADN_Project_Data;
 class ADN_Categories_GUI;
 class ADN_Categories_Data;
@@ -80,9 +79,11 @@ public:
     
     void ExportHtml( const std::string& strPath );
 
+
+    ADN_Project_Data& GetProject(); // $$$$ NLD 2007-01-15: 
+
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
     ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& GetLaunchers();
-    ADN_WorkspaceElement< ADN_Project_Data, ADN_Project_GUI>& GetProject();
     ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& GetCategories();
     ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >& GetEquipements();
     ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>& GetObjects();
@@ -115,9 +116,8 @@ private:
 private: 
     enum E_WorkspaceElements
     {
-        eProject,
         eCategories,
-        eNBC,    
+        eNBC,
         eLaunchers,
         eEquipement,
         eObjects,
@@ -134,7 +134,6 @@ private:
         eHumanFactors,
         eMaintenance,
         eKnowledgeGroups,
-        eHLA,
         eSupply,
         eHealth,
         ePopulation,
@@ -143,14 +142,11 @@ private:
     };
 
 private:
+    ADN_Project_Data* projectData_;
     ADN_WorkspaceElement_ABC* elements_[eNbrWorkspaceElements];
-
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
-
     QtUndoStack*            pUndoStack_;
-
     E_OpenMode              nOpenMode_;
-
     static ADN_Workspace*   pWorkspace_;
 };
 
@@ -182,9 +178,11 @@ ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& ADN_Workspace::Ge
 // Created: APE 2004-12-07
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_Project_Data, ADN_Project_GUI>& ADN_Workspace::GetProject()
+ADN_Project_Data& ADN_Workspace::GetProject()
 {
-    return (ADN_WorkspaceElement< ADN_Project_Data, ADN_Project_GUI>&)(*elements_[eProject]);
+    if( !projectData_ )
+        throw std::runtime_error( "Project data not initialized" );
+    return *projectData_;
 }
 
 

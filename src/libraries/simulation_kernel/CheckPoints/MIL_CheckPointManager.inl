@@ -14,7 +14,7 @@
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
 inline
-MT_Float MIL_CheckPointManager::GetCheckPointFrequency() const
+uint MIL_CheckPointManager::GetCheckPointFrequency() const
 {
-    return rCheckPointsFrequency_;
+    return nCheckPointsFrequency_;
 }

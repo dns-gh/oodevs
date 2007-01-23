@@ -92,8 +92,8 @@ int main( uint nArgc, char** ppArgv )
     std::string inputFile, outputFile;
     po::options_description desc( "Allowed options" );
     desc.add_options()
-        ( "input,i" , po::value< std::string >( &inputFile  )->default_value( "" ), "specify root input file (scipio.xml)" )
-        ( "output,o", po::value< std::string >( &outputFile )->default_value( "" ), "specify output file (scipio.xml) (open/save-mode: input must be specified)" )
+        ( "input,i" , po::value< std::string >( &inputFile  )->default_value( "" ), "specify root input file (physical.xml)" )
+        ( "output,o", po::value< std::string >( &outputFile )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
     ;
     po::variables_map vm;
     po::store( po::parse_command_line( nArgc, ppArgv, desc ), vm );

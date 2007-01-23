@@ -738,7 +738,7 @@ ADN_Population_Data::~ADN_Population_Data()
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::FilesNeeded( T_StringList& vFiles ) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetData().GetDataInfos().szPopulation_.GetData() );
+    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szPopulation_.GetData() );
 }
 
 

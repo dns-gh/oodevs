@@ -10,37 +10,6 @@
 // *****************************************************************************
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::GetConfigFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Config::GetConfigFileName() const
-{
-    return strConfFile_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetConfigFileName
-// Created: JVT 2005-04-07
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetConfigFileName( const std::string& strName )
-{
-    strConfFile_ = strName;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetExerciceID
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-uint MIL_Config::GetExerciceID() const
-{
-    return nExerciceID_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::UseDecDebug
 // Created: NLD 2003-12-16
 // -----------------------------------------------------------------------------
@@ -61,16 +30,6 @@ bool MIL_Config::UseOnlyDIAArchive() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::GetNbrPathFindThreads
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-uint MIL_Config::GetNbrPathFindThreads() const
-{
-    return nNbrPathFindThreads_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::ForceODBAutomateComposition
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
@@ -81,83 +40,13 @@ bool MIL_Config::ForceODBAutomateComposition() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::GetCheckPointFileName
+// Name: MIL_Config::GetCheckPointName
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
 inline
-const std::string& MIL_Config::GetCheckPointFileName() const
+const std::string& MIL_Config::GetCheckPointName() const
 {
-    return strCheckPointFileName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetCheckPointODBFileName
-// Created: NLD 2006-05-30
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Config::GetCheckPointODBFileName() const
-{
-    return strCheckPointODBFileName_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetExerciceID
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetExerciceID( uint nExercideID )
-{
-    nExerciceID_ = nExercideID;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetUseOnlyDIAArchive
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetUseOnlyDIAArchive( bool bUseOnlyDIAArchive )
-{
-    bUseOnlyDIAArchive_ = bUseOnlyDIAArchive;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetNbrPathFindThreads
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetNbrPathFindThreads( uint nNbr )
-{
-    nNbrPathFindThreads_ = nNbr;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetCheckPointFileName
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetCheckPointFileName( const std::string& strName )
-{
-    strCheckPointFileName_ = strName;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetCheckPointODBFileName
-// Created: NLD 2006-05-30
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetCheckPointODBFileName( const std::string& strName )
-{
-    strCheckPointODBFileName_ = strName;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetForceODBAutomateComposition
-// Created: NLD 2003-12-04
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetForceODBAutomateComposition( bool bForce )
-{
-    bForceODBAutomateComposition_ = bForce;
+    return strCheckPointName_;
 }
 
 // -----------------------------------------------------------------------------
@@ -167,47 +56,27 @@ void MIL_Config::SetForceODBAutomateComposition( bool bForce )
 inline
 bool MIL_Config::UseCheckPoint() const
 {
-    return !strCheckPointFileName_.empty();
+    return bCheckPoint_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::UseCheckPointODB
-// Created: NLD 2006-05-30
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::UseCheckPointODB() const
-{
-    return !strCheckPointODBFileName_.empty();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetUseDecDebug
-// Created: NLD 2003-12-16
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetUseDecDebug( bool bUse )
-{
-    bUseDecDebug_ = bUse;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::UseDiaDebugServer
+// Name: MIL_Config::UseDiaDebugger
 // Created: AGN 2004-03-23
 // -----------------------------------------------------------------------------
 inline
-bool MIL_Config::UseDiaDebugServer() const
+bool MIL_Config::UseDiaDebugger() const
 {
-    return bUseDiaDebugServer_;
+    return bUseDiaDebugger_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::SetUseDiaDebugServer
-// Created: AGN 2004-03-23
+// Name: MIL_Config::GetDiaDebuggerPort
+// Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-void MIL_Config::SetUseDiaDebugServer( bool bUse )
+uint16 MIL_Config::GetDiaDebuggerPort() const
 {
-    bUseDiaDebugServer_ = bUse;
+    return diaDebuggerPort_;
 }
 
 // -----------------------------------------------------------------------------
@@ -218,26 +87,6 @@ inline
 bool MIL_Config::IsProfilingEnabled() const
 {
     return bProfilingEnabled_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetProfilingEnabled
-// Created: NLD 2004-07-15
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetProfilingEnabled( bool bEnabled )
-{
-    bProfilingEnabled_ = bEnabled;    
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetUseCheckPointCRC
-// Created: NLD 2005-04-15
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetUseCheckPointCRC( bool bUse )
-{
-    bUseCheckPointCRC_ = bUse;
 }
 
 // -----------------------------------------------------------------------------
@@ -261,26 +110,6 @@ bool MIL_Config::UsePathDebug() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::SetUsePathDebug
-// Created: AGE 2005-07-04
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetUsePathDebug( bool bUse )
-{
-    bUsePathDebug_ = bUse;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::SetDataTestMode
-// Created: SBO 2005-12-12
-// -----------------------------------------------------------------------------
-inline
-void MIL_Config::SetDataTestMode( bool bEnabled )
-{
-    bDataTestMode_ = bEnabled;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::IsDataTestMode
 // Created: SBO 2005-12-12
 // -----------------------------------------------------------------------------
@@ -288,6 +117,16 @@ inline
 bool MIL_Config::IsDataTestMode() const
 {
     return bDataTestMode_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsTestMode
+// Created: NLD 2007-01-15
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsTestMode() const
+{
+    return bTestMode_;
 }
 
 // -----------------------------------------------------------------------------
@@ -301,11 +140,121 @@ bool MIL_Config::IsDispatcherEmbedded() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::SetEmbeddedDispatcher
-// Created: NLD 2006-10-04
+// Name: MIL_Config::UseNetworkLogger
+// Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-void MIL_Config::SetEmbeddedDispatcher( bool bEnabled )
+bool MIL_Config::UseNetworkLogger() const
 {
-    bEmbeddedDispatcher_ = bEnabled;
+    return bUseNetworkLogger_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetNetworkLoggerPort
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+inline
+uint16 MIL_Config::GetNetworkLoggerPort() const
+{
+    return networkLoggerPort_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetCheckPointsFrequency
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+inline
+uint MIL_Config::GetCheckPointsFrequency() const
+{
+    return checkPointsFrequency_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetCheckPointsKept
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+inline
+uint MIL_Config::GetCheckPointsKept() const
+{
+    return checkPointsKept_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetTimeStep
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+inline
+uint MIL_Config::GetTimeStep() const
+{
+    return timeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetTimeFactor
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+inline
+uint MIL_Config::GetTimeFactor() const
+{
+    return timeStep_; 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetNetworkPort
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+inline
+uint16 MIL_Config::GetNetworkPort() const
+{
+    return networkPort_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsThreadedNetwork
+// Created: NLD 2007-01-10
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsThreadedNetwork() const
+{
+    return bNetworkThreaded_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetPathFinderThreads
+// Created: NLD 2007-01-11
+// -----------------------------------------------------------------------------
+inline
+uint MIL_Config::GetPathFinderThreads() const
+{
+    return pathFinderThreads_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsHLAEnabled
+// Created: NLD 2007-01-11
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsHLAEnabled() const
+{
+    return bHLAEnabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetHLAFederation
+// Created: NLD 2007-01-11
+// -----------------------------------------------------------------------------
+inline
+const std::string& MIL_Config::GetHLAFederation() const
+{
+    return hlaFederation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetHLAFederate
+// Created: NLD 2007-01-11
+// -----------------------------------------------------------------------------
+inline
+const std::string& MIL_Config::GetHLAFederate() const
+{
+    return hlaFederate_;
 }

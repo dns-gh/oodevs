@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-19 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_MainWindow.cpp $
-// $Author: Ape $
-// $Modtime: 29/04/05 16:42 $
-// $Revision: 30 $
-// $Workfile: ADN_MainWindow.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_MainWindow.h"
@@ -59,10 +57,10 @@
 // Name: ADN_MainWindow constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-ADN_MainWindow::ADN_MainWindow()
+ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
 : QMainWindow       ()
 , workspace_        ( ADN_Workspace::GetWorkspace() )
-, config_           ( *new ADN_Config() )
+, config_           ( config )
 , rIdSaveAs_        ( 0 )
 , rIdClose_         ( 0 )
 , nIdChangeOpenMode_( 0 )
@@ -260,8 +258,7 @@ void ADN_MainWindow::SaveProject()
     if( ! bNoReadOnlyFiles )
         return; // we were not able to save all the datas
 
-    std::string szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-                         + workspace_.GetProject().GetData().GetFileInfos().GetFileName().GetData();
+    std::string szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + workspace_.GetProject().GetFileInfos().GetFileName().GetData();
     setCaption( tr( "Scipio Adaptation Tool - " ) + szProject.c_str() );
 }
 
@@ -272,7 +269,7 @@ void ADN_MainWindow::SaveProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::SaveAsProject()
 {
-    QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Scipio File (scipio.xml)" ) , this, "", tr( "Save project as" ) );
+    QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
     if( strFileName == QString::null )
         return;
     
@@ -302,7 +299,7 @@ void ADN_MainWindow::SaveAsProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::NewProject()
 {
-    QString qfilename=QFileDialog::getSaveFileName ( QString::null,tr("Scipio File (scipio.xml)") , this, "", tr("Create new project"));
+    QString qfilename=QFileDialog::getSaveFileName ( QString::null,tr("Physical model file (physical.xml)") , this, "", tr("Create new project"));
     if (qfilename==QString::null)
         return;
 
@@ -330,9 +327,7 @@ void ADN_MainWindow::NewProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::OpenProject()
 {
-  //  QString qfilename = "scipio.xml";
-
-    QString qfilename = QFileDialog::getOpenFileName( QString::null,tr("Scipio File (scipio.xml)") , this, "", tr("Open Scipio project"));
+    QString qfilename = QFileDialog::getOpenFileName( QString::null,tr("Physical model file (physical.xml)") , this, "", tr("Open physical model project"));
     if( qfilename == QString::null )
         return;
     try
@@ -394,7 +389,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename )
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::ExportHtml()
 {
-    QString strPath = QFileDialog::getExistingDirectory( ADN_Workspace::GetWorkspace().GetProject().GetData().GetWorkDirInfos().GetWorkingDirectory().GetData().c_str(), this );
+    QString strPath = QFileDialog::getExistingDirectory( ADN_Workspace::GetWorkspace().GetProject().GetWorkDirInfos().GetWorkingDirectory().GetData().c_str(), this );
     if( strPath == QString::null )
         return;
 
@@ -438,14 +433,14 @@ void ADN_MainWindow::TestData()
     try
     {
         std::string strCommandLine = config_.GetSimPath() + " " + config_.GetSimArguments();
-        if( workspace_.GetProject().GetData().GetFileInfos().GetFileNameFull().empty() )
+        if( workspace_.GetProject().GetFileInfos().GetFileNameFull().empty() )
         {
             int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "No project loaded, continue anyway?" ), QMessageBox::Yes, QMessageBox::No );
             if( nResult == QMessageBox::No )
                 return;
         }
-        else
-            strCommandLine += " -conffile \"" + workspace_.GetProject().GetData().GetFileInfos().GetFileNameFull() + "\"";
+//        else
+//            strCommandLine += " -conffile \"" + workspace_.GetProject().GetFileInfos().GetFileNameFull() + "\"";
         
         static ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, tr( "Running data check" ) );
         pDialog->RunCommand( strCommandLine );
@@ -512,7 +507,7 @@ void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
     }
     else
     {
-        std::string szProject = workspace_.GetProject().GetData().GetFileInfos().GetFileName().GetData();
+        std::string szProject = workspace_.GetProject().GetFileInfos().GetFileName().GetData();
         if( szProject == ADN_Project_Data::FileInfos::szUntitled_ )
             setCaption( tr( "Scipio Adaptation Tool - No Project" ) );
         else
@@ -611,7 +606,7 @@ bool ADN_MainWindow::OfferToSave()
     if( ! bNeedSave_ )
         return true;
 
-    QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetData().GetFileInfos().GetFileNameFull().c_str() );
+    QString strMessage = tr( "Save changes to project %1?" ).arg( workspace_.GetProject().GetFileInfos().GetFileNameFull().c_str() );
     int nResult = QMessageBox::information( this, tr( "Scipio Adaptation Tool" ), strMessage, QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
     switch( nResult )
     {

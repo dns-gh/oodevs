@@ -1072,6 +1072,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Load exercise definition file (exercise.xml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Terrain</source>
         <translation type="unfinished"></translation>
     </message>

@@ -28,16 +28,15 @@
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC constructor
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 ADN_Data_ABC::ADN_Data_ABC()
-: QObject()
+    : QObject()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC destructor
@@ -45,8 +44,8 @@ ADN_Data_ABC::ADN_Data_ABC()
 // -----------------------------------------------------------------------------
 ADN_Data_ABC::~ADN_Data_ABC()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::Load
@@ -79,7 +78,6 @@ void ADN_Data_ABC::Load()
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::Save
 // Created: APE 2005-03-17
@@ -102,16 +100,14 @@ void ADN_Data_ABC::Save()
         throw ADN_SaveFile_Exception( strFile );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::ReadArchive
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 void ADN_Data_ABC::ReadArchive( ADN_XmlInput_Helper& /*input*/ )
 {
-    assert( 0 );
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::WriteArchive
@@ -119,5 +115,5 @@ void ADN_Data_ABC::ReadArchive( ADN_XmlInput_Helper& /*input*/ )
 // -----------------------------------------------------------------------------
 void ADN_Data_ABC::WriteArchive( MT_OutputArchive_ABC& /*output*/ )
 {
-    assert( 0 );
+    // NOTHING
 }

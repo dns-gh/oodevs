@@ -12,7 +12,7 @@
 #include "moc_Application.cpp"
 
 #include "MainWindow.h"
-
+#include "Config.h"
 #include "gaming/Network.h"
 #include "gaming/StaticModel.h"
 #include "gaming/Model.h"
@@ -22,16 +22,6 @@
 #include "clients_kernel/Workers.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "RcEntityResolver.h"
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
-#include <boost/program_options.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
-
-namespace po = boost::program_options;
-namespace bfs = boost::filesystem;
 
 using namespace kernel;
 
@@ -45,7 +35,7 @@ namespace
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
-    : QApplication  ( argc, argv )
+    : QApplication( argc, argv )
     , mainWindow_( 0 )
 {
     try
@@ -59,7 +49,7 @@ Application::Application( int argc, char** argv )
     }
     catch( ... )
     {
-        QMessageBox::critical( 0, APP_NAME, "Whooops. Astec has crashed" );
+        QMessageBox::critical( 0, APP_NAME, "Whooops. CSword has crashed" );
         throw CatchMeIfYouCan();
     }
 }
@@ -70,7 +60,7 @@ Application::Application( int argc, char** argv )
 // -----------------------------------------------------------------------------
 Application::~Application()
 {
-    // NOTHING
+    delete config_;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,16 +69,7 @@ Application::~Application()
 // -----------------------------------------------------------------------------
 void Application::Initialize( int argc, char** argv )
 {
-    // Command line options
-    std::string conffile;
-    po::options_description desc( "Allowed options" );
-    desc.add_options()
-        ( "conffile,c", po::value< std::string >( &conffile )->default_value( "./scipio.xml" ), "specify main config file (scipio.xml)" )
-    ;
-    po::variables_map vm;
-    po::store( po::parse_command_line( argc, argv, desc ), vm );
-    po::notify( vm );
-
+    config_      = new Config( argc, argv );
     controllers_ = new Controllers();
     simulation_  = new Simulation( controllers_->controller_  );
     profile_     = new Profile( *controllers_ );
@@ -98,11 +79,7 @@ void Application::Initialize( int argc, char** argv )
     staticModel_ = new StaticModel( *controllers_, *rcResolver );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
     network_->GetMessageMgr().SetModel( *model_ );
-    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_, *profile_ );
-
-    if( bfs::exists( bfs::path( conffile, bfs::native ) ) )
-        mainWindow_->Load( conffile );
-
+    mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *network_, *profile_, *config_ );
     mainWindow_->show();
 
     // Make sure the application exits when the main window is closed.

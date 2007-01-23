@@ -27,6 +27,7 @@ namespace kernel
     class FragOrder;
     class SymbolFactory;
     class KnowledgeGroupType;
+    class ExerciseConfig;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -58,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& scipioXml );
+    void Load( const ExerciseConfig& config );
     void Purge();
     //@}
 
@@ -78,7 +79,6 @@ private:
     //! @name Helpers
     //@{
     void ReadComponents( const std::string& components );
-    void ReadDecisional( const std::string& decisional );
     void ReadSensors( const std::string& sensors );
     void ReadAgents( const std::string& agents );
     void ReadAutomats( const std::string& automats );

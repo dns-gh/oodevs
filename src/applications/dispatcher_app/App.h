@@ -45,15 +45,9 @@ private:
     App& operator=( const App& ); //!< Assignement operator
     //@}
 
-    //! @name Tools
-    //@{
-    void ParseCmdArgs( int argc, char** argv );
-    //@}
-
 private:
     //! @name Member data
     //@{
-    std::string             strConfFile_;
     dispatcher::Dispatcher* pDispatcher_;
     //@}
 };

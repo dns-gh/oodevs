@@ -45,18 +45,21 @@ MIL_IDManager::T_IDManagerMap    MIL_IDManager::objectClassIDToType_;
 // Created: JVT 03-02-27
 // Last modified: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void MIL_IDManager::Initialize( MIL_InputArchive& archive )
+void MIL_IDManager::Initialize( MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing classe ids" );
 
+    MIL_InputArchive physical;
+    physical.Open( config.GetPhysicalFile() );
+    physical.Section( "physical" );
+
     std::string strName;
-    archive.ReadField( "ClasseIDs", strName );
+    physical.ReadField( "ClasseIDs", strName );
 
     MIL_InputArchive idsFile;
-    idsFile.AddWarningStream( std::cout );
-    idsFile.Open( strName );
+    idsFile.Open( config.BuildPhysicalChildFile( strName ) );
 
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( strName );
+    config.AddFileToCRC( strName );
 
     idsFile.BeginList( "Classes" );
     while( idsFile.NextListElement() )

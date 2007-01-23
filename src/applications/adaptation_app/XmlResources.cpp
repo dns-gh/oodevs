@@ -10,83 +10,38 @@
 #include "adaptation_app_pch.h"
 
 // *****************************************************************************
-// terrain.xml
+// physical.xml
 // *****************************************************************************
-static const char* terrainXml = 
-"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-"<Terrain>"
-"    <Geoid>geoid.dat</Geoid>"
-"    <World>World.xml</World>"
-"    <Graph>Pathfind\\Graph.bin</Graph>"
-"    <Nodes>Pathfind\\Nodes.bin</Nodes>"
-"    <Links>Pathfind\\Links.bin</Links>"
-"    <RawVision>Detection\\detection.dat</RawVision>"
-"    <Graphics>Graphics</Graphics>"
-"</Terrain>";
-
-
-// *****************************************************************************
-// scipio.xml
-// *****************************************************************************
-static const char* scipioXml =
+static const char* physicalXml =
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
-"<Scipio>"
-"  <SIM>"
-"    <AutoStart>1</AutoStart>"
-"    <TimeStep>10</TimeStep>"
-"    <TimeFactor>10</TimeFactor>"
-"    <SauvegardesAutomatiques>"
-"        <TempsEntreSauvegardes>1000</TempsEntreSauvegardes>"
-"        <NombreMax>10</NombreMax>"
-"    </SauvegardesAutomatiques>"
-"  </SIM>"
-"  <Donnees>"
-"    <Terrain>Data/Terrain/Terrain.xml</Terrain>"
-"    <Decisionnel>Data/Decisionnel.xml</Decisionnel>"
-"    <Reseau>Data/Reseau.xml</Reseau>"
-"    <Volumes>Data/Volumes.xml</Volumes>"
-"    <Protections>Data/Protections.xml</Protections>"
-"    <DotationNatures>Data/DotationNatures.xml</DotationNatures>"
-"    <Objets>Data/Objets.xml</Objets>"
-"    <Dotations>Data/Dotations.xml</Dotations>"
-"    <Lanceurs>Data/Lanceurs.xml</Lanceurs>"
-"    <Armements>Data/Armements.xml</Armements>"
-"    <Capteurs>Data/Capteurs.xml</Capteurs>"
-"    <Composantes>Data/Composantes.xml</Composantes>"
-"    <Pions>Data/Pions.xml</Pions>"
-"    <Automates>Data/Automates.xml</Automates>"
-"    <NBC>Data/NBC.xml</NBC>"
-"    <Meteo>Data/Meteo.xml</Meteo>"
-"    <ClasseIDs>Data/IDClasses.xml</ClasseIDs>"
-"    <FacteursHumains>Data/FacteursHumains.xml</FacteursHumains>"
-"    <Pannes>Data/Pannes.xml</Pannes>"
-"    <GroupesConnaissance>Data/GroupesConnaissance.xml</GroupesConnaissance>"
-"    <Sante>Data/Sante.xml</Sante>"
-"    <Maintenance>Data/Maintenance.xml</Maintenance>"
-"    <Ravitaillement>Data/Ravitaillement.xml</Ravitaillement>"
-"    <Communications>Data/Communications.xml</Communications>"
-"    <ODB>Data/ODB.xml</ODB>"
-"    <Pathfind>Data/Pathfind.xml</Pathfind>"
-"    <HLA>Data/HLA.xml</HLA>"
-"    <Populations>Data/Populations.xml</Populations>"
-"    <ComptesRendus>Data/Reports.xml</ComptesRendus>"
-"  </Donnees>"
-"</Scipio>";
-
-
-// *****************************************************************************
-// reseau.xml
-// *****************************************************************************
-static const char* reseauXml =
-"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
-"<Reseau>"
-"    <Simulation>"
-"      <BasePort>10000</BasePort>"
-"      <Magic>1</Magic>"
-"    </Simulation>"
-"	<ThreadReseauActif>true</ThreadReseauActif>"
-"</Reseau>";
-
+"<physical>"
+"    <Decisionnel>Decisionnel.xml</Decisionnel>"
+"    <Volumes>Volumes.xml</Volumes>"
+"    <Protections>Protections.xml</Protections>"
+"    <DotationNatures>DotationNatures.xml</DotationNatures>"
+"    <Objets>Objets.xml</Objets>"
+"    <Dotations>Dotations.xml</Dotations>"
+"    <Lanceurs>Lanceurs.xml</Lanceurs>"
+"    <Armements>Armements.xml</Armements>"
+"    <Capteurs>Capteurs.xml</Capteurs>"
+"    <Composantes>Composantes.xml</Composantes>"
+"    <Pions>Pions.xml</Pions>"
+"    <Automates>Automates.xml</Automates>"
+"    <NBC>NBC.xml</NBC>"
+"    <ClasseIDs>IDClasses.xml</ClasseIDs>"
+"    <FacteursHumains>FacteursHumains.xml</FacteursHumains>"
+"    <Pannes>Pannes.xml</Pannes>"
+"    <GroupesConnaissance>GroupesConnaissance.xml</GroupesConnaissance>"
+"    <Sante>Sante.xml</Sante>"
+"    <Maintenance>Maintenance.xml</Maintenance>"
+"    <Ravitaillement>Ravitaillement.xml</Ravitaillement>"
+"    <Communications>Communications.xml</Communications>"
+"    <PathFinder>Pathfind.xml</PathFinder>"
+"    <HLA>HLA.xml</HLA>"
+"    <Populations>Populations.xml</Populations>"
+"    <ComptesRendus>Reports.xml</ComptesRendus>"
+"    <Modeles>Modeles.xml</Modeles>"
+"</physical>";
 
 // *****************************************************************************
 // idclasses.xml

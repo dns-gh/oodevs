@@ -24,7 +24,7 @@
 #include "ProfileFactory.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/PathTools.h"
+#include "clients_kernel/ExerciseConfig.h"
 #include "xeumeuleu/xml.h"
 
 #pragma warning( push )
@@ -101,41 +101,32 @@ void Model::Purge()
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const QString& filename )
+void Model::Load( const kernel::ExerciseConfig& config )
 {
-    xml::xifstream xis( filename.ascii() );
-    std::string orbat, weather, profiles;
-    xis >> start( "Scipio" )
-            >> start( "Donnees" )
-                >> content( "ODB", orbat )
-                >> content( "Meteo", weather )
-            >> end()
-            >> start( "Dispatcher" )
-                >> content( "Profiles", profiles );
-    UpdateName( path_tools::BuildChildPath( filename.ascii(), orbat ).c_str() );
-    teams_.Load( orbatFile_, *this );
-    weather_.Load( path_tools::BuildChildPath( filename.ascii(), weather ).c_str() );
-    profiles_.Load( path_tools::BuildChildPath( filename.ascii(), profiles ).c_str() );
+    UpdateName( config.GetOrbatFile() );
+    teams_.Load( config.GetOrbatFile(), *this );
+    weather_.Load( config.GetWeatherFile() );
+    profiles_.Load( config.GetProfilesFile() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Model::Save
 // Created: SBO 2006-11-21
 // -----------------------------------------------------------------------------
-void Model::Save( const QString& filename /*= ""*/ )
+void Model::Save( const kernel::ExerciseConfig& config )
 {
     teams_ .CheckValidity();
     agents_.CheckValidity();
+    
+    xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
 
-    std::string file = filename.isEmpty() ? orbatFile_ : filename.ascii();
-    xml::xofstream xos( file, xml::encoding( "ISO-8859-1" ) );
     xos << start( "orbat" );
     teams_.Serialize( xos );
     xos << end();
-    UpdateName( file.c_str() );
+    UpdateName( config.GetOrbatFile() );
 
-    weather_ .Serialize( path_tools::BuildChildPath( filename.ascii(), "weather.xml" ) );
-    profiles_.Serialize( path_tools::BuildChildPath( filename.ascii(), "profiles.xml" ) );
+    weather_ .Serialize( config.GetWeatherFile() );
+    profiles_.Serialize( config.GetProfilesFile() );
 }
 
 // -----------------------------------------------------------------------------

@@ -17,6 +17,7 @@
 #include "Entities/Objects/MIL_RealObjectType.h"
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
+#include "Tools/MIL_Config.h"
 
 #include "simulation_terrain/TER_PathfinderThread.h"
 #include "simulation_terrain/TER_PathFindManager.h"
@@ -26,31 +27,35 @@
 // Name: DEC_PathFind_Manager constructor
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
-DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_InputArchive& archive  )
+DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     : nMaxComputationDuration_( std::numeric_limits< uint >::max() )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    archive.Section( "Pathfind" );
-    int nPathfindThreads = 1;
-    archive.ReadField    ( "PathfindNumber"   , nPathfindThreads, CheckValueGreaterOrEqual( 1 ) );
-    archive.ReadField    ( "DistanceThreshold", rDistanceThreshold_ );
-    archive.ReadTimeField( "TempsMaxCalcul"   , nMaxComputationDuration_, CheckValueGreater( 0 ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    MIL_InputArchive phyArchive;
+    phyArchive.Open( config.GetPhysicalFile() );
+    phyArchive.Section( "physical" );
+    
+    std::string strPathFindFile;
+    phyArchive.ReadField( "PathFinder", strPathFindFile );
+    strPathFindFile = config.BuildPhysicalChildFile( strPathFindFile );
 
-    std::string strRulesArchive;
-    archive.ReadField( "Rules", strRulesArchive );
-    archive.EndSection(); // Pathfind
+    MIL_InputArchive pathFindArchive;
+    pathFindArchive.Open( strPathFindFile );
+    config.AddFileToCRC( strPathFindFile );
 
-    MIL_InputArchive rulesArchive;
-    rulesArchive.AddWarningStream( std::cout );
-    rulesArchive.Open( strRulesArchive );
+    pathFindArchive.Section( "Pathfind" );
 
-    DEC_PathType::Initialize();
-    DEC_PathFactory::Initialize( rulesArchive );
+    pathFindArchive.Section( "Config" );
+    pathFindArchive.ReadField    ( "DistanceThreshold", rDistanceThreshold_ );
+    pathFindArchive.ReadTimeField( "TempsMaxCalcul"   , nMaxComputationDuration_, CheckValueGreater( 0 ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    pathFindArchive.EndSection(); // Config
 
-    MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", nPathfindThreads ) );
+    DEC_PathType   ::Initialize();
+    DEC_PathFactory::Initialize( pathFindArchive );
 
-    for( int i = 0; i < nPathfindThreads; ++i )
+    MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
+    for( int i = 0; i < config.GetPathFinderThreads(); ++i )
         pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this ) );
 }   
 

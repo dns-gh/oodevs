@@ -24,6 +24,7 @@ class StaticModel;
 class Model;
 class Simulation;
 class Profile;
+class Config;
 
 // =============================================================================
 /** @class  Application
@@ -63,6 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
+    Config* config_;
     kernel::Controllers* controllers_;
     StaticModel* staticModel_;
     Model* model_;
