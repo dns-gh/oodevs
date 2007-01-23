@@ -1,9 +1,0 @@
-// *****************************************************************************
-// globals
-// *****************************************************************************
-signatures
-{
-    V A::DEC_Perception_ActiverModeEnregistrement   ();
-    V A::DEC_Perception_DesactiverModeEnregistrement();  
-}
-
