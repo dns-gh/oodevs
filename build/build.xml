@@ -305,7 +305,7 @@
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
         <delete dir="${dist.dir}/old"/>
-        <move file="${dist.dir}/current" tofile="${dist.dir}/old"/>
+        <move file="${dist.dir}/current" tofile="${dist.dir}/old"/ failonerror="false">
         <mkdir dir="${dist.dir}/current"/>
         <echoxml file="${dist.dir}/current/exercise.xml">
             <exercise>
