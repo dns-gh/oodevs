@@ -274,9 +274,7 @@
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
         <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/worldwide"/>
         <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>        
-        <delete includeemptydirs="true" failonerror="false">
-            <fileset dir="${adaptation_test.dir2}/" includes="**/*"/>
-        </delete>
+        <delete dir="${adaptation_test.dir2}"/>
         <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-i"/>
             <arg value="${adaptation_test.dir1}/physical.xml"/>
@@ -305,8 +303,19 @@
     <target name="package" description="package the distribution" >
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
-        </zip>      
+        </zip>
+        <delete dir="${dist.dir}/old"/>
+        <move file="${dist.dir}/current" tofile="${dist.dir}/old"/>
         <mkdir dir="${dist.dir}/current"/>
+        <echoxml file="${dist.dir}/current/exercise.xml">
+            <exercise>
+                <profiles file="profiles.xml"/>
+                <orbat file="orbat_empty.xml"/>
+                <weather file="weather.xml"/>   
+                <terrain name="main"/>
+                <model dataset="" physical="worldwide"/>    
+            </exercise>
+        </echoxml>
         <zip destfile="${dist.dir}/current/csword.zip">
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/adaptation_app/"  includes="*.exe"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.qm"/>
@@ -318,8 +327,10 @@
             <zipfileset prefix="applications" dir="${libraries.dir}/ENT"                             includes="*.qm"/>
             <zipfileset prefix="applications" dir="${applications.dir}/gaming_app"                   includes="*.qm"/>
             <zipfileset prefix="applications" dir="${applications.dir}/adaptation_app/translator"    includes="*.qm"/>    
-            <zipfileset prefix="applications" dir="${run.dir}"                                       includes="symbols.pak"/>
             <zipfileset prefix="applications" dir="${run.dir}">
+                <include name="symbols.pak"/>
+                <include name="symbols.xml"/>
+                <include name="preferences.xml"/>
                 <include name="license.dat"/>
                 <include name="TAO.dll"/>
                 <include name="TAO_CosNaming.dll"/>
@@ -341,12 +352,16 @@
                 <include name="qt-*.dll"/>
                 <include name="userDdm.dll"/>
                 <include name="xerces-c_2_7.dll"/>
+                <include name="zlib1.dll"/>
             </zipfileset>                           
             <!-- Cf defaultexcludes : no need of "svn export" -->
             <zipfileset prefix="data/models"   dir="${data.dir}/data/models/main"/>
             <zipfileset prefix="data/terrains" dir="${data.dir}/data/terrains"/>
             <zipfileset prefix="exercises/empty" dir="${data.dir}/exercises/empty"/>
+            
+            <zipfileset prefix="exercises/empty" dir="${dist.dir}/current" includes="exercise.xml"/>
         </zip>        
+        <delete file="${dist.dir}/current/exercise.xml"/>
     </target>
         
     <!--
