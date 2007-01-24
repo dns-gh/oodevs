@@ -27,16 +27,17 @@ using namespace gui;
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
 Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& elevation )
-    : controller_( controller )
-    , elevation_( elevation )
-    , modelLoaded_( false )
-    , min_( Qt::white )
-    , max_( Qt::black )
+    : controller_    ( controller )
+    , elevation_     ( elevation )
+    , modelLoaded_   ( false )
+    , ignore_        ( false )
+    , min_           ( Qt::white )
+    , max_           ( Qt::black )
     , updateGradient_( true )
-    , gradient_( 0 )
-    , enabled_( true )
-    , minElevation_( 0 )
-    , maxElevation_( 0 )
+    , gradient_      ( 0 )
+    , enabled_       ( true )
+    , minElevation_  ( 0 )
+    , maxElevation_  ( 0 )
 {
     controller_.Register( *this );
 }
@@ -137,14 +138,8 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::Cleanup()
 {
-    try
-    {
+    if( shader_.get() )
         gl::ShaderProgram::Unuse();
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
     gl::glActiveTexture( gl::GL_TEXTURE1 );
     glBindTexture( GL_TEXTURE_1D, 0 );
     glDisable( GL_TEXTURE_1D );
@@ -186,19 +181,20 @@ void Elevation2dLayer::SetGradient()
 // -----------------------------------------------------------------------------
 void Elevation2dLayer::SetShader()
 {
-    try
+    if( ! shader_.get() && ! ignore_ )
     {
-        if( ! shader_.get() )
+        try
         {
             shader_.reset( new ElevationShader() );
             SetElevations( 0, elevation_.MaximumElevation() );
         }
+        catch( ... )
+        {
+            ignore_ = true;
+        }
+    }
+    if( shader_.get() )
         shader_->Use();
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -209,6 +205,7 @@ void Elevation2dLayer::Reset()
 {
     extrema_.reset();
     shader_.reset();
+    ignore_ = false;
     layer_.reset();
     glDeleteTextures( 1, &gradient_ );
     gradient_ = 0;

@@ -90,6 +90,8 @@ private:
     std::auto_ptr< gl::FragmentShader > fragment_;
     std::auto_ptr< gl::ShaderProgram >  program_;
     float zRatio_;
+    bool ignoreShader_;
+    bool ignoreTextures_;
     //@}
 };
 

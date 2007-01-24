@@ -79,6 +79,7 @@ private:
     std::auto_ptr< ElevationShader >     shader_;
     std::auto_ptr< ElevationTextureSet > layer_;
     bool modelLoaded_;
+    bool ignore_;
 
     QColor min_;
     QColor max_;

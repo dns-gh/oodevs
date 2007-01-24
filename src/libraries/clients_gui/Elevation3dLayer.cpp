@@ -35,6 +35,8 @@ Elevation3dLayer::Elevation3dLayer( Controller& controller, const DetectionMap& 
     , elevation_( elevation )
     , lighting_ ( lighting )
     , zRatio_( 5.f )
+    , ignoreShader_( false )
+    , ignoreTextures_( false )
 {
     controller_.Register( *this );
 }
@@ -82,9 +84,9 @@ bool Elevation3dLayer::HandleKeyPress( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void Elevation3dLayer::Paint( const ViewFrustum& frustum )
 {
-    if( ! textures_.get() && !program_.get() )
+    if(  !program_.get() && ! ignoreShader_ )
         CreateShaders();
-    if( ! textures_.get() && !graphicsDirectory_.empty() )
+    if( ! textures_.get() && !graphicsDirectory_.empty() && !ignoreTextures_ )
         CreateTextures();
 
     if( !textures_.get() )
@@ -151,7 +153,7 @@ void Elevation3dLayer::CreateShaders()
     }
     catch( ... )
     {
-        // NOTHING
+        ignoreShader_ = true;
     }
 }
 
@@ -171,7 +173,7 @@ void Elevation3dLayer::CreateTextures()
     }
     catch( ... )
     {
-         // $$$$ AGE 2007-01-03: 
+         ignoreTextures_ = true;
     }
 }
 
@@ -188,4 +190,5 @@ void Elevation3dLayer::Reset()
     fragment_.reset();
     program_.reset();
     zRatio_ = 5.f;
+    ignoreTextures_ = ignoreShader_ = false;
 }
