@@ -8,7 +8,7 @@ cd tmp
 cd ..
 
 # get different files ignoring header (generation date) and retrieve it has a list of files
-files=`diff -qr --ignore-file-name-case -x "*.svn" -x "license.dat" -x "asn1c.exe" -I "(http://www.obj-sys.com)" tmp generated | sed -r "s/^.*(tmp\\/\w*(\.cpp|\.h)).*$/\\1/"`
+files=`diff -qrN --ignore-file-name-case -x "*.svn" -x "license.dat" -x "asn1c.exe" -I "(http://www.obj-sys.com)" tmp generated | sed -r "s/^.*(tmp\\/\w*(\.cpp|\.h)).*$/\\1/"`
 
 if [ ! -z "${files}" ]; then
     echo "Changes found in : " ${files}
