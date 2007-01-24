@@ -273,7 +273,10 @@
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
         <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/worldwide"/>
-        <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
+        <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>        
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${adaptation_test.dir2}/" includes="**/*"/>
+        </delete>
         <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-i"/>
             <arg value="${adaptation_test.dir1}/physical.xml"/>
@@ -300,50 +303,11 @@
     -->
     
     <target name="package" description="package the distribution" >
-       <!-- <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/csword.zip">
-            <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
-            <fileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe"/>
-            <fileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>
-            <fileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>
-        </zip>
-        
-        <delete includeemptydirs="true" failonerror="false">
-            <fileset dir="${dist.dir}/current" includes="**/*"/>
-        </delete>
-        <mkdir dir="${dist.dir}/current"/>
-        <exec executable="svn">
-            <arg line="export -force ${data.dir}/main ${dist.dir}/current"/> 
-        </exec>
-        <exec executable="svn">
-            <arg line="export -force ${run.dir} ${dist.dir}/current"/> 
-        </exec>
-        <copy todir="${dist.dir}/current/">
-            <fileset dir="${out.dir}/release/applications/adaptation_app" includes="*.exe"/>
-            <fileset dir="${out.dir}/release/applications/gaming_app" includes="*.exe *.qm"/>            
-            <fileset dir="${out.dir}/release/applications/preparation_app" includes="*.exe"/>            
-            <fileset dir="${out.dir}/release/applications/simulation_app" includes="*.exe"/>            
-            <fileset dir="${libraries.dir}/clients_gui" includes="*.qm"/>
-            <fileset dir="${libraries.dir}/clients_kernel" includes="*.qm"/>
-            <fileset dir="${libraries.dir}/gaming" includes="*.qm"/>
-            <fileset dir="${libraries.dir}/ENT" includes="*.qm"/>
-            <fileset dir="${applications.dir}/gaming_app" includes="*.qm"/>
-            <fileset dir="${applications.dir}/adaptation_app/translator" includes="*.qm"/>                        
-            <fileset dir="${run.dir}" includes="*.dll license.dat"/>
-        </copy>-->
-    </target>
-    
-    <target name="Package2" description="package the distribution" >
-   
-        <property name="tmp.dir" location="${dist.dir}/tmp"/>
-       
-        <mkdir dir="${dist.dir}"/>
-        <mkdir dir="${tmp.dir}"/>
-        <zip destfile="${tmp.dir}/symbols.pak">
+        <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
-        </zip>                
-        
-        <zip destfile="${dist.dir}/current.zip">
+        </zip>      
+        <mkdir dir="${dist.dir}/current"/>
+        <zip destfile="${dist.dir}/current/csword.zip">
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/adaptation_app/"  includes="*.exe"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.qm"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/preparation_app"  includes="*.exe"/>
@@ -354,7 +318,7 @@
             <zipfileset prefix="applications" dir="${libraries.dir}/ENT"                             includes="*.qm"/>
             <zipfileset prefix="applications" dir="${applications.dir}/gaming_app"                   includes="*.qm"/>
             <zipfileset prefix="applications" dir="${applications.dir}/adaptation_app/translator"    includes="*.qm"/>    
-            <zipfileset prefix="applications" dir="${tmp.dir}"                                       includes="symbols.pak"/>
+            <zipfileset prefix="applications" dir="${run.dir}"                                       includes="symbols.pak"/>
             <zipfileset prefix="applications" dir="${run.dir}">
                 <include name="license.dat"/>
                 <include name="TAO.dll"/>
@@ -377,13 +341,12 @@
                 <include name="qt-*.dll"/>
                 <include name="userDdm.dll"/>
                 <include name="xerces-c_2_7.dll"/>
-            </zipfileset>                
-            
+            </zipfileset>                           
             <!-- Cf defaultexcludes : no need of "svn export" -->
             <zipfileset prefix="data/models"   dir="${data.dir}/data/models/main"/>
             <zipfileset prefix="data/terrains" dir="${data.dir}/data/terrains"/>
             <zipfileset prefix="exercises/empty" dir="${data.dir}/exercises/empty"/>
-        </zip>
+        </zip>        
     </target>
         
     <!--
