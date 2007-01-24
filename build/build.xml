@@ -77,7 +77,7 @@
 
     <target name="library.network" description="build network static library">
         <build-lib name="network" pattern="lib${ant.project.name}_network-${platform}-mt@{suffix}" suffix="-gd" warnings="production">
-            <includepath path="${include.dir}/network"/>
+            <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
 
