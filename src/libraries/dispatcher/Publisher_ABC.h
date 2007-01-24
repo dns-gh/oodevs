@@ -40,7 +40,7 @@ public:
     virtual void Send( const ASN1T_MsgsInClient& msg ) = 0;
     
     virtual void                     Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg ) = 0;
-    virtual DIN::DIN_BufferedMessage GetDinMsg() = 0;
+    virtual DIN::DIN_BufferedMessage BuildDinMsg() = 0;
     //@}
 
 private:

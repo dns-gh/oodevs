@@ -62,10 +62,10 @@ void ClientPublisher::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage&
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientPublisher::GetDinMsg
+// Name: ClientPublisher::BuildDinMsg
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-DIN::DIN_BufferedMessage ClientPublisher::GetDinMsg()
+DIN::DIN_BufferedMessage ClientPublisher::BuildDinMsg()
 {
-    return client_.GetDinMsg();
+    return client_.BuildDinMsg();
 }

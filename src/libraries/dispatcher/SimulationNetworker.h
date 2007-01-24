@@ -10,13 +10,14 @@
 #ifndef __SimulationNetworker_h_
 #define __SimulationNetworker_h_
 
-#include "Networker_ABC.h"
-
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceClientUserCbk.h"
+#include "network/ClientNetworker_ABC.h"
 
 struct ASN1T_MsgsInSim;
 
+namespace DIN
+{
+    class DIN_Input;
+}
 
 namespace dispatcher 
 {
@@ -29,7 +30,7 @@ class Simulation;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class SimulationNetworker : public Networker_ABC
+class SimulationNetworker : public network::ClientNetworker_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -53,15 +54,14 @@ private:
 
     //! @name Connection callbacks
     //@{
-    void OnConnected     ( DIN::DIN_Link& link );
-    void OnNotConnected  ( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
-    void OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
+    virtual void OnConnected        ( DIN::DIN_Link& link );
+    virtual void OnConnectionFailed ( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
+    virtual void OnConnectionLost   ( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
     //@}
 
     //! @name Messages callbacks
     //@{
     void OnReceiveMsgOutSim                                ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
-    bool OnErrorReceivingMessage                           ( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
 
     void OnReceiveMsgInit                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgProfilingValues                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
@@ -77,10 +77,8 @@ private:
     //@}
 
 private:
-    DIN::DIN_ConnectionServiceClientUserCbk< SimulationNetworker > connectionService_;
-    DIN::DIN_MessageServiceUserCbk         < SimulationNetworker > messageService_;
-    NEK::NEK_AddressINET                                           simulationAddress_;
-    Simulation*                                                    pSimulation_;
+    Dispatcher& dispatcher_;    
+    Simulation* pSimulation_;
 };
 
 }

@@ -11,13 +11,10 @@
 #define __Client_h_
 
 #include "AsnTypes.h"
-#include "DIN/DIN_UserData_ABC.h"
-#include "DIN/DIN_Link.h"
+#include "network/Client_ABC.h"
 
 namespace DIN
 {
-    class DIN_MessageService_ABC;
-    class DIN_BufferedMessage;
     class DIN_Input;
 }
 
@@ -32,7 +29,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Client : public DIN::DIN_UserData_ABC
+class Client : public network::Client_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -48,13 +45,10 @@ public:
     void Send     ( const ASN1T_MsgsInClient& asnMsg );
     void Send     ( const ASN1T_MsgsInClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
     void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
-    
-    DIN::DIN_BufferedMessage GetDinMsg();
     //@}
 
     //! @name Tools
     //@{
-    void Disconnect();
     static Client& GetClientFromLink( const DIN::DIN_Link& link );
     //@}
 
@@ -80,14 +74,10 @@ private:
     //@}
 
 private:
-    Dispatcher&                  dispatcher_;
-    DIN::DIN_MessageService_ABC& messageService_;
-    DIN::DIN_Link&               link_;
-    Profile*                     pProfile_;
+    Dispatcher& dispatcher_;
+    Profile*    pProfile_;
 };
 
 }
-
-#include "Client.inl"
 
 #endif // __Client_h_

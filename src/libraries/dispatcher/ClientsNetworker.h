@@ -10,18 +10,20 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
-#include "Networker_ABC.h"
-
-#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
-#include "DIN/ConnectionService/DIN_ConnectionServiceServerUserCbk.h"
+#include "network/ServerNetworker_ABC.h"
 
 struct ASN1T_MsgsInClient;
 
+namespace DIN
+{
+    class DIN_Input;
+    class DIN_BufferedMessage;
+}
+
 namespace dispatcher 
 {
-
+class Dispatcher;
 class Client;
-class MessageManager;
 
 // =============================================================================
 /** @class  ClientsNetworker
@@ -29,19 +31,19 @@ class MessageManager;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ClientsNetworker : public Networker_ABC
+class ClientsNetworker : public network::ServerNetworker_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile );
-    ~ClientsNetworker();
+    ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile );
+    virtual ~ClientsNetworker();
     //@}
 
     //! @name Main
     //@{
-    void DenyConnections ();
-    void AllowConnections();
+    virtual void DenyConnections ();
+    virtual void AllowConnections();
 
     void Dispatch( const ASN1T_MsgsInClient& asnMsg );
     void Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
@@ -56,16 +58,14 @@ private:
 
     //! @name Connection callbacks
     //@{
-    void OnConnectionReceived   ( DIN::DIN_Server& server, DIN::DIN_Link& link );
-    void OnConnectionLost       ( DIN::DIN_Server& server, DIN::DIN_Link& link                , const DIN::DIN_ErrorDescription& reason );
-    void OnBadConnectionReceived( DIN::DIN_Server& server, const NEK::NEK_Address_ABC& address, const DIN::DIN_ErrorDescription& reason );    
+    virtual void OnConnectionReceived( DIN::DIN_Server& server, DIN::DIN_Link& link );
+    virtual void OnConnectionLost    ( DIN::DIN_Server& server, DIN::DIN_Link& link                , const DIN::DIN_ErrorDescription& reason );
     //@}
 
     //! @name Messages callbacks
     //@{
     void OnReceiveMsgOutClient             ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    bool OnErrorReceivingMessage           ( DIN::DIN_Link &link, const DIN::DIN_ErrorDescription& info );
-
+    
     void OnReceiveMsgEnableUnitVisionCones ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDisableUnitVisionCones( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgEnableProfiling       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
@@ -88,11 +88,8 @@ private:
     //@}
 
 private:
-    NEK::NEK_AddressINET                                        serverAddress_;
-    DIN::DIN_ConnectionServiceServerUserCbk< ClientsNetworker > connectionService_;
-    DIN::DIN_MessageServiceUserCbk         < ClientsNetworker > messageService_;
-    DIN::DIN_Server*                                            pServer_;
-    T_ClientSet                                                 clients_;
+    Dispatcher& dispatcher_;
+    T_ClientSet clients_;
 };
 
 }

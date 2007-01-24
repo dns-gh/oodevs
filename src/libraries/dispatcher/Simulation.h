@@ -11,14 +11,11 @@
 #define __Simulation_h_
 
 #include "AsnTypes.h"
-#include "DIN/DIN_UserData_ABC.h"
-#include "DIN/DIN_Link.h"
+#include "network/Server_ABC.h"
 
 namespace DIN
 {
-    class DIN_MessageService_ABC;
     class DIN_Input;
-    class DIN_BufferedMessage;
 }
 
 namespace dispatcher
@@ -31,7 +28,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Simulation : public DIN::DIN_UserData_ABC
+class Simulation : public network::Server_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -47,8 +44,6 @@ public:
     void Send     ( const ASN1T_MsgsInSim& asnMsg );
     void Send     ( const ASN1T_MsgsInSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );
     void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
-
-    DIN::DIN_BufferedMessage GetDinMsg();
     //@}
 
     //! @name Tools
@@ -64,13 +59,9 @@ private:
     //@}
 
 private:
-    Dispatcher&                  dispatcher_;
-    DIN::DIN_MessageService_ABC& messageService_;
-    DIN::DIN_Link&               link_;
+    Dispatcher& dispatcher_;
 };
 
 }
-
-#include "Simulation.inl"
 
 #endif // __Simulation_h_

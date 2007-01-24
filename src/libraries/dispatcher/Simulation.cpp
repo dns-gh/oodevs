@@ -19,8 +19,11 @@
 #include "SimulationPublisher.h"
 #include "ProfileManager.h"
 #include "network/AsnMessageEncoder.h"
+#include "DIN/MessageService/DIN_MessageService_ABC.h"
+#include "DIN/DIN_Link.h"
 
 using namespace dispatcher;
+using namespace network;
 using namespace DIN;
 
 // -----------------------------------------------------------------------------
@@ -28,15 +31,9 @@ using namespace DIN;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link )
-    : DIN_UserData_ABC()
-    , dispatcher_     ( dispatcher )
-    , messageService_ ( messageService )
-    , link_           ( link )
+    : Server_ABC ( messageService, link )
+    , dispatcher_( dispatcher )
 {
-    assert( !link_.GetUserData() );
-    link_.SetUserData( this );        
-    messageService_.Enable( link_ );
-
     AsnMsgInSimCtrlClientAnnouncement asnMsg;
     SimulationPublisher publisher( *this );
     asnMsg.Send( publisher );
@@ -48,10 +45,7 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
 //-----------------------------------------------------------------------------
 Simulation::~Simulation()
 {
-    messageService_.Disable( link_ );
-
-    assert( link_.GetUserData() == this );
-    link_.SetUserData( 0 );
+    // NOTHING
 }
 
 // =============================================================================
@@ -254,10 +248,12 @@ void Simulation::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinM
 }
 
 // -----------------------------------------------------------------------------
-// Name: Simulation::GetDinMsg
-// Created: NLD 2006-09-27
+// Name: Simulation::GetSimulationFromLink
+// Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-DIN_BufferedMessage Simulation::GetDinMsg()
+Simulation& Simulation::GetSimulationFromLink( const DIN::DIN_Link& link )
 {
-    return DIN_BufferedMessage( messageService_ );
+    DIN::DIN_UserData_ABC* pTmp = link.GetUserData();
+    assert( pTmp );
+    return *static_cast< Simulation* >( pTmp );    
 }

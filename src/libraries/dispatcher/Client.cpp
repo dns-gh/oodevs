@@ -20,8 +20,10 @@
 #include "ClientPublisher.h"
 #include "network/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
+#include "DIN/DIN_Link.h"
 
 using namespace dispatcher;
+using namespace network;
 using namespace DIN;
 
 // -----------------------------------------------------------------------------
@@ -29,16 +31,11 @@ using namespace DIN;
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 Client::Client( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, DIN_Link& link )
-    : DIN_UserData_ABC()
-    , dispatcher_     ( dispatcher )
-    , messageService_ ( messageService )
-    , link_           ( link )
-    , pProfile_       ( 0 )
+    : Client_ABC ( messageService, link )
+    , dispatcher_( dispatcher )
+    , pProfile_  ( 0 )
 {
-    assert( !link_.GetUserData() );
-    link_.SetUserData( this );        
-
-    messageService_.Enable( link_ );
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -47,19 +44,7 @@ Client::Client( Dispatcher& dispatcher, DIN_MessageService_ABC& messageService, 
 //-----------------------------------------------------------------------------
 Client::~Client()
 {
-    messageService_.Disable( link_ );
-
-    assert( link_.GetUserData() == this );
-    link_.SetUserData( 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Disconnect
-// Created: NLD 2006-10-05
-// -----------------------------------------------------------------------------
-void Client::Disconnect()
-{
-    link_.Close( true ); 
+    // NOTHING
 }
 
 // =============================================================================
@@ -337,11 +322,18 @@ void Client::Send( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg )
     messageService_.Send( link_, nMsgID, dinMsg );
 }
 
+// =============================================================================
+// TOOLS
+// =============================================================================
+
 // -----------------------------------------------------------------------------
-// Name: Client::GetDinMsg
-// Created: NLD 2006-09-27
+// Name: Client::GetClientFromLink
+// Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-DIN_BufferedMessage Client::GetDinMsg()
+// static
+Client& Client::GetClientFromLink( const DIN_Link& link )
 {
-    return DIN_BufferedMessage( messageService_ );
+    DIN_UserData_ABC* pTmp = link.GetUserData();
+    assert( pTmp );
+    return *static_cast< Client* >( pTmp );    
 }

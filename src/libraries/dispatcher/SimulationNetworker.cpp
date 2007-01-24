@@ -18,50 +18,47 @@
 #include "network/AsnMessageDecoder.h"
 #include "network/AsnMessageEncoder.h"
 #include "xeumeuleu/xml.h"
+#include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
+using namespace network;
 using namespace dispatcher;
 using namespace DIN;
-using namespace NEK;
-using namespace xml;
+
+namespace 
+{
+    std::string ReadHost( const std::string& configFile )
+    {
+        std::string host;
+        xml::xifstream xis( configFile );
+        xis >> xml::start( "config" )
+                >> xml::start( "dispatcher" )
+                    >> xml::start( "network" )
+                        >> xml::attribute( "client", host );
+        return host;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile )
-    : Networker_ABC     ( dispatcher )
-    , connectionService_( *this, dinEngine_, DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 2 )
-    , messageService_   ( *this, dinEngine_, DIN_ConnectorGuest() )
-    , pSimulation_      ( 0 )
-    , simulationAddress_()
+    : ClientNetworker_ABC( ReadHost( configFile ) )
+    , dispatcher_        ( dispatcher )
+    , pSimulation_       ( 0 )
 {
-    std::string host;
-    xml::xifstream xis( configFile );
-    xis >> xml::start( "config" )
-            >> xml::start( "dispatcher" )
-                >> xml::start( "network" )
-                    >> xml::attribute( "client", host );
-    // $$$$ NLD 2007-01-10: à intégrer dans DIN
-    simulationAddress_ = NEK_AddressINET( host.substr( 0, host.find_first_of( ':' ) ), atoi( host.substr( host.find_first_of( ':' ) + 1 ).c_str() ) );
-
-    messageService_.SetCbkOnError( &SimulationNetworker::OnErrorReceivingMessage );
-    messageService_.RegisterReceivedMessage( eMsgOutSim                                , *this, &SimulationNetworker::OnReceiveMsgOutSim                                 );
-    messageService_.RegisterReceivedMessage( eMsgInit                                  , *this, &SimulationNetworker::OnReceiveMsgInit                                   );
-    messageService_.RegisterReceivedMessage( eMsgProfilingValues                       , *this, &SimulationNetworker::OnReceiveMsgProfilingValues                        );
-    messageService_.RegisterReceivedMessage( eMsgTrace                                 , *this, &SimulationNetworker::OnReceiveMsgTrace                                  );
-    messageService_.RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, &SimulationNetworker::OnReceiveMsgUnitVisionCones                        );
-    messageService_.RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, &SimulationNetworker::OnReceiveMsgUnitInterVisibility                    );
-    messageService_.RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, &SimulationNetworker::OnReceiveMsgObjectInterVisibility                  );
-    messageService_.RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, &SimulationNetworker::OnReceiveMsgPopulationConcentrationInterVisibility );
-    messageService_.RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, &SimulationNetworker::OnReceiveMsgPopulationFlowInterVisibility          );
-    messageService_.RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, &SimulationNetworker::OnReceiveMsgDebugDrawPoints                        );
-    messageService_.RegisterReceivedMessage( eMsgEnvironmentType                       , *this, &SimulationNetworker::OnReceiveMsgEnvironmentType                        );
-    messageService_.RegisterReceivedMessage( eMsgPopulationCollision                   , *this, &SimulationNetworker::OnReceiveMsgPopulationCollision                    );
-
-    connectionService_.SetCbkOnConnectionSuccessful( &SimulationNetworker::OnConnected      );
-    connectionService_.SetCbkOnConnectionFailed    ( &SimulationNetworker::OnNotConnected   );
-    connectionService_.SetCbkOnConnectionLost      ( &SimulationNetworker::OnConnectionLost );
-    connectionService_.JoinHost( simulationAddress_ );
+    GetMessageService().RegisterReceivedMessage( eMsgOutSim                                , *this, &SimulationNetworker::OnReceiveMsgOutSim                                 );
+    GetMessageService().RegisterReceivedMessage( eMsgInit                                  , *this, &SimulationNetworker::OnReceiveMsgInit                                   );
+    GetMessageService().RegisterReceivedMessage( eMsgProfilingValues                       , *this, &SimulationNetworker::OnReceiveMsgProfilingValues                        );
+    GetMessageService().RegisterReceivedMessage( eMsgTrace                                 , *this, &SimulationNetworker::OnReceiveMsgTrace                                  );
+    GetMessageService().RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, &SimulationNetworker::OnReceiveMsgUnitVisionCones                        );
+    GetMessageService().RegisterReceivedMessage( eMsgUnitInterVisibility                   , *this, &SimulationNetworker::OnReceiveMsgUnitInterVisibility                    );
+    GetMessageService().RegisterReceivedMessage( eMsgObjectInterVisibility                 , *this, &SimulationNetworker::OnReceiveMsgObjectInterVisibility                  );
+    GetMessageService().RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, &SimulationNetworker::OnReceiveMsgPopulationConcentrationInterVisibility );
+    GetMessageService().RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, &SimulationNetworker::OnReceiveMsgPopulationFlowInterVisibility          );
+    GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, &SimulationNetworker::OnReceiveMsgDebugDrawPoints                        );
+    GetMessageService().RegisterReceivedMessage( eMsgEnvironmentType                       , *this, &SimulationNetworker::OnReceiveMsgEnvironmentType                        );
+    GetMessageService().RegisterReceivedMessage( eMsgPopulationCollision                   , *this, &SimulationNetworker::OnReceiveMsgPopulationCollision                    );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +67,7 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
 // -----------------------------------------------------------------------------
 SimulationNetworker::~SimulationNetworker()
 {
+    // NOTHING
 }
   
 // =============================================================================
@@ -82,21 +80,19 @@ SimulationNetworker::~SimulationNetworker()
 // -----------------------------------------------------------------------------
 void SimulationNetworker::OnConnected( DIN_Link& link )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Connected to simulation '%s'", link.GetRemoteAddress().GetAddressAsString().c_str() ).c_str() );
+    ClientNetworker_ABC::OnConnected( link );
 
     assert( !pSimulation_ );
-    pSimulation_ = new Simulation( dispatcher_, messageService_, link );
+    pSimulation_ = new Simulation( dispatcher_, GetMessageService(), link );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnNotConnected
+// Name: SimulationNetworker::OnConnectionFailed
 // Created: AML 03-04-02
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnNotConnected( DIN_Link& link, const DIN_ErrorDescription& reason )
+void SimulationNetworker::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
-    assert( !pSimulation_ );
-    MT_LOG_INFO_MSG( MT_FormatString( "Connection to simulation '%s' failed (reason : %s)", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
-    connectionService_.JoinHost( simulationAddress_ );
+    ClientNetworker_ABC::OnConnectionFailed( link, reason );
 
     dispatcher_.GetModel().Reset();
     dispatcher_.GetClientsNetworker().DenyConnections();
@@ -108,12 +104,11 @@ void SimulationNetworker::OnNotConnected( DIN_Link& link, const DIN_ErrorDescrip
 // -----------------------------------------------------------------------------
 void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
+    ClientNetworker_ABC::OnConnectionLost( link, reason );
+
     assert( pSimulation_ );
     delete pSimulation_;
     pSimulation_ = 0;
-
-    MT_LOG_INFO_MSG( MT_FormatString( "Connection to simulation '%s' lost (reason : %s) - reconnecting", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );    
-    connectionService_.JoinHost( simulationAddress_ );
 
     dispatcher_.GetModel().Reset();
     dispatcher_.GetClientsNetworker().DenyConnections();
@@ -161,16 +156,6 @@ void SimulationNetworker::OnReceiveMsgOutSim( DIN::DIN_Link& linkFrom, DIN::DIN_
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: SimulationNetworker::OnErrorReceivingMessage
-// Created: NLD 2006-09-21
-// -----------------------------------------------------------------------------
-bool SimulationNetworker::OnErrorReceivingMessage( DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& info )
-{
-    MT_LOG_INFO_MSG( MT_FormatString( "Error while receiving message from simulation '%s' : %s", link.GetRemoteAddress().GetAddressAsString().c_str(), info.GetInfo().c_str() ).c_str() );
-    return false;    
-}
-
 // =============================================================================
 // SENT MESSAGES
 // =============================================================================
@@ -184,7 +169,7 @@ void SimulationNetworker::Dispatch( const ASN1T_MsgsInSim& asnMsg )
     assert( pSimulation_ );
     try
     {
-        network::AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( messageService_, asnMsg );
+        network::AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( GetMessageService(), asnMsg );
         pSimulation_->Send( asnMsg, asnEncoder.GetDinMsg() );
     }
     catch( std::runtime_error& exception )
@@ -201,7 +186,7 @@ void SimulationNetworker::Dispatch( unsigned int nMsgID, const DIN::DIN_Input& d
 {
     assert( pSimulation_ );
 
-    DIN_BufferedMessage copiedMsg( messageService_ );
+    DIN_BufferedMessage copiedMsg( GetMessageService() );
     copiedMsg.GetOutput().Append( dinMsg.GetBuffer( 0 ), dinMsg.GetAvailable() );
 
     pSimulation_->Send( nMsgID, copiedMsg );

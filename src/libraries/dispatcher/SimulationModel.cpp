@@ -162,7 +162,7 @@ void SimulationModel::Send( Publisher_ABC& publisher ) const
     asn().etat                 = nSimState_;
     asn.Send( publisher );
 
-    DIN_BufferedMessage msg = publisher.GetDinMsg();
+    DIN_BufferedMessage msg = publisher.BuildDinMsg();
     msg << bSendVisionCones_
         << bProfilingEnabled_
         << strConfigPath_;

@@ -62,10 +62,10 @@ void SimulationPublisher::Send( unsigned int nMsgID, const DIN::DIN_BufferedMess
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationPublisher::GetDinMsg
+// Name: SimulationPublisher::BuildDinMsg
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-DIN::DIN_BufferedMessage SimulationPublisher::GetDinMsg()
+DIN::DIN_BufferedMessage SimulationPublisher::BuildDinMsg()
 {
-    return simulation_.GetDinMsg();
+    return simulation_.BuildDinMsg();
 }
