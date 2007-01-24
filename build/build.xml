@@ -305,7 +305,7 @@
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
         <delete dir="${dist.dir}/old"/>
-        <move file="${dist.dir}/current" tofile="${dist.dir}/old"/ failonerror="false">
+        <move file="${dist.dir}/current" tofile="${dist.dir}/old" failonerror="false"/>
         <mkdir dir="${dist.dir}/current"/>
         <echoxml file="${dist.dir}/current/exercise.xml">
             <exercise>
@@ -316,7 +316,7 @@
                 <model dataset="" physical="worldwide"/>    
             </exercise>
         </echoxml>
-        <zip destfile="${dist.dir}/current/csword.zip">
+        <zip destfile="${dist.dir}/current/csword_applications.zip">
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/adaptation_app/"  includes="*.exe"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.qm"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/preparation_app"  includes="*.exe"/>
@@ -354,11 +354,15 @@
                 <include name="xerces-c_2_7.dll"/>
                 <include name="zlib1.dll"/>
             </zipfileset>                           
+        </zip>            
+            
+                    
+        <zip destfile="${dist.dir}/current/csword.zip">
+            <zipgroupfileset dir="${dist.dir}/current" includes="csword_applications.zip"/>
             <!-- Cf defaultexcludes : no need of "svn export" -->
             <zipfileset prefix="data/models"   dir="${data.dir}/data/models/main"/>
             <zipfileset prefix="data/terrains" dir="${data.dir}/data/terrains"/>
-            <zipfileset prefix="exercises/empty" dir="${data.dir}/exercises/empty"/>
-            
+            <zipfileset prefix="exercises/empty" dir="${data.dir}/exercises/empty"/>            
             <zipfileset prefix="exercises/empty" dir="${dist.dir}/current" includes="exercise.xml"/>
         </zip>        
         <delete file="${dist.dir}/current/exercise.xml"/>
