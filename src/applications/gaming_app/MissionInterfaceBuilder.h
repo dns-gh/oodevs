@@ -10,7 +10,7 @@
 #ifndef __MissionInterfaceBuilder_h_
 #define __MissionInterfaceBuilder_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "ParamComboBox.h"
 #include "ParamRadioBtnGroup.h"
 

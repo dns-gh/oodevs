@@ -19,7 +19,7 @@
 #ifndef __MsgRecorder_h_
 #define __MsgRecorder_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 class AgentServerMsgMgr;
 class Network;
 namespace internal

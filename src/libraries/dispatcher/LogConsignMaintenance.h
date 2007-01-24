@@ -10,7 +10,7 @@
 #ifndef __LogConsignMaintenance_h_
 #define __LogConsignMaintenance_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 
 namespace dispatcher
 {

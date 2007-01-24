@@ -19,7 +19,7 @@
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
 
-#include "Network/NET_ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class PHY_WeaponType;
 class PHY_Weapon;

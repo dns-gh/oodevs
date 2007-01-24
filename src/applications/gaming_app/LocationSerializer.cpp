@@ -11,7 +11,7 @@
 #include "LocationSerializer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 using namespace kernel;
 

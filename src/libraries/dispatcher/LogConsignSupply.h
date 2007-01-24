@@ -10,7 +10,7 @@
 #ifndef __LogConsignSupply_h_
 #define __LogConsignSupply_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "LogSupplyDotation.h"
 #include "ModelsContainer.h"
 

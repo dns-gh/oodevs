@@ -10,7 +10,7 @@
 #ifndef __ParamDirection_h_
 #define __ParamDirection_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "Param_ABC.h"
 
 // =============================================================================

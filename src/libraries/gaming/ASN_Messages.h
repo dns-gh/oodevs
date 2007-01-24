@@ -14,7 +14,7 @@
 
 #include "Network.h"
 #include "AgentServerMsgMgr.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 //=============================================================================
 // ASN ENCODER WRAPPER MACROS

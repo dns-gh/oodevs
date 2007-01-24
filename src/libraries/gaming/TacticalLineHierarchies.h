@@ -13,7 +13,7 @@
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Resolver_ABC.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace kernel
 {

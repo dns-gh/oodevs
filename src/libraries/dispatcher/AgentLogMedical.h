@@ -10,7 +10,7 @@
 #ifndef __AgentLogMedical_h_
 #define __AgentLogMedical_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
 #include "EquipmentAvailability.h"

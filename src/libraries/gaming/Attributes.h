@@ -10,7 +10,7 @@
 #ifndef __Attributes_h_
 #define __Attributes_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"

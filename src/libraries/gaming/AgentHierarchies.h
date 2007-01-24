@@ -15,7 +15,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "Diplomacies.h"
 
 namespace kernel

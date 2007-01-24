@@ -10,7 +10,7 @@
 #ifndef __AgentLogSupply_h_
 #define __AgentLogSupply_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "ModelsContainer.h"
 #include "EquipmentAvailability.h"
 #include "Dotation.h"

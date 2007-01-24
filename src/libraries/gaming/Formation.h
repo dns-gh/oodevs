@@ -13,7 +13,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Resolver_ABC.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 // =============================================================================
 /** @class  Formation

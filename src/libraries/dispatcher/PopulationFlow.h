@@ -10,7 +10,7 @@
 #ifndef __PopulationFlow_h_
 #define __PopulationFlow_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Localisation.h"
 
 namespace dispatcher

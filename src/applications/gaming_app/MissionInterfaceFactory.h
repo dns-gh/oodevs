@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/ElementObserver_ABC.h"
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace kernel
 {

@@ -19,6 +19,8 @@
 #ifndef __DEC_PathClass_h_
 #define __DEC_PathClass_h_
 
+#include "MIL.h"
+
 class DEC_PathType;
 class MIL_AgentPion;
 class MIL_RealObjectType;

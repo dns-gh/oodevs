@@ -15,9 +15,8 @@
 
 #include "MIL.h"
 #include "NET_AS_MOSServerMgr_ABC.h"
-#include "NET_ASN_Types.h"
-
 #include "NET_ASN_MessageController.h"
+#include "network/Simulation_Asn.h"
 
 NET_ASN_GENERATE_MESSAGE_CONTROLLER( MsgsInSim )
 class MIL_Agent_ABC;

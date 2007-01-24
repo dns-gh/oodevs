@@ -10,7 +10,7 @@
 #ifndef __Side_h_
 #define __Side_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "ModelRefsContainer.h"
 
 namespace dispatcher

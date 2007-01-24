@@ -11,7 +11,7 @@
 #define __ParamLimaList_h_
 
 #include "Param_ABC.h"
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 

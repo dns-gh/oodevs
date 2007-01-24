@@ -11,7 +11,7 @@
 #define __FiresModel_h_
 
 #include "clients_kernel/Resolver.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace kernel
 {

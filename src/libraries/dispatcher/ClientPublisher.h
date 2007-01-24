@@ -10,7 +10,7 @@
 #ifndef __ClientPublisher_h_
 #define __ClientPublisher_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 
 #include "Publisher_ABC.h"
 

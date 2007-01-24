@@ -10,7 +10,7 @@
 #ifndef __Position_h_
 #define __Position_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 
 namespace dispatcher
 {

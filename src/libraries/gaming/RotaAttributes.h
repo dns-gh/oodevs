@@ -10,7 +10,7 @@
 #ifndef __RotaAttributes_h_
 #define __RotaAttributes_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"

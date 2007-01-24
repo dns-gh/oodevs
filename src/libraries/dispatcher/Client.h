@@ -10,7 +10,7 @@
 #ifndef __Client_h_
 #define __Client_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "network/Client_ABC.h"
 
 namespace DIN

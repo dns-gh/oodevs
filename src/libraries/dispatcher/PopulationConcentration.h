@@ -10,7 +10,7 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Position.h"
 
 namespace dispatcher

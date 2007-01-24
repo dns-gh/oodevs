@@ -20,7 +20,7 @@
 #define __LogMaintenanceConsign_h_
 
 #include "clients_kernel/Types.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 

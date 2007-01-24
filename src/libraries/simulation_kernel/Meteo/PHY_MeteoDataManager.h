@@ -7,7 +7,7 @@
 
 #include "MIL.h"
 
-#include "Network/NET_ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class MIL_Config;
 class PHY_RawVisionData;

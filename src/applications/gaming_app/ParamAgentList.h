@@ -10,7 +10,7 @@
 #ifndef __ParamAgentList_h_
 #define __ParamAgentList_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "EntityListParameter.h"
 
 namespace kernel

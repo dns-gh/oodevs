@@ -10,7 +10,7 @@
 #ifndef __ChangeHumanFactorsDialog_h_
 #define __ChangeHumanFactorsDialog_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"

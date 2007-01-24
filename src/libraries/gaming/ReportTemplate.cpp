@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;

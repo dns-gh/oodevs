@@ -10,7 +10,7 @@
 #ifndef __SimulationPublisher_h_
 #define __SimulationPublisher_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Publisher_ABC.h"
 
 namespace dispatcher

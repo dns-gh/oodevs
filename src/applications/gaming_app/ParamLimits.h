@@ -11,7 +11,7 @@
 #define __ParamLimits_h_
 
 #include "Param_ABC.h"
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class LimitParameter;
 class Limit;

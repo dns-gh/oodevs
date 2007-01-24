@@ -10,7 +10,7 @@
 #ifndef __ParamObstacleList_h_
 #define __ParamObstacleList_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "Param_ABC.h"
 
 namespace kernel

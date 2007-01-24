@@ -10,7 +10,7 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Position.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"

@@ -10,7 +10,7 @@
 #ifndef __LogSupplyDotation_h_
 #define __LogSupplyDotation_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 
 namespace dispatcher
 {

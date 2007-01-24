@@ -10,7 +10,7 @@
 #ifndef __Reports_h_
 #define __Reports_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "DIN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"

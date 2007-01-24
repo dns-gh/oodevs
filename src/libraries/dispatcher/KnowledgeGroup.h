@@ -10,7 +10,7 @@
 #ifndef __KnowledgeGroup_h_
 #define __KnowledgeGroup_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "ModelRefsContainer.h"
 
 namespace dispatcher

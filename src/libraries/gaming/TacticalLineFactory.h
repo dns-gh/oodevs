@@ -11,7 +11,7 @@
 #define __TacticalLineFactory_h_
 
 #include "clients_kernel/SelectionObserver_ABC.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace kernel
 {

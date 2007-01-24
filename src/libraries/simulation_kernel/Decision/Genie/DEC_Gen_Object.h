@@ -16,7 +16,7 @@
 
 #include "simulation_terrain/TER_Localisation.h"
 
-#include "Network/NET_ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class DEC_AutomateDecision;
 class MIL_RealObjectType;

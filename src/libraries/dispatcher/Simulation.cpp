@@ -12,7 +12,7 @@
 #include "Simulation.h"
 
 #include "Network_Def.h"
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Dispatcher.h"
 #include "Model.h"
 #include "ClientsNetworker.h"

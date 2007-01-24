@@ -10,7 +10,7 @@
 #ifndef __LogisticConsignFactory_ABC_h_
 #define __LogisticConsignFactory_ABC_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class LogMaintenanceConsign;
 class LogSupplyConsign;

@@ -10,7 +10,7 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Localisation.h"
 
 namespace dispatcher

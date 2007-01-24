@@ -17,7 +17,7 @@
 #include "MIL_AgentServer.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_AS_MOSServerMsgMgr.h"
-#include "Network/NET_ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 //=============================================================================
 // ASN ENCODER WRAPPER MACROS

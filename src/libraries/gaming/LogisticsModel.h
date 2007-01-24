@@ -10,7 +10,7 @@
 #ifndef __LogisticsModel_h_
 #define __LogisticsModel_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/Resolver.h"
 
 class LogMaintenanceConsign;

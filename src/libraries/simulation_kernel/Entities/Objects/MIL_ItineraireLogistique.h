@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "MIL_RealObject_ABC.h"
-#include "Network/NET_ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class MIL_Agent_ABC;
 

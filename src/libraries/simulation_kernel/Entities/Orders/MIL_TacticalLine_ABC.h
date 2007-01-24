@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 
-#include "Network/NET_ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class MIL_Formation;
 class MIL_Automate;

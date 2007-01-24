@@ -10,7 +10,7 @@
 #ifndef __MSEllipse_h_
 #define __MSEllipse_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace kernel
 {

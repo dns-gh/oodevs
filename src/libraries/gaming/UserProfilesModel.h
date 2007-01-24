@@ -10,7 +10,7 @@
 #ifndef __UserProfilesModel_h_
 #define __UserProfilesModel_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 class UserProfile;
 class UserProfileFactory_ABC;

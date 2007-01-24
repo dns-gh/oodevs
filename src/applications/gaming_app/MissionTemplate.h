@@ -11,7 +11,7 @@
 #define __MissionInterface_h_
 
 #include "clients_kernel/Resolver.h"
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace xml
 {

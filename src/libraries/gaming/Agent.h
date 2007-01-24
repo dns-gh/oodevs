@@ -10,7 +10,7 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"

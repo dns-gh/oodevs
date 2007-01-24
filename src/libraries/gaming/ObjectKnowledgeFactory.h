@@ -10,7 +10,7 @@
 #ifndef __ObjectKnowledgeFactory_h_
 #define __ObjectKnowledgeFactory_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace kernel
 {

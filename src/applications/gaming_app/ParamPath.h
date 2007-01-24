@@ -10,7 +10,7 @@
 #ifndef __ParamPath_h_
 #define __ParamPath_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"

@@ -10,7 +10,7 @@
 #ifndef __ParamDotationDType_h_
 #define __ParamDotationDType_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "ParamComboBox.h"
 #include "clients_kernel/Resolver.h"
 

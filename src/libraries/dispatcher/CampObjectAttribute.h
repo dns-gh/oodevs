@@ -10,7 +10,7 @@
 #ifndef __CampObjectAttribute_h_
 #define __CampObjectAttribute_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher

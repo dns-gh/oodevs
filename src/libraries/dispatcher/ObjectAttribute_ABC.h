@@ -10,7 +10,7 @@
 #ifndef __ObjectAttribute_ABC_h_
 #define __ObjectAttribute_ABC_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 
 namespace dispatcher
 {

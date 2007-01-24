@@ -10,7 +10,7 @@
 #ifndef __MissionParameter_h_
 #define __MissionParameter_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 namespace xml
 {

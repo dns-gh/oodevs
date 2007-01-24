@@ -10,7 +10,7 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "network/Server_ABC.h"
 
 namespace DIN

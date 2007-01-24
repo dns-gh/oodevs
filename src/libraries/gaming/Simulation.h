@@ -10,7 +10,7 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "Profiling.h"
 
 namespace kernel

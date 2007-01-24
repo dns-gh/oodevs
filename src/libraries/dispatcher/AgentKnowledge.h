@@ -10,7 +10,7 @@
 #ifndef __AgentKnowledge_h_
 #define __AgentKnowledge_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Position.h"
 
 namespace dispatcher

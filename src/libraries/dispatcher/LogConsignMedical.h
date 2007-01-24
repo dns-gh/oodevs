@@ -10,7 +10,7 @@
 #ifndef __LogConsignMedical_h_
 #define __LogConsignMedical_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 
 namespace dispatcher
 {

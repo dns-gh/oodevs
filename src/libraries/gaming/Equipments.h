@@ -10,7 +10,7 @@
 #ifndef __Equipments_h_
 #define __Equipments_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver.h"

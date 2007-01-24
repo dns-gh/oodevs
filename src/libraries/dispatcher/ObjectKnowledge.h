@@ -10,7 +10,7 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
-#include "AsnTypes.h"
+#include "network/Simulation_Asn.h"
 #include "Localisation.h"
 #include "ModelRefsContainer.h"
 

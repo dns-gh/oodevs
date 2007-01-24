@@ -10,7 +10,7 @@
 #ifndef __ParamObstacle_h_
 #define __ParamObstacle_h_
 
-#include "gaming/ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "Param_ABC.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "EntityParameter.h"

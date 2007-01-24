@@ -10,7 +10,7 @@
 #ifndef __AgentFireResult_h_
 #define __AgentFireResult_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Resolver.h"
 #include "Casualties.h"

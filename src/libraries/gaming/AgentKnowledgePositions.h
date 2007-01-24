@@ -10,7 +10,7 @@
 #ifndef __AgentKnowledgePositions_h_
 #define __AgentKnowledgePositions_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Updatable_ABC.h"
 

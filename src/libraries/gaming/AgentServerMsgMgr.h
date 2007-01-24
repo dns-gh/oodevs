@@ -11,7 +11,7 @@
 #define __AgentServerMsgMgr_h_
 
 #include "clients_kernel/Types.h"
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 
 #include "DIN/DIN_Engine.h"
 #include "DIN/DIN_Link.h"

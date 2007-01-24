@@ -10,7 +10,7 @@
 #ifndef __Profile_h_
 #define __Profile_h_
 
-#include "ASN_Types.h"
+#include "network/Simulation_Asn.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "Simulation.h"
