@@ -13,12 +13,12 @@
 
 #include "Network_Def.h"
 #include "AsnTypes.h"
-#include "AsnMessageEncoder.h"
 #include "Dispatcher.h"
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "SimulationPublisher.h"
 #include "ProfileManager.h"
+#include "network/AsnMessageEncoder.h"
 
 using namespace dispatcher;
 using namespace DIN;
@@ -231,7 +231,7 @@ void Simulation::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 // -----------------------------------------------------------------------------
 void Simulation::Send( const ASN1T_MsgsInSim& asnMsg )
 {
-    AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( messageService_, asnMsg );
+    network::AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( messageService_, asnMsg );
     messageService_.Send( link_, eMsgInSim, asnEncoder.GetDinMsg() );
 }
 

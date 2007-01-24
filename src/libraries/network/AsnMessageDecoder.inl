@@ -9,82 +9,83 @@
 
 #include <iostream>
 
-namespace dispatcher {
+namespace network {
 
 // -----------------------------------------------------------------------------
-// Name: AsnMessageEncoder constructor
+// Name: AsnMessageDecoder constructor
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
 template< typename T, typename C > inline
-AsnMessageEncoder< T, C >::AsnMessageEncoder( DIN::DIN_MessageService_ABC& msgService, const T& asnMsg )
+AsnMessageDecoder< T, C >::AsnMessageDecoder( DIN::DIN_Input& dinMsg )
     : asnBuffer_ ( aAsnBuffer_, sizeof( aAsnBuffer_ ), TRUE )
-    , asnMsgCtrl_( asnBuffer_, const_cast< T& >( asnMsg ) )
-    , dinMsg_    ( msgService )
+    , asnMsg_    ()
+    , asnMsgCtrl_( asnBuffer_, asnMsg_ )
 {
-    Encode();
+    Decode( dinMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AsnMessageEncoder constructor
+// Name: AsnMessageDecoder constructor
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
 template< typename T, typename C > inline
-AsnMessageEncoder< T, C >::AsnMessageEncoder( DIN::DIN_MessageService_ABC& msgService, const T& asnMsg, unsigned long nContext )
+AsnMessageDecoder< T, C >::AsnMessageDecoder( DIN::DIN_Input& dinMsg, unsigned long& nContext )
     : asnBuffer_ ( aAsnBuffer_, sizeof( aAsnBuffer_ ), TRUE )
-    , asnMsgCtrl_( asnBuffer_, const_cast< T& >( asnMsg ) )
-    , dinMsg_    ( msgService )
+    , asnMsg_    ()
+    , asnMsgCtrl_( asnBuffer_, asnMsg_ )
 {
-    dinMsg_ << nContext;
-    Encode();
+    dinMsg >> nContext;
+    Decode( dinMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AsnMessageEncoder destructor
+// Name: AsnMessageDecoder destructor
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
 template< typename T, typename C > inline
-AsnMessageEncoder< T, C >::~AsnMessageEncoder()
+AsnMessageDecoder< T, C >::~AsnMessageDecoder()
 {
 }
 
 // -----------------------------------------------------------------------------
-// Name: AsnMessageEncoder::Encode
+// Name: AsnMessageDecoder::Decode
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
-template< typename T, typename C > inline 
-void AsnMessageEncoder< T, C >::Encode()
+template< typename T, typename C > inline
+void AsnMessageDecoder< T, C >::Decode( DIN::DIN_Input& dinMsg )
 {
-    if( asnMsgCtrl_.Encode() != ASN_OK )
+    uint nAsnMsgSize = dinMsg.GetAvailable();
+    assert( nAsnMsgSize <= sizeof( aAsnBuffer_ ) );
+
+    memcpy( aAsnBuffer_, dinMsg.GetBuffer( nAsnMsgSize ), nAsnMsgSize );
+    if( asnMsgCtrl_.Decode() != ASN_OK )
     {
         asnBuffer_.PrintErrorInfo();
-        throw std::runtime_error( "Error while encoding asn message" );
+        throw std::runtime_error( "Error while decoding asn message" );
     }
-
 //    Dump();
-    dinMsg_.GetOutput().Append( asnBuffer_.GetMsgPtr(), asnBuffer_.GetMsgLen() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AsnMessageEncoder::GetDinMsg
+// Name: AsnMessageDecoder::GetAsnMsg
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
 template< typename T, typename C > inline 
-const DIN::DIN_BufferedMessage& AsnMessageEncoder< T, C >::GetDinMsg() const
+const T& AsnMessageDecoder< T, C >::GetAsnMsg() const
 {
-    return dinMsg_;
+    return asnMsg_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AsnMessageEncoder::Dump
+// Name: AsnMessageDecoder::Dump
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
 template< typename T, typename C > inline 
-void AsnMessageEncoder< T, C >::Dump() const
+void AsnMessageDecoder< T, C >::Dump() const
 {
     std::cout << "BEGIN MSG DUMP =>" << std::endl;
-    const_cast< C& >( asnMsgCtrl_ ).Print( "Sending msg" );
+    const_cast< C& >( asnMsgCtrl_ ).Print( "Receiving msg" );
     std::cout << "END MSG DUMP =>" << std::endl;
 }
-
 
 }

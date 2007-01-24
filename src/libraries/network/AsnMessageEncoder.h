@@ -10,7 +10,8 @@
 #ifndef __AsnMessageEncoder_h_
 #define __AsnMessageEncoder_h_
 
-#include "AsnTypes.h"
+#include "asn1per.h"
+#include "asn1PerCppTypes.h"
 #include "DIN/MessageService/DIN_BufferedMessage.h"
 
 namespace DIN
@@ -18,7 +19,7 @@ namespace DIN
     class DIN_MessageService_ABC;
 }
 
-namespace dispatcher 
+namespace network 
 {
 // =============================================================================
 /** @class  AsnMessageEncoder

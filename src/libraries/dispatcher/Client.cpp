@@ -18,7 +18,7 @@
 #include "ProfileManager.h"
 #include "Network_Def.h"
 #include "ClientPublisher.h"
-#include "AsnMessageEncoder.h"
+#include "network/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 
 using namespace dispatcher;
@@ -308,7 +308,7 @@ void Client::Send( const ASN1T_MsgsInClient& asnMsg )
     if( !CheckRights( asnMsg ) )
         return;
 
-    AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( messageService_, asnMsg );
+    network::AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( messageService_, asnMsg );
     messageService_.Send( link_, eMsgInClient, asnEncoder.GetDinMsg() );
 }
 

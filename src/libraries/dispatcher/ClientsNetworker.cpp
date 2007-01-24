@@ -14,8 +14,8 @@
 #include "Network_Def.h"
 #include "Dispatcher.h"
 #include "Client.h"
-#include "AsnMessageDecoder.h"
-#include "AsnMessageEncoder.h"
+#include "network/AsnMessageDecoder.h"
+#include "network/AsnMessageEncoder.h"
 #include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
@@ -170,7 +170,7 @@ void ClientsNetworker::OnReceiveMsgOutClient( DIN::DIN_Link& linkFrom, DIN::DIN_
 {
     try
     {
-        AsnMessageDecoder< ASN1T_MsgsOutClient, ASN1C_MsgsOutClient > asnDecoder( input );
+        network::AsnMessageDecoder< ASN1T_MsgsOutClient, ASN1C_MsgsOutClient > asnDecoder( input );
         Client::GetClientFromLink( linkFrom ).OnReceive( asnDecoder.GetAsnMsg() );
     }
     catch( std::runtime_error& exception )
@@ -191,7 +191,7 @@ void ClientsNetworker::Dispatch( const ASN1T_MsgsInClient& asnMsg )
 {
     try
     {
-        AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( messageService_, asnMsg );
+        network::AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( messageService_, asnMsg );
         for( CIT_ClientSet it = clients_.begin(); it != clients_.end(); ++it )
             (**it).Send( asnMsg, asnEncoder.GetDinMsg() );
     }

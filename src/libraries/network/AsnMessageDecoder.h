@@ -10,14 +10,15 @@
 #ifndef __AsnMessageDecoder_h_
 #define __AsnMessageDecoder_h_
 
-#include "AsnTypes.h"
+#include "asn1per.h"
+#include "asn1PerCppTypes.h"
 
 namespace DIN
 {
     class DIN_Input;
 }
 
-namespace dispatcher 
+namespace network
 {
 // =============================================================================
 /** @class  AsnMessageDecoder
