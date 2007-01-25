@@ -1,0 +1,80 @@
+--
+-- file name : Games.asn
+--
+-- Games messages
+--
+
+Games DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+GamesIncludes ::= SEQUENCE {}
+GamesExports  ::= NULL
+-- END includes
+
+Game ::= SEQUENCE
+{
+    name            VisibleString,
+    host            VisibleString,
+    exercise-name   VisibleString,
+    start-date      VisibleString,
+    status          ENUMERATED
+    {
+        running,
+        paused
+    }
+}
+
+GameList ::= SEQUENCE OF Game
+
+MsgGameListRequest ::= SEQUENCE
+{
+    exercise-name VisibleString
+}
+
+MsgGameListResponse ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        ok,
+        forbidden
+    },
+    games GameList OPTIONAL
+}
+
+-- 
+-- Control commands
+-- 
+MsgGameStartRequest ::= SEQUENCE
+{
+    name     VisibleString OPTIONAL,
+    exercise VisibleString
+}
+
+MsgGameStartResponse ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        ok,
+        forbidden,
+        exercise-not-found,
+        game-name-exists
+    },
+    game    Game OPTIONAL
+}
+
+MsgGameStopRequest ::= SEQUENCE
+{
+    name VisibleString
+}
+
+MsgGameStopResponse ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        ok,
+        forbidden,
+        game-not-found
+    }
+}
+
+END

@@ -1,0 +1,23 @@
+--
+-- file name : Models.asn
+--
+-- Models messages
+--
+
+Models DEFINITIONS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS DatasetsExports FROM Datasets;
+ModelsIncludes ::= SEQUENCE { DatasetsExports }
+ModelsExports  ::= NULL
+-- END includes
+
+Model ::= SEQUENCE
+{
+    dataset  Dataset,
+    physical VisibleString
+}
+
+ModelList ::= SEQUENCE OF Model
+
+END

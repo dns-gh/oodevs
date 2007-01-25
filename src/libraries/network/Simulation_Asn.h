@@ -14,21 +14,21 @@
 
 #pragma warning( push, 3 )
 
-#include "asn/Generated/ScipioBase.h"
-#include "asn/Generated/ScipioArmy.h"
-#include "asn/Generated/ScipioKnowledgeGroup.h"
-#include "asn/Generated/ScipioFormation.h"
-#include "asn/Generated/ScipioControl.h"
-#include "asn/Generated/ScipioLimaLimite.h"
-#include "asn/Generated/ScipioFire.h"
-#include "asn/Generated/ScipioMessages.h"
-#include "asn/Generated/ScipioUnitKnowledge.h"
-#include "asn/Generated/ScipioUnit.h"
-#include "asn/Generated/ScipioAutomate.h"
-#include "asn/Generated/ScipioOrder.h"
-#include "asn/Generated/ScipioObject.h"
-#include "asn/Generated/ScipioPopulation.h"
-#include "asn/Generated/ScipioPopulationKnowledge.h"
+#include "asn/simulation/generated/ScipioBase.h"
+#include "asn/simulation/generated/ScipioArmy.h"
+#include "asn/simulation/generated/ScipioKnowledgeGroup.h"
+#include "asn/simulation/generated/ScipioFormation.h"
+#include "asn/simulation/generated/ScipioControl.h"
+#include "asn/simulation/generated/ScipioLimaLimite.h"
+#include "asn/simulation/generated/ScipioFire.h"
+#include "asn/simulation/generated/ScipioMessages.h"
+#include "asn/simulation/generated/ScipioUnitKnowledge.h"
+#include "asn/simulation/generated/ScipioUnit.h"
+#include "asn/simulation/generated/ScipioAutomate.h"
+#include "asn/simulation/generated/ScipioOrder.h"
+#include "asn/simulation/generated/ScipioObject.h"
+#include "asn/simulation/generated/ScipioPopulation.h"
+#include "asn/simulation/generated/ScipioPopulationKnowledge.h"
 
 #pragma warning( pop ) 
 

@@ -1,0 +1,39 @@
+--
+-- file name : Exercises.asn
+--
+-- Exercises messages
+--
+
+Exercises DEFINITIONS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ModelsExports FROM Models;
+ExercisesIncludes ::= SEQUENCE { ModelsExports }
+ExercisesExports  ::= NULL
+-- END includes
+
+Exercise ::= SEQUENCE
+{
+    name     VisibleString,
+    terrain  VisibleString,
+    model    Model
+}
+
+ExerciseList ::= SEQUENCE OF Exercise
+
+MsgExerciseListRequest ::= SEQUENCE
+{
+    filter VisibleString
+}
+
+MsgExerciseListResponse ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        ok,
+        forbidden
+    },
+    exercises ExerciseList OPTIONAL
+}
+
+END

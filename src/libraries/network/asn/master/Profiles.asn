@@ -1,0 +1,36 @@
+--
+-- file name : Profiles.asn
+--
+-- Profiles messages
+--
+
+Profiles DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+ProfilesIncludes ::= SEQUENCE {}
+ProfilesExports  ::= NULL
+-- END includes
+
+MasterProfile ::= SEQUENCE
+{
+    login VisibleString
+    -- $$$$ access rights
+}
+
+MsgAuthenticationRequest ::= SEQUENCE
+{
+    login    VisibleString,
+    password VisibleString
+}
+
+MsgAuthenticationResponse ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        ok,
+        invalid-login
+    },
+    profile MasterProfile OPTIONAL
+}
+
+END

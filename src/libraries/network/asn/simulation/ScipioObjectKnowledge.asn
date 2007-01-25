@@ -1,0 +1,55 @@
+--
+-- file name : ScipioObject.asn
+--
+-- Messages de gestion des objets
+--
+
+ScipioObjectKnowledge DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ScipioBaseExports   FROM ScipioBase
+        ScipioObjectExports FROM ScipioObject;
+ScipioObjectKnowledgeIncludes ::= SEQUENCE { ScipioBaseExports, ScipioObjectExports }
+ScipioObjectKnowledgeExports  ::= NULL
+-- END includes
+
+---------------------------
+-- Connaissance objet
+---------------------------
+
+-- SIM -> MOS
+MsgObjectKnowledgeCreation ::= SEQUENCE
+{
+    oid-connaissance            KnowledgeObject, 
+    oid-camp-possesseur         Camp, 
+    oid-objet-reel              OID, -- id de l'objet réel pointé par la connaissance
+    type                        EnumObjectType,
+    type-dotation-construction  TypeDotation OPTIONAL,
+    type-dotation-valorisation  TypeDotation OPTIONAL    
+}
+
+MsgObjectKnowledgeUpdate ::= SEQUENCE
+{
+    oid-connaissance           KnowledgeObject,
+    oid-camp-possesseur        Camp,
+    oid-objet-reel             OID                OPTIONAL, -- id de l'objet réel pointé par la connaissance
+    pertinence                 INTEGER( 0..100 )  OPTIONAL,
+    localisation               Localisation       OPTIONAL,
+    pourcentage-construction   INTEGER( 0..100 )  OPTIONAL, 
+    pourcentage-valorisation   INTEGER( 0..100 )  OPTIONAL,
+    pourcentage-contournement  INTEGER( 0..100 )  OPTIONAL,
+    en-preparation             BOOLEAN            OPTIONAL,
+    est-percu                  BOOLEAN            OPTIONAL,
+    attributs-specifiques      AttrObjectSpecific OPTIONAL,
+    perception-par-compagnie   ListOID            OPTIONAL, -- Liste des compagnies percevant l'objet
+    nb-dotation-construction   INTEGER            OPTIONAL,
+    nb-dotation-valorisation   INTEGER            OPTIONAL
+}
+
+MsgObjectKnowledgeDestruction ::= SEQUENCE
+{
+    oid-connaissance    KnowledgeObject,    
+    oid-camp-possesseur Camp     
+}
+
+END -- ScipioObjectKnowledge

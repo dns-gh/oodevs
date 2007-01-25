@@ -213,7 +213,7 @@ void ObjectKnowledge::SendFullUpdate( Publisher_ABC& publisher ) const
     if( optionals_.perception_par_compagniePresent )
     {
         asn().m.perception_par_compagniePresent = 1;
-        automatPerceptions_.Send< ASN1T__SeqOfOID, ASN1T_OID >( asn().perception_par_compagnie );
+        automatPerceptions_.Send< ASN1T_ListOID, ASN1T_OID >( asn().perception_par_compagnie );
     }
 
     SEND_ASN_ATTRIBUTE( pertinence               , nRelevance_                   ); 
