@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __astec_gaming_pch_h_
-#define __astec_gaming_pch_h_
+#ifndef __gaming_pch_h_
+#define __gaming_pch_h_
 
 
 #pragma warning( disable : 4290 )
@@ -95,4 +95,4 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 #include "ENT/ENT_Tr.h"
 
-#endif // __astec_gaming_pch_h_
+#endif // __gaming_pch_h_

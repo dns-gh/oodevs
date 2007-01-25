@@ -26,7 +26,7 @@ GlPlaceHolder::GlPlaceHolder( QWidget* parent )
 //    QLabel* label = new QLabel( box );
 //    box->setStretchFactor( label, 4212 );
 //    box->setSpacing( 4212 );
-//    label->setPixmap( QPixmap( qembed_findData( "astec.jpg" ) ) );
+//    label->setPixmap( QPixmap( qembed_findData( "csword.jpg" ) ) );
 }
 
 // -----------------------------------------------------------------------------

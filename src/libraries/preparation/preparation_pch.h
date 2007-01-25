@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __astec_preparation_pch_h_
-#define __astec_preparation_pch_h_
+#ifndef __preparation_pch_h_
+#define __preparation_pch_h_
 
 #pragma warning( disable : 4290 )
 #pragma warning( disable : 4702 )
@@ -33,4 +33,4 @@ typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
-#endif // __astec_preparation_pch_h_
+#endif // __preparation_pch_h_

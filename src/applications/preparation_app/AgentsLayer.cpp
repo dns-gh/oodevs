@@ -95,7 +95,7 @@ void AgentsLayer::Select( const kernel::Formation_ABC& element )
 bool AgentsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
     // $$$$ SBO 2006-09-29: Unify mime-types
-    return event->provides( "Agent" ) || event->provides( "astec/AgentType" ) || event->provides( "astec/AutomatType" );
+    return event->provides( "Agent" ) || event->provides( "csword/AgentType" ) || event->provides( "csword/AutomatType" );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,11 +114,11 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return true;
         }
     }
-    else if( event->provides( "astec/AgentType" ) )
+    else if( event->provides( "csword/AgentType" ) )
     {
         if( !selectedAutomat_ )
             return false;
-        QByteArray tmp = event->encodedData( "astec/AgentType" );
+        QByteArray tmp = event->encodedData( "csword/AgentType" );
         const AgentType* droppedItem = *reinterpret_cast< const AgentType** >( tmp.data() );
         if( droppedItem )
         {
@@ -126,11 +126,11 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
             return true;
         }
     }
-    else if( event->provides( "astec/AutomatType" ) )
+    else if( event->provides( "csword/AutomatType" ) )
     {
         if( !selectedFormation_ )
             return false;
-        QByteArray tmp = event->encodedData( "astec/AutomatType" );
+        QByteArray tmp = event->encodedData( "csword/AutomatType" );
         const AutomatType* droppedItem = *reinterpret_cast< const AutomatType** >( tmp.data() );
         if( droppedItem )
         {

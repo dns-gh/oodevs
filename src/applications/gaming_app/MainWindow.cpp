@@ -127,7 +127,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , iconLayout_   ( 0 )
     , b3d_          ( false )
 {
-    setIcon( MAKE_PIXMAP( astec ) );
+    setIcon( MAKE_PIXMAP( csword ) );
     setCaption( APP_NAME + tr( " - Not connected" ) );
 
     ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr
@@ -443,7 +443,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 void MainWindow::WriteSettings()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Gaming" );
 
     // Pannel configuration
@@ -463,7 +463,7 @@ void MainWindow::WriteSettings()
 void MainWindow::ReadSettings()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Gaming" );
 
     // Pannel configuration
@@ -485,7 +485,7 @@ void MainWindow::ReadSettings()
 void MainWindow::WriteOptions()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Gaming" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Save( settings );
@@ -500,7 +500,7 @@ void MainWindow::WriteOptions()
 void MainWindow::ReadOptions()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Gaming" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Load( settings );

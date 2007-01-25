@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __astec_pch_h_
-#define __astec_pch_h_
+#ifndef __gaming_app_pch_h_
+#define __gaming_app_pch_h_
 
-#define APP_NAME    "C-SWORD - Gaming"
+#define APP_NAME    "CSword - gaming"
 #define APP_VERSION "Beta-1"
 
 #define WIN32_LEAN_AND_MEAN
@@ -89,4 +89,4 @@ typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
-#endif // __astec_pch_h_
+#endif // __gaming_app_pch_h_

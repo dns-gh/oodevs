@@ -23,7 +23,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory )
     : QDialog( parent, 0, FALSE, WStyle_Splash )
 {
     setCaption( tr( "About" ) );
-    QPixmap pixmap( qembed_findData( "astec.jpg" ) );
+    QPixmap pixmap( qembed_findData( "csword.jpg" ) );
     sizeHint_.setWidth ( pixmap.width() );
     sizeHint_.setHeight( pixmap.height() + 50 );
     setMaximumSize( sizeHint_ );

@@ -17,7 +17,7 @@ class QIconSet;
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] );
 
 // Declare the icon here and include the xpm file in resources.cpp
-DECLARE_ICON( astec );
+DECLARE_ICON( csword );
 DECLARE_ICON( connexiongreen   );
 DECLARE_ICON( connexionorange );
 DECLARE_ICON( connexionred );

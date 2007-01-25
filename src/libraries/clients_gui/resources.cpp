@@ -21,7 +21,7 @@
 // instead of resources.h
 #define static 
 
-#include "res/astec.xpm"
+#include "res/csword.xpm"
 #include "res/connexiongreen.xpm"
 #include "res/connexionorange.xpm"
 #include "res/connexionred.xpm"

@@ -271,12 +271,12 @@ QDragObject* UnitListView::dragObject()
     if( pItem->IsA< const AgentType* >() )
     {
         pBytes->setRawData( (const char*)&( pItem->GetValue< const AgentType* >() ), sizeof( AgentType* ) );
-        mimeType = "astec/AgentType";
+        mimeType = "csword/AgentType";
     }
     else if( pItem->IsA< const AutomatType* >() )
     {
         pBytes->setRawData( (const char*)&( pItem->GetValue< const AutomatType* >() ), sizeof( AutomatType* ) );
-        mimeType = "astec/AutomatType";
+        mimeType = "csword/AutomatType";
     }
     if( mimeType.empty() )
         return 0;

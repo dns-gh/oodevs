@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __astec_prepa_app_pch_h_
-#define __astec_prepa_app_pch_h_
+#ifndef __preparation_app_pch_h_
+#define __preparation_app_pch_h_
 
 #define APP_NAME "C-SWORD - Preparation"
 #define APP_VERSION "Beta-1"
@@ -89,4 +89,4 @@ typedef std::vector< geometry::Point2f > T_PointVector;
 typedef T_PointVector::iterator         IT_PointVector;
 typedef T_PointVector::const_iterator  CIT_PointVector;
 
-#endif // __astec_prepa_app_pch_h_
+#endif // __preparation_app_pch_h_

@@ -45,7 +45,7 @@ PopulationsLayer::~PopulationsLayer()
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometry::Point2f& )
 {
-    return event->provides( "astec/PopulationType" );
+    return event->provides( "csword/PopulationType" );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ bool PopulationsLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geome
 // -----------------------------------------------------------------------------
 bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& point )
 {
-    if( event->provides( "astec/PopulationType" ) && selectedEntity_ )
+    if( event->provides( "csword/PopulationType" ) && selectedEntity_ )
     {
         const kernel::Hierarchies* hierarchies = selectedEntity_->Retrieve< kernel::TacticalHierarchies >();
         if( !hierarchies )
@@ -63,7 +63,7 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
         const kernel::Entity_ABC& top = hierarchies->GetTop();
         if( const kernel::Team_ABC* team = dynamic_cast< const kernel::Team_ABC* >( &top ) )
         {
-            QByteArray tmp = event->encodedData( "astec/PopulationType" );
+            QByteArray tmp = event->encodedData( "csword/PopulationType" );
             const PopulationType* droppedItem = *reinterpret_cast< const PopulationType** >( tmp.data() );
             if( droppedItem )
             {

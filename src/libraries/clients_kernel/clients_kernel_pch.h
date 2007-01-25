@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __astec_kernel_pch_h_
-#define __astec_kernel_pch_h_
+#ifndef __clients_kernel_pch_h_
+#define __clients_kernel_pch_h_
 
 #pragma warning( push )
 #pragma warning( disable : 4290 4702 )
@@ -21,4 +21,4 @@
 
 #include "Types.h"
 
-#endif // __astec_kernel_pch_h_
+#endif // __clients_kernel_pch_h_

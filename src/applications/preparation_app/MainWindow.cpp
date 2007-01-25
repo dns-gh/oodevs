@@ -103,7 +103,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , iconLayout_            ( 0 )
     , needsSaving_           ( false )
 {
-    setIcon( MAKE_PIXMAP( astec ) );
+    setIcon( MAKE_PIXMAP( csword ) );
     SetWindowTitle( false );
 
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *new FixedLighting() ); // $$$$ AGE 2007-01-03:
@@ -434,7 +434,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
 void MainWindow::WriteSettings()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
@@ -453,7 +453,7 @@ void MainWindow::WriteSettings()
 void MainWindow::ReadSettings()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Preparation" );
 
     // Pannel configuration
@@ -474,7 +474,7 @@ void MainWindow::ReadSettings()
 void MainWindow::WriteOptions()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Preparation" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Save( settings );
@@ -489,7 +489,7 @@ void MainWindow::WriteOptions()
 void MainWindow::ReadOptions()
 {
     Settings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/Preparation" );
     settings.beginGroup( "/Options" );
     controllers_.options_.Load( settings );

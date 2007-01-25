@@ -43,7 +43,7 @@ Application::Application( int argc, char** argv )
     }
     catch( ... )
     {
-        QMessageBox::critical( 0, APP_NAME, "Whooops. Astec has crashed" );
+        QMessageBox::critical( 0, APP_NAME, "Whooops. CSword has crashed" );
         throw CatchMeIfYouCan();
     }
 }

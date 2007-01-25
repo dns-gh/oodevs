@@ -82,7 +82,7 @@ QDragObject* PopulationTypesListView::dragObject()
 
     QByteArray* pBytes = new QByteArray();
     pBytes->setRawData( (const char*)&( pItem->GetValue< const PopulationType* >() ), sizeof( PopulationType* ) );
-    QStoredDrag* data = new QStoredDrag( "astec/PopulationType", this );
+    QStoredDrag* data = new QStoredDrag( "csword/PopulationType", this );
     data->setEncodedData( *pBytes );
     return data;
     

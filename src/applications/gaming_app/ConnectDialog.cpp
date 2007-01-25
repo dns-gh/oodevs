@@ -65,7 +65,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network )
 ConnectDialog::~ConnectDialog()
 {
     QSettings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/ConnectWindow" );
     
     QStringList list;
@@ -114,7 +114,7 @@ void ConnectDialog::LoadDefaultConfig()
     pPortSpinBox_->setValue( 10001 );
 
     QSettings settings;
-    settings.setPath( "MASA", "Astec" );
+    settings.setPath( "MASA", "CSword" );
     settings.beginGroup( "/ConnectWindow" );
     QStringList list = settings.readListEntry( "/hosts", ';' );
     int nIndex = settings.readNumEntry( "/index", 0 );
