@@ -151,6 +151,54 @@ int ASN1C_MessagesExports::Decode ()
 
 /**************************************************************/
 /*                                                            */
+/*  MsgClientAnnouncement                                     */
+/*                                                            */
+/**************************************************************/
+
+ASN1C_MsgClientAnnouncement::ASN1C_MsgClientAnnouncement (
+   ASN1MessageBuffer& msgBuf) :
+   ASN1CType(msgBuf)
+{}
+
+EXTERN int asn1PE_MsgClientAnnouncement (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PE_MsgClientAnnouncement: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PE_MsgClientAnnouncement: end\n");
+   return (stat);
+}
+
+int ASN1C_MsgClientAnnouncement::Encode ()
+{
+   mMsgBuf.Init ();
+   int stat = asn1PE_MsgClientAnnouncement (mpContext->GetPtr());
+   return stat;
+}
+
+EXTERN int asn1PD_MsgClientAnnouncement (ASN1CTXT* ctxt_p)
+{
+   int stat = ASN_OK;
+
+   rtdiag ("asn1PD_MsgClientAnnouncement: start\n");
+
+   /* NULL */
+
+   rtdiag ("asn1PD_MsgClientAnnouncement: end\n");
+
+   return (stat);
+}
+
+int ASN1C_MsgClientAnnouncement::Decode ()
+{
+   return asn1PD_MsgClientAnnouncement (mpContext->GetPtr());
+}
+
+/**************************************************************/
+/*                                                            */
 /*  MsgsInMaster_msg                                          */
 /*                                                            */
 /**************************************************************/
@@ -170,7 +218,7 @@ EXTERN int asn1PE_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 3);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 4);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -179,8 +227,18 @@ EXTERN int asn1PE_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
 
    switch (pvalue->t)
    {
-      /* msg_authentication_request */
+      /* msg_client_announcement */
       case 1:
+         PU_PUSHNAME (ctxt_p, "u.msg_client_announcement");
+
+         stat = asn1PE_MsgClientAnnouncement (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_authentication_request */
+      case 2:
          PU_PUSHNAME (ctxt_p, "u.msg_authentication_request");
 
          stat = asn1PE_MsgAuthenticationRequest (ctxt_p, pvalue->u.msg_authentication_request);
@@ -190,7 +248,7 @@ EXTERN int asn1PE_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
          break;
 
       /* msg_exercise_list_request */
-      case 2:
+      case 3:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_list_request");
 
          stat = asn1PE_MsgExerciseListRequest (ctxt_p, pvalue->u.msg_exercise_list_request);
@@ -200,7 +258,7 @@ EXTERN int asn1PE_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
          break;
 
       /* msg_game_start_request */
-      case 3:
+      case 4:
          PU_PUSHNAME (ctxt_p, "u.msg_game_start_request");
 
          stat = asn1PE_MsgGameStartRequest (ctxt_p, pvalue->u.msg_game_start_request);
@@ -210,7 +268,7 @@ EXTERN int asn1PE_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
          break;
 
       /* msg_game_stop_request */
-      case 4:
+      case 5:
          PU_PUSHNAME (ctxt_p, "u.msg_game_stop_request");
 
          stat = asn1PE_MsgGameStopRequest (ctxt_p, pvalue->u.msg_game_stop_request);
@@ -243,15 +301,26 @@ EXTERN int asn1PD_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 3);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 4);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    else pvalue->t = ui + 1;
 
    PU_POPNAME (ctxt_p);
 
    switch (ui) {
-      /* msg_authentication_request */
+      /* msg_client_announcement */
       case 0:
+         PU_PUSHNAME (ctxt_p, "u.msg_client_announcement");
+
+         stat = asn1PD_MsgClientAnnouncement (ctxt_p);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_authentication_request */
+      case 1:
          PU_PUSHNAME (ctxt_p, "u.msg_authentication_request");
 
          pvalue->u.msg_authentication_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAuthenticationRequest);
@@ -266,7 +335,7 @@ EXTERN int asn1PD_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
          break;
 
       /* msg_exercise_list_request */
-      case 1:
+      case 2:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_list_request");
 
          pvalue->u.msg_exercise_list_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseListRequest);
@@ -281,7 +350,7 @@ EXTERN int asn1PD_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
          break;
 
       /* msg_game_start_request */
-      case 2:
+      case 3:
          PU_PUSHNAME (ctxt_p, "u.msg_game_start_request");
 
          pvalue->u.msg_game_start_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgGameStartRequest);
@@ -296,7 +365,7 @@ EXTERN int asn1PD_MsgsInMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInMaster_msg* pv
          break;
 
       /* msg_game_stop_request */
-      case 3:
+      case 4:
          PU_PUSHNAME (ctxt_p, "u.msg_game_stop_request");
 
          pvalue->u.msg_game_stop_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgGameStopRequest);
@@ -709,567 +778,5 @@ EXTERN int asn1PD_MsgsOutMaster (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster* pvalue)
 int ASN1C_MsgsOutMaster::Decode ()
 {
    return asn1PD_MsgsOutMaster (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsInFrontend_msg                                        */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_MsgsInFrontend_msg::ASN1C_MsgsInFrontend_msg (
-   ASN1MessageBuffer& msgBuf, ASN1T_MsgsInFrontend_msg& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_MsgsInFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend_msg* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_MsgsInFrontend_msg: start\n");
-
-   /* Encode choice index value */
-
-   PU_PUSHNAME (ctxt_p, "t");
-
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 3);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* Encode root element data value */
-
-   switch (pvalue->t)
-   {
-      /* msg_authentication_response */
-      case 1:
-         PU_PUSHNAME (ctxt_p, "u.msg_authentication_response");
-
-         stat = asn1PE_MsgAuthenticationResponse (ctxt_p, pvalue->u.msg_authentication_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_exercise_list_response */
-      case 2:
-         PU_PUSHNAME (ctxt_p, "u.msg_exercise_list_response");
-
-         stat = asn1PE_MsgExerciseListResponse (ctxt_p, pvalue->u.msg_exercise_list_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_start_response */
-      case 3:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_start_response");
-
-         stat = asn1PE_MsgGameStartResponse (ctxt_p, pvalue->u.msg_game_start_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_stop_response */
-      case 4:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_stop_response");
-
-         stat = asn1PE_MsgGameStopResponse (ctxt_p, pvalue->u.msg_game_stop_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      default:
-         return LOG_ASN1ERR (ctxt_p, ASN_E_INVOPT);
-   }
-
-   rtdiag ("asn1PE_MsgsInFrontend_msg: end\n");
-   return (stat);
-}
-
-int ASN1C_MsgsInFrontend_msg::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_MsgsInFrontend_msg (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_MsgsInFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend_msg* pvalue)
-{
-   int stat = ASN_OK;
-   ASN1UINT ui;
-
-   rtdiag ("asn1PD_MsgsInFrontend_msg: start\n");
-
-   PU_PUSHNAME (ctxt_p, "t");
-
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 3);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else pvalue->t = ui + 1;
-
-   PU_POPNAME (ctxt_p);
-
-   switch (ui) {
-      /* msg_authentication_response */
-      case 0:
-         PU_PUSHNAME (ctxt_p, "u.msg_authentication_response");
-
-         pvalue->u.msg_authentication_response = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAuthenticationResponse);
-         if (pvalue->u.msg_authentication_response == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgAuthenticationResponse (ctxt_p, pvalue->u.msg_authentication_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_exercise_list_response */
-      case 1:
-         PU_PUSHNAME (ctxt_p, "u.msg_exercise_list_response");
-
-         pvalue->u.msg_exercise_list_response = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseListResponse);
-         if (pvalue->u.msg_exercise_list_response == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgExerciseListResponse (ctxt_p, pvalue->u.msg_exercise_list_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_start_response */
-      case 2:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_start_response");
-
-         pvalue->u.msg_game_start_response = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgGameStartResponse);
-         if (pvalue->u.msg_game_start_response == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgGameStartResponse (ctxt_p, pvalue->u.msg_game_start_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_stop_response */
-      case 3:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_stop_response");
-
-         pvalue->u.msg_game_stop_response = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgGameStopResponse);
-         if (pvalue->u.msg_game_stop_response == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgGameStopResponse (ctxt_p, pvalue->u.msg_game_stop_response);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      default:
-         return LOG_ASN1ERR (ctxt_p, ASN_E_INVOPT);
-   }
-
-   rtdiag ("asn1PD_MsgsInFrontend_msg: end\n");
-
-   return (stat);
-}
-
-int ASN1C_MsgsInFrontend_msg::Decode ()
-{
-   return asn1PD_MsgsInFrontend_msg (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsInFrontend                                            */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_MsgsInFrontend::ASN1C_MsgsInFrontend (
-   ASN1MessageBuffer& msgBuf, ASN1T_MsgsInFrontend& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_MsgsInFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_MsgsInFrontend: start\n");
-
-   PU_NEWFIELD (ctxt_p, "contextPresent");
-
-   stat = pe_bit (ctxt_p, (ASN1BOOL)(pvalue->context != 0));
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* encode context */
-
-   if (pvalue->context != 0) {
-      PU_PUSHNAME (ctxt_p, "context");
-
-      stat = pe_UnconsInteger (ctxt_p, pvalue->context);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-      PU_POPNAME (ctxt_p);
-   }
-
-   /* encode msg */
-
-   PU_PUSHNAME (ctxt_p, "msg");
-
-   stat = asn1PE_MsgsInFrontend_msg (ctxt_p, &pvalue->msg);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_MsgsInFrontend: end\n");
-   return (stat);
-}
-
-int ASN1C_MsgsInFrontend::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_MsgsInFrontend (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_MsgsInFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend* pvalue)
-{
-   int stat = ASN_OK;
-   ASN1BOOL optbit;
-   ASN1BOOL contextPresent;
-
-   rtdiag ("asn1PD_MsgsInFrontend: start\n");
-
-   /* optional bits */
-
-   PU_NEWFIELD (ctxt_p, "contextPresent");
-
-   stat = pd_bit (ctxt_p, &optbit);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else contextPresent = optbit;
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* decode context */
-
-   if (contextPresent) {
-      PU_PUSHNAME (ctxt_p, "context");
-
-      stat = pd_UnconsInteger (ctxt_p, &pvalue->context);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_POPNAME (ctxt_p);
-   }
-   else {
-      pvalue->context = 0;
-   }
-
-   /* decode msg */
-
-   PU_PUSHNAME (ctxt_p, "msg");
-
-   stat = asn1PD_MsgsInFrontend_msg (ctxt_p, &pvalue->msg);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_MsgsInFrontend: end\n");
-
-   return (stat);
-}
-
-int ASN1C_MsgsInFrontend::Decode ()
-{
-   return asn1PD_MsgsInFrontend (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsOutFrontend_msg                                       */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_MsgsOutFrontend_msg::ASN1C_MsgsOutFrontend_msg (
-   ASN1MessageBuffer& msgBuf, ASN1T_MsgsOutFrontend_msg& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_MsgsOutFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend_msg* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_MsgsOutFrontend_msg: start\n");
-
-   /* Encode choice index value */
-
-   PU_PUSHNAME (ctxt_p, "t");
-
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 3);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-   /* Encode root element data value */
-
-   switch (pvalue->t)
-   {
-      /* msg_authentication_request */
-      case 1:
-         PU_PUSHNAME (ctxt_p, "u.msg_authentication_request");
-
-         stat = asn1PE_MsgAuthenticationRequest (ctxt_p, pvalue->u.msg_authentication_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_exercise_list_request */
-      case 2:
-         PU_PUSHNAME (ctxt_p, "u.msg_exercise_list_request");
-
-         stat = asn1PE_MsgExerciseListRequest (ctxt_p, pvalue->u.msg_exercise_list_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_start_request */
-      case 3:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_start_request");
-
-         stat = asn1PE_MsgGameStartRequest (ctxt_p, pvalue->u.msg_game_start_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_stop_request */
-      case 4:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_stop_request");
-
-         stat = asn1PE_MsgGameStopRequest (ctxt_p, pvalue->u.msg_game_stop_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      default:
-         return LOG_ASN1ERR (ctxt_p, ASN_E_INVOPT);
-   }
-
-   rtdiag ("asn1PE_MsgsOutFrontend_msg: end\n");
-   return (stat);
-}
-
-int ASN1C_MsgsOutFrontend_msg::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_MsgsOutFrontend_msg (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_MsgsOutFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend_msg* pvalue)
-{
-   int stat = ASN_OK;
-   ASN1UINT ui;
-
-   rtdiag ("asn1PD_MsgsOutFrontend_msg: start\n");
-
-   PU_PUSHNAME (ctxt_p, "t");
-
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 3);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else pvalue->t = ui + 1;
-
-   PU_POPNAME (ctxt_p);
-
-   switch (ui) {
-      /* msg_authentication_request */
-      case 0:
-         PU_PUSHNAME (ctxt_p, "u.msg_authentication_request");
-
-         pvalue->u.msg_authentication_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgAuthenticationRequest);
-         if (pvalue->u.msg_authentication_request == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgAuthenticationRequest (ctxt_p, pvalue->u.msg_authentication_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_exercise_list_request */
-      case 1:
-         PU_PUSHNAME (ctxt_p, "u.msg_exercise_list_request");
-
-         pvalue->u.msg_exercise_list_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseListRequest);
-         if (pvalue->u.msg_exercise_list_request == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgExerciseListRequest (ctxt_p, pvalue->u.msg_exercise_list_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_start_request */
-      case 2:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_start_request");
-
-         pvalue->u.msg_game_start_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgGameStartRequest);
-         if (pvalue->u.msg_game_start_request == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgGameStartRequest (ctxt_p, pvalue->u.msg_game_start_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      /* msg_game_stop_request */
-      case 3:
-         PU_PUSHNAME (ctxt_p, "u.msg_game_stop_request");
-
-         pvalue->u.msg_game_stop_request = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgGameStopRequest);
-         if (pvalue->u.msg_game_stop_request == NULL)
-            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
-
-         stat = asn1PD_MsgGameStopRequest (ctxt_p, pvalue->u.msg_game_stop_request);
-         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-         PU_POPNAME (ctxt_p);
-
-         break;
-
-      default:
-         return LOG_ASN1ERR (ctxt_p, ASN_E_INVOPT);
-   }
-
-   rtdiag ("asn1PD_MsgsOutFrontend_msg: end\n");
-
-   return (stat);
-}
-
-int ASN1C_MsgsOutFrontend_msg::Decode ()
-{
-   return asn1PD_MsgsOutFrontend_msg (mpContext->GetPtr(), &msgData);
-}
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsOutFrontend                                           */
-/*                                                            */
-/**************************************************************/
-
-ASN1C_MsgsOutFrontend::ASN1C_MsgsOutFrontend (
-   ASN1MessageBuffer& msgBuf, ASN1T_MsgsOutFrontend& data) :
-   ASN1CType(msgBuf), msgData(data)
-{}
-
-EXTERN int asn1PE_MsgsOutFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend* pvalue)
-{
-   int stat = ASN_OK;
-
-   rtdiag ("asn1PE_MsgsOutFrontend: start\n");
-
-   PU_NEWFIELD (ctxt_p, "contextPresent");
-
-   stat = pe_bit (ctxt_p, (ASN1BOOL)(pvalue->context != 0));
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* encode context */
-
-   if (pvalue->context != 0) {
-      PU_PUSHNAME (ctxt_p, "context");
-
-      stat = pe_UnconsInteger (ctxt_p, pvalue->context);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-      PU_POPNAME (ctxt_p);
-   }
-
-   /* encode msg */
-
-   PU_PUSHNAME (ctxt_p, "msg");
-
-   stat = asn1PE_MsgsOutFrontend_msg (ctxt_p, &pvalue->msg);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PE_MsgsOutFrontend: end\n");
-   return (stat);
-}
-
-int ASN1C_MsgsOutFrontend::Encode ()
-{
-   mMsgBuf.Init ();
-   int stat = asn1PE_MsgsOutFrontend (mpContext->GetPtr(), &msgData);
-   return stat;
-}
-
-EXTERN int asn1PD_MsgsOutFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend* pvalue)
-{
-   int stat = ASN_OK;
-   ASN1BOOL optbit;
-   ASN1BOOL contextPresent;
-
-   rtdiag ("asn1PD_MsgsOutFrontend: start\n");
-
-   /* optional bits */
-
-   PU_NEWFIELD (ctxt_p, "contextPresent");
-
-   stat = pd_bit (ctxt_p, &optbit);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-   else contextPresent = optbit;
-
-   PU_SETBITCOUNT (ctxt_p);
-
-   /* decode context */
-
-   if (contextPresent) {
-      PU_PUSHNAME (ctxt_p, "context");
-
-      stat = pd_UnconsInteger (ctxt_p, &pvalue->context);
-      if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-      PU_POPNAME (ctxt_p);
-   }
-   else {
-      pvalue->context = 0;
-   }
-
-   /* decode msg */
-
-   PU_PUSHNAME (ctxt_p, "msg");
-
-   stat = asn1PD_MsgsOutFrontend_msg (ctxt_p, &pvalue->msg);
-   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
-
-   PU_POPNAME (ctxt_p);
-
-
-   rtdiag ("asn1PD_MsgsOutFrontend: end\n");
-
-   return (stat);
-}
-
-int ASN1C_MsgsOutFrontend::Decode ()
-{
-   return asn1PD_MsgsOutFrontend (mpContext->GetPtr(), &msgData);
 }
 

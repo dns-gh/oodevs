@@ -43,13 +43,16 @@ class ClientNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ClientNetworker_ABC( const std::string& host );
+    explicit ClientNetworker_ABC( const std::string& host = "" );
     virtual ~ClientNetworker_ABC();
     //@}
 
     //! @name Operations
     //@{
-    void Update();
+    bool Connect    ( const std::string& host );
+    bool Disconnect ();
+    void Update     ();
+    bool IsConnected() const;
     //@}
 
 protected:
@@ -82,6 +85,7 @@ private:
     std::auto_ptr< DIN::DIN_ConnectionServiceClientUserCbk< ClientNetworker_ABC > > connectionService_;
     std::auto_ptr< DIN::DIN_MessageServiceUserCbk         < ClientNetworker_ABC > > messageService_;
     std::auto_ptr< NEK::NEK_AddressINET                                           > serverAddress_;
+    DIN::DIN_Link*                                                                  session_;
 };
 
 }

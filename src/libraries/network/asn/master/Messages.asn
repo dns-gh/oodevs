@@ -14,11 +14,15 @@ MessagesIncludes ::= SEQUENCE { ProfilesExports, ExercisesExports, GamesExports 
 MessagesExports  ::= NULL
 -- END includes
 
+MsgClientAnnouncement ::= NULL
+
 MsgsInMaster ::= SEQUENCE
 {
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
+        msg-client-announcement     MsgClientAnnouncement,
+    
         -- profiles
         msg-authentication-request  MsgAuthenticationRequest,
         -- exercises
@@ -41,36 +45,6 @@ MsgsOutMaster ::= SEQUENCE
         -- games
         msg-game-start-response     MsgGameStartResponse,
         msg-game-stop-response      MsgGameStopResponse
-    }
-}
-
-MsgsInFrontend ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        -- profiles
-        msg-authentication-response MsgAuthenticationResponse,
-        -- exercises
-        msg-exercise-list-response  MsgExerciseListResponse,
-        -- games
-        msg-game-start-response     MsgGameStartResponse,
-        msg-game-stop-response      MsgGameStopResponse
-    }
-}
-
-MsgsOutFrontend ::= SEQUENCE
-{
-    context INTEGER DEFAULT 0,
-    msg     CHOICE
-    {
-        -- profiles
-        msg-authentication-request  MsgAuthenticationRequest,
-        -- exercises
-        msg-exercise-list-request   MsgExerciseListRequest,
-        -- games
-        msg-game-start-request      MsgGameStartRequest,
-        msg-game-stop-request       MsgGameStopRequest
     }
 }
 

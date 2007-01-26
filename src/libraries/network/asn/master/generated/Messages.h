@@ -59,27 +59,49 @@ EXTERN void asn1Print_MessagesExports (ASN1ConstCharPtr name);
 
 /**************************************************************/
 /*                                                            */
+/*  MsgClientAnnouncement                                     */
+/*                                                            */
+/**************************************************************/
+
+class EXTERN ASN1C_MsgClientAnnouncement : public ASN1CType {
+public:
+   ASN1C_MsgClientAnnouncement (
+      ASN1MessageBuffer& msgBuf);
+   int Encode ();
+   int Decode ();
+   void Print (ASN1ConstCharPtr name);
+} ;
+
+EXTERN int asn1PE_MsgClientAnnouncement (ASN1CTXT* ctxt_p);
+EXTERN int asn1PD_MsgClientAnnouncement (ASN1CTXT* ctxt_p);
+
+EXTERN void asn1Print_MsgClientAnnouncement (ASN1ConstCharPtr name);
+
+/**************************************************************/
+/*                                                            */
 /*  MsgsInMaster_msg                                          */
 /*                                                            */
 /**************************************************************/
 
 /* Choice tag constants */
 
-#define T_MsgsInMaster_msg_msg_authentication_request 1
-#define T_MsgsInMaster_msg_msg_exercise_list_request 2
-#define T_MsgsInMaster_msg_msg_game_start_request 3
-#define T_MsgsInMaster_msg_msg_game_stop_request 4
+#define T_MsgsInMaster_msg_msg_client_announcement 1
+#define T_MsgsInMaster_msg_msg_authentication_request 2
+#define T_MsgsInMaster_msg_msg_exercise_list_request 3
+#define T_MsgsInMaster_msg_msg_game_start_request 4
+#define T_MsgsInMaster_msg_msg_game_stop_request 5
 
 typedef struct EXTERN ASN1T_MsgsInMaster_msg {
    int t;
    union {
       /* t = 1 */
-      ASN1T_MsgAuthenticationRequest *msg_authentication_request;
       /* t = 2 */
-      ASN1T_MsgExerciseListRequest *msg_exercise_list_request;
+      ASN1T_MsgAuthenticationRequest *msg_authentication_request;
       /* t = 3 */
-      ASN1T_MsgGameStartRequest *msg_game_start_request;
+      ASN1T_MsgExerciseListRequest *msg_exercise_list_request;
       /* t = 4 */
+      ASN1T_MsgGameStartRequest *msg_game_start_request;
+      /* t = 5 */
       ASN1T_MsgGameStopRequest *msg_game_stop_request;
    } u;
 } ASN1T_MsgsInMaster_msg;
@@ -200,149 +222,5 @@ EXTERN int asn1PE_MsgsOutMaster (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster* pvalue);
 EXTERN int asn1PD_MsgsOutMaster (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster* pvalue);
 
 EXTERN void asn1Print_MsgsOutMaster (ASN1ConstCharPtr name, ASN1T_MsgsOutMaster* pvalue);
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsInFrontend_msg                                        */
-/*                                                            */
-/**************************************************************/
-
-/* Choice tag constants */
-
-#define T_MsgsInFrontend_msg_msg_authentication_response 1
-#define T_MsgsInFrontend_msg_msg_exercise_list_response 2
-#define T_MsgsInFrontend_msg_msg_game_start_response 3
-#define T_MsgsInFrontend_msg_msg_game_stop_response 4
-
-typedef struct EXTERN ASN1T_MsgsInFrontend_msg {
-   int t;
-   union {
-      /* t = 1 */
-      ASN1T_MsgAuthenticationResponse *msg_authentication_response;
-      /* t = 2 */
-      ASN1T_MsgExerciseListResponse *msg_exercise_list_response;
-      /* t = 3 */
-      ASN1T_MsgGameStartResponse *msg_game_start_response;
-      /* t = 4 */
-      ASN1T_MsgGameStopResponse *msg_game_stop_response;
-   } u;
-} ASN1T_MsgsInFrontend_msg;
-
-class EXTERN ASN1C_MsgsInFrontend_msg : public ASN1CType {
-public:
-   ASN1T_MsgsInFrontend_msg& msgData;
-   ASN1C_MsgsInFrontend_msg (
-      ASN1MessageBuffer& msgBuf, ASN1T_MsgsInFrontend_msg& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_MsgsInFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend_msg* pvalue);
-EXTERN int asn1PD_MsgsInFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend_msg* pvalue);
-
-EXTERN void asn1Print_MsgsInFrontend_msg (ASN1ConstCharPtr name, ASN1T_MsgsInFrontend_msg* pvalue);
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsInFrontend                                            */
-/*                                                            */
-/**************************************************************/
-
-typedef struct EXTERN ASN1T_MsgsInFrontend {
-   ASN1INT   context;
-   ASN1T_MsgsInFrontend_msg  msg;
-
-   ASN1T_MsgsInFrontend () {
-      context = 0;
-   }
-} ASN1T_MsgsInFrontend;
-
-class EXTERN ASN1C_MsgsInFrontend : public ASN1CType {
-public:
-   ASN1T_MsgsInFrontend& msgData;
-   ASN1C_MsgsInFrontend (
-      ASN1MessageBuffer& msgBuf, ASN1T_MsgsInFrontend& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_MsgsInFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend* pvalue);
-EXTERN int asn1PD_MsgsInFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsInFrontend* pvalue);
-
-EXTERN void asn1Print_MsgsInFrontend (ASN1ConstCharPtr name, ASN1T_MsgsInFrontend* pvalue);
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsOutFrontend_msg                                       */
-/*                                                            */
-/**************************************************************/
-
-/* Choice tag constants */
-
-#define T_MsgsOutFrontend_msg_msg_authentication_request 1
-#define T_MsgsOutFrontend_msg_msg_exercise_list_request 2
-#define T_MsgsOutFrontend_msg_msg_game_start_request 3
-#define T_MsgsOutFrontend_msg_msg_game_stop_request 4
-
-typedef struct EXTERN ASN1T_MsgsOutFrontend_msg {
-   int t;
-   union {
-      /* t = 1 */
-      ASN1T_MsgAuthenticationRequest *msg_authentication_request;
-      /* t = 2 */
-      ASN1T_MsgExerciseListRequest *msg_exercise_list_request;
-      /* t = 3 */
-      ASN1T_MsgGameStartRequest *msg_game_start_request;
-      /* t = 4 */
-      ASN1T_MsgGameStopRequest *msg_game_stop_request;
-   } u;
-} ASN1T_MsgsOutFrontend_msg;
-
-class EXTERN ASN1C_MsgsOutFrontend_msg : public ASN1CType {
-public:
-   ASN1T_MsgsOutFrontend_msg& msgData;
-   ASN1C_MsgsOutFrontend_msg (
-      ASN1MessageBuffer& msgBuf, ASN1T_MsgsOutFrontend_msg& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_MsgsOutFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend_msg* pvalue);
-EXTERN int asn1PD_MsgsOutFrontend_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend_msg* pvalue);
-
-EXTERN void asn1Print_MsgsOutFrontend_msg (ASN1ConstCharPtr name, ASN1T_MsgsOutFrontend_msg* pvalue);
-
-/**************************************************************/
-/*                                                            */
-/*  MsgsOutFrontend                                           */
-/*                                                            */
-/**************************************************************/
-
-typedef struct EXTERN ASN1T_MsgsOutFrontend {
-   ASN1INT   context;
-   ASN1T_MsgsOutFrontend_msg  msg;
-
-   ASN1T_MsgsOutFrontend () {
-      context = 0;
-   }
-} ASN1T_MsgsOutFrontend;
-
-class EXTERN ASN1C_MsgsOutFrontend : public ASN1CType {
-public:
-   ASN1T_MsgsOutFrontend& msgData;
-   ASN1C_MsgsOutFrontend (
-      ASN1MessageBuffer& msgBuf, ASN1T_MsgsOutFrontend& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_MsgsOutFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend* pvalue);
-EXTERN int asn1PD_MsgsOutFrontend (ASN1CTXT* ctxt_p, ASN1T_MsgsOutFrontend* pvalue);
-
-EXTERN void asn1Print_MsgsOutFrontend (ASN1ConstCharPtr name, ASN1T_MsgsOutFrontend* pvalue);
 
 #endif

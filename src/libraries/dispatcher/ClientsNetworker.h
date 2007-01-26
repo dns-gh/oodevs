@@ -59,7 +59,7 @@ private:
     //! @name Connection callbacks
     //@{
     virtual void OnConnectionReceived( DIN::DIN_Server& server, DIN::DIN_Link& link );
-    virtual void OnConnectionLost    ( DIN::DIN_Server& server, DIN::DIN_Link& link                , const DIN::DIN_ErrorDescription& reason );
+    virtual void OnConnectionLost    ( DIN::DIN_Server& server, DIN::DIN_Link& link, const DIN::DIN_ErrorDescription& reason );
     //@}
 
     //! @name Messages callbacks
