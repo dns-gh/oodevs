@@ -21,15 +21,14 @@ MsgsInMaster ::= SEQUENCE
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
-        msg-client-announcement     MsgClientAnnouncement,
-    
+        msg-client-announcement             MsgClientAnnouncement,
         -- profiles
-        msg-authentication-request  MsgAuthenticationRequest,
+        msg-authentication-request          MsgAuthenticationRequest,
         -- exercises
-        msg-exercise-list-request   MsgExerciseListRequest,
+        msg-exercise-creation-request       MsgExerciseCreationRequest,
+        msg-exercise-update-request         MsgExerciseUpdateRequest,
+        msg-exercise-destruction-request    MsgExerciseDestructionRequest
         -- games
-        msg-game-start-request      MsgGameStartRequest,
-        msg-game-stop-request       MsgGameStopRequest
     }
 }
 
@@ -39,12 +38,15 @@ MsgsOutMaster ::= SEQUENCE
     msg     CHOICE
     {
         -- profiles
-        msg-authentication-response MsgAuthenticationResponse,
+        msg-authentication-response     MsgAuthenticationResponse,
         -- exercises
-        msg-exercise-list-response  MsgExerciseListResponse,
+        msg-exercise-creation           MsgExerciseCreation,
+        msg-exercise-update             MsgExerciseUpdate,
+        msg-exercise-destruction        MsgExerciseDestruction,
+        msg-exercise-creation-ack       MsgExerciseCreationRequestAck,
+        msg-exercise-update-ack         MsgExerciseUpdateRequestAck,
+        msg-exercise-destruction-ack    MsgExerciseDestructionRequestAck
         -- games
-        msg-game-start-response     MsgGameStartResponse,
-        msg-game-stop-response      MsgGameStopResponse
     }
 }
 

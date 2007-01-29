@@ -7,8 +7,7 @@
 Exercises DEFINITIONS ::= BEGIN
 
 -- BEGIN includes
-IMPORTS ModelsExports FROM Models;
-ExercisesIncludes ::= SEQUENCE { ModelsExports }
+ExercisesIncludes ::= SEQUENCE {}
 ExercisesExports  ::= NULL
 -- END includes
 
@@ -16,24 +15,57 @@ Exercise ::= SEQUENCE
 {
     name     VisibleString,
     terrain  VisibleString,
-    model    Model
+    dataset  VisibleString,
+    physical VisibleString
 }
 
 ExerciseList ::= SEQUENCE OF Exercise
 
-MsgExerciseListRequest ::= SEQUENCE
-{
-    filter VisibleString
-}
+MsgExerciseCreation    ::= Exercise
+MsgExerciseUpdate      ::= Exercise
+MsgExerciseDestruction ::= VisibleString
 
-MsgExerciseListResponse ::= SEQUENCE
+MsgExerciseCreationRequest    ::= Exercise
+MsgExerciseCreationRequestAck ::= SEQUENCE
 {
     return-code ENUMERATED
     {
-        ok,
-        forbidden
+        success,
+        forbidden,
+        invalid-name
     },
-    exercises ExerciseList OPTIONAL
+    name VisibleString
+}
+
+MsgExerciseUpdateRequest    ::= SEQUENCE
+{
+    exercise Exercise,
+    name     VisibleString
+}
+
+MsgExerciseUpdateRequestAck ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        success,
+        forbidden,
+        not-found,
+        invalid-name
+    },
+    name VisibleString
+}
+
+MsgExerciseDestructionRequest    ::= VisibleString
+MsgExerciseDestructionRequestAck ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        success,
+        forbidden,
+        not-found
+        
+    },
+    name VisibleString
 }
 
 END

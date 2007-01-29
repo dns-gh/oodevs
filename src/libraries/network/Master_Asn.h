@@ -18,8 +18,8 @@
 #include "asn/master/generated/Profiles.h"
 #include "asn/master/generated/Exercises.h"
 #include "asn/master/generated/Games.h"
-#include "asn/master/generated/Models.h"
 #include "asn/master/generated/Datasets.h"
+#include "asn/master/generated/PhysicalModels.h"
 
 #pragma warning( pop ) 
 
