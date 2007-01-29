@@ -55,7 +55,7 @@ void UserProfileRights_ABC::CommitTo( UserProfile& profile )
     {
         if( const ValuedListItem* value = static_cast< const ValuedListItem* >( item ) )
         {
-            const Entity_ABC* entity = value->GetValue< const Entity_ABC* >();
+            const Entity_ABC* entity = value->GetValue< const Entity_ABC >();
             const Status status = Status( item->text( 3 ).toInt() );
             const bool isWriteable = status == eWrite;
             const bool isReadable  = status == eReadOnly;
@@ -175,7 +175,7 @@ void UserProfileRights_ABC::SetStatus( QListViewItem* item, Status status )
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable )
 {
-    const Entity_ABC* entity = item->GetValue< const Entity_ABC* >();
+    const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
     if( !entity )
         return;
     const bool isWriteable = selectedProfile_->IsWriteable( *entity );

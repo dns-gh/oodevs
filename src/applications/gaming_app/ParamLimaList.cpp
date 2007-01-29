@@ -85,7 +85,7 @@ void ParamLimaList::Commit()
             for( unsigned int j = 0; j < result_.elem[i].fonctions.n; ++j )
                 result_.elem[i].fonctions.elem[j] = (ASN1T_EnumTypeLima)tools::FromString( functions[j] );
         }
-        const Lima* lima = item->GetValue< const Lima* >();
+        const Lima* lima = item->GetValue< const Lima >();
         lima->CopyTo( result_.elem[i].lima );
         item = (ValuedListItem*)( item->nextSibling() );
         ++i;
@@ -200,7 +200,7 @@ void ParamLimaList::Draw( const geometry::Point2f& point, const geometry::Rectan
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )
     {
-        if( const Lima* lima = item->GetValue< const Lima* >() )
+        if( const Lima* lima = item->GetValue< const Lima >() )
         {
             glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
                 glColor4f( 1, 0, 0, 0.5f );

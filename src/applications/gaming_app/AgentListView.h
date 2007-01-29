@@ -15,7 +15,10 @@
 
 namespace kernel
 {
+    class Entity_ABC;
+    class Agent_ABC;
     class Automat_ABC;
+    class KnowledgeGroup_ABC;
 }
 
 class Publisher_ABC;

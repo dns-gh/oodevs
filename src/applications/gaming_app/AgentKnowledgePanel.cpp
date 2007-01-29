@@ -199,10 +199,10 @@ void AgentKnowledgePanel::Select( const KnowledgeGroup_ABC* element )
 void AgentKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    if( ! item || ! item->IsA< const AgentKnowledge_ABC* >() )
+    if( ! item || ! item->IsA< const AgentKnowledge_ABC >() )
         subSelected_ = 0;
     else
-        subSelected_ = item->GetValue< const AgentKnowledge_ABC* >();
+        subSelected_ = item->GetValue< const AgentKnowledge_ABC >();
 
     if( subSelected_ )
     {

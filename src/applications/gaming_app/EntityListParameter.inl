@@ -76,5 +76,5 @@ void EntityListParameter< ConcreteEntity >::MenuItemValidated()
 template< typename ConcreteEntity >
 unsigned long EntityListParameter< ConcreteEntity >::GetId( gui::ValuedListItem* item )
 {
-    return item->GetValue< const ConcreteEntity* >()->GetId();
+    return item->GetValue< const ConcreteEntity >()->GetId();
 }

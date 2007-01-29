@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    class Agent_ABC;
 }
 
 class AgentKnowledge_ABC;

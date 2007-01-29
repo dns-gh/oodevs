@@ -73,7 +73,7 @@ ValuedListItem::~ValuedListItem()
 // -----------------------------------------------------------------------------
 int ValuedListItem::rtti() const
 {
-    return container_ ? container_->rtti() : 1000;
+    return 1000;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void ValuedListItem::Activate( ActionController& actions )
 // Name: ValueContainer::Select
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void ValueContainer< const Entity_ABC* >::Select( kernel::ActionController& actions )
+void ValueContainer< const Entity_ABC >::Select( kernel::ActionController& actions )
 {
     if( value_ )
         value_->Select( actions );
@@ -120,7 +120,7 @@ void ValueContainer< const Entity_ABC* >::Select( kernel::ActionController& acti
 // Name: ValueContainer::ContextMenu
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void ValueContainer< const Entity_ABC* >::ContextMenu( kernel::ActionController& actions, const QPoint& where )
+void ValueContainer< const Entity_ABC >::ContextMenu( kernel::ActionController& actions, const QPoint& where )
 {
     if( value_ )
         value_->ContextMenu( actions, where );
@@ -130,7 +130,7 @@ void ValueContainer< const Entity_ABC* >::ContextMenu( kernel::ActionController&
 // Name: ValueContainer::Activate
 // Created: AGE 2006-09-20
 // -----------------------------------------------------------------------------
-void ValueContainer< const Entity_ABC* >::Activate( kernel::ActionController& actions )
+void ValueContainer< const Entity_ABC >::Activate( kernel::ActionController& actions )
 {
     if( value_ )
         value_->Activate( actions );

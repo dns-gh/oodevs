@@ -130,7 +130,7 @@ void TacticalListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 void TacticalListView::keyPressEvent( QKeyEvent* event )
 {
     if( selectedItem() && event->key() == Qt::Key_Delete )
-        modelBuilder_.DeleteEntity( *((ValuedListItem*)selectedItem())->GetValue< const Entity_ABC* >() );
+        modelBuilder_.DeleteEntity( *((ValuedListItem*)selectedItem())->GetValue< const Entity_ABC >() );
     else
         QListView::keyPressEvent( event );
 }
@@ -203,7 +203,7 @@ void TacticalListView::Engage()
 {
     if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
     {
-        Entity_ABC& entity = const_cast< Entity_ABC& >( *valuedItem->GetValue< const Entity_ABC* >() );
+        Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
             decisions->Engage();
     }
@@ -217,7 +217,7 @@ void TacticalListView::Disengage()
 {
     if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
     {
-        Entity_ABC& entity = const_cast< Entity_ABC& >( *valuedItem->GetValue< const Entity_ABC* >() );
+        Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
             decisions->Disengage();
     }

@@ -268,14 +268,16 @@ QDragObject* UnitListView::dragObject()
 
     QByteArray* pBytes = new QByteArray();
     std::string mimeType;
-    if( pItem->IsA< const AgentType* >() )
+    if( pItem->IsA< const AgentType >() )
     {
-        pBytes->setRawData( (const char*)&( pItem->GetValue< const AgentType* >() ), sizeof( AgentType* ) );
+        const AgentType* pType = pItem->GetValue< const AgentType >();
+        pBytes->setRawData( (const char*)( &pType ), sizeof( AgentType* ) );
         mimeType = "csword/AgentType";
     }
-    else if( pItem->IsA< const AutomatType* >() )
+    else if( pItem->IsA< const AutomatType >() )
     {
-        pBytes->setRawData( (const char*)&( pItem->GetValue< const AutomatType* >() ), sizeof( AutomatType* ) );
+        const AutomatType* pType = pItem->GetValue< const AutomatType >();
+        pBytes->setRawData( (const char*)( &pType ), sizeof( AutomatType* ) );
         mimeType = "csword/AutomatType";
     }
     if( mimeType.empty() )

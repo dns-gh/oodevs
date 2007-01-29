@@ -52,7 +52,7 @@ void RotaPrototype::Commit()
 
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
-            attr.AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent* >() );
+            attr.AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >() );
     attr.SetDanger( danger_->text().toUInt() );
 }
 

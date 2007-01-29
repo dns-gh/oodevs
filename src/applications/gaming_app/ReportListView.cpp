@@ -170,7 +170,7 @@ void ReportListView::OnReadTimerOut()
     ValuedListItem* item = (ValuedListItem*)( selectedItem() );
     if( item )
     {
-        const Report* report = item->GetValue< const Report* >();
+        const Report* report = item->GetValue< const Report >();
         const_cast< Report* >( report )->Read();
         report->Display( GetItemDisplayer( item ) );
     }

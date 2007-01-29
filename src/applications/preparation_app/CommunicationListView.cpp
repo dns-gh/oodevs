@@ -105,7 +105,7 @@ bool CommunicationListView::Drop( const Entity_ABC& item, const Entity_ABC& targ
 void CommunicationListView::keyPressEvent( QKeyEvent* event )
 {
     if( selectedItem() && event->key() == Qt::Key_Delete )
-        modelBuilder_.DeleteEntity( *((gui::ValuedListItem*)selectedItem())->GetValue< const Entity_ABC* >() );
+        modelBuilder_.DeleteEntity( *((gui::ValuedListItem*)selectedItem())->GetValue< const Entity_ABC >() );
     else
         QListView::keyPressEvent( event );
 }

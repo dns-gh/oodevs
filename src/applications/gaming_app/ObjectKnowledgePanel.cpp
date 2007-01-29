@@ -252,9 +252,9 @@ void ObjectKnowledgePanel::UpdateExtension( const ObjectKnowledge_ABC& k )
 void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    if( item->IsA< const ObjectKnowledge_ABC* >() )
+    if( item->IsA< const ObjectKnowledge_ABC >() )
     {
-        subSelected_ = item->GetValue< const ObjectKnowledge_ABC* >();
+        subSelected_ = item->GetValue< const ObjectKnowledge_ABC >();
         if( subSelected_ )
         {
             NotifyUpdated( *subSelected_ );

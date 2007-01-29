@@ -11,7 +11,6 @@
 #define __ValuedListItem_h_
 
 #include "RichListItem.h"
-#include "ListItemRtti.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -49,17 +48,17 @@ public:
     //! @name Operations
     //@{
     template< typename T >
-    bool Holds( const T& value ) const {
+    bool Holds( T* value ) const {
         return IsA< T >() && GetValue< T >() == value;
     }
     template< typename T >
     bool IsA() const;
     template< typename T >
-    const T& GetValue() const;
+    T* GetValue() const;
     template< typename T >
-    void SetValue( const T& value );
+    void SetValue( T* value );
     template< typename T >
-    void Set( const T& value, QString label1 = QString::null, QString label2 = QString::null );
+    void Set( T* value, QString label1 = QString::null, QString label2 = QString::null );
     template< typename T >
     void SetNamed( const T& value );
     void SetToolTip( const QString& text );
@@ -94,7 +93,7 @@ protected:
 // Created: APE 2004-04-19
 // =============================================================================
 template< typename T >
-ValuedListItem* FindItem( const T& searched, QListViewItem* root )
+ValuedListItem* FindItem( T* searched, QListViewItem* root )
 {
     if( ! root )
         return 0;
@@ -103,7 +102,7 @@ ValuedListItem* FindItem( const T& searched, QListViewItem* root )
     while( it.current() )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        if( item->IsA< T >() && item->GetValue< T >() == searched )
+        if( item->Holds( searched ) )
             return item;
         ++it;
     }
@@ -128,12 +127,12 @@ ValuedListItem* FindItem( const kernel::SafePointer< T >& searched, QListViewIte
 // Created: APE 2004-04-19
 // =============================================================================
 template< typename T >
-ValuedListItem* FindSibling( const T& searched, QListViewItem* child )
+ValuedListItem* FindSibling( T* searched, QListViewItem* child )
 {
     while( child )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( child );
-        if( item->IsA< T >() && item->GetValue< T >() == searched )
+        if( item->Holds( searched ) )
             return item;
         child = child->nextSibling();
     }
@@ -147,7 +146,7 @@ ValuedListItem* FindSibling( const T& searched, QListViewItem* child )
 // Created: APE 2004-04-19
 // =============================================================================
 template< typename T >
-ValuedListItem* FindChild( const T& searched, QListViewItem* root )
+ValuedListItem* FindChild( T* searched, QListViewItem* root )
 {
     if( ! root )
         return 0;
@@ -163,7 +162,7 @@ ValuedListItem* FindChild( const T& searched, QListViewItem* root )
 class ValueContainer_ABC
 {
 public:
-    virtual int rtti() const = 0;
+    virtual const type_info& typeinfo() const = 0;
     virtual void Select( kernel::ActionController& actions ) = 0;
     virtual void ContextMenu( kernel::ActionController& actions, const QPoint& where ) = 0;
     virtual void Activate( kernel::ActionController& actions ) = 0;
@@ -179,14 +178,14 @@ template< typename T >
 class ValueContainer : public ValueContainer_ABC
 {
 public:
-    ValueContainer( const T& value ) : value_( value ) {};
-    virtual int rtti() const {
-        return ListItemRtti< T >::rtti;
+    ValueContainer( T* value ) : value_( value ) {};
+    virtual const type_info& typeinfo() const {
+        return typeid( T );
     }
-    const T& GetValue() const {
+    T* GetValue() const {
         return value_;
     };
-    void SetValue( const T& value ) {
+    void SetValue( T* value ) {
         value_ = value;
     }
     virtual void Select( kernel::ActionController& actions ) {
@@ -199,21 +198,21 @@ public:
         actions.Activate( *value_ );
     }
 private:
-    T value_;
+    T* value_;
 };
 
 template< >
-class ValueContainer< const kernel::Entity_ABC* > : public ValueContainer_ABC
+class ValueContainer< const kernel::Entity_ABC > : public ValueContainer_ABC
 {
 public:
-    ValueContainer( kernel::Entity_ABC const* const& value ) : value_( value ) {};
-    virtual int rtti() const {
-        return ListItemRtti< const kernel::Entity_ABC* >::rtti;
+    ValueContainer( const kernel::Entity_ABC* value ) : value_( value ) {};
+    virtual const type_info& typeinfo() const {
+        return typeid( const kernel::Entity_ABC );
     }
-    kernel::Entity_ABC const* const& GetValue() const {
+    kernel::Entity_ABC const* GetValue() const {
         return value_;
     };
-    void SetValue( kernel::Entity_ABC const* const& value ) {
+    void SetValue( kernel::Entity_ABC const* value ) {
         value_ = value;
     }
     virtual void Select( kernel::ActionController& actions );
@@ -224,38 +223,40 @@ private:
 };
 
 template< >
-class ValueContainer< const kernel::Object_ABC* > : public ValueContainer< const kernel::Entity_ABC* >
+class ValueContainer< const kernel::Object_ABC > : public ValueContainer< const kernel::Entity_ABC >
 {
 public:
-    ValueContainer( kernel::Object_ABC const* const& value ) : ValueContainer< const kernel::Entity_ABC* >( value ), value_( value ) {};
-    virtual int rtti() const {
-        return ListItemRtti< const kernel::Object_ABC* >::rtti;
+    ValueContainer( kernel::Object_ABC const* value )
+        : ValueContainer< const kernel::Entity_ABC >( value ), value_( value ) {};
+    virtual const type_info& typeinfo() const {
+        return typeid( const kernel::Object_ABC );
     }
-    kernel::Object_ABC const* const& GetValue() const {
+    kernel::Object_ABC const* GetValue() const {
         return value_;
     };
-    void SetValue( kernel::Object_ABC const* const& value ) {
+    void SetValue( kernel::Object_ABC const* value ) {
         value_ = value;
-        ValueContainer< const kernel::Entity_ABC* >::SetValue( value );
+        ValueContainer< const kernel::Entity_ABC >::SetValue( value );
     }
 private:
     const kernel::Object_ABC* value_;
 };
 
 template< >
-class ValueContainer< const kernel::Population_ABC* > : public ValueContainer< const kernel::Entity_ABC* >
+class ValueContainer< const kernel::Population_ABC > : public ValueContainer< const kernel::Entity_ABC >
 {
 public:
-    ValueContainer( kernel::Population_ABC const* const& value ) : ValueContainer< const kernel::Entity_ABC* >( value ), value_( value ) {};
-    virtual int rtti() const {
-        return ListItemRtti< const kernel::Population_ABC* >::rtti;
+    ValueContainer( kernel::Population_ABC const* value )
+        : ValueContainer< const kernel::Entity_ABC >( value ), value_( value ) {};
+    virtual const type_info& typeinfo() const {
+        return typeid( const kernel::Population_ABC );
     }
-    kernel::Population_ABC const* const& GetValue() const {
+    kernel::Population_ABC const* GetValue() const {
         return value_;
     };
-    void SetValue( kernel::Population_ABC const* const& value ) {
+    void SetValue( kernel::Population_ABC const* value ) {
         value_ = value;
-        ValueContainer< const kernel::Entity_ABC* >::SetValue( value );
+        ValueContainer< const kernel::Entity_ABC >::SetValue( value );
     }
 private:
     const kernel::Population_ABC* value_;
@@ -268,7 +269,7 @@ private:
 template< typename T >
 bool ValuedListItem::IsA() const
 {
-    return container_ && container_->rtti() == ListItemRtti< T >::rtti;
+    return container_ && container_->typeinfo() == typeid( T );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,11 +277,11 @@ bool ValuedListItem::IsA() const
 // Created: AGE 2005-09-15
 // -----------------------------------------------------------------------------
 template< typename T >
-const T& ValuedListItem::GetValue() const
+T* ValuedListItem::GetValue() const
 {
     if( ! IsA< T >() )
         throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
-    return static_cast< ValueContainer< T >*>( container_ )->GetValue();
+    return static_cast< ValueContainer< T >* >( container_ )->GetValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -288,14 +289,14 @@ const T& ValuedListItem::GetValue() const
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------
 template< typename T >
-void ValuedListItem::SetValue( const T& value )
+void ValuedListItem::SetValue( T* value )
 {
     if( ! IsA< T >() ) {
         delete container_;
         container_ = new ValueContainer< T >( value );
     }
     else
-        static_cast< ValueContainer< T >*>( container_ )->SetValue( value );
+        static_cast< ValueContainer< T >* >( container_ )->SetValue( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,7 +304,7 @@ void ValuedListItem::SetValue( const T& value )
 // Created: AGE 2006-05-11
 // -----------------------------------------------------------------------------
 template< typename T >
-void ValuedListItem::Set( const T& value, QString label1 /*= QString::null*/, QString label2 /*= QString::null*/ )
+void ValuedListItem::Set( T* value, QString label1 /*= QString::null*/, QString label2 /*= QString::null*/ )
 {
     SetValue( value );
     setText( 0, label1 );

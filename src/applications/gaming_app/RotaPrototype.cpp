@@ -55,7 +55,7 @@ void RotaPrototype::Commit()
     unsigned i = 0;
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
-            attr_->agents_nbc.elem[i++] = static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent* >()->GetId();
+            attr_->agents_nbc.elem[i++] = static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId();
 
     attr_->niveau_danger = danger_->text().toUInt();
     msg_.m.attributs_specifiquesPresent = 1;

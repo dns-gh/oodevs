@@ -62,7 +62,7 @@ bool ParamObstacleList::CheckValidity()
 
     if( selected_  )
     {
-        ParamObstacle* obstacle = selected_->GetValue< ParamObstacle* >();
+        ParamObstacle* obstacle = selected_->GetValue< ParamObstacle >();
         obstacle->Commit();
         return obstacle->CheckValidity();
     }
@@ -92,7 +92,7 @@ void ParamObstacleList::Commit()
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        item->GetValue< ParamObstacle* >()->CommitTo( asn_->elem[i] );
+        item->GetValue< ParamObstacle >()->CommitTo( asn_->elem[i] );
     }
 }
 
@@ -105,7 +105,7 @@ bool ParamObstacleList::ChangeSelection()
     if( !selected_ )
         return true;
 
-    ParamObstacle* obstacle = selected_->GetValue< ParamObstacle* >();
+    ParamObstacle* obstacle = selected_->GetValue< ParamObstacle >();
     obstacle->Commit();
     if( !obstacle->CheckValidity() )
     {
@@ -127,7 +127,7 @@ void ParamObstacleList::OnSelectionChanged( QListViewItem* item )
     if( item == selected_ || ! ChangeSelection() || !item )
         return;
     ValuedListItem* current = static_cast< ValuedListItem* >( item );
-    ParamObstacle* obstacle = current->GetValue< ParamObstacle* >();
+    ParamObstacle* obstacle = current->GetValue< ParamObstacle >();
     obstacle->show();
     obstacle->RegisterIn( controller_ );
     selected_ = current;
@@ -185,12 +185,12 @@ void ParamObstacleList::DeleteItem( QListViewItem& item )
 {
     if( &item == selected_ )
     {
-        selected_->GetValue< ParamObstacle* >()->RemoveFromController();
+        selected_->GetValue< ParamObstacle >()->RemoveFromController();
         selected_ = 0;
     }
     item.setSelected( false );
     ValuedListItem* valuedItem = static_cast< ValuedListItem* >( &item );
-    ParamObstacle* obstacle = valuedItem->GetValue< ParamObstacle* >();
+    ParamObstacle* obstacle = valuedItem->GetValue< ParamObstacle >();
     delete obstacle;
     delete &item;
 }
@@ -216,6 +216,6 @@ void ParamObstacleList::Draw( const geometry::Point2f& point, const geometry::Re
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        item->GetValue< ParamObstacle* >()->Draw( point, viewport, tools );
+        item->GetValue< ParamObstacle >()->Draw( point, viewport, tools );
     }
 }

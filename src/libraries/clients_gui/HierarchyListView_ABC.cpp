@@ -281,9 +281,9 @@ void HierarchyListView_ABC::dropEvent( QDropEvent* pEvent )
 // -----------------------------------------------------------------------------
 bool HierarchyListView_ABC::Drop( ValuedListItem& item, ValuedListItem& target )
 {
-    return item.IsA< const Entity_ABC* >()
-        && target.IsA< const Entity_ABC* >()
-        && Drop( *item.GetValue< const Entity_ABC* >(), *target.GetValue< const Entity_ABC* >() );
+    return item.IsA< const Entity_ABC >()
+        && target.IsA< const Entity_ABC >()
+        && Drop( *item.GetValue< const Entity_ABC >(), *target.GetValue< const Entity_ABC >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,9 +337,9 @@ void HierarchyListView_ABC::Update()
     while( item )
     {
         QListViewItem* next = item->nextSibling();
-        if( item->IsA< const Entity_ABC* >() )
+        if( item->IsA< const Entity_ABC >() )
         {
-            const Entity_ABC& entity = *item->GetValue< const Entity_ABC* >();
+            const Entity_ABC& entity = *item->GetValue< const Entity_ABC >();
             Display( entity, item );
         }
         item = (ValuedListItem*)( next );

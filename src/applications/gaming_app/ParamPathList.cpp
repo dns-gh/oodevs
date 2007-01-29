@@ -64,7 +64,7 @@ bool ParamPathList::CheckValidity()
 
     if( selected_  )
     {
-        ParamPath* path = selected_->GetValue< ParamPath* >();
+        ParamPath* path = selected_->GetValue< ParamPath >();
         path->Commit();
         return path->CheckValidity();
     }
@@ -94,7 +94,7 @@ void ParamPathList::Commit()
     for( unsigned int i = 0; it.current(); ++it, ++i )
     {
         ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        item->GetValue< ParamPath* >()->CommitTo( asn_->elem[i] );
+        item->GetValue< ParamPath >()->CommitTo( asn_->elem[i] );
     }
 }
 
@@ -107,7 +107,7 @@ bool ParamPathList::ChangeSelection()
     if( !selected_ )
         return true;
 
-    ParamPath* path = selected_->GetValue< ParamPath* >();
+    ParamPath* path = selected_->GetValue< ParamPath >();
     path->Commit();
     if( !path->CheckValidity() )
     {
@@ -129,7 +129,7 @@ void ParamPathList::OnSelectionChanged( QListViewItem* item )
     if( item == selected_ || ! ChangeSelection() || ! item )
         return;
     ValuedListItem* current = static_cast< ValuedListItem* >( item );
-    ParamPath* path = current->GetValue< ParamPath* >();
+    ParamPath* path = current->GetValue< ParamPath >();
     path->show();
     path->RegisterIn( controller_ );
     selected_ = current;
@@ -188,12 +188,12 @@ void ParamPathList::DeleteItem( QListViewItem& item )
 {
     if( &item == selected_ )
     {
-        selected_->GetValue< ParamPath* >()->RemoveFromController();
+        selected_->GetValue< ParamPath >()->RemoveFromController();
         selected_ = 0;
     }
     item.setSelected( false );
     ValuedListItem* valuedItem = static_cast< ValuedListItem* >( &item );
-    ParamPath* path = valuedItem->GetValue< ParamPath* >();
+    ParamPath* path = valuedItem->GetValue< ParamPath >();
     delete path;
     delete &item;
 }

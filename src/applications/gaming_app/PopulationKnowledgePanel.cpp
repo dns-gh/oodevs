@@ -128,12 +128,12 @@ void PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* i )
     ValuedListItem* item = (ValuedListItem*)( i );
     display_->Group( tr( "Flow" ) ).Hide();
     display_->Group( tr( "Concentration" ) ).Hide();
-    if( item && item->IsA< const PopulationKnowledge_ABC* >() ) {
-        subSelected_ = item->GetValue< const PopulationKnowledge_ABC* >();
+    if( item && item->IsA< const PopulationKnowledge_ABC >() ) {
+        subSelected_ = item->GetValue< const PopulationKnowledge_ABC >();
         subSelected_->Display( *display_ );
     }
-    else if( item && item->IsA< const PopulationPartKnowledge_ABC* >() ) {
-        selectedPart_ = item->GetValue< const PopulationPartKnowledge_ABC* >();
+    else if( item && item->IsA< const PopulationPartKnowledge_ABC >() ) {
+        selectedPart_ = item->GetValue< const PopulationPartKnowledge_ABC >();
         selectedPart_->Display( *display_ );
     }
 }
