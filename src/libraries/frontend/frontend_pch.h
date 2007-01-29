@@ -12,6 +12,7 @@
 
 #include <string>
 #include <memory>
-
+#include <map>
+#include <qstring.h>
 
 #endif // __frontend_pch_h_

@@ -120,7 +120,7 @@
         <build-lib name="preparation" depends="qt" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.frontend" description="build preparation static library" depends="library.network">
+    <target name="library.frontend" description="build preparation static library" depends="library.network,library.clients_kernel">
         <build-lib name="frontend" depends="qt" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>

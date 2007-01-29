@@ -8,38 +8,23 @@
 // *****************************************************************************
 
 #include "frontend_app_pch.h"
-#include "MainWindow.h"
 #include "ExerciseList.h"
-#include "Panels.h"
-#include <qlayout.h>
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow constructor
+// Name: ExerciseList constructor
 // Created: SBO 2007-01-26
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow()
-    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+ExerciseList::ExerciseList( QWidget* parent )
+    : QListView( parent )
 {
-    setCaption( APP_NAME );
-    setFixedSize( 600, 400 );
-    const QRect& screen = QApplication::desktop()->screenGeometry();
-    move( screen.center() - QPoint( width() / 2, height() / 2 ) );
-
-    QGridLayout* grid = new QGridLayout( this, 1, 2 );
-    grid->setColStretch( 0, 1 );
-    grid->setColStretch( 1, 3 );
-    
-    QWidget* list   = new ExerciseList( this );
-    QWidget* panels = new Panels( this );
-    grid->addWidget( list  , 0, 0 );
-    grid->addWidget( panels, 0, 1 );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: MainWindow destructor
+// Name: ExerciseList destructor
 // Created: SBO 2007-01-26
 // -----------------------------------------------------------------------------
-MainWindow::~MainWindow()
+ExerciseList::~ExerciseList()
 {
     // NOTHING
 }

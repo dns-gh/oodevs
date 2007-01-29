@@ -48,9 +48,12 @@ void Master::OnReceive( const ASN1T_MsgsOutMaster& message )
     switch( message.msg.t )
     {
     case T_MsgsOutMaster_msg_msg_authentication_response:
-    case T_MsgsOutMaster_msg_msg_exercise_list_response:
-    case T_MsgsOutMaster_msg_msg_game_start_response:
-    case T_MsgsOutMaster_msg_msg_game_stop_response:
+    case T_MsgsOutMaster_msg_msg_exercise_creation:
+    case T_MsgsOutMaster_msg_msg_exercise_creation_ack:
+    case T_MsgsOutMaster_msg_msg_exercise_update:
+    case T_MsgsOutMaster_msg_msg_exercise_update_ack:
+    case T_MsgsOutMaster_msg_msg_exercise_destruction:
+    case T_MsgsOutMaster_msg_msg_exercise_destruction_ack:
     default:
         break;
     }

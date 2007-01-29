@@ -138,6 +138,14 @@ protected:
     //@}
 };
 
+template< typename T >
+class StringResolver : public Resolver< T, QString >
+{
+public:
+             StringResolver() : Resolver< T, QString >() {}
+    virtual ~StringResolver() {}
+};
+
 }
 
 #endif // __Resolver_h_

@@ -77,11 +77,11 @@ private:                                                                  \
                                                                           \
 };
 
-GENERATE_EMPTY_ASN_MSG_SENDER( Master, ClientAnnouncement   , client_announcement    );
-GENERATE_ASN_MSG_SENDER      ( Master, AuthenticationRequest, authentication_request );
-GENERATE_ASN_MSG_SENDER      ( Master, ExerciseListRequest  , exercise_list_request  );
-GENERATE_ASN_MSG_SENDER      ( Master, GameStartRequest     , game_start_request     );
-GENERATE_ASN_MSG_SENDER      ( Master, GameStopRequest      , game_stop_request      );
+GENERATE_EMPTY_ASN_MSG_SENDER( Master, ClientAnnouncement        , client_announcement    );
+GENERATE_ASN_MSG_SENDER      ( Master, AuthenticationRequest     , authentication_request );
+GENERATE_ASN_MSG_SENDER      ( Master, ExerciseCreationRequest   , exercise_creation_request );
+GENERATE_ASN_MSG_SENDER      ( Master, ExerciseUpdateRequest     , exercise_update_request );
+GENERATE_NOPTR_ASN_MSG_SENDER( Master, ExerciseDestructionRequest, exercise_destruction_request );
 
 }
 
