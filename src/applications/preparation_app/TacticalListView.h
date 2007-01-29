@@ -18,6 +18,7 @@ namespace kernel
     class ModelLoaded;
     class Formation_ABC;
     class Automat_ABC;
+    class Agent_ABC;
     class FormationLevels;
 }
 
