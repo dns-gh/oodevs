@@ -12,6 +12,7 @@
 #include "Messages.h"
 #include "Master.h"
 #include "network/AsnMessageDecoder.h"
+#include "clients_kernel/Controller.h"
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
 using namespace frontend;
@@ -22,12 +23,14 @@ using namespace DIN;
 // Name: Networker constructor
 // Created: SBO 2007-01-25
 // -----------------------------------------------------------------------------
-Networker::Networker( const std::string& host )
+Networker::Networker( const std::string& host, kernel::Controller& controller, Model& model, Profile& profile )
     : ClientNetworker_ABC( host )
+    , controller_( controller )
     , master_( 0 )
+    , model_( model )
+    , profile_( profile )
 {
     GetMessageService().RegisterReceivedMessage( eMsgOutMaster, *this, &Networker::OnReceiveMsgOutMaster );
-    GetMessageService().RegisterReceivedMessage( eMsgInit     , *this, &Networker::OnReceiveMsgInit      );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +49,8 @@ Networker::~Networker()
 void Networker::OnConnected( DIN::DIN_Link& link )
 {
     ClientNetworker_ABC::OnConnected( link );
-    master_.reset( new Master( GetMessageService(), link ) );
+    master_.reset( new Master( GetMessageService(), link, model_, profile_ ) );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +61,7 @@ void Networker::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescr
 {
     ClientNetworker_ABC::OnConnectionLost( link, reason );
     master_.release();
+    controller_.Update( *this );
 }
 
 // =============================================================================
@@ -68,8 +73,6 @@ void Networker::OnConnectionLost( DIN::DIN_Link& link, const DIN::DIN_ErrorDescr
     {                                                                                     \
         master_->OnReceive( eMsg##MSG, msg );                                             \
     }
-
-DECLARE_DIN_CALLBACK( Init )
 
 // -----------------------------------------------------------------------------
 // Name: Networker::OnReceiveMsgOutMaster
@@ -87,4 +90,25 @@ void Networker::OnReceiveMsgOutMaster( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Inp
         // $$$$ SBO 2007-01-25: transform into a non-critical exception
         throw std::exception( exception.what() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Networker::Send
+// Created: SBO 2007-01-29
+// -----------------------------------------------------------------------------
+void Networker::Send( const ASN1T_MsgsInMaster& message )
+{
+    if( master_.get() )
+        master_->Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Networker::BuildDinMsg
+// Created: SBO 2007-01-30
+// -----------------------------------------------------------------------------
+DIN::DIN_BufferedMessage Networker::BuildDinMsg()
+{
+    if( master_.get() )
+        return master_->BuildDinMsg();
+    throw std::runtime_error( "Trying to build network message but you're not connected!" );
 }

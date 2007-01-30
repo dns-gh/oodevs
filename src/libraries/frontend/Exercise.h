@@ -49,6 +49,11 @@ public:
 
     //! @name Operations
     //@{
+    virtual void DoUpdate( const ASN1T_MsgExerciseUpdate& message );
+    //@}
+
+    //! @name Accessors
+    //@{
     QString GetName() const;
     //@}
 
@@ -61,7 +66,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgExerciseUpdate& message );
     void Update( const ASN1T_Exercise& message );
     //@}
 

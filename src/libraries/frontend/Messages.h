@@ -18,8 +18,7 @@ namespace frontend
 static enum
 {
     eMsgOutMaster = 0,
-    eMsgInMaster  = 1,
-    eMsgInit      = 1007
+    eMsgInMaster  = 1
 };
 
 
@@ -77,7 +76,6 @@ private:                                                                  \
                                                                           \
 };
 
-GENERATE_EMPTY_ASN_MSG_SENDER( Master, ClientAnnouncement        , client_announcement    );
 GENERATE_ASN_MSG_SENDER      ( Master, AuthenticationRequest     , authentication_request );
 GENERATE_ASN_MSG_SENDER      ( Master, ExerciseCreationRequest   , exercise_creation_request );
 GENERATE_ASN_MSG_SENDER      ( Master, ExerciseUpdateRequest     , exercise_update_request );

@@ -7,53 +7,54 @@
 //
 // *****************************************************************************
 
-#ifndef __ExercisesModel_h_
-#define __ExercisesModel_h_
-
-#include "Messages.h"
-#include "clients_kernel/Resolver.h"
+#ifndef __LoginDialog_h_
+#define __LoginDialog_h_
 
 namespace frontend
 {
-    class Exercise;
-    class ExerciseFactory_ABC;
+    class Profile;
+    class Publisher_ABC;
+}
 
 // =============================================================================
-/** @class  ExercisesModel
-    @brief  ExercisesModel
+/** @class  LoginDialog
+    @brief  LoginDialog
 */
 // Created: SBO 2007-01-29
 // =============================================================================
-class ExercisesModel : public kernel::StringResolver< Exercise >
+class LoginDialog : public QDialog
 {
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExercisesModel( ExerciseFactory_ABC& factory );
-    virtual ~ExercisesModel();
+             LoginDialog( QWidget* parent, const frontend::Profile& profile, frontend::Publisher_ABC& publisher );
+    virtual ~LoginDialog();
     //@}
 
-    //! @name Operations
+private slots:
+    //! @name Slots
     //@{
-    void CreateExercise( const ASN1T_MsgExerciseCreation&    message );
-    void DeleteExercise( const ASN1T_MsgExerciseDestruction& message );
+    void Validate();
+    void Reject();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ExercisesModel( const ExercisesModel& );            //!< Copy constructor
-    ExercisesModel& operator=( const ExercisesModel& ); //!< Assignment operator
+    LoginDialog( const LoginDialog& );            //!< Copy constructor
+    LoginDialog& operator=( const LoginDialog& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    ExerciseFactory_ABC& factory_;
+    const frontend::Profile& profile_;
+    frontend::Publisher_ABC& publisher_;
+    QLineEdit* login_;
+    QLineEdit* password_;
     //@}
 };
 
-}
-
-#endif // __ExercisesModel_h_
+#endif // __LoginDialog_h_

@@ -20,6 +20,8 @@ namespace DIN
 
 namespace frontend
 {
+    class Model;
+    class Profile;
 
 // =============================================================================
 /** @class  Master
@@ -33,7 +35,7 @@ class Master : public network::Server_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Master( DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link );
+             Master( DIN::DIN_MessageService_ABC& messageService, DIN::DIN_Link& link, Model& model, Profile& profile );
     virtual ~Master();
     //@}
 
@@ -53,11 +55,20 @@ private:
 
     //! @name Helpers
     //@{
+    void OnReceiveMsgAuthenticationResponse       ( const ASN1T_MsgAuthenticationResponse&        message );
+    void OnReceiveMsgExerciseCreation             ( const ASN1T_MsgExerciseCreation&              message );
+    void OnReceiveMsgExerciseUpdate               ( const ASN1T_MsgExerciseUpdate&                message );
+    void OnReceiveMsgExerciseDestruction          ( const ASN1T_MsgExerciseDestruction&           message );
+    void OnReceiveMsgExerciseCreationRequestAck   ( const ASN1T_MsgExerciseCreationRequestAck&    message );
+    void OnReceiveMsgExerciseUpdateRequestAck     ( const ASN1T_MsgExerciseUpdateRequestAck&      message );
+    void OnReceiveMsgExerciseDestructionRequestAck( const ASN1T_MsgExerciseDestructionRequestAck& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    Model& model_;
+    Profile& profile_;
     //@}
 };
 

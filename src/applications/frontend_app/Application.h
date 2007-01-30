@@ -12,9 +12,16 @@
 
 #include <qapplication.h>
 
+namespace kernel
+{
+    class Controllers;
+}
+
 namespace frontend
 {
+    class Model;
     class Networker;
+    class Profile;
 }
 
 class QMainWindow;
@@ -56,6 +63,9 @@ private:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< kernel::Controllers > controllers_;
+    std::auto_ptr< frontend::Model >     model_;
+    std::auto_ptr< frontend::Profile >   profile_;
     std::auto_ptr< frontend::Networker > networker_;
     QTimer*                              networkTimer_;
     QMainWindow*                         mainWindow_;

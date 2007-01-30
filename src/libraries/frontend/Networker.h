@@ -11,15 +11,24 @@
 #define __Networker_h_
 
 #include "network/ClientNetworker_ABC.h"
+#include "Messages.h"
+#include "Publisher_ABC.h"
 
 namespace DIN
 {
     class DIN_Input;
 }
 
+namespace kernel
+{
+    class Controller;
+}
+
 namespace frontend
 {
     class Master;
+    class Model;
+    class Profile;
 
 // =============================================================================
 /** @class  Networker
@@ -28,13 +37,20 @@ namespace frontend
 // Created: SBO 2007-01-25
 // =============================================================================
 class Networker : public network::ClientNetworker_ABC
+                , public Publisher_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Networker( const std::string& host );
+             Networker( const std::string& host, kernel::Controller& controller, Model& model, Profile& profile );
     virtual ~Networker();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Send( const ASN1T_MsgsInMaster& message );
+    virtual DIN::DIN_BufferedMessage BuildDinMsg();
     //@}
 
 private:
@@ -53,13 +69,15 @@ private:
     //! @name Messages callbacks
     //@{
     void OnReceiveMsgOutMaster( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgInit     ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller&     controller_;
     std::auto_ptr< Master > master_;
+    Model&                  model_;
+    Profile&                profile_;
     //@}
 };
 

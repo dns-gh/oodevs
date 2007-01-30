@@ -8,50 +8,64 @@
 // *****************************************************************************
 
 #include "frontend_pch.h"
-#include "ExercisesModel.h"
-#include "ExerciseFactory_ABC.h"
-#include "Exercise.h"
+#include "Profile.h"
+#include "Publisher_ABC.h"
+#include "clients_kernel/Controller.h"
 
 using namespace frontend;
 
 // -----------------------------------------------------------------------------
-// Name: ExercisesModel constructor
+// Name: Profile constructor
 // Created: SBO 2007-01-29
 // -----------------------------------------------------------------------------
-ExercisesModel::ExercisesModel( ExerciseFactory_ABC& factory )
-    : factory_( factory )
+Profile::Profile( kernel::Controller& controller )
+    : controller_( controller )
+    , loggedIn_  ( false )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExercisesModel destructor
+// Name: Profile destructor
 // Created: SBO 2007-01-29
 // -----------------------------------------------------------------------------
-ExercisesModel::~ExercisesModel()
+Profile::~Profile()
 {
-    DeleteAll();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExercisesModel::CreateExercise
+// Name: Profile::DoUpdate
 // Created: SBO 2007-01-29
 // -----------------------------------------------------------------------------
-void ExercisesModel::CreateExercise( const ASN1T_MsgExerciseCreation& message )
+void Profile::DoUpdate( const ASN1T_MsgAuthenticationResponse& message )
 {
-    std::auto_ptr< Exercise > exercise( factory_.Create( message ) );
-    Register( exercise->GetName(), *exercise.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExercisesModel::DeleteExercise
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-void ExercisesModel::DeleteExercise( const ASN1T_MsgExerciseDestruction& message )
-{
-    if( Exercise* exercise = Find( message ) )
+    loggedIn_ = message.return_code == MsgAuthenticationResponse_return_code::ok;
+    if( loggedIn_ )
     {
-        Remove( message );
-        delete exercise;
+        login_ = message.profile.login;
+        type_  = message.profile.type;
     }
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::Login
+// Created: SBO 2007-01-29
+// -----------------------------------------------------------------------------
+void Profile::Login( Publisher_ABC& publisher, const QString& login, const QString& password ) const
+{
+    AsnMsgInMasterAuthenticationRequest asn;
+    asn().login    = login.ascii();
+    asn().password = password.ascii();
+    asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsLoggedIn
+// Created: SBO 2007-01-29
+// -----------------------------------------------------------------------------
+bool Profile::IsLoggedIn() const
+{
+    return loggedIn_;
 }

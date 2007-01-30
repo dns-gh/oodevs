@@ -11,6 +11,12 @@
 #define __ExerciseList_h_
 
 #include <qlistview.h>
+#include "clients_kernel/ElementObserver_ABC.h"
+
+namespace frontend
+{
+    class Exercise;
+}
 
 // =============================================================================
 /** @class  ExerciseList
@@ -18,7 +24,9 @@
 */
 // Created: SBO 2007-01-26
 // =============================================================================
-class ExerciseList : public QListView
+class ExerciseList : public QListView 
+                   , public kernel::Observer_ABC
+                   , public kernel::ElementObserver_ABC< frontend::Exercise >
 {
 
 public:
@@ -41,6 +49,9 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const frontend::Exercise& exercise );
+    virtual void NotifyUpdated( const frontend::Exercise& exercise );
+    virtual void NotifyDeleted( const frontend::Exercise& exercise );
     //@}
 
 private:

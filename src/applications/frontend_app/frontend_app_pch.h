@@ -14,8 +14,24 @@
 
 #include <exception>
 #include <memory>
+#include <map>
+#include <vector>
+#include <set>
 
 #include <qapplication.h>
 #include <qmessagebox.h>
+#include <qstring.h>
+#include <qsimplerichtext.h>
+#include <qpixmap.h>
+#include <qlineedit.h>
+#include <qdialog.h>
+#include <qlayout.h>
+#include <qgroupbox.h>
+#include <qlabel.h>
+#include <qpushbutton.h>
+#include <qtimer.h>
+
+#include "geometry/Types.h"
+
 
 #endif // __frontend_app_pch_h_
