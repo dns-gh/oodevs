@@ -10,7 +10,7 @@
 #ifndef __IndirectFire_h_
 #define __IndirectFire_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Fire_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 

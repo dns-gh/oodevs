@@ -11,7 +11,7 @@
 #define __SimulationNetworker_h_
 
 #include "Publisher_ABC.h"
-#include "network/ClientNetworker_ABC.h"
+#include "tools/ClientNetworker_ABC.h"
 
 struct ASN1T_MsgsInSim;
 
@@ -31,7 +31,7 @@ class Simulation;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class SimulationNetworker : public network::ClientNetworker_ABC
+class SimulationNetworker : public tools::ClientNetworker_ABC
                           , public Publisher_ABC
 {
 public:

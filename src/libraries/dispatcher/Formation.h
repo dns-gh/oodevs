@@ -10,7 +10,7 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
 
 namespace dispatcher

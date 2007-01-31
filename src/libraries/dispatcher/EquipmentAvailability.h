@@ -10,7 +10,7 @@
 #ifndef __EquipmentAvailability_h_
 #define __EquipmentAvailability_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
 
 namespace dispatcher

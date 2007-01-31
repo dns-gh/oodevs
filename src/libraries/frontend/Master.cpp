@@ -16,11 +16,12 @@
 #include "frontend/Exercise.h"
 #include "frontend/Exceptions.h"
 #include "frontend/Profile.h"
-#include "network/AsnMessageEncoder.h"
+#include "tools/AsnMessageEncoder.h"
 #include "clients_gui/Tools.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
 
+using namespace tools;
 using namespace frontend;
 
 // -----------------------------------------------------------------------------
@@ -80,7 +81,7 @@ void Master::OnReceive( unsigned int id, DIN::DIN_Input& message )
 // -----------------------------------------------------------------------------
 void Master::Send( const ASN1T_MsgsInMaster& message )
 {
-    network::AsnMessageEncoder< ASN1T_MsgsInMaster, ASN1C_MsgsInMaster > asnEncoder( messageService_, message );
+    AsnMessageEncoder< ASN1T_MsgsInMaster, ASN1C_MsgsInMaster > asnEncoder( messageService_, message );
     messageService_.Send( link_, eMsgInMaster, asnEncoder.GetDinMsg() );
 }
 

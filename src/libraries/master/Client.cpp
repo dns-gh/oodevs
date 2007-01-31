@@ -15,12 +15,12 @@
 #include "Master.h"
 #include "ProfileManager.h"
 #include "DataManager.h"
-#include "network/AsnMessageEncoder.h"
+#include "tools/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
 
 using namespace master;
-using namespace network;
+using namespace tools;
 using namespace DIN;
 
 // -----------------------------------------------------------------------------

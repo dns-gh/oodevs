@@ -1621,10 +1621,10 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationOrderManagement( const ASN1T_MsgPo
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgAuthLoginAck
+// Name: AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgAuthLoginAck( const ASN1T_MsgAuthLoginAck& message )
+void AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse( const ASN1T_MsgAuthenticationResponse& message )
 {
     profile_.Update( message );
 }
@@ -1710,7 +1710,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_begin:        OnReceiveMsgCtrlSendCurrentStateBegin (); break;
         case T_MsgsInClient_msg_msg_ctrl_send_current_state_end:          OnReceiveMsgCtrlSendCurrentStateEnd   (); break;
 
-        case T_MsgsInClient_msg_msg_auth_login_ack:                       OnReceiveMsgAuthLoginAck                ( *message.msg.u.msg_auth_login_ack ); break;
+        case T_MsgsInClient_msg_msg_authentication_response:              OnReceiveMsgAuthenticationResponse      ( *message.msg.u.msg_authentication_response ); break;
         case T_MsgsInClient_msg_msg_profile_creation:                     OnReceiveMsgProfileCreation             ( *message.msg.u.msg_profile_creation ); break;
         case T_MsgsInClient_msg_msg_profile_creation_request_ack:         OnReceiveMsgProfileCreationRequestAck   ( *message.msg.u.msg_profile_creation_request_ack ); break;
         case T_MsgsInClient_msg_msg_profile_update:                       OnReceiveMsgProfileUpdate               ( *message.msg.u.msg_profile_update ); break;

@@ -1,0 +1,21 @@
+--
+-- file name : PhysicalModels.asn
+--
+-- Physical Models messages
+--
+
+PhysicalModels DEFINITIONS ::= BEGIN
+
+-- BEGIN includes
+PhysicalModelsIncludes ::= SEQUENCE {}
+PhysicalModelsExports  ::= NULL
+-- END includes
+
+PhysicalModel ::= SEQUENCE
+{
+    name    VisibleString
+}
+
+PhysicalModelList ::= SEQUENCE OF PhysicalModel
+
+END

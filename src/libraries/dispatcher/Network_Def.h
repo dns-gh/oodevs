@@ -204,7 +204,7 @@ GENERATE_ASN_MSG_SENDER         ( Client, PopulationConcentrationKnowledgeUpdate
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeCreation               , population_flux_knowledge_creation                );
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeDestruction            , population_flux_knowledge_destruction             );
 GENERATE_ASN_MSG_SENDER         ( Client, PopulationFluxKnowledgeUpdate                 , population_flux_knowledge_update                  );
-GENERATE_ASN_MSG_SENDER         ( Client, AuthLoginAck                                  , auth_login_ack                                    );
+GENERATE_ASN_MSG_SENDER         ( Client, AuthenticationResponse                        , authentication_response                           );
 GENERATE_ASN_MSG_SENDER         ( Client, ProfileCreation                               , profile_creation                                  );
 GENERATE_ASN_MSG_SENDER         ( Client, ProfileUpdate                                 , profile_update                                    );
 GENERATE_NOPTR_ASN_MSG_SENDER   ( Client, ProfileDestruction                            , profile_destruction                               );

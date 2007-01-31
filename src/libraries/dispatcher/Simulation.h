@@ -11,8 +11,8 @@
 #define __Simulation_h_
 
 #include "Publisher_ABC.h"
-#include "network/Simulation_Asn.h"
-#include "network/Server_ABC.h"
+#include "game_asn/Asn.h"
+#include "tools/Server_ABC.h"
 
 namespace DIN
 {
@@ -29,7 +29,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Simulation : public network::Server_ABC
+class Simulation : public tools::Server_ABC
                  , public Publisher_ABC
 {
 public:

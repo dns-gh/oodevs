@@ -12,7 +12,7 @@
 
 #include "MIL.h"
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 class MIL_Lima;
 class MIL_Limit;

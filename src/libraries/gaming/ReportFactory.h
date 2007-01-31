@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Resolver.h"
 #include "DIN_Types.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 namespace xml
 {

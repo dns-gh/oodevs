@@ -10,7 +10,7 @@
 #ifndef __ParamLocation_h_
 #define __ParamLocation_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "LocationSerializer.h"

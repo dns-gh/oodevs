@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 class TER_Localisation;

@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 
 #pragma warning ( push )

@@ -10,7 +10,7 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"

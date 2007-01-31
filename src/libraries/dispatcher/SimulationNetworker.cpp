@@ -15,12 +15,12 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "Network_Def.h"
-#include "network/AsnMessageDecoder.h"
-#include "network/AsnMessageEncoder.h"
+#include "tools/AsnMessageDecoder.h"
+#include "tools/AsnMessageEncoder.h"
 #include "xeumeuleu/xml.h"
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
-using namespace network;
+using namespace tools;
 using namespace dispatcher;
 using namespace DIN;
 
@@ -145,7 +145,7 @@ void SimulationNetworker::OnReceiveMsgOutSim( DIN::DIN_Link& linkFrom, DIN::DIN_
 
     try
     {
-        network::AsnMessageDecoder< ASN1T_MsgsOutSim, ASN1C_MsgsOutSim > asnDecoder( input );
+        AsnMessageDecoder< ASN1T_MsgsOutSim, ASN1C_MsgsOutSim > asnDecoder( input );
         pSimulation_->OnReceive( asnDecoder.GetAsnMsg() );
     }
     catch( std::runtime_error& exception )
@@ -167,7 +167,7 @@ void SimulationNetworker::Send( const ASN1T_MsgsInSim& asnMsg )
     assert( pSimulation_ );
     try
     {
-        network::AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( GetMessageService(), asnMsg );
+        AsnMessageEncoder< ASN1T_MsgsInSim, ASN1C_MsgsInSim > asnEncoder( GetMessageService(), asnMsg );
         pSimulation_->Send( asnMsg, asnEncoder.GetDinMsg() );
     }
     catch( std::runtime_error& exception )

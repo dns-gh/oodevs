@@ -10,7 +10,7 @@
 #ifndef __PopulationKnowledge_h_
 #define __PopulationKnowledge_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "ModelsContainer.h"
 
 namespace dispatcher

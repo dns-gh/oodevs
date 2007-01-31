@@ -10,7 +10,7 @@
 #ifndef __AgentKnowledgePositions_h_
 #define __AgentKnowledgePositions_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Updatable_ABC.h"
 

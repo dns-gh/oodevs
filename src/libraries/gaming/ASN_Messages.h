@@ -14,7 +14,7 @@
 
 #include "Network.h"
 #include "AgentServerMsgMgr.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 //=============================================================================
 // ASN ENCODER WRAPPER MACROS
@@ -93,7 +93,7 @@ public:                                                                         
 // GENERATE ASN MESSAGES
 //=============================================================================
 
-GENERATE_SEND_ASN_MSG_PTR( AuthLogin, auth_login )
+GENERATE_SEND_ASN_MSG_PTR( AuthenticationRequest, authentication_request )
 GENERATE_SEND_ASN_MSG_PTR( ProfileCreationRequest, profile_creation_request )
 GENERATE_SEND_ASN_MSG_PTR( ProfileUpdateRequest, profile_update_request )
 GENERATE_SEND_ASN_MSG_NOPTR( ProfileDestructionRequest, profile_destruction_request )

@@ -10,7 +10,7 @@
 #ifndef __ObjectsModel_h_
 #define __ObjectsModel_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Resolver.h"
 
 class ObjectFactory_ABC;

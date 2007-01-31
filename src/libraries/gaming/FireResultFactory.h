@@ -10,7 +10,7 @@
 #ifndef __FireResultFactory_h_
 #define __FireResultFactory_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 class AgentFireResult;
 class PopulationFireResult;

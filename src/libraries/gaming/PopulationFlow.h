@@ -10,7 +10,7 @@
 #ifndef __PopulationFlow_h_
 #define __PopulationFlow_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"

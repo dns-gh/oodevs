@@ -10,7 +10,7 @@
 #ifndef __VisionCones_h_
 #define __VisionCones_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "DIN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"

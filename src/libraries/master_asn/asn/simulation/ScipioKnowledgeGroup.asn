@@ -1,0 +1,44 @@
+--
+-- file name : ScipioAutomatetAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+ScipioKnowledgeGroup DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ScipioBaseExports FROM ScipioBase;
+ScipioKnowledgeGroupIncludes ::= SEQUENCE { ScipioBaseExports }
+ScipioKnowledgeGroupExports  ::= NULL
+-- END includes
+
+MsgKnowledgeGroupCreation ::= SEQUENCE
+{
+    oid         KnowledgeGroup,
+    oid-camp    Camp
+}
+
+MsgChangeGroupeConnaissance ::= SEQUENCE
+{
+    oid-automate             Automate,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  KnowledgeGroup 
+}
+
+EnumChangeGroupeConnaissanceErrorCode ::= ENUMERATED
+{
+    no-error                         (0),
+    error-invalid-automate           (1),
+    error-invalid-camp               (2),
+    error-invalid-groupe-connaissance(3)
+}
+
+MsgChangeGroupeConnaissanceAck ::= SEQUENCE
+{
+    oid-automate             Automate,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  KnowledgeGroup,
+    error-code               EnumChangeGroupeConnaissanceErrorCode
+}
+
+END -- ScipioKnowledgeGroup

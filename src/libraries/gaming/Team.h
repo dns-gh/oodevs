@@ -10,7 +10,7 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
 

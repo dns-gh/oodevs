@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 class MIL_Army;
 class MIL_RealObjectType;

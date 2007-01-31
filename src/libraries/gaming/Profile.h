@@ -10,7 +10,7 @@
 #ifndef __Profile_h_
 #define __Profile_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
 #include "Simulation.h"
@@ -54,7 +54,7 @@ public:
     //@{
     void Login( Publisher_ABC& publisher ) const;
     void Login( Publisher_ABC& publisher, const std::string& login, const std::string& password ) const;
-    void Update( const ASN1T_MsgAuthLoginAck& asnMsg );
+    void Update( const ASN1T_MsgAuthenticationResponse& asnMsg );
     void Update( const ASN1T_MsgProfileUpdate& asnMsg );
     //@}
     

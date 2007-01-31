@@ -10,7 +10,7 @@
 #ifndef __Humans_h_
 #define __Humans_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 namespace dispatcher
 {

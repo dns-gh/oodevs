@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "MIL_Object_ABC.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "MT_Tools/MT_Random.h"
 #include "simulation_terrain/TER_Localisation.h"
 

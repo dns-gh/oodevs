@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "NET_RoleInterface_Dotations.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 class PHY_ComposanteTypePion;
 class PHY_Dotation;

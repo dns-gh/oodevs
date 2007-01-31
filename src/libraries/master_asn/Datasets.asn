@@ -1,0 +1,21 @@
+--
+-- file name : Datasets.asn
+--
+-- Datasets messages
+--
+
+Datasets DEFINITIONS ::= BEGIN
+
+-- BEGIN includes
+DatasetsIncludes ::= SEQUENCE {}
+DatasetsExports  ::= NULL
+-- END includes
+
+Dataset ::= SEQUENCE
+{
+    name    VisibleString
+}
+
+DatasetList ::= SEQUENCE OF Dataset
+
+END

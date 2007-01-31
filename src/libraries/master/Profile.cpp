@@ -10,7 +10,7 @@
 #include "master_pch.h"
 
 #include "Profile.h"
-#include "network/Master_Asn.h"
+#include "master_asn/Asn.h"
 #include "xeumeuleu/xml.h"
 
 using namespace master;
@@ -81,7 +81,7 @@ bool Profile::CheckRights( const ASN1T_MsgsInMaster& msg ) const
 // Name: Profile::Send
 // Created: NLD 2006-10-09
 // -----------------------------------------------------------------------------
-void Profile::Send( ASN1T_MasterProfile& asn ) const
+void Profile::Send( ASN1T_Profile& asn ) const
 {
     asn.login = strLogin_.c_str();
 

@@ -1,0 +1,45 @@
+--
+-- file name : Profiles.asn
+--
+-- Profiles messages
+--
+
+Profiles DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+ProfilesIncludes ::= SEQUENCE {}
+ProfilesExports  ::= NULL
+-- END includes
+
+EnumProfileType ::= ENUMERATED
+{
+    administration (0),
+    adaptation     (1),
+    preparation    (2),
+    game           (3),
+    supervision    (4)
+}
+
+MasterProfile ::= SEQUENCE
+{
+    login VisibleString,
+    type  EnumProfileType
+}
+
+MsgAuthenticationRequest ::= SEQUENCE
+{
+    login    VisibleString,
+    password VisibleString
+}
+
+MsgAuthenticationResponse ::= SEQUENCE
+{
+    return-code ENUMERATED
+    {
+        ok,
+        invalid-login
+    },
+    profile MasterProfile OPTIONAL
+}
+
+END

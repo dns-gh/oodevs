@@ -11,19 +11,19 @@
 
 #include "Client.h"
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Dispatcher.h"
 #include "Model.h"
 #include "Profile.h"
 #include "ProfileManager.h"
 #include "Network_Def.h"
 #include "SimulationNetworker.h"
-#include "network/AsnMessageEncoder.h"
+#include "tools/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
 
 using namespace dispatcher;
-using namespace network;
+using namespace tools;
 using namespace DIN;
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ Client::~Client()
 // -----------------------------------------------------------------------------
 bool Client::CheckRights( const ASN1T_MsgsOutClient& asnMsg ) const
 {
-    if( asnMsg.msg.t == T_MsgsOutClient_msg_msg_auth_login )
+    if( asnMsg.msg.t == T_MsgsOutClient_msg_msg_authentication_request )
         return true;
 
     if( !pProfile_ )
@@ -73,7 +73,7 @@ bool Client::CheckRights( const ASN1T_MsgsOutClient& asnMsg ) const
 bool Client::CheckRights( const ASN1T_MsgsInClient& asnMsg ) const
 {
     //$$$$ TMP
-    if( asnMsg.msg.t == T_MsgsInClient_msg_msg_auth_login_ack )
+    if( asnMsg.msg.t == T_MsgsInClient_msg_msg_authentication_response )
         return true;
 
     if( !pProfile_ )
@@ -87,10 +87,10 @@ bool Client::CheckRights( const ASN1T_MsgsInClient& asnMsg ) const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: Client::OnReceiveMsgAuthLogin
+// Name: Client::OnReceiveMsgAuthenticationRequest
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
-void Client::OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& msg )
+void Client::OnReceiveMsgAuthenticationRequest( const ASN1T_MsgAuthenticationRequest& msg )
 {
     //$$$ TMP
     if( pProfile_ )
@@ -102,15 +102,15 @@ void Client::OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& msg )
     pProfile_ = dispatcher_.GetProfileManager().Authenticate( msg.login, msg.password );
     if( !pProfile_ )
     {
-        AsnMsgInClientAuthLoginAck ack;
-        ack().etat = MsgAuthLoginAck_etat::invalid_login;
+        AsnMsgInClientAuthenticationResponse ack;
+        ack().error_code = MsgAuthenticationResponse_error_code::invalid_login;
         ack.Send( *this );
         return; 
     }
 
     // Ack message
-    AsnMsgInClientAuthLoginAck ack;
-    ack().etat             = MsgAuthLoginAck_etat::success;
+    AsnMsgInClientAuthenticationResponse ack;
+    ack().error_code      = MsgAuthenticationResponse_error_code::success;
     ack().m.profilePresent = 1;
     pProfile_->Send( ack().profile );
     ack.Send( *this );
@@ -131,7 +131,7 @@ void Client::OnReceiveMsgProfileCreationRequest( const ASN1T_MsgProfileCreationR
 {
     AsnMsgInClientProfileCreationRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Create( asnMsg );
-    ack().login      = asnMsg.login;
+    ack().login       = asnMsg.login;
     ack.Send( *this );
 }
 
@@ -143,7 +143,7 @@ void Client::OnReceiveMsgProfileUpdateRequest( const ASN1T_MsgProfileUpdateReque
 {
     AsnMsgInClientProfileUpdateRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Update( asnMsg );
-    ack().login      = asnMsg.login;
+    ack().login       = asnMsg.login;
     ack.Send( *this );
 }
 
@@ -155,7 +155,7 @@ void Client::OnReceiveMsgProfileDestructionRequest( const ASN1T_MsgProfileDestru
 {
     AsnMsgInClientProfileDestructionRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Destroy( asnMsg );
-    ack().login      = asnMsg;
+    ack().login       = asnMsg;
     ack.Send( *this );
 }
 
@@ -194,10 +194,10 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
 
     switch( asnInMsg.msg.t )
     {
-        case T_MsgsOutClient_msg_msg_auth_login                  : OnReceiveMsgAuthLogin                ( *asnInMsg.msg.u.msg_auth_login ); break;
-        case T_MsgsOutClient_msg_msg_profile_creation_request    : OnReceiveMsgProfileCreationRequest   ( *asnInMsg.msg.u.msg_profile_creation_request ); break;
-        case T_MsgsOutClient_msg_msg_profile_update_request      : OnReceiveMsgProfileUpdateRequest     ( *asnInMsg.msg.u.msg_profile_update_request ); break;
-        case T_MsgsOutClient_msg_msg_profile_destruction_request : OnReceiveMsgProfileDestructionRequest( asnInMsg.msg.u.msg_profile_destruction_request ); break;
+        case T_MsgsOutClient_msg_msg_authentication_request      : OnReceiveMsgAuthenticationRequest    ( *asnInMsg.msg.u.msg_authentication_request      ); break;
+        case T_MsgsOutClient_msg_msg_profile_creation_request    : OnReceiveMsgProfileCreationRequest   ( *asnInMsg.msg.u.msg_profile_creation_request    ); break;
+        case T_MsgsOutClient_msg_msg_profile_update_request      : OnReceiveMsgProfileUpdateRequest     ( *asnInMsg.msg.u.msg_profile_update_request      ); break;
+        case T_MsgsOutClient_msg_msg_profile_destruction_request : OnReceiveMsgProfileDestructionRequest(  asnInMsg.msg.u.msg_profile_destruction_request ); break;
 
         DISPATCH_EMPTY_ASN_MSG( ctrl_stop );
         DISPATCH_EMPTY_ASN_MSG( ctrl_pause );
@@ -253,7 +253,7 @@ void Client::Send( const ASN1T_MsgsInClient& asnMsg )
     if( !CheckRights( asnMsg ) )
         return;
 
-    network::AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( messageService_, asnMsg );
+    AsnMessageEncoder< ASN1T_MsgsInClient, ASN1C_MsgsInClient > asnEncoder( messageService_, asnMsg );
     messageService_.Send( link_, eMsgInClient, asnEncoder.GetDinMsg() );
 }
 

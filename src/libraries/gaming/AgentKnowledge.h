@@ -10,7 +10,7 @@
 #ifndef __AgentKnowledge_h_
 #define __AgentKnowledge_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Resolver_ABC.h"

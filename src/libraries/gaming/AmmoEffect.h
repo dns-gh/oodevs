@@ -10,7 +10,7 @@
 #ifndef __AmmoEffect_h_
 #define __AmmoEffect_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "MSEllipse.h"
 
 namespace kernel

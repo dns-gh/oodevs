@@ -11,7 +11,7 @@
 #define __LogSupplyConsign_h_
 
 #include "clients_kernel/Types.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
 

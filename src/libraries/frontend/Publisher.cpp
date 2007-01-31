@@ -12,7 +12,6 @@
 #include "Master.h"
 #include "DIN/MessageService/DIN_BufferedMessage.h"
 
-using namespace network;
 using namespace frontend;
 
 // -----------------------------------------------------------------------------

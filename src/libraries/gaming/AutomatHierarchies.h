@@ -13,7 +13,7 @@
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 namespace kernel
 {

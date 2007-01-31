@@ -10,7 +10,7 @@
 #ifndef __Networker_h_
 #define __Networker_h_
 
-#include "network/ClientNetworker_ABC.h"
+#include "tools/ClientNetworker_ABC.h"
 #include "Messages.h"
 #include "Publisher_ABC.h"
 
@@ -36,7 +36,7 @@ namespace frontend
 */
 // Created: SBO 2007-01-25
 // =============================================================================
-class Networker : public network::ClientNetworker_ABC
+class Networker : public tools::ClientNetworker_ABC
                 , public Publisher_ABC
 {
 

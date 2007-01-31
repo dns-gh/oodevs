@@ -15,7 +15,7 @@
 #include "MIL.h"
 
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 class PHY_DotationCategory;
 class MIL_RealObject_ABC;

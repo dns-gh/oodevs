@@ -10,7 +10,7 @@
 #ifndef __RotaObjectAttribute_h_
 #define __RotaObjectAttribute_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "ObjectAttribute_ABC.h"
 
 namespace dispatcher

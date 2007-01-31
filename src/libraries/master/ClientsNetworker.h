@@ -10,7 +10,7 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
-#include "network/ServerNetworker_ABC.h"
+#include "tools/ServerNetworker_ABC.h"
 
 struct ASN1T_MsgsOutMaster;
 
@@ -27,7 +27,7 @@ class Client;
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class ClientsNetworker : public network::ServerNetworker_ABC
+class ClientsNetworker : public tools::ServerNetworker_ABC
 {
 public:
     //! @name Constructors/Destructor

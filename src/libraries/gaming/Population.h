@@ -10,7 +10,7 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"

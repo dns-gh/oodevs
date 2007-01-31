@@ -12,6 +12,8 @@
 
 #include "Publisher_ABC.h"
 
+#include "master_asn/Asn.h"
+
 namespace frontend
 {
 

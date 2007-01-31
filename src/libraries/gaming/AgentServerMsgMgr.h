@@ -11,7 +11,7 @@
 #define __AgentServerMsgMgr_h_
 
 #include "clients_kernel/Types.h"
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 #include "DIN/DIN_Engine.h"
 #include "DIN/DIN_Link.h"
@@ -136,7 +136,7 @@ private:
     void OnReceiveMsgAutomateCreation         ( const ASN1T_MsgAutomateCreation& asnMsg );
     void OnReceiveMsgPionCreation             ( const ASN1T_MsgPionCreation& asnMsg );
     void OnReceiveMsgChangeDiplomatie         ( const ASN1T_MsgChangeDiplomatie& asnMsg );
-    void OnReceiveMsgAuthLoginAck             ( const ASN1T_MsgAuthLoginAck& asnMsg );
+    void OnReceiveMsgAuthenticationResponse   ( const ASN1T_MsgAuthenticationResponse& asnMsg );
 
     // Profiles
     void OnReceiveMsgProfileCreation             ( const ASN1T_MsgProfileCreation& message );

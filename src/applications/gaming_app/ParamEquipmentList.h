@@ -10,7 +10,7 @@
 #ifndef __ParamEquipmentList_h_
 #define __ParamEquipmentList_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 #include "clients_kernel/Resolver.h"
 

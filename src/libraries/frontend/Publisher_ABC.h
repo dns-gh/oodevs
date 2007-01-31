@@ -10,12 +10,9 @@
 #ifndef __Publisher_ABC_h_
 #define __Publisher_ABC_h_
 
-#include "network/Master_Asn.h"
+struct ASN1T_MsgsInMaster;
 
-namespace DIN
-{
-    class DIN_BufferedMessage;
-}
+namespace DIN { class DIN_BufferedMessage; }
 
 namespace frontend
 {

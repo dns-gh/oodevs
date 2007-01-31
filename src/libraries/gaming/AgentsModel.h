@@ -10,7 +10,7 @@
 #ifndef __AgentsModel_h_
 #define __AgentsModel_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "clients_kernel/Resolver.h"
 
 namespace kernel

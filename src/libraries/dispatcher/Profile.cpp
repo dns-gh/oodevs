@@ -229,7 +229,7 @@ bool Profile::CheckRights( const ASN1T_MsgsOutClient& msg ) const
         case T_MsgsOutClient_msg_msg_ctrl_meteo_locale                  : return bSupervision_;
         case T_MsgsOutClient_msg_msg_ctrl_checkpoint_save_now           : return bSupervision_;
         case T_MsgsOutClient_msg_msg_ctrl_checkpoint_set_frequency      : return bSupervision_;
-        case T_MsgsOutClient_msg_msg_auth_login                         : return true;
+        case T_MsgsOutClient_msg_msg_authentication_request             : return true;
         case T_MsgsOutClient_msg_msg_profile_creation_request           : return bSupervision_; //$$$ Administration
         case T_MsgsOutClient_msg_msg_profile_update_request             : return bSupervision_; //$$$ Administration
         case T_MsgsOutClient_msg_msg_profile_destruction_request        : return bSupervision_; //$$$ Administration

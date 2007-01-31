@@ -10,7 +10,7 @@
 #ifndef __ParamBool_h_
 #define __ParamBool_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Param_ABC.h"
 
 // =============================================================================

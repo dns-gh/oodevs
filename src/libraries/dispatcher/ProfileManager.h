@@ -10,7 +10,7 @@
 #ifndef __ProfileManager_h_
 #define __ProfileManager_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 namespace xml{ class xistream; };
 

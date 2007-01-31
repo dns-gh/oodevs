@@ -10,7 +10,7 @@
 #ifndef __AgentLogMaintenance_h_
 #define __AgentLogMaintenance_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "ModelRefsContainer.h"
 #include "ModelsContainer.h"
 #include "EquipmentAvailability.h"

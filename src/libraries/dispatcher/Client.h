@@ -11,8 +11,8 @@
 #define __Client_h_
 
 #include "Publisher_ABC.h"
-#include "network/Simulation_Asn.h"
-#include "network/Client_ABC.h"
+#include "game_asn/Asn.h"
+#include "tools/Client_ABC.h"
 
 namespace DIN { class DIN_Input; }
 
@@ -27,7 +27,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Client : public network::Client_ABC
+class Client : public tools::Client_ABC
              , public Publisher_ABC
 {
 public:
@@ -66,9 +66,9 @@ private:
 
     //! @name Messages
     //@{
-    void OnReceiveMsgAuthLogin                ( const ASN1T_MsgAuthLogin& asnMsg );
-    void OnReceiveMsgProfileCreationRequest   ( const ASN1T_MsgProfileCreationRequest& asnMsg );
-    void OnReceiveMsgProfileUpdateRequest     ( const ASN1T_MsgProfileUpdateRequest& asnMsg );
+    void OnReceiveMsgAuthenticationRequest    ( const ASN1T_MsgAuthenticationRequest&     asnMsg );
+    void OnReceiveMsgProfileCreationRequest   ( const ASN1T_MsgProfileCreationRequest&    asnMsg );
+    void OnReceiveMsgProfileUpdateRequest     ( const ASN1T_MsgProfileUpdateRequest&      asnMsg );
     void OnReceiveMsgProfileDestructionRequest( const ASN1T_MsgProfileDestructionRequest& asnMsg );
     //@}
 

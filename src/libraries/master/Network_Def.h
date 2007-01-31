@@ -11,8 +11,7 @@
 #define __NetworkDef_h__
 
 #include "Publisher_ABC.h"
-
-#include "network/Master_Asn.h"
+#include "master_asn/Asn.h"
 
 namespace master
 {

@@ -10,7 +10,7 @@
 #ifndef __FireFactory_h_
 #define __FireFactory_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 class Fire_ABC;
 class Model;
 

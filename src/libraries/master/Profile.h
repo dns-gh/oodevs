@@ -10,7 +10,7 @@
 #ifndef __Profile_h_
 #define __Profile_h_
 
-struct ASN1T_MasterProfile;
+struct ASN1T_Profile;
 struct ASN1T_MsgsInMaster;
 
 namespace xml{ class xistream; };
@@ -42,7 +42,7 @@ public:
 
     //! @name Network
     //@{
-    void Send( ASN1T_MasterProfile& asn ) const;
+    void Send( ASN1T_Profile& asn ) const;
     //@}
 
 private:

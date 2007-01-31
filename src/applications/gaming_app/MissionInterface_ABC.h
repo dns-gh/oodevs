@@ -10,7 +10,7 @@
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "ParamComboBox.h"
 #include "ParamRadioBtnGroup.h"
 

@@ -16,7 +16,7 @@
 
 #include "MT_Tools/MT_Random.h"
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 // =============================================================================
 // @class  PHY_HumanWound

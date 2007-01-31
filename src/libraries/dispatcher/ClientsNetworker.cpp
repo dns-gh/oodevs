@@ -14,13 +14,13 @@
 #include "Network_Def.h"
 #include "Dispatcher.h"
 #include "Client.h"
-#include "network/AsnMessageDecoder.h"
-#include "network/AsnMessageEncoder.h"
+#include "tools/AsnMessageDecoder.h"
+#include "tools/AsnMessageEncoder.h"
 #include "xeumeuleu/xml.h"
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
 using namespace dispatcher;
-using namespace network;
+using namespace tools;
 using namespace DIN;
 
 namespace 

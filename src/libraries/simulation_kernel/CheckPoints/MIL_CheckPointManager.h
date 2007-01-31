@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )

@@ -11,7 +11,7 @@
 #define __Client_h_
 
 #include "Publisher_ABC.h"
-#include "network/Client_ABC.h"
+#include "tools/Client_ABC.h"
 
 struct ASN1T_MsgsOutMaster;
 struct ASN1T_MsgsInMaster;
@@ -33,7 +33,7 @@ namespace master
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Client : public network::Client_ABC
+class Client : public tools::Client_ABC
              , public Publisher_ABC
 {
 public:

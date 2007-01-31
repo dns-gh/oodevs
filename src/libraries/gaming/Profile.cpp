@@ -52,7 +52,7 @@ Profile::~Profile()
 // -----------------------------------------------------------------------------
 void Profile::Login( Publisher_ABC& publisher ) const
 {
-    ASN_MsgAuthLogin asnMsg;
+    ASN_MsgAuthenticationRequest asnMsg;
     asnMsg.GetAsnMsg().login    = login_.c_str();
     asnMsg.GetAsnMsg().password = password_.c_str();
     asnMsg.Send( publisher );
@@ -86,9 +86,9 @@ void Profile::ReadList( const T& idList, T_Ids& ids )
 // Name: Profile::Update
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Profile::Update( const ASN1T_MsgAuthLoginAck& message )
+void Profile::Update( const ASN1T_MsgAuthenticationResponse& message )
 {
-    loggedIn_ = message.etat == 0;
+    loggedIn_ = message.error_code == 0;
     if( message.m.profilePresent )
     {
         Update( message.profile );

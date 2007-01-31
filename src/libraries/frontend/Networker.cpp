@@ -11,12 +11,12 @@
 #include "Networker.h"
 #include "Messages.h"
 #include "Master.h"
-#include "network/AsnMessageDecoder.h"
+#include "tools/AsnMessageDecoder.h"
 #include "clients_kernel/Controller.h"
 #include "DIN/MessageService/DIN_MessageServiceUserCbk.h"
 
 using namespace frontend;
-using namespace network;
+using namespace tools;
 using namespace DIN;
 
 // -----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void Networker::OnReceiveMsgOutMaster( DIN::DIN_Link& /*linkFrom*/, DIN::DIN_Inp
 {
     try
     {
-        network::AsnMessageDecoder< ASN1T_MsgsOutMaster, ASN1C_MsgsOutMaster > asnDecoder( input );
+        AsnMessageDecoder< ASN1T_MsgsOutMaster, ASN1C_MsgsOutMaster > asnDecoder( input );
         master_->OnReceive( asnDecoder.GetAsnMsg() );
     }
     catch( std::runtime_error& exception )

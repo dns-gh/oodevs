@@ -10,13 +10,10 @@
 #ifndef __Master_h_
 #define __Master_h_
 
-#include "network/Master_Asn.h"
-#include "network/Server_ABC.h"
+#include "tools/Server_ABC.h"
+#include "master_asn/Asn.h"
 
-namespace DIN
-{
-    class DIN_Input;
-}
+namespace DIN { class DIN_Input; }
 
 namespace frontend
 {
@@ -29,7 +26,7 @@ namespace frontend
 */
 // Created: SBO 2007-01-25
 // =============================================================================
-class Master : public network::Server_ABC
+class Master : public tools::Server_ABC
 {
 
 public:

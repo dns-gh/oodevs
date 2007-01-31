@@ -10,7 +10,7 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#include "network/Simulation_Asn.h"
+#include "game_asn/Asn.h"
 #include "Localisation.h"
 
 namespace dispatcher
