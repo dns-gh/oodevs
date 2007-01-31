@@ -43,7 +43,7 @@ class ServerNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ServerNetworker_ABC( unsigned short port );
+             ServerNetworker_ABC( unsigned int magicCookie, unsigned short port );
     virtual ~ServerNetworker_ABC();
     //@}
 

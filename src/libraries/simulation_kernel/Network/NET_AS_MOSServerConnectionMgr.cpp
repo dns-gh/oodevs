@@ -20,6 +20,8 @@
 using namespace DIN;
 using namespace NEK;
 
+static const unsigned int magicCookie_ = 1;
+
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerConnectionMgr constructor
 // Created: NLD 2002-07-12
@@ -27,7 +29,7 @@ using namespace NEK;
 NET_AS_MOSServerConnectionMgr::NET_AS_MOSServerConnectionMgr( NET_AgentServer& agentServer )
     : NET_AS_MOSServerMgr_ABC( agentServer )
     , pServer_               ( 0 )
-    , connectionService_     ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 10 )
+    , connectionService_     ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), magicCookie_ )
 {
     connectionService_.SetCbkOnConnectionReceived( & NET_AS_MOSServerConnectionMgr::OnConnectionReceived    );
     connectionService_.SetCbkOnConnectionFailed  ( & NET_AS_MOSServerConnectionMgr::OnBadConnectionReceived );

@@ -28,9 +28,9 @@ namespace
 // Name: ClientNetworker_ABC constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-ClientNetworker_ABC::ClientNetworker_ABC( const std::string& host /* = "" */ )
+ClientNetworker_ABC::ClientNetworker_ABC( unsigned int magicCookie, const std::string& host /* = "" */ )
     : dinEngine_        ( new DIN_Engine() )
-    , connectionService_( new DIN_ConnectionServiceClientUserCbk< ClientNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 2 ) )
+    , connectionService_( new DIN_ConnectionServiceClientUserCbk< ClientNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorGuest(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), magicCookie ) )
     , messageService_   ( new DIN_MessageServiceUserCbk         < ClientNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorGuest() ) )   
     , serverAddress_    ( 0 )
     , session_          ( 0 )

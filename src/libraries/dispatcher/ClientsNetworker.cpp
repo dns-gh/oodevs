@@ -37,12 +37,14 @@ namespace
     }
 }
 
+static const unsigned int magicCookie_ = 10;
+
 // -----------------------------------------------------------------------------
 // Name: ClientsNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 ClientsNetworker::ClientsNetworker( Dispatcher& dispatcher, const std::string& configFile )
-    : ServerNetworker_ABC( ReadPort( configFile ) )
+    : ServerNetworker_ABC( magicCookie_, ReadPort( configFile ) )
     , dispatcher_        ( dispatcher )
     , clients_          ()
 {

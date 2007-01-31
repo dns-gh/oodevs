@@ -43,7 +43,7 @@ class ClientNetworker_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ClientNetworker_ABC( const std::string& host = "" );
+             ClientNetworker_ABC( unsigned int magicCookie, const std::string& host = "" );
     virtual ~ClientNetworker_ABC();
     //@}
 

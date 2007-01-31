@@ -24,6 +24,8 @@ using namespace DIN; using namespace NEK;
 using namespace tools::thread;
 using namespace kernel;
 
+static const unsigned int magicCookie_ = 10;
+
 // -----------------------------------------------------------------------------
 // Name: Network constructor
 // Created: AGE 2006-02-08
@@ -41,7 +43,7 @@ Network::Network( kernel::Controllers& controllers, Simulation& simu, Profile& p
                                     , *engine_
                                     , DIN_ConnectorGuest()
                                     , DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 )
-                                    , 10
+                                    , magicCookie_
                                     , "MOS Server to agent server"); 
 
 	pConnService_->SetCbkOnConnectionSuccessful( &Network::OnConnected      );

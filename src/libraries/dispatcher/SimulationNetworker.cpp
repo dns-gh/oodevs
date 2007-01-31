@@ -38,12 +38,14 @@ namespace
     }
 }
 
+static const unsigned int magicCookie_ = 1;
+
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
 SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::string& configFile )
-    : ClientNetworker_ABC( ReadHost( configFile ) )
+    : ClientNetworker_ABC( magicCookie_, ReadHost( configFile ) )
     , dispatcher_        ( dispatcher )
     , pSimulation_       ( 0 )
 {

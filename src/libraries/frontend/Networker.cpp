@@ -19,12 +19,14 @@ using namespace frontend;
 using namespace tools;
 using namespace DIN;
 
+static const unsigned int magicCookie_ = 4242;
+
 // -----------------------------------------------------------------------------
 // Name: Networker constructor
 // Created: SBO 2007-01-25
 // -----------------------------------------------------------------------------
 Networker::Networker( const std::string& host, kernel::Controller& controller, Model& model, Profile& profile )
-    : ClientNetworker_ABC( host )
+    : ClientNetworker_ABC( magicCookie_, host )
     , controller_( controller )
     , master_( 0 )
     , model_( model )
