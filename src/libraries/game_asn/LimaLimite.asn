@@ -1,0 +1,108 @@
+--
+-- file name : LimaLimite.asn
+--
+-- Messages de gestion des infos de contexte (lima, limite ...)
+--
+
+LimaLimite DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base;
+LimaLimiteIncludes ::= SEQUENCE { BaseExports }
+LimaLimiteExports  ::= NULL
+-- END includes
+
+-- Enums
+EnumInfoContextErrorCode ::= ENUMERATED
+{
+   no-error                        (0),
+   error-invalid-id                (1),
+   error-invalid-geometry          (2),
+   error-invalid-lima-function     (3),
+   error-invalid-diffusion         (4)
+}
+
+EnumTypeLima ::= ENUMERATED
+{ 
+    ligne-debouche              (0),
+    ligne-changement-attitude   (1),
+    ligne-coordination          (2),
+    ligne-interdire             (3),
+    ligne-objectif              (4),
+    ligne-coup-arret            (5),
+    ligne-recueil               (6),
+    ligne-debut-mission         (7),
+    ligne-fin-mission           (8),
+    ligne-identification-accueil(9) 
+}
+
+-- Common types definitions
+TacticalLinesDiffusion ::= CHOICE
+{
+    automate  Automate,
+    formation Formation
+}
+LimaOrder ::= SEQUENCE
+{
+    lima      Line,
+    fonctions SEQUENCE OF EnumTypeLima    
+}
+LimasOrder ::= SEQUENCE OF LimaOrder
+
+TacticalLine ::= SEQUENCE
+{
+    nom         VisibleString,
+    geometrie   Line,
+    diffusion   TacticalLinesDiffusion
+}
+
+-- Limites
+MsgLimitCreationRequestAck  ::= EnumInfoContextErrorCode
+MsgLimitCreationRequest     ::= TacticalLine
+MsgLimitCreation            ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+
+MsgLimitUpdateRequestAck ::= EnumInfoContextErrorCode
+MsgLimitUpdateRequest    ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimitUpdate          ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+
+MsgLimitDestructionRequestAck ::= EnumInfoContextErrorCode
+MsgLimitDestructionRequest    ::= OID
+MsgLimitDestruction           ::= OID
+
+-- Limas
+MsgLimaCreationRequestAck  ::= EnumInfoContextErrorCode
+MsgLimaCreationRequest     ::= TacticalLine
+MsgLimaCreation            ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimaUpdateRequestAck ::= EnumInfoContextErrorCode
+MsgLimaUpdateRequest    ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimaUpdate          ::= SEQUENCE
+{
+    oid           OID,
+    tactical-line TacticalLine
+}
+MsgLimaDestructionRequestAck ::= EnumInfoContextErrorCode
+MsgLimaDestructionRequest    ::= OID
+MsgLimaDestruction           ::= OID
+
+END -- LimaLimite

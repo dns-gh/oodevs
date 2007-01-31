@@ -1,0 +1,144 @@
+--
+-- file name : Population.asn
+--
+-- Messages de gestion des objets
+--
+
+Population DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base;
+PopulationIncludes ::= SEQUENCE { BaseExports }
+PopulationExports  ::= NULL
+-- END includes
+
+EnumPopulationAttitude ::= ENUMERATED
+{
+    calme     (0),
+    agitee    (1),
+    excitee   (2),
+    agressive (3)
+}
+
+-------------------
+-- Population
+-------------------
+
+MsgPopulationCreation ::= SEQUENCE
+{
+    oid-population  OID,
+    type-population TypePopulation,
+    nom             VisibleString,
+    oid-camp        OID    
+}
+
+MsgPopulationUpdate ::= SEQUENCE
+{
+    oid-population  OID,
+    etat-domination Pourcentage OPTIONAL
+}
+
+-------------------
+-- Concentration
+-------------------
+
+MsgPopulationConcentrationCreation ::= SEQUENCE
+{
+    oid-concentration OID,
+    oid-population    OID,
+    position          CoordUTM
+}
+
+MsgPopulationConcentrationUpdate ::= SEQUENCE
+{
+    oid-concentration   OID,
+    oid-population      OID,
+    
+    nb-humains-vivants  INTEGER                OPTIONAL,
+    nb-humains-morts    INTEGER                OPTIONAL,
+    attitude            EnumPopulationAttitude OPTIONAL
+}
+
+MsgPopulationConcentrationDestruction ::= SEQUENCE
+{
+    oid-concentration OID,
+    oid-population    OID
+}
+
+-------------------
+-- Flux
+-------------------
+
+MsgPopulationFluxCreation ::= SEQUENCE
+{
+    oid-flux        OID,
+    oid-population  OID
+}
+
+MsgPopulationFluxUpdate ::= SEQUENCE
+{
+    oid-flux            OID,
+    oid-population      OID,
+    itineraire          Itineraire             OPTIONAL, -- Itineraire de la tête
+    flux                Itineraire             OPTIONAL,
+    direction           Direction              OPTIONAL, -- en degres
+    vitesse             Vitesse                OPTIONAL, -- en km/h
+    nb-humains-vivants  INTEGER                OPTIONAL,
+    nb-humains-morts    INTEGER                OPTIONAL,
+    attitude            EnumPopulationAttitude OPTIONAL
+}
+
+MsgPopulationFluxDestruction ::= SEQUENCE
+{
+    oid-flux        OID,
+    oid-population  OID
+}
+
+---------------------------
+-- Actions magiques
+---------------------------
+
+MagicActionPopulationChangeAttitude ::= SEQUENCE
+{
+	oid-population	OID,					-- oid de l'entité population
+	attitude        EnumPopulationAttitude,	-- nouvelle attitude
+	beneficiaire    CHOICE					-- cible
+	{
+        flux            OID,
+        concentration   OID,
+        global          NULL
+    }
+}
+
+MagicActionPopulationMoveTo				::= CoordUTM    -- Position
+MagicActionPopulationDestructionTotale	::= NULL
+MagicActionPopulationTuer               ::= INTEGER     -- nombre de personne tuées
+MagicActionPopulationRessusciter        ::= INTEGER     -- nombre de personne ressuscitées
+
+MsgPopulationMagicAction ::= SEQUENCE
+{
+    oid-population  OID,  -- oid de l'entité population
+    action          CHOICE
+    {       
+        change-attitude    MagicActionPopulationChangeAttitude,
+        move-to            MagicActionPopulationMoveTo,
+        destruction-totale MagicActionPopulationDestructionTotale,
+        tuer               MagicActionPopulationTuer,
+        ressusciter        MagicActionPopulationRessusciter
+    }       
+}
+
+EnumPopulationAttrErrorCode ::= ENUMERATED
+{
+    no-error                (0),
+    error-invalid-unit      (1),
+    error-invalid-attribute (2)
+}
+
+MsgPopulationMagicActionAck ::= SEQUENCE
+{
+    oid         OID,
+    error-code  EnumPopulationAttrErrorCode
+}
+
+END -- Population

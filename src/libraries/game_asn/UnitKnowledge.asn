@@ -1,0 +1,56 @@
+--
+-- file name : UnitKnowledge.asn
+--
+-- Messages de gestion de la connaissance d'une unité
+--
+
+UnitKnowledge DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports FROM Base;
+UnitKnowledgeIncludes ::= SEQUENCE { BaseExports }
+UnitKnowledgeExports  ::= NULL
+-- END includes
+
+MsgUnitKnowledgeCreation ::= SEQUENCE
+{
+    oid-connaissance        KnowledgeAgent,   -- id de la connaissance
+    oid-groupe-possesseur   KnowledgeGroup,   -- id du groupe de connaissance qui possède cette connaissance
+    oid-unite-reelle        Agent,            -- id de l'unité réélle pointée par la connaissance
+    type-unite              TypePion
+}
+
+AutomatePerception ::= SEQUENCE
+{
+    oid-compagnie           Automate,
+    identification-level    EnumUnitIdentificationLevel
+}
+
+MsgUnitKnowledgeUpdate ::= SEQUENCE
+{
+    oid-connaissance            KnowledgeAgent,
+    oid-groupe-possesseur       KnowledgeGroup,
+
+    pertinence                  Pourcentage                    OPTIONAL,
+    identification-level        EnumUnitIdentificationLevel    OPTIONAL,
+    max-identification-level    EnumUnitIdentificationLevel    OPTIONAL,
+    etat-op                     PourcentageLibre               OPTIONAL,
+    mort                        BOOLEAN                        OPTIONAL,
+    position                    CoordUTM                       OPTIONAL,
+    direction                   Direction                      OPTIONAL,
+    speed                       Vitesse                        OPTIONAL,
+    camp                        OID                            OPTIONAL,
+    nature-pc                   BOOLEAN                        OPTIONAL,
+    perception-par-compagnie    SEQUENCE OF AutomatePerception OPTIONAL,
+    rendu                       BOOLEAN                        OPTIONAL,
+    prisonnier                  BOOLEAN                        OPTIONAL,
+    refugie-pris-en-compte      BOOLEAN                        OPTIONAL
+}
+
+MsgUnitKnowledgeDestruction ::= SEQUENCE
+{
+    oid-connaissance        KnowledgeAgent,
+    oid-groupe-possesseur   KnowledgeGroup
+}
+
+END -- UnitKnowledge

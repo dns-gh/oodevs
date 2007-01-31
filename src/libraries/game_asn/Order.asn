@@ -1,0 +1,207 @@
+--
+-- file name : Order.asn
+--
+-- Fichier contenant les types et messages communs à tous les types d'ordres
+--
+
+Order DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS BaseExports           FROM Base
+        LimaLimiteExports     FROM LimaLimite
+        LogMaintenanceExports FROM LogMaintenance
+        LogSanteExports       FROM LogSante
+        ObjectExports         FROM Object;
+OrderIncludes ::= SEQUENCE { BaseExports, LimaLimiteExports, LogMaintenanceExports, LogSanteExports, ObjectExports }
+OrderExports  ::= NULL
+-- END includes
+
+EnumOrderErrorCode ::= ENUMERATED
+{
+    no-error                                (0),
+    error-invalid-unit                      (1),
+    error-invalid-limit                     (2),
+    error-invalid-lima                      (3),
+    error-invalid-mission                   (4),
+    error-invalid-mission-parameters        (5),
+    error-unit-cannot-receive-order         (6),
+    error-invalid-order-conduite            (7),
+    error-invalid-order-mission             (8),
+    error-invalid-order-initial             (9),
+    error-invalid-order-conduite-parameters (10),
+    error-unit-surrendered                  (11),
+    error-invalid-lima-function             (12)
+}
+
+EnumOrderState ::= ENUMERATED
+{
+    started(0),
+    stopped(1)
+}
+
+OrderContext ::= SEQUENCE
+{
+    limite-gauche           Line OPTIONAL,
+    limite-droite           Line OPTIONAL,   
+    limas                   LimasOrder,
+    direction-dangereuse    Direction
+}
+
+
+-- TEST MISSIONS GENERIQUES
+
+MissionGenObject ::= SEQUENCE
+{
+    type           EnumObjectType,
+    position       Localisation,
+    oid-planifie   OID,
+    preliminaire   EnumMissionGenSousTypeObstacle DEFAULT preliminaire,
+    densite        REAL(0..5) DEFAULT 0,
+    tc2            Automate   DEFAULT 0
+}
+ListMissionGenObject ::= SEQUENCE OF MissionGenObject;
+
+
+MissionParameter ::= SEQUENCE
+{
+    null-value BOOLEAN DEFAULT FALSE,
+    value      CHOICE
+    {
+        BOOLEAN,
+        REAL,
+        enumeration INTEGER,
+        Itineraire,
+        ListItineraire,
+        Point,
+        ListPoint,
+        Polygon,
+        ListPolygon,
+        Localisation,
+        ListLocalisation,
+        Direction,
+        NatureAtlas,
+        Agent,
+        ListAgent,
+        Automate,
+        ListAutomate,
+        KnowledgeAgent,
+        ListKnowledgeAgent,
+        KnowledgeObject,
+        ListKnowledgeObject,
+        KnowledgePopulation,
+        MissionGenObject,
+        ListMissionGenObject,
+        TypeDotation,
+        TypeEquipement,
+        tirIndirect TirPion,
+        GDH,
+        MaintenancePriorites,
+        SantePriorites,
+        VisibleString
+    }
+}
+
+MissionParameters ::= SEQUENCE OF MissionParameter
+
+--
+-- Pion
+--
+MsgPionOrder ::= SEQUENCE
+{
+    oid-unite-executante    Agent,
+    order-context           OrderContext,
+    mission                 OID,
+    parametres              MissionParameters
+}
+MsgPionOrderAck ::= SEQUENCE
+{
+    oid-unite-executante    Agent,
+    error-code				EnumOrderErrorCode
+}
+MsgPionOrderManagement ::= SEQUENCE
+{
+    oid-unite-executante    Agent,
+    etat                    EnumOrderState
+}
+
+--
+-- Automate
+--
+EnumAutomateOrderFormation ::= ENUMERATED
+{
+    un-echelon      (0),
+    deux-echelons   (1)
+}
+MsgAutomateOrder ::= SEQUENCE
+{
+    oid-unite-executante    Automate,
+    order-context           OrderContext,
+    mission                 OID,
+    parametres              MissionParameters,
+    formation               EnumAutomateOrderFormation
+}
+MsgAutomateOrderAck ::= SEQUENCE
+{
+    oid-unite-executante    Agent,
+    error-code		    EnumOrderErrorCode
+}
+MsgAutomateOrderManagement ::= SEQUENCE
+{
+    oid-unite-executante    Automate,
+    etat                    EnumOrderState
+}
+
+--
+-- Population
+--
+MsgPopulationOrder ::= SEQUENCE
+{
+    oid-unite-executante Population,
+    mission              OID,
+    parametres           MissionParameters
+}
+MsgPopulationOrderAck ::= SEQUENCE
+{
+    oid-unite-executante Population,
+    error-code		     EnumOrderErrorCode
+}
+MsgPopulationOrderManagement ::= SEQUENCE
+{
+    oid-unite-executante    Population,
+    etat                    EnumOrderState
+}
+
+--
+-- Frag orders
+--
+MsgFragOrder ::= SEQUENCE
+{
+    oid-unite-executante    OID,
+    frag-order              OID,
+    parametres              MissionParameters
+}
+MsgFragOrderAck ::= SEQUENCE
+{
+    oid-unite-executante OID,
+    error-code           EnumOrderErrorCode
+}
+
+-- CR
+
+EnumTypeCR ::= ENUMERATED
+{
+    message                 (0),
+    operationel             (1),
+    evenement-exceptionnel  (2),
+    warning                 (3)
+}
+
+MsgCR ::= SEQUENCE
+{
+    unit-id    OID, -- Automate, pion ou population    
+    cr         OID,
+    type       EnumTypeCR,
+    parametres MissionParameters
+}
+
+END -- Order

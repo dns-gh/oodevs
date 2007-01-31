@@ -14,21 +14,21 @@
 
 #pragma warning( push, 3 )
 
-#include "generated/ScipioBase.h"
-#include "generated/ScipioArmy.h"
-#include "generated/ScipioKnowledgeGroup.h"
-#include "generated/ScipioFormation.h"
-#include "generated/ScipioControl.h"
-#include "generated/ScipioLimaLimite.h"
-#include "generated/ScipioFire.h"
-#include "generated/ScipioMessages.h"
-#include "generated/ScipioUnitKnowledge.h"
-#include "generated/ScipioUnit.h"
-#include "generated/ScipioAutomate.h"
-#include "generated/ScipioOrder.h"
-#include "generated/ScipioObject.h"
-#include "generated/ScipioPopulation.h"
-#include "generated/ScipioPopulationKnowledge.h"
+#include "generated/Base.h"
+#include "generated/Army.h"
+#include "generated/KnowledgeGroup.h"
+#include "generated/Formation.h"
+#include "generated/Control.h"
+#include "generated/LimaLimite.h"
+#include "generated/Fire.h"
+#include "generated/Messages.h"
+#include "generated/UnitKnowledge.h"
+#include "generated/Unit.h"
+#include "generated/Automate.h"
+#include "generated/Order.h"
+#include "generated/Object.h"
+#include "generated/Population.h"
+#include "generated/PopulationKnowledge.h"
 
 #pragma warning( pop ) 
 
