@@ -138,7 +138,7 @@
     ============================================================================
     -->
     <target name="applications" description="build CSword executables"
-            depends="applications.simulation,applications.clients,applications.master_app,applications.frontend_app"/>
+            depends="applications.simulation,applications.clients,application.master_app,application.frontend_app"/>
 
     <target name="applications.simulation" description="build CSword Simulation executables"
             depends="application.dispatcher_app,application.simulation_app,application.simulation_tester,application.AGR" />
