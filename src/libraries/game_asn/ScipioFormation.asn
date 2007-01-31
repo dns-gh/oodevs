@@ -1,0 +1,24 @@
+--
+-- file name : ScipioAutomatetAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+ScipioFormation DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ScipioBaseExports FROM ScipioBase;
+ScipioFormationIncludes ::= SEQUENCE { ScipioBaseExports }
+ScipioFormationExports  ::= NULL
+-- END includes
+
+MsgFormationCreation ::= SEQUENCE
+{
+    oid                     Formation,
+    oid-camp                Camp,
+    oid-formation-parente   Formation OPTIONAL,
+    niveau                  EnumNatureLevel,
+    nom                     VisibleString          
+}
+
+END -- ScipioFormation

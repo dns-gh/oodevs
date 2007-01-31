@@ -1,0 +1,114 @@
+--
+-- file name : ScipioAutomatetAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+ScipioAutomate DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ScipioBaseExports FROM ScipioBase
+        ScipioUnitExports FROM ScipioUnit;
+ScipioAutomateIncludes ::= SEQUENCE { ScipioBaseExports, ScipioUnitExports }
+ScipioAutomateExports  ::= NULL
+-- END includes
+
+EnumAutomateState ::= ENUMERATED
+{
+    embraye,
+    debraye
+}
+
+MsgAutomateCreation ::= SEQUENCE
+{
+    oid-automate             Automate,
+    type-automate            TypeAutomate,
+    nom                      VisibleString,
+    oid-formation            Formation,
+    oid-camp                 Camp,
+    oid-groupe-connaissance  OID
+}
+
+MsgAutomateAttributes ::= SEQUENCE
+{
+    oid-automate                  Automate,    
+    etat-automate                 EnumAutomateState       OPTIONAL,   
+    rapport-de-force              EnumEtatRapFor          OPTIONAL,
+    combat-de-rencontre           EnumEtatCombatRencontre OPTIONAL,
+    etat-operationnel             EnumEtatOperationnel    OPTIONAL,
+    roe                           EnumRoe                 OPTIONAL
+}
+
+-- Misc
+EnumSetAutomateModeErrorCode ::= ENUMERATED
+{
+    no-error                  (0),
+    error-invalid-unit        (1),
+    error-unit-not-automate   (2),
+    error-already-embraye     (3),
+    error-already-debraye     (4),
+    error-unit-surrendered    (5)
+}
+MsgSetAutomateMode ::= SEQUENCE
+{
+    unit-id Agent,
+    mode    EnumAutomateState
+}
+MsgSetAutomateModeAck ::= SEQUENCE
+{
+    unit-id     Agent,
+    error-code  EnumSetAutomateModeErrorCode
+}
+
+
+-- Changement hierarchie
+EnumChangeAutomateErrorCode ::= ENUMERATED
+{
+    no-error                  (0),
+    error-invalid-pion        (1),
+    error-invalid-automate    (2),
+    error-camps-incompatibles (3)
+}
+MsgChangeAutomateAck ::= SEQUENCE
+{
+    oid-pion     Agent,
+    oid-automate Automate,
+    error-code   EnumChangeAutomateErrorCode
+}
+MsgChangeAutomate ::= SEQUENCE
+{
+    oid-pion     Agent,
+    oid-automate Automate
+}
+
+MsgChangeLiensLogistiques ::= SEQUENCE
+{
+    oid-automate       Automate,
+    oid-tc2            Automate OPTIONAL,
+    oid-maintenance    Automate OPTIONAL,
+    oid-sante          Automate OPTIONAL,
+    oid-ravitaillement Automate OPTIONAL
+}
+
+EnumChangeLiensLogistiquesErrorCode ::= ENUMERATED
+{
+    no-error                             (0),
+    error-invalid-automate               (1),
+    error-invalid-automate-tc2           (2),
+    error-invalid-automate-maintenance   (3),
+    error-invalid-automate-sante         (4),
+    error-invalid-automate-ravitaillement(5),
+    error-unit-surrendered               (6)
+}
+
+MsgChangeLiensLogistiquesAck ::= SEQUENCE
+{
+    oid-automate       Automate,
+    oid-tc2            Automate OPTIONAL,
+    oid-maintenance    Automate OPTIONAL,
+    oid-sante          Automate OPTIONAL,
+    oid-ravitaillement Automate OPTIONAL,
+    error-code         EnumChangeLiensLogistiquesErrorCode   
+}
+
+END -- ScipioAutomate

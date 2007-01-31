@@ -1,0 +1,51 @@
+--
+-- file name : ScipioAutomatetAttr.asn
+--
+-- Messages de gestion des attributs d'une unité
+--
+
+ScipioArmy DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- BEGIN includes
+IMPORTS ScipioBaseExports FROM ScipioBase;
+ScipioArmyIncludes ::= SEQUENCE { ScipioBaseExports }
+ScipioArmyExports  ::= NULL
+-- END includes
+
+EnumDiplomatie ::= ENUMERATED
+{
+    inconnu (0),
+    ami     (1),
+    ennemi  (2),
+    neutre  (3)
+}
+
+MsgChangeDiplomatie ::= SEQUENCE
+{
+    oid-camp1  Camp,
+    oid-camp2  Camp,
+    diplomatie EnumDiplomatie 
+}
+
+EnumChangeDiplomatieErrorCode ::= ENUMERATED
+{
+    no-error            (0),
+    error-invalid-camp  (1)
+}
+
+MsgSideCreation ::= SEQUENCE
+{
+    oid  Camp,
+    nom  VisibleString,
+    type EnumDiplomatie
+}
+
+MsgChangeDiplomatieAck ::= SEQUENCE
+{
+    oid-camp1  Camp,
+    oid-camp2  Camp,
+    diplomatie EnumDiplomatie,
+    error-code EnumChangeDiplomatieErrorCode
+}
+
+END -- ScipioArmy
