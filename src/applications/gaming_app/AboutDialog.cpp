@@ -36,7 +36,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory )
     QHBox* hbox = new QHBox( box );
     QString message;
     message += QString( APP_NAME ) + QString( " " ) + QString( APP_VERSION )
-            + tr( " © 2006 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
+            + tr( " © 2007 Masa-SCI <a href=\"http://www.masa-sci.com\">www.masa-sci.com</a>" );
     RichLabel* label = factory.CreateLabel( message, hbox );
     label->setAlignment( Qt::SingleLine );
     label->setBackgroundPixmap( pixmap );

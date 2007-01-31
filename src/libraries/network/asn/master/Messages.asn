@@ -14,14 +14,11 @@ MessagesIncludes ::= SEQUENCE { ProfilesExports, ExercisesExports, GamesExports 
 MessagesExports  ::= NULL
 -- END includes
 
-MsgClientAnnouncement ::= NULL
-
 MsgsInMaster ::= SEQUENCE
 {
     context INTEGER DEFAULT 0,
     msg     CHOICE
     {
-        msg-client-announcement             MsgClientAnnouncement,
         -- profiles
         msg-authentication-request          MsgAuthenticationRequest,
         -- exercises

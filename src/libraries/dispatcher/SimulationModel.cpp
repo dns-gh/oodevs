@@ -28,7 +28,6 @@ SimulationModel::SimulationModel()
     , nSimState_           ( EnumEtatSim::stopped )
     , bSendVisionCones_    ( false )
     , bProfilingEnabled_   ( false )
-    , strConfigPath_       ()
 {
     // NOTHING
 }
@@ -62,6 +61,8 @@ void SimulationModel::Update( const ASN1T_MsgCtrlInfo& msg )
     nTimeFactor_          = msg.time_factor;
     nCheckpointFrequency_ = msg.checkpoint_frequence;
     nSimState_            = msg.etat;
+    bSendVisionCones_     = msg.send_vision_cones;
+    bProfilingEnabled_    = msg.profiling_enabled;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,33 +139,18 @@ void SimulationModel::Update( const ASN1T_MsgCtrlEndTick& msg )
 //}
 
 // -----------------------------------------------------------------------------
-// Name: SimulationModel::Update_MsgInit
-// Created: NLD 2006-09-27
-// -----------------------------------------------------------------------------
-void SimulationModel::Update_MsgInit( DIN::DIN_Input& msg )
-{
-    msg >> bSendVisionCones_
-        >> bProfilingEnabled_
-        >> strConfigPath_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: SimulationModel::Send
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 void SimulationModel::Send( Publisher_ABC& publisher ) const
 {
     AsnMsgInClientCtrlInfo asn;
-    asn().current_tick         = nCurrentTick_;
-    asn().tick_duration        = nTickDuration_;
-    asn().time_factor          = nTimeFactor_;
-    asn().checkpoint_frequence = nCheckpointFrequency_;
-    asn().etat                 = nSimState_;
+    asn().current_tick           = nCurrentTick_;
+    asn().tick_duration          = nTickDuration_;
+    asn().time_factor            = nTimeFactor_;
+    asn().checkpoint_frequence   = nCheckpointFrequency_;
+    asn().etat                   = nSimState_;
+    asn().send_vision_cones      = bSendVisionCones_;
+    asn().profiling_enabled      = bProfilingEnabled_;
     asn.Send( publisher );
-
-    DIN_BufferedMessage msg = publisher.BuildDinMsg();
-    msg << bSendVisionCones_
-        << bProfilingEnabled_
-        << strConfigPath_;
-    publisher.Send( eMsgInit, msg );
 }

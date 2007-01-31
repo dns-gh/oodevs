@@ -10,6 +10,7 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
+#include "Publisher_ABC.h"
 #include "network/ServerNetworker_ABC.h"
 
 struct ASN1T_MsgsInClient;
@@ -32,6 +33,7 @@ class Client;
 // Created: NLD 2006-09-19
 // =============================================================================
 class ClientsNetworker : public network::ServerNetworker_ABC
+                       , public Publisher_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -45,8 +47,8 @@ public:
     virtual void DenyConnections ();
     virtual void AllowConnections();
 
-    void Dispatch( const ASN1T_MsgsInClient& asnMsg );
-    void Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
+    virtual void Send( const ASN1T_MsgsInClient& asnMsg );
+            void Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
 private:

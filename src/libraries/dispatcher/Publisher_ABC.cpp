@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Publisher_ABC::Publisher_ABC()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,5 +28,23 @@ Publisher_ABC::Publisher_ABC()
 // -----------------------------------------------------------------------------
 Publisher_ABC::~Publisher_ABC()
 {
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: Publisher_ABC::Send
+// Created: NLD 2007-01-30
+// -----------------------------------------------------------------------------
+void Publisher_ABC::Send( const ASN1T_MsgsInSim&    msg )
+{
+    throw std::runtime_error( "Invalid publisher" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Publisher_ABC::Send
+// Created: NLD 2007-01-30
+// -----------------------------------------------------------------------------
+void Publisher_ABC::Send( const ASN1T_MsgsInClient& msg )
+{
+    throw std::runtime_error( "Invalid publisher" );
 }

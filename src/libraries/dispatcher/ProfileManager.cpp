@@ -90,7 +90,7 @@ void ProfileManager::Reset()
 // Name: ProfileManager::Authenticate
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------
-Profile* ProfileManager::Authenticate( const std::string& strName, const std::string& strPassword )
+Profile* ProfileManager::Authenticate( const std::string& strName, const std::string& strPassword ) const
 {
     CIT_ProfileMap it = profiles_.find( strName );
     if( it == profiles_.end() )

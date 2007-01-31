@@ -91,7 +91,6 @@ private:
     void OnReceiveMsgProfilingValues( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // Debug
-    void OnReceiveMsgInit                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgTrace                                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
@@ -106,7 +105,6 @@ private:
     void OnReceiveMsgInClient           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     void _OnReceiveMsgProfilingValues                       ( DIN::DIN_Input& input );
-    void _OnReceiveMsgInit                                  ( DIN::DIN_Input& input );
     void _OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Input& input );
     void _OnReceiveMsgTrace                                 ( DIN::DIN_Input& input );
     void _OnReceiveMsgUnitInterVisibility                   ( DIN::DIN_Input& input );

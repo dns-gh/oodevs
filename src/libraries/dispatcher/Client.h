@@ -10,13 +10,11 @@
 #ifndef __Client_h_
 #define __Client_h_
 
+#include "Publisher_ABC.h"
 #include "network/Simulation_Asn.h"
 #include "network/Client_ABC.h"
 
-namespace DIN
-{
-    class DIN_Input;
-}
+namespace DIN { class DIN_Input; }
 
 namespace dispatcher
 {
@@ -30,6 +28,7 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Client : public network::Client_ABC
+             , public Publisher_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -40,11 +39,11 @@ public:
 
     //! @name Messages
     //@{
-    void OnReceive( const ASN1T_MsgsOutClient& asnMsg );
-    void OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg );
-    void Send     ( const ASN1T_MsgsInClient& asnMsg );
-    void Send     ( const ASN1T_MsgsInClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
-    void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
+            void OnReceive( const ASN1T_MsgsOutClient& asnMsg );
+            void OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg );
+    virtual void Send     ( const ASN1T_MsgsInClient& asnMsg );
+            void Send     ( const ASN1T_MsgsInClient& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );    
+            void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
     //@}
 
     //! @name Tools

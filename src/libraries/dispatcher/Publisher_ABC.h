@@ -12,11 +12,6 @@
 
 #include "network/Simulation_Asn.h"
 
-namespace DIN
-{
-    class DIN_BufferedMessage;
-}
-
 namespace dispatcher
 {
 // =============================================================================
@@ -36,14 +31,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsInSim&    msg ) = 0;
-    virtual void Send( const ASN1T_MsgsInClient& msg ) = 0;
-    
-    virtual void                     Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg ) = 0;
-    virtual DIN::DIN_BufferedMessage BuildDinMsg() = 0;
+    virtual void Send( const ASN1T_MsgsInSim&    msg );
+    virtual void Send( const ASN1T_MsgsInClient& msg );
     //@}
-
-private:
 };
 
 }

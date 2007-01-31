@@ -31,7 +31,7 @@ namespace po = boost::program_options;
 App::App( int argc, char** argv )
     : pDispatcher_ ( 0 )
 {
-    std::string strMsg = "Sword(tm) Dispatcher";
+    std::string strMsg = "CSword(tm) Dispatcher";
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( strMsg.c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );

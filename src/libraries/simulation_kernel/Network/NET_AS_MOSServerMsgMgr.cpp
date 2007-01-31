@@ -44,7 +44,6 @@ static enum
     eMsgDisableProfiling                       = 1004,
     eMsgUnitVisionCones                        = 1005,
     eMsgTrace                                  = 1006,
-    eMsgInit                                   = 1007,
     eMsgProfilingValues                        = 1008,
     eMsgUnitInterVisibility                    = 1009,
     eMsgObjectInterVisibility                  = 1010,
@@ -191,16 +190,6 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgDebugDrawPoints( DIN_Link& /*linkFrom*/
 }
 
 //-----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgInit
-// Created: NLD 2002-07-16
-//-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgInit( NET_AS_MOSServer& mosServer, DIN_BufferedMessage& msg )
-{
-    MT_CriticalSectionLocker locker( agentServer_.GetDINEngineCriticalSection() );
-    messageService_.Send( mosServer.GetLink(), eMsgInit, msg );
-}
-
-//-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::SendMsgTrace
 // Created: NLD 2003-01-29
 //-----------------------------------------------------------------------------
@@ -315,7 +304,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
     //$$$ A revoir totalement
     MT_LOG_INFO_MSG( MT_FormatString( "Announcement from client %s", linkFrom.GetRemoteAddress().GetAddressAsString().c_str() ) );
 
-    NET_AS_MOSServer& connection = agentServer_.GetConnectionMgr().AddConnection( linkFrom );
+    agentServer_.GetConnectionMgr().AddConnection( linkFrom );
     
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
 
@@ -326,14 +315,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( DIN::DIN_Link& 
     asnMsgCtrlInfo().time_factor          = workspace.GetTimeFactor();
     asnMsgCtrlInfo().etat                 = (ASN1T_EnumEtatSim)MIL_AgentServer::GetWorkspace().GetSimState();
     asnMsgCtrlInfo().checkpoint_frequence = workspace.GetCheckPointManager().GetCheckPointFrequency();
+    asnMsgCtrlInfo().send_vision_cones    = workspace.GetAgentServer().MustSendUnitVisionCones();
+    asnMsgCtrlInfo().profiling_enabled    = workspace.GetProfilerManager().IsProfilingEnabled();
     asnMsgCtrlInfo.Send();
-
-    // Init message - MOS Light ONLY
-    DIN_BufferedMessage msg = BuildMessage(); // $$$$ AGE 2005-03-07: The critical section is probably locked twice here. And in many other places
-    msg << (uint8)workspace.GetAgentServer    ().MustSendUnitVisionCones();
-    msg << (uint8)workspace.GetProfilerManager().IsProfilingEnabled     ();
-    msg << "";  // $$$$ NLD 2007-01-11: A VIRER
-    SendMsgInit( connection, msg );
 
     NET_ASN_MsgCtrlSendCurrentStateBegin asnMsgStateBegin;
     asnMsgStateBegin.Send();

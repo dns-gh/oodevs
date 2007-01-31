@@ -575,8 +575,8 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     }
     if( simulation.IsConnected() )
     {
-        CompareConfigPath( simulation.GetSimulationHost(), simulation.GetConfigPath() );
-        setCaption( APP_NAME + QString( " - [%1@%2][%3]" ).arg( profile_ ).arg( simulation.GetSimulationHost().c_str() ).arg( ExtractExerciceName( simulation.GetConfigPath() ) ) );
+//        CompareConfigPath( simulation.GetSimulationHost(), simulation.GetConfigPath() );
+        setCaption( APP_NAME + QString( " - [%1@%2][%3]" ).arg( profile_ ).arg( simulation.GetSimulationHost().c_str() ).arg( ExtractExerciceName( "" ) ) ); //$$$$$ POURRI
     }
 }
 
@@ -601,8 +601,8 @@ void MainWindow::NotifyUpdated( const Profile& profile )
 // Name: MainWindow::CompareConfigPath
 // Created: AGE 2006-07-03
 // -----------------------------------------------------------------------------
-void MainWindow::CompareConfigPath( const std::string& server, const std::string& serverPath )
-{
+//void MainWindow::CompareConfigPath( const std::string& server, const std::string& serverPath )
+//{
     // $$$$ NLD 2007-01-12: TODO: change ASN message...
 //    if( serverPath.empty() || ! scipioXml_.empty() )
 //        return;
@@ -611,7 +611,7 @@ void MainWindow::CompareConfigPath( const std::string& server, const std::string
 //        Load( serverPath );
 //    else
 //        Load( BuildRemotePath( server, serverPath ) );
-}
+//}
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::BuildRemotePath

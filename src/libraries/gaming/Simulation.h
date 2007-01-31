@@ -48,8 +48,6 @@ public:
     void Update( const ProfilingValuesMessage& message );
     void BeginTick( int );
     void EndTick( const ASN1T_MsgCtrlEndTick& asnMsg );
-    void SetConfigPath( const std::string& path );
-    const std::string& GetConfigPath() const;
     const std::string& GetSimulationHost() const;
 
     int GetTime() const;
@@ -77,7 +75,6 @@ private:
     sStartTick startTick_;
     sEndTick endTick_;
     std::string simulationHost_;
-    std::string configPath_;
     Profiling profiling_;
     //@}
 };

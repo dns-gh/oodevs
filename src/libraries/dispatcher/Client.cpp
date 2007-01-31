@@ -17,7 +17,7 @@
 #include "Profile.h"
 #include "ProfileManager.h"
 #include "Network_Def.h"
-#include "ClientPublisher.h"
+#include "SimulationNetworker.h"
 #include "network/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
 #include "DIN/DIN_Link.h"
@@ -99,15 +99,13 @@ void Client::OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& msg )
         return;
     }
 
-    ClientPublisher publisher( *this );
-
     pProfile_ = dispatcher_.GetProfileManager().Authenticate( msg.login, msg.password );
     if( !pProfile_ )
     {
         AsnMsgInClientAuthLoginAck ack;
         ack().etat = MsgAuthLoginAck_etat::invalid_login;
-        ack.Send( publisher );
-        return; //$$$ ??
+        ack.Send( *this );
+        return; 
     }
 
     // Ack message
@@ -115,14 +113,14 @@ void Client::OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& msg )
     ack().etat             = MsgAuthLoginAck_etat::success;
     ack().m.profilePresent = 1;
     pProfile_->Send( ack().profile );
-    ack.Send( publisher );
+    ack.Send( *this );
     Profile::AsnDelete( ack().profile );
 
     // Model
-    dispatcher_.GetModel().Send( publisher );
+    dispatcher_.GetModel().Send( *this );
 
     // Profiles
-    dispatcher_.GetProfileManager().Send( publisher );
+    dispatcher_.GetProfileManager().Send( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,22 +129,10 @@ void Client::OnReceiveMsgAuthLogin( const ASN1T_MsgAuthLogin& msg )
 // -----------------------------------------------------------------------------
 void Client::OnReceiveMsgProfileCreationRequest( const ASN1T_MsgProfileCreationRequest& asnMsg )
 {
-    ClientPublisher publisher( *this );
     AsnMsgInClientProfileCreationRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Create( asnMsg );
     ack().login      = asnMsg.login;
-    ack.Send( publisher );
-
-    // $$$$ SBO 2007-01-22: not terrific... move to ProfileManager or Profile::NotifyCreated ?
-    if( ack().error_code == MsgProfileCreationRequestAck_error_code::success )
-    {
-        ASN1T_MsgsInClient message;
-        message.msg.t = T_MsgsInClient_msg_msg_profile_creation;
-        Profile& profile = *dispatcher_.GetProfileManager().Find( asnMsg.login );
-        profile.Send( *message.msg.u.msg_profile_creation );
-        dispatcher_.DispatchToClients( message );
-        Profile::AsnDelete( *message.msg.u.msg_profile_creation );
-    }
+    ack.Send( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,25 +141,10 @@ void Client::OnReceiveMsgProfileCreationRequest( const ASN1T_MsgProfileCreationR
 // -----------------------------------------------------------------------------
 void Client::OnReceiveMsgProfileUpdateRequest( const ASN1T_MsgProfileUpdateRequest& asnMsg )
 {
-    ClientPublisher publisher( *this );
     AsnMsgInClientProfileUpdateRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Update( asnMsg );
     ack().login      = asnMsg.login;
-    ack.Send( publisher );
-
-    // $$$$ SBO 2007-01-22: not terrific... move to ProfileManager or Profile::NotifyUpdated ?
-    if( ack().error_code == MsgProfileUpdateRequestAck_error_code::success )
-    {
-        ASN1T_MsgsInClient message;
-        message.msg.t = T_MsgsInClient_msg_msg_profile_update;
-        message.msg.u.msg_profile_update = new ASN1T_MsgProfileUpdate();
-        message.msg.u.msg_profile_update->login = asnMsg.login;
-        Profile& profile = *dispatcher_.GetProfileManager().Find( asnMsg.profile.login );
-        profile.Send( message.msg.u.msg_profile_update->profile );
-        dispatcher_.DispatchToClients( message );
-        Profile::AsnDelete( message.msg.u.msg_profile_update->profile );
-        delete message.msg.u.msg_profile_update;
-    }
+    ack.Send( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,40 +153,31 @@ void Client::OnReceiveMsgProfileUpdateRequest( const ASN1T_MsgProfileUpdateReque
 // -----------------------------------------------------------------------------
 void Client::OnReceiveMsgProfileDestructionRequest( const ASN1T_MsgProfileDestructionRequest& asnMsg )
 {
-    ClientPublisher publisher( *this );
     AsnMsgInClientProfileDestructionRequestAck ack;
     ack().error_code = dispatcher_.GetProfileManager().Destroy( asnMsg );
     ack().login      = asnMsg;
-    ack.Send( publisher );
-
-    // $$$$ SBO 2007-01-22: not terrific... move to ProfileManager or Profile::NotifyDeleted ?
-    if( ack().error_code == MsgProfileDestructionRequestAck_error_code::success )
-    {
-        ASN1T_MsgsInClient message;
-        message.msg.t = T_MsgsInClient_msg_msg_profile_destruction;
-        message.msg.u.msg_profile_destruction = asnMsg;
-        dispatcher_.DispatchToClients( message );
-    }
+    ack.Send( *this );
 }
 
-// 
-#define DISPATCH_ASN_MSG( NAME )                                        \
-    case T_MsgsOutClient_msg_msg_##NAME:                                \
-    {                                                                   \
-        asnOutMsg.context          = asnInMsg.context;                  \
-        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME;        \
-        asnOutMsg.msg.u.msg_##NAME = asnInMsg.msg.u.msg_##NAME;         \
-        dispatcher_.DispatchToSimulation( asnOutMsg );                  \
-        break;                                                          \
+#define DISPATCH_ASN_MSG( NAME )                                 \
+    case T_MsgsOutClient_msg_msg_##NAME:                         \
+    {                                                            \
+        ASN1T_MsgsInSim asnOutMsg;                               \
+        asnOutMsg.context          = asnInMsg.context;           \
+        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME; \
+        asnOutMsg.msg.u.msg_##NAME = asnInMsg.msg.u.msg_##NAME;  \
+        dispatcher_.GetSimulationNetworker().Send( asnOutMsg );  \
+        break;                                                   \
     } 
 
-#define DISPATCH_EMPTY_ASN_MSG( NAME )                                  \
-    case T_MsgsOutClient_msg_msg_##NAME:                                \
-    {                                                                   \
-        asnOutMsg.context          = asnInMsg.context;                  \
-        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME;        \
-        dispatcher_.DispatchToSimulation( asnOutMsg );                  \
-        break;                                                          \
+#define DISPATCH_EMPTY_ASN_MSG( NAME )                           \
+    case T_MsgsOutClient_msg_msg_##NAME:                         \
+    {                                                            \
+        ASN1T_MsgsInSim asnOutMsg;                               \
+        asnOutMsg.context          = asnInMsg.context;           \
+        asnOutMsg.msg.t            = T_MsgsInSim_msg_msg_##NAME; \
+        dispatcher_.GetSimulationNetworker().Send( asnOutMsg );  \
+        break;                                                   \
     } 
 
 // -----------------------------------------------------------------------------
@@ -230,7 +192,6 @@ void Client::OnReceive( const ASN1T_MsgsOutClient& asnInMsg )
         return;
     }
 
-    ASN1T_MsgsInSim asnOutMsg;
     switch( asnInMsg.msg.t )
     {
         case T_MsgsOutClient_msg_msg_auth_login                  : OnReceiveMsgAuthLogin                ( *asnInMsg.msg.u.msg_auth_login ); break;
@@ -280,8 +241,7 @@ void Client::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
     // $$$ TMP
     if( !pProfile_ )
         return;
-
-    dispatcher_.DispatchToSimulation( nMsgID, dinMsg );
+    dispatcher_.GetSimulationNetworker().Send( nMsgID, dinMsg );
 }
 
 // -----------------------------------------------------------------------------

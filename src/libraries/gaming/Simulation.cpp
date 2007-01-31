@@ -122,16 +122,6 @@ void Simulation::EndTick( const ASN1T_MsgCtrlEndTick& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Simulation::SetConfigPath
-// Created: AGE 2006-07-03
-// -----------------------------------------------------------------------------
-void Simulation::SetConfigPath( const std::string& path )
-{
-    configPath_ = path;
-    controller_.Update( *this );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Simulation::GetTime
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
@@ -165,15 +155,6 @@ bool Simulation::IsConnected() const
 int Simulation::GetSpeed() const
 {
     return timeFactor_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Simulation::GetConfigPath
-// Created: AGE 2006-07-03
-// -----------------------------------------------------------------------------
-const std::string& Simulation::GetConfigPath() const
-{
-    return configPath_;
 }
 
 // -----------------------------------------------------------------------------

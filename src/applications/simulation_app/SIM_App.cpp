@@ -36,7 +36,7 @@ SIM_App::SIM_App( int argc, char** argv )
     , pNetworkLogger_( 0 )
     , pDispatcher_   ( 0 )
 {
-    std::string strMsg = "Scipio SIM - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
+    std::string strMsg = "CSword(tm) Simulation - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( strMsg.c_str() );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );

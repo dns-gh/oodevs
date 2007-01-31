@@ -1,4 +1,3 @@
-
 //*****************************************************************************
 //
 // $Created: NLD 2002-07-12 $
@@ -51,7 +50,6 @@ public:
     void SendMsgProfilingValues( DIN::DIN_BufferedMessage& msg );
 
     // Debug
-    void SendMsgInit                                  ( NET_AS_MOSServer& mosServer, DIN::DIN_BufferedMessage& msg );
     void SendMsgTrace                                 ( DIN::DIN_BufferedMessage& msg );
     void SendMsgUnitVisionCones                       ( DIN::DIN_BufferedMessage& msg );
     void SendMsgUnitInterVisibility                   ( DIN::DIN_BufferedMessage& msg );
@@ -122,7 +120,7 @@ private:
     T_MessageControllerVector messageControllerList_;
 };
 
-#   include "NET_AS_MOSServerMsgMgr.inl"
+#include "NET_AS_MOSServerMsgMgr.inl"
 
 #endif // __NET_AS_MOSServerMsgMgr_h_
 

@@ -38,7 +38,7 @@ public:
     //! @name Operations
     //@{
     void     Reset       ();
-    Profile* Authenticate( const std::string& strName, const std::string& strPassword );
+    Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
     Profile* Find        ( const std::string& strName ) const;
 
     void Send( Publisher_ABC& publisher ) const;

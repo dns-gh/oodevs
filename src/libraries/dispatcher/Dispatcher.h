@@ -20,7 +20,6 @@ namespace DIN
 
 namespace dispatcher
 {
-
 class Config;
 class Model;
 class SimulationNetworker;
@@ -47,19 +46,20 @@ public:
     void Update();
 
     // Simulation -> clients
-    void DispatchToClients( const ASN1T_MsgsInClient& asnMsg );
-    void DispatchToClients( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
+//    void DispatchToClients( const ASN1T_MsgsInClient& asnMsg );
+//    void DispatchToClients( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
 
     // Clients -> simulation
-    void DispatchToSimulation( const ASN1T_MsgsInSim& asnMsg );
-    void DispatchToSimulation( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
+//    void DispatchToSimulation( const ASN1T_MsgsInSim& asnMsg );
+//    void DispatchToSimulation( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
     //! @name Accessors
     //@{
-    Model&            GetModel           () const;
-    ClientsNetworker& GetClientsNetworker() const;
-    ProfileManager&   GetProfileManager  () const;
+    Model&               GetModel              () const;
+    ClientsNetworker&    GetClientsNetworker   () const;
+    SimulationNetworker& GetSimulationNetworker() const;
+    ProfileManager&      GetProfileManager     () const;
     //@}
 
 private:

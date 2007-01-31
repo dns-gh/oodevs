@@ -247,7 +247,6 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 //        case eMsgDisableProfiling                       : break;
 //        case eMsgUnitVisionCones                        : break;
 //        case eMsgTrace                                  : break;
-        case eMsgInit                                   : pSimulationModel_->Update_MsgInit( msg ); break;
 //        case eMsgProfilingValues                        : break;
 //        case eMsgUnitInterVisibility                    : break;
 //        case eMsgObjectInterVisibility                  : break;

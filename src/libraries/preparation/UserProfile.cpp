@@ -38,7 +38,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
 
     std::string login, pass;
     xis >> attribute( "name", login )
-        >> content( "password", pass )
+        >> attribute( "password", pass )
         >> xml::optional() >> content( "supervisor", supervisor_ )
         >> start( "rights" )
             >> start( "readonly" )
@@ -89,7 +89,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
 {
     xos << start( "profile" )
             << attribute( "name", login_.ascii() )
-            << content( "password", password_.ascii() )
+            << attribute( "password", password_.ascii() )
             << start( "rights" )
                 << start( "readonly" );
     SerializeRights( xos, "side", readSides_ );

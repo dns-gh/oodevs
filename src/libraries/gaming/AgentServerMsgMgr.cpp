@@ -66,7 +66,6 @@ static enum
     eMsgDisableProfiling                       = 1004,
     eMsgUnitVisionCones                        = 1005,
     eMsgTrace                                  = 1006,
-    eMsgInit                                   = 1007,
     eMsgProfilingValues                        = 1008,
     eMsgUnitInterVisibility                    = 1009,
     eMsgObjectInterVisibility                  = 1010,
@@ -94,7 +93,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
 {
     pMessageService_ = new DIN_MessageServiceUserCbk< AgentServerMsgMgr >( *this, engine, DIN_ConnectorGuest(), "Msgs MOS Server -> Agent_ABC Server" );
 
-    pMessageService_->RegisterReceivedMessage( eMsgInit                                  , *this, & AgentServerMsgMgr::OnReceiveMsgInit                );
     pMessageService_->RegisterReceivedMessage( eMsgProfilingValues                       , *this, & AgentServerMsgMgr::OnReceiveMsgProfilingValues     );
 
     pMessageService_->RegisterReceivedMessage( eMsgTrace                                 , *this, & AgentServerMsgMgr::OnReceiveMsgTrace                );
@@ -299,32 +297,6 @@ void AgentServerMsgMgr::SendMagicDestruction( const Entity_ABC& agent )
     dinMsg << (uint8)eUnitMagicActionDestroyComposante;
 
     Send( eMsgUnitMagicAction, dinMsg );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgInit
-// Created: NLD 2002-07-16
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgInit( DIN_Link& /*linkFrom*/, DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgInit );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgInit
-// Created: NLD 2002-07-16
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgInit( DIN_Input& input )
-{
-    unsigned char visionCones, profiling;
-    input >> visionCones >> profiling; // whatever
-    if( input.GetAvailable() )
-    {
-        std::string configPath;
-        input >> configPath;
-        simulation_.SetConfigPath( configPath );
-    }
-    ToggleVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -630,6 +602,9 @@ void AgentServerMsgMgr::OnReceiveMsgCtrlChangeTimeFactorAck( const ASN1T_MsgCtrl
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCtrlInfo( const ASN1T_MsgCtrlInfo& message )
 {
+     // $$$$ NLD 2007-01-30: BULLSHIT A VIRER OU A GERER
+//    unsigned char visionCones, profiling;
+//    input >> visionCones >> profiling; // whatever
     simulation_.Update( message );
 }
 

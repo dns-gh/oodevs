@@ -10,6 +10,7 @@
 #ifndef __SimulationNetworker_h_
 #define __SimulationNetworker_h_
 
+#include "Publisher_ABC.h"
 #include "network/ClientNetworker_ABC.h"
 
 struct ASN1T_MsgsInSim;
@@ -31,6 +32,7 @@ class Simulation;
 // Created: NLD 2006-09-19
 // =============================================================================
 class SimulationNetworker : public network::ClientNetworker_ABC
+                          , public Publisher_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -41,8 +43,8 @@ public:
 
     //! @name Dispatching
     //@{
-    void Dispatch( const ASN1T_MsgsInSim& asnMsg );
-    void Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
+    virtual void Send( const ASN1T_MsgsInSim& asnMsg );
+            void Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
 private:
@@ -63,7 +65,6 @@ private:
     //@{
     void OnReceiveMsgOutSim                                ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );    
 
-    void OnReceiveMsgInit                                  ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgProfilingValues                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgTrace                                 ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgUnitVisionCones                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );

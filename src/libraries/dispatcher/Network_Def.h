@@ -31,7 +31,6 @@ static enum
     eMsgDisableProfiling                       = 1004,
     eMsgUnitVisionCones                        = 1005,
     eMsgTrace                                  = 1006,
-    eMsgInit                                   = 1007,
     eMsgProfilingValues                        = 1008,
     eMsgUnitInterVisibility                    = 1009,
     eMsgObjectInterVisibility                  = 1010,
@@ -50,10 +49,11 @@ class AsnMsgIn##TARGET##ASNMSG                                   \
 public:                                                          \
     AsnMsgIn##TARGET##ASNMSG() {}                                \
                                                                  \
-    void Send( Publisher_ABC& publisher )                        \
+    void Send( Publisher_ABC& publisher, int context = 0 )       \
     {                                                            \
         ASN1T_MsgsIn##TARGET asnMsg;                             \
-        asnMsg.msg.t = T_MsgsIn##TARGET##_msg_msg_##ASNVAR;      \
+        asnMsg.context = context;                                \
+        asnMsg.msg.t   = T_MsgsIn##TARGET##_msg_msg_##ASNVAR;    \
         publisher.Send( asnMsg );                                \
     }                                                            \
 };
@@ -64,9 +64,10 @@ class AsnMsgIn##TARGET##ASNMSG                                            \
 public:                                                                   \
     AsnMsgIn##TARGET##ASNMSG() {}                                         \
                                                                           \
-    void Send( Publisher_ABC& publisher )                                 \
+    void Send( Publisher_ABC& publisher, int context = 0 )                \
     {                                                                     \
         ASN1T_MsgsIn##TARGET asnMsg;                                      \
+        asnMsg.context            = context;                              \
         asnMsg.msg.t              = T_MsgsIn##TARGET##_msg_msg_##ASNVAR;  \
         asnMsg.msg.u.msg_##ASNVAR = asnTmp;                               \
         publisher.Send( asnMsg );                                         \
@@ -84,9 +85,10 @@ class AsnMsgIn##TARGET##ASNMSG                                            \
 public:                                                                   \
     AsnMsgIn##TARGET##ASNMSG() {}                                         \
                                                                           \
-    void Send( Publisher_ABC& publisher )                                 \
+    void Send( Publisher_ABC& publisher, int context = 0 )                \
     {                                                                     \
         ASN1T_MsgsIn##TARGET asnMsg;                                      \
+        asnMsg.context            = context;                              \
         asnMsg.msg.t              = T_MsgsIn##TARGET##_msg_msg_##ASNVAR;  \
         asnMsg.msg.u.msg_##ASNVAR = &asnTmp;                              \
         publisher.Send( asnMsg );                                         \

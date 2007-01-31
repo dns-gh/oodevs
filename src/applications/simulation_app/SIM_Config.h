@@ -28,6 +28,12 @@ public:
              SIM_Config( int argc, char** argv );
     virtual ~SIM_Config();
     //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void Parse( int argc, char** argv );
+    //@}
 };
 
 #endif // __SIM_Config_h_

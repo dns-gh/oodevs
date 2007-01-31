@@ -65,7 +65,9 @@ MsgCtrlInfo ::= SEQUENCE
     tick-duration           INTEGER,  -- En secondes
     time-factor             INTEGER,
     checkpoint-frequence    INTEGER, -- En minutes
-    etat                    EnumEtatSim
+    etat                    EnumEtatSim,
+    send-vision-cones       BOOLEAN, -- No comment ...
+    profiling-enabled       BOOLEAN
 }
 
 ----------------

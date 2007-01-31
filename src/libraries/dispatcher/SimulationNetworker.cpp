@@ -48,7 +48,6 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
     , pSimulation_       ( 0 )
 {
     GetMessageService().RegisterReceivedMessage( eMsgOutSim                                , *this, &SimulationNetworker::OnReceiveMsgOutSim                                 );
-    GetMessageService().RegisterReceivedMessage( eMsgInit                                  , *this, &SimulationNetworker::OnReceiveMsgInit                                   );
     GetMessageService().RegisterReceivedMessage( eMsgProfilingValues                       , *this, &SimulationNetworker::OnReceiveMsgProfilingValues                        );
     GetMessageService().RegisterReceivedMessage( eMsgTrace                                 , *this, &SimulationNetworker::OnReceiveMsgTrace                                  );
     GetMessageService().RegisterReceivedMessage( eMsgUnitVisionCones                       , *this, &SimulationNetworker::OnReceiveMsgUnitVisionCones                        );
@@ -125,7 +124,6 @@ void SimulationNetworker::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescr
         pSimulation_->OnReceive( eMsg##MSG, msg );                                                 \
     }
 
-DECLARE_DIN_CALLBACK( Init                                   )
 DECLARE_DIN_CALLBACK( ProfilingValues                        )
 DECLARE_DIN_CALLBACK( Trace                                  )
 DECLARE_DIN_CALLBACK( UnitVisionCones                        )
@@ -161,10 +159,10 @@ void SimulationNetworker::OnReceiveMsgOutSim( DIN::DIN_Link& linkFrom, DIN::DIN_
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::Dispatch
+// Name: SimulationNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Dispatch( const ASN1T_MsgsInSim& asnMsg )
+void SimulationNetworker::Send( const ASN1T_MsgsInSim& asnMsg )
 {
     assert( pSimulation_ );
     try
@@ -179,10 +177,10 @@ void SimulationNetworker::Dispatch( const ASN1T_MsgsInSim& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationNetworker::Dispatch
+// Name: SimulationNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
+void SimulationNetworker::Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
 {
     assert( pSimulation_ );
 

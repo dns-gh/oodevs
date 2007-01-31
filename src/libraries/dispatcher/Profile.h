@@ -47,13 +47,13 @@ public:
 
     //! @name Network
     //@{
-    void Send( ASN1T_Profile& asn ) const;
-    static void AsnDelete( ASN1T_Profile& asn );
+           void Send        ( ASN1T_Profile& asn ) const;
+           void SendCreation( Publisher_ABC& publisher ) const;
+    static void AsnDelete   ( ASN1T_Profile& asn );
     //@}
 
     //! @name Operations
     //@{
-    void SendCreation( Publisher_ABC& publisher ) const;
     void Update( const ASN1T_MsgProfileUpdateRequest& message );
     //@}
 

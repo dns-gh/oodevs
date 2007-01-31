@@ -46,7 +46,6 @@ public:
 	void Update_Resume ( const ASN1T_MsgCtrlResumeAck&			 msg ); //$$$
 	void Update		   ( const ASN1T_MsgCtrlChangeTimeFactorAck& msg );
 //    void Update        ( const ASN1T_MsgCtrlCheckPointSetFrequencyAck& msg );
-    void Update_MsgInit( DIN::DIN_Input& msg ); 
     void Send          ( Publisher_ABC& publisher ) const;
     void Reset         ();
     //@}
@@ -61,7 +60,6 @@ private:
    //$$$ BULLSHIT
    bool         bSendVisionCones_;
    bool         bProfilingEnabled_;
-   std::string  strConfigPath_;
 };
 
 }

@@ -10,6 +10,7 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
+#include "Publisher_ABC.h"
 #include "network/Simulation_Asn.h"
 #include "network/Server_ABC.h"
 
@@ -29,6 +30,7 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Simulation : public network::Server_ABC
+                 , public Publisher_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -39,11 +41,11 @@ public:
 
     //! @name Messages
     //@{
-    void OnReceive( const ASN1T_MsgsOutSim& asnMsg );
-    void OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg );
-    void Send     ( const ASN1T_MsgsInSim& asnMsg );
-    void Send     ( const ASN1T_MsgsInSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );
-    void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
+            void OnReceive( const ASN1T_MsgsOutSim& asnMsg );
+            void OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg );
+    virtual void Send     ( const ASN1T_MsgsInSim& asnMsg );
+            void Send     ( const ASN1T_MsgsInSim& asnMsg, const DIN::DIN_BufferedMessage& dinMsg );
+            void Send     ( unsigned int nMsgID, const DIN::DIN_BufferedMessage& dinMsg );
     //@}
 
     //! @name Tools

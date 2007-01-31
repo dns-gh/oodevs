@@ -106,7 +106,6 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const Profile& profile );
 
-    void CompareConfigPath( const std::string& server, const std::string& serverPath );
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void BuildIconLayout();

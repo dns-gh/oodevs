@@ -18,6 +18,7 @@
 #include "Side.h"
 #include "Formation.h"
 #include "Population.h"
+#include "ClientsNetworker.h"
 #include "xeumeuleu/xml.h"
 
 using namespace dispatcher;
@@ -40,7 +41,7 @@ Profile::Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xist
     , readWritePopulations_ ()
     , bSupervision_         ( false )
 {
-    xis >> xml::content( "password", strPassword_ )
+    xis >> xml::attribute( "password", strPassword_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -77,6 +78,8 @@ Profile::Profile( Dispatcher& dispatcher, const ASN1T_MsgProfileCreationRequest&
     , bSupervision_         ( message.superviseur )
 {
     ReadRights( message );
+
+    SendCreation( dispatcher_.GetClientsNetworker() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +88,9 @@ Profile::Profile( Dispatcher& dispatcher, const ASN1T_MsgProfileCreationRequest&
 // -----------------------------------------------------------------------------
 Profile::~Profile()
 {
-    // NOTHING
+    AsnMsgInClientProfileDestruction asn;
+    asn() = strLogin_.c_str();
+    asn.Send( dispatcher_.GetClientsNetworker() );
 }
 
 // =============================================================================
@@ -168,6 +173,7 @@ namespace
                 list.insert( entity );
     }
 }
+// $$$$ NLD 2007-01-30: Factoriser ASN & xml
 
 // -----------------------------------------------------------------------------
 // Name: Profile::ReadRights
@@ -313,7 +319,6 @@ void Profile::AsnDelete( ASN1T_Profile& asn )
         delete [] asn.read_only_populations.elem;
     if( asn.m.read_write_populationsPresent && asn.read_write_populations.n > 0 )
         delete [] asn.read_write_populations.elem;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -341,4 +346,10 @@ void Profile::Update( const ASN1T_MsgProfileUpdateRequest& message )
         strPassword_ = message.profile.password;
     bSupervision_ = message.profile.superviseur;
     ReadRights( message.profile );
+
+    AsnMsgInClientProfileUpdate asn;
+    asn().login = message.login;
+    Send( asn().profile );
+    asn.Send( dispatcher_.GetClientsNetworker() );
+    Profile::AsnDelete( asn().profile );
 }

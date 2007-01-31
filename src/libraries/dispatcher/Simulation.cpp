@@ -16,7 +16,6 @@
 #include "Dispatcher.h"
 #include "Model.h"
 #include "ClientsNetworker.h"
-#include "SimulationPublisher.h"
 #include "ProfileManager.h"
 #include "network/AsnMessageEncoder.h"
 #include "DIN/MessageService/DIN_MessageService_ABC.h"
@@ -35,8 +34,7 @@ Simulation::Simulation( Dispatcher& dispatcher, DIN_MessageService_ABC& messageS
     , dispatcher_( dispatcher )
 {
     AsnMsgInSimCtrlClientAnnouncement asnMsg;
-    SimulationPublisher publisher( *this );
-    asnMsg.Send( publisher );
+    asnMsg.Send( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -55,19 +53,21 @@ Simulation::~Simulation()
 #define DISPATCH_ASN_MSG( NAME )                                        \
     case T_MsgsOutSim_msg_msg_##NAME:                                   \
     {                                                                   \
+        ASN1T_MsgsInClient asnOutMsg;                                   \
         asnOutMsg.context          = asnInMsg.context;                  \
         asnOutMsg.msg.t            = T_MsgsInClient_msg_msg_##NAME;     \
         asnOutMsg.msg.u.msg_##NAME = asnInMsg.msg.u.msg_##NAME;         \
-        dispatcher_.DispatchToClients( asnOutMsg) ;                     \
+        dispatcher_.GetClientsNetworker().Send( asnOutMsg );            \
         break;                                                          \
     } 
 
 #define DISPATCH_EMPTY_ASN_MSG( NAME )                                  \
     case T_MsgsOutSim_msg_msg_##NAME:                                   \
     {                                                                   \
+        ASN1T_MsgsInClient asnOutMsg;                                   \
         asnOutMsg.context          = asnInMsg.context;                  \
         asnOutMsg.msg.t            = T_MsgsInClient_msg_msg_##NAME;     \
-        dispatcher_.DispatchToClients( asnOutMsg) ;                     \
+        dispatcher_.GetClientsNetworker().Send( asnOutMsg );            \
         break;                                                          \
     } 
 
@@ -78,8 +78,7 @@ Simulation::~Simulation()
 void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
 {
     dispatcher_.GetModel().Update( asnInMsg );
-
-    ASN1T_MsgsInClient asnOutMsg;
+    
     switch( asnInMsg.msg.t )
     {
         DISPATCH_ASN_MSG( limit_creation_request_ack                        );
@@ -215,7 +214,7 @@ void Simulation::OnReceive( const ASN1T_MsgsOutSim& asnInMsg )
 // -----------------------------------------------------------------------------
 void Simulation::OnReceive( unsigned int nMsgID, DIN::DIN_Input& dinMsg )
 {
-    dispatcher_.DispatchToClients( nMsgID, dinMsg );
+    dispatcher_.GetClientsNetworker().Send( nMsgID, dinMsg );            
     dispatcher_.GetModel().Update( nMsgID, dinMsg );
 }
 

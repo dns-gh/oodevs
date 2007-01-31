@@ -30,6 +30,9 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 GeneralConfig::GeneralConfig()
     : CommandLineConfig_ABC()
+    , terrainConfigFile_   ( "terrain.xml"  )
+    , exerciseConfigFile_  ( "exercise.xml" )
+    , gameConfigFile_      ( "game.xml"     )
 {
     po::options_description desc( "General options" );
     desc.add_options()
@@ -91,13 +94,31 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetExercisesDir
+// Created: NLD 2007-01-29
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetExercisesDir() const
+{
+    return exercisesDir_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetExerciseFile
+// Created: NLD 2007-01-29
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetExerciseFile( const std::string& exercise ) const
+{
+    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exercise, bfs::native ) / exerciseConfigFile_ ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetExerciseFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetExerciseFile() const
 {
     // $$$$ NLD 2007-01-10: exerciseName_
-    return ( bfs::path( exercisesDir_, bfs::native ) / bfs::path( exerciseName_, bfs::native ) / "exercise.xml" ).native_file_string();
+    return GetExerciseFile( exerciseName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,12 +131,22 @@ std::string GeneralConfig::BuildExerciseChildFile( const std::string& file ) con
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetPhysicalsDir
+// Created: NLD 2007-01-29
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset ) const
+{
+    // $$$$ NLD 2007-01-29: trucs en dur
+    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "physical" ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetPhysicalFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetPhysicalFile( const std::string& dataset, const std::string& physical ) const
-{
-    return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "physical" / bfs::path( physical, bfs::native ) / "physical.xml" ).native_file_string();
+{    
+    return ( bfs::path( GetPhysicalsDir( dataset ), bfs::native ) / bfs::path( physical, bfs::native ) / "physical.xml" ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -133,6 +164,7 @@ std::string GeneralConfig::BuildPhysicalChildFile( const std::string& dataset, c
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetDecisionalFile( const std::string& dataset ) const
 {
+    // $$$$ NLD 2007-01-29: 
     return ( bfs::path( modelsDir_, bfs::native ) / bfs::path( dataset, bfs::native ) / "decisional/decisional.xml" ).native_file_string();
 }
 
@@ -146,12 +178,21 @@ std::string GeneralConfig::BuildDecisionalChildFile( const std::string& dataset,
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetTerrainsDir
+// Created: NLD 2007-01-29
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetTerrainsDir() const
+{
+    return terrainsDir_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetTerrainFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetTerrainFile( const std::string& terrain ) const
 {
-    return ( bfs::path( terrainsDir_, bfs::native ) / bfs::path( terrain, bfs::native ) / "terrain.xml" ).native_file_string();
+    return ( bfs::path( terrainsDir_, bfs::native ) / bfs::path( terrain, bfs::native ) / terrainConfigFile_ ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +210,7 @@ std::string GeneralConfig::BuildTerrainChildFile( const std::string& terrain, co
 // -----------------------------------------------------------------------------
 std::string GeneralConfig::GetGameFile() const
 {
-    return ( bfs::path( gamesDir_, bfs::native ) / bfs::path( gameName_, bfs::native ) / "game.xml" ).native_file_string();
+    return ( bfs::path( gamesDir_, bfs::native ) / bfs::path( gameName_, bfs::native ) / gameConfigFile_ ).native_file_string();
 }
 
 // -----------------------------------------------------------------------------
@@ -179,4 +220,13 @@ std::string GeneralConfig::GetGameFile() const
 std::string GeneralConfig::BuildGameChildFile( const std::string& file ) const
 {
     return BuildChildPath( GetGameFile(), file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetModelsDir
+// Created: NLD 2007-01-29
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetModelsDir() const
+{
+    return modelsDir_;
 }

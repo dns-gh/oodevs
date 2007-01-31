@@ -33,6 +33,17 @@ ClientsNetworker& Dispatcher::GetClientsNetworker() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Dispatcher::GetSimulationNetworker
+// Created: NLD 2007-01-30
+// -----------------------------------------------------------------------------
+inline
+SimulationNetworker& Dispatcher::GetSimulationNetworker() const
+{
+    assert( pSimulationNetworker_ );
+    return *pSimulationNetworker_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Dispatcher::GetProfileManager
 // Created: NLD 2006-10-06
 // -----------------------------------------------------------------------------

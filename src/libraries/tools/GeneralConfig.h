@@ -32,20 +32,26 @@ public:
 
     //! @name Operations
     //@{
+    std::string GetExercisesDir() const;
     std::string GetExerciseFile() const;
+    std::string GetExerciseFile( const std::string& exercise ) const;
     std::string BuildExerciseChildFile( const std::string& file ) const;
 
+    std::string GetPhysicalsDir( const std::string& dataset ) const;
     std::string GetPhysicalFile( const std::string& dataset, const std::string& physical ) const;
     std::string BuildPhysicalChildFile( const std::string& dataset, const std::string& physical, const std::string& file ) const;
 
     std::string GetDecisionalFile( const std::string& dataset ) const;
     std::string BuildDecisionalChildFile( const std::string& dataset, const std::string& file ) const;
 
+    std::string GetTerrainsDir() const;
     std::string GetTerrainFile( const std::string& terrain ) const;
     std::string BuildTerrainChildFile( const std::string& terrain, const std::string& file ) const;
 
     std::string GetGameFile() const;
     std::string BuildGameChildFile( const std::string& file ) const;
+
+    std::string GetModelsDir() const;
 
     virtual void Parse( int argc, char** argv );
     //@}
@@ -72,6 +78,10 @@ private:
     std::string gamesDir_;
     std::string exerciseName_;
     std::string gameName_;
+
+    const std::string terrainConfigFile_;
+    const std::string exerciseConfigFile_;
+    const std::string gameConfigFile_;
     //@}
 };
 

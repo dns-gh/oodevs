@@ -157,10 +157,10 @@ void ClientsNetworker::OnReceiveMsgOutClient( DIN::DIN_Link& linkFrom, DIN::DIN_
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Dispatch
+// Name: ClientsNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Dispatch( const ASN1T_MsgsInClient& asnMsg )
+void ClientsNetworker::Send( const ASN1T_MsgsInClient& asnMsg )
 {
     try
     {
@@ -175,10 +175,10 @@ void ClientsNetworker::Dispatch( const ASN1T_MsgsInClient& asnMsg )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ClientsNetworker::Dispatch
+// Name: ClientsNetworker::Send
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Dispatch( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
+void ClientsNetworker::Send( unsigned int nMsgID, const DIN::DIN_Input& dinMsg )
 {
     DIN_BufferedMessage copiedMsg( GetMessageService() );
     copiedMsg.GetOutput().Append( dinMsg.GetBuffer( 0 ), dinMsg.GetAvailable() );

@@ -19,8 +19,7 @@ SIM_Config::SIM_Config( int argc, char** argv )
     : MIL_Config        ()
     , dispatcher::Config()
 {
-    MIL_Config::Parse        ( argc, argv );
-    dispatcher::Config::Parse( argc, argv );
+    Parse( argc, argv );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,4 +29,14 @@ SIM_Config::SIM_Config( int argc, char** argv )
 SIM_Config::~SIM_Config()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIM_Config::Parse
+// Created: NLD 2007-01-30
+// -----------------------------------------------------------------------------
+void SIM_Config::Parse( int argc, char** argv )
+{
+    MIL_Config::Parse        ( argc, argv );
+    dispatcher::Config::Parse( argc, argv );
 }
