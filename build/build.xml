@@ -233,7 +233,8 @@
         <build-app name="frontend_app" depends="mt,din,qt,boost"
                    libs="asn1per
                          lib${ant.project.name}_master_asn-${platform}-mt
-                         lib${ant.project.name}_frontend-${platform}-mt">
+                         lib${ant.project.name}_frontend-${platform}-mt
+                         lib${ant.project.name}_clients_kernel-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
             <syslibset libs="gdi32"/>
         </build-app>
