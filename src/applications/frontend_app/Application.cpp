@@ -29,7 +29,7 @@ Application::Application( int argc, char** argv )
     , controllers_ ( new kernel::Controllers() )
     , model_       ( new Model( *controllers_ ) )
     , profile_     ( new Profile( controllers_->controller_ ) )
-    , networker_   ( new Networker( "127.0.0.1:10000", controllers_->controller_, *model_, *profile_ ) )
+    , networker_   ( new Networker( "127.0.0.1:10002", controllers_->controller_, *model_, *profile_ ) )
     , networkTimer_( new QTimer( this ) )
     , mainWindow_  ( new MainWindow( *controllers_, *networker_, *profile_ ) )
 {

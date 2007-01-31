@@ -41,7 +41,7 @@ Network::Network( kernel::Controllers& controllers, Simulation& simu, Profile& p
                                     , *engine_
                                     , DIN_ConnectorGuest()
                                     , DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 )
-                                    , eConnMagicMOSServerAgentServer
+                                    , 10
                                     , "MOS Server to agent server"); 
 
 	pConnService_->SetCbkOnConnectionSuccessful( &Network::OnConnected      );

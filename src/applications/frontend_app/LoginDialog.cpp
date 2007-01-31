@@ -24,7 +24,7 @@ LoginDialog::LoginDialog( QWidget* parent, const frontend::Profile& profile, fro
     setCaption( tr( "Authentication" ) );
 
     QVBoxLayout* layout = new QVBoxLayout( this );
-    QGroupBox* box = new QGroupBox( 2, Qt::Vertical, this );
+    QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, this );
     layout->addWidget( box );
 
     new QLabel( tr( "Login" ), box );

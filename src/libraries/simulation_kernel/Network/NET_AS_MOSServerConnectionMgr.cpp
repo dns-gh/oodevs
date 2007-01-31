@@ -27,7 +27,7 @@ using namespace NEK;
 NET_AS_MOSServerConnectionMgr::NET_AS_MOSServerConnectionMgr( NET_AgentServer& agentServer )
     : NET_AS_MOSServerMgr_ABC( agentServer )
     , pServer_               ( 0 )
-    , connectionService_     ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 2 )
+    , connectionService_     ( *this, agentServer.GetDINEngine(), DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 10 )
 {
     connectionService_.SetCbkOnConnectionReceived( & NET_AS_MOSServerConnectionMgr::OnConnectionReceived    );
     connectionService_.SetCbkOnConnectionFailed  ( & NET_AS_MOSServerConnectionMgr::OnBadConnectionReceived );

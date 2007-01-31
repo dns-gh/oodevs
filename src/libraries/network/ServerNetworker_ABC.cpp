@@ -22,7 +22,7 @@ using namespace NEK;
 // -----------------------------------------------------------------------------
 ServerNetworker_ABC::ServerNetworker_ABC( unsigned short port )
     : dinEngine_        ( new DIN_Engine() )
-    , connectionService_( new DIN_ConnectionServiceServerUserCbk< ServerNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 1  ) )
+    , connectionService_( new DIN_ConnectionServiceServerUserCbk< ServerNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorHost(), DIN_ConnectionProtocols( NEK_Protocols::eTCP, NEK_Protocols::eIPv4 ), 10  ) )
     , messageService_   ( new DIN_MessageServiceUserCbk         < ServerNetworker_ABC >( *this, *dinEngine_, DIN_ConnectorHost() ) )
     , serverAddress_    ( new NEK_AddressINET( port ) )
     , pServer_          ( 0 )

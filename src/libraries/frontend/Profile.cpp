@@ -19,8 +19,12 @@ using namespace frontend;
 // Created: SBO 2007-01-29
 // -----------------------------------------------------------------------------
 Profile::Profile( kernel::Controller& controller )
-    : controller_( controller )
-    , loggedIn_  ( false )
+    : controller_     ( controller )
+    , roleAdaptation_ ( false )
+    , rolePreparation_( false )
+    , roleGame_       ( false )
+    , roleSupervision_( false )
+    , loggedIn_       ( false )
 {
     // NOTHING
 }
@@ -43,8 +47,11 @@ void Profile::DoUpdate( const ASN1T_MsgAuthenticationResponse& message )
     loggedIn_ = message.return_code == MsgAuthenticationResponse_return_code::ok;
     if( loggedIn_ )
     {
-        login_ = message.profile.login;
-        type_  = message.profile.type;
+        login_           = message.profile.login;
+        roleAdaptation_  = message.profile.role_adaptation;
+        rolePreparation_ = message.profile.role_preparation;
+        roleGame_        = message.profile.role_game;
+        roleSupervision_ = message.profile.role_supervision;
     }
     controller_.Update( *this );
 }

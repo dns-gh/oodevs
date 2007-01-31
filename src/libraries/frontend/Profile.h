@@ -61,7 +61,10 @@ private:
     //@{
     kernel::Controller& controller_;
     QString login_;
-    ASN1T_EnumProfileType type_;
+    bool roleAdaptation_;
+    bool rolePreparation_;
+    bool roleGame_;
+    bool roleSupervision_;
     bool loggedIn_;
     //@}
 };
