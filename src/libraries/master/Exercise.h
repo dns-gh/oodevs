@@ -10,6 +10,8 @@
 #ifndef __Exercise_h_
 #define __Exercise_h_
 
+struct ASN1T_Exercise;
+
 namespace master
 {
 class DataManager;
@@ -17,6 +19,7 @@ class Config;
 class Terrain;
 class Dataset;
 class PhysicalModel;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  Exercise
@@ -33,11 +36,21 @@ public:
     virtual ~Exercise();
     //@}
 
+    //! @name Network
+    //@{
+    void SendCreation( Publisher_ABC& publisher ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     Exercise( const Exercise& );            //!< Copy constructor
     Exercise& operator=( const Exercise& ); //!< Assignment operator
+    //@}
+
+    //! @name Tools
+    //@{
+    void Send( ASN1T_Exercise& asn ) const;
     //@}
 
 private:

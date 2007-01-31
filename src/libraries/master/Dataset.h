@@ -13,6 +13,8 @@
 #include "ModelsContainer.h"
 #include "PhysicalModel.h"
 
+struct ASN1T_Dataset;
+
 namespace master
 {
 class DataManager;
@@ -36,6 +38,12 @@ public:
     //! @name Accessors
     //@{
     const ModelsContainer< std::string, PhysicalModel >& GetPhysicalModels() const;
+    const std::string&                                   GetName          () const;
+    //@}
+
+    //! @name Network
+    //@{
+    void SendCreation( Publisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -43,6 +51,11 @@ private:
     //@{
     Dataset( const Dataset& );            //!< Copy constructor
     Dataset& operator=( const Dataset& ); //!< Assignment operator
+    //@}
+
+    //! @name Tools
+    //@{
+    void Send( ASN1T_Dataset& asn ) const;
     //@}
 
 private:

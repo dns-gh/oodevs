@@ -19,8 +19,6 @@ Exercise ::= SEQUENCE
     physical VisibleString
 }
 
-ExerciseList ::= SEQUENCE OF Exercise
-
 MsgExerciseCreation    ::= Exercise
 MsgExerciseUpdate      ::= Exercise
 MsgExerciseDestruction ::= VisibleString

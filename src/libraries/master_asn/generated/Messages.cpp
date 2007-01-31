@@ -45,6 +45,14 @@ EXTERN int asn1PE_MessagesIncludes (ASN1CTXT* ctxt_p, ASN1T_MessagesIncludes* pv
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    PU_POPNAME (ctxt_p);
 
+   /* encode dataExports */
+
+   PU_PUSHNAME (ctxt_p, "dataExports");
+
+   stat = asn1PE_DataExports (ctxt_p);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+   PU_POPNAME (ctxt_p);
+
 
    rtdiag ("asn1PE_MessagesIncludes: end\n");
    return (stat);
@@ -86,6 +94,15 @@ EXTERN int asn1PD_MessagesIncludes (ASN1CTXT* ctxt_p, ASN1T_MessagesIncludes* pv
    PU_PUSHNAME (ctxt_p, "gamesExports");
 
    stat = asn1PD_GamesExports (ctxt_p);
+   if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+   PU_POPNAME (ctxt_p);
+
+   /* decode dataExports */
+
+   PU_PUSHNAME (ctxt_p, "dataExports");
+
+   stat = asn1PD_DataExports (ctxt_p);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -447,7 +464,7 @@ EXTERN int asn1PE_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 6);
+   stat = pe_ConsUnsigned (ctxt_p, pvalue->t - 1, 0, 9);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
 
    PU_POPNAME (ctxt_p);
@@ -466,8 +483,38 @@ EXTERN int asn1PE_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
 
          break;
 
-      /* msg_exercise_creation */
+      /* msg_dataset_creation */
       case 2:
+         PU_PUSHNAME (ctxt_p, "u.msg_dataset_creation");
+
+         stat = asn1PE_MsgDatasetCreation (ctxt_p, pvalue->u.msg_dataset_creation);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_terrain_creation */
+      case 3:
+         PU_PUSHNAME (ctxt_p, "u.msg_terrain_creation");
+
+         stat = asn1PE_MsgTerrainCreation (ctxt_p, pvalue->u.msg_terrain_creation);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_physical_model_creation */
+      case 4:
+         PU_PUSHNAME (ctxt_p, "u.msg_physical_model_creation");
+
+         stat = asn1PE_MsgPhysicalModelCreation (ctxt_p, pvalue->u.msg_physical_model_creation);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_exercise_creation */
+      case 5:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_creation");
 
          stat = asn1PE_MsgExerciseCreation (ctxt_p, pvalue->u.msg_exercise_creation);
@@ -477,7 +524,7 @@ EXTERN int asn1PE_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_update */
-      case 3:
+      case 6:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_update");
 
          stat = asn1PE_MsgExerciseUpdate (ctxt_p, pvalue->u.msg_exercise_update);
@@ -487,7 +534,7 @@ EXTERN int asn1PE_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_destruction */
-      case 4:
+      case 7:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_destruction");
 
          stat = asn1PE_MsgExerciseDestruction (ctxt_p, pvalue->u.msg_exercise_destruction);
@@ -497,7 +544,7 @@ EXTERN int asn1PE_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_creation_ack */
-      case 5:
+      case 8:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_creation_ack");
 
          stat = asn1PE_MsgExerciseCreationRequestAck (ctxt_p, pvalue->u.msg_exercise_creation_ack);
@@ -507,7 +554,7 @@ EXTERN int asn1PE_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_update_ack */
-      case 6:
+      case 9:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_update_ack");
 
          stat = asn1PE_MsgExerciseUpdateRequestAck (ctxt_p, pvalue->u.msg_exercise_update_ack);
@@ -517,7 +564,7 @@ EXTERN int asn1PE_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_destruction_ack */
-      case 7:
+      case 10:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_destruction_ack");
 
          stat = asn1PE_MsgExerciseDestructionRequestAck (ctxt_p, pvalue->u.msg_exercise_destruction_ack);
@@ -550,7 +597,7 @@ EXTERN int asn1PD_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
 
    PU_PUSHNAME (ctxt_p, "t");
 
-   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 6);
+   stat = pd_ConsUnsigned (ctxt_p, &ui, 0, 9);
    if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
    else pvalue->t = ui + 1;
 
@@ -572,8 +619,53 @@ EXTERN int asn1PD_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
 
          break;
 
-      /* msg_exercise_creation */
+      /* msg_dataset_creation */
       case 1:
+         PU_PUSHNAME (ctxt_p, "u.msg_dataset_creation");
+
+         pvalue->u.msg_dataset_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgDatasetCreation);
+         if (pvalue->u.msg_dataset_creation == NULL)
+            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
+
+         stat = asn1PD_MsgDatasetCreation (ctxt_p, pvalue->u.msg_dataset_creation);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_terrain_creation */
+      case 2:
+         PU_PUSHNAME (ctxt_p, "u.msg_terrain_creation");
+
+         pvalue->u.msg_terrain_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgTerrainCreation);
+         if (pvalue->u.msg_terrain_creation == NULL)
+            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
+
+         stat = asn1PD_MsgTerrainCreation (ctxt_p, pvalue->u.msg_terrain_creation);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_physical_model_creation */
+      case 3:
+         PU_PUSHNAME (ctxt_p, "u.msg_physical_model_creation");
+
+         pvalue->u.msg_physical_model_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgPhysicalModelCreation);
+         if (pvalue->u.msg_physical_model_creation == NULL)
+            return LOG_ASN1ERR (ctxt_p, ASN_E_NOMEM);
+
+         stat = asn1PD_MsgPhysicalModelCreation (ctxt_p, pvalue->u.msg_physical_model_creation);
+         if (stat != ASN_OK) return LOG_ASN1ERR (ctxt_p, stat);
+
+         PU_POPNAME (ctxt_p);
+
+         break;
+
+      /* msg_exercise_creation */
+      case 4:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_creation");
 
          pvalue->u.msg_exercise_creation = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseCreation);
@@ -588,7 +680,7 @@ EXTERN int asn1PD_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_update */
-      case 2:
+      case 5:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_update");
 
          pvalue->u.msg_exercise_update = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseUpdate);
@@ -603,7 +695,7 @@ EXTERN int asn1PD_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_destruction */
-      case 3:
+      case 6:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_destruction");
 
          stat = asn1PD_MsgExerciseDestruction (ctxt_p, &pvalue->u.msg_exercise_destruction);
@@ -614,7 +706,7 @@ EXTERN int asn1PD_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_creation_ack */
-      case 4:
+      case 7:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_creation_ack");
 
          pvalue->u.msg_exercise_creation_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseCreationRequestAck);
@@ -629,7 +721,7 @@ EXTERN int asn1PD_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_update_ack */
-      case 5:
+      case 8:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_update_ack");
 
          pvalue->u.msg_exercise_update_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseUpdateRequestAck);
@@ -644,7 +736,7 @@ EXTERN int asn1PD_MsgsOutMaster_msg (ASN1CTXT* ctxt_p, ASN1T_MsgsOutMaster_msg* 
          break;
 
       /* msg_exercise_destruction_ack */
-      case 6:
+      case 9:
          PU_PUSHNAME (ctxt_p, "u.msg_exercise_destruction_ack");
 
          pvalue->u.msg_exercise_destruction_ack = ALLOC_ASN1ELEM (ctxt_p, ASN1T_MsgExerciseDestructionRequestAck);

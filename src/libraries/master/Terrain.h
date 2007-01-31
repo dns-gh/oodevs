@@ -10,6 +10,8 @@
 #ifndef __Terrain_h_
 #define __Terrain_h_
 
+struct ASN1T_Terrain;
+
 namespace master
 {
 class DataManager;
@@ -31,6 +33,11 @@ public:
     virtual ~Terrain();
     //@}
 
+    //! @name Accessors
+    //@{
+    const std::string& GetName() const;
+    //@}
+
     //! @name Network
     //@{
     void SendCreation( Publisher_ABC& publisher ) const;
@@ -41,6 +48,11 @@ private:
     //@{
     Terrain( const Terrain& );            //!< Copy constructor
     Terrain& operator=( const Terrain& ); //!< Assignment operator
+    //@}
+
+    //! @name Tools
+    //@{
+    void Send( ASN1T_Terrain& asn ) const;
     //@}
 
 private:

@@ -8,9 +8,10 @@ Messages DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 -- BEGIN includes
 IMPORTS ProfilesExports  FROM Profiles
+        DataExports      FROM Data
         ExercisesExports FROM Exercises
         GamesExports     FROM Games;
-MessagesIncludes ::= SEQUENCE { ProfilesExports, ExercisesExports, GamesExports }
+MessagesIncludes ::= SEQUENCE { ProfilesExports, ExercisesExports, GamesExports, DataExports }
 MessagesExports  ::= NULL
 -- END includes
 
@@ -25,6 +26,7 @@ MsgsInMaster ::= SEQUENCE
         msg-exercise-creation-request       MsgExerciseCreationRequest,
         msg-exercise-update-request         MsgExerciseUpdateRequest,
         msg-exercise-destruction-request    MsgExerciseDestructionRequest
+        
         -- games
     }
 }
@@ -36,6 +38,12 @@ MsgsOutMaster ::= SEQUENCE
     {
         -- profiles
         msg-authentication-response     MsgAuthenticationResponse,
+        
+        -- data
+        msg-dataset-creation            MsgDatasetCreation,
+        msg-terrain-creation            MsgTerrainCreation,
+        msg-physical-model-creation     MsgPhysicalModelCreation,
+                
         -- exercises
         msg-exercise-creation           MsgExerciseCreation,
         msg-exercise-update             MsgExerciseUpdate,
@@ -43,6 +51,7 @@ MsgsOutMaster ::= SEQUENCE
         msg-exercise-creation-ack       MsgExerciseCreationRequestAck,
         msg-exercise-update-ack         MsgExerciseUpdateRequestAck,
         msg-exercise-destruction-ack    MsgExerciseDestructionRequestAck
+        
         -- games
     }
 }

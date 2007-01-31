@@ -12,6 +12,8 @@ void asn1Print_MessagesIncludes (ASN1ConstCharPtr name, ASN1T_MessagesIncludes* 
 
    sprintf (namebuf, "%s.gamesExports", name);
 
+   sprintf (namebuf, "%s.dataExports", name);
+
 }
 
 void ASN1C_MessagesIncludes::Print (ASN1ConstCharPtr name)
@@ -96,31 +98,46 @@ void asn1Print_MsgsOutMaster_msg (ASN1ConstCharPtr name, ASN1T_MsgsOutMaster_msg
          break;
 
       case 2:
+         sprintf (namebuf, "%s.u.msg_dataset_creation", name);
+         asn1Print_MsgDatasetCreation (namebuf, pvalue->u.msg_dataset_creation);
+         break;
+
+      case 3:
+         sprintf (namebuf, "%s.u.msg_terrain_creation", name);
+         asn1Print_MsgTerrainCreation (namebuf, pvalue->u.msg_terrain_creation);
+         break;
+
+      case 4:
+         sprintf (namebuf, "%s.u.msg_physical_model_creation", name);
+         asn1Print_MsgPhysicalModelCreation (namebuf, pvalue->u.msg_physical_model_creation);
+         break;
+
+      case 5:
          sprintf (namebuf, "%s.u.msg_exercise_creation", name);
          asn1Print_MsgExerciseCreation (namebuf, pvalue->u.msg_exercise_creation);
          break;
 
-      case 3:
+      case 6:
          sprintf (namebuf, "%s.u.msg_exercise_update", name);
          asn1Print_MsgExerciseUpdate (namebuf, pvalue->u.msg_exercise_update);
          break;
 
-      case 4:
+      case 7:
          sprintf (namebuf, "%s.u.msg_exercise_destruction", name);
          asn1Print_MsgExerciseDestruction (namebuf, &pvalue->u.msg_exercise_destruction);
          break;
 
-      case 5:
+      case 8:
          sprintf (namebuf, "%s.u.msg_exercise_creation_ack", name);
          asn1Print_MsgExerciseCreationRequestAck (namebuf, pvalue->u.msg_exercise_creation_ack);
          break;
 
-      case 6:
+      case 9:
          sprintf (namebuf, "%s.u.msg_exercise_update_ack", name);
          asn1Print_MsgExerciseUpdateRequestAck (namebuf, pvalue->u.msg_exercise_update_ack);
          break;
 
-      case 7:
+      case 10:
          sprintf (namebuf, "%s.u.msg_exercise_destruction_ack", name);
          asn1Print_MsgExerciseDestructionRequestAck (namebuf, pvalue->u.msg_exercise_destruction_ack);
          break;

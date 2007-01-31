@@ -10,6 +10,7 @@
 #include "asn1per.h"
 #include "asn1PerCppTypes.h"
 #include "Profiles.h"
+#include "Data.h"
 #include "Exercises.h"
 #include "Games.h"
 
@@ -138,12 +139,15 @@ EXTERN void asn1Print_MsgsInMaster (ASN1ConstCharPtr name, ASN1T_MsgsInMaster* p
 /* Choice tag constants */
 
 #define T_MsgsOutMaster_msg_msg_authentication_response 1
-#define T_MsgsOutMaster_msg_msg_exercise_creation 2
-#define T_MsgsOutMaster_msg_msg_exercise_update 3
-#define T_MsgsOutMaster_msg_msg_exercise_destruction 4
-#define T_MsgsOutMaster_msg_msg_exercise_creation_ack 5
-#define T_MsgsOutMaster_msg_msg_exercise_update_ack 6
-#define T_MsgsOutMaster_msg_msg_exercise_destruction_ack 7
+#define T_MsgsOutMaster_msg_msg_dataset_creation 2
+#define T_MsgsOutMaster_msg_msg_terrain_creation 3
+#define T_MsgsOutMaster_msg_msg_physical_model_creation 4
+#define T_MsgsOutMaster_msg_msg_exercise_creation 5
+#define T_MsgsOutMaster_msg_msg_exercise_update 6
+#define T_MsgsOutMaster_msg_msg_exercise_destruction 7
+#define T_MsgsOutMaster_msg_msg_exercise_creation_ack 8
+#define T_MsgsOutMaster_msg_msg_exercise_update_ack 9
+#define T_MsgsOutMaster_msg_msg_exercise_destruction_ack 10
 
 typedef struct EXTERN ASN1T_MsgsOutMaster_msg {
    int t;
@@ -151,16 +155,22 @@ typedef struct EXTERN ASN1T_MsgsOutMaster_msg {
       /* t = 1 */
       ASN1T_MsgAuthenticationResponse *msg_authentication_response;
       /* t = 2 */
-      ASN1T_MsgExerciseCreation *msg_exercise_creation;
+      ASN1T_MsgDatasetCreation *msg_dataset_creation;
       /* t = 3 */
-      ASN1T_MsgExerciseUpdate *msg_exercise_update;
+      ASN1T_MsgTerrainCreation *msg_terrain_creation;
       /* t = 4 */
-      ASN1T_MsgExerciseDestruction  msg_exercise_destruction;
+      ASN1T_MsgPhysicalModelCreation *msg_physical_model_creation;
       /* t = 5 */
-      ASN1T_MsgExerciseCreationRequestAck *msg_exercise_creation_ack;
+      ASN1T_MsgExerciseCreation *msg_exercise_creation;
       /* t = 6 */
-      ASN1T_MsgExerciseUpdateRequestAck *msg_exercise_update_ack;
+      ASN1T_MsgExerciseUpdate *msg_exercise_update;
       /* t = 7 */
+      ASN1T_MsgExerciseDestruction  msg_exercise_destruction;
+      /* t = 8 */
+      ASN1T_MsgExerciseCreationRequestAck *msg_exercise_creation_ack;
+      /* t = 9 */
+      ASN1T_MsgExerciseUpdateRequestAck *msg_exercise_update_ack;
+      /* t = 10 */
       ASN1T_MsgExerciseDestructionRequestAck *msg_exercise_destruction_ack;
    } u;
 } ASN1T_MsgsOutMaster_msg;

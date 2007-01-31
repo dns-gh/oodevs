@@ -18,8 +18,7 @@
 #include "generated/Profiles.h"
 #include "generated/Exercises.h"
 #include "generated/Games.h"
-#include "generated/Datasets.h"
-#include "generated/PhysicalModels.h"
+#include "generated/Data.h"
 
 #pragma warning( pop ) 
 

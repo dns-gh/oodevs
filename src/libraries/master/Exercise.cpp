@@ -13,6 +13,10 @@
 #include "Config.h"
 #include "DataManager.h"
 #include "Master.h"
+#include "Terrain.h"
+#include "Dataset.h"
+#include "PhysicalModel.h"
+#include "Network_Def.h"
 #include "xeumeuleu/xml.h"
 
 using namespace master;
@@ -68,4 +72,32 @@ Exercise::Exercise( const DataManager& dataManager, const Config& config, const 
 Exercise::~Exercise()
 {
     // NOTHING
+}
+
+// =============================================================================
+// NETWORK
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::SendCreation
+// Created: NLD 2007-01-31
+// -----------------------------------------------------------------------------
+void Exercise::SendCreation( Publisher_ABC& publisher ) const
+{
+    AsnMsgOutMasterExerciseCreation asn;
+    Send( asn() );
+    asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::Send
+// Created: NLD 2007-01-31
+// -----------------------------------------------------------------------------
+void Exercise::Send( ASN1T_Exercise& asn ) const
+{
+    asn.name     = name_.c_str();   
+    asn.terrain  = pTerrain_->GetName().c_str();
+    asn.dataset  = pDataset_->GetName().c_str();
+    asn.physical = pPhysicalModel_->GetName().c_str();
+        
 }

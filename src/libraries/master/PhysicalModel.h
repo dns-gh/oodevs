@@ -10,10 +10,13 @@
 #ifndef __PhysicalModel_h_
 #define __PhysicalModel_h_
 
+struct ASN1T_PhysicalModel;
+
 namespace master
 {
-class DataManager;
+class Dataset;
 class Config;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  PhysicalModel
@@ -26,8 +29,18 @@ class PhysicalModel
 public:
     //! @name Constructors/Destructor
     //@{
-             PhysicalModel( const DataManager& dataManager, const Config& config, const std::string& name );
+             PhysicalModel( const Dataset& dataset, const Config& config, const std::string& name );
     virtual ~PhysicalModel();
+    //@}
+
+    //! @name Accessors
+    //@{
+    const std::string& GetName() const;
+    //@}
+
+    //! @name Network
+    //@{
+    void SendCreation( Publisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -37,7 +50,13 @@ private:
     PhysicalModel& operator=( const PhysicalModel& ); //!< Assignment operator
     //@}
 
+    //! @name Tools
+    //@{
+    void Send( ASN1T_PhysicalModel& asn ) const;
+    //@}
+
 private:
+    const Dataset&    dataset_;
     const std::string name_;
 };
 

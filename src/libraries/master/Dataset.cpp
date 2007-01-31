@@ -9,8 +9,8 @@
 
 #include "master_pch.h"
 #include "Dataset.h"
-
 #include "Config.h"
+#include "Network_Def.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -26,7 +26,7 @@ using namespace master;
 // Name: Dataset constructor
 // Created: NLD 2007-01-29
 // -----------------------------------------------------------------------------
-Dataset::Dataset( const DataManager& dataManager, const Config& config, const std::string& name )
+Dataset::Dataset( const DataManager& /*dataManager*/, const Config& config, const std::string& name )
     : name_          ( name )
     , physicalModels_()
 {
@@ -37,10 +37,10 @@ Dataset::Dataset( const DataManager& dataManager, const Config& config, const st
         bfs::path current = *it;
         const std::string leaf( current.leaf() );
         if( bfs::is_directory( current ) && bfs::exists( bfs::path( config.GetPhysicalFile( name, leaf ), bfs::native ) ) )
-            physicalModels_.Create( leaf, dataManager, config, leaf );
+            physicalModels_.Create( leaf, *this, config, leaf );
     }
     if( bfs::exists( bfs::path( config.GetPhysicalFile( name, "" ), bfs::native ) ) )
-        physicalModels_.Create( "", dataManager, config, "" );
+        physicalModels_.Create( "", *this, config, "" );
 
     MT_LOG_INFO_MSG( "Dataset loaded : '" << name_ << "'" );
 }
@@ -65,4 +65,39 @@ Dataset::~Dataset()
 const ModelsContainer< std::string, PhysicalModel >& Dataset::GetPhysicalModels() const
 {
     return physicalModels_;    
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dataset::GetName
+// Created: NLD 2007-01-31
+// -----------------------------------------------------------------------------
+const std::string& Dataset::GetName() const
+{
+    return name_;
+}
+
+// =============================================================================
+// NETWORK
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: Dataset::SendCreation
+// Created: NLD 2007-01-31
+// -----------------------------------------------------------------------------
+void Dataset::SendCreation( Publisher_ABC& publisher ) const
+{
+    AsnMsgOutMasterDatasetCreation asn;
+    Send( asn() );
+    asn.Send( publisher );
+
+    physicalModels_.Apply( std::mem_fun_ref( &PhysicalModel::SendCreation ), publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dataset::Send
+// Created: NLD 2007-01-31
+// -----------------------------------------------------------------------------
+void Dataset::Send( ASN1T_Dataset& asn ) const
+{
+    asn.name = name_.c_str();
 }

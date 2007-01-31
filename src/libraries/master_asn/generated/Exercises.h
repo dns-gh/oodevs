@@ -85,32 +85,6 @@ EXTERN void asn1Print_Exercise (ASN1ConstCharPtr name, ASN1T_Exercise* pvalue);
 
 /**************************************************************/
 /*                                                            */
-/*  ExerciseList                                              */
-/*                                                            */
-/**************************************************************/
-
-typedef struct EXTERN ASN1T_ExerciseList {
-   ASN1UINT n;
-   ASN1T_Exercise *elem;
-} ASN1T_ExerciseList;
-
-class EXTERN ASN1C_ExerciseList : public ASN1CType {
-public:
-   ASN1T_ExerciseList& msgData;
-   ASN1C_ExerciseList (
-      ASN1MessageBuffer& msgBuf, ASN1T_ExerciseList& data);
-   int Encode ();
-   int Decode ();
-   void Print (ASN1ConstCharPtr name);
-} ;
-
-EXTERN int asn1PE_ExerciseList (ASN1CTXT* ctxt_p, ASN1T_ExerciseList* pvalue);
-EXTERN int asn1PD_ExerciseList (ASN1CTXT* ctxt_p, ASN1T_ExerciseList* pvalue);
-
-EXTERN void asn1Print_ExerciseList (ASN1ConstCharPtr name, ASN1T_ExerciseList* pvalue);
-
-/**************************************************************/
-/*                                                            */
 /*  MsgExerciseCreation                                       */
 /*                                                            */
 /**************************************************************/

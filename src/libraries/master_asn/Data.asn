@@ -1,0 +1,34 @@
+--
+-- file name : Data.asn
+--
+-- Data messages
+--
+
+Data DEFINITIONS ::= BEGIN
+
+-- BEGIN includes
+DataIncludes ::= SEQUENCE {}
+DataExports  ::= NULL
+-- END includes
+
+Dataset ::= SEQUENCE
+{
+    name    VisibleString
+}
+
+Terrain ::= SEQUENCE
+{
+    name    VisibleString
+}
+
+PhysicalModel ::= SEQUENCE
+{
+    name    VisibleString,
+    dataset VisibleString
+}
+
+MsgDatasetCreation       ::= Dataset
+MsgTerrainCreation       ::= Terrain
+MsgPhysicalModelCreation ::= PhysicalModel
+
+END

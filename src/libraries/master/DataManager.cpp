@@ -144,5 +144,7 @@ const ModelsContainer< std::string, Exercise >& DataManager::GetExercises() cons
 // -----------------------------------------------------------------------------
 void DataManager::Send( Publisher_ABC& publisher ) const
 {
-    terrains_.Apply( std::mem_fun_ref( &Terrain::SendCreation ), publisher ); 
+    terrains_ .Apply( std::mem_fun_ref( &Terrain ::SendCreation ), publisher );
+    datasets_ .Apply( std::mem_fun_ref( &Dataset ::SendCreation ), publisher );
+    exercises_.Apply( std::mem_fun_ref( &Exercise::SendCreation ), publisher );
 }

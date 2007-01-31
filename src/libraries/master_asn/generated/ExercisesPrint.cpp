@@ -46,27 +46,6 @@ void ASN1C_Exercise::Print (ASN1ConstCharPtr name)
    asn1Print_Exercise (name, &msgData);
 }
 
-void asn1Print_ExerciseList (ASN1ConstCharPtr name, ASN1T_ExerciseList* pvalue)
-{
-   char namebuf[512];
-
-   printf ("%s.n = %d\n", name, pvalue->n);
-   {
-   ASN1UINT xx1;
-   for (xx1 = 0; xx1 < pvalue->n; xx1++) {
-      sprintf (namebuf, "%s.elem[%d]", name, xx1);
-      asn1Print_Exercise (namebuf, &pvalue->elem[xx1]);
-   }
-   }
-
-}
-
-void ASN1C_ExerciseList::Print (ASN1ConstCharPtr name)
-
-{
-   asn1Print_ExerciseList (name, &msgData);
-}
-
 void asn1Print_MsgExerciseCreation (ASN1ConstCharPtr name, ASN1T_MsgExerciseCreation* pvalue)
 {
    asn1Print_Exercise (name, pvalue);
