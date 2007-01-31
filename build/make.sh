@@ -15,10 +15,12 @@ for file in $inputDir/*.asn; do
 done
 
 # get different files ignoring header (generation date) and retrieve it has a list of files
-files=`diff -qrN --ignore-file-name-case -x "*.svn" -I "(http://www.obj-sys.com)" $tmpDir $generatedDir | sed -r "s/^Files (.*tmp\\/\w*(\.cpp|\.h)).*$/\\1/"`
+escapedTmpDir=`echo "$tmpDir" | sed "s|/|\\\\\\/|g"`
+files=`diff -qrN --ignore-file-name-case -x "*.svn" -I "(http://www.obj-sys.com)" $tmpDir $generatedDir | sed -r "s/^.*($escapedTmpDir\\/\w*(\.cpp|\.h)).*$/\\1/"`
 
 if [ ! -z "${files}" ]; then
     echo "Changes found in : " ${files}
-    cp ${files} $generatedDir
+    mkdir -p $generatedDir
+    cp -r ${files} $generatedDir
 fi
 rm -rf $tmpDir
