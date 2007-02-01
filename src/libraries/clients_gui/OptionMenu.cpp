@@ -41,7 +41,7 @@ void OptionMenuBase::AddItem( const QString& label, int i )
 {
     insertItem( label, i );
     if( selected_ == -1 )
-        Select( i );
+        OnItemSelected( i );
 }
 
 // -----------------------------------------------------------------------------

@@ -93,8 +93,6 @@ public:
     {
         values_.push_back( value );
         OptionMenuBase::AddItem( label, values_.size() - 1 );
-        if( values_.size() == 1 )
-            Select( 0 );
     };
     //@}
 
