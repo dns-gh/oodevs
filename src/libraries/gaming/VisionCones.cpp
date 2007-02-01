@@ -103,6 +103,9 @@ struct VisionCones::Updater
     void operator()()
     {
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+            (*it)->Initialize( *map_ );
+        map_->Initialize();
+        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Update( *map_ );
         Commit();
     };

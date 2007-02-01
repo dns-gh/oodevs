@@ -87,14 +87,23 @@ void Surface::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& to
 }
 
 // -----------------------------------------------------------------------------
+// Name: Surface::Initialize
+// Created: AGE 2007-02-01
+// -----------------------------------------------------------------------------
+void Surface::Initialize( VisionMap& map )
+{
+    map.Incorporate( MappedExtent() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Surface::Update
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
 void Surface::Update( VisionMap& map )
 {
-    Rectangle2< unsigned > extent = MappedExtent();
-    for( unsigned i = extent.Left(); i <= extent.Right(); ++i )
-        for( unsigned j = extent.Bottom(); j < extent.Top(); ++j )
+    Rectangle2< int > extent = MappedExtent();
+    for( int i = extent.Left(); i <= extent.Right(); ++i )
+        for( int j = extent.Bottom(); j < extent.Top(); ++j )
         {
             const Point2f point = map_.Map( i, j );
             const std::pair< unsigned, unsigned > mappedPoint( i, j );
@@ -120,12 +129,12 @@ Rectangle2f Surface::Extent() const
 // Name: Rectangle2< unsigned > Surface::MappedExtent
 // Created: AGE 2006-04-14
 // -----------------------------------------------------------------------------
-Rectangle2< unsigned > Surface::MappedExtent() const
+Rectangle2< int > Surface::MappedExtent() const
 {
     Rectangle2f extent = Extent();
     std::pair< unsigned, unsigned > bl = map_.Unmap( extent.BottomLeft() );
     std::pair< unsigned, unsigned > tr = map_.Unmap( extent.TopRight() );
-    return Rectangle2< unsigned >( bl.first, bl.second, tr.first, tr.second );
+    return Rectangle2< int >( bl.first, bl.second, tr.first, tr.second );
 }
 
 // -----------------------------------------------------------------------------

@@ -42,6 +42,7 @@ public:
     //@{
     void SetElongation( float elongation );
     void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Initialize( VisionMap& map );
     void Update( VisionMap& map );
     //@}
 
@@ -61,8 +62,8 @@ private:
 
     //! @name Helpers
     //@{
-    geometry::Rectangle2f               Extent() const;
-    geometry::Rectangle2< unsigned >    MappedExtent() const;
+    geometry::Rectangle2f          Extent() const;
+    geometry::Rectangle2< int >    MappedExtent() const;
     bool IsInSector( const geometry::Point2f& point ) const;
     kernel::E_PerceptionResult ComputePerception( const geometry::Point2f& point ) const;
     //@}
