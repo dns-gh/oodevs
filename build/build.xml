@@ -132,7 +132,7 @@
         </build-lib>
     </target>
     
-    <target name="library.master" description="build master static library" depends="library.master_asn">
+    <target name="library.master" description="build master static library" depends="library.MT_Tools,library.master_asn">
         <build-lib name="master" depends="qt" pattern="lib${ant.project.name}_master-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
@@ -154,7 +154,7 @@
 
     <target name="application.dispatcher_app" description="build CSword Dispatcher executable" depends="library.dispatcher">
         <build-app name="dispatcher_app" subsystem="console" depends="mt,din,boost"
-                   libs="masalloc,paranoia,xeumeuleu,tools,xeumeuleu,asn1per
+                   libs="masalloc,paranoia,xeumeuleu,tools,asn1per
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_game_asn-${platform}-mt
@@ -243,13 +243,14 @@
     </target>
 
     <target name="application.master_app" description="build CSword Master executable" depends="library.master">
-        <build-app name="master_app" depends="mt,din,qt,boost"
-                   libs="asn1per
+        <build-app name="master_app" subsystem="console" depends="mt,din,xeumeuleu,boost"
+                   libs="asn1per,tools
+                         lib${ant.project.name}_MT_Tools-${platform}-mt
                          lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_master_asn-${platform}-mt
                          lib${ant.project.name}_master-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
-            <syslibset libs="gdi32"/>
+            <syslibset libs="gdi32,psapi,dbghelp"/>
         </build-app>
     </target>
 
