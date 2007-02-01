@@ -10,6 +10,7 @@
 #ifndef __TerrainsModel_h_
 #define __TerrainsModel_h_
 
+#include "Messages.h"
 #include "clients_kernel/Resolver.h"
 
 namespace frontend
@@ -35,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    void CreateTerrain( const ASN1T_MsgTerrainCreation& message );
     //@}
 
 private:

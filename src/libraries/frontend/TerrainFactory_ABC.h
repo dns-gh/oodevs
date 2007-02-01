@@ -10,6 +10,8 @@
 #ifndef __TerrainFactory_ABC_h_
 #define __TerrainFactory_ABC_h_
 
+#include "Messages.h"
+
 namespace frontend
 {
     class Terrain;
@@ -32,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Terrain* Create() = 0;
+    virtual Terrain* Create( const ASN1T_MsgTerrainCreation& message ) = 0;
     //@}
 };
 

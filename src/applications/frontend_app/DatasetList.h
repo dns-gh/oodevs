@@ -7,62 +7,61 @@
 //
 // *****************************************************************************
 
-#ifndef __Dataset_h_
-#define __Dataset_h_
+#ifndef __DatasetList_h_
+#define __DatasetList_h_
 
-#include "Messages.h"
-#include "clients_kernel/Resolver.h"
+#include "frontend/Dataset.h"
+#include "ElementListView.h"
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
 }
 
 namespace frontend
 {
     class PhysicalModel;
+}
 
 // =============================================================================
-/** @class  Dataset
-    @brief  Dataset
+/** @class  DatasetList
+    @brief  DatasetList
 */
-// Created: SBO 2007-01-29
+// Created: SBO 2007-02-01
 // =============================================================================
-class Dataset : public kernel::StringResolver< PhysicalModel >
+class DatasetList : public ElementListView< frontend::Dataset >
+                  , public kernel::ElementObserver_ABC< frontend::PhysicalModel >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Dataset( const ASN1T_MsgDatasetCreation& message, kernel::Controller& controller );
-    virtual ~Dataset();
+             DatasetList( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~DatasetList();
     //@}
 
     //! @name Operations
     //@{
-    void AddPhysicalModel( PhysicalModel& model );
-    QString GetName() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Dataset( const Dataset& );            //!< Copy constructor
-    Dataset& operator=( const Dataset& ); //!< Assignment operator
+    DatasetList( const DatasetList& );            //!< Copy constructor
+    DatasetList& operator=( const DatasetList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
+    virtual void NotifyCreated( const frontend::PhysicalModel& element );
+    virtual void NotifyUpdated( const frontend::PhysicalModel& element );
+    virtual void NotifyDeleted( const frontend::PhysicalModel& element );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    QString name_;
     //@}
 };
 
-}
-
-#endif // __Dataset_h_
+#endif // __DatasetList_h_

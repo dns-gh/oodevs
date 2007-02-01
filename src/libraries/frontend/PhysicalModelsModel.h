@@ -10,6 +10,7 @@
 #ifndef __PhysicalModelsModel_h_
 #define __PhysicalModelsModel_h_
 
+#include "Messages.h"
 #include "clients_kernel/Resolver.h"
 
 namespace frontend
@@ -35,6 +36,7 @@ public:
 
     //! @name Operations
     //@{
+    void CreatePhysicalModel( const ASN1T_MsgPhysicalModelCreation& message );
     //@}
 
 private:

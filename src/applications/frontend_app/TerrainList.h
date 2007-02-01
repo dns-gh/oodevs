@@ -7,43 +7,42 @@
 //
 // *****************************************************************************
 
-#ifndef __DatasetsModel_h_
-#define __DatasetsModel_h_
+#ifndef __TerrainList_h_
+#define __TerrainList_h_
 
-#include "Messages.h"
-#include "clients_kernel/Resolver.h"
+#include "frontend/Terrain.h"
+#include "ElementListView.h"
 
-namespace frontend
+namespace kernel
 {
-    class Dataset;
-    class DatasetFactory_ABC;
+    class Controllers;
+}
 
 // =============================================================================
-/** @class  DatasetsModel
-    @brief  DatasetsModel
+/** @class  TerrainList
+    @brief  TerrainList
 */
-// Created: SBO 2007-01-29
+// Created: SBO 2007-02-01
 // =============================================================================
-class DatasetsModel : public kernel::StringResolver< Dataset >
+class TerrainList : public ElementListView< frontend::Terrain >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DatasetsModel( DatasetFactory_ABC& factory );
-    virtual ~DatasetsModel();
+             TerrainList( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~TerrainList();
     //@}
 
     //! @name Operations
     //@{
-    void CreateDataset( const ASN1T_MsgDatasetCreation& message );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    DatasetsModel( const DatasetsModel& );            //!< Copy constructor
-    DatasetsModel& operator=( const DatasetsModel& ); //!< Assignment operator
+    TerrainList( const TerrainList& );            //!< Copy constructor
+    TerrainList& operator=( const TerrainList& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -53,10 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    DatasetFactory_ABC& factory_;
     //@}
 };
 
-}
-
-#endif // __DatasetsModel_h_
+#endif // __TerrainList_h_

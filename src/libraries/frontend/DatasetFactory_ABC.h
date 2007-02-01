@@ -10,6 +10,8 @@
 #ifndef __DatasetFactory_ABC_h_
 #define __DatasetFactory_ABC_h_
 
+#include "Messages.h"
+
 namespace frontend
 {
     class Dataset;
@@ -32,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Dataset* Create() = 0;
+    virtual Dataset* Create( const ASN1T_MsgDatasetCreation& message ) = 0;
     //@}
 };
 

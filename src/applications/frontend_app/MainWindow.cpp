@@ -9,13 +9,14 @@
 
 #include "frontend_app_pch.h"
 #include "MainWindow.h"
-#include "ExerciseList.h"
-#include "Panels.h"
+#include "ExercisesTab.h"
+#include "TerrainsTab.h"
+#include "DatasetsTab.h"
 #include "LoginDialog.h"
 #include "frontend/Profile.h"
 #include "frontend/Networker.h"
 #include "clients_kernel/Controllers.h"
-#include <qlayout.h>
+#include <qtabwidget.h>
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -33,14 +34,11 @@ MainWindow::MainWindow( kernel::Controllers& controllers, frontend::Networker& n
     const QRect& screen = QApplication::desktop()->screenGeometry();
     move( screen.center() - QPoint( width() / 2, height() / 2 ) );
 
-    QGridLayout* grid = new QGridLayout( this, 1, 2 );
-    grid->setColStretch( 0, 1 );
-    grid->setColStretch( 1, 3 );
-    
-    QWidget* list   = new ExerciseList( this );
-    QWidget* panels = new Panels( this );
-    grid->addWidget( list  , 0, 0 );
-    grid->addWidget( panels, 0, 1 );
+    QTabWidget* tabs = new QTabWidget( this );
+    tabs->addTab( new ExercisesTab( tabs, controllers_ ), tr( "Exercises" ) );
+    tabs->addTab( new TerrainsTab ( tabs, controllers_ ), tr( "Terrains" ) );
+    tabs->addTab( new DatasetsTab ( tabs, controllers_ ), tr( "Datasets" ) );
+    setCentralWidget( tabs );
 
     controllers_.Register( *this );
 }

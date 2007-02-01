@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "DatasetsModel.h"
 #include "Dataset.h"
+#include "DatasetFactory_ABC.h"
 
 using namespace frontend;
 
@@ -30,4 +31,14 @@ DatasetsModel::DatasetsModel( DatasetFactory_ABC& factory )
 DatasetsModel::~DatasetsModel()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatasetsModel::CreateDataset
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+void DatasetsModel::CreateDataset( const ASN1T_MsgDatasetCreation& message )
+{
+    std::auto_ptr< Dataset > dataset( factory_.Create( message ) );
+    Register( dataset->GetName(), *dataset.release() );
 }

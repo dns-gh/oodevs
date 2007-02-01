@@ -53,6 +53,9 @@ private:
     //! @name Helpers
     //@{
     void OnReceiveMsgAuthenticationResponse       ( const ASN1T_MsgAuthenticationResponse&        message );
+    void OnReceiveMsgDatasetCreation              ( const ASN1T_MsgDatasetCreation&               message );
+    void OnReceiveMsgTerrainCreation              ( const ASN1T_MsgTerrainCreation&               message );
+    void OnReceiveMsgPhysicalModelCreation        ( const ASN1T_MsgPhysicalModelCreation&         message );
     void OnReceiveMsgExerciseCreation             ( const ASN1T_MsgExerciseCreation&              message );
     void OnReceiveMsgExerciseUpdate               ( const ASN1T_MsgExerciseUpdate&                message );
     void OnReceiveMsgExerciseDestruction          ( const ASN1T_MsgExerciseDestruction&           message );

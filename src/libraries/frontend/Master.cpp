@@ -14,6 +14,9 @@
 #include "frontend/Model.h"
 #include "frontend/ExercisesModel.h"
 #include "frontend/Exercise.h"
+#include "frontend/DatasetsModel.h"
+#include "frontend/TerrainsModel.h"
+#include "frontend/PhysicalModelsModel.h"
 #include "frontend/Exceptions.h"
 #include "frontend/Profile.h"
 #include "tools/AsnMessageEncoder.h"
@@ -55,6 +58,9 @@ void Master::OnReceive( const ASN1T_MsgsOutMaster& message )
     switch( message.msg.t )
     {
     case T_MsgsOutMaster_msg_msg_authentication_response:   OnReceiveMsgAuthenticationResponse( *message.msg.u.msg_authentication_response ); break;
+    case T_MsgsOutMaster_msg_msg_dataset_creation:          OnReceiveMsgDatasetCreation( *message.msg.u.msg_dataset_creation ); break;
+    case T_MsgsOutMaster_msg_msg_terrain_creation:          OnReceiveMsgTerrainCreation( *message.msg.u.msg_terrain_creation ); break;
+    case T_MsgsOutMaster_msg_msg_physical_model_creation:   OnReceiveMsgPhysicalModelCreation( *message.msg.u.msg_physical_model_creation ); break;
     case T_MsgsOutMaster_msg_msg_exercise_creation:         OnReceiveMsgExerciseCreation( *message.msg.u.msg_exercise_creation ); break;
     case T_MsgsOutMaster_msg_msg_exercise_creation_ack:     OnReceiveMsgExerciseCreationRequestAck( *message.msg.u.msg_exercise_creation_ack ); break;
     case T_MsgsOutMaster_msg_msg_exercise_update:           OnReceiveMsgExerciseUpdate( *message.msg.u.msg_exercise_update ); break;
@@ -96,6 +102,33 @@ void Master::Send( const ASN1T_MsgsInMaster& message )
 void Master::OnReceiveMsgAuthenticationResponse( const ASN1T_MsgAuthenticationResponse& message )
 {
     profile_.DoUpdate( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Master::OnReceiveMsgDatasetCreation
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+void Master::OnReceiveMsgDatasetCreation( const ASN1T_MsgDatasetCreation& message )
+{
+    model_.datasets_.CreateDataset( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Master::OnReceiveMsgTerrainCreation
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+void Master::OnReceiveMsgTerrainCreation( const ASN1T_MsgTerrainCreation& message )
+{
+    model_.terrains_.CreateTerrain( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Master::OnReceiveMsgPhysicalModelCreation
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+void Master::OnReceiveMsgPhysicalModelCreation( const ASN1T_MsgPhysicalModelCreation& message )
+{
+    model_.physicalModels_.CreatePhysicalModel( message );
 }
 
 // -----------------------------------------------------------------------------

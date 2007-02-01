@@ -32,3 +32,13 @@ TerrainsModel::~TerrainsModel()
 {
     DeleteAll();
 }
+
+// -----------------------------------------------------------------------------
+// Name: TerrainsModel::CreateTerrain
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+void TerrainsModel::CreateTerrain( const ASN1T_MsgTerrainCreation& message )
+{
+    std::auto_ptr< Terrain > terrain( factory_.Create( message ) );
+    Register( terrain->GetName(), *terrain.release() );
+}

@@ -10,12 +10,12 @@
 #ifndef __ExerciseList_h_
 #define __ExerciseList_h_
 
-#include <qlistview.h>
-#include "clients_kernel/ElementObserver_ABC.h"
+#include "frontend/Exercise.h"
+#include "ElementListView.h"
 
-namespace frontend
+namespace kernel
 {
-    class Exercise;
+    class Controllers;
 }
 
 // =============================================================================
@@ -24,15 +24,13 @@ namespace frontend
 */
 // Created: SBO 2007-01-26
 // =============================================================================
-class ExerciseList : public QListView 
-                   , public kernel::Observer_ABC
-                   , public kernel::ElementObserver_ABC< frontend::Exercise >
+class ExerciseList : public ElementListView< frontend::Exercise >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExerciseList( QWidget* parent );
+             ExerciseList( QWidget* parent, kernel::Controllers& controllers );
     virtual ~ExerciseList();
     //@}
 
@@ -49,9 +47,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const frontend::Exercise& exercise );
-    virtual void NotifyUpdated( const frontend::Exercise& exercise );
-    virtual void NotifyDeleted( const frontend::Exercise& exercise );
     //@}
 
 private:

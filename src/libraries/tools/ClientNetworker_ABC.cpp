@@ -20,7 +20,7 @@ namespace
 {
     NEK::NEK_AddressINET* BuildAddress( const std::string& host )
     {
-        return new NEK::NEK_AddressINET( host.substr( 0, host.find_first_of( ':' ) ), atoi( host.substr( host.find_first_of( ':' ) + 1 ).c_str() ) );
+        return new NEK::NEK_AddressINET( host.substr( 0, host.find_first_of( ':' ) ), (uint16)atoi( host.substr( host.find_first_of( ':' ) + 1 ).c_str() ) );
     }
 }
 
@@ -105,7 +105,7 @@ void ClientNetworker_ABC::Update()
 // -----------------------------------------------------------------------------
 void ClientNetworker_ABC::OnConnected( DIN_Link& link )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Connected to simulation '%s'", link.GetRemoteAddress().GetAddressAsString().c_str() ).c_str() );
+    MT_LOG_INFO_MSG( MT_FormatString( "Connected to '%s'", link.GetRemoteAddress().GetAddressAsString().c_str() ).c_str() );
     session_ = &link;
 }
 
@@ -115,7 +115,7 @@ void ClientNetworker_ABC::OnConnected( DIN_Link& link )
 // -----------------------------------------------------------------------------
 void ClientNetworker_ABC::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Connection to simulation '%s' failed (reason : %s)", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
+    MT_LOG_INFO_MSG( MT_FormatString( "Connection to '%s' failed (reason : %s)", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );
     connectionService_->JoinHost( *serverAddress_ );
     session_ = 0;
 }
@@ -126,7 +126,7 @@ void ClientNetworker_ABC::OnConnectionFailed( DIN_Link& link, const DIN_ErrorDes
 // -----------------------------------------------------------------------------
 void ClientNetworker_ABC::OnConnectionLost( DIN_Link& link, const DIN_ErrorDescription& reason )
 {
-    MT_LOG_INFO_MSG( MT_FormatString( "Connection to simulation '%s' lost (reason : %s) - reconnecting", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );    
+    MT_LOG_INFO_MSG( MT_FormatString( "Connection to '%s' lost (reason : %s) - reconnecting", link.GetRemoteAddress().GetAddressAsString().c_str(), reason.GetInfo().c_str() ).c_str() );    
     connectionService_->JoinHost( *serverAddress_ );
     session_ = 0;
 }

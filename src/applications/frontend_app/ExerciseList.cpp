@@ -9,54 +9,22 @@
 
 #include "frontend_app_pch.h"
 #include "ExerciseList.h"
-#include "frontend/Exercise.h"
-#include "clients_gui/ValuedListItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseList constructor
-// Created: SBO 2007-01-26
+// Created: SBO 2007-02-01
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent )
-    : QListView( parent )
+ExerciseList::ExerciseList( QWidget* parent, kernel::Controllers& controllers )
+    : ElementListView< frontend::Exercise >( parent, controllers )
 {
-    addColumn( tr( "Exercise" ) );
+    addColumn( tr( "Exercises" ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseList destructor
-// Created: SBO 2007-01-26
+// Created: SBO 2007-02-01
 // -----------------------------------------------------------------------------
 ExerciseList::~ExerciseList()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::NotifyCreated
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-void ExerciseList::NotifyCreated( const frontend::Exercise& exercise )
-{
-    gui::ValuedListItem* item = new gui::ValuedListItem( this );
-    item->SetNamed( exercise );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::NotifyUpdated
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-void ExerciseList::NotifyUpdated( const frontend::Exercise& exercise )
-{
-    if( gui::ValuedListItem* item = gui::FindItem( &exercise, firstChild() ) )
-        item->SetNamed( exercise );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseList::NotifyDeleted
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-void ExerciseList::NotifyDeleted( const frontend::Exercise& exercise )
-{
-    if( gui::ValuedListItem* item = gui::FindItem( &exercise, firstChild() ) )
-        delete item;
 }

@@ -19,6 +19,7 @@ namespace kernel
 
 namespace frontend
 {
+    class Model;
 
 // =============================================================================
 /** @class  PhysicalModelFactory
@@ -32,13 +33,13 @@ class PhysicalModelFactory : public PhysicalModelFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PhysicalModelFactory( kernel::Controllers& controllers );
+             PhysicalModelFactory( kernel::Controllers& controllers, Model& model );
     virtual ~PhysicalModelFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual PhysicalModel* Create();
+    virtual PhysicalModel* Create( const ASN1T_MsgPhysicalModelCreation& message );
     //@}
 
 private:
@@ -56,6 +57,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    Model& model_;
     //@}
 };
 

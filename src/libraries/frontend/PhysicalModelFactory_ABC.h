@@ -10,6 +10,8 @@
 #ifndef __PhysicalModelFactory_ABC_h_
 #define __PhysicalModelFactory_ABC_h_
 
+#include "Messages.h"
+
 namespace frontend
 {
     class PhysicalModel;
@@ -32,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual PhysicalModel* Create() = 0;
+    virtual PhysicalModel* Create( const ASN1T_MsgPhysicalModelCreation& message ) = 0;
     //@}
 };
 

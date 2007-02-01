@@ -30,6 +30,9 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qtimer.h>
+#include <qhbox.h>
+#include <qvbox.h>
+#include <qlistview.h>
 
 #include "geometry/Types.h"
 

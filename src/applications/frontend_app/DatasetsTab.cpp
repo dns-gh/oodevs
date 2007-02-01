@@ -7,37 +7,27 @@
 //
 // *****************************************************************************
 
-#include "frontend_pch.h"
-#include "Terrain.h"
-#include "clients_kernel/Controller.h"
-
-using namespace frontend;
-
-// -----------------------------------------------------------------------------
-// Name: Terrain constructor
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-Terrain::Terrain( const ASN1T_MsgTerrainCreation& message, kernel::Controller& controller )
-    : controller_( controller )
-    , name_( message.name )
-{
-    controller_.Create( *this );
-}
+#include "frontend_app_pch.h"
+#include "DatasetsTab.h"
+#include "DatasetList.h"
+#include "Panels.h"
 
 // -----------------------------------------------------------------------------
-// Name: Terrain destructor
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-Terrain::~Terrain()
-{
-    controller_.Delete( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Terrain::GetName
+// Name: DatasetsTab constructor
 // Created: SBO 2007-02-01
 // -----------------------------------------------------------------------------
-QString Terrain::GetName() const
+DatasetsTab::DatasetsTab( QWidget* parent, kernel::Controllers& controllers )
+    : QHBox( parent )
 {
-    return name_;
+    setStretchFactor( new DatasetList( this, controllers ), 1 );
+    setStretchFactor( new Panels( this ), 3 ); // $$$$ SBO 2007-02-01: dummy
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatasetsTab destructor
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+DatasetsTab::~DatasetsTab()
+{
+    // NOTHING
 }

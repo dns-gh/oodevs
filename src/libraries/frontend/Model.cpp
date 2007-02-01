@@ -27,7 +27,7 @@ using namespace frontend;
 Model::Model( kernel::Controllers& controllers )
     : terrainFactory_( *new TerrainFactory( controllers ) )
     , datasetFactory_( *new DatasetFactory( controllers ) )
-    , physicalModelFactory_( *new PhysicalModelFactory( controllers ) )
+    , physicalModelFactory_( *new PhysicalModelFactory( controllers, *this ) )
     , exerciseFactory_( *new ExerciseFactory( controllers, *this ) )
     , terrains_( *new TerrainsModel( terrainFactory_ ) )
     , datasets_( *new DatasetsModel( datasetFactory_ ) )

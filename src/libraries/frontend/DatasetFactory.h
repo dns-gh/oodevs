@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Dataset* Create();
+    virtual Dataset* Create( const ASN1T_MsgDatasetCreation& message );
     //@}
 
 private:

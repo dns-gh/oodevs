@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "TerrainFactory.h"
 #include "Terrain.h"
+#include "clients_kernel/Controllers.h"
 
 using namespace frontend;
 
@@ -36,7 +37,7 @@ TerrainFactory::~TerrainFactory()
 // Name: TerrainFactory::Create
 // Created: SBO 2007-01-29
 // -----------------------------------------------------------------------------
-Terrain* TerrainFactory::Create()
+Terrain* TerrainFactory::Create( const ASN1T_MsgTerrainCreation& message )
 {
-    return new Terrain();
+    return new Terrain( message, controllers_.controller_ );
 }

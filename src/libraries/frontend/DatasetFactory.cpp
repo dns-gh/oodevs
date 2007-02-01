@@ -37,7 +37,7 @@ DatasetFactory::~DatasetFactory()
 // Name: DatasetFactory::Create
 // Created: SBO 2007-01-29
 // -----------------------------------------------------------------------------
-Dataset* DatasetFactory::Create()
+Dataset* DatasetFactory::Create( const ASN1T_MsgDatasetCreation& message )
 {
-    return new Dataset( controllers_.controller_ );
+    return new Dataset( message, controllers_.controller_ );
 }

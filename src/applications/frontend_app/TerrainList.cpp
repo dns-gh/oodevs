@@ -7,37 +7,24 @@
 //
 // *****************************************************************************
 
-#include "frontend_pch.h"
-#include "Terrain.h"
-#include "clients_kernel/Controller.h"
-
-using namespace frontend;
+#include "frontend_app_pch.h"
+#include "TerrainList.h"
 
 // -----------------------------------------------------------------------------
-// Name: Terrain constructor
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-Terrain::Terrain( const ASN1T_MsgTerrainCreation& message, kernel::Controller& controller )
-    : controller_( controller )
-    , name_( message.name )
-{
-    controller_.Create( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Terrain destructor
-// Created: SBO 2007-01-29
-// -----------------------------------------------------------------------------
-Terrain::~Terrain()
-{
-    controller_.Delete( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Terrain::GetName
+// Name: TerrainList constructor
 // Created: SBO 2007-02-01
 // -----------------------------------------------------------------------------
-QString Terrain::GetName() const
+TerrainList::TerrainList( QWidget* parent, kernel::Controllers& controllers )
+    : ElementListView< frontend::Terrain >( parent, controllers )
 {
-    return name_;
+    addColumn( tr( "Terrains" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainList destructor
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+TerrainList::~TerrainList()
+{
+    // NOTHING
 }

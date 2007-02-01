@@ -10,6 +10,13 @@
 #ifndef __Terrain_h_
 #define __Terrain_h_
 
+#include "Messages.h"
+
+namespace kernel
+{
+    class Controller;
+}
+
 namespace frontend
 {
 
@@ -25,12 +32,13 @@ class Terrain
 public:
     //! @name Constructors/Destructor
     //@{
-             Terrain();
+             Terrain( const ASN1T_MsgTerrainCreation& message, kernel::Controller& controller );
     virtual ~Terrain();
     //@}
 
     //! @name Operations
     //@{
+    QString GetName() const;
     //@}
 
 private:
@@ -47,6 +55,8 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
+    QString name_;
     //@}
 };
 

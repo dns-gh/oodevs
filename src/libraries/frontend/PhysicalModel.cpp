@@ -9,6 +9,7 @@
 
 #include "frontend_pch.h"
 #include "PhysicalModel.h"
+#include "clients_kernel/Controller.h"
 
 using namespace frontend;
 
@@ -16,9 +17,13 @@ using namespace frontend;
 // Name: PhysicalModel constructor
 // Created: SBO 2007-01-29
 // -----------------------------------------------------------------------------
-PhysicalModel::PhysicalModel( kernel::Controller& controller )
+PhysicalModel::PhysicalModel( const ASN1T_MsgPhysicalModelCreation& message, kernel::Controller& controller
+                            , const kernel::StringResolver< Dataset >& datasetResolver )
+    : controller_( controller )
+    , name_( message.name )
+    , dataset_( datasetResolver.Get( message.dataset ) )
 {
-    // NOTHING
+    controller_.Create( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -27,5 +32,23 @@ PhysicalModel::PhysicalModel( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 PhysicalModel::~PhysicalModel()
 {
-    // NOTHING
+    controller_.Delete( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PhysicalModel::GetName
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+QString PhysicalModel::GetName() const
+{
+    return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PhysicalModel::GetDataset
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+const Dataset& PhysicalModel::GetDataset() const
+{
+    return dataset_;
 }

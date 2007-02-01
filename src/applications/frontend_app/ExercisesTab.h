@@ -7,43 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef __DatasetsModel_h_
-#define __DatasetsModel_h_
+#ifndef __ExercisesTab_h_
+#define __ExercisesTab_h_
 
-#include "Messages.h"
-#include "clients_kernel/Resolver.h"
-
-namespace frontend
+namespace kernel
 {
-    class Dataset;
-    class DatasetFactory_ABC;
+    class Controllers;
+}
 
 // =============================================================================
-/** @class  DatasetsModel
-    @brief  DatasetsModel
+/** @class  ExercisesTab
+    @brief  ExercisesTab
 */
-// Created: SBO 2007-01-29
+// Created: SBO 2007-02-01
 // =============================================================================
-class DatasetsModel : public kernel::StringResolver< Dataset >
+class ExercisesTab : public QHBox
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DatasetsModel( DatasetFactory_ABC& factory );
-    virtual ~DatasetsModel();
+             ExercisesTab( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~ExercisesTab();
     //@}
 
     //! @name Operations
     //@{
-    void CreateDataset( const ASN1T_MsgDatasetCreation& message );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    DatasetsModel( const DatasetsModel& );            //!< Copy constructor
-    DatasetsModel& operator=( const DatasetsModel& ); //!< Assignment operator
+    ExercisesTab( const ExercisesTab& );            //!< Copy constructor
+    ExercisesTab& operator=( const ExercisesTab& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -53,10 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    DatasetFactory_ABC& factory_;
     //@}
 };
 
-}
-
-#endif // __DatasetsModel_h_
+#endif // __ExercisesTab_h_

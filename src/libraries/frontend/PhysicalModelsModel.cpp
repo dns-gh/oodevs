@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "PhysicalModelsModel.h"
 #include "PhysicalModelFactory_ABC.h"
+#include "PhysicalModel.h"
 
 using namespace frontend;
 
@@ -30,4 +31,14 @@ PhysicalModelsModel::PhysicalModelsModel( PhysicalModelFactory_ABC& factory )
 PhysicalModelsModel::~PhysicalModelsModel()
 {
     DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PhysicalModelsModel::CreatePhysicalModel
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+void PhysicalModelsModel::CreatePhysicalModel( const ASN1T_MsgPhysicalModelCreation& message )
+{
+    std::auto_ptr< PhysicalModel > physicalModel( factory_.Create( message ) );
+    Register( physicalModel->GetName(), *physicalModel.release() );
 }

@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual Terrain* Create();
+    virtual Terrain* Create( const ASN1T_MsgTerrainCreation& message );
     //@}
 
 private:

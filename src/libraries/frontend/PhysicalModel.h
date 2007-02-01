@@ -10,6 +10,9 @@
 #ifndef __PhysicalModel_h_
 #define __PhysicalModel_h_
 
+#include "Messages.h"
+#include "clients_kernel/Resolver.h"
+
 namespace kernel
 {
     class Controller;
@@ -17,6 +20,7 @@ namespace kernel
 
 namespace frontend
 {
+    class Dataset;
 
 // =============================================================================
 /** @class  PhysicalModel
@@ -30,12 +34,15 @@ class PhysicalModel
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PhysicalModel( kernel::Controller& controller );
+             PhysicalModel( const ASN1T_MsgPhysicalModelCreation& message, kernel::Controller& controller
+                          , const kernel::StringResolver< frontend::Dataset >& datasetResolver );
     virtual ~PhysicalModel();
     //@}
 
     //! @name Operations
     //@{
+    QString GetName() const;
+    const Dataset& GetDataset() const;
     //@}
 
 private:
@@ -52,6 +59,9 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
+    QString name_;
+    frontend::Dataset& dataset_;
     //@}
 };
 
