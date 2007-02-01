@@ -126,7 +126,7 @@
         <build-lib name="preparation" depends="qt" pattern="lib${ant.project.name}_preparation-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.frontend" description="build frontend static library" depends="library.master_asn,library.clients_kernel">
+    <target name="library.frontend" description="build frontend static library" depends="library.master_asn,library.clients_kernel,library.clients_gui">
         <build-lib name="frontend" depends="qt" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
@@ -232,6 +232,7 @@
     <target name="application.frontend_app" description="build CSword Frontend executable" depends="library.frontend">
         <build-app name="frontend_app" depends="mt,din,qt,boost"
                    libs="asn1per
+                         lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_master_asn-${platform}-mt
                          lib${ant.project.name}_frontend-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
@@ -240,10 +241,11 @@
             <syslibset libs="gdi32"/>
         </build-app>
     </target>
-    
+
     <target name="application.master_app" description="build CSword Master executable" depends="library.master">
-        <build-app name="frontend_app" depends="mt,din,qt,boost"
+        <build-app name="master_app" depends="mt,din,qt,boost"
                    libs="asn1per
+                         lib${ant.project.name}_tools-${platform}-mt
                          lib${ant.project.name}_master_asn-${platform}-mt
                          lib${ant.project.name}_master-${platform}-mt">
             <includepath path="${include.dir}/ASN"/>
