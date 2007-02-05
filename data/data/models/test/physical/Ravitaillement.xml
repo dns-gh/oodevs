@@ -3,33 +3,32 @@
 
   <Convois>
     <TempsConstitution>
-      <Temps nbCamions="1">60s</Temps>
-      <Temps nbCamions="30">120s</Temps>
-      <Temps nbCamions="100">3000s</Temps>
-      <Temps nbCamions="500">18000s</Temps>
-      <Temps nbCamions="5000">54000s</Temps>
+      <Temps nbCamions="1">10m</Temps>
+      <Temps nbCamions="10">10m</Temps>
+      <Temps nbCamions="20">20m</Temps>
+      <Temps nbCamions="30">30m</Temps>
+      <Temps nbCamions="5000">30m</Temps>
     </TempsConstitution>
     <TempsChargement>
-      <Temps nbCamions="1">60s</Temps>
-      <Temps nbCamions="100">120s</Temps>
-      <Temps nbCamions="5000">300s</Temps>
+      <Temps nbCamions="1">30m</Temps>
+      <Temps nbCamions="10">110m</Temps>
     </TempsChargement>
     <TempsDechargement>
-      <Temps nbCamions="1">60s</Temps>
-      <Temps nbCamions="100">120s</Temps>
-      <Temps nbCamions="5000">300s</Temps>
+      <Temps nbCamions="1">15m</Temps>
+      <Temps nbCamions="10">30m</Temps>
+      <Temps nbCamions="40">120m</Temps>
     </TempsDechargement>
     <CoefModificationVitesse>
       <Coef nbCamions="1">1</Coef>
       <Coef nbCamions="100">1</Coef>
-    </CoefModificationVitesse>      
+    </CoefModificationVitesse>
     <TypeUnite nom="Pion Convoi"/>
     <Mission nom="LOG Convoyer"/>
   </Convois>
 
   <AlertesDisponibiliteMoyens>
     <AlertesDisponibiliteVecteurs>
-      <AlerteDisponibiliteVecteurs pourcentageMoyensDisponibles="75"/>
+      <AlerteDisponibiliteVecteurs pourcentageMoyensDisponibles="0"/>
     </AlertesDisponibiliteVecteurs>
   </AlertesDisponibiliteMoyens>
 
