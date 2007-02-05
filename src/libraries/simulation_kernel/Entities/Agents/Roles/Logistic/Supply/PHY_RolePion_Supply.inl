@@ -8,3 +8,13 @@
 // $Workfile: PHY_RolePion_Supply.inl $
 //
 // *****************************************************************************
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Supply::ModifySpeed
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_RolePion_Supply::ModifySpeed( MT_Float rSpeed ) const
+{
+    return rSpeed;
+}

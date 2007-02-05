@@ -86,17 +86,20 @@ public:
 
     //! @name Convoy
     //@{
-    virtual void                   AssignConvoy              ( PHY_StockConvoy& convoy );
-    virtual void                   UnassignConvoy            ( PHY_StockConvoy& convoy );
+    virtual       void             AssignConvoy              ( PHY_StockConvoy& convoy );
+    virtual       void             UnassignConvoy            ( PHY_StockConvoy& convoy );
 
-    virtual bool                   ConvoyLoad                () const;
-    virtual bool                   ConvoyUnload              () const;
-    virtual bool                   ConvoyIsLoadingDone       () const;
-    virtual bool                   ConvoyIsUnloadingDone     () const;
+    virtual       bool             ConvoyLoad                () const;
+    virtual       bool             ConvoyUnload              () const;
+    virtual       bool             ConvoyIsLoadingDone       () const;
+    virtual       bool             ConvoyIsUnloadingDone     () const;
     virtual const MIL_AutomateLOG* ConvoyGetSupplyingAutomate() const;
     virtual const MIL_AutomateLOG* ConvoyGetConvoyingAutomate() const;
     virtual const MIL_Automate*    ConvoyGetSuppliedAutomate () const;
-    virtual void                   ConvoyEndMission          ();
+    virtual       void             ConvoyEndMission          ();
+
+    virtual       MT_Float         ModifySpeed               ( MT_Float rSpeed ) const;
+    //@}
     //@}
 
     //! @name Network

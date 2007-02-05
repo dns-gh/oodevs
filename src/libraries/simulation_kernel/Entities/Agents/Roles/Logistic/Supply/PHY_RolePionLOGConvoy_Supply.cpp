@@ -202,6 +202,17 @@ void PHY_RolePionLOGConvoy_Supply::ConvoyEndMission()
         pConvoy_->EndMission();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOGConvoy_Supply::ModifySpeed
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+MT_Float PHY_RolePionLOGConvoy_Supply::ModifySpeed( MT_Float rSpeed ) const
+{
+    if( !pConvoy_ )
+        return rSpeed;
+    return pConvoy_->ModifySpeed( rSpeed );
+}
+
 // =============================================================================
 // EVENTS
 // =============================================================================

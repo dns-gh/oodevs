@@ -11,7 +11,8 @@
 #include "ADN_Supply_GUI.h"
 
 #include "ADN_Supply_Data.h"
-#include "ADN_Supply_TrucksTable.h"
+#include "ADN_Supply_TrucksDoubleTable.h"
+#include "ADN_Supply_TrucksTimeTable.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Vector.h"
@@ -70,16 +71,20 @@ void ADN_Supply_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), data_.ptrSupplyMission_ );
 
     QHGroupBox* pTrucksGroup = new QHGroupBox( tr( "Convoy setup times" ), pGroup );
-    ADN_Supply_TrucksTable* pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
-    pTrucksTable->GetConnector().Connect( & data_.vConvoySetupInfos_ );
+    ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
+    pTrucksTimeTable->GetConnector().Connect( & data_.vConvoySetupInfos_ );
 
     pTrucksGroup = new QHGroupBox( tr( "Convoy loading times" ), pGroup );
-    pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
-    pTrucksTable->GetConnector().Connect( & data_.vConvoyLoadingInfos_ );
+    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
+    pTrucksTimeTable->GetConnector().Connect( & data_.vConvoyLoadingInfos_ );
 
     pTrucksGroup = new QHGroupBox( tr( "Convoy unloading times" ), pGroup );
-    pTrucksTable = new ADN_Supply_TrucksTable( pTrucksGroup );
-    pTrucksTable->GetConnector().Connect( & data_.vConvoyUnloadingInfos_ );
+    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
+    pTrucksTimeTable->GetConnector().Connect( & data_.vConvoyUnloadingInfos_ );
+
+    pTrucksGroup = new QHGroupBox( tr( "Convoy speed modificators" ), pGroup );
+    ADN_Supply_TrucksDoubleTable* pTrucksDoubleTable = new ADN_Supply_TrucksDoubleTable( pTrucksGroup );
+    pTrucksDoubleTable->GetConnector().Connect( & data_.vConvoySpeedModificatorInfos_ );
 
     QHGroupBox* pVectorGroup = new QHGroupBox( tr( "Vector availability warnings" ), pGroup );
     ADN_AvailabilityWarningTable* pWarningTable = new ADN_AvailabilityWarningTable( pVectorGroup );

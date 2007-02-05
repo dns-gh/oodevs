@@ -24,60 +24,61 @@
 // Name: ConvoyInfo::ConvoyInfo
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-ADN_Supply_Data::ConvoyInfo::ConvoyInfo()
+template< typename T >
+ADN_Supply_Data::ConvoyInfo< T >::ConvoyInfo( typename T::BaseType value )
 : ADN_Ref_ABC         ()
 , ADN_DataTreeNode_ABC()
 , nNbrTrucks_         ( 1 )
-, time_               ( "1s" )
+, value_              ( value )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConvoyInfo::GetNodeName
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-std::string ADN_Supply_Data::ConvoyInfo::GetNodeName()
+template< typename T >
+std::string ADN_Supply_Data::ConvoyInfo< T >::GetNodeName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConvoyInfo::GetItemName
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-std::string ADN_Supply_Data::ConvoyInfo::GetItemName()
+template< typename T >
+std::string ADN_Supply_Data::ConvoyInfo< T >::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConvoyInfo::ReadArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::ConvoyInfo::ReadArchive( ADN_XmlInput_Helper& input )
+template< typename T >
+void ADN_Supply_Data::ConvoyInfo< T >::ReadArchive( const std::string& strSection, ADN_XmlInput_Helper& input )
 {
-    input.Section( "Temps" );
+    input.Section( strSection );
     input.ReadAttribute( "nbCamions", nNbrTrucks_ );
-    std::string strTmp;
-    input.Read( strTmp );
-    time_ = strTmp;
-    input.EndSection(); // Temps
+    T::BaseType tmp;
+    input.Read( tmp );
+    value_ = tmp;
+    input.EndSection(); // strSection
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ConvoyInfo::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
-void ADN_Supply_Data::ConvoyInfo::WriteArchive( MT_OutputArchive_ABC& output )
+template< typename T >
+void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& strSection, MT_OutputArchive_ABC& output )
 {
-    output.Section( "Temps" );
+    output.Section( strSection );
     output.WriteAttribute( "nbCamions", nNbrTrucks_.GetData() );
-    output << time_.GetData();
-    output.EndSection(); // Temps
+    output << value_.GetData();
+    output.EndSection(); // strSection
 }
 
 
@@ -103,6 +104,7 @@ ADN_Supply_Data::~ADN_Supply_Data()
     vConvoySetupInfos_    .Reset();
     vConvoyLoadingInfos_  .Reset();
     vConvoyUnloadingInfos_.Reset();
+    vConvoySpeedModificatorInfos_.Reset();
     vVectorWarnings_      .Reset();
 }
 
@@ -126,6 +128,7 @@ void ADN_Supply_Data::Reset()
     vConvoySetupInfos_    .Reset();
     vConvoyLoadingInfos_  .Reset();
     vConvoyUnloadingInfos_.Reset();
+    vConvoySpeedModificatorInfos_.Reset();
     vVectorWarnings_      .Reset();
 }
 
@@ -142,8 +145,8 @@ void ADN_Supply_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "TempsConstitution" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<ConvoyInfo> spNew( new ConvoyInfo() );
-        spNew->ReadArchive( input );
+        std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+        spNew->ReadArchive( "Temps", input );
         vConvoySetupInfos_.AddItem( spNew.release() );
     }
     vConvoySetupInfos_.AddItem( 0 );  // Signals the end of the vector, allows certain parts of the gui to update.
@@ -152,8 +155,8 @@ void ADN_Supply_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "TempsChargement" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<ConvoyInfo> spNew( new ConvoyInfo() );
-        spNew->ReadArchive( input );
+        std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+        spNew->ReadArchive( "Temps", input );
         vConvoyLoadingInfos_.AddItem( spNew.release() );
     }
     vConvoyLoadingInfos_.AddItem( 0 );
@@ -162,12 +165,22 @@ void ADN_Supply_Data::ReadArchive( ADN_XmlInput_Helper& input )
     input.BeginList( "TempsDechargement" );
     while( input.NextListElement() )
     {
-        std::auto_ptr<ConvoyInfo> spNew( new ConvoyInfo() );
-        spNew->ReadArchive( input );
+        std::auto_ptr< ConvoyInfo< ADN_Type_Time > > spNew( new ConvoyInfo< ADN_Type_Time >( "1s" ) );
+        spNew->ReadArchive( "Temps", input );
         vConvoyUnloadingInfos_.AddItem( spNew.release() );
     }
     vConvoyUnloadingInfos_.AddItem( 0 );
     input.EndList(); // TempsDechargement
+
+    input.BeginList( "CoefModificationVitesse" );
+    while( input.NextListElement() )
+    {
+        std::auto_ptr< ConvoyInfo< ADN_Type_Double > > spNew( new ConvoyInfo< ADN_Type_Double >( 1 ) );
+        spNew->ReadArchive( "Coef", input );
+        vConvoySpeedModificatorInfos_.AddItem( spNew.release() );
+    }
+    vConvoySpeedModificatorInfos_.AddItem( 0 );
+    input.EndList(); // CoefModificationVitesse
 
     input.Section( "TypeUnite" );
     std::string strUnit;
@@ -217,21 +230,27 @@ void ADN_Supply_Data::WriteArchive( MT_OutputArchive_ABC& output )
 
     {
         output.BeginList( "TempsConstitution", vConvoySetupInfos_.size() );
-        for( IT_ConvoyInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
-            (*it)->WriteArchive( output );
+        for( IT_ConvoyTimeInfoVector it = vConvoySetupInfos_.begin(); it != vConvoySetupInfos_.end(); ++it )
+            (*it)->WriteArchive( "Temps", output );
         output.EndList(); // TempsConstitution
     }
     {
         output.BeginList( "TempsChargement", vConvoyLoadingInfos_.size() );
-        for( IT_ConvoyInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
-            (*it)->WriteArchive( output );
+        for( IT_ConvoyTimeInfoVector it = vConvoyLoadingInfos_.begin(); it != vConvoyLoadingInfos_.end(); ++it )
+            (*it)->WriteArchive( "Temps", output );
         output.EndList(); // TempsChargement
     }
     {
         output.BeginList( "TempsDechargement", vConvoyUnloadingInfos_.size() );
-        for( IT_ConvoyInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
-            (*it)->WriteArchive( output );
+        for( IT_ConvoyTimeInfoVector it = vConvoyUnloadingInfos_.begin(); it != vConvoyUnloadingInfos_.end(); ++it )
+            (*it)->WriteArchive( "Temps", output );
         output.EndList(); // TempsDechargement
+    }
+    {
+        output.BeginList( "CoefModificationVitesse", vConvoySpeedModificatorInfos_.size() );
+        for( IT_ConvoyDoubleInfoVector it = vConvoySpeedModificatorInfos_.begin(); it != vConvoySpeedModificatorInfos_.end(); ++it )
+            (*it)->WriteArchive( "Coef", output );
+        output.EndList(); // CoefModificationVitesse
     }
 
     if( ptrUnit_.GetData() == 0 )

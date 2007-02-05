@@ -4974,24 +4974,28 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Vector availability warnings</source>
         <translation>Alertes de disponibilité des vecteurs</translation>
     </message>
+    <message>
+        <source>Convoy speed modificators</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksTable</name>
     <message>
         <source>Nbr of trucks</source>
-        <translation>Nbr de camions</translation>
+        <translation type="obsolete">Nbr de camions</translation>
     </message>
     <message>
         <source>Time required (s)</source>
-        <translation>Temps nécéssaire (s)</translation>
+        <translation type="obsolete">Temps nécéssaire (s)</translation>
     </message>
     <message>
         <source>New</source>
-        <translation>Nouveau</translation>
+        <translation type="obsolete">Nouveau</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Supprimer</translation>
+        <translation type="obsolete">Supprimer</translation>
     </message>
 </context>
 <context>

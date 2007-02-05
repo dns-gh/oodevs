@@ -38,3 +38,15 @@ uint PHY_Convoy_ABC::GetUnloadingTime() const
 {
     return (uint)( unloadingTime_( conveyors_.size() ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::ModifySpeed
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+inline
+MT_Float PHY_Convoy_ABC::ModifySpeed( MT_Float rSpeed ) const
+{
+    if( conveyors_.empty() )
+        return rSpeed;
+    return rSpeed * coefSpeedModificator_( conveyors_.size() );
+}

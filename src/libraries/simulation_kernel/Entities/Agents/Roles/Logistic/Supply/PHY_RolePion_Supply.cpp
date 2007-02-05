@@ -337,7 +337,6 @@ void PHY_RolePion_Supply::NotifyComposanteChanged( PHY_ComposantePion& /*composa
     // NOTHING
 }
 
-
 // =============================================================================
 // NETWORK
 // =============================================================================

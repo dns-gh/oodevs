@@ -25,6 +25,7 @@
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::formingTime_;
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::loadingTime_;
       MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::unloadingTime_;
+      MT_InterpolatedFunction< MT_Float > PHY_Convoy_ABC::coefSpeedModificator_;
 const MIL_AgentTypePion*                  PHY_Convoy_ABC::pConvoyAgentType_   = 0;
 const MIL_PionMissionType*                PHY_Convoy_ABC::pConvoyMissionType_ = 0;
 
@@ -48,9 +49,10 @@ void PHY_Convoy_ABC::Initialize( MIL_InputArchive& archive )
     InitializeConvoyUnitType( archive );
     InitializeConvoyMission ( archive );
 
-    InitializeInterpolatedTime( archive, "TempsConstitution", formingTime_   );
-    InitializeInterpolatedTime( archive, "TempsChargement"  , loadingTime_   );
-    InitializeInterpolatedTime( archive, "TempsDechargement", unloadingTime_ );
+    InitializeInterpolatedTime ( archive, "TempsConstitution"      , formingTime_          );
+    InitializeInterpolatedTime ( archive, "TempsChargement"        , loadingTime_          );
+    InitializeInterpolatedTime ( archive, "TempsDechargement"      , unloadingTime_        );
+    InitializeSpeedModificators( archive );
    
     archive.EndSection(); // Convois
     archive.EndSection(); // Ravitaillement
@@ -100,11 +102,11 @@ void PHY_Convoy_ABC::InitializeConvoyMission( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void PHY_Convoy_ABC::InitializeInterpolatedTime( MIL_InputArchive& archive, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data )
 {
-    archive.BeginList( strTagName );
-
     data.AddNewPoint( 0., 0. );
     uint     nMaxNbrCamions         = 0;
     MT_Float rTimeWhenMaxNbrCamions = 0.;
+
+    archive.BeginList( strTagName );
     while( archive.NextListElement() )
     {
         archive.Section( "Temps" );
@@ -121,13 +123,46 @@ void PHY_Convoy_ABC::InitializeInterpolatedTime( MIL_InputArchive& archive, cons
         if( nNbrCamions >= nMaxNbrCamions )
         {
             rTimeWhenMaxNbrCamions = rTime;
-            nMaxNbrCamions = nNbrCamions;
+            nMaxNbrCamions         = nNbrCamions;
         }
         archive.EndSection(); // Temps
     }   
-    data.SetAfterValue( rTimeWhenMaxNbrCamions );
-
     archive.EndList(); // strTagName
+    data.SetAfterValue( rTimeWhenMaxNbrCamions );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Convoy_ABC::InitializeSpeedModificators
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+void PHY_Convoy_ABC::InitializeSpeedModificators( MIL_InputArchive& archive )
+{
+    coefSpeedModificator_.AddNewPoint( 0., 0. );
+    uint     nMaxNbrCamions          = 0;
+    MT_Float rValueWhenMaxNbrCamions = 0.;
+
+    archive.BeginList( "CoefModificationVitesse" );
+    while( archive.NextListElement() )
+    {
+        archive.Section( "Coef" );
+
+        uint     nNbrCamions;
+        MT_Float rValue;
+
+        archive.ReadAttribute( "nbCamions", nNbrCamions, CheckValueGreater( 0  ) );
+        archive.Read         (              rValue      , CheckValueGreater( 0. ) );
+
+        coefSpeedModificator_.AddNewPoint( nNbrCamions, rValue ); 
+
+        if( nNbrCamions >= nMaxNbrCamions )
+        {
+            rValueWhenMaxNbrCamions = rValue;
+            nMaxNbrCamions          = nNbrCamions;
+        }
+        archive.EndSection(); // Temps
+    }   
+    archive.EndList(); // CoefModificationVitesse
+    coefSpeedModificator_.SetAfterValue( rValueWhenMaxNbrCamions );
 }
 
 // -----------------------------------------------------------------------------

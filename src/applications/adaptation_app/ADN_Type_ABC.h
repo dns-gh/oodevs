@@ -28,6 +28,8 @@ class ADN_Type_ABC
     MT_COPYNOTALLOWED( ADN_Type_ABC )
 
 public:
+    typedef typename T BaseType;
+
     //-------------------------------------------------------------------------
     /** @name Constructor-Destructor*/
     //-------------------------------------------------------------------------

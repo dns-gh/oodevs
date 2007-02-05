@@ -20,6 +20,7 @@
 #include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Roles/NBC/PHY_RolePion_NBC.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RolePion_HumanFactors.h"
+#include "Entities/Agents/Roles/Logistic/Supply/PHY_RolePion_Supply.h"
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RolePion_Surrender.h"
@@ -119,6 +120,7 @@ inline
 MT_Float PHY_RoleAction_Moving::ApplySpeedModificators( MT_Float rSpeed ) const
 {
     rSpeed = GetRole< PHY_RolePion_Communications >().ModifySpeed( rSpeed );
+    rSpeed = GetRole< PHY_RolePion_Supply         >().ModifySpeed( rSpeed );
     rSpeed *= rSpeedModificator_;
     return rSpeed;
 }

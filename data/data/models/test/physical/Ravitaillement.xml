@@ -19,6 +19,10 @@
       <Temps nbCamions="100">120s</Temps>
       <Temps nbCamions="5000">300s</Temps>
     </TempsDechargement>
+    <CoefModificationVitesse>
+      <Coef nbCamions="1">1</Coef>
+      <Coef nbCamions="100">1</Coef>
+    </CoefModificationVitesse>      
     <TypeUnite nom="Pion Convoi"/>
     <Mission nom="LOG Convoyer"/>
   </Convois>

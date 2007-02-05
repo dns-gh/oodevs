@@ -52,7 +52,8 @@ public:
     
     //! @name Operations
     //@{
-    bool ReserveTransporters();
+    bool     ReserveTransporters();
+    MT_Float ModifySpeed        ( MT_Float rSpeed ) const;
     //@}                
 
     //! @name Accessors
@@ -94,13 +95,16 @@ private:
     static void InitializeConvoyUnitType( MIL_InputArchive& archive );
     static void InitializeConvoyMission ( MIL_InputArchive& archive );
 
-    static void InitializeInterpolatedTime( MIL_InputArchive& archive, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data );
+    static void InitializeInterpolatedTime ( MIL_InputArchive& archive, const std::string& strTagName, MT_InterpolatedFunction< MT_Float >& data );
+    static void InitializeSpeedModificators( MIL_InputArchive& archive );
     //@}
 
 protected:
     static       MT_InterpolatedFunction< MT_Float > formingTime_;
     static       MT_InterpolatedFunction< MT_Float > loadingTime_;
     static       MT_InterpolatedFunction< MT_Float > unloadingTime_;
+    static       MT_InterpolatedFunction< MT_Float > coefSpeedModificator_;
+
     static const MIL_AgentTypePion*                  pConvoyAgentType_;
     static const MIL_PionMissionType*                pConvoyMissionType_;
 };
