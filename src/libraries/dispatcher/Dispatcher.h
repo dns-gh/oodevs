@@ -44,14 +44,6 @@ public:
     //! @name Operations
     //@{
     void Update();
-
-    // Simulation -> clients
-//    void DispatchToClients( const ASN1T_MsgsInClient& asnMsg );
-//    void DispatchToClients( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
-
-    // Clients -> simulation
-//    void DispatchToSimulation( const ASN1T_MsgsInSim& asnMsg );
-//    void DispatchToSimulation( unsigned int nMsgID, const DIN::DIN_Input& dinMsg );
     //@}
 
     //! @name Accessors
