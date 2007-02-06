@@ -4980,6 +4980,25 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Supply_TrucksDoubleTable</name>
+    <message>
+        <source>Nbr of trucks</source>
+        <translation type="unfinished">Nbr de camions</translation>
+    </message>
+    <message>
+        <source>Speed factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished">Nouveau</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Supply_TrucksTable</name>
     <message>
         <source>Nbr of trucks</source>
@@ -4996,6 +5015,25 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Delete</source>
         <translation type="obsolete">Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Supply_TrucksTimeTable</name>
+    <message>
+        <source>Nbr of trucks</source>
+        <translation type="unfinished">Nbr de camions</translation>
+    </message>
+    <message>
+        <source>Time required (s)</source>
+        <translation type="unfinished">Temps nécéssaire (s)</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished">Nouveau</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Supprimer</translation>
     </message>
 </context>
 <context>
