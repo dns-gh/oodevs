@@ -37,6 +37,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -209,6 +211,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -382,6 +386,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -505,6 +511,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -644,6 +652,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -751,6 +761,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -858,6 +870,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -962,6 +976,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1068,6 +1084,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1174,6 +1192,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1283,6 +1303,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1392,6 +1414,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1497,6 +1521,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1603,6 +1629,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1704,6 +1732,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1807,6 +1837,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -1913,6 +1945,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -2019,6 +2053,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -2122,6 +2158,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -2225,6 +2263,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -2332,6 +2372,8 @@
       <Terrain type="falaise">0</Terrain>
       <Terrain type="voie ferree">2</Terrain>
       <Terrain type="carrefour">0</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">
@@ -2439,6 +2481,8 @@
       <Terrain type="falaise">500</Terrain>
       <Terrain type="voie ferree">500</Terrain>
       <Terrain type="carrefour">500</Terrain>
+      <Terrain type="montagne">0</Terrain>
+      <Terrain type="bord de montagne">0</Terrain>
     </Vitesses>
     <Contenance>
       <Dotation nom="munition">

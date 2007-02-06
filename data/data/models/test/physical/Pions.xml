@@ -89,13 +89,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements/>
@@ -159,13 +153,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements/>
@@ -229,13 +217,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -306,13 +288,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -378,13 +354,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -452,13 +422,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -529,13 +493,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -601,13 +559,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -674,13 +626,7 @@
     <ModeleDecisionnel>Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -755,13 +701,7 @@
     <ModeleDecisionnel>Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Non renseigne"/>
       <Nature type="combat/engineer"/>
     </Nature>
     <Equipements>
@@ -824,13 +764,7 @@
     <ModeleDecisionnel>Test ALAT</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Non renseigne"/>
       <Nature type="combat/engineer"/>
     </Nature>
     <Equipements>
@@ -894,13 +828,7 @@
     <ModeleDecisionnel>NBC Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Non renseigne"/>
       <Nature type="combat/engineer"/>
     </Nature>
     <Equipements>
@@ -963,13 +891,7 @@
     <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Non renseigne"/>
       <Nature type="combat/engineer"/>
     </Nature>
     <Equipements>
@@ -1035,13 +957,7 @@
     <ModeleDecisionnel>RENS Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Non renseigne"/>
       <Nature type="combat/engineer"/>
     </Nature>
     <Equipements>
@@ -1106,17 +1022,11 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
-        <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
+      <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -1178,13 +1088,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1250,13 +1154,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements/>
@@ -1320,13 +1218,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1393,13 +1285,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1465,13 +1351,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1538,13 +1418,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1610,13 +1484,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements/>
@@ -1680,13 +1548,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1752,13 +1614,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1825,13 +1681,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1897,13 +1747,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -1969,13 +1813,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -2043,13 +1881,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -2115,17 +1947,11 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
-        <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
+      <Equipement equipage="1" majeur="true" nom="CompTest">1</Equipement>
     </Equipements>
     <RepartitionDuCommandement>
       <Officier>1</Officier>
@@ -2187,13 +2013,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -2268,13 +2088,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>
@@ -2350,13 +2164,7 @@
     <ModeleDecisionnel>Test LOG</ModeleDecisionnel>
     <Nature>
       <Niveau type="oo"/>
-      <Arme type="transport"/>
-      <Specialisation type="terrestre"/>
-      <Qualificatif type="none"/>
-      <Categorie type="soutien logistique"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="Blinde"/>
-      <CapaciteMission type="Non renseigne"/>
       <Nature type="combat support service/transportation"/>
     </Nature>
     <Equipements/>
@@ -2429,13 +2237,7 @@
     <ModeleDecisionnel>REFUGIE Test</ModeleDecisionnel>
     <Nature>
       <Niveau type="ooo"/>
-      <Arme type="genie"/>
-      <Specialisation type="none"/>
-      <Qualificatif type="none"/>
-      <Categorie type="combat"/>
-      <TypeMobilite type="none"/>
       <QualificatifAtlas type="None"/>
-      <CapaciteMission type="Genie, combat"/>
       <Nature type="combat/engineer/combat"/>
     </Nature>
     <Equipements>

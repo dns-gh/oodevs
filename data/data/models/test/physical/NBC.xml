@@ -10,11 +10,11 @@
 
   <AgentsNBC>
     <AgentNBC nom="Air">
-      <MosID>8</MosID>
+      <MosID>1</MosID>
       <Liquide/>
     </AgentNBC>
     <AgentNBC nom="Gaz sarin">
-      <MosID>3</MosID>
+      <MosID>2</MosID>
       <Liquide>
         <Intoxication>
           <Humains_NonBlesse>0.2</Humains_NonBlesse>
@@ -41,7 +41,7 @@
       </Gaz>
     </AgentNBC>
     <AgentNBC nom="H5N1">
-      <MosID>2</MosID>
+      <MosID>3</MosID>
       <Liquide>
         <Intoxication>
           <Humains_NonBlesse>0.3</Humains_NonBlesse>
@@ -136,7 +136,7 @@
       </Liquide>
     </AgentNBC>
     <AgentNBC nom="VX">
-      <MosID>1</MosID>
+      <MosID>7</MosID>
       <Liquide>
         <Intoxication>
           <Humains_NonBlesse>0.5</Humains_NonBlesse>
@@ -162,7 +162,7 @@
       </Gaz>
     </AgentNBC>
     <AgentNBC nom="Virus ebola">
-      <MosID>7</MosID>
+      <MosID>8</MosID>
       <Liquide>
         <Intoxication>
           <Humains_NonBlesse>0.3</Humains_NonBlesse>
