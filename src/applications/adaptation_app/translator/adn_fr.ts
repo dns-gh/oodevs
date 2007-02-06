@@ -1147,6 +1147,18 @@
         <source>Unload time</source>
         <translation>Temps déchargement</translation>
     </message>
+    <message>
+        <source>Transports</source>
+        <translation>Transports</translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation>NBC</translation>
+    </message>
+    <message>
+        <source>shock</source>
+        <translation>Réac mental</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>
@@ -3358,15 +3370,15 @@ du tireur</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unité</translation>
     </message>
     <message>
         <source>Automate</source>
-        <translation type="unfinished"></translation>
+        <translation>Automate</translation>
     </message>
     <message>
         <source>Population</source>
-        <translation type="unfinished">Population</translation>
+        <translation>Population</translation>
     </message>
 </context>
 <context>
@@ -3571,11 +3583,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Physical model file (physical.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de modèle physique (physical.xml)</translation>
     </message>
     <message>
         <source>Open physical model project</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir modèle physique</translation>
     </message>
 </context>
 <context>
@@ -3632,14 +3644,14 @@ du tireur</translation>
     <name>ADN_Missions_Data</name>
     <message>
         <source>Mission &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>La mission &apos;%1&apos; n&apos;existe pas.</translation>
     </message>
 </context>
 <context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Special missions</source>
-        <translation type="unfinished">Missions spéciales</translation>
+        <translation>Missions spéciales</translation>
     </message>
     <message>
         <source>&apos;Surrender&apos; mission</source>
@@ -3651,51 +3663,51 @@ du tireur</translation>
     </message>
     <message>
         <source>Unit missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Missions pions</translation>
     </message>
     <message>
         <source>Automat missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Missions automates</translation>
     </message>
     <message>
         <source>Population missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Missions populations</translation>
     </message>
     <message>
         <source>Mission</source>
-        <translation type="unfinished">Mission</translation>
+        <translation>Mission</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished">Paramètes</translation>
+        <translation>Paramètes</translation>
     </message>
     <message>
         <source>Enumeration values</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeurs d&apos;énumérés</translation>
     </message>
     <message>
         <source>Surrender mission</source>
-        <translation type="unfinished"></translation>
+        <translation>Mission &apos;Se Rendre&apos;</translation>
     </message>
     <message>
         <source>Go to refugee camp mission</source>
-        <translation type="unfinished"></translation>
+        <translation>Mission &apos;Aller Vers Camp de Refugiés&apos;</translation>
     </message>
     <message>
         <source>Fragmentary orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordres de conduite</translation>
     </message>
     <message>
         <source>Available for all missions</source>
-        <translation type="unfinished"></translation>
+        <translation>Disponible pour toutes les missions</translation>
     </message>
     <message>
         <source>Available without mission</source>
-        <translation type="unfinished"></translation>
+        <translation>Disponible sans mission</translation>
     </message>
 </context>
 <context>
@@ -3721,11 +3733,11 @@ du tireur</translation>
     <name>ADN_Models_Data::MissionInfos</name>
     <message>
         <source>Data error</source>
-        <translation type="unfinished">Erreur dans les données</translation>
+        <translation>Erreur dans les données</translation>
     </message>
     <message>
         <source>Invalid mission: </source>
-        <translation type="unfinished"></translation>
+        <translation>Mission invalide :</translation>
     </message>
 </context>
 <context>
@@ -4941,7 +4953,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Mission &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>La mission &apos;%1&apos; n&apos;existe pas.</translation>
     </message>
 </context>
 <context>
@@ -4976,26 +4988,26 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Convoy speed modificators</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificateurs de vitesse convois</translation>
     </message>
 </context>
 <context>
     <name>ADN_Supply_TrucksDoubleTable</name>
     <message>
         <source>Nbr of trucks</source>
-        <translation type="unfinished">Nbr de camions</translation>
+        <translation>Nbr de camions</translation>
     </message>
     <message>
         <source>Speed factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur de vitesse</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">Nouveau</translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
@@ -5021,19 +5033,19 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <name>ADN_Supply_TrucksTimeTable</name>
     <message>
         <source>Nbr of trucks</source>
-        <translation type="unfinished">Nbr de camions</translation>
+        <translation>Nbr de camions</translation>
     </message>
     <message>
         <source>Time required (s)</source>
-        <translation type="unfinished">Temps nécéssaire (s)</translation>
+        <translation>Temps nécéssaire (s)</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">Nouveau</translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
@@ -6200,7 +6212,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Automate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automate</translation>
     </message>
     <message>
         <source>AutomateList</source>
@@ -6890,7 +6902,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Comptes-rendus</translation>
     </message>
 </context>
 <context>

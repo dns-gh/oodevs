@@ -356,7 +356,7 @@ PHY_MedicalHumanState* MIL_AutomateLOG::MedicalHandleHumanForEvacuation( MIL_Age
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         PHY_RolePion_Medical& roleMedical = (**itPion).GetRole< PHY_RolePion_Medical >();
-        const int nNewScore = roleMedical.GetAvailabilityScoreForEvacuation();
+        const int nNewScore = roleMedical.GetAvailabilityScoreForEvacuation( human );
         if( nNewScore > nScore )
         {
             nScore               = nNewScore;
@@ -378,7 +378,7 @@ bool MIL_AutomateLOG::MedicalHandleHumanForCollection( PHY_MedicalHumanState& hu
     for( CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
     {
         PHY_RolePion_Medical& roleMedical = (**itPion).GetRole< PHY_RolePion_Medical >();
-        const int nNewScore = roleMedical.GetAvailabilityScoreForCollection();
+        const int nNewScore = roleMedical.GetAvailabilityScoreForCollection( humanState );
         if( nNewScore > nScore )
         {
             nScore               = nNewScore;

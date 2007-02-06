@@ -98,6 +98,9 @@ bool PHY_MedicalCollectionAmbulance::RegisterHuman( PHY_MedicalCollectionConsign
     assert( std::find( consigns_.begin(), consigns_.end(), &consign ) == consigns_.end() );
     assert( pCompAmbulance_ );
 
+    if( !pCompAmbulance_->GetType().CanCollectCasualty( consign.GetHumanState().GetHuman() ) )
+        return false;
+
     if( consigns_.size() >= pCompAmbulance_->GetType().GetAmbulanceCollectionCapacity() )
         return false;
 

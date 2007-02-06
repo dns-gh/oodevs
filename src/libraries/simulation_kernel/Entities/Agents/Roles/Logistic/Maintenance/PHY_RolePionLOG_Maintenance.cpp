@@ -520,7 +520,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
         return std::numeric_limits< int >::min();
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
+    PHY_ComposanteUsePredicate1< PHY_ComposanteTypePion > predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul, composante.GetType() );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
 
     uint nNbrHaulersAvailable = 0;
@@ -598,7 +598,7 @@ void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
 // Name: PHY_RolePionLOG_Maintenance::UpdateLogistic
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::UpdateLogistic( bool bIsDead )
+void PHY_RolePionLOG_Maintenance::UpdateLogistic( bool /*bIsDead*/ )
 {
     for ( IT_MaintenanceConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( IT_MaintenanceConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
@@ -701,15 +701,19 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
         asn().priorites_tactiques.elem = pAsnPriorities;
     }
    
-    PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate1 );   
-    SendComposanteUse( composanteUse, asn().disponibilites_remorqueurs, 0 );
+    {
+        PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+        PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
+        GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+        SendComposanteUse( composanteUse, asn().disponibilites_remorqueurs, 0 );
+    }
 
-    composanteUse.clear();
-    PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
-    GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate2 );   
-    SendComposanteUse( composanteUse, asn().disponibilites_reparateurs, pWorkRate_ );
+    {
+        PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
+        PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanRepair, &PHY_ComposanteTypePion::CanRepair );
+        GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
+        SendComposanteUse( composanteUse, asn().disponibilites_reparateurs, pWorkRate_ );
+    }
 
     asn.Send();
 

@@ -147,7 +147,9 @@ public:
     //! @name Logistic - medical
     //@{
     bool     CanEvacuateCasualties                       () const;
+    bool     CanEvacuateCasualty                         ( const PHY_Human& human ) const;
     bool     CanCollectCasualties                        () const;
+    bool     CanCollectCasualty                          ( const PHY_Human& human ) const;
     bool     CanHealHuman                                ( const PHY_Human& human ) const;
     bool     CanHealHumans                               () const;
     bool     CanDiagnoseHumans                           () const;
@@ -215,7 +217,7 @@ private:
     typedef std::set< sNTICapability >         T_NTICapabilitySet;
     typedef T_NTICapabilitySet::const_iterator CIT_NTICapabilitySet;
 
-    typedef std::vector< bool > T_WoundHealingCapabilityVector;
+    typedef std::vector< bool > T_WoundCapabilityVector;
 
     struct sBreakdownTypeProbability
     {
@@ -244,6 +246,7 @@ private:
     void InitializeBreakdownTypes         ( MIL_InputArchive& archive );
     void InitializeRandomBreakdownTypes   ( MIL_InputArchive& archive );
     void InitializeAttritionBreakdownTypes( MIL_InputArchive& archive );
+    bool ReadWoundCapabilities            ( MIL_InputArchive& archive, T_WoundCapabilityVector& container ) const;
     //@}
     
     //! @name Tools
@@ -283,24 +286,30 @@ private:
     MT_Float            rHaulerUnloadingTime_;
     T_NTICapabilitySet  ntiCapabilities_;
 
-    // Logistic : medical
-    uint                            nAmbulanceCollectionCapacity_;
-    MT_Float                        rNbrHumansLoadedForCollectionPerTimeStep_;
-    MT_Float                        rNbrHumansUnloadedForCollectionPerTimeStep_;
-    uint                            nAmbulanceEvacuationCapacity_;
-    MT_Float                        rNbrHumansLoadedForEvacuationPerTimeStep_;
-    MT_Float                        rNbrHumansUnloadedForEvacuationPerTimeStep_;
-    T_WoundHealingCapabilityVector  woundHealingCapabilities_;
-    bool                            bCanHealWounds_;
-    bool                            bCanHealMentalDiseases_;
-    bool                            bCanHealContaminated_;
-    bool                            bCanSortHumans_;
-    bool                            bCanDiagnoseHumans_;
+    // Logistic : medical $$$$$A SPLITTER
+    T_WoundCapabilityVector woundCollectionCapabilities_;
+    bool                    bCanCollectMentalDiseases_;
+    bool                    bCanCollectContaminated_;
+    uint                    nAmbulanceCollectionCapacity_;
+    MT_Float                rNbrHumansLoadedForCollectionPerTimeStep_;
+    MT_Float                rNbrHumansUnloadedForCollectionPerTimeStep_;
+    T_WoundCapabilityVector woundEvacuationCapabilities_;
+    bool                    bCanEvacuateMentalDiseases_;
+    bool                    bCanEvacuateContaminated_;
+    uint                    nAmbulanceEvacuationCapacity_;
+    MT_Float                rNbrHumansLoadedForEvacuationPerTimeStep_;
+    MT_Float                rNbrHumansUnloadedForEvacuationPerTimeStep_;
+    T_WoundCapabilityVector woundHealingCapabilities_;
+    bool                    bCanHealWounds_;
+    bool                    bCanHealMentalDiseases_;
+    bool                    bCanHealContaminated_;
+    bool                    bCanSortHumans_;
+    bool                    bCanDiagnoseHumans_;
 
     // Logistic : supply
-    const PHY_DotationNature*       pStockTransporterNature_;
-          MT_Float                  rStockTransporterWeightCapacity_;
-          MT_Float                  rStockTransporterVolumeCapacity_;
+    const PHY_DotationNature* pStockTransporterNature_;
+          MT_Float            rStockTransporterWeightCapacity_;
+          MT_Float            rStockTransporterVolumeCapacity_;
 
 private:
     static T_ComposanteTypeMap composantesTypes_;

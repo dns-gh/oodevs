@@ -317,7 +317,7 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
             return &ambulance;
     }
 
-    PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanEvacuateCasualties );
+    PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
     PHY_ComposantePion* pCompAmbulance = GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
     if( !pCompAmbulance )
         return 0;
@@ -342,7 +342,7 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
             return &ambulance;
     }
 
-    PHY_ComposantePredicate predicate( &PHY_ComposantePion::CanCollectCasualties );
+    PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
     PHY_ComposantePion* pCompAmbulance = GetRole< PHY_RolePion_Composantes >().GetComposante( predicate );
     if( !pCompAmbulance )
         return 0;
@@ -388,9 +388,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const
 // Name: PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance() const
+bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const PHY_Human& human ) const
 {
-    PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanEvacuateCasualties );
+    PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
@@ -398,9 +398,9 @@ bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance() const
 // Name: PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance() const
+bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& human ) const
 {
-    PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanCollectCasualties );    
+    PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
     return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
@@ -411,16 +411,6 @@ bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance() const
 bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 {
     PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanSortHumans );        
-    return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Medical::HasUsableDoctorForHealing
-// Created: NLD 2005-01-13
-// -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing() const
-{
-    PHY_ComposanteTypePredicate predicate( &PHY_ComposanteTypePion::CanHealHumans );            
     return GetRole< PHY_RolePion_Composantes >().HasUsableComposante( predicate );
 }
 
@@ -566,7 +556,7 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
 // -----------------------------------------------------------------------------
 PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_AgentPion& pion, PHY_Human& human )
 {
-    if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance() )
+    if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return 0;
 
     PHY_MedicalHumanState* pHumanState = new PHY_MedicalHumanState( pion, human );
@@ -579,13 +569,13 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_Ag
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation() const
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const PHY_Human& human ) const
 {
-    if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance() )
+    if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return std::numeric_limits< int >::min();
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
+    PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );
 
     uint nNbrAvailableAllowedToWork = 0;
@@ -601,7 +591,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Medical::HandleHumanForCollection( PHY_MedicalHumanState& humanState )
 {
-    if( !bSystemEnabled_ || !HasUsableCollectionAmbulance() )
+    if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return false;
 
     PHY_MedicalCollectionConsign* pConsign = new PHY_MedicalCollectionConsign( *this, humanState );
@@ -613,13 +603,13 @@ bool PHY_RolePionLOG_Medical::HandleHumanForCollection( PHY_MedicalHumanState& h
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection() const
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_MedicalHumanState& humanState ) const
 {
-    if( !bSystemEnabled_ || !HasUsableCollectionAmbulance() )
+    if( !bSystemEnabled_ || !HasUsableCollectionAmbulance( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
 
     PHY_RolePion_Composantes::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
+    PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
     GetRole< PHY_RolePion_Composantes >().GetComposantesUse( composanteUse, predicate );   
 
     uint nNbrAvailableAllowedToWork = 0;
@@ -683,7 +673,7 @@ bool PHY_RolePionLOG_Medical::HandleHumanForHealing( PHY_MedicalHumanState& huma
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing
 // Created: NLD 2005-11-18
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanState& humanState )
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHumanState& humanState )
 {
     if( !bSystemEnabled_ || !bHealingFunctionEnabled_ || !HasUsableDoctorForHealing( humanState.GetHuman() ) )
         return std::numeric_limits< int >::min();
@@ -715,7 +705,7 @@ void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 // Name: PHY_RolePionLOG_Medical::UpdateLogistic
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::UpdateLogistic( bool bIsDead )
+void PHY_RolePionLOG_Medical::UpdateLogistic( bool /*bIsDead*/ )
 {
     for( IT_EvacuationAmbulancesMMap itEvacuationAmbulance = evacuationAmbulances_.begin(); itEvacuationAmbulance != evacuationAmbulances_.end(); )
     {
@@ -741,7 +731,7 @@ void PHY_RolePionLOG_Medical::UpdateLogistic( bool bIsDead )
             ++itCollectionAmbulance;
     }
 
-    for ( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+    for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
         for ( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); )
             if( (**itConsign).Update() )
             {

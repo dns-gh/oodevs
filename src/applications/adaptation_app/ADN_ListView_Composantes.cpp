@@ -92,14 +92,25 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eAttritionBreakdowns]->Connect( &pInfos->attritionBreakdowns_.vBreakdowns_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRandomBreakdowns]->Connect( &pInfos->randomBreakdowns_.vBreakdowns_, bConnect );
 
+    vItemConnectors_[ADN_Composantes_GUI::eHasAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulance_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.rCapacity_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.loadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.unloadTimePerPerson_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulance_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eAmbulanceTransportNBC]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.bTransportNBC_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eAmbulanceTransportShock]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.bTransportShock_, bConnect );
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+        vItemConnectors_[ADN_Composantes_GUI::eAmbulanceTransportSkills + n]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceInfos_.transportSkills_[n], bConnect );
+
+    vItemConnectors_[ADN_Composantes_GUI::eHasRAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulanceReleve_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceCapacity]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.rCapacity_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceLoadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.loadTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceUnloadTime]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.unloadTimePerPerson_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eHasRAmbulance]->Connect( &pInfos->logInfos_.healthInfos_.bIsAmbulanceReleve_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceTransportNBC]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.bTransportNBC_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceTransportShock]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.bTransportShock_, bConnect );
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+        vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceTransportSkills + n]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.transportSkills_[n], bConnect );
+
+
     vItemConnectors_[ADN_Composantes_GUI::eIsDoctor]->Connect( &pInfos->logInfos_.healthInfos_.bIsDoctor_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsSortingDoctor]->Connect( &pInfos->logInfos_.healthInfos_.bIsSortingDoctor_, bConnect );
     for( int n = 0; n < eNbrDoctorSkills; ++n )

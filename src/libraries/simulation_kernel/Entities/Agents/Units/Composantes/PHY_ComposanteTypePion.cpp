@@ -128,9 +128,15 @@ PHY_ComposanteTypePion::PHY_ComposanteTypePion( const std::string& strName, MIL_
     , rHaulerWeightCapacity_                     ( 0. )
     , rHaulerLoadingTime_                        ( 0. )
     , rHaulerUnloadingTime_                      ( 0. )
+    , woundCollectionCapabilities_               ( PHY_HumanWound::GetHumanWounds().size(), false )
+    , bCanCollectMentalDiseases_                 ( false )
+    , bCanCollectContaminated_                   ( false )
     , nAmbulanceCollectionCapacity_              ( 0 )
     , rNbrHumansLoadedForCollectionPerTimeStep_  ( 0. )
     , rNbrHumansUnloadedForCollectionPerTimeStep_( 0. )
+    , woundEvacuationCapabilities_               ( PHY_HumanWound::GetHumanWounds().size(), false )
+    , bCanEvacuateMentalDiseases_                ( false )
+    , bCanEvacuateContaminated_                  ( false )
     , nAmbulanceEvacuationCapacity_              ( 0 )
     , rNbrHumansLoadedForEvacuationPerTimeStep_  ( 0. )
     , rNbrHumansUnloadedForEvacuationPerTimeStep_( 0. )
@@ -537,9 +543,30 @@ void PHY_ComposanteTypePion::InitializeLogisticMaintenance( MIL_InputArchive& ar
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::ReadWoundCapabilities
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::ReadWoundCapabilities( MIL_InputArchive& archive, T_WoundCapabilityVector& container ) const
+{
+    bool bHasCapability = false;
+    const PHY_HumanWound::T_HumanWoundMap& wounds = PHY_HumanWound::GetHumanWounds();
+    for( PHY_HumanWound::CIT_HumanWoundMap itWound = wounds.begin(); itWound != wounds.end(); ++itWound )
+    {
+        if( archive.Section( itWound->second->GetName(), MIL_InputArchive::eNothing ) )
+        {
+            bHasCapability = true;
+            container[ itWound->second->GetID() ] = true;                    
+            archive.EndSection();
+        }
+    }
+    return bHasCapability;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::InitializeLogisticMedical
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
+//$$$ A splitter
 void PHY_ComposanteTypePion::InitializeLogisticMedical( MIL_InputArchive& archive )
 {
     if( !archive.Section( "Sante", MIL_InputArchive::eNothing ) )
@@ -566,23 +593,29 @@ void PHY_ComposanteTypePion::InitializeLogisticMedical( MIL_InputArchive& archiv
         }
         if( archive.Section( "SoinBlessures", MIL_InputArchive::eNothing  ) )
         {
-            const PHY_HumanWound::T_HumanWoundMap& wounds = PHY_HumanWound::GetHumanWounds();
-            for( PHY_HumanWound::CIT_HumanWoundMap itWound = wounds.begin(); itWound != wounds.end(); ++itWound )
-            {
-                if( archive.Section( itWound->second->GetName(), MIL_InputArchive::eNothing ) )
-                {
-                    bCanHealWounds_ = true;
-                    woundHealingCapabilities_[ itWound->second->GetID() ] = true;                    
-                    archive.EndSection();
-                }
-            }
-            archive.EndSection(); // MedecinBlessures
+            bCanHealWounds_ = ReadWoundCapabilities( archive, woundHealingCapabilities_ );
+            archive.EndSection(); // SoinBlessures
         }       
         archive.EndSection(); // Medecin
     }
 
     if( archive.Section( "AmbulanceRamassage", MIL_InputArchive::eNothing ) )
     {
+        archive.Section( "TransportBlessures" );
+        ReadWoundCapabilities( archive, woundCollectionCapabilities_ );
+        archive.EndSection(); // TransportBlessures
+
+        if( archive.Section( "TransportNBC", MIL_InputArchive::eNothing  ) )
+        {
+            bCanCollectContaminated_ = true;
+            archive.EndSection(); // MedecinNBC
+        }
+        if( archive.Section( "TransportReacMental", MIL_InputArchive::eNothing  ) )
+        {
+            bCanCollectMentalDiseases_ = true;
+            archive.EndSection(); // MedecinReacMental
+        }
+
         archive.ReadField    ( "Capacite"                  , nAmbulanceCollectionCapacity_              , CheckValueGreater( 0  ) );
         archive.ReadTimeField( "TempsChargementParHumain"  , rNbrHumansLoadedForCollectionPerTimeStep_  , CheckValueGreater( 0. ) );
         archive.ReadTimeField( "TempsDechargementParHumain", rNbrHumansUnloadedForCollectionPerTimeStep_, CheckValueGreater( 0. ) );
@@ -595,6 +628,21 @@ void PHY_ComposanteTypePion::InitializeLogisticMedical( MIL_InputArchive& archiv
 
     if( archive.Section( "AmbulanceReleve", MIL_InputArchive::eNothing ) )
     {
+        archive.Section( "TransportBlessures" );
+        ReadWoundCapabilities( archive, woundEvacuationCapabilities_ );
+        archive.EndSection(); // TransportBlessures
+
+        if( archive.Section( "TransportNBC", MIL_InputArchive::eNothing  ) )
+        {
+            bCanEvacuateContaminated_ = true;
+            archive.EndSection(); // MedecinNBC
+        }
+        if( archive.Section( "TransportReacMental", MIL_InputArchive::eNothing  ) )
+        {
+            bCanEvacuateMentalDiseases_ = true;
+            archive.EndSection(); // MedecinReacMental
+        }
+
         archive.ReadField    ( "Capacite"                  , nAmbulanceEvacuationCapacity_              , CheckValueGreater( 0  ) );
         archive.ReadTimeField( "TempsChargementParHumain"  , rNbrHumansLoadedForEvacuationPerTimeStep_  , CheckValueGreater( 0. ) );
         archive.ReadTimeField( "TempsDechargementParHumain", rNbrHumansUnloadedForEvacuationPerTimeStep_, CheckValueGreater( 0. ) );
@@ -990,6 +1038,50 @@ bool PHY_ComposanteTypePion::CanRepair( const PHY_Breakdown& breakdown ) const
 bool PHY_ComposanteTypePion::CanHaul( const PHY_ComposanteTypePion& type ) const
 {
     return ( rHaulerWeightCapacity_ - type.GetWeight() ) >= 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanEvacuateCasualty
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanEvacuateCasualty( const PHY_Human& human ) const
+{
+    if( !CanEvacuateCasualties() )
+        return false;
+
+    if( human.IsContaminated() )
+        return bCanEvacuateContaminated_;
+
+    if( human.IsWounded() )
+        return woundEvacuationCapabilities_[ human.GetWound().GetID() ];
+
+    if( human.IsMentalDiseased() )
+        return bCanEvacuateMentalDiseases_;
+
+    assert( false );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanCollectCasualty
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanCollectCasualty( const PHY_Human& human ) const
+{
+    if( !CanCollectCasualties() )
+        return false;
+
+    if( human.IsContaminated() )
+        return bCanCollectContaminated_;
+
+    if( human.IsWounded() )
+        return woundCollectionCapabilities_[ human.GetWound().GetID() ];
+
+    if( human.IsMentalDiseased() )
+        return bCanCollectMentalDiseases_;
+
+    assert( false );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

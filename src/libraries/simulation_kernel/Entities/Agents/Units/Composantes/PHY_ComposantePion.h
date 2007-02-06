@@ -98,7 +98,9 @@ public:
     PHY_MedicalHumanState* NotifyHumanWaitingForMedical    ( PHY_Human& human ) const;
     void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) const;
     bool                   CanEvacuateCasualties           () const;
+    bool                   CanEvacuateCasualty             ( const PHY_Human& human ) const;
     bool                   CanCollectCasualties            () const;
+    bool                   CanCollectCasualty              ( const PHY_Human& human ) const;
     bool                   CanDiagnoseHumans               () const;
     bool                   CanSortHumans                   () const;
     bool                   CanHealHuman                    ( const PHY_Human& human ) const;

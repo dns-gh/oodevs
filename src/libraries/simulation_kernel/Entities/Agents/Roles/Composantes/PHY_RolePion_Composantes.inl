@@ -56,6 +56,7 @@ inline PHY_ComposantePion* PHY_RolePion_Composantes::GetComposante( T& functor )
 template< typename T > 
 inline bool PHY_RolePion_Composantes::HasUsableComposante( T& functor ) const
 {
+    // ne teste pas l'état logistique (= potentiellement utilisable)
     for( CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         if( functor( ( **it).GetType() ) && (**it).GetState().IsUsable() )

@@ -91,6 +91,9 @@ bool PHY_MedicalEvacuationAmbulance::RegisterHuman( PHY_MedicalEvacuationConsign
     assert( pCompAmbulance_ );
     assert( std::find( consigns_.begin(), consigns_.end(), &consign ) == consigns_.end() );
 
+    if( !pCompAmbulance_->GetType().CanEvacuateCasualty( consign.GetHumanState().GetHuman() ) )
+        return false;
+
     if( consigns_.size() >= pCompAmbulance_->GetType().GetAmbulanceEvacuationCapacity() )
         return false;
 
@@ -266,4 +269,3 @@ bool PHY_MedicalEvacuationAmbulance::Update()
     }
     return nState_ == eFinished;    
 }
-

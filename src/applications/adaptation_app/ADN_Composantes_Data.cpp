@@ -29,10 +29,15 @@
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::AmbulanceInfos::AmbulanceInfos()
 : ADN_DataTreeNode_ABC  ()
+, transportSkills_      ()
+, bTransportNBC_        ( false )
+, bTransportShock_      ( false )
 , rCapacity_            ( 0 )
 , loadTimePerPerson_    ( "0s" )
 , unloadTimePerPerson_  ( "0s" )
 {
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+        transportSkills_[n] = false;
 }
 
 
@@ -65,8 +70,11 @@ void ADN_Composantes_Data::AmbulanceInfos::CopyFrom( AmbulanceInfos& src )
     rCapacity_ = src.rCapacity_.GetData();
     loadTimePerPerson_ = src.loadTimePerPerson_.GetData();
     unloadTimePerPerson_ = src.unloadTimePerPerson_.GetData();
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+        transportSkills_[n] = src.transportSkills_[n].GetData();
+    bTransportNBC_       = src.bTransportNBC_.GetData();
+    bTransportShock_     = src.bTransportShock_.GetData();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AmbulanceInfos::ReadArchive
@@ -77,6 +85,29 @@ void ADN_Composantes_Data::AmbulanceInfos::ReadArchive( ADN_XmlInput_Helper& inp
     input.ReadField( "Capacite", rCapacity_ );
     input.ReadField( "TempsChargementParHumain", loadTimePerPerson_ );
     input.ReadField( "TempsDechargementParHumain", unloadTimePerPerson_ );
+
+    if( input.Section( "TransportBlessures", ADN_XmlInput_Helper::eNothing ) )
+    {
+        for( int n = 0; n < eNbrDoctorSkills; ++n )
+        {
+            if( input.Section( ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ), ADN_XmlInput_Helper::eNothing ) )
+            {
+                transportSkills_[n] = true;
+                input.EndSection();
+            }
+        }
+        input.EndSection(); // TransportBlessures
+    }
+    if( input.Section( "TransportNBC", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bTransportNBC_ = true;
+        input.EndSection(); // TransportNBC
+    }
+    if( input.Section( "TransportReacMental", ADN_XmlInput_Helper::eNothing ) )
+    {
+        bTransportShock_ = true;
+        input.EndSection(); // TransportReacMental
+    }
 }
 
 
@@ -89,6 +120,29 @@ void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( MT_OutputArchive_ABC& o
     output.WriteField( "Capacite", rCapacity_.GetData() );
     output.WriteField( "TempsChargementParHumain", loadTimePerPerson_.GetData() );
     output.WriteField( "TempsDechargementParHumain", unloadTimePerPerson_.GetData() );
+
+    output.Section( "TransportBlessures" );
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+    {
+        if( transportSkills_[n].GetData() )
+        {
+            output.Section( ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ) );
+            output.EndSection();
+        }
+    }
+    output.EndSection(); // SoinBlessures
+    
+    if( bTransportNBC_.GetData() )
+    {
+        output.Section( "TransportNBC" );
+        output.EndSection(); // SoinNBC
+    }
+    if( bTransportShock_.GetData() )
+    {
+        output.Section( "TransportReacMental" );
+        output.EndSection(); // SoinReacMental
+    }
+
 }
 
 
@@ -206,7 +260,6 @@ void ADN_Composantes_Data::LogHealthInfos::ReadArchive( ADN_XmlInput_Helper& inp
         input.EndSection(); // Medecin
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LogHealthInfos::WriteArchive

@@ -54,7 +54,6 @@ public:
     void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
-    
     //! @name Operations
     //@{
     void Heal                 (); // 'Magic' Heal

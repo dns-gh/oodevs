@@ -34,7 +34,7 @@ PHY_MedicalHumanState* PHY_RolePion_Medical::HandleHumanForEvacuation( MIL_Agent
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
 inline
-int PHY_RolePion_Medical::GetAvailabilityScoreForEvacuation() const
+int PHY_RolePion_Medical::GetAvailabilityScoreForEvacuation( const PHY_Human& /*human*/ ) const
 {
     return std::numeric_limits< int >::min();
 }
@@ -54,7 +54,7 @@ bool PHY_RolePion_Medical::HandleHumanForCollection( PHY_MedicalHumanState& /*hu
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
 inline
-int PHY_RolePion_Medical::GetAvailabilityScoreForCollection() const
+int PHY_RolePion_Medical::GetAvailabilityScoreForCollection( const PHY_MedicalHumanState& /*humanState*/ ) const
 {
     return std::numeric_limits< int >::min();
 }
@@ -66,7 +66,7 @@ int PHY_RolePion_Medical::GetAvailabilityScoreForCollection() const
 inline
 void PHY_RolePion_Medical::HandleHumanForSorting( const PHY_MedicalCollectionAmbulance& /*ambulance*/, PHY_MedicalHumanState& /*humanState*/ )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,8 @@ int PHY_RolePion_Medical::GetAvailabilityScoreForSorting( const PHY_MedicalColle
 // -----------------------------------------------------------------------------
 inline
 void PHY_RolePion_Medical::ReserveForSorting( const PHY_MedicalCollectionAmbulance& /*ambulance*/ )
-{    
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +113,7 @@ bool PHY_RolePion_Medical::HandleHumanForHealing( PHY_MedicalHumanState& /*human
 // Created: NLD 2005-11-18
 // -----------------------------------------------------------------------------
 inline
-int PHY_RolePion_Medical::GetAvailabilityScoreForHealing( PHY_MedicalHumanState& /*humanState*/ )
+int PHY_RolePion_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHumanState& /*humanState*/ )
 {
     return std::numeric_limits< int >::min();
 }

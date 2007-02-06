@@ -133,6 +133,16 @@ bool PHY_ComposantePion::CanEvacuateCasualties() const
     assert( pType_ );
     return pState_->IsUsable() && CanBeUsed() && pType_->CanEvacuateCasualties();
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanEvacuateCasualty
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposantePion::CanEvacuateCasualty( const PHY_Human& human ) const
+{
+    assert( pType_ );
+    return pState_->IsUsable() && CanBeUsed() && pType_->CanEvacuateCasualty( human );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanCollectCasualties
@@ -143,6 +153,16 @@ bool PHY_ComposantePion::CanCollectCasualties() const
 {
     assert( pType_ );
     return pState_->IsUsable() && CanBeUsed() && pType_->CanCollectCasualties();
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanCollectCasualty
+// Created: NLD 2007-02-05
+// -----------------------------------------------------------------------------
+inline
+bool PHY_ComposantePion::CanCollectCasualty( const PHY_Human& human ) const
+{
+    assert( pType_ );
+    return pState_->IsUsable() && CanBeUsed() && pType_->CanCollectCasualty( human );
 }
 
 // -----------------------------------------------------------------------------

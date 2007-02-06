@@ -311,16 +311,29 @@ QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& 
 QWidget* ADN_Composantes_GUI::BuildAmbulance( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex )
 {
     ADN_GuiBuilder builder;
-    ADN_GroupBox* pAmbulanceGroup = new ADN_GroupBox( 3, Qt::Horizontal, szName, pParent );
+    ADN_GroupBox* pAmbulanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, szName, pParent );
     vInfosConnectors[nIndex] = & pAmbulanceGroup->GetConnector();
 
-    builder.AddField<ADN_EditLine_Double>( pAmbulanceGroup, tr( "Capacity" ), vInfosConnectors[nIndex+1], 0, eGreaterZero ); 
-    builder.AddField<ADN_TimeField>( pAmbulanceGroup, tr( "Load time per person" ), vInfosConnectors[nIndex+2] ); 
-    builder.AddField<ADN_TimeField>( pAmbulanceGroup, tr( "Unload time per person" ), vInfosConnectors[nIndex+3] ); 
+    QVBox* box = new QVBox( pAmbulanceGroup );
+    QWidget* pHolder = builder.AddFieldHolder( box );
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Capacity" ), vInfosConnectors[nIndex+1], 0, eGreaterZero ); 
+    pHolder = builder.AddFieldHolder( box );
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Load time per person" ), vInfosConnectors[nIndex+2] ); 
+    pHolder = builder.AddFieldHolder( box );
+    builder.AddField<ADN_TimeField>( pHolder, tr( "Unload time per person" ), vInfosConnectors[nIndex+3] ); 
 
+    QGroupBox* pSkillsBox = new QGroupBox( eNbrDoctorSkills + 2, Qt::Horizontal, tr( "Transports" ), pAmbulanceGroup );
+    for( int n = 0; n < eNbrDoctorSkills; ++n )
+    {
+        pHolder = builder.AddFieldHolder( pSkillsBox );
+        builder.AddField<ADN_CheckBox>( pHolder, ADN_Tr::ConvertFromDoctorSkills( (E_DoctorSkills)n ).c_str(), vInfosConnectors[nIndex+6+n ] );        
+    }
+    pHolder = builder.AddFieldHolder( pSkillsBox );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "NBC" ), vInfosConnectors[nIndex+4] );
+    pHolder = builder.AddFieldHolder( pSkillsBox );
+    builder.AddField<ADN_CheckBox>( pHolder, tr( "shock" ), vInfosConnectors[nIndex+5] );
     return pAmbulanceGroup;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_GUI::BuildSupply

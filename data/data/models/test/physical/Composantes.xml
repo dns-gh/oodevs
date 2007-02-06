@@ -1470,6 +1470,14 @@
           <Capacite>3</Capacite>
           <TempsChargementParHumain>15s</TempsChargementParHumain>
           <TempsDechargementParHumain>10s</TempsDechargementParHumain>
+          <TransportBlessures>
+            <UE/>
+            <U1/>
+            <U2/>
+            <U3/>
+          </TransportBlessures>
+          <TransportNBC/>
+          <TransportReacMental/>
         </AmbulanceReleve>
       </Sante>
     </FonctionsLogistiques>
@@ -1577,6 +1585,14 @@
           <Capacite>5</Capacite>
           <TempsChargementParHumain>25s</TempsChargementParHumain>
           <TempsDechargementParHumain>5s</TempsDechargementParHumain>
+          <TransportBlessures>
+            <UE/>
+            <U1/>
+            <U2/>
+            <U3/>
+          </TransportBlessures>
+          <TransportNBC/>
+          <TransportReacMental/>
         </AmbulanceRamassage>
       </Sante>
     </FonctionsLogistiques>
