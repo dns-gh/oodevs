@@ -74,7 +74,7 @@ void MIL_BouchonMines::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_BouchonMines::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
-    archive.WriteField( "DelaiActiviteMines", nMinesActivityTime_ );
+    archive.WriteField( "activity-time", nMinesActivityTime_ );
  }
 
 //=============================================================================
@@ -101,7 +101,7 @@ bool MIL_BouchonMines::Initialize( DIA_Parameters& diaParameters, uint& nCurrent
 void MIL_BouchonMines::Initialize( MIL_InputArchive& archive )
 {
     MIL_RealObject_ABC::Initialize( archive );
-    archive.ReadField( "DelaiActiviteMines", nMinesActivityTime_, CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    archive.ReadField( "activity-time", nMinesActivityTime_, CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 }
 
 // -----------------------------------------------------------------------------

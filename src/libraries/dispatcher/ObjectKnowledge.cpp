@@ -21,6 +21,9 @@
 #include "CrossingSiteObjectAttribute.h"
 #include "RotaObjectAttribute.h"
 #include "CampObjectAttribute.h"
+#include "MineJamObjectAttribute.h"
+#include "LinearMinedAreaObjectAttribute.h"
+#include "DispersedMinedAreaObjectAttribute.h"
 
 using namespace dispatcher;
 
@@ -111,6 +114,15 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
                     break;
                 case EnumObjectType::site_franchissement:
                     pAttributes_ = new CrossingSiteObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    break;
+                case EnumObjectType::bouchon_mines:
+                    pAttributes_ = new MineJamObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    break;
+                case EnumObjectType::zone_minee_lineaire:
+                    pAttributes_ = new LinearMinedAreaObjectAttribute( model_, asnMsg.attributs_specifiques );
+                    break;
+                case EnumObjectType::zone_minee_par_dispersion:
+                    pAttributes_ = new DispersedMinedAreaObjectAttribute( model_, asnMsg.attributs_specifiques );
                     break;
                 default:
                     pAttributes_ = 0;

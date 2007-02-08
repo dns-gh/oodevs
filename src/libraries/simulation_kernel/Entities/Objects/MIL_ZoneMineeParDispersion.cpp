@@ -74,8 +74,8 @@ void MIL_ZoneMineeParDispersion::serialize( Archive& file, const uint )
 // -----------------------------------------------------------------------------
 void MIL_ZoneMineeParDispersion::WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const
 {
-    archive.WriteField( "DelaiActiviteMines", nMinesActivityTime_ );
-    archive.WriteField( "DensiteMines"      , rMinesDensity_      );
+    archive.WriteField( "activity-time", nMinesActivityTime_ );
+    archive.WriteField( "density"      , rMinesDensity_      );
 }
 
 //=============================================================================
@@ -106,8 +106,8 @@ void MIL_ZoneMineeParDispersion::Initialize( MIL_InputArchive& archive )
 {
     MIL_RealObject_ABC::Initialize( archive );
 
-    archive.ReadField( "DelaiActiviteMines", nMinesActivityTime_, CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
-    archive.ReadField( "DensiteMines"      , rMinesDensity_     , CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    archive.ReadField( "activity-time", nMinesActivityTime_, CheckValueGreaterOrEqual( 0  ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
+    archive.ReadField( "density"      , rMinesDensity_     , CheckValueGreaterOrEqual( 0. ), MIL_InputArchive::eThrow, MIL_InputArchive::eNothing );
 
     rSizeCoef_                          = MIL_Tools::ConvertSimToMeter( GetLocalisation().GetLength() ); // Coef      : tps construction/destruction au m
     nFullNbrDotationForConstruction_ = std::max( (uint)1, (uint)( rMinesDensity_ * rSizeCoef_ ) );
