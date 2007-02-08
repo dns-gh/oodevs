@@ -18,6 +18,7 @@
 #include "LogisticRoutePrototype.h"
 #include "NBCPrototype.h"
 #include "RotaPrototype.h"
+#include "MinePrototype.h"
 
 using namespace kernel;
 using namespace gui;
@@ -40,6 +41,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, con
     logisticRouteAttributes_ = new LogisticRoutePrototype( parent, creation_ );                     logisticRouteAttributes_->hide();
     nbcAttributes_           = new NBCPrototype          ( parent, model.objectTypes_, creation_ ); nbcAttributes_->hide();
     rotaAttributes_          = new RotaPrototype         ( parent, model.objectTypes_, creation_ ); rotaAttributes_->hide();
+    mineAttributes_          = new MinePrototype         ( parent, creation_ );                     mineAttributes_->hide();
 }
 
 // -----------------------------------------------------------------------------

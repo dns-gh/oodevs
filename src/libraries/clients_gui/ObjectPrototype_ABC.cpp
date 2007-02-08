@@ -32,6 +32,7 @@
 #include "LogisticRoutePrototype_ABC.h"
 #include "NBCPrototype_ABC.h"
 #include "RotaPrototype_ABC.h"
+#include "MinePrototype_ABC.h"
 
 #include "ENT/ENT_Tr.h"
 
@@ -53,6 +54,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     , logisticRouteAttributes_( 0 )
     , nbcAttributes_( 0 )
     , rotaAttributes_( 0 )
+    , mineAttributes_( 0 )
 {
     new QLabel( tr( "Name:" ), this );
     name_ = new QLineEdit( this );
@@ -75,7 +77,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
     controllers.Register( *this );
 
-    connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
+    connect( objectTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,6 +87,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 void ObjectPrototype_ABC::NotifyUpdated( const ModelLoaded& )
 {
     FillObjectTypes();
+    OnTypeChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +138,7 @@ ObjectPrototype_ABC::~ObjectPrototype_ABC()
     delete logisticRouteAttributes_;
     delete nbcAttributes_;
     delete rotaAttributes_;
+    delete mineAttributes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +194,7 @@ void ObjectPrototype_ABC::NotifyDeleted( const Team_ABC& team )
 // Name: ObjectPrototype_ABC::OnTypeChanged
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::OnTypeChanged( int )
+void ObjectPrototype_ABC::OnTypeChanged()
 {
     const ObjectType* type = objectTypes_->GetValue();
     if( !type )
@@ -218,6 +222,12 @@ void ObjectPrototype_ABC::OnTypeChanged( int )
             break;
         case eObjectType_SiteFranchissement:
             activeAttributes_ = crossingSiteAttributes_;
+            break;
+        case eObjectType_BouchonMines:
+        case eObjectType_ZoneMineeLineaire:
+        case eObjectType_ZoneMineeParDispersion:
+            activeAttributes_ = mineAttributes_;
+            mineAttributes_->SetMineField( type->id_ != eObjectType_BouchonMines );
             break;
         default:
             activeAttributes_ = 0;

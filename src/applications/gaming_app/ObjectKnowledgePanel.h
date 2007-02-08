@@ -26,6 +26,7 @@ namespace kernel
     class CrossingSiteAttributes_ABC;
     class LogisticRouteAttributes_ABC;
     class RotaAttributes_ABC;
+    class MineAttributes_ABC;
 }
 
 namespace gui
@@ -57,6 +58,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public kernel::ElementObserver_ABC< kernel::LogisticRouteAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::NBCAttributes_ABC >
                            , public kernel::ElementObserver_ABC< kernel::RotaAttributes_ABC >
+                           , public kernel::ElementObserver_ABC< kernel::MineAttributes_ABC >
                            , public TeamSelectionObserver
 {
     Q_OBJECT;
@@ -99,6 +101,7 @@ private:
     virtual void NotifyUpdated( const kernel::LogisticRouteAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::NBCAttributes_ABC& element );
     virtual void NotifyUpdated( const kernel::RotaAttributes_ABC& element );
+    virtual void NotifyUpdated( const kernel::MineAttributes_ABC& element );
     template< typename T >
     void DisplayExtension( const T& extension );
     template< typename T >

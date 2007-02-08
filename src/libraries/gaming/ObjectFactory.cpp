@@ -15,6 +15,7 @@
 #include "RotaAttributes.h"
 #include "CrossingSiteAttributes.h"
 #include "CampAttributes.h"
+#include "MineAttributes.h"
 #include "Explosions.h"
 #include "Model.h"
 #include "TeamsModel.h"
@@ -81,6 +82,11 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
         break;
     case EnumObjectType::site_franchissement:
         result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
+        result->Update( message );
+    case EnumObjectType::bouchon_mines:
+    case EnumObjectType::zone_minee_lineaire:
+    case EnumObjectType::zone_minee_par_dispersion:
+        result->Attach< MineAttributes_ABC >( *new MineAttributes( controllers_.controller_, message.type != EnumObjectType::bouchon_mines ) );
         result->Update( message );
     default:
         ;

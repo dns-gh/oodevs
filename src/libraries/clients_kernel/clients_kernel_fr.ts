@@ -215,6 +215,10 @@
         <source>h</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>mines/m</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>tools</name>

@@ -47,6 +47,7 @@ public:
     static const Unit tons;
     static const Unit kilometersPerHour;
     static const Unit hours;
+    static const Unit minesPerMeter;
 };
 
 template< typename T >

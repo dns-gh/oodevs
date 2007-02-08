@@ -70,7 +70,7 @@ AgentStatePanel::AgentStatePanel( QWidget* parent, PanelStack_ABC& panel, Contro
                 .AddLabel( tr( "Reinforced by:" ) );
 
     display_->AddGroup( tr( "Towed units" ) )
-                .AddLabel( tr( "" ) );
+                .AddLabel( tr( "Towed units" ) );
 
     display_->AddGroup( tr( "Logistic links" ) )
                 .AddLabel( tr( "TC2:" ) )

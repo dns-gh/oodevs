@@ -15,6 +15,7 @@
 #include "RotaAttributes.h"
 #include "CrossingSiteAttributes.h"
 #include "CampAttributes.h"
+#include "MineAttributes.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -76,6 +77,10 @@ ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Team_ABC& owner, cons
     case EnumObjectType::site_franchissement:
         knowledge->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( controllers_.controller_ ) );
         break;
+    case EnumObjectType::bouchon_mines:
+    case EnumObjectType::zone_minee_lineaire:
+    case EnumObjectType::zone_minee_par_dispersion:
+        knowledge->Attach< MineAttributes_ABC >( *new MineAttributes( controllers_.controller_, message.type != EnumObjectType::bouchon_mines ) );
     default:
         ;
     };

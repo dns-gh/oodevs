@@ -33,6 +33,7 @@ namespace gui
     class LogisticRoutePrototype_ABC;
     class NBCPrototype_ABC;
     class RotaPrototype_ABC;
+    class MinePrototype_ABC;
     class LocationCreator;
     class ParametersLayer;
     class RichLabel;
@@ -70,7 +71,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnTypeChanged( int );
+    void OnTypeChanged();
     //@}
 
 private:
@@ -111,6 +112,7 @@ protected:
     LogisticRoutePrototype_ABC* logisticRouteAttributes_;
     NBCPrototype_ABC* nbcAttributes_;
     RotaPrototype_ABC* rotaAttributes_;
+    MinePrototype_ABC* mineAttributes_;
     //@}
 };
 

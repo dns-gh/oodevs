@@ -73,5 +73,5 @@ void Transports::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Transports::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Transports", "Towed units" ) ).Display( "", transported_ ); // $$$$ AGE 2006-02-22: remove a level
+    displayer.Group( tools::translate( "Transports", "Towed units" ) ).Display( "Towed units", transported_ ); // $$$$ AGE 2006-02-22: remove a level
 }

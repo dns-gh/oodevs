@@ -31,4 +31,5 @@ const Unit Units::vehiclesPerHour   ( tools::translate( "Units", "veh/h" ) );
 const Unit Units::tons              ( tools::translate( "Units", "t" ) );
 const Unit Units::kilometersPerHour ( tools::translate( "Units", "km/h" ) );
 const Unit Units::hours             ( tools::translate( "Units", "h" ) );
+const Unit Units::minesPerMeter     ( tools::translate( "Units", "mines/m" ) );
 

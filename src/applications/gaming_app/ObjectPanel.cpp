@@ -69,6 +69,10 @@ using namespace kernel;
                 .AddLabel( tr( "Length:" ) )
                 .AddLabel( tr( "Maximum weight:" ) );
 
+    GetBuilder().AddGroup( tr( "Mine parameters" ) )
+                .AddLabel( tr( "Activity time:" ) )
+                .AddLabel( tr( "Density:" ) );
+
     Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
     construction_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
     valorisation_  = dynamic_cast< SpinBoxDisplayer* > ( & infos.Item( tr( "Development:" ) ) );

@@ -28,6 +28,7 @@ namespace kernel
     DECLARE_EXTENSION( LogisticRouteAttributes_ABC )
     DECLARE_EXTENSION( NBCAttributes_ABC )
     DECLARE_EXTENSION( RotaAttributes_ABC )
+    DECLARE_EXTENSION( MineAttributes_ABC )
 }
 
 #undef DECLARE_EXTENSION

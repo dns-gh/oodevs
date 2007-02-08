@@ -72,6 +72,10 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
                 .AddLabel( tr( "Length:" ) )
                 .AddLabel( tr( "Maximum weight:" ) );
 
+    display_->AddGroup( tr( "Mine parameters" ) )
+                .AddLabel( tr( "Activity time:" ) )
+                .AddLabel( tr( "Density:" ) );
+
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Agent" ) );
 
@@ -213,6 +217,15 @@ void ObjectKnowledgePanel::NotifyUpdated( const RotaAttributes_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::NotifyUpdated
+// Created: AGE 2006-02-24
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::NotifyUpdated( const MineAttributes_ABC& element )
+{
+    DisplayExtension( element );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel::Select
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
@@ -263,6 +276,7 @@ void ObjectKnowledgePanel::OnSelectionChanged( QListViewItem* i )
             UpdateExtension< LogisticRouteAttributes_ABC >( *subSelected_ );
             UpdateExtension< NBCAttributes_ABC >( *subSelected_ );
             UpdateExtension< RotaAttributes_ABC >( *subSelected_ );
+            UpdateExtension< MineAttributes_ABC >( *subSelected_ );
         }
     }
 }
