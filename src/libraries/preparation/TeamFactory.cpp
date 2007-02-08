@@ -25,6 +25,7 @@
 #include "RotaAttributes.h"
 #include "CrossingSiteAttributes.h"
 #include "CampAttributes.h"
+#include "MineAttributes.h"
 #include "ObjectHierarchies.h"
 #include "Populations.h"
 #include "clients_kernel/Controllers.h"
@@ -140,6 +141,11 @@ kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, k
     case eObjectType_SiteFranchissement:
         result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( dico ) );
         break;
+    case eObjectType_BouchonMines:
+    case eObjectType_ZoneMineeLineaire:
+    case eObjectType_ZoneMineeParDispersion:
+        result->Attach< MineAttributes_ABC >( *new MineAttributes( dico ) );
+        break;
     default:
         break;
     };
@@ -175,6 +181,11 @@ kernel::Object_ABC* TeamFactory::CreateObject( xml::xistream& xis, kernel::Team_
         break;
     case eObjectType_SiteFranchissement:
         result->Attach< CrossingSiteAttributes_ABC >( *new CrossingSiteAttributes( xis, dico ) );
+        break;
+    case eObjectType_BouchonMines:
+    case eObjectType_ZoneMineeLineaire:
+    case eObjectType_ZoneMineeParDispersion:
+        result->Attach< MineAttributes_ABC >( *new MineAttributes( dico ) );
         break;
     default:
         break;

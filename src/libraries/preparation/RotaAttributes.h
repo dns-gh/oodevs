@@ -11,7 +11,6 @@
 #define __RotaAttributes_h_
 
 #include "clients_kernel/ObjectExtensions.h"
-#include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
