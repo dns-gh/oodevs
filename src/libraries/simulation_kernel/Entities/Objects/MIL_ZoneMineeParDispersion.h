@@ -44,11 +44,43 @@ public:
     virtual void                      Initialize( const TER_Localisation& localisation, uint nNbrMines );
     //@}
 
+    //! @name Knowledge
+    //@{
+    virtual DEC_Knowledge_Object& CreateKnowledge( const MIL_Army& teamKnowing );
+    //@}
+
+    //! @name Update
+    //@{
+    virtual void UpdateState();
+    //@}
+
+    //! @name Accessors
+    //@{
+    uint     GetMinesActivityTime() const;
+    MT_Float GetMinesDensity     () const;
+    //@}
+
 private:
     //! @name Events
     //@{
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
     //@}
+
+    //! @name Network
+    //@{
+    virtual void WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
+    //@}
+
+    //$$$ HLA
+
+private:
+    // Specific attributes
+    ASN1T_AttrObjectZoneMineeParDispersion asnAttributes_;
+
+    MT_Float rMinesDensity_;
+    uint     nMinesActivityTime_;
+    uint     nDeathTimeStep_;
 };
 
 #include "MIL_ZoneMineeParDispersion.inl"

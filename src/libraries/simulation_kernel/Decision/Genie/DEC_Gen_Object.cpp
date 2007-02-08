@@ -22,11 +22,12 @@
 // Created: AGN 03-08-27
 //-----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object()
-    : pType_        ( 0 )
-    , localisation_ ()
-    , nPreliminaire_( 0 )
-    , rDensity_     ( 0. )
-    , pTC2_         ( 0 )   
+    : pType_             ( 0 )
+    , localisation_      ()
+    , nPreliminaire_     ( 0 )
+    , rDensity_          ( 0. )
+    , nMinesActivityTime_( 0 )
+    , pTC2_              ( 0 )    
 {
 }
 
@@ -35,11 +36,12 @@ DEC_Gen_Object::DEC_Gen_Object()
 // Created: NLD 2006-10-26
 // -----------------------------------------------------------------------------
 DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
-    : pType_        ( rhs.pType_ )
-    , localisation_ ( rhs.localisation_ )
-    , nPreliminaire_( rhs.nPreliminaire_ )
-    , rDensity_     ( rhs.rDensity_ )
-    , pTC2_         ( rhs.pTC2_ )   
+    : pType_             ( rhs.pType_ )
+    , localisation_      ( rhs.localisation_ )
+    , nPreliminaire_     ( rhs.nPreliminaire_ )
+    , rDensity_          ( rhs.rDensity_ )
+    , nMinesActivityTime_( rhs.nMinesActivityTime_ )
+    , pTC2_              ( rhs.pTC2_ )      
 {
 
 }
@@ -65,8 +67,9 @@ ASN1T_EnumOrderErrorCode DEC_Gen_Object::Initialize( const ASN1T_MissionGenObjec
     if( !NET_ASN_Tools::ReadLocation( asn.position, localisation_ ) )
         return EnumOrderErrorCode::error_invalid_mission_parameters;
 
-    nPreliminaire_ = asn.preliminaire;
-    rDensity_      = asn.densite;
+    nPreliminaire_      = asn.preliminaire;
+    rDensity_           = asn.densite;
+    nMinesActivityTime_ = asn.delai_activite_mines;
 
     if( asn.tc2 != 0 )
     {

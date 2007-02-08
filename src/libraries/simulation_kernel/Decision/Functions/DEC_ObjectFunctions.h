@@ -37,11 +37,12 @@ public:
     static void GetRefugeeCampPosition ( DIA_Call_ABC& call, MIL_Automate& callerAutomate );
 
     // Gen object
-    static void GetGenObjectType        ( DIA_Call_ABC& call );
-    static void GetGenObjectLocalisation( DIA_Call_ABC& call );
-    static void GetGenObjectDensity     ( DIA_Call_ABC& call );
-    static void GetGenObjectPreliminaire( DIA_Call_ABC& call );
-    static void GetGenObjectTC2         ( DIA_Call_ABC& call );
+    static void GetGenObjectType             ( DIA_Call_ABC& call );
+    static void GetGenObjectLocalisation     ( DIA_Call_ABC& call );
+    static void GetGenObjectDensity          ( DIA_Call_ABC& call );
+    static void GetGenObjectPreliminaire     ( DIA_Call_ABC& call );
+    static void GetGenObjectTC2              ( DIA_Call_ABC& call );
+    static void GetGenObjectMinesActivityTime( DIA_Call_ABC& call );
     //@}
 };
 

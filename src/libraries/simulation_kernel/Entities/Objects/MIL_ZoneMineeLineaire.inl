@@ -18,3 +18,23 @@ MIL_RealObject_ABC& MIL_ZoneMineeLineaire::Create( const MIL_RealObjectType& typ
 {
     return *new MIL_ZoneMineeLineaire( type, nID, army );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneMineeLineaire::GetMinesActivityTime
+// Created: NLD 2007-02-07
+// -----------------------------------------------------------------------------
+inline
+uint MIL_ZoneMineeLineaire::GetMinesActivityTime() const
+{
+    return nMinesActivityTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneMineeLineaire::GetMinesDensity
+// Created: NLD 2007-02-07
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_ZoneMineeLineaire::GetMinesDensity() const
+{
+    return rMinesDensity_;
+}

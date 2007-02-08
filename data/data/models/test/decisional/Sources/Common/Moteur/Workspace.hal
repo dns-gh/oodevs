@@ -76,12 +76,13 @@ signatures
     B                                   DEC_TypeObjet_PeutEtrePrepare  ( I /*E_TypeObject*/ );
                                         
     // GEN objets                       
-    I /*E_TypeObject*/                  DEC_GenObject_Type        ( U /*T_GenObjet*/ );
-    U /*T_Localisation*/                DEC_GenObject_Localisation( U /*T_GenObjet*/ );
-    R                                   DEC_GenObject_Densite     ( U /*T_GenObjet*/ );
-    I /*E_MissionGenSousTypeObstacle*/  DEC_GenObject_Preliminaire( U /*T_GenObjet*/ );
-    A /*T_Automate*/                    DEC_GenObject_TC2         ( U /*T_GenObjet*/ );
-    
+    I /*E_TypeObject*/                  DEC_GenObject_Type              ( U /*T_GenObjet*/ );
+    U /*T_Localisation*/                DEC_GenObject_Localisation      ( U /*T_GenObjet*/ );
+    R                                   DEC_GenObject_Densite           ( U /*T_GenObjet*/ );
+    I /*E_MissionGenSousTypeObstacle*/  DEC_GenObject_Preliminaire      ( U /*T_GenObjet*/ );
+    A /*T_Automate*/                    DEC_GenObject_TC2               ( U /*T_GenObjet*/ );
+    R                                   DEC_GenObject_DelaiActiviteMines( U /*T_GenObjet*/ );
+     
     // Manipulation DIA Thing 
     A                                   DEC_CreerDIAThing   ( I /*Type*/ );
     V                                   DEC_DetruireDIAThing( A /*Thing*/ );

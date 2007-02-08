@@ -155,11 +155,12 @@ void DEC_Workspace::RegisterDIA_Functions( DIA_FunctionTable< DEC_Workspace >* p
     pFuncTable->RegisterFunction( DEC_ObjectFunctions::CanObjectTypeBePrepared, "DEC_TypeObjet_PeutEtrePrepare"   );
 
     // Gen objects
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectType        , "DEC_GenObject_Type"         );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectLocalisation, "DEC_GenObject_Localisation" );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectDensity     , "DEC_GenObject_Densite"      );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectPreliminaire, "DEC_GenObject_Preliminaire" );
-    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectTC2         , "DEC_GenObject_TC2"          );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectType             , "DEC_GenObject_Type"               );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectLocalisation     , "DEC_GenObject_Localisation"       );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectDensity          , "DEC_GenObject_Densite"            );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectPreliminaire     , "DEC_GenObject_Preliminaire"       );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectTC2              , "DEC_GenObject_TC2"                );
+    pFuncTable->RegisterFunction( DEC_ObjectFunctions::GetGenObjectMinesActivityTime, "DEC_GenObject_DelaiActiviteMines" );
 
     // Debug
     pFuncTable->RegisterFunction( DEC_DIAFunctions::PointToString    , "DEC_PointToString"      );

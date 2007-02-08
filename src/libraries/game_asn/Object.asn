@@ -119,15 +119,35 @@ AttrObjectCampRefugies ::= SEQUENCE
     tc2  Automate
 }
 
+AttrObjectZoneMineeLineaire ::= SEQUENCE
+{
+    densite              REAL(0..5) DEFAULT 0,
+    delai-activite-mines INTEGER    DEFAULT 0       
+}
+
+AttrObjectZoneMineeParDispersion ::= SEQUENCE
+{
+    densite              REAL(0..5) DEFAULT 0,
+    delai-activite-mines INTEGER    DEFAULT 0       
+}
+
+AttrObjectBouchonMines ::= SEQUENCE
+{
+    delai-activite-mines INTEGER DEFAULT 0
+}
+
 AttrObjectSpecific ::= CHOICE
 {
-    site-franchissement   AttrObjectSiteFranchissement,
-    nuage-nbc             AttrObjectNuageNBC,
-    rota                  AttrObjectROTA,
-    zone-nbc              AttrObjectZoneNBC,
-    itineraire-logistique AttrObjectItineraireLogistique,
-    camp-prisonniers      AttrObjectCampPrisonniers,
-    camp-refugies         AttrObjectCampRefugies
+    site-franchissement       AttrObjectSiteFranchissement,
+    nuage-nbc                 AttrObjectNuageNBC,
+    rota                      AttrObjectROTA,
+    zone-nbc                  AttrObjectZoneNBC,
+    itineraire-logistique     AttrObjectItineraireLogistique,
+    camp-prisonniers          AttrObjectCampPrisonniers,
+    camp-refugies             AttrObjectCampRefugies,
+    zone-minee-lineaire       AttrObjectZoneMineeLineaire,
+    zone-minee-par-dispersion AttrObjectZoneMineeParDispersion,
+    bouchon-mines             AttrObjectBouchonMines
 }
  
 ---------------------------

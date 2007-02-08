@@ -18,3 +18,13 @@ MIL_RealObject_ABC& MIL_BouchonMines::Create( const MIL_RealObjectType& type, ui
 {
     return *new MIL_BouchonMines( type, nID, army );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BouchonMines::GetMinesActivityTime
+// Created: NLD 2007-02-08
+// -----------------------------------------------------------------------------
+inline
+uint MIL_BouchonMines::GetMinesActivityTime() const
+{
+    return nMinesActivityTime_;
+}

@@ -337,13 +337,14 @@ bool DEC_Knowledge_Object::UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionLevel )
 {
+    assert( currentPerceptionLevel > PHY_PerceptionLevel::notSeen_ );
+
     nTimeLastUpdate_ = GetCurrentTimeStep();
     
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
     UpdateMaxPerceptionLevel    ( currentPerceptionLevel );
 
-    // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue
-    //      => Pas de eNotPerceived aux ticks suivant la perte de contact
+    // $$$$ NLD 2007-02-07: currentPerceptionLevel peut valoir notSeen_ ?
     UpdateLocalisations     ();  // Updaté même quand 'NotPerceived', pour les objets pouvant bouger
     UpdateSpecificAttributes( currentPerceptionLevel );
    

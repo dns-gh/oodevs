@@ -127,9 +127,10 @@ protected:
 
     //! @name Tools
     //@{
-    void NotifyAttributeUpdated( E_Attributes nAttribute );
-    bool IsAttributeUpdated    ( E_Attributes nAttribute ) const;
-    bool IsReconBy             ( const MIL_AgentType_ABC& agentType ) const;
+          void      NotifyAttributeUpdated( E_Attributes nAttribute );
+          bool      IsAttributeUpdated    ( E_Attributes nAttribute ) const;
+          bool      IsReconBy             ( const MIL_AgentType_ABC& agentType ) const;
+    const MIL_Army& GetArmyKnowing        () const;
     //@}
 
 private:

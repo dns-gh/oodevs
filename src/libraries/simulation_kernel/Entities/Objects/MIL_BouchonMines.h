@@ -39,6 +39,25 @@ public:
     //! @name Init
     //@{
     static MIL_RealObject_ABC& Create( const MIL_RealObjectType& type, uint nID, MIL_Army& army );
+    
+    virtual bool                      Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx );
+    virtual void                      Initialize( MIL_InputArchive& archive );
+    virtual ASN1T_EnumObjectErrorCode Initialize( const ASN1T_MagicActionCreateObject& asn );    
+    //@}
+    
+    //! @name Knowledge
+    //@{
+    virtual DEC_Knowledge_Object& CreateKnowledge( const MIL_Army& teamKnowing );
+    //@}
+
+    //! @name Update
+    //@{
+    virtual void UpdateState();
+    //@}
+
+    //! @name Accessors
+    //@{
+    uint GetMinesActivityTime() const;
     //@}
     
 private:
@@ -46,6 +65,21 @@ private:
     //@{
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
     //@}
+
+    //! @name Network
+    //@{
+    virtual void WriteSpecificAttributes( MT_XXmlOutputArchive& archive ) const;
+    virtual void WriteSpecificAttributes( NET_ASN_MsgObjectCreation& asnMsg );
+    //@}
+
+    //$$$ HLA
+
+private:
+    // Specific attributes
+    ASN1T_AttrObjectBouchonMines asnAttributes_;
+
+    uint nMinesActivityTime_;
+    uint nDeathTimeStep_;
 };
 
 #include "MIL_BouchonMines.inl"

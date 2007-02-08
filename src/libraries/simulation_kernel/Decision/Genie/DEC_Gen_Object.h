@@ -31,11 +31,12 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_RealObjectType& GetType        () const;
-    const TER_Localisation&   GetLocalisation() const;
-          uint                GetPreliminaire() const;
-          MT_Float            GetDensity     () const;
-    const MIL_Automate*       GetTC2         () const;
+    const MIL_RealObjectType& GetType             () const;
+    const TER_Localisation&   GetLocalisation     () const;
+          uint                GetPreliminaire     () const;
+          MT_Float            GetDensity          () const;
+          uint                GetMinesActivityTime() const;
+    const MIL_Automate*       GetTC2              () const;
     //@}
 
     //! @name Init
@@ -48,6 +49,7 @@ private:
           TER_Localisation    localisation_;
           uint                nPreliminaire_;
           MT_Float            rDensity_;
+          uint                nMinesActivityTime_;
     const MIL_Automate*       pTC2_;
 };
 

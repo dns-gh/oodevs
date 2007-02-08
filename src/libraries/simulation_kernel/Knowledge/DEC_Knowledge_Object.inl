@@ -200,3 +200,14 @@ bool DEC_Knowledge_Object::Clean() const
 {
     return GetRelevance() <= 0.;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetArmyKnowing
+// Created: NLD 2007-02-07
+// -----------------------------------------------------------------------------
+inline
+const MIL_Army& DEC_Knowledge_Object::GetArmyKnowing() const
+{
+    assert( pArmyKnowing_ );
+    return *pArmyKnowing_;
+}

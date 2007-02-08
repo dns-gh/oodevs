@@ -614,8 +614,8 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
             
             DEC_Debug( "Aire forme: " + FloatToString( DEC_Geometrie_AireLocalisation( mission.forme_ ) ) );
             
-            DEC_ChangeValeurDotations( eDotation_Munition, mission.param_ / 100, eMunitionClasse_Obus );
-            DEC_ChangeValeurDotations( eDotation_Ration, mission.param_ / 100 );
+            DEC_ChangeValeurDotations( eDotation_Munition, mission.param1_ / 100, eMunitionClasse_Obus );
+            DEC_ChangeValeurDotations( eDotation_Ration, mission.param1_ / 100 );
             
             // DEC_DebugAffichePoint( DEC_Geometrie_CalculeBarycentreLocalisation( mission.forme_ ) );
             
@@ -631,11 +631,11 @@ behavior MIS_Pion_Test_CreateObject( T_Mission_Pion_Test_CreateObject mission, i
         if( DIA_ModuleBegins() )
         {
             //T_Localisation prout = DEC_Geometrie_CreerLocalisationCercle( DEC_Agent_Position(), 800 );
-            //currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, mission.forme_, mission.param_, false );
+            //currentAction = DEC_StartCreerObjet( nState, repObjet, mission.type_, mission.forme_, mission.param1_, mission.param2_, false );
             
             //currentAction =  DEC_StartControlerZone( mission.forme_, 12000, true );
             
-            DEC_CreerObjetSansDelais( mission.type_, mission.forme_, mission.param_, false );
+            DEC_CreerObjetSansDelais( mission.type_, mission.forme_, mission.param1_, mission.param2_, false );
         }
         
         DEC_Debug( "Etat : " + EnumToString( nState, E_EtatActionObjet ) );
@@ -1200,25 +1200,6 @@ behavior TestOnSpontaneousEndNotCalled2( float bite )
 }*/
 
 
-behavior MIS_Pion_LOG_DistribuerMoyens( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
-{
-    when updated:
-    {
-        if( DIA_ModuleBegins() )
-        {
-            DEC_Debug( "MIS_Pion_LOG_DistribuerMoyens::begin" );
-            gTest ++;
-        }
-        
-        DEC_Debug( "MIS_Pion_LOG_DistribuerMoyens::updated" );            
-        behavior TestOnSpontaneousEndNotCalled(  );  
-    }
-    on spontaneous end:
-    {
-        DEC_Debug( "MIS_Pion_LOG_DistribuerMoyens::on spontaneous end" );
-    }         
-}
-
 
 
 action TestOnSpontaneousShouldNotBeCalled( float bite ) using toto
@@ -1243,7 +1224,7 @@ action TestOnSpontaneousShouldNotBeCalled( float bite ) using toto
 }
 
 
-behavior MIS_Pion_LOG_TrierBlesses( T_Mission_Pion_ALAT_Freiner mission, id nDummy )
+behavior MIS_Pion_LOG_TrierBlesses( T_Mission_Pion_LOG_TrierBlesses mission, id nDummy )
 {
     when updated:
     {

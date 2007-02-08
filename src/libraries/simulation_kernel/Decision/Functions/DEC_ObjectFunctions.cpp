@@ -156,3 +156,14 @@ void DEC_ObjectFunctions::GetGenObjectTC2( DIA_Call_ABC& call )
     DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );
     call.GetResult().SetValue( pTmp->GetTC2() ? pTmp->GetTC2()->GetDecision() : *(DEC_AutomateDecision*)( 0 ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::GetGenObjectMinesActivityTime
+// Created: NLD 2006-10-26
+// -----------------------------------------------------------------------------
+void DEC_ObjectFunctions::GetGenObjectMinesActivityTime( DIA_Call_ABC& call )
+{
+    assert( DEC_Tools::CheckTypeGenObjet( call.GetParameter( 0 ) ) );    
+    DEC_Gen_Object* pTmp = call.GetParameter( 0 ).ToUserPtr( pTmp );    
+    call.GetResult().SetValue( (float)pTmp->GetMinesActivityTime() );
+}

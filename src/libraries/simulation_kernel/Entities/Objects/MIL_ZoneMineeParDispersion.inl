@@ -18,3 +18,23 @@ MIL_RealObject_ABC& MIL_ZoneMineeParDispersion::Create( const MIL_RealObjectType
 {
     return *new MIL_ZoneMineeParDispersion( type, nID, army );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneMineeParDispersion::GetMinesActivityTime
+// Created: NLD 2007-02-07
+// -----------------------------------------------------------------------------
+inline
+uint MIL_ZoneMineeParDispersion::GetMinesActivityTime() const
+{
+    return nMinesActivityTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ZoneMineeParDispersion::GetMinesDensity
+// Created: NLD 2007-02-07
+// -----------------------------------------------------------------------------
+inline
+MT_Float MIL_ZoneMineeParDispersion::GetMinesDensity() const
+{
+    return rMinesDensity_;
+}
