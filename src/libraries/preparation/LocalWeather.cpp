@@ -83,7 +83,7 @@ QString LocalWeather::GetName() const
 void LocalWeather::Serialize( xml::xostream& xos ) const
 {
     xos << attribute( "hautGauche", converter_.ConvertToMgrs( topLeft_ ) )
-        << attribute( "basDroite" , converter_.ConvertToMgrs( bottomRight_ ) );
+        << attribute( "basDroit"  , converter_.ConvertToMgrs( bottomRight_ ) );
     Weather::Serialize( xos );
 }
 
