@@ -45,7 +45,7 @@ public:
     void Purge();
 
     void CreateTeam( const ASN1T_MsgSideCreation& asnMsg );
-    void CreateFormation( const ASN1T_MsgFormationCreation& asnMsg ); // $$$$ AGE 2006-10-19: 
+    void CreateFormation( const ASN1T_MsgFormationCreation& asnMsg );
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );

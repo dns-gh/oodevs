@@ -1489,6 +1489,18 @@
         <source>Agent</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mine parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParamAgentType</name>
@@ -2026,6 +2038,18 @@ Message : </source>
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -59,9 +59,8 @@ void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& 
     glTranslatef( translation, translation, 0 );
     glPushAttrib( GL_CURRENT_BIT );
     glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
-    // $$$$ AGE 2006-11-28: y'a pas moins efficace...
-    // $$$$ AGE 2007-02-01: mettre une texture et envoyer
 
+    // $$$$ AGE 2007-02-01: mettre une texture et envoyer
     glBegin( GL_POINTS );
     for( char color = 1; color <= 3; ++color )
     {

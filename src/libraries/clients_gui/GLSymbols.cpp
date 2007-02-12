@@ -68,6 +68,8 @@ svg::Node_ABC* GLSymbols::Compile( const std::string& filename, float lod ) cons
     return factory.Compile( xis, *references_, lod );
 }
 
+// $$$$ AGE 2007-02-09: cette méthode est un champ de $
+
 // -----------------------------------------------------------------------------
 // Name: GLSymbols::PrintApp6
 // Created: SBO 2006-12-15

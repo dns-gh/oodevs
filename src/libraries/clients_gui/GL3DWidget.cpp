@@ -202,9 +202,34 @@ void Gl3dWidget::DrawArrow( const Point2f& from, const Point2f& to, float size /
 // Name: Gl3dWidget::DrawArc
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f& p1, const geometry::Point2f& p2 ) const
+void Gl3dWidget::DrawArc( const geometry::Point2f& center, const geometry::Point2f& from, const geometry::Point2f& to ) const
 {
-    // $$$$ AGE 2006-05-17: 
+    const float radius = center.Distance( from );
+    if( radius == 0 )
+        return;
+
+    Vector2f v1( center, from ); v1.Normalize();
+    float minAngle = std::acos( v1.X() ) * ( v1.Y() > 0 ? 1.f : -1.f );
+    Vector2f v2( center, to ); v2.Normalize();
+    float maxAngle = std::acos( v2.X() ) * ( v2.Y() > 0 ? 1.f : -1.f );
+    if( minAngle > maxAngle )
+    {
+        static const float twoPi = 2.0 * std::acos( -1.0 );
+        maxAngle = maxAngle + twoPi;
+    }
+    
+    const float deltaAngle = ( maxAngle - minAngle ) / 24.f + 1e-6;
+    glBegin( GL_LINE_STRIP );
+    for( float angle = minAngle; angle < maxAngle; angle += deltaAngle )
+    {
+        const geometry::Point2f p = center + radius * geometry::Vector2f( std::cos( angle ), std::sin( angle ) );
+        const float elevation = ElevationAt( from );
+        glVertex3f( p.X(), p.Y(), elevation );
+    }
+    const geometry::Point2f p = center + radius * geometry::Vector2f( std::cos( maxAngle ), std::sin( maxAngle ) );
+    const float elevation = ElevationAt( from );
+    glVertex3f( p.X(), p.Y(), elevation );
+    glEnd();
 }
 
 // -----------------------------------------------------------------------------
@@ -341,7 +366,7 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawIcon( const char** xpm, const geometry::Point2f& where, float size /*= -1.f*/ ) const
 {
-    // $$$$ AGE 2006-05-16: 
+    // $$$$ AGE 2006-05-16: ca va dégager de toute facon...
 }
 
 // -----------------------------------------------------------------------------
