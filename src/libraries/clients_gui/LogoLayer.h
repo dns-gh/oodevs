@@ -26,19 +26,22 @@ namespace gui
 */
 // Created: AGE 2007-02-12
 // =============================================================================
-class LogoLayer : public Layer_ABC
+class LogoLayer : public Layer2d_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image );
+             LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha = -1 );
     virtual ~LogoLayer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& );
+    virtual void Paint( const ViewFrustum& frustum );
+    virtual void RegisterIn( Gl3dWidget& );
+    virtual void SetAlpha( float alpha );
     //@}
 
 private:

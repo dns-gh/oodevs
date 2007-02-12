@@ -1087,6 +1087,10 @@
         <source>Elevation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logo</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapToolbar</name>

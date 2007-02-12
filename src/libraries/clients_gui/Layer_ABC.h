@@ -69,7 +69,7 @@ public:
     virtual void Paint( const ViewFrustum& ) {}
     virtual void RegisterIn( Gl3dWidget& ) {}
 
-    void SetAlpha( float alpha ) { alpha_ = alpha; };
+    virtual void SetAlpha( float alpha ) { alpha_ = alpha; };
     float GetAlpha() const       { return alpha_; };
     virtual void Reset2d()       { Reset(); }
     virtual void Reset() {};

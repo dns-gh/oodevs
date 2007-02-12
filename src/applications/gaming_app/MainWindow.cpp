@@ -89,6 +89,7 @@
 #include "clients_gui/ExclusiveEventStrategy.h"
 #include "clients_gui/DefaultLayer.h"
 #include "clients_gui/DrawerLayer.h"
+#include "clients_gui/LogoLayer.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "graphics/FixedLighting.h"
@@ -298,10 +299,12 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
+    Layer2d_ABC& logoLayer          = *new LogoLayer( *glProxy_, QImage( "logo.png" ), 0.7f );
 
     preferences.AddLayer( tr( "Terrain" ), terrain );
     preferences.AddLayer( tr( "Raster" ), raster );
     preferences.AddLayer( tr( "Elevation" ), elevation2d );
+    preferences.AddLayer( tr( "Logo" ), logoLayer );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -323,7 +326,8 @@ void MainWindow::CreateLayers( MissionPanel& missions, ObjectCreationPanel& obje
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
     glProxy_->Register( drawer );
-
+    glProxy_->Register( logoLayer );
+    
     // ordre des evenements
     forward_->Register( parameters );
     forward_->Register( agents );

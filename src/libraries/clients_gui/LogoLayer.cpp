@@ -17,12 +17,14 @@ using namespace gui;
 // Name: LogoLayer constructor
 // Created: AGE 2007-02-12
 // -----------------------------------------------------------------------------
-LogoLayer::LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image )
+LogoLayer::LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha /*= -1*/ )
     : tools_( tools )
     , image_( image )
 {
     image_ = image_.mirror();
     image_.setAlphaBuffer( true );
+    if( alpha > 0 )
+        SetAlpha( alpha );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +53,44 @@ void LogoLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
     int viewport[4];
     glGetIntegerv( GL_VIEWPORT, viewport );
     double rX, rY, rZ;
-    gluUnProject( 1, viewport[3] - 1, 0, modelViewMatrix, projectionMatrix, viewport, &rX, &rY, &rZ );
+    gluUnProject( 1, viewport[3] - 1, 0.5, modelViewMatrix, projectionMatrix, viewport, &rX, &rY, &rZ );
 
     glRasterPos3f( rX, rY, rZ );
     glBitmap( 0, 0, 0, 0, 0, - image_.height(), 0 );
     glDrawPixels( image_.width(), image_.height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image_.bits() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogoLayer::SetAlpha
+// Created: AGE 2007-02-12
+// -----------------------------------------------------------------------------
+void LogoLayer::SetAlpha( float alpha )
+{
+    unsigned int a = unsigned char( 255 * alpha );
+    a <<= 24;
+    for( unsigned i = 0; i < image_.width(); ++i )
+        for( unsigned j = 0; j < image_.height(); ++j )
+        {
+            QRgb rgb = image_.pixel( i, j );
+            rgb = ( rgb & 0x00FFFFFF ) | a;
+            image_.setPixel( i, j, rgb );
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogoLayer::RegisterIn
+// Created: AGE 2007-02-12
+// -----------------------------------------------------------------------------
+void LogoLayer::RegisterIn( Gl3dWidget& w )
+{
+    Layer_ABC::RegisterIn( w );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogoLayer::Paint
+// Created: AGE 2007-02-12
+// -----------------------------------------------------------------------------
+void LogoLayer::Paint( const ViewFrustum& frustum )
+{
+    Layer_ABC::Paint( frustum );
 }
