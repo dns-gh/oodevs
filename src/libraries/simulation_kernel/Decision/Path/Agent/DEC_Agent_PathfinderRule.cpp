@@ -157,15 +157,30 @@ MT_Float DEC_Agent_PathfinderRule::GetDangerDirectionCost( const MT_Vector2D& to
 // -----------------------------------------------------------------------------
 inline
 MT_Float DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
-{
-    assert( ( !path_.GetPathClass().AvoidObjects() && path_.GetPathKnowledgeObjects().empty() ) || path_.GetPathClass().AvoidObjects() );
-    MT_Float rObjectCost = 0.;
-    for( DEC_Agent_Path::CIT_PathKnowledgeObjectVector it = path_.GetPathKnowledgeObjects().begin(); it != path_.GetPathKnowledgeObjects().end(); ++it )
+{  
+    // default cost : outside all objects
+    MT_Float rObjectCost = path_.GetCostOutsideOfAllObjects();
+
+    const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& knowledgesByTypes = path_.GetPathKnowledgeObjects();
+    for( DEC_Agent_Path::CIT_PathKnowledgeObjectByTypesVector itType = knowledgesByTypes.begin(); itType != knowledgesByTypes.end(); ++itType )
     {
-        MT_Float rCurrentObjectCost = it->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
-        if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
-            return rCurrentObjectCost;
-        rObjectCost += rCurrentObjectCost;
+        bool bInsideObjectType = false;
+        const DEC_Agent_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
+        for( DEC_Agent_Path::CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
+        {
+            MT_Float rCurrentObjectCost = itKnowledge->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+            if( rCurrentObjectCost != std::numeric_limits< MT_Float >::min()  )
+            {
+                if( !bInsideObjectType )
+                {
+                    rObjectCost -= itKnowledge->GetCostOut();
+                    bInsideObjectType = true;
+                }
+                if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
+                    return rCurrentObjectCost;
+                rObjectCost += rCurrentObjectCost;
+            }
+        }
     }
     return rObjectCost;
 }
@@ -214,7 +229,6 @@ MT_Float DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, cons
             return rAutomateFuseauCost;
         rCost += rAutomateFuseauCost;
     }
-
     return rCost;
 }
 
@@ -315,7 +329,7 @@ MT_Float DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Ve
     const MT_Float rPopulationsCost = GetPopulationsCost( from, to, nToTerrainType, nLinkTerrainType );
     if( rPopulationsCost < 0 )
         return rPopulationsCost;
-    rDynamicCost += rPopulationsCost;
+    rDynamicCost += rPopulationsCost;   
 
     const MT_Float rBaseCost = bShort_ ? rDistance : ( rDistance / rSpeed );
     return rBaseCost * ( 1 + rDynamicCost );

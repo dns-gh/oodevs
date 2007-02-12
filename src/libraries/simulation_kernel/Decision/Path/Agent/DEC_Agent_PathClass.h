@@ -37,8 +37,8 @@ class DEC_Agent_PathClass
 public:
     //! @name Manager
     //@{
-    static void                 Initialize  ( MIL_InputArchive& archive );
-    static void                 Terminate   ();
+    static       void                 Initialize  ( MIL_InputArchive& archive );
+    static       void                 Terminate   ();
     static const DEC_Agent_PathClass& GetPathClass( const DEC_PathType& pathType, const MIL_AgentPion& pion );
     //@}
 
@@ -77,7 +77,7 @@ public:
           MT_Float     GetEnemyCostOnContact               () const;
           MT_Float     GetEnemyCostAtSecurityRange         () const;
           MT_Float     GetEnemyMaximumCost                 () const;
-          MT_Float     GetObjectCosts                      ( const MIL_RealObjectType& objectType ) const;
+          MT_Float     GetObjectCost                       ( const MIL_RealObjectType& objectType ) const;
           MT_Float     GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
           MT_Float     GetPopulationSecurityRange          () const;
           MT_Float     GetPopulationMaximumCost            () const;
@@ -95,14 +95,13 @@ private:
     void ReadEnemiesCost    ( MIL_InputArchive& archive );
     void ReadTerrains       ( MIL_InputArchive& archive, TerrainData& data );
     void ReadPopulationsCost( MIL_InputArchive& archive );
+    void ReadObjectsCost    ( MIL_InputArchive& archive );
     //@}
 
 private:
     //! @name Initialization
     //@{
-    static void InitializeObjectCosts();
-    static void InitializeRules      ( MIL_InputArchive& archive );
-    static void CheckRulesExistence  ();
+    static void CheckRulesExistence();
     //@}
 
 private:
@@ -120,8 +119,11 @@ private:
 private:
     //! @name Member data
     //@{
-    bool        bShort_;
-    bool        bAvoidObjects_;
+    bool          bShort_;
+
+    bool          bAvoidObjects_;
+    T_ObjectCosts objectCosts_;
+
     MT_Float    rAltitudePreference_;
 
     MT_Float    rPreferedTerrainCost_;
@@ -153,8 +155,7 @@ private:
     //@}
 
 private:
-    static T_Rules       rules_;
-    static T_ObjectCosts objectCosts_;
+    static T_Rules rules_;
 };
 
 #include "DEC_Agent_PathClass.inl"

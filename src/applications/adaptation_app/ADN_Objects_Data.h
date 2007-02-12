@@ -111,6 +111,7 @@ public:
         ADN_Type_Enum< E_ObjectType, eNbrObjectType > nObjectType_;
         ADN_Type_Enum<E_ConsumptionType,eNbrConsumptionType> nDefaultConsumption_;
         ADN_Type_String                              strName_;           // do not use directly !!!
+        ADN_Type_Bool                                bDangerous_;
         ADN_Type_Bool                                bCanBeValorized_;
         ADN_Type_Bool                                bCanBePrepared_;
         ADN_Type_Bool                                bCanBeBypassed_;

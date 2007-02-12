@@ -14,10 +14,10 @@
 // Created: NLD 2005-07-01
 // -----------------------------------------------------------------------------
 inline
-const MIL_RealObjectTypeFilter& MIL_RealObjectType::GetHatedObjectTypes()
+const MIL_RealObjectTypeFilter& MIL_RealObjectType::GetDangerousObjectTypes()
 {
-    assert( pHatedObjectTypes_ );
-    return *pHatedObjectTypes_;
+    assert( pDangerousObjectTypes_ );
+    return *pDangerousObjectTypes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,16 +67,6 @@ const MIL_RealObjectType* MIL_RealObjectType::Find( uint nID )
     if( it == objectTypes_.end() )
         return 0;
     return it->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_RealObjectType::GetBehavior
-// Created: NLD 2005-07-01
-// -----------------------------------------------------------------------------
-inline
-MIL_RealObjectType::E_Behavior MIL_RealObjectType::GetBehavior() const
-{
-    return nBehavior_;
 }
 
 // -----------------------------------------------------------------------------

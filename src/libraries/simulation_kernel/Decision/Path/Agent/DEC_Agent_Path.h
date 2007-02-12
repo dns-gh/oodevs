@@ -44,6 +44,9 @@ public:
     typedef std::vector< DEC_Path_KnowledgeObject >     T_PathKnowledgeObjectVector;
     typedef T_PathKnowledgeObjectVector::const_iterator CIT_PathKnowledgeObjectVector;
 
+    typedef std::vector< T_PathKnowledgeObjectVector >         T_PathKnowledgeObjectByTypesVector;
+    typedef T_PathKnowledgeObjectByTypesVector::const_iterator CIT_PathKnowledgeObjectByTypesVector;
+
     typedef std::vector< DEC_Path_KnowledgePopulation >     T_PathKnowledgePopulationVector;
     typedef T_PathKnowledgePopulationVector::const_iterator CIT_PathKnowledgePopulationVector;
     //@}
@@ -63,16 +66,17 @@ public:
     
     //! @name Accessors 
     //@{
-    const MIL_Fuseau&                       GetFuseau                   () const;
-    const MIL_Fuseau&                       GetAutomataFuseau           () const;
-    const PHY_Speeds&                       GetUnitSpeeds               () const;
-          MT_Float                          GetUnitMaxSlope             () const;
-    const MT_Vector2D&                      GetDirDanger                () const;
-    const T_PathKnowledgeObjectVector&      GetPathKnowledgeObjects     () const;
-    const T_PathKnowledgeAgentVector&       GetPathKnowledgeAgents      () const;
-    const T_PathKnowledgePopulationVector&  GetPathKnowledgePopulations () const;
-    const DEC_PathType&                     GetPathType                 () const;
-    const DEC_Agent_PathClass&              GetPathClass                () const;         
+    const MIL_Fuseau&                         GetFuseau                   () const;
+    const MIL_Fuseau&                         GetAutomataFuseau           () const;
+    const PHY_Speeds&                         GetUnitSpeeds               () const;
+          MT_Float                            GetUnitMaxSlope             () const;
+    const MT_Vector2D&                        GetDirDanger                () const;
+    const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects     () const;
+          MT_Float                            GetCostOutsideOfAllObjects  () const;
+    const T_PathKnowledgeAgentVector&         GetPathKnowledgeAgents      () const;
+    const T_PathKnowledgePopulationVector&    GetPathKnowledgePopulations () const;
+    const DEC_PathType&                       GetPathType                 () const;
+    const DEC_Agent_PathClass&                GetPathClass                () const;         
     //@}
     
     //! @name Tools
@@ -105,24 +109,26 @@ private:
 
     IT_PathPointList GetPreviousPathPointOnDifferentLocation( IT_PathPointList );
     //@}
-   
+ 
 private:   
     const MIL_AgentPion& queryMaker_;   
     
     // Path calculation parameters
-    const DEC_PathType&                   pathType_;
-    const DEC_Agent_PathClass&            pathClass_;
-          bool                            bRefine_;
-          T_PointVector                   pathPoints_;
-          MIL_Fuseau                      fuseau_;
-          MIL_Fuseau                      automateFuseau_;
-          MT_Vector2D                     vDirDanger_;
-          PHY_Speeds                      unitSpeeds_;
-          MT_Float                        rMaxSlope_;
-          T_PathKnowledgeAgentVector      pathKnowledgeAgentVector_;
-          T_PathKnowledgeObjectVector     pathKnowledgeObjectVector_;
-          T_PathKnowledgePopulationVector pathKnowledgePopulationVector_;
-          MT_Profiler                     profiler_;
+    const DEC_PathType&                      pathType_;
+    const DEC_Agent_PathClass&               pathClass_;
+          bool                               bRefine_;
+          T_PointVector                      pathPoints_;
+          MIL_Fuseau                         fuseau_;
+          MIL_Fuseau                         automateFuseau_;
+          MT_Vector2D                        vDirDanger_;
+          PHY_Speeds                         unitSpeeds_;
+          MT_Float                           rMaxSlope_;
+          T_PathKnowledgeAgentVector         pathKnowledgeAgents_;
+          T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
+          MT_Float                           rCostOutsideOfAllObjects_;
+          T_PathKnowledgePopulationVector    pathKnowledgePopulations_;
+          
+          MT_Profiler                        profiler_;
     
     //! @name
     //@{

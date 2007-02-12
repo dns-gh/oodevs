@@ -4051,6 +4051,10 @@ du tireur</translation>
         <source>valeur</source>
         <translation>value</translation>
     </message>
+    <message>
+        <source>Is dangerous</source>
+        <translation>Est dangereux</translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>

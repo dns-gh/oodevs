@@ -38,15 +38,6 @@ public:
     //@{
     typedef std::map< uint, const MIL_RealObjectType* > T_ObjectTypeMap;
     typedef T_ObjectTypeMap::const_iterator             CIT_ObjectTypeMap;
-
-    enum E_Behavior
-    {
-        eHate,
-        eAvoid,
-        eIgnore,
-        eEnjoy,
-        ePrefer
-    };
     //@}
 
     //! @name Statics
@@ -103,7 +94,7 @@ public:
     static const MIL_RealObjectType* Find( uint nID );
     static const MIL_RealObjectType* Find( ASN1T_EnumObjectType nAsnID );
 
-    static const MIL_RealObjectTypeFilter& GetHatedObjectTypes();
+    static const MIL_RealObjectTypeFilter& GetDangerousObjectTypes();
     //@}
 
     //! @name Accessors
@@ -121,7 +112,6 @@ public:
           MT_Float              GetDefaultSpeedWhenNotBypassed    () const;
     const PHY_ConsumptionType&  GetDefaultConsumptionMode         () const;
           uint                  GetNbrMaxAnimators                () const;
-          E_Behavior            GetBehavior                       () const;
           MT_Float              GetExitingPopulationDensity       () const;
 
     // Dotations
@@ -202,7 +192,7 @@ protected:
     //@}
 
 protected:
-    MIL_RealObjectType( const std::string& strName, E_ObjectType nType, ASN1T_EnumObjectType nAsnID, T_ObjectInstanciator objectInstanciator, E_Behavior nBehavior );
+    MIL_RealObjectType( const std::string& strName, E_ObjectType nType, ASN1T_EnumObjectType nAsnID, T_ObjectInstanciator objectInstanciator );
     virtual ~MIL_RealObjectType();
 
     //! @name Init
@@ -255,7 +245,6 @@ private:
     const PHY_ConsumptionType*  pDefaultConsumptionMode_;
     uint                        nNbrMaxAnimators_;
     MIL_MOSIDManager*           pIDManager_;
-    E_Behavior                  nBehavior_; //$$$ a renommer 
     MT_Float                    rExitingPopulationDensity_;
 
     // Attrition
@@ -265,7 +254,7 @@ private:
 
 private:
     static T_ObjectTypeMap           objectTypes_;
-    static MIL_RealObjectTypeFilter* pHatedObjectTypes_;
+    static MIL_RealObjectTypeFilter* pDangerousObjectTypes_;
 };
 
 #include "MIL_RealObjectType.inl"

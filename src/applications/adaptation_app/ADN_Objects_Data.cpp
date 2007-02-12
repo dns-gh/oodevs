@@ -160,6 +160,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
 : ADN_Ref_ABC       ()
 , nObjectType_      ( nType )
 , strName_          ( nType == (E_ObjectType)-1 ? "" : ENT_Tr::ConvertFromObjectType( nType, ENT_Tr::eToTr ) )
+, bDangerous_       ( false )
 , bCanBeValorized_  ( false )
 , bCanBePrepared_   ( false )
 , bCanBeBypassed_   ( false )
@@ -182,6 +183,8 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( E_ObjectType nType )
 {
     rAvoidDistance_.SetDataName( "la distance d'évitement" );
     rAvoidDistance_.SetParentNode( *this );
+    bDangerous_.SetDataName( "l'objet est dangereux" ); 
+    bDangerous_.SetParentNode( *this );
     bCanBeValorized_.SetDataName( "la capacité d'être valorisé" );
     bCanBeValorized_.SetParentNode( *this );
     bCanBePrepared_.SetDataName( "la capacité d'être préparé" );
@@ -246,6 +249,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( ADN_XmlInput_Helper& input )
     assert( nConsumption != -1 );
     nDefaultConsumption_ = nConsumption;
 
+    input.ReadField( "Dangereux" , bDangerous_ );
     input.ReadField( "PeutEtrePrepare" , bCanBePrepared_ );
     input.ReadField( "PeutEtreValorise", bCanBeValorized_ );
     input.ReadField( "PeutEtreContourne", bCanBeBypassed_ );
@@ -394,6 +398,7 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( MT_OutputArchive_ABC& output )
     output.WriteAttribute( "type", ENT_Tr::ConvertFromObjectType( nObjectType_.GetData() ) );
 
     output.WriteField( "ModeConsommationParDefaut", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) );
+    output.WriteField( "Dangereux", bDangerous_.GetData() );
     output.WriteField( "PeutEtrePrepare" , bCanBePrepared_.GetData() );
     output.WriteField( "PeutEtreValorise", bCanBeValorized_.GetData() || bToReinforce_.GetData() );
     output.WriteField( "PeutEtreContourne", bCanBeBypassed_.GetData() );

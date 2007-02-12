@@ -25,6 +25,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Objects/MIL_RealObjectType.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -38,18 +39,22 @@
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
-    : DEC_PathResult     ()
-    , queryMaker_        ( queryMaker )
-    , bRefine_           ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
-    , fuseau_            () //$$$ Debile
-    , automateFuseau_    () //$$$ Debile
-    , vDirDanger_        ( queryMaker.GetDirDanger() )
-    , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
-    , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
-    , pathType_          ( pathType )
-    , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , bDecPointsInserted_( false )
-    , pathPoints_        ()
+    : DEC_PathResult           ()
+    , queryMaker_              ( queryMaker )
+    , bRefine_                 ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
+    , vDirDanger_              ( queryMaker.GetDirDanger() )
+    , unitSpeeds_              ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
+    , rMaxSlope_               ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_     ()
+    , pathKnowledgeObjects_    ( MIL_RealObjectType::GetObjectTypes().size() )
+    , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_()
+    , pathType_                ( pathType )
+    , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , bDecPointsInserted_      ( false )
+    , pathPoints_              ()
 {
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
@@ -65,18 +70,22 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVe
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType ) 
-    : DEC_PathResult     ()
-    , queryMaker_        ( queryMaker )
-    , bRefine_           ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
-    , fuseau_            () //$$$ Debile
-    , automateFuseau_    () //$$$ Debile
-    , vDirDanger_        ( queryMaker.GetDirDanger() )
-    , unitSpeeds_        ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
-    , rMaxSlope_         ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
-    , pathType_          ( pathType )
-    , pathClass_         ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
-    , bDecPointsInserted_( false )
-    , pathPoints_        ()
+    : DEC_PathResult            ()
+    , queryMaker_               ( queryMaker )
+    , bRefine_                  ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                   () //$$$ Debile
+    , automateFuseau_           () //$$$ Debile
+    , vDirDanger_               ( queryMaker.GetDirDanger() )
+    , unitSpeeds_               ( queryMaker.GetRole< PHY_RoleAction_Moving >() ) 
+    , rMaxSlope_                ( queryMaker.GetRole< PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_      ()
+    , pathKnowledgeObjects_     ( MIL_RealObjectType::GetObjectTypes().size() )
+    , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_ ()
+    , pathType_                 ( pathType )
+    , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , bDecPointsInserted_       ( false )
+    , pathPoints_               ()
 {
     fuseau_         = queryMaker.GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetFuseau();
@@ -92,19 +101,23 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
 // Created: NLD 2005-06-30
 // -----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
-    : DEC_PathResult     ()    
-    , queryMaker_        ( rhs.queryMaker_ )
-    , bRefine_           ( rhs.bRefine_ )
-    , fuseau_            () //$$$ Debile
-    , automateFuseau_    () //$$$ Debile
-    , vDirDanger_        ( rhs.vDirDanger_ )
- //   , unitSpeeds_        ( rhs.unitSpeeds_ ) $$$ TODO
-    , unitSpeeds_        ( queryMaker_.GetRole< PHY_RoleAction_Moving >() )
-    , rMaxSlope_         ( rhs.rMaxSlope_ )
-    , pathType_          ( rhs.pathType_ )
-    , pathClass_         ( rhs.pathClass_ )
-    , bDecPointsInserted_( false )
-    , pathPoints_        ( rhs.pathPoints_ )
+    : DEC_PathResult           ()    
+    , queryMaker_              ( rhs.queryMaker_ )
+    , bRefine_                 ( rhs.bRefine_ )
+    , fuseau_                  () //$$$ Debile
+    , automateFuseau_          () //$$$ Debile
+    , vDirDanger_              ( rhs.vDirDanger_ )
+ //   , unitSpeeds_               ( rhs.unitSpeeds_ ) $$$ TODO
+    , unitSpeeds_              ( queryMaker_.GetRole< PHY_RoleAction_Moving >() )
+    , rMaxSlope_               ( rhs.rMaxSlope_ )
+    , pathKnowledgeAgents_     ()
+    , pathKnowledgeObjects_    ( MIL_RealObjectType::GetObjectTypes().size() )
+    , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_()
+    , pathType_                ( rhs.pathType_ )
+    , pathClass_               ( rhs.pathClass_ )
+    , bDecPointsInserted_      ( false )
+    , pathPoints_              ( rhs.pathPoints_ )
 {
     fuseau_         = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
@@ -184,7 +197,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         {
             const DEC_Knowledge_Agent& knowledge = **itKnowledgeAgent;
             if( fuseau_.IsInside( knowledge.GetPosition() ) )
-                pathKnowledgeAgentVector_.push_back( DEC_Path_KnowledgeAgent( pathClass_, knowledge, queryMaker_ ) );
+                pathKnowledgeAgents_.push_back( DEC_Path_KnowledgeAgent( pathClass_, knowledge, queryMaker_ ) );
         }
     }
 
@@ -201,7 +214,13 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                     && !knowledge.IsBypassed() 
                     && queryMaker_.GetRole< PHY_RolePion_Location >().GetHeight() <= knowledge.GetMaxInteractionHeight() 
                     && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
-                pathKnowledgeObjectVector_.push_back( DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
+            {
+                assert( pathKnowledgeObjects_.size() > knowledge.GetType().GetID() );
+                T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
+                pathKnowledges.push_back( DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
+                if( pathKnowledges.size() == 1 && pathKnowledges.front().GetCostOut() > 0 )
+                    rCostOutsideOfAllObjects_ += pathKnowledges.front().GetCostOut();               
+            }   
         }       
     }
 
@@ -210,9 +229,9 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     {
         T_KnowledgePopulationVector knowledgesPopulation;
         queryMaker_.GetKnowledgeGroup().GetKnowledge().GetPopulations( knowledgesPopulation );
-        pathKnowledgePopulationVector_.reserve( knowledgesPopulation.size() );
+        pathKnowledgePopulations_.reserve( knowledgesPopulation.size() );
         for( CIT_KnowledgePopulationVector it = knowledgesPopulation.begin(); it != knowledgesPopulation.end(); ++it )
-            pathKnowledgePopulationVector_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, queryMaker_ ) );
+            pathKnowledgePopulations_.push_back( DEC_Path_KnowledgePopulation( pathClass_, **it, queryMaker_ ) );
     }
 }
 
@@ -506,7 +525,7 @@ void DEC_Agent_Path::InsertDecPoints()
     /*T_PointVector cock; cock.reserve( dick );
     std::cout << "========== BEGIN PATH ============" << std::endl;
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
-    {
+    {::
         DEC_PathPoint& current = **itPoint;
 
         current.Dump();
@@ -539,8 +558,9 @@ void DEC_Agent_Path::InsertDecPoints()
 void DEC_Agent_Path::CleanAfterComputation()
 {
     DEC_Path_ABC::CleanAfterComputation(); 
-    pathKnowledgeAgentVector_ .clear();
-    pathKnowledgeObjectVector_.clear();
+    pathKnowledgeAgents_     .clear();
+    pathKnowledgeObjects_    .clear();
+    pathKnowledgePopulations_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -590,8 +610,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
                             ", Result : " << stream.str() );
     }
     MIL_AgentServer::GetWorkspace().GetPathFindManager().CleanPathAfterComputation( *this );
-    DecRef(); // We are no longer in the pathfind queue
-    
+    DecRef(); // We are no longer in the pathfind queue    
 }
 
 

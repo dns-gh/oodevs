@@ -62,47 +62,47 @@
 #include "Tools/MIL_IDManager.h"
 
 MIL_RealObjectType::T_ObjectTypeMap     MIL_RealObjectType::objectTypes_;
-MIL_RealObjectTypeFilter*               MIL_RealObjectType::pHatedObjectTypes_ = 0;
+MIL_RealObjectTypeFilter*               MIL_RealObjectType::pDangerousObjectTypes_ = 0;
 
-const MIL_RealObjectType& MIL_RealObjectType::fosseAntiChar_            = *new MIL_RealObjectType( "fosse anti char"           , eObjectTypeFosseAntiChar          , EnumObjectType::fosse_anti_char          , &MIL_FosseAntiChar              ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::abattis_                  = *new MIL_RealObjectType( "abattis"                   , eObjectTypeAbattis                , EnumObjectType::abattis                  , &MIL_Abattis                    ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::barricade_                = *new MIL_RealObjectType( "barricade"                 , eObjectTypeBarricade              , EnumObjectType::barricade                , &MIL_Barricade                  ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::bouchonMines_             = *new MIL_RealObjectType( "bouchon mines"             , eObjectTypeBouchonMines           , EnumObjectType::bouchon_mines            , &MIL_BouchonMines               ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneMineeLineaire_        = *new MIL_RealObjectType( "zone minee lineaire"       , eObjectTypeZoneMineeLineaire      , EnumObjectType::zone_minee_lineaire      , &MIL_ZoneMineeLineaire          ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneMineeParDispersion_   = *new MIL_RealObjectType( "zone minee par dispersion" , eObjectTypeZoneMineeParDispersion , EnumObjectType::zone_minee_par_dispersion, &MIL_ZoneMineeParDispersion     ::Create, eHate   ); 
-const MIL_RealObjectType& MIL_RealObjectType::eboulement_               = *new MIL_RealObjectType( "eboulement"                , eObjectTypeEboulement             , EnumObjectType::eboulement               , &MIL_Eboulement                 ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::destructionRoute_         = *new MIL_RealObjectType( "destruction route"         , eObjectTypeDestructionRoute       , EnumObjectType::destruction_route        , &MIL_DestructionRoute           ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::destructionPont_          = *new MIL_RealObjectType( "destruction pont"          , eObjectTypeDestructionPont        , EnumObjectType::destruction_pont         , &MIL_DestructionPont            ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::pontFlottantContinu_      = *new MIL_RealObjectType( "pont flottant continu"     , eObjectTypePontFlottantContinu    , EnumObjectType::pont_flottant_continu    , &MIL_FloatingBridgeContinuous   ::Create, eIgnore );  
-const MIL_RealObjectType& MIL_RealObjectType::pontFlottantDiscontinu_   = *new MIL_RealObjectType( "pont flottant discontinu"  , eObjectTypePontFlottantDiscontinu , EnumObjectType::pont_flottant_discontinu , &MIL_FloatingBridgeDiscontinuous::Create, eIgnore );  
-const MIL_RealObjectType& MIL_RealObjectType::posteTir_                 = *new MIL_RealObjectType( "poste tir"                 , eObjectTypePosteTir               , EnumObjectType::poste_tir                , &MIL_PosteTir                   ::Create, eIgnore );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneProtegee_             = *new MIL_RealObjectType( "zone protegee"             , eObjectTypeZoneProtegee           , EnumObjectType::zone_protegee            , &MIL_ZoneProtegee               ::Create, eIgnore );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCanon_    = *new MIL_RealObjectType( "zone implantation canon"   , eObjectTypeZoneImplantationCanon  , EnumObjectType::zone_implantation_canon  , &MIL_ZoneImplantationCanon      ::Create, eAvoid  );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCOBRA_    = *new MIL_RealObjectType( "zone implantation cobra"   , eObjectTypeZoneImplantationCOBRA  , EnumObjectType::zone_implantation_cobra  , &MIL_ZoneImplantationCOBRA      ::Create, eAvoid  );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationLRM_      = *new MIL_RealObjectType( "zone implantation lrm"     , eObjectTypeZoneImplantationLRM    , EnumObjectType::zone_implantation_lrm    , &MIL_ZoneImplantationLRM        ::Create, eAvoid  );  
-const MIL_RealObjectType& MIL_RealObjectType::siteFranchissement_       = *new MIL_RealObjectType( "site franchissement"       , eObjectTypeSiteFranchissement     , EnumObjectType::site_franchissement      , &MIL_SiteFranchissement         ::Create, eIgnore );  
-const MIL_RealObjectType& MIL_RealObjectType::nuageNBC_                 = *new MIL_RealObjectType( "nuage nbc"                 , eObjectTypeNuageNBC               , EnumObjectType::nuage_nbc                , &MIL_NuageNBC                   ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::siteDecontamination_      = *new MIL_RealObjectType( "site decontamination"      , eObjectTypeSiteDecontamination    , EnumObjectType::site_decontamination     , &MIL_SiteDecontamination        ::Create, eAvoid  );  
-const MIL_RealObjectType& MIL_RealObjectType::plotRavitaillement_       = *new MIL_RealObjectType( "plot ravitaillement"       , eObjectTypePlotRavitaillement     , EnumObjectType::plot_ravitaillement      , &MIL_PlotRavitaillement         ::Create, eAvoid  );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBrod_       = *new MIL_RealObjectType( "zone brouillage brod"      , eObjectTypeZoneBrouillageBrod     , EnumObjectType::zone_brouillage_brod     , &MIL_ZoneBrouillageBrod         ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBromure_    = *new MIL_RealObjectType( "zone brouillage bromure"   , eObjectTypeZoneBrouillageBromure  , EnumObjectType::zone_brouillage_bromure  , &MIL_ZoneBrouillageBromure      ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::rota_                     = *new MIL_RealObjectType( "rota"                      , eObjectTypeRota                   , EnumObjectType::rota                     , &MIL_Rota                       ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::zoneNBC_                  = *new MIL_RealObjectType( "zone NBC"                  , eObjectTypeZoneNBC                , EnumObjectType::zone_nbc                 , &MIL_ZoneNBC                    ::Create, eHate   );  
-const MIL_RealObjectType& MIL_RealObjectType::airePoser_                = *new MIL_RealObjectType( "aire poser"                , eObjectTypeAirePoser              , EnumObjectType::aire_poser               , &MIL_AirePoser                  ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::piste_                    = *new MIL_RealObjectType( "piste"                     , eObjectTypePiste                  , EnumObjectType::piste                    , &MIL_Piste                      ::Create, ePrefer );
-const MIL_RealObjectType& MIL_RealObjectType::plateForme_               = *new MIL_RealObjectType( "plateforme"                , eObjectTypePlateForme             , EnumObjectType::plateforme               , &MIL_PlateForme                 ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::zoneMobiliteAmelioree_    = *new MIL_RealObjectType( "zone mobilite amelioree"   , eObjectTypeZoneMobiliteAmelioree  , EnumObjectType::zone_mobilite_amelioree  , &MIL_ZoneMobiliteAmelioree      ::Create, ePrefer );
-const MIL_RealObjectType& MIL_RealObjectType::zonePoserHelicoptere_     = *new MIL_RealObjectType( "zone poser helicoptere"    , eObjectTypeZonePoserHelicoptere   , EnumObjectType::zone_poser_helicoptere   , &MIL_ZonePoserHelicoptere       ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::aireLogistique_           = *new MIL_RealObjectType( "aire logistique"           , eObjectTypeAireLogistique         , EnumObjectType::aire_logistique          , &MIL_AireLogistique             ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::campPrisonniers_          = *new MIL_RealObjectType( "camp prisonniers"          , eObjectTypeCampPrisonniers        , EnumObjectType::camp_prisonniers         , &MIL_CampPrisonniers            ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::campRefugies_             = *new MIL_RealObjectType( "camp refugies"             , eObjectTypeCampRefugies           , EnumObjectType::camp_refugies            , &MIL_CampRefugies               ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::itineraireLogistique_     = *new MIL_RealObjectType( "itineraire logistique"     , eObjectTypeItineraireLogistique   , EnumObjectType::itineraire_logistique    , &MIL_ItineraireLogistique       ::Create, eEnjoy  );
-const MIL_RealObjectType& MIL_RealObjectType::posteControle_            = *new MIL_RealObjectType( "poste controle"            , eObjectTypePosteControle          , EnumObjectType::poste_controle           , &MIL_PosteControle              ::Create, ePrefer );
-const MIL_RealObjectType& MIL_RealObjectType::terrainLargage_           = *new MIL_RealObjectType( "terrain largage"           , eObjectTypeTerrainLargage         , EnumObjectType::terrain_largage          , &MIL_TerrainLargage             ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenFire_        = *new MIL_RealObjectType( "zone interdite tir"        , eObjectTypeZoneForbiddenFire      , EnumObjectType::zone_interdite_tir       , &MIL_ZoneForbiddenFire          ::Create, eIgnore );
-const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenMove_        = *new MIL_RealObjectType( "zone interdite mouvement"  , eObjectTypeZoneForbiddenMove      , EnumObjectType::zone_interdite_mouvement , &MIL_ZoneForbiddenMove          ::Create, eHate   );
-const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationMortier_  = *new MIL_RealObjectType( "zone implantation mortier" , eObjectTypeZoneImplantationMortier, EnumObjectType::zone_implantation_mortier, &MIL_ZoneImplantationMortier    ::Create, eAvoid  );
-const MIL_RealObjectType& MIL_RealObjectType::installation_             = *new MIL_RealObjectType( "installation"              , eObjectTypeInstallation           , EnumObjectType::installation             , &MIL_Installation               ::Create, eIgnore );
+const MIL_RealObjectType& MIL_RealObjectType::fosseAntiChar_            = *new MIL_RealObjectType( "fosse anti char"           , eObjectTypeFosseAntiChar          , EnumObjectType::fosse_anti_char          , &MIL_FosseAntiChar              ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::abattis_                  = *new MIL_RealObjectType( "abattis"                   , eObjectTypeAbattis                , EnumObjectType::abattis                  , &MIL_Abattis                    ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::barricade_                = *new MIL_RealObjectType( "barricade"                 , eObjectTypeBarricade              , EnumObjectType::barricade                , &MIL_Barricade                  ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::bouchonMines_             = *new MIL_RealObjectType( "bouchon mines"             , eObjectTypeBouchonMines           , EnumObjectType::bouchon_mines            , &MIL_BouchonMines               ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneMineeLineaire_        = *new MIL_RealObjectType( "zone minee lineaire"       , eObjectTypeZoneMineeLineaire      , EnumObjectType::zone_minee_lineaire      , &MIL_ZoneMineeLineaire          ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneMineeParDispersion_   = *new MIL_RealObjectType( "zone minee par dispersion" , eObjectTypeZoneMineeParDispersion , EnumObjectType::zone_minee_par_dispersion, &MIL_ZoneMineeParDispersion     ::Create ); 
+const MIL_RealObjectType& MIL_RealObjectType::eboulement_               = *new MIL_RealObjectType( "eboulement"                , eObjectTypeEboulement             , EnumObjectType::eboulement               , &MIL_Eboulement                 ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::destructionRoute_         = *new MIL_RealObjectType( "destruction route"         , eObjectTypeDestructionRoute       , EnumObjectType::destruction_route        , &MIL_DestructionRoute           ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::destructionPont_          = *new MIL_RealObjectType( "destruction pont"          , eObjectTypeDestructionPont        , EnumObjectType::destruction_pont         , &MIL_DestructionPont            ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::pontFlottantContinu_      = *new MIL_RealObjectType( "pont flottant continu"     , eObjectTypePontFlottantContinu    , EnumObjectType::pont_flottant_continu    , &MIL_FloatingBridgeContinuous   ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::pontFlottantDiscontinu_   = *new MIL_RealObjectType( "pont flottant discontinu"  , eObjectTypePontFlottantDiscontinu , EnumObjectType::pont_flottant_discontinu , &MIL_FloatingBridgeDiscontinuous::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::posteTir_                 = *new MIL_RealObjectType( "poste tir"                 , eObjectTypePosteTir               , EnumObjectType::poste_tir                , &MIL_PosteTir                   ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneProtegee_             = *new MIL_RealObjectType( "zone protegee"             , eObjectTypeZoneProtegee           , EnumObjectType::zone_protegee            , &MIL_ZoneProtegee               ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCanon_    = *new MIL_RealObjectType( "zone implantation canon"   , eObjectTypeZoneImplantationCanon  , EnumObjectType::zone_implantation_canon  , &MIL_ZoneImplantationCanon      ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationCOBRA_    = *new MIL_RealObjectType( "zone implantation cobra"   , eObjectTypeZoneImplantationCOBRA  , EnumObjectType::zone_implantation_cobra  , &MIL_ZoneImplantationCOBRA      ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationLRM_      = *new MIL_RealObjectType( "zone implantation lrm"     , eObjectTypeZoneImplantationLRM    , EnumObjectType::zone_implantation_lrm    , &MIL_ZoneImplantationLRM        ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::siteFranchissement_       = *new MIL_RealObjectType( "site franchissement"       , eObjectTypeSiteFranchissement     , EnumObjectType::site_franchissement      , &MIL_SiteFranchissement         ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::nuageNBC_                 = *new MIL_RealObjectType( "nuage nbc"                 , eObjectTypeNuageNBC               , EnumObjectType::nuage_nbc                , &MIL_NuageNBC                   ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::siteDecontamination_      = *new MIL_RealObjectType( "site decontamination"      , eObjectTypeSiteDecontamination    , EnumObjectType::site_decontamination     , &MIL_SiteDecontamination        ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::plotRavitaillement_       = *new MIL_RealObjectType( "plot ravitaillement"       , eObjectTypePlotRavitaillement     , EnumObjectType::plot_ravitaillement      , &MIL_PlotRavitaillement         ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBrod_       = *new MIL_RealObjectType( "zone brouillage brod"      , eObjectTypeZoneBrouillageBrod     , EnumObjectType::zone_brouillage_brod     , &MIL_ZoneBrouillageBrod         ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneBrouillageBromure_    = *new MIL_RealObjectType( "zone brouillage bromure"   , eObjectTypeZoneBrouillageBromure  , EnumObjectType::zone_brouillage_bromure  , &MIL_ZoneBrouillageBromure      ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::rota_                     = *new MIL_RealObjectType( "rota"                      , eObjectTypeRota                   , EnumObjectType::rota                     , &MIL_Rota                       ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::zoneNBC_                  = *new MIL_RealObjectType( "zone NBC"                  , eObjectTypeZoneNBC                , EnumObjectType::zone_nbc                 , &MIL_ZoneNBC                    ::Create );  
+const MIL_RealObjectType& MIL_RealObjectType::airePoser_                = *new MIL_RealObjectType( "aire poser"                , eObjectTypeAirePoser              , EnumObjectType::aire_poser               , &MIL_AirePoser                  ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::piste_                    = *new MIL_RealObjectType( "piste"                     , eObjectTypePiste                  , EnumObjectType::piste                    , &MIL_Piste                      ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::plateForme_               = *new MIL_RealObjectType( "plateforme"                , eObjectTypePlateForme             , EnumObjectType::plateforme               , &MIL_PlateForme                 ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneMobiliteAmelioree_    = *new MIL_RealObjectType( "zone mobilite amelioree"   , eObjectTypeZoneMobiliteAmelioree  , EnumObjectType::zone_mobilite_amelioree  , &MIL_ZoneMobiliteAmelioree      ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zonePoserHelicoptere_     = *new MIL_RealObjectType( "zone poser helicoptere"    , eObjectTypeZonePoserHelicoptere   , EnumObjectType::zone_poser_helicoptere   , &MIL_ZonePoserHelicoptere       ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::aireLogistique_           = *new MIL_RealObjectType( "aire logistique"           , eObjectTypeAireLogistique         , EnumObjectType::aire_logistique          , &MIL_AireLogistique             ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::campPrisonniers_          = *new MIL_RealObjectType( "camp prisonniers"          , eObjectTypeCampPrisonniers        , EnumObjectType::camp_prisonniers         , &MIL_CampPrisonniers            ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::campRefugies_             = *new MIL_RealObjectType( "camp refugies"             , eObjectTypeCampRefugies           , EnumObjectType::camp_refugies            , &MIL_CampRefugies               ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::itineraireLogistique_     = *new MIL_RealObjectType( "itineraire logistique"     , eObjectTypeItineraireLogistique   , EnumObjectType::itineraire_logistique    , &MIL_ItineraireLogistique       ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::posteControle_            = *new MIL_RealObjectType( "poste controle"            , eObjectTypePosteControle          , EnumObjectType::poste_controle           , &MIL_PosteControle              ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::terrainLargage_           = *new MIL_RealObjectType( "terrain largage"           , eObjectTypeTerrainLargage         , EnumObjectType::terrain_largage          , &MIL_TerrainLargage             ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenFire_        = *new MIL_RealObjectType( "zone interdite tir"        , eObjectTypeZoneForbiddenFire      , EnumObjectType::zone_interdite_tir       , &MIL_ZoneForbiddenFire          ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneForbiddenMove_        = *new MIL_RealObjectType( "zone interdite mouvement"  , eObjectTypeZoneForbiddenMove      , EnumObjectType::zone_interdite_mouvement , &MIL_ZoneForbiddenMove          ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::zoneImplantationMortier_  = *new MIL_RealObjectType( "zone implantation mortier" , eObjectTypeZoneImplantationMortier, EnumObjectType::zone_implantation_mortier, &MIL_ZoneImplantationMortier    ::Create );
+const MIL_RealObjectType& MIL_RealObjectType::installation_             = *new MIL_RealObjectType( "installation"              , eObjectTypeInstallation           , EnumObjectType::installation             , &MIL_Installation               ::Create );
 
 // =============================================================================
 // MANAGER
@@ -156,7 +156,7 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
     objectTypes_[ zoneImplantationMortier_.GetID() ] = &zoneImplantationMortier_;
     objectTypes_[ installation_           .GetID() ] = &installation_;
 
-    pHatedObjectTypes_ = new MIL_RealObjectTypeFilter();
+    pDangerousObjectTypes_ = new MIL_RealObjectTypeFilter();
 
     archive.Section  ( "Objets" );
     archive.BeginList( "ObjetsReels" );
@@ -191,8 +191,8 @@ void MIL_RealObjectType::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 void MIL_RealObjectType::Terminate()
 {
-    delete pHatedObjectTypes_;
-    pHatedObjectTypes_ = 0;
+    delete pDangerousObjectTypes_;
+    pDangerousObjectTypes_ = 0;
     objectTypes_.clear();
 }
 
@@ -204,7 +204,7 @@ void MIL_RealObjectType::Terminate()
 // Name: MIL_RealObjectType constructor
 // Created: NLD 2004-08-09
 // -----------------------------------------------------------------------------
-MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType nType, ASN1T_EnumObjectType nAsnID, T_ObjectInstanciator objectInstanciator, E_Behavior nBehavior )
+MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType nType, ASN1T_EnumObjectType nAsnID, T_ObjectInstanciator objectInstanciator )
     : nType_                           ( nType )
     , nAsnID_                          ( nAsnID )
     , objectInstanciator_              ( objectInstanciator )
@@ -228,7 +228,6 @@ MIL_RealObjectType::MIL_RealObjectType( const std::string& strName, E_ObjectType
     , nNbrMaxAnimators_                ( 0 )
     , rExitingPopulationDensity_       ( std::numeric_limits< MT_Float >::max() )
     , pIDManager_                      ()
-    , nBehavior_                       ( nBehavior )
     , rPopulationAttritionPH_          ( 0. )
     , rPopulationAttritionSurface_     ( 0. )
 {   
@@ -397,12 +396,14 @@ void MIL_RealObjectType::Read( MIL_InputArchive& archive )
     if( bInitialized_ ) 
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Object types are already initialized" );
 
-    if( nBehavior_ == eHate )
-        pHatedObjectTypes_->Set( *this );
-
     pIDManager_ = MIL_IDManager::FindObjectIDManager( strName_ );
     if( !pIDManager_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Class ID of object '%s' is not initialized", strName_.c_str() ) );
+
+    bool bDangerous;
+    archive.ReadField( "Dangereux", bDangerous );
+    if( bDangerous )
+        pDangerousObjectTypes_->Set( *this );
 
     std::string strConsumptionMode;
     archive.ReadField( "ModeConsommationParDefaut", strConsumptionMode );

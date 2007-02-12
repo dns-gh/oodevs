@@ -289,8 +289,7 @@ void MIL_RealObject_ABC::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_RealObject_ABC::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    assert( pType_ );
-    
+    assert( pType_ );    
     TER_Localisation localisation; 
     if( !NET_ASN_Tools::ReadLocation( asnCreateObject.localisation, localisation ) )
         return EnumObjectErrorCode::error_invalid_localisation;

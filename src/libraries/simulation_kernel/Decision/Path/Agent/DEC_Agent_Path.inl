@@ -84,9 +84,19 @@ const MT_Vector2D& DEC_Agent_Path::GetDirDanger() const
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
 inline
-const DEC_Agent_Path::T_PathKnowledgeObjectVector& DEC_Agent_Path::GetPathKnowledgeObjects() const
+const DEC_Agent_Path::T_PathKnowledgeObjectByTypesVector& DEC_Agent_Path::GetPathKnowledgeObjects() const
 {
-    return pathKnowledgeObjectVector_;
+    return pathKnowledgeObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetCostOutsideOfAllObjects
+// Created: NLD 2007-02-09
+// -----------------------------------------------------------------------------
+inline
+MT_Float DEC_Agent_Path::GetCostOutsideOfAllObjects() const
+{
+    return rCostOutsideOfAllObjects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +106,7 @@ const DEC_Agent_Path::T_PathKnowledgeObjectVector& DEC_Agent_Path::GetPathKnowle
 inline
 const DEC_Agent_Path::T_PathKnowledgeAgentVector& DEC_Agent_Path::GetPathKnowledgeAgents() const
 {
-    return pathKnowledgeAgentVector_;
+    return pathKnowledgeAgents_;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +116,7 @@ const DEC_Agent_Path::T_PathKnowledgeAgentVector& DEC_Agent_Path::GetPathKnowled
 inline
 const DEC_Agent_Path::T_PathKnowledgePopulationVector& DEC_Agent_Path::GetPathKnowledgePopulations() const
 {
-    return pathKnowledgePopulationVector_;
+    return pathKnowledgePopulations_;
 }
 
 // -----------------------------------------------------------------------------

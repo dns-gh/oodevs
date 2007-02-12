@@ -118,7 +118,8 @@ bool MIL_ItineraireLogistique::TransformLocalisation()
 //-----------------------------------------------------------------------------
 bool MIL_ItineraireLogistique::Initialize( DIA_Parameters& diaParameters, uint& nCurrentParamIdx )
 {
-    MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx );
+    if( !MIL_RealObject_ABC::Initialize( diaParameters, nCurrentParamIdx ) )
+        return false;
     TransformLocalisation();
     return true;
 }
@@ -148,7 +149,10 @@ void MIL_ItineraireLogistique::Initialize( MIL_InputArchive& archive )
 // -----------------------------------------------------------------------------
 ASN1T_EnumObjectErrorCode MIL_ItineraireLogistique::Initialize( const ASN1T_MagicActionCreateObject& asnCreateObject )
 {
-    MIL_RealObject_ABC::Initialize( asnCreateObject );
+    ASN1T_EnumObjectErrorCode nErrorCode = MIL_RealObject_ABC::Initialize( asnCreateObject );
+    if( nErrorCode != EnumObjectErrorCode::no_error )
+        return nErrorCode;
+
     if( !TransformLocalisation() )
         return EnumObjectErrorCode::error_invalid_localisation;
 

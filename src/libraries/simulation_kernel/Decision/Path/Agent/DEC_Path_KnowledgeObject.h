@@ -42,12 +42,7 @@ public:
     //! @name Operations
     //@{
     MT_Float ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    //@}
-
-private:
-    //! @name Tools
-    //@{
-    void SetCost( MT_Float rCost );
+    MT_Float GetCostOut () const;
     //@}
 
 private:
@@ -58,5 +53,7 @@ private:
     MT_Float         rCostOut_;
     //@}
 };
+
+#include "DEC_Path_KnowledgeObject.inl"
 
 #endif // __DEC_Path_KnowledgeObject_h_

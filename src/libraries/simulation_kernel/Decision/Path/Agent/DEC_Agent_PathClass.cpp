@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-08-04 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 
@@ -26,58 +17,36 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 
 DEC_Agent_PathClass::T_Rules       DEC_Agent_PathClass::rules_;
-DEC_Agent_PathClass::T_ObjectCosts DEC_Agent_PathClass::objectCosts_;
 
 // =============================================================================
 // MANAGER
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::CheckRulesExistence
+// Created: NLD 2006-01-30
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathClass::CheckRulesExistence()
+{
+    const DEC_PathType::T_PathTypeMap& types = DEC_PathType::GetPathTypes();
+    for( DEC_PathType::CIT_PathTypeMap it = types.begin(); it != types.end(); ++it )
+    {
+        const std::string& strTypeName = it->second->GetName();
+        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( false, false ) ) ) == rules_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for non flying, inhabited units"  );
+        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( true, false ) ) ) == rules_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for flying, inhabited units" );
+        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( false, true ) ) ) == rules_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for non flying, autonomous units" );
+        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( true, true ) ) ) == rules_.end() )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for flying, autonomous units" );
+    }
+}
+// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::Initialize
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 void DEC_Agent_PathClass::Initialize( MIL_InputArchive& archive )
-{
-    InitializeObjectCosts();
-    InitializeRules( archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::InitializeObjectCosts
-// Created: AGE 2005-08-04
-// -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::InitializeObjectCosts()
-{
-    const MIL_RealObjectType::T_ObjectTypeMap& objectTypes = MIL_RealObjectType::GetObjectTypes();
-    objectCosts_.resize( objectTypes.size() );
-
-    const MT_Float ignore( 0 );
-    const MT_Float avoid ( 10 );
-    const MT_Float hate  ( 10000 );
-    const MT_Float enjoy ( -1 );
-    const MT_Float prefer( -5 );
-
-    for( MIL_RealObjectType::CIT_ObjectTypeMap it = objectTypes.begin(); it != objectTypes.end(); ++it )
-    {
-        const MIL_RealObjectType& objectType = *it->second;
-        switch( objectType.GetBehavior() )
-        {
-            case MIL_RealObjectType::eHate   : objectCosts_[ objectType.GetID() ] = hate;   break;
-            case MIL_RealObjectType::eAvoid  : objectCosts_[ objectType.GetID() ] = avoid;  break;
-            case MIL_RealObjectType::eIgnore : objectCosts_[ objectType.GetID() ] = ignore; break;
-            case MIL_RealObjectType::eEnjoy  : objectCosts_[ objectType.GetID() ] = enjoy;  break;
-            case MIL_RealObjectType::ePrefer : objectCosts_[ objectType.GetID() ] = prefer; break;
-            default:
-                assert( false );
-        }       
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::InitializeRules
-// Created: NLD 2006-01-30
-// -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::InitializeRules( MIL_InputArchive& archive )
 {
     archive.BeginList( "AgentRules" );
     while( archive.NextListElement() )
@@ -111,27 +80,6 @@ void DEC_Agent_PathClass::InitializeRules( MIL_InputArchive& archive )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::CheckRulesExistence
-// Created: NLD 2006-01-30
-// -----------------------------------------------------------------------------
-void DEC_Agent_PathClass::CheckRulesExistence()
-{
-    const DEC_PathType::T_PathTypeMap& types = DEC_PathType::GetPathTypes();
-    for( DEC_PathType::CIT_PathTypeMap it = types.begin(); it != types.end(); ++it )
-    {
-        const std::string& strTypeName = it->second->GetName();
-        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( false, false ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for non flying, inhabited units"  );
-        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( true, false ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for flying, inhabited units" );
-        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( false, true ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for non flying, autonomous units" );
-        if( rules_.find( T_RuleType( strTypeName, T_BooleanPair( true, true ) ) ) == rules_.end() )
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Rule '" + strTypeName + "' is not defined for flying, autonomous units" );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::Terminate
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
@@ -153,6 +101,7 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_A
     , rPreferedTerrainCost_              ( 0 )
     , rAvoidedTerrainCost_               ( 0 )
     , bAvoidObjects_                     ( true )
+    , objectCosts_                       ( MIL_RealObjectType::GetObjectTypes().size(), 0 )
     , rAltitudePreference_               ( 0 )
     , rMaximumFuseauDistance_            ( 1000 )
     , rMaximumFuseauDistanceWithAutomata_( 10000 )
@@ -186,7 +135,6 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_A
         ReadTerrains( archive, avoidedTerrain_ );
         archive.EndList();
     }
-    archive.ReadField( "AvoidObjects",       bAvoidObjects_,       MIL_InputArchive::eNothing );
     archive.ReadField( "AltitudePreference", rAltitudePreference_, MIL_InputArchive::eNothing );
 
     if( archive.Section( "Fuseau", MIL_InputArchive::eNothing ) )
@@ -212,6 +160,12 @@ DEC_Agent_PathClass::DEC_Agent_PathClass( MIL_InputArchive& archive, const DEC_A
         archive.EndSection(); // Enemies
     }
 
+    if( archive.Section( "Objects", MIL_InputArchive::eNothing ) )
+    {
+        ReadObjectsCost( archive );
+        archive.EndSection(); // Objects
+    }
+
     if( archive.Section( "Populations", MIL_InputArchive::eNothing ) )
     {
         ReadPopulationsCost( archive );
@@ -231,6 +185,34 @@ DEC_Agent_PathClass::~DEC_Agent_PathClass()
 // =============================================================================
 // INITIALIZATION
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_PathClass::ReadObjectsCost
+// Created: NLD 2007-02-08
+// -----------------------------------------------------------------------------
+void DEC_Agent_PathClass::ReadObjectsCost( MIL_InputArchive& archive )
+{
+    archive.ReadAttribute( "avoid", bAvoidObjects_ );
+    if( archive.BeginList( "Costs", MIL_InputArchive::eNothing ) )
+    {
+        while( archive.NextListElement() )
+        {
+            archive.Section( "Cost" );
+            
+            std::string strObjectType;
+            archive.ReadAttribute( "type", strObjectType );           
+            const MIL_RealObjectType* pType = MIL_RealObjectType::Find( strObjectType );
+            if( !pType )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown object type", archive.GetContext() );
+
+            assert( objectCosts_.size() > pType->GetID() );
+            archive.Read( objectCosts_[ pType->GetID() ] );
+
+            archive.EndSection(); // Cost
+        }
+        archive.EndList(); // Costs
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathClass::ReadTerrains
@@ -356,10 +338,10 @@ const DEC_Agent_PathClass& DEC_Agent_PathClass::GetPathClass( const DEC_PathType
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_PathClass::GetObjectCosts
+// Name: DEC_Agent_PathClass::GetObjectCost
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
-MT_Float DEC_Agent_PathClass::GetObjectCosts( const MIL_RealObjectType& objectType ) const
+MT_Float DEC_Agent_PathClass::GetObjectCost( const MIL_RealObjectType& objectType ) const
 {
     assert( objectCosts_.size() > objectType.GetID() );
     return objectCosts_[ objectType.GetID() ];

@@ -236,3 +236,4 @@ MT_Float DEC_Agent_PathClass::GetPopulationMaximumCost() const
 {
     return rPopulationMaximumCost_;
 }
+

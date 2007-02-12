@@ -82,6 +82,9 @@ void ADN_Objects_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pParamGroup, tr( "Name"), vInfosConnectors[eName] );
     builder.SetEnabled( false );
 
+    // Dangerous
+    builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Is dangerous"), vInfosConnectors[eDangerous] );
+
     // Bypassed
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can be bypassed"), vInfosConnectors[eCanBeBypassed] );
 

@@ -111,7 +111,7 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
 
     const MT_Float rHeight = pion_.GetRole< PHY_RolePion_Location >().GetHeight();
 
-    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, MIL_RealObjectType::GetHatedObjectTypes() );
+    pion_.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, MIL_RealObjectType::GetDangerousObjectTypes() );
     if( knowledges != objectsToAvoid_ )
     {
         objectsToAvoid_ = knowledges;

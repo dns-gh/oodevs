@@ -59,6 +59,7 @@ public:
         ePopulationAttritionPh,
         eCanBePrepared,
         eCanBeValorized,
+        eDangerous,
         eNbrGuiElements
     };
 

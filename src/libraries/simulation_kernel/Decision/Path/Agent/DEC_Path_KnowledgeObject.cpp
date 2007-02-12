@@ -25,7 +25,12 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
     , rCostIn_     ( 0 )
     , rCostOut_    ( 0 )
 { 
-    SetCost( pathClass.GetObjectCosts( knowledge.GetType() ) );
+    const MT_Float rCost = pathClass.GetObjectCost( knowledge.GetType() );
+
+    if( rCost > 0 )
+        rCostIn_  = rCost;
+    else
+        rCostOut_ = -rCost;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,18 +66,6 @@ DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_Kn
     return *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::SetCost
-// Created: AGE 2005-08-04
-// -----------------------------------------------------------------------------
-void DEC_Path_KnowledgeObject::SetCost( MT_Float rCost )
-{
-    if( rCost > 0 )
-        rCostIn_  = rCost;
-    else
-        rCostOut_ = -rCost;
-}
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================
@@ -86,5 +79,5 @@ MT_Float DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const M
     const MT_Line line( from, to );
     if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
         return rCostIn_;
-    return rCostOut_;
+    return std::numeric_limits< MT_Float >::min();
 }

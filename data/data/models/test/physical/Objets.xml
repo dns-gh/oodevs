@@ -4,6 +4,7 @@
   <ObjetsReels>
     <Objet type="bouchon mines">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>true</PeutEtrePrepare>
       <PeutEtreValorise>true</PeutEtreValorise>
       <PeutEtreContourne>true</PeutEtreContourne>
@@ -33,6 +34,7 @@
     </Objet>
     <Objet type="zone minee lineaire">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>true</PeutEtreContourne>
@@ -49,6 +51,7 @@
     </Objet>
     <Objet type="zone minee par dispersion">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>true</PeutEtreContourne>
@@ -105,6 +108,7 @@
     </Objet>
     <Objet type="fosse anti char">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>true</PeutEtreValorise>
       <PeutEtreContourne>true</PeutEtreContourne>
@@ -126,6 +130,7 @@
     </Objet>
     <Objet type="abattis">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>true</PeutEtrePrepare>
       <PeutEtreValorise>true</PeutEtreValorise>
       <PeutEtreContourne>true</PeutEtreContourne>
@@ -147,6 +152,7 @@
     </Objet>
     <Objet type="barricade">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>true</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -163,6 +169,7 @@
     </Objet>
     <Objet type="eboulement">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>true</PeutEtrePrepare>
       <PeutEtreValorise>true</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -179,6 +186,7 @@
     </Objet>
     <Objet type="destruction route">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>true</PeutEtrePrepare>
       <PeutEtreValorise>true</PeutEtreValorise>
       <PeutEtreContourne>true</PeutEtreContourne>
@@ -195,6 +203,7 @@
     </Objet>
     <Objet type="destruction pont">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>true</PeutEtrePrepare>
       <PeutEtreValorise>true</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -211,6 +220,7 @@
     </Objet>
     <Objet type="pont flottant continu">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -225,6 +235,7 @@
     </Objet>
     <Objet type="poste tir">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -236,6 +247,7 @@
     </Objet>
     <Objet type="zone protegee">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -247,6 +259,7 @@
     </Objet>
     <Objet type="zone implantation canon">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -258,6 +271,7 @@
     </Objet>
     <Objet type="zone implantation cobra">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -269,6 +283,7 @@
     </Objet>
     <Objet type="zone implantation lrm">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -280,6 +295,7 @@
     </Objet>
     <Objet type="site franchissement">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -291,6 +307,7 @@
     </Objet>
     <Objet type="nuage nbc">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>true</PeutEtreContourne>
@@ -303,6 +320,7 @@
     </Objet>
     <Objet type="plot ravitaillement">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -314,6 +332,7 @@
     </Objet>
     <Objet type="site decontamination">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -325,6 +344,7 @@
     </Objet>
     <Objet type="zone brouillage brod">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -336,6 +356,7 @@
     </Objet>
     <Objet type="rota">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -347,6 +368,7 @@
     </Objet>
     <Objet type="zone nbc">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -358,6 +380,7 @@
     </Objet>
     <Objet type="zone brouillage bromure">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -369,6 +392,7 @@
     </Objet>
     <Objet type="aire poser">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -380,6 +404,7 @@
     </Objet>
     <Objet type="piste">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -391,6 +416,7 @@
     </Objet>
     <Objet type="plateforme">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -402,6 +428,7 @@
     </Objet>
     <Objet type="zone mobilite amelioree">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -413,6 +440,7 @@
     </Objet>
     <Objet type="zone poser helicoptere">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -424,6 +452,7 @@
     </Objet>
     <Objet type="aire logistique">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -435,6 +464,7 @@
     </Objet>
     <Objet type="itineraire logistique">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -446,6 +476,7 @@
     </Objet>
     <Objet type="camp prisonniers">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -457,6 +488,7 @@
     </Objet>
     <Objet type="camp refugies">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -468,6 +500,7 @@
     </Objet>
     <Objet type="poste controle">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -480,6 +513,7 @@
     </Objet>
     <Objet type="terrain largage">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -491,6 +525,7 @@
     </Objet>
     <Objet type="zone interdite mouvement">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>true</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -502,6 +537,7 @@
     </Objet>
     <Objet type="zone interdite tir">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -513,6 +549,7 @@
     </Objet>
     <Objet type="zone implantation mortier">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -524,6 +561,7 @@
     </Objet>
     <Objet type="pont flottant discontinu">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
@@ -538,6 +576,7 @@
     </Objet>
     <Objet type="installation">
       <ModeConsommationParDefaut>EnTravaux</ModeConsommationParDefaut>
+      <Dangereux>false</Dangereux>
       <PeutEtrePrepare>false</PeutEtrePrepare>
       <PeutEtreValorise>false</PeutEtreValorise>
       <PeutEtreContourne>false</PeutEtreContourne>
