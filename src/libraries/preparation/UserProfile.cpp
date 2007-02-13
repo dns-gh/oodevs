@@ -39,7 +39,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     std::string login, pass;
     xis >> attribute( "name", login )
         >> attribute( "password", pass )
-        >> xml::optional() >> content( "supervisor", supervisor_ )
+        >> xml::optional() >> content( "supervision", supervisor_ )
         >> start( "rights" )
             >> start( "readonly" )
                 >> list( "side"      , *this, &UserProfile::ReadRights, readSides_, teamChecker )
