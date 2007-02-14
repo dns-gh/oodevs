@@ -49,6 +49,7 @@
 #include "Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"
+#include "Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
@@ -169,6 +170,7 @@ void MIL_EntityManager::InitializeSensors( MIL_InputArchive& archive, MIL_Config
 
     archiveType.Section( "Capteurs" );
     PHY_PerceptionRecoSurveillance::Initialize( archiveType );
+    PHY_PerceptionFlyingShell     ::Initialize( archiveType );
     PHY_SensorType                ::Initialize( archiveType );
     PHY_RadarType                 ::Initialize( archiveType );
     archiveType.EndSection(); // Capteurs

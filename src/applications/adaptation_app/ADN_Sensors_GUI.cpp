@@ -238,6 +238,10 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     for( int n = 1; n < eNbrVisionObjects; ++n )
         builder.AddField<ADN_TimeField>( pAlatGroup1, ADN_Tr::ConvertFromVisionObject( (E_VisionObject)n ).c_str(), data_.GetAlatInfos().surveyTimes_[n-1], tr( "/ha" ) );
 
+    // Cobra parameters
+    QGroupBox* pCobraGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Cobra" ), pPage );
+    builder.AddField<ADN_EditLine_Double>( pCobraGroup, tr( "Range" ), data_.GetCobraInfos().rRange_ , tr( "m" ), eGreaterEqualZero );
+
     radarGui_.Build();
     QWidget* pRadarWidget = radarGui_.GetMainWidget();
     pRadarWidget->reparent( pPage, QPoint( 0, 0 ) );
@@ -249,6 +253,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 //    QHBoxLayout* pLayoutCol2 = new QHBoxLayout( pMainLayout, 20 );
 
     pMainLayout->addWidget( pAlatGroup );
+    pMainLayout->addWidget( pCobraGroup );
     pMainLayout->addWidget( pRadarWidget );
 //    builder.AddStretcher( pLayoutCol1, Qt::Vertical );
 

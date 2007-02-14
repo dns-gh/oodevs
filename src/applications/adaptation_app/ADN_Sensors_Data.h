@@ -369,6 +369,22 @@ public:
         ADN_Type_Time surveyTimes_[eNbrVisionObjects-1];
     };
 
+//*****************************************************************************
+    class CobraInfos
+    {
+        MT_COPYNOTALLOWED( CobraInfos )
+
+    public:
+        CobraInfos();
+        ~CobraInfos();
+
+        void ReadArchive( ADN_XmlInput_Helper& input );
+        void WriteArchive( MT_OutputArchive_ABC& output );
+
+    public:
+        ADN_Type_Double rRange_;
+    };
+
 
 
 //*****************************************************************************
@@ -383,7 +399,8 @@ public:
     T_SensorsInfos_Vector& GetSensorsInfos();
     SensorInfos*           FindSensor( const std::string& strName );
 
-    ALATInfos& GetAlatInfos();
+    ALATInfos&  GetAlatInfos ();
+    CobraInfos& GetCobraInfos();
 
 private:
     void ReadArchive( ADN_XmlInput_Helper& input );
@@ -393,9 +410,12 @@ public:
     T_SensorsInfos_Vector  vSensors_;
 
     ALATInfos              alatInfos_;
+    CobraInfos             cobraInfos_;
 
     ADN_Radars_Data&       radarData_;
 };
+
+
 
 
 //-----------------------------------------------------------------------------
@@ -431,6 +451,16 @@ inline
 ADN_Sensors_Data::ALATInfos& ADN_Sensors_Data::GetAlatInfos()
 {
     return alatInfos_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::GetCobraInfos
+// Created: NLD 2007-02-13
+// -----------------------------------------------------------------------------
+inline
+ADN_Sensors_Data::CobraInfos& ADN_Sensors_Data::GetCobraInfos()
+{
+    return cobraInfos_;
 }
 
 

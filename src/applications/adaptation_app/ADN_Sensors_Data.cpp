@@ -968,6 +968,56 @@ void ADN_Sensors_Data::ALATInfos::WriteArchive( MT_OutputArchive_ABC& output )
 }
 
 
+
+// -----------------------------------------------------------------------------
+// Name: CobraInfos::CobraInfos
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::CobraInfos::CobraInfos()
+    : rRange_( 0. )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: CobraInfos::~CobraInfos
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::CobraInfos::~CobraInfos()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: CobraInfos::ReadArchive
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::CobraInfos::ReadArchive( ADN_XmlInput_Helper& input )
+{
+    input.Section( "RadarCOBRA" );
+    input.Section( "Portee" );
+
+    input.ReadField( "RayonAction", rRange_ );
+
+    input.EndSection(); // Portee
+    input.EndSection(); // RadarCOBRA
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: CobraInfos::WriteArchive
+// Created: APE 2005-01-17
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::CobraInfos::WriteArchive( MT_OutputArchive_ABC& output )
+{
+    output.Section( "RadarCOBRA" );
+    output.Section( "Portee" );
+
+    output.WriteField( "RayonAction", rRange_.GetData() );
+
+    output.EndSection(); // Portee
+    output.EndSection(); // RadarCOBRA
+}
+
+
 // =============================================================================
 // 
 // =============================================================================
@@ -1025,9 +1075,9 @@ void ADN_Sensors_Data::ReadArchive( ADN_XmlInput_Helper& input )
 {
     input.Section( "Capteurs" );
 
-    alatInfos_.ReadArchive( input );
-
-    radarData_.ReadArchive( input );
+    alatInfos_ .ReadArchive( input );
+    cobraInfos_.ReadArchive( input );
+    radarData_ .ReadArchive( input );
 
     input.BeginList( "Senseurs" );
     while( input.NextListElement() )
@@ -1049,14 +1099,9 @@ void ADN_Sensors_Data::WriteArchive( MT_OutputArchive_ABC& output )
 {
     output.Section( "Capteurs" );
 
-    alatInfos_.WriteArchive( output );
-
-    output.Section( "RadarsASS" );
-    output.Section( "RadarCOBRA" );
-    output.EndSection(); // RadarCOBRA
-    output.EndSection(); // RadarsASS
-
-    radarData_.WriteArchive( output );
+    alatInfos_ .WriteArchive( output );
+    cobraInfos_.WriteArchive( output );
+    radarData_ .WriteArchive( output );
 
     output.BeginList( "Senseurs", vSensors_.size() );
     for( IT_SensorsInfos_Vector it = vSensors_.begin(); it != vSensors_.end(); ++it )

@@ -4851,6 +4851,14 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Modifier</source>
         <translation>Modificateur</translation>
     </message>
+    <message>
+        <source>Cobra</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation>Portée</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>

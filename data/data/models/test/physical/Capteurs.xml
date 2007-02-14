@@ -9,9 +9,11 @@
     </TempsSurveillance>
   </SurveillanceALAT>
 
-  <RadarsASS>
-    <RadarCOBRA/>
-  </RadarsASS>
+  <RadarCOBRA>
+    <Portee>
+      <RayonAction>100000</RayonAction>
+    </Portee>
+  </RadarCOBRA>
 
   <Radars>
     <Radar nom="Radar standard" type="radar">

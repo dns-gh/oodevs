@@ -13,10 +13,32 @@
 #include "PHY_PerceptionFlyingShell.h"
 
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Tools/MIL_Tools.h"
 #include "MIL_AgentServer.h"
+
+MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionFlyingShell::Initialize
+// Created: NLD 2007-02-13
+// -----------------------------------------------------------------------------
+void PHY_PerceptionFlyingShell::Initialize( MIL_InputArchive& archive )
+{
+    archive.Section( "RadarCOBRA" );
+    archive.Section( "Portee" );
+    
+    archive.ReadField( "RayonAction", rRadius_, CheckValueGreaterOrEqual( 0. ) );
+    rRadius_ = MIL_Tools::ConvertMeterToSim( rRadius_ );
+
+    archive.EndSection(); // Portee
+    archive.EndSection(); // RadarCOBRA
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionFlyingShell constructor
@@ -76,6 +98,7 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( void* pId )
 void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/ )
 {
     const MIL_EffectManager::T_FlyingShellSet& flyingShells = MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().GetFlyingShells();
+    const MT_Vector2D&                         source       = perceiver_.GetPion().GetRole< PHY_RolePion_Location >().GetPosition();
 
     T_FlyingShellSet perceivedFlyingShells;
     for( MIL_EffectManager::CIT_FlyingShellSet itFlyingShell = flyingShells.begin(); itFlyingShell != flyingShells.end(); ++itFlyingShell )
@@ -83,7 +106,7 @@ void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
         const MIL_Effect_IndirectFire& flyingShell = (**itFlyingShell);
         for( CIT_ZoneVector itZone = zones_.begin(); itZone != zones_.end(); ++itZone )
         {
-            if( flyingShell.IsFlyingThroughLocalisation( **itZone ) )
+            if( (**itZone).Intersect2DWithCircle( source, rRadius_ ) && flyingShell.IsFlyingThroughLocalisation( **itZone ) )
             {
                 perceivedFlyingShells.insert( &flyingShell );
                 if( lastPerceivedFlyingShells_.find( &flyingShell ) == lastPerceivedFlyingShells_.end() )

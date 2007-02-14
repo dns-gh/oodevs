@@ -28,7 +28,7 @@ public:
              PHY_PerceptionRecoSurveillance( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_PerceptionRecoSurveillance();
 
-    //! @name Init
+    //! @name Initialization
     //@{
     static void Initialize( MIL_InputArchive& archive );
     //@}

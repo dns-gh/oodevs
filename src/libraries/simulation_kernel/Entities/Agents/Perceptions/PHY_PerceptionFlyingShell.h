@@ -30,6 +30,11 @@ public:
              PHY_PerceptionFlyingShell( PHY_RolePion_Perceiver& perceiver );
     virtual ~PHY_PerceptionFlyingShell();
 
+    //! @name Initialization
+    //@{
+    static void Initialize( MIL_InputArchive& archive );
+    //@}
+
     //! @name Add/Remove Points
     //@{
     void* AddLocalisation        ( const TER_Localisation& );
@@ -55,6 +60,9 @@ private:
 private:
     T_ZoneVector     zones_;
     T_FlyingShellSet lastPerceivedFlyingShells_;
+
+private:
+    static MT_Float rRadius_;
 };
 
 #include "PHY_PerceptionFlyingShell.inl"
