@@ -1607,8 +1607,16 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const ASN1T_MsgPop
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck( const ASN1T_MsgPopulationOrderAck& message, unsigned long nCtx )
 {
-    if( CheckAcknowledge( message, "PopulationOrderAck" ) )
-        GetModel().agents_.GetPopulation( message.oid_unite_executante ).Update( message );
+    CheckAcknowledge( message, "PopulationOrderAck" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgPopulationOrder
+// Created: AGE 2007-02-16
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOrder& message )
+{
+    GetModel().agents_.GetPopulation( message.oid_unite_executante ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1641,6 +1649,16 @@ void AgentServerMsgMgr::OnReceiveMsgAuthenticationResponse( const ASN1T_MsgAuthe
 void AgentServerMsgMgr::OnReceiveMsgInClient( DIN_Link& /*linkFrom*/, DIN_Input& input )
 {
     Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgInClient );
+}
+
+namespace
+{
+    void UnhandledMessage( int message )
+    {
+        std::stringstream m;
+        m << "Unhandled message " << message;
+        throw std::runtime_error( m.str() );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -1752,6 +1770,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_population_order_management:          OnReceiveMsgPopulationOrderManagement ( *message.msg.u.msg_population_order_management         ); break;
         case T_MsgsInClient_msg_msg_pion_order:                           OnReceiveMsgPionOrder                 ( *message.msg.u.msg_pion_order ); break;
         case T_MsgsInClient_msg_msg_automate_order:                       OnReceiveMsgAutomateOrder             ( *message.msg.u.msg_automate_order ); break;
+        case T_MsgsInClient_msg_msg_population_order:                     OnReceiveMsgPopulationOrder           ( *message.msg.u.msg_population_order ); break;
 
         case T_MsgsInClient_msg_msg_object_creation:                      OnReceiveMsgObjectCreation            ( *message.msg.u.msg_object_creation                     ); break;
         case T_MsgsInClient_msg_msg_object_update:                        OnReceiveMsgObjectUpdate              ( *message.msg.u.msg_object_update                       ); break;
@@ -1802,7 +1821,7 @@ void AgentServerMsgMgr::_OnReceiveMsgInClient( DIN_Input& input )
         case T_MsgsInClient_msg_msg_population_flux_knowledge_update               : OnReceiveMsgPopulationFlowKnowledgeUpdate              ( *message.msg.u.msg_population_flux_knowledge_update               ); break;
         case T_MsgsInClient_msg_msg_population_flux_knowledge_destruction          : OnReceiveMsgPopulationFlowKnowledgeDestruction         ( *message.msg.u.msg_population_flux_knowledge_destruction          ); break;
         default:
-            throw std::runtime_error( "Unhandled message" );
+            UnhandledMessage( message.msg.t );
     }
 }
 
