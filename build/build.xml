@@ -379,6 +379,7 @@
                 <include name="symbols.pak"/>
                 <include name="symbols.xml"/>
                 <include name="preferences.xml"/>
+                <include name="DrawingTemplates.xml"/>
                 <include name="license.dat"/>
                 <include name="TAO.dll"/>
                 <include name="TAO_CosNaming.dll"/>
