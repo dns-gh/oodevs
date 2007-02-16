@@ -38,7 +38,7 @@ DEC_Debug::DEC_Debug()
 // -----------------------------------------------------------------------------
 DEC_Debug::~DEC_Debug()
 {
-    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,13 +75,11 @@ void DEC_Debug::NotifyRecoAdded( DIA_Call_ABC& call, const MT_Vector2D& vCenter 
     void* pInstance = call.GetCallingLocation().GetCallingAdress();
     T_RangeRecoPerInstanceMap foundRange = recoPerInstanceMap_.equal_range( pInstance );
     for( IT_RecoPerInstanceMap itReco = foundRange.first; itReco != foundRange.second; ++itReco )
-    {
         if( itReco->second == vCenter )
         {
             MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyRecoAdded - ALREADY REGISTERED - Center %.2f/%.2f", vCenter.rX_, vCenter.rY_ ) );
             return;
         }
-    }
     recoPerInstanceMap_.insert( std::make_pair( pInstance, vCenter ) );
 #endif
 }
@@ -95,13 +93,11 @@ void DEC_Debug::NotifyRecoRemoved( DIA_Call_ABC& call, const MT_Vector2D& vCente
 #ifdef _DEBUG
     T_RangeRecoPerInstanceMap foundRange = recoPerInstanceMap_.equal_range( call.GetCallingLocation().GetCallingAdress() );
     for( IT_RecoPerInstanceMap itReco = foundRange.first; itReco != foundRange.second; ++itReco )
-    {
         if( itReco->second == vCenter )
         {
             recoPerInstanceMap_.erase( itReco );
             return;
         }
-    }
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyRecoRemoved - ALREADY REMOVED - Center %.2f/%.2f", vCenter.rX_, vCenter.rY_ ) );
 #endif
 }
@@ -118,15 +114,12 @@ void DEC_Debug::NotifyActionStarted( DIA_Call_ABC& call, const MIL_AgentPion& pi
 
     T_RangeActionPerInstanceMap foundRange = actionPerInstanceMap_.equal_range( pInstance );
     for( IT_ActionPerInstanceMap itAction = foundRange.first; itAction != foundRange.second; ++itAction )
-    {
         if( itAction->second == &action )
         {
             MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStarted - Agent %d - Instance %s - ACTION ALREADY REGISTERED - Address %p", pion.GetID(), strInstance.c_str(), &action ) );
             return;
         }
-    }
     actionPerInstanceMap_.insert( std::make_pair( pInstance, &action ) );
-    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStarted - Agent %d - Instance %s - Address %p", pion.GetID(), strInstance.c_str(), &action ) );
 #endif
 }
 
@@ -142,15 +135,12 @@ void DEC_Debug::NotifyActionStarted( DIA_Call_ABC& call, const MIL_Population& p
 
     T_RangeActionPerInstanceMap foundRange = actionPerInstanceMap_.equal_range( pInstance );
     for( IT_ActionPerInstanceMap itAction = foundRange.first; itAction != foundRange.second; ++itAction )
-    {
         if( itAction->second == &action )
         {
             MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStarted - Population %d - Instance %s - ACTION ALREADY REGISTERED - Address %p", population.GetID(), strInstance.c_str(), &action ) );
             return;
         }
-    }
     actionPerInstanceMap_.insert( std::make_pair( pInstance, &action ) );
-    MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStarted - Population %d - Instance %s - Address %p", population.GetID(), strInstance.c_str(), &action ) );
 #endif
 }
 
@@ -166,14 +156,11 @@ void DEC_Debug::NotifyActionStopped( DIA_Call_ABC& call, const MIL_AgentPion& pi
 
     T_RangeActionPerInstanceMap foundRange = actionPerInstanceMap_.equal_range( pInstance );
     for( IT_ActionPerInstanceMap itAction = foundRange.first; itAction != foundRange.second; ++itAction )
-    {
         if( itAction->second == &action )
         {
             actionPerInstanceMap_.erase( itAction );
-            MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStopped - Agent %d - Instance %s - Address %p", pion.GetID(), strInstance.c_str(), &action ) );
             return;
         }
-    }
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStopped - Agent %d - Instance %s - Address %p - ACTION ALREADY UNREGISTERED", pion.GetID(), strInstance.c_str(), &action ) );
 #endif
 }
@@ -190,14 +177,11 @@ void DEC_Debug::NotifyActionStopped( DIA_Call_ABC& call, const MIL_Population& p
 
     T_RangeActionPerInstanceMap foundRange = actionPerInstanceMap_.equal_range( pInstance );
     for( IT_ActionPerInstanceMap itAction = foundRange.first; itAction != foundRange.second; ++itAction )
-    {
         if( itAction->second == &action )
         {
             actionPerInstanceMap_.erase( itAction );
-            MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStopped - Population %d - Instance %s - Address %p", population.GetID(), strInstance.c_str(), &action ) );
             return;
         }
-    }
     MT_LOG_DEBUG_MSG( MT_FormatString( "DEC_Debug::NotifyActionStopped - Population %d - Instance %s - Address %p - ACTION ALREADY UNREGISTERED", population.GetID(), strInstance.c_str(), &action ) );
 #endif
 }
