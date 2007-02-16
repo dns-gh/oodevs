@@ -87,5 +87,6 @@ DECLARE_ICON( profiles );
 DECLARE_ICON( profile );
 DECLARE_ICON( left_arrow );
 DECLARE_ICON( right_arrow );
+DECLARE_ICON( conflict );
 
 #endif // __demo_resources_h_

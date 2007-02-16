@@ -35,6 +35,8 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     , menu_( new QPopupMenu( this ) )
     , readTimer_( new QTimer( this ) )
 {
+    setFrameStyle( QFrame::Plain );
+    setMargin( 2 );
     AddColumn( tr( "Received" ) );
     AddColumn( tr( "Report" ) );
     
@@ -185,8 +187,9 @@ void ReportListView::OnRequestPopup( QListViewItem* item, const QPoint& pos, int
     if( !selected_ )
         return;
     menu_->clear();
-    menu_->insertItem( tr( "Clear" ),          this, SLOT( OnClearAll() ) );
+    menu_->insertItem( tr( "Clear" ),        this, SLOT( OnClearAll() ) );
     menu_->insertItem( tr( "Clear traces" ), this, SLOT( OnClearTrace() ) );
+    filter_.AddContextMenu( menu_ );
 //    if( item )
 //        menu_->insertItem( tr( "Effacer jusqu'ici" ), this, SLOT( OnClearUpTo() ) );
     menu_->popup( pos );

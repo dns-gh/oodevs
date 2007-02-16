@@ -28,7 +28,7 @@ ReportPanel::ReportPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& c
 {
     pFilterOptions_      = new ReportFilterOptions( this );
     pReportListView_     = new ReportListView( this, controllers_, *pFilterOptions_, factory );
-    pFireResultListView_ = new FireResultListView( this, factory );
+    pFireResultListView_ = new FireResultListView( this, controllers_, factory );
     connect( pFilterOptions_, SIGNAL( OptionsChanged() ), pReportListView_, SLOT( OnOptionsChanged() ) );
 
     controllers_.Register( *this );

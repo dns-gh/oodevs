@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{
     bool ShouldDisplay( const Report& report ) const;
+    void AddContextMenu( QPopupMenu* menu ) const;
     //@}
 
 signals:
@@ -42,11 +43,11 @@ signals:
 private slots:
     //! @name Slots
     //@{
-    void OnToggleRCs( bool );
-    void OnToggleTraces( bool );
-    void OnToggleEvents( bool );
-    void OnToggleMessages( bool );
-    void OnToggleWarnings( bool );
+    void OnToggleRCs();
+    void OnToggleTraces();
+    void OnToggleEvents();
+    void OnToggleMessages();
+    void OnToggleWarnings();
     //@}
 
 private:
@@ -58,7 +59,8 @@ private:
 
     //! @name Helpers
     //@{
-    void Toggle( bool, Report::E_Type type );
+    void Toggle( Report::E_Type type );
+    void AddMenuItem( QPopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const;
     //@}
 
 private:

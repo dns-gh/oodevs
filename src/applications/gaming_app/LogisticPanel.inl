@@ -134,9 +134,9 @@ void LogisticPanel< ConcretePanel, Consign >::NotifyUpdated( const LogisticConsi
 template< typename ConcretePanel, typename Consign >
 void LogisticPanel< ConcretePanel, Consign >::NotifyUpdated( const Consign& consign )
 {
-    gui::ValuedListItem* item = FindItem( &consign, pConsignListView_->firstChild() );
+    gui::ValuedListItem* item = gui::FindItem( &consign, pConsignListView_->firstChild() );
     if( ! item )
-        item = FindItem( &consign, pConsignHandledListView_->firstChild() );
+        item = gui::FindItem( &consign, pConsignHandledListView_->firstChild() );
     if( item )
         consign.Display( (*logDisplay_)( item ) );
 }

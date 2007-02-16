@@ -139,7 +139,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
-    result->Attach( *new Lives() );
+    result->Attach( *new Lives( controllers_.controller_ ) );
     result->Attach< Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico ) );
     result->Attach( *new CommandPostAttributes( *result ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );

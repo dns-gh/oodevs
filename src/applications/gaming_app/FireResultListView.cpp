@@ -13,8 +13,10 @@
 #include "gaming/AgentFireResult.h"
 #include "gaming/Equipment.h"
 #include "gaming/Casualties.h"
+#include "gaming/Explosions.h"
 #include "clients_gui/SubItemDisplayer.h"
 #include "clients_gui/ItemFactory_ABC.h"
+#include "clients_kernel/Controllers.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,16 +25,22 @@ using namespace gui;
 // Name: FireResultListView constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-FireResultListView::FireResultListView( QWidget* parent, ItemFactory_ABC& factory )
+FireResultListView::FireResultListView( QWidget* parent, kernel::Controllers& controllers, ItemFactory_ABC& factory )
     : ListDisplayer< FireResultListView >( parent, *this, factory )
+    , controllers_( controllers )
     , factory_( factory )
+    , selected_( controllers )
 {
+    setFrameStyle( QFrame::Plain );
+    setMargin( 2 );
     AddColumn( tr( "Target" ) );
     AddColumn( tr( "Attrition" ) );
     
-    agentDisplay_ = new SubItemDisplayer( tr( "Target" ), factory );
-    agentDisplay_->AddChild( tr( "Equipments" ) );
-    agentDisplay_->AddChild( tr( "Humans" ) );
+    subDisplayer_ = new SubItemDisplayer( tr( "Target" ), factory );
+    subDisplayer_->AddChild( tr( "Equipments" ) );
+    subDisplayer_->AddChild( tr( "Troops" ) );
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +49,8 @@ FireResultListView::FireResultListView( QWidget* parent, ItemFactory_ABC& factor
 // -----------------------------------------------------------------------------
 FireResultListView::~FireResultListView()
 {
-    delete agentDisplay_;
+    controllers_.Remove( *this );
+    delete subDisplayer_;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,11 +82,11 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     // SubItemDisplayer;
     // $$$$ AGE 2006-03-10: Move in AgentFireResult
     item->SetValue( result );
-    Displayer_ABC& displayer = (*agentDisplay_)( item );
+    Displayer_ABC& displayer = (*subDisplayer_)( item );
 
     displayer.Display( tr( "Target" ), result->target_ );
     displayer.Display( tr( "Equipments" ), tr( " (avail, unavail, repairable):" ) );
-    displayer.Display( "Troops", tr( " (officer, warrant-off., private)" ) );
+    displayer.Display( tr( "Troops" ), tr( " (officer, warrant-off., private)" ) );
 
     // $$$$ AGE 2006-02-28: crado. Essayer de faire un displayer qui puisse cascader 
     // $$$$ AGE 2006-02-28: les subItems et meler des listes aussi mais sans que l'interface
@@ -103,7 +112,7 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     if( ! humans )
         humans = factory_.CreateItem( item, last );
     DeleteTail( 
-        DisplayList( &* result->casualties_, result->casualties_+eNbrHumanWound, humans )
+        DisplayList( &* result->casualties_, result->casualties_ + eNbrHumanWound, humans )
     );
 }
 
@@ -130,3 +139,34 @@ void FireResultListView::Display( const Casualties& casualties, Displayer_ABC& d
                     .Add( " / " ).Add( casualties.subOfficers_ )
                     .Add( " / " ).Add( casualties.troopers_ ).End();
 }
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::NotifySelected
+// Created: SBO 2007-02-15
+// -----------------------------------------------------------------------------
+void FireResultListView::NotifySelected( const kernel::Entity_ABC* element )
+{
+    if( element != selected_ )
+    {
+        selected_ = element;
+        if( !selected_ )
+            return;
+        if( const Explosions* results = selected_->Retrieve< Explosions >() )
+            NotifyUpdated( *results );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireResultListView::NotifyUpdated
+// Created: SBO 2007-02-15
+// -----------------------------------------------------------------------------
+void FireResultListView::NotifyUpdated( const Explosions& results )
+{
+    if( selected_ && selected_->Retrieve< Explosions >() == &results )
+    {
+        ValuedListItem* item = DisplayList( results.agentExplosions_.begin(), results.agentExplosions_.end() );
+                        item = DisplayList( results.populationExplosions_.begin(), results.populationExplosions_.end(), this, item );
+        DeleteTail( item );
+    }
+}
+

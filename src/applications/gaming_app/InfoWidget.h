@@ -1,0 +1,48 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __InfoWidget_h_
+#define __InfoWidget_h_
+
+namespace kernel
+{
+    class Controllers;
+}
+
+namespace gui
+{
+    class SymbolIcons;
+    class ItemFactory_ABC;
+}
+
+// =============================================================================
+/** @class  InfoWidget
+    @brief  InfoWidget
+*/
+// Created: SBO 2007-02-02
+// =============================================================================
+class InfoWidget : public QHBox
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             InfoWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons, gui::ItemFactory_ABC& itemFactory );
+    virtual ~InfoWidget();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    InfoWidget( const InfoWidget& );            //!< Copy constructor
+    InfoWidget& operator=( const InfoWidget& ); //!< Assignment operator
+    //@}
+};
+
+#endif // __InfoWidget_h_

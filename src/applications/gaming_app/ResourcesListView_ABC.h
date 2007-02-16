@@ -1,0 +1,138 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __ResourcesListView_ABC_h_
+#define __ResourcesListView_ABC_h_
+
+#include "clients_kernel/ElementObserver_ABC.h"
+#include "clients_kernel/SelectionObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
+#include "clients_gui/ListDisplayer.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Agent_ABC.h"
+
+namespace kernel
+{
+    class Agent_ABC;
+    class Controllers;
+}
+
+namespace gui
+{
+    class ItemFactory_ABC;
+}
+
+// =============================================================================
+/** @class  ResourcesListView_ABC
+    @brief  ResourcesListView_ABC
+*/
+// Created: SBO 2007-02-16
+// =============================================================================
+template< typename ConcreteDisplayer, typename Extension >
+class ResourcesListView_ABC : public gui::ListDisplayer< ConcreteDisplayer >
+                            , public kernel::Observer_ABC
+                            , public kernel::ElementObserver_ABC< Extension >
+                            , public kernel::SelectionObserver< kernel::Agent_ABC >
+{
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             ResourcesListView_ABC( QWidget* parent, ConcreteDisplayer& displayer, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+    virtual ~ResourcesListView_ABC();
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
+    bool ShouldUpdate( const Extension& a ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    ResourcesListView_ABC( const ResourcesListView_ABC& );            //!< Copy constructor
+    ResourcesListView_ABC& operator=( const ResourcesListView_ABC& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    virtual void showEvent( QShowEvent* );
+    virtual void NotifySelected( const kernel::Agent_ABC* agent );
+    virtual void NotifyUpdated( const Extension& a ) = 0;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    kernel::Controllers& controllers_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC constructor
+// Created: SBO 2007-02-16
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Extension >
+ResourcesListView_ABC< ConcreteDisplayer, Extension >::ResourcesListView_ABC( QWidget* parent, ConcreteDisplayer& displayer, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+    : gui::ListDisplayer< ConcreteDisplayer >( parent, displayer, factory )
+    , controllers_( controllers )
+    , selected_( controllers )
+{
+    controllers_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC destructor
+// Created: SBO 2007-02-16
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Extension >
+ResourcesListView_ABC< ConcreteDisplayer, Extension >::~ResourcesListView_ABC()
+{
+    controllers_.Remove( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::ShouldUpdate
+// Created: SBO 2007-02-16
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Extension >
+bool ResourcesListView_ABC< ConcreteDisplayer, Extension >::ShouldUpdate( const Extension& a ) const
+{
+    return isVisible() && selected_ && selected_->Retrieve< Extension >() == &a;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::showEvent
+// Created: SBO 2007-02-16
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Extension >
+void ResourcesListView_ABC< ConcreteDisplayer, Extension >::showEvent( QShowEvent* )
+{
+    const kernel::Agent_ABC* selected = selected_;
+    selected_ = 0;
+    NotifySelected( selected );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::NotifySelected
+// Created: SBO 2007-02-16
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Extension >
+void ResourcesListView_ABC< ConcreteDisplayer, Extension >::NotifySelected( const kernel::Agent_ABC* agent )
+{
+    selected_ = agent;
+    if( !selected_ )
+        return;
+    if( const Extension* extension = selected_->Retrieve< Extension >() )
+        NotifyUpdated( *extension );
+}
+
+#endif // __ResourcesListView_ABC_h_

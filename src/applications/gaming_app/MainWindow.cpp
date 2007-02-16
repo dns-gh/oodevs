@@ -41,6 +41,7 @@
 #include "ProfileFilterToolbar.h"
 #include "ProfilingPanel.h"
 #include "UserProfileDialog.h"
+#include "InfoDock.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -219,6 +220,11 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pLogDockWnd_->setCaption( tr( "Log" ) );
     setDockEnabled( pLogDockWnd_, Qt::DockTop, false );
     connect( pLogPanel_, SIGNAL( Error() ), pLogDockWnd_, SLOT( show() ) );
+
+    // Info
+    QDockWindow* infoWnd = new InfoDock( this, controllers_, *icons, *factory );
+    moveDockWindow( infoWnd, Qt::DockBottom );
+    setDockEnabled( infoWnd, Qt::DockTop, false );
 
     // Profiler
     QDockWindow* pProfilerDockWnd_ = new QDockWindow( this );

@@ -99,7 +99,7 @@ void InterfaceContainer< BaseType >::Remove( BaseType& i )
 {
     T_Interfaces::iterator it = std::find( interfaces_.begin(), interfaces_.end(), &i );
     if( it == interfaces_.end() )
-        throw std::runtime_error( std::string( "Interface '" ) + typeid( i ).name() + "' not registered" );
+        return;
 
     std::swap( *it, interfaces_.back() ); 
     interfaces_.pop_back();

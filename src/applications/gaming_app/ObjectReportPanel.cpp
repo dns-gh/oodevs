@@ -28,7 +28,7 @@ ObjectReportPanel::ObjectReportPanel( QWidget* parent, PanelStack_ABC& panel, Co
     , controllers_ ( controllers )
     , selected_    ( controllers )
 {
-    reports_ = new FireResultListView( this, factory );
+    reports_ = new FireResultListView( this, controllers, factory );
 
     controllers_.Register( *this );
 }

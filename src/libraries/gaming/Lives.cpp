@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Lives.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Controller.h"
 
 using namespace kernel;
 
@@ -17,8 +18,9 @@ using namespace kernel;
 // Name: Lives constructor
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-Lives::Lives()
-    : life_( 1.f )
+Lives::Lives( kernel::Controller& controller )
+    : controller_( controller )
+    , life_( 1.f )
 {
     // NOTHING
 }
@@ -51,6 +53,7 @@ void Lives::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 {
     if( message.m.etat_operationnel_brutPresent )
         life_ = message.etat_operationnel_brut * 0.01f;
+    controller_.Update( *this );
 }
 
 

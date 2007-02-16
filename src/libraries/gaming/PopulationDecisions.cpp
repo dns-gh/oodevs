@@ -59,7 +59,7 @@ Iterator< const Mission& > PopulationDecisions::GetMissions() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: kernel::Iterator< const kernel::FragOrder& > PopulationDecisions::GetFragOrders
+// Name: PopulationDecisions::GetFragOrders
 // Created: SBO 2006-12-18
 // -----------------------------------------------------------------------------
 kernel::Iterator< const kernel::FragOrder& > PopulationDecisions::GetFragOrders() const

@@ -15,6 +15,11 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "game_asn/Asn.h"
 
+namespace kernel
+{
+    class Controller;
+}
+
 // =============================================================================
 /** @class  Lives
     @brief  Lives
@@ -29,7 +34,7 @@ class Lives : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Lives();
+    explicit Lives( kernel::Controller& controller );
     virtual ~Lives();
     //@}
 
@@ -51,6 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     float life_;
     //@}
 };

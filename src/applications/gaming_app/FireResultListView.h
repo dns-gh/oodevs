@@ -11,12 +11,21 @@
 #define __FireResultListView_h_
 
 #include "clients_gui/ListDisplayer.h"
+#include "clients_kernel/Observer_ABC.h"
+#include "clients_kernel/SafePointer.h"
+#include "clients_kernel/ElementObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+}
 
 namespace gui
 {
     class SubItemDisplayer;
 }
 
+class Explosions;
 class PopulationFireResult;
 class AgentFireResult;
 class Equipment;
@@ -29,12 +38,15 @@ class Casualties;
 // Created: AGE 2006-03-10
 // =============================================================================
 class FireResultListView : public gui::ListDisplayer< FireResultListView >
+                         , public kernel::Observer_ABC
+                         , public kernel::SelectionObserver< kernel::Entity_ABC >
+                         , public kernel::ElementObserver_ABC< Explosions >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FireResultListView( QWidget* parent, gui::ItemFactory_ABC& factory );
+             FireResultListView( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~FireResultListView();
     //@}
 
@@ -53,11 +65,19 @@ private:
     FireResultListView& operator=( const FireResultListView& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyUpdated( const Explosions& results );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
-    gui::SubItemDisplayer* agentDisplay_;
+    gui::SubItemDisplayer* subDisplayer_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 

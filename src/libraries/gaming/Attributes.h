@@ -15,6 +15,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
+#include "clients_kernel/Types.h"
 
 namespace kernel
 {
@@ -66,7 +67,7 @@ private:
     virtual void Aggregate( const bool& );
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;

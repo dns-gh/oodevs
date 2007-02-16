@@ -25,11 +25,11 @@ ReportFilterOptions::ReportFilterOptions( QWidget* pParent )
     QCheckBox* pDisplayWarnings = new QCheckBox( tr( "Display warnings" ), this );
     pDisplayRCs->setChecked( true ); pDisplayTraces->setChecked( true ); pDisplayEvents->setChecked( true ); pDisplayMessages->setChecked( true ); pDisplayWarnings->setChecked( true );
     toDisplay_.insert( Report::eRC ); toDisplay_.insert( Report::eTrace ); toDisplay_.insert( Report::eEvent ); toDisplay_.insert( Report::eMessage ); toDisplay_.insert( Report::eWarning );
-    connect( pDisplayRCs,       SIGNAL( toggled( bool ) ), this, SLOT( OnToggleRCs( bool ) ) );
-    connect( pDisplayTraces,    SIGNAL( toggled( bool ) ), this, SLOT( OnToggleTraces( bool ) ) );
-    connect( pDisplayEvents,    SIGNAL( toggled( bool ) ), this, SLOT( OnToggleEvents( bool ) ) );
-    connect( pDisplayMessages,  SIGNAL( toggled( bool ) ), this, SLOT( OnToggleMessages( bool ) ) );
-    connect( pDisplayWarnings,  SIGNAL( toggled( bool ) ), this, SLOT( OnToggleWarnings( bool ) ) );
+    connect( pDisplayRCs,       SIGNAL( toggled( bool ) ), this, SLOT( OnToggleRCs() ) );
+    connect( pDisplayTraces,    SIGNAL( toggled( bool ) ), this, SLOT( OnToggleTraces() ) );
+    connect( pDisplayEvents,    SIGNAL( toggled( bool ) ), this, SLOT( OnToggleEvents() ) );
+    connect( pDisplayMessages,  SIGNAL( toggled( bool ) ), this, SLOT( OnToggleMessages() ) );
+    connect( pDisplayWarnings,  SIGNAL( toggled( bool ) ), this, SLOT( OnToggleWarnings() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,9 +54,9 @@ bool ReportFilterOptions::ShouldDisplay( const Report& report ) const
 // Name: ReportFilterOptions::Toggle
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::Toggle( bool bOn, Report::E_Type type )
+void ReportFilterOptions::Toggle( Report::E_Type type )
 {
-    if( bOn )
+    if( toDisplay_.find( type ) == toDisplay_.end() )
         toDisplay_.insert( type );
     else
         toDisplay_.erase( type );
@@ -67,43 +67,68 @@ void ReportFilterOptions::Toggle( bool bOn, Report::E_Type type )
 // Name: ReportFilterOptions::OnToggleRCs
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::OnToggleRCs( bool bOn )
+void ReportFilterOptions::OnToggleRCs()
 {
-    Toggle( bOn, Report::eRC );
+    Toggle( Report::eRC );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFilterOptions::OnToggleTraces
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::OnToggleTraces( bool bOn )
+void ReportFilterOptions::OnToggleTraces()
 {
-    Toggle( bOn, Report::eTrace );
+    Toggle( Report::eTrace );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFilterOptions::OnToggleEvents
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::OnToggleEvents( bool bOn )
+void ReportFilterOptions::OnToggleEvents()
 {
-    Toggle( bOn, Report::eEvent );
+    Toggle( Report::eEvent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFilterOptions::OnToggleMessages
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::OnToggleMessages( bool bOn )
+void ReportFilterOptions::OnToggleMessages()
 {
-    Toggle( bOn, Report::eMessage );
+    Toggle( Report::eMessage );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFilterOptions::OnToggleWarnings
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::OnToggleWarnings( bool bOn )
+void ReportFilterOptions::OnToggleWarnings()
 {
-    Toggle( bOn, Report::eWarning );
+    Toggle( Report::eWarning );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportFilterOptions::AddMenuItem
+// Created: SBO 2007-02-06
+// -----------------------------------------------------------------------------
+void ReportFilterOptions::AddMenuItem( QPopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const
+{
+    int id = menu->insertItem( name );
+    menu->setItemChecked( id, toDisplay_.find( type ) != toDisplay_.end() );
+    menu->connectItem( id, this, slot );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReportFilterOptions::AddContextMenu
+// Created: SBO 2007-02-06
+// -----------------------------------------------------------------------------
+void ReportFilterOptions::AddContextMenu( QPopupMenu* menu ) const
+{
+    menu->insertSeparator();
+    AddMenuItem( menu, tr( "Show reports" ) , Report::eRC      , SLOT( OnToggleRCs     () ) );
+    AddMenuItem( menu, tr( "Show traces" )  , Report::eTrace   , SLOT( OnToggleTraces  () ) );
+    AddMenuItem( menu, tr( "Show events" )  , Report::eEvent   , SLOT( OnToggleEvents  () ) );
+    AddMenuItem( menu, tr( "Show messages" ), Report::eMessage , SLOT( OnToggleMessages() ) );
+    AddMenuItem( menu, tr( "Show warnings" ), Report::eWarning , SLOT( OnToggleWarnings() ) );
 }

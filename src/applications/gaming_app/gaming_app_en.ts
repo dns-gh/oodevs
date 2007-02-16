@@ -233,66 +233,6 @@
 </context>
 <context>
     <name>AgentResourcesPanel</name>
-    <message>
-        <source>Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unavailable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>In maintenance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prisoner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Officer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warrant-officer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Private</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Borrower</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lender</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repairable</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AgentStatePanel</name>
@@ -752,10 +692,6 @@
     </message>
     <message>
         <source>Attrition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Humans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1804,6 +1740,26 @@
         <source>Display warnings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show events</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ReportListView</name>
@@ -2054,6 +2010,10 @@ Message : </source>
     </message>
     <message>
         <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
