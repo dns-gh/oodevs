@@ -42,6 +42,7 @@ Profile::Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xist
     , bSupervision_         ( false )
 {
     xis >> xml::attribute( "password", strPassword_ )
+        >> xml::attribute( "supervision", bSupervision_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -55,7 +56,6 @@ Profile::Profile( Dispatcher& dispatcher, const std::string& strLogin, xml::xist
                 >> xml::list( "formation" , *this, &Profile::ReadFormationRights , readWriteFormations_  )
                 >> xml::list( "population", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end()
-            >> xml::optional() >> xml::content( "supervision", bSupervision_ )
         >> xml::end();
 }
 
