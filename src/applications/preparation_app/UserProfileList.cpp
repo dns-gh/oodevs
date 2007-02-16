@@ -81,9 +81,13 @@ void UserProfileList::OnDelete()
 void UserProfileList::NotifyCreated( const UserProfile& profile )
 {
     userProfiles_.push_back( &profile );
+    const bool itemSelected = list_->selectedItem();
     list_->insertItem( profile.GetLogin() );
-    if( list_->currentItem() == -1 )
+    if( !itemSelected )
+    {
         list_->setSelected( 0, true );
+        pages_.SetEnabled( true );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +114,12 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
     T_UserProfiles::iterator it = std::find( userProfiles_.begin(), userProfiles_.end(), &profile );
     if( it != userProfiles_.end() )
     {
-        list_->removeItem( std::distance( userProfiles_.begin(), it ) );
+        const int index = std::distance( userProfiles_.begin(), it );
+        const bool selected = list_->isSelected( index );
+        list_->removeItem( index );
         userProfiles_.erase( it );
+        if( selected && list_->count() )
+            list_->setSelected( list_->item( index ) ? index : index - 1, true );
+        pages_.SetEnabled( !userProfiles_.empty() );
     }
 }

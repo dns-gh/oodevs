@@ -46,6 +46,7 @@ public:
     void Display( const UserProfile& profile );
     void Commit( const ProfilesModel& model );
     void Reset();
+    void SetEnabled( bool enabled );
     //@}
 
 private:

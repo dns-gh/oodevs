@@ -47,6 +47,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     populationRights_ = populationRights;
 
     addTab( box, tr( "Rights" ) );
+    SetEnabled( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +71,7 @@ void UserProfileWidget::Display( const UserProfile& profile )
     unitRights_->Display( profile );
     populationRights_->Display( profile );
     selectedProfile_ = &profile;
+    SetEnabled( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,4 +119,13 @@ bool UserProfileWidget::CheckValidity( const ProfilesModel& model ) const
         return false;
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::SetEnabled
+// Created: SBO 2007-02-16
+// -----------------------------------------------------------------------------
+void UserProfileWidget::SetEnabled( bool enabled )
+{
+    setShown( enabled );
 }
