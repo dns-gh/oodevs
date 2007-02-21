@@ -12,6 +12,7 @@
 
 namespace kernel
 {
+    class Entity_ABC;
     class Agent_ABC;
     class Object_ABC;
     class Population_ABC;
@@ -45,6 +46,7 @@ public:
     virtual void SelectColor( const kernel::Population_ABC& population ) = 0;
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge ) = 0;
     virtual void SelectColor( const kernel::TacticalLine_ABC& line ) = 0;
+    virtual QColor FindColor( const kernel::Entity_ABC& entity ) = 0;
     //@}
 };
 

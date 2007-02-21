@@ -18,7 +18,7 @@
 // Name: ProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, ProfilesModel& model )
+ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ProfilesModel& model )
     : QDialog( parent )
     , model_( model )
 {

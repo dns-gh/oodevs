@@ -16,12 +16,12 @@
 // Name: InfoDock constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons, gui::ItemFactory_ABC& itemFactory )
+InfoDock::InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory )
     : QDockWindow( parent )
     , controllers_( controllers )
 {
     setOrientation( Qt::Horizontal );
-    setWidget( new InfoWidget( this, controllers_, icons, itemFactory ) );
+    setWidget( new InfoWidget( this, controllers_, profile, icons, itemFactory ) );
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
     setCaption( tr( "Info" ) );

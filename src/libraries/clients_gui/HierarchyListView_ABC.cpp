@@ -21,7 +21,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
-#include "SymbolIcons.h"
+#include "EntitySymbols.h"
 #include "ListItemToolTip.h"
 
 using namespace kernel;
@@ -33,12 +33,12 @@ const char* HierarchyListView_ABC::agentMimeType_ = "agent"; // $$$$ AGE 2006-09
 // Name: HierarchyListView_ABC constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, gui::SymbolIcons& icons )
+HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, gui::EntitySymbols& symbols )
     : ListView< HierarchyListView_ABC >( pParent, *this, factory )
     , controllers_( controllers )
     , factory_    ( factory )
     , profile_    ( profile )
-    , icons_      ( icons )
+    , symbols_    ( symbols )
     , selected_   ( controllers_ )
 {
     new ListItemToolTip( viewport(), *this );
@@ -129,7 +129,7 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
 
-    DisplayIcon( entity.Retrieve< TacticalHierarchies >(), item );
+    DisplayIcon( entity, item );
     SetVisible( item, isVisible );
 }
 
@@ -137,22 +137,11 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
 // Name: HierarchyListView_ABC::DisplayIcon
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::DisplayIcon( const kernel::TacticalHierarchies* hierarchies, gui::ValuedListItem* item )
+void HierarchyListView_ABC::DisplayIcon( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
-    std::string symbolName; 
-    std::string levelName;  
-    if( hierarchies )
-    {
-        symbolName = hierarchies->GetSymbol();
-        levelName  = hierarchies->GetLevel();
-    }
-    QPixmap pixmap;
-    if( ! symbolName.empty() || ! levelName.empty() )
-    {
-        pixmap = icons_.GetSymbol( symbolName, levelName );
-        if( pixmap.isNull() )
-            timer_->start( 500, true );
-    }
+    QPixmap pixmap = symbols_.GetSymbol( entity );
+    if( pixmap.isNull() )
+        timer_->start( 500, true ); // $$$$ SBO 2007-02-21: return; ?
     item->setPixmap( 0, pixmap );
     item->invalidateHeight();
 }
@@ -324,7 +313,7 @@ void HierarchyListView_ABC::NotifyUpdated( const kernel::Symbol_ABC& symbol )
     const Entity_ABC& entity = symbol.GetEntity();
     ValuedListItem* item = FindItem( &entity, firstChild() );
     if( item )
-        DisplayIcon( entity.Retrieve< TacticalHierarchies >(), item );
+        DisplayIcon( entity, item );
 }
 
 // -----------------------------------------------------------------------------

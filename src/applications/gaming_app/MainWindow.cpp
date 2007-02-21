@@ -93,6 +93,7 @@
 #include "clients_gui/LogoLayer.h"
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
+#include "clients_gui/EntitySymbols.h"
 #include "graphics/FixedLighting.h"
 #include "graphics/DragMovementLayer.h"
 #include "icons.h"
@@ -152,7 +153,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    SymbolIcons* icons = new SymbolIcons( this, widget2d_ );
+    SymbolIcons* symbols = new SymbolIcons( this, widget2d_ );
+    EntitySymbols* icons = new EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
 
     pListsTabWidget->addTab( new TacticalList  ( controllers, *factory, profile, *icons ),            tr( "Tactical" ) );
@@ -222,7 +224,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     connect( pLogPanel_, SIGNAL( Error() ), pLogDockWnd_, SLOT( show() ) );
 
     // Info
-    QDockWindow* infoWnd = new InfoDock( this, controllers_, *icons, *factory );
+    QDockWindow* infoWnd = new InfoDock( this, controllers_, p, *icons, *factory );
     moveDockWindow( infoWnd, Qt::DockBottom );
     setDockEnabled( infoWnd, Qt::DockTop, false );
 

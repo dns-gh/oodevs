@@ -37,16 +37,16 @@ SymbolIcons::~SymbolIcons()
 // Name: SymbolIcons::GetSymbol
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-QPixmap SymbolIcons::GetSymbol( const std::string& name )
+QPixmap SymbolIcons::GetSymbol( const std::string& name, const QColor& color /*= Qt::white*/ )
 {
-    return GetSymbol( name, "" );
+    return GetSymbol( name, "", color );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolIcons::GetSymbol
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level )
+QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, const QColor& color /*= Qt::white*/ )
 {
     std::string symbolName( s );
     std::replace( symbolName.begin(), symbolName.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
@@ -56,7 +56,7 @@ QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level )
     if( result.isNull() )
     {
         if( pending_.insert( key ).second )
-            widget_->CreateIcon( key.second, key.first, white, *this );
+            widget_->CreateIcon( key.second, key.first, color, *this );
     }
     return result;
 }

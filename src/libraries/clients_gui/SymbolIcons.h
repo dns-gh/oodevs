@@ -34,8 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual QPixmap GetSymbol( const std::string& symbol );
-    virtual QPixmap GetSymbol( const std::string& symbol, const std::string& level );
+    virtual QPixmap GetSymbol( const std::string& symbol, const QColor& color = Qt::white );
+    virtual QPixmap GetSymbol( const std::string& symbol, const std::string& level, const QColor& color = Qt::white );
     //@}
 
 private:

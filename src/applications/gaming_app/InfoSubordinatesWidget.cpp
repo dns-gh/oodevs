@@ -14,7 +14,8 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_gui/SymbolIcons.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_gui/EntitySymbols.h"
 
 namespace
 {
@@ -35,9 +36,10 @@ namespace
 // Name: InfoSubordinatesWidget constructor
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons )
+InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : QIconView( parent )
     , controllers_( controllers )
+    , profile_( profile )
     , icons_( icons )
     , selected_( controllers )
 {
@@ -94,12 +96,14 @@ void InfoSubordinatesWidget::NotifySelected( const kernel::Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void InfoSubordinatesWidget::AddSubordinate( const kernel::Entity_ABC& entity )
 {
+    if( !profile_.IsVisible( entity ) )
+        return;
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
         const std::string symbolName = hierarchies->GetSymbol();
         const std::string levelName  = hierarchies->GetLevel();
         if( ! symbolName.empty() || ! levelName.empty() )
-            new ValuedIconViewItem( this, entity.GetName(), icons_.GetSymbol( symbolName, levelName ), entity );
+            new ValuedIconViewItem( this, entity.GetName(), icons_.GetSymbol( entity ), entity );
     }
 }
 

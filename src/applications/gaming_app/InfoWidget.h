@@ -13,11 +13,12 @@
 namespace kernel
 {
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
 {
-    class SymbolIcons;
+    class EntitySymbols;
     class ItemFactory_ABC;
 }
 
@@ -33,7 +34,7 @@ class InfoWidget : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons, gui::ItemFactory_ABC& itemFactory );
+             InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory );
     virtual ~InfoWidget();
     //@}
 

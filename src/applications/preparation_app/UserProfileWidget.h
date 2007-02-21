@@ -18,7 +18,7 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
-    class SymbolIcons;
+    class EntitySymbols;
 }
 
 class UserProfile;
@@ -37,7 +37,7 @@ class UserProfileWidget : public QTabWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons );
+             UserProfileWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons );
     virtual ~UserProfileWidget();
     //@}
 

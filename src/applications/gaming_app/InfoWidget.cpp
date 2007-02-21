@@ -21,13 +21,13 @@
 // Name: InfoWidget constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons, gui::ItemFactory_ABC& itemFactory )
+InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory )
     : QHBox( parent )
 {
     layout()->setSpacing( 10 );
     layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
-    new InfoStatusWidget( this, controllers, icons );
-    new InfoSubordinatesWidget( this, controllers, icons );
+    new InfoStatusWidget( this, controllers, profile, icons );
+    new InfoSubordinatesWidget( this, controllers, profile, icons );
     new InfoEventsWidget( this, controllers );
     new InfoButtonsWidget( this, controllers, itemFactory );
 

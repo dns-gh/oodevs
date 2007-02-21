@@ -19,7 +19,7 @@ namespace kernel
 namespace gui
 {
     class ItemFactory_ABC;
-    class SymbolIcons;
+    class EntitySymbols;
 }
 
 class UserProfileList;
@@ -40,7 +40,7 @@ class UserProfileDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons, UserProfileFactory_ABC& factory );
+             UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, UserProfileFactory_ABC& factory );
     virtual ~UserProfileDialog();
     //@}
 

@@ -35,7 +35,7 @@ class CommunicationListView : public gui::HierarchyListView< kernel::Communicati
 public:
     //! @name Constructors/Destructor
     //@{
-             CommunicationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, ModelBuilder& modelBuilder );
+             CommunicationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ModelBuilder& modelBuilder );
     virtual ~CommunicationListView();
     //@}
 

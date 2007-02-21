@@ -33,7 +33,7 @@ class UserProfileUnitRights : public ::T_Parent
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons );
+             UserProfileUnitRights( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~UserProfileUnitRights();
     //@}
 

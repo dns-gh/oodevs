@@ -18,11 +18,12 @@ namespace kernel
 {
     class Entity_ABC;
     class Controllers;
+    class Profile_ABC;
 }
 
 namespace gui
 {
-    class SymbolIcons;
+    class EntitySymbols;
 }
 
 // =============================================================================
@@ -40,7 +41,7 @@ class InfoSubordinatesWidget : public QIconView
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons );
+             InfoSubordinatesWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~InfoSubordinatesWidget();
     //@}
 
@@ -67,7 +68,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::SymbolIcons& icons_;
+    const kernel::Profile_ABC& profile_;
+    gui::EntitySymbols& icons_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };

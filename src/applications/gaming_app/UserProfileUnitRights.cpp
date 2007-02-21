@@ -18,7 +18,7 @@ using namespace kernel;
 // Name: UserProfileUnitRights constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, SymbolIcons& icons )
+UserProfileUnitRights::UserProfileUnitRights( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, EntitySymbols& icons )
     : HierarchyListView< TacticalHierarchies >( parent, controllers, factory, profile, icons )
     , UserProfileRights_ABC( this )
 {

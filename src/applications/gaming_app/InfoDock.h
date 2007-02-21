@@ -16,11 +16,12 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
+    class Profile_ABC;
 }
 
 namespace gui
 {
-    class SymbolIcons;
+    class EntitySymbols;
     class ItemFactory_ABC;
 }
 
@@ -38,7 +39,7 @@ class InfoDock : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoDock( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons, gui::ItemFactory_ABC& itemFactory );
+             InfoDock( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, gui::ItemFactory_ABC& itemFactory );
     virtual ~InfoDock();
     //@}
 

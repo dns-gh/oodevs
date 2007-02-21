@@ -32,7 +32,7 @@ using namespace kernel;
 // Name: TacticalListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , factory_( factory )
     , modelBuilder_( modelBuilder )

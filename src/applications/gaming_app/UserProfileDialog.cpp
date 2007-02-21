@@ -19,7 +19,7 @@
 // Name: UserProfileDialog constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons, UserProfileFactory_ABC& factory )
+UserProfileDialog::UserProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& itemFactory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons, UserProfileFactory_ABC& factory )
     : QDialog( parent )
 {
     setCaption( tr( "User profiles" ) );

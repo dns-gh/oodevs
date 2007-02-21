@@ -69,6 +69,7 @@
 #include "clients_gui/IconLayout.h"
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/SymbolIcons.h"
+#include "clients_gui/EntitySymbols.h"
 #include "graphics/FixedLighting.h"
 #include "graphics/DragMovementLayer.h"
 
@@ -119,8 +120,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
     QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
 
-    gui::SymbolIcons* icons = new gui::SymbolIcons( this, widget2d_ );
-
+    gui::SymbolIcons* symbols = new gui::SymbolIcons( this, widget2d_ );
+    gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_.profiles_ );
 
     QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );

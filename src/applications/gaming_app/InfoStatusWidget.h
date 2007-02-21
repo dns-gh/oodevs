@@ -19,12 +19,12 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Attributes_ABC;
-    class TacticalHierarchies;
+    class Profile_ABC;
 }
 
 namespace gui
 {
-    class SymbolIcons;
+    class EntitySymbols;
 }
 
 class QProgressBar;
@@ -46,7 +46,7 @@ class InfoStatusWidget : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons );
+             InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~InfoStatusWidget();
     //@}
 
@@ -69,7 +69,7 @@ private:
     virtual void NotifyUpdated( const kernel::Attributes_ABC& element );
 
     void SetDefault();
-    void SetIcon   ( const kernel::TacticalHierarchies& hierarchies );
+    void SetIcon   ();
     void SetLifeBar( const Attributes& attributes );
     void SetName   ( const Attributes& attributes );
     //@}
@@ -78,7 +78,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::SymbolIcons& icons_;
+    const kernel::Profile_ABC& profile_;
+    gui::EntitySymbols& icons_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
     QPushButton* gotoParent_;

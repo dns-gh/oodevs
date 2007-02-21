@@ -337,4 +337,3 @@ void ColorStrategy::InitializeColors()
     neutralAvailable_.push_back( QColor( 140, 140, 140 ) ); // gris
     neutralAvailable_.push_back( QColor( 0, 170, 0 ) ); // vert
 }
-

@@ -15,7 +15,8 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_gui/SymbolIcons.h"
+#include "clients_kernel/Profile_ABC.h"
+#include "clients_gui/EntitySymbols.h"
 #include "icons.h"
 #include <qpainter.h>
 #include <qprogressbar.h>
@@ -56,11 +57,12 @@ namespace
 // Name: InfoStatusWidget constructor
 // Created: SBO 2007-02-02
 // -----------------------------------------------------------------------------
-InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons )
+InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : QVBox( parent )
     , controllers_( controllers )
-    , selected_( controllers )
+    , profile_( profile )
     , icons_( icons )
+    , selected_( controllers )
 {
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
     setFixedWidth( 150 );
@@ -125,9 +127,10 @@ void InfoStatusWidget::NotifySelected( const kernel::Entity_ABC* entity )
         if( !selected_ )
             return;
         const kernel::TacticalHierarchies* hierarchies = selected_->Retrieve< kernel::TacticalHierarchies >();
-        gotoParent_->setDisabled( !hierarchies || !hierarchies->GetSuperior() );
+        const kernel::Entity_ABC* parent = hierarchies->GetSuperior();
+        gotoParent_->setDisabled( !hierarchies || !parent || !profile_.IsVisible( *parent ) );
         if( hierarchies )
-            SetIcon( *hierarchies );
+            SetIcon();
         if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
         {
             SetLifeBar( *attributes );
@@ -152,17 +155,12 @@ void InfoStatusWidget::SetDefault()
 // Name: InfoStatusWidget::SetIcon
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void InfoStatusWidget::SetIcon( const kernel::TacticalHierarchies& hierarchies )
+void InfoStatusWidget::SetIcon()
 {
-    const std::string symbolName = hierarchies.GetSymbol();
-    const std::string levelName  = hierarchies.GetLevel();
-    if( ! symbolName.empty() || ! levelName.empty() )
-    {
-        QImage img;
-        img = icons_.GetSymbol( symbolName, levelName );
-        img = img.smoothScale( 64, 64, QImage::ScaleMax );
-        icon_->setPixmap( img );
-    }
+    QImage img;
+    img = icons_.GetSymbol( *selected_ );
+    img = img.smoothScale( 64, 64, QImage::ScaleMax );
+    icon_->setPixmap( img );
 }
 
 // -----------------------------------------------------------------------------

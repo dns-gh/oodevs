@@ -30,7 +30,7 @@ namespace gui
 {
     class ValuedListItem;
     class ItemFactory_ABC;
-    class SymbolIcons;
+    class EntitySymbols;
 
 // =============================================================================
 /** @class  HierarchyListView_ABC
@@ -56,7 +56,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::SymbolIcons& icons );
+             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& symbols );
     virtual ~HierarchyListView_ABC();
 
     QSize sizeHint() const;
@@ -110,7 +110,7 @@ private:
     bool Drop( ValuedListItem& item, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
     static void SetVisible( QListViewItem* item, bool visible );
-    void DisplayIcon( const kernel::TacticalHierarchies* hierarchies, gui::ValuedListItem* item );
+    void DisplayIcon( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     //@}
 
 private:
@@ -119,7 +119,7 @@ private:
     kernel::Controllers& controllers_;
     ItemFactory_ABC& factory_;
     const kernel::Profile_ABC& profile_;
-    gui::SymbolIcons& icons_;
+    gui::EntitySymbols& symbols_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QTimer* timer_;
     //@}
