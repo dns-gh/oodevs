@@ -237,11 +237,18 @@ void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    selected_ = entity;
-    if( !selected_ )
-        return;
-    if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
-        SetAttributes( *attributes );
+    if( selected_ != entity )
+    {
+        selected_ = entity;
+        hide();
+        if( !selected_ )
+            return;
+        if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+        {
+            show();
+            SetAttributes( *attributes );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

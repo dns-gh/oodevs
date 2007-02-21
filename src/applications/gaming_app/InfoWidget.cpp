@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "InfoWidget.h"
 #include "InfoStatusWidget.h"
+#include "InfoSubordinatesWidget.h"
 #include "InfoEventsWidget.h"
 #include "InfoButtonsWidget.h"
 #include "InfoReportsTab.h"
@@ -24,16 +25,16 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, gui::
     : QHBox( parent )
 {
     layout()->setSpacing( 10 );
-    layout()->setAlignment( Qt::AlignLeft );
+    layout()->setAlignment( Qt::AlignTop | Qt::AlignLeft );
     new InfoStatusWidget( this, controllers, icons );
+    new InfoSubordinatesWidget( this, controllers, icons );
     new InfoEventsWidget( this, controllers );
     new InfoButtonsWidget( this, controllers, itemFactory );
 
-    // $$$$ SBO 2007-02-05: 
     QTabWidget* tabs = new QTabWidget( this );
     tabs->addTab( new InfoReportsTab( this, controllers, itemFactory ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
     tabs->addTab( new InfoConflictsTab( this, controllers, itemFactory ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
-    tabs->addTab( new QWidget( this ), tr( "Knowledges" ) );
+    tabs->addTab( new QWidget( this ), tr( "Knowledges" ) ); // $$$$ SBO 2007-02-05: 
 }
 
 // -----------------------------------------------------------------------------

@@ -45,3 +45,4 @@
 #include "res/stance_equipped.xpm"
 #include "res/stance_engineered.xpm"
 #include "res/stance_arrow.xpm"
+#include "res/parent.xpm"

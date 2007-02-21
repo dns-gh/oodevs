@@ -19,6 +19,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Attributes_ABC;
+    class TacticalHierarchies;
 }
 
 namespace gui
@@ -40,12 +41,19 @@ class InfoStatusWidget : public QVBox
                        , public kernel::SelectionObserver< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
              InfoStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::SymbolIcons& icons );
     virtual ~InfoStatusWidget();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void GotoParent();
     //@}
 
 private:
@@ -60,7 +68,8 @@ private:
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyUpdated( const kernel::Attributes_ABC& element );
 
-    void SetIcon   ();
+    void SetDefault();
+    void SetIcon   ( const kernel::TacticalHierarchies& hierarchies );
     void SetLifeBar( const Attributes& attributes );
     void SetName   ( const Attributes& attributes );
     //@}
@@ -72,6 +81,7 @@ private:
     gui::SymbolIcons& icons_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
 
+    QPushButton* gotoParent_;
     QLabel* icon_;
     QLabel* name_;
     QProgressBar* lifeBar_;

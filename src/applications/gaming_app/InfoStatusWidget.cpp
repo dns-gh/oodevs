@@ -9,8 +9,10 @@
 
 #include "gaming_app_pch.h"
 #include "InfoStatusWidget.h"
+#include "moc_InfoStatusWidget.cpp"
 #include "gaming/Attributes.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/SymbolIcons.h"
@@ -48,15 +50,6 @@ namespace
             painter->drawRect( bar );
         }
     };
-
-    void AddButton( QWidget* parent, QGridLayout* grid, QLabel*& label, int index )
-    {
-        label = new QLabel( parent );
-        label->setBackgroundColor( Qt::white );
-        label->setAlignment( Qt::AlignCenter );
-        label->setFixedSize( 20, 20 );
-        grid->addWidget( label, 0, index );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,6 +65,19 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
     setFixedWidth( 150 );
 
+    QHBox* box = new QHBox( this );
+    box->layout()->setAlignment( Qt::AlignRight );
+    box->setMaximumHeight( 20 );
+    box->setBackgroundColor( Qt::white );
+
+    gotoParent_ = new QPushButton( box );
+    gotoParent_->setPixmap( MAKE_PIXMAP( parent ) );
+    gotoParent_->setDisabled( true );
+    gotoParent_->setFixedSize( 20, 20 );
+    gotoParent_->setFlat( true );
+    gotoParent_->setBackgroundColor( Qt::white );
+    QToolTip::add( gotoParent_, tr( "Goto parent unit" ) );
+
     icon_ = new QLabel( this );
     icon_->setPixmap( MAKE_PIXMAP( csword ) );
     icon_->setAlignment( Qt::AlignCenter );
@@ -85,10 +91,15 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
     name_->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
     name_->setBackgroundColor( Qt::white );
 
-    lifeBar_ = new LifeBar( this );
+    box = new QHBox( this );
+    box->setFixedHeight( 20 );
+    box->setBackgroundColor( Qt::white );
+    lifeBar_ = new LifeBar( box );
     lifeBar_->setFont( font );
     lifeBar_->setFixedSize( 150, 20 );
     
+    connect( gotoParent_, SIGNAL( clicked() ), SLOT( GotoParent() ) );
+    SetDefault();
     controllers_.Register( *this );
 }
 
@@ -107,36 +118,50 @@ InfoStatusWidget::~InfoStatusWidget()
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::NotifySelected( const kernel::Entity_ABC* entity )
 {
-    selected_ = entity;
-    if( !selected_ )
-        return;
-    if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+    if( selected_ != entity )
     {
-        SetIcon();
-        SetLifeBar( *attributes );
-        SetName( *attributes );
+        selected_ = entity;
+        SetDefault();
+        if( !selected_ )
+            return;
+        const kernel::TacticalHierarchies* hierarchies = selected_->Retrieve< kernel::TacticalHierarchies >();
+        gotoParent_->setDisabled( !hierarchies || !hierarchies->GetSuperior() );
+        if( hierarchies )
+            SetIcon( *hierarchies );
+        if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+        {
+            SetLifeBar( *attributes );
+            SetName( *attributes );
+        }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::SetDefault
+// Created: SBO 2007-02-21
+// -----------------------------------------------------------------------------
+void InfoStatusWidget::SetDefault()
+{
+    name_->setPaletteForegroundColor( Qt::black );
+    name_->setText( selected_ ? selected_->GetName() : "" );
+    icon_->setPixmap( MAKE_PIXMAP( csword ) );
+    lifeBar_->hide();
 }
 
 // -----------------------------------------------------------------------------
 // Name: InfoStatusWidget::SetIcon
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void InfoStatusWidget::SetIcon()
+void InfoStatusWidget::SetIcon( const kernel::TacticalHierarchies& hierarchies )
 {
-    if( !selected_ )
-        return;
-    if( const kernel::TacticalHierarchies* hierarchies = selected_->Retrieve< kernel::TacticalHierarchies >() )
+    const std::string symbolName = hierarchies.GetSymbol();
+    const std::string levelName  = hierarchies.GetLevel();
+    if( ! symbolName.empty() || ! levelName.empty() )
     {
-        const std::string symbolName = hierarchies->GetSymbol();
-        const std::string levelName  = hierarchies->GetLevel();
-        if( ! symbolName.empty() || ! levelName.empty() )
-        {
-            QImage img;
-            img = icons_.GetSymbol( symbolName, levelName );
-            img = img.smoothScale( 64, 64, QImage::ScaleMax );
-            icon_->setPixmap( img );
-        }
+        QImage img;
+        img = icons_.GetSymbol( symbolName, levelName );
+        img = img.smoothScale( 64, 64, QImage::ScaleMax );
+        icon_->setPixmap( img );
     }
 }
 
@@ -146,6 +171,7 @@ void InfoStatusWidget::SetIcon()
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::SetLifeBar( const Attributes& attributes )
 {
+    lifeBar_->show();
     lifeBar_->setProgress( attributes.nRawOpState_ );
 }
 
@@ -155,7 +181,6 @@ void InfoStatusWidget::SetLifeBar( const Attributes& attributes )
 // -----------------------------------------------------------------------------
 void InfoStatusWidget::SetName( const Attributes& attributes )
 {
-    name_->setText( selected_->GetName() );
     QColor color( Qt::black );
     if( attributes.bDead_ )
         color = Qt::red;
@@ -175,4 +200,17 @@ void InfoStatusWidget::NotifyUpdated( const kernel::Attributes_ABC& element )
     const Attributes& attributes = static_cast< const Attributes& >( element );
     SetLifeBar( attributes );
     SetName( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoStatusWidget::GotoParent
+// Created: SBO 2007-02-21
+// -----------------------------------------------------------------------------
+void InfoStatusWidget::GotoParent()
+{
+    if( !selected_ )
+        return;
+    if( const kernel::TacticalHierarchies* hierarchies = selected_->Retrieve< kernel::TacticalHierarchies >() )
+        if( const kernel::Entity_ABC* parent = hierarchies->GetSuperior() )
+            controllers_.actions_.Select( *parent );
 }

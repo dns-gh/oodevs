@@ -45,5 +45,6 @@ DECLARE_ICON( stance_posted );
 DECLARE_ICON( stance_equipped );
 DECLARE_ICON( stance_engineered );
 DECLARE_ICON( stance_arrow );
+DECLARE_ICON( parent );
 
 #endif // __statusicons_h_

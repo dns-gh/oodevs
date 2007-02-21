@@ -28,7 +28,7 @@ InfoButtonsWidget::InfoButtonsWidget( QWidget* widget, kernel::Controllers& cont
     : QGroupBox( 2, Qt::Horizontal, widget )
 {
     setFlat( true );
-    setFixedSize( 100, 150 );
+    setFixedWidth( 100 );
     setFrameStyle( QFrame::Panel | QFrame::Sunken );
     layout()->setMargin( 0 );
     setInsideMargin( 0 );
