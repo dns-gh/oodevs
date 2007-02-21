@@ -15,6 +15,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "Availability.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/Types.h"
 
 namespace kernel
 {

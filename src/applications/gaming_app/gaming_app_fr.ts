@@ -104,135 +104,23 @@
 <context>
     <name>AgentMaintenancePanel</name>
     <message>
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Maintenance system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Breakdown:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance system state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Working scheme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tow trucks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Working</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Repairers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AgentMedicalPanel</name>
     <message>
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Medical system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Injury:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mentally injured:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NBC contaminated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relief ambulances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Working</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Collect ambulances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AgentResourcesPanel</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentStatePanel</name>
@@ -425,66 +313,6 @@
     <name>AgentSupplyPanel</name>
     <message>
         <source>Supply system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supplier:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convoyer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>State:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supply system state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quota</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transporters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Working</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotations requested/granted/convoyed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2010,10 +1838,6 @@ Message : </source>
     </message>
     <message>
         <source>Density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

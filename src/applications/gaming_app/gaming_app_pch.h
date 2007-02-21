@@ -79,6 +79,7 @@
 #include <qmainwindow.h>
 #include <qdockwindow.h>
 #include <qapplication.h>
+#include <qhgroupbox.h>
 
 #include <map>
 #include <vector>

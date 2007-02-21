@@ -21,11 +21,13 @@ namespace kernel
 {
     class Agent_ABC;
     class Controllers;
+    class Displayer_ABC;
 }
 
 namespace gui
 {
     class ItemFactory_ABC;
+    class ValuedListItem;
 }
 
 // =============================================================================
@@ -63,6 +65,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void polish();
     virtual void showEvent( QShowEvent* );
     virtual void NotifySelected( const kernel::Agent_ABC* agent );
     virtual void NotifyUpdated( const Extension& a ) = 0;
@@ -110,6 +113,17 @@ bool ResourcesListView_ABC< ConcreteDisplayer, Extension >::ShouldUpdate( const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourcesListView_ABC::polish
+// Created: SBO 2007-02-20
+// -----------------------------------------------------------------------------
+template< typename ConcreteDisplayer, typename Extension >
+void ResourcesListView_ABC< ConcreteDisplayer, Extension >::polish()
+{
+    gui::ListDisplayer< ConcreteDisplayer >::polish();
+    setResizeMode( QListView::AllColumns );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourcesListView_ABC::showEvent
 // Created: SBO 2007-02-16
 // -----------------------------------------------------------------------------
@@ -130,9 +144,17 @@ void ResourcesListView_ABC< ConcreteDisplayer, Extension >::NotifySelected( cons
 {
     selected_ = agent;
     if( !selected_ )
+    {
+        hide();
         return;
+    }
     if( const Extension* extension = selected_->Retrieve< Extension >() )
+    {
+        show();
         NotifyUpdated( *extension );
+    }
+    else
+        hide();
 }
 
 #endif // __ResourcesListView_ABC_h_

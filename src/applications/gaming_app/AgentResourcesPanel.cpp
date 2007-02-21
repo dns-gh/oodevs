@@ -9,29 +9,24 @@
 
 #include "gaming_app_pch.h"
 #include "AgentResourcesPanel.h"
-
 #include "EquipmentsListView.h"
 #include "DotationsListView.h"
 #include "LendingsListView.h"
 #include "BorrowingsListView.h"
 #include "HumansListView.h"
-#include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentResourcesPanel constructor
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : gui::InfoPanel_ABC( parent, panel, tr( "Resources" ) )
-    , controllers_( controllers )
-    , selected_( controllers )
+    : EntityPanel( parent, panel, controllers, tr( "Resources" ) )
 {
-    new EquipmentsListView( this, controllers_, factory );
-    new DotationsListView( this, controllers_, factory );
-    new HumansListView( this, controllers_, factory );
-    new LendingsListView( this, controllers_, factory );
-    new BorrowingsListView( this, controllers_, factory );
-    controllers_.Register( *this );
+    new EquipmentsListView( this, controllers, factory );
+    new DotationsListView( this, controllers, factory );
+    new HumansListView( this, controllers, factory );
+    new LendingsListView( this, controllers, factory );
+    new BorrowingsListView( this, controllers, factory );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,32 +35,5 @@ AgentResourcesPanel::AgentResourcesPanel( QWidget* parent, gui::PanelStack_ABC& 
 // -----------------------------------------------------------------------------
 AgentResourcesPanel::~AgentResourcesPanel()
 {
-    controllers_.Remove( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentResourcesPanel::showEvent
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void AgentResourcesPanel::showEvent( QShowEvent* )
-{
-    const kernel::Agent_ABC* selected = selected_;
-    selected_ = 0;
-    NotifySelected( selected );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentResourcesPanel::NotifySelected
-// Created: AGE 2006-02-21
-// -----------------------------------------------------------------------------
-void AgentResourcesPanel::NotifySelected( const kernel::Agent_ABC* agent )
-{
-    if( selected_ != agent || ! agent )
-    {
-        selected_ = agent;
-        if( selected_ )
-            Show();
-        else
-            Hide();
-    }
+    // NOTHING
 }

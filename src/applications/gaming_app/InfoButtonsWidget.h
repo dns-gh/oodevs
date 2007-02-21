@@ -20,8 +20,6 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class InfoDialog;
-
 // =============================================================================
 /** @class  InfoButtonsWidget
     @brief  InfoButtonsWidget
@@ -30,20 +28,12 @@ class InfoDialog;
 // =============================================================================
 class InfoButtonsWidget : public QGroupBox
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
              InfoButtonsWidget( QWidget* widget, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     virtual ~InfoButtonsWidget();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnToggle( bool state );
-    void OnClose();
     //@}
 
 private:
@@ -55,7 +45,8 @@ private:
 
     //! @name Helpers
     //@{
-    void AddButton( const QPixmap& pixmap, InfoDialog* dialog );
+    template< typename Dialog >
+    void AddButton( const QPixmap& pixmap, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
     //@}
 
     //! @name Types
