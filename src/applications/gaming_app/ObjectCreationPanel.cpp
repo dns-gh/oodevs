@@ -12,7 +12,6 @@
 #include "moc_ObjectCreationPanel.cpp"
 #include "ObjectPrototype.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/IDManager.h"
 
 using namespace kernel;
 using namespace gui;

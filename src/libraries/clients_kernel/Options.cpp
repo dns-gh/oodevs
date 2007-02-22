@@ -110,7 +110,7 @@ void Options::Load( Settings_ABC& settings )
         {
             char type = typedName[0];
             const std::string name = typedName.substr( 1 );
-            if( type == Settings_ABC::intPrefix ) // $$$$ AGE 2006-04-19: kaka
+            if( type == Settings_ABC::intPrefix )
                 Load( settings, name, 1 );
             else if( type == Settings_ABC::boolPrefix )
                 Load( settings, name, false );

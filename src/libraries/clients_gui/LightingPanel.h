@@ -62,6 +62,10 @@ private:
     //@{
     FixedLighting& lighting_;
     QButtonGroup* lightingType_;
+
+    DirectionWidget* direction_;
+    ColorButton* ambient_;
+    ColorButton* diffuse_;
     //@}
 };
 

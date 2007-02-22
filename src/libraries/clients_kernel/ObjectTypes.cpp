@@ -124,7 +124,6 @@ void ObjectTypes::ReadObjectType( xml::xistream& xis )
     std::string type;
     xis >> attribute( "type", type );
     int nType = ENT_Tr::ConvertToObjectType( type );
-    // $$$$ AGE 2006-10-17: checks
     Resolver2< ObjectType >::Register( nType, type.c_str(), *new ObjectType( xis, nType, *managers_[ objectIds_[ nType ] ] ) );
 }
 

@@ -30,6 +30,12 @@ public:
     virtual ~DirectionWidget();
     //@}
 
+    //! @name Operations
+    //@{
+    void Commit();
+    void Revert();
+    //@}
+
 signals:
     //! @name Signals
     //@{
@@ -60,6 +66,7 @@ private:
 private:
     //! @name Member data
     //@{
+    QPoint old_;
     QPoint point_;
     //@}
 };

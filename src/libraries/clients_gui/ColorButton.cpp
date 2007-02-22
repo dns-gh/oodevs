@@ -22,12 +22,11 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ColorButton::ColorButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, QColor color /*= black*/ )
     : QPushButton( parent, name )
-    , changed_( false )
     , previous_( color )
     , current_( color )
 {
     setMaximumWidth( height() * 4 / 3 );
-    connect( this, SIGNAL( clicked() ), this, SLOT( OnClick() ) );
+    connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -56,7 +55,7 @@ void ColorButton::drawButton( QPainter* painter )
 // -----------------------------------------------------------------------------
 void ColorButton::OnClick()
 {
-    SetColor( QColorDialog::getColor( previous_, this ) );
+    SetColor( QColorDialog::getColor( current_, this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,9 +64,6 @@ void ColorButton::OnClick()
 // -----------------------------------------------------------------------------
 void ColorButton::SetColor( const QColor& rgb )
 {
-    if( ! changed_ )
-        previous_ = current_;
-    changed_ = true;
     current_ = rgb;
     repaint();
     emit ColorChanged( rgb );
@@ -88,8 +84,7 @@ QColor ColorButton::GetColor() const
 // -----------------------------------------------------------------------------
 void ColorButton::Revert()
 {
-    changed_ = false;
-    current_  = previous_;
+    SetColor( previous_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,5 +94,4 @@ void ColorButton::Revert()
 void ColorButton::Commit()
 {
     previous_ = current_;
-    changed_ = false;
 }

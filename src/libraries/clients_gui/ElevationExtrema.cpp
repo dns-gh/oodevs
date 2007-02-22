@@ -19,9 +19,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ElevationExtrema::ElevationExtrema( const ElevationMap& map )
     : map_( map )
-    , extrema_( geometry::Rectangle2< int >( 0, 0, map.Width(), map.Height() ) )
 {
-    extrema_.SetRefinementPolicy( 10 );
     Fill();
 }
 
@@ -31,7 +29,8 @@ ElevationExtrema::ElevationExtrema( const ElevationMap& map )
 // -----------------------------------------------------------------------------
 ElevationExtrema::~ElevationExtrema()
 {
-    // NOTHING
+    for( std::vector< T_Container* >::const_iterator it = extrema_.begin(); it != extrema_.end(); ++it )
+        delete *it;
 }
 
 struct ElevationExtrema::ExtremaFinder
@@ -69,7 +68,7 @@ void ElevationExtrema::FindExtrema( const geometry::Rectangle2f& extent, short& 
     pathfind::SegmentIntersecter< int > intersecter( tr, bl );
 
     ExtremaFinder finder( geometry::Rectangle2< int >( bl, tr ) );
-    extrema_.Apply( intersecter, finder );
+    extrema_[ FindLevel( extent.Width(), extent.Height() ) ]->Apply( intersecter, finder );
     min = std::max( short( 0 ),              finder.min_ );
     max = std::min( map_.MaximumElevation(), finder.max_ );
 }
@@ -119,36 +118,68 @@ bool ElevationExtrema::Extrema::operator==( const ElevationExtrema::Extrema& rhs
 // -----------------------------------------------------------------------------
 void ElevationExtrema::Fill()
 {
-    AddExtrema( 0, 0, map_.Width(), map_.Height() );
+    AddExtrema( 0, 0, 0, map_.Width(), map_.Height() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ElevationExtrema::AddExtrema
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
-void ElevationExtrema::AddExtrema( int x, int y, int w, int h )
+std::pair< short, short > ElevationExtrema::AddExtrema( unsigned level, int x, int y, int w, int h )
 {
-    typedef std::pair< short, short > T_Result;
-    if( w > 200 && h > 200 )
+    if( extrema_.size() <= level )
+        extrema_.resize( level + 1 );
+    if( ! extrema_[ level ] )
+    {
+        extrema_[ level ] = new T_Container( geometry::Rectangle2< int >( 0, 0, map_.Width(), map_.Height() ) );
+        extrema_[ level ]->SetRefinementPolicy( 20 );
+    }
+
+    typedef std::pair< short, short > T_Bermuda;
+    T_Bermuda result( 20000, 0 );
+    if( w > 50 && h > 50 )
     {
         const int hw = w / 2;
         const int hh = h / 2;
-        AddExtrema( x, y, hw, hh );
-        AddExtrema( x+hw, y, w-hw, hh );
-        AddExtrema( x, y+hh, hw, h-hh );
-        AddExtrema( x+hw, y+hh, w-hw, h-hh );
+        
+        T_Bermuda sub;
+        sub = AddExtrema( level+1, x, y, hw, hh );   
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
+        sub = AddExtrema( level+1, x+hw, y, w-hw, hh );
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
+        sub = AddExtrema( level+1, x, y+hh, hw, h-hh );
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
+        sub = AddExtrema( level+1, x+hw, y+hh, w-hw, h-hh );
+        result.first = std::min( result.first, sub.first ); result.second = std::max( result.second, sub.second ); 
     }
     else
     {
-        short min = 20000;
-        short max = 0;
         for( unsigned i = x; i < x+w; ++i )
             for( unsigned j = y; j < y+h; ++j )
             {
                 const short elevation = *map_.Data( i, j );
-                min = std::min( min,  elevation );
-                max = std::max( max, elevation );
+                result.first  = std::min( result.first,  elevation );
+                result.second = std::max( result.second, elevation );
             }
-        extrema_.Insert( Extrema( x, y, w, h, min, max ) );
     }
+    extrema_[ level ]->Insert( Extrema( x, y, w, h, result.first, result.second ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ElevationExtrema::FindLevel
+// Created: AGE 2007-02-20
+// -----------------------------------------------------------------------------
+unsigned ElevationExtrema::FindLevel( float width, float height ) const
+{
+    float bw = map_.Extent().Width();
+    float bh = map_.Extent().Height();
+    unsigned level = 0;
+    while( width < bw && height < bh && level + 1 < extrema_.size() )
+    {
+        bw *= 0.5f;
+        bh *= 0.5f;
+        ++level;
+    }
+    return level;
 }

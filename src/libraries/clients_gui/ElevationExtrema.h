@@ -64,14 +64,15 @@ private:
     //! @name Helpers
     //@{
     void Fill();
-    void AddExtrema( int x, int y, int width, int height );
+    std::pair< short, short > AddExtrema( unsigned level, int x, int y, int width, int height );
+    unsigned FindLevel( float width, float height ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const ElevationMap& map_;
-    T_Container extrema_;
+    std::vector< T_Container* > extrema_;
     //@}
 };
 

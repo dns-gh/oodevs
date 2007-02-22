@@ -20,11 +20,12 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DirectionWidget::DirectionWidget( QWidget* parent )
     : QFrame( parent )
+    , old_  ( 0, 0 )
     , point_( 0, 0 )
 {
     setFixedSize( 48, 48 );
     setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    point_ = rect().center();
+    old_ = point_ = rect().center();
 }
 
 // -----------------------------------------------------------------------------
@@ -35,6 +36,7 @@ DirectionWidget::~DirectionWidget()
 {
     // NOTHING
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: DirectionWidget::mousePressEvent
@@ -53,6 +55,24 @@ void DirectionWidget::mousePressEvent( QMouseEvent* e )
 void DirectionWidget::mouseMoveEvent( QMouseEvent* e )
 {
     Move( e->pos() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectionWidget::Revert
+// Created: AGE 2007-02-22
+// -----------------------------------------------------------------------------
+void DirectionWidget::Revert()
+{
+    Move( old_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DirectionWidget::Commit
+// Created: AGE 2007-02-22
+// -----------------------------------------------------------------------------
+void DirectionWidget::Commit()
+{
+    old_ = point_;
 }
 
 // -----------------------------------------------------------------------------

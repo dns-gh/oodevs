@@ -28,6 +28,7 @@ LightingPanel::LightingPanel( QWidget* parent, FixedLighting& lighting )
     lighting_.SetDiffuse( 0.8f, 0.8f, 0.8f );
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
 
+    // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
     lightingType_ = new QButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
     lightingType_->insert( new QRadioButton( tr( "Fixed" ), lightingType_ ) );
     lightingType_->insert( new QRadioButton( tr( "Simulation time" ), lightingType_ ) );
@@ -36,16 +37,15 @@ LightingPanel::LightingPanel( QWidget* parent, FixedLighting& lighting )
 
     QGroupBox* lightBox = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), this );
     new QLabel( tr( "Source position" ), lightBox );
-    DirectionWidget* direction = new DirectionWidget( lightBox );
+    direction_ = new DirectionWidget( lightBox );
     new QLabel( tr( "Ambient color" ), lightBox );
-    ColorButton* ambient = new ColorButton( lightBox, "", QColor( 50, 50, 50 ) );
+    ambient_ = new ColorButton( lightBox, "", QColor( 52, 52, 52 ) );
     new QLabel( tr( "Diffuse color" ), lightBox );
-    ColorButton* diffuse = new ColorButton( lightBox, "", QColor( 200, 200, 200 ) );
+    diffuse_ = new ColorButton( lightBox, "", QColor( 204, 204, 204 ) );
 
-    connect( direction, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
-    connect( ambient, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
-    connect( diffuse, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
-    // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
+    connect( direction_, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
+    connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
+    connect( diffuse_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( DiffuseChanged( const QColor& ) ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -63,7 +63,9 @@ LightingPanel::~LightingPanel()
 // -----------------------------------------------------------------------------
 void LightingPanel::Commit()
 {
-     // $$$$ SBO 2007-01-03: TODO !
+    direction_->Commit();
+    ambient_  ->Commit();
+    diffuse_  ->Commit();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +74,9 @@ void LightingPanel::Commit()
 // -----------------------------------------------------------------------------
 void LightingPanel::Reset()
 {
-    // $$$$ SBO 2007-01-03: TODO !
+    direction_->Revert();
+    ambient_  ->Revert();
+    diffuse_  ->Revert();
 }
 
 // -----------------------------------------------------------------------------

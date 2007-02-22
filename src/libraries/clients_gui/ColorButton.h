@@ -68,7 +68,6 @@ private:
 private:
     //! @name Member data
     //@{
-    bool changed_;
     QColor previous_;
     QColor current_;
     //@}
