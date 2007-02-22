@@ -149,8 +149,8 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
     const Hierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
     if( ! hierarchies )
         hierarchies = entity.Retrieve< CommunicationHierarchies >();
-    const Entity_ABC* team = hierarchies ? &hierarchies->GetTop() : &entity;
-    return teamColors_[ team ];
+    const Entity_ABC& team = hierarchies ? hierarchies->GetTop() : entity;
+    return FindTeamColor( team );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,21 +270,7 @@ QColor ColorStrategy::RandomColor() const
 // -----------------------------------------------------------------------------
 void ColorStrategy::NotifyCreated( const Team_ABC& team )
 {
-    T_Colors* available = 0;
-    if( team.IsFriend() )
-        available = &friendlyAvailable_;
-    else if( team.IsEnemy() )
-        available = &enemyAvailable_;
-    else /*if( team.IsNeutral() )*/
-        available = &neutralAvailable_;
-
-    if( available->empty() )
-        teamColors_[ &team ] = RandomColor();
-    else
-    {
-        teamColors_[ &team ] = available->back();
-        available->pop_back();
-    }
+    FindTeamColor( team ); // $$$$ SBO 2007-02-22: should not be needed
 }
 
 // -----------------------------------------------------------------------------
@@ -317,6 +303,35 @@ void ColorStrategy::NotifyDeleted( const Team_ABC& team )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorStrategy::FindTeamColor
+// Created: SBO 2007-02-22
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::FindTeamColor( const kernel::Entity_ABC& entity )
+{
+    T_TeamColors::const_iterator it = teamColors_.find( &entity );
+    if( it != teamColors_.end() )
+        return it->second;
+
+    T_Colors* available = 0;
+    const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( entity );
+    if( team.IsFriend() )
+        available = &friendlyAvailable_;
+    else if( team.IsEnemy() )
+        available = &enemyAvailable_;
+    else /*if( team.IsNeutral() )*/
+        available = &neutralAvailable_;
+
+    if( available->empty() )
+        teamColors_[ &entity ] = RandomColor();
+    else
+    {
+        teamColors_[ &entity ] = available->back();
+        available->pop_back();
+    }
+    return teamColors_[ &entity ];
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorStrategy::InitializeColors
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
@@ -324,12 +339,12 @@ void ColorStrategy::InitializeColors()
 {
     enemyAvailable_.push_back( QColor( 170, 90, 40 ) );   // marron
     enemyAvailable_.push_back( QColor( 255, 150, 10 ) );  // orange
-    enemyAvailable_.push_back( QColor( 255, 000, 255 ) ); // magenta
-    enemyAvailable_.push_back( QColor( 255, 50, 50 ) );   // rouge
+    enemyAvailable_.push_back( QColor( 255, 0, 255 ) ); // magenta
+    enemyAvailable_.push_back( QColor( 255, 50, 50 ) );   // rouge  
 
-    friendlyAvailable_.push_back( QColor( 171, 100, 60 ) ); // vert d'eau
+    friendlyAvailable_.push_back( QColor( 170, 100, 60 ) ); // vert d'eau
     friendlyAvailable_.push_back( QColor( 50, 50, 128 ) ); // cobalt
-    friendlyAvailable_.push_back( QColor( 000, 230, 230 ) ); // cyan
+    friendlyAvailable_.push_back( QColor( 0, 230, 230 ) ); // cyan
     friendlyAvailable_.push_back( QColor( 100, 125, 255 ) ); // bleu
 
     neutralAvailable_.push_back( QColor( 255, 255, 255 ) ); // blanc

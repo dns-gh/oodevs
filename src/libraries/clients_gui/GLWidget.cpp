@@ -270,7 +270,7 @@ void GlWidget::RenderIcon( const T_IconTask& task, const geometry::Rectangle2f& 
     glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     glFlush();
 
-    task.handler->AddIcon( task.name, task.name2, QPixmap( image.mirror().smoothScale( 32, 32 ) ) );
+    task.handler->AddIcon( task.name, task.name2, task.color, QPixmap( image.mirror().smoothScale( 32, 32 ) ) );
 }
 
 // -----------------------------------------------------------------------------

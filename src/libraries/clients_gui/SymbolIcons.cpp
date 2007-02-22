@@ -51,12 +51,12 @@ QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, 
     std::string symbolName( s );
     std::replace( symbolName.begin(), symbolName.end(), '*', 'f' ); // $$$$ AGE 2006-11-22: 
 
-    const T_Key key( level, symbolName );
+    const Key key( symbolName, level, color );
     const QPixmap& result = icons_[ key ];
     if( result.isNull() )
     {
         if( pending_.insert( key ).second )
-            widget_->CreateIcon( key.second, key.first, color, *this );
+            widget_->CreateIcon( key.symbol_, key.level_, key.color_, *this );
     }
     return result;
 }
@@ -65,9 +65,9 @@ QPixmap SymbolIcons::GetSymbol( const std::string& s, const std::string& level, 
 // Name: SymbolIcons::AddIcon
 // Created: AGE 2006-11-22
 // -----------------------------------------------------------------------------
-void SymbolIcons::AddIcon( const std::string& symbol, const std::string& level, const QPixmap& icon )
+void SymbolIcons::AddIcon( const std::string& symbol, const std::string& level, const QColor& color, const QPixmap& icon )
 {
-    const T_Key key( level, symbol );
+    const Key key( symbol, level, color );
     icons_[ key ] = icon;
     pending_.erase( key );
 }

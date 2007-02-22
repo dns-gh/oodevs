@@ -42,11 +42,15 @@ EntitySymbols::~EntitySymbols()
 // -----------------------------------------------------------------------------
 QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity )
 {
+    QPixmap stub( 1, 1 );
+    stub.fill( Qt::white );
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
     {
         const std::string symbolName = hierarchies->GetSymbol();
         const std::string levelName  = hierarchies->GetLevel();
+        if( symbolName.empty() && levelName.empty() )
+            return stub;
         return icons_.GetSymbol( symbolName, levelName, strategy_.FindColor( entity ) );
     }
-    return QPixmap();
+    return stub;
 }

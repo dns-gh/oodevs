@@ -47,15 +47,31 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< std::string, std::string > T_Key;
-    typedef std::map< T_Key, QPixmap >            T_Icons;
-    typedef std::set< T_Key >                     T_PendingIcons;
+    struct Key
+    {
+        Key( const std::string& symbol, const std::string& level, const QColor& color )
+            : symbol_( symbol )
+            , level_( level )
+            , color_( color )
+        {}
+
+        bool operator<( const Key& rhs ) const
+        {
+            return make_pair( make_pair( symbol_, level_ ), color_.rgb() )
+                < make_pair( make_pair( rhs.symbol_, rhs.level_ ), rhs.color_.rgb() );
+        }
+        std::string symbol_, level_;
+        QColor color_;
+    };
+
+    typedef std::map< Key, QPixmap >            T_Icons;
+    typedef std::set< Key >                     T_PendingIcons;
     typedef T_PendingIcons::const_iterator      CIT_PendingIcons;
     //@}
 
     //! @name Helpers
     //@{
-    virtual void AddIcon( const std::string& symbol, const std::string& level, const QPixmap& icon );
+    virtual void AddIcon( const std::string& symbol, const std::string& level, const QColor& color, const QPixmap& icon );
     //@}
 
 private:

@@ -98,6 +98,7 @@ private:
     QColor SuperiorSelectedColor( const QColor& base ) const;
     QColor KnowledgeColor( const QColor& base ) const;
     void ApplyColor( const QColor& color ) const;
+    QColor FindTeamColor( const kernel::Entity_ABC& team );
     //@}
 
 private:
