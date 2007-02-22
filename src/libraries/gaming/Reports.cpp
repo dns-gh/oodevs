@@ -108,15 +108,6 @@ void Reports::ClearTraces()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Reports::Draw
-// Created: AGE 2006-04-06
-// -----------------------------------------------------------------------------
-void Reports::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
-{
-    // $$$$ AGE 2006-04-06: ?
-}
-
-// -----------------------------------------------------------------------------
 // Name: Reports::DisplayInTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------

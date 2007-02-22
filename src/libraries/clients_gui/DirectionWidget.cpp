@@ -37,7 +37,6 @@ DirectionWidget::~DirectionWidget()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DirectionWidget::mousePressEvent
 // Created: AGE 2007-01-02

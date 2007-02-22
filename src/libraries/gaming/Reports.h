@@ -14,7 +14,6 @@
 #include "DIN_Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
@@ -37,7 +36,6 @@ class ReportFactory;
 class Reports : public kernel::Extension_ABC
               , public kernel::Updatable_ABC< ASN1T_MsgCR >
               , public kernel::Updatable_ABC< TraceMessage >
-              , public kernel::Drawable_ABC
               , public kernel::Displayable_ABC
 {
 
@@ -52,7 +50,6 @@ public:
     //! @name Operations
     //@{
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
 
     void Clear();
     void ClearTraces();

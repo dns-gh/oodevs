@@ -80,7 +80,7 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "NBC", "NBC" ) )
                 .Display( tools::translate( "NBC", "NBC suit:" ), 
-                        bNbcProtectionSuitWorn_ ? tools::translate( "NBC", "on" ) : tools::translate( "NBC", "off" ) ) // $$$$ AGE 2006-02-22: Boolean
+                        bNbcProtectionSuitWorn_ ? tools::translate( "NBC", "on" ) : tools::translate( "NBC", "off" ) ) 
                 .Display( tools::translate( "NBC", "Contaminating agents:" ), contaminatingNbcAgents_ )
                 .Display( tools::translate( "NBC", "Contamination level:" ), nContamination_ );
 }

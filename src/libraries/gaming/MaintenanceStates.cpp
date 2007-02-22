@@ -100,7 +100,7 @@ void MaintenanceStates::Display( Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "MaintenanceStates", "Maintenance system state" ) )
                 .Display( tools::translate( "MaintenanceStates", "System status" ), bChainEnabled_ ?
                         tools::translate( "MaintenanceStates", "Enabled" ) : tools::translate( "MaintenanceStates", "Disabled" ) )
-                .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%1" ).arg( nWorkRate_ ) ) // $$$$ AGE 2006-04-03: 
+                .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%1" ).arg( nWorkRate_ ) )
                 .Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ )
                 .Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );
 }

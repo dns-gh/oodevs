@@ -60,7 +60,6 @@ void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& 
     glPushAttrib( GL_CURRENT_BIT );
     glPointSize( std::ceil( map_.GetCellSize() / tools.Pixels() ) );
 
-    // $$$$ AGE 2007-02-01: mettre une texture et envoyer
     glBegin( GL_POINTS );
     for( char color = 1; color <= 3; ++color )
     {
