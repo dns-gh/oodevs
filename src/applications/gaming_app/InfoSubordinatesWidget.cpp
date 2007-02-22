@@ -16,21 +16,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/EntitySymbols.h"
-
-namespace
-{
-    class ValuedIconViewItem : public QIconViewItem
-    {
-    public:
-        ValuedIconViewItem( QIconView* parent, const QString& text, const QPixmap& icon, const kernel::Entity_ABC& entity )
-            : QIconViewItem( parent, text, icon )
-            , entity_( &entity )
-        {}
-        virtual ~ValuedIconViewItem() {}
-
-        const kernel::Entity_ABC* entity_;
-    };
-}
+#include "InfoSubordinateItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: InfoSubordinatesWidget constructor
@@ -45,10 +31,11 @@ InfoSubordinatesWidget::InfoSubordinatesWidget( QWidget* parent, kernel::Control
 {
     setGridX( 60 );
     setGridY( 60 );
-    setFixedWidth( 330 );
+    setFixedWidth( 345 );
     setWordWrapIconText( false );
     setSorting( true );
     setItemsMovable( false );
+    setHScrollBarMode( QScrollView::AlwaysOff );
     connect( this, SIGNAL( doubleClicked( QIconViewItem* ) ), SLOT( OpenItem( QIconViewItem* ) ) );
     hide();
     controllers_.Register( *this );
@@ -103,7 +90,7 @@ void InfoSubordinatesWidget::AddSubordinate( const kernel::Entity_ABC& entity )
         const std::string symbolName = hierarchies->GetSymbol();
         const std::string levelName  = hierarchies->GetLevel();
         if( ! symbolName.empty() || ! levelName.empty() )
-            new ValuedIconViewItem( this, entity.GetName(), icons_.GetSymbol( entity ), entity );
+            new InfoSubordinateItem( this, entity.GetName(), icons_.GetSymbol( entity ), entity );
     }
 }
 
@@ -113,6 +100,6 @@ void InfoSubordinatesWidget::AddSubordinate( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void InfoSubordinatesWidget::OpenItem( QIconViewItem* item )
 {
-    if( ValuedIconViewItem* value = static_cast< ValuedIconViewItem* >( item ) )
-        controllers_.actions_.Select( *value->entity_ );
+    if( InfoSubordinateItem* value = static_cast< InfoSubordinateItem* >( item ) )
+        controllers_.actions_.Select( value->GetEntity() );
 }
