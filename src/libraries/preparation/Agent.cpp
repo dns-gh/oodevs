@@ -13,10 +13,13 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
+#include "TeamKarma.h"
+#include "Team.h"
 
 using namespace kernel;
 using namespace xml;
@@ -32,8 +35,6 @@ Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManage
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
-    symbol_ = type_->GetSymbol();
-    std::replace( symbol_.begin(), symbol_.end(), '*', 'f' );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,8 +53,6 @@ Agent::Agent( xistream& xis, Controller& controller, IdManager& idManager, const
     
     RegisterSelf( *this );
     CreateDictionary( controller );
-    symbol_ = type_->GetSymbol();
-    std::replace( symbol_.begin(), symbol_.end(), '*', 'f' );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,9 +94,23 @@ void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& v
 {
     if( viewport.IsInside( where ) )
     {
+        if( symbol_.empty() )
+            InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where );
         type_->Draw( where, viewport, tools, commandPost_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::InitializeSymbol
+// Created: AGE 2006-10-25
+// -----------------------------------------------------------------------------
+void Agent::InitializeSymbol() const
+{
+    symbol_ = type_->GetSymbol();
+    const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
+    const TeamKarma& karma = static_cast< const Team& >( team ).GetKarma();
+    std::replace( symbol_.begin(), symbol_.end(), '*', karma.GetIdentifier() );
 }
 
 // -----------------------------------------------------------------------------

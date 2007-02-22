@@ -111,7 +111,7 @@ void ProfilesModel::DeleteProfile( const UserProfile& profile )
 // -----------------------------------------------------------------------------
 bool ProfilesModel::Exists( const QString& login ) const
 {
-    for( T_UserProfiles::const_iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         if( login == (*it)->GetLogin() )
             return true;
     return false;

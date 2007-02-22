@@ -14,8 +14,12 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
+#include "TeamKarma.h"
+#include "Team.h"
 
 using namespace kernel;
 using namespace xml;
@@ -105,7 +109,28 @@ void Automat::Rename( const QString& name )
 void Automat::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsInside( where ) )
+    {
+//        if( symbol_.empty() ) // $$$$ SBO 2007-02-22: somehow watch symbol modifications instead of trying to update symbol
+        InitializeSymbol();
+        tools.DrawApp6Symbol( symbol_, where, 2 );
         type_->Draw( where, viewport, tools );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::InitializeSymbol
+// Created: AGE 2006-10-25
+// -----------------------------------------------------------------------------
+void Automat::InitializeSymbol() const
+{
+    const kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
+    const std::string symbol = hierarchies.GetSymbol();
+    if( symbol_ == symbol )
+        return;
+    symbol_ = symbol;
+    const Entity_ABC& team = hierarchies.GetTop();
+    const TeamKarma& karma = static_cast< const Team& >( team ).GetKarma();
+    std::replace( symbol_.begin(), symbol_.end(), '*', karma.GetIdentifier() );
 }
 
 // -----------------------------------------------------------------------------

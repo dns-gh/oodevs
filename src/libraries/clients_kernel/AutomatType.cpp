@@ -45,7 +45,6 @@ AutomatType::AutomatType( xml::xistream& xis, const Resolver_ABC< AgentType, QSt
     pcType_ = & agentResolver.Get( pcType.c_str() );
 
     symbol_ = pcType_->GetSymbol();
-    std::replace( symbol_.begin(), symbol_.end(), '*', 'f' ); // $$$$ AGE 2006-10-24: 
 }
 
 // -----------------------------------------------------------------------------
@@ -103,6 +102,15 @@ QString AutomatType::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatType::GetSymbol
+// Created: SBO 2007-02-22
+// -----------------------------------------------------------------------------
+std::string AutomatType::GetSymbol() const
+{
+    return symbol_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatType::GetDecisionalModel
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
@@ -117,8 +125,9 @@ const DecisionalModel& AutomatType::GetDecisionalModel() const
 // -----------------------------------------------------------------------------
 void AutomatType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) )
-        tools.DrawApp6Symbol( symbol_, where, 2 );
+    // $$$$ SBO 2007-02-22: display aggregated level ?
+//    if( viewport.IsInside( where ) )
+//        tools.DrawApp6Symbol( symbol_, where, 2 );
 }
 
 // -----------------------------------------------------------------------------

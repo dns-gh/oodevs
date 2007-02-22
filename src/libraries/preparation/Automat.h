@@ -76,6 +76,7 @@ private:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void SerializeLogistics ( xml::xostream& xos ) const;
     void CreateDictionary( kernel::Controller& controller );
+    void InitializeSymbol() const;
 
     static unsigned long ReadId  ( xml::xistream& xis );
     static QString       ReadName( xml::xistream& xis );
@@ -85,6 +86,7 @@ private:
     //! @name Member data
     //@{
     const kernel::AutomatType* type_;
+    mutable std::string symbol_;
     //@}
 };
 

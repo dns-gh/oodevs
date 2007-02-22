@@ -44,6 +44,7 @@ public:
     unsigned long GetId();
     QString GetName() const;
     AgentType* GetTypePC() const;
+    std::string GetSymbol() const;
     const DecisionalModel& GetDecisionalModel() const;
     void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     Iterator< const AutomatComposition& > CreateIterator() const;

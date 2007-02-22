@@ -63,12 +63,14 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::AutomatType& type_;
+    mutable std::string symbol_;
     //@}
 };
 

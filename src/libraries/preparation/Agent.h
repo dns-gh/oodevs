@@ -73,13 +73,14 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     static unsigned long ReadId  ( xml::xistream& xis );
     static QString       ReadName( xml::xistream& xis );
+    void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::AgentType* type_;
-    std::string symbol_;
+    mutable std::string symbol_;
     bool commandPost_;
     //@}
 };
