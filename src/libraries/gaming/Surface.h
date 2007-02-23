@@ -20,6 +20,7 @@ namespace kernel
     class SensorType;
     class Agent_ABC;
     class GlTools_ABC;
+    class Viewport_ABC;
     class DetectionMap;
 }
 
@@ -41,7 +42,7 @@ public:
     //! @name Operations
     //@{
     void SetElongation( float elongation );
-    void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     void Initialize( VisionMap& map );
     void Update( VisionMap& map );
     //@}

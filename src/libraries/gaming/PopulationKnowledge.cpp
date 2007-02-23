@@ -205,7 +205,7 @@ const kernel::KnowledgeGroup_ABC& PopulationKnowledge::GetOwner() const
 // Name: PopulationKnowledge::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void PopulationKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2006-05-18: 
 }

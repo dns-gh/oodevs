@@ -100,7 +100,7 @@ void PopulationDetections::DoUpdate( const PopulationCollisionMessage& message )
 // Name: PopulationDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void PopulationDetections::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void PopulationDetections::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     // $$$$ AGE 2006-04-06: draw something
 }

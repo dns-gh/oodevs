@@ -55,7 +55,7 @@ public:
     //@{
     virtual const kernel::AgentType& GetType() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
     virtual bool IsCommandPost() const;
     void Rename( const QString& name );

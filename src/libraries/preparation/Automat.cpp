@@ -16,6 +16,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "TeamKarma.h"
@@ -106,14 +107,12 @@ void Automat::Rename( const QString& name )
 // Name: Automat::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void Automat::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Automat::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) )
+    if( viewport.IsVisible( where ) )
     {
-//        if( symbol_.empty() ) // $$$$ SBO 2007-02-22: somehow watch symbol modifications instead of trying to update symbol
         InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, 2 );
-        type_->Draw( where, viewport, tools );
     }
 }
 

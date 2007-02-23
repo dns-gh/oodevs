@@ -305,7 +305,7 @@ void MissionPanel::hideEvent( QHideEvent* pEvent )
 // Name: MissionPanel::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void MissionPanel::Draw( const geometry::Rectangle2f& viewport )
+void MissionPanel::Draw( Viewport_ABC& viewport )
 {
     if( pMissionInterface_  && isVisible() )
     {

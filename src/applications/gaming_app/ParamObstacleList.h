@@ -49,7 +49,7 @@ public:
     //@{
     virtual bool CheckValidity();
     virtual void Commit();
-    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
     
 private slots:

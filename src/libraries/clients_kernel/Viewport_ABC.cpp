@@ -3,41 +3,48 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
-#include "PopulationFire.h"
-#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel_pch.h"
+#include "Viewport_ABC.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFire constructor
-// Created: AGE 2006-03-10
+// Name: Viewport_ABC constructor
+// Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-PopulationFire::PopulationFire( const ASN1T_MsgStartPopulationFire& message, const Resolver_ABC< Population_ABC >& resolver )
-    : Fire_ABC( resolver.Get( message.oid_src ) )
-    , id_( message.oid_tir )
+Viewport_ABC::Viewport_ABC()
+    : hotIsVisible_( false )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFire destructor
-// Created: AGE 2006-03-10
+// Name: Viewport_ABC destructor
+// Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-PopulationFire::~PopulationFire()
+Viewport_ABC::~Viewport_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFire::Draw
-// Created: AGE 2006-03-17
+// Name: Viewport_ABC::IsHotpointVisible
+// Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void PopulationFire::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const GlTools_ABC& ) const
+bool Viewport_ABC::IsHotpointVisible() const
 {
-    // $$$$ AGE 2007-02-23: 
+    return hotIsVisible_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Viewport_ABC::SetHotpoint
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void Viewport_ABC::SetHotpoint( const geometry::Point2f& point )
+{
+    hotIsVisible_ = IsVisible( point );
 }

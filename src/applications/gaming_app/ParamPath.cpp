@@ -59,7 +59,7 @@ ParamPath::~ParamPath()
 // Name: ParamPath::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::Draw( const geometry::Point2f& , const geometry::Rectangle2f& , const GlTools_ABC& tools ) const
+void ParamPath::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     if( location_ )
         location_->Draw( tools );

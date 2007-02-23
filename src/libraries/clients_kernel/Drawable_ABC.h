@@ -13,6 +13,7 @@
 namespace kernel
 {
     class GlTools_ABC;
+    class Viewport_ABC;
 
 // =============================================================================
 /** @class  Drawable_ABC
@@ -32,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const = 0;
+    virtual void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const = 0;
     //@}
 };
 

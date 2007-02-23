@@ -14,6 +14,11 @@
 
 class ViewFrustum;
 
+namespace kernel
+{
+    class Viewport_ABC;
+}
+
 namespace gui
 {
     class GlWidget;
@@ -38,7 +43,8 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const ViewFrustum& frustum );
-    using MapLayer_ABC::Paint;
+    virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void Paint( kernel::Viewport_ABC& viewport );
 
     virtual void RegisterIn( Gl3dWidget& widget );
     virtual void RegisterIn( GlWidget& widget );
@@ -67,12 +73,13 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const ViewFrustum& ) {}
-    virtual void RegisterIn( Gl3dWidget& ) {}
+    virtual void RegisterIn( Gl3dWidget& )   {}
 
-    virtual void SetAlpha( float alpha ) { alpha_ = alpha; };
-    float GetAlpha() const       { return alpha_; };
-    virtual void Reset2d()       { Reset(); }
-    virtual void Reset() {};
+    virtual void SetAlpha( float alpha );
+    float GetAlpha() const;
+
+    virtual void Reset2d();
+    virtual void Reset();
     //@}
 
 private:
@@ -101,9 +108,10 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( const geometry::Rectangle2f& ) {}
-    virtual void RegisterIn( GlWidget& ) {}
-    virtual void Reset3d()       { Reset(); }
-    virtual void Reset() {};
+    virtual void RegisterIn( GlWidget& )               {}
+
+    virtual void Reset3d();
+    virtual void Reset();
     //@}
 };
 

@@ -16,6 +16,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "View_ABC.h"
 #include "GlTooltip.h"
 
@@ -51,7 +52,7 @@ EntityLayerBase::~EntityLayerBase()
 // Name: EntityLayerBase::Paint
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
+void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 {
     for( unsigned i = 0; i < entities_.size(); ++i )
         if( i != selected_ )
@@ -70,13 +71,14 @@ void EntityLayerBase::Paint( const geometry::Rectangle2f& viewport )
 // Name: EntityLayerBase::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void EntityLayerBase::Draw( const Entity_ABC& entity, const geometry::Rectangle2f& viewport )
+void EntityLayerBase::Draw( const Entity_ABC& entity, kernel::Viewport_ABC& viewport )
 {
     if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
     {
         SelectColor( entity );
         const Positions& positions = entity.Get< Positions >();
         const geometry::Point2f position = positions.GetPosition();
+        viewport.SetHotpoint( position );
         entity.Draw( position, viewport, tools_ );
     }
 }

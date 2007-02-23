@@ -28,6 +28,7 @@ namespace kernel
     class ActionController;
     class GlTools_ABC;
     class Drawer;
+    class Viewport_ABC;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -67,7 +68,7 @@ public:
             CheckUpdate( typeid( updateMessage ) );
     }
 
-    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
 
     InterfaceContainer< Extension_ABC >& Interface() const;
     //@}
@@ -94,7 +95,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Drawer* drawer_;
+    std::auto_ptr< Drawer > drawer_;
     //@}
 };
 

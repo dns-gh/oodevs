@@ -17,6 +17,7 @@
 #include "DotationRequest.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 
 using namespace geometry;
@@ -130,14 +131,14 @@ void LogSupplyConsign::Display( Displayer_ABC& displayer ) const
 // Name: LogSupplyConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Draw( const Point2f& where, const Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! pAutomateLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
 
     const Point2f from = pAutomateLogHandling_->Get< Positions >().GetPosition();
     const Point2f to   = pion_.Get< Positions >().GetPosition();
-    if( viewport.Intersect( Rectangle2f( from, to ) ).IsEmpty() )
+    if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
 
     glColor4f( COLOR_ORANGE );

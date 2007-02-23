@@ -15,6 +15,7 @@ namespace kernel
     class Drawable_ABC;
     class Extension_ABC;
     class GlTools_ABC;
+    class Viewport_ABC;
 
 // =============================================================================
 /** @class  Drawer
@@ -35,7 +36,7 @@ public:
     //! @name Operations
     //@{
     void Register( const Extension_ABC& extension );
-    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
+    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const;
     //@}
 
     // $$$$ AGE 2006-08-10: mettre static ?

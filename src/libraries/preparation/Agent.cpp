@@ -15,6 +15,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
@@ -90,9 +91,9 @@ QString Agent::ReadName( xml::xistream& xis )
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
 // -----------------------------------------------------------------------------
-void Agent::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) )
+    if( viewport.IsHotpointVisible() )
     {
         if( symbol_.empty() )
             InitializeSymbol();

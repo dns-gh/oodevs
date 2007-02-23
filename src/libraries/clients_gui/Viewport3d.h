@@ -7,57 +7,51 @@
 //
 // *****************************************************************************
 
-#ifndef __LogoLayer_h_
-#define __LogoLayer_h_
+#ifndef __Viewport3d_h_
+#define __Viewport3d_h_
 
-#include "Layer_ABC.h"
-
-namespace kernel
-{
-    class GlTools_ABC;
-}
+#include "clients_kernel/Viewport_ABC.h"
+class ViewFrustum;
 
 namespace gui
 {
 
 // =============================================================================
-/** @class  LogoLayer
-    @brief  LogoLayer
+/** @class  Viewport3d
+    @brief  Viewport3d
 */
-// Created: AGE 2007-02-12
+// Created: AGE 2007-02-23
 // =============================================================================
-class LogoLayer : public Layer2d_ABC
+class Viewport3d : public kernel::Viewport_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha = -1 );
-    virtual ~LogoLayer();
+    explicit Viewport3d( const ViewFrustum& frustum );
+    virtual ~Viewport3d();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
-    virtual void RegisterIn( Gl3dWidget& );
-    virtual void SetAlpha( float alpha );
+    virtual bool IsVisible( const geometry::Point2f& point ) const;
+    virtual bool IsVisible( const geometry::Rectangle2f& rectangle ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    LogoLayer( const LogoLayer& );            //!< Copy constructor
-    LogoLayer& operator=( const LogoLayer& ); //!< Assignement operator
+    Viewport3d( const Viewport3d& );            //!< Copy constructor
+    Viewport3d& operator=( const Viewport3d& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
-    QImage image_;
+    const ViewFrustum& frustum_;
     //@}
 };
 
 }
 
-#endif // __LogoLayer_h_
+#endif // __Viewport3d_h_

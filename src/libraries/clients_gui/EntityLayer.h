@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void Paint( kernel::Viewport_ABC& viewport );
     //@}
 
 protected:
@@ -65,7 +65,7 @@ protected:
     //! @name Helpers
     //@{
     virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
-    virtual void Draw( const kernel::Entity_ABC& entity, const geometry::Rectangle2f& viewport );
+    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
 
     template< typename Functor >
     void Apply( Functor& functor ) const

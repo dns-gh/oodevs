@@ -16,6 +16,7 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "xeumeuleu/xml.h"
 
@@ -221,9 +222,9 @@ void ObjectPositions::VisitPoint( const geometry::Point2f& point )
 // Name: ObjectPositions::Draw
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( viewport.Intersect( boundingBox_ ).IsEmpty() || points_.empty() )
+    if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
 
     glPushAttrib( GL_LINE_BIT );

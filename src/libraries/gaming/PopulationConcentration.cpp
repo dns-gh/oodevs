@@ -132,18 +132,13 @@ float PopulationConcentration::GetHeight() const
 // Name: PopulationConcentration::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
-    const geometry::Vector2f extension( radius_, radius_ );
-    geometry::Rectangle2f extended( viewport.BottomLeft() - extension, viewport.TopRight() + extension );
-    if( extended.IsInside( position_ ) )
-    {
-        tools.DrawDisc( position_, radius_ );
-        glPushAttrib( GL_CURRENT_BIT );
-        glColor4f( COLOR_BLACK );
-        tools.DrawDisc( position_, deadRadius_ );
-        glPopAttrib();
-    }
+    tools.DrawDisc( position_, radius_ );
+    glPushAttrib( GL_CURRENT_BIT );
+    glColor4f( COLOR_BLACK );
+    tools.DrawDisc( position_, deadRadius_ );
+    glPopAttrib();
 }
     
 // -----------------------------------------------------------------------------

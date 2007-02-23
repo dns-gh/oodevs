@@ -11,6 +11,7 @@
 #include "LocationPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 
@@ -98,9 +99,9 @@ geometry::Rectangle2f LocationPositions::GetBoundingBox() const
 // Name: LocationPositions::Draw
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void LocationPositions::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.Intersect( boundingBox_ ).IsEmpty() || points_.empty() )
+    if( ! viewport.IsVisible( boundingBox_ ) || points_.empty() )
         return;
 
     glPushAttrib( GL_LINE_BIT );

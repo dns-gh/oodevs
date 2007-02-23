@@ -56,7 +56,7 @@ void ObjectCreationPanel::Commit()
 // Name: ObjectCreationPanel::Draw
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-void ObjectCreationPanel::Draw( const geometry::Rectangle2f& /*viewport*/ )
+void ObjectCreationPanel::Draw( kernel::Viewport_ABC& )
 {
     created_->Draw( tools_ );
 }

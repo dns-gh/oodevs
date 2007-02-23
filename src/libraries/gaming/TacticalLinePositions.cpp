@@ -116,7 +116,7 @@ geometry::Rectangle2f TacticalLinePositions::GetBoundingBox() const
 // Name: TacticalLinePositions::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::Draw( const geometry::Point2f&, const geometry::Rectangle2f&, const kernel::GlTools_ABC& tools ) const
+void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
 {
     // $$$$ SBO 2006-11-07: viewport
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );

@@ -210,7 +210,7 @@ void ParamObstacleList::ClearList()
 // Name: ParamObstacleList::Draw
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void ParamObstacleList::Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+void ParamObstacleList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     QListViewItemIterator it( listView_ );
     for( unsigned int i = 0; it.current(); ++it, ++i )

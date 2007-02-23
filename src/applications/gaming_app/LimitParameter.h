@@ -53,7 +53,7 @@ public:
     virtual bool CheckValidity();
     virtual void Commit();
     void CommitTo( ASN1T_Line& asn );
-    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private slots:

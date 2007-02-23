@@ -17,6 +17,7 @@ namespace kernel
 {
     class ActionController;
     class GlTools_ABC;
+    class Viewport_ABC;
 }
 
 class OptionalParamFunctor_ABC;
@@ -40,7 +41,7 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void SetOptional( OptionalParamFunctor_ABC* optional );
 
-    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit() = 0;
     //@}

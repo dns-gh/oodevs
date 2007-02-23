@@ -54,7 +54,7 @@ void ParametersLayer::Initialize( const geometry::Rectangle2f& extent )
 // Name: ParametersLayer::Paint
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void ParametersLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
+void ParametersLayer::Paint( kernel::Viewport_ABC& /*viewport*/ )
 {
     if( ! current_ )
         return;

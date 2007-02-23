@@ -143,7 +143,7 @@ void VisionCones::Update() const
 // Name: VisionCones::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionCones::Draw( const geometry::Point2f& , const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void VisionCones::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     boost::mutex::scoped_lock locker( mutex_ );
      

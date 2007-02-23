@@ -13,6 +13,7 @@
 #include "AgentNature.h"
 #include "SymbolFactory.h"
 #include "GlTools_ABC.h"
+#include "Viewport_ABC.h"
 #include <qgl.h>
 using namespace kernel;
 using namespace xml;
@@ -130,9 +131,9 @@ const std::string& AgentType::GetHQSymbol() const
 // Name: AgentType::Draw
 // Created: SBO 2006-03-21
 // -----------------------------------------------------------------------------
-void AgentType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool pc ) const
+void AgentType::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools, bool pc ) const
 {
-    if( viewport.IsInside( where ) )
+    if( viewport.IsHotpointVisible() )
     {
         tools.DrawApp6Symbol( levelSymbol_, where );
         if( pc )

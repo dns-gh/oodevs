@@ -51,7 +51,7 @@ void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& m
 // Name: ObjectKnowledgePositions::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void ObjectKnowledgePositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! perceived_ || ! realObjectKnown_ )
         LocationPositions::Draw( where, viewport, tools );

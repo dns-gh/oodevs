@@ -11,6 +11,7 @@
 #include "VisionMap.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 
@@ -42,7 +43,7 @@ VisionMap::~VisionMap()
 // Name: VisionMap::Draw
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void VisionMap::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     static const float colors[3][4] =
     {
@@ -51,7 +52,7 @@ void VisionMap::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& 
         { COLOR_VISION_IDENTIED  }
     };
 
-    if( viewport.Intersect( boundingBox_ ).IsEmpty() || !vision_ )
+    if( !vision_ || ! viewport.IsVisible( boundingBox_ ) )
         return;
 
     const float translation = map_.GetCellSize() * 0.5;

@@ -12,6 +12,7 @@
 #include "gaming_pch.h"
 #include "Sector.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 const float Sector::pi_ = std::acos( -1.f );
 
@@ -94,7 +95,7 @@ Sector::~Sector()
 // Name: Sector::Draw
 // Created: AGE 2006-04-26
 // -----------------------------------------------------------------------------
-void Sector::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, float radius ) const
+void Sector::Draw( const kernel::Viewport_ABC& , const GlTools_ABC& tools, float radius ) const
 {
     if( vOrigin_.IsZero() )
         tools.DrawCircle( vOrigin_, radius );

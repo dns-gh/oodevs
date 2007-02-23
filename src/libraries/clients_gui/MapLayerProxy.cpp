@@ -55,7 +55,16 @@ void MapLayerProxy::Paint( const ViewFrustum& frustum )
 // -----------------------------------------------------------------------------
 void MapLayerProxy::Paint( const geometry::Rectangle2f& viewport )
 {
-    ((MapLayer_ABC&)layer_).Paint( viewport );
+    layer_.Paint( viewport );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MapLayerProxy::Paint
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void MapLayerProxy::Paint( kernel::Viewport_ABC& viewport )
+{
+    layer_.Paint( viewport );
 }
 
 // -----------------------------------------------------------------------------

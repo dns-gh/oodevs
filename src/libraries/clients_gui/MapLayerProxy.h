@@ -33,9 +33,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint                 ( const ViewFrustum& frustum );
     virtual void Initialize            ( const geometry::Rectangle2f& extent );
+    virtual void Paint                 ( const ViewFrustum& frustum );
     virtual void Paint                 ( const geometry::Rectangle2f& viewport );
+    virtual void Paint                 ( kernel::Viewport_ABC& viewport );
+
     virtual bool HandleKeyPress        ( QKeyEvent* key );
     virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );

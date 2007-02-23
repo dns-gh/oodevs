@@ -123,7 +123,7 @@ void ParamLocation::Handle( Location_ABC& location )
 // Name: ParamLocation::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamLocation::Draw( const geometry::Point2f& , const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
+void ParamLocation::Draw( const geometry::Point2f& , const Viewport_ABC& extent, const GlTools_ABC& tools ) const
 {
     if( location_ )
         location_->Draw( tools );

@@ -31,7 +31,7 @@ Entity_ABC::Entity_ABC()
 // -----------------------------------------------------------------------------
 Entity_ABC::~Entity_ABC()
 {
-    delete drawer_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ void Entity_ABC::AddExtension( Extension_ABC& ext )
 // Name: Entity_ABC::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void Entity_ABC::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Entity_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     drawer_->Draw( where, viewport, tools );
 }

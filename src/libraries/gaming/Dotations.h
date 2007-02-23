@@ -34,6 +34,7 @@ class Dotation;
 class Dotations : public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
                 , public kernel::Resolver< Dotation >
+                , public kernel::Drawable_ABC
 {
 
 public:
@@ -45,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:

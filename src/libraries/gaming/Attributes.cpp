@@ -14,6 +14,7 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "statusicons.h"
 #include "Tools.h"
@@ -240,11 +241,11 @@ void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Attributes::Draw( const Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Attributes::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( aggregated_ 
     || ! ( bDead_ || bRadioSilence_ || bRadarEnabled_ || bCommJammed_ )
-    || ! viewport.IsInside( where ) )
+    || ! viewport.IsHotpointVisible() )
         return;
 
     glPushAttrib( GL_CURRENT_BIT );

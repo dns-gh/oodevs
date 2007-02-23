@@ -38,7 +38,7 @@ PcAttributes::~PcAttributes()
 // Name: PcAttributes::Draw
 // Created: AGE 2006-11-29
 // -----------------------------------------------------------------------------
-void PcAttributes::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void PcAttributes::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     const LogisticLinks_ABC* l = holder_.Get< TacticalHierarchies >().GetUp().Retrieve< LogisticLinks_ABC >();
     const LogisticLinks* links = static_cast< const LogisticLinks* >( l );

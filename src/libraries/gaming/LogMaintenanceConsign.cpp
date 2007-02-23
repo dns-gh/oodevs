@@ -14,6 +14,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "Tools.h"
 
@@ -95,14 +96,14 @@ void LogMaintenanceConsign::Display( Displayer_ABC& displayer ) const
 // Name: LogMaintenanceConsign::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Draw( const Point2f& where, const Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void LogMaintenanceConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! pPionLogHandling_ || ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;
 
     const Point2f from = pPionLogHandling_->Get< Positions >().GetPosition();
     const Point2f to   = pion_.Get< Positions >().GetPosition();
-    if( viewport.Intersect( Rectangle2f( from, to ) ).IsEmpty() )
+    if( ! viewport.IsVisible( Rectangle2f( from, to ) ) )
         return;
 
     glColor4f( COLOR_MAROON );

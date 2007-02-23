@@ -13,6 +13,7 @@
 #include "Dotation.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "statusicons.h"
 #include "Tools.h"
@@ -83,8 +84,8 @@ void Dotations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: Dotations::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Dotations::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Dotations::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( bEmptyGasTank_ && viewport.IsInside( where ) )
+    if( bEmptyGasTank_ && viewport.IsHotpointVisible() )
         tools.DrawIcon( xpm_gas, where, 150.f );
 }

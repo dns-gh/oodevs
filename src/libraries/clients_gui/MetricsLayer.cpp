@@ -39,7 +39,7 @@ MetricsLayer::~MetricsLayer()
 // Name: MetricsLayer::Paint
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void MetricsLayer::Paint( const geometry::Rectangle2f& )
+void MetricsLayer::Paint( kernel::Viewport_ABC& )
 {
     if( ruling_ )
     {

@@ -7,57 +7,51 @@
 //
 // *****************************************************************************
 
-#ifndef __LogoLayer_h_
-#define __LogoLayer_h_
-
-#include "Layer_ABC.h"
+#ifndef __Viewport_ABC_h_
+#define __Viewport_ABC_h_
 
 namespace kernel
 {
-    class GlTools_ABC;
-}
-
-namespace gui
-{
 
 // =============================================================================
-/** @class  LogoLayer
-    @brief  LogoLayer
+/** @class  Viewport_ABC
+    @brief  Viewport_ABC
 */
-// Created: AGE 2007-02-12
+// Created: AGE 2007-02-23
 // =============================================================================
-class LogoLayer : public Layer2d_ABC
+class Viewport_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LogoLayer( const kernel::GlTools_ABC& tools, const QImage& image, float alpha = -1 );
-    virtual ~LogoLayer();
+             Viewport_ABC();
+    virtual ~Viewport_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
-    virtual void RegisterIn( Gl3dWidget& );
-    virtual void SetAlpha( float alpha );
+    bool IsHotpointVisible() const;
+    virtual bool IsVisible( const geometry::Point2f& point ) const = 0;
+    virtual bool IsVisible( const geometry::Rectangle2f& rectangle ) const = 0;
+
+    void SetHotpoint( const geometry::Point2f& point );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    LogoLayer( const LogoLayer& );            //!< Copy constructor
-    LogoLayer& operator=( const LogoLayer& ); //!< Assignement operator
+    Viewport_ABC( const Viewport_ABC& );            //!< Copy constructor
+    Viewport_ABC& operator=( const Viewport_ABC& ); //!< Assignement operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
-    QImage image_;
+    bool hotIsVisible_;
     //@}
 };
 
 }
 
-#endif // __LogoLayer_h_
+#endif // __Viewport_ABC_h_

@@ -160,7 +160,7 @@ void LogisticConsigns::TerminateConsign( LogMedicalConsign& consign )
 // Name: LogisticConsigns::Draw
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void LogisticConsigns::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void LogisticConsigns::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( ! tools.ShouldDisplay( "RealTimeLogistic" ) )
         return;

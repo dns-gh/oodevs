@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "statusicons.h"
 #include "Tools.h"
@@ -89,8 +90,8 @@ void Contaminations::Display( Displayer_ABC& displayer ) const
 // Name: Contaminations::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Contaminations::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Contaminations::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( ! contaminatingNbcAgents_.empty() && viewport.IsInside( where ) )
+    if( ! contaminatingNbcAgents_.empty() && viewport.IsHotpointVisible() )
         tools.DrawIcon( xpm_nbc, where, 150.f );
 }

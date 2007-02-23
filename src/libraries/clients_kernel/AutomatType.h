@@ -11,7 +11,6 @@
 #define __AutomatType_h_
 
 #include "Resolver_ABC.h"
-#include "Drawable_ABC.h"
 
 namespace xml { class xistream; };
 
@@ -28,7 +27,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AutomatType : public Drawable_ABC
+class AutomatType
 {
 
 public:
@@ -46,7 +45,6 @@ public:
     AgentType* GetTypePC() const;
     std::string GetSymbol() const;
     const DecisionalModel& GetDecisionalModel() const;
-    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const;
     Iterator< const AutomatComposition& > CreateIterator() const;
     
     bool HasLogistics() const;

@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "ObjectType.h"
 #include "GlTools_ABC.h"
+#include "Viewport_ABC.h"
 #include "objecticons.h"
 #include "ENT/ENT_Tr.h"
 #include "xeumeuleu/xml.h"
@@ -83,9 +84,9 @@ bool ObjectType::CanBeBypassed() const
 // Name: ObjectType::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void ObjectType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void ObjectType::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) )
+    if( viewport.IsVisible( where ) )
         tools.DrawIcon( xpm_, where, 900.f );
 }
 

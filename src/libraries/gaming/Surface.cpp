@@ -17,6 +17,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -77,9 +78,9 @@ Surface::~Surface()
 // Name: Surface::Draw
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-void Surface::Draw( const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Surface::Draw( const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.Intersect( Extent() ).IsEmpty() )
+    if( ! viewport.IsVisible( Extent() ) )
         return;
 
     for( CIT_SectorVector itSector = sectors_.begin(); itSector != sectors_.end(); ++itSector )

@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -158,10 +159,10 @@ void LogisticLinks::DrawLink( const geometry::Point2f& where, Automat_ABC* agent
 // Name: LogisticLinks::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void LogisticLinks::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void LogisticLinks::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
-    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsInside( where );
+    const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
     if( ! displayLinks && ! displayMissing )
         return;
 

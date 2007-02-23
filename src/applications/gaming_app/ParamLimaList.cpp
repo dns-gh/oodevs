@@ -195,7 +195,7 @@ void ParamLimaList::Clean()
 // Name: ParamLimaList::Draw
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void ParamLimaList::Draw( const geometry::Point2f& point, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+void ParamLimaList::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     ValuedListItem* item = (ValuedListItem*)( firstChild() );
     while( item )

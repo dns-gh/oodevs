@@ -15,6 +15,7 @@
 namespace kernel
 {
     class GlTools_ABC;
+    class Viewport_ABC;
 }
 
 // =============================================================================
@@ -33,7 +34,7 @@ public:
     //@{
     bool IsInCone  ( const geometry::Point2f& vPos, float rRadius ) const;
     bool IsInSector( const geometry::Point2f& vPos ) const;
-    void Draw( const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, float radius ) const;
+    void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools, float radius ) const;
     //@}
 
     //! @name Accessors

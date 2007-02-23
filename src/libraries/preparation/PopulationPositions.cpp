@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -133,12 +134,10 @@ geometry::Rectangle2f PopulationPositions::GetBoundingBox() const
 // Name: PopulationPositions::Draw
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-void PopulationPositions::Draw( const geometry::Point2f&, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+void PopulationPositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     const_cast< PopulationPositions* >( this )->UpdatePosition(); // $$$$ SBO 2006-11-09: 
-    const geometry::Vector2f extension( radius_, radius_ );
-    geometry::Rectangle2f extended( viewport.BottomLeft() - extension, viewport.TopRight() + extension );
-    if( extended.IsInside( center_ ) )
+    if( viewport.IsVisible( boundingBox_ ) )
         tools.DrawDisc( center_, radius_ );
 }
 

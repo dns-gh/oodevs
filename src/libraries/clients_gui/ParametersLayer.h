@@ -51,7 +51,7 @@ public:
     void AddPoint( const geometry::Point2f& point );
 
     virtual void Initialize( const geometry::Rectangle2f& extent );
-    virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void Paint( kernel::Viewport_ABC& viewport );
     //@}
 
 private:

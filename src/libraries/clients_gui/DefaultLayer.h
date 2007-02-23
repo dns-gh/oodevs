@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( const geometry::Rectangle2f& viewport );
+    virtual void Paint( kernel::Viewport_ABC& viewport );
     //@}
 
 private:

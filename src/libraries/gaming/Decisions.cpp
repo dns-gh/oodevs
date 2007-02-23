@@ -17,6 +17,7 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include "AutomatDecisions.h"
 #include "statusicons.h"
@@ -106,9 +107,9 @@ const Mission* Decisions::GetCurrentMission() const
 // Name: Decisions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Decisions::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Decisions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( IsEmbraye() && viewport.IsInside( where ) )
+    if( IsEmbraye() && viewport.IsVisible( where ) )
         tools.DrawIcon( xpm_cadenas, where, 150.f );
 }
 

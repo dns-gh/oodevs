@@ -11,6 +11,7 @@
 #include "MissionParameters.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 
 // -----------------------------------------------------------------------------
@@ -142,9 +143,9 @@ void MissionParameters::DoUpdate( const ASN1T_MsgAutomateOrderManagement& messag
 // Name: MissionParameters::Draw
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-void MissionParameters::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools ) const
+void MissionParameters::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( !viewport.Intersect( boundingBox_ ).IsEmpty() && tools.ShouldDisplay( "TacticalLines" ) )
+    if( viewport.IsVisible( boundingBox_ ) && tools.ShouldDisplay( "TacticalLines" ) )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( 3.f );

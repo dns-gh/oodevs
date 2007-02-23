@@ -24,6 +24,7 @@ namespace kernel
     class Controllers;
     class CoordinateConverter_ABC;
     class GlTools_ABC;
+    class Viewport_ABC;
     class Mission;
     class Profile_ABC;
 }
@@ -67,7 +68,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const geometry::Rectangle2f& viewport );
+    void Draw( kernel::Viewport_ABC& viewport );
     void hideEvent( QHideEvent* pEvent );
     //@}
 

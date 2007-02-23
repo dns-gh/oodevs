@@ -19,6 +19,7 @@ namespace kernel
     class Controllers;
     class GlTools_ABC;
     class ModelLoaded;
+    class Viewport_ABC;
 }
 
 namespace gui
@@ -52,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const geometry::Rectangle2f& viewport );
+    void Draw( kernel::Viewport_ABC& viewport );
     //@}
 
 private slots:

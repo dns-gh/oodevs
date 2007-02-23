@@ -12,6 +12,7 @@
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "xeumeuleu/xml.h"
 
 using namespace xml;
@@ -123,9 +124,10 @@ geometry::Rectangle2f TacticalLinePositions::GetBoundingBox() const
 // Name: TacticalLinePositions::Draw
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::Draw( const geometry::Point2f&, const geometry::Rectangle2f&, const kernel::GlTools_ABC& tools ) const
+void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    // $$$$ SBO 2006-11-07: viewport
+    if( ! viewport.IsVisible( boundingBox_ ) )
+        return
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 5.f );
         tools.DrawLines( pointList_ );

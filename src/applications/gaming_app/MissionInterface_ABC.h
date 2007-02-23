@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     bool CheckValidity();
-    void Draw( const kernel::GlTools_ABC& tools, const geometry::Rectangle2f& extent ) const;
+    void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter, OptionalParamFunctor_ABC* pOptional );
     //@}

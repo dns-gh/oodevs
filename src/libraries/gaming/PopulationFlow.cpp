@@ -157,15 +157,12 @@ float PopulationFlow::GetHeight() const
 // Name: PopulationFlow::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
-    if( ! boundingBox_.Intersect( viewport ).IsEmpty() )
-    {
-        glPushAttrib( GL_LINE_BIT );
-        glLineWidth( 10.f );
-        tools.DrawLines( flow_ );
-        glPopAttrib();
-    }
+    glPushAttrib( GL_LINE_BIT );
+    glLineWidth( 10.f );
+    tools.DrawLines( flow_ );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -64,9 +65,9 @@ bool ParamPoint::CheckValidity()
 // Name: ParamPoint::Draw
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPoint::Draw( const geometry::Point2f& /*point*/, const geometry::Rectangle2f& extent, const GlTools_ABC& tools ) const
+void ParamPoint::Draw( const geometry::Point2f& /*point*/, const kernel::Viewport_ABC& extent, const GlTools_ABC& tools ) const
 {
-    if( pPosLabel_->text() != "---" && extent.IsInside( paramPoint_ ) )
+    if( pPosLabel_->text() != "---" && extent.IsVisible( paramPoint_ ) )
         tools.DrawCross( paramPoint_ );
 }
 

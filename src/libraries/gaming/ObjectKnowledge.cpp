@@ -165,7 +165,7 @@ const kernel::Team_ABC& ObjectKnowledge::GetOwner() const
 // Name: ObjectKnowledge::Draw
 // Created: AGE 2006-05-19
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void ObjectKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( bIsPerceived_ && pRealObject_ )
     {

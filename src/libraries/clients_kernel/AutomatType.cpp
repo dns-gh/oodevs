@@ -8,7 +8,6 @@
 
 #include "clients_kernel_pch.h"
 #include "AutomatType.h"
-#include "GlTools_ABC.h"
 #include "Iterator.h"
 #include "AutomatComposition.h"
 #include "AgentType.h"
@@ -117,17 +116,6 @@ std::string AutomatType::GetSymbol() const
 const DecisionalModel& AutomatType::GetDecisionalModel() const
 {
     return *model_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AutomatType::Draw
-// Created: SBO 2006-03-21
-// -----------------------------------------------------------------------------
-void AutomatType::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
-{
-    // $$$$ SBO 2007-02-22: display aggregated level ?
-//    if( viewport.IsInside( where ) )
-//        tools.DrawApp6Symbol( symbol_, where, 2 );
 }
 
 // -----------------------------------------------------------------------------

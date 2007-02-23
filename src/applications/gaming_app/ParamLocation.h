@@ -46,7 +46,7 @@ public:
     //@{
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
-    virtual void Draw( const geometry::Point2f& point, const geometry::Rectangle2f& extent, const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit();
     virtual void Handle( kernel::Location_ABC& location );

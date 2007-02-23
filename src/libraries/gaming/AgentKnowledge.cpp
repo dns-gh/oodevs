@@ -22,6 +22,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include "Diplomacies.h"
 
@@ -181,9 +182,9 @@ void AgentKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: AgentKnowledge::Draw
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void AgentKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) )
+    if( viewport.IsVisible( where ) )
     {
         const bool backupState = tools.Select( false );
         tools.DrawApp6Symbol( currentSymbol_, where );

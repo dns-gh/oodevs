@@ -140,7 +140,7 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // Name: Object::Draw
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Object::Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void Object::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     type_.Draw( where, viewport, tools );
 }

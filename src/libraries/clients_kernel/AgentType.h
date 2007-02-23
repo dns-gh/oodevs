@@ -21,6 +21,7 @@ namespace kernel
     class DecisionalModel;
     class SymbolFactory;
     class GlTools_ABC;
+    class Viewport_ABC;
 
 // =============================================================================
 /** @class  AgentType
@@ -51,7 +52,7 @@ public:
     const std::string& GetLevelSymbol() const;
     const std::string& GetHQSymbol() const;
 
-    void Draw( const geometry::Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools, bool pc ) const;
+    void Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools, bool pc ) const;
     //@}
 
 private:

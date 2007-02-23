@@ -11,6 +11,7 @@
 #include "AgentPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -111,9 +112,9 @@ geometry::Rectangle2f AgentPositions::GetBoundingBox() const
 // Name: AgentPositions::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void AgentPositions::Draw( const Point2f& where, const geometry::Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void AgentPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) )
+    if( viewport.IsHotpointVisible() )
         tools.DrawCross( where, GL_CROSSSIZE );    
 }
 

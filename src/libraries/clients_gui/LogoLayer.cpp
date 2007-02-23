@@ -38,9 +38,9 @@ LogoLayer::~LogoLayer()
 
 // -----------------------------------------------------------------------------
 // Name: LogoLayer::Paint
-// Created: AGE 2007-02-12
+// Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void LogoLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
+void LogoLayer::Paint( kernel::Viewport_ABC& )
 {
     if( ! image_.bits() )
         return;
@@ -84,13 +84,4 @@ void LogoLayer::SetAlpha( float alpha )
 void LogoLayer::RegisterIn( Gl3dWidget& w )
 {
     Layer_ABC::RegisterIn( w );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogoLayer::Paint
-// Created: AGE 2007-02-12
-// -----------------------------------------------------------------------------
-void LogoLayer::Paint( const ViewFrustum& frustum )
-{
-    Layer_ABC::Paint( frustum );
 }

@@ -13,6 +13,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
 using namespace geometry;
@@ -118,8 +119,8 @@ Rectangle2f AutomatPositions::GetBoundingBox() const
 // Name: AutomatPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatPositions::Draw( const Point2f& where, const Rectangle2f& viewport, const GlTools_ABC& tools ) const
+void AutomatPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsInside( where ) )
+    if( viewport.IsHotpointVisible() )
         tools.DrawCross( where, GL_CROSSSIZE );   
 }

@@ -12,6 +12,10 @@
 
 #include "Layer_ABC.h"
 
+namespace kernel
+{
+    class Viewport_ABC;
+}
 namespace gui
 {
 
@@ -35,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Paint( const geometry::Rectangle2f& viewport )
+    virtual void Paint( kernel::Viewport_ABC& viewport )
     {
         panel_.Draw( viewport );
     }
