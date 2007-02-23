@@ -45,6 +45,8 @@ public:
 private slots:
     //! @name Slots
     //@{
+    void OnLightingType( int type );
+
     void DirectionChanged( const geometry::Vector3f& direction );
     void AmbientChanged( const QColor& color );
     void DiffuseChanged( const QColor& color );
@@ -61,8 +63,8 @@ private:
     //! @name Member data
     //@{
     FixedLighting& lighting_;
-    QButtonGroup* lightingType_;
 
+    QGroupBox* fixedLightBox_;
     DirectionWidget* direction_;
     ColorButton* ambient_;
     ColorButton* diffuse_;

@@ -9,6 +9,9 @@
 
 #include "clients_kernel_pch.h"
 #include "Workers.h"
+#include "WorkerTask_ABC.h"
+#undef Yield
+#include "tools/thread/ThreadPool.h"
 #include <windows.h>
 
 using namespace kernel;
@@ -20,7 +23,7 @@ namespace
         void operator()()
         {
             SetThreadPriority( GetCurrentThread(), THREAD_PRIORITY_LOWEST );
-            tools::thread::Thread::Sleep( 1000 );
+            tools::thread::Thread::Sleep( 10000 );
         }
     };
 }
@@ -30,11 +33,11 @@ namespace
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
 Workers::Workers()
-    : pool_()
+    : pool_( new tools::thread::ThreadPool() )
 {
-    const unsigned threads = pool_.GetCpuNumber();
+    const unsigned threads = pool_->GetCpuNumber();
     for( unsigned i = 0; i < threads; ++i )
-        pool_.Enqueue( PrioritySetter() );
+        pool_->Enqueue( PrioritySetter() );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,4 +47,52 @@ Workers::Workers()
 Workers::~Workers()
 {
     // NOTHING
+}
+
+namespace 
+{
+    struct Adaptor
+    {
+        Adaptor( WorkerTask_ABC& task, boost::mutex& mutex, std::vector< WorkerTask_ABC* >& tasks ) 
+            : task_ ( &task  )
+            , mutex_( &mutex )
+            , tasks_( &tasks ) {}
+        void operator()()
+        {
+            task_->Process();
+            boost::mutex::scoped_lock locker( *mutex_ );
+            tasks_->push_back( task_ );
+        };
+        WorkerTask_ABC*                 task_;
+        boost::mutex*                   mutex_;
+        std::vector< WorkerTask_ABC* >* tasks_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Workers::Enqueue
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void Workers::Enqueue( std::auto_ptr< WorkerTask_ABC > task )
+{
+    pool_->Enqueue( Adaptor( *task.release(), mutex_, finished_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Workers::CommitTasks
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void Workers::CommitTasks()
+{
+    T_Tasks toDeal;
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        std::swap( toDeal, finished_ );
+    }
+
+    for( CIT_Tasks it = toDeal.begin(); it != toDeal.end(); ++it )
+    {
+        (*it)->Commit();
+        delete *it;
+    }
 }

@@ -142,7 +142,7 @@ void Gl3dWidget::DrawCross( const Point2f& at, float size /*= -1.f*/ ) const
 inline
 float Gl3dWidget::ElevationAt( const geometry::Point2f& point ) const
 {
-    return ( elevation_.ElevationAt( point ) + 20.f ) * zRatio_;
+    return ( elevation_.ElevationAt( point ) + 2.f ) * zRatio_;
 }
 
 // -----------------------------------------------------------------------------

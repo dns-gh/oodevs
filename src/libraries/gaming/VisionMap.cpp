@@ -159,3 +159,12 @@ void VisionMap::Update( const std::pair< unsigned, unsigned >& cell, E_Perceptio
         vision_[ y * width_ + x ] = char( perception );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: VisionMap::IsVisible
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+bool VisionMap::IsVisible( const kernel::Viewport_ABC& viewport ) const
+{
+    return viewport.IsVisible( boundingBox_ );
+}

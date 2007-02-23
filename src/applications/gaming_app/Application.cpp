@@ -100,6 +100,7 @@ void Application::UpdateData()
 {
     try
     {
+        workers_->CommitTasks();
         network_->Update();
     } 
     catch( std::exception& e )

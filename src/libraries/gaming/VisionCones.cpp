@@ -14,6 +14,7 @@
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
 #include "clients_kernel/Workers.h"
+#include "clients_kernel/WorkerTask_ABC.h"
 
 using namespace kernel;
 
@@ -22,22 +23,15 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers )
-    : agent_( agent )
-    , factory_( factory )
-    , workers_( workers )
-    , map_( factory_.CreateVisionMap() )
+    : agent_       ( agent )
+    , factory_     ( factory )
+    , workers_     ( workers )
+    , map_         ( factory_.CreateVisionMap() )
     , needUpdating_( true )
-    , updating_    ( false )
+    ,current_     ( 0 )
 {
     // NOTHING
 }
-
-struct VisionCones::NotUpdating
-{
-    NotUpdating( VisionCones* cones ) : cones_( cones ) {};
-    bool operator()() const { return ! cones_->updating_; }
-    VisionCones* cones_;
-};
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones destructor
@@ -45,9 +39,7 @@ struct VisionCones::NotUpdating
 // -----------------------------------------------------------------------------
 VisionCones::~VisionCones()
 {
-    boost::mutex::scoped_lock locker( mutex_ );
-    condition_.wait( locker, NotUpdating( this ) );
-
+    CancelCurrent();
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
     delete map_;
@@ -59,8 +51,6 @@ VisionCones::~VisionCones()
 // -----------------------------------------------------------------------------
 void VisionCones::DoUpdate( const VisionConesMessage& message )
 {
-    boost::mutex::scoped_lock locker( mutex_ );
-
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
     surfaces_.clear();
@@ -87,48 +77,75 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
         Invalidate();
 }
 
-struct VisionCones::Updater
+struct VisionCones::Updater : public kernel::WorkerTask_ABC
 {
     Updater( VisionCones& cones )
         : cones_           ( &cones )
         , map_             ( cones.factory_.CreateVisionMap() )
         , elongationFactor_( cones.elongationFactor_ )
+        , cancelled_       ( false )
+        , deprecated_      ( false )
+        , computed_        ( false )
     {
-        cones.updating_ = true;
+        cones.current_ = this;
         surfaces_.reserve( cones.surfaces_.size() );
         for( CIT_Surfaces it = cones.surfaces_.begin(); it != cones.surfaces_.end(); ++it )
             surfaces_.push_back( new Surface( **it ) );
     };
-
-    void operator()()
+    virtual ~Updater()
     {
+        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
+            delete *it;
+        delete map_;
+    }
+    void Cancel() 
+    {
+        cancelled_ = true;
+    }
+    void Deprecate()
+    {
+        deprecated_ = true;
+    }
+    virtual void Process()
+    {
+        if( cancelled_ || deprecated_ )
+            return;
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Initialize( *map_ );
         map_->Initialize();
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Update( *map_ );
-        Commit();
+        computed_ = true;
     };
 
-    void Commit()
+    virtual void Commit()
     {
-        for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
-            delete *it;
-
-        boost::mutex::scoped_lock locker( cones_->mutex_ );
-
+        if( cancelled_ || !computed_ )
+            return;
         std::swap( cones_->map_, map_ );
-        delete map_;
-        cones_->updating_     = false;
         cones_->needUpdating_ = false;
-        cones_->condition_.notify_one();
+        cones_->current_      = 0;
     };
+
 private:
     VisionCones* cones_;
     VisionMap* map_;
     T_Surfaces surfaces_;
     double elongationFactor_;
+    bool cancelled_;
+    bool deprecated_;
+    bool computed_;
 };
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones::CancelCurrent
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void VisionCones::CancelCurrent()
+{
+    if( current_ )
+        current_->Cancel();
+}
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones::Update
@@ -136,7 +153,8 @@ private:
 // -----------------------------------------------------------------------------
 void VisionCones::Update() const
 {
-    workers_.Enqueue( Updater( *const_cast< VisionCones* >( this ) ) );
+    std::auto_ptr< WorkerTask_ABC > task( new Updater( *const_cast< VisionCones* >( this ) ) );
+    workers_.Enqueue( task );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,16 +163,18 @@ void VisionCones::Update() const
 // -----------------------------------------------------------------------------
 void VisionCones::Draw( const geometry::Point2f& , const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    boost::mutex::scoped_lock locker( mutex_ );
-     
     if( tools.ShouldDisplay( "VisionCones" ) )
         for( CIT_Surfaces it = surfaces_.begin(); it != surfaces_.end(); ++it )
             (*it)->Draw( viewport, tools );
 
-    if( tools.ShouldDisplay( "VisionSurfaces" ) )
+    if( tools.ShouldDisplay( "VisionSurfaces" ) && map_->IsVisible( viewport ) )
     {
-        if( needUpdating_ && ! updating_ )
+        if( needUpdating_ )
+        {
+            if( current_ )
+                current_->Deprecate();
             Update();
+        }
         map_->Draw( viewport, tools );
     }
 }

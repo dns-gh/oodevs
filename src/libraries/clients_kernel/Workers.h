@@ -10,11 +10,18 @@
 #ifndef __Workers_h_
 #define __Workers_h_
 
-#undef Yield
-#include "tools/thread/ThreadPool.h"
+#pragma warning ( disable : 4275 )
+#include <boost/thread/mutex.hpp>
+
+namespace tools {
+    namespace thread {
+        class ThreadPool;
+    }
+}
 
 namespace kernel
 {
+    class WorkerTask_ABC;
 
 // =============================================================================
 /** @class  Workers
@@ -34,11 +41,15 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Functor >
-    void Enqueue( const Functor& functor )
+    template< typename Functor, typename Commiter >
+    void Enqueue( const Functor& functor, const Commiter& commiter )
     {
-        pool_.Enqueue( functor );
+        std::auto_ptr< WorkerTask_ABC > task( new WorkerTask< Functor, Commiter >( functor, commiter ) );
+        Enqueue( task );
     }
+    void Enqueue( std::auto_ptr< WorkerTask_ABC > task );
+
+    void CommitTasks();
     //@}
 
 private:
@@ -48,10 +59,18 @@ private:
     Workers& operator=( const Workers& ); //!< Assignement operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< WorkerTask_ABC* > T_Tasks;
+    typedef T_Tasks::const_iterator      CIT_Tasks;
+    //@}
+
 private:
     //! @name Member data
     //@{
-    tools::thread::ThreadPool pool_;
+    std::auto_ptr< tools::thread::ThreadPool > pool_;
+    boost::mutex mutex_;
+    T_Tasks finished_;
     //@}
 };
 

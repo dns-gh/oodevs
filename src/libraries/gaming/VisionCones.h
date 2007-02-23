@@ -17,9 +17,6 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
 
-#include "boost/thread/mutex.hpp"
-#include "boost/thread/condition.hpp"
-
 namespace kernel
 {
     class CoordinateConverter_ABC;
@@ -67,7 +64,7 @@ private:
     //@{
     typedef std::vector< Surface* >      T_Surfaces;
     typedef T_Surfaces::const_iterator CIT_Surfaces;
-    struct Updater; struct NotUpdating;
+    struct Updater;
     //@}
 
     //! @name Helpers
@@ -76,6 +73,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
     void Invalidate();
     void Update() const;
+    void CancelCurrent();
     //@}
 
 private:
@@ -85,11 +83,8 @@ private:
     SurfaceFactory& factory_;
     kernel::Workers& workers_;
 
-    mutable boost::mutex mutex_;
-    boost::condition condition_;
-    
     bool needUpdating_;
-    bool updating_;
+    Updater* current_;
     VisionMap* map_;
     T_Surfaces surfaces_;
     double elongationFactor_;

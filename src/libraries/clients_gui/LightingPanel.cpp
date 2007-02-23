@@ -29,19 +29,21 @@ LightingPanel::LightingPanel( QWidget* parent, FixedLighting& lighting )
     lighting_.SetLightDirection( geometry::Vector3f( 0, 0, 1 ) );
 
     // $$$$ SBO 2007-01-03: Todo, handle lighting types different from fixed
-    lightingType_ = new QButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
-    lightingType_->insert( new QRadioButton( tr( "Fixed" ), lightingType_ ) );
-    lightingType_->insert( new QRadioButton( tr( "Simulation time" ), lightingType_ ) );
-    lightingType_->insert( new QRadioButton( tr( "Real time" ), lightingType_ ) );
-    lightingType_->setButton( 0 );
+    QButtonGroup* lightingType = new QButtonGroup( 3, Qt::Horizontal, tr( "Lighting type" ), this );
+    lightingType->insert( new QRadioButton( tr( "Fixed" ), lightingType ) );
+    lightingType->insert( new QRadioButton( tr( "Simulation time" ), lightingType ) );
+    lightingType->insert( new QRadioButton( tr( "Real time" ), lightingType ) );
+    lightingType->setButton( 0 );
 
-    QGroupBox* lightBox = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), this );
-    new QLabel( tr( "Source position" ), lightBox );
-    direction_ = new DirectionWidget( lightBox );
-    new QLabel( tr( "Ambient color" ), lightBox );
-    ambient_ = new ColorButton( lightBox, "", QColor( 52, 52, 52 ) );
-    new QLabel( tr( "Diffuse color" ), lightBox );
-    diffuse_ = new ColorButton( lightBox, "", QColor( 204, 204, 204 ) );
+    connect( lightingType, SIGNAL( clicked( int ) ), this, SLOT( OnLightingType( int ) ) );
+
+    fixedLightBox_ = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), this );
+    new QLabel( tr( "Source position" ), fixedLightBox_ );
+    direction_ = new DirectionWidget( fixedLightBox_ );
+    new QLabel( tr( "Ambient color" ), fixedLightBox_ );
+    ambient_ = new ColorButton( fixedLightBox_, "", QColor( 52, 52, 52 ) );
+    new QLabel( tr( "Diffuse color" ), fixedLightBox_ );
+    diffuse_ = new ColorButton( fixedLightBox_, "", QColor( 204, 204, 204 ) );
 
     connect( direction_, SIGNAL( DirectionChanged( const geometry::Vector3f& ) ), this, SLOT( DirectionChanged( const geometry::Vector3f& ) ) );
     connect( ambient_, SIGNAL( ColorChanged( const QColor& ) ), this, SLOT( AmbientChanged( const QColor& ) ) );
@@ -77,6 +79,15 @@ void LightingPanel::Reset()
     direction_->Revert();
     ambient_  ->Revert();
     diffuse_  ->Revert();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LightingPanel::OnLightingType
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void LightingPanel::OnLightingType( int type )
+{
+    fixedLightBox_->setShown( type == 0 );
 }
 
 // -----------------------------------------------------------------------------

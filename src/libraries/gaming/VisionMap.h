@@ -42,6 +42,8 @@ public:
     void Initialize();
     bool ShouldUpdate( const std::pair< unsigned, unsigned >& cell );
     void Update( const std::pair< unsigned, unsigned >& cell, kernel::E_PerceptionResult perception );
+
+    bool IsVisible( const kernel::Viewport_ABC& viewport ) const;
     //@}
 
 private:
