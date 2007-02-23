@@ -21,7 +21,6 @@
 #include "terrain/TesselatedShape.h"
 
 class GraphicShape;
-class GraphicSetup_ABC;
 
 namespace kernel
 {
@@ -32,6 +31,7 @@ namespace kernel
 
 namespace gui
 {
+    class GraphicPreferences;
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -49,12 +49,13 @@ class TerrainLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, GraphicSetup_ABC& setup );
+             TerrainLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, GraphicPreferences& setup );
     virtual ~TerrainLayer();
     //@}
 
     //! @name Operations
     //@{
+    virtual void SetAlpha( float alpha );
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     virtual void Reset();
@@ -109,7 +110,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
-    GraphicSetup_ABC& setup_;
+    GraphicPreferences& setup_;
 
     const std::string dataDirectory_;
     geometry::Rectangle2f world_;

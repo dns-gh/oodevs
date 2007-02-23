@@ -214,7 +214,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, GraphicSetup_ABC& setup, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, GraphicPreferences& setup, const Profile_ABC& profile )
 {
     Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
     Elevation2dLayer& elevation2d  = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );

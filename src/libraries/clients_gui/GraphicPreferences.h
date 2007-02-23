@@ -25,10 +25,8 @@ namespace gui
 */
 // Created: SBO 2006-04-04
 // =============================================================================
-class GraphicPreferences : public QObject
-                         , public GraphicSetup_ABC
+class GraphicPreferences : public GraphicSetup_ABC
 {
-    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -38,6 +36,8 @@ public:
 
     //! @name Operations
     //@{
+    void SetAlpha( float a );
+
     void Display( QWidget* parent ) const;
 
     virtual void SetupLineGraphics  ( const Data_ABC* pData );
@@ -46,12 +46,6 @@ public:
 
     void Commit();
     void Revert();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnAlpha( int );
     //@}
 
 private:

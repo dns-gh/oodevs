@@ -95,6 +95,16 @@ void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Elevation2dLayer::SetAlpha
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void Elevation2dLayer::SetAlpha( float alpha )
+{
+    Layer2d_ABC::SetAlpha( alpha );
+    updateGradient_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Elevation2dLayer::Paint
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------

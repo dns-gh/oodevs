@@ -47,6 +47,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void SetAlpha( float alpha );
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void Paint( kernel::Viewport_ABC& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );

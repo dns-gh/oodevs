@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
-#include "moc_GraphicPreferences.cpp"
 
 #include "TerrainPreference.h"
 #include "graphics/GraphicData.h"
@@ -69,25 +68,18 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Display( QWidget* parent ) const
 {
-    QVBox* pPanel = new QVBox( parent );
-    pPanel->setMargin( 5 );
-
-    QGroupBox* alphaBox = new QGroupBox( 1, Qt::Vertical, tr( "Transparency" ), pPanel );
-    QSlider* slider = new QSlider( 0, 100, 1, 100, Qt::Horizontal, alphaBox );
-    connect( slider, SIGNAL( valueChanged( int ) ), this, SLOT( OnAlpha( int ) ) );
-    
-    QGroupBox* colorBox = new QGroupBox( displays_.size(), Qt::Vertical, tr( "Colors" ), pPanel );
+    QGroupBox* colorBox = new QGroupBox( displays_.size(), Qt::Vertical, parent->tr( "Colors" ), parent );
     for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
         (*it)->Display( colorBox );
 }
 
 // -----------------------------------------------------------------------------
-// Name: GraphicPreferences::OnAlpha
-// Created: AGE 2006-11-22
+// Name: GraphicPreferences::SetAlpha
+// Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void GraphicPreferences::OnAlpha( int value )
+void GraphicPreferences::SetAlpha( float a )
 {
-    alpha_ = value * 0.01f;
+    alpha_ = a;
 }
 
 // -----------------------------------------------------------------------------

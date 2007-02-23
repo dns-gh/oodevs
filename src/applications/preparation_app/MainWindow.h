@@ -33,13 +33,13 @@ namespace gui
     class ColorStrategy;
     class CircularEventStrategy;
     class ExclusiveEventStrategy;
+    class GraphicPreferences;
 }
 
 class AgentsLayer;
 class Model;
 class ModelBuilder;
 class StaticModel;
-class GraphicSetup_ABC;
 class ObjectCreationPanel;
 class WeatherLayer;
 class MapLayer_ABC;
@@ -95,7 +95,7 @@ private:
     //! @name Helpers
     //@{
     void BuildIconLayout();
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, GraphicSetup_ABC& setup, const kernel::Profile_ABC& profile );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, gui::GraphicPreferences& setup, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

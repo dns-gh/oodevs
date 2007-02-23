@@ -84,10 +84,6 @@
 <context>
     <name>GraphicPreferences</name>
     <message>
-        <source>Transparency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Colors</source>
         <translation type="unfinished"></translation>
     </message>

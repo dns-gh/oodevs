@@ -19,6 +19,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/OptionVariant.h"
+#include "GraphicPreferences.h"
 
 using namespace pathfind;
 using namespace kernel;
@@ -28,7 +29,7 @@ using namespace gui;
 // Name: TerrainLayer constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicSetup_ABC& setup )
+TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicPreferences& setup )
     : controllers_  ( controllers )
     , tools_        ( tools )
     , setup_        ( setup )
@@ -106,6 +107,16 @@ bool TerrainLayer::ShouldLoad( const std::string& filename )
 {
     return filename.find( ".bin" )   != std::string::npos
         && filename.find( "review" ) == std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::SetAlpha
+// Created: AGE 2007-02-23
+// -----------------------------------------------------------------------------
+void TerrainLayer::SetAlpha( float alpha )
+{
+    setup_.SetAlpha( alpha );
+    Layer2d_ABC::SetAlpha( alpha );
 }
 
 // -----------------------------------------------------------------------------
