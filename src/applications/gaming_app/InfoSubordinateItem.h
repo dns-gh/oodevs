@@ -10,14 +10,15 @@
 #ifndef __InfoSubordinateItem_h_
 #define __InfoSubordinateItem_h_
 
+#include "clients_kernel/ElementObserver_ABC.h"
 #include <qiconview.h>
 
 namespace kernel
 {
     class Entity_ABC;
+    class Controllers;
+    class Attributes_ABC;
 }
-
-class Lives;
 
 // =============================================================================
 /** @class  InfoSubordinateItem
@@ -26,12 +27,14 @@ class Lives;
 // Created: SBO 2007-02-22
 // =============================================================================
 class InfoSubordinateItem : public QIconViewItem
+                          , public kernel::Observer_ABC
+                          , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSubordinateItem( QIconView* parent, const QString& text, const QPixmap& icon, const kernel::Entity_ABC& entity );
+             InfoSubordinateItem( QIconView* parent, kernel::Controllers& controllers, const QString& text, const QPixmap& icon, const kernel::Entity_ABC& entity );
     virtual ~InfoSubordinateItem();
     //@}
 
@@ -49,12 +52,15 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void NotifyUpdated( const kernel::Attributes_ABC& attributes );
     virtual void paintItem( QPainter* p, const QColorGroup& cg );
+    void DrawLife( QPainter* p, int life );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const kernel::Entity_ABC& entity_;
     //@}
 };

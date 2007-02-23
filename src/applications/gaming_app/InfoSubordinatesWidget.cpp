@@ -90,7 +90,7 @@ void InfoSubordinatesWidget::AddSubordinate( const kernel::Entity_ABC& entity )
         const std::string symbolName = hierarchies->GetSymbol();
         const std::string levelName  = hierarchies->GetLevel();
         if( ! symbolName.empty() || ! levelName.empty() )
-            new InfoSubordinateItem( this, entity.GetName(), icons_.GetSymbol( entity ), entity );
+            new InfoSubordinateItem( this, controllers_, entity.GetName(), icons_.GetSymbol( entity ), entity );
     }
 }
 

@@ -50,9 +50,9 @@ InfoStancesWidget::~InfoStancesWidget()
 // -----------------------------------------------------------------------------
 void InfoStancesWidget::Update( const Attributes& attributes )
 {
-    previous_->setPixmap( pixmaps_[attributes.nOldPosture_] );
+    previous_->setPixmap( pixmaps_.at( attributes.nOldPosture_ ) );
     QToolTip::add( previous_, tr( "Stance: previous was: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nOldPosture_ ).c_str() ) );
-    next_->setPixmap( pixmaps_[attributes.nCurrentPosture_] );
+    next_->setPixmap( pixmaps_.at( attributes.nCurrentPosture_ ) );
     if( attributes.nPostureCompletionPourcentage_ < 100 )
         QToolTip::add( next_, tr( "Stance: next is: '%1'" ).arg( ENT_Tr::ConvertFromUnitPosture( (E_UnitPosture)attributes.nCurrentPosture_ ).c_str() ) );
     else
