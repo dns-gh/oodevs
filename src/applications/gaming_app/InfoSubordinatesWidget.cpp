@@ -15,7 +15,6 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_gui/EntitySymbols.h"
 #include "InfoSubordinateItem.h"
 
 // -----------------------------------------------------------------------------
@@ -83,15 +82,8 @@ void InfoSubordinatesWidget::NotifySelected( const kernel::Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void InfoSubordinatesWidget::AddSubordinate( const kernel::Entity_ABC& entity )
 {
-    if( !profile_.IsVisible( entity ) )
-        return;
-    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
-    {
-        const std::string symbolName = hierarchies->GetSymbol();
-        const std::string levelName  = hierarchies->GetLevel();
-        if( ! symbolName.empty() || ! levelName.empty() )
-            new InfoSubordinateItem( this, controllers_, entity.GetName(), icons_.GetSymbol( entity ), entity );
-    }
+    if( profile_.IsVisible( entity ) )
+        new InfoSubordinateItem( this, controllers_, icons_, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,4 +94,18 @@ void InfoSubordinatesWidget::OpenItem( QIconViewItem* item )
 {
     if( InfoSubordinateItem* value = static_cast< InfoSubordinateItem* >( item ) )
         controllers_.actions_.Select( value->GetEntity() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoSubordinatesWidget::NotifyDeleted
+// Created: SBO 2007-02-23
+// -----------------------------------------------------------------------------
+void InfoSubordinatesWidget::NotifyDeleted( const kernel::Entity_ABC& entity )
+{
+    for( QIconViewItem* item = firstItem(); item; item = item->nextItem() )
+        if( &static_cast< InfoSubordinateItem* >( item )->GetEntity() == &entity )
+        {
+            delete item;
+            return;
+        }
 }

@@ -14,6 +14,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Resolver_ABC.h"
+#include "clients_kernel/Karma.h"
 
 namespace kernel
 {
@@ -43,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    char GetKarma() const;
+    const kernel::Karma& GetKarma() const;
     ASN1T_EnumDiplomatie GetRelationship( const kernel::Entity_ABC& rhs ) const;
     //@}
 
@@ -75,7 +76,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Team_ABC >& resolver_;
     T_Diplomacies diplomacies_;
-    char karma_;
+    kernel::Karma karma_;
     //@}
 };
 

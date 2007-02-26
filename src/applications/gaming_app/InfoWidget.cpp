@@ -32,9 +32,9 @@ InfoWidget::InfoWidget( QWidget* parent, kernel::Controllers& controllers, const
     new InfoButtonsWidget( this, controllers, itemFactory );
 
     QTabWidget* tabs = new QTabWidget( this );
+    tabs->setTabShape( QTabWidget::Triangular );
     tabs->addTab( new InfoReportsTab( this, controllers, itemFactory ), MAKE_PIXMAP( msg ), tr( "Reports" ) );
     tabs->addTab( new InfoConflictsTab( this, controllers, itemFactory ), MAKE_PIXMAP( conflict ), tr( "Conflicts" ) );
-    tabs->addTab( new QWidget( this ), tr( "Knowledges" ) ); // $$$$ SBO 2007-02-05: 
 }
 
 // -----------------------------------------------------------------------------

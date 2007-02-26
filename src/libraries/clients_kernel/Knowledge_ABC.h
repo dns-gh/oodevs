@@ -36,6 +36,8 @@ public:
     virtual const Entity_ABC* GetEntity() const = 0;
     virtual const Entity_ABC* GetRecognizedEntity() const = 0;
     virtual const Entity_ABC& GetOwner() const = 0;
+
+    virtual std::string GetSymbol() const { return ""; } // $$$$ SBO 2007-02-26: 
     //@}
 
 private:

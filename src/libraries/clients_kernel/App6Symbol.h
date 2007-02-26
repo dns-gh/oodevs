@@ -7,57 +7,56 @@
 //
 // *****************************************************************************
 
-#ifndef __EntitySymbols_h_
-#define __EntitySymbols_h_
+#ifndef __App6Symbol_h_
+#define __App6Symbol_h_
 
 namespace kernel
 {
-    class Entity_ABC;
-    class Knowledge_ABC;
-}
-
-namespace gui
-{
-    class SymbolIcons;
-    class ColorStrategy_ABC;
+    class Karma;
 
 // =============================================================================
-/** @class  EntitySymbols
-    @brief  EntitySymbols
+/** @class  App6Symbol
+    @brief  App6Symbol
 */
-// Created: SBO 2007-02-21
+// Created: SBO 2007-02-26
 // =============================================================================
-class EntitySymbols
+class App6Symbol
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EntitySymbols( SymbolIcons& icons, ColorStrategy_ABC& strategy );
-    virtual ~EntitySymbols();
+             App6Symbol();
+    virtual ~App6Symbol();
     //@}
 
     //! @name Operations
     //@{
-    virtual QPixmap GetSymbol( const kernel::Entity_ABC& entity );
-    virtual QPixmap GetSymbol( const kernel::Knowledge_ABC& entity );
+    static void Initialize();
+    static void SetKarma( std::string& symbol, const Karma& karma );
+    static void FilterPerceptionLevel( std::string& symbol, E_PerceptionResult perception );
+    static void Merge( const std::string& from, std::string& to );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    EntitySymbols( const EntitySymbols& );            //!< Copy constructor
-    EntitySymbols& operator=( const EntitySymbols& ); //!< Assignment operator
+    App6Symbol( const App6Symbol& );            //!< Copy constructor
+    App6Symbol& operator=( const App6Symbol& ); //!< Assignment operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< Karma, char > T_KarmaChars;
     //@}
 
 private:
     //! @name Member data
     //@{
-    SymbolIcons& icons_;
-    ColorStrategy_ABC& strategy_;
+    static T_KarmaChars karmaChars_;
     //@}
 };
 
 }
 
-#endif // __EntitySymbols_h_
+#endif // __App6Symbol_h_

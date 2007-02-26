@@ -11,6 +11,7 @@
 #include "InfoSubordinateItem.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_gui/EntitySymbols.h"
 #include "gaming/Attributes.h"
 #include <qpainter.h>
 
@@ -18,9 +19,10 @@
 // Name: InfoSubordinateItem constructor
 // Created: SBO 2007-02-22
 // -----------------------------------------------------------------------------
-InfoSubordinateItem::InfoSubordinateItem( QIconView* parent, kernel::Controllers& controllers, const QString& text, const QPixmap& icon, const kernel::Entity_ABC& entity )
-    : QIconViewItem( parent, text, icon )
+InfoSubordinateItem::InfoSubordinateItem( QIconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity )
+    : QIconViewItem( parent, entity.GetName(), icons.GetSymbol( entity ) )
     , controllers_( controllers )
+    , icons_( icons )
     , entity_( entity )
 {
     controllers_.Register( *this );

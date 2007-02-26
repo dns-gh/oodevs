@@ -15,6 +15,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/App6Symbol.h"
 #include "Diplomacies.h"
 #include "Tools.h"
 
@@ -68,11 +69,9 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 void Agent::InitializeSymbol() const
 {
     symbol_ = type_.GetSymbol();
-    
     const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
     const Diplomacies* diplo = team.Retrieve< Diplomacies >();
-    char karma = diplo ? diplo->GetKarma() : 'u';
-    std::replace( symbol_.begin(), symbol_.end(), '*', karma );
+    kernel::App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
 }
 
 // -----------------------------------------------------------------------------

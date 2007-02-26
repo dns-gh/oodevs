@@ -23,6 +23,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/App6Symbol.h"
 #include "Tools.h"
 #include "Diplomacies.h"
 
@@ -142,6 +143,15 @@ QString AgentKnowledge::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentKnowledge::GetSymbol
+// Created: SBO 2007-02-26
+// -----------------------------------------------------------------------------
+std::string AgentKnowledge::GetSymbol() const
+{
+    return currentSymbol_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentKnowledge::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
@@ -171,7 +181,7 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "AgentKnowledge", "Percepetion level:" ), nCurrentPerceptionLevel_ )
+    displayer.Display( tools::translate( "AgentKnowledge", "Perception level:" ), nCurrentPerceptionLevel_ )
              .Display( tools::translate( "AgentKnowledge", "Side:" ), team_  )
              .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
              .Display( tools::translate( "AgentKnowledge", "Level:" ), nLevel_ )
@@ -217,13 +227,12 @@ unsigned int AgentKnowledge::ElementsToKeep( E_PerceptionResult perception ) con
 // Name: AgentKnowledge::TeamCharacter
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-char AgentKnowledge::TeamCharacter( E_PerceptionResult perception ) const
+const kernel::Karma& AgentKnowledge::TeamKarma( E_PerceptionResult perception ) const
 {
-    char result = 'u';
     if( team_ && perception > eDetection )
         if( const Diplomacies* diplomacy = team_->Retrieve< Diplomacies >() )
-            result = diplomacy->GetKarma();
-    return result;
+            return diplomacy->GetKarma();
+    return Karma::unknown_;
 }
 
 namespace
@@ -245,17 +254,14 @@ namespace
 void AgentKnowledge::UpdateSymbol()
 {
     E_PerceptionResult perception = nMaxPerceptionLevel_.IsSet() ? nMaxPerceptionLevel_ : eDetection;
-    const unsigned int toKeep = ElementsToKeep( perception); 
-    const char teamChar = TeamCharacter( perception );
-    
+    const unsigned int toKeep = ElementsToKeep( perception ); 
+
     currentSymbol_ = fullSymbol_;
-    std::string::size_type pos = currentSymbol_.find_first_of( '*' );
-    currentSymbol_[ pos ] = teamChar;
-    currentSymbol_ = currentSymbol_.substr( 0, pos + toKeep + 1 );
+    App6Symbol::SetKarma( currentSymbol_, TeamKarma( perception ) );
+    App6Symbol::FilterPerceptionLevel( currentSymbol_, perception );
 
     currentNature_ = Strip( realAgent_.GetType().GetNature().GetNature(), toKeep - 3 ); // $$$$ AGE 2006-10-25: 
 
     if( nLevel_ == eNatureLevel_None && nMaxPerceptionLevel_.IsSet() && nMaxPerceptionLevel_ > eDetection )
         nLevel_ = ENT_Tr::ConvertToNatureLevel( realAgent_.GetType().GetNature().GetLevel() ); // $$$$ AGE 2006-11-20: 
-
 }

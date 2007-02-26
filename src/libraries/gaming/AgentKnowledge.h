@@ -24,6 +24,7 @@ namespace kernel
     class Displayer_ABC;
     class Team_ABC;
     class CoordinateConverter_ABC;
+    class Karma;
 }
 
 // =============================================================================
@@ -61,6 +62,7 @@ public:
     virtual const kernel::Agent_ABC* GetEntity() const;
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
+    virtual std::string GetSymbol() const;
     //@}
 
 private:
@@ -69,7 +71,7 @@ private:
     virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
     void UpdateSymbol();
     unsigned int ElementsToKeep( kernel::E_PerceptionResult perception ) const;
-    char TeamCharacter( kernel::E_PerceptionResult perception ) const;
+    const kernel::Karma& TeamKarma( kernel::E_PerceptionResult perception ) const;
     //@}
 
 public:

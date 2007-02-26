@@ -127,7 +127,7 @@ void InfoStatusWidget::NotifySelected( const kernel::Entity_ABC* entity )
         if( !selected_ )
             return;
         const kernel::TacticalHierarchies* hierarchies = selected_->Retrieve< kernel::TacticalHierarchies >();
-        const kernel::Entity_ABC* parent = hierarchies->GetSuperior();
+        const kernel::Entity_ABC* parent = hierarchies ? hierarchies->GetSuperior() : 0;
         gotoParent_->setDisabled( !hierarchies || !parent || !profile_.IsVisible( *parent ) );
         if( hierarchies )
             SetIcon();

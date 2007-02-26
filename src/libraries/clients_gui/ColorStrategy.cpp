@@ -154,6 +154,17 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorStrategy::FindColor
+// Created: SBO 2007-02-26
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::FindColor( const kernel::Knowledge_ABC& knowledge )
+{
+    if( const kernel::Entity_ABC* realEntity = knowledge.GetRecognizedEntity() )
+        return FindColor( *realEntity );
+    return QColor( 255, 220, 000 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
@@ -185,11 +196,7 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
-    QColor color( 255, 255, 255 );
-    if( const Entity_ABC* entity = knowledge.GetRecognizedEntity() )
-        color = FindColor( *entity );
-    else
-        color = QColor( 255, 220, 000 ); // $$$$ SBO 2006-12-08: unrecognized entities must be Yellow!
+    QColor color( FindColor( knowledge ) );
     if( selectedKnowledge_ == &knowledge )
         color = SelectedColor( color );
     color = KnowledgeColor( color );

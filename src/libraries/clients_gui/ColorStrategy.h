@@ -62,6 +62,7 @@ public:
     virtual void SelectColor( const kernel::Knowledge_ABC& knowledge );
     virtual void SelectColor( const kernel::TacticalLine_ABC& line );
     virtual QColor FindColor( const kernel::Entity_ABC& entity );
+    virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge );
     //@}
 
 private:

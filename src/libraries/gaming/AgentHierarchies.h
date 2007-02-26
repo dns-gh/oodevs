@@ -15,6 +15,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/App6Symbol.h"
 #include "game_asn/Asn.h"
 #include "Diplomacies.h"
 
@@ -113,7 +114,7 @@ void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgPionCreation& message )
     kernel::Automat_ABC& superior = automatResolver_.Get( message.oid_automate );
     const Diplomacies* diplo = superior.Get< I >().GetTop().Retrieve< Diplomacies >();
     if( diplo )
-        std::replace( symbol_.begin(), symbol_.end(), '*', diplo->GetKarma() );
+        App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
     SetSuperior( & superior );
 }
 

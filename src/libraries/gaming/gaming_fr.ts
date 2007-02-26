@@ -73,10 +73,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Percepetion level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Heading:</source>
         <translation type="unfinished"></translation>
     </message>

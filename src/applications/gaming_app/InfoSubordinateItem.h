@@ -20,6 +20,11 @@ namespace kernel
     class Attributes_ABC;
 }
 
+namespace gui
+{
+    class EntitySymbols;
+}
+
 // =============================================================================
 /** @class  InfoSubordinateItem
     @brief  InfoSubordinateItem
@@ -34,7 +39,7 @@ class InfoSubordinateItem : public QIconViewItem
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoSubordinateItem( QIconView* parent, kernel::Controllers& controllers, const QString& text, const QPixmap& icon, const kernel::Entity_ABC& entity );
+             InfoSubordinateItem( QIconView* parent, kernel::Controllers& controllers, gui::EntitySymbols& icons, const kernel::Entity_ABC& entity );
     virtual ~InfoSubordinateItem();
     //@}
 
@@ -61,6 +66,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    gui::EntitySymbols& icons_;
     const kernel::Entity_ABC& entity_;
     //@}
 };

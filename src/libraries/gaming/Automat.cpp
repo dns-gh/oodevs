@@ -16,6 +16,8 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Karma.h"
 #include "Diplomacies.h"
 #include "Tools.h"
 
@@ -92,6 +94,5 @@ void Automat::InitializeSymbol() const
     symbol_ = symbol;
     const Entity_ABC& team = hierarchies.GetTop();
     const Diplomacies* diplo = team.Retrieve< Diplomacies >();
-    char karma = diplo ? diplo->GetKarma() : 'u';
-    std::replace( symbol_.begin(), symbol_.end(), '*', karma );
+    App6Symbol::SetKarma( symbol_, diplo ? diplo->GetKarma() : Karma::unknown_ );
 }

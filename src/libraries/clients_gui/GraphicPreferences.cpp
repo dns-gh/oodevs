@@ -12,6 +12,7 @@
 
 #include "TerrainPreference.h"
 #include "graphics/GraphicData.h"
+#include "clients_kernel/Tools.h"
 
 #include "xeumeuleu/xml.h"
 using namespace xml;
@@ -68,7 +69,7 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Display( QWidget* parent ) const
 {
-    QGroupBox* colorBox = new QGroupBox( displays_.size(), Qt::Vertical, parent->tr( "Colors" ), parent );
+    QGroupBox* colorBox = new QGroupBox( displays_.size(), Qt::Vertical, tools::translate( "GraphicPreferences", "Colors" ), parent );
     for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
         (*it)->Display( colorBox );
 }

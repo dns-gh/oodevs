@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "MergingTacticalHierarchies.h"
+#include "clients_kernel/App6Symbol.h"
 
 using namespace kernel;
 
@@ -100,17 +101,5 @@ void MergingTacticalHierarchies::UnregisterSubordinate( const kernel::Entity_ABC
 void MergingTacticalHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
 {
     if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
-    {
-        const std::string newChildSymbol = hierarchies->GetSymbol();
-        if( symbol_.empty() )
-            symbol_ = newChildSymbol;
-        else
-        {
-            unsigned i = 0;
-            const unsigned max = std::min( symbol_.length(), newChildSymbol.length() );
-            while( i < max && symbol_[ i ] == newChildSymbol[ i ] )
-                ++i;
-            symbol_ = symbol_.substr( 0, i );
-        }
-    }
+        App6Symbol::Merge( hierarchies->GetSymbol(), symbol_ );
 }
