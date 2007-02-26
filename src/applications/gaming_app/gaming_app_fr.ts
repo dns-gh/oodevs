@@ -531,11 +531,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> (officer, warrant-off., private)</source>
+        <source>Troops</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Troops</source>
+        <source> (officer, warrant-off., private)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

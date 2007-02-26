@@ -88,29 +88,12 @@ void FireResultListView::Display( const AgentFireResult* result, Displayer_ABC&,
     displayer.Display( tr( "Equipments" ), tr( " (avail, unavail, repairable):" ) );
     displayer.Display( tr( "Troops" ), tr( " (officer, warrant-off., private)" ) );
 
-    // $$$$ AGE 2006-02-28: crado. Essayer de faire un displayer qui puisse cascader 
-    // $$$$ AGE 2006-02-28: les subItems et meler des listes aussi mais sans que l'interface
-    // $$$$ AGE 2006-02-28: devienne horrible (MT_Archive_ABC quelqu'un ?)
-    QListViewItem* last  = item->firstChild();
-    QListViewItem* equipments = last;
-    while( equipments && equipments->text( 0 ) != tr( "Equipments" ) ) {
-        last = equipments;
-        equipments = equipments->nextSibling();
-    }
-    if( ! equipments )
-        equipments = factory_.CreateItem( item, last );
+    QListViewItem* equipments = item->firstChild();
     DeleteTail( 
         DisplayList( result->CreateIterator(), equipments )
     );
 
-    last = item->firstChild();
-    QListViewItem* humans = last;
-    while( humans && humans->text( 0 ) != tr( "Troops" ) ) {
-        last = humans;
-        humans = humans->nextSibling();
-    }
-    if( ! humans )
-        humans = factory_.CreateItem( item, last );
+    QListViewItem* humans = equipments->nextSibling();
     DeleteTail( 
         DisplayList( &* result->casualties_, result->casualties_ + eNbrHumanWound, humans )
     );
