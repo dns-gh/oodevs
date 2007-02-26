@@ -12,7 +12,7 @@
 #include "moc_LightingPanel.cpp"
 #include "ColorButton.h"
 #include "DirectionWidget.h"
-#include "graphics/FixedLighting.h"
+#include "LightingProxy.h"
 
 using namespace gui;
 
@@ -20,7 +20,7 @@ using namespace gui;
 // Name: LightingPanel constructor
 // Created: SBO 2007-01-03
 // -----------------------------------------------------------------------------
-LightingPanel::LightingPanel( QWidget* parent, FixedLighting& lighting )
+LightingPanel::LightingPanel( QWidget* parent, LightingProxy& lighting )
     : PreferencePanel_ABC( parent )
     , lighting_( lighting )
 {
@@ -88,6 +88,10 @@ void LightingPanel::Reset()
 void LightingPanel::OnLightingType( int type )
 {
     fixedLightBox_->setShown( type == 0 );
+    if( type == 0 )
+        lighting_.SwitchToFixed();
+    else if( type == 1 )
+        lighting_.SwitchToClockTime();
 }
 
 // -----------------------------------------------------------------------------

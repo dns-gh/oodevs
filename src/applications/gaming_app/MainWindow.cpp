@@ -94,7 +94,7 @@
 #include "clients_gui/DrawerToolbar.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/EntitySymbols.h"
-#include "graphics/FixedLighting.h"
+#include "clients_gui/LightingProxy.h"
 #include "graphics/DragMovementLayer.h"
 #include "icons.h"
 
@@ -137,7 +137,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
-    lighting_ = new FixedLighting();
+    lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
     new Dialogs( this, controllers, model_, staticModel, publisher, profile );
 

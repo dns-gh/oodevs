@@ -38,6 +38,7 @@ namespace gui
     class ExclusiveEventStrategy;
     class CircularEventStrategy;
     class PreferencesDialog;
+    class LightingProxy;
 }
 
 class Spy;
@@ -49,7 +50,6 @@ class Network;
 class MissionPanel;
 class ObjectCreationPanel;
 class LoginDialog;
-class FixedLighting;
 class MapLayer_ABC;
 
 // =============================================================================
@@ -136,7 +136,7 @@ private:
 
     gui::GlProxy*                glProxy_;
     gui::ColorStrategy*          strategy_;
-    FixedLighting*               lighting_;
+    gui::LightingProxy*          lighting_;
     gui::GlWidget*               widget2d_;
     gui::Gl3dWidget*             widget3d_;
     gui::GlPlaceHolder*          glPlaceHolder_;

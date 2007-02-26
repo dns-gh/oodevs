@@ -12,10 +12,9 @@
 
 #include "PreferencePanel_ABC.h"
 
-class FixedLighting;
-
 namespace gui
 {
+    class LightingProxy;
     class DirectionWidget;
     class ColorButton;
 
@@ -32,7 +31,7 @@ class LightingPanel : public PreferencePanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LightingPanel( QWidget* parent, FixedLighting& lighting );
+             LightingPanel( QWidget* parent, LightingProxy& lighting );
     virtual ~LightingPanel();
     //@}
 
@@ -62,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    FixedLighting& lighting_;
+    LightingProxy& lighting_;
 
     QGroupBox* fixedLightBox_;
     DirectionWidget* direction_;

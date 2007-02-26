@@ -29,7 +29,7 @@ using namespace gui;
 // Name: PreferencesDialog constructor
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
-PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, FixedLighting& lighting )
+PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting )
     : QDialog( parent )
     , pGraphicPrefPanel_( 0 )
 {

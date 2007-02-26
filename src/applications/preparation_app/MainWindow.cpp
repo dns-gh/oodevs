@@ -70,7 +70,7 @@
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/EntitySymbols.h"
-#include "graphics/FixedLighting.h"
+#include "clients_gui/LightingProxy.h"
 #include "graphics/DragMovementLayer.h"
 
 #include "xeumeuleu/xml.h"
@@ -107,7 +107,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( csword ) );
     SetWindowTitle( false );
 
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *new FixedLighting() ); // $$$$ AGE 2007-01-03:
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *new LightingProxy( this ) );
     new Dialogs( this, controllers );
 
     glProxy_ = new GlProxy();
