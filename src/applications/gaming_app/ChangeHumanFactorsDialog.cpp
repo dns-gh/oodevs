@@ -197,7 +197,7 @@ QSize ChangeHumanFactorsDialog::sizeHint() const
 // Name: ChangeHumanFactorsDialog::NotifyContextMenu
 // Created: SBO 2006-08-10
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::NotifyContextMenu( const Entity_ABC& agent, ContextMenu& menu )
+void ChangeHumanFactorsDialog::NotifyContextMenu( const Agent_ABC& agent, ContextMenu& menu )
 {
     if( profile_.CanDoMagic( agent ) )
     {

@@ -784,6 +784,30 @@
         <source>Destroy - All</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change population attitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kill all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kill people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resurect people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

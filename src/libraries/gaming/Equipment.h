@@ -52,11 +52,11 @@ public:
     //@{
     const kernel::EquipmentType& type_;
 
-    unsigned available_;
-    unsigned unavailable_;
-    unsigned repairable_;
-    unsigned inMaintenance_;
-    unsigned prisonners_;
+    int available_;
+    int unavailable_;
+    int repairable_;
+    int inMaintenance_;
+    int prisonners_;
     //@}
 };
 

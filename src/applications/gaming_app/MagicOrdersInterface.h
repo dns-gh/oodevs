@@ -22,6 +22,7 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Profile_ABC;
+    class Population_ABC;
 }
 
 namespace gui
@@ -41,9 +42,9 @@ class Publisher_ABC;
 // =============================================================================
 class MagicOrdersInterface : public QObject
                            , public kernel::Observer_ABC
-                           , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                            , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                           , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                            , public gui::ShapeHandler_ABC
                            , private kernel::LocationVisitor_ABC
 {
@@ -58,9 +59,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
     virtual void Handle( kernel::Location_ABC& location );
     //@}
 
@@ -72,6 +73,11 @@ private slots:
     void Move();
     void Surrender();
     void RecoverHumanTransporters();
+
+    void KillAllPopulation();
+    void KillSomePopulation();
+    void ResurectSomePopulation();
+    void ChangePopulationAttitude( int index );
     //@}
 
 private:
@@ -83,9 +89,9 @@ private:
 
     //! @name Helpers
     //@{
-    void AddMagicMove( const kernel::Agent_ABC& agent, QPopupMenu* menu );
     void AddMagic( const QString& label, int id,           QPopupMenu* menu );
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
+    void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
     void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
 

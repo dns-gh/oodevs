@@ -17,6 +17,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -26,9 +27,43 @@
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/ASN_Messages.h"
+#include "ENT/ENT_Tr.h"
 
 using namespace kernel;
 using namespace gui;
+
+namespace
+{
+    class InitializedLineEdit : public QLineEdit
+    {
+    public:
+        InitializedLineEdit( QWidget* parent, const QString& initialValue )
+            : QLineEdit( initialValue, parent ), initialValue_( initialValue ) {}
+
+        virtual void keyPressEvent( QKeyEvent* e )
+        {
+            if( text() == initialValue_ )
+            {
+                clear();
+                setAlignment( Qt::AlignRight );
+            }
+            QLineEdit::keyPressEvent( e );
+        }
+
+        virtual void showEvent( QShowEvent* e )
+        {
+            if( text() == initialValue_ )
+            {
+                selectAll();
+                setFocus();
+            }
+            QLineEdit::showEvent( e );
+        }
+
+    private:
+        QString initialValue_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface constructor
@@ -70,12 +105,12 @@ void MagicOrdersInterface::NotifyContextMenu( const Agent_ABC& agent, ContextMen
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
         QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
         AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );
+        FillCommonOrders( magicMenu );
     }
 }
 
@@ -96,21 +131,30 @@ void MagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& agent, 
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         bMoveAllowed = decisions->IsEmbraye();
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
+    FillCommonOrders( magicMenu );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::NotifyContextMenu
-// Created: AGE 2006-07-04
+// Created: SBO 2007-02-27
 // -----------------------------------------------------------------------------
-void MagicOrdersInterface::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
-{   
+void MagicOrdersInterface::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
+{
     if( !profile_.CanDoMagic( entity ) )
         return;
 
     selectedEntity_ = &entity;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-    FillCommonOrders( magicMenu );
-} 
+    AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
+    AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
+    AddValuedMagic( magicMenu, menu, tr( "Kill people:" ), SLOT( KillSomePopulation() ) );
+    AddValuedMagic( magicMenu, menu, tr( "Resurect people:" ), SLOT( ResurectSomePopulation() ) );
+
+    QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
+    for( unsigned int i = 0; i < (unsigned int)eNbrPopulationAttitude; ++i )
+        choiceMenu->insertItem( ENT_Tr::ConvertFromPopulationAttitude( (E_PopulationAttitude)i ).c_str(), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
+    magicMenu->insertItem( tr( "Change population attitude" ), choiceMenu );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MagicOrdersInterface::FillCommonOrders
@@ -123,6 +167,21 @@ void MagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
     AddMagic( tr( "Recover - Equipments" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
     AddMagic( tr( "Recover - Resources" ),  T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
     AddMagic( tr( "Destroy - All" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::AddValuedMagic
+// Created: SBO 2007-02-27
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot )
+{
+    QPopupMenu* valueMenu = new QPopupMenu( parent );
+    QLineEdit* valueEditor = new InitializedLineEdit( valueMenu, tr( "Enter value" ) );
+    valueMenu->insertItem( valueEditor );
+    parent->insertItem( label, valueMenu );
+    QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
+    connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
+    connect( valueEditor, SIGNAL( returnPressed() ), menu, SLOT( hide() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,15 +309,26 @@ void MagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
 {
     if( selectedEntity_ )
     {
-        ASN_MsgUnitMagicAction message;
-        message.GetAsnMsg().oid = selectedEntity_->GetId();
-        message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
-
         ASN1T_CoordUTM utm;
         utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
-        message.GetAsnMsg().action.u.move_to = &utm;
-        message.Send( publisher_, 56 );
-        const_cast< kernel::Entity_ABC* >( &*selectedEntity_ )->Update( message.GetAsnMsg() );
+        if( dynamic_cast< const Agent_ABC* >( &*selectedEntity_ ) )
+        {
+            ASN_MsgUnitMagicAction message;
+            message.GetAsnMsg().oid = selectedEntity_->GetId();
+            message.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_move_to;
+            message.GetAsnMsg().action.u.move_to = &utm;
+            message.Send( publisher_, 56 );
+            const_cast< kernel::Entity_ABC* >( &*selectedEntity_ )->Update( message.GetAsnMsg() );
+        }
+        else if( dynamic_cast< const Population_ABC* >( &*selectedEntity_ ) )
+        {
+            ASN_MsgPopulationMagicAction message;
+            message.GetAsnMsg().oid_population = selectedEntity_->GetId();
+            message.GetAsnMsg().action.t = T_MsgPopulationMagicAction_action_move_to;
+            message.GetAsnMsg().action.u.move_to = &utm;
+            message.Send( publisher_, 56 );
+            const_cast< kernel::Entity_ABC* >( &*selectedEntity_ )->Update( message.GetAsnMsg() );
+        }
     }
 }
 
@@ -290,4 +360,74 @@ void MagicOrdersInterface::RecoverHumanTransporters()
         asnMsg.GetAsnMsg().action.t = T_MsgUnitMagicAction_action_recuperer_transporteurs;
         asnMsg.Send( publisher_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::ChangePopulationAttitude
+// Created: SBO 2007-02-27
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::ChangePopulationAttitude( int index )
+{
+    if( selectedEntity_ )
+    {
+        ASN_MsgPopulationMagicAction asn;
+        asn.GetAsnMsg().oid_population = selectedEntity_->GetId();
+        asn.GetAsnMsg().action.t       = T_MsgPopulationMagicAction_action_change_attitude;
+
+        ASN1T_MagicActionPopulationChangeAttitude params;
+        params.attitude       = (ASN1T_EnumPopulationAttitude)index;
+        params.beneficiaire.t = T_MagicActionPopulationChangeAttitude_beneficiaire_global;
+
+        asn.GetAsnMsg().action.u.change_attitude = &params;
+        asn.Send( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::KillAllPopulation
+// Created: SBO 2007-02-27
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::KillAllPopulation()
+{
+    if( selectedEntity_ )
+    {
+        ASN_MsgPopulationMagicAction asn;
+        asn.GetAsnMsg().oid_population = selectedEntity_->GetId();
+        asn.GetAsnMsg().action.t       = T_MsgPopulationMagicAction_action_destruction_totale;
+        asn.Send( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::KillSomePopulation
+// Created: SBO 2007-02-27
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::KillSomePopulation()
+{
+    if( selectedEntity_ )
+        if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
+        {
+            ASN_MsgPopulationMagicAction asn;
+            asn.GetAsnMsg().oid_population = selectedEntity_->GetId();
+            asn.GetAsnMsg().action.t       = T_MsgPopulationMagicAction_action_tuer;
+            asn.GetAsnMsg().action.u.tuer  = editor->text().toUInt();
+            asn.Send( publisher_ );
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MagicOrdersInterface::ResurectSomePopulation
+// Created: SBO 2007-02-27
+// -----------------------------------------------------------------------------
+void MagicOrdersInterface::ResurectSomePopulation()
+{
+    if( selectedEntity_ )
+        if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
+        {
+            ASN_MsgPopulationMagicAction asn;
+            asn.GetAsnMsg().oid_population       = selectedEntity_->GetId();
+            asn.GetAsnMsg().action.t             = T_MsgPopulationMagicAction_action_ressusciter;
+            asn.GetAsnMsg().action.u.ressusciter = editor->text().toUInt();
+            asn.Send( publisher_ );
+        }
 }

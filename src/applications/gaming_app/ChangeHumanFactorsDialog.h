@@ -20,6 +20,7 @@ namespace kernel
 {
     class Controllers;
     class Profile_ABC;
+    class Agent_ABC;
     class Entity_ABC;
 }
 
@@ -33,7 +34,7 @@ class Publisher_ABC;
 // =============================================================================
 class ChangeHumanFactorsDialog : public QDialog
                                , public kernel::Observer_ABC
-                               , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                               , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                                , public kernel::NullDisplayer
                                , public kernel::Caller< E_UnitFatigue >
                                , public kernel::Caller< E_UnitMoral >
@@ -49,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& agent, kernel::ContextMenu& menu );
     virtual QSize sizeHint() const;
     //@}
 

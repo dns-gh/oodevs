@@ -109,6 +109,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller&                    controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::PopulationType&          type_;
 

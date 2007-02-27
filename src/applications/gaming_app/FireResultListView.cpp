@@ -152,4 +152,3 @@ void FireResultListView::NotifyUpdated( const Explosions& results )
         DeleteTail( item );
     }
 }
-

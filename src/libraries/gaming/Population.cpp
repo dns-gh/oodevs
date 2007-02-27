@@ -32,6 +32,7 @@ unsigned long Population::nMaxId_ = 200;
 // -----------------------------------------------------------------------------
 Population::Population( const ASN1T_MsgPopulationCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const Resolver_ABC< PopulationType >& typeResolver )
     : EntityImplementation< Population_ABC >( controller, message.oid_population, message.nom )
+    , controller_   ( controller )
     , converter_    ( converter )
     , type_         ( typeResolver.Get( message.type_population ) )
 {
@@ -100,6 +101,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationFluxUpdate& asnMsg )
 {
     static_cast< PopulationFlow& >( Resolver< PopulationFlow_ABC >::Get( asnMsg.oid_flux ) ).Update( asnMsg );
     ComputeCenter();
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +112,7 @@ void Population::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg 
 {
     static_cast< PopulationConcentration& >( Resolver< PopulationConcentration_ABC >::Get( asnMsg.oid_concentration ) ).Update( asnMsg );
     ComputeCenter();
+    Touch();
 }
 
 // -----------------------------------------------------------------------------
