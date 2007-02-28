@@ -66,6 +66,7 @@ Function .onInit
         Abort
 FunctionEnd
 
+;--------------------------------
 Section "C-Sword"
     SectionIn RO
     
@@ -126,6 +127,7 @@ Section "C-Sword"
     CreateShortCut "$SMPROGRAMS\C-Sword\C-Sword adaptation.lnk" "$INSTDIR\applications\adaptationn_app.exe"    
 SectionEnd
 
+;--------------------------------
 Section "Uninstaller files"
     SectionIn RO
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "DisplayName" "C-Sword"
@@ -137,10 +139,6 @@ Section "Uninstaller files"
 SectionEnd
 
 ;--------------------------------
-; Uninstaller
-UninstPage uninstConfirm
-UninstPage instfiles
-
 Section "Uninstall"
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa"
     DeleteRegKey HKLM "Software\Masa\C-Sword"
