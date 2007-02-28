@@ -420,7 +420,7 @@
         <mkdir dir="${dist.dir}/current"/>
         <exec executable="makensis" failonerror="true">
             <arg value="/V1"/>
-            <arg value="/DDISTDIR=${dist.dir}"/>
+            <arg value="/DDISTDIR=${dist.dir}/current"/>
             <arg value="/DRUNDIR=${run.dir}"/>
             <arg value="/DLIBDIR=${lib.dir}/${platform}"/>
             <arg value="/DOUTDIR=${out.dir}"/>
