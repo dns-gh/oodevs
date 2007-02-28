@@ -417,7 +417,7 @@
     </target>
     
     <target name="installer" description="create the installer">
-        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}/current"/>
         <exec executable="makensis" failonerror="true">
             <arg value="/V1"/>
             <arg value="/DDISTDIR=${dist.dir}"/>
