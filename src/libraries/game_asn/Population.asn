@@ -100,7 +100,6 @@ MsgPopulationFluxDestruction ::= SEQUENCE
 
 MagicActionPopulationChangeAttitude ::= SEQUENCE
 {
-	oid-population	OID,					-- oid de l'entité population
 	attitude        EnumPopulationAttitude,	-- nouvelle attitude
 	beneficiaire    CHOICE					-- cible
 	{

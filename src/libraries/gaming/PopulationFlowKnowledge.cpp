@@ -17,6 +17,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "Tools.h"
 #include "PopulationKnowledge_ABC.h"
 
@@ -66,10 +67,10 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlowKnowledge::Update
+// Name: PopulationFlowKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
+void PopulationFlowKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg )
 {
     if( asnMsg.m.attitudePresent )
         eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
@@ -119,4 +120,44 @@ void PopulationFlowKnowledge::Display( Displayer_ABC& displayer ) const
 void PopulationFlowKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Population", "Known populations" ) ).Start( tools::translate( "Population", "Flow - " ) ).Add( nID_ ).End();
+}
+
+namespace
+{
+    void SelectColor( E_PopulationAttitude attitude )
+    {
+        if( attitude == ePopulationAttitude_Agressive )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+        else if( attitude == ePopulationAttitude_Excitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+        else if( attitude == ePopulationAttitude_Agitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+        else // ePopulationAttitude_Calme
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlowKnowledge::Draw
+// Created: SBO 2007-02-27
+// -----------------------------------------------------------------------------
+void PopulationFlowKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( pFlow_ )
+    {
+        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        float color[4];
+        glGetFloatv( GL_CURRENT_COLOR, color );
+        for( unsigned int i = 0; i < flowParts_.size(); ++i )
+        {
+            const FlowPart& part = flowParts_[i];
+            SelectColor( eAttitude_ );
+            glLineWidth( 10.f );
+            tools.DrawLines( part.flowPart_ );
+            glColor4f( color[0], color[1], color[2], 0.5f * ( 1.f + part.rRelevance_ * 0.01f ) );
+            glLineWidth( 8.f );
+            tools.DrawLines( part.flowPart_ );
+        }
+        glPopAttrib();
+    }
 }

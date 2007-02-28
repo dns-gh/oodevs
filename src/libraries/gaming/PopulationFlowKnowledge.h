@@ -14,6 +14,8 @@
 
 #include "game_asn/Asn.h"
 #include "clients_kernel/OptionalValue.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "PopulationPartKnowledge_ABC.h"
 
 namespace kernel
@@ -30,6 +32,8 @@ class PopulationKnowledge_ABC;
 // Created: APE 2004-03-10
 // =============================================================================
 class PopulationFlowKnowledge : public PopulationPartKnowledge_ABC
+                              , public kernel::Drawable_ABC
+                              , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
 {
 public:
     //! @name Types
@@ -56,11 +60,12 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInList( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
     //! @name Network
     //@{
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& asnMsg );
     //@}
 
 private:

@@ -128,6 +128,21 @@ float PopulationConcentration::GetHeight() const
     return 0.;
 }
 
+namespace
+{
+    void SelectColor( E_PopulationAttitude attitude )
+    {
+        if( attitude == ePopulationAttitude_Agressive )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+        else if( attitude == ePopulationAttitude_Excitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+        else if( attitude == ePopulationAttitude_Agitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+        else // ePopulationAttitude_Calme
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration::Draw
 // Created: AGE 2006-03-23
@@ -138,6 +153,8 @@ void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const ke
     glPushAttrib( GL_CURRENT_BIT );
     glColor4f( COLOR_BLACK );
     tools.DrawDisc( position_, deadRadius_ );
+    SelectColor( attitude_ );
+    tools.DrawCircle( position_, radius_ );
     glPopAttrib();
 }
     

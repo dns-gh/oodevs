@@ -153,6 +153,21 @@ float PopulationFlow::GetHeight() const
     return 0.;
 }
 
+namespace
+{
+    void SelectColor( E_PopulationAttitude attitude )
+    {
+        if( attitude == ePopulationAttitude_Agressive )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+        else if( attitude == ePopulationAttitude_Excitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+        else if( attitude == ePopulationAttitude_Agitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+        else // ePopulationAttitude_Calme
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: PopulationFlow::Draw
 // Created: AGE 2006-03-23
@@ -160,8 +175,13 @@ float PopulationFlow::GetHeight() const
 void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_LINE_BIT );
-    glLineWidth( 10.f );
-    tools.DrawLines( flow_ );
+        glLineWidth( 10.f );
+        glPushAttrib( GL_CURRENT_BIT );
+            SelectColor( attitude_ );
+            tools.DrawLines( flow_ );
+        glPopAttrib();
+        glLineWidth( 8.f );
+        tools.DrawLines( flow_ );
     glPopAttrib();
 }
 

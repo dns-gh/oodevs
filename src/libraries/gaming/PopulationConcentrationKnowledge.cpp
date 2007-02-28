@@ -17,6 +17,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "PopulationKnowledge_ABC.h"
 #include "Tools.h"
 
@@ -27,13 +28,14 @@ using namespace kernel;
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
 PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
-    : controller_( controller )
-    , resolver_  ( resolver )
+    : controller_    ( controller )
+    , resolver_      ( resolver )
     , nID_           ( asnMsg.oid_connaissance_concentration )
     , pConcentration_( resolver_.FindConcentration( asnMsg.oid_concentration_reelle ) )
     , position_      ( converter.ConvertToXY( asnMsg.position ) )
+    , radius_        ( 100.f )
+    , deadRadius_    ( 0 )
 {
-    // NOTHING
     controller_.Create( *this );
 }
 
@@ -47,11 +49,12 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationConcentrationKnowledge::Update
+// Name: PopulationConcentrationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
+void PopulationConcentrationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
 {
+    static const float oneOnpi = 1.f / std::acos( -1.f );
     if( asnMsg.m.attitudePresent )
         eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
     if( asnMsg.m.est_percuPresent )
@@ -64,6 +67,13 @@ void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentr
         pConcentration_ = resolver_.FindConcentration( asnMsg.oid_concentration_reelle );
     if( asnMsg.m.pertinencePresent )
         rRelevance_ = asnMsg.pertinence;
+
+    const float density = pConcentration_ ? pConcentration_->GetDensity() : 0.f;
+    if( density > 0.f && nNbrAliveHumans_.IsSet() )
+    {
+        radius_     = std::sqrt( ( ( nNbrAliveHumans_ + nNbrDeadHumans_ ) / density ) * oneOnpi );
+        deadRadius_ = std::sqrt( ( nNbrDeadHumans_ / density ) * oneOnpi );
+    }
     controller_.Update( *this );
 }
 
@@ -92,4 +102,42 @@ void PopulationConcentrationKnowledge::DisplayInList( Displayer_ABC& displayer )
 {
     displayer.Display( tools::translate( "Population", "Known populations" ) )
                 .Start( tools::translate( "Population", "Concentration - " ) ).Add( nID_ ).End();
+}
+
+namespace
+{
+    void SelectColor( E_PopulationAttitude attitude )
+    {
+        if( attitude == ePopulationAttitude_Agressive )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGRESSIVE );
+        else if( attitude == ePopulationAttitude_Excitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_EXCITED );
+        else if( attitude == ePopulationAttitude_Agitee )
+            glColor4f( COLOR_POPULATION_ATTITUDE_AGITATED );
+        else // ePopulationAttitude_Calme
+            glColor4f( COLOR_POPULATION_ATTITUDE_CALM );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentrationKnowledge::Draw
+// Created: SBO 2007-02-27
+// -----------------------------------------------------------------------------
+void PopulationConcentrationKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    // $$$$ SBO 2007-02-27: check viewport
+    if( pConcentration_ ) // $$$$ SBO 2007-02-27: isPerceived?
+    {
+        float currentColor[4];
+        currentColor[3] = 0.5f * ( 1.f + rRelevance_ * 0.01f );
+        glPushAttrib( GL_CURRENT_BIT );
+        glGetFloatv( GL_CURRENT_COLOR, currentColor );
+        glColor4fv( currentColor );
+        tools.DrawDisc( position_, radius_ );
+        glColor4f( COLOR_BLACK );
+        tools.DrawDisc( position_, deadRadius_ );
+        SelectColor( eAttitude_ );
+        tools.DrawCircle( position_, radius_ );
+        glPopAttrib();
+    }
 }

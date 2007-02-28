@@ -13,6 +13,7 @@
 #include "game_asn/Asn.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "PopulationKnowledge_ABC.h"
 
@@ -33,6 +34,13 @@ class PopulationFlowKnowledge;
 class PopulationKnowledge : public kernel::EntityImplementation< PopulationKnowledge_ABC >
                           , public kernel::Extension_ABC
                           , public kernel::Drawable_ABC
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeUpdate >
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeCreation >
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeUpdate >
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeDestruction >
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeCreation >
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeUpdate >
+                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationFluxKnowledgeDestruction >
 {
 
 public:
@@ -59,13 +67,13 @@ public:
     //! @name Network
     //@{
     // $$$$ AGE 2006-03-13: hmmm
-    void Update( const ASN1T_MsgPopulationKnowledgeUpdate& message );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    message );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      message );
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeCreation&             message );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               message );
-    void Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreation&             message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate&               message );
+    virtual void DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeDestruction&          message );
     //@}
 
 private:

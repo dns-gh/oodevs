@@ -67,10 +67,10 @@ QString PopulationKnowledge::GetTypeName() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
+// Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message )
 {
     if( message.m.etat_dominationPresent )
     {
@@ -84,34 +84,34 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationKnowledgeUpdate& mess
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
+// Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
 {
     if( ! Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration ) )
     {
         PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, converter_, popu_, message );
         Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
         Touch();
-    };
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
+// Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
 {
     Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration )
-        .Update( message );
+        .DoUpdate( message );
 }
     
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
+// Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
 {
     delete Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
     Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
@@ -119,10 +119,10 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledg
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
+// Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeCreation& message )
 {
     if( ! Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
     {
@@ -133,20 +133,20 @@ void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeCreation
 }
     
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
+// Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUpdate& message )
 {
     Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux )
-        .Update( message );
+        .DoUpdate( message );
 }
     
 // -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::Update
+// Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::Update( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
+void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeDestruction& message )
 {
     delete Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
     Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
@@ -207,5 +207,17 @@ const kernel::KnowledgeGroup_ABC& PopulationKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-05-18: 
+//    if( viewport.IsVisible( boundingBox_ ) ) // $$$$ SBO 2007-02-27: 
+    {
+        {
+            Iterator< const PopulationFlowKnowledge& > it = Resolver< PopulationFlowKnowledge >::CreateIterator();
+            while( it.HasMoreElements() )
+                it.NextElement().Draw( where, viewport, tools );
+        }
+        {
+            Iterator< const PopulationConcentrationKnowledge& > it = Resolver< PopulationConcentrationKnowledge >::CreateIterator();
+            while( it.HasMoreElements() )
+                it.NextElement().Draw( where, viewport, tools );
+        }
+    }
 }

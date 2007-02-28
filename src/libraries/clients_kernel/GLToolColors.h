@@ -48,5 +48,9 @@
 #define COLOR_SMOKE         0.8f, 0.6f, 0.6f, 0.3f
 #define COLOR_LIGHT         1.0f, 1.0f, 1.0f, 0.3f
 
+#define COLOR_POPULATION_ATTITUDE_CALM      0.0f, 0.0f, 1.0f, 1.0f
+#define COLOR_POPULATION_ATTITUDE_AGITATED  0.0f, 1.0f, 0.0f, 1.0f
+#define COLOR_POPULATION_ATTITUDE_EXCITED   1.0f, 1.0f, 0.0f, 1.0f
+#define COLOR_POPULATION_ATTITUDE_AGRESSIVE 1.0f, 0.0f, 0.0f, 1.0f
 
 #define GL_CROSSSIZE        100.0f
