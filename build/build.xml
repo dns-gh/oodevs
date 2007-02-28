@@ -403,8 +403,7 @@
                 <include name="xerces-c_2_7.dll"/>
                 <include name="zlib1.dll"/>
             </zipfileset>                           
-        </zip>            
-            
+        </zip>                        
                     
         <zip destfile="${dist.dir}/current/csword.zip">
             <zipgroupfileset dir="${dist.dir}/current" includes="csword_applications.zip"/>
@@ -416,6 +415,19 @@
         </zip>        
         <delete file="${dist.dir}/current/exercise.xml"/>
     </target>
+    
+    <target name="installer" description="create the installer">
+        <mkdir dir="${dist.dir}"/>
+        <exec executable="makensis" failonerror="true">
+            <arg value="/V1"/>
+            <arg value="/DDISTDIR=${dist.dir}"/>
+            <arg value="/DRUNDIR=${run.dir}"/>
+            <arg value="/DLIBDIR=${lib.dir}/${platform}"/>
+            <arg value="/DOUTDIR=${out.dir}"/>
+            <arg value="/DAPPLICATIONSDIR=${applications.dir}"/>
+            <arg value="installer.nsi"/>
+        </exec>
+    </target>      
         
     <!--
     ============================================================================
@@ -450,6 +462,6 @@
     -->
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="configure,build,test,package" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,package,installer" description="build and package distribution"/>
 
 </project>
