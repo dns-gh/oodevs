@@ -117,6 +117,7 @@ Section "C-Sword"
     SetOutPath "$INSTDIR\exercises"
     File /r /x ".svn" "${DATADIR}\exercises\empty"
     
+    SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\C-Sword" "Install_Dir" "$INSTDIR"
     CreateDirectory "$SMPROGRAMS\C-Sword"
     CreateShortCut "$SMPROGRAMS\C-Sword\C-Sword simulation.lnk" "$INSTDIR\applications\simulation_app.exe" "--exercise=empty"
