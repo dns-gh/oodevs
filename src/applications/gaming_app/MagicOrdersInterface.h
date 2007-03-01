@@ -99,6 +99,8 @@ private:
     virtual void VisitPolygon( const T_PointVector& ) {};
     virtual void VisitCircle ( const geometry::Point2f& , float ) {};
     virtual void VisitPoint  ( const geometry::Point2f& point );
+    template< typename Message >
+    void SendMagicMove( const geometry::Point2f& point, int action );
     //@}
 
 private:

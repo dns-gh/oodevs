@@ -806,7 +806,7 @@ void MIL_Population::OnReceiveMsgFragOrder( ASN1T_MsgFragOrder& msg )
 void MIL_Population::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx )
 {
     NET_ASN_MsgPopulationMagicActionAck asnReplyMsg;
-    asnReplyMsg().oid = asnMsg.oid_population;
+    asnReplyMsg().oid = asnMsg.oid;
 
     switch( asnMsg.action.t )
     {

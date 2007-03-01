@@ -116,7 +116,7 @@ MagicActionPopulationRessusciter        ::= INTEGER     -- nombre de personne re
 
 MsgPopulationMagicAction ::= SEQUENCE
 {
-    oid-population  OID,  -- oid de l'entité population
+    oid             OID,  -- oid de l'entité population
     action          CHOICE
     {       
         change-attitude    MagicActionPopulationChangeAttitude,

@@ -940,11 +940,11 @@ void MIL_EntityManager::OnReceiveMsgObjectMagicAction( ASN1T_MsgObjectMagicActio
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( ASN1T_MsgPopulationMagicAction& asnMsg, uint nCtx )
 {
-    MIL_Population* pPopulation = FindPopulation( asnMsg.oid_population );
+    MIL_Population* pPopulation = FindPopulation( asnMsg.oid );
     if( !pPopulation )
     {
         NET_ASN_MsgPopulationMagicActionAck asnReplyMsg;
-        asnReplyMsg().oid        = asnMsg.oid_population;
+        asnReplyMsg().oid        = asnMsg.oid;
         asnReplyMsg().error_code = EnumPopulationAttrErrorCode::error_invalid_unit;
         asnReplyMsg.Send( nCtx );
         return;
