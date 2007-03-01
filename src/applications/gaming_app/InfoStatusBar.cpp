@@ -36,6 +36,7 @@ InfoStatusBar::InfoStatusBar( QWidget* parent, kernel::Controllers& controllers 
 
     InitializeIcons();
     controllers_.Register( *this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,11 +88,14 @@ void InfoStatusBar::AddButton( QGridLayout* grid, QLabel*& label, int index )
 void InfoStatusBar::NotifySelected( const kernel::Entity_ABC* entity )
 {
     selected_ = entity;
+    hide();
     if( !selected_ )
         return;
-    if( const HumanFactors* humans = static_cast< const HumanFactors* >( selected_->Retrieve< kernel::HumanFactors_ABC >() ) )
+    const HumanFactors* humans = static_cast< const HumanFactors* >( selected_->Retrieve< kernel::HumanFactors_ABC >() );
+    const Reinforcements* reinforcements = selected_->Retrieve< Reinforcements >();
+    if( humans )
         SetHumanFactors( *humans );
-    if( const Reinforcements* reinforcements = selected_->Retrieve< Reinforcements >() )
+    if( reinforcements )
         SetReinforcements( *reinforcements );
 }
 
@@ -126,6 +130,7 @@ void InfoStatusBar::NotifyUpdated( const Reinforcements& element )
 // -----------------------------------------------------------------------------
 void InfoStatusBar::SetHumanFactors( const HumanFactors& humans )
 {
+    show();
     mood_->setPixmap( moodIcons_.at( humans.GetMorale() ) );
     QToolTip::add( mood_, tr( "Morale: " ) + ENT_Tr::ConvertFromUnitMoral( humans.GetMorale() ).c_str() );
     experience_->setPixmap( experienceIcons_.at( humans.GetExperience() ) );
@@ -140,6 +145,7 @@ void InfoStatusBar::SetHumanFactors( const HumanFactors& humans )
 // -----------------------------------------------------------------------------
 void InfoStatusBar::SetReinforcements( const Reinforcements& reinforcements )
 {
+    show();
     if( reinforcements.reinforced_ )
     {
         reinforcing_->setPixmap( MAKE_PIXMAP( reinforcing ) );    

@@ -35,6 +35,7 @@ public:
     virtual void Display         ( Displayer_ABC& ) const {};
     virtual void DisplayInList   ( Displayer_ABC& ) const {};
     virtual void DisplayInTooltip( Displayer_ABC& ) const {};
+    virtual void DisplayInSummary( Displayer_ABC& ) const {};
     //@}
 };
 

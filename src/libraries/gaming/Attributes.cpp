@@ -238,6 +238,16 @@ void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Attributes::DisplayInSummary
+// Created: SBO 2007-03-01
+// -----------------------------------------------------------------------------
+void Attributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "Attributes", "Speed:" ) , nSpeed_ * Units::kilometersPerHour )
+             .Display( tools::translate( "Attributes", "Height:" ), nAltitude_ * Units::meters );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------

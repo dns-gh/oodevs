@@ -9,8 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "InfoEventsWidget.h"
-#include "InfoStancesWidget.h"
-#include "InfoStatusBar.h"
 #include "gaming/Attributes.h"
 #include "gaming/Contaminations.h"
 #include "clients_kernel/Controllers.h"
@@ -51,17 +49,6 @@ namespace
         }
 
     };
-
-    void AddEntry( QWidget* parent, const QString& name, QLabel*& value )
-    {
-        QLabel* lbl = new QLabel( parent );
-        QFont font;
-        font.setBold( true );
-        lbl->setFont( font );
-        lbl->setText( name + ":" );
-        value = new QLabel( parent );
-        value->setText( "-" );
-    }
 
     class TransparentButton : public QButton
     {
@@ -120,35 +107,19 @@ namespace
 // Created: SBO 2007-02-05
 // -----------------------------------------------------------------------------
 InfoEventsWidget::InfoEventsWidget( QWidget* parent, kernel::Controllers& controllers )
-    : QVBox( parent )
+    : QGroupBox( 1, Qt::Horizontal, parent )
     , controllers_( controllers )
     , selected_( controllers )
 {
-    setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
-    setFixedWidth( 250 );
-    setSpacing( 5 );
-    layout()->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
-
-    new InfoStatusBar( this, controllers_ );
-    QGroupBox* group = new QGroupBox( 3, Qt::Horizontal, this );
-    group->setInsideMargin( 5 );
-    group->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
-    group->setFixedWidth( 250 );
-    AddEntry( group, tr( "Speed" ), speed_ );
-    stances_ = new InfoStancesWidget( group );
-    AddEntry( group, tr( "Height" ), height_ );
-    
-    QGroupBox* events = new QGroupBox( 1, Qt::Horizontal, this );
-    events->setFixedHeight( 31 );
-    events->setMargin( 0 );
-    events->setInsideMargin( 2 );
-    events->setAlignment( Qt::AlignLeft );
-    QHBox* box = new MinimalBox( events );
+    setFixedHeight( 31 );
+    setMargin( 0 );
+    setInsideMargin( 2 );
+    setAlignment( Qt::AlignLeft );
+    QHBox* box = new MinimalBox( this );
     box->setMargin( 0 );
-
     InitializeEventButtons( box );
-
     controllers_.Register( *this );
+    hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -199,17 +170,12 @@ void InfoEventsWidget::AddEventButton( const std::string& event, bool add /* = t
 // -----------------------------------------------------------------------------
 void InfoEventsWidget::SetAttributes( const Attributes& attributes )
 {
-    // $$$$ SBO 2007-02-09: use a displayer/formatter
-    speed_->setText( QString::number( attributes.nSpeed_ ) + kernel::Units::kilometersPerHour  );
-    height_->setText( QString::number( attributes.nAltitude_ ) + kernel::Units::meters );
-
     AddEventButton( "jammed"  , attributes.bCommJammed_ );
     AddEventButton( "silence" , attributes.bRadioSilence_ );
     AddEventButton( "radar"   , attributes.bRadarEnabled_ );
     AddEventButton( "stealth" , attributes.bStealthModeEnabled_ );
     AddEventButton( "refugees", attributes.bRefugeesManaged_ );
-
-    stances_->Update( attributes );
+    SetShown();
 }
 
 // -----------------------------------------------------------------------------
@@ -229,6 +195,7 @@ void InfoEventsWidget::SetContaminations( const Contaminations& attributes )
         btn->setText( QString::number( attributes.nContamination_ ) );
         QToolTip::add( btn, tr( "NBC: contamination of type '%1' level '%2'" ).arg( agents.join( ", " ) ).arg( attributes.nContamination_ ) );
     }
+    SetShown();
 }
 
 // -----------------------------------------------------------------------------
@@ -241,12 +208,13 @@ void InfoEventsWidget::NotifySelected( const kernel::Entity_ABC* entity )
     {
         selected_ = entity;
         hide();
-        if( !selected_ )
-            return;
-        if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+        Reset();
+        if( selected_ )
         {
-            show();
-            SetAttributes( *attributes );
+            if( const Attributes* attributes = static_cast< const Attributes* >( selected_->Retrieve< kernel::Attributes_ABC >() ) )
+                SetAttributes( *attributes );
+            if( const Contaminations* contaminations = selected_->Retrieve< Contaminations >() )
+                SetContaminations( *contaminations );
         }
     }
 }
@@ -274,4 +242,29 @@ void InfoEventsWidget::NotifyUpdated( const Contaminations& element )
     const Contaminations* contaminations = selected_->Retrieve< Contaminations >();
     if( contaminations == &element )
         SetContaminations( element );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoEventsWidget::SetShown
+// Created: SBO 2007-03-01
+// -----------------------------------------------------------------------------
+void InfoEventsWidget::SetShown()
+{
+    for( CIT_EventButtons it = eventButtons_.begin(); it != eventButtons_.end(); ++it )
+        if( it->second->isShown() )
+        {
+            show();
+            return;
+        }
+    hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfoEventsWidget::Reset
+// Created: SBO 2007-03-01
+// -----------------------------------------------------------------------------
+void InfoEventsWidget::Reset()
+{
+    for( CIT_EventButtons it = eventButtons_.begin(); it != eventButtons_.end(); ++it )
+        it->second->hide();
 }

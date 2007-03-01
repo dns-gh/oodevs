@@ -47,6 +47,7 @@ public:
     void StartCircle ( ShapeHandler_ABC& handler );
     void StartPath   ( ShapeHandler_ABC& handler, const kernel::Positions& position );
     void Start       ( ShapeHandler_ABC& handler, kernel::Location_ABC& location );
+    void Reset       ();
 
     void AddPoint( const geometry::Point2f& point );
 

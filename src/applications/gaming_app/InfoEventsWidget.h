@@ -23,7 +23,6 @@ namespace kernel
 
 class Attributes;
 class Contaminations;
-class InfoStancesWidget;
 
 // =============================================================================
 /** @class  InfoEventsWidget
@@ -31,7 +30,7 @@ class InfoStancesWidget;
 */
 // Created: SBO 2007-02-05
 // =============================================================================
-class InfoEventsWidget : public QVBox
+class InfoEventsWidget : public QGroupBox
                        , public kernel::Observer_ABC
                        , public kernel::SelectionObserver< kernel::Entity_ABC >
                        , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
@@ -64,11 +63,14 @@ private:
     void InitializeEventButtons( QWidget* parent );
     void SetAttributes( const Attributes& attributes );
     void SetContaminations( const Contaminations& attributes );
+    void SetShown();
+    void Reset();
     //@}
 
     //! @name Types
     //@{
     typedef std::map< std::string, QButton* > T_EventButtons;
+    typedef T_EventButtons::const_iterator  CIT_EventButtons;
     //@}
 
 private:
@@ -76,12 +78,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-
-    QLabel* speed_;
-    QLabel* height_;
-
     T_EventButtons eventButtons_;
-    InfoStancesWidget* stances_;
     //@}
 };
 

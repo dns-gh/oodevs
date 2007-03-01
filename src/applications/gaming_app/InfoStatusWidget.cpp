@@ -160,7 +160,8 @@ void InfoStatusWidget::SetIcon()
     QImage img;
     img = icons_.GetSymbol( *selected_ );
     img = img.smoothScale( 64, 64, QImage::ScaleMax );
-    icon_->setPixmap( img );
+    if( !img.isNull() )
+        icon_->setPixmap( img );
 }
 
 // -----------------------------------------------------------------------------

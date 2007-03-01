@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __InfoStancesWidget_h_
-#define __InfoStancesWidget_h_
+#ifndef __InfoSummariesWidget_h_
+#define __InfoSummariesWidget_h_
 
 #include "clients_kernel/SelectionObserver_ABC.h"
 #include "clients_kernel/ElementObserver_ABC.h"
@@ -19,47 +19,42 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Attributes_ABC;
+    class Displayer_ABC;
 }
 
-class Attributes;
-
 // =============================================================================
-/** @class  InfoStancesWidget
-    @brief  InfoStancesWidget
+/** @class  InfoSummariesWidget
+    @brief  InfoSummariesWidget
 */
-// Created: SBO 2007-02-09
+// Created: SBO 2007-02-28
 // =============================================================================
-class InfoStancesWidget : public QHBox
-                        , public kernel::Observer_ABC
-                        , public kernel::SelectionObserver< kernel::Entity_ABC >
-                        , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
+class InfoSummariesWidget : public QVBox
+                          , public kernel::Observer_ABC
+                          , public kernel::SelectionObserver< kernel::Entity_ABC >
+                          , public kernel::ElementObserver_ABC< kernel::Entity_ABC >
+                          , public kernel::ElementObserver_ABC< kernel::Attributes_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoStancesWidget( QWidget* parent, kernel::Controllers& controllers );
-    virtual ~InfoStancesWidget();
+             InfoSummariesWidget( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~InfoSummariesWidget();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    InfoStancesWidget( const InfoStancesWidget& );            //!< Copy constructor
-    InfoStancesWidget& operator=( const InfoStancesWidget& ); //!< Assignment operator
+    InfoSummariesWidget( const InfoSummariesWidget& );            //!< Copy constructor
+    InfoSummariesWidget& operator=( const InfoSummariesWidget& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void InitializeIcons();
+    virtual void showEvent( QShowEvent* );
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Attributes_ABC& extension );
-    void Update( const Attributes& attributes );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< QPixmap > T_Pixmaps;
     //@}
 
 private:
@@ -67,12 +62,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-
-    QButton* previous_;
-    QButton* next_;
-    QLabel*  progress_;
-    T_Pixmaps pixmaps_;
+    kernel::Displayer_ABC* display_;
     //@}
 };
 
-#endif // __InfoStancesWidget_h_
+#endif // __InfoSummariesWidget_h_

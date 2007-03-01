@@ -26,6 +26,8 @@ using namespace kernel;
 Contaminations::Contaminations( Controller& controller, const Resolver_ABC< NBCAgent >& resolver, PropertiesDictionary& dico )
     : controller_( controller )
     , resolver_( resolver )
+    , bNbcProtectionSuitWorn_( false )
+    , nContamination_( 0 )
 {
     CreateDictionary( dico );
 }

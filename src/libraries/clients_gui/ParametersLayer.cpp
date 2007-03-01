@@ -84,9 +84,7 @@ bool ParametersLayer::HandleKeyPress( QKeyEvent* key )
             NotifyDone();
             return true;
         case Qt::Key_Escape:
-            delete current_;
-            current_ = 0;
-            NotifyDone();
+            Reset();
             return true;
     };
     return false;
@@ -202,6 +200,17 @@ void ParametersLayer::Start( ShapeHandler_ABC& handler, Location_ABC& location )
 {
     handler_ = &handler;
     current_ = &location;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::Reset
+// Created: SBO 2007-03-01
+// -----------------------------------------------------------------------------
+void ParametersLayer::Reset()
+{
+    delete current_;
+    current_ = 0;
+    NotifyDone();
 }
 
 // -----------------------------------------------------------------------------

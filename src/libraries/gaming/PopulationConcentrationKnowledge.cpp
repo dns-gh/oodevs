@@ -18,6 +18,7 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "PopulationKnowledge_ABC.h"
 #include "Tools.h"
 
@@ -123,9 +124,10 @@ namespace
 // Name: PopulationConcentrationKnowledge::Draw
 // Created: SBO 2007-02-27
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void PopulationConcentrationKnowledge::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    // $$$$ SBO 2007-02-27: check viewport
+    if( !viewport.IsVisible( position_ ) )
+        return;
     if( pConcentration_ ) // $$$$ SBO 2007-02-27: isPerceived?
     {
         float currentColor[4];

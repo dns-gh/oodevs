@@ -18,6 +18,8 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -207,7 +209,8 @@ const kernel::KnowledgeGroup_ABC& PopulationKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-//    if( viewport.IsVisible( boundingBox_ ) ) // $$$$ SBO 2007-02-27: 
+    const kernel::Positions& positions = Get< kernel::Positions >();
+    if( viewport.IsVisible( positions.GetBoundingBox() ) )
     {
         {
             Iterator< const PopulationFlowKnowledge& > it = Resolver< PopulationFlowKnowledge >::CreateIterator();

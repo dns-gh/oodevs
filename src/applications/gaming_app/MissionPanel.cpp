@@ -35,6 +35,7 @@
 #include "gaming/AgentKnowledgeConverter.h"
 #include "gaming/ObjectKnowledgeConverter.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_gui/ParametersLayer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -296,6 +297,7 @@ void MissionPanel::hideEvent( QHideEvent* pEvent )
 {
     if( ! pEvent->spontaneous() )
     {
+        layer_.Reset();
         delete pMissionInterface_;
         pMissionInterface_ = 0;
     }

@@ -162,6 +162,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgPionCreation& asnMsg )
     result->Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
     result->Attach( *new Troops( controllers_.controller_ ) );
+    result->Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
     AttachExtensions( *result );
 
     result->Update( asnMsg );
@@ -192,14 +193,12 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
 // -----------------------------------------------------------------------------
 void AgentFactory::AttachExtensions( Entity_ABC& agent )
 {
-    PropertiesDictionary& dico = agent.Get< PropertiesDictionary >();
-    agent.Attach( *new Contaminations( controllers_.controller_, static_.objectTypes_, dico ) );
     agent.Attach( *new DebugPoints() );
     agent.Attach( *new MissionParameters( static_.coordinateConverter_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, simulation_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
-    agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_ ) );
+    agent.Attach( *new PopulationDetections( controllers_.controller_, model_.agents_, agent ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
 }

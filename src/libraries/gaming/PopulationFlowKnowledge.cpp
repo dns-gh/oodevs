@@ -18,6 +18,8 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include "PopulationKnowledge_ABC.h"
 
@@ -31,11 +33,15 @@ using namespace kernel;
 // Name: PopulationFlowKnowledge::FlowPart::FlowPart
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter_ABC& converter )
+PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_PortionFlux& asn, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
      : rRelevance_ ( asn.pertinence )
 {
     for( uint i = 0; i < asn.forme.vecteur_point.n; ++i )
-        flowPart_.push_back( converter.ConvertToXY( asn.forme.vecteur_point.elem[ i ] ) );
+    {
+        const geometry::Point2f point = converter.ConvertToXY( asn.forme.vecteur_point.elem[ i ] );
+        flowPart_.push_back( point );
+        boundingBox.Incorporate( point );
+    }
 }
 
 // =============================================================================
@@ -88,9 +94,10 @@ void PopulationFlowKnowledge::DoUpdate( const ASN1T_MsgPopulationFluxKnowledgeUp
         pFlow_ = popu_.FindFlow( asnMsg.oid_flux_reel );
     if( asnMsg.m.portions_fluxPresent )
     {
+        boundingBox_ = geometry::Rectangle2f();
         flowParts_.clear(); flowParts_.reserve( asnMsg.portions_flux.n );
         for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
-            flowParts_.push_back( FlowPart( asnMsg.portions_flux.elem[ i ], converter_ ) );
+            flowParts_.push_back( FlowPart( asnMsg.portions_flux.elem[ i ], converter_, boundingBox_ ) );
     }
     controller_.Update( *this );
 }
@@ -141,8 +148,10 @@ namespace
 // Name: PopulationFlowKnowledge::Draw
 // Created: SBO 2007-02-27
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void PopulationFlowKnowledge::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
+    if( !viewport.IsVisible( boundingBox_ ) )
+        return;
     if( pFlow_ )
     {
         glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );

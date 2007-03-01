@@ -337,3 +337,14 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
              .Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() )
              .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Population::DisplayInSummary
+// Created: SBO 2007-03-01
+// -----------------------------------------------------------------------------
+void Population::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "Population", "Alive:" ), GetLivingHumans() )
+             .Display( tools::translate( "Population", "Dead:" ), GetDeadHumans() )
+             .Display( tools::translate( "Population", "Domination:" ), nDomination_ );
+}

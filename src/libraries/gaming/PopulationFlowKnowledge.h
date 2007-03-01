@@ -40,7 +40,7 @@ public:
     //@{
     struct FlowPart
     {
-        FlowPart( ASN1T_PortionFlux& asn, const kernel::CoordinateConverter_ABC& converter );
+        FlowPart( ASN1T_PortionFlux& asn, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
         T_PointVector flowPart_;
         float         rRelevance_;
     };
@@ -89,7 +89,8 @@ private:
     kernel::OptionalValue< uint  >                 nNbrDeadHumans_;
     kernel::OptionalValue< E_PopulationAttitude >  eAttitude_;
     kernel::OptionalValue< bool  >                 bIsPerceived_;
-    T_FlowParts                            flowParts_;
+    T_FlowParts                                    flowParts_;
+    geometry::Rectangle2f                          boundingBox_;
 
 };
 
