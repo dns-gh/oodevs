@@ -61,6 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     //@}
 };
 

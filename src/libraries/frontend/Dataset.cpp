@@ -31,6 +31,7 @@ Dataset::Dataset( const ASN1T_MsgDatasetCreation& message, kernel::Controller& c
 // -----------------------------------------------------------------------------
 Dataset::~Dataset()
 {
+    Clear();
     controller_.Delete( *this );
 }
 
@@ -41,6 +42,16 @@ Dataset::~Dataset()
 void Dataset::AddPhysicalModel( PhysicalModel& model )
 {
     Register( model.GetName(), model );
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Dataset::RemovePhysicalModel
+// Created: SBO 2007-02-01
+// -----------------------------------------------------------------------------
+void Dataset::RemovePhysicalModel( const PhysicalModel& model )
+{
+    Remove( model.GetName() );
     controller_.Update( *this );
 }
 

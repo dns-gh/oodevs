@@ -33,6 +33,7 @@
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qlistview.h>
+#include <qheader.h>
 
 #include "geometry/Types.h"
 

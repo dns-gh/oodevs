@@ -19,6 +19,8 @@
 DatasetsTab::DatasetsTab( QWidget* parent, kernel::Controllers& controllers )
     : QHBox( parent )
 {
+    setMargin( 5 );
+    setSpacing( 5 );
     setStretchFactor( new DatasetList( this, controllers ), 1 );
     setStretchFactor( new Panels( this ), 3 ); // $$$$ SBO 2007-02-01: dummy
 }

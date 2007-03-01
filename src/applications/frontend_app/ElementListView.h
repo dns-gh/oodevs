@@ -73,6 +73,7 @@ ElementListView< Element >::ElementListView( QWidget* parent, kernel::Controller
     , controllers_( controllers )
 {
     controllers_.Register( *this );
+    header()->hide();
 }
 
 // -----------------------------------------------------------------------------

@@ -7,49 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef __Dataset_h_
-#define __Dataset_h_
-
-#include "Messages.h"
-#include "clients_kernel/Resolver.h"
+#ifndef __ExerciseInfo_h_
+#define __ExerciseInfo_h_
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
 }
 
-namespace frontend
-{
-    class PhysicalModel;
-
 // =============================================================================
-/** @class  Dataset
-    @brief  Dataset
+/** @class  ExerciseInfo
+    @brief  ExerciseInfo
 */
-// Created: SBO 2007-01-29
+// Created: SBO 2007-02-01
 // =============================================================================
-class Dataset : public kernel::StringResolver< PhysicalModel >
+class ExerciseInfo : public QVBox
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Dataset( const ASN1T_MsgDatasetCreation& message, kernel::Controller& controller );
-    virtual ~Dataset();
+             ExerciseInfo( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~ExerciseInfo();
     //@}
 
     //! @name Operations
     //@{
-    void AddPhysicalModel( PhysicalModel& model );
-    void RemovePhysicalModel( const PhysicalModel& model );
-    QString GetName() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    Dataset( const Dataset& );            //!< Copy constructor
-    Dataset& operator=( const Dataset& ); //!< Assignment operator
+    ExerciseInfo( const ExerciseInfo& );            //!< Copy constructor
+    ExerciseInfo& operator=( const ExerciseInfo& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -59,11 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    QString name_;
     //@}
 };
 
-}
-
-#endif // __Dataset_h_
+#endif // __ExerciseInfo_h_

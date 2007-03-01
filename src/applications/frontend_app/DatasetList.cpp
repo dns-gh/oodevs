@@ -17,8 +17,10 @@
 // -----------------------------------------------------------------------------
 DatasetList::DatasetList( QWidget* parent, kernel::Controllers& controllers )
     : ElementListView< frontend::Dataset >( parent, controllers )
+    , controllers_( controllers )
 {
     addColumn( tr( "Datasets" ) );
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -27,7 +29,7 @@ DatasetList::DatasetList( QWidget* parent, kernel::Controllers& controllers )
 // -----------------------------------------------------------------------------
 DatasetList::~DatasetList()
 {
-    // NOTHING
+    controllers_.Remove( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +41,10 @@ void DatasetList::NotifyCreated( const frontend::PhysicalModel& element )
     if( QListViewItem* parent = gui::FindItem( &element.GetDataset(), firstChild() ) )
     {
         gui::ValuedListItem* item = new gui::ValuedListItem( parent );
-        item->SetNamed( element );
+        if( !element.GetName().isEmpty() )
+            item->SetNamed( element );
+        else
+            item->setText( 0, tr( "[Default]" ) );
     }
 }
 
@@ -50,7 +55,12 @@ void DatasetList::NotifyCreated( const frontend::PhysicalModel& element )
 void DatasetList::NotifyUpdated( const frontend::PhysicalModel& element )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &element, firstChild() ) )
-        item->SetNamed( element );
+    {
+        if( !element.GetName().isEmpty() )
+            item->SetNamed( element );
+        else
+            item->setText( 0, tr( "[Default]" ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

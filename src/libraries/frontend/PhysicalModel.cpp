@@ -9,6 +9,7 @@
 
 #include "frontend_pch.h"
 #include "PhysicalModel.h"
+#include "Dataset.h"
 #include "clients_kernel/Controller.h"
 
 using namespace frontend;
@@ -32,6 +33,7 @@ PhysicalModel::PhysicalModel( const ASN1T_MsgPhysicalModelCreation& message, ker
 // -----------------------------------------------------------------------------
 PhysicalModel::~PhysicalModel()
 {
+    dataset_.RemovePhysicalModel( *this );
     controller_.Delete( *this );
 }
 
