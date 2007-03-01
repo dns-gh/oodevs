@@ -21,6 +21,7 @@ namespace kernel
     class Controller;
     class Population_ABC;
     class PopulationPart_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -32,14 +33,13 @@ namespace kernel
 class PopulationDetections : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< ConcentrationDetectionMessage >
                            , public kernel::Updatable_ABC< FlowDetectionMessage >
-                           , public kernel::Updatable_ABC< PopulationCollisionMessage >
                            , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver );
+             PopulationDetections( kernel::Controller& controller, const kernel::Resolver_ABC< kernel::Population_ABC >& resolver, const kernel::Entity_ABC& entity );
     virtual ~PopulationDetections();
     //@}
 
@@ -59,12 +59,12 @@ private:
     //@{
     virtual void DoUpdate( const ConcentrationDetectionMessage& message );
     virtual void DoUpdate( const FlowDetectionMessage& message );
-    virtual void DoUpdate( const PopulationCollisionMessage& message );
     //@}
 
     //! @name Types
     //@{
     typedef std::set< const kernel::PopulationPart_ABC* > T_Parts;
+    typedef T_Parts::const_iterator                     CIT_Parts;
     //@}
 
 private:
@@ -72,6 +72,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::Resolver_ABC< kernel::Population_ABC >& resolver_;
+    const kernel::Entity_ABC& entity_;
     T_Parts perceived_;
     T_PointVector shape_;
     //@}

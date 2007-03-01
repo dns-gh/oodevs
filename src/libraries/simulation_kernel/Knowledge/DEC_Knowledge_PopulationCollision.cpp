@@ -19,10 +19,6 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
-#include "Network/NET_AS_MOSServerMsgMgr.h"
-#include "Network/NET_AgentServer.h"
-
-using namespace DIN;
 
 BOOST_CLASS_EXPORT_GUID( DEC_Knowledge_PopulationCollision, "DEC_Knowledge_PopulationCollision" )
 
@@ -190,44 +186,4 @@ const MT_Vector2D& DEC_Knowledge_PopulationCollision::GetPosition() const
 {
     assert( pAgentColliding_ );
     return pAgentColliding_->GetRole< PHY_RolePion_Location >().GetPosition(); //$$$
-}
-
-// =============================================================================
-// NETWORK
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationCollision::UpdateOnNetwork
-// Created: NLD 2004-03-17
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationCollision::UpdateOnNetwork() const
-{
-    if( previousFlows_ != flows_ || previousConcentrations_ != concentrations_ )
-        SendStateToNewClient();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_PopulationCollision::SendStateToNewClient
-// Created: NLD 2004-03-18
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationCollision::SendStateToNewClient() const
-{
-    NET_AS_MOSServerMsgMgr& msgMgr = MIL_AgentServer::GetWorkspace().GetAgentServer().GetMessageMgr();
-    DIN_BufferedMessage msg = msgMgr.BuildMessage();
-
-    assert( pAgentColliding_ );
-    assert( pPopulation_ );
-
-    msg << (uint32)pAgentColliding_->GetID();
-    msg << (uint32)pPopulation_    ->GetID();
-
-    msg << (uint32)concentrations_.size();
-    for( CIT_PopulationConcentrationSet it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        msg << (uint32)(**it).GetID();
-
-    msg << (uint32)flows_.size();
-    for( CIT_PopulationFlowSet it = flows_.begin(); it != flows_.end(); ++it )
-        msg << (uint32)(**it).GetID();
-
-    msgMgr.SendMsgPopulationCollision( msg );
 }

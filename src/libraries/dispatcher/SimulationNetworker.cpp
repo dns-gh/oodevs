@@ -59,7 +59,6 @@ SimulationNetworker::SimulationNetworker( Dispatcher& dispatcher, const std::str
     GetMessageService().RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, &SimulationNetworker::OnReceiveMsgPopulationFlowInterVisibility          );
     GetMessageService().RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, &SimulationNetworker::OnReceiveMsgDebugDrawPoints                        );
     GetMessageService().RegisterReceivedMessage( eMsgEnvironmentType                       , *this, &SimulationNetworker::OnReceiveMsgEnvironmentType                        );
-    GetMessageService().RegisterReceivedMessage( eMsgPopulationCollision                   , *this, &SimulationNetworker::OnReceiveMsgPopulationCollision                    );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +134,6 @@ DECLARE_DIN_CALLBACK( PopulationConcentrationInterVisibility )
 DECLARE_DIN_CALLBACK( PopulationFlowInterVisibility          )
 DECLARE_DIN_CALLBACK( DebugDrawPoints                        )
 DECLARE_DIN_CALLBACK( EnvironmentType                        )
-DECLARE_DIN_CALLBACK( PopulationCollision                    )
 
 // -----------------------------------------------------------------------------
 // Name: SimulationNetworker::OnReceiveMsgOutSim

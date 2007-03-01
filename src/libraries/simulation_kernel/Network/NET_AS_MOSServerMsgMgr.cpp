@@ -50,8 +50,7 @@ static enum
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
     eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016,
-    eMsgPopulationCollision                    = 1017
+    eMsgEnvironmentType                        = 1016
 };
 //@}
 
@@ -241,15 +240,6 @@ void NET_AS_MOSServerMsgMgr::SendMsgPopulationConcentrationInterVisibility( DIN:
 void NET_AS_MOSServerMsgMgr::SendMsgPopulationFlowInterVisibility( DIN::DIN_BufferedMessage& msg )
 {
     SendMsgToAll( eMsgPopulationFlowInterVisibility, msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AS_MOSServerMsgMgr::SendMsgPopulationCollision
-// Created: NLD 2005-10-28
-// -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::SendMsgPopulationCollision( DIN::DIN_BufferedMessage& msg )
-{
-    SendMsgToAll( eMsgPopulationCollision, msg );
 }
 
 // -----------------------------------------------------------------------------

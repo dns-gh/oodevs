@@ -72,8 +72,7 @@ static enum
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
     eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016,
-    eMsgPopulationCollision                    = 1017
+    eMsgEnvironmentType                        = 1016
 };
 //@}
 
@@ -102,7 +101,6 @@ AgentServerMsgMgr::AgentServerMsgMgr( Controllers& controllers, DIN::DIN_Engine&
     pMessageService_->RegisterReceivedMessage( eMsgPopulationConcentrationInterVisibility, *this, & AgentServerMsgMgr::OnReceiveMsgPopulationConcentrationInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgPopulationFlowInterVisibility         , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationFlowInterVisibility );
     pMessageService_->RegisterReceivedMessage( eMsgDebugDrawPoints                       , *this, & AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints       );
-    pMessageService_->RegisterReceivedMessage( eMsgPopulationCollision                   , *this, & AgentServerMsgMgr::OnReceiveMsgPopulationCollision );
     pMessageService_->RegisterReceivedMessage( eMsgInClient                              , *this, & AgentServerMsgMgr::OnReceiveMsgInClient            );
 //eMsgEnvironmentType // $$$$ AGE 2006-05-03:
     pMessageService_->SetCbkOnError( & AgentServerMsgMgr::OnError );
@@ -482,26 +480,6 @@ void AgentServerMsgMgr::_OnReceiveMsgPopulationFlowInterVisibility( DIN::DIN_Inp
     unsigned long nAgentID;
     input >> nAgentID;
     GetModel().agents_.GetAgent( nAgentID ).Update( FlowDetectionMessage( input ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationCollision
-// Created: NLD 2005-10-28
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgPopulationCollision( DIN::DIN_Link& , DIN::DIN_Input& input )
-{
-    Enqueue( input, &AgentServerMsgMgr::_OnReceiveMsgPopulationCollision );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPopulationCollision
-// Created: NLD 2005-10-28
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::_OnReceiveMsgPopulationCollision( DIN::DIN_Input& input )
-{
-    unsigned long nAgentID;
-    input >> nAgentID;
-    GetModel().agents_.GetAgent( nAgentID ).Update( PopulationCollisionMessage( input ) );
 }
 
 //-----------------------------------------------------------------------------

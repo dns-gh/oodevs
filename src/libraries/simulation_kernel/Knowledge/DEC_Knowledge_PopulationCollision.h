@@ -66,12 +66,6 @@ public:
     const MIL_AgentPion&   GetAgentColliding() const;
     //@}
 
-    //! @name Network
-    //@{
-    void UpdateOnNetwork     () const;
-    void SendStateToNewClient() const;
-    //@}
-
 private:
     //! @name Types
     //@{

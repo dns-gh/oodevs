@@ -99,7 +99,6 @@ private:
     void OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
     void OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
-    void OnReceiveMsgPopulationCollision                   ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
 
     // ASN
     void OnReceiveMsgInClient           ( DIN::DIN_Link& linkFrom, DIN::DIN_Input& input );
@@ -113,7 +112,6 @@ private:
     void _OnReceiveMsgPopulationFlowInterVisibility         ( DIN::DIN_Input& input );
     void _OnReceiveMsgKnowledgeGroup                        ( DIN::DIN_Input& input );
     void _OnReceiveMsgDebugDrawPoints                       ( DIN::DIN_Input& input );
-    void _OnReceiveMsgPopulationCollision                   ( DIN::DIN_Input& input );
     void _OnReceiveMsgInClient                              ( DIN::DIN_Input& input );    
 
     // Control

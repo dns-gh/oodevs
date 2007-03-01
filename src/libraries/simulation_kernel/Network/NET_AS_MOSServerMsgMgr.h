@@ -56,7 +56,6 @@ public:
     void SendMsgObjectInterVisibility                 ( DIN::DIN_BufferedMessage& msg );
     void SendMsgPopulationConcentrationInterVisibility( DIN::DIN_BufferedMessage& msg );
     void SendMsgPopulationFlowInterVisibility         ( DIN::DIN_BufferedMessage& msg );
-    void SendMsgPopulationCollision                   ( DIN::DIN_BufferedMessage& msg );
     void SendMsgDebugDrawPoints                       ( DIN::DIN_BufferedMessage& msg );
     void SendMsgEnvironmentType                       ( DIN::DIN_BufferedMessage& msg );
     

@@ -37,8 +37,7 @@ static enum
     eMsgPopulationConcentrationInterVisibility = 1011,
     eMsgPopulationFlowInterVisibility          = 1012,
     eMsgDebugDrawPoints                        = 1015,
-    eMsgEnvironmentType                        = 1016,
-    eMsgPopulationCollision                    = 1017
+    eMsgEnvironmentType                        = 1016
 };
 //@}
 

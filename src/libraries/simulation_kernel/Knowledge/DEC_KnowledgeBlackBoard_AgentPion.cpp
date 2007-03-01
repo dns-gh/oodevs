@@ -137,7 +137,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendFullState() const
     pKnowledgeAgentPerceptionContainer_     ->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::SendStateToNewClient ) );
     pKnowledgeObjectPerceptionContainer_    ->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::SendStateToNewClient ) );
     pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::SendStateToNewClient ) );
-    pKnowledgePopulationCollisionContainer_ ->ApplyOnKnowledgesPopulationCollision ( std::mem_fun_ref( & DEC_Knowledge_PopulationCollision ::SendStateToNewClient ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +151,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendChangedState() const
     pKnowledgeAgentPerceptionContainer_     ->ApplyOnKnowledgesAgentPerception     ( std::mem_fun_ref( & DEC_Knowledge_AgentPerception     ::UpdateOnNetwork ) );
     pKnowledgeObjectPerceptionContainer_    ->ApplyOnKnowledgesObjectPerception    ( std::mem_fun_ref( & DEC_Knowledge_ObjectPerception    ::UpdateOnNetwork ) );
     pKnowledgePopulationPerceptionContainer_->ApplyOnKnowledgesPopulationPerception( std::mem_fun_ref( & DEC_Knowledge_PopulationPerception::UpdateOnNetwork ) );
-    pKnowledgePopulationCollisionContainer_ ->ApplyOnKnowledgesPopulationCollision ( std::mem_fun_ref( & DEC_Knowledge_PopulationCollision ::UpdateOnNetwork ) );
 }
 
 

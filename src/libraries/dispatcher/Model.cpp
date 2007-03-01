@@ -254,7 +254,6 @@ void Model::Update( uint nMsgID, DIN::DIN_Input& msg )
 //        case eMsgPopulationFlowInterVisibility          : break;
 //        case eMsgDebugDrawPoints                        : break;
 //        case eMsgEnvironmentType                        : break;
-//        case eMsgPopulationCollision                    : break;
         default:
             ;
     }

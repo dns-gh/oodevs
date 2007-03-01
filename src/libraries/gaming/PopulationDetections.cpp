@@ -12,6 +12,9 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "Attr_def.h"
 
 using namespace kernel;
@@ -20,9 +23,10 @@ using namespace kernel;
 // Name: PopulationDetections constructor
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-PopulationDetections::PopulationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver )
+PopulationDetections::PopulationDetections( Controller& controller, const Resolver_ABC< Population_ABC >& resolver, const kernel::Entity_ABC& entity )
     : controller_( controller )
     , resolver_( resolver )
+    , entity_( entity )
 {
     // NOTHING
 }
@@ -88,21 +92,20 @@ void PopulationDetections::DoUpdate( const FlowDetectionMessage& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationDetections::DoUpdate
-// Created: AGE 2006-03-17
-// -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const PopulationCollisionMessage& message )
-{
-    // $$$$ AGE 2006-03-17: 
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationDetections::Draw
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void PopulationDetections::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void PopulationDetections::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    // $$$$ AGE 2006-04-06: draw something
+    const geometry::Point2f& center = entity_.Get< kernel::Positions >().GetPosition();
+    if( !viewport.IsVisible( center ) )
+        return;
+    glPushAttrib( GL_CURRENT_BIT );
+    glColor4f( COLOR_DETECTED );
+    for( CIT_Parts it = perceived_.begin(); it != perceived_.end(); ++it )
+        if( const kernel::Positions* position = (*it)->Retrieve< kernel::Positions >() )
+            tools.DrawLine( center, position->GetPosition() );
+    glPopAttrib();
 }
 
 

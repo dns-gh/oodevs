@@ -18,7 +18,6 @@ DECLARE_MESSAGE_WRAPPER( VisionConesMessage );
 DECLARE_MESSAGE_WRAPPER( DetectionMessage );
 DECLARE_MESSAGE_WRAPPER( ConcentrationDetectionMessage );
 DECLARE_MESSAGE_WRAPPER( FlowDetectionMessage );
-DECLARE_MESSAGE_WRAPPER( PopulationCollisionMessage );
 DECLARE_MESSAGE_WRAPPER( ObjectDetectionMessage );
 DECLARE_MESSAGE_WRAPPER( ProfilingValuesMessage );
 
