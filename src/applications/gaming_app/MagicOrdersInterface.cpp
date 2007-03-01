@@ -311,7 +311,7 @@ void MagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
     {
         ASN1T_CoordUTM utm;
         utm = static_.coordinateConverter_.ConvertToMgrs( point ).c_str();
-        if( dynamic_cast< const Agent_ABC* >( &*selectedEntity_ ) )
+        if( dynamic_cast< const Agent_ABC* >( &*selectedEntity_ ) || dynamic_cast< const Automat_ABC* >( &*selectedEntity_ ) )
         {
             ASN_MsgUnitMagicAction message;
             message.GetAsnMsg().oid = selectedEntity_->GetId();

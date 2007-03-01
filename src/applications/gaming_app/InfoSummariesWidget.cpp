@@ -28,7 +28,7 @@ InfoSummariesWidget::InfoSummariesWidget( QWidget* parent, kernel::Controllers& 
     group->setFixedWidth( 250 );
     display_ = new SummariesDisplayer( group );
     controllers_.Register( *this );
-    hide();
+    group->hide();
 }
 
 // -----------------------------------------------------------------------------
