@@ -294,7 +294,7 @@
       tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts,test-adaptation" description="run all tests"/>
+    <target name="test" depends="generate-license,test-test-scripts,test-main-scripts-worldwide,test-main-scripts-france,test-adaptation" description="run all tests"/>
 
     <target name="generate-license" description="generate license file in run directory">
         <exec executable="${bin.dir}/hostid_light.exe" failonerror="true" outputproperty="hostid"/>
@@ -303,10 +303,18 @@
         </exec>
     </target>
 
-    <target name="test-main-scripts" description="run all tests">
+    <target name="test-main-scripts-france" description="run all tests">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=empty"/>
+            <arg value="--exercise=empty-france"/>
+            <arg value="--test"/>
+        </exec>
+    </target>
+
+    <target name="test-main-scripts-worldwide" description="run all tests">
+        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=empty-worldwide"/>
             <arg value="--test"/>
         </exec>
     </target>
@@ -355,7 +363,7 @@
         <delete dir="${dist.dir}/old"/>
         <move file="${dist.dir}/current" tofile="${dist.dir}/old" failonerror="false"/>
         <mkdir dir="${dist.dir}/current"/>
-        <echoxml file="${dist.dir}/current/exercise.xml">
+<!--        <echoxml file="${dist.dir}/current/exercise.xml">
             <exercise>
                 <profiles file="profiles.xml"/>
                 <orbat file="orbat_empty.xml"/>
@@ -363,7 +371,7 @@
                 <terrain name="main"/>
                 <model dataset="" physical="worldwide"/>    
             </exercise>
-        </echoxml>
+        </echoxml>-->
         <zip destfile="${dist.dir}/current/csword_applications.zip">
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/adaptation_app/"  includes="*.exe"/>
             <zipfileset prefix="applications" dir="${out.dir}/release/applications/gaming_app"       includes="*.exe *.qm"/>
@@ -410,10 +418,11 @@
             <!-- Cf defaultexcludes : no need of "svn export" -->
             <zipfileset prefix="data/models"   dir="${data.dir}/data/models/main"/>
             <zipfileset prefix="data/terrains" dir="${data.dir}/data/terrains"/>
-            <zipfileset prefix="exercises/empty" dir="${data.dir}/exercises/empty"/>            
-            <zipfileset prefix="exercises/empty" dir="${dist.dir}/current" includes="exercise.xml"/>
+            <zipfileset prefix="exercises/empty-worldwide" dir="${data.dir}/exercises/empty-worldwide"/>
+            <zipfileset prefix="exercises/empty-france" dir="${data.dir}/exercises/empty-france"/>
+            <!--<zipfileset prefix="exercises/empty" dir="${dist.dir}/current" includes="exercise.xml"/>-->
         </zip>        
-        <delete file="${dist.dir}/current/exercise.xml"/>
+     <!--   <delete file="${dist.dir}/current/exercise.xml"/>-->
     </target>
     
     <target name="installer" description="create the installer">
