@@ -141,7 +141,7 @@ Section "Uninstaller files"
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\C-Sword-Masa" "NoRepair" 1
     WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\C-Sword\uninstall.lnk" "$INSTDIR\uninstall.exe"
+    CreateShortCut "$SMPROGRAMS\C-Sword\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 SectionEnd
 
 ;--------------------------------
