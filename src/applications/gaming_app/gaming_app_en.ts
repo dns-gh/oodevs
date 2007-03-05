@@ -716,33 +716,6 @@
     </message>
 </context>
 <context>
-    <name>LogisticToolbar</name>
-    <message>
-        <source>Logistic options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display logistic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display missing logistic links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Real-time logistic actions display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Aggregate all automats</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disaggregate all automats</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
@@ -877,69 +850,6 @@
     </message>
     <message>
         <source>Logo</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MapToolbar</name>
-    <message>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.1km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.25km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.5km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1.0km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2.5km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5.0km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10.0km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Map options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display small text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display large text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display tactical lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display weather</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1700,33 +1610,6 @@
         <source>Tactical-lines description file (TacticalLines.xml) cannot be written.
 Please check for write protection then retry.
 Message : </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UnitToolbar</name>
-    <message>
-        <source>Unit options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display vision lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display vision cones</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display vision surfaces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display routes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display covered route</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

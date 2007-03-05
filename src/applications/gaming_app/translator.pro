@@ -18,10 +18,8 @@ SOURCES         =   AboutDialog.cpp \
                     LogisticSupplyChangeQuotasDialog.cpp \
                     LogisticSupplyPushFlowDialog.cpp \
                     LogisticSupplyRecompletionDialog.cpp \
-                    LogisticToolbar.cpp \
                     MagicOrdersInterface.cpp \
                     MainWindow.cpp \
-                    MapToolbar.cpp \
                     Menu.cpp \
                     MissionInterface_ABC.cpp \
                     MissionPanel.cpp \
@@ -45,8 +43,7 @@ SOURCES         =   AboutDialog.cpp \
                     ReportPanel.cpp \
                     SIMControlToolbar.cpp \
                     Spy.cpp \
-                    TacticalLinesSaver.cpp \
-                    UnitToolbar.cpp
+                    TacticalLinesSaver.cpp
 
 
 TRANSLATIONS    = gaming_app_fr.ts \

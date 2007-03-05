@@ -14,15 +14,14 @@
 #include "Dialogs.h"
 #include "EventToolbar.h"
 #include "InfoPanels.h"
-#include "LogisticToolbar.h"
+#include "OrbatToolbar.h"
 #include "MagicOrdersInterface.h"
-#include "MapToolbar.h"
 #include "Menu.h"
 #include "MissionPanel.h"
 #include "ObjectCreationPanel.h"
 #include "RecorderToolbar.h"
+#include "DisplayToolbar.h"
 #include "SIMControlToolbar.h"
-#include "UnitToolbar.h"
 #include "LinkInterpreter.h"
 #include "AgentsLayer.h"
 #include "PopulationsLayer.h"
@@ -38,7 +37,6 @@
 #include "Properties.h"
 #include "TacticalList.h"
 #include "XPSPlayer.h"
-#include "ProfileFilterToolbar.h"
 #include "ProfilingPanel.h"
 #include "UserProfileDialog.h"
 #include "InfoDock.h"
@@ -148,10 +146,16 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
+    // A few layers
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
+    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
+
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this );
     moveDockWindow( pListDockWnd_, Qt::DockLeft );
-    QTabWidget* pListsTabWidget = new QTabWidget( pListDockWnd_ );
+    QVBox* box = new QVBox( pListDockWnd_ );
+    new OrbatToolbar( box, controllers, profile, *agentsLayer );
+    QTabWidget* pListsTabWidget = new QTabWidget( box );
 
     SymbolIcons* symbols = new SymbolIcons( this, widget2d_ );
     EntitySymbols* icons = new EntitySymbols( *symbols, *strategy_ );
@@ -161,7 +165,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pListsTabWidget->addTab( new AgentList     ( controllers, publisher, *factory, profile, *icons ), tr( "Communication" ) );
     pListsTabWidget->addTab( new ObjectList    ( controllers, *factory, profile ),                    tr( "Objects" ) );
     pListsTabWidget->addTab( new PopulationList( controllers, *factory, profile ),                    tr( "Populations" ) );
-    pListDockWnd_->setWidget( pListsTabWidget );
+    pListDockWnd_->setWidget( box );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
     pListDockWnd_->setCaption( tr( "Orbat" ) );
@@ -200,10 +204,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
     pInfoDockWnd_->setCaption( tr( "Information" ) );
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
-
-    // A few layers
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
 
      // Mission panel
     MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile );
@@ -251,11 +251,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
     new SIMControlToolbar( this, controllers, network, publisher );
-    new MapToolbar( this, controllers );
-    new UnitToolbar( this, controllers );
-    new LogisticToolbar( this, controllers, *agentsLayer );
+    new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );
-    new ProfileFilterToolbar( this, controllers, profile );
     RecorderToolbar* recorderToolbar = new RecorderToolbar( this, network );
 
     // Drawer

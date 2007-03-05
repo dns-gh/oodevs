@@ -88,5 +88,8 @@ DECLARE_ICON( profile );
 DECLARE_ICON( left_arrow );
 DECLARE_ICON( right_arrow );
 DECLARE_ICON( conflict );
+DECLARE_ICON( filter );
+DECLARE_ICON( pencil );
+DECLARE_ICON( pencil_checkbox );
 
 #endif // __demo_resources_h_

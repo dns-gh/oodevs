@@ -94,6 +94,9 @@
 #include "res/profile.xpm"
 #include "res/left_arrow.xpm"
 #include "res/right_arrow.xpm"
+#include "res/filter.xpm"
+#include "res/pencil.xpm"
+#include "res/pencil_checkbox.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

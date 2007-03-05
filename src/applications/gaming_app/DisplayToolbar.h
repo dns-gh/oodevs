@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __UnitToolbar_h_
-#define __UnitToolbar_h_
+#ifndef __DisplayToolbar_h_
+#define __DisplayToolbar_h_
 
 namespace kernel
 {
@@ -16,20 +16,20 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  UnitToolbar
-    @brief  UnitToolbar
+/** @class  DisplayToolbar
+    @brief  DisplayToolbar
 */
-// Created: APE 2004-09-21
+// Created: SBO 2007-03-05
 // =============================================================================
-class UnitToolbar : public QToolBar
+class DisplayToolbar : public QToolBar
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitToolbar( QMainWindow* pParent, kernel::Controllers& controllers );
-    virtual ~UnitToolbar();
+             DisplayToolbar( QMainWindow* pParent, kernel::Controllers& controllers );
+    virtual ~DisplayToolbar();
     //@}
 };
 
-
-#endif // __UnitToolbar_h_
+#endif // __DisplayToolbar_h_

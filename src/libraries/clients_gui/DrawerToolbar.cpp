@@ -39,14 +39,14 @@ DrawerToolbar::DrawerToolbar( QMainWindow* mainWindow, ExclusiveEventStrategy& s
     dock_->hide();
 
     draw_ = new QToolButton( this, "draw" );
-    draw_->setIconSet( MAKE_ICON( visible ) );
+    draw_->setIconSet( MAKE_ICON( pencil ) );
     draw_->setTextLabel( tr( "Draw" ) );
     draw_->setToggleButton( true );
     draw_->setOn( false );
     connect( draw_, SIGNAL( toggled( bool ) ), this, SLOT( OnDraw( bool ) ) );
 
     show_ = new QToolButton( this, "show" );
-    show_->setIconSet( MAKE_ICON( visible ) );
+    show_->setIconSet( MAKE_ICON( pencil_checkbox ) );
     show_->setTextLabel( tr( "Display drawings" ) );
     show_->setToggleButton( true );
     show_->setOn( true );
