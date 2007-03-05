@@ -56,16 +56,16 @@ Message::Message( std::ifstream& input )
     input.read( (char*)pMsg_, nMsgLength_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Message::Message
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
 Message::Message( ASN1PEREncodeBuffer& asnPEREncodeBuffer )
-    : pMsg_     ( asnPEREncodeBuffer.GetMsgCopy() )
+    : pMsg_     ( 0 )
     , nMsgLength_( asnPEREncodeBuffer.GetMsgLen() )
 {
-    // NOTHING
+    pMsg_ = new ASN1OCTET[ nMsgLength_ ];
+    memcpy( pMsg_, asnPEREncodeBuffer.GetMsgPtr(), nMsgLength_ );
 }
 
 // -----------------------------------------------------------------------------
