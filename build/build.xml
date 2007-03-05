@@ -80,12 +80,12 @@
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-    
+
     <target name="library.master_asn" description="build master asn static library">
         <build-lib name="master_asn" pattern="lib${ant.project.name}_master_asn-${platform}-mt@{suffix}" suffix="-gd" warnings="production">
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
-    </target>    
+    </target>
 
     <target name="library.ENT" description="build ENT static library">
         <build-lib name="ENT" depends="qt" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd"/>
@@ -131,7 +131,7 @@
             <includepath path="${include.dir}/ASN"/>
         </build-lib>
     </target>
-    
+
     <target name="library.master" description="build master static library" depends="library.MT_Tools,library.master_asn">
         <build-lib name="master" depends="qt" pattern="lib${ant.project.name}_master-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/ASN"/>
@@ -195,7 +195,7 @@
     </target>
 
     <target name="application.adaptation_app" description="build CSword Adaptation executable" depends="library.ENT,library.clients_gui">
-        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu,boost" excludes="**/XmlResources.cpp" 
+        <build-app name="adaptation_app" depends="mt,qt,xeumeuleu,boost" excludes="**/XmlResources.cpp"
                    libs="lib${ant.project.name}_ENT-${platform}-mt
                          lib${ant.project.name}_clients_gui-${platform}-mt
                          lib${ant.project.name}_clients_kernel-${platform}-mt" pch-excludes="qtundo.cpp">
@@ -329,7 +329,7 @@
 
     <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
         <property name="adaptation_test.dir1" value="${data.dir}/data/models/main/physical/worldwide"/>
-        <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>        
+        <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
         <delete dir="${adaptation_test.dir2}"/>
         <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" resolveexecutable="true" vmlauncher="false">
             <arg value="-i"/>
@@ -337,7 +337,7 @@
             <arg value="-o"/>
             <arg value="${adaptation_test.dir2}/physical.xml"/>
         </exec>
-        <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}" 
+        <compare-dirs dir1="${adaptation_test.dir1}" dir2="${adaptation_test.dir2}"
                       excludes="**/Pathfind.xml"
                       includes="**/*.xml" property="adaptation_test.is-different"/>
         <if>
@@ -355,7 +355,7 @@
       package
     ============================================================================
     -->
-    
+
     <target name="package" description="package the distribution" >
         <zip destfile="${run.dir}/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
@@ -367,9 +367,9 @@
             <exercise>
                 <profiles file="profiles.xml"/>
                 <orbat file="orbat_empty.xml"/>
-                <weather file="weather.xml"/>   
+                <weather file="weather.xml"/>
                 <terrain name="main"/>
-                <model dataset="" physical="worldwide"/>    
+                <model dataset="" physical="worldwide"/>
             </exercise>
         </echoxml>-->
         <zip destfile="${dist.dir}/current/csword_applications.zip">
@@ -382,7 +382,7 @@
             <zipfileset prefix="applications" dir="${libraries.dir}/gaming"                          includes="*.qm"/>
             <zipfileset prefix="applications" dir="${libraries.dir}/ENT"                             includes="*.qm"/>
             <zipfileset prefix="applications" dir="${applications.dir}/gaming_app"                   includes="*.qm"/>
-            <zipfileset prefix="applications" dir="${applications.dir}/adaptation_app/translator"    includes="*.qm"/>    
+            <zipfileset prefix="applications" dir="${applications.dir}/adaptation_app/translator"    includes="*.qm"/>
             <zipfileset prefix="applications" dir="${run.dir}">
                 <include name="symbols.pak"/>
                 <include name="symbols.xml"/>
@@ -410,9 +410,9 @@
                 <include name="userDdm.dll"/>
                 <include name="xerces-c_2_7.dll"/>
                 <include name="zlib1.dll"/>
-            </zipfileset>                           
-        </zip>                        
-                    
+            </zipfileset>
+        </zip>
+
         <zip destfile="${dist.dir}/current/csword.zip">
             <zipgroupfileset dir="${dist.dir}/current" includes="csword_applications.zip"/>
             <!-- Cf defaultexcludes : no need of "svn export" -->
@@ -421,10 +421,10 @@
             <zipfileset prefix="exercises/empty-worldwide" dir="${data.dir}/exercises/empty-worldwide"/>
             <zipfileset prefix="exercises/empty-france" dir="${data.dir}/exercises/empty-france"/>
             <!--<zipfileset prefix="exercises/empty" dir="${dist.dir}/current" includes="exercise.xml"/>-->
-        </zip>        
+        </zip>
      <!--   <delete file="${dist.dir}/current/exercise.xml"/>-->
     </target>
-    
+
     <target name="installer" description="create the installer">
         <mkdir dir="${dist.dir}/current"/>
         <exec executable="makensis" failonerror="true">
@@ -436,8 +436,8 @@
             <arg value="/DAPPLICATIONSDIR=${applications.dir}"/>
             <arg value="installer.nsi"/>
         </exec>
-    </target>      
-        
+    </target>
+
     <!--
     ============================================================================
       configure
