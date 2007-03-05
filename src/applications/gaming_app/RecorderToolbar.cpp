@@ -53,8 +53,7 @@ void RecorderToolbar::Play()
     if( strFileName == QString::null )
         return;
 
-    msgRecorder_.Read( strFileName.ascii() );
-    msgRecorder_.Play();
+    msgRecorder_.Play( strFileName.ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,6 +64,9 @@ void RecorderToolbar::Stop()
 {
     if( msgRecorder_.Stop() )
     {
+        pPlayButton_->setEnabled( true );
+        pRecButton_->setEnabled( true );
+        pStopButton_->setEnabled( false );
         QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Fichiers d'ordres (*.ord)" ), 0, 0, tr("Enregistrer") );
         if( strFileName == QString::null )
             return;
@@ -72,10 +74,6 @@ void RecorderToolbar::Stop()
             strFileName += ".ord";
         msgRecorder_.Write( strFileName.ascii() );
     }
-
-    pPlayButton_->setEnabled( true );
-    pRecButton_->setEnabled( true );
-    pStopButton_->setEnabled( false );
 }
 
 

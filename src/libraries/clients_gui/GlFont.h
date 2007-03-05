@@ -42,10 +42,6 @@ private:
     GlFont& operator=( const GlFont& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

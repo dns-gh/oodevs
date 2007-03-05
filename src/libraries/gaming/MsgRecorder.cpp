@@ -68,7 +68,6 @@ Message::Message( ASN1PEREncodeBuffer& asnPEREncodeBuffer )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Message::~Message
 // Created: APE 2004-10-20
@@ -80,8 +79,6 @@ Message::~Message()
 
 // -----------------------------------------------------------------------------
 // Name: Message::Send
-/** @param  msgManager 
-*/
 // Created: APE 2004-10-20
 // -----------------------------------------------------------------------------
 void Message::Send( AgentServerMsgMgr& msgManager )
@@ -93,7 +90,7 @@ void Message::Send( AgentServerMsgMgr& msgManager )
 // Name: Message::Write
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void Message::Write( std::ofstream& output ) const 
+void Message::Write( std::ofstream& output ) const
 {
     output.write( (const char*)( &nMsgLength_ ), sizeof( nMsgLength_ ) );
     output.write( (const char*)pMsg_, nMsgLength_ );
@@ -107,9 +104,8 @@ MsgRecorder::MsgRecorder( Network& network )
     : msgManager_( network.GetMessageMgr() )
     , recording_ ( false )
 {
-    msgManager_.RegisterMessageRecorder( *this );   
+    msgManager_.RegisterMessageRecorder( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MsgRecorder destructor
@@ -118,7 +114,11 @@ MsgRecorder::MsgRecorder( Network& network )
 MsgRecorder::~MsgRecorder()
 {
     msgManager_.UnregisterMessageRecorder( *this );
-    Clear();
+
+    boost::mutex::scoped_lock locker( mutex_ );
+    for( IT_Messages it = messages_.begin(); it != messages_.end(); ++it )
+        delete *it;
+    messages_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -130,22 +130,30 @@ void MsgRecorder::OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer )
     if( ! recording_ )
         return;
 
-    if(    nType != T_MsgsOutClient_msg_msg_pion_order
+    if( nType != T_MsgsOutClient_msg_msg_pion_order
         && nType != T_MsgsOutClient_msg_msg_frag_order
         && nType != T_MsgsOutClient_msg_msg_automate_order )
         return;
+    Message* message = new Message( asnPEREncodeBuffer );
 
-    messages_.push_back( new Message( asnPEREncodeBuffer ) );
+    boost::mutex::scoped_lock locker( mutex_ );
+    messages_.push_back( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MsgRecorder::Play
-// Created: APE 2004-10-20
+// Created: AGE 2007-03-05
 // -----------------------------------------------------------------------------
-void MsgRecorder::Play()
+void MsgRecorder::Play( const std::string& filename )
 {
-    for( IT_Messages it = messages_.begin(); it != messages_.end(); ++it )
-        (*it)->Send( msgManager_ );
+    std::ifstream input( filename.c_str(), std::ios_base::binary & std::ios_base::in );
+    int size;
+    input.read( (char*)(&size), sizeof( int ) );
+    for( int n = 0; n < size; ++n  )
+    {
+        Message message( input );
+        message.Send( msgManager_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +162,6 @@ void MsgRecorder::Play()
 // -----------------------------------------------------------------------------
 void MsgRecorder::Record()
 {
-    Clear();
     recording_ = true;
 }
 
@@ -170,40 +177,24 @@ bool MsgRecorder::Stop()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MsgRecorder::Clear
-// Created: APE 2004-10-20
-// -----------------------------------------------------------------------------
-void MsgRecorder::Clear()
-{
-    for( IT_Messages it = messages_.begin(); it != messages_.end(); ++it )
-        delete *it;
-    messages_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MsgRecorder::Read
-// Created: AGE 2006-03-30
-// -----------------------------------------------------------------------------
-void MsgRecorder::Read( const std::string& filename )
-{
-    Clear();
-    std::ifstream input( filename.c_str(), std::ios_base::binary & std::ios_base::in );
-    int size;
-    input.read( (char*)(&size), sizeof( int ) );
-    for( int n = 0; n < size; ++n  )
-        messages_.push_back( new Message( input ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MsgRecorder::Write
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-void MsgRecorder::Write( const std::string& filename ) const
+void MsgRecorder::Write( const std::string& filename )
 {
-    std::ofstream output( filename.c_str(), std::ios_base::binary & std::ios_base::out );
-    int size = (int)( messages_.size() );
-    output.write( (const char*)( &size ), sizeof( size ) );
-    for( CIT_Messages it = messages_.begin(); it != messages_.end(); ++it )
-        (*it)->Write( output );
-}
+    T_Messages toSave;
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        std::swap( toSave, messages_ );
+    }
 
+    std::ofstream output( filename.c_str(), std::ios_base::binary & std::ios_base::out );
+    int size = (int)( toSave.size() );
+    output.write( (const char*)( &size ), sizeof( size ) );
+    for( CIT_Messages it = toSave.begin(); it != toSave.end(); ++it )
+    {
+        (*it)->Write( output );
+        delete *it;
+    }
+
+}

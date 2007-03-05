@@ -20,6 +20,7 @@
 #define __MsgRecorder_h_
 
 #include "game_asn/Asn.h"
+#include "boost/thread/mutex.hpp"
 class AgentServerMsgMgr;
 class Network;
 namespace internal
@@ -46,23 +47,21 @@ public:
     //! @name Operations
     //@{
     void OnNewMsg( int nType, ASN1PEREncodeBuffer& asnPEREncodeBuffer );
+    void Play( const std::string& filename );
 
-    void Play();
     void Record();
     bool Stop();
-    void Clear();
 
-    void Read( const std::string& filename );
-    void Write( const std::string& filename ) const;
+    void Write( const std::string& filename );
     //@}
 
 private:
-    //! @name Helpers
+    //! @name Copy/Assignment
     //@{
     MsgRecorder( const MsgRecorder& );
     MsgRecorder& operator=( const MsgRecorder& );
     //@}
-
+    
 private:
     //! @name Types
     //@{
@@ -75,7 +74,7 @@ private:
     //! @name Member data
     //@{
     AgentServerMsgMgr& msgManager_;
-
+    boost::mutex mutex_;
     bool recording_;
     T_Messages messages_;
     //@}
