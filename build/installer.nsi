@@ -108,17 +108,13 @@ Section "C-Sword"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\xerces-c_2_7.dll"
     File "${RUNDIR}\zlib1.dll"
-                               
     SetOutPath "$INSTDIR\data\models"
     File /r /x ".svn" "${DATADIR}\data\models\main"
-    
     SetOutPath "$INSTDIR\data"
     File /r /x ".svn" "${DATADIR}\data\terrains"
-    
     SetOutPath "$INSTDIR\exercises"
     File /r /x ".svn" "${DATADIR}\exercises\empty-france"
     File /r /x ".svn" "${DATADIR}\exercises\empty-worldwide"
-    
     SetOutPath "$INSTDIR\applications"
     WriteRegStr HKLM "Software\Masa\C-Sword" "Install_Dir" "$INSTDIR"
     CreateDirectory "$SMPROGRAMS\C-Sword"
