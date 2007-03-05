@@ -46,13 +46,13 @@ InstallDirRegKey HKLM "Software\Masa\C-Sword" "Install_Dir"
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
-  !insertmacro MUI_PAGE_FINISH  
-  
+  !insertmacro MUI_PAGE_FINISH
+
   !insertmacro MUI_UNPAGE_WELCOME
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
   !insertmacro MUI_UNPAGE_FINISH
- 
+
 ;Languages
   !insertmacro MUI_LANGUAGE "English"
 
@@ -69,8 +69,7 @@ FunctionEnd
 ;--------------------------------
 Section "C-Sword"
     SectionIn RO
-    
-    SetOutPath "$INSTDIR\applications"       
+    SetOutPath "$INSTDIR\applications"
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
     File "${OUTDIR}\release\applications\gaming_app\*.exe"
     File "${OUTDIR}\release\applications\preparation_app\*.exe"
@@ -81,7 +80,7 @@ Section "C-Sword"
     ;File "${LIBDIR}\clients_kernel\*.qm"
     ;File "${LIBDIR}\gaming\*.qm"
     ;File "${LIBDIR}\ENT\*.qm"
-    ;File "${LIBDIR}\clients_gui\*.qm"         
+    ;File "${LIBDIR}\clients_gui\*.qm"
     File "${RUNDIR}\symbols.pak"
     File "${RUNDIR}\symbols.xml"
     File "${RUNDIR}\preferences.xml"
@@ -126,7 +125,7 @@ Section "C-Sword"
     CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\C-Sword simulation.lnk" "$INSTDIR\applications\simulation_app.exe" "--exercise=empty-worldwide"
     CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\C-Sword preparation.lnk" "$INSTDIR\applications\preparation_app.exe" "--exercise=empty-worldwide"
     CreateShortCut "$SMPROGRAMS\C-Sword\WorldWide\C-Sword gaming.lnk" "$INSTDIR\applications\gaming_app.exe" "--exercise=empty-worldwide"
-    CreateShortCut "$SMPROGRAMS\C-Sword\C-Sword adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"    
+    CreateShortCut "$SMPROGRAMS\C-Sword\C-Sword adaptation.lnk" "$INSTDIR\applications\adaptation_app.exe"
 SectionEnd
 
 ;--------------------------------
@@ -148,7 +147,7 @@ Section "Uninstall"
     RmDir /r "$INSTDIR\applications"
     RmDir /r "$INSTDIR\data"
     RmDir /r "$INSTDIR\exercises"
-    RmDir "$INSTDIR"  
+    RmDir "$INSTDIR"
     Delete "$SMPROGRAMS\C-Sword\France\C-Sword simulation.lnk"
     Delete "$SMPROGRAMS\C-Sword\France\C-Sword preparation.lnk"
     Delete "$SMPROGRAMS\C-Sword\France\C-Sword gaming.lnk"
