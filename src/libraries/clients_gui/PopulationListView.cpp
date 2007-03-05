@@ -164,7 +164,15 @@ void PopulationListView::NotifySelected( const Entity_ABC* element )
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyUpdated( const kernel::Profile_ABC& profile )
 {
-    // $$$$ AGE 2006-11-21: update !
-    // $$$$ AGE 2006-10-13: Should be a HierarchyListView...
+    QListViewItemIterator it( this );
+    while( ValuedListItem* item = (ValuedListItem*)( *it ) )
+    {
+        if( item->IsA< const Entity_ABC >() )
+        {
+            const Entity_ABC& entity = *item->GetValue< const Entity_ABC >();
+            item->setVisible( profile_.IsVisible( entity ) );
+        }
+        ++it;
+    }
 }
 
