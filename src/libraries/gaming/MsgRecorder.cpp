@@ -189,12 +189,11 @@ void MsgRecorder::Write( const std::string& filename )
     }
 
     std::ofstream output( filename.c_str(), std::ios_base::binary & std::ios_base::out );
-    int size = (int)( toSave.size() );
+    int size = int( toSave.size() );
     output.write( (const char*)( &size ), sizeof( size ) );
     for( CIT_Messages it = toSave.begin(); it != toSave.end(); ++it )
     {
         (*it)->Write( output );
         delete *it;
     }
-
 }
