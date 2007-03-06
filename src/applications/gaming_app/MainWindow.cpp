@@ -93,6 +93,7 @@
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/LightingProxy.h"
+#include "clients_gui/LocationEditorToolbar.h"
 #include "graphics/DragMovementLayer.h"
 #include "icons.h"
 
@@ -147,7 +148,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
     // A few layers
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, staticModel_.coordinateConverter_, *glProxy_ ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
 
     // Agent list panel

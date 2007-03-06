@@ -91,5 +91,7 @@ DECLARE_ICON( conflict );
 DECLARE_ICON( filter );
 DECLARE_ICON( pencil );
 DECLARE_ICON( pencil_checkbox );
+DECLARE_ICON( goto );
+DECLARE_ICON( add_point );
 
 #endif // __demo_resources_h_

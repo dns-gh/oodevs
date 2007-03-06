@@ -11,6 +11,7 @@
 #include "ParametersLayer.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "ShapeHandler_ABC.h"
+#include "LocationEditor_ABC.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Polygon.h"
@@ -24,8 +25,9 @@ using namespace gui;
 // Name: ParametersLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ParametersLayer::ParametersLayer( const GlTools_ABC& tools )
+ParametersLayer::ParametersLayer( const GlTools_ABC& tools, LocationEditor_ABC& editor )
     : tools_( tools )
+    , editor_( editor )
     , handler_( 0 )
     , current_( 0 )
 {
@@ -198,6 +200,7 @@ void ParametersLayer::StartPath( ShapeHandler_ABC& handler, const Positions& pos
 // -----------------------------------------------------------------------------
 void ParametersLayer::Start( ShapeHandler_ABC& handler, Location_ABC& location )
 {
+    editor_.StartEdit( *this );
     handler_ = &handler;
     current_ = &location;
 }
@@ -219,6 +222,7 @@ void ParametersLayer::Reset()
 // -----------------------------------------------------------------------------
 void ParametersLayer::NotifyDone()
 {
+    editor_.EndEdit();
     ShapeHandler_ABC* handler = handler_;
     Location_ABC* location = current_;
     handler_ = 0; current_ = 0;

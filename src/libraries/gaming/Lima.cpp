@@ -48,6 +48,7 @@ Lima::Lima( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgLim
 Lima::~Lima()
 {
     controller_.Delete( *(kernel::TacticalLine_ABC*)this );
+    controller_.Delete( *(kernel::Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,6 +71,7 @@
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/LightingProxy.h"
+#include "clients_gui/LocationEditorToolbar.h"
 #include "graphics/DragMovementLayer.h"
 
 #include "xeumeuleu/xml.h"
@@ -171,7 +172,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setDockEnabled( pInfoDockWnd_, Qt::DockTop, false );
 
     // A few layers
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_ );
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, staticModel_.coordinateConverter_, *glProxy_ ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
     // object creation window

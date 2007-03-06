@@ -48,6 +48,7 @@ Limit::Limit( Controller& controller, Publisher_ABC& publisher, const ASN1T_MsgL
 Limit::~Limit()
 {
     controller_.Delete( *(kernel::TacticalLine_ABC*)this );
+    controller_.Delete( *(kernel::Entity_ABC*)this );
 }
 
 //-----------------------------------------------------------------------------

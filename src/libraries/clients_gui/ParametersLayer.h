@@ -22,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class ShapeHandler_ABC;
+    class LocationEditor_ABC;
 
 // =============================================================================
 /** @class  ParametersLayer
@@ -35,7 +36,7 @@ class ParametersLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParametersLayer( const kernel::GlTools_ABC& tools );
+             ParametersLayer( const kernel::GlTools_ABC& tools, LocationEditor_ABC& editor );
     virtual ~ParametersLayer();
     //@}
 
@@ -76,6 +77,7 @@ private:
     //! @name Member data
     //@{
     const kernel::GlTools_ABC& tools_;
+    LocationEditor_ABC& editor_;
     ShapeHandler_ABC* handler_;
     kernel::Location_ABC* current_;
     geometry::Rectangle2f world_;
