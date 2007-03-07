@@ -12,6 +12,11 @@
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
+namespace kernel
+{
+    struct Nothing;
+}
+
 namespace gui
 {
     class ParametersLayer;
@@ -25,6 +30,7 @@ namespace gui
 // =============================================================================
 class LocationCreator : public QObject
                       , public kernel::Observer_ABC
+                      , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;
@@ -54,6 +60,7 @@ public slots:
 private:
     //! @name Helpers
     //@{
+    virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     //@}
 
@@ -71,8 +78,12 @@ private:
     ShapeHandler_ABC& handler_;
     
     QString menu_;
-    QPopupMenu* pPopupMenu_;
     geometry::Point2f popupPoint_;
+
+    bool pointAllowed_;
+    bool lineAllowed_;
+    bool polygonAllowed_;
+    bool circleAllowed_;
     //@}
 };
 

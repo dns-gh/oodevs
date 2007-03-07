@@ -22,6 +22,7 @@
 namespace kernel
 {
     class TacticalLine_ABC;
+    struct Nothing;
 }
 
 namespace gui
@@ -36,7 +37,7 @@ namespace gui
 // =============================================================================
 class TacticalLinesLayer : public QObject
                          , public EntityLayer< kernel::TacticalLine_ABC >
-                         , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                         , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                          , public kernel::OptionsObserver_ABC
                          , private ShapeHandler_ABC
                          , private kernel::LocationVisitor_ABC
@@ -68,7 +69,7 @@ protected:
     virtual bool HandleMouseMove       ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMousePress      ( QMouseEvent* mouse, const geometry::Point2f& point );
     virtual bool HandleMouseDoubleClick( QMouseEvent* mouse, const geometry::Point2f& point );
-    virtual void NotifyContextMenu     ( const geometry::Point2f&, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu     ( const kernel::Nothing&, kernel::ContextMenu& menu );
     virtual void NotifySelected        ( const kernel::TacticalLine_ABC* element );
 
     virtual void Handle( kernel::Location_ABC& location );

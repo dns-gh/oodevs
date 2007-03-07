@@ -22,6 +22,7 @@ namespace kernel
     class Entity_ABC;
     class Location_ABC;
     class Positions;
+    struct Nothing;
 }
 
 namespace gui
@@ -37,7 +38,7 @@ namespace gui
 // Created: APE 2004-03-25
 // =============================================================================
 class ParamPath : public QHBox, public Param_ABC
-                , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                 , private gui::ShapeHandler_ABC
 {
     Q_OBJECT;
@@ -54,7 +55,7 @@ public:
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual bool CheckValidity();
     virtual void Commit();
-    virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     void CommitTo( ASN1T_Itineraire& destination );
     //@}

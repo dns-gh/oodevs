@@ -19,6 +19,7 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 
 namespace kernel
 {
+    struct Nothing {};
 
 
 enum E_TroopHealthState

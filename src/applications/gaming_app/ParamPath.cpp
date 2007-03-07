@@ -106,7 +106,7 @@ void ParamPath::CommitTo( ASN1T_Itineraire& destination )
 // Name: ParamPath::NotifyContextMenu
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
-void ParamPath::NotifyContextMenu( const geometry::Point2f&, ContextMenu& menu )
+void ParamPath::NotifyContextMenu( const kernel::Nothing&, ContextMenu& menu )
 {   
     menu.InsertItem( "Parameter", menu_, this, SLOT( StartPath() ) );
 }

@@ -75,7 +75,7 @@ bool TacticalLinesLayer::HandleKeyPress( QKeyEvent* k )
 // Name: TacticalLinesLayer::NotifyContextMenu
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
-void TacticalLinesLayer::NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu )
+void TacticalLinesLayer::NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& menu )
 {
     if( CanCreateLine() )
     {

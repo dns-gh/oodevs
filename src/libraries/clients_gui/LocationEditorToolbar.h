@@ -15,6 +15,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Controllers;
 }
 
 namespace gui
@@ -36,7 +37,7 @@ class LocationEditorToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationEditorToolbar( QMainWindow* parent, const kernel::CoordinateConverter_ABC& converter, View_ABC& view );
+             LocationEditorToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, View_ABC& view );
     virtual ~LocationEditorToolbar();
     //@}
 
@@ -51,6 +52,7 @@ private slots:
     //@{
     void Goto();
     void AddPoint();
+    void AddParamPoint();
     //@}
 
 private:
@@ -68,11 +70,13 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     View_ABC& view_;
     ParametersLayer* parameters_;
     QLineEdit* utm_;
     QToolButton* okButton_;
+    QToolButton* paramsButton_;
     QToolButton* gotoButton_;
     //@}
 };

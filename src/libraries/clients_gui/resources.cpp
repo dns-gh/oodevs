@@ -99,6 +99,7 @@
 #include "res/pencil_checkbox.xpm"
 #include "res/goto.xpm"
 #include "res/add_point.xpm"
+#include "res/special_point.xpm"
 
 QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
 {

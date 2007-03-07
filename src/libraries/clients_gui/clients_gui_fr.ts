@@ -113,15 +113,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ligne</source>
+        <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Polygone</source>
+        <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cercle</source>
+        <source>Circle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

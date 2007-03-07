@@ -24,13 +24,16 @@ using namespace gui;
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 LocationCreator::LocationCreator( QWidget* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
-    : QObject   ( parent )
-    , layer_    ( layer )
-    , handler_  ( handler )
-    , menu_     ( menu )
+    : QObject        ( parent )
+    , layer_         ( layer )
+    , handler_       ( handler )
+    , menu_          ( menu )
+    , pointAllowed_  ( true )
+    , lineAllowed_   ( true )
+    , polygonAllowed_( true )
+    , circleAllowed_ ( true )
 {
-    pPopupMenu_ = new QPopupMenu( parent );
-    Allow( true, true, true, true );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -38,10 +41,13 @@ LocationCreator::LocationCreator( QWidget* parent, const QString& menu, Paramete
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
 LocationCreator::LocationCreator( QWidget* parent, ParametersLayer& layer, ShapeHandler_ABC& handler )
-    : QObject    ( parent )
-    , layer_     ( layer )
-    , handler_   ( handler )
-    , pPopupMenu_( 0 )
+    : QObject        ( parent )
+    , layer_         ( layer )
+    , handler_       ( handler )
+    , pointAllowed_  ( false )
+    , lineAllowed_   ( false )
+    , polygonAllowed_( false )
+    , circleAllowed_ ( false )
 {
     // NOTHING
 }
@@ -57,21 +63,31 @@ LocationCreator::~LocationCreator()
 
 // -----------------------------------------------------------------------------
 // Name: LocationCreator::Allow
-// Created: AGE 2006-08-09
+// Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
 void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle )
-{   
-    if( pPopupMenu_ )
+{
+    pointAllowed_ = point;
+    lineAllowed_ = line;
+    polygonAllowed_ = polygon;
+    circleAllowed_ = circle;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::NotifyContextMenu
+// Created: SBO 2007-03-06
+// -----------------------------------------------------------------------------
+void LocationCreator::NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& menu )
+{
+    if( lineAllowed_ || polygonAllowed_ || circleAllowed_ )
     {
-        pPopupMenu_->clear();
-        if( point )
-            pPopupMenu_->insertItem( tools::translate( "Localisation", "Point" ), this, SLOT( StartPoint() ) );
-        if( line )
-            pPopupMenu_->insertItem( tools::translate( "Localisation", "Ligne" ), this, SLOT( StartLine() ) );
-        if( polygon )
-            pPopupMenu_->insertItem( tools::translate( "Localisation", "Polygone" ), this, SLOT( StartPolygon() ) );
-        if( circle )
-            pPopupMenu_->insertItem( tools::translate( "Localisation", "Cercle" ), this, SLOT( StartCircle() ) );
+        QPopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
+        if( lineAllowed_ )
+            subMenu->insertItem( tools::translate( "Localisation", "Line" ), this, SLOT( StartLine() ) );
+        if( polygonAllowed_ )
+            subMenu->insertItem( tools::translate( "Localisation", "Polygon" ), this, SLOT( StartPolygon() ) );
+        if( circleAllowed_ )
+            subMenu->insertItem( tools::translate( "Localisation", "Circle" ), this, SLOT( StartCircle() ) );
     }
 }
 
@@ -81,10 +97,13 @@ void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle )
 // -----------------------------------------------------------------------------
 void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, ContextMenu& menu )
 {
-    if( !pPopupMenu_ )
-        return;
-    popupPoint_ = point;
-    menu.InsertItem( "Creation", menu_, pPopupMenu_ );
+    if( pointAllowed_ )
+    {
+        popupPoint_ = point;
+        QPopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
+        if( pointAllowed_ )
+            subMenu->insertItem( tools::translate( "Localisation", "Point" ), this, SLOT( StartPoint() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -93,14 +112,14 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
 // -----------------------------------------------------------------------------
 void LocationCreator::StartPoint()
 {
-    if( !pPopupMenu_ )
-        layer_.StartPoint( handler_ );
-    else
+    if( pointAllowed_ || lineAllowed_ || polygonAllowed_ || circleAllowed_ )
     {
         Location_ABC* location = new Point();
         location->AddPoint( popupPoint_ );
         handler_.Handle( *location );
     }
+    else
+        layer_.StartPoint( handler_ );
 }
 
 // -----------------------------------------------------------------------------

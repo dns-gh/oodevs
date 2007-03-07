@@ -11,6 +11,7 @@
 #include "DefaultLayer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
+#include "clients_kernel/Types.h"
 
 using namespace kernel;
 using namespace gui;
@@ -55,7 +56,7 @@ bool DefaultLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
         if( mouse->button() == Qt::LeftButton )
             controllers_.actions_.Select( point_ );
         else if( mouse->button() == Qt::RightButton )
-            controllers_.actions_.ContextMenu( point_, mouse->globalPos() );
+            controllers_.actions_.ContextMenu( point_, kernel::Nothing(), mouse->globalPos() );
     }
     return false;
 }
