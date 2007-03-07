@@ -70,7 +70,7 @@ public:
     void NotifySecuredBy  ( const MIL_Agent_ABC& securer );
     void GetPionsSecuring ( T_PopulationKnowledgeAgentDiaIDVector& container ) const;
     
-          void              NotifyChanneling      ( const TER_Localisation& location );
+          void              NotifyChanneled       ( const TER_Localisation& location );
     const T_LocationVector& GetChannelingLocations() const;
           bool              HasChannelingChanged  () const;
     //@}

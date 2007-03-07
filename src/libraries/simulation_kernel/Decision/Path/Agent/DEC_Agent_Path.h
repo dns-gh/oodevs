@@ -114,7 +114,7 @@ private:
     const MIL_AgentPion& queryMaker_;   
     
     // Path calculation parameters
-    const DEC_PathType&                      pathType_;
+    const DEC_PathType&                      pathType_; //$$$ A VIRER
     const DEC_Agent_PathClass&               pathClass_;
           bool                               bRefine_;
           T_PointVector                      pathPoints_;

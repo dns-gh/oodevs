@@ -18,7 +18,7 @@
 #include "Decision/Path/Population/DEC_Population_Path_Channeler.h"
 #include "MT_Tools/MT_Profiler.h"
 
-class MIL_PopulationFlow;
+class MIL_Population;
 
 //*****************************************************************************
 // Created: JDY 03-02-11
@@ -34,7 +34,7 @@ public:
     //@}
 
 public:
-     DEC_Population_Path( const MIL_PopulationFlow& flow, const MT_Vector2D& destination );
+     DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination );
     ~DEC_Population_Path();
 
     //! @name Path calculation
@@ -46,7 +46,8 @@ public:
 
     //! @name Accessors
     //@{
-    const T_PopulationPathChannelerVector& GetChannelers() const;
+    const T_PopulationPathChannelerVector& GetChannelers             () const;
+          MT_Float                         GetCostOutsideOfChanneling() const;
     //@}
 
 private:
@@ -58,8 +59,9 @@ private:
     virtual void InsertDecPoints();
     //@}
    
-private:       
-    const MIL_PopulationFlow&             flow_;
+private:
+    const DEC_Population_PathClass&       pathClass_;
+    const MIL_Population&                 population_;        
           MT_Profiler                     profiler_;   
           T_PopulationPathChannelerVector channelers_;
 };

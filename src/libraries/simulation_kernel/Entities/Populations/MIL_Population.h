@@ -88,7 +88,7 @@ public:
     void NotifyAttackedBy( const MIL_Agent_ABC&    attacker );
     void Secure          ( const MIL_AgentPion&    securer  );
     void Exterminate     ( const MIL_AgentPion&    exterminator, MT_Float rSurface );
-    void NotifyChanneling( const TER_Localisation& localisation );
+    void NotifyChanneled ( const TER_Localisation& localisation );
     //@}
 
     //! @name Operations
@@ -116,6 +116,7 @@ public:
     //! @name Tools
     //@{
     MIL_PopulationFlow&          CreateFlow      ( MIL_PopulationConcentration& concentration );
+    MIL_PopulationFlow&          CreateFlow      ( const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
     MIL_PopulationConcentration& GetConcentration( const MT_Vector2D& position );
     //@}
 

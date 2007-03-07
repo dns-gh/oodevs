@@ -64,6 +64,7 @@ public:
     //@{
     void     RegisterPushingFlow   ( MIL_PopulationFlow& flow );
     void     UnregisterPushingFlow ( MIL_PopulationFlow& flow );
+
     MT_Float GetPullingFlowsDensity() const;
     void     SetPullingFlowsDensity( const MIL_RealObject_ABC& splittingObject );
     //@}

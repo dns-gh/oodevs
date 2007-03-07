@@ -28,11 +28,9 @@
 // -----------------------------------------------------------------------------
 DEC_Population_PathfinderRule::DEC_Population_PathfinderRule( const DEC_Population_Path& path ) 
     : TerrainRule_ABC()
+    , path_          ( path )
 {
-    const DEC_Population_Path::T_PopulationPathChannelerVector& channelers = path.GetChannelers();
-    channelers_.reserve( channelers.size() );
-    for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
-        channelers_.push_back( *it );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +56,23 @@ float DEC_Population_PathfinderRule::EvaluateCost( const geometry::Point2f& from
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Population_PathfinderRule::GetChannelingCost
+// Created: NLD 2007-03-07
+// -----------------------------------------------------------------------------
+double DEC_Population_PathfinderRule::GetChannelingCost( const MT_Vector2D& vFrom, const MT_Vector2D& vTo, const TerrainData& terrainTo, const TerrainData& terrainBetween ) const
+{
+    const DEC_Population_Path::T_PopulationPathChannelerVector& channelers = path_.GetChannelers();
+    if( channelers.empty() )
+        return 0.;
+    for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
+    {
+        if( it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween ) != std::numeric_limits< MT_Float >::min() ) // Inside channel
+            return 0;
+    }
+    return path_.GetCostOutsideOfChanneling();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule::GetCost
 // Created: AGE 2005-03-08
 // -----------------------------------------------------------------------------
@@ -71,10 +86,8 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
     const double rTerrainCost = terrainBetween.ContainsOne( preferedTerrain ) ? 0 : 10000.;
 
     MT_Vector2D vFrom( from.X(), from.Y() ); 
-    MT_Vector2D vTo  ( to.X()  , to.Y() );
-    double rChannelingCost = 0.;
-    for( CIT_PathChannelers it = channelers_.begin(); it != channelers_.end(); ++it )
-        rChannelingCost += it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween );
-    
+    MT_Vector2D vTo  ( to  .X(), to  .Y() );
+
+    const double rChannelingCost = GetChannelingCost( vFrom, vTo, terrainTo, terrainBetween );   
     return float( from.Distance( to ) * ( 1 + rChannelingCost + rTerrainCost ) );
 }

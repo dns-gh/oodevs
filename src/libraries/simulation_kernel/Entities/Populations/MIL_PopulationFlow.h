@@ -41,6 +41,7 @@ class MIL_PopulationFlow : public PHY_MovingEntity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
+     MIL_PopulationFlow( MIL_Population& population, const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
      MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration );
      MIL_PopulationFlow();
     ~MIL_PopulationFlow();
@@ -138,9 +139,11 @@ private:
     virtual bool HasResources         ();
     virtual void SendRC               ( int nReportID ) const;
 
-            void ManageSplit               ();
-            void MoveToAlternateDestination( const MT_Vector2D& destination );
-            void ComputePath               ( const MT_Vector2D& destination );
+            bool ManageObjectSplit          ();
+            bool ManageSplit                ();
+            void MoveToAlternateDestination ( const MT_Vector2D& destination );
+            void ComputePath                ( const MT_Vector2D& destination );
+            void DetachFromDestConcentration();
     //@}
 
     //! @name Network
@@ -153,14 +156,15 @@ private:
     MIL_PopulationConcentration* pSourceConcentration_;
     MIL_PopulationConcentration* pDestConcentration_;
          
-    MT_Vector2D                       primaryDestination_;
-    MT_Vector2D                       alternateDestination_; // Used when the flow is splitted
-    DEC_Population_Path*              pCurrentPath_;
-    bool                              bHeadMoveFinished_;
+    MT_Vector2D          primaryDestination_;
+    MT_Vector2D          alternateDestination_; // Used when the flow is splitted
+    DEC_Population_Path* pHeadPath_;
+    DEC_Population_Path* pTailPath_;
+    bool                 bHeadMoveFinished_;
 
     MT_Vector2D          direction_;
     MT_Float             rSpeed_;
-    T_PointList          flowShape_;
+    T_PointList          flowShape_; // begin() == head ...
     TER_Localisation     location_; // For terrain
 
     // Network

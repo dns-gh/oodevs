@@ -1081,7 +1081,7 @@ void MIL_EntityManager::RegisterLocalAgents( HLA_Federate& federate ) const
 void MIL_EntityManager::ChannelPopulations( const TER_Localisation& localisation )
 {
     for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
-        it->second->NotifyChanneling( localisation );
+        it->second->NotifyChanneled( localisation );
 }
 
 // -----------------------------------------------------------------------------

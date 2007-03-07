@@ -54,7 +54,7 @@ bool DEC_PopulationKnowledge::HasChannelingChanged() const
 // Created: SBO 2006-01-16
 // -----------------------------------------------------------------------------
 inline
-void DEC_PopulationKnowledge::NotifyChanneling( const TER_Localisation& location )
+void DEC_PopulationKnowledge::NotifyChanneled( const TER_Localisation& location )
 {
     CIT_LocationVector it = std::find( channelingLocations_.begin(), channelingLocations_.end(), location );
     if( it == channelingLocations_.end() )

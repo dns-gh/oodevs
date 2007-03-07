@@ -15,7 +15,6 @@
 
 #include "DEC_Population_PathClass.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
 #include "Decision/Path/Population/DEC_Population_PathSection.h"
 #include "Decision/Path/DEC_PathPoint.h"
@@ -26,12 +25,13 @@
 // Name: DEC_Population_Path constructor
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
-DEC_Population_Path::DEC_Population_Path( const MIL_PopulationFlow& flow, const MT_Vector2D& destination ) 
-    : flow_    ( flow )
-    , profiler_()
+DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, const MT_Vector2D& start, const MT_Vector2D& destination ) 
+    : pathClass_ ( DEC_Population_PathClass::GetPathClass( "base" ) ) //$$$ n'importe quoi
+    , population_( population )
+    , profiler_  ()
 {
     T_PointVector pointsTmp; pointsTmp.reserve( 2 );
-    pointsTmp.push_back( flow_.GetPosition() ); // Head position
+    pointsTmp.push_back( start );
     pointsTmp.push_back( destination );
     Initialize( pointsTmp );
 }
@@ -55,14 +55,12 @@ DEC_Population_Path::~DEC_Population_Path()
 // -----------------------------------------------------------------------------
 void DEC_Population_Path::Initialize( const T_PointVector& points )
 {
-    const DEC_Population_PathClass& pathClass = DEC_Population_PathClass::GetPathClass( "base" );
-
     // initialize channeling points
-    const DEC_PopulationKnowledge::T_LocationVector& channelingLocations = flow_.GetPopulation().GetKnowledge().GetChannelingLocations();
+    const DEC_PopulationKnowledge::T_LocationVector& channelingLocations = population_.GetKnowledge().GetChannelingLocations();
     channelers_.reserve( channelingLocations.size() );
     for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin(); 
         itChanLocation != channelingLocations.end(); ++itChanLocation )
-        channelers_.push_back( DEC_Population_Path_Channeler( pathClass, *itChanLocation ) );
+        channelers_.push_back( DEC_Population_Path_Channeler( pathClass_, *itChanLocation ) );
 
     assert( !points.empty() );
     const MT_Vector2D* pLastPoint = 0;
@@ -75,6 +73,19 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
         }
         pLastPoint = &*itPoint;
     }
+}
+
+// =============================================================================
+// ACCESSORS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Population_Path::GetCostOutsideOfChanneling
+// Created: NLD 2007-03-07
+// -----------------------------------------------------------------------------
+MT_Float DEC_Population_Path::GetCostOutsideOfChanneling() const
+{
+    return pathClass_.GetCostOutsideOfChanneling();
 }
 
 // =============================================================================
@@ -100,8 +111,8 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         MT_LOG_MESSAGE_MSG( "DEC_Population_Path::Compute: " << this << " : computation begin" );
-        MT_LOG_MESSAGE_MSG( "   Thread          : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
-        MT_LOG_MESSAGE_MSG( "   Flux population : " << flow_.GetID() );
+        MT_LOG_MESSAGE_MSG( "   Thread      : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
+        MT_LOG_MESSAGE_MSG( "   Population  : " << population_.GetID() );
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }
@@ -115,8 +126,8 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
         double rComputationTime = profiler_.Stop();
 
         std::stringstream stream;
-        if ( ! resultList_.empty() )
-            stream << "[" << resultList_.front()->GetPos() << "] -> [" << resultList_.back()->GetPos() << "]";
+        for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
+            stream << "[" << (**it).GetPos() << "] ";
         MT_LOG_MESSAGE_MSG( "DEC_Population_Path::Compute: " << this << 
                             ", Thread : "  << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() <<
                             ", Time : " << rComputationTime << 

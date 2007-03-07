@@ -46,19 +46,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
-    virtual float GetCost     ( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
+    virtual float  EvaluateCost     ( const geometry::Point2f& from, const geometry::Point2f& to );
+    virtual float  GetCost          ( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
+            double GetChannelingCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::vector< DEC_Population_Path_Channeler >  T_PathChannelers;
-    typedef T_PathChannelers::const_iterator              CIT_PathChannelers;
-    //@}
-
-private:
-    T_PathChannelers channelers_;
+    const DEC_Population_Path& path_;
 };
 
 #endif // __DEC_Population_PathfinderRule_h_

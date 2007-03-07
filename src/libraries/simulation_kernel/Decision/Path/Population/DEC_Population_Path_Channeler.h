@@ -35,7 +35,6 @@ public:
 
 private:
     TER_Localisation location_;
-    double rCostOutsideChanneler_;
 };
 
 #endif // __DEC_Population_Path_Channeler_h_

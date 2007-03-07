@@ -232,13 +232,13 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, MT_Float rS
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::NotifyChanneling
+// Name: MIL_Population::NotifyChanneled
 // Created: SBO 2006-01-16
 // -----------------------------------------------------------------------------
-void MIL_Population::NotifyChanneling( const TER_Localisation& localisation )
+void MIL_Population::NotifyChanneled( const TER_Localisation& localisation )
 {
     assert( pKnowledge_ );
-    pKnowledge_->NotifyChanneling( localisation );
+    pKnowledge_->NotifyChanneled( localisation );
 }
 
 // =============================================================================
@@ -706,6 +706,17 @@ void MIL_Population::SetAttitude( const MIL_PopulationAttitude& attitude )
 MIL_PopulationFlow& MIL_Population::CreateFlow( MIL_PopulationConcentration& concentration )
 {
     MIL_PopulationFlow* pFlow = new MIL_PopulationFlow( *this, concentration );
+    flows_.push_back( pFlow );
+    return *pFlow;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::CreateFlow
+// Created: NLD 2007-03-01
+// -----------------------------------------------------------------------------
+MIL_PopulationFlow& MIL_Population::CreateFlow( const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint )
+{
+    MIL_PopulationFlow* pFlow = new MIL_PopulationFlow( *this, source, splitPoint );
     flows_.push_back( pFlow );
     return *pFlow;
 }

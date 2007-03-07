@@ -16,8 +16,7 @@
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
 DEC_Population_Path_Channeler::DEC_Population_Path_Channeler( const DEC_Population_PathClass& pathClass, const TER_Localisation& location )
-    : location_ ( location )
-    , rCostOutsideChanneler_( pathClass.GetCostOutsideOfChanneling() )
+    : location_( location )
 {
     location_.Scale( pathClass.GetChannelingRange() );
 }
@@ -40,5 +39,5 @@ double DEC_Population_Path_Channeler::ComputeCost( const MT_Vector2D& from, cons
     const MT_Line line( from, to );
     if( location_.Intersect2D( line ) || location_.IsInside( to ) )
         return 0.;
-    return rCostOutsideChanneler_;
+    return std::numeric_limits< double >::min();
 }

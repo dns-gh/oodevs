@@ -26,8 +26,8 @@ class DEC_Population_PathClass
 public:
     //! @name Manager
     //@{
-    static void                 Initialize  ( MIL_InputArchive& archive );
-    static void                 Terminate   ();
+    static       void                      Initialize  ( MIL_InputArchive& archive );
+    static       void                      Terminate   ();
     static const DEC_Population_PathClass& GetPathClass( const std::string& type );
     //@}
 

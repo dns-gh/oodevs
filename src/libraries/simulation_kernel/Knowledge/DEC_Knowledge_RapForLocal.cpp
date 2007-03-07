@@ -85,7 +85,6 @@ void DEC_Knowledge_RapForLocal::Update()
         return;
     nLastCacheUpdateTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 
-
     assert( pPion_ );
     const T_KnowledgeAgentVector& enemies = pPion_->GetKnowledgeGroup().GetKnowledge().GetEnemies();
     const T_KnowledgeAgentVector& friends = pPion_->GetKnowledgeGroup().GetKnowledge().GetFriends();
