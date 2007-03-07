@@ -48,7 +48,7 @@ CampPrototype_ABC::~CampPrototype_ABC()
 // -----------------------------------------------------------------------------
 bool CampPrototype_ABC::CheckValidity() const
 {
-    return tc2s_->GetValue();
+    return tc2s_->count() && tc2s_->GetValue();
 }
 
 // -----------------------------------------------------------------------------
