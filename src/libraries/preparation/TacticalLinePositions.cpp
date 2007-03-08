@@ -26,7 +26,7 @@ TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, co
     , owner_    ( owner )
     , pointList_( pointList )
 {
-    // NOTHING
+    ComputeBoundingBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -166,10 +166,12 @@ void TacticalLinePositions::Translate( const geometry::Point2f& from, const geom
         if( it->SquareDistance( from ) < squarePrecision )
         {
             *it += translation;
+            ComputeBoundingBox();
             return;
         }
     for( IT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
         *it += translation;
+    ComputeBoundingBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -207,6 +209,7 @@ void TacticalLinePositions::InsertPoint( const geometry::Point2f& point, float p
         pointList_.insert( pointList_.end(), point );
     else
         pointList_.insert( minIt + 1, point );
+    ComputeBoundingBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -220,6 +223,18 @@ void TacticalLinePositions::RemovePoint( const geometry::Point2f& point, float p
         if( it->SquareDistance( point ) < squarePrecision )
         {
             pointList_.erase( it );
+            ComputeBoundingBox();
             return;
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::ComputeBoundingBox
+// Created: SBO 2007-03-08
+// -----------------------------------------------------------------------------
+void TacticalLinePositions::ComputeBoundingBox()
+{
+    boundingBox_ = geometry::Rectangle2f();
+    for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        boundingBox_.Incorporate( *it );
 }

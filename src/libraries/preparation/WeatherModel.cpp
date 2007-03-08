@@ -31,7 +31,6 @@ WeatherModel::WeatherModel( kernel::Controller& controller, const kernel::Coordi
     , sunset_       ()
     , sunrise_      ()
     , lighting_     ( (kernel::E_LightingType)-1 )
-    , globalWeather_( 0 )
 {
     controller_.Create( *this );
 }
@@ -53,7 +52,6 @@ WeatherModel::~WeatherModel()
 void WeatherModel::Purge()
 {
     DeleteAll();
-    delete globalWeather_;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +144,7 @@ void WeatherModel::ReadEphemerides( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void WeatherModel::ReadGlobalWeather( xml::xistream& xis )
 {
-    globalWeather_ = new Weather( xis );
+    globalWeather_.reset( new Weather( xis ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,6 +71,7 @@ private:
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
+    void ComputeBoundingBox();
     //@}
 
 private:
