@@ -397,7 +397,7 @@ void Agent::SendFullUpdate( Publisher_ABC& publisher ) const
         asn().fatigue = nTiredness_;
         asn().moral = nMorale_;
         asn().experience = nExperience_;
-        asn().rendu = pSideSurrenderedTo_ ? 0 : pSideSurrenderedTo_->GetID();
+        asn().rendu = pSideSurrenderedTo_ ? pSideSurrenderedTo_->GetID() : 0;
         asn().prisonnier = bPrisonner_;
         asn().refugie_pris_en_compte = bRefugeeManaged_;
 
