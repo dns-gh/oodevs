@@ -224,10 +224,12 @@ bool EntityLayerBase::RemoveEntity( const Entity_ABC& entity )
     IT_Entities it = std::find( entities_.begin(), entities_.end(), &entity );
     if( it != entities_.end() )
     {
-        if( entities_[ selected_ ] == *it )
-            selected_ = it - entities_.begin();
         std::swap( *it, entities_.back() );
         entities_.pop_back();
+        if( selected_  >= entities_.size() )
+            selected_ = 0;
+        if( tooltiped_ >= entities_.size() )
+            tooltiped_ = 0;
         return true;
     }
     return false;

@@ -23,12 +23,13 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers )
-    : agent_       ( agent )
-    , factory_     ( factory )
-    , workers_     ( workers )
-    , map_         ( factory_.CreateVisionMap() )
-    , needUpdating_( true )
-    ,current_     ( 0 )
+    : agent_           ( agent )
+    , factory_         ( factory )
+    , workers_         ( workers )
+    , map_             ( factory_.CreateVisionMap() )
+    , needUpdating_    ( true )
+    , current_         ( 0 )
+    , elongationFactor_( 1 )
 {
     // NOTHING
 }

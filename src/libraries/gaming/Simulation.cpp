@@ -21,6 +21,7 @@ using namespace kernel;
 Simulation::Simulation( Controller& controller )
     : controller_( controller )
     , tickDuration_( 10 )
+    , timeFactor_( 1 )
     , time_( 0 )
     , paused_( false )
     , connected_( false )
