@@ -200,7 +200,7 @@
       <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_PrendreEnComptePrisonniers" dia-type="T_Mission_Automate_PrendreEnComptePrisonniers" id="28" mrt-dia-behavior="MIS_Automate_MRT_PrendreEnComptePrisonniers" name="Prendre En Compte Prisonniers">
-      <parameter dia-name="unitesRendues_" name="Unite rendues" optional="false" type="AgentKnowledgeList"/>
+      <parameter dia-name="unitesRendues_" name="Unites rendues" optional="false" type="AgentKnowledgeList"/>
       <parameter dia-name="campPrisonniers_" name="Camp prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_OrienterRefugies" dia-type="T_Mission_Automate_OrienterRefugies" id="29" mrt-dia-behavior="MIS_Automate_MRT_OrienterRefugies" name="Orienter Refugies">
