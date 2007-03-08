@@ -34,6 +34,7 @@ namespace gui
     class CircularEventStrategy;
     class ExclusiveEventStrategy;
     class GraphicPreferences;
+    class DrawerLayer;
 }
 
 class AgentsLayer;
@@ -95,7 +96,7 @@ private:
     //! @name Helpers
     //@{
     void BuildIconLayout();
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, gui::GraphicPreferences& setup, const kernel::Profile_ABC& profile );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, WeatherLayer& weather, AgentsLayer& agents, gui::DrawerLayer& drawer, gui::GraphicPreferences& setup, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();
@@ -117,8 +118,8 @@ private:
     ModelBuilder* modelBuilder_;
     kernel::ExerciseConfig& config_;
 
-    std::auto_ptr< gui::CircularEventStrategy >  eventStrategy_;
-    std::auto_ptr< gui::ExclusiveEventStrategy > exclusiveEventStrategy_;
+    std::auto_ptr< gui::CircularEventStrategy >  forward_;
+    std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< MapLayer_ABC >                moveLayer_;
 
     gui::GlProxy*       glProxy_;

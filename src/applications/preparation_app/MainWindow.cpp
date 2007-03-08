@@ -72,6 +72,8 @@
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/LightingProxy.h"
 #include "clients_gui/LocationEditorToolbar.h"
+#include "clients_gui/DrawerLayer.h"
+#include "clients_gui/DrawerToolbar.h"
 #include "graphics/DragMovementLayer.h"
 
 #include "xeumeuleu/xml.h"
@@ -92,18 +94,18 @@ using namespace gui;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, ExerciseConfig& config )
-    : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , controllers_           ( controllers )
-    , staticModel_           ( staticModel )
-    , model_                 ( model )
-    , modelBuilder_          ( new ModelBuilder( controllers, model ) )
-    , config_                ( config )    
-    , eventStrategy_         ( new CircularEventStrategy() )
-    , exclusiveEventStrategy_( new ExclusiveEventStrategy( *eventStrategy_ ) )
-    , glProxy_               ( 0 )
-    , widget2d_              ( 0 )
-    , iconLayout_            ( 0 )
-    , needsSaving_           ( false )
+    : QMainWindow   ( 0, 0, Qt::WDestructiveClose )
+    , controllers_  ( controllers )
+    , staticModel_  ( staticModel )
+    , model_        ( model )
+    , modelBuilder_ ( new ModelBuilder( controllers, model ) )
+    , config_       ( config )    
+    , forward_      ( new CircularEventStrategy() )
+    , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
+    , glProxy_      ( 0 )
+    , widget2d_     ( 0 )
+    , iconLayout_   ( 0 )
+    , needsSaving_  ( false )
 {
     setIcon( MAKE_PIXMAP( csword ) );
     SetWindowTitle( false );
@@ -179,11 +181,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_ );
     pCreationPanel->AddPanel( objectCreationPanel );
 
-    WeatherLayer* weatherLayer = new WeatherLayer( *glProxy_, *exclusiveEventStrategy_ );
+    WeatherLayer* weatherLayer = new WeatherLayer( *glProxy_, *eventStrategy_ );
     WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_.coordinateConverter_, *weatherLayer );
     pCreationPanel->AddPanel( weatherPanel );
 
     new FileToolbar( this );
+
+    // Drawer
+    DrawerLayer* drawer = new DrawerLayer( *glProxy_ );
+    new DrawerToolbar( this, *eventStrategy_, *drawer, *glProxy_ );
 
     new Menu( this, controllers, *prefDialog, *profileDialog );
 
@@ -191,7 +197,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setCentralWidget( glPlaceHolder_ );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *weatherLayer, *agentsLayer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *weatherLayer, *agentsLayer, *drawer, prefDialog->GetPreferences(), PreparationProfile::GetProfile() );
 
     pStatus_ = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
     controllers_.Register( *this );
@@ -215,14 +221,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, GraphicPreferences& setup, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, WeatherLayer& weather, ::AgentsLayer& agents, DrawerLayer& drawer, GraphicPreferences& setup, const Profile_ABC& profile )
 {
     Layer_ABC& objectCreationLayer = *new MiscLayer< ObjectCreationPanel >( objects );
     Elevation2dLayer& elevation2d  = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& terrain             = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& grid                = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics             = *new MetricsLayer( *glProxy_ );
-    Layer_ABC& limits              = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *exclusiveEventStrategy_, profile );
+    Layer_ABC& limits              = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
     Layer_ABC& objectsLayer        = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populations         = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
     Layer_ABC& defaultLayer        = *new DefaultLayer( controllers_ );
@@ -240,16 +246,17 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( objectCreationLayer );
     glProxy_->Register( parameters );
     glProxy_->Register( metrics );
+    glProxy_->Register( drawer );
 
     // ordre des evenements
-    eventStrategy_->Register( parameters );
-    eventStrategy_->Register( agents );
-    eventStrategy_->Register( populations );
-    eventStrategy_->Register( objectsLayer );
-    eventStrategy_->Register( weather );
-    eventStrategy_->Register( limits );
-    eventStrategy_->Register( metrics );
-    eventStrategy_->SetDefault( defaultLayer );
+    forward_->Register( parameters );
+    forward_->Register( agents );
+    forward_->Register( populations );
+    forward_->Register( objectsLayer );
+    forward_->Register( weather );
+    forward_->Register( limits );
+    forward_->Register( metrics );
+    forward_->SetDefault( defaultLayer );
 }
 
 // -----------------------------------------------------------------------------
