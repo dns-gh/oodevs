@@ -9,9 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "PropertiesTableDisplayer.h"
-#include "preparation/TeamKarma.h"
 #include "preparation/DotationsItem.h"
 #include "preparation/Dotation.h"
+#include "clients_kernel/Karma.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_gui/Tools.h"
 
@@ -37,9 +37,9 @@ PropertiesTableDisplayer::~PropertiesTableDisplayer()
 // Name: PropertiesTableDisplayer::Call
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void PropertiesTableDisplayer::Call( const TeamKarma& value )
+void PropertiesTableDisplayer::Call( const kernel::Karma& value )
 {
-    AddToDisplay( value.GetName() );
+    AddToDisplay( value.GetName() ); // $$$$ SBO 2007-03-08: move to BaseDisplayer
 }
 
 // -----------------------------------------------------------------------------

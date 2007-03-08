@@ -16,10 +16,11 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/App6Symbol.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
 #include "IdManager.h"
-#include "TeamKarma.h"
 #include "Team.h"
 
 using namespace kernel;
@@ -95,7 +96,7 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 {
     if( viewport.IsHotpointVisible() )
     {
-        if( symbol_.empty() )
+//        if( symbol_.empty() ) // $$$$ SBO 2007-03-08: allow symbol update on team karma change... to avoid observation of team update
             InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where );
         type_->Draw( where, viewport, tools, commandPost_ );
@@ -110,8 +111,8 @@ void Agent::InitializeSymbol() const
 {
     symbol_ = type_->GetSymbol();
     const Entity_ABC& team = Get< CommunicationHierarchies >().GetTop();
-    const TeamKarma& karma = static_cast< const Team& >( team ).GetKarma();
-    std::replace( symbol_.begin(), symbol_.end(), '*', karma.GetIdentifier() );
+    const kernel::Karma& karma = static_cast< const Team& >( team ).GetKarma();
+    kernel::App6Symbol::SetKarma( symbol_, karma );
 }
 
 // -----------------------------------------------------------------------------

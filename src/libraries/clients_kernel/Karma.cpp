@@ -75,3 +75,12 @@ bool Karma::operator<( const Karma& rhs ) const
 {
     return identifier_ < rhs.identifier_ || ( identifier_ >= rhs.identifier_ && name_ < rhs.name_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Karma::operator==
+// Created: SBO 2007-03-08
+// -----------------------------------------------------------------------------
+bool Karma::operator==( const Karma& rhs ) const
+{
+    return identifier_ == rhs.identifier_;
+}

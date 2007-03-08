@@ -41,6 +41,7 @@ public:
     QString GetName() const;
 
     bool operator<( const Karma& rhs ) const;
+    bool operator==( const Karma& rhs ) const;
     //@}
 
 private:

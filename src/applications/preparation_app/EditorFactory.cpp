@@ -16,8 +16,8 @@
 #include "preparation/AgentsModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
-#include "preparation/TeamKarma.h"
 #include "clients_gui/ValuedComboBox.h"
+#include "clients_kernel/Karma.h"
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/NBCAgent.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -149,9 +149,9 @@ void EditorFactory::Call( kernel::KnowledgeGroupType** const& value )
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( TeamKarma** const& value )
+void EditorFactory::Call( kernel::Karma** const& value )
 {
-    SimpleResolverEditor< TeamKarma, TeamKarmas >* editor = new SimpleResolverEditor< TeamKarma, TeamKarmas >( parent_, staticModel_.teamKarmas_ );
+    SimpleResolverEditor< kernel::Karma, TeamKarmas >* editor = new SimpleResolverEditor< kernel::Karma, TeamKarmas >( parent_, staticModel_.teamKarmas_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

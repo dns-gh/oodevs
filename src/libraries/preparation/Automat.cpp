@@ -19,7 +19,8 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/Tools.h"
 #include "xeumeuleu/xml.h"
-#include "TeamKarma.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/App6Symbol.h"
 #include "Team.h"
 
 using namespace kernel;
@@ -128,8 +129,8 @@ void Automat::InitializeSymbol() const
         return;
     symbol_ = symbol;
     const Entity_ABC& team = hierarchies.GetTop();
-    const TeamKarma& karma = static_cast< const Team& >( team ).GetKarma();
-    std::replace( symbol_.begin(), symbol_.end(), '*', karma.GetIdentifier() );
+    const kernel::Karma& karma = static_cast< const Team& >( team ).GetKarma();
+    kernel::App6Symbol::SetKarma( symbol_, karma );
 }
 
 // -----------------------------------------------------------------------------

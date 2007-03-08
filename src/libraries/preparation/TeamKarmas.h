@@ -12,7 +12,10 @@
 
 #include "clients_kernel/Resolver.h"
 
-class TeamKarma;
+namespace kernel
+{
+    class Karma;
+}
 
 // =============================================================================
 /** @class  TeamKarmas
@@ -20,7 +23,7 @@ class TeamKarma;
 */
 // Created: SBO 2006-10-27
 // =============================================================================
-class TeamKarmas : public kernel::Resolver< TeamKarma, QString >
+class TeamKarmas : public kernel::Resolver< kernel::Karma, QString >
 {
 
 public:
@@ -32,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    TeamKarma& GetDefault() const;
+    kernel::Karma& GetDefault() const;
     //@}
 
 private:
@@ -45,7 +48,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TeamKarma* default_;
+    kernel::Karma& default_;
     //@}
 };
 

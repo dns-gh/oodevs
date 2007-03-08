@@ -24,11 +24,11 @@ namespace kernel
     class Entity_ABC;
     class NBCAgent;
     class KnowledgeGroupType;
+    class Karma;
 }
 
 class Model;
 class StaticModel;
-class TeamKarma;
 class DotationsItem;
 
 // =============================================================================
@@ -45,7 +45,7 @@ class EditorFactory : public gui::EditorFactory
                     , public kernel::Caller< MedicalSuperior* >
                     , public kernel::Caller< SupplySuperior* >
                     , public kernel::Caller< kernel::KnowledgeGroupType** >
-                    , public kernel::Caller< TeamKarma** >
+                    , public kernel::Caller< kernel::Karma** >
                     , public kernel::Caller< kernel::NBCAgent** >
                     , public kernel::Caller< std::vector< kernel::NBCAgent* >* >
                     , public kernel::Caller< Enum_PopulationAttitude* >
@@ -66,7 +66,7 @@ public:
     virtual void Call( MedicalSuperior* const& value );
     virtual void Call( SupplySuperior* const& value );
     virtual void Call( kernel::KnowledgeGroupType** const& value );
-    virtual void Call( TeamKarma** const& value );
+    virtual void Call( kernel::Karma** const& value );
     virtual void Call( kernel::NBCAgent** const& value );
     virtual void Call( std::vector< kernel::NBCAgent* >* const& value );
     virtual void Call( Enum_PopulationAttitude* const& value );

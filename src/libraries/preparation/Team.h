@@ -22,6 +22,7 @@ namespace kernel
     class ObjectType;
     class Location_ABC;
     class Object_ABC;
+    class Karma;
 }
 
 namespace xml
@@ -33,7 +34,6 @@ namespace xml
 class KnowledgeGroupFactory_ABC;
 class ObjectFactory_ABC;
 class IdManager;
-class TeamKarma;
 class TeamKarmas;
 
 // =============================================================================
@@ -64,7 +64,7 @@ public:
     void CreateObject( xml::xistream& xis );
     void Rename( const QString& name );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    const TeamKarma& GetKarma() const;
+    const kernel::Karma& GetKarma() const;
 
     virtual bool IsFriend () const;
     virtual bool IsEnemy  () const;
@@ -84,7 +84,7 @@ private:
 
     static unsigned long ReadId  ( xml::xistream& xis );
     static QString       ReadName( xml::xistream& xis );
-    void SetKarma( TeamKarma* const& karma );
+    void SetKarma( kernel::Karma* const& karma );
     //@}
 
 private:
@@ -92,7 +92,7 @@ private:
     //@{
     KnowledgeGroupFactory_ABC& kgFactory_;
     ObjectFactory_ABC& objectFactory_;
-    TeamKarma* karma_;
+    kernel::Karma* karma_;
     //@}
 };
 

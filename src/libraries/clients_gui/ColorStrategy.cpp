@@ -299,12 +299,8 @@ void ColorStrategy::NotifyDeleted( const Team_ABC& team )
     T_TeamColors::iterator it = teamColors_.find( &team );
     if( it != teamColors_.end() )
     {
-        if( team.IsFriend() )
-            friendlyAvailable_.push_back( it->second );
-        else if( team.IsEnemy() )
-            enemyAvailable_.push_back( it->second );
-        else if( team.IsNeutral() )
-            neutralAvailable_.push_back( it->second );
+        if( it->second.second )
+            it->second.second->push_back( it->second.first );
         teamColors_.erase( it );
     }
 }
@@ -317,7 +313,7 @@ QColor ColorStrategy::FindTeamColor( const kernel::Entity_ABC& entity )
 {
     T_TeamColors::const_iterator it = teamColors_.find( &entity );
     if( it != teamColors_.end() )
-        return it->second;
+        return it->second.first;
 
     T_Colors* available = 0;
     const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( entity );
@@ -329,13 +325,13 @@ QColor ColorStrategy::FindTeamColor( const kernel::Entity_ABC& entity )
         available = &neutralAvailable_;
 
     if( available->empty() )
-        teamColors_[ &entity ] = RandomColor();
+        teamColors_[ &entity ] = std::make_pair( RandomColor(), (T_Colors*)0 );
     else
     {
-        teamColors_[ &entity ] = available->back();
+        teamColors_[ &entity ] = std::make_pair( available->back(), available );
         available->pop_back();
     }
-    return teamColors_[ &entity ];
+    return teamColors_[ &entity ].first;
 }
 
 // -----------------------------------------------------------------------------

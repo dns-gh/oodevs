@@ -9,19 +9,18 @@
 
 #include "preparation_pch.h"
 #include "TeamKarmas.h"
-#include "TeamKarma.h"
-#include "clients_gui/Tools.h"
+#include "clients_kernel/Karma.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamKarmas constructor
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
 TeamKarmas::TeamKarmas()
+    : default_( kernel::Karma::friend_ )
 {
-    default_ = new TeamKarma( tools::translate( "TeamKarmas", "Friend" ), "friend", 'f' );
-    Register( "friend" , *default_ );
-    Register( "neutral", *new TeamKarma( tools::translate( "TeamKarmas", "Neutral" ), "neutral", 'n' ) );
-    Register( "enemy"  , *new TeamKarma( tools::translate( "TeamKarmas", "Enemy" ), "enemy", 'h' ) );
+    Register( "friend" , kernel::Karma::friend_ );
+    Register( "neutral", kernel::Karma::neutral_ );
+    Register( "enemy"  , kernel::Karma::enemy_ );
 
 }
 
@@ -38,7 +37,7 @@ TeamKarmas::~TeamKarmas()
 // Name: TeamKarmas::GetDefault
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-TeamKarma& TeamKarmas::GetDefault() const
+kernel::Karma& TeamKarmas::GetDefault() const
 {
-    return *default_;
+    return default_;
 }

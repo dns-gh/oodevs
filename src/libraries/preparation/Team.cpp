@@ -14,7 +14,7 @@
 #include "KnowledgeGroup.h"
 #include "Object.h"
 #include "TeamKarmas.h"
-#include "TeamKarma.h"
+#include "clients_kernel/Karma.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -146,7 +146,7 @@ void Team::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "id", long( id_ ) )
         << attribute( "name", name_.ascii() )
-        << attribute( "type", karma_->GetValue() );
+        << attribute( "type", karma_->GetId() );
 
     xos << start( "objects" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -175,7 +175,7 @@ void Team::CreateDictionary( kernel::Controller& controller )
 // Name: Team::GetKarma
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-const TeamKarma& Team::GetKarma() const
+const kernel::Karma& Team::GetKarma() const
 {
     return *karma_;
 }
@@ -184,9 +184,10 @@ const TeamKarma& Team::GetKarma() const
 // Name: Team::SetKarma
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void Team::SetKarma( TeamKarma* const& karma )
+void Team::SetKarma( kernel::Karma* const& karma )
 {
     karma_ = karma;
+    Touch();
     Get< kernel::TacticalHierarchies >().UpdateSymbol( false );
 }
 
@@ -196,7 +197,7 @@ void Team::SetKarma( TeamKarma* const& karma )
 // -----------------------------------------------------------------------------
 bool Team::IsFriend() const
 {
-    return karma_->GetIdentifier() == 'f';
+    return *karma_ == Karma::friend_;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +206,7 @@ bool Team::IsFriend() const
 // -----------------------------------------------------------------------------
 bool Team::IsEnemy() const
 {
-    return karma_->GetIdentifier() == 'h';
+    return *karma_ == Karma::enemy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,5 +215,5 @@ bool Team::IsEnemy() const
 // -----------------------------------------------------------------------------
 bool Team::IsNeutral() const
 {
-    return karma_->GetIdentifier() == 'n';
+    return *karma_ == Karma::neutral_;
 }

@@ -11,7 +11,8 @@
 #include "AgentHierarchies.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "TeamKarma.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/App6Symbol.h"
 #include "Team.h"
 
 // -----------------------------------------------------------------------------
@@ -75,9 +76,8 @@ void AgentHierarchies::UpdateKarma( const kernel::Entity_ABC& superior )
 {
     const kernel::Entity_ABC& top = superior.Get< kernel::TacticalHierarchies >().GetTop();
     const Team& team = static_cast< const Team& >( top );
-    const std::string oldSymbol = symbol_;
     symbol_ = baseSymbol_;
-    std::replace( symbol_.begin(), symbol_.end(), '*', team.GetKarma().GetIdentifier() );
+    kernel::App6Symbol::SetKarma( symbol_, team.GetKarma() );
 }
 
 // -----------------------------------------------------------------------------
